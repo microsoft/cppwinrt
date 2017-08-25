@@ -1,27 +1,1477 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.ApplicationModel.2.h"
+#include "winrt/impl/Windows.Data.Xml.Dom.2.h"
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.Foundation.Collections.2.h"
+#include "winrt/impl/Windows.System.2.h"
+#include "winrt/impl/Windows.UI.Notifications.2.h"
+#include "winrt/Windows.UI.h"
 
-#include "internal/Windows.ApplicationModel.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Data.Xml.Dom.3.h"
-#include "internal/Windows.System.3.h"
-#include "internal/Windows.UI.Notifications.3.h"
-#include "Windows.UI.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::UI::Notifications::AdaptiveNotificationContentKind consume_Windows_UI_Notifications_IAdaptiveNotificationContent<D>::Kind() const
+{
+    Windows::UI::Notifications::AdaptiveNotificationContentKind value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IAdaptiveNotificationContent)->get_Kind(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> consume_Windows_UI_Notifications_IAdaptiveNotificationContent<D>::Hints() const
+{
+    Windows::Foundation::Collections::IMap<hstring, hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IAdaptiveNotificationContent)->get_Hints(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IAdaptiveNotificationText<D>::Text() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IAdaptiveNotificationText)->get_Text(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IAdaptiveNotificationText<D>::Text(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IAdaptiveNotificationText)->put_Text(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IAdaptiveNotificationText<D>::Language() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IAdaptiveNotificationText)->get_Language(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IAdaptiveNotificationText<D>::Language(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IAdaptiveNotificationText)->put_Language(get_abi(value)));
+}
+
+template <typename D> Windows::Data::Xml::Dom::XmlDocument consume_Windows_UI_Notifications_IBadgeNotification<D>::Content() const
+{
+    Windows::Data::Xml::Dom::XmlDocument value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeNotification)->get_Content(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IBadgeNotification<D>::ExpirationTime(optional<Windows::Foundation::DateTime> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeNotification)->put_ExpirationTime(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_UI_Notifications_IBadgeNotification<D>::ExpirationTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeNotification)->get_ExpirationTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Notifications::BadgeNotification consume_Windows_UI_Notifications_IBadgeNotificationFactory<D>::CreateBadgeNotification(Windows::Data::Xml::Dom::XmlDocument const& content) const
+{
+    Windows::UI::Notifications::BadgeNotification notification{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeNotificationFactory)->CreateBadgeNotification(get_abi(content), put_abi(notification)));
+    return notification;
+}
+
+template <typename D> Windows::UI::Notifications::BadgeUpdater consume_Windows_UI_Notifications_IBadgeUpdateManagerForUser<D>::CreateBadgeUpdaterForApplication() const
+{
+    Windows::UI::Notifications::BadgeUpdater result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdateManagerForUser)->CreateBadgeUpdaterForApplication(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Notifications::BadgeUpdater consume_Windows_UI_Notifications_IBadgeUpdateManagerForUser<D>::CreateBadgeUpdaterForApplication(param::hstring const& applicationId) const
+{
+    Windows::UI::Notifications::BadgeUpdater result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdateManagerForUser)->CreateBadgeUpdaterForApplicationWithId(get_abi(applicationId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Notifications::BadgeUpdater consume_Windows_UI_Notifications_IBadgeUpdateManagerForUser<D>::CreateBadgeUpdaterForSecondaryTile(param::hstring const& tileId) const
+{
+    Windows::UI::Notifications::BadgeUpdater result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdateManagerForUser)->CreateBadgeUpdaterForSecondaryTile(get_abi(tileId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::System::User consume_Windows_UI_Notifications_IBadgeUpdateManagerForUser<D>::User() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdateManagerForUser)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Notifications::BadgeUpdater consume_Windows_UI_Notifications_IBadgeUpdateManagerStatics<D>::CreateBadgeUpdaterForApplication() const
+{
+    Windows::UI::Notifications::BadgeUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdateManagerStatics)->CreateBadgeUpdaterForApplication(put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::BadgeUpdater consume_Windows_UI_Notifications_IBadgeUpdateManagerStatics<D>::CreateBadgeUpdaterForApplication(param::hstring const& applicationId) const
+{
+    Windows::UI::Notifications::BadgeUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdateManagerStatics)->CreateBadgeUpdaterForApplicationWithId(get_abi(applicationId), put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::BadgeUpdater consume_Windows_UI_Notifications_IBadgeUpdateManagerStatics<D>::CreateBadgeUpdaterForSecondaryTile(param::hstring const& tileId) const
+{
+    Windows::UI::Notifications::BadgeUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdateManagerStatics)->CreateBadgeUpdaterForSecondaryTile(get_abi(tileId), put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::Data::Xml::Dom::XmlDocument consume_Windows_UI_Notifications_IBadgeUpdateManagerStatics<D>::GetTemplateContent(Windows::UI::Notifications::BadgeTemplateType const& type) const
+{
+    Windows::Data::Xml::Dom::XmlDocument content{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdateManagerStatics)->GetTemplateContent(get_abi(type), put_abi(content)));
+    return content;
+}
+
+template <typename D> Windows::UI::Notifications::BadgeUpdateManagerForUser consume_Windows_UI_Notifications_IBadgeUpdateManagerStatics2<D>::GetForUser(Windows::System::User const& user) const
+{
+    Windows::UI::Notifications::BadgeUpdateManagerForUser result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdateManagerStatics2)->GetForUser(get_abi(user), put_abi(result)));
+    return result;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IBadgeUpdater<D>::Update(Windows::UI::Notifications::BadgeNotification const& notification) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdater)->Update(get_abi(notification)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IBadgeUpdater<D>::Clear() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdater)->Clear());
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IBadgeUpdater<D>::StartPeriodicUpdate(Windows::Foundation::Uri const& badgeContent, Windows::UI::Notifications::PeriodicUpdateRecurrence const& requestedInterval) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdater)->StartPeriodicUpdate(get_abi(badgeContent), get_abi(requestedInterval)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IBadgeUpdater<D>::StartPeriodicUpdate(Windows::Foundation::Uri const& badgeContent, Windows::Foundation::DateTime const& startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence const& requestedInterval) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdater)->StartPeriodicUpdateAtTime(get_abi(badgeContent), get_abi(startTime), get_abi(requestedInterval)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IBadgeUpdater<D>::StopPeriodicUpdate() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IBadgeUpdater)->StopPeriodicUpdate());
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationHintsStatics<D>::Style() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics)->get_Style(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationHintsStatics<D>::Wrap() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics)->get_Wrap(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationHintsStatics<D>::MaxLines() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics)->get_MaxLines(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationHintsStatics<D>::MinLines() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics)->get_MinLines(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationHintsStatics<D>::TextStacking() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics)->get_TextStacking(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationHintsStatics<D>::Align() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics)->get_Align(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::Caption() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_Caption(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::Body() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_Body(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::Base() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_Base(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::Subtitle() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_Subtitle(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::Title() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_Title(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::Subheader() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_Subheader(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::Header() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_Header(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::TitleNumeral() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_TitleNumeral(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::SubheaderNumeral() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_SubheaderNumeral(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::HeaderNumeral() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_HeaderNumeral(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::CaptionSubtle() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_CaptionSubtle(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::BodySubtle() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_BodySubtle(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::BaseSubtle() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_BaseSubtle(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::SubtitleSubtle() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_SubtitleSubtle(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::TitleSubtle() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_TitleSubtle(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::SubheaderSubtle() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_SubheaderSubtle(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::SubheaderNumeralSubtle() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_SubheaderNumeralSubtle(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::HeaderSubtle() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_HeaderSubtle(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownAdaptiveNotificationTextStylesStatics<D>::HeaderNumeralSubtle() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics)->get_HeaderNumeralSubtle(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IKnownNotificationBindingsStatics<D>::ToastGeneric() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IKnownNotificationBindingsStatics)->get_ToastGeneric(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_UI_Notifications_INotification<D>::ExpirationTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotification)->get_ExpirationTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_INotification<D>::ExpirationTime(optional<Windows::Foundation::DateTime> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotification)->put_ExpirationTime(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Notifications::NotificationVisual consume_Windows_UI_Notifications_INotification<D>::Visual() const
+{
+    Windows::UI::Notifications::NotificationVisual value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotification)->get_Visual(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_INotification<D>::Visual(Windows::UI::Notifications::NotificationVisual const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotification)->put_Visual(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_INotificationBinding<D>::Template() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationBinding)->get_Template(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_INotificationBinding<D>::Template(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationBinding)->put_Template(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_INotificationBinding<D>::Language() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationBinding)->get_Language(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_INotificationBinding<D>::Language(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationBinding)->put_Language(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> consume_Windows_UI_Notifications_INotificationBinding<D>::Hints() const
+{
+    Windows::Foundation::Collections::IMap<hstring, hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationBinding)->get_Hints(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::AdaptiveNotificationText> consume_Windows_UI_Notifications_INotificationBinding<D>::GetTextElements() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::AdaptiveNotificationText> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationBinding)->GetTextElements(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> consume_Windows_UI_Notifications_INotificationData<D>::Values() const
+{
+    Windows::Foundation::Collections::IMap<hstring, hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationData)->get_Values(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_UI_Notifications_INotificationData<D>::SequenceNumber() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationData)->get_SequenceNumber(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_INotificationData<D>::SequenceNumber(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationData)->put_SequenceNumber(value));
+}
+
+template <typename D> Windows::UI::Notifications::NotificationData consume_Windows_UI_Notifications_INotificationDataFactory<D>::CreateNotificationData(param::iterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& initialValues, uint32_t sequenceNumber) const
+{
+    Windows::UI::Notifications::NotificationData result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationDataFactory)->CreateNotificationDataWithValuesAndSequenceNumber(get_abi(initialValues), sequenceNumber, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Notifications::NotificationData consume_Windows_UI_Notifications_INotificationDataFactory<D>::CreateNotificationData(param::iterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& initialValues) const
+{
+    Windows::UI::Notifications::NotificationData result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationDataFactory)->CreateNotificationDataWithValues(get_abi(initialValues), put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_INotificationVisual<D>::Language() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationVisual)->get_Language(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_INotificationVisual<D>::Language(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationVisual)->put_Language(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::UI::Notifications::NotificationBinding> consume_Windows_UI_Notifications_INotificationVisual<D>::Bindings() const
+{
+    Windows::Foundation::Collections::IVector<Windows::UI::Notifications::NotificationBinding> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationVisual)->get_Bindings(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Notifications::NotificationBinding consume_Windows_UI_Notifications_INotificationVisual<D>::GetBinding(param::hstring const& templateName) const
+{
+    Windows::UI::Notifications::NotificationBinding result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::INotificationVisual)->GetBinding(get_abi(templateName), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Data::Xml::Dom::XmlDocument consume_Windows_UI_Notifications_IScheduledTileNotification<D>::Content() const
+{
+    Windows::Data::Xml::Dom::XmlDocument value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledTileNotification)->get_Content(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_UI_Notifications_IScheduledTileNotification<D>::DeliveryTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledTileNotification)->get_DeliveryTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IScheduledTileNotification<D>::ExpirationTime(optional<Windows::Foundation::DateTime> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledTileNotification)->put_ExpirationTime(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_UI_Notifications_IScheduledTileNotification<D>::ExpirationTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledTileNotification)->get_ExpirationTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IScheduledTileNotification<D>::Tag(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledTileNotification)->put_Tag(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IScheduledTileNotification<D>::Tag() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledTileNotification)->get_Tag(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IScheduledTileNotification<D>::Id(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledTileNotification)->put_Id(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IScheduledTileNotification<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledTileNotification)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Notifications::ScheduledTileNotification consume_Windows_UI_Notifications_IScheduledTileNotificationFactory<D>::CreateScheduledTileNotification(Windows::Data::Xml::Dom::XmlDocument const& content, Windows::Foundation::DateTime const& deliveryTime) const
+{
+    Windows::UI::Notifications::ScheduledTileNotification notification{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledTileNotificationFactory)->CreateScheduledTileNotification(get_abi(content), get_abi(deliveryTime), put_abi(notification)));
+    return notification;
+}
+
+template <typename D> Windows::Data::Xml::Dom::XmlDocument consume_Windows_UI_Notifications_IScheduledToastNotification<D>::Content() const
+{
+    Windows::Data::Xml::Dom::XmlDocument value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification)->get_Content(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_UI_Notifications_IScheduledToastNotification<D>::DeliveryTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification)->get_DeliveryTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::TimeSpan> consume_Windows_UI_Notifications_IScheduledToastNotification<D>::SnoozeInterval() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification)->get_SnoozeInterval(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_UI_Notifications_IScheduledToastNotification<D>::MaximumSnoozeCount() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification)->get_MaximumSnoozeCount(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IScheduledToastNotification<D>::Id(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification)->put_Id(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IScheduledToastNotification<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IScheduledToastNotification2<D>::Tag(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification2)->put_Tag(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IScheduledToastNotification2<D>::Tag() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification2)->get_Tag(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IScheduledToastNotification2<D>::Group(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification2)->put_Group(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IScheduledToastNotification2<D>::Group() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification2)->get_Group(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IScheduledToastNotification2<D>::SuppressPopup(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification2)->put_SuppressPopup(value));
+}
+
+template <typename D> bool consume_Windows_UI_Notifications_IScheduledToastNotification2<D>::SuppressPopup() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification2)->get_SuppressPopup(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Notifications::NotificationMirroring consume_Windows_UI_Notifications_IScheduledToastNotification3<D>::NotificationMirroring() const
+{
+    Windows::UI::Notifications::NotificationMirroring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification3)->get_NotificationMirroring(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IScheduledToastNotification3<D>::NotificationMirroring(Windows::UI::Notifications::NotificationMirroring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification3)->put_NotificationMirroring(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IScheduledToastNotification3<D>::RemoteId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification3)->get_RemoteId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IScheduledToastNotification3<D>::RemoteId(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotification3)->put_RemoteId(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Notifications::ScheduledToastNotification consume_Windows_UI_Notifications_IScheduledToastNotificationFactory<D>::CreateScheduledToastNotification(Windows::Data::Xml::Dom::XmlDocument const& content, Windows::Foundation::DateTime const& deliveryTime) const
+{
+    Windows::UI::Notifications::ScheduledToastNotification notification{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotificationFactory)->CreateScheduledToastNotification(get_abi(content), get_abi(deliveryTime), put_abi(notification)));
+    return notification;
+}
+
+template <typename D> Windows::UI::Notifications::ScheduledToastNotification consume_Windows_UI_Notifications_IScheduledToastNotificationFactory<D>::CreateScheduledToastNotificationRecurring(Windows::Data::Xml::Dom::XmlDocument const& content, Windows::Foundation::DateTime const& deliveryTime, Windows::Foundation::TimeSpan const& snoozeInterval, uint32_t maximumSnoozeCount) const
+{
+    Windows::UI::Notifications::ScheduledToastNotification notification{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IScheduledToastNotificationFactory)->CreateScheduledToastNotificationRecurring(get_abi(content), get_abi(deliveryTime), get_abi(snoozeInterval), maximumSnoozeCount, put_abi(notification)));
+    return notification;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IShownTileNotification<D>::Arguments() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IShownTileNotification)->get_Arguments(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Data::Xml::Dom::XmlDocument consume_Windows_UI_Notifications_ITileFlyoutNotification<D>::Content() const
+{
+    Windows::Data::Xml::Dom::XmlDocument value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutNotification)->get_Content(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileFlyoutNotification<D>::ExpirationTime(optional<Windows::Foundation::DateTime> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutNotification)->put_ExpirationTime(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_UI_Notifications_ITileFlyoutNotification<D>::ExpirationTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutNotification)->get_ExpirationTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Notifications::TileFlyoutNotification consume_Windows_UI_Notifications_ITileFlyoutNotificationFactory<D>::CreateTileFlyoutNotification(Windows::Data::Xml::Dom::XmlDocument const& content) const
+{
+    Windows::UI::Notifications::TileFlyoutNotification notification{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutNotificationFactory)->CreateTileFlyoutNotification(get_abi(content), put_abi(notification)));
+    return notification;
+}
+
+template <typename D> Windows::UI::Notifications::TileFlyoutUpdater consume_Windows_UI_Notifications_ITileFlyoutUpdateManagerStatics<D>::CreateTileFlyoutUpdaterForApplication() const
+{
+    Windows::UI::Notifications::TileFlyoutUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics)->CreateTileFlyoutUpdaterForApplication(put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::TileFlyoutUpdater consume_Windows_UI_Notifications_ITileFlyoutUpdateManagerStatics<D>::CreateTileFlyoutUpdaterForApplication(param::hstring const& applicationId) const
+{
+    Windows::UI::Notifications::TileFlyoutUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics)->CreateTileFlyoutUpdaterForApplicationWithId(get_abi(applicationId), put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::TileFlyoutUpdater consume_Windows_UI_Notifications_ITileFlyoutUpdateManagerStatics<D>::CreateTileFlyoutUpdaterForSecondaryTile(param::hstring const& tileId) const
+{
+    Windows::UI::Notifications::TileFlyoutUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics)->CreateTileFlyoutUpdaterForSecondaryTile(get_abi(tileId), put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::Data::Xml::Dom::XmlDocument consume_Windows_UI_Notifications_ITileFlyoutUpdateManagerStatics<D>::GetTemplateContent(Windows::UI::Notifications::TileFlyoutTemplateType const& type) const
+{
+    Windows::Data::Xml::Dom::XmlDocument content{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics)->GetTemplateContent(get_abi(type), put_abi(content)));
+    return content;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileFlyoutUpdater<D>::Update(Windows::UI::Notifications::TileFlyoutNotification const& notification) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutUpdater)->Update(get_abi(notification)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileFlyoutUpdater<D>::Clear() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutUpdater)->Clear());
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileFlyoutUpdater<D>::StartPeriodicUpdate(Windows::Foundation::Uri const& tileFlyoutContent, Windows::UI::Notifications::PeriodicUpdateRecurrence const& requestedInterval) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutUpdater)->StartPeriodicUpdate(get_abi(tileFlyoutContent), get_abi(requestedInterval)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileFlyoutUpdater<D>::StartPeriodicUpdate(Windows::Foundation::Uri const& tileFlyoutContent, Windows::Foundation::DateTime const& startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence const& requestedInterval) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutUpdater)->StartPeriodicUpdateAtTime(get_abi(tileFlyoutContent), get_abi(startTime), get_abi(requestedInterval)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileFlyoutUpdater<D>::StopPeriodicUpdate() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutUpdater)->StopPeriodicUpdate());
+}
+
+template <typename D> Windows::UI::Notifications::NotificationSetting consume_Windows_UI_Notifications_ITileFlyoutUpdater<D>::Setting() const
+{
+    Windows::UI::Notifications::NotificationSetting value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileFlyoutUpdater)->get_Setting(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Data::Xml::Dom::XmlDocument consume_Windows_UI_Notifications_ITileNotification<D>::Content() const
+{
+    Windows::Data::Xml::Dom::XmlDocument value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileNotification)->get_Content(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileNotification<D>::ExpirationTime(optional<Windows::Foundation::DateTime> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileNotification)->put_ExpirationTime(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_UI_Notifications_ITileNotification<D>::ExpirationTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileNotification)->get_ExpirationTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileNotification<D>::Tag(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileNotification)->put_Tag(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_ITileNotification<D>::Tag() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileNotification)->get_Tag(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Notifications::TileNotification consume_Windows_UI_Notifications_ITileNotificationFactory<D>::CreateTileNotification(Windows::Data::Xml::Dom::XmlDocument const& content) const
+{
+    Windows::UI::Notifications::TileNotification notification{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileNotificationFactory)->CreateTileNotification(get_abi(content), put_abi(notification)));
+    return notification;
+}
+
+template <typename D> Windows::UI::Notifications::TileUpdater consume_Windows_UI_Notifications_ITileUpdateManagerForUser<D>::CreateTileUpdaterForApplicationForUser() const
+{
+    Windows::UI::Notifications::TileUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdateManagerForUser)->CreateTileUpdaterForApplication(put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::TileUpdater consume_Windows_UI_Notifications_ITileUpdateManagerForUser<D>::CreateTileUpdaterForApplication(param::hstring const& applicationId) const
+{
+    Windows::UI::Notifications::TileUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdateManagerForUser)->CreateTileUpdaterForApplicationWithId(get_abi(applicationId), put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::TileUpdater consume_Windows_UI_Notifications_ITileUpdateManagerForUser<D>::CreateTileUpdaterForSecondaryTile(param::hstring const& tileId) const
+{
+    Windows::UI::Notifications::TileUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdateManagerForUser)->CreateTileUpdaterForSecondaryTile(get_abi(tileId), put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::System::User consume_Windows_UI_Notifications_ITileUpdateManagerForUser<D>::User() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdateManagerForUser)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Notifications::TileUpdater consume_Windows_UI_Notifications_ITileUpdateManagerStatics<D>::CreateTileUpdaterForApplication() const
+{
+    Windows::UI::Notifications::TileUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdateManagerStatics)->CreateTileUpdaterForApplication(put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::TileUpdater consume_Windows_UI_Notifications_ITileUpdateManagerStatics<D>::CreateTileUpdaterForApplication(param::hstring const& applicationId) const
+{
+    Windows::UI::Notifications::TileUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdateManagerStatics)->CreateTileUpdaterForApplicationWithId(get_abi(applicationId), put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::TileUpdater consume_Windows_UI_Notifications_ITileUpdateManagerStatics<D>::CreateTileUpdaterForSecondaryTile(param::hstring const& tileId) const
+{
+    Windows::UI::Notifications::TileUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdateManagerStatics)->CreateTileUpdaterForSecondaryTile(get_abi(tileId), put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::Data::Xml::Dom::XmlDocument consume_Windows_UI_Notifications_ITileUpdateManagerStatics<D>::GetTemplateContent(Windows::UI::Notifications::TileTemplateType const& type) const
+{
+    Windows::Data::Xml::Dom::XmlDocument content{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdateManagerStatics)->GetTemplateContent(get_abi(type), put_abi(content)));
+    return content;
+}
+
+template <typename D> Windows::UI::Notifications::TileUpdateManagerForUser consume_Windows_UI_Notifications_ITileUpdateManagerStatics2<D>::GetForUser(Windows::System::User const& user) const
+{
+    Windows::UI::Notifications::TileUpdateManagerForUser result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdateManagerStatics2)->GetForUser(get_abi(user), put_abi(result)));
+    return result;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater<D>::Update(Windows::UI::Notifications::TileNotification const& notification) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->Update(get_abi(notification)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater<D>::Clear() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->Clear());
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater<D>::EnableNotificationQueue(bool enable) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->EnableNotificationQueue(enable));
+}
+
+template <typename D> Windows::UI::Notifications::NotificationSetting consume_Windows_UI_Notifications_ITileUpdater<D>::Setting() const
+{
+    Windows::UI::Notifications::NotificationSetting value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->get_Setting(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater<D>::AddToSchedule(Windows::UI::Notifications::ScheduledTileNotification const& scheduledTile) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->AddToSchedule(get_abi(scheduledTile)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater<D>::RemoveFromSchedule(Windows::UI::Notifications::ScheduledTileNotification const& scheduledTile) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->RemoveFromSchedule(get_abi(scheduledTile)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledTileNotification> consume_Windows_UI_Notifications_ITileUpdater<D>::GetScheduledTileNotifications() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledTileNotification> scheduledTiles{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->GetScheduledTileNotifications(put_abi(scheduledTiles)));
+    return scheduledTiles;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater<D>::StartPeriodicUpdate(Windows::Foundation::Uri const& tileContent, Windows::UI::Notifications::PeriodicUpdateRecurrence const& requestedInterval) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->StartPeriodicUpdate(get_abi(tileContent), get_abi(requestedInterval)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater<D>::StartPeriodicUpdate(Windows::Foundation::Uri const& tileContent, Windows::Foundation::DateTime const& startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence const& requestedInterval) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->StartPeriodicUpdateAtTime(get_abi(tileContent), get_abi(startTime), get_abi(requestedInterval)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater<D>::StopPeriodicUpdate() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->StopPeriodicUpdate());
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater<D>::StartPeriodicUpdateBatch(param::iterable<Windows::Foundation::Uri> const& tileContents, Windows::UI::Notifications::PeriodicUpdateRecurrence const& requestedInterval) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->StartPeriodicUpdateBatch(get_abi(tileContents), get_abi(requestedInterval)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater<D>::StartPeriodicUpdateBatch(param::iterable<Windows::Foundation::Uri> const& tileContents, Windows::Foundation::DateTime const& startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence const& requestedInterval) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater)->StartPeriodicUpdateBatchAtTime(get_abi(tileContents), get_abi(startTime), get_abi(requestedInterval)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater2<D>::EnableNotificationQueueForSquare150x150(bool enable) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater2)->EnableNotificationQueueForSquare150x150(enable));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater2<D>::EnableNotificationQueueForWide310x150(bool enable) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater2)->EnableNotificationQueueForWide310x150(enable));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_ITileUpdater2<D>::EnableNotificationQueueForSquare310x310(bool enable) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::ITileUpdater2)->EnableNotificationQueueForSquare310x310(enable));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IToastActivatedEventArgs<D>::Arguments() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastActivatedEventArgs)->get_Arguments(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IToastCollection<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollection)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IToastCollection<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollection)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastCollection<D>::DisplayName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollection)->put_DisplayName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IToastCollection<D>::LaunchArgs() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollection)->get_LaunchArgs(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastCollection<D>::LaunchArgs(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollection)->put_LaunchArgs(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Uri consume_Windows_UI_Notifications_IToastCollection<D>::Icon() const
+{
+    Windows::Foundation::Uri value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollection)->get_Icon(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastCollection<D>::Icon(Windows::Foundation::Uri const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollection)->put_Icon(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Notifications::ToastCollection consume_Windows_UI_Notifications_IToastCollectionFactory<D>::CreateInstance(param::hstring const& collectionId, param::hstring const& displayName, param::hstring const& launchArgs, Windows::Foundation::Uri const& iconUri) const
+{
+    Windows::UI::Notifications::ToastCollection result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollectionFactory)->CreateInstance(get_abi(collectionId), get_abi(displayName), get_abi(launchArgs), get_abi(iconUri), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_Notifications_IToastCollectionManager<D>::SaveToastCollectionAsync(Windows::UI::Notifications::ToastCollection const& collection) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollectionManager)->SaveToastCollectionAsync(get_abi(collection), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastCollection>> consume_Windows_UI_Notifications_IToastCollectionManager<D>::FindAllToastCollectionsAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastCollection>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollectionManager)->FindAllToastCollectionsAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastCollection> consume_Windows_UI_Notifications_IToastCollectionManager<D>::GetToastCollectionAsync(param::hstring const& collectionId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastCollection> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollectionManager)->GetToastCollectionAsync(get_abi(collectionId), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_Notifications_IToastCollectionManager<D>::RemoveToastCollectionAsync(param::hstring const& collectionId) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollectionManager)->RemoveToastCollectionAsync(get_abi(collectionId), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_Notifications_IToastCollectionManager<D>::RemoveAllToastCollectionsAsync() const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollectionManager)->RemoveAllToastCollectionsAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::System::User consume_Windows_UI_Notifications_IToastCollectionManager<D>::User() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollectionManager)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IToastCollectionManager<D>::AppId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastCollectionManager)->get_AppId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Notifications::ToastDismissalReason consume_Windows_UI_Notifications_IToastDismissedEventArgs<D>::Reason() const
+{
+    Windows::UI::Notifications::ToastDismissalReason value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastDismissedEventArgs)->get_Reason(put_abi(value)));
+    return value;
+}
+
+template <typename D> HRESULT consume_Windows_UI_Notifications_IToastFailedEventArgs<D>::ErrorCode() const
+{
+    HRESULT value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastFailedEventArgs)->get_ErrorCode(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Data::Xml::Dom::XmlDocument consume_Windows_UI_Notifications_IToastNotification<D>::Content() const
+{
+    Windows::Data::Xml::Dom::XmlDocument value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification)->get_Content(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotification<D>::ExpirationTime(optional<Windows::Foundation::DateTime> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification)->put_ExpirationTime(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_UI_Notifications_IToastNotification<D>::ExpirationTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification)->get_ExpirationTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_Notifications_IToastNotification<D>::Dismissed(Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs> const& handler) const
+{
+    event_token cookie{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification)->add_Dismissed(get_abi(handler), put_abi(cookie)));
+    return cookie;
+}
+
+template <typename D> event_revoker<Windows::UI::Notifications::IToastNotification> consume_Windows_UI_Notifications_IToastNotification<D>::Dismissed(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Notifications::IToastNotification>(this, &abi_t<Windows::UI::Notifications::IToastNotification>::remove_Dismissed, Dismissed(handler));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotification<D>::Dismissed(event_token const& cookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification)->remove_Dismissed(get_abi(cookie)));
+}
+
+template <typename D> event_token consume_Windows_UI_Notifications_IToastNotification<D>::Activated(Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token cookie{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification)->add_Activated(get_abi(handler), put_abi(cookie)));
+    return cookie;
+}
+
+template <typename D> event_revoker<Windows::UI::Notifications::IToastNotification> consume_Windows_UI_Notifications_IToastNotification<D>::Activated(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Notifications::IToastNotification>(this, &abi_t<Windows::UI::Notifications::IToastNotification>::remove_Activated, Activated(handler));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotification<D>::Activated(event_token const& cookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification)->remove_Activated(get_abi(cookie)));
+}
+
+template <typename D> event_token consume_Windows_UI_Notifications_IToastNotification<D>::Failed(Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification)->add_Failed(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Notifications::IToastNotification> consume_Windows_UI_Notifications_IToastNotification<D>::Failed(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Notifications::IToastNotification>(this, &abi_t<Windows::UI::Notifications::IToastNotification>::remove_Failed, Failed(handler));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotification<D>::Failed(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification)->remove_Failed(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotification2<D>::Tag(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification2)->put_Tag(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IToastNotification2<D>::Tag() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification2)->get_Tag(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotification2<D>::Group(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification2)->put_Group(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IToastNotification2<D>::Group() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification2)->get_Group(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotification2<D>::SuppressPopup(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification2)->put_SuppressPopup(value));
+}
+
+template <typename D> bool consume_Windows_UI_Notifications_IToastNotification2<D>::SuppressPopup() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification2)->get_SuppressPopup(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Notifications::NotificationMirroring consume_Windows_UI_Notifications_IToastNotification3<D>::NotificationMirroring() const
+{
+    Windows::UI::Notifications::NotificationMirroring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification3)->get_NotificationMirroring(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotification3<D>::NotificationMirroring(Windows::UI::Notifications::NotificationMirroring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification3)->put_NotificationMirroring(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IToastNotification3<D>::RemoteId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification3)->get_RemoteId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotification3<D>::RemoteId(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification3)->put_RemoteId(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Notifications::NotificationData consume_Windows_UI_Notifications_IToastNotification4<D>::Data() const
+{
+    Windows::UI::Notifications::NotificationData value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification4)->get_Data(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotification4<D>::Data(Windows::UI::Notifications::NotificationData const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification4)->put_Data(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotificationPriority consume_Windows_UI_Notifications_IToastNotification4<D>::Priority() const
+{
+    Windows::UI::Notifications::ToastNotificationPriority value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification4)->get_Priority(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotification4<D>::Priority(Windows::UI::Notifications::ToastNotificationPriority const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotification4)->put_Priority(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IToastNotificationActionTriggerDetail<D>::Argument() const
+{
+    hstring argument{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationActionTriggerDetail)->get_Argument(put_abi(argument)));
+    return argument;
+}
+
+template <typename D> Windows::Foundation::Collections::ValueSet consume_Windows_UI_Notifications_IToastNotificationActionTriggerDetail<D>::UserInput() const
+{
+    Windows::Foundation::Collections::ValueSet inputs{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationActionTriggerDetail)->get_UserInput(put_abi(inputs)));
+    return inputs;
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotification consume_Windows_UI_Notifications_IToastNotificationFactory<D>::CreateToastNotification(Windows::Data::Xml::Dom::XmlDocument const& content) const
+{
+    Windows::UI::Notifications::ToastNotification notification{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationFactory)->CreateToastNotification(get_abi(content), put_abi(notification)));
+    return notification;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotificationHistory<D>::RemoveGroup(param::hstring const& group) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationHistory)->RemoveGroup(get_abi(group)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotificationHistory<D>::RemoveGroup(param::hstring const& group, param::hstring const& applicationId) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationHistory)->RemoveGroupWithId(get_abi(group), get_abi(applicationId)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotificationHistory<D>::Remove(param::hstring const& tag, param::hstring const& group, param::hstring const& applicationId) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationHistory)->RemoveGroupedTagWithId(get_abi(tag), get_abi(group), get_abi(applicationId)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotificationHistory<D>::Remove(param::hstring const& tag, param::hstring const& group) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationHistory)->RemoveGroupedTag(get_abi(tag), get_abi(group)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotificationHistory<D>::Remove(param::hstring const& tag) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationHistory)->Remove(get_abi(tag)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotificationHistory<D>::Clear() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationHistory)->Clear());
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotificationHistory<D>::Clear(param::hstring const& applicationId) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationHistory)->ClearWithId(get_abi(applicationId)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> consume_Windows_UI_Notifications_IToastNotificationHistory2<D>::GetHistory() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> toasts{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationHistory2)->GetHistory(put_abi(toasts)));
+    return toasts;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> consume_Windows_UI_Notifications_IToastNotificationHistory2<D>::GetHistory(param::hstring const& applicationId) const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> toasts{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationHistory2)->GetHistoryWithId(get_abi(applicationId), put_abi(toasts)));
+    return toasts;
+}
+
+template <typename D> Windows::UI::Notifications::ToastHistoryChangedType consume_Windows_UI_Notifications_IToastNotificationHistoryChangedTriggerDetail<D>::ChangeType() const
+{
+    Windows::UI::Notifications::ToastHistoryChangedType value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail)->get_ChangeType(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Notifications_IToastNotificationHistoryChangedTriggerDetail2<D>::CollectionId() const
+{
+    hstring collectionId{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail2)->get_CollectionId(put_abi(collectionId)));
+    return collectionId;
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotifier consume_Windows_UI_Notifications_IToastNotificationManagerForUser<D>::CreateToastNotifier() const
+{
+    Windows::UI::Notifications::ToastNotifier result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerForUser)->CreateToastNotifier(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotifier consume_Windows_UI_Notifications_IToastNotificationManagerForUser<D>::CreateToastNotifier(param::hstring const& applicationId) const
+{
+    Windows::UI::Notifications::ToastNotifier result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerForUser)->CreateToastNotifierWithId(get_abi(applicationId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotificationHistory consume_Windows_UI_Notifications_IToastNotificationManagerForUser<D>::History() const
+{
+    Windows::UI::Notifications::ToastNotificationHistory value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerForUser)->get_History(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::User consume_Windows_UI_Notifications_IToastNotificationManagerForUser<D>::User() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerForUser)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastNotifier> consume_Windows_UI_Notifications_IToastNotificationManagerForUser2<D>::GetToastNotifierForToastCollectionIdAsync(param::hstring const& collectionId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastNotifier> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerForUser2)->GetToastNotifierForToastCollectionIdAsync(get_abi(collectionId), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastNotificationHistory> consume_Windows_UI_Notifications_IToastNotificationManagerForUser2<D>::GetHistoryForToastCollectionIdAsync(param::hstring const& collectionId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastNotificationHistory> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerForUser2)->GetHistoryForToastCollectionIdAsync(get_abi(collectionId), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::UI::Notifications::ToastCollectionManager consume_Windows_UI_Notifications_IToastNotificationManagerForUser2<D>::GetToastCollectionManager() const
+{
+    Windows::UI::Notifications::ToastCollectionManager result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerForUser2)->GetToastCollectionManager(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Notifications::ToastCollectionManager consume_Windows_UI_Notifications_IToastNotificationManagerForUser2<D>::GetToastCollectionManager(param::hstring const& appId) const
+{
+    Windows::UI::Notifications::ToastCollectionManager result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerForUser2)->GetToastCollectionManagerWithAppId(get_abi(appId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotifier consume_Windows_UI_Notifications_IToastNotificationManagerStatics<D>::CreateToastNotifier() const
+{
+    Windows::UI::Notifications::ToastNotifier notifier{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerStatics)->CreateToastNotifier(put_abi(notifier)));
+    return notifier;
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotifier consume_Windows_UI_Notifications_IToastNotificationManagerStatics<D>::CreateToastNotifier(param::hstring const& applicationId) const
+{
+    Windows::UI::Notifications::ToastNotifier notifier{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerStatics)->CreateToastNotifierWithId(get_abi(applicationId), put_abi(notifier)));
+    return notifier;
+}
+
+template <typename D> Windows::Data::Xml::Dom::XmlDocument consume_Windows_UI_Notifications_IToastNotificationManagerStatics<D>::GetTemplateContent(Windows::UI::Notifications::ToastTemplateType const& type) const
+{
+    Windows::Data::Xml::Dom::XmlDocument content{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerStatics)->GetTemplateContent(get_abi(type), put_abi(content)));
+    return content;
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotificationHistory consume_Windows_UI_Notifications_IToastNotificationManagerStatics2<D>::History() const
+{
+    Windows::UI::Notifications::ToastNotificationHistory value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerStatics2)->get_History(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotificationManagerForUser consume_Windows_UI_Notifications_IToastNotificationManagerStatics4<D>::GetForUser(Windows::System::User const& user) const
+{
+    Windows::UI::Notifications::ToastNotificationManagerForUser result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerStatics4)->GetForUser(get_abi(user), put_abi(result)));
+    return result;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotificationManagerStatics4<D>::ConfigureNotificationMirroring(Windows::UI::Notifications::NotificationMirroring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerStatics4)->ConfigureNotificationMirroring(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotificationManagerForUser consume_Windows_UI_Notifications_IToastNotificationManagerStatics5<D>::GetDefault() const
+{
+    Windows::UI::Notifications::ToastNotificationManagerForUser value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotificationManagerStatics5)->GetDefault(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotifier<D>::Show(Windows::UI::Notifications::ToastNotification const& notification) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotifier)->Show(get_abi(notification)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotifier<D>::Hide(Windows::UI::Notifications::ToastNotification const& notification) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotifier)->Hide(get_abi(notification)));
+}
+
+template <typename D> Windows::UI::Notifications::NotificationSetting consume_Windows_UI_Notifications_IToastNotifier<D>::Setting() const
+{
+    Windows::UI::Notifications::NotificationSetting value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotifier)->get_Setting(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotifier<D>::AddToSchedule(Windows::UI::Notifications::ScheduledToastNotification const& scheduledToast) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotifier)->AddToSchedule(get_abi(scheduledToast)));
+}
+
+template <typename D> void consume_Windows_UI_Notifications_IToastNotifier<D>::RemoveFromSchedule(Windows::UI::Notifications::ScheduledToastNotification const& scheduledToast) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotifier)->RemoveFromSchedule(get_abi(scheduledToast)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledToastNotification> consume_Windows_UI_Notifications_IToastNotifier<D>::GetScheduledToastNotifications() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledToastNotification> scheduledToasts{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotifier)->GetScheduledToastNotifications(put_abi(scheduledToasts)));
+    return scheduledToasts;
+}
+
+template <typename D> Windows::UI::Notifications::NotificationUpdateResult consume_Windows_UI_Notifications_IToastNotifier2<D>::Update(Windows::UI::Notifications::NotificationData const& data, param::hstring const& tag, param::hstring const& group) const
+{
+    Windows::UI::Notifications::NotificationUpdateResult result{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotifier2)->UpdateWithTagAndGroup(get_abi(data), get_abi(tag), get_abi(group), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Notifications::NotificationUpdateResult consume_Windows_UI_Notifications_IToastNotifier2<D>::Update(Windows::UI::Notifications::NotificationData const& data, param::hstring const& tag) const
+{
+    Windows::UI::Notifications::NotificationUpdateResult result{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IToastNotifier2)->UpdateWithTag(get_abi(data), get_abi(tag), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::UI::Notifications::Notification consume_Windows_UI_Notifications_IUserNotification<D>::Notification() const
+{
+    Windows::UI::Notifications::Notification value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IUserNotification)->get_Notification(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::AppInfo consume_Windows_UI_Notifications_IUserNotification<D>::AppInfo() const
+{
+    Windows::ApplicationModel::AppInfo value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IUserNotification)->get_AppInfo(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_UI_Notifications_IUserNotification<D>::Id() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IUserNotification)->get_Id(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_UI_Notifications_IUserNotification<D>::CreationTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IUserNotification)->get_CreationTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Notifications::UserNotificationChangedKind consume_Windows_UI_Notifications_IUserNotificationChangedEventArgs<D>::ChangeKind() const
+{
+    Windows::UI::Notifications::UserNotificationChangedKind value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IUserNotificationChangedEventArgs)->get_ChangeKind(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_UI_Notifications_IUserNotificationChangedEventArgs<D>::UserNotificationId() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Notifications::IUserNotificationChangedEventArgs)->get_UserNotificationId(&value));
+    return value;
+}
 
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IAdaptiveNotificationContent> : produce_base<D, Windows::UI::Notifications::IAdaptiveNotificationContent>
 {
-    HRESULT __stdcall get_Kind(Windows::UI::Notifications::AdaptiveNotificationContentKind * value) noexcept override
+    HRESULT __stdcall get_Kind(abi_t<Windows::UI::Notifications::AdaptiveNotificationContentKind>* value) noexcept override
     {
         try
         {
@@ -35,7 +1485,7 @@ struct produce<D, Windows::UI::Notifications::IAdaptiveNotificationContent> : pr
         }
     }
 
-    HRESULT __stdcall get_Hints(impl::abi_arg_out<Windows::Foundation::Collections::IMap<hstring, hstring>> value) noexcept override
+    HRESULT __stdcall get_Hints(::IUnknown** value) noexcept override
     {
         try
         {
@@ -54,7 +1504,7 @@ struct produce<D, Windows::UI::Notifications::IAdaptiveNotificationContent> : pr
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IAdaptiveNotificationText> : produce_base<D, Windows::UI::Notifications::IAdaptiveNotificationText>
 {
-    HRESULT __stdcall get_Text(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Text(HSTRING* value) noexcept override
     {
         try
         {
@@ -69,12 +1519,12 @@ struct produce<D, Windows::UI::Notifications::IAdaptiveNotificationText> : produ
         }
     }
 
-    HRESULT __stdcall put_Text(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Text(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Text(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Text(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -83,7 +1533,7 @@ struct produce<D, Windows::UI::Notifications::IAdaptiveNotificationText> : produ
         }
     }
 
-    HRESULT __stdcall get_Language(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Language(HSTRING* value) noexcept override
     {
         try
         {
@@ -98,12 +1548,12 @@ struct produce<D, Windows::UI::Notifications::IAdaptiveNotificationText> : produ
         }
     }
 
-    HRESULT __stdcall put_Language(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Language(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Language(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Language(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -116,7 +1566,7 @@ struct produce<D, Windows::UI::Notifications::IAdaptiveNotificationText> : produ
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IBadgeNotification> : produce_base<D, Windows::UI::Notifications::IBadgeNotification>
 {
-    HRESULT __stdcall get_Content(impl::abi_arg_out<Windows::Data::Xml::Dom::IXmlDocument> value) noexcept override
+    HRESULT __stdcall get_Content(::IUnknown** value) noexcept override
     {
         try
         {
@@ -131,12 +1581,12 @@ struct produce<D, Windows::UI::Notifications::IBadgeNotification> : produce_base
         }
     }
 
-    HRESULT __stdcall put_ExpirationTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall put_ExpirationTime(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ExpirationTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&value));
+            this->shim().ExpirationTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -145,7 +1595,7 @@ struct produce<D, Windows::UI::Notifications::IBadgeNotification> : produce_base
         }
     }
 
-    HRESULT __stdcall get_ExpirationTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_ExpirationTime(::IUnknown** value) noexcept override
     {
         try
         {
@@ -164,12 +1614,12 @@ struct produce<D, Windows::UI::Notifications::IBadgeNotification> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IBadgeNotificationFactory> : produce_base<D, Windows::UI::Notifications::IBadgeNotificationFactory>
 {
-    HRESULT __stdcall abi_CreateBadgeNotification(impl::abi_arg_in<Windows::Data::Xml::Dom::IXmlDocument> content, impl::abi_arg_out<Windows::UI::Notifications::IBadgeNotification> notification) noexcept override
+    HRESULT __stdcall CreateBadgeNotification(::IUnknown* content, ::IUnknown** notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *notification = detach_abi(this->shim().CreateBadgeNotification(*reinterpret_cast<const Windows::Data::Xml::Dom::XmlDocument *>(&content)));
+            *notification = detach_abi(this->shim().CreateBadgeNotification(*reinterpret_cast<Windows::Data::Xml::Dom::XmlDocument const*>(&content)));
             return S_OK;
         }
         catch (...)
@@ -183,7 +1633,7 @@ struct produce<D, Windows::UI::Notifications::IBadgeNotificationFactory> : produ
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerForUser> : produce_base<D, Windows::UI::Notifications::IBadgeUpdateManagerForUser>
 {
-    HRESULT __stdcall abi_CreateBadgeUpdaterForApplication(impl::abi_arg_out<Windows::UI::Notifications::IBadgeUpdater> result) noexcept override
+    HRESULT __stdcall CreateBadgeUpdaterForApplication(::IUnknown** result) noexcept override
     {
         try
         {
@@ -198,12 +1648,12 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerForUser> : prod
         }
     }
 
-    HRESULT __stdcall abi_CreateBadgeUpdaterForApplicationWithId(impl::abi_arg_in<hstring> applicationId, impl::abi_arg_out<Windows::UI::Notifications::IBadgeUpdater> result) noexcept override
+    HRESULT __stdcall CreateBadgeUpdaterForApplicationWithId(HSTRING applicationId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateBadgeUpdaterForApplication(*reinterpret_cast<const hstring *>(&applicationId)));
+            *result = detach_abi(this->shim().CreateBadgeUpdaterForApplication(*reinterpret_cast<hstring const*>(&applicationId)));
             return S_OK;
         }
         catch (...)
@@ -213,12 +1663,12 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerForUser> : prod
         }
     }
 
-    HRESULT __stdcall abi_CreateBadgeUpdaterForSecondaryTile(impl::abi_arg_in<hstring> tileId, impl::abi_arg_out<Windows::UI::Notifications::IBadgeUpdater> result) noexcept override
+    HRESULT __stdcall CreateBadgeUpdaterForSecondaryTile(HSTRING tileId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateBadgeUpdaterForSecondaryTile(*reinterpret_cast<const hstring *>(&tileId)));
+            *result = detach_abi(this->shim().CreateBadgeUpdaterForSecondaryTile(*reinterpret_cast<hstring const*>(&tileId)));
             return S_OK;
         }
         catch (...)
@@ -228,7 +1678,7 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerForUser> : prod
         }
     }
 
-    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_User(::IUnknown** value) noexcept override
     {
         try
         {
@@ -247,7 +1697,7 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerForUser> : prod
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerStatics> : produce_base<D, Windows::UI::Notifications::IBadgeUpdateManagerStatics>
 {
-    HRESULT __stdcall abi_CreateBadgeUpdaterForApplication(impl::abi_arg_out<Windows::UI::Notifications::IBadgeUpdater> updater) noexcept override
+    HRESULT __stdcall CreateBadgeUpdaterForApplication(::IUnknown** updater) noexcept override
     {
         try
         {
@@ -262,12 +1712,12 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerStatics> : prod
         }
     }
 
-    HRESULT __stdcall abi_CreateBadgeUpdaterForApplicationWithId(impl::abi_arg_in<hstring> applicationId, impl::abi_arg_out<Windows::UI::Notifications::IBadgeUpdater> updater) noexcept override
+    HRESULT __stdcall CreateBadgeUpdaterForApplicationWithId(HSTRING applicationId, ::IUnknown** updater) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *updater = detach_abi(this->shim().CreateBadgeUpdaterForApplication(*reinterpret_cast<const hstring *>(&applicationId)));
+            *updater = detach_abi(this->shim().CreateBadgeUpdaterForApplication(*reinterpret_cast<hstring const*>(&applicationId)));
             return S_OK;
         }
         catch (...)
@@ -277,12 +1727,12 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerStatics> : prod
         }
     }
 
-    HRESULT __stdcall abi_CreateBadgeUpdaterForSecondaryTile(impl::abi_arg_in<hstring> tileId, impl::abi_arg_out<Windows::UI::Notifications::IBadgeUpdater> updater) noexcept override
+    HRESULT __stdcall CreateBadgeUpdaterForSecondaryTile(HSTRING tileId, ::IUnknown** updater) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *updater = detach_abi(this->shim().CreateBadgeUpdaterForSecondaryTile(*reinterpret_cast<const hstring *>(&tileId)));
+            *updater = detach_abi(this->shim().CreateBadgeUpdaterForSecondaryTile(*reinterpret_cast<hstring const*>(&tileId)));
             return S_OK;
         }
         catch (...)
@@ -292,12 +1742,12 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerStatics> : prod
         }
     }
 
-    HRESULT __stdcall abi_GetTemplateContent(Windows::UI::Notifications::BadgeTemplateType type, impl::abi_arg_out<Windows::Data::Xml::Dom::IXmlDocument> content) noexcept override
+    HRESULT __stdcall GetTemplateContent(abi_t<Windows::UI::Notifications::BadgeTemplateType> type, ::IUnknown** content) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *content = detach_abi(this->shim().GetTemplateContent(type));
+            *content = detach_abi(this->shim().GetTemplateContent(*reinterpret_cast<Windows::UI::Notifications::BadgeTemplateType const*>(&type)));
             return S_OK;
         }
         catch (...)
@@ -311,12 +1761,12 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerStatics> : prod
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerStatics2> : produce_base<D, Windows::UI::Notifications::IBadgeUpdateManagerStatics2>
 {
-    HRESULT __stdcall abi_GetForUser(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_out<Windows::UI::Notifications::IBadgeUpdateManagerForUser> result) noexcept override
+    HRESULT __stdcall GetForUser(::IUnknown* user, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<const Windows::System::User *>(&user)));
+            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<Windows::System::User const*>(&user)));
             return S_OK;
         }
         catch (...)
@@ -330,12 +1780,12 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdateManagerStatics2> : pro
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IBadgeUpdater> : produce_base<D, Windows::UI::Notifications::IBadgeUpdater>
 {
-    HRESULT __stdcall abi_Update(impl::abi_arg_in<Windows::UI::Notifications::IBadgeNotification> notification) noexcept override
+    HRESULT __stdcall Update(::IUnknown* notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Update(*reinterpret_cast<const Windows::UI::Notifications::BadgeNotification *>(&notification));
+            this->shim().Update(*reinterpret_cast<Windows::UI::Notifications::BadgeNotification const*>(&notification));
             return S_OK;
         }
         catch (...)
@@ -344,7 +1794,7 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdater> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_Clear() noexcept override
+    HRESULT __stdcall Clear() noexcept override
     {
         try
         {
@@ -358,12 +1808,12 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdater> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_StartPeriodicUpdate(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> badgeContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) noexcept override
+    HRESULT __stdcall StartPeriodicUpdate(::IUnknown* badgeContent, abi_t<Windows::UI::Notifications::PeriodicUpdateRecurrence> requestedInterval) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StartPeriodicUpdate(*reinterpret_cast<const Windows::Foundation::Uri *>(&badgeContent), requestedInterval);
+            this->shim().StartPeriodicUpdate(*reinterpret_cast<Windows::Foundation::Uri const*>(&badgeContent), *reinterpret_cast<Windows::UI::Notifications::PeriodicUpdateRecurrence const*>(&requestedInterval));
             return S_OK;
         }
         catch (...)
@@ -372,12 +1822,12 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdater> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_StartPeriodicUpdateAtTime(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> badgeContent, impl::abi_arg_in<Windows::Foundation::DateTime> startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) noexcept override
+    HRESULT __stdcall StartPeriodicUpdateAtTime(::IUnknown* badgeContent, abi_t<Windows::Foundation::DateTime> startTime, abi_t<Windows::UI::Notifications::PeriodicUpdateRecurrence> requestedInterval) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StartPeriodicUpdate(*reinterpret_cast<const Windows::Foundation::Uri *>(&badgeContent), *reinterpret_cast<const Windows::Foundation::DateTime *>(&startTime), requestedInterval);
+            this->shim().StartPeriodicUpdate(*reinterpret_cast<Windows::Foundation::Uri const*>(&badgeContent), *reinterpret_cast<Windows::Foundation::DateTime const*>(&startTime), *reinterpret_cast<Windows::UI::Notifications::PeriodicUpdateRecurrence const*>(&requestedInterval));
             return S_OK;
         }
         catch (...)
@@ -386,7 +1836,7 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdater> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_StopPeriodicUpdate() noexcept override
+    HRESULT __stdcall StopPeriodicUpdate() noexcept override
     {
         try
         {
@@ -404,7 +1854,7 @@ struct produce<D, Windows::UI::Notifications::IBadgeUpdater> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics> : produce_base<D, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics>
 {
-    HRESULT __stdcall get_Style(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Style(HSTRING* value) noexcept override
     {
         try
         {
@@ -419,7 +1869,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsSta
         }
     }
 
-    HRESULT __stdcall get_Wrap(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Wrap(HSTRING* value) noexcept override
     {
         try
         {
@@ -434,7 +1884,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsSta
         }
     }
 
-    HRESULT __stdcall get_MaxLines(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MaxLines(HSTRING* value) noexcept override
     {
         try
         {
@@ -449,7 +1899,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsSta
         }
     }
 
-    HRESULT __stdcall get_MinLines(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MinLines(HSTRING* value) noexcept override
     {
         try
         {
@@ -464,7 +1914,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsSta
         }
     }
 
-    HRESULT __stdcall get_TextStacking(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TextStacking(HSTRING* value) noexcept override
     {
         try
         {
@@ -479,7 +1929,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsSta
         }
     }
 
-    HRESULT __stdcall get_Align(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Align(HSTRING* value) noexcept override
     {
         try
         {
@@ -498,7 +1948,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsSta
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics> : produce_base<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>
 {
-    HRESULT __stdcall get_Caption(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Caption(HSTRING* value) noexcept override
     {
         try
         {
@@ -513,7 +1963,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_Body(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Body(HSTRING* value) noexcept override
     {
         try
         {
@@ -528,7 +1978,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_Base(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Base(HSTRING* value) noexcept override
     {
         try
         {
@@ -543,7 +1993,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_Subtitle(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Subtitle(HSTRING* value) noexcept override
     {
         try
         {
@@ -558,7 +2008,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_Title(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Title(HSTRING* value) noexcept override
     {
         try
         {
@@ -573,7 +2023,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_Subheader(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Subheader(HSTRING* value) noexcept override
     {
         try
         {
@@ -588,7 +2038,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_Header(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Header(HSTRING* value) noexcept override
     {
         try
         {
@@ -603,7 +2053,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_TitleNumeral(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TitleNumeral(HSTRING* value) noexcept override
     {
         try
         {
@@ -618,7 +2068,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_SubheaderNumeral(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SubheaderNumeral(HSTRING* value) noexcept override
     {
         try
         {
@@ -633,7 +2083,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_HeaderNumeral(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HeaderNumeral(HSTRING* value) noexcept override
     {
         try
         {
@@ -648,7 +2098,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_CaptionSubtle(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CaptionSubtle(HSTRING* value) noexcept override
     {
         try
         {
@@ -663,7 +2113,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_BodySubtle(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BodySubtle(HSTRING* value) noexcept override
     {
         try
         {
@@ -678,7 +2128,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_BaseSubtle(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BaseSubtle(HSTRING* value) noexcept override
     {
         try
         {
@@ -693,7 +2143,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_SubtitleSubtle(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SubtitleSubtle(HSTRING* value) noexcept override
     {
         try
         {
@@ -708,7 +2158,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_TitleSubtle(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TitleSubtle(HSTRING* value) noexcept override
     {
         try
         {
@@ -723,7 +2173,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_SubheaderSubtle(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SubheaderSubtle(HSTRING* value) noexcept override
     {
         try
         {
@@ -738,7 +2188,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_SubheaderNumeralSubtle(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SubheaderNumeralSubtle(HSTRING* value) noexcept override
     {
         try
         {
@@ -753,7 +2203,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_HeaderSubtle(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HeaderSubtle(HSTRING* value) noexcept override
     {
         try
         {
@@ -768,7 +2218,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
         }
     }
 
-    HRESULT __stdcall get_HeaderNumeralSubtle(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HeaderNumeralSubtle(HSTRING* value) noexcept override
     {
         try
         {
@@ -787,7 +2237,7 @@ struct produce<D, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStyl
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IKnownNotificationBindingsStatics> : produce_base<D, Windows::UI::Notifications::IKnownNotificationBindingsStatics>
 {
-    HRESULT __stdcall get_ToastGeneric(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ToastGeneric(HSTRING* value) noexcept override
     {
         try
         {
@@ -806,7 +2256,7 @@ struct produce<D, Windows::UI::Notifications::IKnownNotificationBindingsStatics>
 template <typename D>
 struct produce<D, Windows::UI::Notifications::INotification> : produce_base<D, Windows::UI::Notifications::INotification>
 {
-    HRESULT __stdcall get_ExpirationTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_ExpirationTime(::IUnknown** value) noexcept override
     {
         try
         {
@@ -821,12 +2271,12 @@ struct produce<D, Windows::UI::Notifications::INotification> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall put_ExpirationTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall put_ExpirationTime(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ExpirationTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&value));
+            this->shim().ExpirationTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -835,7 +2285,7 @@ struct produce<D, Windows::UI::Notifications::INotification> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_Visual(impl::abi_arg_out<Windows::UI::Notifications::INotificationVisual> value) noexcept override
+    HRESULT __stdcall get_Visual(::IUnknown** value) noexcept override
     {
         try
         {
@@ -850,12 +2300,12 @@ struct produce<D, Windows::UI::Notifications::INotification> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall put_Visual(impl::abi_arg_in<Windows::UI::Notifications::INotificationVisual> value) noexcept override
+    HRESULT __stdcall put_Visual(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Visual(*reinterpret_cast<const Windows::UI::Notifications::NotificationVisual *>(&value));
+            this->shim().Visual(*reinterpret_cast<Windows::UI::Notifications::NotificationVisual const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -868,7 +2318,7 @@ struct produce<D, Windows::UI::Notifications::INotification> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::UI::Notifications::INotificationBinding> : produce_base<D, Windows::UI::Notifications::INotificationBinding>
 {
-    HRESULT __stdcall get_Template(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Template(HSTRING* value) noexcept override
     {
         try
         {
@@ -883,12 +2333,12 @@ struct produce<D, Windows::UI::Notifications::INotificationBinding> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_Template(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Template(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Template(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Template(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -897,7 +2347,7 @@ struct produce<D, Windows::UI::Notifications::INotificationBinding> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_Language(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Language(HSTRING* value) noexcept override
     {
         try
         {
@@ -912,12 +2362,12 @@ struct produce<D, Windows::UI::Notifications::INotificationBinding> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_Language(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Language(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Language(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Language(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -926,7 +2376,7 @@ struct produce<D, Windows::UI::Notifications::INotificationBinding> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_Hints(impl::abi_arg_out<Windows::Foundation::Collections::IMap<hstring, hstring>> value) noexcept override
+    HRESULT __stdcall get_Hints(::IUnknown** value) noexcept override
     {
         try
         {
@@ -941,7 +2391,7 @@ struct produce<D, Windows::UI::Notifications::INotificationBinding> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_GetTextElements(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::AdaptiveNotificationText>> result) noexcept override
+    HRESULT __stdcall GetTextElements(::IUnknown** result) noexcept override
     {
         try
         {
@@ -960,7 +2410,7 @@ struct produce<D, Windows::UI::Notifications::INotificationBinding> : produce_ba
 template <typename D>
 struct produce<D, Windows::UI::Notifications::INotificationData> : produce_base<D, Windows::UI::Notifications::INotificationData>
 {
-    HRESULT __stdcall get_Values(impl::abi_arg_out<Windows::Foundation::Collections::IMap<hstring, hstring>> value) noexcept override
+    HRESULT __stdcall get_Values(::IUnknown** value) noexcept override
     {
         try
         {
@@ -975,7 +2425,7 @@ struct produce<D, Windows::UI::Notifications::INotificationData> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_SequenceNumber(uint32_t * value) noexcept override
+    HRESULT __stdcall get_SequenceNumber(uint32_t* value) noexcept override
     {
         try
         {
@@ -1007,12 +2457,12 @@ struct produce<D, Windows::UI::Notifications::INotificationData> : produce_base<
 template <typename D>
 struct produce<D, Windows::UI::Notifications::INotificationDataFactory> : produce_base<D, Windows::UI::Notifications::INotificationDataFactory>
 {
-    HRESULT __stdcall abi_CreateNotificationDataWithValuesAndSequenceNumber(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>>> initialValues, uint32_t sequenceNumber, impl::abi_arg_out<Windows::UI::Notifications::INotificationData> result) noexcept override
+    HRESULT __stdcall CreateNotificationDataWithValuesAndSequenceNumber(::IUnknown* initialValues, uint32_t sequenceNumber, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateNotificationData(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> *>(&initialValues), sequenceNumber));
+            *result = detach_abi(this->shim().CreateNotificationData(*reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const*>(&initialValues), sequenceNumber));
             return S_OK;
         }
         catch (...)
@@ -1022,12 +2472,12 @@ struct produce<D, Windows::UI::Notifications::INotificationDataFactory> : produc
         }
     }
 
-    HRESULT __stdcall abi_CreateNotificationDataWithValues(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>>> initialValues, impl::abi_arg_out<Windows::UI::Notifications::INotificationData> result) noexcept override
+    HRESULT __stdcall CreateNotificationDataWithValues(::IUnknown* initialValues, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateNotificationData(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> *>(&initialValues)));
+            *result = detach_abi(this->shim().CreateNotificationData(*reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const*>(&initialValues)));
             return S_OK;
         }
         catch (...)
@@ -1041,7 +2491,7 @@ struct produce<D, Windows::UI::Notifications::INotificationDataFactory> : produc
 template <typename D>
 struct produce<D, Windows::UI::Notifications::INotificationVisual> : produce_base<D, Windows::UI::Notifications::INotificationVisual>
 {
-    HRESULT __stdcall get_Language(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Language(HSTRING* value) noexcept override
     {
         try
         {
@@ -1056,12 +2506,12 @@ struct produce<D, Windows::UI::Notifications::INotificationVisual> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Language(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Language(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Language(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Language(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1070,7 +2520,7 @@ struct produce<D, Windows::UI::Notifications::INotificationVisual> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Bindings(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Notifications::NotificationBinding>> result) noexcept override
+    HRESULT __stdcall get_Bindings(::IUnknown** result) noexcept override
     {
         try
         {
@@ -1085,12 +2535,12 @@ struct produce<D, Windows::UI::Notifications::INotificationVisual> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetBinding(impl::abi_arg_in<hstring> templateName, impl::abi_arg_out<Windows::UI::Notifications::INotificationBinding> result) noexcept override
+    HRESULT __stdcall GetBinding(HSTRING templateName, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetBinding(*reinterpret_cast<const hstring *>(&templateName)));
+            *result = detach_abi(this->shim().GetBinding(*reinterpret_cast<hstring const*>(&templateName)));
             return S_OK;
         }
         catch (...)
@@ -1104,7 +2554,7 @@ struct produce<D, Windows::UI::Notifications::INotificationVisual> : produce_bas
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IScheduledTileNotification> : produce_base<D, Windows::UI::Notifications::IScheduledTileNotification>
 {
-    HRESULT __stdcall get_Content(impl::abi_arg_out<Windows::Data::Xml::Dom::IXmlDocument> value) noexcept override
+    HRESULT __stdcall get_Content(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1119,7 +2569,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledTileNotification> : prod
         }
     }
 
-    HRESULT __stdcall get_DeliveryTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_DeliveryTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -1133,12 +2583,12 @@ struct produce<D, Windows::UI::Notifications::IScheduledTileNotification> : prod
         }
     }
 
-    HRESULT __stdcall put_ExpirationTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall put_ExpirationTime(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ExpirationTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&value));
+            this->shim().ExpirationTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1147,7 +2597,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledTileNotification> : prod
         }
     }
 
-    HRESULT __stdcall get_ExpirationTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_ExpirationTime(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1162,12 +2612,12 @@ struct produce<D, Windows::UI::Notifications::IScheduledTileNotification> : prod
         }
     }
 
-    HRESULT __stdcall put_Tag(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Tag(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Tag(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Tag(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1176,7 +2626,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledTileNotification> : prod
         }
     }
 
-    HRESULT __stdcall get_Tag(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Tag(HSTRING* value) noexcept override
     {
         try
         {
@@ -1191,12 +2641,12 @@ struct produce<D, Windows::UI::Notifications::IScheduledTileNotification> : prod
         }
     }
 
-    HRESULT __stdcall put_Id(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Id(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Id(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Id(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1205,7 +2655,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledTileNotification> : prod
         }
     }
 
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -1224,12 +2674,12 @@ struct produce<D, Windows::UI::Notifications::IScheduledTileNotification> : prod
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IScheduledTileNotificationFactory> : produce_base<D, Windows::UI::Notifications::IScheduledTileNotificationFactory>
 {
-    HRESULT __stdcall abi_CreateScheduledTileNotification(impl::abi_arg_in<Windows::Data::Xml::Dom::IXmlDocument> content, impl::abi_arg_in<Windows::Foundation::DateTime> deliveryTime, impl::abi_arg_out<Windows::UI::Notifications::IScheduledTileNotification> notification) noexcept override
+    HRESULT __stdcall CreateScheduledTileNotification(::IUnknown* content, abi_t<Windows::Foundation::DateTime> deliveryTime, ::IUnknown** notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *notification = detach_abi(this->shim().CreateScheduledTileNotification(*reinterpret_cast<const Windows::Data::Xml::Dom::XmlDocument *>(&content), *reinterpret_cast<const Windows::Foundation::DateTime *>(&deliveryTime)));
+            *notification = detach_abi(this->shim().CreateScheduledTileNotification(*reinterpret_cast<Windows::Data::Xml::Dom::XmlDocument const*>(&content), *reinterpret_cast<Windows::Foundation::DateTime const*>(&deliveryTime)));
             return S_OK;
         }
         catch (...)
@@ -1243,7 +2693,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledTileNotificationFactory>
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IScheduledToastNotification> : produce_base<D, Windows::UI::Notifications::IScheduledToastNotification>
 {
-    HRESULT __stdcall get_Content(impl::abi_arg_out<Windows::Data::Xml::Dom::IXmlDocument> value) noexcept override
+    HRESULT __stdcall get_Content(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1258,7 +2708,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification> : pro
         }
     }
 
-    HRESULT __stdcall get_DeliveryTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_DeliveryTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -1272,7 +2722,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification> : pro
         }
     }
 
-    HRESULT __stdcall get_SnoozeInterval(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::TimeSpan>> value) noexcept override
+    HRESULT __stdcall get_SnoozeInterval(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1287,7 +2737,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification> : pro
         }
     }
 
-    HRESULT __stdcall get_MaximumSnoozeCount(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MaximumSnoozeCount(uint32_t* value) noexcept override
     {
         try
         {
@@ -1301,12 +2751,12 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification> : pro
         }
     }
 
-    HRESULT __stdcall put_Id(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Id(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Id(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Id(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1315,7 +2765,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification> : pro
         }
     }
 
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -1334,12 +2784,12 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification> : pro
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IScheduledToastNotification2> : produce_base<D, Windows::UI::Notifications::IScheduledToastNotification2>
 {
-    HRESULT __stdcall put_Tag(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Tag(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Tag(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Tag(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1348,7 +2798,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification2> : pr
         }
     }
 
-    HRESULT __stdcall get_Tag(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Tag(HSTRING* value) noexcept override
     {
         try
         {
@@ -1363,12 +2813,12 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification2> : pr
         }
     }
 
-    HRESULT __stdcall put_Group(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Group(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Group(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Group(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1377,7 +2827,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification2> : pr
         }
     }
 
-    HRESULT __stdcall get_Group(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Group(HSTRING* value) noexcept override
     {
         try
         {
@@ -1406,7 +2856,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification2> : pr
         }
     }
 
-    HRESULT __stdcall get_SuppressPopup(bool * value) noexcept override
+    HRESULT __stdcall get_SuppressPopup(bool* value) noexcept override
     {
         try
         {
@@ -1424,7 +2874,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification2> : pr
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IScheduledToastNotification3> : produce_base<D, Windows::UI::Notifications::IScheduledToastNotification3>
 {
-    HRESULT __stdcall get_NotificationMirroring(Windows::UI::Notifications::NotificationMirroring * value) noexcept override
+    HRESULT __stdcall get_NotificationMirroring(abi_t<Windows::UI::Notifications::NotificationMirroring>* value) noexcept override
     {
         try
         {
@@ -1438,12 +2888,12 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification3> : pr
         }
     }
 
-    HRESULT __stdcall put_NotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) noexcept override
+    HRESULT __stdcall put_NotificationMirroring(abi_t<Windows::UI::Notifications::NotificationMirroring> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().NotificationMirroring(value);
+            this->shim().NotificationMirroring(*reinterpret_cast<Windows::UI::Notifications::NotificationMirroring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1452,7 +2902,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification3> : pr
         }
     }
 
-    HRESULT __stdcall get_RemoteId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RemoteId(HSTRING* value) noexcept override
     {
         try
         {
@@ -1467,12 +2917,12 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification3> : pr
         }
     }
 
-    HRESULT __stdcall put_RemoteId(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_RemoteId(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RemoteId(*reinterpret_cast<const hstring *>(&value));
+            this->shim().RemoteId(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1485,12 +2935,12 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotification3> : pr
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IScheduledToastNotificationFactory> : produce_base<D, Windows::UI::Notifications::IScheduledToastNotificationFactory>
 {
-    HRESULT __stdcall abi_CreateScheduledToastNotification(impl::abi_arg_in<Windows::Data::Xml::Dom::IXmlDocument> content, impl::abi_arg_in<Windows::Foundation::DateTime> deliveryTime, impl::abi_arg_out<Windows::UI::Notifications::IScheduledToastNotification> notification) noexcept override
+    HRESULT __stdcall CreateScheduledToastNotification(::IUnknown* content, abi_t<Windows::Foundation::DateTime> deliveryTime, ::IUnknown** notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *notification = detach_abi(this->shim().CreateScheduledToastNotification(*reinterpret_cast<const Windows::Data::Xml::Dom::XmlDocument *>(&content), *reinterpret_cast<const Windows::Foundation::DateTime *>(&deliveryTime)));
+            *notification = detach_abi(this->shim().CreateScheduledToastNotification(*reinterpret_cast<Windows::Data::Xml::Dom::XmlDocument const*>(&content), *reinterpret_cast<Windows::Foundation::DateTime const*>(&deliveryTime)));
             return S_OK;
         }
         catch (...)
@@ -1500,12 +2950,12 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotificationFactory
         }
     }
 
-    HRESULT __stdcall abi_CreateScheduledToastNotificationRecurring(impl::abi_arg_in<Windows::Data::Xml::Dom::IXmlDocument> content, impl::abi_arg_in<Windows::Foundation::DateTime> deliveryTime, impl::abi_arg_in<Windows::Foundation::TimeSpan> snoozeInterval, uint32_t maximumSnoozeCount, impl::abi_arg_out<Windows::UI::Notifications::IScheduledToastNotification> notification) noexcept override
+    HRESULT __stdcall CreateScheduledToastNotificationRecurring(::IUnknown* content, abi_t<Windows::Foundation::DateTime> deliveryTime, abi_t<Windows::Foundation::TimeSpan> snoozeInterval, uint32_t maximumSnoozeCount, ::IUnknown** notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *notification = detach_abi(this->shim().CreateScheduledToastNotificationRecurring(*reinterpret_cast<const Windows::Data::Xml::Dom::XmlDocument *>(&content), *reinterpret_cast<const Windows::Foundation::DateTime *>(&deliveryTime), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&snoozeInterval), maximumSnoozeCount));
+            *notification = detach_abi(this->shim().CreateScheduledToastNotificationRecurring(*reinterpret_cast<Windows::Data::Xml::Dom::XmlDocument const*>(&content), *reinterpret_cast<Windows::Foundation::DateTime const*>(&deliveryTime), *reinterpret_cast<Windows::Foundation::TimeSpan const*>(&snoozeInterval), maximumSnoozeCount));
             return S_OK;
         }
         catch (...)
@@ -1519,7 +2969,7 @@ struct produce<D, Windows::UI::Notifications::IScheduledToastNotificationFactory
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IShownTileNotification> : produce_base<D, Windows::UI::Notifications::IShownTileNotification>
 {
-    HRESULT __stdcall get_Arguments(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Arguments(HSTRING* value) noexcept override
     {
         try
         {
@@ -1538,7 +2988,7 @@ struct produce<D, Windows::UI::Notifications::IShownTileNotification> : produce_
 template <typename D>
 struct produce<D, Windows::UI::Notifications::ITileFlyoutNotification> : produce_base<D, Windows::UI::Notifications::ITileFlyoutNotification>
 {
-    HRESULT __stdcall get_Content(impl::abi_arg_out<Windows::Data::Xml::Dom::IXmlDocument> value) noexcept override
+    HRESULT __stdcall get_Content(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1553,12 +3003,12 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutNotification> : produce
         }
     }
 
-    HRESULT __stdcall put_ExpirationTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall put_ExpirationTime(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ExpirationTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&value));
+            this->shim().ExpirationTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1567,7 +3017,7 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutNotification> : produce
         }
     }
 
-    HRESULT __stdcall get_ExpirationTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_ExpirationTime(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1586,12 +3036,12 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutNotification> : produce
 template <typename D>
 struct produce<D, Windows::UI::Notifications::ITileFlyoutNotificationFactory> : produce_base<D, Windows::UI::Notifications::ITileFlyoutNotificationFactory>
 {
-    HRESULT __stdcall abi_CreateTileFlyoutNotification(impl::abi_arg_in<Windows::Data::Xml::Dom::IXmlDocument> content, impl::abi_arg_out<Windows::UI::Notifications::ITileFlyoutNotification> notification) noexcept override
+    HRESULT __stdcall CreateTileFlyoutNotification(::IUnknown* content, ::IUnknown** notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *notification = detach_abi(this->shim().CreateTileFlyoutNotification(*reinterpret_cast<const Windows::Data::Xml::Dom::XmlDocument *>(&content)));
+            *notification = detach_abi(this->shim().CreateTileFlyoutNotification(*reinterpret_cast<Windows::Data::Xml::Dom::XmlDocument const*>(&content)));
             return S_OK;
         }
         catch (...)
@@ -1605,7 +3055,7 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutNotificationFactory> : 
 template <typename D>
 struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics> : produce_base<D, Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics>
 {
-    HRESULT __stdcall abi_CreateTileFlyoutUpdaterForApplication(impl::abi_arg_out<Windows::UI::Notifications::ITileFlyoutUpdater> updater) noexcept override
+    HRESULT __stdcall CreateTileFlyoutUpdaterForApplication(::IUnknown** updater) noexcept override
     {
         try
         {
@@ -1620,12 +3070,12 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics> :
         }
     }
 
-    HRESULT __stdcall abi_CreateTileFlyoutUpdaterForApplicationWithId(impl::abi_arg_in<hstring> applicationId, impl::abi_arg_out<Windows::UI::Notifications::ITileFlyoutUpdater> updater) noexcept override
+    HRESULT __stdcall CreateTileFlyoutUpdaterForApplicationWithId(HSTRING applicationId, ::IUnknown** updater) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *updater = detach_abi(this->shim().CreateTileFlyoutUpdaterForApplication(*reinterpret_cast<const hstring *>(&applicationId)));
+            *updater = detach_abi(this->shim().CreateTileFlyoutUpdaterForApplication(*reinterpret_cast<hstring const*>(&applicationId)));
             return S_OK;
         }
         catch (...)
@@ -1635,12 +3085,12 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics> :
         }
     }
 
-    HRESULT __stdcall abi_CreateTileFlyoutUpdaterForSecondaryTile(impl::abi_arg_in<hstring> tileId, impl::abi_arg_out<Windows::UI::Notifications::ITileFlyoutUpdater> updater) noexcept override
+    HRESULT __stdcall CreateTileFlyoutUpdaterForSecondaryTile(HSTRING tileId, ::IUnknown** updater) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *updater = detach_abi(this->shim().CreateTileFlyoutUpdaterForSecondaryTile(*reinterpret_cast<const hstring *>(&tileId)));
+            *updater = detach_abi(this->shim().CreateTileFlyoutUpdaterForSecondaryTile(*reinterpret_cast<hstring const*>(&tileId)));
             return S_OK;
         }
         catch (...)
@@ -1650,12 +3100,12 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics> :
         }
     }
 
-    HRESULT __stdcall abi_GetTemplateContent(Windows::UI::Notifications::TileFlyoutTemplateType type, impl::abi_arg_out<Windows::Data::Xml::Dom::IXmlDocument> content) noexcept override
+    HRESULT __stdcall GetTemplateContent(abi_t<Windows::UI::Notifications::TileFlyoutTemplateType> type, ::IUnknown** content) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *content = detach_abi(this->shim().GetTemplateContent(type));
+            *content = detach_abi(this->shim().GetTemplateContent(*reinterpret_cast<Windows::UI::Notifications::TileFlyoutTemplateType const*>(&type)));
             return S_OK;
         }
         catch (...)
@@ -1669,12 +3119,12 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics> :
 template <typename D>
 struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdater> : produce_base<D, Windows::UI::Notifications::ITileFlyoutUpdater>
 {
-    HRESULT __stdcall abi_Update(impl::abi_arg_in<Windows::UI::Notifications::ITileFlyoutNotification> notification) noexcept override
+    HRESULT __stdcall Update(::IUnknown* notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Update(*reinterpret_cast<const Windows::UI::Notifications::TileFlyoutNotification *>(&notification));
+            this->shim().Update(*reinterpret_cast<Windows::UI::Notifications::TileFlyoutNotification const*>(&notification));
             return S_OK;
         }
         catch (...)
@@ -1683,7 +3133,7 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdater> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_Clear() noexcept override
+    HRESULT __stdcall Clear() noexcept override
     {
         try
         {
@@ -1697,12 +3147,12 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdater> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_StartPeriodicUpdate(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> tileFlyoutContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) noexcept override
+    HRESULT __stdcall StartPeriodicUpdate(::IUnknown* tileFlyoutContent, abi_t<Windows::UI::Notifications::PeriodicUpdateRecurrence> requestedInterval) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StartPeriodicUpdate(*reinterpret_cast<const Windows::Foundation::Uri *>(&tileFlyoutContent), requestedInterval);
+            this->shim().StartPeriodicUpdate(*reinterpret_cast<Windows::Foundation::Uri const*>(&tileFlyoutContent), *reinterpret_cast<Windows::UI::Notifications::PeriodicUpdateRecurrence const*>(&requestedInterval));
             return S_OK;
         }
         catch (...)
@@ -1711,12 +3161,12 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdater> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_StartPeriodicUpdateAtTime(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> tileFlyoutContent, impl::abi_arg_in<Windows::Foundation::DateTime> startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) noexcept override
+    HRESULT __stdcall StartPeriodicUpdateAtTime(::IUnknown* tileFlyoutContent, abi_t<Windows::Foundation::DateTime> startTime, abi_t<Windows::UI::Notifications::PeriodicUpdateRecurrence> requestedInterval) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StartPeriodicUpdate(*reinterpret_cast<const Windows::Foundation::Uri *>(&tileFlyoutContent), *reinterpret_cast<const Windows::Foundation::DateTime *>(&startTime), requestedInterval);
+            this->shim().StartPeriodicUpdate(*reinterpret_cast<Windows::Foundation::Uri const*>(&tileFlyoutContent), *reinterpret_cast<Windows::Foundation::DateTime const*>(&startTime), *reinterpret_cast<Windows::UI::Notifications::PeriodicUpdateRecurrence const*>(&requestedInterval));
             return S_OK;
         }
         catch (...)
@@ -1725,7 +3175,7 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdater> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_StopPeriodicUpdate() noexcept override
+    HRESULT __stdcall StopPeriodicUpdate() noexcept override
     {
         try
         {
@@ -1739,7 +3189,7 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdater> : produce_base
         }
     }
 
-    HRESULT __stdcall get_Setting(Windows::UI::Notifications::NotificationSetting * value) noexcept override
+    HRESULT __stdcall get_Setting(abi_t<Windows::UI::Notifications::NotificationSetting>* value) noexcept override
     {
         try
         {
@@ -1757,7 +3207,7 @@ struct produce<D, Windows::UI::Notifications::ITileFlyoutUpdater> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::Notifications::ITileNotification> : produce_base<D, Windows::UI::Notifications::ITileNotification>
 {
-    HRESULT __stdcall get_Content(impl::abi_arg_out<Windows::Data::Xml::Dom::IXmlDocument> value) noexcept override
+    HRESULT __stdcall get_Content(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1772,12 +3222,12 @@ struct produce<D, Windows::UI::Notifications::ITileNotification> : produce_base<
         }
     }
 
-    HRESULT __stdcall put_ExpirationTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall put_ExpirationTime(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ExpirationTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&value));
+            this->shim().ExpirationTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1786,7 +3236,7 @@ struct produce<D, Windows::UI::Notifications::ITileNotification> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_ExpirationTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_ExpirationTime(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1801,12 +3251,12 @@ struct produce<D, Windows::UI::Notifications::ITileNotification> : produce_base<
         }
     }
 
-    HRESULT __stdcall put_Tag(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Tag(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Tag(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Tag(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1815,7 +3265,7 @@ struct produce<D, Windows::UI::Notifications::ITileNotification> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_Tag(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Tag(HSTRING* value) noexcept override
     {
         try
         {
@@ -1834,12 +3284,12 @@ struct produce<D, Windows::UI::Notifications::ITileNotification> : produce_base<
 template <typename D>
 struct produce<D, Windows::UI::Notifications::ITileNotificationFactory> : produce_base<D, Windows::UI::Notifications::ITileNotificationFactory>
 {
-    HRESULT __stdcall abi_CreateTileNotification(impl::abi_arg_in<Windows::Data::Xml::Dom::IXmlDocument> content, impl::abi_arg_out<Windows::UI::Notifications::ITileNotification> notification) noexcept override
+    HRESULT __stdcall CreateTileNotification(::IUnknown* content, ::IUnknown** notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *notification = detach_abi(this->shim().CreateTileNotification(*reinterpret_cast<const Windows::Data::Xml::Dom::XmlDocument *>(&content)));
+            *notification = detach_abi(this->shim().CreateTileNotification(*reinterpret_cast<Windows::Data::Xml::Dom::XmlDocument const*>(&content)));
             return S_OK;
         }
         catch (...)
@@ -1853,7 +3303,7 @@ struct produce<D, Windows::UI::Notifications::ITileNotificationFactory> : produc
 template <typename D>
 struct produce<D, Windows::UI::Notifications::ITileUpdateManagerForUser> : produce_base<D, Windows::UI::Notifications::ITileUpdateManagerForUser>
 {
-    HRESULT __stdcall abi_CreateTileUpdaterForApplication(impl::abi_arg_out<Windows::UI::Notifications::ITileUpdater> updater) noexcept override
+    HRESULT __stdcall CreateTileUpdaterForApplication(::IUnknown** updater) noexcept override
     {
         try
         {
@@ -1868,12 +3318,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdateManagerForUser> : produ
         }
     }
 
-    HRESULT __stdcall abi_CreateTileUpdaterForApplicationWithId(impl::abi_arg_in<hstring> applicationId, impl::abi_arg_out<Windows::UI::Notifications::ITileUpdater> updater) noexcept override
+    HRESULT __stdcall CreateTileUpdaterForApplicationWithId(HSTRING applicationId, ::IUnknown** updater) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *updater = detach_abi(this->shim().CreateTileUpdaterForApplication(*reinterpret_cast<const hstring *>(&applicationId)));
+            *updater = detach_abi(this->shim().CreateTileUpdaterForApplication(*reinterpret_cast<hstring const*>(&applicationId)));
             return S_OK;
         }
         catch (...)
@@ -1883,12 +3333,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdateManagerForUser> : produ
         }
     }
 
-    HRESULT __stdcall abi_CreateTileUpdaterForSecondaryTile(impl::abi_arg_in<hstring> tileId, impl::abi_arg_out<Windows::UI::Notifications::ITileUpdater> updater) noexcept override
+    HRESULT __stdcall CreateTileUpdaterForSecondaryTile(HSTRING tileId, ::IUnknown** updater) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *updater = detach_abi(this->shim().CreateTileUpdaterForSecondaryTile(*reinterpret_cast<const hstring *>(&tileId)));
+            *updater = detach_abi(this->shim().CreateTileUpdaterForSecondaryTile(*reinterpret_cast<hstring const*>(&tileId)));
             return S_OK;
         }
         catch (...)
@@ -1898,7 +3348,7 @@ struct produce<D, Windows::UI::Notifications::ITileUpdateManagerForUser> : produ
         }
     }
 
-    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_User(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1917,7 +3367,7 @@ struct produce<D, Windows::UI::Notifications::ITileUpdateManagerForUser> : produ
 template <typename D>
 struct produce<D, Windows::UI::Notifications::ITileUpdateManagerStatics> : produce_base<D, Windows::UI::Notifications::ITileUpdateManagerStatics>
 {
-    HRESULT __stdcall abi_CreateTileUpdaterForApplication(impl::abi_arg_out<Windows::UI::Notifications::ITileUpdater> updater) noexcept override
+    HRESULT __stdcall CreateTileUpdaterForApplication(::IUnknown** updater) noexcept override
     {
         try
         {
@@ -1932,12 +3382,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdateManagerStatics> : produ
         }
     }
 
-    HRESULT __stdcall abi_CreateTileUpdaterForApplicationWithId(impl::abi_arg_in<hstring> applicationId, impl::abi_arg_out<Windows::UI::Notifications::ITileUpdater> updater) noexcept override
+    HRESULT __stdcall CreateTileUpdaterForApplicationWithId(HSTRING applicationId, ::IUnknown** updater) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *updater = detach_abi(this->shim().CreateTileUpdaterForApplication(*reinterpret_cast<const hstring *>(&applicationId)));
+            *updater = detach_abi(this->shim().CreateTileUpdaterForApplication(*reinterpret_cast<hstring const*>(&applicationId)));
             return S_OK;
         }
         catch (...)
@@ -1947,12 +3397,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdateManagerStatics> : produ
         }
     }
 
-    HRESULT __stdcall abi_CreateTileUpdaterForSecondaryTile(impl::abi_arg_in<hstring> tileId, impl::abi_arg_out<Windows::UI::Notifications::ITileUpdater> updater) noexcept override
+    HRESULT __stdcall CreateTileUpdaterForSecondaryTile(HSTRING tileId, ::IUnknown** updater) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *updater = detach_abi(this->shim().CreateTileUpdaterForSecondaryTile(*reinterpret_cast<const hstring *>(&tileId)));
+            *updater = detach_abi(this->shim().CreateTileUpdaterForSecondaryTile(*reinterpret_cast<hstring const*>(&tileId)));
             return S_OK;
         }
         catch (...)
@@ -1962,12 +3412,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdateManagerStatics> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetTemplateContent(Windows::UI::Notifications::TileTemplateType type, impl::abi_arg_out<Windows::Data::Xml::Dom::IXmlDocument> content) noexcept override
+    HRESULT __stdcall GetTemplateContent(abi_t<Windows::UI::Notifications::TileTemplateType> type, ::IUnknown** content) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *content = detach_abi(this->shim().GetTemplateContent(type));
+            *content = detach_abi(this->shim().GetTemplateContent(*reinterpret_cast<Windows::UI::Notifications::TileTemplateType const*>(&type)));
             return S_OK;
         }
         catch (...)
@@ -1981,12 +3431,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdateManagerStatics> : produ
 template <typename D>
 struct produce<D, Windows::UI::Notifications::ITileUpdateManagerStatics2> : produce_base<D, Windows::UI::Notifications::ITileUpdateManagerStatics2>
 {
-    HRESULT __stdcall abi_GetForUser(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_out<Windows::UI::Notifications::ITileUpdateManagerForUser> result) noexcept override
+    HRESULT __stdcall GetForUser(::IUnknown* user, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<const Windows::System::User *>(&user)));
+            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<Windows::System::User const*>(&user)));
             return S_OK;
         }
         catch (...)
@@ -2000,12 +3450,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdateManagerStatics2> : prod
 template <typename D>
 struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Windows::UI::Notifications::ITileUpdater>
 {
-    HRESULT __stdcall abi_Update(impl::abi_arg_in<Windows::UI::Notifications::ITileNotification> notification) noexcept override
+    HRESULT __stdcall Update(::IUnknown* notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Update(*reinterpret_cast<const Windows::UI::Notifications::TileNotification *>(&notification));
+            this->shim().Update(*reinterpret_cast<Windows::UI::Notifications::TileNotification const*>(&notification));
             return S_OK;
         }
         catch (...)
@@ -2014,7 +3464,7 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_Clear() noexcept override
+    HRESULT __stdcall Clear() noexcept override
     {
         try
         {
@@ -2028,7 +3478,7 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_EnableNotificationQueue(bool enable) noexcept override
+    HRESULT __stdcall EnableNotificationQueue(bool enable) noexcept override
     {
         try
         {
@@ -2042,7 +3492,7 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Setting(Windows::UI::Notifications::NotificationSetting * value) noexcept override
+    HRESULT __stdcall get_Setting(abi_t<Windows::UI::Notifications::NotificationSetting>* value) noexcept override
     {
         try
         {
@@ -2056,12 +3506,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_AddToSchedule(impl::abi_arg_in<Windows::UI::Notifications::IScheduledTileNotification> scheduledTile) noexcept override
+    HRESULT __stdcall AddToSchedule(::IUnknown* scheduledTile) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AddToSchedule(*reinterpret_cast<const Windows::UI::Notifications::ScheduledTileNotification *>(&scheduledTile));
+            this->shim().AddToSchedule(*reinterpret_cast<Windows::UI::Notifications::ScheduledTileNotification const*>(&scheduledTile));
             return S_OK;
         }
         catch (...)
@@ -2070,12 +3520,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_RemoveFromSchedule(impl::abi_arg_in<Windows::UI::Notifications::IScheduledTileNotification> scheduledTile) noexcept override
+    HRESULT __stdcall RemoveFromSchedule(::IUnknown* scheduledTile) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RemoveFromSchedule(*reinterpret_cast<const Windows::UI::Notifications::ScheduledTileNotification *>(&scheduledTile));
+            this->shim().RemoveFromSchedule(*reinterpret_cast<Windows::UI::Notifications::ScheduledTileNotification const*>(&scheduledTile));
             return S_OK;
         }
         catch (...)
@@ -2084,7 +3534,7 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_GetScheduledTileNotifications(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledTileNotification>> scheduledTiles) noexcept override
+    HRESULT __stdcall GetScheduledTileNotifications(::IUnknown** scheduledTiles) noexcept override
     {
         try
         {
@@ -2099,12 +3549,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_StartPeriodicUpdate(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> tileContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) noexcept override
+    HRESULT __stdcall StartPeriodicUpdate(::IUnknown* tileContent, abi_t<Windows::UI::Notifications::PeriodicUpdateRecurrence> requestedInterval) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StartPeriodicUpdate(*reinterpret_cast<const Windows::Foundation::Uri *>(&tileContent), requestedInterval);
+            this->shim().StartPeriodicUpdate(*reinterpret_cast<Windows::Foundation::Uri const*>(&tileContent), *reinterpret_cast<Windows::UI::Notifications::PeriodicUpdateRecurrence const*>(&requestedInterval));
             return S_OK;
         }
         catch (...)
@@ -2113,12 +3563,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_StartPeriodicUpdateAtTime(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> tileContent, impl::abi_arg_in<Windows::Foundation::DateTime> startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) noexcept override
+    HRESULT __stdcall StartPeriodicUpdateAtTime(::IUnknown* tileContent, abi_t<Windows::Foundation::DateTime> startTime, abi_t<Windows::UI::Notifications::PeriodicUpdateRecurrence> requestedInterval) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StartPeriodicUpdate(*reinterpret_cast<const Windows::Foundation::Uri *>(&tileContent), *reinterpret_cast<const Windows::Foundation::DateTime *>(&startTime), requestedInterval);
+            this->shim().StartPeriodicUpdate(*reinterpret_cast<Windows::Foundation::Uri const*>(&tileContent), *reinterpret_cast<Windows::Foundation::DateTime const*>(&startTime), *reinterpret_cast<Windows::UI::Notifications::PeriodicUpdateRecurrence const*>(&requestedInterval));
             return S_OK;
         }
         catch (...)
@@ -2127,7 +3577,7 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_StopPeriodicUpdate() noexcept override
+    HRESULT __stdcall StopPeriodicUpdate() noexcept override
     {
         try
         {
@@ -2141,12 +3591,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_StartPeriodicUpdateBatch(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri>> tileContents, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) noexcept override
+    HRESULT __stdcall StartPeriodicUpdateBatch(::IUnknown* tileContents, abi_t<Windows::UI::Notifications::PeriodicUpdateRecurrence> requestedInterval) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StartPeriodicUpdateBatch(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri> *>(&tileContents), requestedInterval);
+            this->shim().StartPeriodicUpdateBatch(*reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri> const*>(&tileContents), *reinterpret_cast<Windows::UI::Notifications::PeriodicUpdateRecurrence const*>(&requestedInterval));
             return S_OK;
         }
         catch (...)
@@ -2155,12 +3605,12 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_StartPeriodicUpdateBatchAtTime(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri>> tileContents, impl::abi_arg_in<Windows::Foundation::DateTime> startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) noexcept override
+    HRESULT __stdcall StartPeriodicUpdateBatchAtTime(::IUnknown* tileContents, abi_t<Windows::Foundation::DateTime> startTime, abi_t<Windows::UI::Notifications::PeriodicUpdateRecurrence> requestedInterval) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StartPeriodicUpdateBatch(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri> *>(&tileContents), *reinterpret_cast<const Windows::Foundation::DateTime *>(&startTime), requestedInterval);
+            this->shim().StartPeriodicUpdateBatch(*reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri> const*>(&tileContents), *reinterpret_cast<Windows::Foundation::DateTime const*>(&startTime), *reinterpret_cast<Windows::UI::Notifications::PeriodicUpdateRecurrence const*>(&requestedInterval));
             return S_OK;
         }
         catch (...)
@@ -2173,7 +3623,7 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::UI::Notifications::ITileUpdater2> : produce_base<D, Windows::UI::Notifications::ITileUpdater2>
 {
-    HRESULT __stdcall abi_EnableNotificationQueueForSquare150x150(bool enable) noexcept override
+    HRESULT __stdcall EnableNotificationQueueForSquare150x150(bool enable) noexcept override
     {
         try
         {
@@ -2187,7 +3637,7 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_EnableNotificationQueueForWide310x150(bool enable) noexcept override
+    HRESULT __stdcall EnableNotificationQueueForWide310x150(bool enable) noexcept override
     {
         try
         {
@@ -2201,7 +3651,7 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_EnableNotificationQueueForSquare310x310(bool enable) noexcept override
+    HRESULT __stdcall EnableNotificationQueueForSquare310x310(bool enable) noexcept override
     {
         try
         {
@@ -2219,7 +3669,7 @@ struct produce<D, Windows::UI::Notifications::ITileUpdater2> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastActivatedEventArgs> : produce_base<D, Windows::UI::Notifications::IToastActivatedEventArgs>
 {
-    HRESULT __stdcall get_Arguments(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Arguments(HSTRING* value) noexcept override
     {
         try
         {
@@ -2238,7 +3688,7 @@ struct produce<D, Windows::UI::Notifications::IToastActivatedEventArgs> : produc
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastCollection> : produce_base<D, Windows::UI::Notifications::IToastCollection>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -2253,7 +3703,7 @@ struct produce<D, Windows::UI::Notifications::IToastCollection> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -2268,12 +3718,12 @@ struct produce<D, Windows::UI::Notifications::IToastCollection> : produce_base<D
         }
     }
 
-    HRESULT __stdcall put_DisplayName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DisplayName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DisplayName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DisplayName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2282,7 +3732,7 @@ struct produce<D, Windows::UI::Notifications::IToastCollection> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_LaunchArgs(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LaunchArgs(HSTRING* value) noexcept override
     {
         try
         {
@@ -2297,12 +3747,12 @@ struct produce<D, Windows::UI::Notifications::IToastCollection> : produce_base<D
         }
     }
 
-    HRESULT __stdcall put_LaunchArgs(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_LaunchArgs(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().LaunchArgs(*reinterpret_cast<const hstring *>(&value));
+            this->shim().LaunchArgs(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2311,7 +3761,7 @@ struct produce<D, Windows::UI::Notifications::IToastCollection> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_Icon(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_Icon(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2326,12 +3776,12 @@ struct produce<D, Windows::UI::Notifications::IToastCollection> : produce_base<D
         }
     }
 
-    HRESULT __stdcall put_Icon(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall put_Icon(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Icon(*reinterpret_cast<const Windows::Foundation::Uri *>(&value));
+            this->shim().Icon(*reinterpret_cast<Windows::Foundation::Uri const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2344,12 +3794,12 @@ struct produce<D, Windows::UI::Notifications::IToastCollection> : produce_base<D
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastCollectionFactory> : produce_base<D, Windows::UI::Notifications::IToastCollectionFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<hstring> collectionId, impl::abi_arg_in<hstring> displayName, impl::abi_arg_in<hstring> launchArgs, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> iconUri, impl::abi_arg_out<Windows::UI::Notifications::IToastCollection> result) noexcept override
+    HRESULT __stdcall CreateInstance(HSTRING collectionId, HSTRING displayName, HSTRING launchArgs, ::IUnknown* iconUri, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const hstring *>(&collectionId), *reinterpret_cast<const hstring *>(&displayName), *reinterpret_cast<const hstring *>(&launchArgs), *reinterpret_cast<const Windows::Foundation::Uri *>(&iconUri)));
+            *result = detach_abi(this->shim().CreateInstance(*reinterpret_cast<hstring const*>(&collectionId), *reinterpret_cast<hstring const*>(&displayName), *reinterpret_cast<hstring const*>(&launchArgs), *reinterpret_cast<Windows::Foundation::Uri const*>(&iconUri)));
             return S_OK;
         }
         catch (...)
@@ -2363,12 +3813,12 @@ struct produce<D, Windows::UI::Notifications::IToastCollectionFactory> : produce
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastCollectionManager> : produce_base<D, Windows::UI::Notifications::IToastCollectionManager>
 {
-    HRESULT __stdcall abi_SaveToastCollectionAsync(impl::abi_arg_in<Windows::UI::Notifications::IToastCollection> collection, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall SaveToastCollectionAsync(::IUnknown* collection, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().SaveToastCollectionAsync(*reinterpret_cast<const Windows::UI::Notifications::ToastCollection *>(&collection)));
+            *operation = detach_abi(this->shim().SaveToastCollectionAsync(*reinterpret_cast<Windows::UI::Notifications::ToastCollection const*>(&collection)));
             return S_OK;
         }
         catch (...)
@@ -2378,7 +3828,7 @@ struct produce<D, Windows::UI::Notifications::IToastCollectionManager> : produce
         }
     }
 
-    HRESULT __stdcall abi_FindAllToastCollectionsAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastCollection>>> operation) noexcept override
+    HRESULT __stdcall FindAllToastCollectionsAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -2393,12 +3843,12 @@ struct produce<D, Windows::UI::Notifications::IToastCollectionManager> : produce
         }
     }
 
-    HRESULT __stdcall abi_GetToastCollectionAsync(impl::abi_arg_in<hstring> collectionId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastCollection>> operation) noexcept override
+    HRESULT __stdcall GetToastCollectionAsync(HSTRING collectionId, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().GetToastCollectionAsync(*reinterpret_cast<const hstring *>(&collectionId)));
+            *operation = detach_abi(this->shim().GetToastCollectionAsync(*reinterpret_cast<hstring const*>(&collectionId)));
             return S_OK;
         }
         catch (...)
@@ -2408,12 +3858,12 @@ struct produce<D, Windows::UI::Notifications::IToastCollectionManager> : produce
         }
     }
 
-    HRESULT __stdcall abi_RemoveToastCollectionAsync(impl::abi_arg_in<hstring> collectionId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall RemoveToastCollectionAsync(HSTRING collectionId, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RemoveToastCollectionAsync(*reinterpret_cast<const hstring *>(&collectionId)));
+            *operation = detach_abi(this->shim().RemoveToastCollectionAsync(*reinterpret_cast<hstring const*>(&collectionId)));
             return S_OK;
         }
         catch (...)
@@ -2423,7 +3873,7 @@ struct produce<D, Windows::UI::Notifications::IToastCollectionManager> : produce
         }
     }
 
-    HRESULT __stdcall abi_RemoveAllToastCollectionsAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall RemoveAllToastCollectionsAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -2438,7 +3888,7 @@ struct produce<D, Windows::UI::Notifications::IToastCollectionManager> : produce
         }
     }
 
-    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_User(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2453,7 +3903,7 @@ struct produce<D, Windows::UI::Notifications::IToastCollectionManager> : produce
         }
     }
 
-    HRESULT __stdcall get_AppId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppId(HSTRING* value) noexcept override
     {
         try
         {
@@ -2472,7 +3922,7 @@ struct produce<D, Windows::UI::Notifications::IToastCollectionManager> : produce
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastDismissedEventArgs> : produce_base<D, Windows::UI::Notifications::IToastDismissedEventArgs>
 {
-    HRESULT __stdcall get_Reason(Windows::UI::Notifications::ToastDismissalReason * value) noexcept override
+    HRESULT __stdcall get_Reason(abi_t<Windows::UI::Notifications::ToastDismissalReason>* value) noexcept override
     {
         try
         {
@@ -2490,7 +3940,7 @@ struct produce<D, Windows::UI::Notifications::IToastDismissedEventArgs> : produc
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastFailedEventArgs> : produce_base<D, Windows::UI::Notifications::IToastFailedEventArgs>
 {
-    HRESULT __stdcall get_ErrorCode(HRESULT * value) noexcept override
+    HRESULT __stdcall get_ErrorCode(abi_t<HRESULT>* value) noexcept override
     {
         try
         {
@@ -2508,7 +3958,7 @@ struct produce<D, Windows::UI::Notifications::IToastFailedEventArgs> : produce_b
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotification> : produce_base<D, Windows::UI::Notifications::IToastNotification>
 {
-    HRESULT __stdcall get_Content(impl::abi_arg_out<Windows::Data::Xml::Dom::IXmlDocument> value) noexcept override
+    HRESULT __stdcall get_Content(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2523,12 +3973,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification> : produce_base
         }
     }
 
-    HRESULT __stdcall put_ExpirationTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall put_ExpirationTime(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ExpirationTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&value));
+            this->shim().ExpirationTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2537,7 +3987,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotification> : produce_base
         }
     }
 
-    HRESULT __stdcall get_ExpirationTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_ExpirationTime(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2552,12 +4002,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification> : produce_base
         }
     }
 
-    HRESULT __stdcall add_Dismissed(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs>> handler, event_token * cookie) noexcept override
+    HRESULT __stdcall add_Dismissed(::IUnknown* handler, abi_t<event_token>* cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *cookie = detach_abi(this->shim().Dismissed(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs> *>(&handler)));
+            *cookie = detach_abi(this->shim().Dismissed(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2566,12 +4016,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification> : produce_base
         }
     }
 
-    HRESULT __stdcall remove_Dismissed(event_token cookie) noexcept override
+    HRESULT __stdcall remove_Dismissed(abi_t<event_token> cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Dismissed(cookie);
+            this->shim().Dismissed(*reinterpret_cast<event_token const*>(&cookie));
             return S_OK;
         }
         catch (...)
@@ -2580,12 +4030,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification> : produce_base
         }
     }
 
-    HRESULT __stdcall add_Activated(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable>> handler, event_token * cookie) noexcept override
+    HRESULT __stdcall add_Activated(::IUnknown* handler, abi_t<event_token>* cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *cookie = detach_abi(this->shim().Activated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable> *>(&handler)));
+            *cookie = detach_abi(this->shim().Activated(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2594,12 +4044,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification> : produce_base
         }
     }
 
-    HRESULT __stdcall remove_Activated(event_token cookie) noexcept override
+    HRESULT __stdcall remove_Activated(abi_t<event_token> cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Activated(cookie);
+            this->shim().Activated(*reinterpret_cast<event_token const*>(&cookie));
             return S_OK;
         }
         catch (...)
@@ -2608,12 +4058,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification> : produce_base
         }
     }
 
-    HRESULT __stdcall add_Failed(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Failed(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Failed(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().Failed(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2622,12 +4072,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification> : produce_base
         }
     }
 
-    HRESULT __stdcall remove_Failed(event_token token) noexcept override
+    HRESULT __stdcall remove_Failed(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Failed(token);
+            this->shim().Failed(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2640,12 +4090,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotification2> : produce_base<D, Windows::UI::Notifications::IToastNotification2>
 {
-    HRESULT __stdcall put_Tag(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Tag(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Tag(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Tag(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2654,7 +4104,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotification2> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Tag(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Tag(HSTRING* value) noexcept override
     {
         try
         {
@@ -2669,12 +4119,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification2> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Group(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Group(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Group(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Group(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2683,7 +4133,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotification2> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Group(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Group(HSTRING* value) noexcept override
     {
         try
         {
@@ -2712,7 +4162,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotification2> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_SuppressPopup(bool * value) noexcept override
+    HRESULT __stdcall get_SuppressPopup(bool* value) noexcept override
     {
         try
         {
@@ -2730,7 +4180,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotification2> : produce_bas
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotification3> : produce_base<D, Windows::UI::Notifications::IToastNotification3>
 {
-    HRESULT __stdcall get_NotificationMirroring(Windows::UI::Notifications::NotificationMirroring * value) noexcept override
+    HRESULT __stdcall get_NotificationMirroring(abi_t<Windows::UI::Notifications::NotificationMirroring>* value) noexcept override
     {
         try
         {
@@ -2744,12 +4194,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification3> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_NotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) noexcept override
+    HRESULT __stdcall put_NotificationMirroring(abi_t<Windows::UI::Notifications::NotificationMirroring> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().NotificationMirroring(value);
+            this->shim().NotificationMirroring(*reinterpret_cast<Windows::UI::Notifications::NotificationMirroring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2758,7 +4208,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotification3> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_RemoteId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RemoteId(HSTRING* value) noexcept override
     {
         try
         {
@@ -2773,12 +4223,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification3> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_RemoteId(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_RemoteId(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RemoteId(*reinterpret_cast<const hstring *>(&value));
+            this->shim().RemoteId(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2791,7 +4241,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotification3> : produce_bas
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotification4> : produce_base<D, Windows::UI::Notifications::IToastNotification4>
 {
-    HRESULT __stdcall get_Data(impl::abi_arg_out<Windows::UI::Notifications::INotificationData> value) noexcept override
+    HRESULT __stdcall get_Data(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2806,12 +4256,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification4> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Data(impl::abi_arg_in<Windows::UI::Notifications::INotificationData> value) noexcept override
+    HRESULT __stdcall put_Data(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Data(*reinterpret_cast<const Windows::UI::Notifications::NotificationData *>(&value));
+            this->shim().Data(*reinterpret_cast<Windows::UI::Notifications::NotificationData const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2820,7 +4270,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotification4> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Priority(Windows::UI::Notifications::ToastNotificationPriority * value) noexcept override
+    HRESULT __stdcall get_Priority(abi_t<Windows::UI::Notifications::ToastNotificationPriority>* value) noexcept override
     {
         try
         {
@@ -2834,12 +4284,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotification4> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Priority(Windows::UI::Notifications::ToastNotificationPriority value) noexcept override
+    HRESULT __stdcall put_Priority(abi_t<Windows::UI::Notifications::ToastNotificationPriority> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Priority(value);
+            this->shim().Priority(*reinterpret_cast<Windows::UI::Notifications::ToastNotificationPriority const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2852,7 +4302,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotification4> : produce_bas
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationActionTriggerDetail> : produce_base<D, Windows::UI::Notifications::IToastNotificationActionTriggerDetail>
 {
-    HRESULT __stdcall get_Argument(impl::abi_arg_out<hstring> argument) noexcept override
+    HRESULT __stdcall get_Argument(HSTRING* argument) noexcept override
     {
         try
         {
@@ -2867,7 +4317,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationActionTriggerDet
         }
     }
 
-    HRESULT __stdcall get_UserInput(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> inputs) noexcept override
+    HRESULT __stdcall get_UserInput(::IUnknown** inputs) noexcept override
     {
         try
         {
@@ -2886,12 +4336,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationActionTriggerDet
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationFactory> : produce_base<D, Windows::UI::Notifications::IToastNotificationFactory>
 {
-    HRESULT __stdcall abi_CreateToastNotification(impl::abi_arg_in<Windows::Data::Xml::Dom::IXmlDocument> content, impl::abi_arg_out<Windows::UI::Notifications::IToastNotification> notification) noexcept override
+    HRESULT __stdcall CreateToastNotification(::IUnknown* content, ::IUnknown** notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *notification = detach_abi(this->shim().CreateToastNotification(*reinterpret_cast<const Windows::Data::Xml::Dom::XmlDocument *>(&content)));
+            *notification = detach_abi(this->shim().CreateToastNotification(*reinterpret_cast<Windows::Data::Xml::Dom::XmlDocument const*>(&content)));
             return S_OK;
         }
         catch (...)
@@ -2905,12 +4355,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationFactory> : produ
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationHistory> : produce_base<D, Windows::UI::Notifications::IToastNotificationHistory>
 {
-    HRESULT __stdcall abi_RemoveGroup(impl::abi_arg_in<hstring> group) noexcept override
+    HRESULT __stdcall RemoveGroup(HSTRING group) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RemoveGroup(*reinterpret_cast<const hstring *>(&group));
+            this->shim().RemoveGroup(*reinterpret_cast<hstring const*>(&group));
             return S_OK;
         }
         catch (...)
@@ -2919,12 +4369,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationHistory> : produ
         }
     }
 
-    HRESULT __stdcall abi_RemoveGroupWithId(impl::abi_arg_in<hstring> group, impl::abi_arg_in<hstring> applicationId) noexcept override
+    HRESULT __stdcall RemoveGroupWithId(HSTRING group, HSTRING applicationId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RemoveGroup(*reinterpret_cast<const hstring *>(&group), *reinterpret_cast<const hstring *>(&applicationId));
+            this->shim().RemoveGroup(*reinterpret_cast<hstring const*>(&group), *reinterpret_cast<hstring const*>(&applicationId));
             return S_OK;
         }
         catch (...)
@@ -2933,12 +4383,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationHistory> : produ
         }
     }
 
-    HRESULT __stdcall abi_RemoveGroupedTagWithId(impl::abi_arg_in<hstring> tag, impl::abi_arg_in<hstring> group, impl::abi_arg_in<hstring> applicationId) noexcept override
+    HRESULT __stdcall RemoveGroupedTagWithId(HSTRING tag, HSTRING group, HSTRING applicationId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Remove(*reinterpret_cast<const hstring *>(&tag), *reinterpret_cast<const hstring *>(&group), *reinterpret_cast<const hstring *>(&applicationId));
+            this->shim().Remove(*reinterpret_cast<hstring const*>(&tag), *reinterpret_cast<hstring const*>(&group), *reinterpret_cast<hstring const*>(&applicationId));
             return S_OK;
         }
         catch (...)
@@ -2947,12 +4397,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationHistory> : produ
         }
     }
 
-    HRESULT __stdcall abi_RemoveGroupedTag(impl::abi_arg_in<hstring> tag, impl::abi_arg_in<hstring> group) noexcept override
+    HRESULT __stdcall RemoveGroupedTag(HSTRING tag, HSTRING group) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Remove(*reinterpret_cast<const hstring *>(&tag), *reinterpret_cast<const hstring *>(&group));
+            this->shim().Remove(*reinterpret_cast<hstring const*>(&tag), *reinterpret_cast<hstring const*>(&group));
             return S_OK;
         }
         catch (...)
@@ -2961,12 +4411,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationHistory> : produ
         }
     }
 
-    HRESULT __stdcall abi_Remove(impl::abi_arg_in<hstring> tag) noexcept override
+    HRESULT __stdcall Remove(HSTRING tag) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Remove(*reinterpret_cast<const hstring *>(&tag));
+            this->shim().Remove(*reinterpret_cast<hstring const*>(&tag));
             return S_OK;
         }
         catch (...)
@@ -2975,7 +4425,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationHistory> : produ
         }
     }
 
-    HRESULT __stdcall abi_Clear() noexcept override
+    HRESULT __stdcall Clear() noexcept override
     {
         try
         {
@@ -2989,12 +4439,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationHistory> : produ
         }
     }
 
-    HRESULT __stdcall abi_ClearWithId(impl::abi_arg_in<hstring> applicationId) noexcept override
+    HRESULT __stdcall ClearWithId(HSTRING applicationId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Clear(*reinterpret_cast<const hstring *>(&applicationId));
+            this->shim().Clear(*reinterpret_cast<hstring const*>(&applicationId));
             return S_OK;
         }
         catch (...)
@@ -3007,7 +4457,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationHistory> : produ
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationHistory2> : produce_base<D, Windows::UI::Notifications::IToastNotificationHistory2>
 {
-    HRESULT __stdcall abi_GetHistory(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification>> toasts) noexcept override
+    HRESULT __stdcall GetHistory(::IUnknown** toasts) noexcept override
     {
         try
         {
@@ -3022,12 +4472,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationHistory2> : prod
         }
     }
 
-    HRESULT __stdcall abi_GetHistoryWithId(impl::abi_arg_in<hstring> applicationId, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification>> toasts) noexcept override
+    HRESULT __stdcall GetHistoryWithId(HSTRING applicationId, ::IUnknown** toasts) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *toasts = detach_abi(this->shim().GetHistory(*reinterpret_cast<const hstring *>(&applicationId)));
+            *toasts = detach_abi(this->shim().GetHistory(*reinterpret_cast<hstring const*>(&applicationId)));
             return S_OK;
         }
         catch (...)
@@ -3041,7 +4491,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationHistory2> : prod
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail> : produce_base<D, Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail>
 {
-    HRESULT __stdcall get_ChangeType(Windows::UI::Notifications::ToastHistoryChangedType * value) noexcept override
+    HRESULT __stdcall get_ChangeType(abi_t<Windows::UI::Notifications::ToastHistoryChangedType>* value) noexcept override
     {
         try
         {
@@ -3059,7 +4509,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationHistoryChangedTr
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail2> : produce_base<D, Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail2>
 {
-    HRESULT __stdcall get_CollectionId(impl::abi_arg_out<hstring> collectionId) noexcept override
+    HRESULT __stdcall get_CollectionId(HSTRING* collectionId) noexcept override
     {
         try
         {
@@ -3078,7 +4528,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationHistoryChangedTr
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationManagerForUser> : produce_base<D, Windows::UI::Notifications::IToastNotificationManagerForUser>
 {
-    HRESULT __stdcall abi_CreateToastNotifier(impl::abi_arg_out<Windows::UI::Notifications::IToastNotifier> result) noexcept override
+    HRESULT __stdcall CreateToastNotifier(::IUnknown** result) noexcept override
     {
         try
         {
@@ -3093,12 +4543,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerForUser> 
         }
     }
 
-    HRESULT __stdcall abi_CreateToastNotifierWithId(impl::abi_arg_in<hstring> applicationId, impl::abi_arg_out<Windows::UI::Notifications::IToastNotifier> result) noexcept override
+    HRESULT __stdcall CreateToastNotifierWithId(HSTRING applicationId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateToastNotifier(*reinterpret_cast<const hstring *>(&applicationId)));
+            *result = detach_abi(this->shim().CreateToastNotifier(*reinterpret_cast<hstring const*>(&applicationId)));
             return S_OK;
         }
         catch (...)
@@ -3108,7 +4558,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerForUser> 
         }
     }
 
-    HRESULT __stdcall get_History(impl::abi_arg_out<Windows::UI::Notifications::IToastNotificationHistory> value) noexcept override
+    HRESULT __stdcall get_History(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3123,7 +4573,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerForUser> 
         }
     }
 
-    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_User(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3142,12 +4592,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerForUser> 
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationManagerForUser2> : produce_base<D, Windows::UI::Notifications::IToastNotificationManagerForUser2>
 {
-    HRESULT __stdcall abi_GetToastNotifierForToastCollectionIdAsync(impl::abi_arg_in<hstring> collectionId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastNotifier>> operation) noexcept override
+    HRESULT __stdcall GetToastNotifierForToastCollectionIdAsync(HSTRING collectionId, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().GetToastNotifierForToastCollectionIdAsync(*reinterpret_cast<const hstring *>(&collectionId)));
+            *operation = detach_abi(this->shim().GetToastNotifierForToastCollectionIdAsync(*reinterpret_cast<hstring const*>(&collectionId)));
             return S_OK;
         }
         catch (...)
@@ -3157,12 +4607,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerForUser2>
         }
     }
 
-    HRESULT __stdcall abi_GetHistoryForToastCollectionIdAsync(impl::abi_arg_in<hstring> collectionId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastNotificationHistory>> operation) noexcept override
+    HRESULT __stdcall GetHistoryForToastCollectionIdAsync(HSTRING collectionId, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().GetHistoryForToastCollectionIdAsync(*reinterpret_cast<const hstring *>(&collectionId)));
+            *operation = detach_abi(this->shim().GetHistoryForToastCollectionIdAsync(*reinterpret_cast<hstring const*>(&collectionId)));
             return S_OK;
         }
         catch (...)
@@ -3172,7 +4622,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerForUser2>
         }
     }
 
-    HRESULT __stdcall abi_GetToastCollectionManager(impl::abi_arg_out<Windows::UI::Notifications::IToastCollectionManager> result) noexcept override
+    HRESULT __stdcall GetToastCollectionManager(::IUnknown** result) noexcept override
     {
         try
         {
@@ -3187,12 +4637,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerForUser2>
         }
     }
 
-    HRESULT __stdcall abi_GetToastCollectionManagerWithAppId(impl::abi_arg_in<hstring> appId, impl::abi_arg_out<Windows::UI::Notifications::IToastCollectionManager> result) noexcept override
+    HRESULT __stdcall GetToastCollectionManagerWithAppId(HSTRING appId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetToastCollectionManager(*reinterpret_cast<const hstring *>(&appId)));
+            *result = detach_abi(this->shim().GetToastCollectionManager(*reinterpret_cast<hstring const*>(&appId)));
             return S_OK;
         }
         catch (...)
@@ -3206,7 +4656,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerForUser2>
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationManagerStatics> : produce_base<D, Windows::UI::Notifications::IToastNotificationManagerStatics>
 {
-    HRESULT __stdcall abi_CreateToastNotifier(impl::abi_arg_out<Windows::UI::Notifications::IToastNotifier> notifier) noexcept override
+    HRESULT __stdcall CreateToastNotifier(::IUnknown** notifier) noexcept override
     {
         try
         {
@@ -3221,12 +4671,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerStatics> 
         }
     }
 
-    HRESULT __stdcall abi_CreateToastNotifierWithId(impl::abi_arg_in<hstring> applicationId, impl::abi_arg_out<Windows::UI::Notifications::IToastNotifier> notifier) noexcept override
+    HRESULT __stdcall CreateToastNotifierWithId(HSTRING applicationId, ::IUnknown** notifier) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *notifier = detach_abi(this->shim().CreateToastNotifier(*reinterpret_cast<const hstring *>(&applicationId)));
+            *notifier = detach_abi(this->shim().CreateToastNotifier(*reinterpret_cast<hstring const*>(&applicationId)));
             return S_OK;
         }
         catch (...)
@@ -3236,12 +4686,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerStatics> 
         }
     }
 
-    HRESULT __stdcall abi_GetTemplateContent(Windows::UI::Notifications::ToastTemplateType type, impl::abi_arg_out<Windows::Data::Xml::Dom::IXmlDocument> content) noexcept override
+    HRESULT __stdcall GetTemplateContent(abi_t<Windows::UI::Notifications::ToastTemplateType> type, ::IUnknown** content) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *content = detach_abi(this->shim().GetTemplateContent(type));
+            *content = detach_abi(this->shim().GetTemplateContent(*reinterpret_cast<Windows::UI::Notifications::ToastTemplateType const*>(&type)));
             return S_OK;
         }
         catch (...)
@@ -3255,7 +4705,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerStatics> 
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationManagerStatics2> : produce_base<D, Windows::UI::Notifications::IToastNotificationManagerStatics2>
 {
-    HRESULT __stdcall get_History(impl::abi_arg_out<Windows::UI::Notifications::IToastNotificationHistory> value) noexcept override
+    HRESULT __stdcall get_History(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3274,12 +4724,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerStatics2>
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationManagerStatics4> : produce_base<D, Windows::UI::Notifications::IToastNotificationManagerStatics4>
 {
-    HRESULT __stdcall abi_GetForUser(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_out<Windows::UI::Notifications::IToastNotificationManagerForUser> result) noexcept override
+    HRESULT __stdcall GetForUser(::IUnknown* user, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<const Windows::System::User *>(&user)));
+            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<Windows::System::User const*>(&user)));
             return S_OK;
         }
         catch (...)
@@ -3289,12 +4739,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerStatics4>
         }
     }
 
-    HRESULT __stdcall abi_ConfigureNotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) noexcept override
+    HRESULT __stdcall ConfigureNotificationMirroring(abi_t<Windows::UI::Notifications::NotificationMirroring> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ConfigureNotificationMirroring(value);
+            this->shim().ConfigureNotificationMirroring(*reinterpret_cast<Windows::UI::Notifications::NotificationMirroring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3307,7 +4757,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerStatics4>
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotificationManagerStatics5> : produce_base<D, Windows::UI::Notifications::IToastNotificationManagerStatics5>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::UI::Notifications::IToastNotificationManagerForUser> value) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3326,12 +4776,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotificationManagerStatics5>
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotifier> : produce_base<D, Windows::UI::Notifications::IToastNotifier>
 {
-    HRESULT __stdcall abi_Show(impl::abi_arg_in<Windows::UI::Notifications::IToastNotification> notification) noexcept override
+    HRESULT __stdcall Show(::IUnknown* notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Show(*reinterpret_cast<const Windows::UI::Notifications::ToastNotification *>(&notification));
+            this->shim().Show(*reinterpret_cast<Windows::UI::Notifications::ToastNotification const*>(&notification));
             return S_OK;
         }
         catch (...)
@@ -3340,12 +4790,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotifier> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall abi_Hide(impl::abi_arg_in<Windows::UI::Notifications::IToastNotification> notification) noexcept override
+    HRESULT __stdcall Hide(::IUnknown* notification) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Hide(*reinterpret_cast<const Windows::UI::Notifications::ToastNotification *>(&notification));
+            this->shim().Hide(*reinterpret_cast<Windows::UI::Notifications::ToastNotification const*>(&notification));
             return S_OK;
         }
         catch (...)
@@ -3354,7 +4804,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotifier> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_Setting(Windows::UI::Notifications::NotificationSetting * value) noexcept override
+    HRESULT __stdcall get_Setting(abi_t<Windows::UI::Notifications::NotificationSetting>* value) noexcept override
     {
         try
         {
@@ -3368,12 +4818,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotifier> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall abi_AddToSchedule(impl::abi_arg_in<Windows::UI::Notifications::IScheduledToastNotification> scheduledToast) noexcept override
+    HRESULT __stdcall AddToSchedule(::IUnknown* scheduledToast) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AddToSchedule(*reinterpret_cast<const Windows::UI::Notifications::ScheduledToastNotification *>(&scheduledToast));
+            this->shim().AddToSchedule(*reinterpret_cast<Windows::UI::Notifications::ScheduledToastNotification const*>(&scheduledToast));
             return S_OK;
         }
         catch (...)
@@ -3382,12 +4832,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotifier> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall abi_RemoveFromSchedule(impl::abi_arg_in<Windows::UI::Notifications::IScheduledToastNotification> scheduledToast) noexcept override
+    HRESULT __stdcall RemoveFromSchedule(::IUnknown* scheduledToast) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RemoveFromSchedule(*reinterpret_cast<const Windows::UI::Notifications::ScheduledToastNotification *>(&scheduledToast));
+            this->shim().RemoveFromSchedule(*reinterpret_cast<Windows::UI::Notifications::ScheduledToastNotification const*>(&scheduledToast));
             return S_OK;
         }
         catch (...)
@@ -3396,7 +4846,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotifier> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall abi_GetScheduledToastNotifications(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledToastNotification>> scheduledToasts) noexcept override
+    HRESULT __stdcall GetScheduledToastNotifications(::IUnknown** scheduledToasts) noexcept override
     {
         try
         {
@@ -3415,12 +4865,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotifier> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IToastNotifier2> : produce_base<D, Windows::UI::Notifications::IToastNotifier2>
 {
-    HRESULT __stdcall abi_UpdateWithTagAndGroup(impl::abi_arg_in<Windows::UI::Notifications::INotificationData> data, impl::abi_arg_in<hstring> tag, impl::abi_arg_in<hstring> group, Windows::UI::Notifications::NotificationUpdateResult * result) noexcept override
+    HRESULT __stdcall UpdateWithTagAndGroup(::IUnknown* data, HSTRING tag, HSTRING group, abi_t<Windows::UI::Notifications::NotificationUpdateResult>* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Update(*reinterpret_cast<const Windows::UI::Notifications::NotificationData *>(&data), *reinterpret_cast<const hstring *>(&tag), *reinterpret_cast<const hstring *>(&group)));
+            *result = detach_abi(this->shim().Update(*reinterpret_cast<Windows::UI::Notifications::NotificationData const*>(&data), *reinterpret_cast<hstring const*>(&tag), *reinterpret_cast<hstring const*>(&group)));
             return S_OK;
         }
         catch (...)
@@ -3429,12 +4879,12 @@ struct produce<D, Windows::UI::Notifications::IToastNotifier2> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_UpdateWithTag(impl::abi_arg_in<Windows::UI::Notifications::INotificationData> data, impl::abi_arg_in<hstring> tag, Windows::UI::Notifications::NotificationUpdateResult * result) noexcept override
+    HRESULT __stdcall UpdateWithTag(::IUnknown* data, HSTRING tag, abi_t<Windows::UI::Notifications::NotificationUpdateResult>* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Update(*reinterpret_cast<const Windows::UI::Notifications::NotificationData *>(&data), *reinterpret_cast<const hstring *>(&tag)));
+            *result = detach_abi(this->shim().Update(*reinterpret_cast<Windows::UI::Notifications::NotificationData const*>(&data), *reinterpret_cast<hstring const*>(&tag)));
             return S_OK;
         }
         catch (...)
@@ -3447,7 +4897,7 @@ struct produce<D, Windows::UI::Notifications::IToastNotifier2> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IUserNotification> : produce_base<D, Windows::UI::Notifications::IUserNotification>
 {
-    HRESULT __stdcall get_Notification(impl::abi_arg_out<Windows::UI::Notifications::INotification> value) noexcept override
+    HRESULT __stdcall get_Notification(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3462,7 +4912,7 @@ struct produce<D, Windows::UI::Notifications::IUserNotification> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_AppInfo(impl::abi_arg_out<Windows::ApplicationModel::IAppInfo> value) noexcept override
+    HRESULT __stdcall get_AppInfo(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3477,7 +4927,7 @@ struct produce<D, Windows::UI::Notifications::IUserNotification> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_Id(uint32_t * value) noexcept override
+    HRESULT __stdcall get_Id(uint32_t* value) noexcept override
     {
         try
         {
@@ -3491,7 +4941,7 @@ struct produce<D, Windows::UI::Notifications::IUserNotification> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_CreationTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_CreationTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -3509,7 +4959,7 @@ struct produce<D, Windows::UI::Notifications::IUserNotification> : produce_base<
 template <typename D>
 struct produce<D, Windows::UI::Notifications::IUserNotificationChangedEventArgs> : produce_base<D, Windows::UI::Notifications::IUserNotificationChangedEventArgs>
 {
-    HRESULT __stdcall get_ChangeKind(Windows::UI::Notifications::UserNotificationChangedKind * value) noexcept override
+    HRESULT __stdcall get_ChangeKind(abi_t<Windows::UI::Notifications::UserNotificationChangedKind>* value) noexcept override
     {
         try
         {
@@ -3523,7 +4973,7 @@ struct produce<D, Windows::UI::Notifications::IUserNotificationChangedEventArgs>
         }
     }
 
-    HRESULT __stdcall get_UserNotificationId(uint32_t * value) noexcept override
+    HRESULT __stdcall get_UserNotificationId(uint32_t* value) noexcept override
     {
         try
         {
@@ -3540,1619 +4990,169 @@ struct produce<D, Windows::UI::Notifications::IUserNotificationChangedEventArgs>
 
 }
 
-namespace Windows::UI::Notifications {
-
-template <typename D> hstring impl_IShownTileNotification<D>::Arguments() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IShownTileNotification)->get_Arguments(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::UserNotificationChangedKind impl_IUserNotificationChangedEventArgs<D>::ChangeKind() const
-{
-    Windows::UI::Notifications::UserNotificationChangedKind value {};
-    check_hresult(WINRT_SHIM(IUserNotificationChangedEventArgs)->get_ChangeKind(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IUserNotificationChangedEventArgs<D>::UserNotificationId() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IUserNotificationChangedEventArgs)->get_UserNotificationId(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::Notification impl_IUserNotification<D>::Notification() const
-{
-    Windows::UI::Notifications::Notification value { nullptr };
-    check_hresult(WINRT_SHIM(IUserNotification)->get_Notification(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::AppInfo impl_IUserNotification<D>::AppInfo() const
-{
-    Windows::ApplicationModel::AppInfo value { nullptr };
-    check_hresult(WINRT_SHIM(IUserNotification)->get_AppInfo(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IUserNotification<D>::Id() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IUserNotification)->get_Id(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IUserNotification<D>::CreationTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IUserNotification)->get_CreationTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INotificationVisual<D>::Language() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INotificationVisual)->get_Language(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_INotificationVisual<D>::Language(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(INotificationVisual)->put_Language(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::UI::Notifications::NotificationBinding> impl_INotificationVisual<D>::Bindings() const
-{
-    Windows::Foundation::Collections::IVector<Windows::UI::Notifications::NotificationBinding> result;
-    check_hresult(WINRT_SHIM(INotificationVisual)->get_Bindings(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::NotificationBinding impl_INotificationVisual<D>::GetBinding(hstring_view templateName) const
-{
-    Windows::UI::Notifications::NotificationBinding result { nullptr };
-    check_hresult(WINRT_SHIM(INotificationVisual)->abi_GetBinding(get_abi(templateName), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::AdaptiveNotificationContentKind impl_IAdaptiveNotificationContent<D>::Kind() const
-{
-    Windows::UI::Notifications::AdaptiveNotificationContentKind value {};
-    check_hresult(WINRT_SHIM(IAdaptiveNotificationContent)->get_Kind(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> impl_IAdaptiveNotificationContent<D>::Hints() const
-{
-    Windows::Foundation::Collections::IMap<hstring, hstring> value;
-    check_hresult(WINRT_SHIM(IAdaptiveNotificationContent)->get_Hints(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INotificationBinding<D>::Template() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INotificationBinding)->get_Template(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_INotificationBinding<D>::Template(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(INotificationBinding)->put_Template(get_abi(value)));
-}
-
-template <typename D> hstring impl_INotificationBinding<D>::Language() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INotificationBinding)->get_Language(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_INotificationBinding<D>::Language(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(INotificationBinding)->put_Language(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> impl_INotificationBinding<D>::Hints() const
-{
-    Windows::Foundation::Collections::IMap<hstring, hstring> value;
-    check_hresult(WINRT_SHIM(INotificationBinding)->get_Hints(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::AdaptiveNotificationText> impl_INotificationBinding<D>::GetTextElements() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::AdaptiveNotificationText> result;
-    check_hresult(WINRT_SHIM(INotificationBinding)->abi_GetTextElements(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IKnownNotificationBindingsStatics<D>::ToastGeneric() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownNotificationBindingsStatics)->get_ToastGeneric(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationHintsStatics<D>::Style() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationHintsStatics)->get_Style(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationHintsStatics<D>::Wrap() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationHintsStatics)->get_Wrap(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationHintsStatics<D>::MaxLines() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationHintsStatics)->get_MaxLines(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationHintsStatics<D>::MinLines() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationHintsStatics)->get_MinLines(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationHintsStatics<D>::TextStacking() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationHintsStatics)->get_TextStacking(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationHintsStatics<D>::Align() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationHintsStatics)->get_Align(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::Caption() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_Caption(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::Body() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_Body(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::Base() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_Base(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::Subtitle() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_Subtitle(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::Title() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_Title(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::Subheader() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_Subheader(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::Header() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_Header(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::TitleNumeral() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_TitleNumeral(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::SubheaderNumeral() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_SubheaderNumeral(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::HeaderNumeral() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_HeaderNumeral(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::CaptionSubtle() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_CaptionSubtle(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::BodySubtle() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_BodySubtle(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::BaseSubtle() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_BaseSubtle(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::SubtitleSubtle() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_SubtitleSubtle(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::TitleSubtle() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_TitleSubtle(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::SubheaderSubtle() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_SubheaderSubtle(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::SubheaderNumeralSubtle() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_SubheaderNumeralSubtle(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::HeaderSubtle() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_HeaderSubtle(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownAdaptiveNotificationTextStylesStatics<D>::HeaderNumeralSubtle() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownAdaptiveNotificationTextStylesStatics)->get_HeaderNumeralSubtle(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAdaptiveNotificationText<D>::Text() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAdaptiveNotificationText)->get_Text(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IAdaptiveNotificationText<D>::Text(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IAdaptiveNotificationText)->put_Text(get_abi(value)));
-}
-
-template <typename D> hstring impl_IAdaptiveNotificationText<D>::Language() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAdaptiveNotificationText)->get_Language(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IAdaptiveNotificationText<D>::Language(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IAdaptiveNotificationText)->put_Language(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Notifications::ToastDismissalReason impl_IToastDismissedEventArgs<D>::Reason() const
-{
-    Windows::UI::Notifications::ToastDismissalReason value {};
-    check_hresult(WINRT_SHIM(IToastDismissedEventArgs)->get_Reason(&value));
-    return value;
-}
-
-template <typename D> HRESULT impl_IToastFailedEventArgs<D>::ErrorCode() const
-{
-    HRESULT value {};
-    check_hresult(WINRT_SHIM(IToastFailedEventArgs)->get_ErrorCode(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IToastActivatedEventArgs<D>::Arguments() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IToastActivatedEventArgs)->get_Arguments(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::TileUpdater impl_ITileUpdateManagerStatics<D>::CreateTileUpdaterForApplication() const
-{
-    Windows::UI::Notifications::TileUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(ITileUpdateManagerStatics)->abi_CreateTileUpdaterForApplication(put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::TileUpdater impl_ITileUpdateManagerStatics<D>::CreateTileUpdaterForApplication(hstring_view applicationId) const
-{
-    Windows::UI::Notifications::TileUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(ITileUpdateManagerStatics)->abi_CreateTileUpdaterForApplicationWithId(get_abi(applicationId), put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::TileUpdater impl_ITileUpdateManagerStatics<D>::CreateTileUpdaterForSecondaryTile(hstring_view tileId) const
-{
-    Windows::UI::Notifications::TileUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(ITileUpdateManagerStatics)->abi_CreateTileUpdaterForSecondaryTile(get_abi(tileId), put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::Data::Xml::Dom::XmlDocument impl_ITileUpdateManagerStatics<D>::GetTemplateContent(Windows::UI::Notifications::TileTemplateType type) const
-{
-    Windows::Data::Xml::Dom::XmlDocument content { nullptr };
-    check_hresult(WINRT_SHIM(ITileUpdateManagerStatics)->abi_GetTemplateContent(type, put_abi(content)));
-    return content;
-}
-
-template <typename D> Windows::UI::Notifications::TileUpdateManagerForUser impl_ITileUpdateManagerStatics2<D>::GetForUser(const Windows::System::User & user) const
-{
-    Windows::UI::Notifications::TileUpdateManagerForUser result { nullptr };
-    check_hresult(WINRT_SHIM(ITileUpdateManagerStatics2)->abi_GetForUser(get_abi(user), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::TileUpdater impl_ITileUpdateManagerForUser<D>::CreateTileUpdaterForApplicationForUser() const
-{
-    Windows::UI::Notifications::TileUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(ITileUpdateManagerForUser)->abi_CreateTileUpdaterForApplication(put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::TileUpdater impl_ITileUpdateManagerForUser<D>::CreateTileUpdaterForApplication(hstring_view applicationId) const
-{
-    Windows::UI::Notifications::TileUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(ITileUpdateManagerForUser)->abi_CreateTileUpdaterForApplicationWithId(get_abi(applicationId), put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::TileUpdater impl_ITileUpdateManagerForUser<D>::CreateTileUpdaterForSecondaryTile(hstring_view tileId) const
-{
-    Windows::UI::Notifications::TileUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(ITileUpdateManagerForUser)->abi_CreateTileUpdaterForSecondaryTile(get_abi(tileId), put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::System::User impl_ITileUpdateManagerForUser<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(ITileUpdateManagerForUser)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ITileUpdater<D>::Update(const Windows::UI::Notifications::TileNotification & notification) const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater)->abi_Update(get_abi(notification)));
-}
-
-template <typename D> void impl_ITileUpdater<D>::Clear() const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater)->abi_Clear());
-}
-
-template <typename D> void impl_ITileUpdater<D>::EnableNotificationQueue(bool enable) const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater)->abi_EnableNotificationQueue(enable));
-}
-
-template <typename D> Windows::UI::Notifications::NotificationSetting impl_ITileUpdater<D>::Setting() const
-{
-    Windows::UI::Notifications::NotificationSetting value {};
-    check_hresult(WINRT_SHIM(ITileUpdater)->get_Setting(&value));
-    return value;
-}
-
-template <typename D> void impl_ITileUpdater<D>::AddToSchedule(const Windows::UI::Notifications::ScheduledTileNotification & scheduledTile) const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater)->abi_AddToSchedule(get_abi(scheduledTile)));
-}
-
-template <typename D> void impl_ITileUpdater<D>::RemoveFromSchedule(const Windows::UI::Notifications::ScheduledTileNotification & scheduledTile) const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater)->abi_RemoveFromSchedule(get_abi(scheduledTile)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledTileNotification> impl_ITileUpdater<D>::GetScheduledTileNotifications() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledTileNotification> scheduledTiles;
-    check_hresult(WINRT_SHIM(ITileUpdater)->abi_GetScheduledTileNotifications(put_abi(scheduledTiles)));
-    return scheduledTiles;
-}
-
-template <typename D> void impl_ITileUpdater<D>::StartPeriodicUpdate(const Windows::Foundation::Uri & tileContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater)->abi_StartPeriodicUpdate(get_abi(tileContent), requestedInterval));
-}
-
-template <typename D> void impl_ITileUpdater<D>::StartPeriodicUpdate(const Windows::Foundation::Uri & tileContent, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater)->abi_StartPeriodicUpdateAtTime(get_abi(tileContent), get_abi(startTime), requestedInterval));
-}
-
-template <typename D> void impl_ITileUpdater<D>::StopPeriodicUpdate() const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater)->abi_StopPeriodicUpdate());
-}
-
-template <typename D> void impl_ITileUpdater<D>::StartPeriodicUpdateBatch(iterable<Windows::Foundation::Uri> tileContents, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater)->abi_StartPeriodicUpdateBatch(get_abi(tileContents), requestedInterval));
-}
-
-template <typename D> void impl_ITileUpdater<D>::StartPeriodicUpdateBatch(iterable<Windows::Foundation::Uri> tileContents, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater)->abi_StartPeriodicUpdateBatchAtTime(get_abi(tileContents), get_abi(startTime), requestedInterval));
-}
-
-template <typename D> void impl_ITileUpdater2<D>::EnableNotificationQueueForSquare150x150(bool enable) const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater2)->abi_EnableNotificationQueueForSquare150x150(enable));
-}
-
-template <typename D> void impl_ITileUpdater2<D>::EnableNotificationQueueForWide310x150(bool enable) const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater2)->abi_EnableNotificationQueueForWide310x150(enable));
-}
-
-template <typename D> void impl_ITileUpdater2<D>::EnableNotificationQueueForSquare310x310(bool enable) const
-{
-    check_hresult(WINRT_SHIM(ITileUpdater2)->abi_EnableNotificationQueueForSquare310x310(enable));
-}
-
-template <typename D> Windows::UI::Notifications::TileFlyoutUpdater impl_ITileFlyoutUpdateManagerStatics<D>::CreateTileFlyoutUpdaterForApplication() const
-{
-    Windows::UI::Notifications::TileFlyoutUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(ITileFlyoutUpdateManagerStatics)->abi_CreateTileFlyoutUpdaterForApplication(put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::TileFlyoutUpdater impl_ITileFlyoutUpdateManagerStatics<D>::CreateTileFlyoutUpdaterForApplication(hstring_view applicationId) const
-{
-    Windows::UI::Notifications::TileFlyoutUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(ITileFlyoutUpdateManagerStatics)->abi_CreateTileFlyoutUpdaterForApplicationWithId(get_abi(applicationId), put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::TileFlyoutUpdater impl_ITileFlyoutUpdateManagerStatics<D>::CreateTileFlyoutUpdaterForSecondaryTile(hstring_view tileId) const
-{
-    Windows::UI::Notifications::TileFlyoutUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(ITileFlyoutUpdateManagerStatics)->abi_CreateTileFlyoutUpdaterForSecondaryTile(get_abi(tileId), put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::Data::Xml::Dom::XmlDocument impl_ITileFlyoutUpdateManagerStatics<D>::GetTemplateContent(Windows::UI::Notifications::TileFlyoutTemplateType type) const
-{
-    Windows::Data::Xml::Dom::XmlDocument content { nullptr };
-    check_hresult(WINRT_SHIM(ITileFlyoutUpdateManagerStatics)->abi_GetTemplateContent(type, put_abi(content)));
-    return content;
-}
-
-template <typename D> void impl_ITileFlyoutUpdater<D>::Update(const Windows::UI::Notifications::TileFlyoutNotification & notification) const
-{
-    check_hresult(WINRT_SHIM(ITileFlyoutUpdater)->abi_Update(get_abi(notification)));
-}
-
-template <typename D> void impl_ITileFlyoutUpdater<D>::Clear() const
-{
-    check_hresult(WINRT_SHIM(ITileFlyoutUpdater)->abi_Clear());
-}
-
-template <typename D> void impl_ITileFlyoutUpdater<D>::StartPeriodicUpdate(const Windows::Foundation::Uri & tileFlyoutContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const
-{
-    check_hresult(WINRT_SHIM(ITileFlyoutUpdater)->abi_StartPeriodicUpdate(get_abi(tileFlyoutContent), requestedInterval));
-}
-
-template <typename D> void impl_ITileFlyoutUpdater<D>::StartPeriodicUpdate(const Windows::Foundation::Uri & tileFlyoutContent, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const
-{
-    check_hresult(WINRT_SHIM(ITileFlyoutUpdater)->abi_StartPeriodicUpdateAtTime(get_abi(tileFlyoutContent), get_abi(startTime), requestedInterval));
-}
-
-template <typename D> void impl_ITileFlyoutUpdater<D>::StopPeriodicUpdate() const
-{
-    check_hresult(WINRT_SHIM(ITileFlyoutUpdater)->abi_StopPeriodicUpdate());
-}
-
-template <typename D> Windows::UI::Notifications::NotificationSetting impl_ITileFlyoutUpdater<D>::Setting() const
-{
-    Windows::UI::Notifications::NotificationSetting value {};
-    check_hresult(WINRT_SHIM(ITileFlyoutUpdater)->get_Setting(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::BadgeUpdater impl_IBadgeUpdateManagerStatics<D>::CreateBadgeUpdaterForApplication() const
-{
-    Windows::UI::Notifications::BadgeUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(IBadgeUpdateManagerStatics)->abi_CreateBadgeUpdaterForApplication(put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::BadgeUpdater impl_IBadgeUpdateManagerStatics<D>::CreateBadgeUpdaterForApplication(hstring_view applicationId) const
-{
-    Windows::UI::Notifications::BadgeUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(IBadgeUpdateManagerStatics)->abi_CreateBadgeUpdaterForApplicationWithId(get_abi(applicationId), put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::BadgeUpdater impl_IBadgeUpdateManagerStatics<D>::CreateBadgeUpdaterForSecondaryTile(hstring_view tileId) const
-{
-    Windows::UI::Notifications::BadgeUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(IBadgeUpdateManagerStatics)->abi_CreateBadgeUpdaterForSecondaryTile(get_abi(tileId), put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::Data::Xml::Dom::XmlDocument impl_IBadgeUpdateManagerStatics<D>::GetTemplateContent(Windows::UI::Notifications::BadgeTemplateType type) const
-{
-    Windows::Data::Xml::Dom::XmlDocument content { nullptr };
-    check_hresult(WINRT_SHIM(IBadgeUpdateManagerStatics)->abi_GetTemplateContent(type, put_abi(content)));
-    return content;
-}
-
-template <typename D> Windows::UI::Notifications::BadgeUpdateManagerForUser impl_IBadgeUpdateManagerStatics2<D>::GetForUser(const Windows::System::User & user) const
-{
-    Windows::UI::Notifications::BadgeUpdateManagerForUser result { nullptr };
-    check_hresult(WINRT_SHIM(IBadgeUpdateManagerStatics2)->abi_GetForUser(get_abi(user), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::BadgeUpdater impl_IBadgeUpdateManagerForUser<D>::CreateBadgeUpdaterForApplication() const
-{
-    Windows::UI::Notifications::BadgeUpdater result { nullptr };
-    check_hresult(WINRT_SHIM(IBadgeUpdateManagerForUser)->abi_CreateBadgeUpdaterForApplication(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::BadgeUpdater impl_IBadgeUpdateManagerForUser<D>::CreateBadgeUpdaterForApplication(hstring_view applicationId) const
-{
-    Windows::UI::Notifications::BadgeUpdater result { nullptr };
-    check_hresult(WINRT_SHIM(IBadgeUpdateManagerForUser)->abi_CreateBadgeUpdaterForApplicationWithId(get_abi(applicationId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::BadgeUpdater impl_IBadgeUpdateManagerForUser<D>::CreateBadgeUpdaterForSecondaryTile(hstring_view tileId) const
-{
-    Windows::UI::Notifications::BadgeUpdater result { nullptr };
-    check_hresult(WINRT_SHIM(IBadgeUpdateManagerForUser)->abi_CreateBadgeUpdaterForSecondaryTile(get_abi(tileId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::System::User impl_IBadgeUpdateManagerForUser<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IBadgeUpdateManagerForUser)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IBadgeUpdater<D>::Update(const Windows::UI::Notifications::BadgeNotification & notification) const
-{
-    check_hresult(WINRT_SHIM(IBadgeUpdater)->abi_Update(get_abi(notification)));
-}
-
-template <typename D> void impl_IBadgeUpdater<D>::Clear() const
-{
-    check_hresult(WINRT_SHIM(IBadgeUpdater)->abi_Clear());
-}
-
-template <typename D> void impl_IBadgeUpdater<D>::StartPeriodicUpdate(const Windows::Foundation::Uri & badgeContent, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const
-{
-    check_hresult(WINRT_SHIM(IBadgeUpdater)->abi_StartPeriodicUpdate(get_abi(badgeContent), requestedInterval));
-}
-
-template <typename D> void impl_IBadgeUpdater<D>::StartPeriodicUpdate(const Windows::Foundation::Uri & badgeContent, const Windows::Foundation::DateTime & startTime, Windows::UI::Notifications::PeriodicUpdateRecurrence requestedInterval) const
-{
-    check_hresult(WINRT_SHIM(IBadgeUpdater)->abi_StartPeriodicUpdateAtTime(get_abi(badgeContent), get_abi(startTime), requestedInterval));
-}
-
-template <typename D> void impl_IBadgeUpdater<D>::StopPeriodicUpdate() const
-{
-    check_hresult(WINRT_SHIM(IBadgeUpdater)->abi_StopPeriodicUpdate());
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotifier impl_IToastNotificationManagerStatics<D>::CreateToastNotifier() const
-{
-    Windows::UI::Notifications::ToastNotifier notifier { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerStatics)->abi_CreateToastNotifier(put_abi(notifier)));
-    return notifier;
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotifier impl_IToastNotificationManagerStatics<D>::CreateToastNotifier(hstring_view applicationId) const
-{
-    Windows::UI::Notifications::ToastNotifier notifier { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerStatics)->abi_CreateToastNotifierWithId(get_abi(applicationId), put_abi(notifier)));
-    return notifier;
-}
-
-template <typename D> Windows::Data::Xml::Dom::XmlDocument impl_IToastNotificationManagerStatics<D>::GetTemplateContent(Windows::UI::Notifications::ToastTemplateType type) const
-{
-    Windows::Data::Xml::Dom::XmlDocument content { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerStatics)->abi_GetTemplateContent(type, put_abi(content)));
-    return content;
-}
-
-template <typename D> void impl_IToastNotifier<D>::Show(const Windows::UI::Notifications::ToastNotification & notification) const
-{
-    check_hresult(WINRT_SHIM(IToastNotifier)->abi_Show(get_abi(notification)));
-}
-
-template <typename D> void impl_IToastNotifier<D>::Hide(const Windows::UI::Notifications::ToastNotification & notification) const
-{
-    check_hresult(WINRT_SHIM(IToastNotifier)->abi_Hide(get_abi(notification)));
-}
-
-template <typename D> Windows::UI::Notifications::NotificationSetting impl_IToastNotifier<D>::Setting() const
-{
-    Windows::UI::Notifications::NotificationSetting value {};
-    check_hresult(WINRT_SHIM(IToastNotifier)->get_Setting(&value));
-    return value;
-}
-
-template <typename D> void impl_IToastNotifier<D>::AddToSchedule(const Windows::UI::Notifications::ScheduledToastNotification & scheduledToast) const
-{
-    check_hresult(WINRT_SHIM(IToastNotifier)->abi_AddToSchedule(get_abi(scheduledToast)));
-}
-
-template <typename D> void impl_IToastNotifier<D>::RemoveFromSchedule(const Windows::UI::Notifications::ScheduledToastNotification & scheduledToast) const
-{
-    check_hresult(WINRT_SHIM(IToastNotifier)->abi_RemoveFromSchedule(get_abi(scheduledToast)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledToastNotification> impl_IToastNotifier<D>::GetScheduledToastNotifications() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ScheduledToastNotification> scheduledToasts;
-    check_hresult(WINRT_SHIM(IToastNotifier)->abi_GetScheduledToastNotifications(put_abi(scheduledToasts)));
-    return scheduledToasts;
-}
-
-template <typename D> Windows::UI::Notifications::NotificationUpdateResult impl_IToastNotifier2<D>::Update(const Windows::UI::Notifications::NotificationData & data, hstring_view tag, hstring_view group) const
-{
-    Windows::UI::Notifications::NotificationUpdateResult result {};
-    check_hresult(WINRT_SHIM(IToastNotifier2)->abi_UpdateWithTagAndGroup(get_abi(data), get_abi(tag), get_abi(group), &result));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::NotificationUpdateResult impl_IToastNotifier2<D>::Update(const Windows::UI::Notifications::NotificationData & data, hstring_view tag) const
-{
-    Windows::UI::Notifications::NotificationUpdateResult result {};
-    check_hresult(WINRT_SHIM(IToastNotifier2)->abi_UpdateWithTag(get_abi(data), get_abi(tag), &result));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IToastCollectionManager<D>::SaveToastCollectionAsync(const Windows::UI::Notifications::ToastCollection & collection) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IToastCollectionManager)->abi_SaveToastCollectionAsync(get_abi(collection), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastCollection>> impl_IToastCollectionManager<D>::FindAllToastCollectionsAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastCollection>> operation;
-    check_hresult(WINRT_SHIM(IToastCollectionManager)->abi_FindAllToastCollectionsAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastCollection> impl_IToastCollectionManager<D>::GetToastCollectionAsync(hstring_view collectionId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastCollection> operation;
-    check_hresult(WINRT_SHIM(IToastCollectionManager)->abi_GetToastCollectionAsync(get_abi(collectionId), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IToastCollectionManager<D>::RemoveToastCollectionAsync(hstring_view collectionId) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IToastCollectionManager)->abi_RemoveToastCollectionAsync(get_abi(collectionId), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IToastCollectionManager<D>::RemoveAllToastCollectionsAsync() const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IToastCollectionManager)->abi_RemoveAllToastCollectionsAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::System::User impl_IToastCollectionManager<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IToastCollectionManager)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IToastCollectionManager<D>::AppId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IToastCollectionManager)->get_AppId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::TileNotification impl_ITileNotificationFactory<D>::CreateTileNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const
-{
-    Windows::UI::Notifications::TileNotification notification { nullptr };
-    check_hresult(WINRT_SHIM(ITileNotificationFactory)->abi_CreateTileNotification(get_abi(content), put_abi(notification)));
-    return notification;
-}
-
-template <typename D> Windows::Data::Xml::Dom::XmlDocument impl_ITileNotification<D>::Content() const
-{
-    Windows::Data::Xml::Dom::XmlDocument value { nullptr };
-    check_hresult(WINRT_SHIM(ITileNotification)->get_Content(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ITileNotification<D>::ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const
-{
-    check_hresult(WINRT_SHIM(ITileNotification)->put_ExpirationTime(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_ITileNotification<D>::ExpirationTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(ITileNotification)->get_ExpirationTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ITileNotification<D>::Tag(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ITileNotification)->put_Tag(get_abi(value)));
-}
-
-template <typename D> hstring impl_ITileNotification<D>::Tag() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ITileNotification)->get_Tag(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::TileFlyoutNotification impl_ITileFlyoutNotificationFactory<D>::CreateTileFlyoutNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const
-{
-    Windows::UI::Notifications::TileFlyoutNotification notification { nullptr };
-    check_hresult(WINRT_SHIM(ITileFlyoutNotificationFactory)->abi_CreateTileFlyoutNotification(get_abi(content), put_abi(notification)));
-    return notification;
-}
-
-template <typename D> Windows::Data::Xml::Dom::XmlDocument impl_ITileFlyoutNotification<D>::Content() const
-{
-    Windows::Data::Xml::Dom::XmlDocument value { nullptr };
-    check_hresult(WINRT_SHIM(ITileFlyoutNotification)->get_Content(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ITileFlyoutNotification<D>::ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const
-{
-    check_hresult(WINRT_SHIM(ITileFlyoutNotification)->put_ExpirationTime(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_ITileFlyoutNotification<D>::ExpirationTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(ITileFlyoutNotification)->get_ExpirationTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::BadgeNotification impl_IBadgeNotificationFactory<D>::CreateBadgeNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const
-{
-    Windows::UI::Notifications::BadgeNotification notification { nullptr };
-    check_hresult(WINRT_SHIM(IBadgeNotificationFactory)->abi_CreateBadgeNotification(get_abi(content), put_abi(notification)));
-    return notification;
-}
-
-template <typename D> Windows::Data::Xml::Dom::XmlDocument impl_IBadgeNotification<D>::Content() const
-{
-    Windows::Data::Xml::Dom::XmlDocument value { nullptr };
-    check_hresult(WINRT_SHIM(IBadgeNotification)->get_Content(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IBadgeNotification<D>::ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const
-{
-    check_hresult(WINRT_SHIM(IBadgeNotification)->put_ExpirationTime(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IBadgeNotification<D>::ExpirationTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(IBadgeNotification)->get_ExpirationTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotification impl_IToastNotificationFactory<D>::CreateToastNotification(const Windows::Data::Xml::Dom::XmlDocument & content) const
-{
-    Windows::UI::Notifications::ToastNotification notification { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationFactory)->abi_CreateToastNotification(get_abi(content), put_abi(notification)));
-    return notification;
-}
-
-template <typename D> Windows::Data::Xml::Dom::XmlDocument impl_IToastNotification<D>::Content() const
-{
-    Windows::Data::Xml::Dom::XmlDocument value { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotification)->get_Content(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IToastNotification<D>::ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const
-{
-    check_hresult(WINRT_SHIM(IToastNotification)->put_ExpirationTime(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IToastNotification<D>::ExpirationTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(IToastNotification)->get_ExpirationTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IToastNotification<D>::Dismissed(const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IToastNotification)->add_Dismissed(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IToastNotification> impl_IToastNotification<D>::Dismissed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastDismissedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IToastNotification>(this, &ABI::Windows::UI::Notifications::IToastNotification::remove_Dismissed, Dismissed(handler));
-}
-
-template <typename D> void impl_IToastNotification<D>::Dismissed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IToastNotification)->remove_Dismissed(cookie));
-}
-
-template <typename D> event_token impl_IToastNotification<D>::Activated(const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IToastNotification)->add_Activated(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IToastNotification> impl_IToastNotification<D>::Activated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IToastNotification>(this, &ABI::Windows::UI::Notifications::IToastNotification::remove_Activated, Activated(handler));
-}
-
-template <typename D> void impl_IToastNotification<D>::Activated(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IToastNotification)->remove_Activated(cookie));
-}
-
-template <typename D> event_token impl_IToastNotification<D>::Failed(const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IToastNotification)->add_Failed(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IToastNotification> impl_IToastNotification<D>::Failed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Notifications::ToastNotification, Windows::UI::Notifications::ToastFailedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IToastNotification>(this, &ABI::Windows::UI::Notifications::IToastNotification::remove_Failed, Failed(handler));
-}
-
-template <typename D> void impl_IToastNotification<D>::Failed(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IToastNotification)->remove_Failed(token));
-}
-
-template <typename D> void impl_IToastNotification2<D>::Tag(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IToastNotification2)->put_Tag(get_abi(value)));
-}
-
-template <typename D> hstring impl_IToastNotification2<D>::Tag() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IToastNotification2)->get_Tag(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IToastNotification2<D>::Group(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IToastNotification2)->put_Group(get_abi(value)));
-}
-
-template <typename D> hstring impl_IToastNotification2<D>::Group() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IToastNotification2)->get_Group(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IToastNotification2<D>::SuppressPopup(bool value) const
-{
-    check_hresult(WINRT_SHIM(IToastNotification2)->put_SuppressPopup(value));
-}
-
-template <typename D> bool impl_IToastNotification2<D>::SuppressPopup() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IToastNotification2)->get_SuppressPopup(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_INotification<D>::ExpirationTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(INotification)->get_ExpirationTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_INotification<D>::ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const
-{
-    check_hresult(WINRT_SHIM(INotification)->put_ExpirationTime(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Notifications::NotificationVisual impl_INotification<D>::Visual() const
-{
-    Windows::UI::Notifications::NotificationVisual value { nullptr };
-    check_hresult(WINRT_SHIM(INotification)->get_Visual(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_INotification<D>::Visual(const Windows::UI::Notifications::NotificationVisual & value) const
-{
-    check_hresult(WINRT_SHIM(INotification)->put_Visual(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Notifications::NotificationMirroring impl_IToastNotification3<D>::NotificationMirroring() const
-{
-    Windows::UI::Notifications::NotificationMirroring value {};
-    check_hresult(WINRT_SHIM(IToastNotification3)->get_NotificationMirroring(&value));
-    return value;
-}
-
-template <typename D> void impl_IToastNotification3<D>::NotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) const
-{
-    check_hresult(WINRT_SHIM(IToastNotification3)->put_NotificationMirroring(value));
-}
-
-template <typename D> hstring impl_IToastNotification3<D>::RemoteId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IToastNotification3)->get_RemoteId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IToastNotification3<D>::RemoteId(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IToastNotification3)->put_RemoteId(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Notifications::NotificationData impl_IToastNotification4<D>::Data() const
-{
-    Windows::UI::Notifications::NotificationData value { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotification4)->get_Data(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IToastNotification4<D>::Data(const Windows::UI::Notifications::NotificationData & value) const
-{
-    check_hresult(WINRT_SHIM(IToastNotification4)->put_Data(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotificationPriority impl_IToastNotification4<D>::Priority() const
-{
-    Windows::UI::Notifications::ToastNotificationPriority value {};
-    check_hresult(WINRT_SHIM(IToastNotification4)->get_Priority(&value));
-    return value;
-}
-
-template <typename D> void impl_IToastNotification4<D>::Priority(Windows::UI::Notifications::ToastNotificationPriority value) const
-{
-    check_hresult(WINRT_SHIM(IToastNotification4)->put_Priority(value));
-}
-
-template <typename D> Windows::UI::Notifications::ToastCollection impl_IToastCollectionFactory<D>::CreateInstance(hstring_view collectionId, hstring_view displayName, hstring_view launchArgs, const Windows::Foundation::Uri & iconUri) const
-{
-    Windows::UI::Notifications::ToastCollection result { nullptr };
-    check_hresult(WINRT_SHIM(IToastCollectionFactory)->abi_CreateInstance(get_abi(collectionId), get_abi(displayName), get_abi(launchArgs), get_abi(iconUri), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::NotificationData impl_INotificationDataFactory<D>::CreateNotificationData(iterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> initialValues, uint32_t sequenceNumber) const
-{
-    Windows::UI::Notifications::NotificationData result { nullptr };
-    check_hresult(WINRT_SHIM(INotificationDataFactory)->abi_CreateNotificationDataWithValuesAndSequenceNumber(get_abi(initialValues), sequenceNumber, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::NotificationData impl_INotificationDataFactory<D>::CreateNotificationData(iterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> initialValues) const
-{
-    Windows::UI::Notifications::NotificationData result { nullptr };
-    check_hresult(WINRT_SHIM(INotificationDataFactory)->abi_CreateNotificationDataWithValues(get_abi(initialValues), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> impl_INotificationData<D>::Values() const
-{
-    Windows::Foundation::Collections::IMap<hstring, hstring> value;
-    check_hresult(WINRT_SHIM(INotificationData)->get_Values(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_INotificationData<D>::SequenceNumber() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(INotificationData)->get_SequenceNumber(&value));
-    return value;
-}
-
-template <typename D> void impl_INotificationData<D>::SequenceNumber(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(INotificationData)->put_SequenceNumber(value));
-}
-
-template <typename D> hstring impl_IToastCollection<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IToastCollection)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IToastCollection<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IToastCollection)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IToastCollection<D>::DisplayName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IToastCollection)->put_DisplayName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IToastCollection<D>::LaunchArgs() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IToastCollection)->get_LaunchArgs(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IToastCollection<D>::LaunchArgs(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IToastCollection)->put_LaunchArgs(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Uri impl_IToastCollection<D>::Icon() const
-{
-    Windows::Foundation::Uri value { nullptr };
-    check_hresult(WINRT_SHIM(IToastCollection)->get_Icon(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IToastCollection<D>::Icon(const Windows::Foundation::Uri & value) const
-{
-    check_hresult(WINRT_SHIM(IToastCollection)->put_Icon(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Notifications::ScheduledToastNotification impl_IScheduledToastNotificationFactory<D>::CreateScheduledToastNotification(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime) const
-{
-    Windows::UI::Notifications::ScheduledToastNotification notification { nullptr };
-    check_hresult(WINRT_SHIM(IScheduledToastNotificationFactory)->abi_CreateScheduledToastNotification(get_abi(content), get_abi(deliveryTime), put_abi(notification)));
-    return notification;
-}
-
-template <typename D> Windows::UI::Notifications::ScheduledToastNotification impl_IScheduledToastNotificationFactory<D>::CreateScheduledToastNotificationRecurring(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime, const Windows::Foundation::TimeSpan & snoozeInterval, uint32_t maximumSnoozeCount) const
-{
-    Windows::UI::Notifications::ScheduledToastNotification notification { nullptr };
-    check_hresult(WINRT_SHIM(IScheduledToastNotificationFactory)->abi_CreateScheduledToastNotificationRecurring(get_abi(content), get_abi(deliveryTime), get_abi(snoozeInterval), maximumSnoozeCount, put_abi(notification)));
-    return notification;
-}
-
-template <typename D> Windows::Data::Xml::Dom::XmlDocument impl_IScheduledToastNotification<D>::Content() const
-{
-    Windows::Data::Xml::Dom::XmlDocument value { nullptr };
-    check_hresult(WINRT_SHIM(IScheduledToastNotification)->get_Content(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IScheduledToastNotification<D>::DeliveryTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IScheduledToastNotification)->get_DeliveryTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::TimeSpan> impl_IScheduledToastNotification<D>::SnoozeInterval() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> value;
-    check_hresult(WINRT_SHIM(IScheduledToastNotification)->get_SnoozeInterval(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IScheduledToastNotification<D>::MaximumSnoozeCount() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IScheduledToastNotification)->get_MaximumSnoozeCount(&value));
-    return value;
-}
-
-template <typename D> void impl_IScheduledToastNotification<D>::Id(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IScheduledToastNotification)->put_Id(get_abi(value)));
-}
-
-template <typename D> hstring impl_IScheduledToastNotification<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IScheduledToastNotification)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IScheduledToastNotification2<D>::Tag(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IScheduledToastNotification2)->put_Tag(get_abi(value)));
-}
-
-template <typename D> hstring impl_IScheduledToastNotification2<D>::Tag() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IScheduledToastNotification2)->get_Tag(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IScheduledToastNotification2<D>::Group(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IScheduledToastNotification2)->put_Group(get_abi(value)));
-}
-
-template <typename D> hstring impl_IScheduledToastNotification2<D>::Group() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IScheduledToastNotification2)->get_Group(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IScheduledToastNotification2<D>::SuppressPopup(bool value) const
-{
-    check_hresult(WINRT_SHIM(IScheduledToastNotification2)->put_SuppressPopup(value));
-}
-
-template <typename D> bool impl_IScheduledToastNotification2<D>::SuppressPopup() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IScheduledToastNotification2)->get_SuppressPopup(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::NotificationMirroring impl_IScheduledToastNotification3<D>::NotificationMirroring() const
-{
-    Windows::UI::Notifications::NotificationMirroring value {};
-    check_hresult(WINRT_SHIM(IScheduledToastNotification3)->get_NotificationMirroring(&value));
-    return value;
-}
-
-template <typename D> void impl_IScheduledToastNotification3<D>::NotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) const
-{
-    check_hresult(WINRT_SHIM(IScheduledToastNotification3)->put_NotificationMirroring(value));
-}
-
-template <typename D> hstring impl_IScheduledToastNotification3<D>::RemoteId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IScheduledToastNotification3)->get_RemoteId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IScheduledToastNotification3<D>::RemoteId(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IScheduledToastNotification3)->put_RemoteId(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Notifications::ScheduledTileNotification impl_IScheduledTileNotificationFactory<D>::CreateScheduledTileNotification(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime) const
-{
-    Windows::UI::Notifications::ScheduledTileNotification notification { nullptr };
-    check_hresult(WINRT_SHIM(IScheduledTileNotificationFactory)->abi_CreateScheduledTileNotification(get_abi(content), get_abi(deliveryTime), put_abi(notification)));
-    return notification;
-}
-
-template <typename D> Windows::Data::Xml::Dom::XmlDocument impl_IScheduledTileNotification<D>::Content() const
-{
-    Windows::Data::Xml::Dom::XmlDocument value { nullptr };
-    check_hresult(WINRT_SHIM(IScheduledTileNotification)->get_Content(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IScheduledTileNotification<D>::DeliveryTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IScheduledTileNotification)->get_DeliveryTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IScheduledTileNotification<D>::ExpirationTime(const optional<Windows::Foundation::DateTime> & value) const
-{
-    check_hresult(WINRT_SHIM(IScheduledTileNotification)->put_ExpirationTime(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IScheduledTileNotification<D>::ExpirationTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(IScheduledTileNotification)->get_ExpirationTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IScheduledTileNotification<D>::Tag(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IScheduledTileNotification)->put_Tag(get_abi(value)));
-}
-
-template <typename D> hstring impl_IScheduledTileNotification<D>::Tag() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IScheduledTileNotification)->get_Tag(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IScheduledTileNotification<D>::Id(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IScheduledTileNotification)->put_Id(get_abi(value)));
-}
-
-template <typename D> hstring impl_IScheduledTileNotification<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IScheduledTileNotification)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotificationHistory impl_IToastNotificationManagerStatics2<D>::History() const
-{
-    Windows::UI::Notifications::ToastNotificationHistory value { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerStatics2)->get_History(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotificationManagerForUser impl_IToastNotificationManagerStatics4<D>::GetForUser(const Windows::System::User & user) const
-{
-    Windows::UI::Notifications::ToastNotificationManagerForUser result { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerStatics4)->abi_GetForUser(get_abi(user), put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IToastNotificationManagerStatics4<D>::ConfigureNotificationMirroring(Windows::UI::Notifications::NotificationMirroring value) const
-{
-    check_hresult(WINRT_SHIM(IToastNotificationManagerStatics4)->abi_ConfigureNotificationMirroring(value));
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotificationManagerForUser impl_IToastNotificationManagerStatics5<D>::GetDefault() const
-{
-    Windows::UI::Notifications::ToastNotificationManagerForUser value { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerStatics5)->abi_GetDefault(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotifier impl_IToastNotificationManagerForUser<D>::CreateToastNotifier() const
-{
-    Windows::UI::Notifications::ToastNotifier result { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerForUser)->abi_CreateToastNotifier(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotifier impl_IToastNotificationManagerForUser<D>::CreateToastNotifier(hstring_view applicationId) const
-{
-    Windows::UI::Notifications::ToastNotifier result { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerForUser)->abi_CreateToastNotifierWithId(get_abi(applicationId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotificationHistory impl_IToastNotificationManagerForUser<D>::History() const
-{
-    Windows::UI::Notifications::ToastNotificationHistory value { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerForUser)->get_History(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::User impl_IToastNotificationManagerForUser<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerForUser)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastNotifier> impl_IToastNotificationManagerForUser2<D>::GetToastNotifierForToastCollectionIdAsync(hstring_view collectionId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastNotifier> operation;
-    check_hresult(WINRT_SHIM(IToastNotificationManagerForUser2)->abi_GetToastNotifierForToastCollectionIdAsync(get_abi(collectionId), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastNotificationHistory> impl_IToastNotificationManagerForUser2<D>::GetHistoryForToastCollectionIdAsync(hstring_view collectionId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::UI::Notifications::ToastNotificationHistory> operation;
-    check_hresult(WINRT_SHIM(IToastNotificationManagerForUser2)->abi_GetHistoryForToastCollectionIdAsync(get_abi(collectionId), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::UI::Notifications::ToastCollectionManager impl_IToastNotificationManagerForUser2<D>::GetToastCollectionManager() const
-{
-    Windows::UI::Notifications::ToastCollectionManager result { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerForUser2)->abi_GetToastCollectionManager(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::UI::Notifications::ToastCollectionManager impl_IToastNotificationManagerForUser2<D>::GetToastCollectionManager(hstring_view appId) const
-{
-    Windows::UI::Notifications::ToastCollectionManager result { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerForUser2)->abi_GetToastCollectionManagerWithAppId(get_abi(appId), put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IToastNotificationHistory<D>::RemoveGroup(hstring_view group) const
-{
-    check_hresult(WINRT_SHIM(IToastNotificationHistory)->abi_RemoveGroup(get_abi(group)));
-}
-
-template <typename D> void impl_IToastNotificationHistory<D>::RemoveGroup(hstring_view group, hstring_view applicationId) const
-{
-    check_hresult(WINRT_SHIM(IToastNotificationHistory)->abi_RemoveGroupWithId(get_abi(group), get_abi(applicationId)));
-}
-
-template <typename D> void impl_IToastNotificationHistory<D>::Remove(hstring_view tag, hstring_view group, hstring_view applicationId) const
-{
-    check_hresult(WINRT_SHIM(IToastNotificationHistory)->abi_RemoveGroupedTagWithId(get_abi(tag), get_abi(group), get_abi(applicationId)));
-}
-
-template <typename D> void impl_IToastNotificationHistory<D>::Remove(hstring_view tag, hstring_view group) const
-{
-    check_hresult(WINRT_SHIM(IToastNotificationHistory)->abi_RemoveGroupedTag(get_abi(tag), get_abi(group)));
-}
-
-template <typename D> void impl_IToastNotificationHistory<D>::Remove(hstring_view tag) const
-{
-    check_hresult(WINRT_SHIM(IToastNotificationHistory)->abi_Remove(get_abi(tag)));
-}
-
-template <typename D> void impl_IToastNotificationHistory<D>::Clear() const
-{
-    check_hresult(WINRT_SHIM(IToastNotificationHistory)->abi_Clear());
-}
-
-template <typename D> void impl_IToastNotificationHistory<D>::Clear(hstring_view applicationId) const
-{
-    check_hresult(WINRT_SHIM(IToastNotificationHistory)->abi_ClearWithId(get_abi(applicationId)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> impl_IToastNotificationHistory2<D>::GetHistory() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> toasts;
-    check_hresult(WINRT_SHIM(IToastNotificationHistory2)->abi_GetHistory(put_abi(toasts)));
-    return toasts;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> impl_IToastNotificationHistory2<D>::GetHistory(hstring_view applicationId) const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Notifications::ToastNotification> toasts;
-    check_hresult(WINRT_SHIM(IToastNotificationHistory2)->abi_GetHistoryWithId(get_abi(applicationId), put_abi(toasts)));
-    return toasts;
-}
-
-template <typename D> Windows::UI::Notifications::ToastHistoryChangedType impl_IToastNotificationHistoryChangedTriggerDetail<D>::ChangeType() const
-{
-    Windows::UI::Notifications::ToastHistoryChangedType value {};
-    check_hresult(WINRT_SHIM(IToastNotificationHistoryChangedTriggerDetail)->get_ChangeType(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IToastNotificationHistoryChangedTriggerDetail2<D>::CollectionId() const
-{
-    hstring collectionId;
-    check_hresult(WINRT_SHIM(IToastNotificationHistoryChangedTriggerDetail2)->get_CollectionId(put_abi(collectionId)));
-    return collectionId;
-}
-
-template <typename D> hstring impl_IToastNotificationActionTriggerDetail<D>::Argument() const
-{
-    hstring argument;
-    check_hresult(WINRT_SHIM(IToastNotificationActionTriggerDetail)->get_Argument(put_abi(argument)));
-    return argument;
-}
-
-template <typename D> Windows::Foundation::Collections::ValueSet impl_IToastNotificationActionTriggerDetail<D>::UserInput() const
-{
-    Windows::Foundation::Collections::ValueSet inputs { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationActionTriggerDetail)->get_UserInput(put_abi(inputs)));
-    return inputs;
-}
+WINRT_EXPORT namespace winrt::Windows::UI::Notifications {
 
 inline AdaptiveNotificationText::AdaptiveNotificationText() :
     AdaptiveNotificationText(activate_instance<AdaptiveNotificationText>())
 {}
 
-inline BadgeNotification::BadgeNotification(const Windows::Data::Xml::Dom::XmlDocument & content) :
-    BadgeNotification(get_activation_factory<BadgeNotification, IBadgeNotificationFactory>().CreateBadgeNotification(content))
+inline BadgeNotification::BadgeNotification(Windows::Data::Xml::Dom::XmlDocument const& content) :
+    BadgeNotification(get_activation_factory<BadgeNotification, Windows::UI::Notifications::IBadgeNotificationFactory>().CreateBadgeNotification(content))
 {}
 
 inline Windows::UI::Notifications::BadgeUpdater BadgeUpdateManager::CreateBadgeUpdaterForApplication()
 {
-    return get_activation_factory<BadgeUpdateManager, IBadgeUpdateManagerStatics>().CreateBadgeUpdaterForApplication();
+    return get_activation_factory<BadgeUpdateManager, Windows::UI::Notifications::IBadgeUpdateManagerStatics>().CreateBadgeUpdaterForApplication();
 }
 
-inline Windows::UI::Notifications::BadgeUpdater BadgeUpdateManager::CreateBadgeUpdaterForApplication(hstring_view applicationId)
+inline Windows::UI::Notifications::BadgeUpdater BadgeUpdateManager::CreateBadgeUpdaterForApplication(param::hstring const& applicationId)
 {
-    return get_activation_factory<BadgeUpdateManager, IBadgeUpdateManagerStatics>().CreateBadgeUpdaterForApplication(applicationId);
+    return get_activation_factory<BadgeUpdateManager, Windows::UI::Notifications::IBadgeUpdateManagerStatics>().CreateBadgeUpdaterForApplication(applicationId);
 }
 
-inline Windows::UI::Notifications::BadgeUpdater BadgeUpdateManager::CreateBadgeUpdaterForSecondaryTile(hstring_view tileId)
+inline Windows::UI::Notifications::BadgeUpdater BadgeUpdateManager::CreateBadgeUpdaterForSecondaryTile(param::hstring const& tileId)
 {
-    return get_activation_factory<BadgeUpdateManager, IBadgeUpdateManagerStatics>().CreateBadgeUpdaterForSecondaryTile(tileId);
+    return get_activation_factory<BadgeUpdateManager, Windows::UI::Notifications::IBadgeUpdateManagerStatics>().CreateBadgeUpdaterForSecondaryTile(tileId);
 }
 
-inline Windows::Data::Xml::Dom::XmlDocument BadgeUpdateManager::GetTemplateContent(Windows::UI::Notifications::BadgeTemplateType type)
+inline Windows::Data::Xml::Dom::XmlDocument BadgeUpdateManager::GetTemplateContent(Windows::UI::Notifications::BadgeTemplateType const& type)
 {
-    return get_activation_factory<BadgeUpdateManager, IBadgeUpdateManagerStatics>().GetTemplateContent(type);
+    return get_activation_factory<BadgeUpdateManager, Windows::UI::Notifications::IBadgeUpdateManagerStatics>().GetTemplateContent(type);
 }
 
-inline Windows::UI::Notifications::BadgeUpdateManagerForUser BadgeUpdateManager::GetForUser(const Windows::System::User & user)
+inline Windows::UI::Notifications::BadgeUpdateManagerForUser BadgeUpdateManager::GetForUser(Windows::System::User const& user)
 {
-    return get_activation_factory<BadgeUpdateManager, IBadgeUpdateManagerStatics2>().GetForUser(user);
+    return get_activation_factory<BadgeUpdateManager, Windows::UI::Notifications::IBadgeUpdateManagerStatics2>().GetForUser(user);
 }
 
 inline hstring KnownAdaptiveNotificationHints::Style()
 {
-    return get_activation_factory<KnownAdaptiveNotificationHints, IKnownAdaptiveNotificationHintsStatics>().Style();
+    return get_activation_factory<KnownAdaptiveNotificationHints, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics>().Style();
 }
 
 inline hstring KnownAdaptiveNotificationHints::Wrap()
 {
-    return get_activation_factory<KnownAdaptiveNotificationHints, IKnownAdaptiveNotificationHintsStatics>().Wrap();
+    return get_activation_factory<KnownAdaptiveNotificationHints, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics>().Wrap();
 }
 
 inline hstring KnownAdaptiveNotificationHints::MaxLines()
 {
-    return get_activation_factory<KnownAdaptiveNotificationHints, IKnownAdaptiveNotificationHintsStatics>().MaxLines();
+    return get_activation_factory<KnownAdaptiveNotificationHints, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics>().MaxLines();
 }
 
 inline hstring KnownAdaptiveNotificationHints::MinLines()
 {
-    return get_activation_factory<KnownAdaptiveNotificationHints, IKnownAdaptiveNotificationHintsStatics>().MinLines();
+    return get_activation_factory<KnownAdaptiveNotificationHints, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics>().MinLines();
 }
 
 inline hstring KnownAdaptiveNotificationHints::TextStacking()
 {
-    return get_activation_factory<KnownAdaptiveNotificationHints, IKnownAdaptiveNotificationHintsStatics>().TextStacking();
+    return get_activation_factory<KnownAdaptiveNotificationHints, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics>().TextStacking();
 }
 
 inline hstring KnownAdaptiveNotificationHints::Align()
 {
-    return get_activation_factory<KnownAdaptiveNotificationHints, IKnownAdaptiveNotificationHintsStatics>().Align();
+    return get_activation_factory<KnownAdaptiveNotificationHints, Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics>().Align();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::Caption()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().Caption();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().Caption();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::Body()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().Body();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().Body();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::Base()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().Base();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().Base();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::Subtitle()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().Subtitle();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().Subtitle();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::Title()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().Title();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().Title();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::Subheader()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().Subheader();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().Subheader();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::Header()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().Header();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().Header();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::TitleNumeral()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().TitleNumeral();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().TitleNumeral();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::SubheaderNumeral()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().SubheaderNumeral();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().SubheaderNumeral();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::HeaderNumeral()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().HeaderNumeral();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().HeaderNumeral();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::CaptionSubtle()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().CaptionSubtle();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().CaptionSubtle();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::BodySubtle()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().BodySubtle();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().BodySubtle();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::BaseSubtle()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().BaseSubtle();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().BaseSubtle();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::SubtitleSubtle()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().SubtitleSubtle();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().SubtitleSubtle();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::TitleSubtle()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().TitleSubtle();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().TitleSubtle();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::SubheaderSubtle()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().SubheaderSubtle();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().SubheaderSubtle();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::SubheaderNumeralSubtle()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().SubheaderNumeralSubtle();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().SubheaderNumeralSubtle();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::HeaderSubtle()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().HeaderSubtle();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().HeaderSubtle();
 }
 
 inline hstring KnownAdaptiveNotificationTextStyles::HeaderNumeralSubtle()
 {
-    return get_activation_factory<KnownAdaptiveNotificationTextStyles, IKnownAdaptiveNotificationTextStylesStatics>().HeaderNumeralSubtle();
+    return get_activation_factory<KnownAdaptiveNotificationTextStyles, Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>().HeaderNumeralSubtle();
 }
 
 inline hstring KnownNotificationBindings::ToastGeneric()
 {
-    return get_activation_factory<KnownNotificationBindings, IKnownNotificationBindingsStatics>().ToastGeneric();
+    return get_activation_factory<KnownNotificationBindings, Windows::UI::Notifications::IKnownNotificationBindingsStatics>().ToastGeneric();
 }
 
 inline Notification::Notification() :
@@ -5163,925 +5163,414 @@ inline NotificationData::NotificationData() :
     NotificationData(activate_instance<NotificationData>())
 {}
 
-inline NotificationData::NotificationData(iterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> initialValues, uint32_t sequenceNumber) :
-    NotificationData(get_activation_factory<NotificationData, INotificationDataFactory>().CreateNotificationData(initialValues, sequenceNumber))
+inline NotificationData::NotificationData(param::iterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& initialValues, uint32_t sequenceNumber) :
+    NotificationData(get_activation_factory<NotificationData, Windows::UI::Notifications::INotificationDataFactory>().CreateNotificationData(initialValues, sequenceNumber))
 {}
 
-inline NotificationData::NotificationData(iterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> initialValues) :
-    NotificationData(get_activation_factory<NotificationData, INotificationDataFactory>().CreateNotificationData(initialValues))
+inline NotificationData::NotificationData(param::iterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& initialValues) :
+    NotificationData(get_activation_factory<NotificationData, Windows::UI::Notifications::INotificationDataFactory>().CreateNotificationData(initialValues))
 {}
 
-inline ScheduledTileNotification::ScheduledTileNotification(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime) :
-    ScheduledTileNotification(get_activation_factory<ScheduledTileNotification, IScheduledTileNotificationFactory>().CreateScheduledTileNotification(content, deliveryTime))
+inline ScheduledTileNotification::ScheduledTileNotification(Windows::Data::Xml::Dom::XmlDocument const& content, Windows::Foundation::DateTime const& deliveryTime) :
+    ScheduledTileNotification(get_activation_factory<ScheduledTileNotification, Windows::UI::Notifications::IScheduledTileNotificationFactory>().CreateScheduledTileNotification(content, deliveryTime))
 {}
 
-inline ScheduledToastNotification::ScheduledToastNotification(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime) :
-    ScheduledToastNotification(get_activation_factory<ScheduledToastNotification, IScheduledToastNotificationFactory>().CreateScheduledToastNotification(content, deliveryTime))
+inline ScheduledToastNotification::ScheduledToastNotification(Windows::Data::Xml::Dom::XmlDocument const& content, Windows::Foundation::DateTime const& deliveryTime) :
+    ScheduledToastNotification(get_activation_factory<ScheduledToastNotification, Windows::UI::Notifications::IScheduledToastNotificationFactory>().CreateScheduledToastNotification(content, deliveryTime))
 {}
 
-inline ScheduledToastNotification::ScheduledToastNotification(const Windows::Data::Xml::Dom::XmlDocument & content, const Windows::Foundation::DateTime & deliveryTime, const Windows::Foundation::TimeSpan & snoozeInterval, uint32_t maximumSnoozeCount) :
-    ScheduledToastNotification(get_activation_factory<ScheduledToastNotification, IScheduledToastNotificationFactory>().CreateScheduledToastNotificationRecurring(content, deliveryTime, snoozeInterval, maximumSnoozeCount))
+inline ScheduledToastNotification::ScheduledToastNotification(Windows::Data::Xml::Dom::XmlDocument const& content, Windows::Foundation::DateTime const& deliveryTime, Windows::Foundation::TimeSpan const& snoozeInterval, uint32_t maximumSnoozeCount) :
+    ScheduledToastNotification(get_activation_factory<ScheduledToastNotification, Windows::UI::Notifications::IScheduledToastNotificationFactory>().CreateScheduledToastNotificationRecurring(content, deliveryTime, snoozeInterval, maximumSnoozeCount))
 {}
 
-inline TileFlyoutNotification::TileFlyoutNotification(const Windows::Data::Xml::Dom::XmlDocument & content) :
-    TileFlyoutNotification(get_activation_factory<TileFlyoutNotification, ITileFlyoutNotificationFactory>().CreateTileFlyoutNotification(content))
+inline TileFlyoutNotification::TileFlyoutNotification(Windows::Data::Xml::Dom::XmlDocument const& content) :
+    TileFlyoutNotification(get_activation_factory<TileFlyoutNotification, Windows::UI::Notifications::ITileFlyoutNotificationFactory>().CreateTileFlyoutNotification(content))
 {}
 
 inline Windows::UI::Notifications::TileFlyoutUpdater TileFlyoutUpdateManager::CreateTileFlyoutUpdaterForApplication()
 {
-    return get_activation_factory<TileFlyoutUpdateManager, ITileFlyoutUpdateManagerStatics>().CreateTileFlyoutUpdaterForApplication();
+    return get_activation_factory<TileFlyoutUpdateManager, Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics>().CreateTileFlyoutUpdaterForApplication();
 }
 
-inline Windows::UI::Notifications::TileFlyoutUpdater TileFlyoutUpdateManager::CreateTileFlyoutUpdaterForApplication(hstring_view applicationId)
+inline Windows::UI::Notifications::TileFlyoutUpdater TileFlyoutUpdateManager::CreateTileFlyoutUpdaterForApplication(param::hstring const& applicationId)
 {
-    return get_activation_factory<TileFlyoutUpdateManager, ITileFlyoutUpdateManagerStatics>().CreateTileFlyoutUpdaterForApplication(applicationId);
+    return get_activation_factory<TileFlyoutUpdateManager, Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics>().CreateTileFlyoutUpdaterForApplication(applicationId);
 }
 
-inline Windows::UI::Notifications::TileFlyoutUpdater TileFlyoutUpdateManager::CreateTileFlyoutUpdaterForSecondaryTile(hstring_view tileId)
+inline Windows::UI::Notifications::TileFlyoutUpdater TileFlyoutUpdateManager::CreateTileFlyoutUpdaterForSecondaryTile(param::hstring const& tileId)
 {
-    return get_activation_factory<TileFlyoutUpdateManager, ITileFlyoutUpdateManagerStatics>().CreateTileFlyoutUpdaterForSecondaryTile(tileId);
+    return get_activation_factory<TileFlyoutUpdateManager, Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics>().CreateTileFlyoutUpdaterForSecondaryTile(tileId);
 }
 
-inline Windows::Data::Xml::Dom::XmlDocument TileFlyoutUpdateManager::GetTemplateContent(Windows::UI::Notifications::TileFlyoutTemplateType type)
+inline Windows::Data::Xml::Dom::XmlDocument TileFlyoutUpdateManager::GetTemplateContent(Windows::UI::Notifications::TileFlyoutTemplateType const& type)
 {
-    return get_activation_factory<TileFlyoutUpdateManager, ITileFlyoutUpdateManagerStatics>().GetTemplateContent(type);
+    return get_activation_factory<TileFlyoutUpdateManager, Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics>().GetTemplateContent(type);
 }
 
-inline TileNotification::TileNotification(const Windows::Data::Xml::Dom::XmlDocument & content) :
-    TileNotification(get_activation_factory<TileNotification, ITileNotificationFactory>().CreateTileNotification(content))
+inline TileNotification::TileNotification(Windows::Data::Xml::Dom::XmlDocument const& content) :
+    TileNotification(get_activation_factory<TileNotification, Windows::UI::Notifications::ITileNotificationFactory>().CreateTileNotification(content))
 {}
 
 inline Windows::UI::Notifications::TileUpdater TileUpdateManager::CreateTileUpdaterForApplication()
 {
-    return get_activation_factory<TileUpdateManager, ITileUpdateManagerStatics>().CreateTileUpdaterForApplication();
+    return get_activation_factory<TileUpdateManager, Windows::UI::Notifications::ITileUpdateManagerStatics>().CreateTileUpdaterForApplication();
 }
 
-inline Windows::UI::Notifications::TileUpdater TileUpdateManager::CreateTileUpdaterForApplication(hstring_view applicationId)
+inline Windows::UI::Notifications::TileUpdater TileUpdateManager::CreateTileUpdaterForApplication(param::hstring const& applicationId)
 {
-    return get_activation_factory<TileUpdateManager, ITileUpdateManagerStatics>().CreateTileUpdaterForApplication(applicationId);
+    return get_activation_factory<TileUpdateManager, Windows::UI::Notifications::ITileUpdateManagerStatics>().CreateTileUpdaterForApplication(applicationId);
 }
 
-inline Windows::UI::Notifications::TileUpdater TileUpdateManager::CreateTileUpdaterForSecondaryTile(hstring_view tileId)
+inline Windows::UI::Notifications::TileUpdater TileUpdateManager::CreateTileUpdaterForSecondaryTile(param::hstring const& tileId)
 {
-    return get_activation_factory<TileUpdateManager, ITileUpdateManagerStatics>().CreateTileUpdaterForSecondaryTile(tileId);
+    return get_activation_factory<TileUpdateManager, Windows::UI::Notifications::ITileUpdateManagerStatics>().CreateTileUpdaterForSecondaryTile(tileId);
 }
 
-inline Windows::Data::Xml::Dom::XmlDocument TileUpdateManager::GetTemplateContent(Windows::UI::Notifications::TileTemplateType type)
+inline Windows::Data::Xml::Dom::XmlDocument TileUpdateManager::GetTemplateContent(Windows::UI::Notifications::TileTemplateType const& type)
 {
-    return get_activation_factory<TileUpdateManager, ITileUpdateManagerStatics>().GetTemplateContent(type);
+    return get_activation_factory<TileUpdateManager, Windows::UI::Notifications::ITileUpdateManagerStatics>().GetTemplateContent(type);
 }
 
-inline Windows::UI::Notifications::TileUpdateManagerForUser TileUpdateManager::GetForUser(const Windows::System::User & user)
+inline Windows::UI::Notifications::TileUpdateManagerForUser TileUpdateManager::GetForUser(Windows::System::User const& user)
 {
-    return get_activation_factory<TileUpdateManager, ITileUpdateManagerStatics2>().GetForUser(user);
+    return get_activation_factory<TileUpdateManager, Windows::UI::Notifications::ITileUpdateManagerStatics2>().GetForUser(user);
 }
 
-inline ToastCollection::ToastCollection(hstring_view collectionId, hstring_view displayName, hstring_view launchArgs, const Windows::Foundation::Uri & iconUri) :
-    ToastCollection(get_activation_factory<ToastCollection, IToastCollectionFactory>().CreateInstance(collectionId, displayName, launchArgs, iconUri))
+inline ToastCollection::ToastCollection(param::hstring const& collectionId, param::hstring const& displayName, param::hstring const& launchArgs, Windows::Foundation::Uri const& iconUri) :
+    ToastCollection(get_activation_factory<ToastCollection, Windows::UI::Notifications::IToastCollectionFactory>().CreateInstance(collectionId, displayName, launchArgs, iconUri))
 {}
 
-inline ToastNotification::ToastNotification(const Windows::Data::Xml::Dom::XmlDocument & content) :
-    ToastNotification(get_activation_factory<ToastNotification, IToastNotificationFactory>().CreateToastNotification(content))
+inline ToastNotification::ToastNotification(Windows::Data::Xml::Dom::XmlDocument const& content) :
+    ToastNotification(get_activation_factory<ToastNotification, Windows::UI::Notifications::IToastNotificationFactory>().CreateToastNotification(content))
 {}
 
 inline Windows::UI::Notifications::ToastNotifier ToastNotificationManager::CreateToastNotifier()
 {
-    return get_activation_factory<ToastNotificationManager, IToastNotificationManagerStatics>().CreateToastNotifier();
+    return get_activation_factory<ToastNotificationManager, Windows::UI::Notifications::IToastNotificationManagerStatics>().CreateToastNotifier();
 }
 
-inline Windows::UI::Notifications::ToastNotifier ToastNotificationManager::CreateToastNotifier(hstring_view applicationId)
+inline Windows::UI::Notifications::ToastNotifier ToastNotificationManager::CreateToastNotifier(param::hstring const& applicationId)
 {
-    return get_activation_factory<ToastNotificationManager, IToastNotificationManagerStatics>().CreateToastNotifier(applicationId);
+    return get_activation_factory<ToastNotificationManager, Windows::UI::Notifications::IToastNotificationManagerStatics>().CreateToastNotifier(applicationId);
 }
 
-inline Windows::Data::Xml::Dom::XmlDocument ToastNotificationManager::GetTemplateContent(Windows::UI::Notifications::ToastTemplateType type)
+inline Windows::Data::Xml::Dom::XmlDocument ToastNotificationManager::GetTemplateContent(Windows::UI::Notifications::ToastTemplateType const& type)
 {
-    return get_activation_factory<ToastNotificationManager, IToastNotificationManagerStatics>().GetTemplateContent(type);
+    return get_activation_factory<ToastNotificationManager, Windows::UI::Notifications::IToastNotificationManagerStatics>().GetTemplateContent(type);
 }
 
 inline Windows::UI::Notifications::ToastNotificationHistory ToastNotificationManager::History()
 {
-    return get_activation_factory<ToastNotificationManager, IToastNotificationManagerStatics2>().History();
+    return get_activation_factory<ToastNotificationManager, Windows::UI::Notifications::IToastNotificationManagerStatics2>().History();
 }
 
-inline Windows::UI::Notifications::ToastNotificationManagerForUser ToastNotificationManager::GetForUser(const Windows::System::User & user)
+inline Windows::UI::Notifications::ToastNotificationManagerForUser ToastNotificationManager::GetForUser(Windows::System::User const& user)
 {
-    return get_activation_factory<ToastNotificationManager, IToastNotificationManagerStatics4>().GetForUser(user);
+    return get_activation_factory<ToastNotificationManager, Windows::UI::Notifications::IToastNotificationManagerStatics4>().GetForUser(user);
 }
 
-inline void ToastNotificationManager::ConfigureNotificationMirroring(Windows::UI::Notifications::NotificationMirroring value)
+inline void ToastNotificationManager::ConfigureNotificationMirroring(Windows::UI::Notifications::NotificationMirroring const& value)
 {
-    get_activation_factory<ToastNotificationManager, IToastNotificationManagerStatics4>().ConfigureNotificationMirroring(value);
+    get_activation_factory<ToastNotificationManager, Windows::UI::Notifications::IToastNotificationManagerStatics4>().ConfigureNotificationMirroring(value);
 }
 
 inline Windows::UI::Notifications::ToastNotificationManagerForUser ToastNotificationManager::GetDefault()
 {
-    return get_activation_factory<ToastNotificationManager, IToastNotificationManagerStatics5>().GetDefault();
+    return get_activation_factory<ToastNotificationManager, Windows::UI::Notifications::IToastNotificationManagerStatics5>().GetDefault();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::UI::Notifications::IAdaptiveNotificationContent> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IAdaptiveNotificationContent> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IAdaptiveNotificationText> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IAdaptiveNotificationText> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IBadgeNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IBadgeNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IBadgeNotificationFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IBadgeNotificationFactory> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IBadgeUpdateManagerForUser> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IBadgeUpdateManagerForUser> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IBadgeUpdateManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IBadgeUpdateManagerStatics> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IBadgeUpdateManagerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IBadgeUpdateManagerStatics2> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IBadgeUpdater> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IBadgeUpdater> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IKnownNotificationBindingsStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IKnownNotificationBindingsStatics> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::INotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::INotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::INotificationBinding> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::INotificationBinding> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::INotificationData> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::INotificationData> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::INotificationDataFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::INotificationDataFactory> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::INotificationVisual> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::INotificationVisual> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IScheduledTileNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IScheduledTileNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IScheduledTileNotificationFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IScheduledTileNotificationFactory> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IScheduledToastNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IScheduledToastNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IScheduledToastNotification2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IScheduledToastNotification2> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IScheduledToastNotification3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IScheduledToastNotification3> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IScheduledToastNotificationFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IScheduledToastNotificationFactory> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IShownTileNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IShownTileNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ITileFlyoutNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ITileFlyoutNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ITileFlyoutNotificationFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ITileFlyoutNotificationFactory> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ITileFlyoutUpdater> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ITileFlyoutUpdater> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ITileNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ITileNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ITileNotificationFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ITileNotificationFactory> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ITileUpdateManagerForUser> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ITileUpdateManagerForUser> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ITileUpdateManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ITileUpdateManagerStatics> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ITileUpdateManagerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ITileUpdateManagerStatics2> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ITileUpdater> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ITileUpdater> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ITileUpdater2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ITileUpdater2> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastActivatedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastActivatedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastCollection> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastCollection> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastCollectionFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastCollectionFactory> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastCollectionManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastCollectionManager> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastDismissedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastDismissedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastFailedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastFailedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotification2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotification2> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotification3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotification3> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotification4> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotification4> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationActionTriggerDetail> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationActionTriggerDetail> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationFactory> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationHistory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationHistory> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationHistory2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationHistory2> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail2> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationManagerForUser> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationManagerForUser> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationManagerForUser2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationManagerForUser2> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics2> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics4> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics4> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics5> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics5> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotifier> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotifier> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IToastNotifier2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IToastNotifier2> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IUserNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IUserNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::IUserNotificationChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::IUserNotificationChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::AdaptiveNotificationText> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::AdaptiveNotificationText> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::BadgeNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::BadgeNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::BadgeUpdateManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::BadgeUpdateManager> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::BadgeUpdateManagerForUser> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::BadgeUpdateManagerForUser> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::BadgeUpdater> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::BadgeUpdater> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::KnownAdaptiveNotificationHints> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::KnownAdaptiveNotificationHints> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::KnownAdaptiveNotificationTextStyles> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::KnownAdaptiveNotificationTextStyles> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::KnownNotificationBindings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::KnownNotificationBindings> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::Notification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::Notification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::NotificationBinding> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::NotificationBinding> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::NotificationData> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::NotificationData> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::NotificationVisual> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::NotificationVisual> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ScheduledTileNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ScheduledTileNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ScheduledToastNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ScheduledToastNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ShownTileNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ShownTileNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::TileFlyoutNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::TileFlyoutNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::TileFlyoutUpdateManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::TileFlyoutUpdateManager> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::TileFlyoutUpdater> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::TileFlyoutUpdater> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::TileNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::TileNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::TileUpdateManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::TileUpdateManager> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::TileUpdateManagerForUser> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::TileUpdateManagerForUser> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::TileUpdater> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::TileUpdater> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastActivatedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastActivatedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastCollection> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastCollection> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastCollectionManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastCollectionManager> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastDismissedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastDismissedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastFailedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastFailedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastNotificationActionTriggerDetail> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastNotificationActionTriggerDetail> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastNotificationHistory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastNotificationHistory> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastNotificationHistoryChangedTriggerDetail> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastNotificationHistoryChangedTriggerDetail> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastNotificationManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastNotificationManager> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastNotificationManagerForUser> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastNotificationManagerForUser> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::ToastNotifier> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::ToastNotifier> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::UserNotification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::UserNotification> {};
+
+template<> struct hash<winrt::Windows::UI::Notifications::UserNotificationChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Notifications::UserNotificationChangedEventArgs> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IAdaptiveNotificationContent>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IAdaptiveNotificationContent & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IAdaptiveNotificationText>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IAdaptiveNotificationText & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IBadgeNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IBadgeNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IBadgeNotificationFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IBadgeNotificationFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IBadgeUpdateManagerForUser>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IBadgeUpdateManagerForUser & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IBadgeUpdateManagerStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IBadgeUpdateManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IBadgeUpdateManagerStatics2>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IBadgeUpdateManagerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IBadgeUpdater>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IBadgeUpdater & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IKnownAdaptiveNotificationHintsStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IKnownAdaptiveNotificationTextStylesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IKnownNotificationBindingsStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IKnownNotificationBindingsStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::INotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::INotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::INotificationBinding>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::INotificationBinding & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::INotificationData>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::INotificationData & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::INotificationDataFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::INotificationDataFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::INotificationVisual>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::INotificationVisual & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IScheduledTileNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IScheduledTileNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IScheduledTileNotificationFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IScheduledTileNotificationFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IScheduledToastNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IScheduledToastNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IScheduledToastNotification2>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IScheduledToastNotification2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IScheduledToastNotification3>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IScheduledToastNotification3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IScheduledToastNotificationFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IScheduledToastNotificationFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IShownTileNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IShownTileNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ITileFlyoutNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ITileFlyoutNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ITileFlyoutNotificationFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ITileFlyoutNotificationFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ITileFlyoutUpdateManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ITileFlyoutUpdater>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ITileFlyoutUpdater & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ITileNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ITileNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ITileNotificationFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ITileNotificationFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ITileUpdateManagerForUser>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ITileUpdateManagerForUser & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ITileUpdateManagerStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ITileUpdateManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ITileUpdateManagerStatics2>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ITileUpdateManagerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ITileUpdater>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ITileUpdater & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ITileUpdater2>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ITileUpdater2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastActivatedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastActivatedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastCollection>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastCollection & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastCollectionFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastCollectionFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastCollectionManager>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastCollectionManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastDismissedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastDismissedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastFailedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastFailedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotification2>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotification2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotification3>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotification3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotification4>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotification4 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationActionTriggerDetail>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationActionTriggerDetail & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationHistory>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationHistory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationHistory2>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationHistory2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail2>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationHistoryChangedTriggerDetail2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationManagerForUser>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationManagerForUser & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationManagerForUser2>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationManagerForUser2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics2>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationManagerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics4>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationManagerStatics4 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotificationManagerStatics5>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotificationManagerStatics5 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotifier>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotifier & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IToastNotifier2>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IToastNotifier2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IUserNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IUserNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::IUserNotificationChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::IUserNotificationChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::AdaptiveNotificationText>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::AdaptiveNotificationText & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::BadgeNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::BadgeNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::BadgeUpdateManagerForUser>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::BadgeUpdateManagerForUser & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::BadgeUpdater>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::BadgeUpdater & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::Notification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::Notification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::NotificationBinding>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::NotificationBinding & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::NotificationData>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::NotificationData & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::NotificationVisual>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::NotificationVisual & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ScheduledTileNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ScheduledTileNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ScheduledToastNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ScheduledToastNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ShownTileNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ShownTileNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::TileFlyoutNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::TileFlyoutNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::TileFlyoutUpdater>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::TileFlyoutUpdater & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::TileNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::TileNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::TileUpdateManagerForUser>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::TileUpdateManagerForUser & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::TileUpdater>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::TileUpdater & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ToastActivatedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ToastActivatedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ToastCollection>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ToastCollection & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ToastCollectionManager>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ToastCollectionManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ToastDismissedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ToastDismissedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ToastFailedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ToastFailedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ToastNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ToastNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ToastNotificationActionTriggerDetail>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ToastNotificationActionTriggerDetail & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ToastNotificationHistory>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ToastNotificationHistory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ToastNotificationHistoryChangedTriggerDetail>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ToastNotificationHistoryChangedTriggerDetail & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ToastNotificationManagerForUser>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ToastNotificationManagerForUser & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::ToastNotifier>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::ToastNotifier & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::UserNotification>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::UserNotification & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Notifications::UserNotificationChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Notifications::UserNotificationChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

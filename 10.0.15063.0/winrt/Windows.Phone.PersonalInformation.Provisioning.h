@@ -1,31 +1,64 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Phone.PersonalInformation.2.h"
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.Phone.PersonalInformation.Provisioning.2.h"
+#include "winrt/Windows.Phone.PersonalInformation.h"
 
-#include "internal/Windows.Phone.PersonalInformation.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Phone.PersonalInformation.Provisioning.3.h"
-#include "Windows.Phone.PersonalInformation.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Phone_PersonalInformation_Provisioning_IContactPartnerProvisioningManagerStatics<D>::AssociateNetworkAccountAsync(Windows::Phone::PersonalInformation::ContactStore const& store, param::hstring const& networkName, param::hstring const& networkAccountId) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics)->AssociateNetworkAccountAsync(get_abi(store), get_abi(networkName), get_abi(networkAccountId), put_abi(result)));
+    return result;
+}
 
-namespace impl {
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Phone_PersonalInformation_Provisioning_IContactPartnerProvisioningManagerStatics<D>::ImportVcardToSystemAsync(Windows::Storage::Streams::IInputStream const& stream) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics)->ImportVcardToSystemAsync(get_abi(stream), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Phone_PersonalInformation_Provisioning_IContactPartnerProvisioningManagerStatics2<D>::AssociateSocialNetworkAccountAsync(Windows::Phone::PersonalInformation::ContactStore const& store, param::hstring const& networkName, param::hstring const& networkAccountId) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics2)->AssociateSocialNetworkAccountAsync(get_abi(store), get_abi(networkName), get_abi(networkAccountId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Phone_PersonalInformation_Provisioning_IMessagePartnerProvisioningManagerStatics<D>::ImportSmsToSystemAsync(bool incoming, bool read, param::hstring const& body, param::hstring const& sender, param::async_vector_view<hstring> const& recipients, Windows::Foundation::DateTime const& deliveryTime) const
+{
+    Windows::Foundation::IAsyncAction action{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::PersonalInformation::Provisioning::IMessagePartnerProvisioningManagerStatics)->ImportSmsToSystemAsync(incoming, read, get_abi(body), get_abi(sender), get_abi(recipients), get_abi(deliveryTime), put_abi(action)));
+    return action;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Phone_PersonalInformation_Provisioning_IMessagePartnerProvisioningManagerStatics<D>::ImportMmsToSystemAsync(bool incoming, bool read, param::hstring const& subject, param::hstring const& sender, param::async_vector_view<hstring> const& recipients, Windows::Foundation::DateTime const& deliveryTime, param::async_vector_view<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>> const& attachments) const
+{
+    Windows::Foundation::IAsyncAction action{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::PersonalInformation::Provisioning::IMessagePartnerProvisioningManagerStatics)->ImportMmsToSystemAsync(incoming, read, get_abi(subject), get_abi(sender), get_abi(recipients), get_abi(deliveryTime), get_abi(attachments), put_abi(action)));
+    return action;
+}
 
 template <typename D>
 struct produce<D, Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics> : produce_base<D, Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics>
 {
-    HRESULT __stdcall abi_AssociateNetworkAccountAsync(impl::abi_arg_in<Windows::Phone::PersonalInformation::IContactStore> store, impl::abi_arg_in<hstring> networkName, impl::abi_arg_in<hstring> networkAccountId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall AssociateNetworkAccountAsync(::IUnknown* store, HSTRING networkName, HSTRING networkAccountId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().AssociateNetworkAccountAsync(*reinterpret_cast<const Windows::Phone::PersonalInformation::ContactStore *>(&store), *reinterpret_cast<const hstring *>(&networkName), *reinterpret_cast<const hstring *>(&networkAccountId)));
+            *result = detach_abi(this->shim().AssociateNetworkAccountAsync(*reinterpret_cast<Windows::Phone::PersonalInformation::ContactStore const*>(&store), *reinterpret_cast<hstring const*>(&networkName), *reinterpret_cast<hstring const*>(&networkAccountId)));
             return S_OK;
         }
         catch (...)
@@ -35,12 +68,12 @@ struct produce<D, Windows::Phone::PersonalInformation::Provisioning::IContactPar
         }
     }
 
-    HRESULT __stdcall abi_ImportVcardToSystemAsync(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> stream, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall ImportVcardToSystemAsync(::IUnknown* stream, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().ImportVcardToSystemAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&stream)));
+            *result = detach_abi(this->shim().ImportVcardToSystemAsync(*reinterpret_cast<Windows::Storage::Streams::IInputStream const*>(&stream)));
             return S_OK;
         }
         catch (...)
@@ -54,12 +87,12 @@ struct produce<D, Windows::Phone::PersonalInformation::Provisioning::IContactPar
 template <typename D>
 struct produce<D, Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics2> : produce_base<D, Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics2>
 {
-    HRESULT __stdcall abi_AssociateSocialNetworkAccountAsync(impl::abi_arg_in<Windows::Phone::PersonalInformation::IContactStore> store, impl::abi_arg_in<hstring> networkName, impl::abi_arg_in<hstring> networkAccountId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall AssociateSocialNetworkAccountAsync(::IUnknown* store, HSTRING networkName, HSTRING networkAccountId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().AssociateSocialNetworkAccountAsync(*reinterpret_cast<const Windows::Phone::PersonalInformation::ContactStore *>(&store), *reinterpret_cast<const hstring *>(&networkName), *reinterpret_cast<const hstring *>(&networkAccountId)));
+            *result = detach_abi(this->shim().AssociateSocialNetworkAccountAsync(*reinterpret_cast<Windows::Phone::PersonalInformation::ContactStore const*>(&store), *reinterpret_cast<hstring const*>(&networkName), *reinterpret_cast<hstring const*>(&networkAccountId)));
             return S_OK;
         }
         catch (...)
@@ -73,12 +106,12 @@ struct produce<D, Windows::Phone::PersonalInformation::Provisioning::IContactPar
 template <typename D>
 struct produce<D, Windows::Phone::PersonalInformation::Provisioning::IMessagePartnerProvisioningManagerStatics> : produce_base<D, Windows::Phone::PersonalInformation::Provisioning::IMessagePartnerProvisioningManagerStatics>
 {
-    HRESULT __stdcall abi_ImportSmsToSystemAsync(bool incoming, bool read, impl::abi_arg_in<hstring> body, impl::abi_arg_in<hstring> sender, impl::abi_arg_in<Windows::Foundation::Collections::IVectorView<hstring>> recipients, impl::abi_arg_in<Windows::Foundation::DateTime> deliveryTime, impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall ImportSmsToSystemAsync(bool incoming, bool read, HSTRING body, HSTRING sender, ::IUnknown* recipients, abi_t<Windows::Foundation::DateTime> deliveryTime, ::IUnknown** action) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *action = detach_abi(this->shim().ImportSmsToSystemAsync(incoming, read, *reinterpret_cast<const hstring *>(&body), *reinterpret_cast<const hstring *>(&sender), *reinterpret_cast<const Windows::Foundation::Collections::IVectorView<hstring> *>(&recipients), *reinterpret_cast<const Windows::Foundation::DateTime *>(&deliveryTime)));
+            *action = detach_abi(this->shim().ImportSmsToSystemAsync(incoming, read, *reinterpret_cast<hstring const*>(&body), *reinterpret_cast<hstring const*>(&sender), *reinterpret_cast<Windows::Foundation::Collections::IVectorView<hstring> const*>(&recipients), *reinterpret_cast<Windows::Foundation::DateTime const*>(&deliveryTime)));
             return S_OK;
         }
         catch (...)
@@ -88,12 +121,12 @@ struct produce<D, Windows::Phone::PersonalInformation::Provisioning::IMessagePar
         }
     }
 
-    HRESULT __stdcall abi_ImportMmsToSystemAsync(bool incoming, bool read, impl::abi_arg_in<hstring> subject, impl::abi_arg_in<hstring> sender, impl::abi_arg_in<Windows::Foundation::Collections::IVectorView<hstring>> recipients, impl::abi_arg_in<Windows::Foundation::DateTime> deliveryTime, impl::abi_arg_in<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>>> attachments, impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall ImportMmsToSystemAsync(bool incoming, bool read, HSTRING subject, HSTRING sender, ::IUnknown* recipients, abi_t<Windows::Foundation::DateTime> deliveryTime, ::IUnknown* attachments, ::IUnknown** action) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *action = detach_abi(this->shim().ImportMmsToSystemAsync(incoming, read, *reinterpret_cast<const hstring *>(&subject), *reinterpret_cast<const hstring *>(&sender), *reinterpret_cast<const Windows::Foundation::Collections::IVectorView<hstring> *>(&recipients), *reinterpret_cast<const Windows::Foundation::DateTime *>(&deliveryTime), *reinterpret_cast<const Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>> *>(&attachments)));
+            *action = detach_abi(this->shim().ImportMmsToSystemAsync(incoming, read, *reinterpret_cast<hstring const*>(&subject), *reinterpret_cast<hstring const*>(&sender), *reinterpret_cast<Windows::Foundation::Collections::IVectorView<hstring> const*>(&recipients), *reinterpret_cast<Windows::Foundation::DateTime const*>(&deliveryTime), *reinterpret_cast<Windows::Foundation::Collections::IVectorView<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>> const*>(&attachments)));
             return S_OK;
         }
         catch (...)
@@ -106,97 +139,52 @@ struct produce<D, Windows::Phone::PersonalInformation::Provisioning::IMessagePar
 
 }
 
-namespace Windows::Phone::PersonalInformation::Provisioning {
+WINRT_EXPORT namespace winrt::Windows::Phone::PersonalInformation::Provisioning {
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IContactPartnerProvisioningManagerStatics<D>::AssociateNetworkAccountAsync(const Windows::Phone::PersonalInformation::ContactStore & store, hstring_view networkName, hstring_view networkAccountId) const
+inline Windows::Foundation::IAsyncAction ContactPartnerProvisioningManager::AssociateNetworkAccountAsync(Windows::Phone::PersonalInformation::ContactStore const& store, param::hstring const& networkName, param::hstring const& networkAccountId)
 {
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IContactPartnerProvisioningManagerStatics)->abi_AssociateNetworkAccountAsync(get_abi(store), get_abi(networkName), get_abi(networkAccountId), put_abi(result)));
-    return result;
+    return get_activation_factory<ContactPartnerProvisioningManager, Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics>().AssociateNetworkAccountAsync(store, networkName, networkAccountId);
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IContactPartnerProvisioningManagerStatics<D>::ImportVcardToSystemAsync(const Windows::Storage::Streams::IInputStream & stream) const
+inline Windows::Foundation::IAsyncAction ContactPartnerProvisioningManager::ImportVcardToSystemAsync(Windows::Storage::Streams::IInputStream const& stream)
 {
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IContactPartnerProvisioningManagerStatics)->abi_ImportVcardToSystemAsync(get_abi(stream), put_abi(result)));
-    return result;
+    return get_activation_factory<ContactPartnerProvisioningManager, Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics>().ImportVcardToSystemAsync(stream);
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IContactPartnerProvisioningManagerStatics2<D>::AssociateSocialNetworkAccountAsync(const Windows::Phone::PersonalInformation::ContactStore & store, hstring_view networkName, hstring_view networkAccountId) const
+inline Windows::Foundation::IAsyncAction ContactPartnerProvisioningManager::AssociateSocialNetworkAccountAsync(Windows::Phone::PersonalInformation::ContactStore const& store, param::hstring const& networkName, param::hstring const& networkAccountId)
 {
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IContactPartnerProvisioningManagerStatics2)->abi_AssociateSocialNetworkAccountAsync(get_abi(store), get_abi(networkName), get_abi(networkAccountId), put_abi(result)));
-    return result;
+    return get_activation_factory<ContactPartnerProvisioningManager, Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics2>().AssociateSocialNetworkAccountAsync(store, networkName, networkAccountId);
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IMessagePartnerProvisioningManagerStatics<D>::ImportSmsToSystemAsync(bool incoming, bool read, hstring_view body, hstring_view sender, vector_view<hstring> recipients, const Windows::Foundation::DateTime & deliveryTime) const
+inline Windows::Foundation::IAsyncAction MessagePartnerProvisioningManager::ImportSmsToSystemAsync(bool incoming, bool read, param::hstring const& body, param::hstring const& sender, param::async_vector_view<hstring> const& recipients, Windows::Foundation::DateTime const& deliveryTime)
 {
-    Windows::Foundation::IAsyncAction action;
-    check_hresult(WINRT_SHIM(IMessagePartnerProvisioningManagerStatics)->abi_ImportSmsToSystemAsync(incoming, read, get_abi(body), get_abi(sender), get_abi(recipients), get_abi(deliveryTime), put_abi(action)));
-    return action;
+    return get_activation_factory<MessagePartnerProvisioningManager, Windows::Phone::PersonalInformation::Provisioning::IMessagePartnerProvisioningManagerStatics>().ImportSmsToSystemAsync(incoming, read, body, sender, recipients, deliveryTime);
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_IMessagePartnerProvisioningManagerStatics<D>::ImportMmsToSystemAsync(bool incoming, bool read, hstring_view subject, hstring_view sender, vector_view<hstring> recipients, const Windows::Foundation::DateTime & deliveryTime, vector_view<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>> attachments) const
+inline Windows::Foundation::IAsyncAction MessagePartnerProvisioningManager::ImportMmsToSystemAsync(bool incoming, bool read, param::hstring const& subject, param::hstring const& sender, param::async_vector_view<hstring> const& recipients, Windows::Foundation::DateTime const& deliveryTime, param::async_vector_view<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>> const& attachments)
 {
-    Windows::Foundation::IAsyncAction action;
-    check_hresult(WINRT_SHIM(IMessagePartnerProvisioningManagerStatics)->abi_ImportMmsToSystemAsync(incoming, read, get_abi(subject), get_abi(sender), get_abi(recipients), get_abi(deliveryTime), get_abi(attachments), put_abi(action)));
-    return action;
-}
-
-inline Windows::Foundation::IAsyncAction ContactPartnerProvisioningManager::AssociateNetworkAccountAsync(const Windows::Phone::PersonalInformation::ContactStore & store, hstring_view networkName, hstring_view networkAccountId)
-{
-    return get_activation_factory<ContactPartnerProvisioningManager, IContactPartnerProvisioningManagerStatics>().AssociateNetworkAccountAsync(store, networkName, networkAccountId);
-}
-
-inline Windows::Foundation::IAsyncAction ContactPartnerProvisioningManager::ImportVcardToSystemAsync(const Windows::Storage::Streams::IInputStream & stream)
-{
-    return get_activation_factory<ContactPartnerProvisioningManager, IContactPartnerProvisioningManagerStatics>().ImportVcardToSystemAsync(stream);
-}
-
-inline Windows::Foundation::IAsyncAction ContactPartnerProvisioningManager::AssociateSocialNetworkAccountAsync(const Windows::Phone::PersonalInformation::ContactStore & store, hstring_view networkName, hstring_view networkAccountId)
-{
-    return get_activation_factory<ContactPartnerProvisioningManager, IContactPartnerProvisioningManagerStatics2>().AssociateSocialNetworkAccountAsync(store, networkName, networkAccountId);
-}
-
-inline Windows::Foundation::IAsyncAction MessagePartnerProvisioningManager::ImportSmsToSystemAsync(bool incoming, bool read, hstring_view body, hstring_view sender, vector_view<hstring> recipients, const Windows::Foundation::DateTime & deliveryTime)
-{
-    return get_activation_factory<MessagePartnerProvisioningManager, IMessagePartnerProvisioningManagerStatics>().ImportSmsToSystemAsync(incoming, read, body, sender, recipients, deliveryTime);
-}
-
-inline Windows::Foundation::IAsyncAction MessagePartnerProvisioningManager::ImportMmsToSystemAsync(bool incoming, bool read, hstring_view subject, hstring_view sender, vector_view<hstring> recipients, const Windows::Foundation::DateTime & deliveryTime, vector_view<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>> attachments)
-{
-    return get_activation_factory<MessagePartnerProvisioningManager, IMessagePartnerProvisioningManagerStatics>().ImportMmsToSystemAsync(incoming, read, subject, sender, recipients, deliveryTime, attachments);
+    return get_activation_factory<MessagePartnerProvisioningManager, Windows::Phone::PersonalInformation::Provisioning::IMessagePartnerProvisioningManagerStatics>().ImportMmsToSystemAsync(incoming, read, subject, sender, recipients, deliveryTime, attachments);
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics> {};
+
+template<> struct hash<winrt::Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics2> {};
+
+template<> struct hash<winrt::Windows::Phone::PersonalInformation::Provisioning::IMessagePartnerProvisioningManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::PersonalInformation::Provisioning::IMessagePartnerProvisioningManagerStatics> {};
+
+template<> struct hash<winrt::Windows::Phone::PersonalInformation::Provisioning::ContactPartnerProvisioningManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::PersonalInformation::Provisioning::ContactPartnerProvisioningManager> {};
+
+template<> struct hash<winrt::Windows::Phone::PersonalInformation::Provisioning::MessagePartnerProvisioningManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::PersonalInformation::Provisioning::MessagePartnerProvisioningManager> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics>
-{
-    size_t operator()(const winrt::Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics2>
-{
-    size_t operator()(const winrt::Windows::Phone::PersonalInformation::Provisioning::IContactPartnerProvisioningManagerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::PersonalInformation::Provisioning::IMessagePartnerProvisioningManagerStatics>
-{
-    size_t operator()(const winrt::Windows::Phone::PersonalInformation::Provisioning::IMessagePartnerProvisioningManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

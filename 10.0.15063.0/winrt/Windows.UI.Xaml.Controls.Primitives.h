@@ -1,137 +1,3532 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.UI.Xaml.2.h"
+#include "winrt/impl/Windows.UI.Xaml.Controls.2.h"
+#include "winrt/impl/Windows.UI.Xaml.Input.2.h"
+#include "winrt/impl/Windows.UI.Xaml.Interop.2.h"
+#include "winrt/impl/Windows.UI.Xaml.Media.2.h"
+#include "winrt/impl/Windows.UI.Xaml.Media.Animation.2.h"
+#include "winrt/impl/Windows.UI.Xaml.Data.2.h"
+#include "winrt/impl/Windows.UI.Xaml.Controls.Primitives.2.h"
+#include "winrt/Windows.UI.Xaml.Controls.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.UI.Xaml.Controls.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.UI.Xaml.3.h"
-#include "internal/Windows.UI.Xaml.Media.3.h"
-#include "internal/Windows.UI.Xaml.Input.3.h"
-#include "internal/Windows.UI.Xaml.Controls.Primitives.3.h"
-#include "Windows.UI.Xaml.Controls.h"
-#include "Windows.UI.Xaml.Data.h"
-#include "internal/Windows.UI.Xaml.Controls.Primitives.4.h"
-#include "internal/Windows.UI.Xaml.Controls.Primitives.5.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
-
-namespace Windows::UI::Xaml::Controls::Primitives {
-
-template <typename L> DragCompletedEventHandler::DragCompletedEventHandler(L lambda) :
-    DragCompletedEventHandler(impl::make_delegate<impl_DragCompletedEventHandler<L>, DragCompletedEventHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> DragCompletedEventHandler::DragCompletedEventHandler(F * function) :
-    DragCompletedEventHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> DragCompletedEventHandler::DragCompletedEventHandler(O * object, M method) :
-    DragCompletedEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void DragCompletedEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs & e) const
+template <typename D> Windows::Foundation::Rect consume_Windows_UI_Xaml_Controls_Primitives_IAppBarTemplateSettings<D>::ClipRect() const
 {
-    check_hresult((*(abi<DragCompletedEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
+    Windows::Foundation::Rect value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings)->get_ClipRect(put_abi(value)));
+    return value;
 }
 
-template <typename L> DragDeltaEventHandler::DragDeltaEventHandler(L lambda) :
-    DragDeltaEventHandler(impl::make_delegate<impl_DragDeltaEventHandler<L>, DragDeltaEventHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> DragDeltaEventHandler::DragDeltaEventHandler(F * function) :
-    DragDeltaEventHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> DragDeltaEventHandler::DragDeltaEventHandler(O * object, M method) :
-    DragDeltaEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void DragDeltaEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs & e) const
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IAppBarTemplateSettings<D>::CompactVerticalDelta() const
 {
-    check_hresult((*(abi<DragDeltaEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings)->get_CompactVerticalDelta(&value));
+    return value;
 }
 
-template <typename L> DragStartedEventHandler::DragStartedEventHandler(L lambda) :
-    DragStartedEventHandler(impl::make_delegate<impl_DragStartedEventHandler<L>, DragStartedEventHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> DragStartedEventHandler::DragStartedEventHandler(F * function) :
-    DragStartedEventHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> DragStartedEventHandler::DragStartedEventHandler(O * object, M method) :
-    DragStartedEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void DragStartedEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs & e) const
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IAppBarTemplateSettings<D>::CompactRootMargin() const
 {
-    check_hresult((*(abi<DragStartedEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings)->get_CompactRootMargin(put_abi(value)));
+    return value;
 }
 
-template <typename L> ItemsChangedEventHandler::ItemsChangedEventHandler(L lambda) :
-    ItemsChangedEventHandler(impl::make_delegate<impl_ItemsChangedEventHandler<L>, ItemsChangedEventHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> ItemsChangedEventHandler::ItemsChangedEventHandler(F * function) :
-    ItemsChangedEventHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> ItemsChangedEventHandler::ItemsChangedEventHandler(O * object, M method) :
-    ItemsChangedEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void ItemsChangedEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventArgs & e) const
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IAppBarTemplateSettings<D>::MinimalVerticalDelta() const
 {
-    check_hresult((*(abi<ItemsChangedEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings)->get_MinimalVerticalDelta(&value));
+    return value;
 }
 
-template <typename L> RangeBaseValueChangedEventHandler::RangeBaseValueChangedEventHandler(L lambda) :
-    RangeBaseValueChangedEventHandler(impl::make_delegate<impl_RangeBaseValueChangedEventHandler<L>, RangeBaseValueChangedEventHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> RangeBaseValueChangedEventHandler::RangeBaseValueChangedEventHandler(F * function) :
-    RangeBaseValueChangedEventHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> RangeBaseValueChangedEventHandler::RangeBaseValueChangedEventHandler(O * object, M method) :
-    RangeBaseValueChangedEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void RangeBaseValueChangedEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs & e) const
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IAppBarTemplateSettings<D>::MinimalRootMargin() const
 {
-    check_hresult((*(abi<RangeBaseValueChangedEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings)->get_MinimalRootMargin(put_abi(value)));
+    return value;
 }
 
-template <typename L> ScrollEventHandler::ScrollEventHandler(L lambda) :
-    ScrollEventHandler(impl::make_delegate<impl_ScrollEventHandler<L>, ScrollEventHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> ScrollEventHandler::ScrollEventHandler(F * function) :
-    ScrollEventHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> ScrollEventHandler::ScrollEventHandler(O * object, M method) :
-    ScrollEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void ScrollEventHandler::operator()(const Windows::Foundation::IInspectable & sender, const Windows::UI::Xaml::Controls::Primitives::ScrollEventArgs & e) const
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IAppBarTemplateSettings<D>::HiddenVerticalDelta() const
 {
-    check_hresult((*(abi<ScrollEventHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(e)));
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings)->get_HiddenVerticalDelta(&value));
+    return value;
 }
 
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IAppBarTemplateSettings<D>::HiddenRootMargin() const
+{
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings)->get_HiddenRootMargin(put_abi(value)));
+    return value;
 }
 
-namespace impl {
+template <typename D> Windows::UI::Xaml::Controls::ClickMode consume_Windows_UI_Xaml_Controls_Primitives_IButtonBase<D>::ClickMode() const
+{
+    Windows::UI::Xaml::Controls::ClickMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBase)->get_ClickMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IButtonBase<D>::ClickMode(Windows::UI::Xaml::Controls::ClickMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBase)->put_ClickMode(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IButtonBase<D>::IsPointerOver() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBase)->get_IsPointerOver(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IButtonBase<D>::IsPressed() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBase)->get_IsPressed(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Input::ICommand consume_Windows_UI_Xaml_Controls_Primitives_IButtonBase<D>::Command() const
+{
+    Windows::UI::Xaml::Input::ICommand value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBase)->get_Command(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IButtonBase<D>::Command(Windows::UI::Xaml::Input::ICommand const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBase)->put_Command(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IInspectable consume_Windows_UI_Xaml_Controls_Primitives_IButtonBase<D>::CommandParameter() const
+{
+    Windows::Foundation::IInspectable value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBase)->get_CommandParameter(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IButtonBase<D>::CommandParameter(Windows::Foundation::IInspectable const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBase)->put_CommandParameter(get_abi(value)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IButtonBase<D>::Click(Windows::UI::Xaml::RoutedEventHandler const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBase)->add_Click(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IButtonBase> consume_Windows_UI_Xaml_Controls_Primitives_IButtonBase<D>::Click(auto_revoke_t, Windows::UI::Xaml::RoutedEventHandler const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IButtonBase>::remove_Click, Click(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IButtonBase<D>::Click(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBase)->remove_Click(get_abi(token)));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::ButtonBase consume_Windows_UI_Xaml_Controls_Primitives_IButtonBaseFactory<D>::CreateInstance(Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::ButtonBase instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBaseFactory)->CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IButtonBaseStatics<D>::ClickModeProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics)->get_ClickModeProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IButtonBaseStatics<D>::IsPointerOverProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics)->get_IsPointerOverProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IButtonBaseStatics<D>::IsPressedProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics)->get_IsPressedProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IButtonBaseStatics<D>::CommandProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics)->get_CommandProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IButtonBaseStatics<D>::CommandParameterProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics)->get_CommandParameterProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::MinViewWidth() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_MinViewWidth(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::HeaderText() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_HeaderText(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::WeekDay1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_WeekDay1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::WeekDay2() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_WeekDay2(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::WeekDay3() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_WeekDay3(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::WeekDay4() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_WeekDay4(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::WeekDay5() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_WeekDay5(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::WeekDay6() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_WeekDay6(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::WeekDay7() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_WeekDay7(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::HasMoreContentAfter() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_HasMoreContentAfter(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::HasMoreContentBefore() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_HasMoreContentBefore(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::HasMoreViews() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_HasMoreViews(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Rect consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::ClipRect() const
+{
+    Windows::Foundation::Rect value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_ClipRect(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::CenterX() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_CenterX(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICalendarViewTemplateSettings<D>::CenterY() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings)->get_CenterY(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::CanVerticallyScroll() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->get_CanVerticallyScroll(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::CanVerticallyScroll(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->put_CanVerticallyScroll(value));
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::CanHorizontallyScroll() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->get_CanHorizontallyScroll(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::CanHorizontallyScroll(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->put_CanHorizontallyScroll(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::ExtentWidth() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->get_ExtentWidth(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::ExtentHeight() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->get_ExtentHeight(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::ViewportWidth() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->get_ViewportWidth(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::ViewportHeight() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->get_ViewportHeight(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::HorizontalOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->get_HorizontalOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::VerticalOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->get_VerticalOffset(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IInspectable consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::ScrollOwner() const
+{
+    Windows::Foundation::IInspectable value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->get_ScrollOwner(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::ScrollOwner(Windows::Foundation::IInspectable const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->put_ScrollOwner(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::LineUp() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->LineUp());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::LineDown() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->LineDown());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::LineLeft() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->LineLeft());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::LineRight() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->LineRight());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::PageUp() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->PageUp());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::PageDown() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->PageDown());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::PageLeft() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->PageLeft());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::PageRight() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->PageRight());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::MouseWheelUp() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->MouseWheelUp());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::MouseWheelDown() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->MouseWheelDown());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::MouseWheelLeft() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->MouseWheelLeft());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::MouseWheelRight() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->MouseWheelRight());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::SetHorizontalOffset(double offset) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->SetHorizontalOffset(offset));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::SetVerticalOffset(double offset) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->SetVerticalOffset(offset));
+}
+
+template <typename D> Windows::Foundation::Rect consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanel<D>::MakeVisible(Windows::UI::Xaml::UIElement const& visual, Windows::Foundation::Rect const& rectangle) const
+{
+    Windows::Foundation::Rect returnValue{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanel)->MakeVisible(get_abi(visual), get_abi(rectangle), put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::CarouselPanel consume_Windows_UI_Xaml_Controls_Primitives_ICarouselPanelFactory<D>::CreateInstance(Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::CarouselPanel instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICarouselPanelFactory)->CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IComboBoxTemplateSettings<D>::DropDownOpenedHeight() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings)->get_DropDownOpenedHeight(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IComboBoxTemplateSettings<D>::DropDownClosedHeight() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings)->get_DropDownClosedHeight(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IComboBoxTemplateSettings<D>::DropDownOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings)->get_DropDownOffset(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::AnimationDirection consume_Windows_UI_Xaml_Controls_Primitives_IComboBoxTemplateSettings<D>::SelectedItemDirection() const
+{
+    Windows::UI::Xaml::Controls::Primitives::AnimationDirection value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings)->get_SelectedItemDirection(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IComboBoxTemplateSettings2<D>::DropDownContentMinWidth() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings2)->get_DropDownContentMinWidth(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICommandBarTemplateSettings<D>::ContentHeight() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings)->get_ContentHeight(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Rect consume_Windows_UI_Xaml_Controls_Primitives_ICommandBarTemplateSettings<D>::OverflowContentClipRect() const
+{
+    Windows::Foundation::Rect value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings)->get_OverflowContentClipRect(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICommandBarTemplateSettings<D>::OverflowContentMinWidth() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings)->get_OverflowContentMinWidth(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICommandBarTemplateSettings<D>::OverflowContentMaxHeight() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings)->get_OverflowContentMaxHeight(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICommandBarTemplateSettings<D>::OverflowContentHorizontalOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings)->get_OverflowContentHorizontalOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICommandBarTemplateSettings<D>::OverflowContentHeight() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings)->get_OverflowContentHeight(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICommandBarTemplateSettings<D>::NegativeOverflowContentHeight() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings)->get_NegativeOverflowContentHeight(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ICommandBarTemplateSettings2<D>::OverflowContentMaxWidth() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings2)->get_OverflowContentMaxWidth(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Visibility consume_Windows_UI_Xaml_Controls_Primitives_ICommandBarTemplateSettings3<D>::EffectiveOverflowButtonVisibility() const
+{
+    Windows::UI::Xaml::Visibility value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings3)->get_EffectiveOverflowButtonVisibility(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IDragCompletedEventArgs<D>::HorizontalChange() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs)->get_HorizontalChange(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IDragCompletedEventArgs<D>::VerticalChange() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs)->get_VerticalChange(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IDragCompletedEventArgs<D>::Canceled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs)->get_Canceled(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs consume_Windows_UI_Xaml_Controls_Primitives_IDragCompletedEventArgsFactory<D>::CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(double horizontalChange, double verticalChange, bool canceled, Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgsFactory)->CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(horizontalChange, verticalChange, canceled, get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IDragDeltaEventArgs<D>::HorizontalChange() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs)->get_HorizontalChange(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IDragDeltaEventArgs<D>::VerticalChange() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs)->get_VerticalChange(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs consume_Windows_UI_Xaml_Controls_Primitives_IDragDeltaEventArgsFactory<D>::CreateInstanceWithHorizontalChangeAndVerticalChange(double horizontalChange, double verticalChange, Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgsFactory)->CreateInstanceWithHorizontalChangeAndVerticalChange(horizontalChange, verticalChange, get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IDragStartedEventArgs<D>::HorizontalOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs)->get_HorizontalOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IDragStartedEventArgs<D>::VerticalOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs)->get_VerticalOffset(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs consume_Windows_UI_Xaml_Controls_Primitives_IDragStartedEventArgsFactory<D>::CreateInstanceWithHorizontalOffsetAndVerticalOffset(double horizontalOffset, double verticalOffset, Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgsFactory)->CreateInstanceWithHorizontalOffsetAndVerticalOffset(horizontalOffset, verticalOffset, get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::FlyoutPlacementMode consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Placement() const
+{
+    Windows::UI::Xaml::Controls::Primitives::FlyoutPlacementMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase)->get_Placement(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Placement(Windows::UI::Xaml::Controls::Primitives::FlyoutPlacementMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase)->put_Placement(get_abi(value)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Opened(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase)->add_Opened(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Opened(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IFlyoutBase>::remove_Opened, Opened(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Opened(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase)->remove_Opened(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Closed(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase)->add_Closed(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Closed(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IFlyoutBase>::remove_Closed, Closed(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Closed(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase)->remove_Closed(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Opening(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase)->add_Opening(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Opening(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IFlyoutBase>::remove_Opening, Opening(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Opening(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase)->remove_Opening(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::ShowAt(Windows::UI::Xaml::FrameworkElement const& placementTarget) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase)->ShowAt(get_abi(placementTarget)));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase<D>::Hide() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase)->Hide());
+}
+
+template <typename D> Windows::UI::Xaml::FrameworkElement consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::Target() const
+{
+    Windows::UI::Xaml::FrameworkElement value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2)->get_Target(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::AllowFocusOnInteraction() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2)->get_AllowFocusOnInteraction(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::AllowFocusOnInteraction(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2)->put_AllowFocusOnInteraction(value));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::LightDismissOverlayMode consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::LightDismissOverlayMode() const
+{
+    Windows::UI::Xaml::Controls::LightDismissOverlayMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2)->get_LightDismissOverlayMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::LightDismissOverlayMode(Windows::UI::Xaml::Controls::LightDismissOverlayMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2)->put_LightDismissOverlayMode(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::AllowFocusWhenDisabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2)->get_AllowFocusWhenDisabled(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::AllowFocusWhenDisabled(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2)->put_AllowFocusWhenDisabled(value));
+}
+
+template <typename D> Windows::UI::Xaml::ElementSoundMode consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::ElementSoundMode() const
+{
+    Windows::UI::Xaml::ElementSoundMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2)->get_ElementSoundMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::ElementSoundMode(Windows::UI::Xaml::ElementSoundMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2)->put_ElementSoundMode(get_abi(value)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::Closing(Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Primitives::FlyoutBase, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs> const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2)->add_Closing(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::Closing(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Primitives::FlyoutBase, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs> const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2>::remove_Closing, Closing(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase2<D>::Closing(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2)->remove_Closing(get_abi(token)));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyObject consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase3<D>::OverlayInputPassThroughElement() const
+{
+    Windows::UI::Xaml::DependencyObject value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3)->get_OverlayInputPassThroughElement(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBase3<D>::OverlayInputPassThroughElement(Windows::UI::Xaml::DependencyObject const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3)->put_OverlayInputPassThroughElement(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseClosingEventArgs<D>::Cancel() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseClosingEventArgs)->get_Cancel(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseClosingEventArgs<D>::Cancel(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseClosingEventArgs)->put_Cancel(value));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::FlyoutBase consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseFactory<D>::CreateInstance(Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::FlyoutBase instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseFactory)->CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Control consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseOverrides<D>::CreatePresenter() const
+{
+    Windows::UI::Xaml::Controls::Control returnValue{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverrides)->CreatePresenter(put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseStatics<D>::PlacementProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics)->get_PlacementProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseStatics<D>::AttachedFlyoutProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics)->get_AttachedFlyoutProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::FlyoutBase consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseStatics<D>::GetAttachedFlyout(Windows::UI::Xaml::FrameworkElement const& element) const
+{
+    Windows::UI::Xaml::Controls::Primitives::FlyoutBase value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics)->GetAttachedFlyout(get_abi(element), put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseStatics<D>::SetAttachedFlyout(Windows::UI::Xaml::FrameworkElement const& element, Windows::UI::Xaml::Controls::Primitives::FlyoutBase const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics)->SetAttachedFlyout(get_abi(element), get_abi(value)));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseStatics<D>::ShowAttachedFlyout(Windows::UI::Xaml::FrameworkElement const& flyoutOwner) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics)->ShowAttachedFlyout(get_abi(flyoutOwner)));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseStatics2<D>::AllowFocusOnInteractionProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2)->get_AllowFocusOnInteractionProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseStatics2<D>::LightDismissOverlayModeProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2)->get_LightDismissOverlayModeProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseStatics2<D>::AllowFocusWhenDisabledProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2)->get_AllowFocusWhenDisabledProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseStatics2<D>::ElementSoundModeProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2)->get_ElementSoundModeProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IFlyoutBaseStatics3<D>::OverlayInputPassThroughElementProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics3)->get_OverlayInputPassThroughElementProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::GeneratorPosition consume_Windows_UI_Xaml_Controls_Primitives_IGeneratorPositionHelperStatics<D>::FromIndexAndOffset(int32_t index, int32_t offset) const
+{
+    Windows::UI::Xaml::Controls::Primitives::GeneratorPosition returnValue{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelperStatics)->FromIndexAndOffset(index, offset, put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectionCheckMarkVisualEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_SelectionCheckMarkVisualEnabled(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectionCheckMarkVisualEnabled(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_SelectionCheckMarkVisualEnabled(value));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::CheckHintBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_CheckHintBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::CheckHintBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_CheckHintBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::CheckSelectingBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_CheckSelectingBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::CheckSelectingBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_CheckSelectingBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::CheckBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_CheckBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::CheckBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_CheckBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::DragBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_DragBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::DragBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_DragBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::DragForeground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_DragForeground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::DragForeground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_DragForeground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::FocusBorderBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_FocusBorderBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::FocusBorderBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_FocusBorderBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::PlaceholderBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_PlaceholderBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::PlaceholderBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_PlaceholderBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::PointerOverBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_PointerOverBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::PointerOverBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_PointerOverBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectedBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_SelectedBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectedBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_SelectedBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectedForeground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_SelectedForeground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectedForeground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_SelectedForeground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectedPointerOverBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_SelectedPointerOverBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectedPointerOverBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_SelectedPointerOverBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectedPointerOverBorderBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_SelectedPointerOverBorderBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectedPointerOverBorderBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_SelectedPointerOverBorderBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectedBorderThickness() const
+{
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_SelectedBorderThickness(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::SelectedBorderThickness(Windows::UI::Xaml::Thickness const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_SelectedBorderThickness(get_abi(value)));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::DisabledOpacity() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_DisabledOpacity(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::DisabledOpacity(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_DisabledOpacity(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::DragOpacity() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_DragOpacity(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::DragOpacity(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_DragOpacity(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::ReorderHintOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_ReorderHintOffset(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::ReorderHintOffset(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_ReorderHintOffset(value));
+}
+
+template <typename D> Windows::UI::Xaml::HorizontalAlignment consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::GridViewItemPresenterHorizontalContentAlignment() const
+{
+    Windows::UI::Xaml::HorizontalAlignment value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_GridViewItemPresenterHorizontalContentAlignment(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::GridViewItemPresenterHorizontalContentAlignment(Windows::UI::Xaml::HorizontalAlignment const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_GridViewItemPresenterHorizontalContentAlignment(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::VerticalAlignment consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::GridViewItemPresenterVerticalContentAlignment() const
+{
+    Windows::UI::Xaml::VerticalAlignment value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_GridViewItemPresenterVerticalContentAlignment(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::GridViewItemPresenterVerticalContentAlignment(Windows::UI::Xaml::VerticalAlignment const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_GridViewItemPresenterVerticalContentAlignment(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::GridViewItemPresenterPadding() const
+{
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_GridViewItemPresenterPadding(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::GridViewItemPresenterPadding(Windows::UI::Xaml::Thickness const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_GridViewItemPresenterPadding(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::PointerOverBackgroundMargin() const
+{
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_PointerOverBackgroundMargin(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::PointerOverBackgroundMargin(Windows::UI::Xaml::Thickness const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_PointerOverBackgroundMargin(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::ContentMargin() const
+{
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->get_ContentMargin(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenter<D>::ContentMargin(Windows::UI::Xaml::Thickness const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter)->put_ContentMargin(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::GridViewItemPresenter consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterFactory<D>::CreateInstance(Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::GridViewItemPresenter instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterFactory)->CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::SelectionCheckMarkVisualEnabledProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_SelectionCheckMarkVisualEnabledProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::CheckHintBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_CheckHintBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::CheckSelectingBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_CheckSelectingBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::CheckBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_CheckBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::DragBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_DragBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::DragForegroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_DragForegroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::FocusBorderBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_FocusBorderBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::PlaceholderBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_PlaceholderBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::PointerOverBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_PointerOverBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::SelectedBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_SelectedBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::SelectedForegroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_SelectedForegroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::SelectedPointerOverBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_SelectedPointerOverBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::SelectedPointerOverBorderBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_SelectedPointerOverBorderBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::SelectedBorderThicknessProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_SelectedBorderThicknessProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::DisabledOpacityProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_DisabledOpacityProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::DragOpacityProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_DragOpacityProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::ReorderHintOffsetProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_ReorderHintOffsetProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::GridViewItemPresenterHorizontalContentAlignmentProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_GridViewItemPresenterHorizontalContentAlignmentProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::GridViewItemPresenterVerticalContentAlignmentProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_GridViewItemPresenterVerticalContentAlignmentProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::GridViewItemPresenterPaddingProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_GridViewItemPresenterPaddingProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::PointerOverBackgroundMarginProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_PointerOverBackgroundMarginProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemPresenterStatics<D>::ContentMarginProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics)->get_ContentMarginProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_UI_Xaml_Controls_Primitives_IGridViewItemTemplateSettings<D>::DragItemsCount() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IGridViewItemTemplateSettings)->get_DragItemsCount(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_UI_Xaml_Controls_Primitives_IItemsChangedEventArgs<D>::Action() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs)->get_Action(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::GeneratorPosition consume_Windows_UI_Xaml_Controls_Primitives_IItemsChangedEventArgs<D>::Position() const
+{
+    Windows::UI::Xaml::Controls::Primitives::GeneratorPosition value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs)->get_Position(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::GeneratorPosition consume_Windows_UI_Xaml_Controls_Primitives_IItemsChangedEventArgs<D>::OldPosition() const
+{
+    Windows::UI::Xaml::Controls::Primitives::GeneratorPosition value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs)->get_OldPosition(put_abi(value)));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_UI_Xaml_Controls_Primitives_IItemsChangedEventArgs<D>::ItemCount() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs)->get_ItemCount(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_UI_Xaml_Controls_Primitives_IItemsChangedEventArgs<D>::ItemUICount() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs)->get_ItemUICount(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemBackgroundConverter<D>::Enabled() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverter)->get_Enabled(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemBackgroundConverter<D>::Enabled(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverter)->put_Enabled(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemBackgroundConverter<D>::Disabled() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverter)->get_Disabled(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemBackgroundConverter<D>::Disabled(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverter)->put_Disabled(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemBackgroundConverterStatics<D>::EnabledProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverterStatics)->get_EnabledProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemBackgroundConverterStatics<D>::DisabledProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverterStatics)->get_DisabledProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemForegroundConverter<D>::Enabled() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverter)->get_Enabled(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemForegroundConverter<D>::Enabled(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverter)->put_Enabled(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemForegroundConverter<D>::Disabled() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverter)->get_Disabled(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemForegroundConverter<D>::Disabled(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverter)->put_Disabled(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemForegroundConverterStatics<D>::EnabledProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverterStatics)->get_EnabledProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IJumpListItemForegroundConverterStatics<D>::DisabledProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverterStatics)->get_DisabledProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::UIElement consume_Windows_UI_Xaml_Controls_Primitives_ILayoutInformationStatics<D>::GetLayoutExceptionElement(Windows::Foundation::IInspectable const& dispatcher) const
+{
+    Windows::UI::Xaml::UIElement element{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILayoutInformationStatics)->GetLayoutExceptionElement(get_abi(dispatcher), put_abi(element)));
+    return element;
+}
+
+template <typename D> Windows::Foundation::Rect consume_Windows_UI_Xaml_Controls_Primitives_ILayoutInformationStatics<D>::GetLayoutSlot(Windows::UI::Xaml::FrameworkElement const& element) const
+{
+    Windows::Foundation::Rect slot{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILayoutInformationStatics)->GetLayoutSlot(get_abi(element), put_abi(slot)));
+    return slot;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectionCheckMarkVisualEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_SelectionCheckMarkVisualEnabled(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectionCheckMarkVisualEnabled(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_SelectionCheckMarkVisualEnabled(value));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::CheckHintBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_CheckHintBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::CheckHintBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_CheckHintBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::CheckSelectingBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_CheckSelectingBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::CheckSelectingBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_CheckSelectingBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::CheckBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_CheckBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::CheckBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_CheckBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::DragBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_DragBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::DragBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_DragBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::DragForeground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_DragForeground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::DragForeground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_DragForeground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::FocusBorderBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_FocusBorderBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::FocusBorderBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_FocusBorderBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::PlaceholderBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_PlaceholderBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::PlaceholderBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_PlaceholderBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::PointerOverBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_PointerOverBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::PointerOverBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_PointerOverBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectedBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_SelectedBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectedBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_SelectedBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectedForeground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_SelectedForeground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectedForeground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_SelectedForeground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectedPointerOverBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_SelectedPointerOverBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectedPointerOverBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_SelectedPointerOverBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectedPointerOverBorderBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_SelectedPointerOverBorderBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectedPointerOverBorderBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_SelectedPointerOverBorderBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectedBorderThickness() const
+{
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_SelectedBorderThickness(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::SelectedBorderThickness(Windows::UI::Xaml::Thickness const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_SelectedBorderThickness(get_abi(value)));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::DisabledOpacity() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_DisabledOpacity(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::DisabledOpacity(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_DisabledOpacity(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::DragOpacity() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_DragOpacity(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::DragOpacity(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_DragOpacity(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::ReorderHintOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_ReorderHintOffset(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::ReorderHintOffset(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_ReorderHintOffset(value));
+}
+
+template <typename D> Windows::UI::Xaml::HorizontalAlignment consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::ListViewItemPresenterHorizontalContentAlignment() const
+{
+    Windows::UI::Xaml::HorizontalAlignment value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_ListViewItemPresenterHorizontalContentAlignment(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::ListViewItemPresenterHorizontalContentAlignment(Windows::UI::Xaml::HorizontalAlignment const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_ListViewItemPresenterHorizontalContentAlignment(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::VerticalAlignment consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::ListViewItemPresenterVerticalContentAlignment() const
+{
+    Windows::UI::Xaml::VerticalAlignment value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_ListViewItemPresenterVerticalContentAlignment(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::ListViewItemPresenterVerticalContentAlignment(Windows::UI::Xaml::VerticalAlignment const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_ListViewItemPresenterVerticalContentAlignment(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::ListViewItemPresenterPadding() const
+{
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_ListViewItemPresenterPadding(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::ListViewItemPresenterPadding(Windows::UI::Xaml::Thickness const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_ListViewItemPresenterPadding(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::PointerOverBackgroundMargin() const
+{
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_PointerOverBackgroundMargin(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::PointerOverBackgroundMargin(Windows::UI::Xaml::Thickness const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_PointerOverBackgroundMargin(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::ContentMargin() const
+{
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->get_ContentMargin(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter<D>::ContentMargin(Windows::UI::Xaml::Thickness const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter)->put_ContentMargin(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::SelectedPressedBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->get_SelectedPressedBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::SelectedPressedBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->put_SelectedPressedBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::PressedBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->get_PressedBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::PressedBackground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->put_PressedBackground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::CheckBoxBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->get_CheckBoxBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::CheckBoxBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->put_CheckBoxBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::FocusSecondaryBorderBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->get_FocusSecondaryBorderBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::FocusSecondaryBorderBrush(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->put_FocusSecondaryBorderBrush(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenterCheckMode consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::CheckMode() const
+{
+    Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenterCheckMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->get_CheckMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::CheckMode(Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenterCheckMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->put_CheckMode(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::PointerOverForeground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->get_PointerOverForeground(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenter2<D>::PointerOverForeground(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2)->put_PointerOverForeground(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenter consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterFactory<D>::CreateInstance(Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenter instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterFactory)->CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::SelectionCheckMarkVisualEnabledProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_SelectionCheckMarkVisualEnabledProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::CheckHintBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_CheckHintBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::CheckSelectingBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_CheckSelectingBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::CheckBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_CheckBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::DragBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_DragBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::DragForegroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_DragForegroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::FocusBorderBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_FocusBorderBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::PlaceholderBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_PlaceholderBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::PointerOverBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_PointerOverBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::SelectedBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_SelectedBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::SelectedForegroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_SelectedForegroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::SelectedPointerOverBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_SelectedPointerOverBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::SelectedPointerOverBorderBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_SelectedPointerOverBorderBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::SelectedBorderThicknessProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_SelectedBorderThicknessProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::DisabledOpacityProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_DisabledOpacityProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::DragOpacityProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_DragOpacityProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::ReorderHintOffsetProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_ReorderHintOffsetProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::ListViewItemPresenterHorizontalContentAlignmentProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_ListViewItemPresenterHorizontalContentAlignmentProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::ListViewItemPresenterVerticalContentAlignmentProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_ListViewItemPresenterVerticalContentAlignmentProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::ListViewItemPresenterPaddingProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_ListViewItemPresenterPaddingProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::PointerOverBackgroundMarginProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_PointerOverBackgroundMarginProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics<D>::ContentMarginProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics)->get_ContentMarginProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics2<D>::SelectedPressedBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2)->get_SelectedPressedBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics2<D>::PressedBackgroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2)->get_PressedBackgroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics2<D>::CheckBoxBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2)->get_CheckBoxBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics2<D>::FocusSecondaryBorderBrushProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2)->get_FocusSecondaryBorderBrushProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics2<D>::CheckModeProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2)->get_CheckModeProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemPresenterStatics2<D>::PointerOverForegroundProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2)->get_PointerOverForegroundProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_UI_Xaml_Controls_Primitives_IListViewItemTemplateSettings<D>::DragItemsCount() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IListViewItemTemplateSettings)->get_DragItemsCount(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::ShouldLoop() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->get_ShouldLoop(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::ShouldLoop(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->put_ShouldLoop(value));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::Items() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->get_Items(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::Items(param::vector<Windows::Foundation::IInspectable> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->put_Items(get_abi(value)));
+}
+
+template <typename D> int32_t consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::SelectedIndex() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->get_SelectedIndex(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::SelectedIndex(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->put_SelectedIndex(value));
+}
+
+template <typename D> Windows::Foundation::IInspectable consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::SelectedItem() const
+{
+    Windows::Foundation::IInspectable value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->get_SelectedItem(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::SelectedItem(Windows::Foundation::IInspectable const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->put_SelectedItem(get_abi(value)));
+}
+
+template <typename D> int32_t consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::ItemWidth() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->get_ItemWidth(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::ItemWidth(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->put_ItemWidth(value));
+}
+
+template <typename D> int32_t consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::ItemHeight() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->get_ItemHeight(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::ItemHeight(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->put_ItemHeight(value));
+}
+
+template <typename D> Windows::UI::Xaml::DataTemplate consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::ItemTemplate() const
+{
+    Windows::UI::Xaml::DataTemplate value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->get_ItemTemplate(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::ItemTemplate(Windows::UI::Xaml::DataTemplate const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->put_ItemTemplate(get_abi(value)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::SelectionChanged(Windows::UI::Xaml::Controls::SelectionChangedEventHandler const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->add_SelectionChanged(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::SelectionChanged(auto_revoke_t, Windows::UI::Xaml::Controls::SelectionChangedEventHandler const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::ILoopingSelector>::remove_SelectionChanged, SelectionChanged(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelector<D>::SelectionChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelector)->remove_SelectionChanged(get_abi(token)));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelectorStatics<D>::ShouldLoopProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics)->get_ShouldLoopProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelectorStatics<D>::ItemsProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics)->get_ItemsProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelectorStatics<D>::SelectedIndexProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics)->get_SelectedIndexProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelectorStatics<D>::SelectedItemProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics)->get_SelectedItemProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelectorStatics<D>::ItemWidthProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics)->get_ItemWidthProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelectorStatics<D>::ItemHeightProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics)->get_ItemHeightProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ILoopingSelectorStatics<D>::ItemTemplateProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics)->get_ItemTemplateProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IMenuFlyoutPresenterTemplateSettings<D>::FlyoutContentMinWidth() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IMenuFlyoutPresenterTemplateSettings)->get_FlyoutContentMinWidth(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::CanVerticallyScroll() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->get_CanVerticallyScroll(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::CanVerticallyScroll(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->put_CanVerticallyScroll(value));
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::CanHorizontallyScroll() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->get_CanHorizontallyScroll(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::CanHorizontallyScroll(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->put_CanHorizontallyScroll(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::ExtentWidth() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->get_ExtentWidth(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::ExtentHeight() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->get_ExtentHeight(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::ViewportWidth() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->get_ViewportWidth(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::ViewportHeight() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->get_ViewportHeight(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::HorizontalOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->get_HorizontalOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::VerticalOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->get_VerticalOffset(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IInspectable consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::ScrollOwner() const
+{
+    Windows::Foundation::IInspectable value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->get_ScrollOwner(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::ScrollOwner(Windows::Foundation::IInspectable const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->put_ScrollOwner(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::LineUp() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->LineUp());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::LineDown() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->LineDown());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::LineLeft() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->LineLeft());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::LineRight() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->LineRight());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::PageUp() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->PageUp());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::PageDown() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->PageDown());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::PageLeft() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->PageLeft());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::PageRight() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->PageRight());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::MouseWheelUp() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->MouseWheelUp());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::MouseWheelDown() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->MouseWheelDown());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::MouseWheelLeft() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->MouseWheelLeft());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::MouseWheelRight() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->MouseWheelRight());
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::SetHorizontalOffset(double offset) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->SetHorizontalOffset(offset));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::SetVerticalOffset(double offset) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->SetVerticalOffset(offset));
+}
+
+template <typename D> Windows::Foundation::Rect consume_Windows_UI_Xaml_Controls_Primitives_IOrientedVirtualizingPanel<D>::MakeVisible(Windows::UI::Xaml::UIElement const& visual, Windows::Foundation::Rect const& rectangle) const
+{
+    Windows::Foundation::Rect returnValue{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel)->MakeVisible(get_abi(visual), get_abi(rectangle), put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::PickerFlyoutBase consume_Windows_UI_Xaml_Controls_Primitives_IPickerFlyoutBaseFactory<D>::CreateInstance(Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::PickerFlyoutBase instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseFactory)->CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IPickerFlyoutBaseOverrides<D>::OnConfirmed() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOverrides)->OnConfirmed());
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IPickerFlyoutBaseOverrides<D>::ShouldShowConfirmationButtons() const
+{
+    bool returnValue{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOverrides)->ShouldShowConfirmationButtons(&returnValue));
+    return returnValue;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IPickerFlyoutBaseStatics<D>::TitleProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics)->get_TitleProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_UI_Xaml_Controls_Primitives_IPickerFlyoutBaseStatics<D>::GetTitle(Windows::UI::Xaml::DependencyObject const& element) const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics)->GetTitle(get_abi(element), put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IPickerFlyoutBaseStatics<D>::SetTitle(Windows::UI::Xaml::DependencyObject const& element, param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics)->SetTitle(get_abi(element), get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::PivotHeaderItem consume_Windows_UI_Xaml_Controls_Primitives_IPivotHeaderItemFactory<D>::CreateInstance(Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::PivotHeaderItem instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItemFactory)->CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> Windows::UI::Xaml::UIElement consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::Child() const
+{
+    Windows::UI::Xaml::UIElement value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->get_Child(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::Child(Windows::UI::Xaml::UIElement const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->put_Child(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::IsOpen() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->get_IsOpen(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::IsOpen(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->put_IsOpen(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::HorizontalOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->get_HorizontalOffset(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::HorizontalOffset(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->put_HorizontalOffset(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::VerticalOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->get_VerticalOffset(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::VerticalOffset(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->put_VerticalOffset(value));
+}
+
+template <typename D> Windows::UI::Xaml::Media::Animation::TransitionCollection consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::ChildTransitions() const
+{
+    Windows::UI::Xaml::Media::Animation::TransitionCollection value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->get_ChildTransitions(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::ChildTransitions(Windows::UI::Xaml::Media::Animation::TransitionCollection const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->put_ChildTransitions(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::IsLightDismissEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->get_IsLightDismissEnabled(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::IsLightDismissEnabled(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->put_IsLightDismissEnabled(value));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::Opened(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->add_Opened(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IPopup> consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::Opened(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IPopup>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IPopup>::remove_Opened, Opened(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::Opened(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->remove_Opened(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::Closed(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->add_Closed(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IPopup> consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::Closed(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IPopup>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IPopup>::remove_Closed, Closed(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IPopup<D>::Closed(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup)->remove_Closed(get_abi(token)));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::LightDismissOverlayMode consume_Windows_UI_Xaml_Controls_Primitives_IPopup2<D>::LightDismissOverlayMode() const
+{
+    Windows::UI::Xaml::Controls::LightDismissOverlayMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup2)->get_LightDismissOverlayMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IPopup2<D>::LightDismissOverlayMode(Windows::UI::Xaml::Controls::LightDismissOverlayMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopup2)->put_LightDismissOverlayMode(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IPopupStatics<D>::ChildProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopupStatics)->get_ChildProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IPopupStatics<D>::IsOpenProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopupStatics)->get_IsOpenProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IPopupStatics<D>::HorizontalOffsetProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopupStatics)->get_HorizontalOffsetProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IPopupStatics<D>::VerticalOffsetProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopupStatics)->get_VerticalOffsetProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IPopupStatics<D>::ChildTransitionsProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopupStatics)->get_ChildTransitionsProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IPopupStatics<D>::IsLightDismissEnabledProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopupStatics)->get_IsLightDismissEnabledProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IPopupStatics2<D>::LightDismissOverlayModeProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IPopupStatics2)->get_LightDismissOverlayModeProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IProgressBarTemplateSettings<D>::EllipseDiameter() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings)->get_EllipseDiameter(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IProgressBarTemplateSettings<D>::EllipseOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings)->get_EllipseOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IProgressBarTemplateSettings<D>::EllipseAnimationWellPosition() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings)->get_EllipseAnimationWellPosition(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IProgressBarTemplateSettings<D>::EllipseAnimationEndPosition() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings)->get_EllipseAnimationEndPosition(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IProgressBarTemplateSettings<D>::ContainerAnimationStartPosition() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings)->get_ContainerAnimationStartPosition(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IProgressBarTemplateSettings<D>::ContainerAnimationEndPosition() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings)->get_ContainerAnimationEndPosition(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IProgressBarTemplateSettings<D>::IndicatorLengthDelta() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings)->get_IndicatorLengthDelta(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IProgressRingTemplateSettings<D>::EllipseDiameter() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplateSettings)->get_EllipseDiameter(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_IProgressRingTemplateSettings<D>::EllipseOffset() const
+{
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplateSettings)->get_EllipseOffset(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IProgressRingTemplateSettings<D>::MaxSideLength() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplateSettings)->get_MaxSideLength(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::Minimum() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->get_Minimum(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::Minimum(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->put_Minimum(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::Maximum() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->get_Maximum(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::Maximum(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->put_Maximum(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::SmallChange() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->get_SmallChange(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::SmallChange(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->put_SmallChange(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::LargeChange() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->get_LargeChange(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::LargeChange(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->put_LargeChange(value));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::Value() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->get_Value(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::Value(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->put_Value(value));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::ValueChanged(Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventHandler const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->add_ValueChanged(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IRangeBase> consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::ValueChanged(auto_revoke_t, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventHandler const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IRangeBase>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IRangeBase>::remove_ValueChanged, ValueChanged(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IRangeBase<D>::ValueChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBase)->remove_ValueChanged(get_abi(token)));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::RangeBase consume_Windows_UI_Xaml_Controls_Primitives_IRangeBaseFactory<D>::CreateInstance(Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::RangeBase instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBaseFactory)->CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IRangeBaseOverrides<D>::OnMinimumChanged(double oldMinimum, double newMinimum) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides)->OnMinimumChanged(oldMinimum, newMinimum));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IRangeBaseOverrides<D>::OnMaximumChanged(double oldMaximum, double newMaximum) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides)->OnMaximumChanged(oldMaximum, newMaximum));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IRangeBaseOverrides<D>::OnValueChanged(double oldValue, double newValue) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides)->OnValueChanged(oldValue, newValue));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IRangeBaseStatics<D>::MinimumProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics)->get_MinimumProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IRangeBaseStatics<D>::MaximumProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics)->get_MaximumProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IRangeBaseStatics<D>::SmallChangeProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics)->get_SmallChangeProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IRangeBaseStatics<D>::LargeChangeProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics)->get_LargeChangeProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IRangeBaseStatics<D>::ValueProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics)->get_ValueProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IRangeBaseValueChangedEventArgs<D>::OldValue() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChangedEventArgs)->get_OldValue(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IRangeBaseValueChangedEventArgs<D>::NewValue() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChangedEventArgs)->get_NewValue(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_UI_Xaml_Controls_Primitives_IRepeatButton<D>::Delay() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRepeatButton)->get_Delay(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IRepeatButton<D>::Delay(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRepeatButton)->put_Delay(value));
+}
+
+template <typename D> int32_t consume_Windows_UI_Xaml_Controls_Primitives_IRepeatButton<D>::Interval() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRepeatButton)->get_Interval(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IRepeatButton<D>::Interval(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRepeatButton)->put_Interval(value));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IRepeatButtonStatics<D>::DelayProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics)->get_DelayProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IRepeatButtonStatics<D>::IntervalProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics)->get_IntervalProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Orientation consume_Windows_UI_Xaml_Controls_Primitives_IScrollBar<D>::Orientation() const
+{
+    Windows::UI::Xaml::Controls::Orientation value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollBar)->get_Orientation(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IScrollBar<D>::Orientation(Windows::UI::Xaml::Controls::Orientation const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollBar)->put_Orientation(get_abi(value)));
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IScrollBar<D>::ViewportSize() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollBar)->get_ViewportSize(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IScrollBar<D>::ViewportSize(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollBar)->put_ViewportSize(value));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::ScrollingIndicatorMode consume_Windows_UI_Xaml_Controls_Primitives_IScrollBar<D>::IndicatorMode() const
+{
+    Windows::UI::Xaml::Controls::Primitives::ScrollingIndicatorMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollBar)->get_IndicatorMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IScrollBar<D>::IndicatorMode(Windows::UI::Xaml::Controls::Primitives::ScrollingIndicatorMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollBar)->put_IndicatorMode(get_abi(value)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IScrollBar<D>::Scroll(Windows::UI::Xaml::Controls::Primitives::ScrollEventHandler const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollBar)->add_Scroll(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IScrollBar> consume_Windows_UI_Xaml_Controls_Primitives_IScrollBar<D>::Scroll(auto_revoke_t, Windows::UI::Xaml::Controls::Primitives::ScrollEventHandler const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IScrollBar>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IScrollBar>::remove_Scroll, Scroll(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IScrollBar<D>::Scroll(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollBar)->remove_Scroll(get_abi(token)));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IScrollBarStatics<D>::OrientationProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics)->get_OrientationProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IScrollBarStatics<D>::ViewportSizeProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics)->get_ViewportSizeProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IScrollBarStatics<D>::IndicatorModeProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics)->get_IndicatorModeProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IScrollEventArgs<D>::NewValue() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs)->get_NewValue(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::ScrollEventType consume_Windows_UI_Xaml_Controls_Primitives_IScrollEventArgs<D>::ScrollEventType() const
+{
+    Windows::UI::Xaml::Controls::Primitives::ScrollEventType value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs)->get_ScrollEventType(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IScrollSnapPointsInfo<D>::AreHorizontalSnapPointsRegular() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo)->get_AreHorizontalSnapPointsRegular(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IScrollSnapPointsInfo<D>::AreVerticalSnapPointsRegular() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo)->get_AreVerticalSnapPointsRegular(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IScrollSnapPointsInfo<D>::HorizontalSnapPointsChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo)->add_HorizontalSnapPointsChanged(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo> consume_Windows_UI_Xaml_Controls_Primitives_IScrollSnapPointsInfo<D>::HorizontalSnapPointsChanged(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo>::remove_HorizontalSnapPointsChanged, HorizontalSnapPointsChanged(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IScrollSnapPointsInfo<D>::HorizontalSnapPointsChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo)->remove_HorizontalSnapPointsChanged(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IScrollSnapPointsInfo<D>::VerticalSnapPointsChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo)->add_VerticalSnapPointsChanged(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo> consume_Windows_UI_Xaml_Controls_Primitives_IScrollSnapPointsInfo<D>::VerticalSnapPointsChanged(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo>::remove_VerticalSnapPointsChanged, VerticalSnapPointsChanged(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IScrollSnapPointsInfo<D>::VerticalSnapPointsChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo)->remove_VerticalSnapPointsChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<float> consume_Windows_UI_Xaml_Controls_Primitives_IScrollSnapPointsInfo<D>::GetIrregularSnapPoints(Windows::UI::Xaml::Controls::Orientation const& orientation, Windows::UI::Xaml::Controls::Primitives::SnapPointsAlignment const& alignment) const
+{
+    Windows::Foundation::Collections::IVectorView<float> returnValue{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo)->GetIrregularSnapPoints(get_abi(orientation), get_abi(alignment), put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> float consume_Windows_UI_Xaml_Controls_Primitives_IScrollSnapPointsInfo<D>::GetRegularSnapPoints(Windows::UI::Xaml::Controls::Orientation const& orientation, Windows::UI::Xaml::Controls::Primitives::SnapPointsAlignment const& alignment, float& offset) const
+{
+    float returnValue{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo)->GetRegularSnapPoints(get_abi(orientation), get_abi(alignment), &offset, &returnValue));
+    return returnValue;
+}
+
+template <typename D> int32_t consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::SelectedIndex() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->get_SelectedIndex(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::SelectedIndex(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->put_SelectedIndex(value));
+}
+
+template <typename D> Windows::Foundation::IInspectable consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::SelectedItem() const
+{
+    Windows::Foundation::IInspectable value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->get_SelectedItem(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::SelectedItem(Windows::Foundation::IInspectable const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->put_SelectedItem(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IInspectable consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::SelectedValue() const
+{
+    Windows::Foundation::IInspectable value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->get_SelectedValue(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::SelectedValue(Windows::Foundation::IInspectable const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->put_SelectedValue(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::SelectedValuePath() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->get_SelectedValuePath(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::SelectedValuePath(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->put_SelectedValuePath(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<bool> consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::IsSynchronizedWithCurrentItem() const
+{
+    Windows::Foundation::IReference<bool> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->get_IsSynchronizedWithCurrentItem(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::IsSynchronizedWithCurrentItem(optional<bool> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->put_IsSynchronizedWithCurrentItem(get_abi(value)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::SelectionChanged(Windows::UI::Xaml::Controls::SelectionChangedEventHandler const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->add_SelectionChanged(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::ISelector> consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::SelectionChanged(auto_revoke_t, Windows::UI::Xaml::Controls::SelectionChangedEventHandler const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::ISelector>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::ISelector>::remove_SelectionChanged, SelectionChanged(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ISelector<D>::SelectionChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelector)->remove_SelectionChanged(get_abi(token)));
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_ISelectorItem<D>::IsSelected() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelectorItem)->get_IsSelected(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ISelectorItem<D>::IsSelected(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelectorItem)->put_IsSelected(value));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::SelectorItem consume_Windows_UI_Xaml_Controls_Primitives_ISelectorItemFactory<D>::CreateInstance(Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::SelectorItem instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelectorItemFactory)->CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ISelectorItemStatics<D>::IsSelectedProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelectorItemStatics)->get_IsSelectedProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ISelectorStatics<D>::SelectedIndexProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelectorStatics)->get_SelectedIndexProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ISelectorStatics<D>::SelectedItemProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelectorStatics)->get_SelectedItemProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ISelectorStatics<D>::SelectedValueProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelectorStatics)->get_SelectedValueProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ISelectorStatics<D>::SelectedValuePathProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelectorStatics)->get_SelectedValuePathProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ISelectorStatics<D>::IsSynchronizedWithCurrentItemProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelectorStatics)->get_IsSynchronizedWithCurrentItemProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_ISelectorStatics<D>::GetIsSelectionActive(Windows::UI::Xaml::DependencyObject const& element) const
+{
+    bool returnValue{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISelectorStatics)->GetIsSelectionActive(get_abi(element), &returnValue));
+    return returnValue;
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_ISettingsFlyoutTemplateSettings<D>::HeaderBackground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings)->get_HeaderBackground(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_ISettingsFlyoutTemplateSettings<D>::HeaderForeground() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings)->get_HeaderForeground(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_ISettingsFlyoutTemplateSettings<D>::BorderBrush() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings)->get_BorderBrush(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Thickness consume_Windows_UI_Xaml_Controls_Primitives_ISettingsFlyoutTemplateSettings<D>::BorderThickness() const
+{
+    Windows::UI::Xaml::Thickness value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings)->get_BorderThickness(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Media::ImageSource consume_Windows_UI_Xaml_Controls_Primitives_ISettingsFlyoutTemplateSettings<D>::IconSource() const
+{
+    Windows::UI::Xaml::Media::ImageSource value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings)->get_IconSource(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Media::Animation::TransitionCollection consume_Windows_UI_Xaml_Controls_Primitives_ISettingsFlyoutTemplateSettings<D>::ContentTransitions() const
+{
+    Windows::UI::Xaml::Media::Animation::TransitionCollection value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings)->get_ContentTransitions(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ISplitViewTemplateSettings<D>::OpenPaneLength() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings)->get_OpenPaneLength(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ISplitViewTemplateSettings<D>::NegativeOpenPaneLength() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings)->get_NegativeOpenPaneLength(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ISplitViewTemplateSettings<D>::OpenPaneLengthMinusCompactLength() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings)->get_OpenPaneLengthMinusCompactLength(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_ISplitViewTemplateSettings<D>::NegativeOpenPaneLengthMinusCompactLength() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings)->get_NegativeOpenPaneLengthMinusCompactLength(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::GridLength consume_Windows_UI_Xaml_Controls_Primitives_ISplitViewTemplateSettings<D>::OpenPaneGridLength() const
+{
+    Windows::UI::Xaml::GridLength value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings)->get_OpenPaneGridLength(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::GridLength consume_Windows_UI_Xaml_Controls_Primitives_ISplitViewTemplateSettings<D>::CompactPaneGridLength() const
+{
+    Windows::UI::Xaml::GridLength value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings)->get_CompactPaneGridLength(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IThumb<D>::IsDragging() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IThumb)->get_IsDragging(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IThumb<D>::DragStarted(Windows::UI::Xaml::Controls::Primitives::DragStartedEventHandler const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IThumb)->add_DragStarted(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IThumb> consume_Windows_UI_Xaml_Controls_Primitives_IThumb<D>::DragStarted(auto_revoke_t, Windows::UI::Xaml::Controls::Primitives::DragStartedEventHandler const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IThumb>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IThumb>::remove_DragStarted, DragStarted(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IThumb<D>::DragStarted(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IThumb)->remove_DragStarted(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IThumb<D>::DragDelta(Windows::UI::Xaml::Controls::Primitives::DragDeltaEventHandler const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IThumb)->add_DragDelta(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IThumb> consume_Windows_UI_Xaml_Controls_Primitives_IThumb<D>::DragDelta(auto_revoke_t, Windows::UI::Xaml::Controls::Primitives::DragDeltaEventHandler const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IThumb>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IThumb>::remove_DragDelta, DragDelta(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IThumb<D>::DragDelta(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IThumb)->remove_DragDelta(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IThumb<D>::DragCompleted(Windows::UI::Xaml::Controls::Primitives::DragCompletedEventHandler const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IThumb)->add_DragCompleted(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IThumb> consume_Windows_UI_Xaml_Controls_Primitives_IThumb<D>::DragCompleted(auto_revoke_t, Windows::UI::Xaml::Controls::Primitives::DragCompletedEventHandler const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IThumb>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IThumb>::remove_DragCompleted, DragCompleted(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IThumb<D>::DragCompleted(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IThumb)->remove_DragCompleted(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IThumb<D>::CancelDrag() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IThumb)->CancelDrag());
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IThumbStatics<D>::IsDraggingProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IThumbStatics)->get_IsDraggingProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::Media::Brush consume_Windows_UI_Xaml_Controls_Primitives_ITickBar<D>::Fill() const
+{
+    Windows::UI::Xaml::Media::Brush value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ITickBar)->get_Fill(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_ITickBar<D>::Fill(Windows::UI::Xaml::Media::Brush const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ITickBar)->put_Fill(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_ITickBarStatics<D>::FillProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::ITickBarStatics)->get_FillProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<bool> consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::IsChecked() const
+{
+    Windows::Foundation::IReference<bool> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButton)->get_IsChecked(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::IsChecked(optional<bool> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButton)->put_IsChecked(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::IsThreeState() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButton)->get_IsThreeState(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::IsThreeState(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButton)->put_IsThreeState(value));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::Checked(Windows::UI::Xaml::RoutedEventHandler const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButton)->add_Checked(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IToggleButton> consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::Checked(auto_revoke_t, Windows::UI::Xaml::RoutedEventHandler const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IToggleButton>::remove_Checked, Checked(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::Checked(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButton)->remove_Checked(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::Unchecked(Windows::UI::Xaml::RoutedEventHandler const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButton)->add_Unchecked(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IToggleButton> consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::Unchecked(auto_revoke_t, Windows::UI::Xaml::RoutedEventHandler const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IToggleButton>::remove_Unchecked, Unchecked(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::Unchecked(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButton)->remove_Unchecked(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::Indeterminate(Windows::UI::Xaml::RoutedEventHandler const& value) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButton)->add_Indeterminate(get_abi(value), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Xaml::Controls::Primitives::IToggleButton> consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::Indeterminate(auto_revoke_t, Windows::UI::Xaml::RoutedEventHandler const& value) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton>(this, &abi_t<Windows::UI::Xaml::Controls::Primitives::IToggleButton>::remove_Indeterminate, Indeterminate(value));
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IToggleButton<D>::Indeterminate(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButton)->remove_Indeterminate(get_abi(token)));
+}
+
+template <typename D> Windows::UI::Xaml::Controls::Primitives::ToggleButton consume_Windows_UI_Xaml_Controls_Primitives_IToggleButtonFactory<D>::CreateInstance(Windows::Foundation::IInspectable const& outer, Windows::Foundation::IInspectable& inner) const
+{
+    Windows::UI::Xaml::Controls::Primitives::ToggleButton instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButtonFactory)->CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> void consume_Windows_UI_Xaml_Controls_Primitives_IToggleButtonOverrides<D>::OnToggle() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButtonOverrides)->OnToggle());
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IToggleButtonStatics<D>::IsCheckedProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics)->get_IsCheckedProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::Xaml::DependencyProperty consume_Windows_UI_Xaml_Controls_Primitives_IToggleButtonStatics<D>::IsThreeStateProperty() const
+{
+    Windows::UI::Xaml::DependencyProperty value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics)->get_IsThreeStateProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IToggleSwitchTemplateSettings<D>::KnobCurrentToOnOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings)->get_KnobCurrentToOnOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IToggleSwitchTemplateSettings<D>::KnobCurrentToOffOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings)->get_KnobCurrentToOffOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IToggleSwitchTemplateSettings<D>::KnobOnToOffOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings)->get_KnobOnToOffOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IToggleSwitchTemplateSettings<D>::KnobOffToOnOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings)->get_KnobOffToOnOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IToggleSwitchTemplateSettings<D>::CurtainCurrentToOnOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings)->get_CurtainCurrentToOnOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IToggleSwitchTemplateSettings<D>::CurtainCurrentToOffOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings)->get_CurtainCurrentToOffOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IToggleSwitchTemplateSettings<D>::CurtainOnToOffOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings)->get_CurtainOnToOffOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IToggleSwitchTemplateSettings<D>::CurtainOffToOnOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings)->get_CurtainOffToOnOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IToolTipTemplateSettings<D>::FromHorizontalOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToolTipTemplateSettings)->get_FromHorizontalOffset(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_Xaml_Controls_Primitives_IToolTipTemplateSettings<D>::FromVerticalOffset() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Xaml::Controls::Primitives::IToolTipTemplateSettings)->get_FromVerticalOffset(&value));
+    return value;
+}
+
+template <> struct delegate<Windows::UI::Xaml::Controls::Primitives::DragCompletedEventHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::UI::Xaml::Controls::Primitives::DragCompletedEventHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::UI::Xaml::Controls::Primitives::DragCompletedEventHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender, ::IUnknown* e) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&sender), *reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs const*>(&e));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
+
+template <> struct delegate<Windows::UI::Xaml::Controls::Primitives::DragDeltaEventHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::UI::Xaml::Controls::Primitives::DragDeltaEventHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::UI::Xaml::Controls::Primitives::DragDeltaEventHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender, ::IUnknown* e) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&sender), *reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs const*>(&e));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
+
+template <> struct delegate<Windows::UI::Xaml::Controls::Primitives::DragStartedEventHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::UI::Xaml::Controls::Primitives::DragStartedEventHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::UI::Xaml::Controls::Primitives::DragStartedEventHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender, ::IUnknown* e) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&sender), *reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs const*>(&e));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
+
+template <> struct delegate<Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender, ::IUnknown* e) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&sender), *reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventArgs const*>(&e));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
+
+template <> struct delegate<Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender, ::IUnknown* e) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&sender), *reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const*>(&e));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
+
+template <> struct delegate<Windows::UI::Xaml::Controls::Primitives::ScrollEventHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::UI::Xaml::Controls::Primitives::ScrollEventHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::UI::Xaml::Controls::Primitives::ScrollEventHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender, ::IUnknown* e) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&sender), *reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::ScrollEventArgs const*>(&e));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings>
 {
-    HRESULT __stdcall get_ClipRect(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_ClipRect(abi_t<Windows::Foundation::Rect>* value) noexcept override
     {
         try
         {
@@ -145,7 +3540,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettin
         }
     }
 
-    HRESULT __stdcall get_CompactVerticalDelta(double * value) noexcept override
+    HRESULT __stdcall get_CompactVerticalDelta(double* value) noexcept override
     {
         try
         {
@@ -159,7 +3554,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettin
         }
     }
 
-    HRESULT __stdcall get_CompactRootMargin(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_CompactRootMargin(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -173,7 +3568,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettin
         }
     }
 
-    HRESULT __stdcall get_MinimalVerticalDelta(double * value) noexcept override
+    HRESULT __stdcall get_MinimalVerticalDelta(double* value) noexcept override
     {
         try
         {
@@ -187,7 +3582,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettin
         }
     }
 
-    HRESULT __stdcall get_MinimalRootMargin(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_MinimalRootMargin(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -201,7 +3596,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettin
         }
     }
 
-    HRESULT __stdcall get_HiddenVerticalDelta(double * value) noexcept override
+    HRESULT __stdcall get_HiddenVerticalDelta(double* value) noexcept override
     {
         try
         {
@@ -215,7 +3610,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettin
         }
     }
 
-    HRESULT __stdcall get_HiddenRootMargin(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_HiddenRootMargin(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -233,7 +3628,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettin
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase>
 {
-    HRESULT __stdcall get_ClickMode(Windows::UI::Xaml::Controls::ClickMode * value) noexcept override
+    HRESULT __stdcall get_ClickMode(abi_t<Windows::UI::Xaml::Controls::ClickMode>* value) noexcept override
     {
         try
         {
@@ -247,12 +3642,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase> : produc
         }
     }
 
-    HRESULT __stdcall put_ClickMode(Windows::UI::Xaml::Controls::ClickMode value) noexcept override
+    HRESULT __stdcall put_ClickMode(abi_t<Windows::UI::Xaml::Controls::ClickMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ClickMode(value);
+            this->shim().ClickMode(*reinterpret_cast<Windows::UI::Xaml::Controls::ClickMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -261,7 +3656,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase> : produc
         }
     }
 
-    HRESULT __stdcall get_IsPointerOver(bool * value) noexcept override
+    HRESULT __stdcall get_IsPointerOver(bool* value) noexcept override
     {
         try
         {
@@ -275,7 +3670,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase> : produc
         }
     }
 
-    HRESULT __stdcall get_IsPressed(bool * value) noexcept override
+    HRESULT __stdcall get_IsPressed(bool* value) noexcept override
     {
         try
         {
@@ -289,7 +3684,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase> : produc
         }
     }
 
-    HRESULT __stdcall get_Command(impl::abi_arg_out<Windows::UI::Xaml::Input::ICommand> value) noexcept override
+    HRESULT __stdcall get_Command(::IUnknown** value) noexcept override
     {
         try
         {
@@ -304,12 +3699,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase> : produc
         }
     }
 
-    HRESULT __stdcall put_Command(impl::abi_arg_in<Windows::UI::Xaml::Input::ICommand> value) noexcept override
+    HRESULT __stdcall put_Command(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Command(*reinterpret_cast<const Windows::UI::Xaml::Input::ICommand *>(&value));
+            this->shim().Command(*reinterpret_cast<Windows::UI::Xaml::Input::ICommand const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -318,7 +3713,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase> : produc
         }
     }
 
-    HRESULT __stdcall get_CommandParameter(impl::abi_arg_out<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall get_CommandParameter(::IUnknown** value) noexcept override
     {
         try
         {
@@ -333,12 +3728,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase> : produc
         }
     }
 
-    HRESULT __stdcall put_CommandParameter(impl::abi_arg_in<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall put_CommandParameter(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CommandParameter(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&value));
+            this->shim().CommandParameter(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -347,12 +3742,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase> : produc
         }
     }
 
-    HRESULT __stdcall add_Click(impl::abi_arg_in<Windows::UI::Xaml::RoutedEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Click(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Click(*reinterpret_cast<const Windows::UI::Xaml::RoutedEventHandler *>(&value)));
+            *token = detach_abi(this->shim().Click(*reinterpret_cast<Windows::UI::Xaml::RoutedEventHandler const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -361,12 +3756,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase> : produc
         }
     }
 
-    HRESULT __stdcall remove_Click(event_token token) noexcept override
+    HRESULT __stdcall remove_Click(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Click(token);
+            this->shim().Click(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -379,17 +3774,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase> : produc
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBaseFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IButtonBaseFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IButtonBase> instance) noexcept override
+    HRESULT __stdcall CreateInstance(::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -399,7 +3796,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBaseFactory> :
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics>
 {
-    HRESULT __stdcall get_ClickModeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ClickModeProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -414,7 +3811,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics> :
         }
     }
 
-    HRESULT __stdcall get_IsPointerOverProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsPointerOverProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -429,7 +3826,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics> :
         }
     }
 
-    HRESULT __stdcall get_IsPressedProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsPressedProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -444,7 +3841,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics> :
         }
     }
 
-    HRESULT __stdcall get_CommandProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CommandProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -459,7 +3856,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics> :
         }
     }
 
-    HRESULT __stdcall get_CommandParameterProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CommandParameterProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -482,7 +3879,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarPanel> : pro
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings>
 {
-    HRESULT __stdcall get_MinViewWidth(double * value) noexcept override
+    HRESULT __stdcall get_MinViewWidth(double* value) noexcept override
     {
         try
         {
@@ -496,7 +3893,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_HeaderText(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HeaderText(HSTRING* value) noexcept override
     {
         try
         {
@@ -511,7 +3908,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_WeekDay1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_WeekDay1(HSTRING* value) noexcept override
     {
         try
         {
@@ -526,7 +3923,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_WeekDay2(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_WeekDay2(HSTRING* value) noexcept override
     {
         try
         {
@@ -541,7 +3938,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_WeekDay3(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_WeekDay3(HSTRING* value) noexcept override
     {
         try
         {
@@ -556,7 +3953,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_WeekDay4(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_WeekDay4(HSTRING* value) noexcept override
     {
         try
         {
@@ -571,7 +3968,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_WeekDay5(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_WeekDay5(HSTRING* value) noexcept override
     {
         try
         {
@@ -586,7 +3983,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_WeekDay6(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_WeekDay6(HSTRING* value) noexcept override
     {
         try
         {
@@ -601,7 +3998,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_WeekDay7(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_WeekDay7(HSTRING* value) noexcept override
     {
         try
         {
@@ -616,7 +4013,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_HasMoreContentAfter(bool * value) noexcept override
+    HRESULT __stdcall get_HasMoreContentAfter(bool* value) noexcept override
     {
         try
         {
@@ -630,7 +4027,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_HasMoreContentBefore(bool * value) noexcept override
+    HRESULT __stdcall get_HasMoreContentBefore(bool* value) noexcept override
     {
         try
         {
@@ -644,7 +4041,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_HasMoreViews(bool * value) noexcept override
+    HRESULT __stdcall get_HasMoreViews(bool* value) noexcept override
     {
         try
         {
@@ -658,7 +4055,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_ClipRect(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_ClipRect(abi_t<Windows::Foundation::Rect>* value) noexcept override
     {
         try
         {
@@ -672,7 +4069,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_CenterX(double * value) noexcept override
+    HRESULT __stdcall get_CenterX(double* value) noexcept override
     {
         try
         {
@@ -686,7 +4083,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
         }
     }
 
-    HRESULT __stdcall get_CenterY(double * value) noexcept override
+    HRESULT __stdcall get_CenterY(double* value) noexcept override
     {
         try
         {
@@ -704,7 +4101,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplate
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel>
 {
-    HRESULT __stdcall get_CanVerticallyScroll(bool * value) noexcept override
+    HRESULT __stdcall get_CanVerticallyScroll(bool* value) noexcept override
     {
         try
         {
@@ -732,7 +4129,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall get_CanHorizontallyScroll(bool * value) noexcept override
+    HRESULT __stdcall get_CanHorizontallyScroll(bool* value) noexcept override
     {
         try
         {
@@ -760,7 +4157,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall get_ExtentWidth(double * value) noexcept override
+    HRESULT __stdcall get_ExtentWidth(double* value) noexcept override
     {
         try
         {
@@ -774,7 +4171,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall get_ExtentHeight(double * value) noexcept override
+    HRESULT __stdcall get_ExtentHeight(double* value) noexcept override
     {
         try
         {
@@ -788,7 +4185,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall get_ViewportWidth(double * value) noexcept override
+    HRESULT __stdcall get_ViewportWidth(double* value) noexcept override
     {
         try
         {
@@ -802,7 +4199,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall get_ViewportHeight(double * value) noexcept override
+    HRESULT __stdcall get_ViewportHeight(double* value) noexcept override
     {
         try
         {
@@ -816,7 +4213,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall get_HorizontalOffset(double * value) noexcept override
+    HRESULT __stdcall get_HorizontalOffset(double* value) noexcept override
     {
         try
         {
@@ -830,7 +4227,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall get_VerticalOffset(double * value) noexcept override
+    HRESULT __stdcall get_VerticalOffset(double* value) noexcept override
     {
         try
         {
@@ -844,7 +4241,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall get_ScrollOwner(impl::abi_arg_out<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall get_ScrollOwner(::IUnknown** value) noexcept override
     {
         try
         {
@@ -859,12 +4256,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall put_ScrollOwner(impl::abi_arg_in<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall put_ScrollOwner(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ScrollOwner(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&value));
+            this->shim().ScrollOwner(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -873,7 +4270,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_LineUp() noexcept override
+    HRESULT __stdcall LineUp() noexcept override
     {
         try
         {
@@ -887,7 +4284,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_LineDown() noexcept override
+    HRESULT __stdcall LineDown() noexcept override
     {
         try
         {
@@ -901,7 +4298,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_LineLeft() noexcept override
+    HRESULT __stdcall LineLeft() noexcept override
     {
         try
         {
@@ -915,7 +4312,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_LineRight() noexcept override
+    HRESULT __stdcall LineRight() noexcept override
     {
         try
         {
@@ -929,7 +4326,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_PageUp() noexcept override
+    HRESULT __stdcall PageUp() noexcept override
     {
         try
         {
@@ -943,7 +4340,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_PageDown() noexcept override
+    HRESULT __stdcall PageDown() noexcept override
     {
         try
         {
@@ -957,7 +4354,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_PageLeft() noexcept override
+    HRESULT __stdcall PageLeft() noexcept override
     {
         try
         {
@@ -971,7 +4368,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_PageRight() noexcept override
+    HRESULT __stdcall PageRight() noexcept override
     {
         try
         {
@@ -985,7 +4382,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_MouseWheelUp() noexcept override
+    HRESULT __stdcall MouseWheelUp() noexcept override
     {
         try
         {
@@ -999,7 +4396,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_MouseWheelDown() noexcept override
+    HRESULT __stdcall MouseWheelDown() noexcept override
     {
         try
         {
@@ -1013,7 +4410,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_MouseWheelLeft() noexcept override
+    HRESULT __stdcall MouseWheelLeft() noexcept override
     {
         try
         {
@@ -1027,7 +4424,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_MouseWheelRight() noexcept override
+    HRESULT __stdcall MouseWheelRight() noexcept override
     {
         try
         {
@@ -1041,7 +4438,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_SetHorizontalOffset(double offset) noexcept override
+    HRESULT __stdcall SetHorizontalOffset(double offset) noexcept override
     {
         try
         {
@@ -1055,7 +4452,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_SetVerticalOffset(double offset) noexcept override
+    HRESULT __stdcall SetVerticalOffset(double offset) noexcept override
     {
         try
         {
@@ -1069,12 +4466,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
         }
     }
 
-    HRESULT __stdcall abi_MakeVisible(impl::abi_arg_in<Windows::UI::Xaml::IUIElement> visual, impl::abi_arg_in<Windows::Foundation::Rect> rectangle, impl::abi_arg_out<Windows::Foundation::Rect> returnValue) noexcept override
+    HRESULT __stdcall MakeVisible(::IUnknown* visual, abi_t<Windows::Foundation::Rect> rectangle, abi_t<Windows::Foundation::Rect>* returnValue) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *returnValue = detach_abi(this->shim().MakeVisible(*reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&visual), *reinterpret_cast<const Windows::Foundation::Rect *>(&rectangle)));
+            *returnValue = detach_abi(this->shim().MakeVisible(*reinterpret_cast<Windows::UI::Xaml::UIElement const*>(&visual), *reinterpret_cast<Windows::Foundation::Rect const*>(&rectangle)));
             return S_OK;
         }
         catch (...)
@@ -1087,17 +4484,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : pro
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanelFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanelFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> instance) noexcept override
+    HRESULT __stdcall CreateInstance(::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -1107,7 +4506,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanelFactory
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings>
 {
-    HRESULT __stdcall get_DropDownOpenedHeight(double * value) noexcept override
+    HRESULT __stdcall get_DropDownOpenedHeight(double* value) noexcept override
     {
         try
         {
@@ -1121,7 +4520,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSett
         }
     }
 
-    HRESULT __stdcall get_DropDownClosedHeight(double * value) noexcept override
+    HRESULT __stdcall get_DropDownClosedHeight(double* value) noexcept override
     {
         try
         {
@@ -1135,7 +4534,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSett
         }
     }
 
-    HRESULT __stdcall get_DropDownOffset(double * value) noexcept override
+    HRESULT __stdcall get_DropDownOffset(double* value) noexcept override
     {
         try
         {
@@ -1149,7 +4548,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSett
         }
     }
 
-    HRESULT __stdcall get_SelectedItemDirection(Windows::UI::Xaml::Controls::Primitives::AnimationDirection * value) noexcept override
+    HRESULT __stdcall get_SelectedItemDirection(abi_t<Windows::UI::Xaml::Controls::Primitives::AnimationDirection>* value) noexcept override
     {
         try
         {
@@ -1167,7 +4566,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSett
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings2> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings2>
 {
-    HRESULT __stdcall get_DropDownContentMinWidth(double * value) noexcept override
+    HRESULT __stdcall get_DropDownContentMinWidth(double* value) noexcept override
     {
         try
         {
@@ -1185,7 +4584,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSett
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings>
 {
-    HRESULT __stdcall get_ContentHeight(double * value) noexcept override
+    HRESULT __stdcall get_ContentHeight(double* value) noexcept override
     {
         try
         {
@@ -1199,7 +4598,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSe
         }
     }
 
-    HRESULT __stdcall get_OverflowContentClipRect(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_OverflowContentClipRect(abi_t<Windows::Foundation::Rect>* value) noexcept override
     {
         try
         {
@@ -1213,7 +4612,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSe
         }
     }
 
-    HRESULT __stdcall get_OverflowContentMinWidth(double * value) noexcept override
+    HRESULT __stdcall get_OverflowContentMinWidth(double* value) noexcept override
     {
         try
         {
@@ -1227,7 +4626,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSe
         }
     }
 
-    HRESULT __stdcall get_OverflowContentMaxHeight(double * value) noexcept override
+    HRESULT __stdcall get_OverflowContentMaxHeight(double* value) noexcept override
     {
         try
         {
@@ -1241,7 +4640,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSe
         }
     }
 
-    HRESULT __stdcall get_OverflowContentHorizontalOffset(double * value) noexcept override
+    HRESULT __stdcall get_OverflowContentHorizontalOffset(double* value) noexcept override
     {
         try
         {
@@ -1255,7 +4654,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSe
         }
     }
 
-    HRESULT __stdcall get_OverflowContentHeight(double * value) noexcept override
+    HRESULT __stdcall get_OverflowContentHeight(double* value) noexcept override
     {
         try
         {
@@ -1269,7 +4668,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSe
         }
     }
 
-    HRESULT __stdcall get_NegativeOverflowContentHeight(double * value) noexcept override
+    HRESULT __stdcall get_NegativeOverflowContentHeight(double* value) noexcept override
     {
         try
         {
@@ -1287,7 +4686,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSe
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings2> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings2>
 {
-    HRESULT __stdcall get_OverflowContentMaxWidth(double * value) noexcept override
+    HRESULT __stdcall get_OverflowContentMaxWidth(double* value) noexcept override
     {
         try
         {
@@ -1305,7 +4704,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSe
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings3> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings3>
 {
-    HRESULT __stdcall get_EffectiveOverflowButtonVisibility(Windows::UI::Xaml::Visibility * value) noexcept override
+    HRESULT __stdcall get_EffectiveOverflowButtonVisibility(abi_t<Windows::UI::Xaml::Visibility>* value) noexcept override
     {
         try
         {
@@ -1323,7 +4722,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSe
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs>
 {
-    HRESULT __stdcall get_HorizontalChange(double * value) noexcept override
+    HRESULT __stdcall get_HorizontalChange(double* value) noexcept override
     {
         try
         {
@@ -1337,7 +4736,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventAr
         }
     }
 
-    HRESULT __stdcall get_VerticalChange(double * value) noexcept override
+    HRESULT __stdcall get_VerticalChange(double* value) noexcept override
     {
         try
         {
@@ -1351,7 +4750,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventAr
         }
     }
 
-    HRESULT __stdcall get_Canceled(bool * value) noexcept override
+    HRESULT __stdcall get_Canceled(bool* value) noexcept override
     {
         try
         {
@@ -1369,17 +4768,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventAr
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgsFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgsFactory>
 {
-    HRESULT __stdcall abi_CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(double horizontalChange, double verticalChange, bool canceled, impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs> instance) noexcept override
+    HRESULT __stdcall CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(double horizontalChange, double verticalChange, bool canceled, ::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(horizontalChange, verticalChange, canceled, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(horizontalChange, verticalChange, canceled, *reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -1389,7 +4790,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventAr
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs>
 {
-    HRESULT __stdcall get_HorizontalChange(double * value) noexcept override
+    HRESULT __stdcall get_HorizontalChange(double* value) noexcept override
     {
         try
         {
@@ -1403,7 +4804,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs> 
         }
     }
 
-    HRESULT __stdcall get_VerticalChange(double * value) noexcept override
+    HRESULT __stdcall get_VerticalChange(double* value) noexcept override
     {
         try
         {
@@ -1421,17 +4822,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs> 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgsFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgsFactory>
 {
-    HRESULT __stdcall abi_CreateInstanceWithHorizontalChangeAndVerticalChange(double horizontalChange, double verticalChange, impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs> instance) noexcept override
+    HRESULT __stdcall CreateInstanceWithHorizontalChangeAndVerticalChange(double horizontalChange, double verticalChange, ::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalChangeAndVerticalChange(horizontalChange, verticalChange, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalChangeAndVerticalChange(horizontalChange, verticalChange, *reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -1441,7 +4844,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgsFa
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs>
 {
-    HRESULT __stdcall get_HorizontalOffset(double * value) noexcept override
+    HRESULT __stdcall get_HorizontalOffset(double* value) noexcept override
     {
         try
         {
@@ -1455,7 +4858,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs
         }
     }
 
-    HRESULT __stdcall get_VerticalOffset(double * value) noexcept override
+    HRESULT __stdcall get_VerticalOffset(double* value) noexcept override
     {
         try
         {
@@ -1473,17 +4876,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgsFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgsFactory>
 {
-    HRESULT __stdcall abi_CreateInstanceWithHorizontalOffsetAndVerticalOffset(double horizontalOffset, double verticalOffset, impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs> instance) noexcept override
+    HRESULT __stdcall CreateInstanceWithHorizontalOffsetAndVerticalOffset(double horizontalOffset, double verticalOffset, ::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalOffsetAndVerticalOffset(horizontalOffset, verticalOffset, *reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstanceWithHorizontalOffsetAndVerticalOffset(horizontalOffset, verticalOffset, *reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -1493,7 +4898,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase>
 {
-    HRESULT __stdcall get_Placement(Windows::UI::Xaml::Controls::Primitives::FlyoutPlacementMode * value) noexcept override
+    HRESULT __stdcall get_Placement(abi_t<Windows::UI::Xaml::Controls::Primitives::FlyoutPlacementMode>* value) noexcept override
     {
         try
         {
@@ -1507,12 +4912,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : produc
         }
     }
 
-    HRESULT __stdcall put_Placement(Windows::UI::Xaml::Controls::Primitives::FlyoutPlacementMode value) noexcept override
+    HRESULT __stdcall put_Placement(abi_t<Windows::UI::Xaml::Controls::Primitives::FlyoutPlacementMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Placement(value);
+            this->shim().Placement(*reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::FlyoutPlacementMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1521,12 +4926,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : produc
         }
     }
 
-    HRESULT __stdcall add_Opened(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Opened(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Opened(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&value)));
+            *token = detach_abi(this->shim().Opened(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -1535,12 +4940,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : produc
         }
     }
 
-    HRESULT __stdcall remove_Opened(event_token token) noexcept override
+    HRESULT __stdcall remove_Opened(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Opened(token);
+            this->shim().Opened(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1549,12 +4954,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : produc
         }
     }
 
-    HRESULT __stdcall add_Closed(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Closed(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Closed(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&value)));
+            *token = detach_abi(this->shim().Closed(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -1563,12 +4968,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : produc
         }
     }
 
-    HRESULT __stdcall remove_Closed(event_token token) noexcept override
+    HRESULT __stdcall remove_Closed(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Closed(token);
+            this->shim().Closed(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1577,12 +4982,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : produc
         }
     }
 
-    HRESULT __stdcall add_Opening(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Opening(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Opening(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&value)));
+            *token = detach_abi(this->shim().Opening(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -1591,12 +4996,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : produc
         }
     }
 
-    HRESULT __stdcall remove_Opening(event_token token) noexcept override
+    HRESULT __stdcall remove_Opening(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Opening(token);
+            this->shim().Opening(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1605,12 +5010,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : produc
         }
     }
 
-    HRESULT __stdcall abi_ShowAt(impl::abi_arg_in<Windows::UI::Xaml::IFrameworkElement> placementTarget) noexcept override
+    HRESULT __stdcall ShowAt(::IUnknown* placementTarget) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ShowAt(*reinterpret_cast<const Windows::UI::Xaml::FrameworkElement *>(&placementTarget));
+            this->shim().ShowAt(*reinterpret_cast<Windows::UI::Xaml::FrameworkElement const*>(&placementTarget));
             return S_OK;
         }
         catch (...)
@@ -1619,7 +5024,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : produc
         }
     }
 
-    HRESULT __stdcall abi_Hide() noexcept override
+    HRESULT __stdcall Hide() noexcept override
     {
         try
         {
@@ -1637,7 +5042,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : produc
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2>
 {
-    HRESULT __stdcall get_Target(impl::abi_arg_out<Windows::UI::Xaml::IFrameworkElement> value) noexcept override
+    HRESULT __stdcall get_Target(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1652,7 +5057,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> : produ
         }
     }
 
-    HRESULT __stdcall get_AllowFocusOnInteraction(bool * value) noexcept override
+    HRESULT __stdcall get_AllowFocusOnInteraction(bool* value) noexcept override
     {
         try
         {
@@ -1680,7 +5085,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> : produ
         }
     }
 
-    HRESULT __stdcall get_LightDismissOverlayMode(Windows::UI::Xaml::Controls::LightDismissOverlayMode * value) noexcept override
+    HRESULT __stdcall get_LightDismissOverlayMode(abi_t<Windows::UI::Xaml::Controls::LightDismissOverlayMode>* value) noexcept override
     {
         try
         {
@@ -1694,12 +5099,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> : produ
         }
     }
 
-    HRESULT __stdcall put_LightDismissOverlayMode(Windows::UI::Xaml::Controls::LightDismissOverlayMode value) noexcept override
+    HRESULT __stdcall put_LightDismissOverlayMode(abi_t<Windows::UI::Xaml::Controls::LightDismissOverlayMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().LightDismissOverlayMode(value);
+            this->shim().LightDismissOverlayMode(*reinterpret_cast<Windows::UI::Xaml::Controls::LightDismissOverlayMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1708,7 +5113,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> : produ
         }
     }
 
-    HRESULT __stdcall get_AllowFocusWhenDisabled(bool * value) noexcept override
+    HRESULT __stdcall get_AllowFocusWhenDisabled(bool* value) noexcept override
     {
         try
         {
@@ -1736,7 +5141,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> : produ
         }
     }
 
-    HRESULT __stdcall get_ElementSoundMode(Windows::UI::Xaml::ElementSoundMode * value) noexcept override
+    HRESULT __stdcall get_ElementSoundMode(abi_t<Windows::UI::Xaml::ElementSoundMode>* value) noexcept override
     {
         try
         {
@@ -1750,12 +5155,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> : produ
         }
     }
 
-    HRESULT __stdcall put_ElementSoundMode(Windows::UI::Xaml::ElementSoundMode value) noexcept override
+    HRESULT __stdcall put_ElementSoundMode(abi_t<Windows::UI::Xaml::ElementSoundMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ElementSoundMode(value);
+            this->shim().ElementSoundMode(*reinterpret_cast<Windows::UI::Xaml::ElementSoundMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1764,12 +5169,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> : produ
         }
     }
 
-    HRESULT __stdcall add_Closing(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Primitives::FlyoutBase, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs>> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Closing(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Closing(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Primitives::FlyoutBase, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs> *>(&value)));
+            *token = detach_abi(this->shim().Closing(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Primitives::FlyoutBase, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs> const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -1778,12 +5183,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> : produ
         }
     }
 
-    HRESULT __stdcall remove_Closing(event_token token) noexcept override
+    HRESULT __stdcall remove_Closing(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Closing(token);
+            this->shim().Closing(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1796,7 +5201,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> : produ
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3>
 {
-    HRESULT __stdcall get_OverlayInputPassThroughElement(impl::abi_arg_out<Windows::UI::Xaml::IDependencyObject> value) noexcept override
+    HRESULT __stdcall get_OverlayInputPassThroughElement(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1811,12 +5216,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3> : produ
         }
     }
 
-    HRESULT __stdcall put_OverlayInputPassThroughElement(impl::abi_arg_in<Windows::UI::Xaml::IDependencyObject> value) noexcept override
+    HRESULT __stdcall put_OverlayInputPassThroughElement(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().OverlayInputPassThroughElement(*reinterpret_cast<const Windows::UI::Xaml::DependencyObject *>(&value));
+            this->shim().OverlayInputPassThroughElement(*reinterpret_cast<Windows::UI::Xaml::DependencyObject const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1829,7 +5234,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3> : produ
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseClosingEventArgs> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseClosingEventArgs>
 {
-    HRESULT __stdcall get_Cancel(bool * value) noexcept override
+    HRESULT __stdcall get_Cancel(bool* value) noexcept override
     {
         try
         {
@@ -1861,17 +5266,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseClosingEve
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> instance) noexcept override
+    HRESULT __stdcall CreateInstance(::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -1881,7 +5288,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseFactory> :
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverrides> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverrides>
 {
-    HRESULT __stdcall abi_CreatePresenter(impl::abi_arg_out<Windows::UI::Xaml::Controls::IControl> returnValue) noexcept override
+    HRESULT __stdcall CreatePresenter(::IUnknown** returnValue) noexcept override
     {
         try
         {
@@ -1900,7 +5307,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverrides>
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics>
 {
-    HRESULT __stdcall get_PlacementProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PlacementProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1915,7 +5322,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics> :
         }
     }
 
-    HRESULT __stdcall get_AttachedFlyoutProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_AttachedFlyoutProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1930,12 +5337,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics> :
         }
     }
 
-    HRESULT __stdcall abi_GetAttachedFlyout(impl::abi_arg_in<Windows::UI::Xaml::IFrameworkElement> element, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> value) noexcept override
+    HRESULT __stdcall GetAttachedFlyout(::IUnknown* element, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetAttachedFlyout(*reinterpret_cast<const Windows::UI::Xaml::FrameworkElement *>(&element)));
+            *value = detach_abi(this->shim().GetAttachedFlyout(*reinterpret_cast<Windows::UI::Xaml::FrameworkElement const*>(&element)));
             return S_OK;
         }
         catch (...)
@@ -1945,12 +5352,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics> :
         }
     }
 
-    HRESULT __stdcall abi_SetAttachedFlyout(impl::abi_arg_in<Windows::UI::Xaml::IFrameworkElement> element, impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> value) noexcept override
+    HRESULT __stdcall SetAttachedFlyout(::IUnknown* element, ::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SetAttachedFlyout(*reinterpret_cast<const Windows::UI::Xaml::FrameworkElement *>(&element), *reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::FlyoutBase *>(&value));
+            this->shim().SetAttachedFlyout(*reinterpret_cast<Windows::UI::Xaml::FrameworkElement const*>(&element), *reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::FlyoutBase const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1959,12 +5366,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics> :
         }
     }
 
-    HRESULT __stdcall abi_ShowAttachedFlyout(impl::abi_arg_in<Windows::UI::Xaml::IFrameworkElement> flyoutOwner) noexcept override
+    HRESULT __stdcall ShowAttachedFlyout(::IUnknown* flyoutOwner) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ShowAttachedFlyout(*reinterpret_cast<const Windows::UI::Xaml::FrameworkElement *>(&flyoutOwner));
+            this->shim().ShowAttachedFlyout(*reinterpret_cast<Windows::UI::Xaml::FrameworkElement const*>(&flyoutOwner));
             return S_OK;
         }
         catch (...)
@@ -1977,7 +5384,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics> :
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2>
 {
-    HRESULT __stdcall get_AllowFocusOnInteractionProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_AllowFocusOnInteractionProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1992,7 +5399,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2> 
         }
     }
 
-    HRESULT __stdcall get_LightDismissOverlayModeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_LightDismissOverlayModeProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2007,7 +5414,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2> 
         }
     }
 
-    HRESULT __stdcall get_AllowFocusWhenDisabledProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_AllowFocusWhenDisabledProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2022,7 +5429,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2> 
         }
     }
 
-    HRESULT __stdcall get_ElementSoundModeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ElementSoundModeProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2041,7 +5448,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2> 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics3> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics3>
 {
-    HRESULT __stdcall get_OverlayInputPassThroughElementProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_OverlayInputPassThroughElementProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2064,7 +5471,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHel
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelperStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelperStatics>
 {
-    HRESULT __stdcall abi_FromIndexAndOffset(int32_t index, int32_t offset, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::GeneratorPosition> returnValue) noexcept override
+    HRESULT __stdcall FromIndexAndOffset(int32_t index, int32_t offset, abi_t<Windows::UI::Xaml::Controls::Primitives::GeneratorPosition>* returnValue) noexcept override
     {
         try
         {
@@ -2082,7 +5489,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHel
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter>
 {
-    HRESULT __stdcall get_SelectionCheckMarkVisualEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_SelectionCheckMarkVisualEnabled(bool* value) noexcept override
     {
         try
         {
@@ -2110,7 +5517,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckHintBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_CheckHintBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2125,12 +5532,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_CheckHintBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_CheckHintBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CheckHintBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().CheckHintBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2139,7 +5546,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckSelectingBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_CheckSelectingBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2154,12 +5561,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_CheckSelectingBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_CheckSelectingBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CheckSelectingBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().CheckSelectingBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2168,7 +5575,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_CheckBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2183,12 +5590,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_CheckBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_CheckBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CheckBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().CheckBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2197,7 +5604,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_DragBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2212,12 +5619,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_DragBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_DragBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DragBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().DragBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2226,7 +5633,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragForeground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_DragForeground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2241,12 +5648,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_DragForeground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_DragForeground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DragForeground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().DragForeground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2255,7 +5662,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_FocusBorderBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_FocusBorderBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2270,12 +5677,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_FocusBorderBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_FocusBorderBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().FocusBorderBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().FocusBorderBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2284,7 +5691,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PlaceholderBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_PlaceholderBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2299,12 +5706,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_PlaceholderBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_PlaceholderBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PlaceholderBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().PlaceholderBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2313,7 +5720,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PointerOverBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_PointerOverBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2328,12 +5735,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_PointerOverBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_PointerOverBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PointerOverBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().PointerOverBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2342,7 +5749,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_SelectedBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2357,12 +5764,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_SelectedBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_SelectedBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().SelectedBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2371,7 +5778,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedForeground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_SelectedForeground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2386,12 +5793,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_SelectedForeground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_SelectedForeground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedForeground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().SelectedForeground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2400,7 +5807,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedPointerOverBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_SelectedPointerOverBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2415,12 +5822,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_SelectedPointerOverBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_SelectedPointerOverBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedPointerOverBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().SelectedPointerOverBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2429,7 +5836,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedPointerOverBorderBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_SelectedPointerOverBorderBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2444,12 +5851,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_SelectedPointerOverBorderBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_SelectedPointerOverBorderBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedPointerOverBorderBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().SelectedPointerOverBorderBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2458,7 +5865,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedBorderThickness(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_SelectedBorderThickness(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -2472,12 +5879,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_SelectedBorderThickness(impl::abi_arg_in<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall put_SelectedBorderThickness(abi_t<Windows::UI::Xaml::Thickness> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedBorderThickness(*reinterpret_cast<const Windows::UI::Xaml::Thickness *>(&value));
+            this->shim().SelectedBorderThickness(*reinterpret_cast<Windows::UI::Xaml::Thickness const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2486,7 +5893,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DisabledOpacity(double * value) noexcept override
+    HRESULT __stdcall get_DisabledOpacity(double* value) noexcept override
     {
         try
         {
@@ -2514,7 +5921,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragOpacity(double * value) noexcept override
+    HRESULT __stdcall get_DragOpacity(double* value) noexcept override
     {
         try
         {
@@ -2542,7 +5949,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ReorderHintOffset(double * value) noexcept override
+    HRESULT __stdcall get_ReorderHintOffset(double* value) noexcept override
     {
         try
         {
@@ -2570,7 +5977,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_GridViewItemPresenterHorizontalContentAlignment(Windows::UI::Xaml::HorizontalAlignment * value) noexcept override
+    HRESULT __stdcall get_GridViewItemPresenterHorizontalContentAlignment(abi_t<Windows::UI::Xaml::HorizontalAlignment>* value) noexcept override
     {
         try
         {
@@ -2584,12 +5991,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_GridViewItemPresenterHorizontalContentAlignment(Windows::UI::Xaml::HorizontalAlignment value) noexcept override
+    HRESULT __stdcall put_GridViewItemPresenterHorizontalContentAlignment(abi_t<Windows::UI::Xaml::HorizontalAlignment> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().GridViewItemPresenterHorizontalContentAlignment(value);
+            this->shim().GridViewItemPresenterHorizontalContentAlignment(*reinterpret_cast<Windows::UI::Xaml::HorizontalAlignment const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2598,7 +6005,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_GridViewItemPresenterVerticalContentAlignment(Windows::UI::Xaml::VerticalAlignment * value) noexcept override
+    HRESULT __stdcall get_GridViewItemPresenterVerticalContentAlignment(abi_t<Windows::UI::Xaml::VerticalAlignment>* value) noexcept override
     {
         try
         {
@@ -2612,12 +6019,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_GridViewItemPresenterVerticalContentAlignment(Windows::UI::Xaml::VerticalAlignment value) noexcept override
+    HRESULT __stdcall put_GridViewItemPresenterVerticalContentAlignment(abi_t<Windows::UI::Xaml::VerticalAlignment> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().GridViewItemPresenterVerticalContentAlignment(value);
+            this->shim().GridViewItemPresenterVerticalContentAlignment(*reinterpret_cast<Windows::UI::Xaml::VerticalAlignment const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2626,7 +6033,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_GridViewItemPresenterPadding(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_GridViewItemPresenterPadding(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -2640,12 +6047,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_GridViewItemPresenterPadding(impl::abi_arg_in<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall put_GridViewItemPresenterPadding(abi_t<Windows::UI::Xaml::Thickness> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().GridViewItemPresenterPadding(*reinterpret_cast<const Windows::UI::Xaml::Thickness *>(&value));
+            this->shim().GridViewItemPresenterPadding(*reinterpret_cast<Windows::UI::Xaml::Thickness const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2654,7 +6061,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PointerOverBackgroundMargin(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_PointerOverBackgroundMargin(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -2668,12 +6075,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_PointerOverBackgroundMargin(impl::abi_arg_in<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall put_PointerOverBackgroundMargin(abi_t<Windows::UI::Xaml::Thickness> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PointerOverBackgroundMargin(*reinterpret_cast<const Windows::UI::Xaml::Thickness *>(&value));
+            this->shim().PointerOverBackgroundMargin(*reinterpret_cast<Windows::UI::Xaml::Thickness const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2682,7 +6089,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ContentMargin(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_ContentMargin(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -2696,12 +6103,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_ContentMargin(impl::abi_arg_in<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall put_ContentMargin(abi_t<Windows::UI::Xaml::Thickness> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ContentMargin(*reinterpret_cast<const Windows::UI::Xaml::Thickness *>(&value));
+            this->shim().ContentMargin(*reinterpret_cast<Windows::UI::Xaml::Thickness const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2714,17 +6121,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter> instance) noexcept override
+    HRESULT __stdcall CreateInstance(::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -2734,7 +6143,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>
 {
-    HRESULT __stdcall get_SelectionCheckMarkVisualEnabledProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectionCheckMarkVisualEnabledProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2749,7 +6158,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckHintBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CheckHintBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2764,7 +6173,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckSelectingBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CheckSelectingBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2779,7 +6188,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CheckBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2794,7 +6203,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_DragBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2809,7 +6218,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragForegroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_DragForegroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2824,7 +6233,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_FocusBorderBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_FocusBorderBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2839,7 +6248,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PlaceholderBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PlaceholderBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2854,7 +6263,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PointerOverBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PointerOverBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2869,7 +6278,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2884,7 +6293,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedForegroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedForegroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2899,7 +6308,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedPointerOverBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedPointerOverBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2914,7 +6323,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedPointerOverBorderBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedPointerOverBorderBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2929,7 +6338,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedBorderThicknessProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedBorderThicknessProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2944,7 +6353,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DisabledOpacityProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_DisabledOpacityProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2959,7 +6368,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragOpacityProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_DragOpacityProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2974,7 +6383,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ReorderHintOffsetProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ReorderHintOffsetProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2989,7 +6398,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_GridViewItemPresenterHorizontalContentAlignmentProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_GridViewItemPresenterHorizontalContentAlignmentProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3004,7 +6413,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_GridViewItemPresenterVerticalContentAlignmentProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_GridViewItemPresenterVerticalContentAlignmentProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3019,7 +6428,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_GridViewItemPresenterPaddingProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_GridViewItemPresenterPaddingProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3034,7 +6443,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PointerOverBackgroundMarginProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PointerOverBackgroundMarginProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3049,7 +6458,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ContentMarginProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ContentMarginProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3068,7 +6477,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresente
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemTemplateSettings>
 {
-    HRESULT __stdcall get_DragItemsCount(int32_t * value) noexcept override
+    HRESULT __stdcall get_DragItemsCount(int32_t* value) noexcept override
     {
         try
         {
@@ -3086,7 +6495,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemTemplate
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs>
 {
-    HRESULT __stdcall get_Action(int32_t * value) noexcept override
+    HRESULT __stdcall get_Action(int32_t* value) noexcept override
     {
         try
         {
@@ -3100,7 +6509,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArg
         }
     }
 
-    HRESULT __stdcall get_Position(impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::GeneratorPosition> value) noexcept override
+    HRESULT __stdcall get_Position(abi_t<Windows::UI::Xaml::Controls::Primitives::GeneratorPosition>* value) noexcept override
     {
         try
         {
@@ -3114,7 +6523,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArg
         }
     }
 
-    HRESULT __stdcall get_OldPosition(impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::GeneratorPosition> value) noexcept override
+    HRESULT __stdcall get_OldPosition(abi_t<Windows::UI::Xaml::Controls::Primitives::GeneratorPosition>* value) noexcept override
     {
         try
         {
@@ -3128,7 +6537,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArg
         }
     }
 
-    HRESULT __stdcall get_ItemCount(int32_t * value) noexcept override
+    HRESULT __stdcall get_ItemCount(int32_t* value) noexcept override
     {
         try
         {
@@ -3142,7 +6551,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArg
         }
     }
 
-    HRESULT __stdcall get_ItemUICount(int32_t * value) noexcept override
+    HRESULT __stdcall get_ItemUICount(int32_t* value) noexcept override
     {
         try
         {
@@ -3160,7 +6569,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArg
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverter> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverter>
 {
-    HRESULT __stdcall get_Enabled(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_Enabled(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3175,12 +6584,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgrou
         }
     }
 
-    HRESULT __stdcall put_Enabled(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_Enabled(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Enabled(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().Enabled(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3189,7 +6598,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgrou
         }
     }
 
-    HRESULT __stdcall get_Disabled(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_Disabled(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3204,12 +6613,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgrou
         }
     }
 
-    HRESULT __stdcall put_Disabled(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_Disabled(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Disabled(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().Disabled(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3222,7 +6631,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgrou
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverterStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverterStatics>
 {
-    HRESULT __stdcall get_EnabledProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_EnabledProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3237,7 +6646,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgrou
         }
     }
 
-    HRESULT __stdcall get_DisabledProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_DisabledProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3256,7 +6665,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgrou
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverter> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverter>
 {
-    HRESULT __stdcall get_Enabled(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_Enabled(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3271,12 +6680,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegrou
         }
     }
 
-    HRESULT __stdcall put_Enabled(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_Enabled(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Enabled(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().Enabled(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3285,7 +6694,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegrou
         }
     }
 
-    HRESULT __stdcall get_Disabled(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_Disabled(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3300,12 +6709,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegrou
         }
     }
 
-    HRESULT __stdcall put_Disabled(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_Disabled(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Disabled(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().Disabled(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3318,7 +6727,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegrou
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverterStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverterStatics>
 {
-    HRESULT __stdcall get_EnabledProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_EnabledProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3333,7 +6742,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegrou
         }
     }
 
-    HRESULT __stdcall get_DisabledProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_DisabledProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3356,12 +6765,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILayoutInformation> :
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILayoutInformationStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ILayoutInformationStatics>
 {
-    HRESULT __stdcall abi_GetLayoutExceptionElement(impl::abi_arg_in<Windows::Foundation::IInspectable> dispatcher, impl::abi_arg_out<Windows::UI::Xaml::IUIElement> element) noexcept override
+    HRESULT __stdcall GetLayoutExceptionElement(::IUnknown* dispatcher, ::IUnknown** element) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *element = detach_abi(this->shim().GetLayoutExceptionElement(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&dispatcher)));
+            *element = detach_abi(this->shim().GetLayoutExceptionElement(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&dispatcher)));
             return S_OK;
         }
         catch (...)
@@ -3371,12 +6780,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILayoutInformationSta
         }
     }
 
-    HRESULT __stdcall abi_GetLayoutSlot(impl::abi_arg_in<Windows::UI::Xaml::IFrameworkElement> element, impl::abi_arg_out<Windows::Foundation::Rect> slot) noexcept override
+    HRESULT __stdcall GetLayoutSlot(::IUnknown* element, abi_t<Windows::Foundation::Rect>* slot) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *slot = detach_abi(this->shim().GetLayoutSlot(*reinterpret_cast<const Windows::UI::Xaml::FrameworkElement *>(&element)));
+            *slot = detach_abi(this->shim().GetLayoutSlot(*reinterpret_cast<Windows::UI::Xaml::FrameworkElement const*>(&element)));
             return S_OK;
         }
         catch (...)
@@ -3389,7 +6798,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILayoutInformationSta
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter>
 {
-    HRESULT __stdcall get_SelectionCheckMarkVisualEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_SelectionCheckMarkVisualEnabled(bool* value) noexcept override
     {
         try
         {
@@ -3417,7 +6826,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckHintBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_CheckHintBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3432,12 +6841,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_CheckHintBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_CheckHintBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CheckHintBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().CheckHintBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3446,7 +6855,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckSelectingBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_CheckSelectingBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3461,12 +6870,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_CheckSelectingBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_CheckSelectingBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CheckSelectingBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().CheckSelectingBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3475,7 +6884,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_CheckBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3490,12 +6899,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_CheckBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_CheckBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CheckBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().CheckBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3504,7 +6913,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_DragBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3519,12 +6928,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_DragBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_DragBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DragBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().DragBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3533,7 +6942,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragForeground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_DragForeground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3548,12 +6957,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_DragForeground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_DragForeground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DragForeground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().DragForeground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3562,7 +6971,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_FocusBorderBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_FocusBorderBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3577,12 +6986,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_FocusBorderBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_FocusBorderBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().FocusBorderBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().FocusBorderBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3591,7 +7000,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PlaceholderBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_PlaceholderBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3606,12 +7015,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_PlaceholderBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_PlaceholderBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PlaceholderBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().PlaceholderBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3620,7 +7029,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PointerOverBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_PointerOverBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3635,12 +7044,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_PointerOverBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_PointerOverBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PointerOverBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().PointerOverBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3649,7 +7058,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_SelectedBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3664,12 +7073,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_SelectedBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_SelectedBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().SelectedBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3678,7 +7087,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedForeground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_SelectedForeground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3693,12 +7102,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_SelectedForeground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_SelectedForeground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedForeground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().SelectedForeground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3707,7 +7116,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedPointerOverBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_SelectedPointerOverBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3722,12 +7131,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_SelectedPointerOverBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_SelectedPointerOverBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedPointerOverBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().SelectedPointerOverBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3736,7 +7145,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedPointerOverBorderBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_SelectedPointerOverBorderBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3751,12 +7160,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_SelectedPointerOverBorderBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_SelectedPointerOverBorderBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedPointerOverBorderBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().SelectedPointerOverBorderBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3765,7 +7174,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedBorderThickness(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_SelectedBorderThickness(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -3779,12 +7188,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_SelectedBorderThickness(impl::abi_arg_in<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall put_SelectedBorderThickness(abi_t<Windows::UI::Xaml::Thickness> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedBorderThickness(*reinterpret_cast<const Windows::UI::Xaml::Thickness *>(&value));
+            this->shim().SelectedBorderThickness(*reinterpret_cast<Windows::UI::Xaml::Thickness const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3793,7 +7202,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DisabledOpacity(double * value) noexcept override
+    HRESULT __stdcall get_DisabledOpacity(double* value) noexcept override
     {
         try
         {
@@ -3821,7 +7230,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragOpacity(double * value) noexcept override
+    HRESULT __stdcall get_DragOpacity(double* value) noexcept override
     {
         try
         {
@@ -3849,7 +7258,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ReorderHintOffset(double * value) noexcept override
+    HRESULT __stdcall get_ReorderHintOffset(double* value) noexcept override
     {
         try
         {
@@ -3877,7 +7286,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ListViewItemPresenterHorizontalContentAlignment(Windows::UI::Xaml::HorizontalAlignment * value) noexcept override
+    HRESULT __stdcall get_ListViewItemPresenterHorizontalContentAlignment(abi_t<Windows::UI::Xaml::HorizontalAlignment>* value) noexcept override
     {
         try
         {
@@ -3891,12 +7300,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_ListViewItemPresenterHorizontalContentAlignment(Windows::UI::Xaml::HorizontalAlignment value) noexcept override
+    HRESULT __stdcall put_ListViewItemPresenterHorizontalContentAlignment(abi_t<Windows::UI::Xaml::HorizontalAlignment> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ListViewItemPresenterHorizontalContentAlignment(value);
+            this->shim().ListViewItemPresenterHorizontalContentAlignment(*reinterpret_cast<Windows::UI::Xaml::HorizontalAlignment const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3905,7 +7314,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ListViewItemPresenterVerticalContentAlignment(Windows::UI::Xaml::VerticalAlignment * value) noexcept override
+    HRESULT __stdcall get_ListViewItemPresenterVerticalContentAlignment(abi_t<Windows::UI::Xaml::VerticalAlignment>* value) noexcept override
     {
         try
         {
@@ -3919,12 +7328,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_ListViewItemPresenterVerticalContentAlignment(Windows::UI::Xaml::VerticalAlignment value) noexcept override
+    HRESULT __stdcall put_ListViewItemPresenterVerticalContentAlignment(abi_t<Windows::UI::Xaml::VerticalAlignment> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ListViewItemPresenterVerticalContentAlignment(value);
+            this->shim().ListViewItemPresenterVerticalContentAlignment(*reinterpret_cast<Windows::UI::Xaml::VerticalAlignment const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3933,7 +7342,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ListViewItemPresenterPadding(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_ListViewItemPresenterPadding(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -3947,12 +7356,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_ListViewItemPresenterPadding(impl::abi_arg_in<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall put_ListViewItemPresenterPadding(abi_t<Windows::UI::Xaml::Thickness> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ListViewItemPresenterPadding(*reinterpret_cast<const Windows::UI::Xaml::Thickness *>(&value));
+            this->shim().ListViewItemPresenterPadding(*reinterpret_cast<Windows::UI::Xaml::Thickness const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3961,7 +7370,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PointerOverBackgroundMargin(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_PointerOverBackgroundMargin(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -3975,12 +7384,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_PointerOverBackgroundMargin(impl::abi_arg_in<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall put_PointerOverBackgroundMargin(abi_t<Windows::UI::Xaml::Thickness> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PointerOverBackgroundMargin(*reinterpret_cast<const Windows::UI::Xaml::Thickness *>(&value));
+            this->shim().PointerOverBackgroundMargin(*reinterpret_cast<Windows::UI::Xaml::Thickness const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3989,7 +7398,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ContentMargin(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_ContentMargin(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -4003,12 +7412,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_ContentMargin(impl::abi_arg_in<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall put_ContentMargin(abi_t<Windows::UI::Xaml::Thickness> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ContentMargin(*reinterpret_cast<const Windows::UI::Xaml::Thickness *>(&value));
+            this->shim().ContentMargin(*reinterpret_cast<Windows::UI::Xaml::Thickness const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4021,7 +7430,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2>
 {
-    HRESULT __stdcall get_SelectedPressedBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_SelectedPressedBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4036,12 +7445,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_SelectedPressedBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_SelectedPressedBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedPressedBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().SelectedPressedBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4050,7 +7459,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PressedBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_PressedBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4065,12 +7474,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_PressedBackground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_PressedBackground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PressedBackground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().PressedBackground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4079,7 +7488,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckBoxBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_CheckBoxBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4094,12 +7503,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_CheckBoxBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_CheckBoxBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CheckBoxBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().CheckBoxBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4108,7 +7517,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_FocusSecondaryBorderBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_FocusSecondaryBorderBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4123,12 +7532,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_FocusSecondaryBorderBrush(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_FocusSecondaryBorderBrush(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().FocusSecondaryBorderBrush(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().FocusSecondaryBorderBrush(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4137,7 +7546,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckMode(Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenterCheckMode * value) noexcept override
+    HRESULT __stdcall get_CheckMode(abi_t<Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenterCheckMode>* value) noexcept override
     {
         try
         {
@@ -4151,12 +7560,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_CheckMode(Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenterCheckMode value) noexcept override
+    HRESULT __stdcall put_CheckMode(abi_t<Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenterCheckMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CheckMode(value);
+            this->shim().CheckMode(*reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenterCheckMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4165,7 +7574,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PointerOverForeground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_PointerOverForeground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4180,12 +7589,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall put_PointerOverForeground(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_PointerOverForeground(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PointerOverForeground(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().PointerOverForeground(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4198,17 +7607,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter> instance) noexcept override
+    HRESULT __stdcall CreateInstance(::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -4218,7 +7629,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>
 {
-    HRESULT __stdcall get_SelectionCheckMarkVisualEnabledProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectionCheckMarkVisualEnabledProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4233,7 +7644,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckHintBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CheckHintBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4248,7 +7659,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckSelectingBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CheckSelectingBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4263,7 +7674,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CheckBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4278,7 +7689,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_DragBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4293,7 +7704,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragForegroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_DragForegroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4308,7 +7719,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_FocusBorderBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_FocusBorderBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4323,7 +7734,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PlaceholderBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PlaceholderBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4338,7 +7749,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PointerOverBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PointerOverBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4353,7 +7764,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4368,7 +7779,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedForegroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedForegroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4383,7 +7794,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedPointerOverBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedPointerOverBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4398,7 +7809,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedPointerOverBorderBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedPointerOverBorderBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4413,7 +7824,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_SelectedBorderThicknessProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedBorderThicknessProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4428,7 +7839,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DisabledOpacityProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_DisabledOpacityProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4443,7 +7854,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_DragOpacityProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_DragOpacityProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4458,7 +7869,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ReorderHintOffsetProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ReorderHintOffsetProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4473,7 +7884,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ListViewItemPresenterHorizontalContentAlignmentProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ListViewItemPresenterHorizontalContentAlignmentProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4488,7 +7899,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ListViewItemPresenterVerticalContentAlignmentProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ListViewItemPresenterVerticalContentAlignmentProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4503,7 +7914,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ListViewItemPresenterPaddingProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ListViewItemPresenterPaddingProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4518,7 +7929,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PointerOverBackgroundMarginProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PointerOverBackgroundMarginProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4533,7 +7944,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_ContentMarginProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ContentMarginProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4552,7 +7963,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2>
 {
-    HRESULT __stdcall get_SelectedPressedBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedPressedBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4567,7 +7978,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PressedBackgroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PressedBackgroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4582,7 +7993,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckBoxBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CheckBoxBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4597,7 +8008,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_FocusSecondaryBorderBrushProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_FocusSecondaryBorderBrushProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4612,7 +8023,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_CheckModeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_CheckModeProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4627,7 +8038,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
         }
     }
 
-    HRESULT __stdcall get_PointerOverForegroundProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_PointerOverForegroundProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4646,7 +8057,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresente
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemTemplateSettings>
 {
-    HRESULT __stdcall get_DragItemsCount(int32_t * value) noexcept override
+    HRESULT __stdcall get_DragItemsCount(int32_t* value) noexcept override
     {
         try
         {
@@ -4664,7 +8075,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemTemplate
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector>
 {
-    HRESULT __stdcall get_ShouldLoop(bool * value) noexcept override
+    HRESULT __stdcall get_ShouldLoop(bool* value) noexcept override
     {
         try
         {
@@ -4692,7 +8103,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : p
         }
     }
 
-    HRESULT __stdcall get_Items(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable>> value) noexcept override
+    HRESULT __stdcall get_Items(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4707,12 +8118,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : p
         }
     }
 
-    HRESULT __stdcall put_Items(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable>> value) noexcept override
+    HRESULT __stdcall put_Items(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Items(*reinterpret_cast<const Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> *>(&value));
+            this->shim().Items(*reinterpret_cast<Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4721,7 +8132,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : p
         }
     }
 
-    HRESULT __stdcall get_SelectedIndex(int32_t * value) noexcept override
+    HRESULT __stdcall get_SelectedIndex(int32_t* value) noexcept override
     {
         try
         {
@@ -4749,7 +8160,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : p
         }
     }
 
-    HRESULT __stdcall get_SelectedItem(impl::abi_arg_out<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall get_SelectedItem(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4764,12 +8175,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : p
         }
     }
 
-    HRESULT __stdcall put_SelectedItem(impl::abi_arg_in<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall put_SelectedItem(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&value));
+            this->shim().SelectedItem(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4778,7 +8189,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : p
         }
     }
 
-    HRESULT __stdcall get_ItemWidth(int32_t * value) noexcept override
+    HRESULT __stdcall get_ItemWidth(int32_t* value) noexcept override
     {
         try
         {
@@ -4806,7 +8217,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : p
         }
     }
 
-    HRESULT __stdcall get_ItemHeight(int32_t * value) noexcept override
+    HRESULT __stdcall get_ItemHeight(int32_t* value) noexcept override
     {
         try
         {
@@ -4834,7 +8245,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : p
         }
     }
 
-    HRESULT __stdcall get_ItemTemplate(impl::abi_arg_out<Windows::UI::Xaml::IDataTemplate> value) noexcept override
+    HRESULT __stdcall get_ItemTemplate(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4849,12 +8260,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : p
         }
     }
 
-    HRESULT __stdcall put_ItemTemplate(impl::abi_arg_in<Windows::UI::Xaml::IDataTemplate> value) noexcept override
+    HRESULT __stdcall put_ItemTemplate(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ItemTemplate(*reinterpret_cast<const Windows::UI::Xaml::DataTemplate *>(&value));
+            this->shim().ItemTemplate(*reinterpret_cast<Windows::UI::Xaml::DataTemplate const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4863,12 +8274,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : p
         }
     }
 
-    HRESULT __stdcall add_SelectionChanged(impl::abi_arg_in<Windows::UI::Xaml::Controls::SelectionChangedEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_SelectionChanged(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().SelectionChanged(*reinterpret_cast<const Windows::UI::Xaml::Controls::SelectionChangedEventHandler *>(&value)));
+            *token = detach_abi(this->shim().SelectionChanged(*reinterpret_cast<Windows::UI::Xaml::Controls::SelectionChangedEventHandler const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -4877,12 +8288,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : p
         }
     }
 
-    HRESULT __stdcall remove_SelectionChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_SelectionChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectionChanged(token);
+            this->shim().SelectionChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -4903,7 +8314,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorPanel
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics>
 {
-    HRESULT __stdcall get_ShouldLoopProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ShouldLoopProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4918,7 +8329,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStati
         }
     }
 
-    HRESULT __stdcall get_ItemsProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ItemsProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4933,7 +8344,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStati
         }
     }
 
-    HRESULT __stdcall get_SelectedIndexProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedIndexProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4948,7 +8359,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStati
         }
     }
 
-    HRESULT __stdcall get_SelectedItemProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedItemProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4963,7 +8374,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStati
         }
     }
 
-    HRESULT __stdcall get_ItemWidthProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ItemWidthProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4978,7 +8389,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStati
         }
     }
 
-    HRESULT __stdcall get_ItemHeightProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ItemHeightProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4993,7 +8404,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStati
         }
     }
 
-    HRESULT __stdcall get_ItemTemplateProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ItemTemplateProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5012,7 +8423,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStati
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IMenuFlyoutPresenterTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IMenuFlyoutPresenterTemplateSettings>
 {
-    HRESULT __stdcall get_FlyoutContentMinWidth(double * value) noexcept override
+    HRESULT __stdcall get_FlyoutContentMinWidth(double* value) noexcept override
     {
         try
         {
@@ -5030,7 +8441,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IMenuFlyoutPresenterT
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel>
 {
-    HRESULT __stdcall get_CanVerticallyScroll(bool * value) noexcept override
+    HRESULT __stdcall get_CanVerticallyScroll(bool* value) noexcept override
     {
         try
         {
@@ -5058,7 +8469,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall get_CanHorizontallyScroll(bool * value) noexcept override
+    HRESULT __stdcall get_CanHorizontallyScroll(bool* value) noexcept override
     {
         try
         {
@@ -5086,7 +8497,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall get_ExtentWidth(double * value) noexcept override
+    HRESULT __stdcall get_ExtentWidth(double* value) noexcept override
     {
         try
         {
@@ -5100,7 +8511,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall get_ExtentHeight(double * value) noexcept override
+    HRESULT __stdcall get_ExtentHeight(double* value) noexcept override
     {
         try
         {
@@ -5114,7 +8525,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall get_ViewportWidth(double * value) noexcept override
+    HRESULT __stdcall get_ViewportWidth(double* value) noexcept override
     {
         try
         {
@@ -5128,7 +8539,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall get_ViewportHeight(double * value) noexcept override
+    HRESULT __stdcall get_ViewportHeight(double* value) noexcept override
     {
         try
         {
@@ -5142,7 +8553,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall get_HorizontalOffset(double * value) noexcept override
+    HRESULT __stdcall get_HorizontalOffset(double* value) noexcept override
     {
         try
         {
@@ -5156,7 +8567,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall get_VerticalOffset(double * value) noexcept override
+    HRESULT __stdcall get_VerticalOffset(double* value) noexcept override
     {
         try
         {
@@ -5170,7 +8581,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall get_ScrollOwner(impl::abi_arg_out<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall get_ScrollOwner(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5185,12 +8596,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall put_ScrollOwner(impl::abi_arg_in<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall put_ScrollOwner(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ScrollOwner(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&value));
+            this->shim().ScrollOwner(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5199,7 +8610,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_LineUp() noexcept override
+    HRESULT __stdcall LineUp() noexcept override
     {
         try
         {
@@ -5213,7 +8624,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_LineDown() noexcept override
+    HRESULT __stdcall LineDown() noexcept override
     {
         try
         {
@@ -5227,7 +8638,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_LineLeft() noexcept override
+    HRESULT __stdcall LineLeft() noexcept override
     {
         try
         {
@@ -5241,7 +8652,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_LineRight() noexcept override
+    HRESULT __stdcall LineRight() noexcept override
     {
         try
         {
@@ -5255,7 +8666,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_PageUp() noexcept override
+    HRESULT __stdcall PageUp() noexcept override
     {
         try
         {
@@ -5269,7 +8680,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_PageDown() noexcept override
+    HRESULT __stdcall PageDown() noexcept override
     {
         try
         {
@@ -5283,7 +8694,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_PageLeft() noexcept override
+    HRESULT __stdcall PageLeft() noexcept override
     {
         try
         {
@@ -5297,7 +8708,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_PageRight() noexcept override
+    HRESULT __stdcall PageRight() noexcept override
     {
         try
         {
@@ -5311,7 +8722,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_MouseWheelUp() noexcept override
+    HRESULT __stdcall MouseWheelUp() noexcept override
     {
         try
         {
@@ -5325,7 +8736,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_MouseWheelDown() noexcept override
+    HRESULT __stdcall MouseWheelDown() noexcept override
     {
         try
         {
@@ -5339,7 +8750,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_MouseWheelLeft() noexcept override
+    HRESULT __stdcall MouseWheelLeft() noexcept override
     {
         try
         {
@@ -5353,7 +8764,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_MouseWheelRight() noexcept override
+    HRESULT __stdcall MouseWheelRight() noexcept override
     {
         try
         {
@@ -5367,7 +8778,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_SetHorizontalOffset(double offset) noexcept override
+    HRESULT __stdcall SetHorizontalOffset(double offset) noexcept override
     {
         try
         {
@@ -5381,7 +8792,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_SetVerticalOffset(double offset) noexcept override
+    HRESULT __stdcall SetVerticalOffset(double offset) noexcept override
     {
         try
         {
@@ -5395,12 +8806,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizing
         }
     }
 
-    HRESULT __stdcall abi_MakeVisible(impl::abi_arg_in<Windows::UI::Xaml::IUIElement> visual, impl::abi_arg_in<Windows::Foundation::Rect> rectangle, impl::abi_arg_out<Windows::Foundation::Rect> returnValue) noexcept override
+    HRESULT __stdcall MakeVisible(::IUnknown* visual, abi_t<Windows::Foundation::Rect> rectangle, abi_t<Windows::Foundation::Rect>* returnValue) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *returnValue = detach_abi(this->shim().MakeVisible(*reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&visual), *reinterpret_cast<const Windows::Foundation::Rect *>(&rectangle)));
+            *returnValue = detach_abi(this->shim().MakeVisible(*reinterpret_cast<Windows::UI::Xaml::UIElement const*>(&visual), *reinterpret_cast<Windows::Foundation::Rect const*>(&rectangle)));
             return S_OK;
         }
         catch (...)
@@ -5421,17 +8832,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBase> : 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBase> instance) noexcept override
+    HRESULT __stdcall CreateInstance(::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -5441,7 +8854,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseFact
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOverrides> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOverrides>
 {
-    HRESULT __stdcall abi_OnConfirmed() noexcept override
+    HRESULT __stdcall OnConfirmed() noexcept override
     {
         try
         {
@@ -5455,7 +8868,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOver
         }
     }
 
-    HRESULT __stdcall abi_ShouldShowConfirmationButtons(bool * returnValue) noexcept override
+    HRESULT __stdcall ShouldShowConfirmationButtons(bool* returnValue) noexcept override
     {
         try
         {
@@ -5473,7 +8886,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOver
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics>
 {
-    HRESULT __stdcall get_TitleProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_TitleProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5488,12 +8901,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStat
         }
     }
 
-    HRESULT __stdcall abi_GetTitle(impl::abi_arg_in<Windows::UI::Xaml::IDependencyObject> element, impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall GetTitle(::IUnknown* element, HSTRING* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetTitle(*reinterpret_cast<const Windows::UI::Xaml::DependencyObject *>(&element)));
+            *value = detach_abi(this->shim().GetTitle(*reinterpret_cast<Windows::UI::Xaml::DependencyObject const*>(&element)));
             return S_OK;
         }
         catch (...)
@@ -5503,12 +8916,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStat
         }
     }
 
-    HRESULT __stdcall abi_SetTitle(impl::abi_arg_in<Windows::UI::Xaml::IDependencyObject> element, impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall SetTitle(::IUnknown* element, HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SetTitle(*reinterpret_cast<const Windows::UI::Xaml::DependencyObject *>(&element), *reinterpret_cast<const hstring *>(&value));
+            this->shim().SetTitle(*reinterpret_cast<Windows::UI::Xaml::DependencyObject const*>(&element), *reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5525,17 +8938,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItem> : p
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItemFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItemFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItem> instance) noexcept override
+    HRESULT __stdcall CreateInstance(::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -5553,7 +8968,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPivotPanel> : produc
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IPopup>
 {
-    HRESULT __stdcall get_Child(impl::abi_arg_out<Windows::UI::Xaml::IUIElement> value) noexcept override
+    HRESULT __stdcall get_Child(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5568,12 +8983,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Child(impl::abi_arg_in<Windows::UI::Xaml::IUIElement> value) noexcept override
+    HRESULT __stdcall put_Child(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Child(*reinterpret_cast<const Windows::UI::Xaml::UIElement *>(&value));
+            this->shim().Child(*reinterpret_cast<Windows::UI::Xaml::UIElement const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5582,7 +8997,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_IsOpen(bool * value) noexcept override
+    HRESULT __stdcall get_IsOpen(bool* value) noexcept override
     {
         try
         {
@@ -5610,7 +9025,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_HorizontalOffset(double * value) noexcept override
+    HRESULT __stdcall get_HorizontalOffset(double* value) noexcept override
     {
         try
         {
@@ -5638,7 +9053,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_VerticalOffset(double * value) noexcept override
+    HRESULT __stdcall get_VerticalOffset(double* value) noexcept override
     {
         try
         {
@@ -5666,7 +9081,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_ChildTransitions(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::Animation::Transition>> value) noexcept override
+    HRESULT __stdcall get_ChildTransitions(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5681,12 +9096,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_ChildTransitions(impl::abi_arg_in<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::Animation::Transition>> value) noexcept override
+    HRESULT __stdcall put_ChildTransitions(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ChildTransitions(*reinterpret_cast<const Windows::UI::Xaml::Media::Animation::TransitionCollection *>(&value));
+            this->shim().ChildTransitions(*reinterpret_cast<Windows::UI::Xaml::Media::Animation::TransitionCollection const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5695,7 +9110,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_IsLightDismissEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_IsLightDismissEnabled(bool* value) noexcept override
     {
         try
         {
@@ -5723,12 +9138,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
         }
     }
 
-    HRESULT __stdcall add_Opened(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Opened(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Opened(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&value)));
+            *token = detach_abi(this->shim().Opened(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -5737,12 +9152,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
         }
     }
 
-    HRESULT __stdcall remove_Opened(event_token token) noexcept override
+    HRESULT __stdcall remove_Opened(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Opened(token);
+            this->shim().Opened(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -5751,12 +9166,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
         }
     }
 
-    HRESULT __stdcall add_Closed(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Closed(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Closed(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&value)));
+            *token = detach_abi(this->shim().Closed(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -5765,12 +9180,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
         }
     }
 
-    HRESULT __stdcall remove_Closed(event_token token) noexcept override
+    HRESULT __stdcall remove_Closed(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Closed(token);
+            this->shim().Closed(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -5783,7 +9198,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup> : produce_bas
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup2> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IPopup2>
 {
-    HRESULT __stdcall get_LightDismissOverlayMode(Windows::UI::Xaml::Controls::LightDismissOverlayMode * value) noexcept override
+    HRESULT __stdcall get_LightDismissOverlayMode(abi_t<Windows::UI::Xaml::Controls::LightDismissOverlayMode>* value) noexcept override
     {
         try
         {
@@ -5797,12 +9212,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_LightDismissOverlayMode(Windows::UI::Xaml::Controls::LightDismissOverlayMode value) noexcept override
+    HRESULT __stdcall put_LightDismissOverlayMode(abi_t<Windows::UI::Xaml::Controls::LightDismissOverlayMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().LightDismissOverlayMode(value);
+            this->shim().LightDismissOverlayMode(*reinterpret_cast<Windows::UI::Xaml::Controls::LightDismissOverlayMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5815,7 +9230,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopup2> : produce_ba
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopupStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IPopupStatics>
 {
-    HRESULT __stdcall get_ChildProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ChildProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5830,7 +9245,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopupStatics> : prod
         }
     }
 
-    HRESULT __stdcall get_IsOpenProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsOpenProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5845,7 +9260,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopupStatics> : prod
         }
     }
 
-    HRESULT __stdcall get_HorizontalOffsetProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_HorizontalOffsetProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5860,7 +9275,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopupStatics> : prod
         }
     }
 
-    HRESULT __stdcall get_VerticalOffsetProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_VerticalOffsetProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5875,7 +9290,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopupStatics> : prod
         }
     }
 
-    HRESULT __stdcall get_ChildTransitionsProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ChildTransitionsProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5890,7 +9305,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopupStatics> : prod
         }
     }
 
-    HRESULT __stdcall get_IsLightDismissEnabledProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsLightDismissEnabledProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5909,7 +9324,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopupStatics> : prod
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopupStatics2> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IPopupStatics2>
 {
-    HRESULT __stdcall get_LightDismissOverlayModeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_LightDismissOverlayModeProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5928,7 +9343,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IPopupStatics2> : pro
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings>
 {
-    HRESULT __stdcall get_EllipseDiameter(double * value) noexcept override
+    HRESULT __stdcall get_EllipseDiameter(double* value) noexcept override
     {
         try
         {
@@ -5942,7 +9357,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateS
         }
     }
 
-    HRESULT __stdcall get_EllipseOffset(double * value) noexcept override
+    HRESULT __stdcall get_EllipseOffset(double* value) noexcept override
     {
         try
         {
@@ -5956,7 +9371,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateS
         }
     }
 
-    HRESULT __stdcall get_EllipseAnimationWellPosition(double * value) noexcept override
+    HRESULT __stdcall get_EllipseAnimationWellPosition(double* value) noexcept override
     {
         try
         {
@@ -5970,7 +9385,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateS
         }
     }
 
-    HRESULT __stdcall get_EllipseAnimationEndPosition(double * value) noexcept override
+    HRESULT __stdcall get_EllipseAnimationEndPosition(double* value) noexcept override
     {
         try
         {
@@ -5984,7 +9399,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateS
         }
     }
 
-    HRESULT __stdcall get_ContainerAnimationStartPosition(double * value) noexcept override
+    HRESULT __stdcall get_ContainerAnimationStartPosition(double* value) noexcept override
     {
         try
         {
@@ -5998,7 +9413,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateS
         }
     }
 
-    HRESULT __stdcall get_ContainerAnimationEndPosition(double * value) noexcept override
+    HRESULT __stdcall get_ContainerAnimationEndPosition(double* value) noexcept override
     {
         try
         {
@@ -6012,7 +9427,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateS
         }
     }
 
-    HRESULT __stdcall get_IndicatorLengthDelta(double * value) noexcept override
+    HRESULT __stdcall get_IndicatorLengthDelta(double* value) noexcept override
     {
         try
         {
@@ -6030,7 +9445,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateS
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplateSettings>
 {
-    HRESULT __stdcall get_EllipseDiameter(double * value) noexcept override
+    HRESULT __stdcall get_EllipseDiameter(double* value) noexcept override
     {
         try
         {
@@ -6044,7 +9459,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplate
         }
     }
 
-    HRESULT __stdcall get_EllipseOffset(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_EllipseOffset(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -6058,7 +9473,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplate
         }
     }
 
-    HRESULT __stdcall get_MaxSideLength(double * value) noexcept override
+    HRESULT __stdcall get_MaxSideLength(double* value) noexcept override
     {
         try
         {
@@ -6076,7 +9491,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplate
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBase> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IRangeBase>
 {
-    HRESULT __stdcall get_Minimum(double * value) noexcept override
+    HRESULT __stdcall get_Minimum(double* value) noexcept override
     {
         try
         {
@@ -6104,7 +9519,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBase> : produce
         }
     }
 
-    HRESULT __stdcall get_Maximum(double * value) noexcept override
+    HRESULT __stdcall get_Maximum(double* value) noexcept override
     {
         try
         {
@@ -6132,7 +9547,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBase> : produce
         }
     }
 
-    HRESULT __stdcall get_SmallChange(double * value) noexcept override
+    HRESULT __stdcall get_SmallChange(double* value) noexcept override
     {
         try
         {
@@ -6160,7 +9575,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBase> : produce
         }
     }
 
-    HRESULT __stdcall get_LargeChange(double * value) noexcept override
+    HRESULT __stdcall get_LargeChange(double* value) noexcept override
     {
         try
         {
@@ -6188,7 +9603,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBase> : produce
         }
     }
 
-    HRESULT __stdcall get_Value(double * value) noexcept override
+    HRESULT __stdcall get_Value(double* value) noexcept override
     {
         try
         {
@@ -6216,12 +9631,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBase> : produce
         }
     }
 
-    HRESULT __stdcall add_ValueChanged(impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_ValueChanged(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ValueChanged(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventHandler *>(&value)));
+            *token = detach_abi(this->shim().ValueChanged(*reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventHandler const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -6230,12 +9645,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBase> : produce
         }
     }
 
-    HRESULT __stdcall remove_ValueChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ValueChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ValueChanged(token);
+            this->shim().ValueChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -6248,17 +9663,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBase> : produce
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IRangeBase> instance) noexcept override
+    HRESULT __stdcall CreateInstance(::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -6268,7 +9685,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseFactory> : 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides>
 {
-    HRESULT __stdcall abi_OnMinimumChanged(double oldMinimum, double newMinimum) noexcept override
+    HRESULT __stdcall OnMinimumChanged(double oldMinimum, double newMinimum) noexcept override
     {
         try
         {
@@ -6282,7 +9699,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides> 
         }
     }
 
-    HRESULT __stdcall abi_OnMaximumChanged(double oldMaximum, double newMaximum) noexcept override
+    HRESULT __stdcall OnMaximumChanged(double oldMaximum, double newMaximum) noexcept override
     {
         try
         {
@@ -6296,7 +9713,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides> 
         }
     }
 
-    HRESULT __stdcall abi_OnValueChanged(double oldValue, double newValue) noexcept override
+    HRESULT __stdcall OnValueChanged(double oldValue, double newValue) noexcept override
     {
         try
         {
@@ -6314,7 +9731,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides> 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics>
 {
-    HRESULT __stdcall get_MinimumProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_MinimumProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6329,7 +9746,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics> : 
         }
     }
 
-    HRESULT __stdcall get_MaximumProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_MaximumProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6344,7 +9761,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics> : 
         }
     }
 
-    HRESULT __stdcall get_SmallChangeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SmallChangeProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6359,7 +9776,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics> : 
         }
     }
 
-    HRESULT __stdcall get_LargeChangeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_LargeChangeProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6374,7 +9791,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics> : 
         }
     }
 
-    HRESULT __stdcall get_ValueProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ValueProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6393,7 +9810,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics> : 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChangedEventArgs> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChangedEventArgs>
 {
-    HRESULT __stdcall get_OldValue(double * value) noexcept override
+    HRESULT __stdcall get_OldValue(double* value) noexcept override
     {
         try
         {
@@ -6407,7 +9824,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChange
         }
     }
 
-    HRESULT __stdcall get_NewValue(double * value) noexcept override
+    HRESULT __stdcall get_NewValue(double* value) noexcept override
     {
         try
         {
@@ -6425,7 +9842,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChange
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRepeatButton> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IRepeatButton>
 {
-    HRESULT __stdcall get_Delay(int32_t * value) noexcept override
+    HRESULT __stdcall get_Delay(int32_t* value) noexcept override
     {
         try
         {
@@ -6453,7 +9870,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRepeatButton> : prod
         }
     }
 
-    HRESULT __stdcall get_Interval(int32_t * value) noexcept override
+    HRESULT __stdcall get_Interval(int32_t* value) noexcept override
     {
         try
         {
@@ -6485,7 +9902,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRepeatButton> : prod
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics>
 {
-    HRESULT __stdcall get_DelayProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_DelayProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6500,7 +9917,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics>
         }
     }
 
-    HRESULT __stdcall get_IntervalProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IntervalProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6519,7 +9936,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics>
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBar> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IScrollBar>
 {
-    HRESULT __stdcall get_Orientation(Windows::UI::Xaml::Controls::Orientation * value) noexcept override
+    HRESULT __stdcall get_Orientation(abi_t<Windows::UI::Xaml::Controls::Orientation>* value) noexcept override
     {
         try
         {
@@ -6533,12 +9950,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBar> : produce
         }
     }
 
-    HRESULT __stdcall put_Orientation(Windows::UI::Xaml::Controls::Orientation value) noexcept override
+    HRESULT __stdcall put_Orientation(abi_t<Windows::UI::Xaml::Controls::Orientation> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Orientation(value);
+            this->shim().Orientation(*reinterpret_cast<Windows::UI::Xaml::Controls::Orientation const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -6547,7 +9964,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBar> : produce
         }
     }
 
-    HRESULT __stdcall get_ViewportSize(double * value) noexcept override
+    HRESULT __stdcall get_ViewportSize(double* value) noexcept override
     {
         try
         {
@@ -6575,7 +9992,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBar> : produce
         }
     }
 
-    HRESULT __stdcall get_IndicatorMode(Windows::UI::Xaml::Controls::Primitives::ScrollingIndicatorMode * value) noexcept override
+    HRESULT __stdcall get_IndicatorMode(abi_t<Windows::UI::Xaml::Controls::Primitives::ScrollingIndicatorMode>* value) noexcept override
     {
         try
         {
@@ -6589,12 +10006,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBar> : produce
         }
     }
 
-    HRESULT __stdcall put_IndicatorMode(Windows::UI::Xaml::Controls::Primitives::ScrollingIndicatorMode value) noexcept override
+    HRESULT __stdcall put_IndicatorMode(abi_t<Windows::UI::Xaml::Controls::Primitives::ScrollingIndicatorMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().IndicatorMode(value);
+            this->shim().IndicatorMode(*reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::ScrollingIndicatorMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -6603,12 +10020,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBar> : produce
         }
     }
 
-    HRESULT __stdcall add_Scroll(impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::ScrollEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Scroll(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Scroll(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::ScrollEventHandler *>(&value)));
+            *token = detach_abi(this->shim().Scroll(*reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::ScrollEventHandler const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -6617,12 +10034,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBar> : produce
         }
     }
 
-    HRESULT __stdcall remove_Scroll(event_token token) noexcept override
+    HRESULT __stdcall remove_Scroll(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Scroll(token);
+            this->shim().Scroll(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -6635,7 +10052,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBar> : produce
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics>
 {
-    HRESULT __stdcall get_OrientationProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_OrientationProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6650,7 +10067,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics> : 
         }
     }
 
-    HRESULT __stdcall get_ViewportSizeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_ViewportSizeProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6665,7 +10082,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics> : 
         }
     }
 
-    HRESULT __stdcall get_IndicatorModeProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IndicatorModeProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6684,7 +10101,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics> : 
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs>
 {
-    HRESULT __stdcall get_NewValue(double * value) noexcept override
+    HRESULT __stdcall get_NewValue(double* value) noexcept override
     {
         try
         {
@@ -6698,7 +10115,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs> : p
         }
     }
 
-    HRESULT __stdcall get_ScrollEventType(Windows::UI::Xaml::Controls::Primitives::ScrollEventType * value) noexcept override
+    HRESULT __stdcall get_ScrollEventType(abi_t<Windows::UI::Xaml::Controls::Primitives::ScrollEventType>* value) noexcept override
     {
         try
         {
@@ -6716,7 +10133,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs> : p
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo>
 {
-    HRESULT __stdcall get_AreHorizontalSnapPointsRegular(bool * value) noexcept override
+    HRESULT __stdcall get_AreHorizontalSnapPointsRegular(bool* value) noexcept override
     {
         try
         {
@@ -6730,7 +10147,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo
         }
     }
 
-    HRESULT __stdcall get_AreVerticalSnapPointsRegular(bool * value) noexcept override
+    HRESULT __stdcall get_AreVerticalSnapPointsRegular(bool* value) noexcept override
     {
         try
         {
@@ -6744,12 +10161,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo
         }
     }
 
-    HRESULT __stdcall add_HorizontalSnapPointsChanged(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> value, event_token * token) noexcept override
+    HRESULT __stdcall add_HorizontalSnapPointsChanged(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().HorizontalSnapPointsChanged(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&value)));
+            *token = detach_abi(this->shim().HorizontalSnapPointsChanged(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -6758,12 +10175,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo
         }
     }
 
-    HRESULT __stdcall remove_HorizontalSnapPointsChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_HorizontalSnapPointsChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().HorizontalSnapPointsChanged(token);
+            this->shim().HorizontalSnapPointsChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -6772,12 +10189,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo
         }
     }
 
-    HRESULT __stdcall add_VerticalSnapPointsChanged(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> value, event_token * token) noexcept override
+    HRESULT __stdcall add_VerticalSnapPointsChanged(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().VerticalSnapPointsChanged(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&value)));
+            *token = detach_abi(this->shim().VerticalSnapPointsChanged(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -6786,12 +10203,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo
         }
     }
 
-    HRESULT __stdcall remove_VerticalSnapPointsChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_VerticalSnapPointsChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().VerticalSnapPointsChanged(token);
+            this->shim().VerticalSnapPointsChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -6800,12 +10217,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo
         }
     }
 
-    HRESULT __stdcall abi_GetIrregularSnapPoints(Windows::UI::Xaml::Controls::Orientation orientation, Windows::UI::Xaml::Controls::Primitives::SnapPointsAlignment alignment, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<float>> returnValue) noexcept override
+    HRESULT __stdcall GetIrregularSnapPoints(abi_t<Windows::UI::Xaml::Controls::Orientation> orientation, abi_t<Windows::UI::Xaml::Controls::Primitives::SnapPointsAlignment> alignment, ::IUnknown** returnValue) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *returnValue = detach_abi(this->shim().GetIrregularSnapPoints(orientation, alignment));
+            *returnValue = detach_abi(this->shim().GetIrregularSnapPoints(*reinterpret_cast<Windows::UI::Xaml::Controls::Orientation const*>(&orientation), *reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::SnapPointsAlignment const*>(&alignment)));
             return S_OK;
         }
         catch (...)
@@ -6815,12 +10232,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo
         }
     }
 
-    HRESULT __stdcall abi_GetRegularSnapPoints(Windows::UI::Xaml::Controls::Orientation orientation, Windows::UI::Xaml::Controls::Primitives::SnapPointsAlignment alignment, float * offset, float * returnValue) noexcept override
+    HRESULT __stdcall GetRegularSnapPoints(abi_t<Windows::UI::Xaml::Controls::Orientation> orientation, abi_t<Windows::UI::Xaml::Controls::Primitives::SnapPointsAlignment> alignment, float* offset, float* returnValue) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *returnValue = detach_abi(this->shim().GetRegularSnapPoints(orientation, alignment, *offset));
+            *returnValue = detach_abi(this->shim().GetRegularSnapPoints(*reinterpret_cast<Windows::UI::Xaml::Controls::Orientation const*>(&orientation), *reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::SnapPointsAlignment const*>(&alignment), *offset));
             return S_OK;
         }
         catch (...)
@@ -6833,7 +10250,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelector> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ISelector>
 {
-    HRESULT __stdcall get_SelectedIndex(int32_t * value) noexcept override
+    HRESULT __stdcall get_SelectedIndex(int32_t* value) noexcept override
     {
         try
         {
@@ -6861,7 +10278,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelector> : produce_
         }
     }
 
-    HRESULT __stdcall get_SelectedItem(impl::abi_arg_out<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall get_SelectedItem(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6876,12 +10293,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelector> : produce_
         }
     }
 
-    HRESULT __stdcall put_SelectedItem(impl::abi_arg_in<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall put_SelectedItem(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedItem(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&value));
+            this->shim().SelectedItem(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -6890,7 +10307,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelector> : produce_
         }
     }
 
-    HRESULT __stdcall get_SelectedValue(impl::abi_arg_out<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall get_SelectedValue(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6905,12 +10322,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelector> : produce_
         }
     }
 
-    HRESULT __stdcall put_SelectedValue(impl::abi_arg_in<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall put_SelectedValue(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedValue(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&value));
+            this->shim().SelectedValue(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -6919,7 +10336,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelector> : produce_
         }
     }
 
-    HRESULT __stdcall get_SelectedValuePath(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SelectedValuePath(HSTRING* value) noexcept override
     {
         try
         {
@@ -6934,12 +10351,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelector> : produce_
         }
     }
 
-    HRESULT __stdcall put_SelectedValuePath(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_SelectedValuePath(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectedValuePath(*reinterpret_cast<const hstring *>(&value));
+            this->shim().SelectedValuePath(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -6948,7 +10365,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelector> : produce_
         }
     }
 
-    HRESULT __stdcall get_IsSynchronizedWithCurrentItem(impl::abi_arg_out<Windows::Foundation::IReference<bool>> value) noexcept override
+    HRESULT __stdcall get_IsSynchronizedWithCurrentItem(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6963,12 +10380,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelector> : produce_
         }
     }
 
-    HRESULT __stdcall put_IsSynchronizedWithCurrentItem(impl::abi_arg_in<Windows::Foundation::IReference<bool>> value) noexcept override
+    HRESULT __stdcall put_IsSynchronizedWithCurrentItem(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().IsSynchronizedWithCurrentItem(*reinterpret_cast<const Windows::Foundation::IReference<bool> *>(&value));
+            this->shim().IsSynchronizedWithCurrentItem(*reinterpret_cast<Windows::Foundation::IReference<bool> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -6977,12 +10394,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelector> : produce_
         }
     }
 
-    HRESULT __stdcall add_SelectionChanged(impl::abi_arg_in<Windows::UI::Xaml::Controls::SelectionChangedEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_SelectionChanged(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().SelectionChanged(*reinterpret_cast<const Windows::UI::Xaml::Controls::SelectionChangedEventHandler *>(&value)));
+            *token = detach_abi(this->shim().SelectionChanged(*reinterpret_cast<Windows::UI::Xaml::Controls::SelectionChangedEventHandler const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -6991,12 +10408,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelector> : produce_
         }
     }
 
-    HRESULT __stdcall remove_SelectionChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_SelectionChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectionChanged(token);
+            this->shim().SelectionChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -7013,7 +10430,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorFactory> : p
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorItem> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ISelectorItem>
 {
-    HRESULT __stdcall get_IsSelected(bool * value) noexcept override
+    HRESULT __stdcall get_IsSelected(bool* value) noexcept override
     {
         try
         {
@@ -7045,17 +10462,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorItem> : prod
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorItemFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ISelectorItemFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::ISelectorItem> instance) noexcept override
+    HRESULT __stdcall CreateInstance(::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -7065,7 +10484,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorItemFactory>
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorItemStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ISelectorItemStatics>
 {
-    HRESULT __stdcall get_IsSelectedProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsSelectedProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7084,7 +10503,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorItemStatics>
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics>
 {
-    HRESULT __stdcall get_SelectedIndexProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedIndexProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7099,7 +10518,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics> : p
         }
     }
 
-    HRESULT __stdcall get_SelectedItemProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedItemProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7114,7 +10533,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics> : p
         }
     }
 
-    HRESULT __stdcall get_SelectedValueProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedValueProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7129,7 +10548,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics> : p
         }
     }
 
-    HRESULT __stdcall get_SelectedValuePathProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_SelectedValuePathProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7144,7 +10563,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics> : p
         }
     }
 
-    HRESULT __stdcall get_IsSynchronizedWithCurrentItemProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsSynchronizedWithCurrentItemProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7159,12 +10578,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics> : p
         }
     }
 
-    HRESULT __stdcall abi_GetIsSelectionActive(impl::abi_arg_in<Windows::UI::Xaml::IDependencyObject> element, bool * returnValue) noexcept override
+    HRESULT __stdcall GetIsSelectionActive(::IUnknown* element, bool* returnValue) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *returnValue = detach_abi(this->shim().GetIsSelectionActive(*reinterpret_cast<const Windows::UI::Xaml::DependencyObject *>(&element)));
+            *returnValue = detach_abi(this->shim().GetIsSelectionActive(*reinterpret_cast<Windows::UI::Xaml::DependencyObject const*>(&element)));
             return S_OK;
         }
         catch (...)
@@ -7177,7 +10596,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics> : p
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings>
 {
-    HRESULT __stdcall get_HeaderBackground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_HeaderBackground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7192,7 +10611,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTempla
         }
     }
 
-    HRESULT __stdcall get_HeaderForeground(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_HeaderForeground(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7207,7 +10626,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTempla
         }
     }
 
-    HRESULT __stdcall get_BorderBrush(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_BorderBrush(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7222,7 +10641,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTempla
         }
     }
 
-    HRESULT __stdcall get_BorderThickness(impl::abi_arg_out<Windows::UI::Xaml::Thickness> value) noexcept override
+    HRESULT __stdcall get_BorderThickness(abi_t<Windows::UI::Xaml::Thickness>* value) noexcept override
     {
         try
         {
@@ -7236,7 +10655,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTempla
         }
     }
 
-    HRESULT __stdcall get_IconSource(impl::abi_arg_out<Windows::UI::Xaml::Media::IImageSource> value) noexcept override
+    HRESULT __stdcall get_IconSource(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7251,7 +10670,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTempla
         }
     }
 
-    HRESULT __stdcall get_ContentTransitions(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::UI::Xaml::Media::Animation::Transition>> value) noexcept override
+    HRESULT __stdcall get_ContentTransitions(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7270,7 +10689,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTempla
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings>
 {
-    HRESULT __stdcall get_OpenPaneLength(double * value) noexcept override
+    HRESULT __stdcall get_OpenPaneLength(double* value) noexcept override
     {
         try
         {
@@ -7284,7 +10703,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSet
         }
     }
 
-    HRESULT __stdcall get_NegativeOpenPaneLength(double * value) noexcept override
+    HRESULT __stdcall get_NegativeOpenPaneLength(double* value) noexcept override
     {
         try
         {
@@ -7298,7 +10717,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSet
         }
     }
 
-    HRESULT __stdcall get_OpenPaneLengthMinusCompactLength(double * value) noexcept override
+    HRESULT __stdcall get_OpenPaneLengthMinusCompactLength(double* value) noexcept override
     {
         try
         {
@@ -7312,7 +10731,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSet
         }
     }
 
-    HRESULT __stdcall get_NegativeOpenPaneLengthMinusCompactLength(double * value) noexcept override
+    HRESULT __stdcall get_NegativeOpenPaneLengthMinusCompactLength(double* value) noexcept override
     {
         try
         {
@@ -7326,7 +10745,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSet
         }
     }
 
-    HRESULT __stdcall get_OpenPaneGridLength(impl::abi_arg_out<Windows::UI::Xaml::GridLength> value) noexcept override
+    HRESULT __stdcall get_OpenPaneGridLength(abi_t<Windows::UI::Xaml::GridLength>* value) noexcept override
     {
         try
         {
@@ -7340,7 +10759,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSet
         }
     }
 
-    HRESULT __stdcall get_CompactPaneGridLength(impl::abi_arg_out<Windows::UI::Xaml::GridLength> value) noexcept override
+    HRESULT __stdcall get_CompactPaneGridLength(abi_t<Windows::UI::Xaml::GridLength>* value) noexcept override
     {
         try
         {
@@ -7358,7 +10777,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSet
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IThumb> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IThumb>
 {
-    HRESULT __stdcall get_IsDragging(bool * value) noexcept override
+    HRESULT __stdcall get_IsDragging(bool* value) noexcept override
     {
         try
         {
@@ -7372,12 +10791,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IThumb> : produce_bas
         }
     }
 
-    HRESULT __stdcall add_DragStarted(impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::DragStartedEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_DragStarted(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().DragStarted(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::DragStartedEventHandler *>(&value)));
+            *token = detach_abi(this->shim().DragStarted(*reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::DragStartedEventHandler const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -7386,12 +10805,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IThumb> : produce_bas
         }
     }
 
-    HRESULT __stdcall remove_DragStarted(event_token token) noexcept override
+    HRESULT __stdcall remove_DragStarted(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DragStarted(token);
+            this->shim().DragStarted(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -7400,12 +10819,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IThumb> : produce_bas
         }
     }
 
-    HRESULT __stdcall add_DragDelta(impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::DragDeltaEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_DragDelta(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().DragDelta(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::DragDeltaEventHandler *>(&value)));
+            *token = detach_abi(this->shim().DragDelta(*reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::DragDeltaEventHandler const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -7414,12 +10833,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IThumb> : produce_bas
         }
     }
 
-    HRESULT __stdcall remove_DragDelta(event_token token) noexcept override
+    HRESULT __stdcall remove_DragDelta(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DragDelta(token);
+            this->shim().DragDelta(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -7428,12 +10847,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IThumb> : produce_bas
         }
     }
 
-    HRESULT __stdcall add_DragCompleted(impl::abi_arg_in<Windows::UI::Xaml::Controls::Primitives::DragCompletedEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_DragCompleted(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().DragCompleted(*reinterpret_cast<const Windows::UI::Xaml::Controls::Primitives::DragCompletedEventHandler *>(&value)));
+            *token = detach_abi(this->shim().DragCompleted(*reinterpret_cast<Windows::UI::Xaml::Controls::Primitives::DragCompletedEventHandler const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -7442,12 +10861,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IThumb> : produce_bas
         }
     }
 
-    HRESULT __stdcall remove_DragCompleted(event_token token) noexcept override
+    HRESULT __stdcall remove_DragCompleted(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DragCompleted(token);
+            this->shim().DragCompleted(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -7456,7 +10875,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IThumb> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_CancelDrag() noexcept override
+    HRESULT __stdcall CancelDrag() noexcept override
     {
         try
         {
@@ -7474,7 +10893,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IThumb> : produce_bas
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IThumbStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IThumbStatics>
 {
-    HRESULT __stdcall get_IsDraggingProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsDraggingProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7493,7 +10912,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IThumbStatics> : prod
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ITickBar> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ITickBar>
 {
-    HRESULT __stdcall get_Fill(impl::abi_arg_out<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall get_Fill(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7508,12 +10927,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ITickBar> : produce_b
         }
     }
 
-    HRESULT __stdcall put_Fill(impl::abi_arg_in<Windows::UI::Xaml::Media::IBrush> value) noexcept override
+    HRESULT __stdcall put_Fill(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Fill(*reinterpret_cast<const Windows::UI::Xaml::Media::Brush *>(&value));
+            this->shim().Fill(*reinterpret_cast<Windows::UI::Xaml::Media::Brush const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -7526,7 +10945,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ITickBar> : produce_b
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::ITickBarStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::ITickBarStatics>
 {
-    HRESULT __stdcall get_FillProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_FillProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7545,7 +10964,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::ITickBarStatics> : pr
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton>
 {
-    HRESULT __stdcall get_IsChecked(impl::abi_arg_out<Windows::Foundation::IReference<bool>> value) noexcept override
+    HRESULT __stdcall get_IsChecked(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7560,12 +10979,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton> : prod
         }
     }
 
-    HRESULT __stdcall put_IsChecked(impl::abi_arg_in<Windows::Foundation::IReference<bool>> value) noexcept override
+    HRESULT __stdcall put_IsChecked(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().IsChecked(*reinterpret_cast<const Windows::Foundation::IReference<bool> *>(&value));
+            this->shim().IsChecked(*reinterpret_cast<Windows::Foundation::IReference<bool> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -7574,7 +10993,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton> : prod
         }
     }
 
-    HRESULT __stdcall get_IsThreeState(bool * value) noexcept override
+    HRESULT __stdcall get_IsThreeState(bool* value) noexcept override
     {
         try
         {
@@ -7602,12 +11021,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton> : prod
         }
     }
 
-    HRESULT __stdcall add_Checked(impl::abi_arg_in<Windows::UI::Xaml::RoutedEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Checked(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Checked(*reinterpret_cast<const Windows::UI::Xaml::RoutedEventHandler *>(&value)));
+            *token = detach_abi(this->shim().Checked(*reinterpret_cast<Windows::UI::Xaml::RoutedEventHandler const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -7616,12 +11035,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton> : prod
         }
     }
 
-    HRESULT __stdcall remove_Checked(event_token token) noexcept override
+    HRESULT __stdcall remove_Checked(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Checked(token);
+            this->shim().Checked(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -7630,12 +11049,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton> : prod
         }
     }
 
-    HRESULT __stdcall add_Unchecked(impl::abi_arg_in<Windows::UI::Xaml::RoutedEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Unchecked(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Unchecked(*reinterpret_cast<const Windows::UI::Xaml::RoutedEventHandler *>(&value)));
+            *token = detach_abi(this->shim().Unchecked(*reinterpret_cast<Windows::UI::Xaml::RoutedEventHandler const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -7644,12 +11063,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton> : prod
         }
     }
 
-    HRESULT __stdcall remove_Unchecked(event_token token) noexcept override
+    HRESULT __stdcall remove_Unchecked(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Unchecked(token);
+            this->shim().Unchecked(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -7658,12 +11077,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton> : prod
         }
     }
 
-    HRESULT __stdcall add_Indeterminate(impl::abi_arg_in<Windows::UI::Xaml::RoutedEventHandler> value, event_token * token) noexcept override
+    HRESULT __stdcall add_Indeterminate(::IUnknown* value, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Indeterminate(*reinterpret_cast<const Windows::UI::Xaml::RoutedEventHandler *>(&value)));
+            *token = detach_abi(this->shim().Indeterminate(*reinterpret_cast<Windows::UI::Xaml::RoutedEventHandler const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -7672,12 +11091,12 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton> : prod
         }
     }
 
-    HRESULT __stdcall remove_Indeterminate(event_token token) noexcept override
+    HRESULT __stdcall remove_Indeterminate(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Indeterminate(token);
+            this->shim().Indeterminate(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -7690,17 +11109,19 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton> : prod
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonFactory> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Foundation::IInspectable> outer, impl::abi_arg_out<Windows::Foundation::IInspectable> inner, impl::abi_arg_out<Windows::UI::Xaml::Controls::Primitives::IToggleButton> instance) noexcept override
+    HRESULT __stdcall CreateInstance(::IUnknown* outer, ::IUnknown** inner, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&outer), *reinterpret_cast<Windows::Foundation::IInspectable *>(inner)));
+            Windows::Foundation::IInspectable __local_inner;
+            *instance = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&outer), __local_inner));
+            if (inner) *inner = detach_abi(__local_inner);
             return S_OK;
         }
         catch (...)
         {
-            *inner = nullptr;
+            if (inner) *inner = nullptr;
             *instance = nullptr;
             return impl::to_hresult();
         }
@@ -7710,7 +11131,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonFactory>
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonOverrides> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonOverrides>
 {
-    HRESULT __stdcall abi_OnToggle() noexcept override
+    HRESULT __stdcall OnToggle() noexcept override
     {
         try
         {
@@ -7728,7 +11149,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonOverride
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics>
 {
-    HRESULT __stdcall get_IsCheckedProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsCheckedProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7743,7 +11164,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics>
         }
     }
 
-    HRESULT __stdcall get_IsThreeStateProperty(impl::abi_arg_out<Windows::UI::Xaml::IDependencyProperty> value) noexcept override
+    HRESULT __stdcall get_IsThreeStateProperty(::IUnknown** value) noexcept override
     {
         try
         {
@@ -7762,7 +11183,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics>
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings>
 {
-    HRESULT __stdcall get_KnobCurrentToOnOffset(double * value) noexcept override
+    HRESULT __stdcall get_KnobCurrentToOnOffset(double* value) noexcept override
     {
         try
         {
@@ -7776,7 +11197,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplate
         }
     }
 
-    HRESULT __stdcall get_KnobCurrentToOffOffset(double * value) noexcept override
+    HRESULT __stdcall get_KnobCurrentToOffOffset(double* value) noexcept override
     {
         try
         {
@@ -7790,7 +11211,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplate
         }
     }
 
-    HRESULT __stdcall get_KnobOnToOffOffset(double * value) noexcept override
+    HRESULT __stdcall get_KnobOnToOffOffset(double* value) noexcept override
     {
         try
         {
@@ -7804,7 +11225,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplate
         }
     }
 
-    HRESULT __stdcall get_KnobOffToOnOffset(double * value) noexcept override
+    HRESULT __stdcall get_KnobOffToOnOffset(double* value) noexcept override
     {
         try
         {
@@ -7818,7 +11239,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplate
         }
     }
 
-    HRESULT __stdcall get_CurtainCurrentToOnOffset(double * value) noexcept override
+    HRESULT __stdcall get_CurtainCurrentToOnOffset(double* value) noexcept override
     {
         try
         {
@@ -7832,7 +11253,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplate
         }
     }
 
-    HRESULT __stdcall get_CurtainCurrentToOffOffset(double * value) noexcept override
+    HRESULT __stdcall get_CurtainCurrentToOffOffset(double* value) noexcept override
     {
         try
         {
@@ -7846,7 +11267,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplate
         }
     }
 
-    HRESULT __stdcall get_CurtainOnToOffOffset(double * value) noexcept override
+    HRESULT __stdcall get_CurtainOnToOffOffset(double* value) noexcept override
     {
         try
         {
@@ -7860,7 +11281,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplate
         }
     }
 
-    HRESULT __stdcall get_CurtainOffToOnOffset(double * value) noexcept override
+    HRESULT __stdcall get_CurtainOffToOnOffset(double* value) noexcept override
     {
         try
         {
@@ -7878,7 +11299,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplate
 template <typename D>
 struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToolTipTemplateSettings> : produce_base<D, Windows::UI::Xaml::Controls::Primitives::IToolTipTemplateSettings>
 {
-    HRESULT __stdcall get_FromHorizontalOffset(double * value) noexcept override
+    HRESULT __stdcall get_FromHorizontalOffset(double* value) noexcept override
     {
         try
         {
@@ -7892,7 +11313,7 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToolTipTemplateSetti
         }
     }
 
-    HRESULT __stdcall get_FromVerticalOffset(double * value) noexcept override
+    HRESULT __stdcall get_FromVerticalOffset(double* value) noexcept override
     {
         try
         {
@@ -7909,3402 +11330,31 @@ struct produce<D, Windows::UI::Xaml::Controls::Primitives::IToolTipTemplateSetti
 
 }
 
-namespace Windows::UI::Xaml::Controls::Primitives {
-
-template <typename D> bool impl_IScrollSnapPointsInfo<D>::AreHorizontalSnapPointsRegular() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IScrollSnapPointsInfo)->get_AreHorizontalSnapPointsRegular(&value));
-    return value;
-}
-
-template <typename D> bool impl_IScrollSnapPointsInfo<D>::AreVerticalSnapPointsRegular() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IScrollSnapPointsInfo)->get_AreVerticalSnapPointsRegular(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IScrollSnapPointsInfo<D>::HorizontalSnapPointsChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IScrollSnapPointsInfo)->add_HorizontalSnapPointsChanged(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IScrollSnapPointsInfo> impl_IScrollSnapPointsInfo<D>::HorizontalSnapPointsChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    return impl::make_event_revoker<D, IScrollSnapPointsInfo>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo::remove_HorizontalSnapPointsChanged, HorizontalSnapPointsChanged(value));
-}
-
-template <typename D> void impl_IScrollSnapPointsInfo<D>::HorizontalSnapPointsChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IScrollSnapPointsInfo)->remove_HorizontalSnapPointsChanged(token));
-}
-
-template <typename D> event_token impl_IScrollSnapPointsInfo<D>::VerticalSnapPointsChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IScrollSnapPointsInfo)->add_VerticalSnapPointsChanged(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IScrollSnapPointsInfo> impl_IScrollSnapPointsInfo<D>::VerticalSnapPointsChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    return impl::make_event_revoker<D, IScrollSnapPointsInfo>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo::remove_VerticalSnapPointsChanged, VerticalSnapPointsChanged(value));
-}
-
-template <typename D> void impl_IScrollSnapPointsInfo<D>::VerticalSnapPointsChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IScrollSnapPointsInfo)->remove_VerticalSnapPointsChanged(token));
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<float> impl_IScrollSnapPointsInfo<D>::GetIrregularSnapPoints(Windows::UI::Xaml::Controls::Orientation orientation, Windows::UI::Xaml::Controls::Primitives::SnapPointsAlignment alignment) const
-{
-    Windows::Foundation::Collections::IVectorView<float> returnValue;
-    check_hresult(WINRT_SHIM(IScrollSnapPointsInfo)->abi_GetIrregularSnapPoints(orientation, alignment, put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> float impl_IScrollSnapPointsInfo<D>::GetRegularSnapPoints(Windows::UI::Xaml::Controls::Orientation orientation, Windows::UI::Xaml::Controls::Primitives::SnapPointsAlignment alignment, float & offset) const
-{
-    float returnValue {};
-    check_hresult(WINRT_SHIM(IScrollSnapPointsInfo)->abi_GetRegularSnapPoints(orientation, alignment, &offset, &returnValue));
-    return returnValue;
-}
-
-template <typename D> int32_t impl_IItemsChangedEventArgs<D>::Action() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IItemsChangedEventArgs)->get_Action(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::GeneratorPosition impl_IItemsChangedEventArgs<D>::Position() const
-{
-    Windows::UI::Xaml::Controls::Primitives::GeneratorPosition value {};
-    check_hresult(WINRT_SHIM(IItemsChangedEventArgs)->get_Position(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::GeneratorPosition impl_IItemsChangedEventArgs<D>::OldPosition() const
-{
-    Windows::UI::Xaml::Controls::Primitives::GeneratorPosition value {};
-    check_hresult(WINRT_SHIM(IItemsChangedEventArgs)->get_OldPosition(put_abi(value)));
-    return value;
-}
-
-template <typename D> int32_t impl_IItemsChangedEventArgs<D>::ItemCount() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IItemsChangedEventArgs)->get_ItemCount(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_IItemsChangedEventArgs<D>::ItemUICount() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IItemsChangedEventArgs)->get_ItemUICount(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::UIElement impl_ILayoutInformationStatics<D>::GetLayoutExceptionElement(const Windows::Foundation::IInspectable & dispatcher) const
-{
-    Windows::UI::Xaml::UIElement element { nullptr };
-    check_hresult(WINRT_SHIM(ILayoutInformationStatics)->abi_GetLayoutExceptionElement(get_abi(dispatcher), put_abi(element)));
-    return element;
-}
-
-template <typename D> Windows::Foundation::Rect impl_ILayoutInformationStatics<D>::GetLayoutSlot(const Windows::UI::Xaml::FrameworkElement & element) const
-{
-    Windows::Foundation::Rect slot {};
-    check_hresult(WINRT_SHIM(ILayoutInformationStatics)->abi_GetLayoutSlot(get_abi(element), put_abi(slot)));
-    return slot;
-}
-
-template <typename D> double impl_IComboBoxTemplateSettings<D>::DropDownOpenedHeight() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IComboBoxTemplateSettings)->get_DropDownOpenedHeight(&value));
-    return value;
-}
-
-template <typename D> double impl_IComboBoxTemplateSettings<D>::DropDownClosedHeight() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IComboBoxTemplateSettings)->get_DropDownClosedHeight(&value));
-    return value;
-}
-
-template <typename D> double impl_IComboBoxTemplateSettings<D>::DropDownOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IComboBoxTemplateSettings)->get_DropDownOffset(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::AnimationDirection impl_IComboBoxTemplateSettings<D>::SelectedItemDirection() const
-{
-    Windows::UI::Xaml::Controls::Primitives::AnimationDirection value {};
-    check_hresult(WINRT_SHIM(IComboBoxTemplateSettings)->get_SelectedItemDirection(&value));
-    return value;
-}
-
-template <typename D> double impl_IComboBoxTemplateSettings2<D>::DropDownContentMinWidth() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IComboBoxTemplateSettings2)->get_DropDownContentMinWidth(&value));
-    return value;
-}
-
-template <typename D> double impl_IDragCompletedEventArgs<D>::HorizontalChange() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IDragCompletedEventArgs)->get_HorizontalChange(&value));
-    return value;
-}
-
-template <typename D> double impl_IDragCompletedEventArgs<D>::VerticalChange() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IDragCompletedEventArgs)->get_VerticalChange(&value));
-    return value;
-}
-
-template <typename D> bool impl_IDragCompletedEventArgs<D>::Canceled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IDragCompletedEventArgs)->get_Canceled(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs impl_IDragCompletedEventArgsFactory<D>::CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(double horizontalChange, double verticalChange, bool canceled, const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs instance { nullptr };
-    check_hresult(WINRT_SHIM(IDragCompletedEventArgsFactory)->abi_CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(horizontalChange, verticalChange, canceled, get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> double impl_IDragDeltaEventArgs<D>::HorizontalChange() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IDragDeltaEventArgs)->get_HorizontalChange(&value));
-    return value;
-}
-
-template <typename D> double impl_IDragDeltaEventArgs<D>::VerticalChange() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IDragDeltaEventArgs)->get_VerticalChange(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs impl_IDragDeltaEventArgsFactory<D>::CreateInstanceWithHorizontalChangeAndVerticalChange(double horizontalChange, double verticalChange, const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs instance { nullptr };
-    check_hresult(WINRT_SHIM(IDragDeltaEventArgsFactory)->abi_CreateInstanceWithHorizontalChangeAndVerticalChange(horizontalChange, verticalChange, get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> double impl_IDragStartedEventArgs<D>::HorizontalOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IDragStartedEventArgs)->get_HorizontalOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IDragStartedEventArgs<D>::VerticalOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IDragStartedEventArgs)->get_VerticalOffset(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs impl_IDragStartedEventArgsFactory<D>::CreateInstanceWithHorizontalOffsetAndVerticalOffset(double horizontalOffset, double verticalOffset, const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs instance { nullptr };
-    check_hresult(WINRT_SHIM(IDragStartedEventArgsFactory)->abi_CreateInstanceWithHorizontalOffsetAndVerticalOffset(horizontalOffset, verticalOffset, get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> int32_t impl_IGridViewItemTemplateSettings<D>::DragItemsCount() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IGridViewItemTemplateSettings)->get_DragItemsCount(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_IListViewItemTemplateSettings<D>::DragItemsCount() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IListViewItemTemplateSettings)->get_DragItemsCount(&value));
-    return value;
-}
-
-template <typename D> double impl_IMenuFlyoutPresenterTemplateSettings<D>::FlyoutContentMinWidth() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IMenuFlyoutPresenterTemplateSettings)->get_FlyoutContentMinWidth(&value));
-    return value;
-}
-
-template <typename D> double impl_IProgressBarTemplateSettings<D>::EllipseDiameter() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IProgressBarTemplateSettings)->get_EllipseDiameter(&value));
-    return value;
-}
-
-template <typename D> double impl_IProgressBarTemplateSettings<D>::EllipseOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IProgressBarTemplateSettings)->get_EllipseOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IProgressBarTemplateSettings<D>::EllipseAnimationWellPosition() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IProgressBarTemplateSettings)->get_EllipseAnimationWellPosition(&value));
-    return value;
-}
-
-template <typename D> double impl_IProgressBarTemplateSettings<D>::EllipseAnimationEndPosition() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IProgressBarTemplateSettings)->get_EllipseAnimationEndPosition(&value));
-    return value;
-}
-
-template <typename D> double impl_IProgressBarTemplateSettings<D>::ContainerAnimationStartPosition() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IProgressBarTemplateSettings)->get_ContainerAnimationStartPosition(&value));
-    return value;
-}
-
-template <typename D> double impl_IProgressBarTemplateSettings<D>::ContainerAnimationEndPosition() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IProgressBarTemplateSettings)->get_ContainerAnimationEndPosition(&value));
-    return value;
-}
-
-template <typename D> double impl_IProgressBarTemplateSettings<D>::IndicatorLengthDelta() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IProgressBarTemplateSettings)->get_IndicatorLengthDelta(&value));
-    return value;
-}
-
-template <typename D> double impl_IProgressRingTemplateSettings<D>::EllipseDiameter() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IProgressRingTemplateSettings)->get_EllipseDiameter(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IProgressRingTemplateSettings<D>::EllipseOffset() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IProgressRingTemplateSettings)->get_EllipseOffset(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IProgressRingTemplateSettings<D>::MaxSideLength() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IProgressRingTemplateSettings)->get_MaxSideLength(&value));
-    return value;
-}
-
-template <typename D> double impl_IRangeBaseValueChangedEventArgs<D>::OldValue() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IRangeBaseValueChangedEventArgs)->get_OldValue(&value));
-    return value;
-}
-
-template <typename D> double impl_IRangeBaseValueChangedEventArgs<D>::NewValue() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IRangeBaseValueChangedEventArgs)->get_NewValue(&value));
-    return value;
-}
-
-template <typename D> double impl_IScrollEventArgs<D>::NewValue() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IScrollEventArgs)->get_NewValue(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::ScrollEventType impl_IScrollEventArgs<D>::ScrollEventType() const
-{
-    Windows::UI::Xaml::Controls::Primitives::ScrollEventType value {};
-    check_hresult(WINRT_SHIM(IScrollEventArgs)->get_ScrollEventType(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_ISettingsFlyoutTemplateSettings<D>::HeaderBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(ISettingsFlyoutTemplateSettings)->get_HeaderBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_ISettingsFlyoutTemplateSettings<D>::HeaderForeground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(ISettingsFlyoutTemplateSettings)->get_HeaderForeground(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_ISettingsFlyoutTemplateSettings<D>::BorderBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(ISettingsFlyoutTemplateSettings)->get_BorderBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_ISettingsFlyoutTemplateSettings<D>::BorderThickness() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(ISettingsFlyoutTemplateSettings)->get_BorderThickness(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Media::ImageSource impl_ISettingsFlyoutTemplateSettings<D>::IconSource() const
-{
-    Windows::UI::Xaml::Media::ImageSource value { nullptr };
-    check_hresult(WINRT_SHIM(ISettingsFlyoutTemplateSettings)->get_IconSource(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Media::Animation::TransitionCollection impl_ISettingsFlyoutTemplateSettings<D>::ContentTransitions() const
-{
-    Windows::UI::Xaml::Media::Animation::TransitionCollection value { nullptr };
-    check_hresult(WINRT_SHIM(ISettingsFlyoutTemplateSettings)->get_ContentTransitions(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IToggleSwitchTemplateSettings<D>::KnobCurrentToOnOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IToggleSwitchTemplateSettings)->get_KnobCurrentToOnOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IToggleSwitchTemplateSettings<D>::KnobCurrentToOffOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IToggleSwitchTemplateSettings)->get_KnobCurrentToOffOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IToggleSwitchTemplateSettings<D>::KnobOnToOffOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IToggleSwitchTemplateSettings)->get_KnobOnToOffOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IToggleSwitchTemplateSettings<D>::KnobOffToOnOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IToggleSwitchTemplateSettings)->get_KnobOffToOnOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IToggleSwitchTemplateSettings<D>::CurtainCurrentToOnOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IToggleSwitchTemplateSettings)->get_CurtainCurrentToOnOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IToggleSwitchTemplateSettings<D>::CurtainCurrentToOffOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IToggleSwitchTemplateSettings)->get_CurtainCurrentToOffOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IToggleSwitchTemplateSettings<D>::CurtainOnToOffOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IToggleSwitchTemplateSettings)->get_CurtainOnToOffOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IToggleSwitchTemplateSettings<D>::CurtainOffToOnOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IToggleSwitchTemplateSettings)->get_CurtainOffToOnOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IToolTipTemplateSettings<D>::FromHorizontalOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IToolTipTemplateSettings)->get_FromHorizontalOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IToolTipTemplateSettings<D>::FromVerticalOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IToolTipTemplateSettings)->get_FromVerticalOffset(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::UIElement impl_IPopup<D>::Child() const
-{
-    Windows::UI::Xaml::UIElement value { nullptr };
-    check_hresult(WINRT_SHIM(IPopup)->get_Child(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPopup<D>::Child(const Windows::UI::Xaml::UIElement & value) const
-{
-    check_hresult(WINRT_SHIM(IPopup)->put_Child(get_abi(value)));
-}
-
-template <typename D> bool impl_IPopup<D>::IsOpen() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPopup)->get_IsOpen(&value));
-    return value;
-}
-
-template <typename D> void impl_IPopup<D>::IsOpen(bool value) const
-{
-    check_hresult(WINRT_SHIM(IPopup)->put_IsOpen(value));
-}
-
-template <typename D> double impl_IPopup<D>::HorizontalOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IPopup)->get_HorizontalOffset(&value));
-    return value;
-}
-
-template <typename D> void impl_IPopup<D>::HorizontalOffset(double value) const
-{
-    check_hresult(WINRT_SHIM(IPopup)->put_HorizontalOffset(value));
-}
-
-template <typename D> double impl_IPopup<D>::VerticalOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IPopup)->get_VerticalOffset(&value));
-    return value;
-}
-
-template <typename D> void impl_IPopup<D>::VerticalOffset(double value) const
-{
-    check_hresult(WINRT_SHIM(IPopup)->put_VerticalOffset(value));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Animation::TransitionCollection impl_IPopup<D>::ChildTransitions() const
-{
-    Windows::UI::Xaml::Media::Animation::TransitionCollection value { nullptr };
-    check_hresult(WINRT_SHIM(IPopup)->get_ChildTransitions(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPopup<D>::ChildTransitions(const Windows::UI::Xaml::Media::Animation::TransitionCollection & value) const
-{
-    check_hresult(WINRT_SHIM(IPopup)->put_ChildTransitions(get_abi(value)));
-}
-
-template <typename D> bool impl_IPopup<D>::IsLightDismissEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPopup)->get_IsLightDismissEnabled(&value));
-    return value;
-}
-
-template <typename D> void impl_IPopup<D>::IsLightDismissEnabled(bool value) const
-{
-    check_hresult(WINRT_SHIM(IPopup)->put_IsLightDismissEnabled(value));
-}
-
-template <typename D> event_token impl_IPopup<D>::Opened(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPopup)->add_Opened(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPopup> impl_IPopup<D>::Opened(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    return impl::make_event_revoker<D, IPopup>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IPopup::remove_Opened, Opened(value));
-}
-
-template <typename D> void impl_IPopup<D>::Opened(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPopup)->remove_Opened(token));
-}
-
-template <typename D> event_token impl_IPopup<D>::Closed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPopup)->add_Closed(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPopup> impl_IPopup<D>::Closed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    return impl::make_event_revoker<D, IPopup>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IPopup::remove_Closed, Closed(value));
-}
-
-template <typename D> void impl_IPopup<D>::Closed(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPopup)->remove_Closed(token));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPopupStatics<D>::ChildProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IPopupStatics)->get_ChildProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPopupStatics<D>::IsOpenProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IPopupStatics)->get_IsOpenProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPopupStatics<D>::HorizontalOffsetProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IPopupStatics)->get_HorizontalOffsetProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPopupStatics<D>::VerticalOffsetProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IPopupStatics)->get_VerticalOffsetProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPopupStatics<D>::ChildTransitionsProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IPopupStatics)->get_ChildTransitionsProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPopupStatics<D>::IsLightDismissEnabledProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IPopupStatics)->get_IsLightDismissEnabledProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::LightDismissOverlayMode impl_IPopup2<D>::LightDismissOverlayMode() const
-{
-    Windows::UI::Xaml::Controls::LightDismissOverlayMode value {};
-    check_hresult(WINRT_SHIM(IPopup2)->get_LightDismissOverlayMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IPopup2<D>::LightDismissOverlayMode(Windows::UI::Xaml::Controls::LightDismissOverlayMode value) const
-{
-    check_hresult(WINRT_SHIM(IPopup2)->put_LightDismissOverlayMode(value));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPopupStatics2<D>::LightDismissOverlayModeProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IPopupStatics2)->get_LightDismissOverlayModeProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_ITickBar<D>::Fill() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(ITickBar)->get_Fill(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ITickBar<D>::Fill(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(ITickBar)->put_Fill(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ITickBarStatics<D>::FillProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ITickBarStatics)->get_FillProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IRangeBase<D>::Minimum() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IRangeBase)->get_Minimum(&value));
-    return value;
-}
-
-template <typename D> void impl_IRangeBase<D>::Minimum(double value) const
-{
-    check_hresult(WINRT_SHIM(IRangeBase)->put_Minimum(value));
-}
-
-template <typename D> double impl_IRangeBase<D>::Maximum() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IRangeBase)->get_Maximum(&value));
-    return value;
-}
-
-template <typename D> void impl_IRangeBase<D>::Maximum(double value) const
-{
-    check_hresult(WINRT_SHIM(IRangeBase)->put_Maximum(value));
-}
-
-template <typename D> double impl_IRangeBase<D>::SmallChange() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IRangeBase)->get_SmallChange(&value));
-    return value;
-}
-
-template <typename D> void impl_IRangeBase<D>::SmallChange(double value) const
-{
-    check_hresult(WINRT_SHIM(IRangeBase)->put_SmallChange(value));
-}
-
-template <typename D> double impl_IRangeBase<D>::LargeChange() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IRangeBase)->get_LargeChange(&value));
-    return value;
-}
-
-template <typename D> void impl_IRangeBase<D>::LargeChange(double value) const
-{
-    check_hresult(WINRT_SHIM(IRangeBase)->put_LargeChange(value));
-}
-
-template <typename D> double impl_IRangeBase<D>::Value() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IRangeBase)->get_Value(&value));
-    return value;
-}
-
-template <typename D> void impl_IRangeBase<D>::Value(double value) const
-{
-    check_hresult(WINRT_SHIM(IRangeBase)->put_Value(value));
-}
-
-template <typename D> event_token impl_IRangeBase<D>::ValueChanged(const Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventHandler & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IRangeBase)->add_ValueChanged(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IRangeBase> impl_IRangeBase<D>::ValueChanged(auto_revoke_t, const Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventHandler & value) const
-{
-    return impl::make_event_revoker<D, IRangeBase>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IRangeBase::remove_ValueChanged, ValueChanged(value));
-}
-
-template <typename D> void impl_IRangeBase<D>::ValueChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IRangeBase)->remove_ValueChanged(token));
-}
-
-template <typename D> void impl_IRangeBaseOverrides<D>::OnMinimumChanged(double oldMinimum, double newMinimum) const
-{
-    check_hresult(WINRT_SHIM(IRangeBaseOverrides)->abi_OnMinimumChanged(oldMinimum, newMinimum));
-}
-
-template <typename D> void impl_IRangeBaseOverrides<D>::OnMaximumChanged(double oldMaximum, double newMaximum) const
-{
-    check_hresult(WINRT_SHIM(IRangeBaseOverrides)->abi_OnMaximumChanged(oldMaximum, newMaximum));
-}
-
-template <typename D> void impl_IRangeBaseOverrides<D>::OnValueChanged(double oldValue, double newValue) const
-{
-    check_hresult(WINRT_SHIM(IRangeBaseOverrides)->abi_OnValueChanged(oldValue, newValue));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IRangeBaseStatics<D>::MinimumProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IRangeBaseStatics)->get_MinimumProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IRangeBaseStatics<D>::MaximumProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IRangeBaseStatics)->get_MaximumProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IRangeBaseStatics<D>::SmallChangeProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IRangeBaseStatics)->get_SmallChangeProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IRangeBaseStatics<D>::LargeChangeProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IRangeBaseStatics)->get_LargeChangeProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IRangeBaseStatics<D>::ValueProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IRangeBaseStatics)->get_ValueProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::RangeBase impl_IRangeBaseFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::RangeBase instance { nullptr };
-    check_hresult(WINRT_SHIM(IRangeBaseFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> bool impl_IThumb<D>::IsDragging() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IThumb)->get_IsDragging(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IThumb<D>::DragStarted(const Windows::UI::Xaml::Controls::Primitives::DragStartedEventHandler & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IThumb)->add_DragStarted(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IThumb> impl_IThumb<D>::DragStarted(auto_revoke_t, const Windows::UI::Xaml::Controls::Primitives::DragStartedEventHandler & value) const
-{
-    return impl::make_event_revoker<D, IThumb>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IThumb::remove_DragStarted, DragStarted(value));
-}
-
-template <typename D> void impl_IThumb<D>::DragStarted(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IThumb)->remove_DragStarted(token));
-}
-
-template <typename D> event_token impl_IThumb<D>::DragDelta(const Windows::UI::Xaml::Controls::Primitives::DragDeltaEventHandler & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IThumb)->add_DragDelta(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IThumb> impl_IThumb<D>::DragDelta(auto_revoke_t, const Windows::UI::Xaml::Controls::Primitives::DragDeltaEventHandler & value) const
-{
-    return impl::make_event_revoker<D, IThumb>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IThumb::remove_DragDelta, DragDelta(value));
-}
-
-template <typename D> void impl_IThumb<D>::DragDelta(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IThumb)->remove_DragDelta(token));
-}
-
-template <typename D> event_token impl_IThumb<D>::DragCompleted(const Windows::UI::Xaml::Controls::Primitives::DragCompletedEventHandler & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IThumb)->add_DragCompleted(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IThumb> impl_IThumb<D>::DragCompleted(auto_revoke_t, const Windows::UI::Xaml::Controls::Primitives::DragCompletedEventHandler & value) const
-{
-    return impl::make_event_revoker<D, IThumb>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IThumb::remove_DragCompleted, DragCompleted(value));
-}
-
-template <typename D> void impl_IThumb<D>::DragCompleted(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IThumb)->remove_DragCompleted(token));
-}
-
-template <typename D> void impl_IThumb<D>::CancelDrag() const
-{
-    check_hresult(WINRT_SHIM(IThumb)->abi_CancelDrag());
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IThumbStatics<D>::IsDraggingProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IThumbStatics)->get_IsDraggingProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::ClickMode impl_IButtonBase<D>::ClickMode() const
-{
-    Windows::UI::Xaml::Controls::ClickMode value {};
-    check_hresult(WINRT_SHIM(IButtonBase)->get_ClickMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IButtonBase<D>::ClickMode(Windows::UI::Xaml::Controls::ClickMode value) const
-{
-    check_hresult(WINRT_SHIM(IButtonBase)->put_ClickMode(value));
-}
-
-template <typename D> bool impl_IButtonBase<D>::IsPointerOver() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IButtonBase)->get_IsPointerOver(&value));
-    return value;
-}
-
-template <typename D> bool impl_IButtonBase<D>::IsPressed() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IButtonBase)->get_IsPressed(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Input::ICommand impl_IButtonBase<D>::Command() const
-{
-    Windows::UI::Xaml::Input::ICommand value;
-    check_hresult(WINRT_SHIM(IButtonBase)->get_Command(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IButtonBase<D>::Command(const Windows::UI::Xaml::Input::ICommand & value) const
-{
-    check_hresult(WINRT_SHIM(IButtonBase)->put_Command(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IButtonBase<D>::CommandParameter() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(IButtonBase)->get_CommandParameter(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IButtonBase<D>::CommandParameter(const Windows::Foundation::IInspectable & value) const
-{
-    check_hresult(WINRT_SHIM(IButtonBase)->put_CommandParameter(get_abi(value)));
-}
-
-template <typename D> event_token impl_IButtonBase<D>::Click(const Windows::UI::Xaml::RoutedEventHandler & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IButtonBase)->add_Click(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IButtonBase> impl_IButtonBase<D>::Click(auto_revoke_t, const Windows::UI::Xaml::RoutedEventHandler & value) const
-{
-    return impl::make_event_revoker<D, IButtonBase>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IButtonBase::remove_Click, Click(value));
-}
-
-template <typename D> void impl_IButtonBase<D>::Click(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IButtonBase)->remove_Click(token));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IButtonBaseStatics<D>::ClickModeProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IButtonBaseStatics)->get_ClickModeProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IButtonBaseStatics<D>::IsPointerOverProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IButtonBaseStatics)->get_IsPointerOverProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IButtonBaseStatics<D>::IsPressedProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IButtonBaseStatics)->get_IsPressedProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IButtonBaseStatics<D>::CommandProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IButtonBaseStatics)->get_CommandProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IButtonBaseStatics<D>::CommandParameterProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IButtonBaseStatics)->get_CommandParameterProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::ButtonBase impl_IButtonBaseFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::ButtonBase instance { nullptr };
-    check_hresult(WINRT_SHIM(IButtonBaseFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> bool impl_ICarouselPanel<D>::CanVerticallyScroll() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ICarouselPanel)->get_CanVerticallyScroll(&value));
-    return value;
-}
-
-template <typename D> void impl_ICarouselPanel<D>::CanVerticallyScroll(bool value) const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->put_CanVerticallyScroll(value));
-}
-
-template <typename D> bool impl_ICarouselPanel<D>::CanHorizontallyScroll() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ICarouselPanel)->get_CanHorizontallyScroll(&value));
-    return value;
-}
-
-template <typename D> void impl_ICarouselPanel<D>::CanHorizontallyScroll(bool value) const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->put_CanHorizontallyScroll(value));
-}
-
-template <typename D> double impl_ICarouselPanel<D>::ExtentWidth() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICarouselPanel)->get_ExtentWidth(&value));
-    return value;
-}
-
-template <typename D> double impl_ICarouselPanel<D>::ExtentHeight() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICarouselPanel)->get_ExtentHeight(&value));
-    return value;
-}
-
-template <typename D> double impl_ICarouselPanel<D>::ViewportWidth() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICarouselPanel)->get_ViewportWidth(&value));
-    return value;
-}
-
-template <typename D> double impl_ICarouselPanel<D>::ViewportHeight() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICarouselPanel)->get_ViewportHeight(&value));
-    return value;
-}
-
-template <typename D> double impl_ICarouselPanel<D>::HorizontalOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICarouselPanel)->get_HorizontalOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_ICarouselPanel<D>::VerticalOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICarouselPanel)->get_VerticalOffset(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_ICarouselPanel<D>::ScrollOwner() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(ICarouselPanel)->get_ScrollOwner(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ICarouselPanel<D>::ScrollOwner(const Windows::Foundation::IInspectable & value) const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->put_ScrollOwner(get_abi(value)));
-}
-
-template <typename D> void impl_ICarouselPanel<D>::LineUp() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_LineUp());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::LineDown() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_LineDown());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::LineLeft() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_LineLeft());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::LineRight() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_LineRight());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::PageUp() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_PageUp());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::PageDown() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_PageDown());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::PageLeft() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_PageLeft());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::PageRight() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_PageRight());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::MouseWheelUp() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_MouseWheelUp());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::MouseWheelDown() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_MouseWheelDown());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::MouseWheelLeft() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_MouseWheelLeft());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::MouseWheelRight() const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_MouseWheelRight());
-}
-
-template <typename D> void impl_ICarouselPanel<D>::SetHorizontalOffset(double offset) const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_SetHorizontalOffset(offset));
-}
-
-template <typename D> void impl_ICarouselPanel<D>::SetVerticalOffset(double offset) const
-{
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_SetVerticalOffset(offset));
-}
-
-template <typename D> Windows::Foundation::Rect impl_ICarouselPanel<D>::MakeVisible(const Windows::UI::Xaml::UIElement & visual, const Windows::Foundation::Rect & rectangle) const
-{
-    Windows::Foundation::Rect returnValue {};
-    check_hresult(WINRT_SHIM(ICarouselPanel)->abi_MakeVisible(get_abi(visual), get_abi(rectangle), put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::CarouselPanel impl_ICarouselPanelFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::CarouselPanel instance { nullptr };
-    check_hresult(WINRT_SHIM(ICarouselPanelFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> bool impl_IOrientedVirtualizingPanel<D>::CanVerticallyScroll() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->get_CanVerticallyScroll(&value));
-    return value;
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::CanVerticallyScroll(bool value) const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->put_CanVerticallyScroll(value));
-}
-
-template <typename D> bool impl_IOrientedVirtualizingPanel<D>::CanHorizontallyScroll() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->get_CanHorizontallyScroll(&value));
-    return value;
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::CanHorizontallyScroll(bool value) const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->put_CanHorizontallyScroll(value));
-}
-
-template <typename D> double impl_IOrientedVirtualizingPanel<D>::ExtentWidth() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->get_ExtentWidth(&value));
-    return value;
-}
-
-template <typename D> double impl_IOrientedVirtualizingPanel<D>::ExtentHeight() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->get_ExtentHeight(&value));
-    return value;
-}
-
-template <typename D> double impl_IOrientedVirtualizingPanel<D>::ViewportWidth() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->get_ViewportWidth(&value));
-    return value;
-}
-
-template <typename D> double impl_IOrientedVirtualizingPanel<D>::ViewportHeight() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->get_ViewportHeight(&value));
-    return value;
-}
-
-template <typename D> double impl_IOrientedVirtualizingPanel<D>::HorizontalOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->get_HorizontalOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_IOrientedVirtualizingPanel<D>::VerticalOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->get_VerticalOffset(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IOrientedVirtualizingPanel<D>::ScrollOwner() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->get_ScrollOwner(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::ScrollOwner(const Windows::Foundation::IInspectable & value) const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->put_ScrollOwner(get_abi(value)));
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::LineUp() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_LineUp());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::LineDown() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_LineDown());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::LineLeft() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_LineLeft());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::LineRight() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_LineRight());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::PageUp() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_PageUp());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::PageDown() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_PageDown());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::PageLeft() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_PageLeft());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::PageRight() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_PageRight());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::MouseWheelUp() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_MouseWheelUp());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::MouseWheelDown() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_MouseWheelDown());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::MouseWheelLeft() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_MouseWheelLeft());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::MouseWheelRight() const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_MouseWheelRight());
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::SetHorizontalOffset(double offset) const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_SetHorizontalOffset(offset));
-}
-
-template <typename D> void impl_IOrientedVirtualizingPanel<D>::SetVerticalOffset(double offset) const
-{
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_SetVerticalOffset(offset));
-}
-
-template <typename D> Windows::Foundation::Rect impl_IOrientedVirtualizingPanel<D>::MakeVisible(const Windows::UI::Xaml::UIElement & visual, const Windows::Foundation::Rect & rectangle) const
-{
-    Windows::Foundation::Rect returnValue {};
-    check_hresult(WINRT_SHIM(IOrientedVirtualizingPanel)->abi_MakeVisible(get_abi(visual), get_abi(rectangle), put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Orientation impl_IScrollBar<D>::Orientation() const
-{
-    Windows::UI::Xaml::Controls::Orientation value {};
-    check_hresult(WINRT_SHIM(IScrollBar)->get_Orientation(&value));
-    return value;
-}
-
-template <typename D> void impl_IScrollBar<D>::Orientation(Windows::UI::Xaml::Controls::Orientation value) const
-{
-    check_hresult(WINRT_SHIM(IScrollBar)->put_Orientation(value));
-}
-
-template <typename D> double impl_IScrollBar<D>::ViewportSize() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IScrollBar)->get_ViewportSize(&value));
-    return value;
-}
-
-template <typename D> void impl_IScrollBar<D>::ViewportSize(double value) const
-{
-    check_hresult(WINRT_SHIM(IScrollBar)->put_ViewportSize(value));
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::ScrollingIndicatorMode impl_IScrollBar<D>::IndicatorMode() const
-{
-    Windows::UI::Xaml::Controls::Primitives::ScrollingIndicatorMode value {};
-    check_hresult(WINRT_SHIM(IScrollBar)->get_IndicatorMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IScrollBar<D>::IndicatorMode(Windows::UI::Xaml::Controls::Primitives::ScrollingIndicatorMode value) const
-{
-    check_hresult(WINRT_SHIM(IScrollBar)->put_IndicatorMode(value));
-}
-
-template <typename D> event_token impl_IScrollBar<D>::Scroll(const Windows::UI::Xaml::Controls::Primitives::ScrollEventHandler & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IScrollBar)->add_Scroll(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IScrollBar> impl_IScrollBar<D>::Scroll(auto_revoke_t, const Windows::UI::Xaml::Controls::Primitives::ScrollEventHandler & value) const
-{
-    return impl::make_event_revoker<D, IScrollBar>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IScrollBar::remove_Scroll, Scroll(value));
-}
-
-template <typename D> void impl_IScrollBar<D>::Scroll(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IScrollBar)->remove_Scroll(token));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IScrollBarStatics<D>::OrientationProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IScrollBarStatics)->get_OrientationProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IScrollBarStatics<D>::ViewportSizeProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IScrollBarStatics)->get_ViewportSizeProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IScrollBarStatics<D>::IndicatorModeProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IScrollBarStatics)->get_IndicatorModeProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> int32_t impl_ISelector<D>::SelectedIndex() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ISelector)->get_SelectedIndex(&value));
-    return value;
-}
-
-template <typename D> void impl_ISelector<D>::SelectedIndex(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ISelector)->put_SelectedIndex(value));
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_ISelector<D>::SelectedItem() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(ISelector)->get_SelectedItem(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ISelector<D>::SelectedItem(const Windows::Foundation::IInspectable & value) const
-{
-    check_hresult(WINRT_SHIM(ISelector)->put_SelectedItem(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_ISelector<D>::SelectedValue() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(ISelector)->get_SelectedValue(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ISelector<D>::SelectedValue(const Windows::Foundation::IInspectable & value) const
-{
-    check_hresult(WINRT_SHIM(ISelector)->put_SelectedValue(get_abi(value)));
-}
-
-template <typename D> hstring impl_ISelector<D>::SelectedValuePath() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISelector)->get_SelectedValuePath(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ISelector<D>::SelectedValuePath(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ISelector)->put_SelectedValuePath(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<bool> impl_ISelector<D>::IsSynchronizedWithCurrentItem() const
-{
-    Windows::Foundation::IReference<bool> value;
-    check_hresult(WINRT_SHIM(ISelector)->get_IsSynchronizedWithCurrentItem(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ISelector<D>::IsSynchronizedWithCurrentItem(const optional<bool> & value) const
-{
-    check_hresult(WINRT_SHIM(ISelector)->put_IsSynchronizedWithCurrentItem(get_abi(value)));
-}
-
-template <typename D> event_token impl_ISelector<D>::SelectionChanged(const Windows::UI::Xaml::Controls::SelectionChangedEventHandler & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ISelector)->add_SelectionChanged(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ISelector> impl_ISelector<D>::SelectionChanged(auto_revoke_t, const Windows::UI::Xaml::Controls::SelectionChangedEventHandler & value) const
-{
-    return impl::make_event_revoker<D, ISelector>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::ISelector::remove_SelectionChanged, SelectionChanged(value));
-}
-
-template <typename D> void impl_ISelector<D>::SelectionChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ISelector)->remove_SelectionChanged(token));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ISelectorStatics<D>::SelectedIndexProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ISelectorStatics)->get_SelectedIndexProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ISelectorStatics<D>::SelectedItemProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ISelectorStatics)->get_SelectedItemProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ISelectorStatics<D>::SelectedValueProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ISelectorStatics)->get_SelectedValueProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ISelectorStatics<D>::SelectedValuePathProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ISelectorStatics)->get_SelectedValuePathProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ISelectorStatics<D>::IsSynchronizedWithCurrentItemProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ISelectorStatics)->get_IsSynchronizedWithCurrentItemProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_ISelectorStatics<D>::GetIsSelectionActive(const Windows::UI::Xaml::DependencyObject & element) const
-{
-    bool returnValue {};
-    check_hresult(WINRT_SHIM(ISelectorStatics)->abi_GetIsSelectionActive(get_abi(element), &returnValue));
-    return returnValue;
-}
-
-template <typename D> bool impl_ISelectorItem<D>::IsSelected() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ISelectorItem)->get_IsSelected(&value));
-    return value;
-}
-
-template <typename D> void impl_ISelectorItem<D>::IsSelected(bool value) const
-{
-    check_hresult(WINRT_SHIM(ISelectorItem)->put_IsSelected(value));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ISelectorItemStatics<D>::IsSelectedProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ISelectorItemStatics)->get_IsSelectedProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::SelectorItem impl_ISelectorItemFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::SelectorItem instance { nullptr };
-    check_hresult(WINRT_SHIM(ISelectorItemFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> int32_t impl_IRepeatButton<D>::Delay() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IRepeatButton)->get_Delay(&value));
-    return value;
-}
-
-template <typename D> void impl_IRepeatButton<D>::Delay(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(IRepeatButton)->put_Delay(value));
-}
-
-template <typename D> int32_t impl_IRepeatButton<D>::Interval() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IRepeatButton)->get_Interval(&value));
-    return value;
-}
-
-template <typename D> void impl_IRepeatButton<D>::Interval(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(IRepeatButton)->put_Interval(value));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IRepeatButtonStatics<D>::DelayProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IRepeatButtonStatics)->get_DelayProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IRepeatButtonStatics<D>::IntervalProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IRepeatButtonStatics)->get_IntervalProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<bool> impl_IToggleButton<D>::IsChecked() const
-{
-    Windows::Foundation::IReference<bool> value;
-    check_hresult(WINRT_SHIM(IToggleButton)->get_IsChecked(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IToggleButton<D>::IsChecked(const optional<bool> & value) const
-{
-    check_hresult(WINRT_SHIM(IToggleButton)->put_IsChecked(get_abi(value)));
-}
-
-template <typename D> bool impl_IToggleButton<D>::IsThreeState() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IToggleButton)->get_IsThreeState(&value));
-    return value;
-}
-
-template <typename D> void impl_IToggleButton<D>::IsThreeState(bool value) const
-{
-    check_hresult(WINRT_SHIM(IToggleButton)->put_IsThreeState(value));
-}
-
-template <typename D> event_token impl_IToggleButton<D>::Checked(const Windows::UI::Xaml::RoutedEventHandler & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IToggleButton)->add_Checked(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IToggleButton> impl_IToggleButton<D>::Checked(auto_revoke_t, const Windows::UI::Xaml::RoutedEventHandler & value) const
-{
-    return impl::make_event_revoker<D, IToggleButton>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IToggleButton::remove_Checked, Checked(value));
-}
-
-template <typename D> void impl_IToggleButton<D>::Checked(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IToggleButton)->remove_Checked(token));
-}
-
-template <typename D> event_token impl_IToggleButton<D>::Unchecked(const Windows::UI::Xaml::RoutedEventHandler & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IToggleButton)->add_Unchecked(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IToggleButton> impl_IToggleButton<D>::Unchecked(auto_revoke_t, const Windows::UI::Xaml::RoutedEventHandler & value) const
-{
-    return impl::make_event_revoker<D, IToggleButton>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IToggleButton::remove_Unchecked, Unchecked(value));
-}
-
-template <typename D> void impl_IToggleButton<D>::Unchecked(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IToggleButton)->remove_Unchecked(token));
-}
-
-template <typename D> event_token impl_IToggleButton<D>::Indeterminate(const Windows::UI::Xaml::RoutedEventHandler & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IToggleButton)->add_Indeterminate(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IToggleButton> impl_IToggleButton<D>::Indeterminate(auto_revoke_t, const Windows::UI::Xaml::RoutedEventHandler & value) const
-{
-    return impl::make_event_revoker<D, IToggleButton>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IToggleButton::remove_Indeterminate, Indeterminate(value));
-}
-
-template <typename D> void impl_IToggleButton<D>::Indeterminate(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IToggleButton)->remove_Indeterminate(token));
-}
-
-template <typename D> void impl_IToggleButtonOverrides<D>::OnToggle() const
-{
-    check_hresult(WINRT_SHIM(IToggleButtonOverrides)->abi_OnToggle());
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IToggleButtonStatics<D>::IsCheckedProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IToggleButtonStatics)->get_IsCheckedProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IToggleButtonStatics<D>::IsThreeStateProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IToggleButtonStatics)->get_IsThreeStateProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::ToggleButton impl_IToggleButtonFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::ToggleButton instance { nullptr };
-    check_hresult(WINRT_SHIM(IToggleButtonFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> Windows::Foundation::Rect impl_IAppBarTemplateSettings<D>::ClipRect() const
-{
-    Windows::Foundation::Rect value {};
-    check_hresult(WINRT_SHIM(IAppBarTemplateSettings)->get_ClipRect(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IAppBarTemplateSettings<D>::CompactVerticalDelta() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IAppBarTemplateSettings)->get_CompactVerticalDelta(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IAppBarTemplateSettings<D>::CompactRootMargin() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IAppBarTemplateSettings)->get_CompactRootMargin(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IAppBarTemplateSettings<D>::MinimalVerticalDelta() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IAppBarTemplateSettings)->get_MinimalVerticalDelta(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IAppBarTemplateSettings<D>::MinimalRootMargin() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IAppBarTemplateSettings)->get_MinimalRootMargin(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IAppBarTemplateSettings<D>::HiddenVerticalDelta() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IAppBarTemplateSettings)->get_HiddenVerticalDelta(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IAppBarTemplateSettings<D>::HiddenRootMargin() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IAppBarTemplateSettings)->get_HiddenRootMargin(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_ICalendarViewTemplateSettings<D>::MinViewWidth() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_MinViewWidth(&value));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarViewTemplateSettings<D>::HeaderText() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_HeaderText(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarViewTemplateSettings<D>::WeekDay1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_WeekDay1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarViewTemplateSettings<D>::WeekDay2() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_WeekDay2(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarViewTemplateSettings<D>::WeekDay3() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_WeekDay3(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarViewTemplateSettings<D>::WeekDay4() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_WeekDay4(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarViewTemplateSettings<D>::WeekDay5() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_WeekDay5(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarViewTemplateSettings<D>::WeekDay6() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_WeekDay6(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarViewTemplateSettings<D>::WeekDay7() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_WeekDay7(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_ICalendarViewTemplateSettings<D>::HasMoreContentAfter() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_HasMoreContentAfter(&value));
-    return value;
-}
-
-template <typename D> bool impl_ICalendarViewTemplateSettings<D>::HasMoreContentBefore() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_HasMoreContentBefore(&value));
-    return value;
-}
-
-template <typename D> bool impl_ICalendarViewTemplateSettings<D>::HasMoreViews() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_HasMoreViews(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Rect impl_ICalendarViewTemplateSettings<D>::ClipRect() const
-{
-    Windows::Foundation::Rect value {};
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_ClipRect(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_ICalendarViewTemplateSettings<D>::CenterX() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_CenterX(&value));
-    return value;
-}
-
-template <typename D> double impl_ICalendarViewTemplateSettings<D>::CenterY() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICalendarViewTemplateSettings)->get_CenterY(&value));
-    return value;
-}
-
-template <typename D> double impl_ICommandBarTemplateSettings<D>::ContentHeight() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICommandBarTemplateSettings)->get_ContentHeight(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Rect impl_ICommandBarTemplateSettings<D>::OverflowContentClipRect() const
-{
-    Windows::Foundation::Rect value {};
-    check_hresult(WINRT_SHIM(ICommandBarTemplateSettings)->get_OverflowContentClipRect(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_ICommandBarTemplateSettings<D>::OverflowContentMinWidth() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICommandBarTemplateSettings)->get_OverflowContentMinWidth(&value));
-    return value;
-}
-
-template <typename D> double impl_ICommandBarTemplateSettings<D>::OverflowContentMaxHeight() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICommandBarTemplateSettings)->get_OverflowContentMaxHeight(&value));
-    return value;
-}
-
-template <typename D> double impl_ICommandBarTemplateSettings<D>::OverflowContentHorizontalOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICommandBarTemplateSettings)->get_OverflowContentHorizontalOffset(&value));
-    return value;
-}
-
-template <typename D> double impl_ICommandBarTemplateSettings<D>::OverflowContentHeight() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICommandBarTemplateSettings)->get_OverflowContentHeight(&value));
-    return value;
-}
-
-template <typename D> double impl_ICommandBarTemplateSettings<D>::NegativeOverflowContentHeight() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICommandBarTemplateSettings)->get_NegativeOverflowContentHeight(&value));
-    return value;
-}
-
-template <typename D> double impl_ICommandBarTemplateSettings2<D>::OverflowContentMaxWidth() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICommandBarTemplateSettings2)->get_OverflowContentMaxWidth(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Visibility impl_ICommandBarTemplateSettings3<D>::EffectiveOverflowButtonVisibility() const
-{
-    Windows::UI::Xaml::Visibility value {};
-    check_hresult(WINRT_SHIM(ICommandBarTemplateSettings3)->get_EffectiveOverflowButtonVisibility(&value));
-    return value;
-}
-
-template <typename D> double impl_ISplitViewTemplateSettings<D>::OpenPaneLength() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ISplitViewTemplateSettings)->get_OpenPaneLength(&value));
-    return value;
-}
-
-template <typename D> double impl_ISplitViewTemplateSettings<D>::NegativeOpenPaneLength() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ISplitViewTemplateSettings)->get_NegativeOpenPaneLength(&value));
-    return value;
-}
-
-template <typename D> double impl_ISplitViewTemplateSettings<D>::OpenPaneLengthMinusCompactLength() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ISplitViewTemplateSettings)->get_OpenPaneLengthMinusCompactLength(&value));
-    return value;
-}
-
-template <typename D> double impl_ISplitViewTemplateSettings<D>::NegativeOpenPaneLengthMinusCompactLength() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ISplitViewTemplateSettings)->get_NegativeOpenPaneLengthMinusCompactLength(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::GridLength impl_ISplitViewTemplateSettings<D>::OpenPaneGridLength() const
-{
-    Windows::UI::Xaml::GridLength value {};
-    check_hresult(WINRT_SHIM(ISplitViewTemplateSettings)->get_OpenPaneGridLength(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::GridLength impl_ISplitViewTemplateSettings<D>::CompactPaneGridLength() const
-{
-    Windows::UI::Xaml::GridLength value {};
-    check_hresult(WINRT_SHIM(ISplitViewTemplateSettings)->get_CompactPaneGridLength(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IGridViewItemPresenter<D>::SelectionCheckMarkVisualEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_SelectionCheckMarkVisualEnabled(&value));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::SelectionCheckMarkVisualEnabled(bool value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_SelectionCheckMarkVisualEnabled(value));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::CheckHintBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_CheckHintBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::CheckHintBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_CheckHintBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::CheckSelectingBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_CheckSelectingBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::CheckSelectingBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_CheckSelectingBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::CheckBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_CheckBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::CheckBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_CheckBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::DragBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_DragBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::DragBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_DragBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::DragForeground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_DragForeground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::DragForeground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_DragForeground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::FocusBorderBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_FocusBorderBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::FocusBorderBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_FocusBorderBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::PlaceholderBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_PlaceholderBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::PlaceholderBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_PlaceholderBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::PointerOverBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_PointerOverBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::PointerOverBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_PointerOverBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::SelectedBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_SelectedBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::SelectedBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_SelectedBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::SelectedForeground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_SelectedForeground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::SelectedForeground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_SelectedForeground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::SelectedPointerOverBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_SelectedPointerOverBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::SelectedPointerOverBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_SelectedPointerOverBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IGridViewItemPresenter<D>::SelectedPointerOverBorderBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_SelectedPointerOverBorderBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::SelectedPointerOverBorderBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_SelectedPointerOverBorderBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IGridViewItemPresenter<D>::SelectedBorderThickness() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_SelectedBorderThickness(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::SelectedBorderThickness(const Windows::UI::Xaml::Thickness & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_SelectedBorderThickness(get_abi(value)));
-}
-
-template <typename D> double impl_IGridViewItemPresenter<D>::DisabledOpacity() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_DisabledOpacity(&value));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::DisabledOpacity(double value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_DisabledOpacity(value));
-}
-
-template <typename D> double impl_IGridViewItemPresenter<D>::DragOpacity() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_DragOpacity(&value));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::DragOpacity(double value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_DragOpacity(value));
-}
-
-template <typename D> double impl_IGridViewItemPresenter<D>::ReorderHintOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_ReorderHintOffset(&value));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::ReorderHintOffset(double value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_ReorderHintOffset(value));
-}
-
-template <typename D> Windows::UI::Xaml::HorizontalAlignment impl_IGridViewItemPresenter<D>::GridViewItemPresenterHorizontalContentAlignment() const
-{
-    Windows::UI::Xaml::HorizontalAlignment value {};
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_GridViewItemPresenterHorizontalContentAlignment(&value));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::GridViewItemPresenterHorizontalContentAlignment(Windows::UI::Xaml::HorizontalAlignment value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_GridViewItemPresenterHorizontalContentAlignment(value));
-}
-
-template <typename D> Windows::UI::Xaml::VerticalAlignment impl_IGridViewItemPresenter<D>::GridViewItemPresenterVerticalContentAlignment() const
-{
-    Windows::UI::Xaml::VerticalAlignment value {};
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_GridViewItemPresenterVerticalContentAlignment(&value));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::GridViewItemPresenterVerticalContentAlignment(Windows::UI::Xaml::VerticalAlignment value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_GridViewItemPresenterVerticalContentAlignment(value));
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IGridViewItemPresenter<D>::GridViewItemPresenterPadding() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_GridViewItemPresenterPadding(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::GridViewItemPresenterPadding(const Windows::UI::Xaml::Thickness & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_GridViewItemPresenterPadding(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IGridViewItemPresenter<D>::PointerOverBackgroundMargin() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_PointerOverBackgroundMargin(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::PointerOverBackgroundMargin(const Windows::UI::Xaml::Thickness & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_PointerOverBackgroundMargin(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IGridViewItemPresenter<D>::ContentMargin() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->get_ContentMargin(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IGridViewItemPresenter<D>::ContentMargin(const Windows::UI::Xaml::Thickness & value) const
-{
-    check_hresult(WINRT_SHIM(IGridViewItemPresenter)->put_ContentMargin(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::SelectionCheckMarkVisualEnabledProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_SelectionCheckMarkVisualEnabledProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::CheckHintBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_CheckHintBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::CheckSelectingBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_CheckSelectingBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::CheckBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_CheckBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::DragBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_DragBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::DragForegroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_DragForegroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::FocusBorderBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_FocusBorderBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::PlaceholderBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_PlaceholderBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::PointerOverBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_PointerOverBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::SelectedBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_SelectedBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::SelectedForegroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_SelectedForegroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::SelectedPointerOverBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_SelectedPointerOverBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::SelectedPointerOverBorderBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_SelectedPointerOverBorderBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::SelectedBorderThicknessProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_SelectedBorderThicknessProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::DisabledOpacityProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_DisabledOpacityProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::DragOpacityProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_DragOpacityProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::ReorderHintOffsetProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_ReorderHintOffsetProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::GridViewItemPresenterHorizontalContentAlignmentProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_GridViewItemPresenterHorizontalContentAlignmentProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::GridViewItemPresenterVerticalContentAlignmentProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_GridViewItemPresenterVerticalContentAlignmentProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::GridViewItemPresenterPaddingProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_GridViewItemPresenterPaddingProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::PointerOverBackgroundMarginProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_PointerOverBackgroundMarginProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IGridViewItemPresenterStatics<D>::ContentMarginProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterStatics)->get_ContentMarginProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::GridViewItemPresenter impl_IGridViewItemPresenterFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::GridViewItemPresenter instance { nullptr };
-    check_hresult(WINRT_SHIM(IGridViewItemPresenterFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> bool impl_IListViewItemPresenter<D>::SelectionCheckMarkVisualEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_SelectionCheckMarkVisualEnabled(&value));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::SelectionCheckMarkVisualEnabled(bool value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_SelectionCheckMarkVisualEnabled(value));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::CheckHintBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_CheckHintBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::CheckHintBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_CheckHintBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::CheckSelectingBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_CheckSelectingBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::CheckSelectingBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_CheckSelectingBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::CheckBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_CheckBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::CheckBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_CheckBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::DragBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_DragBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::DragBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_DragBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::DragForeground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_DragForeground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::DragForeground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_DragForeground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::FocusBorderBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_FocusBorderBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::FocusBorderBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_FocusBorderBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::PlaceholderBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_PlaceholderBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::PlaceholderBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_PlaceholderBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::PointerOverBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_PointerOverBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::PointerOverBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_PointerOverBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::SelectedBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_SelectedBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::SelectedBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_SelectedBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::SelectedForeground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_SelectedForeground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::SelectedForeground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_SelectedForeground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::SelectedPointerOverBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_SelectedPointerOverBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::SelectedPointerOverBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_SelectedPointerOverBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter<D>::SelectedPointerOverBorderBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_SelectedPointerOverBorderBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::SelectedPointerOverBorderBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_SelectedPointerOverBorderBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IListViewItemPresenter<D>::SelectedBorderThickness() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_SelectedBorderThickness(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::SelectedBorderThickness(const Windows::UI::Xaml::Thickness & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_SelectedBorderThickness(get_abi(value)));
-}
-
-template <typename D> double impl_IListViewItemPresenter<D>::DisabledOpacity() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_DisabledOpacity(&value));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::DisabledOpacity(double value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_DisabledOpacity(value));
-}
-
-template <typename D> double impl_IListViewItemPresenter<D>::DragOpacity() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_DragOpacity(&value));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::DragOpacity(double value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_DragOpacity(value));
-}
-
-template <typename D> double impl_IListViewItemPresenter<D>::ReorderHintOffset() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_ReorderHintOffset(&value));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::ReorderHintOffset(double value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_ReorderHintOffset(value));
-}
-
-template <typename D> Windows::UI::Xaml::HorizontalAlignment impl_IListViewItemPresenter<D>::ListViewItemPresenterHorizontalContentAlignment() const
-{
-    Windows::UI::Xaml::HorizontalAlignment value {};
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_ListViewItemPresenterHorizontalContentAlignment(&value));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::ListViewItemPresenterHorizontalContentAlignment(Windows::UI::Xaml::HorizontalAlignment value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_ListViewItemPresenterHorizontalContentAlignment(value));
-}
-
-template <typename D> Windows::UI::Xaml::VerticalAlignment impl_IListViewItemPresenter<D>::ListViewItemPresenterVerticalContentAlignment() const
-{
-    Windows::UI::Xaml::VerticalAlignment value {};
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_ListViewItemPresenterVerticalContentAlignment(&value));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::ListViewItemPresenterVerticalContentAlignment(Windows::UI::Xaml::VerticalAlignment value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_ListViewItemPresenterVerticalContentAlignment(value));
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IListViewItemPresenter<D>::ListViewItemPresenterPadding() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_ListViewItemPresenterPadding(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::ListViewItemPresenterPadding(const Windows::UI::Xaml::Thickness & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_ListViewItemPresenterPadding(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IListViewItemPresenter<D>::PointerOverBackgroundMargin() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_PointerOverBackgroundMargin(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::PointerOverBackgroundMargin(const Windows::UI::Xaml::Thickness & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_PointerOverBackgroundMargin(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Thickness impl_IListViewItemPresenter<D>::ContentMargin() const
-{
-    Windows::UI::Xaml::Thickness value {};
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->get_ContentMargin(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter<D>::ContentMargin(const Windows::UI::Xaml::Thickness & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter)->put_ContentMargin(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::SelectionCheckMarkVisualEnabledProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_SelectionCheckMarkVisualEnabledProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::CheckHintBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_CheckHintBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::CheckSelectingBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_CheckSelectingBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::CheckBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_CheckBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::DragBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_DragBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::DragForegroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_DragForegroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::FocusBorderBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_FocusBorderBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::PlaceholderBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_PlaceholderBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::PointerOverBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_PointerOverBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::SelectedBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_SelectedBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::SelectedForegroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_SelectedForegroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::SelectedPointerOverBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_SelectedPointerOverBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::SelectedPointerOverBorderBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_SelectedPointerOverBorderBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::SelectedBorderThicknessProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_SelectedBorderThicknessProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::DisabledOpacityProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_DisabledOpacityProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::DragOpacityProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_DragOpacityProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::ReorderHintOffsetProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_ReorderHintOffsetProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::ListViewItemPresenterHorizontalContentAlignmentProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_ListViewItemPresenterHorizontalContentAlignmentProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::ListViewItemPresenterVerticalContentAlignmentProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_ListViewItemPresenterVerticalContentAlignmentProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::ListViewItemPresenterPaddingProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_ListViewItemPresenterPaddingProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::PointerOverBackgroundMarginProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_PointerOverBackgroundMarginProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics<D>::ContentMarginProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics)->get_ContentMarginProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenter impl_IListViewItemPresenterFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenter instance { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter2<D>::SelectedPressedBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->get_SelectedPressedBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter2<D>::SelectedPressedBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->put_SelectedPressedBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter2<D>::PressedBackground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->get_PressedBackground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter2<D>::PressedBackground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->put_PressedBackground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter2<D>::CheckBoxBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->get_CheckBoxBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter2<D>::CheckBoxBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->put_CheckBoxBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter2<D>::FocusSecondaryBorderBrush() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->get_FocusSecondaryBorderBrush(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter2<D>::FocusSecondaryBorderBrush(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->put_FocusSecondaryBorderBrush(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenterCheckMode impl_IListViewItemPresenter2<D>::CheckMode() const
-{
-    Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenterCheckMode value {};
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->get_CheckMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter2<D>::CheckMode(Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenterCheckMode value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->put_CheckMode(value));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IListViewItemPresenter2<D>::PointerOverForeground() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->get_PointerOverForeground(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IListViewItemPresenter2<D>::PointerOverForeground(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IListViewItemPresenter2)->put_PointerOverForeground(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics2<D>::SelectedPressedBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics2)->get_SelectedPressedBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics2<D>::PressedBackgroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics2)->get_PressedBackgroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics2<D>::CheckBoxBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics2)->get_CheckBoxBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics2<D>::FocusSecondaryBorderBrushProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics2)->get_FocusSecondaryBorderBrushProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics2<D>::CheckModeProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics2)->get_CheckModeProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IListViewItemPresenterStatics2<D>::PointerOverForegroundProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IListViewItemPresenterStatics2)->get_PointerOverForegroundProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::GeneratorPosition impl_IGeneratorPositionHelperStatics<D>::FromIndexAndOffset(int32_t index, int32_t offset) const
-{
-    Windows::UI::Xaml::Controls::Primitives::GeneratorPosition returnValue {};
-    check_hresult(WINRT_SHIM(IGeneratorPositionHelperStatics)->abi_FromIndexAndOffset(index, offset, put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> bool impl_IFlyoutBaseClosingEventArgs<D>::Cancel() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IFlyoutBaseClosingEventArgs)->get_Cancel(&value));
-    return value;
-}
-
-template <typename D> void impl_IFlyoutBaseClosingEventArgs<D>::Cancel(bool value) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBaseClosingEventArgs)->put_Cancel(value));
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::FlyoutPlacementMode impl_IFlyoutBase<D>::Placement() const
-{
-    Windows::UI::Xaml::Controls::Primitives::FlyoutPlacementMode value {};
-    check_hresult(WINRT_SHIM(IFlyoutBase)->get_Placement(&value));
-    return value;
-}
-
-template <typename D> void impl_IFlyoutBase<D>::Placement(Windows::UI::Xaml::Controls::Primitives::FlyoutPlacementMode value) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase)->put_Placement(value));
-}
-
-template <typename D> event_token impl_IFlyoutBase<D>::Opened(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IFlyoutBase)->add_Opened(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IFlyoutBase> impl_IFlyoutBase<D>::Opened(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    return impl::make_event_revoker<D, IFlyoutBase>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase::remove_Opened, Opened(value));
-}
-
-template <typename D> void impl_IFlyoutBase<D>::Opened(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase)->remove_Opened(token));
-}
-
-template <typename D> event_token impl_IFlyoutBase<D>::Closed(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IFlyoutBase)->add_Closed(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IFlyoutBase> impl_IFlyoutBase<D>::Closed(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    return impl::make_event_revoker<D, IFlyoutBase>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase::remove_Closed, Closed(value));
-}
-
-template <typename D> void impl_IFlyoutBase<D>::Closed(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase)->remove_Closed(token));
-}
-
-template <typename D> event_token impl_IFlyoutBase<D>::Opening(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IFlyoutBase)->add_Opening(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IFlyoutBase> impl_IFlyoutBase<D>::Opening(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & value) const
-{
-    return impl::make_event_revoker<D, IFlyoutBase>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase::remove_Opening, Opening(value));
-}
-
-template <typename D> void impl_IFlyoutBase<D>::Opening(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase)->remove_Opening(token));
-}
-
-template <typename D> void impl_IFlyoutBase<D>::ShowAt(const Windows::UI::Xaml::FrameworkElement & placementTarget) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase)->abi_ShowAt(get_abi(placementTarget)));
-}
-
-template <typename D> void impl_IFlyoutBase<D>::Hide() const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase)->abi_Hide());
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Control impl_IFlyoutBaseOverrides<D>::CreatePresenter() const
-{
-    Windows::UI::Xaml::Controls::Control returnValue { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBaseOverrides)->abi_CreatePresenter(put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IFlyoutBaseStatics<D>::PlacementProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBaseStatics)->get_PlacementProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IFlyoutBaseStatics<D>::AttachedFlyoutProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBaseStatics)->get_AttachedFlyoutProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::FlyoutBase impl_IFlyoutBaseStatics<D>::GetAttachedFlyout(const Windows::UI::Xaml::FrameworkElement & element) const
-{
-    Windows::UI::Xaml::Controls::Primitives::FlyoutBase value { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBaseStatics)->abi_GetAttachedFlyout(get_abi(element), put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFlyoutBaseStatics<D>::SetAttachedFlyout(const Windows::UI::Xaml::FrameworkElement & element, const Windows::UI::Xaml::Controls::Primitives::FlyoutBase & value) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBaseStatics)->abi_SetAttachedFlyout(get_abi(element), get_abi(value)));
-}
-
-template <typename D> void impl_IFlyoutBaseStatics<D>::ShowAttachedFlyout(const Windows::UI::Xaml::FrameworkElement & flyoutOwner) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBaseStatics)->abi_ShowAttachedFlyout(get_abi(flyoutOwner)));
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::FlyoutBase impl_IFlyoutBaseFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::FlyoutBase instance { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBaseFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> Windows::UI::Xaml::FrameworkElement impl_IFlyoutBase2<D>::Target() const
-{
-    Windows::UI::Xaml::FrameworkElement value { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBase2)->get_Target(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IFlyoutBase2<D>::AllowFocusOnInteraction() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IFlyoutBase2)->get_AllowFocusOnInteraction(&value));
-    return value;
-}
-
-template <typename D> void impl_IFlyoutBase2<D>::AllowFocusOnInteraction(bool value) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase2)->put_AllowFocusOnInteraction(value));
-}
-
-template <typename D> Windows::UI::Xaml::Controls::LightDismissOverlayMode impl_IFlyoutBase2<D>::LightDismissOverlayMode() const
-{
-    Windows::UI::Xaml::Controls::LightDismissOverlayMode value {};
-    check_hresult(WINRT_SHIM(IFlyoutBase2)->get_LightDismissOverlayMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IFlyoutBase2<D>::LightDismissOverlayMode(Windows::UI::Xaml::Controls::LightDismissOverlayMode value) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase2)->put_LightDismissOverlayMode(value));
-}
-
-template <typename D> bool impl_IFlyoutBase2<D>::AllowFocusWhenDisabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IFlyoutBase2)->get_AllowFocusWhenDisabled(&value));
-    return value;
-}
-
-template <typename D> void impl_IFlyoutBase2<D>::AllowFocusWhenDisabled(bool value) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase2)->put_AllowFocusWhenDisabled(value));
-}
-
-template <typename D> Windows::UI::Xaml::ElementSoundMode impl_IFlyoutBase2<D>::ElementSoundMode() const
-{
-    Windows::UI::Xaml::ElementSoundMode value {};
-    check_hresult(WINRT_SHIM(IFlyoutBase2)->get_ElementSoundMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IFlyoutBase2<D>::ElementSoundMode(Windows::UI::Xaml::ElementSoundMode value) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase2)->put_ElementSoundMode(value));
-}
-
-template <typename D> event_token impl_IFlyoutBase2<D>::Closing(const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Primitives::FlyoutBase, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs> & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IFlyoutBase2)->add_Closing(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IFlyoutBase2> impl_IFlyoutBase2<D>::Closing(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::Xaml::Controls::Primitives::FlyoutBase, Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs> & value) const
-{
-    return impl::make_event_revoker<D, IFlyoutBase2>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2::remove_Closing, Closing(value));
-}
-
-template <typename D> void impl_IFlyoutBase2<D>::Closing(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase2)->remove_Closing(token));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IFlyoutBaseStatics2<D>::AllowFocusOnInteractionProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBaseStatics2)->get_AllowFocusOnInteractionProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IFlyoutBaseStatics2<D>::LightDismissOverlayModeProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBaseStatics2)->get_LightDismissOverlayModeProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IFlyoutBaseStatics2<D>::AllowFocusWhenDisabledProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBaseStatics2)->get_AllowFocusWhenDisabledProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IFlyoutBaseStatics2<D>::ElementSoundModeProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBaseStatics2)->get_ElementSoundModeProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyObject impl_IFlyoutBase3<D>::OverlayInputPassThroughElement() const
-{
-    Windows::UI::Xaml::DependencyObject value { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBase3)->get_OverlayInputPassThroughElement(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFlyoutBase3<D>::OverlayInputPassThroughElement(const Windows::UI::Xaml::DependencyObject & value) const
-{
-    check_hresult(WINRT_SHIM(IFlyoutBase3)->put_OverlayInputPassThroughElement(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IFlyoutBaseStatics3<D>::OverlayInputPassThroughElementProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IFlyoutBaseStatics3)->get_OverlayInputPassThroughElementProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IJumpListItemBackgroundConverter<D>::Enabled() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IJumpListItemBackgroundConverter)->get_Enabled(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IJumpListItemBackgroundConverter<D>::Enabled(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IJumpListItemBackgroundConverter)->put_Enabled(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IJumpListItemBackgroundConverter<D>::Disabled() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IJumpListItemBackgroundConverter)->get_Disabled(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IJumpListItemBackgroundConverter<D>::Disabled(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IJumpListItemBackgroundConverter)->put_Disabled(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IJumpListItemBackgroundConverterStatics<D>::EnabledProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IJumpListItemBackgroundConverterStatics)->get_EnabledProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IJumpListItemBackgroundConverterStatics<D>::DisabledProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IJumpListItemBackgroundConverterStatics)->get_DisabledProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IJumpListItemForegroundConverter<D>::Enabled() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IJumpListItemForegroundConverter)->get_Enabled(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IJumpListItemForegroundConverter<D>::Enabled(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IJumpListItemForegroundConverter)->put_Enabled(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Media::Brush impl_IJumpListItemForegroundConverter<D>::Disabled() const
-{
-    Windows::UI::Xaml::Media::Brush value { nullptr };
-    check_hresult(WINRT_SHIM(IJumpListItemForegroundConverter)->get_Disabled(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IJumpListItemForegroundConverter<D>::Disabled(const Windows::UI::Xaml::Media::Brush & value) const
-{
-    check_hresult(WINRT_SHIM(IJumpListItemForegroundConverter)->put_Disabled(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IJumpListItemForegroundConverterStatics<D>::EnabledProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IJumpListItemForegroundConverterStatics)->get_EnabledProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IJumpListItemForegroundConverterStatics<D>::DisabledProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IJumpListItemForegroundConverterStatics)->get_DisabledProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPickerFlyoutBaseOverrides<D>::OnConfirmed() const
-{
-    check_hresult(WINRT_SHIM(IPickerFlyoutBaseOverrides)->abi_OnConfirmed());
-}
-
-template <typename D> bool impl_IPickerFlyoutBaseOverrides<D>::ShouldShowConfirmationButtons() const
-{
-    bool returnValue {};
-    check_hresult(WINRT_SHIM(IPickerFlyoutBaseOverrides)->abi_ShouldShowConfirmationButtons(&returnValue));
-    return returnValue;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_IPickerFlyoutBaseStatics<D>::TitleProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(IPickerFlyoutBaseStatics)->get_TitleProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IPickerFlyoutBaseStatics<D>::GetTitle(const Windows::UI::Xaml::DependencyObject & element) const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPickerFlyoutBaseStatics)->abi_GetTitle(get_abi(element), put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPickerFlyoutBaseStatics<D>::SetTitle(const Windows::UI::Xaml::DependencyObject & element, hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPickerFlyoutBaseStatics)->abi_SetTitle(get_abi(element), get_abi(value)));
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::PickerFlyoutBase impl_IPickerFlyoutBaseFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::PickerFlyoutBase instance { nullptr };
-    check_hresult(WINRT_SHIM(IPickerFlyoutBaseFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
-
-template <typename D> bool impl_ILoopingSelector<D>::ShouldLoop() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ILoopingSelector)->get_ShouldLoop(&value));
-    return value;
-}
-
-template <typename D> void impl_ILoopingSelector<D>::ShouldLoop(bool value) const
-{
-    check_hresult(WINRT_SHIM(ILoopingSelector)->put_ShouldLoop(value));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> impl_ILoopingSelector<D>::Items() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> value;
-    check_hresult(WINRT_SHIM(ILoopingSelector)->get_Items(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILoopingSelector<D>::Items(const Windows::Foundation::Collections::IVector<Windows::Foundation::IInspectable> & value) const
-{
-    check_hresult(WINRT_SHIM(ILoopingSelector)->put_Items(get_abi(value)));
-}
-
-template <typename D> int32_t impl_ILoopingSelector<D>::SelectedIndex() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ILoopingSelector)->get_SelectedIndex(&value));
-    return value;
-}
-
-template <typename D> void impl_ILoopingSelector<D>::SelectedIndex(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ILoopingSelector)->put_SelectedIndex(value));
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_ILoopingSelector<D>::SelectedItem() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(ILoopingSelector)->get_SelectedItem(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILoopingSelector<D>::SelectedItem(const Windows::Foundation::IInspectable & value) const
-{
-    check_hresult(WINRT_SHIM(ILoopingSelector)->put_SelectedItem(get_abi(value)));
-}
-
-template <typename D> int32_t impl_ILoopingSelector<D>::ItemWidth() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ILoopingSelector)->get_ItemWidth(&value));
-    return value;
-}
-
-template <typename D> void impl_ILoopingSelector<D>::ItemWidth(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ILoopingSelector)->put_ItemWidth(value));
-}
-
-template <typename D> int32_t impl_ILoopingSelector<D>::ItemHeight() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ILoopingSelector)->get_ItemHeight(&value));
-    return value;
-}
-
-template <typename D> void impl_ILoopingSelector<D>::ItemHeight(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ILoopingSelector)->put_ItemHeight(value));
-}
-
-template <typename D> Windows::UI::Xaml::DataTemplate impl_ILoopingSelector<D>::ItemTemplate() const
-{
-    Windows::UI::Xaml::DataTemplate value { nullptr };
-    check_hresult(WINRT_SHIM(ILoopingSelector)->get_ItemTemplate(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILoopingSelector<D>::ItemTemplate(const Windows::UI::Xaml::DataTemplate & value) const
-{
-    check_hresult(WINRT_SHIM(ILoopingSelector)->put_ItemTemplate(get_abi(value)));
-}
-
-template <typename D> event_token impl_ILoopingSelector<D>::SelectionChanged(const Windows::UI::Xaml::Controls::SelectionChangedEventHandler & value) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ILoopingSelector)->add_SelectionChanged(get_abi(value), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ILoopingSelector> impl_ILoopingSelector<D>::SelectionChanged(auto_revoke_t, const Windows::UI::Xaml::Controls::SelectionChangedEventHandler & value) const
-{
-    return impl::make_event_revoker<D, ILoopingSelector>(this, &ABI::Windows::UI::Xaml::Controls::Primitives::ILoopingSelector::remove_SelectionChanged, SelectionChanged(value));
-}
-
-template <typename D> void impl_ILoopingSelector<D>::SelectionChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ILoopingSelector)->remove_SelectionChanged(token));
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILoopingSelectorStatics<D>::ShouldLoopProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ILoopingSelectorStatics)->get_ShouldLoopProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILoopingSelectorStatics<D>::ItemsProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ILoopingSelectorStatics)->get_ItemsProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILoopingSelectorStatics<D>::SelectedIndexProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ILoopingSelectorStatics)->get_SelectedIndexProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILoopingSelectorStatics<D>::SelectedItemProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ILoopingSelectorStatics)->get_SelectedItemProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILoopingSelectorStatics<D>::ItemWidthProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ILoopingSelectorStatics)->get_ItemWidthProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILoopingSelectorStatics<D>::ItemHeightProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ILoopingSelectorStatics)->get_ItemHeightProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::DependencyProperty impl_ILoopingSelectorStatics<D>::ItemTemplateProperty() const
-{
-    Windows::UI::Xaml::DependencyProperty value { nullptr };
-    check_hresult(WINRT_SHIM(ILoopingSelectorStatics)->get_ItemTemplateProperty(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::Xaml::Controls::Primitives::PivotHeaderItem impl_IPivotHeaderItemFactory<D>::CreateInstance(const Windows::Foundation::IInspectable & outer, Windows::Foundation::IInspectable & inner) const
-{
-    Windows::UI::Xaml::Controls::Primitives::PivotHeaderItem instance { nullptr };
-    check_hresult(WINRT_SHIM(IPivotHeaderItemFactory)->abi_CreateInstance(get_abi(outer), put_abi(inner), put_abi(instance)));
-    return instance;
-}
+WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Controls::Primitives {
 
 inline Windows::UI::Xaml::DependencyProperty ButtonBase::ClickModeProperty()
 {
-    return get_activation_factory<ButtonBase, IButtonBaseStatics>().ClickModeProperty();
+    return get_activation_factory<ButtonBase, Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics>().ClickModeProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ButtonBase::IsPointerOverProperty()
 {
-    return get_activation_factory<ButtonBase, IButtonBaseStatics>().IsPointerOverProperty();
+    return get_activation_factory<ButtonBase, Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics>().IsPointerOverProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ButtonBase::IsPressedProperty()
 {
-    return get_activation_factory<ButtonBase, IButtonBaseStatics>().IsPressedProperty();
+    return get_activation_factory<ButtonBase, Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics>().IsPressedProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ButtonBase::CommandProperty()
 {
-    return get_activation_factory<ButtonBase, IButtonBaseStatics>().CommandProperty();
+    return get_activation_factory<ButtonBase, Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics>().CommandProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ButtonBase::CommandParameterProperty()
 {
-    return get_activation_factory<ButtonBase, IButtonBaseStatics>().CommandParameterProperty();
+    return get_activation_factory<ButtonBase, Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics>().CommandParameterProperty();
 }
 
 inline CalendarPanel::CalendarPanel() :
@@ -11314,196 +11364,196 @@ inline CalendarPanel::CalendarPanel() :
 inline CarouselPanel::CarouselPanel()
 {
     Windows::Foundation::IInspectable outer, inner;
-    impl_move(get_activation_factory<CarouselPanel, ICarouselPanelFactory>().CreateInstance(outer, inner));
+    impl_move(get_activation_factory<CarouselPanel, Windows::UI::Xaml::Controls::Primitives::ICarouselPanelFactory>().CreateInstance(outer, inner));
 }
 
 inline DragCompletedEventArgs::DragCompletedEventArgs(double horizontalChange, double verticalChange, bool canceled)
 {
     Windows::Foundation::IInspectable outer, inner;
-    impl_move(get_activation_factory<DragCompletedEventArgs, IDragCompletedEventArgsFactory>().CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(horizontalChange, verticalChange, canceled, outer, inner));
+    impl_move(get_activation_factory<DragCompletedEventArgs, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgsFactory>().CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(horizontalChange, verticalChange, canceled, outer, inner));
 }
 
 inline DragDeltaEventArgs::DragDeltaEventArgs(double horizontalChange, double verticalChange)
 {
     Windows::Foundation::IInspectable outer, inner;
-    impl_move(get_activation_factory<DragDeltaEventArgs, IDragDeltaEventArgsFactory>().CreateInstanceWithHorizontalChangeAndVerticalChange(horizontalChange, verticalChange, outer, inner));
+    impl_move(get_activation_factory<DragDeltaEventArgs, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgsFactory>().CreateInstanceWithHorizontalChangeAndVerticalChange(horizontalChange, verticalChange, outer, inner));
 }
 
 inline DragStartedEventArgs::DragStartedEventArgs(double horizontalOffset, double verticalOffset)
 {
     Windows::Foundation::IInspectable outer, inner;
-    impl_move(get_activation_factory<DragStartedEventArgs, IDragStartedEventArgsFactory>().CreateInstanceWithHorizontalOffsetAndVerticalOffset(horizontalOffset, verticalOffset, outer, inner));
+    impl_move(get_activation_factory<DragStartedEventArgs, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgsFactory>().CreateInstanceWithHorizontalOffsetAndVerticalOffset(horizontalOffset, verticalOffset, outer, inner));
 }
 
 inline Windows::UI::Xaml::DependencyProperty FlyoutBase::PlacementProperty()
 {
-    return get_activation_factory<FlyoutBase, IFlyoutBaseStatics>().PlacementProperty();
+    return get_activation_factory<FlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics>().PlacementProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty FlyoutBase::AttachedFlyoutProperty()
 {
-    return get_activation_factory<FlyoutBase, IFlyoutBaseStatics>().AttachedFlyoutProperty();
+    return get_activation_factory<FlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics>().AttachedFlyoutProperty();
 }
 
-inline Windows::UI::Xaml::Controls::Primitives::FlyoutBase FlyoutBase::GetAttachedFlyout(const Windows::UI::Xaml::FrameworkElement & element)
+inline Windows::UI::Xaml::Controls::Primitives::FlyoutBase FlyoutBase::GetAttachedFlyout(Windows::UI::Xaml::FrameworkElement const& element)
 {
-    return get_activation_factory<FlyoutBase, IFlyoutBaseStatics>().GetAttachedFlyout(element);
+    return get_activation_factory<FlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics>().GetAttachedFlyout(element);
 }
 
-inline void FlyoutBase::SetAttachedFlyout(const Windows::UI::Xaml::FrameworkElement & element, const Windows::UI::Xaml::Controls::Primitives::FlyoutBase & value)
+inline void FlyoutBase::SetAttachedFlyout(Windows::UI::Xaml::FrameworkElement const& element, Windows::UI::Xaml::Controls::Primitives::FlyoutBase const& value)
 {
-    get_activation_factory<FlyoutBase, IFlyoutBaseStatics>().SetAttachedFlyout(element, value);
+    get_activation_factory<FlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics>().SetAttachedFlyout(element, value);
 }
 
-inline void FlyoutBase::ShowAttachedFlyout(const Windows::UI::Xaml::FrameworkElement & flyoutOwner)
+inline void FlyoutBase::ShowAttachedFlyout(Windows::UI::Xaml::FrameworkElement const& flyoutOwner)
 {
-    get_activation_factory<FlyoutBase, IFlyoutBaseStatics>().ShowAttachedFlyout(flyoutOwner);
+    get_activation_factory<FlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics>().ShowAttachedFlyout(flyoutOwner);
 }
 
 inline Windows::UI::Xaml::DependencyProperty FlyoutBase::AllowFocusOnInteractionProperty()
 {
-    return get_activation_factory<FlyoutBase, IFlyoutBaseStatics2>().AllowFocusOnInteractionProperty();
+    return get_activation_factory<FlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2>().AllowFocusOnInteractionProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty FlyoutBase::LightDismissOverlayModeProperty()
 {
-    return get_activation_factory<FlyoutBase, IFlyoutBaseStatics2>().LightDismissOverlayModeProperty();
+    return get_activation_factory<FlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2>().LightDismissOverlayModeProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty FlyoutBase::AllowFocusWhenDisabledProperty()
 {
-    return get_activation_factory<FlyoutBase, IFlyoutBaseStatics2>().AllowFocusWhenDisabledProperty();
+    return get_activation_factory<FlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2>().AllowFocusWhenDisabledProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty FlyoutBase::ElementSoundModeProperty()
 {
-    return get_activation_factory<FlyoutBase, IFlyoutBaseStatics2>().ElementSoundModeProperty();
+    return get_activation_factory<FlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2>().ElementSoundModeProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty FlyoutBase::OverlayInputPassThroughElementProperty()
 {
-    return get_activation_factory<FlyoutBase, IFlyoutBaseStatics3>().OverlayInputPassThroughElementProperty();
+    return get_activation_factory<FlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics3>().OverlayInputPassThroughElementProperty();
 }
 
 inline Windows::UI::Xaml::Controls::Primitives::GeneratorPosition GeneratorPositionHelper::FromIndexAndOffset(int32_t index, int32_t offset)
 {
-    return get_activation_factory<GeneratorPositionHelper, IGeneratorPositionHelperStatics>().FromIndexAndOffset(index, offset);
+    return get_activation_factory<GeneratorPositionHelper, Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelperStatics>().FromIndexAndOffset(index, offset);
 }
 
 inline GridViewItemPresenter::GridViewItemPresenter()
 {
     Windows::Foundation::IInspectable outer, inner;
-    impl_move(get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterFactory>().CreateInstance(outer, inner));
+    impl_move(get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterFactory>().CreateInstance(outer, inner));
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::SelectionCheckMarkVisualEnabledProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().SelectionCheckMarkVisualEnabledProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().SelectionCheckMarkVisualEnabledProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::CheckHintBrushProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().CheckHintBrushProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().CheckHintBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::CheckSelectingBrushProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().CheckSelectingBrushProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().CheckSelectingBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::CheckBrushProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().CheckBrushProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().CheckBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::DragBackgroundProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().DragBackgroundProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().DragBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::DragForegroundProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().DragForegroundProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().DragForegroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::FocusBorderBrushProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().FocusBorderBrushProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().FocusBorderBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::PlaceholderBackgroundProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().PlaceholderBackgroundProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().PlaceholderBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::PointerOverBackgroundProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().PointerOverBackgroundProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().PointerOverBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::SelectedBackgroundProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().SelectedBackgroundProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().SelectedBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::SelectedForegroundProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().SelectedForegroundProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().SelectedForegroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::SelectedPointerOverBackgroundProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().SelectedPointerOverBackgroundProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().SelectedPointerOverBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::SelectedPointerOverBorderBrushProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().SelectedPointerOverBorderBrushProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().SelectedPointerOverBorderBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::SelectedBorderThicknessProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().SelectedBorderThicknessProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().SelectedBorderThicknessProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::DisabledOpacityProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().DisabledOpacityProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().DisabledOpacityProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::DragOpacityProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().DragOpacityProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().DragOpacityProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::ReorderHintOffsetProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().ReorderHintOffsetProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().ReorderHintOffsetProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::GridViewItemPresenterHorizontalContentAlignmentProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().GridViewItemPresenterHorizontalContentAlignmentProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().GridViewItemPresenterHorizontalContentAlignmentProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::GridViewItemPresenterVerticalContentAlignmentProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().GridViewItemPresenterVerticalContentAlignmentProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().GridViewItemPresenterVerticalContentAlignmentProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::GridViewItemPresenterPaddingProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().GridViewItemPresenterPaddingProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().GridViewItemPresenterPaddingProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::PointerOverBackgroundMarginProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().PointerOverBackgroundMarginProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().PointerOverBackgroundMarginProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty GridViewItemPresenter::ContentMarginProperty()
 {
-    return get_activation_factory<GridViewItemPresenter, IGridViewItemPresenterStatics>().ContentMarginProperty();
+    return get_activation_factory<GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>().ContentMarginProperty();
 }
 
 inline JumpListItemBackgroundConverter::JumpListItemBackgroundConverter() :
@@ -11512,12 +11562,12 @@ inline JumpListItemBackgroundConverter::JumpListItemBackgroundConverter() :
 
 inline Windows::UI::Xaml::DependencyProperty JumpListItemBackgroundConverter::EnabledProperty()
 {
-    return get_activation_factory<JumpListItemBackgroundConverter, IJumpListItemBackgroundConverterStatics>().EnabledProperty();
+    return get_activation_factory<JumpListItemBackgroundConverter, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverterStatics>().EnabledProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty JumpListItemBackgroundConverter::DisabledProperty()
 {
-    return get_activation_factory<JumpListItemBackgroundConverter, IJumpListItemBackgroundConverterStatics>().DisabledProperty();
+    return get_activation_factory<JumpListItemBackgroundConverter, Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverterStatics>().DisabledProperty();
 }
 
 inline JumpListItemForegroundConverter::JumpListItemForegroundConverter() :
@@ -11526,224 +11576,224 @@ inline JumpListItemForegroundConverter::JumpListItemForegroundConverter() :
 
 inline Windows::UI::Xaml::DependencyProperty JumpListItemForegroundConverter::EnabledProperty()
 {
-    return get_activation_factory<JumpListItemForegroundConverter, IJumpListItemForegroundConverterStatics>().EnabledProperty();
+    return get_activation_factory<JumpListItemForegroundConverter, Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverterStatics>().EnabledProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty JumpListItemForegroundConverter::DisabledProperty()
 {
-    return get_activation_factory<JumpListItemForegroundConverter, IJumpListItemForegroundConverterStatics>().DisabledProperty();
+    return get_activation_factory<JumpListItemForegroundConverter, Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverterStatics>().DisabledProperty();
 }
 
-inline Windows::UI::Xaml::UIElement LayoutInformation::GetLayoutExceptionElement(const Windows::Foundation::IInspectable & dispatcher)
+inline Windows::UI::Xaml::UIElement LayoutInformation::GetLayoutExceptionElement(Windows::Foundation::IInspectable const& dispatcher)
 {
-    return get_activation_factory<LayoutInformation, ILayoutInformationStatics>().GetLayoutExceptionElement(dispatcher);
+    return get_activation_factory<LayoutInformation, Windows::UI::Xaml::Controls::Primitives::ILayoutInformationStatics>().GetLayoutExceptionElement(dispatcher);
 }
 
-inline Windows::Foundation::Rect LayoutInformation::GetLayoutSlot(const Windows::UI::Xaml::FrameworkElement & element)
+inline Windows::Foundation::Rect LayoutInformation::GetLayoutSlot(Windows::UI::Xaml::FrameworkElement const& element)
 {
-    return get_activation_factory<LayoutInformation, ILayoutInformationStatics>().GetLayoutSlot(element);
+    return get_activation_factory<LayoutInformation, Windows::UI::Xaml::Controls::Primitives::ILayoutInformationStatics>().GetLayoutSlot(element);
 }
 
 inline ListViewItemPresenter::ListViewItemPresenter()
 {
     Windows::Foundation::IInspectable outer, inner;
-    impl_move(get_activation_factory<ListViewItemPresenter, IListViewItemPresenterFactory>().CreateInstance(outer, inner));
+    impl_move(get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterFactory>().CreateInstance(outer, inner));
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::SelectionCheckMarkVisualEnabledProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().SelectionCheckMarkVisualEnabledProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().SelectionCheckMarkVisualEnabledProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::CheckHintBrushProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().CheckHintBrushProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().CheckHintBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::CheckSelectingBrushProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().CheckSelectingBrushProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().CheckSelectingBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::CheckBrushProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().CheckBrushProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().CheckBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::DragBackgroundProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().DragBackgroundProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().DragBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::DragForegroundProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().DragForegroundProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().DragForegroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::FocusBorderBrushProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().FocusBorderBrushProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().FocusBorderBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::PlaceholderBackgroundProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().PlaceholderBackgroundProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().PlaceholderBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::PointerOverBackgroundProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().PointerOverBackgroundProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().PointerOverBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::SelectedBackgroundProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().SelectedBackgroundProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().SelectedBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::SelectedForegroundProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().SelectedForegroundProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().SelectedForegroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::SelectedPointerOverBackgroundProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().SelectedPointerOverBackgroundProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().SelectedPointerOverBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::SelectedPointerOverBorderBrushProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().SelectedPointerOverBorderBrushProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().SelectedPointerOverBorderBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::SelectedBorderThicknessProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().SelectedBorderThicknessProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().SelectedBorderThicknessProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::DisabledOpacityProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().DisabledOpacityProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().DisabledOpacityProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::DragOpacityProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().DragOpacityProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().DragOpacityProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::ReorderHintOffsetProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().ReorderHintOffsetProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().ReorderHintOffsetProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::ListViewItemPresenterHorizontalContentAlignmentProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().ListViewItemPresenterHorizontalContentAlignmentProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().ListViewItemPresenterHorizontalContentAlignmentProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::ListViewItemPresenterVerticalContentAlignmentProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().ListViewItemPresenterVerticalContentAlignmentProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().ListViewItemPresenterVerticalContentAlignmentProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::ListViewItemPresenterPaddingProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().ListViewItemPresenterPaddingProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().ListViewItemPresenterPaddingProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::PointerOverBackgroundMarginProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().PointerOverBackgroundMarginProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().PointerOverBackgroundMarginProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::ContentMarginProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics>().ContentMarginProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>().ContentMarginProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::SelectedPressedBackgroundProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics2>().SelectedPressedBackgroundProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2>().SelectedPressedBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::PressedBackgroundProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics2>().PressedBackgroundProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2>().PressedBackgroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::CheckBoxBrushProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics2>().CheckBoxBrushProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2>().CheckBoxBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::FocusSecondaryBorderBrushProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics2>().FocusSecondaryBorderBrushProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2>().FocusSecondaryBorderBrushProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::CheckModeProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics2>().CheckModeProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2>().CheckModeProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ListViewItemPresenter::PointerOverForegroundProperty()
 {
-    return get_activation_factory<ListViewItemPresenter, IListViewItemPresenterStatics2>().PointerOverForegroundProperty();
+    return get_activation_factory<ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2>().PointerOverForegroundProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty LoopingSelector::ShouldLoopProperty()
 {
-    return get_activation_factory<LoopingSelector, ILoopingSelectorStatics>().ShouldLoopProperty();
+    return get_activation_factory<LoopingSelector, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics>().ShouldLoopProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty LoopingSelector::ItemsProperty()
 {
-    return get_activation_factory<LoopingSelector, ILoopingSelectorStatics>().ItemsProperty();
+    return get_activation_factory<LoopingSelector, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics>().ItemsProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty LoopingSelector::SelectedIndexProperty()
 {
-    return get_activation_factory<LoopingSelector, ILoopingSelectorStatics>().SelectedIndexProperty();
+    return get_activation_factory<LoopingSelector, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics>().SelectedIndexProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty LoopingSelector::SelectedItemProperty()
 {
-    return get_activation_factory<LoopingSelector, ILoopingSelectorStatics>().SelectedItemProperty();
+    return get_activation_factory<LoopingSelector, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics>().SelectedItemProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty LoopingSelector::ItemWidthProperty()
 {
-    return get_activation_factory<LoopingSelector, ILoopingSelectorStatics>().ItemWidthProperty();
+    return get_activation_factory<LoopingSelector, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics>().ItemWidthProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty LoopingSelector::ItemHeightProperty()
 {
-    return get_activation_factory<LoopingSelector, ILoopingSelectorStatics>().ItemHeightProperty();
+    return get_activation_factory<LoopingSelector, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics>().ItemHeightProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty LoopingSelector::ItemTemplateProperty()
 {
-    return get_activation_factory<LoopingSelector, ILoopingSelectorStatics>().ItemTemplateProperty();
+    return get_activation_factory<LoopingSelector, Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics>().ItemTemplateProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty PickerFlyoutBase::TitleProperty()
 {
-    return get_activation_factory<PickerFlyoutBase, IPickerFlyoutBaseStatics>().TitleProperty();
+    return get_activation_factory<PickerFlyoutBase, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics>().TitleProperty();
 }
 
-inline hstring PickerFlyoutBase::GetTitle(const Windows::UI::Xaml::DependencyObject & element)
+inline hstring PickerFlyoutBase::GetTitle(Windows::UI::Xaml::DependencyObject const& element)
 {
-    return get_activation_factory<PickerFlyoutBase, IPickerFlyoutBaseStatics>().GetTitle(element);
+    return get_activation_factory<PickerFlyoutBase, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics>().GetTitle(element);
 }
 
-inline void PickerFlyoutBase::SetTitle(const Windows::UI::Xaml::DependencyObject & element, hstring_view value)
+inline void PickerFlyoutBase::SetTitle(Windows::UI::Xaml::DependencyObject const& element, param::hstring const& value)
 {
-    get_activation_factory<PickerFlyoutBase, IPickerFlyoutBaseStatics>().SetTitle(element, value);
+    get_activation_factory<PickerFlyoutBase, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics>().SetTitle(element, value);
 }
 
 inline PivotHeaderItem::PivotHeaderItem()
 {
     Windows::Foundation::IInspectable outer, inner;
-    impl_move(get_activation_factory<PivotHeaderItem, IPivotHeaderItemFactory>().CreateInstance(outer, inner));
+    impl_move(get_activation_factory<PivotHeaderItem, Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItemFactory>().CreateInstance(outer, inner));
 }
 
 inline PivotHeaderPanel::PivotHeaderPanel() :
@@ -11760,62 +11810,62 @@ inline Popup::Popup() :
 
 inline Windows::UI::Xaml::DependencyProperty Popup::ChildProperty()
 {
-    return get_activation_factory<Popup, IPopupStatics>().ChildProperty();
+    return get_activation_factory<Popup, Windows::UI::Xaml::Controls::Primitives::IPopupStatics>().ChildProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty Popup::IsOpenProperty()
 {
-    return get_activation_factory<Popup, IPopupStatics>().IsOpenProperty();
+    return get_activation_factory<Popup, Windows::UI::Xaml::Controls::Primitives::IPopupStatics>().IsOpenProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty Popup::HorizontalOffsetProperty()
 {
-    return get_activation_factory<Popup, IPopupStatics>().HorizontalOffsetProperty();
+    return get_activation_factory<Popup, Windows::UI::Xaml::Controls::Primitives::IPopupStatics>().HorizontalOffsetProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty Popup::VerticalOffsetProperty()
 {
-    return get_activation_factory<Popup, IPopupStatics>().VerticalOffsetProperty();
+    return get_activation_factory<Popup, Windows::UI::Xaml::Controls::Primitives::IPopupStatics>().VerticalOffsetProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty Popup::ChildTransitionsProperty()
 {
-    return get_activation_factory<Popup, IPopupStatics>().ChildTransitionsProperty();
+    return get_activation_factory<Popup, Windows::UI::Xaml::Controls::Primitives::IPopupStatics>().ChildTransitionsProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty Popup::IsLightDismissEnabledProperty()
 {
-    return get_activation_factory<Popup, IPopupStatics>().IsLightDismissEnabledProperty();
+    return get_activation_factory<Popup, Windows::UI::Xaml::Controls::Primitives::IPopupStatics>().IsLightDismissEnabledProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty Popup::LightDismissOverlayModeProperty()
 {
-    return get_activation_factory<Popup, IPopupStatics2>().LightDismissOverlayModeProperty();
+    return get_activation_factory<Popup, Windows::UI::Xaml::Controls::Primitives::IPopupStatics2>().LightDismissOverlayModeProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty RangeBase::MinimumProperty()
 {
-    return get_activation_factory<RangeBase, IRangeBaseStatics>().MinimumProperty();
+    return get_activation_factory<RangeBase, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics>().MinimumProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty RangeBase::MaximumProperty()
 {
-    return get_activation_factory<RangeBase, IRangeBaseStatics>().MaximumProperty();
+    return get_activation_factory<RangeBase, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics>().MaximumProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty RangeBase::SmallChangeProperty()
 {
-    return get_activation_factory<RangeBase, IRangeBaseStatics>().SmallChangeProperty();
+    return get_activation_factory<RangeBase, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics>().SmallChangeProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty RangeBase::LargeChangeProperty()
 {
-    return get_activation_factory<RangeBase, IRangeBaseStatics>().LargeChangeProperty();
+    return get_activation_factory<RangeBase, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics>().LargeChangeProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty RangeBase::ValueProperty()
 {
-    return get_activation_factory<RangeBase, IRangeBaseStatics>().ValueProperty();
+    return get_activation_factory<RangeBase, Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics>().ValueProperty();
 }
 
 inline RepeatButton::RepeatButton() :
@@ -11824,12 +11874,12 @@ inline RepeatButton::RepeatButton() :
 
 inline Windows::UI::Xaml::DependencyProperty RepeatButton::DelayProperty()
 {
-    return get_activation_factory<RepeatButton, IRepeatButtonStatics>().DelayProperty();
+    return get_activation_factory<RepeatButton, Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics>().DelayProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty RepeatButton::IntervalProperty()
 {
-    return get_activation_factory<RepeatButton, IRepeatButtonStatics>().IntervalProperty();
+    return get_activation_factory<RepeatButton, Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics>().IntervalProperty();
 }
 
 inline ScrollBar::ScrollBar() :
@@ -11838,17 +11888,17 @@ inline ScrollBar::ScrollBar() :
 
 inline Windows::UI::Xaml::DependencyProperty ScrollBar::OrientationProperty()
 {
-    return get_activation_factory<ScrollBar, IScrollBarStatics>().OrientationProperty();
+    return get_activation_factory<ScrollBar, Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics>().OrientationProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ScrollBar::ViewportSizeProperty()
 {
-    return get_activation_factory<ScrollBar, IScrollBarStatics>().ViewportSizeProperty();
+    return get_activation_factory<ScrollBar, Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics>().ViewportSizeProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ScrollBar::IndicatorModeProperty()
 {
-    return get_activation_factory<ScrollBar, IScrollBarStatics>().IndicatorModeProperty();
+    return get_activation_factory<ScrollBar, Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics>().IndicatorModeProperty();
 }
 
 inline ScrollEventArgs::ScrollEventArgs() :
@@ -11857,37 +11907,37 @@ inline ScrollEventArgs::ScrollEventArgs() :
 
 inline Windows::UI::Xaml::DependencyProperty Selector::SelectedIndexProperty()
 {
-    return get_activation_factory<Selector, ISelectorStatics>().SelectedIndexProperty();
+    return get_activation_factory<Selector, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics>().SelectedIndexProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty Selector::SelectedItemProperty()
 {
-    return get_activation_factory<Selector, ISelectorStatics>().SelectedItemProperty();
+    return get_activation_factory<Selector, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics>().SelectedItemProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty Selector::SelectedValueProperty()
 {
-    return get_activation_factory<Selector, ISelectorStatics>().SelectedValueProperty();
+    return get_activation_factory<Selector, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics>().SelectedValueProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty Selector::SelectedValuePathProperty()
 {
-    return get_activation_factory<Selector, ISelectorStatics>().SelectedValuePathProperty();
+    return get_activation_factory<Selector, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics>().SelectedValuePathProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty Selector::IsSynchronizedWithCurrentItemProperty()
 {
-    return get_activation_factory<Selector, ISelectorStatics>().IsSynchronizedWithCurrentItemProperty();
+    return get_activation_factory<Selector, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics>().IsSynchronizedWithCurrentItemProperty();
 }
 
-inline bool Selector::GetIsSelectionActive(const Windows::UI::Xaml::DependencyObject & element)
+inline bool Selector::GetIsSelectionActive(Windows::UI::Xaml::DependencyObject const& element)
 {
-    return get_activation_factory<Selector, ISelectorStatics>().GetIsSelectionActive(element);
+    return get_activation_factory<Selector, Windows::UI::Xaml::Controls::Primitives::ISelectorStatics>().GetIsSelectionActive(element);
 }
 
 inline Windows::UI::Xaml::DependencyProperty SelectorItem::IsSelectedProperty()
 {
-    return get_activation_factory<SelectorItem, ISelectorItemStatics>().IsSelectedProperty();
+    return get_activation_factory<SelectorItem, Windows::UI::Xaml::Controls::Primitives::ISelectorItemStatics>().IsSelectedProperty();
 }
 
 inline Thumb::Thumb() :
@@ -11896,7 +11946,7 @@ inline Thumb::Thumb() :
 
 inline Windows::UI::Xaml::DependencyProperty Thumb::IsDraggingProperty()
 {
-    return get_activation_factory<Thumb, IThumbStatics>().IsDraggingProperty();
+    return get_activation_factory<Thumb, Windows::UI::Xaml::Controls::Primitives::IThumbStatics>().IsDraggingProperty();
 }
 
 inline TickBar::TickBar() :
@@ -11905,1323 +11955,790 @@ inline TickBar::TickBar() :
 
 inline Windows::UI::Xaml::DependencyProperty TickBar::FillProperty()
 {
-    return get_activation_factory<TickBar, ITickBarStatics>().FillProperty();
+    return get_activation_factory<TickBar, Windows::UI::Xaml::Controls::Primitives::ITickBarStatics>().FillProperty();
 }
 
 inline ToggleButton::ToggleButton()
 {
     Windows::Foundation::IInspectable outer, inner;
-    impl_move(get_activation_factory<ToggleButton, IToggleButtonFactory>().CreateInstance(outer, inner));
+    impl_move(get_activation_factory<ToggleButton, Windows::UI::Xaml::Controls::Primitives::IToggleButtonFactory>().CreateInstance(outer, inner));
 }
 
 inline Windows::UI::Xaml::DependencyProperty ToggleButton::IsCheckedProperty()
 {
-    return get_activation_factory<ToggleButton, IToggleButtonStatics>().IsCheckedProperty();
+    return get_activation_factory<ToggleButton, Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics>().IsCheckedProperty();
 }
 
 inline Windows::UI::Xaml::DependencyProperty ToggleButton::IsThreeStateProperty()
 {
-    return get_activation_factory<ToggleButton, IToggleButtonStatics>().IsThreeStateProperty();
+    return get_activation_factory<ToggleButton, Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics>().IsThreeStateProperty();
 }
 
+template <typename L> DragCompletedEventHandler::DragCompletedEventHandler(L handler) :
+    DragCompletedEventHandler(impl::make_delegate<DragCompletedEventHandler>(std::forward<L>(handler)))
+{}
+
+template <typename F> DragCompletedEventHandler::DragCompletedEventHandler(F* handler) :
+    DragCompletedEventHandler([=](auto&& ... args) { handler(args ...); })
+{}
+
+template <typename O, typename M> DragCompletedEventHandler::DragCompletedEventHandler(O* object, M method) :
+    DragCompletedEventHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
+
+inline void DragCompletedEventHandler::operator()(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs const& e) const
+{
+    check_hresult((*(abi_t<DragCompletedEventHandler>**)this)->Invoke(get_abi(sender), get_abi(e)));
 }
 
+template <typename L> DragDeltaEventHandler::DragDeltaEventHandler(L handler) :
+    DragDeltaEventHandler(impl::make_delegate<DragDeltaEventHandler>(std::forward<L>(handler)))
+{}
+
+template <typename F> DragDeltaEventHandler::DragDeltaEventHandler(F* handler) :
+    DragDeltaEventHandler([=](auto&& ... args) { handler(args ...); })
+{}
+
+template <typename O, typename M> DragDeltaEventHandler::DragDeltaEventHandler(O* object, M method) :
+    DragDeltaEventHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
+
+inline void DragDeltaEventHandler::operator()(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs const& e) const
+{
+    check_hresult((*(abi_t<DragDeltaEventHandler>**)this)->Invoke(get_abi(sender), get_abi(e)));
 }
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename L> DragStartedEventHandler::DragStartedEventHandler(L handler) :
+    DragStartedEventHandler(impl::make_delegate<DragStartedEventHandler>(std::forward<L>(handler)))
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBase>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBase & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename F> DragStartedEventHandler::DragStartedEventHandler(F* handler) :
+    DragStartedEventHandler([=](auto&& ... args) { handler(args ...); })
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBaseFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBaseFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename O, typename M> DragStartedEventHandler::DragStartedEventHandler(O* object, M method) :
+    DragStartedEventHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics>
+inline void DragStartedEventHandler::operator()(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs const& e) const
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    check_hresult((*(abi_t<DragStartedEventHandler>**)this)->Invoke(get_abi(sender), get_abi(e)));
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICalendarPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ICalendarPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename L> ItemsChangedEventHandler::ItemsChangedEventHandler(L handler) :
+    ItemsChangedEventHandler(impl::make_delegate<ItemsChangedEventHandler>(std::forward<L>(handler)))
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename F> ItemsChangedEventHandler::ItemsChangedEventHandler(F* handler) :
+    ItemsChangedEventHandler([=](auto&& ... args) { handler(args ...); })
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICarouselPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ICarouselPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename O, typename M> ItemsChangedEventHandler::ItemsChangedEventHandler(O* object, M method) :
+    ItemsChangedEventHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICarouselPanelFactory>
+inline void ItemsChangedEventHandler::operator()(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventArgs const& e) const
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ICarouselPanelFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    check_hresult((*(abi_t<ItemsChangedEventHandler>**)this)->Invoke(get_abi(sender), get_abi(e)));
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename L> RangeBaseValueChangedEventHandler::RangeBaseValueChangedEventHandler(L handler) :
+    RangeBaseValueChangedEventHandler(impl::make_delegate<RangeBaseValueChangedEventHandler>(std::forward<L>(handler)))
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings2>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename F> RangeBaseValueChangedEventHandler::RangeBaseValueChangedEventHandler(F* handler) :
+    RangeBaseValueChangedEventHandler([=](auto&& ... args) { handler(args ...); })
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename O, typename M> RangeBaseValueChangedEventHandler::RangeBaseValueChangedEventHandler(O* object, M method) :
+    RangeBaseValueChangedEventHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings2>
+inline void RangeBaseValueChangedEventHandler::operator()(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs const& e) const
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    check_hresult((*(abi_t<RangeBaseValueChangedEventHandler>**)this)->Invoke(get_abi(sender), get_abi(e)));
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings3>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename L> ScrollEventHandler::ScrollEventHandler(L handler) :
+    ScrollEventHandler(impl::make_delegate<ScrollEventHandler>(std::forward<L>(handler)))
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename F> ScrollEventHandler::ScrollEventHandler(F* handler) :
+    ScrollEventHandler([=](auto&& ... args) { handler(args ...); })
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgsFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgsFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template <typename O, typename M> ScrollEventHandler::ScrollEventHandler(O* object, M method) :
+    ScrollEventHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs>
+inline void ScrollEventHandler::operator()(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::Controls::Primitives::ScrollEventArgs const& e) const
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    check_hresult((*(abi_t<ScrollEventHandler>**)this)->Invoke(get_abi(sender), get_abi(e)));
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgsFactory>
+template <typename D> Windows::UI::Xaml::Controls::Control IFlyoutBaseOverridesT<D>::CreatePresenter() const
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgsFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    return shim().template as<IFlyoutBaseOverrides>().CreatePresenter();
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs>
+template <typename D> void IPickerFlyoutBaseOverridesT<D>::OnConfirmed() const
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    return shim().template as<IPickerFlyoutBaseOverrides>().OnConfirmed();
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgsFactory>
+template <typename D> bool IPickerFlyoutBaseOverridesT<D>::ShouldShowConfirmationButtons() const
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgsFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    return shim().template as<IPickerFlyoutBaseOverrides>().ShouldShowConfirmationButtons();
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase>
+template <typename D> void IRangeBaseOverridesT<D>::OnMinimumChanged(double oldMinimum, double newMinimum) const
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    return shim().template as<IRangeBaseOverrides>().OnMinimumChanged(oldMinimum, newMinimum);
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2>
+template <typename D> void IRangeBaseOverridesT<D>::OnMaximumChanged(double oldMaximum, double newMaximum) const
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    return shim().template as<IRangeBaseOverrides>().OnMaximumChanged(oldMaximum, newMaximum);
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3>
+template <typename D> void IRangeBaseOverridesT<D>::OnValueChanged(double oldValue, double newValue) const
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    return shim().template as<IRangeBaseOverrides>().OnValueChanged(oldValue, newValue);
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseClosingEventArgs>
+template <typename D> void IToggleButtonOverridesT<D>::OnToggle() const
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseClosingEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    return shim().template as<IToggleButtonOverrides>().OnToggle();
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseFactory>
+template <typename D, typename ... Interfaces>
+struct ButtonBaseT :
+    implements<D, Windows::UI::Xaml::Controls::IContentControlOverrides, Windows::UI::Xaml::Controls::IControlOverrides, Windows::UI::Xaml::IFrameworkElementOverrides, Windows::UI::Xaml::IFrameworkElementOverrides2, Windows::UI::Xaml::IUIElementOverrides, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::IButtonBase, Windows::UI::Xaml::Controls::IContentControl, Windows::UI::Xaml::Controls::IContentControl2, Windows::UI::Xaml::Controls::IControl, Windows::UI::Xaml::Controls::IControl2, Windows::UI::Xaml::Controls::IControl3, Windows::UI::Xaml::Controls::IControl4, Windows::UI::Xaml::Controls::IControl5, Windows::UI::Xaml::Controls::IControlProtected, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IFrameworkElement, Windows::UI::Xaml::IFrameworkElement2, Windows::UI::Xaml::IFrameworkElement3, Windows::UI::Xaml::IFrameworkElement4, Windows::UI::Xaml::IUIElement, Windows::UI::Xaml::IUIElement2, Windows::UI::Xaml::IUIElement3, Windows::UI::Xaml::IUIElement4, Windows::UI::Xaml::IUIElement5>,
+    Windows::UI::Xaml::Controls::IContentControlOverridesT<D>, Windows::UI::Xaml::Controls::IControlOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverrides2T<D>, Windows::UI::Xaml::IUIElementOverridesT<D>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = ButtonBase;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverrides>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverrides & value) const noexcept
+protected:
+    ButtonBaseT()
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::ButtonBase, Windows::UI::Xaml::Controls::Primitives::IButtonBaseFactory>().CreateInstance(*this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics>
+template <typename D, typename ... Interfaces>
+struct CarouselPanelT :
+    implements<D, Windows::UI::Xaml::Controls::IVirtualizingPanelOverrides, Windows::UI::Xaml::IFrameworkElementOverrides, Windows::UI::Xaml::IFrameworkElementOverrides2, Windows::UI::Xaml::IUIElementOverrides, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::ICarouselPanel, Windows::UI::Xaml::Controls::IPanel, Windows::UI::Xaml::Controls::IVirtualizingPanel, Windows::UI::Xaml::Controls::IVirtualizingPanelProtected, Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IFrameworkElement, Windows::UI::Xaml::IFrameworkElement2, Windows::UI::Xaml::IFrameworkElement3, Windows::UI::Xaml::IFrameworkElement4, Windows::UI::Xaml::IUIElement, Windows::UI::Xaml::IUIElement2, Windows::UI::Xaml::IUIElement3, Windows::UI::Xaml::IUIElement4, Windows::UI::Xaml::IUIElement5>,
+    Windows::UI::Xaml::Controls::IVirtualizingPanelOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverrides2T<D>, Windows::UI::Xaml::IUIElementOverridesT<D>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = CarouselPanel;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2 & value) const noexcept
+protected:
+    CarouselPanelT()
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::CarouselPanel, Windows::UI::Xaml::Controls::Primitives::ICarouselPanelFactory>().CreateInstance(*this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics3>
+template <typename D, typename ... Interfaces>
+struct DragCompletedEventArgsT :
+    implements<D, Windows::Foundation::IInspectable, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs, Windows::UI::Xaml::IRoutedEventArgs>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = DragCompletedEventArgs;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelper>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelper & value) const noexcept
+protected:
+    DragCompletedEventArgsT(double horizontalChange, double verticalChange, bool canceled)
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs, Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgsFactory>().CreateInstanceWithHorizontalChangeVerticalChangeAndCanceled(horizontalChange, verticalChange, canceled, *this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelperStatics>
+template <typename D, typename ... Interfaces>
+struct DragDeltaEventArgsT :
+    implements<D, Windows::Foundation::IInspectable, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs, Windows::UI::Xaml::IRoutedEventArgs>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelperStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = DragDeltaEventArgs;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter & value) const noexcept
+protected:
+    DragDeltaEventArgsT(double horizontalChange, double verticalChange)
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs, Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgsFactory>().CreateInstanceWithHorizontalChangeAndVerticalChange(horizontalChange, verticalChange, *this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterFactory>
+template <typename D, typename ... Interfaces>
+struct DragStartedEventArgsT :
+    implements<D, Windows::Foundation::IInspectable, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs, Windows::UI::Xaml::IRoutedEventArgs>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = DragStartedEventArgs;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics & value) const noexcept
+protected:
+    DragStartedEventArgsT(double horizontalOffset, double verticalOffset)
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs, Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgsFactory>().CreateInstanceWithHorizontalOffsetAndVerticalOffset(horizontalOffset, verticalOffset, *this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemTemplateSettings>
+template <typename D, typename ... Interfaces>
+struct FlyoutBaseT :
+    implements<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverrides, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2>,
+    Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverridesT<D>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = FlyoutBase;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs & value) const noexcept
+protected:
+    FlyoutBaseT()
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::FlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseFactory>().CreateInstance(*this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverter>
+template <typename D, typename ... Interfaces>
+struct GridViewItemPresenterT :
+    implements<D, Windows::UI::Xaml::Controls::IContentPresenterOverrides, Windows::UI::Xaml::IFrameworkElementOverrides, Windows::UI::Xaml::IFrameworkElementOverrides2, Windows::UI::Xaml::IUIElementOverrides, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter, Windows::UI::Xaml::Controls::IContentPresenter, Windows::UI::Xaml::Controls::IContentPresenter2, Windows::UI::Xaml::Controls::IContentPresenter3, Windows::UI::Xaml::Controls::IContentPresenter4, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IFrameworkElement, Windows::UI::Xaml::IFrameworkElement2, Windows::UI::Xaml::IFrameworkElement3, Windows::UI::Xaml::IFrameworkElement4, Windows::UI::Xaml::IUIElement, Windows::UI::Xaml::IUIElement2, Windows::UI::Xaml::IUIElement3, Windows::UI::Xaml::IUIElement4, Windows::UI::Xaml::IUIElement5>,
+    Windows::UI::Xaml::Controls::IContentPresenterOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverrides2T<D>, Windows::UI::Xaml::IUIElementOverridesT<D>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverter & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = GridViewItemPresenter;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverterStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverterStatics & value) const noexcept
+protected:
+    GridViewItemPresenterT()
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::GridViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterFactory>().CreateInstance(*this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverter>
+template <typename D, typename ... Interfaces>
+struct ListViewItemPresenterT :
+    implements<D, Windows::UI::Xaml::Controls::IContentPresenterOverrides, Windows::UI::Xaml::IFrameworkElementOverrides, Windows::UI::Xaml::IFrameworkElementOverrides2, Windows::UI::Xaml::IUIElementOverrides, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter, Windows::UI::Xaml::Controls::IContentPresenter, Windows::UI::Xaml::Controls::IContentPresenter2, Windows::UI::Xaml::Controls::IContentPresenter3, Windows::UI::Xaml::Controls::IContentPresenter4, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IFrameworkElement, Windows::UI::Xaml::IFrameworkElement2, Windows::UI::Xaml::IFrameworkElement3, Windows::UI::Xaml::IFrameworkElement4, Windows::UI::Xaml::IUIElement, Windows::UI::Xaml::IUIElement2, Windows::UI::Xaml::IUIElement3, Windows::UI::Xaml::IUIElement4, Windows::UI::Xaml::IUIElement5>,
+    Windows::UI::Xaml::Controls::IContentPresenterOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverrides2T<D>, Windows::UI::Xaml::IUIElementOverridesT<D>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverter & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = ListViewItemPresenter;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverterStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverterStatics & value) const noexcept
+protected:
+    ListViewItemPresenterT()
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenter, Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterFactory>().CreateInstance(*this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILayoutInformation>
+template <typename D, typename ... Interfaces>
+struct PickerFlyoutBaseT :
+    implements<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOverrides, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverrides, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2, Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2>,
+    Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOverridesT<D>, Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverridesT<D>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ILayoutInformation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = PickerFlyoutBase;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILayoutInformationStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ILayoutInformationStatics & value) const noexcept
+protected:
+    PickerFlyoutBaseT()
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::PickerFlyoutBase, Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseFactory>().CreateInstance(*this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter>
+template <typename D, typename ... Interfaces>
+struct PivotHeaderItemT :
+    implements<D, Windows::UI::Xaml::Controls::IContentControlOverrides, Windows::UI::Xaml::Controls::IControlOverrides, Windows::UI::Xaml::IFrameworkElementOverrides, Windows::UI::Xaml::IFrameworkElementOverrides2, Windows::UI::Xaml::IUIElementOverrides, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItem, Windows::UI::Xaml::Controls::IContentControl, Windows::UI::Xaml::Controls::IContentControl2, Windows::UI::Xaml::Controls::IControl, Windows::UI::Xaml::Controls::IControl2, Windows::UI::Xaml::Controls::IControl3, Windows::UI::Xaml::Controls::IControl4, Windows::UI::Xaml::Controls::IControl5, Windows::UI::Xaml::Controls::IControlProtected, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IFrameworkElement, Windows::UI::Xaml::IFrameworkElement2, Windows::UI::Xaml::IFrameworkElement3, Windows::UI::Xaml::IFrameworkElement4, Windows::UI::Xaml::IUIElement, Windows::UI::Xaml::IUIElement2, Windows::UI::Xaml::IUIElement3, Windows::UI::Xaml::IUIElement4, Windows::UI::Xaml::IUIElement5>,
+    Windows::UI::Xaml::Controls::IContentControlOverridesT<D>, Windows::UI::Xaml::Controls::IControlOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverrides2T<D>, Windows::UI::Xaml::IUIElementOverridesT<D>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = PivotHeaderItem;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2 & value) const noexcept
+protected:
+    PivotHeaderItemT()
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::PivotHeaderItem, Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItemFactory>().CreateInstance(*this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterFactory>
+template <typename D, typename ... Interfaces>
+struct RangeBaseT :
+    implements<D, Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides, Windows::UI::Xaml::Controls::IControlOverrides, Windows::UI::Xaml::IFrameworkElementOverrides, Windows::UI::Xaml::IFrameworkElementOverrides2, Windows::UI::Xaml::IUIElementOverrides, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::IRangeBase, Windows::UI::Xaml::Controls::IControl, Windows::UI::Xaml::Controls::IControl2, Windows::UI::Xaml::Controls::IControl3, Windows::UI::Xaml::Controls::IControl4, Windows::UI::Xaml::Controls::IControl5, Windows::UI::Xaml::Controls::IControlProtected, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IFrameworkElement, Windows::UI::Xaml::IFrameworkElement2, Windows::UI::Xaml::IFrameworkElement3, Windows::UI::Xaml::IFrameworkElement4, Windows::UI::Xaml::IUIElement, Windows::UI::Xaml::IUIElement2, Windows::UI::Xaml::IUIElement3, Windows::UI::Xaml::IUIElement4, Windows::UI::Xaml::IUIElement5>,
+    Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverridesT<D>, Windows::UI::Xaml::Controls::IControlOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverrides2T<D>, Windows::UI::Xaml::IUIElementOverridesT<D>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = RangeBase;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics & value) const noexcept
+protected:
+    RangeBaseT()
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::RangeBase, Windows::UI::Xaml::Controls::Primitives::IRangeBaseFactory>().CreateInstance(*this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2>
+template <typename D, typename ... Interfaces>
+struct SelectorItemT :
+    implements<D, Windows::UI::Xaml::Controls::IContentControlOverrides, Windows::UI::Xaml::Controls::IControlOverrides, Windows::UI::Xaml::IFrameworkElementOverrides, Windows::UI::Xaml::IFrameworkElementOverrides2, Windows::UI::Xaml::IUIElementOverrides, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::ISelectorItem, Windows::UI::Xaml::Controls::IContentControl, Windows::UI::Xaml::Controls::IContentControl2, Windows::UI::Xaml::Controls::IControl, Windows::UI::Xaml::Controls::IControl2, Windows::UI::Xaml::Controls::IControl3, Windows::UI::Xaml::Controls::IControl4, Windows::UI::Xaml::Controls::IControl5, Windows::UI::Xaml::Controls::IControlProtected, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IFrameworkElement, Windows::UI::Xaml::IFrameworkElement2, Windows::UI::Xaml::IFrameworkElement3, Windows::UI::Xaml::IFrameworkElement4, Windows::UI::Xaml::IUIElement, Windows::UI::Xaml::IUIElement2, Windows::UI::Xaml::IUIElement3, Windows::UI::Xaml::IUIElement4, Windows::UI::Xaml::IUIElement5>,
+    Windows::UI::Xaml::Controls::IContentControlOverridesT<D>, Windows::UI::Xaml::Controls::IControlOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverrides2T<D>, Windows::UI::Xaml::IUIElementOverridesT<D>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = SelectorItem;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemTemplateSettings & value) const noexcept
+protected:
+    SelectorItemT()
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::SelectorItem, Windows::UI::Xaml::Controls::Primitives::ISelectorItemFactory>().CreateInstance(*this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelector>
+template <typename D, typename ... Interfaces>
+struct ToggleButtonT :
+    implements<D, Windows::UI::Xaml::Controls::Primitives::IToggleButtonOverrides, Windows::UI::Xaml::Controls::IContentControlOverrides, Windows::UI::Xaml::Controls::IControlOverrides, Windows::UI::Xaml::IFrameworkElementOverrides, Windows::UI::Xaml::IFrameworkElementOverrides2, Windows::UI::Xaml::IUIElementOverrides, composing, Interfaces ...>,
+    impl::require<D, Windows::UI::Xaml::Controls::Primitives::IToggleButton, Windows::UI::Xaml::Controls::IContentControl, Windows::UI::Xaml::Controls::IContentControl2, Windows::UI::Xaml::Controls::IControl, Windows::UI::Xaml::Controls::IControl2, Windows::UI::Xaml::Controls::IControl3, Windows::UI::Xaml::Controls::IControl4, Windows::UI::Xaml::Controls::IControl5, Windows::UI::Xaml::Controls::IControlProtected, Windows::UI::Xaml::Controls::Primitives::IButtonBase, Windows::UI::Xaml::IDependencyObject, Windows::UI::Xaml::IDependencyObject2, Windows::UI::Xaml::IFrameworkElement, Windows::UI::Xaml::IFrameworkElement2, Windows::UI::Xaml::IFrameworkElement3, Windows::UI::Xaml::IFrameworkElement4, Windows::UI::Xaml::IUIElement, Windows::UI::Xaml::IUIElement2, Windows::UI::Xaml::IUIElement3, Windows::UI::Xaml::IUIElement4, Windows::UI::Xaml::IUIElement5>,
+    Windows::UI::Xaml::Controls::Primitives::IToggleButtonOverridesT<D>, Windows::UI::Xaml::Controls::IContentControlOverridesT<D>, Windows::UI::Xaml::Controls::IControlOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverridesT<D>, Windows::UI::Xaml::IFrameworkElementOverrides2T<D>, Windows::UI::Xaml::IUIElementOverridesT<D>
 {
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelector & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+    using composable = ToggleButton;
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorItem>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorItem & value) const noexcept
+protected:
+    ToggleButtonT()
     {
-        return winrt::impl::hash_unknown(value);
+        get_activation_factory<Windows::UI::Xaml::Controls::Primitives::ToggleButton, Windows::UI::Xaml::Controls::Primitives::IToggleButtonFactory>().CreateInstance(*this, this->m_inner);
     }
 };
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+}
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+WINRT_EXPORT namespace std {
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IMenuFlyoutPresenterTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IMenuFlyoutPresenterTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IAppBarTemplateSettings> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBase> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBase> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanelFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanelFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBaseFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBaseFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBase>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBase & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IButtonBaseStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICalendarPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ICalendarPanel> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOverrides>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOverrides & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ICalendarViewTemplateSettings> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ICarouselPanel> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItem>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItem & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICarouselPanelFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ICarouselPanelFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItemFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItemFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IComboBoxTemplateSettings2> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPivotPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPopup>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPopup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings2> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPopup2>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPopup2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ICommandBarTemplateSettings3> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPopupStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPopupStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgs> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPopupStatics2>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IPopupStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgsFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IDragCompletedEventArgsFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgs> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgsFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IDragDeltaEventArgsFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBase>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBase & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgs> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgsFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IDragStartedEventArgsFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase2> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBase3> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRepeatButton>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IRepeatButton & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseClosingEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseClosingEventArgs> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollBar>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IScrollBar & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverrides> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseOverrides> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics2> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IFlyoutBaseStatics3> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelector>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ISelector & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelper> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelper> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelperStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IGeneratorPositionHelperStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItem>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItem & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenter> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItemFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItemFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItemStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItemStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemPresenterStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IGridViewItemTemplateSettings> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IItemsChangedEventArgs> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverter> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverter> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IThumb>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IThumb & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverterStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemBackgroundConverterStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IThumbStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IThumbStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverter> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverter> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ITickBar>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ITickBar & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverterStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IJumpListItemForegroundConverterStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ITickBarStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ITickBarStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILayoutInformation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ILayoutInformation> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButton>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButton & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILayoutInformationStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ILayoutInformationStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonOverrides>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonOverrides & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenter2> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToolTipTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::IToolTipTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemPresenterStatics2> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::AppBarTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::AppBarTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IListViewItemTemplateSettings> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ButtonBase>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ButtonBase & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelector> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::CalendarPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::CalendarPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorItem> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorItem> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::CalendarViewTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::CalendarViewTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorPanel> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::CarouselPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::CarouselPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ILoopingSelectorStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ComboBoxTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ComboBoxTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IMenuFlyoutPresenterTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IMenuFlyoutPresenterTemplateSettings> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::CommandBarTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::CommandBarTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanel> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanelFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IOrientedVirtualizingPanelFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBase> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBase> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::FlyoutBase>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::FlyoutBase & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOverrides> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseOverrides> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPickerFlyoutBaseStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::GeneratorPositionHelper>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::GeneratorPositionHelper & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItem> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItem> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::GridViewItemPresenter>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::GridViewItemPresenter & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItemFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderItemFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::GridViewItemTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::GridViewItemTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotHeaderPanel> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPivotPanel> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::JumpListItemBackgroundConverter>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::JumpListItemBackgroundConverter & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPopup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPopup> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::JumpListItemForegroundConverter>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::JumpListItemForegroundConverter & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPopup2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPopup2> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::LayoutInformation>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::LayoutInformation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPopupStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPopupStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenter>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenter & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IPopupStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IPopupStatics2> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ListViewItemTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ListViewItemTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IProgressBarTemplateSettings> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelector>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelector & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IProgressRingTemplateSettings> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelectorItem>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelectorItem & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBase> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBase> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelectorPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelectorPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::MenuFlyoutPresenterTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::MenuFlyoutPresenterTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseOverrides> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::OrientedVirtualizingPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::OrientedVirtualizingPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::PickerFlyoutBase>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::PickerFlyoutBase & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IRangeBaseValueChangedEventArgs> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::PivotHeaderItem>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::PivotHeaderItem & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRepeatButton> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IRepeatButton> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::PivotHeaderPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::PivotHeaderPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IRepeatButtonStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::PivotPanel>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::PivotPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollBar> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollBar> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::Popup>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::Popup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollBarStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ProgressBarTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ProgressBarTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollEventArgs> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ProgressRingTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ProgressRingTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IScrollSnapPointsInfo> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::RangeBase>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::RangeBase & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelector> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ISelector> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::RepeatButton>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::RepeatButton & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItem> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItem> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ScrollBar>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ScrollBar & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItemFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItemFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ScrollEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ScrollEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItemStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorItemStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::Selector>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::Selector & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ISelectorStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::SelectorItem>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::SelectorItem & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ISettingsFlyoutTemplateSettings> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::SettingsFlyoutTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::SettingsFlyoutTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ISplitViewTemplateSettings> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::SplitViewTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::SplitViewTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IThumb> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IThumb> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::Thumb>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::Thumb & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IThumbStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IThumbStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::TickBar>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::TickBar & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ITickBar> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ITickBar> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ToggleButton>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ToggleButton & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ITickBarStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ITickBarStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ToggleSwitchTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ToggleSwitchTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButton> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButton> {};
 
-template<>
-struct std::hash<winrt::Windows::UI::Xaml::Controls::Primitives::ToolTipTemplateSettings>
-{
-    size_t operator()(const winrt::Windows::UI::Xaml::Controls::Primitives::ToolTipTemplateSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonFactory> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonOverrides> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonOverrides> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleButtonStatics> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IToggleSwitchTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::IToolTipTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::IToolTipTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::AppBarTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::AppBarTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ButtonBase> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ButtonBase> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::CalendarPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::CalendarPanel> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::CalendarViewTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::CalendarViewTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::CarouselPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::CarouselPanel> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ComboBoxTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ComboBoxTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::CommandBarTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::CommandBarTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::DragCompletedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::DragDeltaEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::DragStartedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::FlyoutBase> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::FlyoutBase> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::FlyoutBaseClosingEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::GeneratorPositionHelper> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::GeneratorPositionHelper> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::GridViewItemPresenter> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::GridViewItemPresenter> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::GridViewItemTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::GridViewItemTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ItemsChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::JumpListItemBackgroundConverter> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::JumpListItemBackgroundConverter> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::JumpListItemForegroundConverter> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::JumpListItemForegroundConverter> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::LayoutInformation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::LayoutInformation> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenter> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ListViewItemPresenter> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ListViewItemTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ListViewItemTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelector> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelector> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelectorItem> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelectorItem> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelectorPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::LoopingSelectorPanel> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::MenuFlyoutPresenterTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::MenuFlyoutPresenterTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::OrientedVirtualizingPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::OrientedVirtualizingPanel> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::PickerFlyoutBase> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::PickerFlyoutBase> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::PivotHeaderItem> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::PivotHeaderItem> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::PivotHeaderPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::PivotHeaderPanel> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::PivotPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::PivotPanel> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::Popup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::Popup> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ProgressBarTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ProgressBarTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ProgressRingTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ProgressRingTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::RangeBase> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::RangeBase> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::RangeBaseValueChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::RepeatButton> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::RepeatButton> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ScrollBar> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ScrollBar> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ScrollEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ScrollEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::Selector> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::Selector> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::SelectorItem> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::SelectorItem> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::SettingsFlyoutTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::SettingsFlyoutTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::SplitViewTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::SplitViewTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::Thumb> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::Thumb> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::TickBar> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::TickBar> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ToggleButton> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ToggleButton> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ToggleSwitchTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ToggleSwitchTemplateSettings> {};
+
+template<> struct hash<winrt::Windows::UI::Xaml::Controls::Primitives::ToolTipTemplateSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Xaml::Controls::Primitives::ToolTipTemplateSettings> {};
+
+}
 
 WINRT_WARNING_POP

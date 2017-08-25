@@ -1,25 +1,18 @@
 #include "pch.h"
 
+namespace fs = std::experimental::filesystem;
 using namespace winrt;
 using namespace std::chrono;
-
 using namespace Windows::Foundation;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Windows::Graphics::Imaging;
 using namespace Windows::Media::Ocr;
 
-hstring MessagePath()
-{
-    wchar_t buffer[1024]{};
-    GetCurrentDirectory(_countof(buffer), buffer);
-    check_hresult(PathCchAppendEx(buffer, _countof(buffer), L"message.png", PATHCCH_ALLOW_LONG_PATHS));
-    return buffer;
-}
-
 IAsyncOperation<hstring> AsyncSample()
 {
-    StorageFile file = co_await StorageFile::GetFileFromPathAsync(MessagePath());
+    fs::path path = fs::current_path().append(L"message.png");
+    StorageFile file = co_await StorageFile::GetFileFromPathAsync(path.c_str());
     IRandomAccessStream stream = co_await file.OpenAsync(FileAccessMode::Read);
 
     BitmapDecoder decoder = co_await BitmapDecoder::CreateAsync(stream);

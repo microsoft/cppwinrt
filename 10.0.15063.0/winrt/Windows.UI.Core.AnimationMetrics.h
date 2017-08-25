@@ -1,24 +1,148 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.UI.Core.AnimationMetrics.2.h"
+#include "winrt/Windows.UI.Core.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.UI.Core.AnimationMetrics.3.h"
-#include "Windows.UI.Core.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Core::AnimationMetrics::IPropertyAnimation> consume_Windows_UI_Core_AnimationMetrics_IAnimationDescription<D>::Animations() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::UI::Core::AnimationMetrics::IPropertyAnimation> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IAnimationDescription)->get_Animations(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> Windows::Foundation::TimeSpan consume_Windows_UI_Core_AnimationMetrics_IAnimationDescription<D>::StaggerDelay() const
+{
+    Windows::Foundation::TimeSpan value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IAnimationDescription)->get_StaggerDelay(put_abi(value)));
+    return value;
+}
+
+template <typename D> float consume_Windows_UI_Core_AnimationMetrics_IAnimationDescription<D>::StaggerDelayFactor() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IAnimationDescription)->get_StaggerDelayFactor(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::TimeSpan consume_Windows_UI_Core_AnimationMetrics_IAnimationDescription<D>::DelayLimit() const
+{
+    Windows::Foundation::TimeSpan value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IAnimationDescription)->get_DelayLimit(put_abi(value)));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_UI_Core_AnimationMetrics_IAnimationDescription<D>::ZOrder() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IAnimationDescription)->get_ZOrder(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Core::AnimationMetrics::AnimationDescription consume_Windows_UI_Core_AnimationMetrics_IAnimationDescriptionFactory<D>::CreateInstance(Windows::UI::Core::AnimationMetrics::AnimationEffect const& effect, Windows::UI::Core::AnimationMetrics::AnimationEffectTarget const& target) const
+{
+    Windows::UI::Core::AnimationMetrics::AnimationDescription animation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IAnimationDescriptionFactory)->CreateInstance(get_abi(effect), get_abi(target), put_abi(animation)));
+    return animation;
+}
+
+template <typename D> Windows::Foundation::IReference<float> consume_Windows_UI_Core_AnimationMetrics_IOpacityAnimation<D>::InitialOpacity() const
+{
+    Windows::Foundation::IReference<float> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IOpacityAnimation)->get_InitialOpacity(put_abi(value)));
+    return value;
+}
+
+template <typename D> float consume_Windows_UI_Core_AnimationMetrics_IOpacityAnimation<D>::FinalOpacity() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IOpacityAnimation)->get_FinalOpacity(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Core::AnimationMetrics::PropertyAnimationType consume_Windows_UI_Core_AnimationMetrics_IPropertyAnimation<D>::Type() const
+{
+    Windows::UI::Core::AnimationMetrics::PropertyAnimationType value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IPropertyAnimation)->get_Type(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::TimeSpan consume_Windows_UI_Core_AnimationMetrics_IPropertyAnimation<D>::Delay() const
+{
+    Windows::Foundation::TimeSpan value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IPropertyAnimation)->get_Delay(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::TimeSpan consume_Windows_UI_Core_AnimationMetrics_IPropertyAnimation<D>::Duration() const
+{
+    Windows::Foundation::TimeSpan value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IPropertyAnimation)->get_Duration(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Point consume_Windows_UI_Core_AnimationMetrics_IPropertyAnimation<D>::Control1() const
+{
+    Windows::Foundation::Point value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IPropertyAnimation)->get_Control1(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Point consume_Windows_UI_Core_AnimationMetrics_IPropertyAnimation<D>::Control2() const
+{
+    Windows::Foundation::Point value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IPropertyAnimation)->get_Control2(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<float> consume_Windows_UI_Core_AnimationMetrics_IScaleAnimation<D>::InitialScaleX() const
+{
+    Windows::Foundation::IReference<float> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IScaleAnimation)->get_InitialScaleX(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<float> consume_Windows_UI_Core_AnimationMetrics_IScaleAnimation<D>::InitialScaleY() const
+{
+    Windows::Foundation::IReference<float> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IScaleAnimation)->get_InitialScaleY(put_abi(value)));
+    return value;
+}
+
+template <typename D> float consume_Windows_UI_Core_AnimationMetrics_IScaleAnimation<D>::FinalScaleX() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IScaleAnimation)->get_FinalScaleX(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_UI_Core_AnimationMetrics_IScaleAnimation<D>::FinalScaleY() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IScaleAnimation)->get_FinalScaleY(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Point consume_Windows_UI_Core_AnimationMetrics_IScaleAnimation<D>::NormalizedOrigin() const
+{
+    Windows::Foundation::Point value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::AnimationMetrics::IScaleAnimation)->get_NormalizedOrigin(put_abi(value)));
+    return value;
+}
 
 template <typename D>
 struct produce<D, Windows::UI::Core::AnimationMetrics::IAnimationDescription> : produce_base<D, Windows::UI::Core::AnimationMetrics::IAnimationDescription>
 {
-    HRESULT __stdcall get_Animations(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::UI::Core::AnimationMetrics::IPropertyAnimation>> value) noexcept override
+    HRESULT __stdcall get_Animations(::IUnknown** value) noexcept override
     {
         try
         {
@@ -33,7 +157,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IAnimationDescription> : 
         }
     }
 
-    HRESULT __stdcall get_StaggerDelay(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_StaggerDelay(abi_t<Windows::Foundation::TimeSpan>* value) noexcept override
     {
         try
         {
@@ -47,7 +171,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IAnimationDescription> : 
         }
     }
 
-    HRESULT __stdcall get_StaggerDelayFactor(float * value) noexcept override
+    HRESULT __stdcall get_StaggerDelayFactor(float* value) noexcept override
     {
         try
         {
@@ -61,7 +185,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IAnimationDescription> : 
         }
     }
 
-    HRESULT __stdcall get_DelayLimit(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_DelayLimit(abi_t<Windows::Foundation::TimeSpan>* value) noexcept override
     {
         try
         {
@@ -75,7 +199,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IAnimationDescription> : 
         }
     }
 
-    HRESULT __stdcall get_ZOrder(int32_t * value) noexcept override
+    HRESULT __stdcall get_ZOrder(int32_t* value) noexcept override
     {
         try
         {
@@ -93,12 +217,12 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IAnimationDescription> : 
 template <typename D>
 struct produce<D, Windows::UI::Core::AnimationMetrics::IAnimationDescriptionFactory> : produce_base<D, Windows::UI::Core::AnimationMetrics::IAnimationDescriptionFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(Windows::UI::Core::AnimationMetrics::AnimationEffect effect, Windows::UI::Core::AnimationMetrics::AnimationEffectTarget target, impl::abi_arg_out<Windows::UI::Core::AnimationMetrics::IAnimationDescription> animation) noexcept override
+    HRESULT __stdcall CreateInstance(abi_t<Windows::UI::Core::AnimationMetrics::AnimationEffect> effect, abi_t<Windows::UI::Core::AnimationMetrics::AnimationEffectTarget> target, ::IUnknown** animation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *animation = detach_abi(this->shim().CreateInstance(effect, target));
+            *animation = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::UI::Core::AnimationMetrics::AnimationEffect const*>(&effect), *reinterpret_cast<Windows::UI::Core::AnimationMetrics::AnimationEffectTarget const*>(&target)));
             return S_OK;
         }
         catch (...)
@@ -112,7 +236,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IAnimationDescriptionFact
 template <typename D>
 struct produce<D, Windows::UI::Core::AnimationMetrics::IOpacityAnimation> : produce_base<D, Windows::UI::Core::AnimationMetrics::IOpacityAnimation>
 {
-    HRESULT __stdcall get_InitialOpacity(impl::abi_arg_out<Windows::Foundation::IReference<float>> value) noexcept override
+    HRESULT __stdcall get_InitialOpacity(::IUnknown** value) noexcept override
     {
         try
         {
@@ -127,7 +251,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IOpacityAnimation> : prod
         }
     }
 
-    HRESULT __stdcall get_FinalOpacity(float * value) noexcept override
+    HRESULT __stdcall get_FinalOpacity(float* value) noexcept override
     {
         try
         {
@@ -145,7 +269,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IOpacityAnimation> : prod
 template <typename D>
 struct produce<D, Windows::UI::Core::AnimationMetrics::IPropertyAnimation> : produce_base<D, Windows::UI::Core::AnimationMetrics::IPropertyAnimation>
 {
-    HRESULT __stdcall get_Type(Windows::UI::Core::AnimationMetrics::PropertyAnimationType * value) noexcept override
+    HRESULT __stdcall get_Type(abi_t<Windows::UI::Core::AnimationMetrics::PropertyAnimationType>* value) noexcept override
     {
         try
         {
@@ -159,7 +283,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IPropertyAnimation> : pro
         }
     }
 
-    HRESULT __stdcall get_Delay(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_Delay(abi_t<Windows::Foundation::TimeSpan>* value) noexcept override
     {
         try
         {
@@ -173,7 +297,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IPropertyAnimation> : pro
         }
     }
 
-    HRESULT __stdcall get_Duration(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_Duration(abi_t<Windows::Foundation::TimeSpan>* value) noexcept override
     {
         try
         {
@@ -187,7 +311,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IPropertyAnimation> : pro
         }
     }
 
-    HRESULT __stdcall get_Control1(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_Control1(abi_t<Windows::Foundation::Point>* value) noexcept override
     {
         try
         {
@@ -201,7 +325,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IPropertyAnimation> : pro
         }
     }
 
-    HRESULT __stdcall get_Control2(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_Control2(abi_t<Windows::Foundation::Point>* value) noexcept override
     {
         try
         {
@@ -219,7 +343,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IPropertyAnimation> : pro
 template <typename D>
 struct produce<D, Windows::UI::Core::AnimationMetrics::IScaleAnimation> : produce_base<D, Windows::UI::Core::AnimationMetrics::IScaleAnimation>
 {
-    HRESULT __stdcall get_InitialScaleX(impl::abi_arg_out<Windows::Foundation::IReference<float>> value) noexcept override
+    HRESULT __stdcall get_InitialScaleX(::IUnknown** value) noexcept override
     {
         try
         {
@@ -234,7 +358,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IScaleAnimation> : produc
         }
     }
 
-    HRESULT __stdcall get_InitialScaleY(impl::abi_arg_out<Windows::Foundation::IReference<float>> value) noexcept override
+    HRESULT __stdcall get_InitialScaleY(::IUnknown** value) noexcept override
     {
         try
         {
@@ -249,7 +373,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IScaleAnimation> : produc
         }
     }
 
-    HRESULT __stdcall get_FinalScaleX(float * value) noexcept override
+    HRESULT __stdcall get_FinalScaleX(float* value) noexcept override
     {
         try
         {
@@ -263,7 +387,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IScaleAnimation> : produc
         }
     }
 
-    HRESULT __stdcall get_FinalScaleY(float * value) noexcept override
+    HRESULT __stdcall get_FinalScaleY(float* value) noexcept override
     {
         try
         {
@@ -277,7 +401,7 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IScaleAnimation> : produc
         }
     }
 
-    HRESULT __stdcall get_NormalizedOrigin(impl::abi_arg_out<Windows::Foundation::Point> value) noexcept override
+    HRESULT __stdcall get_NormalizedOrigin(abi_t<Windows::Foundation::Point>* value) noexcept override
     {
         try
         {
@@ -294,230 +418,46 @@ struct produce<D, Windows::UI::Core::AnimationMetrics::IScaleAnimation> : produc
 
 }
 
-namespace Windows::UI::Core::AnimationMetrics {
+WINRT_EXPORT namespace winrt::Windows::UI::Core::AnimationMetrics {
 
-template <typename D> Windows::UI::Core::AnimationMetrics::PropertyAnimationType impl_IPropertyAnimation<D>::Type() const
-{
-    Windows::UI::Core::AnimationMetrics::PropertyAnimationType value {};
-    check_hresult(WINRT_SHIM(IPropertyAnimation)->get_Type(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::TimeSpan impl_IPropertyAnimation<D>::Delay() const
-{
-    Windows::Foundation::TimeSpan value {};
-    check_hresult(WINRT_SHIM(IPropertyAnimation)->get_Delay(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::TimeSpan impl_IPropertyAnimation<D>::Duration() const
-{
-    Windows::Foundation::TimeSpan value {};
-    check_hresult(WINRT_SHIM(IPropertyAnimation)->get_Duration(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Point impl_IPropertyAnimation<D>::Control1() const
-{
-    Windows::Foundation::Point value {};
-    check_hresult(WINRT_SHIM(IPropertyAnimation)->get_Control1(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Point impl_IPropertyAnimation<D>::Control2() const
-{
-    Windows::Foundation::Point value {};
-    check_hresult(WINRT_SHIM(IPropertyAnimation)->get_Control2(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<float> impl_IScaleAnimation<D>::InitialScaleX() const
-{
-    Windows::Foundation::IReference<float> value;
-    check_hresult(WINRT_SHIM(IScaleAnimation)->get_InitialScaleX(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<float> impl_IScaleAnimation<D>::InitialScaleY() const
-{
-    Windows::Foundation::IReference<float> value;
-    check_hresult(WINRT_SHIM(IScaleAnimation)->get_InitialScaleY(put_abi(value)));
-    return value;
-}
-
-template <typename D> float impl_IScaleAnimation<D>::FinalScaleX() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(IScaleAnimation)->get_FinalScaleX(&value));
-    return value;
-}
-
-template <typename D> float impl_IScaleAnimation<D>::FinalScaleY() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(IScaleAnimation)->get_FinalScaleY(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Point impl_IScaleAnimation<D>::NormalizedOrigin() const
-{
-    Windows::Foundation::Point value {};
-    check_hresult(WINRT_SHIM(IScaleAnimation)->get_NormalizedOrigin(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<float> impl_IOpacityAnimation<D>::InitialOpacity() const
-{
-    Windows::Foundation::IReference<float> value;
-    check_hresult(WINRT_SHIM(IOpacityAnimation)->get_InitialOpacity(put_abi(value)));
-    return value;
-}
-
-template <typename D> float impl_IOpacityAnimation<D>::FinalOpacity() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(IOpacityAnimation)->get_FinalOpacity(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::UI::Core::AnimationMetrics::IPropertyAnimation> impl_IAnimationDescription<D>::Animations() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::UI::Core::AnimationMetrics::IPropertyAnimation> value;
-    check_hresult(WINRT_SHIM(IAnimationDescription)->get_Animations(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::TimeSpan impl_IAnimationDescription<D>::StaggerDelay() const
-{
-    Windows::Foundation::TimeSpan value {};
-    check_hresult(WINRT_SHIM(IAnimationDescription)->get_StaggerDelay(put_abi(value)));
-    return value;
-}
-
-template <typename D> float impl_IAnimationDescription<D>::StaggerDelayFactor() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(IAnimationDescription)->get_StaggerDelayFactor(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::TimeSpan impl_IAnimationDescription<D>::DelayLimit() const
-{
-    Windows::Foundation::TimeSpan value {};
-    check_hresult(WINRT_SHIM(IAnimationDescription)->get_DelayLimit(put_abi(value)));
-    return value;
-}
-
-template <typename D> int32_t impl_IAnimationDescription<D>::ZOrder() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IAnimationDescription)->get_ZOrder(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Core::AnimationMetrics::AnimationDescription impl_IAnimationDescriptionFactory<D>::CreateInstance(Windows::UI::Core::AnimationMetrics::AnimationEffect effect, Windows::UI::Core::AnimationMetrics::AnimationEffectTarget target) const
-{
-    Windows::UI::Core::AnimationMetrics::AnimationDescription animation { nullptr };
-    check_hresult(WINRT_SHIM(IAnimationDescriptionFactory)->abi_CreateInstance(effect, target, put_abi(animation)));
-    return animation;
-}
-
-inline AnimationDescription::AnimationDescription(Windows::UI::Core::AnimationMetrics::AnimationEffect effect, Windows::UI::Core::AnimationMetrics::AnimationEffectTarget target) :
-    AnimationDescription(get_activation_factory<AnimationDescription, IAnimationDescriptionFactory>().CreateInstance(effect, target))
+inline AnimationDescription::AnimationDescription(Windows::UI::Core::AnimationMetrics::AnimationEffect const& effect, Windows::UI::Core::AnimationMetrics::AnimationEffectTarget const& target) :
+    AnimationDescription(get_activation_factory<AnimationDescription, Windows::UI::Core::AnimationMetrics::IAnimationDescriptionFactory>().CreateInstance(effect, target))
 {}
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::UI::Core::AnimationMetrics::IAnimationDescription> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::AnimationMetrics::IAnimationDescription> {};
+
+template<> struct hash<winrt::Windows::UI::Core::AnimationMetrics::IAnimationDescriptionFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::AnimationMetrics::IAnimationDescriptionFactory> {};
+
+template<> struct hash<winrt::Windows::UI::Core::AnimationMetrics::IOpacityAnimation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::AnimationMetrics::IOpacityAnimation> {};
+
+template<> struct hash<winrt::Windows::UI::Core::AnimationMetrics::IPropertyAnimation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::AnimationMetrics::IPropertyAnimation> {};
+
+template<> struct hash<winrt::Windows::UI::Core::AnimationMetrics::IScaleAnimation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::AnimationMetrics::IScaleAnimation> {};
+
+template<> struct hash<winrt::Windows::UI::Core::AnimationMetrics::AnimationDescription> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::AnimationMetrics::AnimationDescription> {};
+
+template<> struct hash<winrt::Windows::UI::Core::AnimationMetrics::OpacityAnimation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::AnimationMetrics::OpacityAnimation> {};
+
+template<> struct hash<winrt::Windows::UI::Core::AnimationMetrics::PropertyAnimation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::AnimationMetrics::PropertyAnimation> {};
+
+template<> struct hash<winrt::Windows::UI::Core::AnimationMetrics::ScaleAnimation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::AnimationMetrics::ScaleAnimation> {};
+
+template<> struct hash<winrt::Windows::UI::Core::AnimationMetrics::TranslationAnimation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::AnimationMetrics::TranslationAnimation> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::AnimationMetrics::IAnimationDescription>
-{
-    size_t operator()(const winrt::Windows::UI::Core::AnimationMetrics::IAnimationDescription & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::AnimationMetrics::IAnimationDescriptionFactory>
-{
-    size_t operator()(const winrt::Windows::UI::Core::AnimationMetrics::IAnimationDescriptionFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::AnimationMetrics::IOpacityAnimation>
-{
-    size_t operator()(const winrt::Windows::UI::Core::AnimationMetrics::IOpacityAnimation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::AnimationMetrics::IPropertyAnimation>
-{
-    size_t operator()(const winrt::Windows::UI::Core::AnimationMetrics::IPropertyAnimation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::AnimationMetrics::IScaleAnimation>
-{
-    size_t operator()(const winrt::Windows::UI::Core::AnimationMetrics::IScaleAnimation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::AnimationMetrics::AnimationDescription>
-{
-    size_t operator()(const winrt::Windows::UI::Core::AnimationMetrics::AnimationDescription & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::AnimationMetrics::OpacityAnimation>
-{
-    size_t operator()(const winrt::Windows::UI::Core::AnimationMetrics::OpacityAnimation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::AnimationMetrics::PropertyAnimation>
-{
-    size_t operator()(const winrt::Windows::UI::Core::AnimationMetrics::PropertyAnimation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::AnimationMetrics::ScaleAnimation>
-{
-    size_t operator()(const winrt::Windows::UI::Core::AnimationMetrics::ScaleAnimation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::AnimationMetrics::TranslationAnimation>
-{
-    size_t operator()(const winrt::Windows::UI::Core::AnimationMetrics::TranslationAnimation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

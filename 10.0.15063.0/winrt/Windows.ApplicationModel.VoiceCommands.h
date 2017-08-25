@@ -1,28 +1,381 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.ApplicationModel.AppService.2.h"
+#include "winrt/impl/Windows.Globalization.2.h"
+#include "winrt/impl/Windows.Media.SpeechRecognition.2.h"
+#include "winrt/impl/Windows.Storage.2.h"
+#include "winrt/impl/Windows.ApplicationModel.VoiceCommands.2.h"
+#include "winrt/Windows.ApplicationModel.h"
 
-#include "internal/Windows.Storage.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Media.SpeechRecognition.3.h"
-#include "internal/Windows.Globalization.3.h"
-#include "internal/Windows.ApplicationModel.AppService.3.h"
-#include "internal/Windows.ApplicationModel.VoiceCommands.3.h"
-#include "Windows.ApplicationModel.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommand<D>::CommandName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommand)->get_CommandName(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::Collections::IVectorView<hstring>> consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommand<D>::Properties() const
+{
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::Collections::IVectorView<hstring>> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommand)->get_Properties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Media::SpeechRecognition::SpeechRecognitionResult consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommand<D>::SpeechRecognitionResult() const
+{
+    Windows::Media::SpeechRecognition::SpeechRecognitionResult value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommand)->get_SpeechRecognitionResult(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletionReason consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandCompletedEventArgs<D>::Reason() const
+{
+    Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletionReason value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandCompletedEventArgs)->get_Reason(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandConfirmationResult<D>::Confirmed() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandConfirmationResult)->get_Confirmed(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::Title() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->get_Title(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::Title(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->put_Title(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::TextLine1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->get_TextLine1(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::TextLine1(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->put_TextLine1(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::TextLine2() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->get_TextLine2(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::TextLine2(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->put_TextLine2(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::TextLine3() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->get_TextLine3(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::TextLine3(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->put_TextLine3(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::IStorageFile consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::Image() const
+{
+    Windows::Storage::IStorageFile value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->get_Image(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::Image(Windows::Storage::IStorageFile const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->put_Image(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IInspectable consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::AppContext() const
+{
+    Windows::Foundation::IInspectable value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->get_AppContext(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::AppContext(Windows::Foundation::IInspectable const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->put_AppContext(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::AppLaunchArgument() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->get_AppLaunchArgument(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::AppLaunchArgument(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->put_AppLaunchArgument(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::ContentTileType() const
+{
+    Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->get_ContentTileType(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandContentTile<D>::ContentTileType(Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile)->put_ContentTileType(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandDefinition<D>::Language() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinition)->get_Language(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandDefinition<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinition)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandDefinition<D>::SetPhraseListAsync(param::hstring const& phraseListName, param::async_iterable<hstring> const& phraseList) const
+{
+    Windows::Foundation::IAsyncAction updateAction{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinition)->SetPhraseListAsync(get_abi(phraseListName), get_abi(phraseList), put_abi(updateAction)));
+    return updateAction;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandDefinitionManagerStatics<D>::InstallCommandDefinitionsFromStorageFileAsync(Windows::Storage::StorageFile const& file) const
+{
+    Windows::Foundation::IAsyncAction installAction{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinitionManagerStatics)->InstallCommandDefinitionsFromStorageFileAsync(get_abi(file), put_abi(installAction)));
+    return installAction;
+}
+
+template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandDefinitionManagerStatics<D>::InstalledCommandDefinitions() const
+{
+    Windows::Foundation::Collections::IMapView<hstring, Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> voiceCommandDefinitions{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinitionManagerStatics)->get_InstalledCommandDefinitions(put_abi(voiceCommandDefinitions)));
+    return voiceCommandDefinitions;
+}
+
+template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandDisambiguationResult<D>::SelectedItem() const
+{
+    Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandDisambiguationResult)->get_SelectedItem(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponse<D>::Message() const
+{
+    Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse)->get_Message(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponse<D>::Message(Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse)->put_Message(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponse<D>::RepeatMessage() const
+{
+    Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse)->get_RepeatMessage(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponse<D>::RepeatMessage(Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse)->put_RepeatMessage(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponse<D>::AppLaunchArgument() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse)->get_AppLaunchArgument(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponse<D>::AppLaunchArgument(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse)->put_AppLaunchArgument(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponse<D>::VoiceCommandContentTiles() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse)->get_VoiceCommandContentTiles(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponseStatics<D>::MaxSupportedVoiceCommandContentTiles() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics)->get_MaxSupportedVoiceCommandContentTiles(&value));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponseStatics<D>::CreateResponse(Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& userMessage) const
+{
+    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse response{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics)->CreateResponse(get_abi(userMessage), put_abi(response)));
+    return response;
+}
+
+template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponseStatics<D>::CreateResponse(Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& message, param::iterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> const& contentTiles) const
+{
+    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse response{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics)->CreateResponseWithTiles(get_abi(message), get_abi(contentTiles), put_abi(response)));
+    return response;
+}
+
+template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponseStatics<D>::CreateResponseForPrompt(Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& message, Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& repeatMessage) const
+{
+    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse response{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics)->CreateResponseForPrompt(get_abi(message), get_abi(repeatMessage), put_abi(response)));
+    return response;
+}
+
+template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandResponseStatics<D>::CreateResponseForPrompt(Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& message, Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& repeatMessage, param::iterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> const& contentTiles) const
+{
+    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse response{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics)->CreateResponseForPromptWithTiles(get_abi(message), get_abi(repeatMessage), get_abi(contentTiles), put_abi(response)));
+    return response;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommand> consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnection<D>::GetVoiceCommandAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommand> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection)->GetVoiceCommandAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandConfirmationResult> consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnection<D>::RequestConfirmationAsync(Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const& response) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandConfirmationResult> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection)->RequestConfirmationAsync(get_abi(response), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandDisambiguationResult> consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnection<D>::RequestDisambiguationAsync(Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const& response) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandDisambiguationResult> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection)->RequestDisambiguationAsync(get_abi(response), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnection<D>::ReportProgressAsync(Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const& response) const
+{
+    Windows::Foundation::IAsyncAction action{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection)->ReportProgressAsync(get_abi(response), put_abi(action)));
+    return action;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnection<D>::ReportSuccessAsync(Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const& response) const
+{
+    Windows::Foundation::IAsyncAction action{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection)->ReportSuccessAsync(get_abi(response), put_abi(action)));
+    return action;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnection<D>::ReportFailureAsync(Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const& response) const
+{
+    Windows::Foundation::IAsyncAction action{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection)->ReportFailureAsync(get_abi(response), put_abi(action)));
+    return action;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnection<D>::RequestAppLaunchAsync(Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const& response) const
+{
+    Windows::Foundation::IAsyncAction action{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection)->RequestAppLaunchAsync(get_abi(response), put_abi(action)));
+    return action;
+}
+
+template <typename D> Windows::Globalization::Language consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnection<D>::Language() const
+{
+    Windows::Globalization::Language language{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection)->get_Language(put_abi(language)));
+    return language;
+}
+
+template <typename D> event_token consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnection<D>::VoiceCommandCompleted(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection, Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection)->add_VoiceCommandCompleted(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection> consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnection<D>::VoiceCommandCompleted(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection, Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection>(this, &abi_t<Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection>::remove_VoiceCommandCompleted, VoiceCommandCompleted(handler));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnection<D>::VoiceCommandCompleted(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection)->remove_VoiceCommandCompleted(get_abi(token)));
+}
+
+template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandServiceConnectionStatics<D>::FromAppServiceTriggerDetails(Windows::ApplicationModel::AppService::AppServiceTriggerDetails const& triggerDetails) const
+{
+    Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnectionStatics)->FromAppServiceTriggerDetails(get_abi(triggerDetails), put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandUserMessage<D>::DisplayMessage() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage)->get_DisplayMessage(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandUserMessage<D>::DisplayMessage(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage)->put_DisplayMessage(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandUserMessage<D>::SpokenMessage() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage)->get_SpokenMessage(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_VoiceCommands_IVoiceCommandUserMessage<D>::SpokenMessage(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage)->put_SpokenMessage(get_abi(value)));
+}
 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommand> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommand>
 {
-    HRESULT __stdcall get_CommandName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CommandName(HSTRING* value) noexcept override
     {
         try
         {
@@ -37,7 +390,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommand> : pro
         }
     }
 
-    HRESULT __stdcall get_Properties(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::Collections::IVectorView<hstring>>> value) noexcept override
+    HRESULT __stdcall get_Properties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -52,7 +405,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommand> : pro
         }
     }
 
-    HRESULT __stdcall get_SpeechRecognitionResult(impl::abi_arg_out<Windows::Media::SpeechRecognition::ISpeechRecognitionResult> value) noexcept override
+    HRESULT __stdcall get_SpeechRecognitionResult(::IUnknown** value) noexcept override
     {
         try
         {
@@ -71,7 +424,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommand> : pro
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandCompletedEventArgs> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandCompletedEventArgs>
 {
-    HRESULT __stdcall get_Reason(Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletionReason * value) noexcept override
+    HRESULT __stdcall get_Reason(abi_t<Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletionReason>* value) noexcept override
     {
         try
         {
@@ -89,7 +442,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandComplet
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandConfirmationResult> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandConfirmationResult>
 {
-    HRESULT __stdcall get_Confirmed(bool * value) noexcept override
+    HRESULT __stdcall get_Confirmed(bool* value) noexcept override
     {
         try
         {
@@ -107,7 +460,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandConfirm
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile>
 {
-    HRESULT __stdcall get_Title(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Title(HSTRING* value) noexcept override
     {
         try
         {
@@ -122,12 +475,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall put_Title(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Title(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Title(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Title(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -136,7 +489,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall get_TextLine1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TextLine1(HSTRING* value) noexcept override
     {
         try
         {
@@ -151,12 +504,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall put_TextLine1(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_TextLine1(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TextLine1(*reinterpret_cast<const hstring *>(&value));
+            this->shim().TextLine1(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -165,7 +518,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall get_TextLine2(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TextLine2(HSTRING* value) noexcept override
     {
         try
         {
@@ -180,12 +533,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall put_TextLine2(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_TextLine2(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TextLine2(*reinterpret_cast<const hstring *>(&value));
+            this->shim().TextLine2(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -194,7 +547,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall get_TextLine3(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TextLine3(HSTRING* value) noexcept override
     {
         try
         {
@@ -209,12 +562,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall put_TextLine3(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_TextLine3(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TextLine3(*reinterpret_cast<const hstring *>(&value));
+            this->shim().TextLine3(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -223,7 +576,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall get_Image(impl::abi_arg_out<Windows::Storage::IStorageFile> value) noexcept override
+    HRESULT __stdcall get_Image(::IUnknown** value) noexcept override
     {
         try
         {
@@ -238,12 +591,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall put_Image(impl::abi_arg_in<Windows::Storage::IStorageFile> value) noexcept override
+    HRESULT __stdcall put_Image(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Image(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&value));
+            this->shim().Image(*reinterpret_cast<Windows::Storage::IStorageFile const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -252,7 +605,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall get_AppContext(impl::abi_arg_out<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall get_AppContext(::IUnknown** value) noexcept override
     {
         try
         {
@@ -267,12 +620,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall put_AppContext(impl::abi_arg_in<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall put_AppContext(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AppContext(*reinterpret_cast<const Windows::Foundation::IInspectable *>(&value));
+            this->shim().AppContext(*reinterpret_cast<Windows::Foundation::IInspectable const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -281,7 +634,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall get_AppLaunchArgument(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppLaunchArgument(HSTRING* value) noexcept override
     {
         try
         {
@@ -296,12 +649,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall put_AppLaunchArgument(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_AppLaunchArgument(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AppLaunchArgument(*reinterpret_cast<const hstring *>(&value));
+            this->shim().AppLaunchArgument(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -310,7 +663,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall get_ContentTileType(Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType * value) noexcept override
+    HRESULT __stdcall get_ContentTileType(abi_t<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType>* value) noexcept override
     {
         try
         {
@@ -324,12 +677,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
         }
     }
 
-    HRESULT __stdcall put_ContentTileType(Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType value) noexcept override
+    HRESULT __stdcall put_ContentTileType(abi_t<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ContentTileType(value);
+            this->shim().ContentTileType(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -342,7 +695,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandContent
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinition> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinition>
 {
-    HRESULT __stdcall get_Language(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Language(HSTRING* value) noexcept override
     {
         try
         {
@@ -357,7 +710,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinit
         }
     }
 
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -372,12 +725,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinit
         }
     }
 
-    HRESULT __stdcall abi_SetPhraseListAsync(impl::abi_arg_in<hstring> phraseListName, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> phraseList, impl::abi_arg_out<Windows::Foundation::IAsyncAction> updateAction) noexcept override
+    HRESULT __stdcall SetPhraseListAsync(HSTRING phraseListName, ::IUnknown* phraseList, ::IUnknown** updateAction) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *updateAction = detach_abi(this->shim().SetPhraseListAsync(*reinterpret_cast<const hstring *>(&phraseListName), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&phraseList)));
+            *updateAction = detach_abi(this->shim().SetPhraseListAsync(*reinterpret_cast<hstring const*>(&phraseListName), *reinterpret_cast<Windows::Foundation::Collections::IIterable<hstring> const*>(&phraseList)));
             return S_OK;
         }
         catch (...)
@@ -391,12 +744,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinit
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinitionManagerStatics> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinitionManagerStatics>
 {
-    HRESULT __stdcall abi_InstallCommandDefinitionsFromStorageFileAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_out<Windows::Foundation::IAsyncAction> installAction) noexcept override
+    HRESULT __stdcall InstallCommandDefinitionsFromStorageFileAsync(::IUnknown* file, ::IUnknown** installAction) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *installAction = detach_abi(this->shim().InstallCommandDefinitionsFromStorageFileAsync(*reinterpret_cast<const Windows::Storage::StorageFile *>(&file)));
+            *installAction = detach_abi(this->shim().InstallCommandDefinitionsFromStorageFileAsync(*reinterpret_cast<Windows::Storage::StorageFile const*>(&file)));
             return S_OK;
         }
         catch (...)
@@ -406,7 +759,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinit
         }
     }
 
-    HRESULT __stdcall get_InstalledCommandDefinitions(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<hstring, Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition>> voiceCommandDefinitions) noexcept override
+    HRESULT __stdcall get_InstalledCommandDefinitions(::IUnknown** voiceCommandDefinitions) noexcept override
     {
         try
         {
@@ -425,7 +778,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinit
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDisambiguationResult> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDisambiguationResult>
 {
-    HRESULT __stdcall get_SelectedItem(impl::abi_arg_out<Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile> value) noexcept override
+    HRESULT __stdcall get_SelectedItem(::IUnknown** value) noexcept override
     {
         try
         {
@@ -444,7 +797,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDisambi
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse>
 {
-    HRESULT __stdcall get_Message(impl::abi_arg_out<Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> value) noexcept override
+    HRESULT __stdcall get_Message(::IUnknown** value) noexcept override
     {
         try
         {
@@ -459,12 +812,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
         }
     }
 
-    HRESULT __stdcall put_Message(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> value) noexcept override
+    HRESULT __stdcall put_Message(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Message(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage *>(&value));
+            this->shim().Message(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -473,7 +826,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
         }
     }
 
-    HRESULT __stdcall get_RepeatMessage(impl::abi_arg_out<Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> value) noexcept override
+    HRESULT __stdcall get_RepeatMessage(::IUnknown** value) noexcept override
     {
         try
         {
@@ -488,12 +841,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
         }
     }
 
-    HRESULT __stdcall put_RepeatMessage(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> value) noexcept override
+    HRESULT __stdcall put_RepeatMessage(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RepeatMessage(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage *>(&value));
+            this->shim().RepeatMessage(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -502,7 +855,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
         }
     }
 
-    HRESULT __stdcall get_AppLaunchArgument(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppLaunchArgument(HSTRING* value) noexcept override
     {
         try
         {
@@ -517,12 +870,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
         }
     }
 
-    HRESULT __stdcall put_AppLaunchArgument(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_AppLaunchArgument(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AppLaunchArgument(*reinterpret_cast<const hstring *>(&value));
+            this->shim().AppLaunchArgument(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -531,7 +884,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
         }
     }
 
-    HRESULT __stdcall get_VoiceCommandContentTiles(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile>> value) noexcept override
+    HRESULT __stdcall get_VoiceCommandContentTiles(::IUnknown** value) noexcept override
     {
         try
         {
@@ -550,7 +903,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics>
 {
-    HRESULT __stdcall get_MaxSupportedVoiceCommandContentTiles(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MaxSupportedVoiceCommandContentTiles(uint32_t* value) noexcept override
     {
         try
         {
@@ -564,12 +917,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
         }
     }
 
-    HRESULT __stdcall abi_CreateResponse(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> userMessage, impl::abi_arg_out<Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> response) noexcept override
+    HRESULT __stdcall CreateResponse(::IUnknown* userMessage, ::IUnknown** response) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *response = detach_abi(this->shim().CreateResponse(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage *>(&userMessage)));
+            *response = detach_abi(this->shim().CreateResponse(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const*>(&userMessage)));
             return S_OK;
         }
         catch (...)
@@ -579,12 +932,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
         }
     }
 
-    HRESULT __stdcall abi_CreateResponseWithTiles(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> message, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile>> contentTiles, impl::abi_arg_out<Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> response) noexcept override
+    HRESULT __stdcall CreateResponseWithTiles(::IUnknown* message, ::IUnknown* contentTiles, ::IUnknown** response) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *response = detach_abi(this->shim().CreateResponse(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage *>(&message), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> *>(&contentTiles)));
+            *response = detach_abi(this->shim().CreateResponse(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const*>(&message), *reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> const*>(&contentTiles)));
             return S_OK;
         }
         catch (...)
@@ -594,12 +947,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
         }
     }
 
-    HRESULT __stdcall abi_CreateResponseForPrompt(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> message, impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> repeatMessage, impl::abi_arg_out<Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> response) noexcept override
+    HRESULT __stdcall CreateResponseForPrompt(::IUnknown* message, ::IUnknown* repeatMessage, ::IUnknown** response) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *response = detach_abi(this->shim().CreateResponseForPrompt(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage *>(&message), *reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage *>(&repeatMessage)));
+            *response = detach_abi(this->shim().CreateResponseForPrompt(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const*>(&message), *reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const*>(&repeatMessage)));
             return S_OK;
         }
         catch (...)
@@ -609,12 +962,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
         }
     }
 
-    HRESULT __stdcall abi_CreateResponseForPromptWithTiles(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> message, impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> repeatMessage, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile>> contentTiles, impl::abi_arg_out<Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> response) noexcept override
+    HRESULT __stdcall CreateResponseForPromptWithTiles(::IUnknown* message, ::IUnknown* repeatMessage, ::IUnknown* contentTiles, ::IUnknown** response) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *response = detach_abi(this->shim().CreateResponseForPrompt(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage *>(&message), *reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage *>(&repeatMessage), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> *>(&contentTiles)));
+            *response = detach_abi(this->shim().CreateResponseForPrompt(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const*>(&message), *reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const*>(&repeatMessage), *reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> const*>(&contentTiles)));
             return S_OK;
         }
         catch (...)
@@ -628,7 +981,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandRespons
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection>
 {
-    HRESULT __stdcall abi_GetVoiceCommandAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommand>> operation) noexcept override
+    HRESULT __stdcall GetVoiceCommandAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -643,12 +996,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandService
         }
     }
 
-    HRESULT __stdcall abi_RequestConfirmationAsync(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> response, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandConfirmationResult>> operation) noexcept override
+    HRESULT __stdcall RequestConfirmationAsync(::IUnknown* response, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RequestConfirmationAsync(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse *>(&response)));
+            *operation = detach_abi(this->shim().RequestConfirmationAsync(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const*>(&response)));
             return S_OK;
         }
         catch (...)
@@ -658,12 +1011,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandService
         }
     }
 
-    HRESULT __stdcall abi_RequestDisambiguationAsync(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> response, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandDisambiguationResult>> operation) noexcept override
+    HRESULT __stdcall RequestDisambiguationAsync(::IUnknown* response, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RequestDisambiguationAsync(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse *>(&response)));
+            *operation = detach_abi(this->shim().RequestDisambiguationAsync(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const*>(&response)));
             return S_OK;
         }
         catch (...)
@@ -673,12 +1026,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandService
         }
     }
 
-    HRESULT __stdcall abi_ReportProgressAsync(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> response, impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall ReportProgressAsync(::IUnknown* response, ::IUnknown** action) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *action = detach_abi(this->shim().ReportProgressAsync(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse *>(&response)));
+            *action = detach_abi(this->shim().ReportProgressAsync(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const*>(&response)));
             return S_OK;
         }
         catch (...)
@@ -688,12 +1041,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandService
         }
     }
 
-    HRESULT __stdcall abi_ReportSuccessAsync(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> response, impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall ReportSuccessAsync(::IUnknown* response, ::IUnknown** action) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *action = detach_abi(this->shim().ReportSuccessAsync(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse *>(&response)));
+            *action = detach_abi(this->shim().ReportSuccessAsync(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const*>(&response)));
             return S_OK;
         }
         catch (...)
@@ -703,12 +1056,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandService
         }
     }
 
-    HRESULT __stdcall abi_ReportFailureAsync(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> response, impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall ReportFailureAsync(::IUnknown* response, ::IUnknown** action) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *action = detach_abi(this->shim().ReportFailureAsync(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse *>(&response)));
+            *action = detach_abi(this->shim().ReportFailureAsync(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const*>(&response)));
             return S_OK;
         }
         catch (...)
@@ -718,12 +1071,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandService
         }
     }
 
-    HRESULT __stdcall abi_RequestAppLaunchAsync(impl::abi_arg_in<Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> response, impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall RequestAppLaunchAsync(::IUnknown* response, ::IUnknown** action) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *action = detach_abi(this->shim().RequestAppLaunchAsync(*reinterpret_cast<const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse *>(&response)));
+            *action = detach_abi(this->shim().RequestAppLaunchAsync(*reinterpret_cast<Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse const*>(&response)));
             return S_OK;
         }
         catch (...)
@@ -733,7 +1086,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandService
         }
     }
 
-    HRESULT __stdcall get_Language(impl::abi_arg_out<Windows::Globalization::ILanguage> language) noexcept override
+    HRESULT __stdcall get_Language(::IUnknown** language) noexcept override
     {
         try
         {
@@ -748,12 +1101,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandService
         }
     }
 
-    HRESULT __stdcall add_VoiceCommandCompleted(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection, Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_VoiceCommandCompleted(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().VoiceCommandCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection, Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().VoiceCommandCompleted(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection, Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -762,12 +1115,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandService
         }
     }
 
-    HRESULT __stdcall remove_VoiceCommandCompleted(event_token token) noexcept override
+    HRESULT __stdcall remove_VoiceCommandCompleted(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().VoiceCommandCompleted(token);
+            this->shim().VoiceCommandCompleted(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -780,12 +1133,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandService
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnectionStatics> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnectionStatics>
 {
-    HRESULT __stdcall abi_FromAppServiceTriggerDetails(impl::abi_arg_in<Windows::ApplicationModel::AppService::IAppServiceTriggerDetails> triggerDetails, impl::abi_arg_out<Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection> value) noexcept override
+    HRESULT __stdcall FromAppServiceTriggerDetails(::IUnknown* triggerDetails, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().FromAppServiceTriggerDetails(*reinterpret_cast<const Windows::ApplicationModel::AppService::AppServiceTriggerDetails *>(&triggerDetails)));
+            *value = detach_abi(this->shim().FromAppServiceTriggerDetails(*reinterpret_cast<Windows::ApplicationModel::AppService::AppServiceTriggerDetails const*>(&triggerDetails)));
             return S_OK;
         }
         catch (...)
@@ -799,7 +1152,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandService
 template <typename D>
 struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> : produce_base<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage>
 {
-    HRESULT __stdcall get_DisplayMessage(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayMessage(HSTRING* value) noexcept override
     {
         try
         {
@@ -814,12 +1167,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMes
         }
     }
 
-    HRESULT __stdcall put_DisplayMessage(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DisplayMessage(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DisplayMessage(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DisplayMessage(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -828,7 +1181,7 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMes
         }
     }
 
-    HRESULT __stdcall get_SpokenMessage(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SpokenMessage(HSTRING* value) noexcept override
     {
         try
         {
@@ -843,12 +1196,12 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMes
         }
     }
 
-    HRESULT __stdcall put_SpokenMessage(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_SpokenMessage(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SpokenMessage(*reinterpret_cast<const hstring *>(&value));
+            this->shim().SpokenMessage(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -860,405 +1213,50 @@ struct produce<D, Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMes
 
 }
 
-namespace Windows::ApplicationModel::VoiceCommands {
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IVoiceCommandDefinitionManagerStatics<D>::InstallCommandDefinitionsFromStorageFileAsync(const Windows::Storage::StorageFile & file) const
-{
-    Windows::Foundation::IAsyncAction installAction;
-    check_hresult(WINRT_SHIM(IVoiceCommandDefinitionManagerStatics)->abi_InstallCommandDefinitionsFromStorageFileAsync(get_abi(file), put_abi(installAction)));
-    return installAction;
-}
-
-template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> impl_IVoiceCommandDefinitionManagerStatics<D>::InstalledCommandDefinitions() const
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> voiceCommandDefinitions;
-    check_hresult(WINRT_SHIM(IVoiceCommandDefinitionManagerStatics)->get_InstalledCommandDefinitions(put_abi(voiceCommandDefinitions)));
-    return voiceCommandDefinitions;
-}
-
-template <typename D> hstring impl_IVoiceCommandDefinition<D>::Language() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandDefinition)->get_Language(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IVoiceCommandDefinition<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandDefinition)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IVoiceCommandDefinition<D>::SetPhraseListAsync(hstring_view phraseListName, iterable<hstring> phraseList) const
-{
-    Windows::Foundation::IAsyncAction updateAction;
-    check_hresult(WINRT_SHIM(IVoiceCommandDefinition)->abi_SetPhraseListAsync(get_abi(phraseListName), get_abi(phraseList), put_abi(updateAction)));
-    return updateAction;
-}
-
-template <typename D> hstring impl_IVoiceCommandContentTile<D>::Title() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->get_Title(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandContentTile<D>::Title(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->put_Title(get_abi(value)));
-}
-
-template <typename D> hstring impl_IVoiceCommandContentTile<D>::TextLine1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->get_TextLine1(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandContentTile<D>::TextLine1(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->put_TextLine1(get_abi(value)));
-}
-
-template <typename D> hstring impl_IVoiceCommandContentTile<D>::TextLine2() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->get_TextLine2(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandContentTile<D>::TextLine2(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->put_TextLine2(get_abi(value)));
-}
-
-template <typename D> hstring impl_IVoiceCommandContentTile<D>::TextLine3() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->get_TextLine3(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandContentTile<D>::TextLine3(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->put_TextLine3(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::IStorageFile impl_IVoiceCommandContentTile<D>::Image() const
-{
-    Windows::Storage::IStorageFile value;
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->get_Image(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandContentTile<D>::Image(const Windows::Storage::IStorageFile & value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->put_Image(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IVoiceCommandContentTile<D>::AppContext() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->get_AppContext(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandContentTile<D>::AppContext(const Windows::Foundation::IInspectable & value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->put_AppContext(get_abi(value)));
-}
-
-template <typename D> hstring impl_IVoiceCommandContentTile<D>::AppLaunchArgument() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->get_AppLaunchArgument(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandContentTile<D>::AppLaunchArgument(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->put_AppLaunchArgument(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType impl_IVoiceCommandContentTile<D>::ContentTileType() const
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType value {};
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->get_ContentTileType(&value));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandContentTile<D>::ContentTileType(Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTileType value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandContentTile)->put_ContentTileType(value));
-}
-
-template <typename D> hstring impl_IVoiceCommandUserMessage<D>::DisplayMessage() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandUserMessage)->get_DisplayMessage(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandUserMessage<D>::DisplayMessage(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandUserMessage)->put_DisplayMessage(get_abi(value)));
-}
-
-template <typename D> hstring impl_IVoiceCommandUserMessage<D>::SpokenMessage() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandUserMessage)->get_SpokenMessage(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandUserMessage<D>::SpokenMessage(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandUserMessage)->put_SpokenMessage(get_abi(value)));
-}
-
-template <typename D> hstring impl_IVoiceCommand<D>::CommandName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommand)->get_CommandName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::Collections::IVectorView<hstring>> impl_IVoiceCommand<D>::Properties() const
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::Collections::IVectorView<hstring>> value;
-    check_hresult(WINRT_SHIM(IVoiceCommand)->get_Properties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Media::SpeechRecognition::SpeechRecognitionResult impl_IVoiceCommand<D>::SpeechRecognitionResult() const
-{
-    Windows::Media::SpeechRecognition::SpeechRecognitionResult value { nullptr };
-    check_hresult(WINRT_SHIM(IVoiceCommand)->get_SpeechRecognitionResult(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletionReason impl_IVoiceCommandCompletedEventArgs<D>::Reason() const
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletionReason value {};
-    check_hresult(WINRT_SHIM(IVoiceCommandCompletedEventArgs)->get_Reason(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile impl_IVoiceCommandDisambiguationResult<D>::SelectedItem() const
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile value { nullptr };
-    check_hresult(WINRT_SHIM(IVoiceCommandDisambiguationResult)->get_SelectedItem(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IVoiceCommandConfirmationResult<D>::Confirmed() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IVoiceCommandConfirmationResult)->get_Confirmed(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommand> impl_IVoiceCommandServiceConnection<D>::GetVoiceCommandAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommand> operation;
-    check_hresult(WINRT_SHIM(IVoiceCommandServiceConnection)->abi_GetVoiceCommandAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandConfirmationResult> impl_IVoiceCommandServiceConnection<D>::RequestConfirmationAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandConfirmationResult> operation;
-    check_hresult(WINRT_SHIM(IVoiceCommandServiceConnection)->abi_RequestConfirmationAsync(get_abi(response), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandDisambiguationResult> impl_IVoiceCommandServiceConnection<D>::RequestDisambiguationAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::VoiceCommands::VoiceCommandDisambiguationResult> operation;
-    check_hresult(WINRT_SHIM(IVoiceCommandServiceConnection)->abi_RequestDisambiguationAsync(get_abi(response), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IVoiceCommandServiceConnection<D>::ReportProgressAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const
-{
-    Windows::Foundation::IAsyncAction action;
-    check_hresult(WINRT_SHIM(IVoiceCommandServiceConnection)->abi_ReportProgressAsync(get_abi(response), put_abi(action)));
-    return action;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IVoiceCommandServiceConnection<D>::ReportSuccessAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const
-{
-    Windows::Foundation::IAsyncAction action;
-    check_hresult(WINRT_SHIM(IVoiceCommandServiceConnection)->abi_ReportSuccessAsync(get_abi(response), put_abi(action)));
-    return action;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IVoiceCommandServiceConnection<D>::ReportFailureAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const
-{
-    Windows::Foundation::IAsyncAction action;
-    check_hresult(WINRT_SHIM(IVoiceCommandServiceConnection)->abi_ReportFailureAsync(get_abi(response), put_abi(action)));
-    return action;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IVoiceCommandServiceConnection<D>::RequestAppLaunchAsync(const Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & response) const
-{
-    Windows::Foundation::IAsyncAction action;
-    check_hresult(WINRT_SHIM(IVoiceCommandServiceConnection)->abi_RequestAppLaunchAsync(get_abi(response), put_abi(action)));
-    return action;
-}
-
-template <typename D> Windows::Globalization::Language impl_IVoiceCommandServiceConnection<D>::Language() const
-{
-    Windows::Globalization::Language language { nullptr };
-    check_hresult(WINRT_SHIM(IVoiceCommandServiceConnection)->get_Language(put_abi(language)));
-    return language;
-}
-
-template <typename D> event_token impl_IVoiceCommandServiceConnection<D>::VoiceCommandCompleted(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection, Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IVoiceCommandServiceConnection)->add_VoiceCommandCompleted(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IVoiceCommandServiceConnection> impl_IVoiceCommandServiceConnection<D>::VoiceCommandCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection, Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IVoiceCommandServiceConnection>(this, &ABI::Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection::remove_VoiceCommandCompleted, VoiceCommandCompleted(handler));
-}
-
-template <typename D> void impl_IVoiceCommandServiceConnection<D>::VoiceCommandCompleted(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandServiceConnection)->remove_VoiceCommandCompleted(token));
-}
-
-template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection impl_IVoiceCommandServiceConnectionStatics<D>::FromAppServiceTriggerDetails(const Windows::ApplicationModel::AppService::AppServiceTriggerDetails & triggerDetails) const
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection value { nullptr };
-    check_hresult(WINRT_SHIM(IVoiceCommandServiceConnectionStatics)->abi_FromAppServiceTriggerDetails(get_abi(triggerDetails), put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IVoiceCommandResponseStatics<D>::MaxSupportedVoiceCommandContentTiles() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IVoiceCommandResponseStatics)->get_MaxSupportedVoiceCommandContentTiles(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse impl_IVoiceCommandResponseStatics<D>::CreateResponse(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & userMessage) const
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse response { nullptr };
-    check_hresult(WINRT_SHIM(IVoiceCommandResponseStatics)->abi_CreateResponse(get_abi(userMessage), put_abi(response)));
-    return response;
-}
-
-template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse impl_IVoiceCommandResponseStatics<D>::CreateResponse(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & message, iterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> contentTiles) const
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse response { nullptr };
-    check_hresult(WINRT_SHIM(IVoiceCommandResponseStatics)->abi_CreateResponseWithTiles(get_abi(message), get_abi(contentTiles), put_abi(response)));
-    return response;
-}
-
-template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse impl_IVoiceCommandResponseStatics<D>::CreateResponseForPrompt(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & message, const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & repeatMessage) const
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse response { nullptr };
-    check_hresult(WINRT_SHIM(IVoiceCommandResponseStatics)->abi_CreateResponseForPrompt(get_abi(message), get_abi(repeatMessage), put_abi(response)));
-    return response;
-}
-
-template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse impl_IVoiceCommandResponseStatics<D>::CreateResponseForPrompt(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & message, const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & repeatMessage, iterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> contentTiles) const
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse response { nullptr };
-    check_hresult(WINRT_SHIM(IVoiceCommandResponseStatics)->abi_CreateResponseForPromptWithTiles(get_abi(message), get_abi(repeatMessage), get_abi(contentTiles), put_abi(response)));
-    return response;
-}
-
-template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage impl_IVoiceCommandResponse<D>::Message() const
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage value { nullptr };
-    check_hresult(WINRT_SHIM(IVoiceCommandResponse)->get_Message(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandResponse<D>::Message(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandResponse)->put_Message(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage impl_IVoiceCommandResponse<D>::RepeatMessage() const
-{
-    Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage value { nullptr };
-    check_hresult(WINRT_SHIM(IVoiceCommandResponse)->get_RepeatMessage(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandResponse<D>::RepeatMessage(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandResponse)->put_RepeatMessage(get_abi(value)));
-}
-
-template <typename D> hstring impl_IVoiceCommandResponse<D>::AppLaunchArgument() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IVoiceCommandResponse)->get_AppLaunchArgument(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IVoiceCommandResponse<D>::AppLaunchArgument(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IVoiceCommandResponse)->put_AppLaunchArgument(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> impl_IVoiceCommandResponse<D>::VoiceCommandContentTiles() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> value;
-    check_hresult(WINRT_SHIM(IVoiceCommandResponse)->get_VoiceCommandContentTiles(put_abi(value)));
-    return value;
-}
+WINRT_EXPORT namespace winrt::Windows::ApplicationModel::VoiceCommands {
 
 inline VoiceCommandContentTile::VoiceCommandContentTile() :
     VoiceCommandContentTile(activate_instance<VoiceCommandContentTile>())
 {}
 
-inline Windows::Foundation::IAsyncAction VoiceCommandDefinitionManager::InstallCommandDefinitionsFromStorageFileAsync(const Windows::Storage::StorageFile & file)
+inline Windows::Foundation::IAsyncAction VoiceCommandDefinitionManager::InstallCommandDefinitionsFromStorageFileAsync(Windows::Storage::StorageFile const& file)
 {
-    return get_activation_factory<VoiceCommandDefinitionManager, IVoiceCommandDefinitionManagerStatics>().InstallCommandDefinitionsFromStorageFileAsync(file);
+    return get_activation_factory<VoiceCommandDefinitionManager, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinitionManagerStatics>().InstallCommandDefinitionsFromStorageFileAsync(file);
 }
 
 inline Windows::Foundation::Collections::IMapView<hstring, Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> VoiceCommandDefinitionManager::InstalledCommandDefinitions()
 {
-    return get_activation_factory<VoiceCommandDefinitionManager, IVoiceCommandDefinitionManagerStatics>().InstalledCommandDefinitions();
+    return get_activation_factory<VoiceCommandDefinitionManager, Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinitionManagerStatics>().InstalledCommandDefinitions();
 }
 
 inline uint32_t VoiceCommandResponse::MaxSupportedVoiceCommandContentTiles()
 {
-    return get_activation_factory<VoiceCommandResponse, IVoiceCommandResponseStatics>().MaxSupportedVoiceCommandContentTiles();
+    return get_activation_factory<VoiceCommandResponse, Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics>().MaxSupportedVoiceCommandContentTiles();
 }
 
-inline Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse VoiceCommandResponse::CreateResponse(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & userMessage)
+inline Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse VoiceCommandResponse::CreateResponse(Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& userMessage)
 {
-    return get_activation_factory<VoiceCommandResponse, IVoiceCommandResponseStatics>().CreateResponse(userMessage);
+    return get_activation_factory<VoiceCommandResponse, Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics>().CreateResponse(userMessage);
 }
 
-inline Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse VoiceCommandResponse::CreateResponse(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & message, iterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> contentTiles)
+inline Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse VoiceCommandResponse::CreateResponse(Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& message, param::iterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> const& contentTiles)
 {
-    return get_activation_factory<VoiceCommandResponse, IVoiceCommandResponseStatics>().CreateResponse(message, contentTiles);
+    return get_activation_factory<VoiceCommandResponse, Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics>().CreateResponse(message, contentTiles);
 }
 
-inline Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse VoiceCommandResponse::CreateResponseForPrompt(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & message, const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & repeatMessage)
+inline Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse VoiceCommandResponse::CreateResponseForPrompt(Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& message, Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& repeatMessage)
 {
-    return get_activation_factory<VoiceCommandResponse, IVoiceCommandResponseStatics>().CreateResponseForPrompt(message, repeatMessage);
+    return get_activation_factory<VoiceCommandResponse, Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics>().CreateResponseForPrompt(message, repeatMessage);
 }
 
-inline Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse VoiceCommandResponse::CreateResponseForPrompt(const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & message, const Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & repeatMessage, iterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> contentTiles)
+inline Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse VoiceCommandResponse::CreateResponseForPrompt(Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& message, Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage const& repeatMessage, param::iterable<Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> const& contentTiles)
 {
-    return get_activation_factory<VoiceCommandResponse, IVoiceCommandResponseStatics>().CreateResponseForPrompt(message, repeatMessage, contentTiles);
+    return get_activation_factory<VoiceCommandResponse, Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics>().CreateResponseForPrompt(message, repeatMessage, contentTiles);
 }
 
-inline Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection VoiceCommandServiceConnection::FromAppServiceTriggerDetails(const Windows::ApplicationModel::AppService::AppServiceTriggerDetails & triggerDetails)
+inline Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection VoiceCommandServiceConnection::FromAppServiceTriggerDetails(Windows::ApplicationModel::AppService::AppServiceTriggerDetails const& triggerDetails)
 {
-    return get_activation_factory<VoiceCommandServiceConnection, IVoiceCommandServiceConnectionStatics>().FromAppServiceTriggerDetails(triggerDetails);
+    return get_activation_factory<VoiceCommandServiceConnection, Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnectionStatics>().FromAppServiceTriggerDetails(triggerDetails);
 }
 
 inline VoiceCommandUserMessage::VoiceCommandUserMessage() :
@@ -1267,195 +1265,74 @@ inline VoiceCommandUserMessage::VoiceCommandUserMessage() :
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommand> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommand> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandCompletedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandCompletedEventArgs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandConfirmationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandConfirmationResult> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinition> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinition> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinitionManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinitionManagerStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDisambiguationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDisambiguationResult> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnectionStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnectionStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommand> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommand> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandConfirmationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandConfirmationResult> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinitionManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinitionManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandDisambiguationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandDisambiguationResult> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommand>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommand & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandCompletedEventArgs>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandCompletedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandConfirmationResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandConfirmationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandContentTile & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinition>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinition & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinitionManagerStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDefinitionManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDisambiguationResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandDisambiguationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponse & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandResponseStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnection & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnectionStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandServiceConnectionStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::IVoiceCommandUserMessage & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommand>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommand & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandCompletedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandConfirmationResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandConfirmationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandContentTile & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandDefinition & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandDisambiguationResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandDisambiguationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandResponse & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandServiceConnection & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::VoiceCommands::VoiceCommandUserMessage & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

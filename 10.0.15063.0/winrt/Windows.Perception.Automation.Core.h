@@ -1,28 +1,32 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.Perception.Automation.Core.2.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Perception.Automation.Core.3.h"
-#include "Windows.Perception.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
-
-namespace impl {
+template <typename D> void consume_Windows_Perception_Automation_Core_ICorePerceptionAutomationStatics<D>::SetActivationFactoryProvider(Windows::Foundation::IGetActivationFactory const& provider) const
+{
+    check_hresult(WINRT_SHIM(Windows::Perception::Automation::Core::ICorePerceptionAutomationStatics)->SetActivationFactoryProvider(get_abi(provider)));
+}
 
 template <typename D>
 struct produce<D, Windows::Perception::Automation::Core::ICorePerceptionAutomationStatics> : produce_base<D, Windows::Perception::Automation::Core::ICorePerceptionAutomationStatics>
 {
-    HRESULT __stdcall abi_SetActivationFactoryProvider(impl::abi_arg_in<Windows::Foundation::IGetActivationFactory> provider) noexcept override
+    HRESULT __stdcall SetActivationFactoryProvider(::IUnknown* provider) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SetActivationFactoryProvider(*reinterpret_cast<const Windows::Foundation::IGetActivationFactory *>(&provider));
+            this->shim().SetActivationFactoryProvider(*reinterpret_cast<Windows::Foundation::IGetActivationFactory const*>(&provider));
             return S_OK;
         }
         catch (...)
@@ -34,29 +38,23 @@ struct produce<D, Windows::Perception::Automation::Core::ICorePerceptionAutomati
 
 }
 
-namespace Windows::Perception::Automation::Core {
+WINRT_EXPORT namespace winrt::Windows::Perception::Automation::Core {
 
-template <typename D> void impl_ICorePerceptionAutomationStatics<D>::SetActivationFactoryProvider(const Windows::Foundation::IGetActivationFactory & provider) const
+inline void CorePerceptionAutomation::SetActivationFactoryProvider(Windows::Foundation::IGetActivationFactory const& provider)
 {
-    check_hresult(WINRT_SHIM(ICorePerceptionAutomationStatics)->abi_SetActivationFactoryProvider(get_abi(provider)));
-}
-
-inline void CorePerceptionAutomation::SetActivationFactoryProvider(const Windows::Foundation::IGetActivationFactory & provider)
-{
-    get_activation_factory<CorePerceptionAutomation, ICorePerceptionAutomationStatics>().SetActivationFactoryProvider(provider);
+    get_activation_factory<CorePerceptionAutomation, Windows::Perception::Automation::Core::ICorePerceptionAutomationStatics>().SetActivationFactoryProvider(provider);
 }
 
 }
 
-}
+WINRT_EXPORT namespace std {
 
-template<>
-struct std::hash<winrt::Windows::Perception::Automation::Core::ICorePerceptionAutomationStatics>
-{
-    size_t operator()(const winrt::Windows::Perception::Automation::Core::ICorePerceptionAutomationStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Perception::Automation::Core::ICorePerceptionAutomationStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Perception::Automation::Core::ICorePerceptionAutomationStatics> {};
+
+template<> struct hash<winrt::Windows::Perception::Automation::Core::CorePerceptionAutomation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Perception::Automation::Core::CorePerceptionAutomation> {};
+
+}
 
 WINRT_WARNING_POP

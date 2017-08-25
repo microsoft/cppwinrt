@@ -1,0 +1,11 @@
+﻿<Page xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+
+    <TextBlock FontFamily="Segoe UI Semibold"
+               FontSize="72.0"
+               Foreground="Orange"
+               VerticalAlignment="Center"
+               TextAlignment="Center">
+        C++/WinRT
+    </TextBlock>
+
+</Page>

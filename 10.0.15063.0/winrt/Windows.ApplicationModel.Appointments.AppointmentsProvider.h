@@ -1,24 +1,181 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.ApplicationModel.Appointments.2.h"
+#include "winrt/impl/Windows.ApplicationModel.Appointments.AppointmentsProvider.2.h"
+#include "winrt/Windows.ApplicationModel.Appointments.h"
 
-#include "internal/Windows.ApplicationModel.Appointments.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.ApplicationModel.Appointments.AppointmentsProvider.3.h"
-#include "Windows.ApplicationModel.Appointments.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::ApplicationModel::Appointments::Appointment consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IAddAppointmentOperation<D>::AppointmentInformation() const
+{
+    Windows::ApplicationModel::Appointments::Appointment value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation)->get_AppointmentInformation(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> hstring consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IAddAppointmentOperation<D>::SourcePackageFamilyName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation)->get_SourcePackageFamilyName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IAddAppointmentOperation<D>::ReportCompleted(param::hstring const& itemId) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation)->ReportCompleted(get_abi(itemId)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IAddAppointmentOperation<D>::ReportCanceled() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation)->ReportCanceled());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IAddAppointmentOperation<D>::ReportError(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation)->ReportError(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IAddAppointmentOperation<D>::DismissUI() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation)->DismissUI());
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IAppointmentsProviderLaunchActionVerbsStatics<D>::AddAppointment() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics)->get_AddAppointment(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IAppointmentsProviderLaunchActionVerbsStatics<D>::ReplaceAppointment() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics)->get_ReplaceAppointment(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IAppointmentsProviderLaunchActionVerbsStatics<D>::RemoveAppointment() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics)->get_RemoveAppointment(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IAppointmentsProviderLaunchActionVerbsStatics<D>::ShowTimeFrame() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics)->get_ShowTimeFrame(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IAppointmentsProviderLaunchActionVerbsStatics2<D>::ShowAppointmentDetails() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2)->get_ShowAppointmentDetails(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IRemoveAppointmentOperation<D>::AppointmentId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation)->get_AppointmentId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IRemoveAppointmentOperation<D>::InstanceStartDate() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation)->get_InstanceStartDate(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IRemoveAppointmentOperation<D>::SourcePackageFamilyName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation)->get_SourcePackageFamilyName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IRemoveAppointmentOperation<D>::ReportCompleted() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation)->ReportCompleted());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IRemoveAppointmentOperation<D>::ReportCanceled() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation)->ReportCanceled());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IRemoveAppointmentOperation<D>::ReportError(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation)->ReportError(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IRemoveAppointmentOperation<D>::DismissUI() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation)->DismissUI());
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IReplaceAppointmentOperation<D>::AppointmentId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation)->get_AppointmentId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Appointments::Appointment consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IReplaceAppointmentOperation<D>::AppointmentInformation() const
+{
+    Windows::ApplicationModel::Appointments::Appointment value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation)->get_AppointmentInformation(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IReplaceAppointmentOperation<D>::InstanceStartDate() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation)->get_InstanceStartDate(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IReplaceAppointmentOperation<D>::SourcePackageFamilyName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation)->get_SourcePackageFamilyName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IReplaceAppointmentOperation<D>::ReportCompleted(param::hstring const& itemId) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation)->ReportCompleted(get_abi(itemId)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IReplaceAppointmentOperation<D>::ReportCanceled() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation)->ReportCanceled());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IReplaceAppointmentOperation<D>::ReportError(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation)->ReportError(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Appointments_AppointmentsProvider_IReplaceAppointmentOperation<D>::DismissUI() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation)->DismissUI());
+}
 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation> : produce_base<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation>
 {
-    HRESULT __stdcall get_AppointmentInformation(impl::abi_arg_out<Windows::ApplicationModel::Appointments::IAppointment> value) noexcept override
+    HRESULT __stdcall get_AppointmentInformation(::IUnknown** value) noexcept override
     {
         try
         {
@@ -33,7 +190,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_SourcePackageFamilyName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SourcePackageFamilyName(HSTRING* value) noexcept override
     {
         try
         {
@@ -48,12 +205,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportCompleted(impl::abi_arg_in<hstring> itemId) noexcept override
+    HRESULT __stdcall ReportCompleted(HSTRING itemId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReportCompleted(*reinterpret_cast<const hstring *>(&itemId));
+            this->shim().ReportCompleted(*reinterpret_cast<hstring const*>(&itemId));
             return S_OK;
         }
         catch (...)
@@ -62,7 +219,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportCanceled() noexcept override
+    HRESULT __stdcall ReportCanceled() noexcept override
     {
         try
         {
@@ -76,12 +233,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportError(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall ReportError(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReportError(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ReportError(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -90,7 +247,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_DismissUI() noexcept override
+    HRESULT __stdcall DismissUI() noexcept override
     {
         try
         {
@@ -108,7 +265,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics> : produce_base<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics>
 {
-    HRESULT __stdcall get_AddAppointment(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AddAppointment(HSTRING* value) noexcept override
     {
         try
         {
@@ -123,7 +280,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_ReplaceAppointment(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ReplaceAppointment(HSTRING* value) noexcept override
     {
         try
         {
@@ -138,7 +295,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_RemoveAppointment(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RemoveAppointment(HSTRING* value) noexcept override
     {
         try
         {
@@ -153,7 +310,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_ShowTimeFrame(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ShowTimeFrame(HSTRING* value) noexcept override
     {
         try
         {
@@ -172,7 +329,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2> : produce_base<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2>
 {
-    HRESULT __stdcall get_ShowAppointmentDetails(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ShowAppointmentDetails(HSTRING* value) noexcept override
     {
         try
         {
@@ -191,7 +348,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation> : produce_base<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation>
 {
-    HRESULT __stdcall get_AppointmentId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppointmentId(HSTRING* value) noexcept override
     {
         try
         {
@@ -206,7 +363,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_InstanceStartDate(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_InstanceStartDate(::IUnknown** value) noexcept override
     {
         try
         {
@@ -221,7 +378,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_SourcePackageFamilyName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SourcePackageFamilyName(HSTRING* value) noexcept override
     {
         try
         {
@@ -236,7 +393,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportCompleted() noexcept override
+    HRESULT __stdcall ReportCompleted() noexcept override
     {
         try
         {
@@ -250,7 +407,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportCanceled() noexcept override
+    HRESULT __stdcall ReportCanceled() noexcept override
     {
         try
         {
@@ -264,12 +421,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportError(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall ReportError(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReportError(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ReportError(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -278,7 +435,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_DismissUI() noexcept override
+    HRESULT __stdcall DismissUI() noexcept override
     {
         try
         {
@@ -296,7 +453,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation> : produce_base<D, Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation>
 {
-    HRESULT __stdcall get_AppointmentId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppointmentId(HSTRING* value) noexcept override
     {
         try
         {
@@ -311,7 +468,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_AppointmentInformation(impl::abi_arg_out<Windows::ApplicationModel::Appointments::IAppointment> value) noexcept override
+    HRESULT __stdcall get_AppointmentInformation(::IUnknown** value) noexcept override
     {
         try
         {
@@ -326,7 +483,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_InstanceStartDate(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_InstanceStartDate(::IUnknown** value) noexcept override
     {
         try
         {
@@ -341,7 +498,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall get_SourcePackageFamilyName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SourcePackageFamilyName(HSTRING* value) noexcept override
     {
         try
         {
@@ -356,12 +513,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportCompleted(impl::abi_arg_in<hstring> itemId) noexcept override
+    HRESULT __stdcall ReportCompleted(HSTRING itemId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReportCompleted(*reinterpret_cast<const hstring *>(&itemId));
+            this->shim().ReportCompleted(*reinterpret_cast<hstring const*>(&itemId));
             return S_OK;
         }
         catch (...)
@@ -370,7 +527,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportCanceled() noexcept override
+    HRESULT __stdcall ReportCanceled() noexcept override
     {
         try
         {
@@ -384,12 +541,12 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_ReportError(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall ReportError(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReportError(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ReportError(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -398,7 +555,7 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
         }
     }
 
-    HRESULT __stdcall abi_DismissUI() noexcept override
+    HRESULT __stdcall DismissUI() noexcept override
     {
         try
         {
@@ -415,265 +572,64 @@ struct produce<D, Windows::ApplicationModel::Appointments::AppointmentsProvider:
 
 }
 
-namespace Windows::ApplicationModel::Appointments::AppointmentsProvider {
-
-template <typename D> hstring impl_IAppointmentsProviderLaunchActionVerbsStatics<D>::AddAppointment() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAppointmentsProviderLaunchActionVerbsStatics)->get_AddAppointment(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAppointmentsProviderLaunchActionVerbsStatics<D>::ReplaceAppointment() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAppointmentsProviderLaunchActionVerbsStatics)->get_ReplaceAppointment(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAppointmentsProviderLaunchActionVerbsStatics<D>::RemoveAppointment() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAppointmentsProviderLaunchActionVerbsStatics)->get_RemoveAppointment(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAppointmentsProviderLaunchActionVerbsStatics<D>::ShowTimeFrame() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAppointmentsProviderLaunchActionVerbsStatics)->get_ShowTimeFrame(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAppointmentsProviderLaunchActionVerbsStatics2<D>::ShowAppointmentDetails() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAppointmentsProviderLaunchActionVerbsStatics2)->get_ShowAppointmentDetails(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Appointments::Appointment impl_IAddAppointmentOperation<D>::AppointmentInformation() const
-{
-    Windows::ApplicationModel::Appointments::Appointment value { nullptr };
-    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->get_AppointmentInformation(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAddAppointmentOperation<D>::SourcePackageFamilyName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->get_SourcePackageFamilyName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IAddAppointmentOperation<D>::ReportCompleted(hstring_view itemId) const
-{
-    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->abi_ReportCompleted(get_abi(itemId)));
-}
-
-template <typename D> void impl_IAddAppointmentOperation<D>::ReportCanceled() const
-{
-    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->abi_ReportCanceled());
-}
-
-template <typename D> void impl_IAddAppointmentOperation<D>::ReportError(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->abi_ReportError(get_abi(value)));
-}
-
-template <typename D> void impl_IAddAppointmentOperation<D>::DismissUI() const
-{
-    check_hresult(WINRT_SHIM(IAddAppointmentOperation)->abi_DismissUI());
-}
-
-template <typename D> hstring impl_IReplaceAppointmentOperation<D>::AppointmentId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->get_AppointmentId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Appointments::Appointment impl_IReplaceAppointmentOperation<D>::AppointmentInformation() const
-{
-    Windows::ApplicationModel::Appointments::Appointment value { nullptr };
-    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->get_AppointmentInformation(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IReplaceAppointmentOperation<D>::InstanceStartDate() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->get_InstanceStartDate(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IReplaceAppointmentOperation<D>::SourcePackageFamilyName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->get_SourcePackageFamilyName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IReplaceAppointmentOperation<D>::ReportCompleted(hstring_view itemId) const
-{
-    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->abi_ReportCompleted(get_abi(itemId)));
-}
-
-template <typename D> void impl_IReplaceAppointmentOperation<D>::ReportCanceled() const
-{
-    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->abi_ReportCanceled());
-}
-
-template <typename D> void impl_IReplaceAppointmentOperation<D>::ReportError(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->abi_ReportError(get_abi(value)));
-}
-
-template <typename D> void impl_IReplaceAppointmentOperation<D>::DismissUI() const
-{
-    check_hresult(WINRT_SHIM(IReplaceAppointmentOperation)->abi_DismissUI());
-}
-
-template <typename D> hstring impl_IRemoveAppointmentOperation<D>::AppointmentId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->get_AppointmentId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IRemoveAppointmentOperation<D>::InstanceStartDate() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->get_InstanceStartDate(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IRemoveAppointmentOperation<D>::SourcePackageFamilyName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->get_SourcePackageFamilyName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IRemoveAppointmentOperation<D>::ReportCompleted() const
-{
-    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->abi_ReportCompleted());
-}
-
-template <typename D> void impl_IRemoveAppointmentOperation<D>::ReportCanceled() const
-{
-    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->abi_ReportCanceled());
-}
-
-template <typename D> void impl_IRemoveAppointmentOperation<D>::ReportError(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->abi_ReportError(get_abi(value)));
-}
-
-template <typename D> void impl_IRemoveAppointmentOperation<D>::DismissUI() const
-{
-    check_hresult(WINRT_SHIM(IRemoveAppointmentOperation)->abi_DismissUI());
-}
+WINRT_EXPORT namespace winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider {
 
 inline hstring AppointmentsProviderLaunchActionVerbs::AddAppointment()
 {
-    return get_activation_factory<AppointmentsProviderLaunchActionVerbs, IAppointmentsProviderLaunchActionVerbsStatics>().AddAppointment();
+    return get_activation_factory<AppointmentsProviderLaunchActionVerbs, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics>().AddAppointment();
 }
 
 inline hstring AppointmentsProviderLaunchActionVerbs::ReplaceAppointment()
 {
-    return get_activation_factory<AppointmentsProviderLaunchActionVerbs, IAppointmentsProviderLaunchActionVerbsStatics>().ReplaceAppointment();
+    return get_activation_factory<AppointmentsProviderLaunchActionVerbs, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics>().ReplaceAppointment();
 }
 
 inline hstring AppointmentsProviderLaunchActionVerbs::RemoveAppointment()
 {
-    return get_activation_factory<AppointmentsProviderLaunchActionVerbs, IAppointmentsProviderLaunchActionVerbsStatics>().RemoveAppointment();
+    return get_activation_factory<AppointmentsProviderLaunchActionVerbs, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics>().RemoveAppointment();
 }
 
 inline hstring AppointmentsProviderLaunchActionVerbs::ShowTimeFrame()
 {
-    return get_activation_factory<AppointmentsProviderLaunchActionVerbs, IAppointmentsProviderLaunchActionVerbsStatics>().ShowTimeFrame();
+    return get_activation_factory<AppointmentsProviderLaunchActionVerbs, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics>().ShowTimeFrame();
 }
 
 inline hstring AppointmentsProviderLaunchActionVerbs::ShowAppointmentDetails()
 {
-    return get_activation_factory<AppointmentsProviderLaunchActionVerbs, IAppointmentsProviderLaunchActionVerbsStatics2>().ShowAppointmentDetails();
+    return get_activation_factory<AppointmentsProviderLaunchActionVerbs, Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2>().ShowAppointmentDetails();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::AddAppointmentOperation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::AddAppointmentOperation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::AppointmentsProviderLaunchActionVerbs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::AppointmentsProviderLaunchActionVerbs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::RemoveAppointmentOperation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::RemoveAppointmentOperation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::ReplaceAppointmentOperation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::ReplaceAppointmentOperation> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAddAppointmentOperation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IAppointmentsProviderLaunchActionVerbsStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IRemoveAppointmentOperation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::IReplaceAppointmentOperation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::AddAppointmentOperation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::AddAppointmentOperation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::RemoveAppointmentOperation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::RemoveAppointmentOperation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::ReplaceAppointmentOperation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Appointments::AppointmentsProvider::ReplaceAppointmentOperation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

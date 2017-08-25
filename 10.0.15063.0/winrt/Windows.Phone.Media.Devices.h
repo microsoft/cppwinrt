@@ -1,22 +1,64 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Phone.Media.Devices.2.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Phone.Media.Devices.3.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Phone::Media::Devices::AudioRoutingEndpoint consume_Windows_Phone_Media_Devices_IAudioRoutingManager<D>::GetAudioEndpoint() const
+{
+    Windows::Phone::Media::Devices::AudioRoutingEndpoint endpoint{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Media::Devices::IAudioRoutingManager)->GetAudioEndpoint(put_abi(endpoint)));
+    return endpoint;
+}
 
-namespace impl {
+template <typename D> void consume_Windows_Phone_Media_Devices_IAudioRoutingManager<D>::SetAudioEndpoint(Windows::Phone::Media::Devices::AudioRoutingEndpoint const& endpoint) const
+{
+    check_hresult(WINRT_SHIM(Windows::Phone::Media::Devices::IAudioRoutingManager)->SetAudioEndpoint(get_abi(endpoint)));
+}
+
+template <typename D> event_token consume_Windows_Phone_Media_Devices_IAudioRoutingManager<D>::AudioEndpointChanged(Windows::Foundation::TypedEventHandler<Windows::Phone::Media::Devices::AudioRoutingManager, Windows::Foundation::IInspectable> const& endpointChangeHandler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Media::Devices::IAudioRoutingManager)->add_AudioEndpointChanged(get_abi(endpointChangeHandler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Phone::Media::Devices::IAudioRoutingManager> consume_Windows_Phone_Media_Devices_IAudioRoutingManager<D>::AudioEndpointChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Phone::Media::Devices::AudioRoutingManager, Windows::Foundation::IInspectable> const& endpointChangeHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Phone::Media::Devices::IAudioRoutingManager>(this, &abi_t<Windows::Phone::Media::Devices::IAudioRoutingManager>::remove_AudioEndpointChanged, AudioEndpointChanged(endpointChangeHandler));
+}
+
+template <typename D> void consume_Windows_Phone_Media_Devices_IAudioRoutingManager<D>::AudioEndpointChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Phone::Media::Devices::IAudioRoutingManager)->remove_AudioEndpointChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Phone::Media::Devices::AvailableAudioRoutingEndpoints consume_Windows_Phone_Media_Devices_IAudioRoutingManager<D>::AvailableAudioEndpoints() const
+{
+    Windows::Phone::Media::Devices::AvailableAudioRoutingEndpoints value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Media::Devices::IAudioRoutingManager)->get_AvailableAudioEndpoints(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Phone::Media::Devices::AudioRoutingManager consume_Windows_Phone_Media_Devices_IAudioRoutingManagerStatics<D>::GetDefault() const
+{
+    Windows::Phone::Media::Devices::AudioRoutingManager audioRoutingManager{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Media::Devices::IAudioRoutingManagerStatics)->GetDefault(put_abi(audioRoutingManager)));
+    return audioRoutingManager;
+}
 
 template <typename D>
 struct produce<D, Windows::Phone::Media::Devices::IAudioRoutingManager> : produce_base<D, Windows::Phone::Media::Devices::IAudioRoutingManager>
 {
-    HRESULT __stdcall abi_GetAudioEndpoint(Windows::Phone::Media::Devices::AudioRoutingEndpoint * endpoint) noexcept override
+    HRESULT __stdcall GetAudioEndpoint(abi_t<Windows::Phone::Media::Devices::AudioRoutingEndpoint>* endpoint) noexcept override
     {
         try
         {
@@ -30,12 +72,12 @@ struct produce<D, Windows::Phone::Media::Devices::IAudioRoutingManager> : produc
         }
     }
 
-    HRESULT __stdcall abi_SetAudioEndpoint(Windows::Phone::Media::Devices::AudioRoutingEndpoint endpoint) noexcept override
+    HRESULT __stdcall SetAudioEndpoint(abi_t<Windows::Phone::Media::Devices::AudioRoutingEndpoint> endpoint) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SetAudioEndpoint(endpoint);
+            this->shim().SetAudioEndpoint(*reinterpret_cast<Windows::Phone::Media::Devices::AudioRoutingEndpoint const*>(&endpoint));
             return S_OK;
         }
         catch (...)
@@ -44,12 +86,12 @@ struct produce<D, Windows::Phone::Media::Devices::IAudioRoutingManager> : produc
         }
     }
 
-    HRESULT __stdcall add_AudioEndpointChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Phone::Media::Devices::AudioRoutingManager, Windows::Foundation::IInspectable>> endpointChangeHandler, event_token * token) noexcept override
+    HRESULT __stdcall add_AudioEndpointChanged(::IUnknown* endpointChangeHandler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().AudioEndpointChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Phone::Media::Devices::AudioRoutingManager, Windows::Foundation::IInspectable> *>(&endpointChangeHandler)));
+            *token = detach_abi(this->shim().AudioEndpointChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Phone::Media::Devices::AudioRoutingManager, Windows::Foundation::IInspectable> const*>(&endpointChangeHandler)));
             return S_OK;
         }
         catch (...)
@@ -58,12 +100,12 @@ struct produce<D, Windows::Phone::Media::Devices::IAudioRoutingManager> : produc
         }
     }
 
-    HRESULT __stdcall remove_AudioEndpointChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_AudioEndpointChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AudioEndpointChanged(token);
+            this->shim().AudioEndpointChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -72,7 +114,7 @@ struct produce<D, Windows::Phone::Media::Devices::IAudioRoutingManager> : produc
         }
     }
 
-    HRESULT __stdcall get_AvailableAudioEndpoints(Windows::Phone::Media::Devices::AvailableAudioRoutingEndpoints * value) noexcept override
+    HRESULT __stdcall get_AvailableAudioEndpoints(abi_t<Windows::Phone::Media::Devices::AvailableAudioRoutingEndpoints>* value) noexcept override
     {
         try
         {
@@ -90,7 +132,7 @@ struct produce<D, Windows::Phone::Media::Devices::IAudioRoutingManager> : produc
 template <typename D>
 struct produce<D, Windows::Phone::Media::Devices::IAudioRoutingManagerStatics> : produce_base<D, Windows::Phone::Media::Devices::IAudioRoutingManagerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Phone::Media::Devices::IAudioRoutingManager> audioRoutingManager) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** audioRoutingManager) noexcept override
     {
         try
         {
@@ -108,85 +150,26 @@ struct produce<D, Windows::Phone::Media::Devices::IAudioRoutingManagerStatics> :
 
 }
 
-namespace Windows::Phone::Media::Devices {
-
-template <typename D> Windows::Phone::Media::Devices::AudioRoutingEndpoint impl_IAudioRoutingManager<D>::GetAudioEndpoint() const
-{
-    Windows::Phone::Media::Devices::AudioRoutingEndpoint endpoint {};
-    check_hresult(WINRT_SHIM(IAudioRoutingManager)->abi_GetAudioEndpoint(&endpoint));
-    return endpoint;
-}
-
-template <typename D> void impl_IAudioRoutingManager<D>::SetAudioEndpoint(Windows::Phone::Media::Devices::AudioRoutingEndpoint endpoint) const
-{
-    check_hresult(WINRT_SHIM(IAudioRoutingManager)->abi_SetAudioEndpoint(endpoint));
-}
-
-template <typename D> event_token impl_IAudioRoutingManager<D>::AudioEndpointChanged(const Windows::Foundation::TypedEventHandler<Windows::Phone::Media::Devices::AudioRoutingManager, Windows::Foundation::IInspectable> & endpointChangeHandler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IAudioRoutingManager)->add_AudioEndpointChanged(get_abi(endpointChangeHandler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IAudioRoutingManager> impl_IAudioRoutingManager<D>::AudioEndpointChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Phone::Media::Devices::AudioRoutingManager, Windows::Foundation::IInspectable> & endpointChangeHandler) const
-{
-    return impl::make_event_revoker<D, IAudioRoutingManager>(this, &ABI::Windows::Phone::Media::Devices::IAudioRoutingManager::remove_AudioEndpointChanged, AudioEndpointChanged(endpointChangeHandler));
-}
-
-template <typename D> void impl_IAudioRoutingManager<D>::AudioEndpointChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IAudioRoutingManager)->remove_AudioEndpointChanged(token));
-}
-
-template <typename D> Windows::Phone::Media::Devices::AvailableAudioRoutingEndpoints impl_IAudioRoutingManager<D>::AvailableAudioEndpoints() const
-{
-    Windows::Phone::Media::Devices::AvailableAudioRoutingEndpoints value {};
-    check_hresult(WINRT_SHIM(IAudioRoutingManager)->get_AvailableAudioEndpoints(&value));
-    return value;
-}
-
-template <typename D> Windows::Phone::Media::Devices::AudioRoutingManager impl_IAudioRoutingManagerStatics<D>::GetDefault() const
-{
-    Windows::Phone::Media::Devices::AudioRoutingManager audioRoutingManager { nullptr };
-    check_hresult(WINRT_SHIM(IAudioRoutingManagerStatics)->abi_GetDefault(put_abi(audioRoutingManager)));
-    return audioRoutingManager;
-}
+WINRT_EXPORT namespace winrt::Windows::Phone::Media::Devices {
 
 inline Windows::Phone::Media::Devices::AudioRoutingManager AudioRoutingManager::GetDefault()
 {
-    return get_activation_factory<AudioRoutingManager, IAudioRoutingManagerStatics>().GetDefault();
+    return get_activation_factory<AudioRoutingManager, Windows::Phone::Media::Devices::IAudioRoutingManagerStatics>().GetDefault();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Phone::Media::Devices::IAudioRoutingManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Media::Devices::IAudioRoutingManager> {};
+
+template<> struct hash<winrt::Windows::Phone::Media::Devices::IAudioRoutingManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Media::Devices::IAudioRoutingManagerStatics> {};
+
+template<> struct hash<winrt::Windows::Phone::Media::Devices::AudioRoutingManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Media::Devices::AudioRoutingManager> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Phone::Media::Devices::IAudioRoutingManager>
-{
-    size_t operator()(const winrt::Windows::Phone::Media::Devices::IAudioRoutingManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::Media::Devices::IAudioRoutingManagerStatics>
-{
-    size_t operator()(const winrt::Windows::Phone::Media::Devices::IAudioRoutingManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::Media::Devices::AudioRoutingManager>
-{
-    size_t operator()(const winrt::Windows::Phone::Media::Devices::AudioRoutingManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

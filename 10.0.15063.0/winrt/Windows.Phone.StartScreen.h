@@ -1,28 +1,130 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.UI.Notifications.2.h"
+#include "winrt/impl/Windows.Phone.StartScreen.2.h"
 
-#include "internal/Windows.UI.Notifications.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Phone.StartScreen.3.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> void consume_Windows_Phone_StartScreen_IDualSimTile<D>::DisplayName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTile)->put_DisplayName(get_abi(value)));
+}
 
-namespace impl {
+template <typename D> hstring consume_Windows_Phone_StartScreen_IDualSimTile<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTile)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Phone_StartScreen_IDualSimTile<D>::IsPinnedToStart() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTile)->get_IsPinnedToStart(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_Phone_StartScreen_IDualSimTile<D>::CreateAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTile)->CreateAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_Phone_StartScreen_IDualSimTile<D>::UpdateAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTile)->UpdateAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_Phone_StartScreen_IDualSimTile<D>::DeleteAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTile)->DeleteAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Phone::StartScreen::DualSimTile consume_Windows_Phone_StartScreen_IDualSimTileStatics<D>::GetTileForSim2() const
+{
+    Windows::Phone::StartScreen::DualSimTile result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTileStatics)->GetTileForSim2(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_Phone_StartScreen_IDualSimTileStatics<D>::UpdateDisplayNameForSim1Async(param::hstring const& name) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTileStatics)->UpdateDisplayNameForSim1Async(get_abi(name), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::UI::Notifications::TileUpdater consume_Windows_Phone_StartScreen_IDualSimTileStatics<D>::CreateTileUpdaterForSim1() const
+{
+    Windows::UI::Notifications::TileUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTileStatics)->CreateTileUpdaterForSim1(put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::TileUpdater consume_Windows_Phone_StartScreen_IDualSimTileStatics<D>::CreateTileUpdaterForSim2() const
+{
+    Windows::UI::Notifications::TileUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTileStatics)->CreateTileUpdaterForSim2(put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::BadgeUpdater consume_Windows_Phone_StartScreen_IDualSimTileStatics<D>::CreateBadgeUpdaterForSim1() const
+{
+    Windows::UI::Notifications::BadgeUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTileStatics)->CreateBadgeUpdaterForSim1(put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::BadgeUpdater consume_Windows_Phone_StartScreen_IDualSimTileStatics<D>::CreateBadgeUpdaterForSim2() const
+{
+    Windows::UI::Notifications::BadgeUpdater updater{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTileStatics)->CreateBadgeUpdaterForSim2(put_abi(updater)));
+    return updater;
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotifier consume_Windows_Phone_StartScreen_IDualSimTileStatics<D>::CreateToastNotifierForSim1() const
+{
+    Windows::UI::Notifications::ToastNotifier notifier{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTileStatics)->CreateToastNotifierForSim1(put_abi(notifier)));
+    return notifier;
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotifier consume_Windows_Phone_StartScreen_IDualSimTileStatics<D>::CreateToastNotifierForSim2() const
+{
+    Windows::UI::Notifications::ToastNotifier notifier{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IDualSimTileStatics)->CreateToastNotifierForSim2(put_abi(notifier)));
+    return notifier;
+}
+
+template <typename D> Windows::UI::Notifications::ToastNotifier consume_Windows_Phone_StartScreen_IToastNotificationManagerStatics3<D>::CreateToastNotifierForSecondaryTile(param::hstring const& tileId) const
+{
+    Windows::UI::Notifications::ToastNotifier notifier{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::StartScreen::IToastNotificationManagerStatics3)->CreateToastNotifierForSecondaryTile(get_abi(tileId), put_abi(notifier)));
+    return notifier;
+}
 
 template <typename D>
 struct produce<D, Windows::Phone::StartScreen::IDualSimTile> : produce_base<D, Windows::Phone::StartScreen::IDualSimTile>
 {
-    HRESULT __stdcall put_DisplayName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DisplayName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DisplayName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DisplayName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -31,7 +133,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTile> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -46,7 +148,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTile> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_IsPinnedToStart(bool * value) noexcept override
+    HRESULT __stdcall get_IsPinnedToStart(bool* value) noexcept override
     {
         try
         {
@@ -60,7 +162,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTile> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_CreateAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall CreateAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -75,7 +177,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTile> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_UpdateAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall UpdateAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -90,7 +192,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTile> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_DeleteAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall DeleteAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -109,7 +211,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTile> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Phone::StartScreen::IDualSimTileStatics> : produce_base<D, Windows::Phone::StartScreen::IDualSimTileStatics>
 {
-    HRESULT __stdcall abi_GetTileForSim2(impl::abi_arg_out<Windows::Phone::StartScreen::IDualSimTile> result) noexcept override
+    HRESULT __stdcall GetTileForSim2(::IUnknown** result) noexcept override
     {
         try
         {
@@ -124,12 +226,12 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTileStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_UpdateDisplayNameForSim1Async(impl::abi_arg_in<hstring> name, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall UpdateDisplayNameForSim1Async(HSTRING name, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().UpdateDisplayNameForSim1Async(*reinterpret_cast<const hstring *>(&name)));
+            *operation = detach_abi(this->shim().UpdateDisplayNameForSim1Async(*reinterpret_cast<hstring const*>(&name)));
             return S_OK;
         }
         catch (...)
@@ -139,7 +241,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTileStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_CreateTileUpdaterForSim1(impl::abi_arg_out<Windows::UI::Notifications::ITileUpdater> updater) noexcept override
+    HRESULT __stdcall CreateTileUpdaterForSim1(::IUnknown** updater) noexcept override
     {
         try
         {
@@ -154,7 +256,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTileStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_CreateTileUpdaterForSim2(impl::abi_arg_out<Windows::UI::Notifications::ITileUpdater> updater) noexcept override
+    HRESULT __stdcall CreateTileUpdaterForSim2(::IUnknown** updater) noexcept override
     {
         try
         {
@@ -169,7 +271,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTileStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_CreateBadgeUpdaterForSim1(impl::abi_arg_out<Windows::UI::Notifications::IBadgeUpdater> updater) noexcept override
+    HRESULT __stdcall CreateBadgeUpdaterForSim1(::IUnknown** updater) noexcept override
     {
         try
         {
@@ -184,7 +286,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTileStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_CreateBadgeUpdaterForSim2(impl::abi_arg_out<Windows::UI::Notifications::IBadgeUpdater> updater) noexcept override
+    HRESULT __stdcall CreateBadgeUpdaterForSim2(::IUnknown** updater) noexcept override
     {
         try
         {
@@ -199,7 +301,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTileStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_CreateToastNotifierForSim1(impl::abi_arg_out<Windows::UI::Notifications::IToastNotifier> notifier) noexcept override
+    HRESULT __stdcall CreateToastNotifierForSim1(::IUnknown** notifier) noexcept override
     {
         try
         {
@@ -214,7 +316,7 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTileStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_CreateToastNotifierForSim2(impl::abi_arg_out<Windows::UI::Notifications::IToastNotifier> notifier) noexcept override
+    HRESULT __stdcall CreateToastNotifierForSim2(::IUnknown** notifier) noexcept override
     {
         try
         {
@@ -233,12 +335,12 @@ struct produce<D, Windows::Phone::StartScreen::IDualSimTileStatics> : produce_ba
 template <typename D>
 struct produce<D, Windows::Phone::StartScreen::IToastNotificationManagerStatics3> : produce_base<D, Windows::Phone::StartScreen::IToastNotificationManagerStatics3>
 {
-    HRESULT __stdcall abi_CreateToastNotifierForSecondaryTile(impl::abi_arg_in<hstring> tileId, impl::abi_arg_out<Windows::UI::Notifications::IToastNotifier> notifier) noexcept override
+    HRESULT __stdcall CreateToastNotifierForSecondaryTile(HSTRING tileId, ::IUnknown** notifier) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *notifier = detach_abi(this->shim().CreateToastNotifierForSecondaryTile(*reinterpret_cast<const hstring *>(&tileId)));
+            *notifier = detach_abi(this->shim().CreateToastNotifierForSecondaryTile(*reinterpret_cast<hstring const*>(&tileId)));
             return S_OK;
         }
         catch (...)
@@ -251,110 +353,7 @@ struct produce<D, Windows::Phone::StartScreen::IToastNotificationManagerStatics3
 
 }
 
-namespace Windows::Phone::StartScreen {
-
-template <typename D> Windows::UI::Notifications::ToastNotifier impl_IToastNotificationManagerStatics3<D>::CreateToastNotifierForSecondaryTile(hstring_view tileId) const
-{
-    Windows::UI::Notifications::ToastNotifier notifier { nullptr };
-    check_hresult(WINRT_SHIM(IToastNotificationManagerStatics3)->abi_CreateToastNotifierForSecondaryTile(get_abi(tileId), put_abi(notifier)));
-    return notifier;
-}
-
-template <typename D> void impl_IDualSimTile<D>::DisplayName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IDualSimTile)->put_DisplayName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IDualSimTile<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IDualSimTile)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IDualSimTile<D>::IsPinnedToStart() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IDualSimTile)->get_IsPinnedToStart(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IDualSimTile<D>::CreateAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IDualSimTile)->abi_CreateAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IDualSimTile<D>::UpdateAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IDualSimTile)->abi_UpdateAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IDualSimTile<D>::DeleteAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IDualSimTile)->abi_DeleteAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Phone::StartScreen::DualSimTile impl_IDualSimTileStatics<D>::GetTileForSim2() const
-{
-    Windows::Phone::StartScreen::DualSimTile result { nullptr };
-    check_hresult(WINRT_SHIM(IDualSimTileStatics)->abi_GetTileForSim2(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IDualSimTileStatics<D>::UpdateDisplayNameForSim1Async(hstring_view name) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IDualSimTileStatics)->abi_UpdateDisplayNameForSim1Async(get_abi(name), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::UI::Notifications::TileUpdater impl_IDualSimTileStatics<D>::CreateTileUpdaterForSim1() const
-{
-    Windows::UI::Notifications::TileUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(IDualSimTileStatics)->abi_CreateTileUpdaterForSim1(put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::TileUpdater impl_IDualSimTileStatics<D>::CreateTileUpdaterForSim2() const
-{
-    Windows::UI::Notifications::TileUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(IDualSimTileStatics)->abi_CreateTileUpdaterForSim2(put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::BadgeUpdater impl_IDualSimTileStatics<D>::CreateBadgeUpdaterForSim1() const
-{
-    Windows::UI::Notifications::BadgeUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(IDualSimTileStatics)->abi_CreateBadgeUpdaterForSim1(put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::BadgeUpdater impl_IDualSimTileStatics<D>::CreateBadgeUpdaterForSim2() const
-{
-    Windows::UI::Notifications::BadgeUpdater updater { nullptr };
-    check_hresult(WINRT_SHIM(IDualSimTileStatics)->abi_CreateBadgeUpdaterForSim2(put_abi(updater)));
-    return updater;
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotifier impl_IDualSimTileStatics<D>::CreateToastNotifierForSim1() const
-{
-    Windows::UI::Notifications::ToastNotifier notifier { nullptr };
-    check_hresult(WINRT_SHIM(IDualSimTileStatics)->abi_CreateToastNotifierForSim1(put_abi(notifier)));
-    return notifier;
-}
-
-template <typename D> Windows::UI::Notifications::ToastNotifier impl_IDualSimTileStatics<D>::CreateToastNotifierForSim2() const
-{
-    Windows::UI::Notifications::ToastNotifier notifier { nullptr };
-    check_hresult(WINRT_SHIM(IDualSimTileStatics)->abi_CreateToastNotifierForSim2(put_abi(notifier)));
-    return notifier;
-}
+WINRT_EXPORT namespace winrt::Windows::Phone::StartScreen {
 
 inline DualSimTile::DualSimTile() :
     DualSimTile(activate_instance<DualSimTile>())
@@ -362,82 +361,60 @@ inline DualSimTile::DualSimTile() :
 
 inline Windows::Phone::StartScreen::DualSimTile DualSimTile::GetTileForSim2()
 {
-    return get_activation_factory<DualSimTile, IDualSimTileStatics>().GetTileForSim2();
+    return get_activation_factory<DualSimTile, Windows::Phone::StartScreen::IDualSimTileStatics>().GetTileForSim2();
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> DualSimTile::UpdateDisplayNameForSim1Async(hstring_view name)
+inline Windows::Foundation::IAsyncOperation<bool> DualSimTile::UpdateDisplayNameForSim1Async(param::hstring const& name)
 {
-    return get_activation_factory<DualSimTile, IDualSimTileStatics>().UpdateDisplayNameForSim1Async(name);
+    return get_activation_factory<DualSimTile, Windows::Phone::StartScreen::IDualSimTileStatics>().UpdateDisplayNameForSim1Async(name);
 }
 
 inline Windows::UI::Notifications::TileUpdater DualSimTile::CreateTileUpdaterForSim1()
 {
-    return get_activation_factory<DualSimTile, IDualSimTileStatics>().CreateTileUpdaterForSim1();
+    return get_activation_factory<DualSimTile, Windows::Phone::StartScreen::IDualSimTileStatics>().CreateTileUpdaterForSim1();
 }
 
 inline Windows::UI::Notifications::TileUpdater DualSimTile::CreateTileUpdaterForSim2()
 {
-    return get_activation_factory<DualSimTile, IDualSimTileStatics>().CreateTileUpdaterForSim2();
+    return get_activation_factory<DualSimTile, Windows::Phone::StartScreen::IDualSimTileStatics>().CreateTileUpdaterForSim2();
 }
 
 inline Windows::UI::Notifications::BadgeUpdater DualSimTile::CreateBadgeUpdaterForSim1()
 {
-    return get_activation_factory<DualSimTile, IDualSimTileStatics>().CreateBadgeUpdaterForSim1();
+    return get_activation_factory<DualSimTile, Windows::Phone::StartScreen::IDualSimTileStatics>().CreateBadgeUpdaterForSim1();
 }
 
 inline Windows::UI::Notifications::BadgeUpdater DualSimTile::CreateBadgeUpdaterForSim2()
 {
-    return get_activation_factory<DualSimTile, IDualSimTileStatics>().CreateBadgeUpdaterForSim2();
+    return get_activation_factory<DualSimTile, Windows::Phone::StartScreen::IDualSimTileStatics>().CreateBadgeUpdaterForSim2();
 }
 
 inline Windows::UI::Notifications::ToastNotifier DualSimTile::CreateToastNotifierForSim1()
 {
-    return get_activation_factory<DualSimTile, IDualSimTileStatics>().CreateToastNotifierForSim1();
+    return get_activation_factory<DualSimTile, Windows::Phone::StartScreen::IDualSimTileStatics>().CreateToastNotifierForSim1();
 }
 
 inline Windows::UI::Notifications::ToastNotifier DualSimTile::CreateToastNotifierForSim2()
 {
-    return get_activation_factory<DualSimTile, IDualSimTileStatics>().CreateToastNotifierForSim2();
+    return get_activation_factory<DualSimTile, Windows::Phone::StartScreen::IDualSimTileStatics>().CreateToastNotifierForSim2();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Phone::StartScreen::IDualSimTile> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::StartScreen::IDualSimTile> {};
+
+template<> struct hash<winrt::Windows::Phone::StartScreen::IDualSimTileStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::StartScreen::IDualSimTileStatics> {};
+
+template<> struct hash<winrt::Windows::Phone::StartScreen::IToastNotificationManagerStatics3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::StartScreen::IToastNotificationManagerStatics3> {};
+
+template<> struct hash<winrt::Windows::Phone::StartScreen::DualSimTile> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::StartScreen::DualSimTile> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Phone::StartScreen::IDualSimTile>
-{
-    size_t operator()(const winrt::Windows::Phone::StartScreen::IDualSimTile & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::StartScreen::IDualSimTileStatics>
-{
-    size_t operator()(const winrt::Windows::Phone::StartScreen::IDualSimTileStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::StartScreen::IToastNotificationManagerStatics3>
-{
-    size_t operator()(const winrt::Windows::Phone::StartScreen::IToastNotificationManagerStatics3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::StartScreen::DualSimTile>
-{
-    size_t operator()(const winrt::Windows::Phone::StartScreen::DualSimTile & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

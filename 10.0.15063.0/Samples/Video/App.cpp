@@ -1,5 +1,6 @@
 #include "pch.h"
 
+using namespace std::chrono;
 using namespace winrt;
 
 using namespace Windows::ApplicationModel::Core;
@@ -8,6 +9,7 @@ using namespace Windows::UI::Core;
 using namespace Windows::UI::Composition;
 using namespace Windows::Media::Core;
 using namespace Windows::Media::Playback;
+using namespace Windows::System;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Pickers;
 
@@ -22,7 +24,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
     {
     }
 
-    void Load(hstring_view)
+    void Load(hstring const&)
     {
     }
 
@@ -84,6 +86,28 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         window.SizeChanged([=](auto &&, WindowSizeChangedEventArgs const & args)
         {
             visual.Size(args.Size());
+        });
+
+        window.KeyDown([=](auto&&, KeyEventArgs const& args)
+        {
+            VirtualKey key = args.VirtualKey();
+            MediaPlaybackSession session = player.PlaybackSession();
+            TimeSpan position = session.Position();
+
+            if (key == VirtualKey::Left)
+            {
+                position -= 10s;
+            }
+            else if (key == VirtualKey::Right)
+            {
+                position += 10s;
+            }
+            else if (key == VirtualKey::Up)
+            {
+                position = 0s;
+            }
+
+            session.Position(position);
         });
     }
 

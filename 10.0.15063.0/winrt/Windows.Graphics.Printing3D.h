@@ -1,52 +1,1030 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Foundation.Collections.2.h"
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.UI.2.h"
+#include "winrt/impl/Windows.Graphics.Printing3D.2.h"
+#include "winrt/Windows.Graphics.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.UI.3.h"
-#include "internal/Windows.Graphics.Printing3D.3.h"
-#include "Windows.Graphics.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
-
-namespace Windows::Graphics::Printing3D {
-
-template <typename L> Print3DTaskSourceRequestedHandler::Print3DTaskSourceRequestedHandler(L lambda) :
-    Print3DTaskSourceRequestedHandler(impl::make_delegate<impl_Print3DTaskSourceRequestedHandler<L>, Print3DTaskSourceRequestedHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> Print3DTaskSourceRequestedHandler::Print3DTaskSourceRequestedHandler(F * function) :
-    Print3DTaskSourceRequestedHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> Print3DTaskSourceRequestedHandler::Print3DTaskSourceRequestedHandler(O * object, M method) :
-    Print3DTaskSourceRequestedHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void Print3DTaskSourceRequestedHandler::operator()(const Windows::Graphics::Printing3D::Print3DTaskSourceRequestedArgs & args) const
+template <typename D> event_token consume_Windows_Graphics_Printing3D_IPrint3DManager<D>::TaskRequested(Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DManager, Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs> const& eventHandler) const
 {
-    check_hresult((*(abi<Print3DTaskSourceRequestedHandler> **)this)->abi_Invoke(get_abi(args)));
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DManager)->add_TaskRequested(get_abi(eventHandler), put_abi(token)));
+    return token;
 }
 
+template <typename D> event_revoker<Windows::Graphics::Printing3D::IPrint3DManager> consume_Windows_Graphics_Printing3D_IPrint3DManager<D>::TaskRequested(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DManager, Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs> const& eventHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Graphics::Printing3D::IPrint3DManager>(this, &abi_t<Windows::Graphics::Printing3D::IPrint3DManager>::remove_TaskRequested, TaskRequested(eventHandler));
 }
 
-namespace impl {
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrint3DManager<D>::TaskRequested(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DManager)->remove_TaskRequested(get_abi(token)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Print3DManager consume_Windows_Graphics_Printing3D_IPrint3DManagerStatics<D>::GetForCurrentView() const
+{
+    Windows::Graphics::Printing3D::Print3DManager result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DManagerStatics)->GetForCurrentView(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_Graphics_Printing3D_IPrint3DManagerStatics<D>::ShowPrintUIAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DManagerStatics)->ShowPrintUIAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3D3MFPackage consume_Windows_Graphics_Printing3D_IPrint3DTask<D>::Source() const
+{
+    Windows::Graphics::Printing3D::Printing3D3MFPackage value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTask)->get_Source(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Graphics_Printing3D_IPrint3DTask<D>::Submitting(Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Foundation::IInspectable> const& eventHandler) const
+{
+    event_token eventCookie{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTask)->add_Submitting(get_abi(eventHandler), put_abi(eventCookie)));
+    return eventCookie;
+}
+
+template <typename D> event_revoker<Windows::Graphics::Printing3D::IPrint3DTask> consume_Windows_Graphics_Printing3D_IPrint3DTask<D>::Submitting(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Foundation::IInspectable> const& eventHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Graphics::Printing3D::IPrint3DTask>(this, &abi_t<Windows::Graphics::Printing3D::IPrint3DTask>::remove_Submitting, Submitting(eventHandler));
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrint3DTask<D>::Submitting(event_token const& eventCookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTask)->remove_Submitting(get_abi(eventCookie)));
+}
+
+template <typename D> event_token consume_Windows_Graphics_Printing3D_IPrint3DTask<D>::Completed(Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs> const& eventHandler) const
+{
+    event_token eventCookie{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTask)->add_Completed(get_abi(eventHandler), put_abi(eventCookie)));
+    return eventCookie;
+}
+
+template <typename D> event_revoker<Windows::Graphics::Printing3D::IPrint3DTask> consume_Windows_Graphics_Printing3D_IPrint3DTask<D>::Completed(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs> const& eventHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Graphics::Printing3D::IPrint3DTask>(this, &abi_t<Windows::Graphics::Printing3D::IPrint3DTask>::remove_Completed, Completed(eventHandler));
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrint3DTask<D>::Completed(event_token const& eventCookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTask)->remove_Completed(get_abi(eventCookie)));
+}
+
+template <typename D> event_token consume_Windows_Graphics_Printing3D_IPrint3DTask<D>::SourceChanged(Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs> const& eventHandler) const
+{
+    event_token eventCookie{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTask)->add_SourceChanged(get_abi(eventHandler), put_abi(eventCookie)));
+    return eventCookie;
+}
+
+template <typename D> event_revoker<Windows::Graphics::Printing3D::IPrint3DTask> consume_Windows_Graphics_Printing3D_IPrint3DTask<D>::SourceChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs> const& eventHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Graphics::Printing3D::IPrint3DTask>(this, &abi_t<Windows::Graphics::Printing3D::IPrint3DTask>::remove_SourceChanged, SourceChanged(eventHandler));
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrint3DTask<D>::SourceChanged(event_token const& eventCookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTask)->remove_SourceChanged(get_abi(eventCookie)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Print3DTaskCompletion consume_Windows_Graphics_Printing3D_IPrint3DTaskCompletedEventArgs<D>::Completion() const
+{
+    Windows::Graphics::Printing3D::Print3DTaskCompletion value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTaskCompletedEventArgs)->get_Completion(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Print3DTaskDetail consume_Windows_Graphics_Printing3D_IPrint3DTaskCompletedEventArgs<D>::ExtendedStatus() const
+{
+    Windows::Graphics::Printing3D::Print3DTaskDetail value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTaskCompletedEventArgs)->get_ExtendedStatus(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Print3DTask consume_Windows_Graphics_Printing3D_IPrint3DTaskRequest<D>::CreateTask(param::hstring const& title, param::hstring const& printerId, Windows::Graphics::Printing3D::Print3DTaskSourceRequestedHandler const& handler) const
+{
+    Windows::Graphics::Printing3D::Print3DTask result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTaskRequest)->CreateTask(get_abi(title), get_abi(printerId), get_abi(handler), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Print3DTaskRequest consume_Windows_Graphics_Printing3D_IPrint3DTaskRequestedEventArgs<D>::Request() const
+{
+    Windows::Graphics::Printing3D::Print3DTaskRequest value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTaskRequestedEventArgs)->get_Request(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3D3MFPackage consume_Windows_Graphics_Printing3D_IPrint3DTaskSourceChangedEventArgs<D>::Source() const
+{
+    Windows::Graphics::Printing3D::Printing3D3MFPackage value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTaskSourceChangedEventArgs)->get_Source(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrint3DTaskSourceRequestedArgs<D>::SetSource(Windows::Graphics::Printing3D::Printing3D3MFPackage const& source) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrint3DTaskSourceRequestedArgs)->SetSource(get_abi(source)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> consume_Windows_Graphics_Printing3D_IPrinting3D3MFPackage<D>::SaveAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3D3MFPackage)->SaveAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Storage::Streams::IRandomAccessStream consume_Windows_Graphics_Printing3D_IPrinting3D3MFPackage<D>::PrintTicket() const
+{
+    Windows::Storage::Streams::IRandomAccessStream value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3D3MFPackage)->get_PrintTicket(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3D3MFPackage<D>::PrintTicket(Windows::Storage::Streams::IRandomAccessStream const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3D3MFPackage)->put_PrintTicket(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Streams::IRandomAccessStream consume_Windows_Graphics_Printing3D_IPrinting3D3MFPackage<D>::ModelPart() const
+{
+    Windows::Storage::Streams::IRandomAccessStream value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3D3MFPackage)->get_ModelPart(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3D3MFPackage<D>::ModelPart(Windows::Storage::Streams::IRandomAccessStream const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3D3MFPackage)->put_ModelPart(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DTextureResource consume_Windows_Graphics_Printing3D_IPrinting3D3MFPackage<D>::Thumbnail() const
+{
+    Windows::Graphics::Printing3D::Printing3DTextureResource value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3D3MFPackage)->get_Thumbnail(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3D3MFPackage<D>::Thumbnail(Windows::Graphics::Printing3D::Printing3DTextureResource const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3D3MFPackage)->put_Thumbnail(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTextureResource> consume_Windows_Graphics_Printing3D_IPrinting3D3MFPackage<D>::Textures() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTextureResource> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3D3MFPackage)->get_Textures(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DModel> consume_Windows_Graphics_Printing3D_IPrinting3D3MFPackage<D>::LoadModelFromPackageAsync(Windows::Storage::Streams::IRandomAccessStream const& value) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DModel> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3D3MFPackage)->LoadModelFromPackageAsync(get_abi(value), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Graphics_Printing3D_IPrinting3D3MFPackage<D>::SaveModelToPackageAsync(Windows::Graphics::Printing3D::Printing3DModel const& value) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3D3MFPackage)->SaveModelToPackageAsync(get_abi(value), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3D3MFPackage> consume_Windows_Graphics_Printing3D_IPrinting3D3MFPackageStatics<D>::LoadAsync(Windows::Storage::Streams::IRandomAccessStream const& value) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3D3MFPackage> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3D3MFPackageStatics)->LoadAsync(get_abi(value), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> hstring consume_Windows_Graphics_Printing3D_IPrinting3DBaseMaterial<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DBaseMaterial)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DBaseMaterial<D>::Name(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DBaseMaterial)->put_Name(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DColorMaterial consume_Windows_Graphics_Printing3D_IPrinting3DBaseMaterial<D>::Color() const
+{
+    Windows::Graphics::Printing3D::Printing3DColorMaterial value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DBaseMaterial)->get_Color(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DBaseMaterial<D>::Color(Windows::Graphics::Printing3D::Printing3DColorMaterial const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DBaseMaterial)->put_Color(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterial> consume_Windows_Graphics_Printing3D_IPrinting3DBaseMaterialGroup<D>::Bases() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterial> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup)->get_Bases(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Graphics_Printing3D_IPrinting3DBaseMaterialGroup<D>::MaterialGroupId() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup)->get_MaterialGroupId(&value));
+    return value;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup consume_Windows_Graphics_Printing3D_IPrinting3DBaseMaterialGroupFactory<D>::Create(uint32_t MaterialGroupId) const
+{
+    Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroupFactory)->Create(MaterialGroupId, put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Graphics_Printing3D_IPrinting3DBaseMaterialStatics<D>::Abs() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics)->get_Abs(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Graphics_Printing3D_IPrinting3DBaseMaterialStatics<D>::Pla() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics)->get_Pla(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Graphics_Printing3D_IPrinting3DColorMaterial<D>::Value() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DColorMaterial)->get_Value(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DColorMaterial<D>::Value(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DColorMaterial)->put_Value(value));
+}
+
+template <typename D> Windows::UI::Color consume_Windows_Graphics_Printing3D_IPrinting3DColorMaterial2<D>::Color() const
+{
+    Windows::UI::Color value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DColorMaterial2)->get_Color(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DColorMaterial2<D>::Color(Windows::UI::Color const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DColorMaterial2)->put_Color(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterial> consume_Windows_Graphics_Printing3D_IPrinting3DColorMaterialGroup<D>::Colors() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterial> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroup)->get_Colors(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Graphics_Printing3D_IPrinting3DColorMaterialGroup<D>::MaterialGroupId() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroup)->get_MaterialGroupId(&value));
+    return value;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DColorMaterialGroup consume_Windows_Graphics_Printing3D_IPrinting3DColorMaterialGroupFactory<D>::Create(uint32_t MaterialGroupId) const
+{
+    Windows::Graphics::Printing3D::Printing3DColorMaterialGroup result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroupFactory)->Create(MaterialGroupId, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DMesh consume_Windows_Graphics_Printing3D_IPrinting3DComponent<D>::Mesh() const
+{
+    Windows::Graphics::Printing3D::Printing3DMesh value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponent)->get_Mesh(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DComponent<D>::Mesh(Windows::Graphics::Printing3D::Printing3DMesh const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponent)->put_Mesh(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponentWithMatrix> consume_Windows_Graphics_Printing3D_IPrinting3DComponent<D>::Components() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponentWithMatrix> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponent)->get_Components(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DTextureResource consume_Windows_Graphics_Printing3D_IPrinting3DComponent<D>::Thumbnail() const
+{
+    Windows::Graphics::Printing3D::Printing3DTextureResource value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponent)->get_Thumbnail(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DComponent<D>::Thumbnail(Windows::Graphics::Printing3D::Printing3DTextureResource const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponent)->put_Thumbnail(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DObjectType consume_Windows_Graphics_Printing3D_IPrinting3DComponent<D>::Type() const
+{
+    Windows::Graphics::Printing3D::Printing3DObjectType value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponent)->get_Type(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DComponent<D>::Type(Windows::Graphics::Printing3D::Printing3DObjectType const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponent)->put_Type(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Graphics_Printing3D_IPrinting3DComponent<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponent)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DComponent<D>::Name(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponent)->put_Name(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Graphics_Printing3D_IPrinting3DComponent<D>::PartNumber() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponent)->get_PartNumber(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DComponent<D>::PartNumber(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponent)->put_PartNumber(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DComponent consume_Windows_Graphics_Printing3D_IPrinting3DComponentWithMatrix<D>::Component() const
+{
+    Windows::Graphics::Printing3D::Printing3DComponent value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix)->get_Component(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DComponentWithMatrix<D>::Component(Windows::Graphics::Printing3D::Printing3DComponent const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix)->put_Component(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Numerics::float4x4 consume_Windows_Graphics_Printing3D_IPrinting3DComponentWithMatrix<D>::Matrix() const
+{
+    Windows::Foundation::Numerics::float4x4 value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix)->get_Matrix(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DComponentWithMatrix<D>::Matrix(Windows::Foundation::Numerics::float4x4 const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix)->put_Matrix(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<double> consume_Windows_Graphics_Printing3D_IPrinting3DCompositeMaterial<D>::Values() const
+{
+    Windows::Foundation::Collections::IVector<double> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DCompositeMaterial)->get_Values(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterial> consume_Windows_Graphics_Printing3D_IPrinting3DCompositeMaterialGroup<D>::Composites() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterial> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup)->get_Composites(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Graphics_Printing3D_IPrinting3DCompositeMaterialGroup<D>::MaterialGroupId() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup)->get_MaterialGroupId(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<uint32_t> consume_Windows_Graphics_Printing3D_IPrinting3DCompositeMaterialGroup<D>::MaterialIndices() const
+{
+    Windows::Foundation::Collections::IVector<uint32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup)->get_MaterialIndices(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup consume_Windows_Graphics_Printing3D_IPrinting3DCompositeMaterialGroup2<D>::BaseMaterialGroup() const
+{
+    Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup2)->get_BaseMaterialGroup(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DCompositeMaterialGroup2<D>::BaseMaterialGroup(Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup2)->put_BaseMaterialGroup(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup consume_Windows_Graphics_Printing3D_IPrinting3DCompositeMaterialGroupFactory<D>::Create(uint32_t MaterialGroupId) const
+{
+    Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroupFactory)->Create(MaterialGroupId, put_abi(result)));
+    return result;
+}
+
+template <typename D> double consume_Windows_Graphics_Printing3D_IPrinting3DFaceReductionOptions<D>::MaxReductionArea() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions)->get_MaxReductionArea(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DFaceReductionOptions<D>::MaxReductionArea(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions)->put_MaxReductionArea(value));
+}
+
+template <typename D> uint32_t consume_Windows_Graphics_Printing3D_IPrinting3DFaceReductionOptions<D>::TargetTriangleCount() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions)->get_TargetTriangleCount(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DFaceReductionOptions<D>::TargetTriangleCount(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions)->put_TargetTriangleCount(value));
+}
+
+template <typename D> double consume_Windows_Graphics_Printing3D_IPrinting3DFaceReductionOptions<D>::MaxEdgeLength() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions)->get_MaxEdgeLength(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DFaceReductionOptions<D>::MaxEdgeLength(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions)->put_MaxEdgeLength(value));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup> consume_Windows_Graphics_Printing3D_IPrinting3DMaterial<D>::BaseGroups() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMaterial)->get_BaseGroups(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterialGroup> consume_Windows_Graphics_Printing3D_IPrinting3DMaterial<D>::ColorGroups() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterialGroup> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMaterial)->get_ColorGroups(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup> consume_Windows_Graphics_Printing3D_IPrinting3DMaterial<D>::Texture2CoordGroups() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMaterial)->get_Texture2CoordGroups(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup> consume_Windows_Graphics_Printing3D_IPrinting3DMaterial<D>::CompositeGroups() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMaterial)->get_CompositeGroups(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup> consume_Windows_Graphics_Printing3D_IPrinting3DMaterial<D>::MultiplePropertyGroups() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMaterial)->get_MultiplePropertyGroups(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::VertexCount() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->get_VertexCount(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::VertexCount(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->put_VertexCount(value));
+}
+
+template <typename D> uint32_t consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::IndexCount() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->get_IndexCount(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::IndexCount(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->put_IndexCount(value));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DBufferDescription consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::VertexPositionsDescription() const
+{
+    Windows::Graphics::Printing3D::Printing3DBufferDescription value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->get_VertexPositionsDescription(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::VertexPositionsDescription(Windows::Graphics::Printing3D::Printing3DBufferDescription const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->put_VertexPositionsDescription(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DBufferDescription consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::VertexNormalsDescription() const
+{
+    Windows::Graphics::Printing3D::Printing3DBufferDescription value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->get_VertexNormalsDescription(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::VertexNormalsDescription(Windows::Graphics::Printing3D::Printing3DBufferDescription const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->put_VertexNormalsDescription(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DBufferDescription consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::TriangleIndicesDescription() const
+{
+    Windows::Graphics::Printing3D::Printing3DBufferDescription value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->get_TriangleIndicesDescription(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::TriangleIndicesDescription(Windows::Graphics::Printing3D::Printing3DBufferDescription const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->put_TriangleIndicesDescription(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DBufferDescription consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::TriangleMaterialIndicesDescription() const
+{
+    Windows::Graphics::Printing3D::Printing3DBufferDescription value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->get_TriangleMaterialIndicesDescription(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::TriangleMaterialIndicesDescription(Windows::Graphics::Printing3D::Printing3DBufferDescription const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->put_TriangleMaterialIndicesDescription(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::GetVertexPositions() const
+{
+    Windows::Storage::Streams::IBuffer buffer{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->GetVertexPositions(put_abi(buffer)));
+    return buffer;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::CreateVertexPositions(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->CreateVertexPositions(value));
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::GetVertexNormals() const
+{
+    Windows::Storage::Streams::IBuffer buffer{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->GetVertexNormals(put_abi(buffer)));
+    return buffer;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::CreateVertexNormals(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->CreateVertexNormals(value));
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::GetTriangleIndices() const
+{
+    Windows::Storage::Streams::IBuffer buffer{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->GetTriangleIndices(put_abi(buffer)));
+    return buffer;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::CreateTriangleIndices(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->CreateTriangleIndices(value));
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::GetTriangleMaterialIndices() const
+{
+    Windows::Storage::Streams::IBuffer buffer{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->GetTriangleMaterialIndices(put_abi(buffer)));
+    return buffer;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::CreateTriangleMaterialIndices(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->CreateTriangleMaterialIndices(value));
+}
+
+template <typename D> Windows::Foundation::Collections::IPropertySet consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::BufferDescriptionSet() const
+{
+    Windows::Foundation::Collections::IPropertySet value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->get_BufferDescriptionSet(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IPropertySet consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::BufferSet() const
+{
+    Windows::Foundation::Collections::IPropertySet value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->get_BufferSet(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DMeshVerificationResult> consume_Windows_Graphics_Printing3D_IPrinting3DMesh<D>::VerifyAsync(Windows::Graphics::Printing3D::Printing3DMeshVerificationMode const& value) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DMeshVerificationResult> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMesh)->VerifyAsync(get_abi(value), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> bool consume_Windows_Graphics_Printing3D_IPrinting3DMeshVerificationResult<D>::IsValid() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResult)->get_IsValid(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<uint32_t> consume_Windows_Graphics_Printing3D_IPrinting3DMeshVerificationResult<D>::NonmanifoldTriangles() const
+{
+    Windows::Foundation::Collections::IVectorView<uint32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResult)->get_NonmanifoldTriangles(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<uint32_t> consume_Windows_Graphics_Printing3D_IPrinting3DMeshVerificationResult<D>::ReversedNormalTriangles() const
+{
+    Windows::Foundation::Collections::IVectorView<uint32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResult)->get_ReversedNormalTriangles(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DModelUnit consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Unit() const
+{
+    Windows::Graphics::Printing3D::Printing3DModelUnit value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->get_Unit(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Unit(Windows::Graphics::Printing3D::Printing3DModelUnit const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->put_Unit(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DModelTexture> consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Textures() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DModelTexture> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->get_Textures(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMesh> consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Meshes() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMesh> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->get_Meshes(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponent> consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Components() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponent> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->get_Components(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DMaterial consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Material() const
+{
+    Windows::Graphics::Printing3D::Printing3DMaterial value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->get_Material(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Material(Windows::Graphics::Printing3D::Printing3DMaterial const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->put_Material(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DComponent consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Build() const
+{
+    Windows::Graphics::Printing3D::Printing3DComponent value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->get_Build(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Build(Windows::Graphics::Printing3D::Printing3DComponent const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->put_Build(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Version() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->get_Version(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Version(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->put_Version(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::RequiredExtensions() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->get_RequiredExtensions(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Metadata() const
+{
+    Windows::Foundation::Collections::IMap<hstring, hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->get_Metadata(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::RepairAsync() const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->RepairAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DModel consume_Windows_Graphics_Printing3D_IPrinting3DModel<D>::Clone() const
+{
+    Windows::Graphics::Printing3D::Printing3DModel value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel)->Clone(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_Graphics_Printing3D_IPrinting3DModel2<D>::TryPartialRepairAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel2)->TryPartialRepairAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_Graphics_Printing3D_IPrinting3DModel2<D>::TryPartialRepairAsync(Windows::Foundation::TimeSpan const& maxWaitTime) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel2)->TryPartialRepairWithTimeAsync(get_abi(maxWaitTime), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<bool, double> consume_Windows_Graphics_Printing3D_IPrinting3DModel2<D>::TryReduceFacesAsync() const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<bool, double> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel2)->TryReduceFacesAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<bool, double> consume_Windows_Graphics_Printing3D_IPrinting3DModel2<D>::TryReduceFacesAsync(Windows::Graphics::Printing3D::Printing3DFaceReductionOptions const& printing3DFaceReductionOptions) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<bool, double> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel2)->TryReduceFacesWithOptionsAsync(get_abi(printing3DFaceReductionOptions), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<bool, double> consume_Windows_Graphics_Printing3D_IPrinting3DModel2<D>::TryReduceFacesAsync(Windows::Graphics::Printing3D::Printing3DFaceReductionOptions const& printing3DFaceReductionOptions, Windows::Foundation::TimeSpan const& maxWait) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<bool, double> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel2)->TryReduceFacesWithOptionsAndTimeAsync(get_abi(printing3DFaceReductionOptions), get_abi(maxWait), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<bool, double> consume_Windows_Graphics_Printing3D_IPrinting3DModel2<D>::RepairWithProgressAsync() const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<bool, double> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModel2)->RepairWithProgressAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DTextureResource consume_Windows_Graphics_Printing3D_IPrinting3DModelTexture<D>::TextureResource() const
+{
+    Windows::Graphics::Printing3D::Printing3DTextureResource value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModelTexture)->get_TextureResource(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DModelTexture<D>::TextureResource(Windows::Graphics::Printing3D::Printing3DTextureResource const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModelTexture)->put_TextureResource(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior consume_Windows_Graphics_Printing3D_IPrinting3DModelTexture<D>::TileStyleU() const
+{
+    Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModelTexture)->get_TileStyleU(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DModelTexture<D>::TileStyleU(Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModelTexture)->put_TileStyleU(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior consume_Windows_Graphics_Printing3D_IPrinting3DModelTexture<D>::TileStyleV() const
+{
+    Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModelTexture)->get_TileStyleV(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DModelTexture<D>::TileStyleV(Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DModelTexture)->put_TileStyleV(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<uint32_t> consume_Windows_Graphics_Printing3D_IPrinting3DMultiplePropertyMaterial<D>::MaterialIndices() const
+{
+    Windows::Foundation::Collections::IVector<uint32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterial)->get_MaterialIndices(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterial> consume_Windows_Graphics_Printing3D_IPrinting3DMultiplePropertyMaterialGroup<D>::MultipleProperties() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterial> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroup)->get_MultipleProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<uint32_t> consume_Windows_Graphics_Printing3D_IPrinting3DMultiplePropertyMaterialGroup<D>::MaterialGroupIndices() const
+{
+    Windows::Foundation::Collections::IVector<uint32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroup)->get_MaterialGroupIndices(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Graphics_Printing3D_IPrinting3DMultiplePropertyMaterialGroup<D>::MaterialGroupId() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroup)->get_MaterialGroupId(&value));
+    return value;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup consume_Windows_Graphics_Printing3D_IPrinting3DMultiplePropertyMaterialGroupFactory<D>::Create(uint32_t MaterialGroupId) const
+{
+    Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroupFactory)->Create(MaterialGroupId, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DModelTexture consume_Windows_Graphics_Printing3D_IPrinting3DTexture2CoordMaterial<D>::Texture() const
+{
+    Windows::Graphics::Printing3D::Printing3DModelTexture value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial)->get_Texture(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DTexture2CoordMaterial<D>::Texture(Windows::Graphics::Printing3D::Printing3DModelTexture const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial)->put_Texture(get_abi(value)));
+}
+
+template <typename D> double consume_Windows_Graphics_Printing3D_IPrinting3DTexture2CoordMaterial<D>::U() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial)->get_U(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DTexture2CoordMaterial<D>::U(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial)->put_U(value));
+}
+
+template <typename D> double consume_Windows_Graphics_Printing3D_IPrinting3DTexture2CoordMaterial<D>::V() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial)->get_V(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DTexture2CoordMaterial<D>::V(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial)->put_V(value));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterial> consume_Windows_Graphics_Printing3D_IPrinting3DTexture2CoordMaterialGroup<D>::Texture2Coords() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterial> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup)->get_Texture2Coords(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Graphics_Printing3D_IPrinting3DTexture2CoordMaterialGroup<D>::MaterialGroupId() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup)->get_MaterialGroupId(&value));
+    return value;
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DModelTexture consume_Windows_Graphics_Printing3D_IPrinting3DTexture2CoordMaterialGroup2<D>::Texture() const
+{
+    Windows::Graphics::Printing3D::Printing3DModelTexture value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup2)->get_Texture(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DTexture2CoordMaterialGroup2<D>::Texture(Windows::Graphics::Printing3D::Printing3DModelTexture const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup2)->put_Texture(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup consume_Windows_Graphics_Printing3D_IPrinting3DTexture2CoordMaterialGroupFactory<D>::Create(uint32_t MaterialGroupId) const
+{
+    Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroupFactory)->Create(MaterialGroupId, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Storage::Streams::IRandomAccessStreamWithContentType consume_Windows_Graphics_Printing3D_IPrinting3DTextureResource<D>::TextureData() const
+{
+    Windows::Storage::Streams::IRandomAccessStreamWithContentType value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTextureResource)->get_TextureData(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DTextureResource<D>::TextureData(Windows::Storage::Streams::IRandomAccessStreamWithContentType const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTextureResource)->put_TextureData(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Graphics_Printing3D_IPrinting3DTextureResource<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTextureResource)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Graphics_Printing3D_IPrinting3DTextureResource<D>::Name(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Printing3D::IPrinting3DTextureResource)->put_Name(get_abi(value)));
+}
+
+template <> struct delegate<Windows::Graphics::Printing3D::Print3DTaskSourceRequestedHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::Graphics::Printing3D::Print3DTaskSourceRequestedHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::Graphics::Printing3D::Print3DTaskSourceRequestedHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* args) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Graphics::Printing3D::Print3DTaskSourceRequestedArgs const*>(&args));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
 
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrint3DManager> : produce_base<D, Windows::Graphics::Printing3D::IPrint3DManager>
 {
-    HRESULT __stdcall add_TaskRequested(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DManager, Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs>> eventHandler, event_token * token) noexcept override
+    HRESULT __stdcall add_TaskRequested(::IUnknown* eventHandler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().TaskRequested(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DManager, Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs> *>(&eventHandler)));
+            *token = detach_abi(this->shim().TaskRequested(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DManager, Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs> const*>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -55,12 +1033,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DManager> : produce_base
         }
     }
 
-    HRESULT __stdcall remove_TaskRequested(event_token token) noexcept override
+    HRESULT __stdcall remove_TaskRequested(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TaskRequested(token);
+            this->shim().TaskRequested(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -73,7 +1051,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DManager> : produce_base
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrint3DManagerStatics> : produce_base<D, Windows::Graphics::Printing3D::IPrint3DManagerStatics>
 {
-    HRESULT __stdcall abi_GetForCurrentView(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrint3DManager> result) noexcept override
+    HRESULT __stdcall GetForCurrentView(::IUnknown** result) noexcept override
     {
         try
         {
@@ -88,7 +1066,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DManagerStatics> : produ
         }
     }
 
-    HRESULT __stdcall abi_ShowPrintUIAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall ShowPrintUIAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -107,7 +1085,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DManagerStatics> : produ
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrint3DTask> : produce_base<D, Windows::Graphics::Printing3D::IPrint3DTask>
 {
-    HRESULT __stdcall get_Source(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3D3MFPackage> value) noexcept override
+    HRESULT __stdcall get_Source(::IUnknown** value) noexcept override
     {
         try
         {
@@ -122,12 +1100,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTask> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall add_Submitting(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Foundation::IInspectable>> eventHandler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_Submitting(::IUnknown* eventHandler, abi_t<event_token>* eventCookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *eventCookie = detach_abi(this->shim().Submitting(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Foundation::IInspectable> *>(&eventHandler)));
+            *eventCookie = detach_abi(this->shim().Submitting(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Foundation::IInspectable> const*>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -136,12 +1114,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTask> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall remove_Submitting(event_token eventCookie) noexcept override
+    HRESULT __stdcall remove_Submitting(abi_t<event_token> eventCookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Submitting(eventCookie);
+            this->shim().Submitting(*reinterpret_cast<event_token const*>(&eventCookie));
             return S_OK;
         }
         catch (...)
@@ -150,12 +1128,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTask> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall add_Completed(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs>> eventHandler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_Completed(::IUnknown* eventHandler, abi_t<event_token>* eventCookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *eventCookie = detach_abi(this->shim().Completed(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs> *>(&eventHandler)));
+            *eventCookie = detach_abi(this->shim().Completed(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs> const*>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -164,12 +1142,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTask> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall remove_Completed(event_token eventCookie) noexcept override
+    HRESULT __stdcall remove_Completed(abi_t<event_token> eventCookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Completed(eventCookie);
+            this->shim().Completed(*reinterpret_cast<event_token const*>(&eventCookie));
             return S_OK;
         }
         catch (...)
@@ -178,12 +1156,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTask> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall add_SourceChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs>> eventHandler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_SourceChanged(::IUnknown* eventHandler, abi_t<event_token>* eventCookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *eventCookie = detach_abi(this->shim().SourceChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs> *>(&eventHandler)));
+            *eventCookie = detach_abi(this->shim().SourceChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs> const*>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -192,12 +1170,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTask> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall remove_SourceChanged(event_token eventCookie) noexcept override
+    HRESULT __stdcall remove_SourceChanged(abi_t<event_token> eventCookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SourceChanged(eventCookie);
+            this->shim().SourceChanged(*reinterpret_cast<event_token const*>(&eventCookie));
             return S_OK;
         }
         catch (...)
@@ -210,7 +1188,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTask> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrint3DTaskCompletedEventArgs> : produce_base<D, Windows::Graphics::Printing3D::IPrint3DTaskCompletedEventArgs>
 {
-    HRESULT __stdcall get_Completion(Windows::Graphics::Printing3D::Print3DTaskCompletion * value) noexcept override
+    HRESULT __stdcall get_Completion(abi_t<Windows::Graphics::Printing3D::Print3DTaskCompletion>* value) noexcept override
     {
         try
         {
@@ -224,7 +1202,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTaskCompletedEventArgs>
         }
     }
 
-    HRESULT __stdcall get_ExtendedStatus(Windows::Graphics::Printing3D::Print3DTaskDetail * value) noexcept override
+    HRESULT __stdcall get_ExtendedStatus(abi_t<Windows::Graphics::Printing3D::Print3DTaskDetail>* value) noexcept override
     {
         try
         {
@@ -242,12 +1220,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTaskCompletedEventArgs>
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrint3DTaskRequest> : produce_base<D, Windows::Graphics::Printing3D::IPrint3DTaskRequest>
 {
-    HRESULT __stdcall abi_CreateTask(impl::abi_arg_in<hstring> title, impl::abi_arg_in<hstring> printerId, impl::abi_arg_in<Windows::Graphics::Printing3D::Print3DTaskSourceRequestedHandler> handler, impl::abi_arg_out<Windows::Graphics::Printing3D::IPrint3DTask> result) noexcept override
+    HRESULT __stdcall CreateTask(HSTRING title, HSTRING printerId, ::IUnknown* handler, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateTask(*reinterpret_cast<const hstring *>(&title), *reinterpret_cast<const hstring *>(&printerId), *reinterpret_cast<const Windows::Graphics::Printing3D::Print3DTaskSourceRequestedHandler *>(&handler)));
+            *result = detach_abi(this->shim().CreateTask(*reinterpret_cast<hstring const*>(&title), *reinterpret_cast<hstring const*>(&printerId), *reinterpret_cast<Windows::Graphics::Printing3D::Print3DTaskSourceRequestedHandler const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -261,7 +1239,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTaskRequest> : produce_
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrint3DTaskRequestedEventArgs> : produce_base<D, Windows::Graphics::Printing3D::IPrint3DTaskRequestedEventArgs>
 {
-    HRESULT __stdcall get_Request(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrint3DTaskRequest> value) noexcept override
+    HRESULT __stdcall get_Request(::IUnknown** value) noexcept override
     {
         try
         {
@@ -280,7 +1258,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTaskRequestedEventArgs>
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrint3DTaskSourceChangedEventArgs> : produce_base<D, Windows::Graphics::Printing3D::IPrint3DTaskSourceChangedEventArgs>
 {
-    HRESULT __stdcall get_Source(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3D3MFPackage> value) noexcept override
+    HRESULT __stdcall get_Source(::IUnknown** value) noexcept override
     {
         try
         {
@@ -299,12 +1277,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTaskSourceChangedEventA
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrint3DTaskSourceRequestedArgs> : produce_base<D, Windows::Graphics::Printing3D::IPrint3DTaskSourceRequestedArgs>
 {
-    HRESULT __stdcall abi_SetSource(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3D3MFPackage> source) noexcept override
+    HRESULT __stdcall SetSource(::IUnknown* source) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SetSource(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3D3MFPackage *>(&source));
+            this->shim().SetSource(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3D3MFPackage const*>(&source));
             return S_OK;
         }
         catch (...)
@@ -317,7 +1295,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrint3DTaskSourceRequestedArgs
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage>
 {
-    HRESULT __stdcall abi_SaveAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream>> operation) noexcept override
+    HRESULT __stdcall SaveAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -332,7 +1310,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : produc
         }
     }
 
-    HRESULT __stdcall get_PrintTicket(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStream> value) noexcept override
+    HRESULT __stdcall get_PrintTicket(::IUnknown** value) noexcept override
     {
         try
         {
@@ -347,12 +1325,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : produc
         }
     }
 
-    HRESULT __stdcall put_PrintTicket(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> value) noexcept override
+    HRESULT __stdcall put_PrintTicket(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PrintTicket(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&value));
+            this->shim().PrintTicket(*reinterpret_cast<Windows::Storage::Streams::IRandomAccessStream const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -361,7 +1339,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : produc
         }
     }
 
-    HRESULT __stdcall get_ModelPart(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStream> value) noexcept override
+    HRESULT __stdcall get_ModelPart(::IUnknown** value) noexcept override
     {
         try
         {
@@ -376,12 +1354,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : produc
         }
     }
 
-    HRESULT __stdcall put_ModelPart(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> value) noexcept override
+    HRESULT __stdcall put_ModelPart(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ModelPart(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&value));
+            this->shim().ModelPart(*reinterpret_cast<Windows::Storage::Streams::IRandomAccessStream const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -390,7 +1368,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : produc
         }
     }
 
-    HRESULT __stdcall get_Thumbnail(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DTextureResource> value) noexcept override
+    HRESULT __stdcall get_Thumbnail(::IUnknown** value) noexcept override
     {
         try
         {
@@ -405,12 +1383,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : produc
         }
     }
 
-    HRESULT __stdcall put_Thumbnail(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DTextureResource> value) noexcept override
+    HRESULT __stdcall put_Thumbnail(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Thumbnail(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DTextureResource *>(&value));
+            this->shim().Thumbnail(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DTextureResource const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -419,7 +1397,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : produc
         }
     }
 
-    HRESULT __stdcall get_Textures(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTextureResource>> value) noexcept override
+    HRESULT __stdcall get_Textures(::IUnknown** value) noexcept override
     {
         try
         {
@@ -434,12 +1412,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : produc
         }
     }
 
-    HRESULT __stdcall abi_LoadModelFromPackageAsync(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> value, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DModel>> operation) noexcept override
+    HRESULT __stdcall LoadModelFromPackageAsync(::IUnknown* value, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LoadModelFromPackageAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&value)));
+            *operation = detach_abi(this->shim().LoadModelFromPackageAsync(*reinterpret_cast<Windows::Storage::Streams::IRandomAccessStream const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -449,12 +1427,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : produc
         }
     }
 
-    HRESULT __stdcall abi_SaveModelToPackageAsync(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DModel> value, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall SaveModelToPackageAsync(::IUnknown* value, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().SaveModelToPackageAsync(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DModel *>(&value)));
+            *operation = detach_abi(this->shim().SaveModelToPackageAsync(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DModel const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -468,12 +1446,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : produc
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackageStatics> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackageStatics>
 {
-    HRESULT __stdcall abi_LoadAsync(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStream> value, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3D3MFPackage>> operation) noexcept override
+    HRESULT __stdcall LoadAsync(::IUnknown* value, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LoadAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStream *>(&value)));
+            *operation = detach_abi(this->shim().LoadAsync(*reinterpret_cast<Windows::Storage::Streams::IRandomAccessStream const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -487,7 +1465,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3D3MFPackageStatics> :
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterial> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterial>
 {
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -502,12 +1480,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterial> : prod
         }
     }
 
-    HRESULT __stdcall put_Name(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Name(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Name(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Name(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -516,7 +1494,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterial> : prod
         }
     }
 
-    HRESULT __stdcall get_Color(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DColorMaterial> value) noexcept override
+    HRESULT __stdcall get_Color(::IUnknown** value) noexcept override
     {
         try
         {
@@ -531,12 +1509,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterial> : prod
         }
     }
 
-    HRESULT __stdcall put_Color(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DColorMaterial> value) noexcept override
+    HRESULT __stdcall put_Color(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Color(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DColorMaterial *>(&value));
+            this->shim().Color(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DColorMaterial const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -549,7 +1527,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterial> : prod
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup>
 {
-    HRESULT __stdcall get_Bases(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterial>> value) noexcept override
+    HRESULT __stdcall get_Bases(::IUnknown** value) noexcept override
     {
         try
         {
@@ -564,7 +1542,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup> :
         }
     }
 
-    HRESULT __stdcall get_MaterialGroupId(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MaterialGroupId(uint32_t* value) noexcept override
     {
         try
         {
@@ -582,7 +1560,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup> :
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroupFactory> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroupFactory>
 {
-    HRESULT __stdcall abi_Create(uint32_t MaterialGroupId, impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup> result) noexcept override
+    HRESULT __stdcall Create(uint32_t MaterialGroupId, ::IUnknown** result) noexcept override
     {
         try
         {
@@ -601,7 +1579,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroupFac
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics>
 {
-    HRESULT __stdcall get_Abs(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Abs(HSTRING* value) noexcept override
     {
         try
         {
@@ -616,7 +1594,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics>
         }
     }
 
-    HRESULT __stdcall get_Pla(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Pla(HSTRING* value) noexcept override
     {
         try
         {
@@ -635,7 +1613,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics>
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterial> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterial>
 {
-    HRESULT __stdcall get_Value(uint32_t * value) noexcept override
+    HRESULT __stdcall get_Value(uint32_t* value) noexcept override
     {
         try
         {
@@ -667,7 +1645,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterial> : pro
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterial2> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterial2>
 {
-    HRESULT __stdcall get_Color(impl::abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall get_Color(abi_t<Windows::UI::Color>* value) noexcept override
     {
         try
         {
@@ -681,12 +1659,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterial2> : pr
         }
     }
 
-    HRESULT __stdcall put_Color(impl::abi_arg_in<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall put_Color(abi_t<Windows::UI::Color> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Color(*reinterpret_cast<const Windows::UI::Color *>(&value));
+            this->shim().Color(*reinterpret_cast<Windows::UI::Color const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -699,7 +1677,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterial2> : pr
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroup> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroup>
 {
-    HRESULT __stdcall get_Colors(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterial>> value) noexcept override
+    HRESULT __stdcall get_Colors(::IUnknown** value) noexcept override
     {
         try
         {
@@ -714,7 +1692,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroup> 
         }
     }
 
-    HRESULT __stdcall get_MaterialGroupId(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MaterialGroupId(uint32_t* value) noexcept override
     {
         try
         {
@@ -732,7 +1710,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroup> 
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroupFactory> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroupFactory>
 {
-    HRESULT __stdcall abi_Create(uint32_t MaterialGroupId, impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroup> result) noexcept override
+    HRESULT __stdcall Create(uint32_t MaterialGroupId, ::IUnknown** result) noexcept override
     {
         try
         {
@@ -751,7 +1729,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroupFa
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DComponent>
 {
-    HRESULT __stdcall get_Mesh(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DMesh> value) noexcept override
+    HRESULT __stdcall get_Mesh(::IUnknown** value) noexcept override
     {
         try
         {
@@ -766,12 +1744,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce
         }
     }
 
-    HRESULT __stdcall put_Mesh(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DMesh> value) noexcept override
+    HRESULT __stdcall put_Mesh(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Mesh(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DMesh *>(&value));
+            this->shim().Mesh(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DMesh const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -780,7 +1758,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce
         }
     }
 
-    HRESULT __stdcall get_Components(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponentWithMatrix>> value) noexcept override
+    HRESULT __stdcall get_Components(::IUnknown** value) noexcept override
     {
         try
         {
@@ -795,7 +1773,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce
         }
     }
 
-    HRESULT __stdcall get_Thumbnail(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DTextureResource> value) noexcept override
+    HRESULT __stdcall get_Thumbnail(::IUnknown** value) noexcept override
     {
         try
         {
@@ -810,12 +1788,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce
         }
     }
 
-    HRESULT __stdcall put_Thumbnail(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DTextureResource> value) noexcept override
+    HRESULT __stdcall put_Thumbnail(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Thumbnail(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DTextureResource *>(&value));
+            this->shim().Thumbnail(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DTextureResource const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -824,7 +1802,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce
         }
     }
 
-    HRESULT __stdcall get_Type(Windows::Graphics::Printing3D::Printing3DObjectType * value) noexcept override
+    HRESULT __stdcall get_Type(abi_t<Windows::Graphics::Printing3D::Printing3DObjectType>* value) noexcept override
     {
         try
         {
@@ -838,12 +1816,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce
         }
     }
 
-    HRESULT __stdcall put_Type(Windows::Graphics::Printing3D::Printing3DObjectType value) noexcept override
+    HRESULT __stdcall put_Type(abi_t<Windows::Graphics::Printing3D::Printing3DObjectType> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Type(value);
+            this->shim().Type(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DObjectType const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -852,7 +1830,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce
         }
     }
 
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -867,12 +1845,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce
         }
     }
 
-    HRESULT __stdcall put_Name(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Name(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Name(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Name(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -881,7 +1859,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce
         }
     }
 
-    HRESULT __stdcall get_PartNumber(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PartNumber(HSTRING* value) noexcept override
     {
         try
         {
@@ -896,12 +1874,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce
         }
     }
 
-    HRESULT __stdcall put_PartNumber(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_PartNumber(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PartNumber(*reinterpret_cast<const hstring *>(&value));
+            this->shim().PartNumber(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -914,7 +1892,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponent> : produce
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix>
 {
-    HRESULT __stdcall get_Component(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DComponent> value) noexcept override
+    HRESULT __stdcall get_Component(::IUnknown** value) noexcept override
     {
         try
         {
@@ -929,12 +1907,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix>
         }
     }
 
-    HRESULT __stdcall put_Component(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DComponent> value) noexcept override
+    HRESULT __stdcall put_Component(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Component(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DComponent *>(&value));
+            this->shim().Component(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DComponent const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -943,7 +1921,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix>
         }
     }
 
-    HRESULT __stdcall get_Matrix(impl::abi_arg_out<Windows::Foundation::Numerics::float4x4> value) noexcept override
+    HRESULT __stdcall get_Matrix(abi_t<Windows::Foundation::Numerics::float4x4>* value) noexcept override
     {
         try
         {
@@ -957,12 +1935,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix>
         }
     }
 
-    HRESULT __stdcall put_Matrix(impl::abi_arg_in<Windows::Foundation::Numerics::float4x4> value) noexcept override
+    HRESULT __stdcall put_Matrix(abi_t<Windows::Foundation::Numerics::float4x4> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Matrix(*reinterpret_cast<const Windows::Foundation::Numerics::float4x4 *>(&value));
+            this->shim().Matrix(*reinterpret_cast<Windows::Foundation::Numerics::float4x4 const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -975,7 +1953,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix>
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterial> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterial>
 {
-    HRESULT __stdcall get_Values(impl::abi_arg_out<Windows::Foundation::Collections::IVector<double>> value) noexcept override
+    HRESULT __stdcall get_Values(::IUnknown** value) noexcept override
     {
         try
         {
@@ -994,7 +1972,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterial> :
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup>
 {
-    HRESULT __stdcall get_Composites(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterial>> value) noexcept override
+    HRESULT __stdcall get_Composites(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1009,7 +1987,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGro
         }
     }
 
-    HRESULT __stdcall get_MaterialGroupId(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MaterialGroupId(uint32_t* value) noexcept override
     {
         try
         {
@@ -1023,7 +2001,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGro
         }
     }
 
-    HRESULT __stdcall get_MaterialIndices(impl::abi_arg_out<Windows::Foundation::Collections::IVector<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_MaterialIndices(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1042,7 +2020,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGro
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup2> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup2>
 {
-    HRESULT __stdcall get_BaseMaterialGroup(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup> value) noexcept override
+    HRESULT __stdcall get_BaseMaterialGroup(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1057,12 +2035,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGro
         }
     }
 
-    HRESULT __stdcall put_BaseMaterialGroup(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup> value) noexcept override
+    HRESULT __stdcall put_BaseMaterialGroup(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().BaseMaterialGroup(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup *>(&value));
+            this->shim().BaseMaterialGroup(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1075,7 +2053,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGro
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroupFactory> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroupFactory>
 {
-    HRESULT __stdcall abi_Create(uint32_t MaterialGroupId, impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup> result) noexcept override
+    HRESULT __stdcall Create(uint32_t MaterialGroupId, ::IUnknown** result) noexcept override
     {
         try
         {
@@ -1094,7 +2072,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGro
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions>
 {
-    HRESULT __stdcall get_MaxReductionArea(double * value) noexcept override
+    HRESULT __stdcall get_MaxReductionArea(double* value) noexcept override
     {
         try
         {
@@ -1122,7 +2100,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions
         }
     }
 
-    HRESULT __stdcall get_TargetTriangleCount(uint32_t * value) noexcept override
+    HRESULT __stdcall get_TargetTriangleCount(uint32_t* value) noexcept override
     {
         try
         {
@@ -1150,7 +2128,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions
         }
     }
 
-    HRESULT __stdcall get_MaxEdgeLength(double * value) noexcept override
+    HRESULT __stdcall get_MaxEdgeLength(double* value) noexcept override
     {
         try
         {
@@ -1182,7 +2160,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMaterial> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DMaterial>
 {
-    HRESULT __stdcall get_BaseGroups(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup>> value) noexcept override
+    HRESULT __stdcall get_BaseGroups(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1197,7 +2175,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMaterial> : produce_
         }
     }
 
-    HRESULT __stdcall get_ColorGroups(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterialGroup>> value) noexcept override
+    HRESULT __stdcall get_ColorGroups(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1212,7 +2190,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMaterial> : produce_
         }
     }
 
-    HRESULT __stdcall get_Texture2CoordGroups(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup>> value) noexcept override
+    HRESULT __stdcall get_Texture2CoordGroups(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1227,7 +2205,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMaterial> : produce_
         }
     }
 
-    HRESULT __stdcall get_CompositeGroups(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup>> value) noexcept override
+    HRESULT __stdcall get_CompositeGroups(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1242,7 +2220,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMaterial> : produce_
         }
     }
 
-    HRESULT __stdcall get_MultiplePropertyGroups(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup>> value) noexcept override
+    HRESULT __stdcall get_MultiplePropertyGroups(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1261,7 +2239,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMaterial> : produce_
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DMesh>
 {
-    HRESULT __stdcall get_VertexCount(uint32_t * value) noexcept override
+    HRESULT __stdcall get_VertexCount(uint32_t* value) noexcept override
     {
         try
         {
@@ -1289,7 +2267,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall get_IndexCount(uint32_t * value) noexcept override
+    HRESULT __stdcall get_IndexCount(uint32_t* value) noexcept override
     {
         try
         {
@@ -1317,7 +2295,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall get_VertexPositionsDescription(impl::abi_arg_out<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
+    HRESULT __stdcall get_VertexPositionsDescription(abi_t<Windows::Graphics::Printing3D::Printing3DBufferDescription>* value) noexcept override
     {
         try
         {
@@ -1331,12 +2309,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall put_VertexPositionsDescription(impl::abi_arg_in<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
+    HRESULT __stdcall put_VertexPositionsDescription(abi_t<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().VertexPositionsDescription(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DBufferDescription *>(&value));
+            this->shim().VertexPositionsDescription(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DBufferDescription const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1345,7 +2323,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall get_VertexNormalsDescription(impl::abi_arg_out<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
+    HRESULT __stdcall get_VertexNormalsDescription(abi_t<Windows::Graphics::Printing3D::Printing3DBufferDescription>* value) noexcept override
     {
         try
         {
@@ -1359,12 +2337,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall put_VertexNormalsDescription(impl::abi_arg_in<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
+    HRESULT __stdcall put_VertexNormalsDescription(abi_t<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().VertexNormalsDescription(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DBufferDescription *>(&value));
+            this->shim().VertexNormalsDescription(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DBufferDescription const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1373,7 +2351,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall get_TriangleIndicesDescription(impl::abi_arg_out<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
+    HRESULT __stdcall get_TriangleIndicesDescription(abi_t<Windows::Graphics::Printing3D::Printing3DBufferDescription>* value) noexcept override
     {
         try
         {
@@ -1387,12 +2365,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall put_TriangleIndicesDescription(impl::abi_arg_in<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
+    HRESULT __stdcall put_TriangleIndicesDescription(abi_t<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TriangleIndicesDescription(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DBufferDescription *>(&value));
+            this->shim().TriangleIndicesDescription(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DBufferDescription const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1401,7 +2379,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall get_TriangleMaterialIndicesDescription(impl::abi_arg_out<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
+    HRESULT __stdcall get_TriangleMaterialIndicesDescription(abi_t<Windows::Graphics::Printing3D::Printing3DBufferDescription>* value) noexcept override
     {
         try
         {
@@ -1415,12 +2393,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall put_TriangleMaterialIndicesDescription(impl::abi_arg_in<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
+    HRESULT __stdcall put_TriangleMaterialIndicesDescription(abi_t<Windows::Graphics::Printing3D::Printing3DBufferDescription> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TriangleMaterialIndicesDescription(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DBufferDescription *>(&value));
+            this->shim().TriangleMaterialIndicesDescription(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DBufferDescription const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1429,7 +2407,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetVertexPositions(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> buffer) noexcept override
+    HRESULT __stdcall GetVertexPositions(::IUnknown** buffer) noexcept override
     {
         try
         {
@@ -1444,7 +2422,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_CreateVertexPositions(uint32_t value) noexcept override
+    HRESULT __stdcall CreateVertexPositions(uint32_t value) noexcept override
     {
         try
         {
@@ -1458,7 +2436,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetVertexNormals(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> buffer) noexcept override
+    HRESULT __stdcall GetVertexNormals(::IUnknown** buffer) noexcept override
     {
         try
         {
@@ -1473,7 +2451,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_CreateVertexNormals(uint32_t value) noexcept override
+    HRESULT __stdcall CreateVertexNormals(uint32_t value) noexcept override
     {
         try
         {
@@ -1487,7 +2465,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetTriangleIndices(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> buffer) noexcept override
+    HRESULT __stdcall GetTriangleIndices(::IUnknown** buffer) noexcept override
     {
         try
         {
@@ -1502,7 +2480,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_CreateTriangleIndices(uint32_t value) noexcept override
+    HRESULT __stdcall CreateTriangleIndices(uint32_t value) noexcept override
     {
         try
         {
@@ -1516,7 +2494,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetTriangleMaterialIndices(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> buffer) noexcept override
+    HRESULT __stdcall GetTriangleMaterialIndices(::IUnknown** buffer) noexcept override
     {
         try
         {
@@ -1531,7 +2509,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_CreateTriangleMaterialIndices(uint32_t value) noexcept override
+    HRESULT __stdcall CreateTriangleMaterialIndices(uint32_t value) noexcept override
     {
         try
         {
@@ -1545,7 +2523,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall get_BufferDescriptionSet(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_BufferDescriptionSet(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1560,7 +2538,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall get_BufferSet(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_BufferSet(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1575,12 +2553,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_VerifyAsync(Windows::Graphics::Printing3D::Printing3DMeshVerificationMode value, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DMeshVerificationResult>> operation) noexcept override
+    HRESULT __stdcall VerifyAsync(abi_t<Windows::Graphics::Printing3D::Printing3DMeshVerificationMode> value, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().VerifyAsync(value));
+            *operation = detach_abi(this->shim().VerifyAsync(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DMeshVerificationMode const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -1594,7 +2572,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMesh> : produce_base
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResult> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResult>
 {
-    HRESULT __stdcall get_IsValid(bool * value) noexcept override
+    HRESULT __stdcall get_IsValid(bool* value) noexcept override
     {
         try
         {
@@ -1608,7 +2586,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResu
         }
     }
 
-    HRESULT __stdcall get_NonmanifoldTriangles(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_NonmanifoldTriangles(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1623,7 +2601,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResu
         }
     }
 
-    HRESULT __stdcall get_ReversedNormalTriangles(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_ReversedNormalTriangles(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1642,7 +2620,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResu
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DModel>
 {
-    HRESULT __stdcall get_Unit(Windows::Graphics::Printing3D::Printing3DModelUnit * value) noexcept override
+    HRESULT __stdcall get_Unit(abi_t<Windows::Graphics::Printing3D::Printing3DModelUnit>* value) noexcept override
     {
         try
         {
@@ -1656,12 +2634,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Unit(Windows::Graphics::Printing3D::Printing3DModelUnit value) noexcept override
+    HRESULT __stdcall put_Unit(abi_t<Windows::Graphics::Printing3D::Printing3DModelUnit> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Unit(value);
+            this->shim().Unit(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DModelUnit const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1670,7 +2648,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Textures(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DModelTexture>> value) noexcept override
+    HRESULT __stdcall get_Textures(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1685,7 +2663,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Meshes(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMesh>> value) noexcept override
+    HRESULT __stdcall get_Meshes(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1700,7 +2678,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Components(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponent>> value) noexcept override
+    HRESULT __stdcall get_Components(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1715,7 +2693,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Material(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DMaterial> value) noexcept override
+    HRESULT __stdcall get_Material(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1730,12 +2708,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Material(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DMaterial> value) noexcept override
+    HRESULT __stdcall put_Material(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Material(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DMaterial *>(&value));
+            this->shim().Material(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DMaterial const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1744,7 +2722,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Build(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DComponent> value) noexcept override
+    HRESULT __stdcall get_Build(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1759,12 +2737,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Build(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DComponent> value) noexcept override
+    HRESULT __stdcall put_Build(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Build(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DComponent *>(&value));
+            this->shim().Build(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DComponent const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1773,7 +2751,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Version(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Version(HSTRING* value) noexcept override
     {
         try
         {
@@ -1788,12 +2766,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Version(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Version(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Version(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Version(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1802,7 +2780,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_RequiredExtensions(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_RequiredExtensions(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1817,7 +2795,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Metadata(impl::abi_arg_out<Windows::Foundation::Collections::IMap<hstring, hstring>> value) noexcept override
+    HRESULT __stdcall get_Metadata(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1832,7 +2810,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_RepairAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall RepairAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -1847,7 +2825,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_Clone(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DModel> value) noexcept override
+    HRESULT __stdcall Clone(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1866,7 +2844,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel> : produce_bas
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel2> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DModel2>
 {
-    HRESULT __stdcall abi_TryPartialRepairAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall TryPartialRepairAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -1881,12 +2859,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel2> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_TryPartialRepairWithTimeAsync(impl::abi_arg_in<Windows::Foundation::TimeSpan> maxWaitTime, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall TryPartialRepairWithTimeAsync(abi_t<Windows::Foundation::TimeSpan> maxWaitTime, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().TryPartialRepairAsync(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&maxWaitTime)));
+            *operation = detach_abi(this->shim().TryPartialRepairAsync(*reinterpret_cast<Windows::Foundation::TimeSpan const*>(&maxWaitTime)));
             return S_OK;
         }
         catch (...)
@@ -1896,7 +2874,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel2> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_TryReduceFacesAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<bool, double>> operation) noexcept override
+    HRESULT __stdcall TryReduceFacesAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -1911,12 +2889,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel2> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_TryReduceFacesWithOptionsAsync(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions> printing3DFaceReductionOptions, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<bool, double>> operation) noexcept override
+    HRESULT __stdcall TryReduceFacesWithOptionsAsync(::IUnknown* printing3DFaceReductionOptions, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().TryReduceFacesAsync(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DFaceReductionOptions *>(&printing3DFaceReductionOptions)));
+            *operation = detach_abi(this->shim().TryReduceFacesAsync(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DFaceReductionOptions const*>(&printing3DFaceReductionOptions)));
             return S_OK;
         }
         catch (...)
@@ -1926,12 +2904,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel2> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_TryReduceFacesWithOptionsAndTimeAsync(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions> printing3DFaceReductionOptions, impl::abi_arg_in<Windows::Foundation::TimeSpan> maxWait, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<bool, double>> operation) noexcept override
+    HRESULT __stdcall TryReduceFacesWithOptionsAndTimeAsync(::IUnknown* printing3DFaceReductionOptions, abi_t<Windows::Foundation::TimeSpan> maxWait, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().TryReduceFacesAsync(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DFaceReductionOptions *>(&printing3DFaceReductionOptions), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&maxWait)));
+            *operation = detach_abi(this->shim().TryReduceFacesAsync(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DFaceReductionOptions const*>(&printing3DFaceReductionOptions), *reinterpret_cast<Windows::Foundation::TimeSpan const*>(&maxWait)));
             return S_OK;
         }
         catch (...)
@@ -1941,7 +2919,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel2> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_RepairWithProgressAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<bool, double>> operation) noexcept override
+    HRESULT __stdcall RepairWithProgressAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -1960,7 +2938,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModel2> : produce_ba
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModelTexture> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DModelTexture>
 {
-    HRESULT __stdcall get_TextureResource(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DTextureResource> value) noexcept override
+    HRESULT __stdcall get_TextureResource(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1975,12 +2953,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModelTexture> : prod
         }
     }
 
-    HRESULT __stdcall put_TextureResource(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DTextureResource> value) noexcept override
+    HRESULT __stdcall put_TextureResource(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TextureResource(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DTextureResource *>(&value));
+            this->shim().TextureResource(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DTextureResource const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1989,7 +2967,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModelTexture> : prod
         }
     }
 
-    HRESULT __stdcall get_TileStyleU(Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior * value) noexcept override
+    HRESULT __stdcall get_TileStyleU(abi_t<Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior>* value) noexcept override
     {
         try
         {
@@ -2003,12 +2981,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModelTexture> : prod
         }
     }
 
-    HRESULT __stdcall put_TileStyleU(Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior value) noexcept override
+    HRESULT __stdcall put_TileStyleU(abi_t<Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TileStyleU(value);
+            this->shim().TileStyleU(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2017,7 +2995,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModelTexture> : prod
         }
     }
 
-    HRESULT __stdcall get_TileStyleV(Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior * value) noexcept override
+    HRESULT __stdcall get_TileStyleV(abi_t<Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior>* value) noexcept override
     {
         try
         {
@@ -2031,12 +3009,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModelTexture> : prod
         }
     }
 
-    HRESULT __stdcall put_TileStyleV(Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior value) noexcept override
+    HRESULT __stdcall put_TileStyleV(abi_t<Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TileStyleV(value);
+            this->shim().TileStyleV(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2049,7 +3027,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DModelTexture> : prod
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterial> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterial>
 {
-    HRESULT __stdcall get_MaterialIndices(impl::abi_arg_out<Windows::Foundation::Collections::IVector<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_MaterialIndices(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2068,7 +3046,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMate
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroup> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroup>
 {
-    HRESULT __stdcall get_MultipleProperties(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterial>> value) noexcept override
+    HRESULT __stdcall get_MultipleProperties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2083,7 +3061,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMate
         }
     }
 
-    HRESULT __stdcall get_MaterialGroupIndices(impl::abi_arg_out<Windows::Foundation::Collections::IVector<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_MaterialGroupIndices(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2098,7 +3076,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMate
         }
     }
 
-    HRESULT __stdcall get_MaterialGroupId(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MaterialGroupId(uint32_t* value) noexcept override
     {
         try
         {
@@ -2116,7 +3094,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMate
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroupFactory> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroupFactory>
 {
-    HRESULT __stdcall abi_Create(uint32_t MaterialGroupId, impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroup> result) noexcept override
+    HRESULT __stdcall Create(uint32_t MaterialGroupId, ::IUnknown** result) noexcept override
     {
         try
         {
@@ -2135,7 +3113,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMate
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial>
 {
-    HRESULT __stdcall get_Texture(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DModelTexture> value) noexcept override
+    HRESULT __stdcall get_Texture(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2150,12 +3128,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMateria
         }
     }
 
-    HRESULT __stdcall put_Texture(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DModelTexture> value) noexcept override
+    HRESULT __stdcall put_Texture(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Texture(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DModelTexture *>(&value));
+            this->shim().Texture(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DModelTexture const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2164,7 +3142,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMateria
         }
     }
 
-    HRESULT __stdcall get_U(double * value) noexcept override
+    HRESULT __stdcall get_U(double* value) noexcept override
     {
         try
         {
@@ -2192,7 +3170,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMateria
         }
     }
 
-    HRESULT __stdcall get_V(double * value) noexcept override
+    HRESULT __stdcall get_V(double* value) noexcept override
     {
         try
         {
@@ -2224,7 +3202,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMateria
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup>
 {
-    HRESULT __stdcall get_Texture2Coords(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterial>> value) noexcept override
+    HRESULT __stdcall get_Texture2Coords(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2239,7 +3217,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMateria
         }
     }
 
-    HRESULT __stdcall get_MaterialGroupId(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MaterialGroupId(uint32_t* value) noexcept override
     {
         try
         {
@@ -2257,7 +3235,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMateria
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup2> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup2>
 {
-    HRESULT __stdcall get_Texture(impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DModelTexture> value) noexcept override
+    HRESULT __stdcall get_Texture(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2272,12 +3250,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMateria
         }
     }
 
-    HRESULT __stdcall put_Texture(impl::abi_arg_in<Windows::Graphics::Printing3D::IPrinting3DModelTexture> value) noexcept override
+    HRESULT __stdcall put_Texture(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Texture(*reinterpret_cast<const Windows::Graphics::Printing3D::Printing3DModelTexture *>(&value));
+            this->shim().Texture(*reinterpret_cast<Windows::Graphics::Printing3D::Printing3DModelTexture const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2290,7 +3268,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMateria
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroupFactory> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroupFactory>
 {
-    HRESULT __stdcall abi_Create(uint32_t MaterialGroupId, impl::abi_arg_out<Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup> result) noexcept override
+    HRESULT __stdcall Create(uint32_t MaterialGroupId, ::IUnknown** result) noexcept override
     {
         try
         {
@@ -2309,7 +3287,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMateria
 template <typename D>
 struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTextureResource> : produce_base<D, Windows::Graphics::Printing3D::IPrinting3DTextureResource>
 {
-    HRESULT __stdcall get_TextureData(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamWithContentType> value) noexcept override
+    HRESULT __stdcall get_TextureData(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2324,12 +3302,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTextureResource> : p
         }
     }
 
-    HRESULT __stdcall put_TextureData(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamWithContentType> value) noexcept override
+    HRESULT __stdcall put_TextureData(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TextureData(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamWithContentType *>(&value));
+            this->shim().TextureData(*reinterpret_cast<Windows::Storage::Streams::IRandomAccessStreamWithContentType const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2338,7 +3316,7 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTextureResource> : p
         }
     }
 
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -2353,12 +3331,12 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTextureResource> : p
         }
     }
 
-    HRESULT __stdcall put_Name(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Name(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Name(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Name(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2370,1003 +3348,25 @@ struct produce<D, Windows::Graphics::Printing3D::IPrinting3DTextureResource> : p
 
 }
 
-namespace Windows::Graphics::Printing3D {
-
-template <typename D> Windows::Graphics::Printing3D::Print3DTaskCompletion impl_IPrint3DTaskCompletedEventArgs<D>::Completion() const
-{
-    Windows::Graphics::Printing3D::Print3DTaskCompletion value {};
-    check_hresult(WINRT_SHIM(IPrint3DTaskCompletedEventArgs)->get_Completion(&value));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Print3DTaskDetail impl_IPrint3DTaskCompletedEventArgs<D>::ExtendedStatus() const
-{
-    Windows::Graphics::Printing3D::Print3DTaskDetail value {};
-    check_hresult(WINRT_SHIM(IPrint3DTaskCompletedEventArgs)->get_ExtendedStatus(&value));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3D3MFPackage impl_IPrint3DTaskSourceChangedEventArgs<D>::Source() const
-{
-    Windows::Graphics::Printing3D::Printing3D3MFPackage value { nullptr };
-    check_hresult(WINRT_SHIM(IPrint3DTaskSourceChangedEventArgs)->get_Source(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3D3MFPackage impl_IPrint3DTask<D>::Source() const
-{
-    Windows::Graphics::Printing3D::Printing3D3MFPackage value { nullptr };
-    check_hresult(WINRT_SHIM(IPrint3DTask)->get_Source(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IPrint3DTask<D>::Submitting(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    event_token eventCookie {};
-    check_hresult(WINRT_SHIM(IPrint3DTask)->add_Submitting(get_abi(eventHandler), &eventCookie));
-    return eventCookie;
-}
-
-template <typename D> event_revoker<IPrint3DTask> impl_IPrint3DTask<D>::Submitting(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    return impl::make_event_revoker<D, IPrint3DTask>(this, &ABI::Windows::Graphics::Printing3D::IPrint3DTask::remove_Submitting, Submitting(eventHandler));
-}
-
-template <typename D> void impl_IPrint3DTask<D>::Submitting(event_token eventCookie) const
-{
-    check_hresult(WINRT_SHIM(IPrint3DTask)->remove_Submitting(eventCookie));
-}
-
-template <typename D> event_token impl_IPrint3DTask<D>::Completed(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs> & eventHandler) const
-{
-    event_token eventCookie {};
-    check_hresult(WINRT_SHIM(IPrint3DTask)->add_Completed(get_abi(eventHandler), &eventCookie));
-    return eventCookie;
-}
-
-template <typename D> event_revoker<IPrint3DTask> impl_IPrint3DTask<D>::Completed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs> & eventHandler) const
-{
-    return impl::make_event_revoker<D, IPrint3DTask>(this, &ABI::Windows::Graphics::Printing3D::IPrint3DTask::remove_Completed, Completed(eventHandler));
-}
-
-template <typename D> void impl_IPrint3DTask<D>::Completed(event_token eventCookie) const
-{
-    check_hresult(WINRT_SHIM(IPrint3DTask)->remove_Completed(eventCookie));
-}
-
-template <typename D> event_token impl_IPrint3DTask<D>::SourceChanged(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs> & eventHandler) const
-{
-    event_token eventCookie {};
-    check_hresult(WINRT_SHIM(IPrint3DTask)->add_SourceChanged(get_abi(eventHandler), &eventCookie));
-    return eventCookie;
-}
-
-template <typename D> event_revoker<IPrint3DTask> impl_IPrint3DTask<D>::SourceChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DTask, Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs> & eventHandler) const
-{
-    return impl::make_event_revoker<D, IPrint3DTask>(this, &ABI::Windows::Graphics::Printing3D::IPrint3DTask::remove_SourceChanged, SourceChanged(eventHandler));
-}
-
-template <typename D> void impl_IPrint3DTask<D>::SourceChanged(event_token eventCookie) const
-{
-    check_hresult(WINRT_SHIM(IPrint3DTask)->remove_SourceChanged(eventCookie));
-}
-
-template <typename D> void impl_IPrint3DTaskSourceRequestedArgs<D>::SetSource(const Windows::Graphics::Printing3D::Printing3D3MFPackage & source) const
-{
-    check_hresult(WINRT_SHIM(IPrint3DTaskSourceRequestedArgs)->abi_SetSource(get_abi(source)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Print3DTask impl_IPrint3DTaskRequest<D>::CreateTask(hstring_view title, hstring_view printerId, const Windows::Graphics::Printing3D::Print3DTaskSourceRequestedHandler & handler) const
-{
-    Windows::Graphics::Printing3D::Print3DTask result { nullptr };
-    check_hresult(WINRT_SHIM(IPrint3DTaskRequest)->abi_CreateTask(get_abi(title), get_abi(printerId), get_abi(handler), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Print3DTaskRequest impl_IPrint3DTaskRequestedEventArgs<D>::Request() const
-{
-    Windows::Graphics::Printing3D::Print3DTaskRequest value { nullptr };
-    check_hresult(WINRT_SHIM(IPrint3DTaskRequestedEventArgs)->get_Request(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Print3DManager impl_IPrint3DManagerStatics<D>::GetForCurrentView() const
-{
-    Windows::Graphics::Printing3D::Print3DManager result { nullptr };
-    check_hresult(WINRT_SHIM(IPrint3DManagerStatics)->abi_GetForCurrentView(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPrint3DManagerStatics<D>::ShowPrintUIAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IPrint3DManagerStatics)->abi_ShowPrintUIAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> event_token impl_IPrint3DManager<D>::TaskRequested(const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DManager, Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs> & eventHandler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPrint3DManager)->add_TaskRequested(get_abi(eventHandler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPrint3DManager> impl_IPrint3DManager<D>::TaskRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Graphics::Printing3D::Print3DManager, Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs> & eventHandler) const
-{
-    return impl::make_event_revoker<D, IPrint3DManager>(this, &ABI::Windows::Graphics::Printing3D::IPrint3DManager::remove_TaskRequested, TaskRequested(eventHandler));
-}
-
-template <typename D> void impl_IPrint3DManager<D>::TaskRequested(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPrint3DManager)->remove_TaskRequested(token));
-}
-
-template <typename D> uint32_t impl_IPrinting3DMesh<D>::VertexCount() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->get_VertexCount(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DMesh<D>::VertexCount(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->put_VertexCount(value));
-}
-
-template <typename D> uint32_t impl_IPrinting3DMesh<D>::IndexCount() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->get_IndexCount(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DMesh<D>::IndexCount(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->put_IndexCount(value));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DBufferDescription impl_IPrinting3DMesh<D>::VertexPositionsDescription() const
-{
-    Windows::Graphics::Printing3D::Printing3DBufferDescription value {};
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->get_VertexPositionsDescription(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DMesh<D>::VertexPositionsDescription(const Windows::Graphics::Printing3D::Printing3DBufferDescription & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->put_VertexPositionsDescription(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DBufferDescription impl_IPrinting3DMesh<D>::VertexNormalsDescription() const
-{
-    Windows::Graphics::Printing3D::Printing3DBufferDescription value {};
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->get_VertexNormalsDescription(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DMesh<D>::VertexNormalsDescription(const Windows::Graphics::Printing3D::Printing3DBufferDescription & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->put_VertexNormalsDescription(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DBufferDescription impl_IPrinting3DMesh<D>::TriangleIndicesDescription() const
-{
-    Windows::Graphics::Printing3D::Printing3DBufferDescription value {};
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->get_TriangleIndicesDescription(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DMesh<D>::TriangleIndicesDescription(const Windows::Graphics::Printing3D::Printing3DBufferDescription & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->put_TriangleIndicesDescription(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DBufferDescription impl_IPrinting3DMesh<D>::TriangleMaterialIndicesDescription() const
-{
-    Windows::Graphics::Printing3D::Printing3DBufferDescription value {};
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->get_TriangleMaterialIndicesDescription(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DMesh<D>::TriangleMaterialIndicesDescription(const Windows::Graphics::Printing3D::Printing3DBufferDescription & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->put_TriangleMaterialIndicesDescription(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IPrinting3DMesh<D>::GetVertexPositions() const
-{
-    Windows::Storage::Streams::IBuffer buffer;
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->abi_GetVertexPositions(put_abi(buffer)));
-    return buffer;
-}
-
-template <typename D> void impl_IPrinting3DMesh<D>::CreateVertexPositions(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->abi_CreateVertexPositions(value));
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IPrinting3DMesh<D>::GetVertexNormals() const
-{
-    Windows::Storage::Streams::IBuffer buffer;
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->abi_GetVertexNormals(put_abi(buffer)));
-    return buffer;
-}
-
-template <typename D> void impl_IPrinting3DMesh<D>::CreateVertexNormals(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->abi_CreateVertexNormals(value));
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IPrinting3DMesh<D>::GetTriangleIndices() const
-{
-    Windows::Storage::Streams::IBuffer buffer;
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->abi_GetTriangleIndices(put_abi(buffer)));
-    return buffer;
-}
-
-template <typename D> void impl_IPrinting3DMesh<D>::CreateTriangleIndices(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->abi_CreateTriangleIndices(value));
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IPrinting3DMesh<D>::GetTriangleMaterialIndices() const
-{
-    Windows::Storage::Streams::IBuffer buffer;
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->abi_GetTriangleMaterialIndices(put_abi(buffer)));
-    return buffer;
-}
-
-template <typename D> void impl_IPrinting3DMesh<D>::CreateTriangleMaterialIndices(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->abi_CreateTriangleMaterialIndices(value));
-}
-
-template <typename D> Windows::Foundation::Collections::IPropertySet impl_IPrinting3DMesh<D>::BufferDescriptionSet() const
-{
-    Windows::Foundation::Collections::IPropertySet value;
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->get_BufferDescriptionSet(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IPropertySet impl_IPrinting3DMesh<D>::BufferSet() const
-{
-    Windows::Foundation::Collections::IPropertySet value;
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->get_BufferSet(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DMeshVerificationResult> impl_IPrinting3DMesh<D>::VerifyAsync(Windows::Graphics::Printing3D::Printing3DMeshVerificationMode value) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DMeshVerificationResult> operation;
-    check_hresult(WINRT_SHIM(IPrinting3DMesh)->abi_VerifyAsync(value, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DTextureResource impl_IPrinting3DModelTexture<D>::TextureResource() const
-{
-    Windows::Graphics::Printing3D::Printing3DTextureResource value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DModelTexture)->get_TextureResource(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DModelTexture<D>::TextureResource(const Windows::Graphics::Printing3D::Printing3DTextureResource & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DModelTexture)->put_TextureResource(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior impl_IPrinting3DModelTexture<D>::TileStyleU() const
-{
-    Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior value {};
-    check_hresult(WINRT_SHIM(IPrinting3DModelTexture)->get_TileStyleU(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DModelTexture<D>::TileStyleU(Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DModelTexture)->put_TileStyleU(value));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior impl_IPrinting3DModelTexture<D>::TileStyleV() const
-{
-    Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior value {};
-    check_hresult(WINRT_SHIM(IPrinting3DModelTexture)->get_TileStyleV(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DModelTexture<D>::TileStyleV(Windows::Graphics::Printing3D::Printing3DTextureEdgeBehavior value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DModelTexture)->put_TileStyleV(value));
-}
-
-template <typename D> Windows::Storage::Streams::IRandomAccessStreamWithContentType impl_IPrinting3DTextureResource<D>::TextureData() const
-{
-    Windows::Storage::Streams::IRandomAccessStreamWithContentType value;
-    check_hresult(WINRT_SHIM(IPrinting3DTextureResource)->get_TextureData(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DTextureResource<D>::TextureData(const Windows::Storage::Streams::IRandomAccessStreamWithContentType & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DTextureResource)->put_TextureData(get_abi(value)));
-}
-
-template <typename D> hstring impl_IPrinting3DTextureResource<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPrinting3DTextureResource)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DTextureResource<D>::Name(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DTextureResource)->put_Name(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DComponent impl_IPrinting3DComponentWithMatrix<D>::Component() const
-{
-    Windows::Graphics::Printing3D::Printing3DComponent value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DComponentWithMatrix)->get_Component(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DComponentWithMatrix<D>::Component(const Windows::Graphics::Printing3D::Printing3DComponent & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DComponentWithMatrix)->put_Component(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Numerics::float4x4 impl_IPrinting3DComponentWithMatrix<D>::Matrix() const
-{
-    Windows::Foundation::Numerics::float4x4 value {};
-    check_hresult(WINRT_SHIM(IPrinting3DComponentWithMatrix)->get_Matrix(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DComponentWithMatrix<D>::Matrix(const Windows::Foundation::Numerics::float4x4 & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DComponentWithMatrix)->put_Matrix(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DMesh impl_IPrinting3DComponent<D>::Mesh() const
-{
-    Windows::Graphics::Printing3D::Printing3DMesh value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DComponent)->get_Mesh(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DComponent<D>::Mesh(const Windows::Graphics::Printing3D::Printing3DMesh & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DComponent)->put_Mesh(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponentWithMatrix> impl_IPrinting3DComponent<D>::Components() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponentWithMatrix> value;
-    check_hresult(WINRT_SHIM(IPrinting3DComponent)->get_Components(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DTextureResource impl_IPrinting3DComponent<D>::Thumbnail() const
-{
-    Windows::Graphics::Printing3D::Printing3DTextureResource value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DComponent)->get_Thumbnail(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DComponent<D>::Thumbnail(const Windows::Graphics::Printing3D::Printing3DTextureResource & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DComponent)->put_Thumbnail(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DObjectType impl_IPrinting3DComponent<D>::Type() const
-{
-    Windows::Graphics::Printing3D::Printing3DObjectType value {};
-    check_hresult(WINRT_SHIM(IPrinting3DComponent)->get_Type(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DComponent<D>::Type(Windows::Graphics::Printing3D::Printing3DObjectType value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DComponent)->put_Type(value));
-}
-
-template <typename D> hstring impl_IPrinting3DComponent<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPrinting3DComponent)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DComponent<D>::Name(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DComponent)->put_Name(get_abi(value)));
-}
-
-template <typename D> hstring impl_IPrinting3DComponent<D>::PartNumber() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPrinting3DComponent)->get_PartNumber(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DComponent<D>::PartNumber(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DComponent)->put_PartNumber(get_abi(value)));
-}
-
-template <typename D> hstring impl_IPrinting3DBaseMaterialStatics<D>::Abs() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPrinting3DBaseMaterialStatics)->get_Abs(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IPrinting3DBaseMaterialStatics<D>::Pla() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPrinting3DBaseMaterialStatics)->get_Pla(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IPrinting3DBaseMaterial<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPrinting3DBaseMaterial)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DBaseMaterial<D>::Name(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DBaseMaterial)->put_Name(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DColorMaterial impl_IPrinting3DBaseMaterial<D>::Color() const
-{
-    Windows::Graphics::Printing3D::Printing3DColorMaterial value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DBaseMaterial)->get_Color(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DBaseMaterial<D>::Color(const Windows::Graphics::Printing3D::Printing3DColorMaterial & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DBaseMaterial)->put_Color(get_abi(value)));
-}
-
-template <typename D> uint32_t impl_IPrinting3DColorMaterial<D>::Value() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPrinting3DColorMaterial)->get_Value(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DColorMaterial<D>::Value(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DColorMaterial)->put_Value(value));
-}
-
-template <typename D> Windows::UI::Color impl_IPrinting3DColorMaterial2<D>::Color() const
-{
-    Windows::UI::Color value {};
-    check_hresult(WINRT_SHIM(IPrinting3DColorMaterial2)->get_Color(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DColorMaterial2<D>::Color(const Windows::UI::Color & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DColorMaterial2)->put_Color(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DModelTexture impl_IPrinting3DTexture2CoordMaterial<D>::Texture() const
-{
-    Windows::Graphics::Printing3D::Printing3DModelTexture value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DTexture2CoordMaterial)->get_Texture(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DTexture2CoordMaterial<D>::Texture(const Windows::Graphics::Printing3D::Printing3DModelTexture & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DTexture2CoordMaterial)->put_Texture(get_abi(value)));
-}
-
-template <typename D> double impl_IPrinting3DTexture2CoordMaterial<D>::U() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IPrinting3DTexture2CoordMaterial)->get_U(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DTexture2CoordMaterial<D>::U(double value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DTexture2CoordMaterial)->put_U(value));
-}
-
-template <typename D> double impl_IPrinting3DTexture2CoordMaterial<D>::V() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IPrinting3DTexture2CoordMaterial)->get_V(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DTexture2CoordMaterial<D>::V(double value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DTexture2CoordMaterial)->put_V(value));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<double> impl_IPrinting3DCompositeMaterial<D>::Values() const
-{
-    Windows::Foundation::Collections::IVector<double> value;
-    check_hresult(WINRT_SHIM(IPrinting3DCompositeMaterial)->get_Values(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<uint32_t> impl_IPrinting3DMultiplePropertyMaterial<D>::MaterialIndices() const
-{
-    Windows::Foundation::Collections::IVector<uint32_t> value;
-    check_hresult(WINRT_SHIM(IPrinting3DMultiplePropertyMaterial)->get_MaterialIndices(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup impl_IPrinting3DBaseMaterialGroupFactory<D>::Create(uint32_t MaterialGroupId) const
-{
-    Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup result { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DBaseMaterialGroupFactory)->abi_Create(MaterialGroupId, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterial> impl_IPrinting3DBaseMaterialGroup<D>::Bases() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterial> value;
-    check_hresult(WINRT_SHIM(IPrinting3DBaseMaterialGroup)->get_Bases(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IPrinting3DBaseMaterialGroup<D>::MaterialGroupId() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPrinting3DBaseMaterialGroup)->get_MaterialGroupId(&value));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DColorMaterialGroup impl_IPrinting3DColorMaterialGroupFactory<D>::Create(uint32_t MaterialGroupId) const
-{
-    Windows::Graphics::Printing3D::Printing3DColorMaterialGroup result { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DColorMaterialGroupFactory)->abi_Create(MaterialGroupId, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterial> impl_IPrinting3DColorMaterialGroup<D>::Colors() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterial> value;
-    check_hresult(WINRT_SHIM(IPrinting3DColorMaterialGroup)->get_Colors(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IPrinting3DColorMaterialGroup<D>::MaterialGroupId() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPrinting3DColorMaterialGroup)->get_MaterialGroupId(&value));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup impl_IPrinting3DTexture2CoordMaterialGroupFactory<D>::Create(uint32_t MaterialGroupId) const
-{
-    Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup result { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DTexture2CoordMaterialGroupFactory)->abi_Create(MaterialGroupId, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterial> impl_IPrinting3DTexture2CoordMaterialGroup<D>::Texture2Coords() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterial> value;
-    check_hresult(WINRT_SHIM(IPrinting3DTexture2CoordMaterialGroup)->get_Texture2Coords(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IPrinting3DTexture2CoordMaterialGroup<D>::MaterialGroupId() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPrinting3DTexture2CoordMaterialGroup)->get_MaterialGroupId(&value));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DModelTexture impl_IPrinting3DTexture2CoordMaterialGroup2<D>::Texture() const
-{
-    Windows::Graphics::Printing3D::Printing3DModelTexture value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DTexture2CoordMaterialGroup2)->get_Texture(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DTexture2CoordMaterialGroup2<D>::Texture(const Windows::Graphics::Printing3D::Printing3DModelTexture & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DTexture2CoordMaterialGroup2)->put_Texture(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup impl_IPrinting3DCompositeMaterialGroupFactory<D>::Create(uint32_t MaterialGroupId) const
-{
-    Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup result { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DCompositeMaterialGroupFactory)->abi_Create(MaterialGroupId, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup impl_IPrinting3DCompositeMaterialGroup2<D>::BaseMaterialGroup() const
-{
-    Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DCompositeMaterialGroup2)->get_BaseMaterialGroup(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DCompositeMaterialGroup2<D>::BaseMaterialGroup(const Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DCompositeMaterialGroup2)->put_BaseMaterialGroup(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterial> impl_IPrinting3DCompositeMaterialGroup<D>::Composites() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterial> value;
-    check_hresult(WINRT_SHIM(IPrinting3DCompositeMaterialGroup)->get_Composites(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IPrinting3DCompositeMaterialGroup<D>::MaterialGroupId() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPrinting3DCompositeMaterialGroup)->get_MaterialGroupId(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<uint32_t> impl_IPrinting3DCompositeMaterialGroup<D>::MaterialIndices() const
-{
-    Windows::Foundation::Collections::IVector<uint32_t> value;
-    check_hresult(WINRT_SHIM(IPrinting3DCompositeMaterialGroup)->get_MaterialIndices(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup impl_IPrinting3DMultiplePropertyMaterialGroupFactory<D>::Create(uint32_t MaterialGroupId) const
-{
-    Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup result { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DMultiplePropertyMaterialGroupFactory)->abi_Create(MaterialGroupId, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterial> impl_IPrinting3DMultiplePropertyMaterialGroup<D>::MultipleProperties() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterial> value;
-    check_hresult(WINRT_SHIM(IPrinting3DMultiplePropertyMaterialGroup)->get_MultipleProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<uint32_t> impl_IPrinting3DMultiplePropertyMaterialGroup<D>::MaterialGroupIndices() const
-{
-    Windows::Foundation::Collections::IVector<uint32_t> value;
-    check_hresult(WINRT_SHIM(IPrinting3DMultiplePropertyMaterialGroup)->get_MaterialGroupIndices(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IPrinting3DMultiplePropertyMaterialGroup<D>::MaterialGroupId() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPrinting3DMultiplePropertyMaterialGroup)->get_MaterialGroupId(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup> impl_IPrinting3DMaterial<D>::BaseGroups() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup> value;
-    check_hresult(WINRT_SHIM(IPrinting3DMaterial)->get_BaseGroups(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterialGroup> impl_IPrinting3DMaterial<D>::ColorGroups() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DColorMaterialGroup> value;
-    check_hresult(WINRT_SHIM(IPrinting3DMaterial)->get_ColorGroups(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup> impl_IPrinting3DMaterial<D>::Texture2CoordGroups() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup> value;
-    check_hresult(WINRT_SHIM(IPrinting3DMaterial)->get_Texture2CoordGroups(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup> impl_IPrinting3DMaterial<D>::CompositeGroups() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup> value;
-    check_hresult(WINRT_SHIM(IPrinting3DMaterial)->get_CompositeGroups(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup> impl_IPrinting3DMaterial<D>::MultiplePropertyGroups() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup> value;
-    check_hresult(WINRT_SHIM(IPrinting3DMaterial)->get_MultiplePropertyGroups(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IPrinting3DMeshVerificationResult<D>::IsValid() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPrinting3DMeshVerificationResult)->get_IsValid(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<uint32_t> impl_IPrinting3DMeshVerificationResult<D>::NonmanifoldTriangles() const
-{
-    Windows::Foundation::Collections::IVectorView<uint32_t> value;
-    check_hresult(WINRT_SHIM(IPrinting3DMeshVerificationResult)->get_NonmanifoldTriangles(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<uint32_t> impl_IPrinting3DMeshVerificationResult<D>::ReversedNormalTriangles() const
-{
-    Windows::Foundation::Collections::IVectorView<uint32_t> value;
-    check_hresult(WINRT_SHIM(IPrinting3DMeshVerificationResult)->get_ReversedNormalTriangles(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DModelUnit impl_IPrinting3DModel<D>::Unit() const
-{
-    Windows::Graphics::Printing3D::Printing3DModelUnit value {};
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->get_Unit(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DModel<D>::Unit(Windows::Graphics::Printing3D::Printing3DModelUnit value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->put_Unit(value));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DModelTexture> impl_IPrinting3DModel<D>::Textures() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DModelTexture> value;
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->get_Textures(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMesh> impl_IPrinting3DModel<D>::Meshes() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DMesh> value;
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->get_Meshes(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponent> impl_IPrinting3DModel<D>::Components() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DComponent> value;
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->get_Components(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DMaterial impl_IPrinting3DModel<D>::Material() const
-{
-    Windows::Graphics::Printing3D::Printing3DMaterial value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->get_Material(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DModel<D>::Material(const Windows::Graphics::Printing3D::Printing3DMaterial & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->put_Material(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DComponent impl_IPrinting3DModel<D>::Build() const
-{
-    Windows::Graphics::Printing3D::Printing3DComponent value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->get_Build(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DModel<D>::Build(const Windows::Graphics::Printing3D::Printing3DComponent & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->put_Build(get_abi(value)));
-}
-
-template <typename D> hstring impl_IPrinting3DModel<D>::Version() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->get_Version(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DModel<D>::Version(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->put_Version(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IPrinting3DModel<D>::RequiredExtensions() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->get_RequiredExtensions(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> impl_IPrinting3DModel<D>::Metadata() const
-{
-    Windows::Foundation::Collections::IMap<hstring, hstring> value;
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->get_Metadata(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IPrinting3DModel<D>::RepairAsync() const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->abi_RepairAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DModel impl_IPrinting3DModel<D>::Clone() const
-{
-    Windows::Graphics::Printing3D::Printing3DModel value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3DModel)->abi_Clone(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IPrinting3DFaceReductionOptions<D>::MaxReductionArea() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IPrinting3DFaceReductionOptions)->get_MaxReductionArea(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DFaceReductionOptions<D>::MaxReductionArea(double value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DFaceReductionOptions)->put_MaxReductionArea(value));
-}
-
-template <typename D> uint32_t impl_IPrinting3DFaceReductionOptions<D>::TargetTriangleCount() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPrinting3DFaceReductionOptions)->get_TargetTriangleCount(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DFaceReductionOptions<D>::TargetTriangleCount(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DFaceReductionOptions)->put_TargetTriangleCount(value));
-}
-
-template <typename D> double impl_IPrinting3DFaceReductionOptions<D>::MaxEdgeLength() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IPrinting3DFaceReductionOptions)->get_MaxEdgeLength(&value));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3DFaceReductionOptions<D>::MaxEdgeLength(double value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3DFaceReductionOptions)->put_MaxEdgeLength(value));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPrinting3DModel2<D>::TryPartialRepairAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IPrinting3DModel2)->abi_TryPartialRepairAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPrinting3DModel2<D>::TryPartialRepairAsync(const Windows::Foundation::TimeSpan & maxWaitTime) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IPrinting3DModel2)->abi_TryPartialRepairWithTimeAsync(get_abi(maxWaitTime), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<bool, double> impl_IPrinting3DModel2<D>::TryReduceFacesAsync() const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<bool, double> operation;
-    check_hresult(WINRT_SHIM(IPrinting3DModel2)->abi_TryReduceFacesAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<bool, double> impl_IPrinting3DModel2<D>::TryReduceFacesAsync(const Windows::Graphics::Printing3D::Printing3DFaceReductionOptions & printing3DFaceReductionOptions) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<bool, double> operation;
-    check_hresult(WINRT_SHIM(IPrinting3DModel2)->abi_TryReduceFacesWithOptionsAsync(get_abi(printing3DFaceReductionOptions), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<bool, double> impl_IPrinting3DModel2<D>::TryReduceFacesAsync(const Windows::Graphics::Printing3D::Printing3DFaceReductionOptions & printing3DFaceReductionOptions, const Windows::Foundation::TimeSpan & maxWait) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<bool, double> operation;
-    check_hresult(WINRT_SHIM(IPrinting3DModel2)->abi_TryReduceFacesWithOptionsAndTimeAsync(get_abi(printing3DFaceReductionOptions), get_abi(maxWait), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<bool, double> impl_IPrinting3DModel2<D>::RepairWithProgressAsync() const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<bool, double> operation;
-    check_hresult(WINRT_SHIM(IPrinting3DModel2)->abi_RepairWithProgressAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3D3MFPackage> impl_IPrinting3D3MFPackageStatics<D>::LoadAsync(const Windows::Storage::Streams::IRandomAccessStream & value) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3D3MFPackage> operation;
-    check_hresult(WINRT_SHIM(IPrinting3D3MFPackageStatics)->abi_LoadAsync(get_abi(value), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> impl_IPrinting3D3MFPackage<D>::SaveAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStream> operation;
-    check_hresult(WINRT_SHIM(IPrinting3D3MFPackage)->abi_SaveAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Storage::Streams::IRandomAccessStream impl_IPrinting3D3MFPackage<D>::PrintTicket() const
-{
-    Windows::Storage::Streams::IRandomAccessStream value;
-    check_hresult(WINRT_SHIM(IPrinting3D3MFPackage)->get_PrintTicket(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3D3MFPackage<D>::PrintTicket(const Windows::Storage::Streams::IRandomAccessStream & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3D3MFPackage)->put_PrintTicket(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Streams::IRandomAccessStream impl_IPrinting3D3MFPackage<D>::ModelPart() const
-{
-    Windows::Storage::Streams::IRandomAccessStream value;
-    check_hresult(WINRT_SHIM(IPrinting3D3MFPackage)->get_ModelPart(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3D3MFPackage<D>::ModelPart(const Windows::Storage::Streams::IRandomAccessStream & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3D3MFPackage)->put_ModelPart(get_abi(value)));
-}
-
-template <typename D> Windows::Graphics::Printing3D::Printing3DTextureResource impl_IPrinting3D3MFPackage<D>::Thumbnail() const
-{
-    Windows::Graphics::Printing3D::Printing3DTextureResource value { nullptr };
-    check_hresult(WINRT_SHIM(IPrinting3D3MFPackage)->get_Thumbnail(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPrinting3D3MFPackage<D>::Thumbnail(const Windows::Graphics::Printing3D::Printing3DTextureResource & value) const
-{
-    check_hresult(WINRT_SHIM(IPrinting3D3MFPackage)->put_Thumbnail(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTextureResource> impl_IPrinting3D3MFPackage<D>::Textures() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Graphics::Printing3D::Printing3DTextureResource> value;
-    check_hresult(WINRT_SHIM(IPrinting3D3MFPackage)->get_Textures(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DModel> impl_IPrinting3D3MFPackage<D>::LoadModelFromPackageAsync(const Windows::Storage::Streams::IRandomAccessStream & value) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3DModel> operation;
-    check_hresult(WINRT_SHIM(IPrinting3D3MFPackage)->abi_LoadModelFromPackageAsync(get_abi(value), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IPrinting3D3MFPackage<D>::SaveModelToPackageAsync(const Windows::Graphics::Printing3D::Printing3DModel & value) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IPrinting3D3MFPackage)->abi_SaveModelToPackageAsync(get_abi(value), put_abi(operation)));
-    return operation;
-}
+WINRT_EXPORT namespace winrt::Windows::Graphics::Printing3D {
 
 inline Windows::Graphics::Printing3D::Print3DManager Print3DManager::GetForCurrentView()
 {
-    return get_activation_factory<Print3DManager, IPrint3DManagerStatics>().GetForCurrentView();
+    return get_activation_factory<Print3DManager, Windows::Graphics::Printing3D::IPrint3DManagerStatics>().GetForCurrentView();
 }
 
 inline Windows::Foundation::IAsyncOperation<bool> Print3DManager::ShowPrintUIAsync()
 {
-    return get_activation_factory<Print3DManager, IPrint3DManagerStatics>().ShowPrintUIAsync();
+    return get_activation_factory<Print3DManager, Windows::Graphics::Printing3D::IPrint3DManagerStatics>().ShowPrintUIAsync();
 }
 
 inline Printing3D3MFPackage::Printing3D3MFPackage() :
     Printing3D3MFPackage(activate_instance<Printing3D3MFPackage>())
 {}
 
-inline Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3D3MFPackage> Printing3D3MFPackage::LoadAsync(const Windows::Storage::Streams::IRandomAccessStream & value)
+inline Windows::Foundation::IAsyncOperation<Windows::Graphics::Printing3D::Printing3D3MFPackage> Printing3D3MFPackage::LoadAsync(Windows::Storage::Streams::IRandomAccessStream const& value)
 {
-    return get_activation_factory<Printing3D3MFPackage, IPrinting3D3MFPackageStatics>().LoadAsync(value);
+    return get_activation_factory<Printing3D3MFPackage, Windows::Graphics::Printing3D::IPrinting3D3MFPackageStatics>().LoadAsync(value);
 }
 
 inline Printing3DBaseMaterial::Printing3DBaseMaterial() :
@@ -3375,16 +3375,16 @@ inline Printing3DBaseMaterial::Printing3DBaseMaterial() :
 
 inline hstring Printing3DBaseMaterial::Abs()
 {
-    return get_activation_factory<Printing3DBaseMaterial, IPrinting3DBaseMaterialStatics>().Abs();
+    return get_activation_factory<Printing3DBaseMaterial, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics>().Abs();
 }
 
 inline hstring Printing3DBaseMaterial::Pla()
 {
-    return get_activation_factory<Printing3DBaseMaterial, IPrinting3DBaseMaterialStatics>().Pla();
+    return get_activation_factory<Printing3DBaseMaterial, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics>().Pla();
 }
 
 inline Printing3DBaseMaterialGroup::Printing3DBaseMaterialGroup(uint32_t MaterialGroupId) :
-    Printing3DBaseMaterialGroup(get_activation_factory<Printing3DBaseMaterialGroup, IPrinting3DBaseMaterialGroupFactory>().Create(MaterialGroupId))
+    Printing3DBaseMaterialGroup(get_activation_factory<Printing3DBaseMaterialGroup, Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroupFactory>().Create(MaterialGroupId))
 {}
 
 inline Printing3DColorMaterial::Printing3DColorMaterial() :
@@ -3392,7 +3392,7 @@ inline Printing3DColorMaterial::Printing3DColorMaterial() :
 {}
 
 inline Printing3DColorMaterialGroup::Printing3DColorMaterialGroup(uint32_t MaterialGroupId) :
-    Printing3DColorMaterialGroup(get_activation_factory<Printing3DColorMaterialGroup, IPrinting3DColorMaterialGroupFactory>().Create(MaterialGroupId))
+    Printing3DColorMaterialGroup(get_activation_factory<Printing3DColorMaterialGroup, Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroupFactory>().Create(MaterialGroupId))
 {}
 
 inline Printing3DComponent::Printing3DComponent() :
@@ -3408,7 +3408,7 @@ inline Printing3DCompositeMaterial::Printing3DCompositeMaterial() :
 {}
 
 inline Printing3DCompositeMaterialGroup::Printing3DCompositeMaterialGroup(uint32_t MaterialGroupId) :
-    Printing3DCompositeMaterialGroup(get_activation_factory<Printing3DCompositeMaterialGroup, IPrinting3DCompositeMaterialGroupFactory>().Create(MaterialGroupId))
+    Printing3DCompositeMaterialGroup(get_activation_factory<Printing3DCompositeMaterialGroup, Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroupFactory>().Create(MaterialGroupId))
 {}
 
 inline Printing3DFaceReductionOptions::Printing3DFaceReductionOptions() :
@@ -3436,7 +3436,7 @@ inline Printing3DMultiplePropertyMaterial::Printing3DMultiplePropertyMaterial() 
 {}
 
 inline Printing3DMultiplePropertyMaterialGroup::Printing3DMultiplePropertyMaterialGroup(uint32_t MaterialGroupId) :
-    Printing3DMultiplePropertyMaterialGroup(get_activation_factory<Printing3DMultiplePropertyMaterialGroup, IPrinting3DMultiplePropertyMaterialGroupFactory>().Create(MaterialGroupId))
+    Printing3DMultiplePropertyMaterialGroup(get_activation_factory<Printing3DMultiplePropertyMaterialGroup, Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroupFactory>().Create(MaterialGroupId))
 {}
 
 inline Printing3DTexture2CoordMaterial::Printing3DTexture2CoordMaterial() :
@@ -3444,609 +3444,232 @@ inline Printing3DTexture2CoordMaterial::Printing3DTexture2CoordMaterial() :
 {}
 
 inline Printing3DTexture2CoordMaterialGroup::Printing3DTexture2CoordMaterialGroup(uint32_t MaterialGroupId) :
-    Printing3DTexture2CoordMaterialGroup(get_activation_factory<Printing3DTexture2CoordMaterialGroup, IPrinting3DTexture2CoordMaterialGroupFactory>().Create(MaterialGroupId))
+    Printing3DTexture2CoordMaterialGroup(get_activation_factory<Printing3DTexture2CoordMaterialGroup, Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroupFactory>().Create(MaterialGroupId))
 {}
 
 inline Printing3DTextureResource::Printing3DTextureResource() :
     Printing3DTextureResource(activate_instance<Printing3DTextureResource>())
 {}
 
+template <typename L> Print3DTaskSourceRequestedHandler::Print3DTaskSourceRequestedHandler(L handler) :
+    Print3DTaskSourceRequestedHandler(impl::make_delegate<Print3DTaskSourceRequestedHandler>(std::forward<L>(handler)))
+{}
+
+template <typename F> Print3DTaskSourceRequestedHandler::Print3DTaskSourceRequestedHandler(F* handler) :
+    Print3DTaskSourceRequestedHandler([=](auto&& ... args) { handler(args ...); })
+{}
+
+template <typename O, typename M> Print3DTaskSourceRequestedHandler::Print3DTaskSourceRequestedHandler(O* object, M method) :
+    Print3DTaskSourceRequestedHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
+
+inline void Print3DTaskSourceRequestedHandler::operator()(Windows::Graphics::Printing3D::Print3DTaskSourceRequestedArgs const& args) const
+{
+    check_hresult((*(abi_t<Print3DTaskSourceRequestedHandler>**)this)->Invoke(get_abi(args)));
 }
 
 }
 
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrint3DManager>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrint3DManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrint3DManagerStatics>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrint3DManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrint3DTask>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrint3DTask & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrint3DTaskCompletedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrint3DTaskCompletedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrint3DTaskRequest>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrint3DTaskRequest & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrint3DTaskRequestedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrint3DTaskRequestedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrint3DTaskSourceChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrint3DTaskSourceChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrint3DTaskSourceRequestedArgs>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrint3DTaskSourceRequestedArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3D3MFPackage>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3D3MFPackage & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3D3MFPackageStatics>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3D3MFPackageStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroupFactory>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroupFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterial2>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterial2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroup>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroupFactory>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroupFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DComponent>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DComponent & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup2>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroupFactory>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroupFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMesh>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DMesh & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResult>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DModel>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DModel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DModel2>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DModel2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DModelTexture>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DModelTexture & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroup>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroupFactory>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroupFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup2>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroupFactory>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroupFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::IPrinting3DTextureResource>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::IPrinting3DTextureResource & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Print3DManager>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Print3DManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Print3DTask>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Print3DTask & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Print3DTaskRequest>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Print3DTaskRequest & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Print3DTaskSourceRequestedArgs>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Print3DTaskSourceRequestedArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3D3MFPackage>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3D3MFPackage & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DBaseMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DBaseMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DColorMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DColorMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DColorMaterialGroup>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DColorMaterialGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DComponent>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DComponent & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DComponentWithMatrix>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DComponentWithMatrix & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DCompositeMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DCompositeMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DFaceReductionOptions>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DFaceReductionOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DMesh>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DMesh & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DMeshVerificationResult>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DMeshVerificationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DModel>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DModel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DModelTexture>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DModelTexture & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterial>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterial & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Printing3D::Printing3DTextureResource>
-{
-    size_t operator()(const winrt::Windows::Graphics::Printing3D::Printing3DTextureResource & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrint3DManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrint3DManager> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrint3DManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrint3DManagerStatics> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrint3DTask> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrint3DTask> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrint3DTaskCompletedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrint3DTaskCompletedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrint3DTaskRequest> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrint3DTaskRequest> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrint3DTaskRequestedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrint3DTaskRequestedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrint3DTaskSourceChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrint3DTaskSourceChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrint3DTaskSourceRequestedArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrint3DTaskSourceRequestedArgs> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3D3MFPackage> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3D3MFPackage> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3D3MFPackageStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3D3MFPackageStatics> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroup> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroupFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialGroupFactory> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DBaseMaterialStatics> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterial2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterial2> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroup> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroupFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DColorMaterialGroupFactory> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DComponent> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DComponent> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DComponentWithMatrix> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroup2> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroupFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DCompositeMaterialGroupFactory> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DFaceReductionOptions> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMesh> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DMesh> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DMeshVerificationResult> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DModel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DModel> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DModel2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DModel2> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DModelTexture> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DModelTexture> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroup> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroupFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DMultiplePropertyMaterialGroupFactory> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroup2> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroupFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DTexture2CoordMaterialGroupFactory> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::IPrinting3DTextureResource> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::IPrinting3DTextureResource> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Print3DManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Print3DManager> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Print3DTask> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Print3DTask> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Print3DTaskCompletedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Print3DTaskRequest> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Print3DTaskRequest> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Print3DTaskRequestedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Print3DTaskSourceChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Print3DTaskSourceRequestedArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Print3DTaskSourceRequestedArgs> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3D3MFPackage> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3D3MFPackage> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DBaseMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DBaseMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DBaseMaterialGroup> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DColorMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DColorMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DColorMaterialGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DColorMaterialGroup> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DComponent> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DComponent> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DComponentWithMatrix> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DComponentWithMatrix> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DCompositeMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DCompositeMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DCompositeMaterialGroup> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DFaceReductionOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DFaceReductionOptions> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DMesh> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DMesh> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DMeshVerificationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DMeshVerificationResult> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DModel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DModel> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DModelTexture> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DModelTexture> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DMultiplePropertyMaterialGroup> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterial> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterial> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DTexture2CoordMaterialGroup> {};
+
+template<> struct hash<winrt::Windows::Graphics::Printing3D::Printing3DTextureResource> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Printing3D::Printing3DTextureResource> {};
+
+}
 
 WINRT_WARNING_POP

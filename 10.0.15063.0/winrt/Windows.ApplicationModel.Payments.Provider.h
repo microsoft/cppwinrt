@@ -1,30 +1,132 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.ApplicationModel.Payments.2.h"
+#include "winrt/impl/Windows.ApplicationModel.Payments.Provider.2.h"
+#include "winrt/Windows.ApplicationModel.Payments.h"
 
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.ApplicationModel.Payments.3.h"
-#include "internal/Windows.ApplicationModel.Payments.Provider.3.h"
-#include "Windows.ApplicationModel.Payments.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Payments_Provider_IPaymentAppManager<D>::RegisterAsync(param::async_iterable<hstring> const& supportedPaymentMethodIds) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentAppManager)->RegisterAsync(get_abi(supportedPaymentMethodIds), put_abi(result)));
+    return result;
+}
 
-namespace impl {
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Payments_Provider_IPaymentAppManager<D>::UnregisterAsync() const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentAppManager)->UnregisterAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Payments::Provider::PaymentAppManager consume_Windows_ApplicationModel_Payments_Provider_IPaymentAppManagerStatics<D>::Current() const
+{
+    Windows::ApplicationModel::Payments::Provider::PaymentAppManager value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentAppManagerStatics)->get_Current(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Payments::PaymentRequest consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransaction<D>::PaymentRequest() const
+{
+    Windows::ApplicationModel::Payments::PaymentRequest value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransaction)->get_PaymentRequest(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransaction<D>::PayerEmail() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransaction)->get_PayerEmail(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransaction<D>::PayerEmail(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransaction)->put_PayerEmail(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransaction<D>::PayerName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransaction)->get_PayerName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransaction<D>::PayerName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransaction)->put_PayerName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransaction<D>::PayerPhoneNumber() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransaction)->get_PayerPhoneNumber(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransaction<D>::PayerPhoneNumber(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransaction)->put_PayerPhoneNumber(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::PaymentRequestChangedResult> consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransaction<D>::UpdateShippingAddressAsync(Windows::ApplicationModel::Payments::PaymentAddress const& shippingAddress) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::PaymentRequestChangedResult> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransaction)->UpdateShippingAddressAsync(get_abi(shippingAddress), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::PaymentRequestChangedResult> consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransaction<D>::UpdateSelectedShippingOptionAsync(Windows::ApplicationModel::Payments::PaymentShippingOption const& selectedShippingOption) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::PaymentRequestChangedResult> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransaction)->UpdateSelectedShippingOptionAsync(get_abi(selectedShippingOption), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransactionAcceptResult> consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransaction<D>::AcceptAsync(Windows::ApplicationModel::Payments::PaymentToken const& paymentToken) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransactionAcceptResult> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransaction)->AcceptAsync(get_abi(paymentToken), put_abi(result)));
+    return result;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransaction<D>::Reject() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransaction)->Reject());
+}
+
+template <typename D> Windows::ApplicationModel::Payments::PaymentRequestCompletionStatus consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransactionAcceptResult<D>::Status() const
+{
+    Windows::ApplicationModel::Payments::PaymentRequestCompletionStatus value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransactionAcceptResult)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransaction> consume_Windows_ApplicationModel_Payments_Provider_IPaymentTransactionStatics<D>::FromIdAsync(param::hstring const& id) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransaction> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Payments::Provider::IPaymentTransactionStatics)->FromIdAsync(get_abi(id), put_abi(result)));
+    return result;
+}
 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentAppManager> : produce_base<D, Windows::ApplicationModel::Payments::Provider::IPaymentAppManager>
 {
-    HRESULT __stdcall abi_RegisterAsync(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> supportedPaymentMethodIds, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall RegisterAsync(::IUnknown* supportedPaymentMethodIds, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().RegisterAsync(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&supportedPaymentMethodIds)));
+            *result = detach_abi(this->shim().RegisterAsync(*reinterpret_cast<Windows::Foundation::Collections::IIterable<hstring> const*>(&supportedPaymentMethodIds)));
             return S_OK;
         }
         catch (...)
@@ -34,7 +136,7 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentAppMana
         }
     }
 
-    HRESULT __stdcall abi_UnregisterAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall UnregisterAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -53,7 +155,7 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentAppMana
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentAppManagerStatics> : produce_base<D, Windows::ApplicationModel::Payments::Provider::IPaymentAppManagerStatics>
 {
-    HRESULT __stdcall get_Current(impl::abi_arg_out<Windows::ApplicationModel::Payments::Provider::IPaymentAppManager> value) noexcept override
+    HRESULT __stdcall get_Current(::IUnknown** value) noexcept override
     {
         try
         {
@@ -72,7 +174,7 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentAppMana
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransaction> : produce_base<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransaction>
 {
-    HRESULT __stdcall get_PaymentRequest(impl::abi_arg_out<Windows::ApplicationModel::Payments::IPaymentRequest> value) noexcept override
+    HRESULT __stdcall get_PaymentRequest(::IUnknown** value) noexcept override
     {
         try
         {
@@ -87,7 +189,7 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
         }
     }
 
-    HRESULT __stdcall get_PayerEmail(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PayerEmail(HSTRING* value) noexcept override
     {
         try
         {
@@ -102,12 +204,12 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
         }
     }
 
-    HRESULT __stdcall put_PayerEmail(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_PayerEmail(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PayerEmail(*reinterpret_cast<const hstring *>(&value));
+            this->shim().PayerEmail(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -116,7 +218,7 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
         }
     }
 
-    HRESULT __stdcall get_PayerName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PayerName(HSTRING* value) noexcept override
     {
         try
         {
@@ -131,12 +233,12 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
         }
     }
 
-    HRESULT __stdcall put_PayerName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_PayerName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PayerName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().PayerName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -145,7 +247,7 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
         }
     }
 
-    HRESULT __stdcall get_PayerPhoneNumber(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PayerPhoneNumber(HSTRING* value) noexcept override
     {
         try
         {
@@ -160,12 +262,12 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
         }
     }
 
-    HRESULT __stdcall put_PayerPhoneNumber(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_PayerPhoneNumber(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PayerPhoneNumber(*reinterpret_cast<const hstring *>(&value));
+            this->shim().PayerPhoneNumber(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -174,27 +276,12 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
         }
     }
 
-    HRESULT __stdcall abi_UpdateShippingAddressAsync(impl::abi_arg_in<Windows::ApplicationModel::Payments::IPaymentAddress> shippingAddress, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::PaymentRequestChangedResult>> result) noexcept override
+    HRESULT __stdcall UpdateShippingAddressAsync(::IUnknown* shippingAddress, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().UpdateShippingAddressAsync(*reinterpret_cast<const Windows::ApplicationModel::Payments::PaymentAddress *>(&shippingAddress)));
-            return S_OK;
-        }
-        catch (...)
-        {
-            *result = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall abi_UpdateSelectedShippingOptionAsync(impl::abi_arg_in<Windows::ApplicationModel::Payments::IPaymentShippingOption> selectedShippingOption, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::PaymentRequestChangedResult>> result) noexcept override
-    {
-        try
-        {
-            typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().UpdateSelectedShippingOptionAsync(*reinterpret_cast<const Windows::ApplicationModel::Payments::PaymentShippingOption *>(&selectedShippingOption)));
+            *result = detach_abi(this->shim().UpdateShippingAddressAsync(*reinterpret_cast<Windows::ApplicationModel::Payments::PaymentAddress const*>(&shippingAddress)));
             return S_OK;
         }
         catch (...)
@@ -204,12 +291,12 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
         }
     }
 
-    HRESULT __stdcall abi_AcceptAsync(impl::abi_arg_in<Windows::ApplicationModel::Payments::IPaymentToken> paymentToken, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransactionAcceptResult>> result) noexcept override
+    HRESULT __stdcall UpdateSelectedShippingOptionAsync(::IUnknown* selectedShippingOption, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().AcceptAsync(*reinterpret_cast<const Windows::ApplicationModel::Payments::PaymentToken *>(&paymentToken)));
+            *result = detach_abi(this->shim().UpdateSelectedShippingOptionAsync(*reinterpret_cast<Windows::ApplicationModel::Payments::PaymentShippingOption const*>(&selectedShippingOption)));
             return S_OK;
         }
         catch (...)
@@ -219,7 +306,22 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
         }
     }
 
-    HRESULT __stdcall abi_Reject() noexcept override
+    HRESULT __stdcall AcceptAsync(::IUnknown* paymentToken, ::IUnknown** result) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *result = detach_abi(this->shim().AcceptAsync(*reinterpret_cast<Windows::ApplicationModel::Payments::PaymentToken const*>(&paymentToken)));
+            return S_OK;
+        }
+        catch (...)
+        {
+            *result = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall Reject() noexcept override
     {
         try
         {
@@ -237,7 +339,7 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransactionAcceptResult> : produce_base<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransactionAcceptResult>
 {
-    HRESULT __stdcall get_Status(Windows::ApplicationModel::Payments::PaymentRequestCompletionStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::ApplicationModel::Payments::PaymentRequestCompletionStatus>* value) noexcept override
     {
         try
         {
@@ -255,12 +357,12 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransactionStatics> : produce_base<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransactionStatics>
 {
-    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> id, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransaction>> result) noexcept override
+    HRESULT __stdcall FromIdAsync(HSTRING id, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&id)));
+            *result = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<hstring const*>(&id)));
             return S_OK;
         }
         catch (...)
@@ -273,196 +375,46 @@ struct produce<D, Windows::ApplicationModel::Payments::Provider::IPaymentTransac
 
 }
 
-namespace Windows::ApplicationModel::Payments::Provider {
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IPaymentAppManager<D>::RegisterAsync(iterable<hstring> supportedPaymentMethodIds) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IPaymentAppManager)->abi_RegisterAsync(get_abi(supportedPaymentMethodIds), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IPaymentAppManager<D>::UnregisterAsync() const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IPaymentAppManager)->abi_UnregisterAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Payments::Provider::PaymentAppManager impl_IPaymentAppManagerStatics<D>::Current() const
-{
-    Windows::ApplicationModel::Payments::Provider::PaymentAppManager value { nullptr };
-    check_hresult(WINRT_SHIM(IPaymentAppManagerStatics)->get_Current(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Payments::PaymentRequest impl_IPaymentTransaction<D>::PaymentRequest() const
-{
-    Windows::ApplicationModel::Payments::PaymentRequest value { nullptr };
-    check_hresult(WINRT_SHIM(IPaymentTransaction)->get_PaymentRequest(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IPaymentTransaction<D>::PayerEmail() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPaymentTransaction)->get_PayerEmail(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPaymentTransaction<D>::PayerEmail(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPaymentTransaction)->put_PayerEmail(get_abi(value)));
-}
-
-template <typename D> hstring impl_IPaymentTransaction<D>::PayerName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPaymentTransaction)->get_PayerName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPaymentTransaction<D>::PayerName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPaymentTransaction)->put_PayerName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IPaymentTransaction<D>::PayerPhoneNumber() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPaymentTransaction)->get_PayerPhoneNumber(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPaymentTransaction<D>::PayerPhoneNumber(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPaymentTransaction)->put_PayerPhoneNumber(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::PaymentRequestChangedResult> impl_IPaymentTransaction<D>::UpdateShippingAddressAsync(const Windows::ApplicationModel::Payments::PaymentAddress & shippingAddress) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::PaymentRequestChangedResult> result;
-    check_hresult(WINRT_SHIM(IPaymentTransaction)->abi_UpdateShippingAddressAsync(get_abi(shippingAddress), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::PaymentRequestChangedResult> impl_IPaymentTransaction<D>::UpdateSelectedShippingOptionAsync(const Windows::ApplicationModel::Payments::PaymentShippingOption & selectedShippingOption) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::PaymentRequestChangedResult> result;
-    check_hresult(WINRT_SHIM(IPaymentTransaction)->abi_UpdateSelectedShippingOptionAsync(get_abi(selectedShippingOption), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransactionAcceptResult> impl_IPaymentTransaction<D>::AcceptAsync(const Windows::ApplicationModel::Payments::PaymentToken & paymentToken) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransactionAcceptResult> result;
-    check_hresult(WINRT_SHIM(IPaymentTransaction)->abi_AcceptAsync(get_abi(paymentToken), put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IPaymentTransaction<D>::Reject() const
-{
-    check_hresult(WINRT_SHIM(IPaymentTransaction)->abi_Reject());
-}
-
-template <typename D> Windows::ApplicationModel::Payments::PaymentRequestCompletionStatus impl_IPaymentTransactionAcceptResult<D>::Status() const
-{
-    Windows::ApplicationModel::Payments::PaymentRequestCompletionStatus value {};
-    check_hresult(WINRT_SHIM(IPaymentTransactionAcceptResult)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransaction> impl_IPaymentTransactionStatics<D>::FromIdAsync(hstring_view id) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransaction> result;
-    check_hresult(WINRT_SHIM(IPaymentTransactionStatics)->abi_FromIdAsync(get_abi(id), put_abi(result)));
-    return result;
-}
+WINRT_EXPORT namespace winrt::Windows::ApplicationModel::Payments::Provider {
 
 inline Windows::ApplicationModel::Payments::Provider::PaymentAppManager PaymentAppManager::Current()
 {
-    return get_activation_factory<PaymentAppManager, IPaymentAppManagerStatics>().Current();
+    return get_activation_factory<PaymentAppManager, Windows::ApplicationModel::Payments::Provider::IPaymentAppManagerStatics>().Current();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransaction> PaymentTransaction::FromIdAsync(hstring_view id)
+inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Payments::Provider::PaymentTransaction> PaymentTransaction::FromIdAsync(param::hstring const& id)
 {
-    return get_activation_factory<PaymentTransaction, IPaymentTransactionStatics>().FromIdAsync(id);
+    return get_activation_factory<PaymentTransaction, Windows::ApplicationModel::Payments::Provider::IPaymentTransactionStatics>().FromIdAsync(id);
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentAppManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentAppManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentAppManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentAppManagerStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransaction> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransaction> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransactionAcceptResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransactionAcceptResult> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransactionStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransactionStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Payments::Provider::PaymentAppManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Payments::Provider::PaymentAppManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Payments::Provider::PaymentTransaction> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Payments::Provider::PaymentTransaction> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Payments::Provider::PaymentTransactionAcceptResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Payments::Provider::PaymentTransactionAcceptResult> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentAppManager>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Payments::Provider::IPaymentAppManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentAppManagerStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Payments::Provider::IPaymentAppManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransaction>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransaction & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransactionAcceptResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransactionAcceptResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransactionStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Payments::Provider::IPaymentTransactionStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Payments::Provider::PaymentAppManager>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Payments::Provider::PaymentAppManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Payments::Provider::PaymentTransaction>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Payments::Provider::PaymentTransaction & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Payments::Provider::PaymentTransactionAcceptResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Payments::Provider::PaymentTransactionAcceptResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

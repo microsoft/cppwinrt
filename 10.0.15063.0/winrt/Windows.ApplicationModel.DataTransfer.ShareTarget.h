@@ -1,25 +1,128 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.ApplicationModel.DataTransfer.2.h"
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.ApplicationModel.DataTransfer.ShareTarget.2.h"
+#include "winrt/Windows.ApplicationModel.DataTransfer.h"
 
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.ApplicationModel.DataTransfer.3.h"
-#include "internal/Windows.ApplicationModel.DataTransfer.ShareTarget.3.h"
-#include "Windows.ApplicationModel.DataTransfer.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IQuickLink<D>::Title() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink)->get_Title(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> void consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IQuickLink<D>::Title(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink)->put_Title(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Streams::RandomAccessStreamReference consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IQuickLink<D>::Thumbnail() const
+{
+    Windows::Storage::Streams::RandomAccessStreamReference value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink)->get_Thumbnail(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IQuickLink<D>::Thumbnail(Windows::Storage::Streams::RandomAccessStreamReference const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink)->put_Thumbnail(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IQuickLink<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IQuickLink<D>::Id(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink)->put_Id(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IQuickLink<D>::SupportedDataFormats() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink)->get_SupportedDataFormats(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IQuickLink<D>::SupportedFileTypes() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink)->get_SupportedFileTypes(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::DataTransfer::DataPackageView consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IShareOperation<D>::Data() const
+{
+    Windows::ApplicationModel::DataTransfer::DataPackageView value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation)->get_Data(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IShareOperation<D>::QuickLinkId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation)->get_QuickLinkId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IShareOperation<D>::RemoveThisQuickLink() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation)->RemoveThisQuickLink());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IShareOperation<D>::ReportStarted() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation)->ReportStarted());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IShareOperation<D>::ReportDataRetrieved() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation)->ReportDataRetrieved());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IShareOperation<D>::ReportSubmittedBackgroundTask() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation)->ReportSubmittedBackgroundTask());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IShareOperation<D>::ReportCompleted(Windows::ApplicationModel::DataTransfer::ShareTarget::QuickLink const& quicklink) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation)->ReportCompletedWithQuickLink(get_abi(quicklink)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IShareOperation<D>::ReportCompleted() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation)->ReportCompleted());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IShareOperation<D>::ReportError(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation)->ReportError(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_DataTransfer_ShareTarget_IShareOperation2<D>::DismissUI() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation2)->DismissUI());
+}
 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink> : produce_base<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink>
 {
-    HRESULT __stdcall get_Title(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Title(HSTRING* value) noexcept override
     {
         try
         {
@@ -34,12 +137,12 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLi
         }
     }
 
-    HRESULT __stdcall put_Title(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Title(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Title(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Title(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -48,7 +151,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLi
         }
     }
 
-    HRESULT __stdcall get_Thumbnail(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall get_Thumbnail(::IUnknown** value) noexcept override
     {
         try
         {
@@ -63,12 +166,12 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLi
         }
     }
 
-    HRESULT __stdcall put_Thumbnail(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall put_Thumbnail(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Thumbnail(*reinterpret_cast<const Windows::Storage::Streams::RandomAccessStreamReference *>(&value));
+            this->shim().Thumbnail(*reinterpret_cast<Windows::Storage::Streams::RandomAccessStreamReference const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -77,7 +180,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLi
         }
     }
 
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -92,12 +195,12 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLi
         }
     }
 
-    HRESULT __stdcall put_Id(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Id(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Id(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Id(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -106,7 +209,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLi
         }
     }
 
-    HRESULT __stdcall get_SupportedDataFormats(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_SupportedDataFormats(::IUnknown** value) noexcept override
     {
         try
         {
@@ -121,7 +224,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLi
         }
     }
 
-    HRESULT __stdcall get_SupportedFileTypes(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_SupportedFileTypes(::IUnknown** value) noexcept override
     {
         try
         {
@@ -140,7 +243,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLi
 template <typename D>
 struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation> : produce_base<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation>
 {
-    HRESULT __stdcall get_Data(impl::abi_arg_out<Windows::ApplicationModel::DataTransfer::IDataPackageView> value) noexcept override
+    HRESULT __stdcall get_Data(::IUnknown** value) noexcept override
     {
         try
         {
@@ -155,7 +258,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOp
         }
     }
 
-    HRESULT __stdcall get_QuickLinkId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_QuickLinkId(HSTRING* value) noexcept override
     {
         try
         {
@@ -170,7 +273,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOp
         }
     }
 
-    HRESULT __stdcall abi_RemoveThisQuickLink() noexcept override
+    HRESULT __stdcall RemoveThisQuickLink() noexcept override
     {
         try
         {
@@ -184,7 +287,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOp
         }
     }
 
-    HRESULT __stdcall abi_ReportStarted() noexcept override
+    HRESULT __stdcall ReportStarted() noexcept override
     {
         try
         {
@@ -198,7 +301,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOp
         }
     }
 
-    HRESULT __stdcall abi_ReportDataRetrieved() noexcept override
+    HRESULT __stdcall ReportDataRetrieved() noexcept override
     {
         try
         {
@@ -212,7 +315,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOp
         }
     }
 
-    HRESULT __stdcall abi_ReportSubmittedBackgroundTask() noexcept override
+    HRESULT __stdcall ReportSubmittedBackgroundTask() noexcept override
     {
         try
         {
@@ -226,12 +329,12 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOp
         }
     }
 
-    HRESULT __stdcall abi_ReportCompletedWithQuickLink(impl::abi_arg_in<Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink> quicklink) noexcept override
+    HRESULT __stdcall ReportCompletedWithQuickLink(::IUnknown* quicklink) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReportCompleted(*reinterpret_cast<const Windows::ApplicationModel::DataTransfer::ShareTarget::QuickLink *>(&quicklink));
+            this->shim().ReportCompleted(*reinterpret_cast<Windows::ApplicationModel::DataTransfer::ShareTarget::QuickLink const*>(&quicklink));
             return S_OK;
         }
         catch (...)
@@ -240,7 +343,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOp
         }
     }
 
-    HRESULT __stdcall abi_ReportCompleted() noexcept override
+    HRESULT __stdcall ReportCompleted() noexcept override
     {
         try
         {
@@ -254,12 +357,12 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOp
         }
     }
 
-    HRESULT __stdcall abi_ReportError(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall ReportError(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReportError(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ReportError(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -272,7 +375,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOp
 template <typename D>
 struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation2> : produce_base<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation2>
 {
-    HRESULT __stdcall abi_DismissUI() noexcept override
+    HRESULT __stdcall DismissUI() noexcept override
     {
         try
         {
@@ -289,111 +392,7 @@ struct produce<D, Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOp
 
 }
 
-namespace Windows::ApplicationModel::DataTransfer::ShareTarget {
-
-template <typename D> hstring impl_IQuickLink<D>::Title() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IQuickLink)->get_Title(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IQuickLink<D>::Title(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IQuickLink)->put_Title(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Streams::RandomAccessStreamReference impl_IQuickLink<D>::Thumbnail() const
-{
-    Windows::Storage::Streams::RandomAccessStreamReference value { nullptr };
-    check_hresult(WINRT_SHIM(IQuickLink)->get_Thumbnail(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IQuickLink<D>::Thumbnail(const Windows::Storage::Streams::RandomAccessStreamReference & value) const
-{
-    check_hresult(WINRT_SHIM(IQuickLink)->put_Thumbnail(get_abi(value)));
-}
-
-template <typename D> hstring impl_IQuickLink<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IQuickLink)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IQuickLink<D>::Id(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IQuickLink)->put_Id(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IQuickLink<D>::SupportedDataFormats() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IQuickLink)->get_SupportedDataFormats(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IQuickLink<D>::SupportedFileTypes() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IQuickLink)->get_SupportedFileTypes(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::DataTransfer::DataPackageView impl_IShareOperation<D>::Data() const
-{
-    Windows::ApplicationModel::DataTransfer::DataPackageView value { nullptr };
-    check_hresult(WINRT_SHIM(IShareOperation)->get_Data(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IShareOperation<D>::QuickLinkId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IShareOperation)->get_QuickLinkId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IShareOperation<D>::RemoveThisQuickLink() const
-{
-    check_hresult(WINRT_SHIM(IShareOperation)->abi_RemoveThisQuickLink());
-}
-
-template <typename D> void impl_IShareOperation<D>::ReportStarted() const
-{
-    check_hresult(WINRT_SHIM(IShareOperation)->abi_ReportStarted());
-}
-
-template <typename D> void impl_IShareOperation<D>::ReportDataRetrieved() const
-{
-    check_hresult(WINRT_SHIM(IShareOperation)->abi_ReportDataRetrieved());
-}
-
-template <typename D> void impl_IShareOperation<D>::ReportSubmittedBackgroundTask() const
-{
-    check_hresult(WINRT_SHIM(IShareOperation)->abi_ReportSubmittedBackgroundTask());
-}
-
-template <typename D> void impl_IShareOperation<D>::ReportCompleted(const Windows::ApplicationModel::DataTransfer::ShareTarget::QuickLink & quicklink) const
-{
-    check_hresult(WINRT_SHIM(IShareOperation)->abi_ReportCompletedWithQuickLink(get_abi(quicklink)));
-}
-
-template <typename D> void impl_IShareOperation<D>::ReportCompleted() const
-{
-    check_hresult(WINRT_SHIM(IShareOperation)->abi_ReportCompleted());
-}
-
-template <typename D> void impl_IShareOperation<D>::ReportError(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IShareOperation)->abi_ReportError(get_abi(value)));
-}
-
-template <typename D> void impl_IShareOperation2<D>::DismissUI() const
-{
-    check_hresult(WINRT_SHIM(IShareOperation2)->abi_DismissUI());
-}
+WINRT_EXPORT namespace winrt::Windows::ApplicationModel::DataTransfer::ShareTarget {
 
 inline QuickLink::QuickLink() :
     QuickLink(activate_instance<QuickLink>())
@@ -401,51 +400,23 @@ inline QuickLink::QuickLink() :
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::QuickLink> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::QuickLink> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::ShareOperation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::ShareOperation> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IQuickLink & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::IShareOperation2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::QuickLink>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::QuickLink & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::ShareOperation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::DataTransfer::ShareTarget::ShareOperation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

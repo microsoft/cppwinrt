@@ -1,24 +1,114 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.Devices.Custom.2.h"
+#include "winrt/Windows.Devices.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.Devices.Custom.3.h"
-#include "Windows.Devices.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Storage::Streams::IInputStream consume_Windows_Devices_Custom_ICustomDevice<D>::InputStream() const
+{
+    Windows::Storage::Streams::IInputStream value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::ICustomDevice)->get_InputStream(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> Windows::Storage::Streams::IOutputStream consume_Windows_Devices_Custom_ICustomDevice<D>::OutputStream() const
+{
+    Windows::Storage::Streams::IOutputStream value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::ICustomDevice)->get_OutputStream(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<uint32_t> consume_Windows_Devices_Custom_ICustomDevice<D>::SendIOControlAsync(Windows::Devices::Custom::IIOControlCode const& ioControlCode, Windows::Storage::Streams::IBuffer const& inputBuffer, Windows::Storage::Streams::IBuffer const& outputBuffer) const
+{
+    Windows::Foundation::IAsyncOperation<uint32_t> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::ICustomDevice)->SendIOControlAsync(get_abi(ioControlCode), get_abi(inputBuffer), get_abi(outputBuffer), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_Devices_Custom_ICustomDevice<D>::TrySendIOControlAsync(Windows::Devices::Custom::IIOControlCode const& ioControlCode, Windows::Storage::Streams::IBuffer const& inputBuffer, Windows::Storage::Streams::IBuffer const& outputBuffer) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::ICustomDevice)->TrySendIOControlAsync(get_abi(ioControlCode), get_abi(inputBuffer), get_abi(outputBuffer), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> hstring consume_Windows_Devices_Custom_ICustomDeviceStatics<D>::GetDeviceSelector(GUID const& classGuid) const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::ICustomDeviceStatics)->GetDeviceSelector(get_abi(classGuid), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Custom::CustomDevice> consume_Windows_Devices_Custom_ICustomDeviceStatics<D>::FromIdAsync(param::hstring const& deviceId, Windows::Devices::Custom::DeviceAccessMode const& desiredAccess, Windows::Devices::Custom::DeviceSharingMode const& sharingMode) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Custom::CustomDevice> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::ICustomDeviceStatics)->FromIdAsync(get_abi(deviceId), get_abi(desiredAccess), get_abi(sharingMode), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Devices::Custom::IOControlAccessMode consume_Windows_Devices_Custom_IIOControlCode<D>::AccessMode() const
+{
+    Windows::Devices::Custom::IOControlAccessMode value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::IIOControlCode)->get_AccessMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Custom::IOControlBufferingMethod consume_Windows_Devices_Custom_IIOControlCode<D>::BufferingMethod() const
+{
+    Windows::Devices::Custom::IOControlBufferingMethod value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::IIOControlCode)->get_BufferingMethod(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint16_t consume_Windows_Devices_Custom_IIOControlCode<D>::Function() const
+{
+    uint16_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::IIOControlCode)->get_Function(&value));
+    return value;
+}
+
+template <typename D> uint16_t consume_Windows_Devices_Custom_IIOControlCode<D>::DeviceType() const
+{
+    uint16_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::IIOControlCode)->get_DeviceType(&value));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Custom_IIOControlCode<D>::ControlCode() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::IIOControlCode)->get_ControlCode(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Custom::IOControlCode consume_Windows_Devices_Custom_IIOControlCodeFactory<D>::CreateIOControlCode(uint16_t deviceType, uint16_t function, Windows::Devices::Custom::IOControlAccessMode const& accessMode, Windows::Devices::Custom::IOControlBufferingMethod const& bufferingMethod) const
+{
+    Windows::Devices::Custom::IOControlCode instance{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::IIOControlCodeFactory)->CreateIOControlCode(deviceType, function, get_abi(accessMode), get_abi(bufferingMethod), put_abi(instance)));
+    return instance;
+}
+
+template <typename D> uint16_t consume_Windows_Devices_Custom_IKnownDeviceTypesStatics<D>::Unknown() const
+{
+    uint16_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Custom::IKnownDeviceTypesStatics)->get_Unknown(&value));
+    return value;
+}
 
 template <typename D>
 struct produce<D, Windows::Devices::Custom::ICustomDevice> : produce_base<D, Windows::Devices::Custom::ICustomDevice>
 {
-    HRESULT __stdcall get_InputStream(impl::abi_arg_out<Windows::Storage::Streams::IInputStream> value) noexcept override
+    HRESULT __stdcall get_InputStream(::IUnknown** value) noexcept override
     {
         try
         {
@@ -33,7 +123,7 @@ struct produce<D, Windows::Devices::Custom::ICustomDevice> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_OutputStream(impl::abi_arg_out<Windows::Storage::Streams::IOutputStream> value) noexcept override
+    HRESULT __stdcall get_OutputStream(::IUnknown** value) noexcept override
     {
         try
         {
@@ -48,12 +138,12 @@ struct produce<D, Windows::Devices::Custom::ICustomDevice> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_SendIOControlAsync(impl::abi_arg_in<Windows::Devices::Custom::IIOControlCode> ioControlCode, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> inputBuffer, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> outputBuffer, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<uint32_t>> operation) noexcept override
+    HRESULT __stdcall SendIOControlAsync(::IUnknown* ioControlCode, ::IUnknown* inputBuffer, ::IUnknown* outputBuffer, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().SendIOControlAsync(*reinterpret_cast<const Windows::Devices::Custom::IIOControlCode *>(&ioControlCode), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&inputBuffer), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&outputBuffer)));
+            *operation = detach_abi(this->shim().SendIOControlAsync(*reinterpret_cast<Windows::Devices::Custom::IIOControlCode const*>(&ioControlCode), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&inputBuffer), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&outputBuffer)));
             return S_OK;
         }
         catch (...)
@@ -63,12 +153,12 @@ struct produce<D, Windows::Devices::Custom::ICustomDevice> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_TrySendIOControlAsync(impl::abi_arg_in<Windows::Devices::Custom::IIOControlCode> ioControlCode, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> inputBuffer, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> outputBuffer, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall TrySendIOControlAsync(::IUnknown* ioControlCode, ::IUnknown* inputBuffer, ::IUnknown* outputBuffer, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().TrySendIOControlAsync(*reinterpret_cast<const Windows::Devices::Custom::IIOControlCode *>(&ioControlCode), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&inputBuffer), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&outputBuffer)));
+            *operation = detach_abi(this->shim().TrySendIOControlAsync(*reinterpret_cast<Windows::Devices::Custom::IIOControlCode const*>(&ioControlCode), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&inputBuffer), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&outputBuffer)));
             return S_OK;
         }
         catch (...)
@@ -82,12 +172,12 @@ struct produce<D, Windows::Devices::Custom::ICustomDevice> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Devices::Custom::ICustomDeviceStatics> : produce_base<D, Windows::Devices::Custom::ICustomDeviceStatics>
 {
-    HRESULT __stdcall abi_GetDeviceSelector(GUID classGuid, impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall GetDeviceSelector(abi_t<GUID> classGuid, HSTRING* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetDeviceSelector(classGuid));
+            *value = detach_abi(this->shim().GetDeviceSelector(*reinterpret_cast<GUID const*>(&classGuid)));
             return S_OK;
         }
         catch (...)
@@ -97,12 +187,12 @@ struct produce<D, Windows::Devices::Custom::ICustomDeviceStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> deviceId, Windows::Devices::Custom::DeviceAccessMode desiredAccess, Windows::Devices::Custom::DeviceSharingMode sharingMode, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Custom::CustomDevice>> operation) noexcept override
+    HRESULT __stdcall FromIdAsync(HSTRING deviceId, abi_t<Windows::Devices::Custom::DeviceAccessMode> desiredAccess, abi_t<Windows::Devices::Custom::DeviceSharingMode> sharingMode, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId), desiredAccess, sharingMode));
+            *operation = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<hstring const*>(&deviceId), *reinterpret_cast<Windows::Devices::Custom::DeviceAccessMode const*>(&desiredAccess), *reinterpret_cast<Windows::Devices::Custom::DeviceSharingMode const*>(&sharingMode)));
             return S_OK;
         }
         catch (...)
@@ -116,7 +206,7 @@ struct produce<D, Windows::Devices::Custom::ICustomDeviceStatics> : produce_base
 template <typename D>
 struct produce<D, Windows::Devices::Custom::IIOControlCode> : produce_base<D, Windows::Devices::Custom::IIOControlCode>
 {
-    HRESULT __stdcall get_AccessMode(Windows::Devices::Custom::IOControlAccessMode * value) noexcept override
+    HRESULT __stdcall get_AccessMode(abi_t<Windows::Devices::Custom::IOControlAccessMode>* value) noexcept override
     {
         try
         {
@@ -130,7 +220,7 @@ struct produce<D, Windows::Devices::Custom::IIOControlCode> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_BufferingMethod(Windows::Devices::Custom::IOControlBufferingMethod * value) noexcept override
+    HRESULT __stdcall get_BufferingMethod(abi_t<Windows::Devices::Custom::IOControlBufferingMethod>* value) noexcept override
     {
         try
         {
@@ -144,7 +234,7 @@ struct produce<D, Windows::Devices::Custom::IIOControlCode> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Function(uint16_t * value) noexcept override
+    HRESULT __stdcall get_Function(uint16_t* value) noexcept override
     {
         try
         {
@@ -158,7 +248,7 @@ struct produce<D, Windows::Devices::Custom::IIOControlCode> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_DeviceType(uint16_t * value) noexcept override
+    HRESULT __stdcall get_DeviceType(uint16_t* value) noexcept override
     {
         try
         {
@@ -172,7 +262,7 @@ struct produce<D, Windows::Devices::Custom::IIOControlCode> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_ControlCode(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ControlCode(uint32_t* value) noexcept override
     {
         try
         {
@@ -190,12 +280,12 @@ struct produce<D, Windows::Devices::Custom::IIOControlCode> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Devices::Custom::IIOControlCodeFactory> : produce_base<D, Windows::Devices::Custom::IIOControlCodeFactory>
 {
-    HRESULT __stdcall abi_CreateIOControlCode(uint16_t deviceType, uint16_t function, Windows::Devices::Custom::IOControlAccessMode accessMode, Windows::Devices::Custom::IOControlBufferingMethod bufferingMethod, impl::abi_arg_out<Windows::Devices::Custom::IIOControlCode> instance) noexcept override
+    HRESULT __stdcall CreateIOControlCode(uint16_t deviceType, uint16_t function, abi_t<Windows::Devices::Custom::IOControlAccessMode> accessMode, abi_t<Windows::Devices::Custom::IOControlBufferingMethod> bufferingMethod, ::IUnknown** instance) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *instance = detach_abi(this->shim().CreateIOControlCode(deviceType, function, accessMode, bufferingMethod));
+            *instance = detach_abi(this->shim().CreateIOControlCode(deviceType, function, *reinterpret_cast<Windows::Devices::Custom::IOControlAccessMode const*>(&accessMode), *reinterpret_cast<Windows::Devices::Custom::IOControlBufferingMethod const*>(&bufferingMethod)));
             return S_OK;
         }
         catch (...)
@@ -209,7 +299,7 @@ struct produce<D, Windows::Devices::Custom::IIOControlCodeFactory> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Custom::IKnownDeviceTypesStatics> : produce_base<D, Windows::Devices::Custom::IKnownDeviceTypesStatics>
 {
-    HRESULT __stdcall get_Unknown(uint16_t * value) noexcept override
+    HRESULT __stdcall get_Unknown(uint16_t* value) noexcept override
     {
         try
         {
@@ -226,183 +316,55 @@ struct produce<D, Windows::Devices::Custom::IKnownDeviceTypesStatics> : produce_
 
 }
 
-namespace Windows::Devices::Custom {
+WINRT_EXPORT namespace winrt::Windows::Devices::Custom {
 
-template <typename D> uint16_t impl_IKnownDeviceTypesStatics<D>::Unknown() const
+inline hstring CustomDevice::GetDeviceSelector(GUID const& classGuid)
 {
-    uint16_t value {};
-    check_hresult(WINRT_SHIM(IKnownDeviceTypesStatics)->get_Unknown(&value));
-    return value;
+    return get_activation_factory<CustomDevice, Windows::Devices::Custom::ICustomDeviceStatics>().GetDeviceSelector(classGuid);
 }
 
-template <typename D> Windows::Devices::Custom::IOControlAccessMode impl_IIOControlCode<D>::AccessMode() const
+inline Windows::Foundation::IAsyncOperation<Windows::Devices::Custom::CustomDevice> CustomDevice::FromIdAsync(param::hstring const& deviceId, Windows::Devices::Custom::DeviceAccessMode const& desiredAccess, Windows::Devices::Custom::DeviceSharingMode const& sharingMode)
 {
-    Windows::Devices::Custom::IOControlAccessMode value {};
-    check_hresult(WINRT_SHIM(IIOControlCode)->get_AccessMode(&value));
-    return value;
+    return get_activation_factory<CustomDevice, Windows::Devices::Custom::ICustomDeviceStatics>().FromIdAsync(deviceId, desiredAccess, sharingMode);
 }
 
-template <typename D> Windows::Devices::Custom::IOControlBufferingMethod impl_IIOControlCode<D>::BufferingMethod() const
-{
-    Windows::Devices::Custom::IOControlBufferingMethod value {};
-    check_hresult(WINRT_SHIM(IIOControlCode)->get_BufferingMethod(&value));
-    return value;
-}
-
-template <typename D> uint16_t impl_IIOControlCode<D>::Function() const
-{
-    uint16_t value {};
-    check_hresult(WINRT_SHIM(IIOControlCode)->get_Function(&value));
-    return value;
-}
-
-template <typename D> uint16_t impl_IIOControlCode<D>::DeviceType() const
-{
-    uint16_t value {};
-    check_hresult(WINRT_SHIM(IIOControlCode)->get_DeviceType(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IIOControlCode<D>::ControlCode() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IIOControlCode)->get_ControlCode(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Custom::IOControlCode impl_IIOControlCodeFactory<D>::CreateIOControlCode(uint16_t deviceType, uint16_t function, Windows::Devices::Custom::IOControlAccessMode accessMode, Windows::Devices::Custom::IOControlBufferingMethod bufferingMethod) const
-{
-    Windows::Devices::Custom::IOControlCode instance { nullptr };
-    check_hresult(WINRT_SHIM(IIOControlCodeFactory)->abi_CreateIOControlCode(deviceType, function, accessMode, bufferingMethod, put_abi(instance)));
-    return instance;
-}
-
-template <typename D> hstring impl_ICustomDeviceStatics<D>::GetDeviceSelector(GUID classGuid) const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICustomDeviceStatics)->abi_GetDeviceSelector(classGuid, put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Custom::CustomDevice> impl_ICustomDeviceStatics<D>::FromIdAsync(hstring_view deviceId, Windows::Devices::Custom::DeviceAccessMode desiredAccess, Windows::Devices::Custom::DeviceSharingMode sharingMode) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Custom::CustomDevice> operation;
-    check_hresult(WINRT_SHIM(ICustomDeviceStatics)->abi_FromIdAsync(get_abi(deviceId), desiredAccess, sharingMode, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Storage::Streams::IInputStream impl_ICustomDevice<D>::InputStream() const
-{
-    Windows::Storage::Streams::IInputStream value;
-    check_hresult(WINRT_SHIM(ICustomDevice)->get_InputStream(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IOutputStream impl_ICustomDevice<D>::OutputStream() const
-{
-    Windows::Storage::Streams::IOutputStream value;
-    check_hresult(WINRT_SHIM(ICustomDevice)->get_OutputStream(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<uint32_t> impl_ICustomDevice<D>::SendIOControlAsync(const Windows::Devices::Custom::IIOControlCode & ioControlCode, const Windows::Storage::Streams::IBuffer & inputBuffer, const Windows::Storage::Streams::IBuffer & outputBuffer) const
-{
-    Windows::Foundation::IAsyncOperation<uint32_t> operation;
-    check_hresult(WINRT_SHIM(ICustomDevice)->abi_SendIOControlAsync(get_abi(ioControlCode), get_abi(inputBuffer), get_abi(outputBuffer), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_ICustomDevice<D>::TrySendIOControlAsync(const Windows::Devices::Custom::IIOControlCode & ioControlCode, const Windows::Storage::Streams::IBuffer & inputBuffer, const Windows::Storage::Streams::IBuffer & outputBuffer) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(ICustomDevice)->abi_TrySendIOControlAsync(get_abi(ioControlCode), get_abi(inputBuffer), get_abi(outputBuffer), put_abi(operation)));
-    return operation;
-}
-
-inline hstring CustomDevice::GetDeviceSelector(GUID classGuid)
-{
-    return get_activation_factory<CustomDevice, ICustomDeviceStatics>().GetDeviceSelector(classGuid);
-}
-
-inline Windows::Foundation::IAsyncOperation<Windows::Devices::Custom::CustomDevice> CustomDevice::FromIdAsync(hstring_view deviceId, Windows::Devices::Custom::DeviceAccessMode desiredAccess, Windows::Devices::Custom::DeviceSharingMode sharingMode)
-{
-    return get_activation_factory<CustomDevice, ICustomDeviceStatics>().FromIdAsync(deviceId, desiredAccess, sharingMode);
-}
-
-inline IOControlCode::IOControlCode(uint16_t deviceType, uint16_t function, Windows::Devices::Custom::IOControlAccessMode accessMode, Windows::Devices::Custom::IOControlBufferingMethod bufferingMethod) :
-    IOControlCode(get_activation_factory<IOControlCode, IIOControlCodeFactory>().CreateIOControlCode(deviceType, function, accessMode, bufferingMethod))
+inline IOControlCode::IOControlCode(uint16_t deviceType, uint16_t function, Windows::Devices::Custom::IOControlAccessMode const& accessMode, Windows::Devices::Custom::IOControlBufferingMethod const& bufferingMethod) :
+    IOControlCode(get_activation_factory<IOControlCode, Windows::Devices::Custom::IIOControlCodeFactory>().CreateIOControlCode(deviceType, function, accessMode, bufferingMethod))
 {}
 
 inline uint16_t KnownDeviceTypes::Unknown()
 {
-    return get_activation_factory<KnownDeviceTypes, IKnownDeviceTypesStatics>().Unknown();
+    return get_activation_factory<KnownDeviceTypes, Windows::Devices::Custom::IKnownDeviceTypesStatics>().Unknown();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Devices::Custom::ICustomDevice> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Custom::ICustomDevice> {};
+
+template<> struct hash<winrt::Windows::Devices::Custom::ICustomDeviceStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Custom::ICustomDeviceStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Custom::IIOControlCode> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Custom::IIOControlCode> {};
+
+template<> struct hash<winrt::Windows::Devices::Custom::IIOControlCodeFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Custom::IIOControlCodeFactory> {};
+
+template<> struct hash<winrt::Windows::Devices::Custom::IKnownDeviceTypesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Custom::IKnownDeviceTypesStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Custom::CustomDevice> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Custom::CustomDevice> {};
+
+template<> struct hash<winrt::Windows::Devices::Custom::IOControlCode> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Custom::IOControlCode> {};
+
+template<> struct hash<winrt::Windows::Devices::Custom::KnownDeviceTypes> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Custom::KnownDeviceTypes> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Devices::Custom::ICustomDevice>
-{
-    size_t operator()(const winrt::Windows::Devices::Custom::ICustomDevice & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Custom::ICustomDeviceStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Custom::ICustomDeviceStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Custom::IIOControlCode>
-{
-    size_t operator()(const winrt::Windows::Devices::Custom::IIOControlCode & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Custom::IIOControlCodeFactory>
-{
-    size_t operator()(const winrt::Windows::Devices::Custom::IIOControlCodeFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Custom::IKnownDeviceTypesStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Custom::IKnownDeviceTypesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Custom::CustomDevice>
-{
-    size_t operator()(const winrt::Windows::Devices::Custom::CustomDevice & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Custom::IOControlCode>
-{
-    size_t operator()(const winrt::Windows::Devices::Custom::IOControlCode & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

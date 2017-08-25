@@ -1,30 +1,1123 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.ApplicationModel.2.h"
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.Foundation.Collections.2.h"
+#include "winrt/impl/Windows.Storage.2.h"
+#include "winrt/impl/Windows.Storage.Search.2.h"
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.System.RemoteSystems.2.h"
+#include "winrt/impl/Windows.UI.Popups.2.h"
+#include "winrt/impl/Windows.UI.ViewManagement.2.h"
+#include "winrt/impl/Windows.System.2.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.ApplicationModel.3.h"
-#include "internal/Windows.UI.Popups.3.h"
-#include "internal/Windows.Storage.Search.3.h"
-#include "internal/Windows.UI.ViewManagement.3.h"
-#include "internal/Windows.Storage.3.h"
-#include "internal/Windows.System.RemoteSystems.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.System.3.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::ApplicationModel::AppInfo consume_Windows_System_IAppDiagnosticInfo<D>::AppInfo() const
+{
+    Windows::ApplicationModel::AppInfo value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IAppDiagnosticInfo)->get_AppInfo(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::System::AppDiagnosticInfo>> consume_Windows_System_IAppDiagnosticInfoStatics<D>::RequestInfoAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::System::AppDiagnosticInfo>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IAppDiagnosticInfoStatics)->RequestInfoAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> uint64_t consume_Windows_System_IAppMemoryReport<D>::PrivateCommitUsage() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::IAppMemoryReport)->get_PrivateCommitUsage(&value));
+    return value;
+}
+
+template <typename D> uint64_t consume_Windows_System_IAppMemoryReport<D>::PeakPrivateCommitUsage() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::IAppMemoryReport)->get_PeakPrivateCommitUsage(&value));
+    return value;
+}
+
+template <typename D> uint64_t consume_Windows_System_IAppMemoryReport<D>::TotalCommitUsage() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::IAppMemoryReport)->get_TotalCommitUsage(&value));
+    return value;
+}
+
+template <typename D> uint64_t consume_Windows_System_IAppMemoryReport<D>::TotalCommitLimit() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::IAppMemoryReport)->get_TotalCommitLimit(&value));
+    return value;
+}
+
+template <typename D> uint64_t consume_Windows_System_IAppMemoryUsageLimitChangingEventArgs<D>::OldLimit() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::IAppMemoryUsageLimitChangingEventArgs)->get_OldLimit(&value));
+    return value;
+}
+
+template <typename D> uint64_t consume_Windows_System_IAppMemoryUsageLimitChangingEventArgs<D>::NewLimit() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::IAppMemoryUsageLimitChangingEventArgs)->get_NewLimit(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Storage::IStorageItem> consume_Windows_System_IFolderLauncherOptions<D>::ItemsToSelect() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Storage::IStorageItem> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IFolderLauncherOptions)->get_ItemsToSelect(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_IKnownUserPropertiesStatics<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IKnownUserPropertiesStatics)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_IKnownUserPropertiesStatics<D>::FirstName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IKnownUserPropertiesStatics)->get_FirstName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_IKnownUserPropertiesStatics<D>::LastName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IKnownUserPropertiesStatics)->get_LastName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_IKnownUserPropertiesStatics<D>::ProviderName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IKnownUserPropertiesStatics)->get_ProviderName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_IKnownUserPropertiesStatics<D>::AccountName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IKnownUserPropertiesStatics)->get_AccountName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_IKnownUserPropertiesStatics<D>::GuestHost() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IKnownUserPropertiesStatics)->get_GuestHost(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_IKnownUserPropertiesStatics<D>::PrincipalName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IKnownUserPropertiesStatics)->get_PrincipalName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_IKnownUserPropertiesStatics<D>::DomainName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IKnownUserPropertiesStatics)->get_DomainName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_IKnownUserPropertiesStatics<D>::SessionInitiationProtocolUri() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IKnownUserPropertiesStatics)->get_SessionInitiationProtocolUri(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::LaunchUriStatus consume_Windows_System_ILaunchUriResult<D>::Status() const
+{
+    Windows::System::LaunchUriStatus value{};
+    check_hresult(WINRT_SHIM(Windows::System::ILaunchUriResult)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::ValueSet consume_Windows_System_ILaunchUriResult<D>::Result() const
+{
+    Windows::Foundation::Collections::ValueSet value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILaunchUriResult)->get_Result(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_System_ILauncherOptions<D>::TreatAsUntrusted() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->get_TreatAsUntrusted(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherOptions<D>::TreatAsUntrusted(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->put_TreatAsUntrusted(value));
+}
+
+template <typename D> bool consume_Windows_System_ILauncherOptions<D>::DisplayApplicationPicker() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->get_DisplayApplicationPicker(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherOptions<D>::DisplayApplicationPicker(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->put_DisplayApplicationPicker(value));
+}
+
+template <typename D> Windows::System::LauncherUIOptions consume_Windows_System_ILauncherOptions<D>::UI() const
+{
+    Windows::System::LauncherUIOptions value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->get_UI(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_ILauncherOptions<D>::PreferredApplicationPackageFamilyName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->get_PreferredApplicationPackageFamilyName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherOptions<D>::PreferredApplicationPackageFamilyName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->put_PreferredApplicationPackageFamilyName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_System_ILauncherOptions<D>::PreferredApplicationDisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->get_PreferredApplicationDisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherOptions<D>::PreferredApplicationDisplayName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->put_PreferredApplicationDisplayName(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Uri consume_Windows_System_ILauncherOptions<D>::FallbackUri() const
+{
+    Windows::Foundation::Uri value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->get_FallbackUri(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherOptions<D>::FallbackUri(Windows::Foundation::Uri const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->put_FallbackUri(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_System_ILauncherOptions<D>::ContentType() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->get_ContentType(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherOptions<D>::ContentType(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions)->put_ContentType(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_System_ILauncherOptions2<D>::TargetApplicationPackageFamilyName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions2)->get_TargetApplicationPackageFamilyName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherOptions2<D>::TargetApplicationPackageFamilyName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions2)->put_TargetApplicationPackageFamilyName(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Search::StorageFileQueryResult consume_Windows_System_ILauncherOptions2<D>::NeighboringFilesQuery() const
+{
+    Windows::Storage::Search::StorageFileQueryResult value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions2)->get_NeighboringFilesQuery(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherOptions2<D>::NeighboringFilesQuery(Windows::Storage::Search::StorageFileQueryResult const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions2)->put_NeighboringFilesQuery(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_System_ILauncherOptions3<D>::IgnoreAppUriHandlers() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions3)->get_IgnoreAppUriHandlers(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherOptions3<D>::IgnoreAppUriHandlers(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions3)->put_IgnoreAppUriHandlers(value));
+}
+
+template <typename D> bool consume_Windows_System_ILauncherOptions4<D>::LimitPickerToCurrentAppAndAppUriHandlers() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions4)->get_LimitPickerToCurrentAppAndAppUriHandlers(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherOptions4<D>::LimitPickerToCurrentAppAndAppUriHandlers(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherOptions4)->put_LimitPickerToCurrentAppAndAppUriHandlers(value));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_System_ILauncherStatics<D>::LaunchFileAsync(Windows::Storage::IStorageFile const& file) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics)->LaunchFileAsync(get_abi(file), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_System_ILauncherStatics<D>::LaunchFileAsync(Windows::Storage::IStorageFile const& file, Windows::System::LauncherOptions const& options) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics)->LaunchFileWithOptionsAsync(get_abi(file), get_abi(options), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_System_ILauncherStatics<D>::LaunchUriAsync(Windows::Foundation::Uri const& uri) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics)->LaunchUriAsync(get_abi(uri), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_System_ILauncherStatics<D>::LaunchUriAsync(Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics)->LaunchUriWithOptionsAsync(get_abi(uri), get_abi(options), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> consume_Windows_System_ILauncherStatics2<D>::LaunchUriForResultsAsync(Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics2)->LaunchUriForResultsAsync(get_abi(uri), get_abi(options), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> consume_Windows_System_ILauncherStatics2<D>::LaunchUriForResultsAsync(Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options, Windows::Foundation::Collections::ValueSet const& inputData) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics2)->LaunchUriForResultsWithDataAsync(get_abi(uri), get_abi(options), get_abi(inputData), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_System_ILauncherStatics2<D>::LaunchUriAsync(Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options, Windows::Foundation::Collections::ValueSet const& inputData) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics2)->LaunchUriWithDataAsync(get_abi(uri), get_abi(options), get_abi(inputData), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> consume_Windows_System_ILauncherStatics2<D>::QueryUriSupportAsync(Windows::Foundation::Uri const& uri, Windows::System::LaunchQuerySupportType const& launchQuerySupportType) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics2)->QueryUriSupportAsync(get_abi(uri), get_abi(launchQuerySupportType), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> consume_Windows_System_ILauncherStatics2<D>::QueryUriSupportAsync(Windows::Foundation::Uri const& uri, Windows::System::LaunchQuerySupportType const& launchQuerySupportType, param::hstring const& packageFamilyName) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics2)->QueryUriSupportWithPackageFamilyNameAsync(get_abi(uri), get_abi(launchQuerySupportType), get_abi(packageFamilyName), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> consume_Windows_System_ILauncherStatics2<D>::QueryFileSupportAsync(Windows::Storage::StorageFile const& file) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics2)->QueryFileSupportAsync(get_abi(file), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> consume_Windows_System_ILauncherStatics2<D>::QueryFileSupportAsync(Windows::Storage::StorageFile const& file, param::hstring const& packageFamilyName) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics2)->QueryFileSupportWithPackageFamilyNameAsync(get_abi(file), get_abi(packageFamilyName), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> consume_Windows_System_ILauncherStatics2<D>::FindUriSchemeHandlersAsync(param::hstring const& scheme) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics2)->FindUriSchemeHandlersAsync(get_abi(scheme), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> consume_Windows_System_ILauncherStatics2<D>::FindUriSchemeHandlersAsync(param::hstring const& scheme, Windows::System::LaunchQuerySupportType const& launchQuerySupportType) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics2)->FindUriSchemeHandlersWithLaunchUriTypeAsync(get_abi(scheme), get_abi(launchQuerySupportType), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> consume_Windows_System_ILauncherStatics2<D>::FindFileHandlersAsync(param::hstring const& extension) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics2)->FindFileHandlersAsync(get_abi(extension), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_System_ILauncherStatics3<D>::LaunchFolderAsync(Windows::Storage::IStorageFolder const& folder) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics3)->LaunchFolderAsync(get_abi(folder), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_System_ILauncherStatics3<D>::LaunchFolderAsync(Windows::Storage::IStorageFolder const& folder, Windows::System::FolderLauncherOptions const& options) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics3)->LaunchFolderWithOptionsAsync(get_abi(folder), get_abi(options), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> consume_Windows_System_ILauncherStatics4<D>::QueryAppUriSupportAsync(Windows::Foundation::Uri const& uri) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics4)->QueryAppUriSupportAsync(get_abi(uri), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> consume_Windows_System_ILauncherStatics4<D>::QueryAppUriSupportAsync(Windows::Foundation::Uri const& uri, param::hstring const& packageFamilyName) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics4)->QueryAppUriSupportWithPackageFamilyNameAsync(get_abi(uri), get_abi(packageFamilyName), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> consume_Windows_System_ILauncherStatics4<D>::FindAppUriHandlersAsync(Windows::Foundation::Uri const& uri) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics4)->FindAppUriHandlersAsync(get_abi(uri), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriStatus> consume_Windows_System_ILauncherStatics4<D>::LaunchUriForUserAsync(Windows::System::User const& user, Windows::Foundation::Uri const& uri) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics4)->LaunchUriForUserAsync(get_abi(user), get_abi(uri), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriStatus> consume_Windows_System_ILauncherStatics4<D>::LaunchUriForUserAsync(Windows::System::User const& user, Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics4)->LaunchUriWithOptionsForUserAsync(get_abi(user), get_abi(uri), get_abi(options), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriStatus> consume_Windows_System_ILauncherStatics4<D>::LaunchUriForUserAsync(Windows::System::User const& user, Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options, Windows::Foundation::Collections::ValueSet const& inputData) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics4)->LaunchUriWithDataForUserAsync(get_abi(user), get_abi(uri), get_abi(options), get_abi(inputData), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> consume_Windows_System_ILauncherStatics4<D>::LaunchUriForResultsForUserAsync(Windows::System::User const& user, Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics4)->LaunchUriForResultsForUserAsync(get_abi(user), get_abi(uri), get_abi(options), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> consume_Windows_System_ILauncherStatics4<D>::LaunchUriForResultsForUserAsync(Windows::System::User const& user, Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options, Windows::Foundation::Collections::ValueSet const& inputData) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherStatics4)->LaunchUriForResultsWithDataForUserAsync(get_abi(user), get_abi(uri), get_abi(options), get_abi(inputData), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::Point> consume_Windows_System_ILauncherUIOptions<D>::InvocationPoint() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::Point> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherUIOptions)->get_InvocationPoint(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherUIOptions<D>::InvocationPoint(optional<Windows::Foundation::Point> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherUIOptions)->put_InvocationPoint(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::Rect> consume_Windows_System_ILauncherUIOptions<D>::SelectionRect() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::Rect> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherUIOptions)->get_SelectionRect(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherUIOptions<D>::SelectionRect(optional<Windows::Foundation::Rect> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherUIOptions)->put_SelectionRect(get_abi(value)));
+}
+
+template <typename D> Windows::UI::Popups::Placement consume_Windows_System_ILauncherUIOptions<D>::PreferredPlacement() const
+{
+    Windows::UI::Popups::Placement value{};
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherUIOptions)->get_PreferredPlacement(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherUIOptions<D>::PreferredPlacement(Windows::UI::Popups::Placement const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherUIOptions)->put_PreferredPlacement(get_abi(value)));
+}
+
+template <typename D> Windows::UI::ViewManagement::ViewSizePreference consume_Windows_System_ILauncherViewOptions<D>::DesiredRemainingView() const
+{
+    Windows::UI::ViewManagement::ViewSizePreference value{};
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherViewOptions)->get_DesiredRemainingView(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ILauncherViewOptions<D>::DesiredRemainingView(Windows::UI::ViewManagement::ViewSizePreference const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ILauncherViewOptions)->put_DesiredRemainingView(get_abi(value)));
+}
+
+template <typename D> uint64_t consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsage() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics)->get_AppMemoryUsage(&value));
+    return value;
+}
+
+template <typename D> uint64_t consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsageLimit() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics)->get_AppMemoryUsageLimit(&value));
+    return value;
+}
+
+template <typename D> Windows::System::AppMemoryUsageLevel consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsageLevel() const
+{
+    Windows::System::AppMemoryUsageLevel value{};
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics)->get_AppMemoryUsageLevel(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsageIncreased(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics)->add_AppMemoryUsageIncreased(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::IMemoryManagerStatics> consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsageIncreased(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::IMemoryManagerStatics>(this, &abi_t<Windows::System::IMemoryManagerStatics>::remove_AppMemoryUsageIncreased, AppMemoryUsageIncreased(handler));
+}
+
+template <typename D> void consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsageIncreased(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics)->remove_AppMemoryUsageIncreased(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsageDecreased(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics)->add_AppMemoryUsageDecreased(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::IMemoryManagerStatics> consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsageDecreased(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::IMemoryManagerStatics>(this, &abi_t<Windows::System::IMemoryManagerStatics>::remove_AppMemoryUsageDecreased, AppMemoryUsageDecreased(handler));
+}
+
+template <typename D> void consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsageDecreased(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics)->remove_AppMemoryUsageDecreased(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsageLimitChanging(Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics)->add_AppMemoryUsageLimitChanging(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::IMemoryManagerStatics> consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsageLimitChanging(auto_revoke_t, Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::IMemoryManagerStatics>(this, &abi_t<Windows::System::IMemoryManagerStatics>::remove_AppMemoryUsageLimitChanging, AppMemoryUsageLimitChanging(handler));
+}
+
+template <typename D> void consume_Windows_System_IMemoryManagerStatics<D>::AppMemoryUsageLimitChanging(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics)->remove_AppMemoryUsageLimitChanging(get_abi(token)));
+}
+
+template <typename D> Windows::System::AppMemoryReport consume_Windows_System_IMemoryManagerStatics2<D>::GetAppMemoryReport() const
+{
+    Windows::System::AppMemoryReport memoryReport{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics2)->GetAppMemoryReport(put_abi(memoryReport)));
+    return memoryReport;
+}
+
+template <typename D> Windows::System::ProcessMemoryReport consume_Windows_System_IMemoryManagerStatics2<D>::GetProcessMemoryReport() const
+{
+    Windows::System::ProcessMemoryReport memoryReport{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics2)->GetProcessMemoryReport(put_abi(memoryReport)));
+    return memoryReport;
+}
+
+template <typename D> bool consume_Windows_System_IMemoryManagerStatics3<D>::TrySetAppMemoryUsageLimit(uint64_t value) const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::System::IMemoryManagerStatics3)->TrySetAppMemoryUsageLimit(value, &result));
+    return result;
+}
+
+template <typename D> Windows::Storage::Streams::IInputStream consume_Windows_System_IProcessLauncherOptions<D>::StandardInput() const
+{
+    Windows::Storage::Streams::IInputStream value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IProcessLauncherOptions)->get_StandardInput(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_IProcessLauncherOptions<D>::StandardInput(Windows::Storage::Streams::IInputStream const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IProcessLauncherOptions)->put_StandardInput(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Streams::IOutputStream consume_Windows_System_IProcessLauncherOptions<D>::StandardOutput() const
+{
+    Windows::Storage::Streams::IOutputStream value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IProcessLauncherOptions)->get_StandardOutput(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_IProcessLauncherOptions<D>::StandardOutput(Windows::Storage::Streams::IOutputStream const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IProcessLauncherOptions)->put_StandardOutput(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Streams::IOutputStream consume_Windows_System_IProcessLauncherOptions<D>::StandardError() const
+{
+    Windows::Storage::Streams::IOutputStream value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IProcessLauncherOptions)->get_StandardError(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_IProcessLauncherOptions<D>::StandardError(Windows::Storage::Streams::IOutputStream const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IProcessLauncherOptions)->put_StandardError(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_System_IProcessLauncherOptions<D>::WorkingDirectory() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IProcessLauncherOptions)->get_WorkingDirectory(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_IProcessLauncherOptions<D>::WorkingDirectory(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IProcessLauncherOptions)->put_WorkingDirectory(get_abi(value)));
+}
+
+template <typename D> uint32_t consume_Windows_System_IProcessLauncherResult<D>::ExitCode() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::IProcessLauncherResult)->get_ExitCode(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> consume_Windows_System_IProcessLauncherStatics<D>::RunToCompletionAsync(param::hstring const& fileName, param::hstring const& args) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> asyncOperationResult{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IProcessLauncherStatics)->RunToCompletionAsync(get_abi(fileName), get_abi(args), put_abi(asyncOperationResult)));
+    return asyncOperationResult;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> consume_Windows_System_IProcessLauncherStatics<D>::RunToCompletionAsync(param::hstring const& fileName, param::hstring const& args, Windows::System::ProcessLauncherOptions const& options) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> asyncOperationResult{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IProcessLauncherStatics)->RunToCompletionAsyncWithOptions(get_abi(fileName), get_abi(args), get_abi(options), put_abi(asyncOperationResult)));
+    return asyncOperationResult;
+}
+
+template <typename D> uint64_t consume_Windows_System_IProcessMemoryReport<D>::PrivateWorkingSetUsage() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::IProcessMemoryReport)->get_PrivateWorkingSetUsage(&value));
+    return value;
+}
+
+template <typename D> uint64_t consume_Windows_System_IProcessMemoryReport<D>::TotalWorkingSetUsage() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::IProcessMemoryReport)->get_TotalWorkingSetUsage(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_IProtocolForResultsOperation<D>::ReportCompleted(Windows::Foundation::Collections::ValueSet const& data) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IProtocolForResultsOperation)->ReportCompleted(get_abi(data)));
+}
+
+template <typename D> Windows::Foundation::Uri consume_Windows_System_IRemoteLauncherOptions<D>::FallbackUri() const
+{
+    Windows::Foundation::Uri value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IRemoteLauncherOptions)->get_FallbackUri(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_IRemoteLauncherOptions<D>::FallbackUri(Windows::Foundation::Uri const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IRemoteLauncherOptions)->put_FallbackUri(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_System_IRemoteLauncherOptions<D>::PreferredAppIds() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IRemoteLauncherOptions)->get_PreferredAppIds(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::RemoteLaunchUriStatus> consume_Windows_System_IRemoteLauncherStatics<D>::LaunchUriAsync(Windows::System::RemoteSystems::RemoteSystemConnectionRequest const& remoteSystemConnectionRequest, Windows::Foundation::Uri const& uri) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::RemoteLaunchUriStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IRemoteLauncherStatics)->LaunchUriAsync(get_abi(remoteSystemConnectionRequest), get_abi(uri), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::RemoteLaunchUriStatus> consume_Windows_System_IRemoteLauncherStatics<D>::LaunchUriAsync(Windows::System::RemoteSystems::RemoteSystemConnectionRequest const& remoteSystemConnectionRequest, Windows::Foundation::Uri const& uri, Windows::System::RemoteLauncherOptions const& options) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::RemoteLaunchUriStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IRemoteLauncherStatics)->LaunchUriWithOptionsAsync(get_abi(remoteSystemConnectionRequest), get_abi(uri), get_abi(options), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::RemoteLaunchUriStatus> consume_Windows_System_IRemoteLauncherStatics<D>::LaunchUriAsync(Windows::System::RemoteSystems::RemoteSystemConnectionRequest const& remoteSystemConnectionRequest, Windows::Foundation::Uri const& uri, Windows::System::RemoteLauncherOptions const& options, Windows::Foundation::Collections::ValueSet const& inputData) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::RemoteLaunchUriStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IRemoteLauncherStatics)->LaunchUriWithDataAsync(get_abi(remoteSystemConnectionRequest), get_abi(uri), get_abi(options), get_abi(inputData), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> void consume_Windows_System_IShutdownManagerStatics<D>::BeginShutdown(Windows::System::ShutdownKind const& shutdownKind, Windows::Foundation::TimeSpan const& timeout) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IShutdownManagerStatics)->BeginShutdown(get_abi(shutdownKind), get_abi(timeout)));
+}
+
+template <typename D> void consume_Windows_System_IShutdownManagerStatics<D>::CancelShutdown() const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IShutdownManagerStatics)->CancelShutdown());
+}
+
+template <typename D> bool consume_Windows_System_IShutdownManagerStatics2<D>::IsPowerStateSupported(Windows::System::PowerState const& powerState) const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::IShutdownManagerStatics2)->IsPowerStateSupported(get_abi(powerState), &value));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_IShutdownManagerStatics2<D>::EnterPowerState(Windows::System::PowerState const& powerState) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IShutdownManagerStatics2)->EnterPowerState(get_abi(powerState)));
+}
+
+template <typename D> void consume_Windows_System_IShutdownManagerStatics2<D>::EnterPowerState(Windows::System::PowerState const& powerState, Windows::Foundation::TimeSpan const& wakeUpAfter) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IShutdownManagerStatics2)->EnterPowerStateWithTimeSpan(get_abi(powerState), get_abi(wakeUpAfter)));
+}
+
+template <typename D> hstring consume_Windows_System_ITimeZoneSettingsStatics<D>::CurrentTimeZoneDisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::ITimeZoneSettingsStatics)->get_CurrentTimeZoneDisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> consume_Windows_System_ITimeZoneSettingsStatics<D>::SupportedTimeZoneDisplayNames() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::ITimeZoneSettingsStatics)->get_SupportedTimeZoneDisplayNames(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_System_ITimeZoneSettingsStatics<D>::CanChangeTimeZone() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::ITimeZoneSettingsStatics)->get_CanChangeTimeZone(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_ITimeZoneSettingsStatics<D>::ChangeTimeZoneByDisplayName(param::hstring const& timeZoneDisplayName) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::ITimeZoneSettingsStatics)->ChangeTimeZoneByDisplayName(get_abi(timeZoneDisplayName)));
+}
+
+template <typename D> hstring consume_Windows_System_IUser<D>::NonRoamableId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IUser)->get_NonRoamableId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::UserAuthenticationStatus consume_Windows_System_IUser<D>::AuthenticationStatus() const
+{
+    Windows::System::UserAuthenticationStatus value{};
+    check_hresult(WINRT_SHIM(Windows::System::IUser)->get_AuthenticationStatus(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::UserType consume_Windows_System_IUser<D>::Type() const
+{
+    Windows::System::UserType value{};
+    check_hresult(WINRT_SHIM(Windows::System::IUser)->get_Type(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::IInspectable> consume_Windows_System_IUser<D>::GetPropertyAsync(param::hstring const& value) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::IInspectable> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUser)->GetPropertyAsync(get_abi(value), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IPropertySet> consume_Windows_System_IUser<D>::GetPropertiesAsync(param::async_vector_view<hstring> const& values) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IPropertySet> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUser)->GetPropertiesAsync(get_abi(values), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamReference> consume_Windows_System_IUser<D>::GetPictureAsync(Windows::System::UserPictureSize const& desiredSize) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamReference> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUser)->GetPictureAsync(get_abi(desiredSize), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> void consume_Windows_System_IUserAuthenticationStatusChangeDeferral<D>::Complete() const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserAuthenticationStatusChangeDeferral)->Complete());
+}
+
+template <typename D> Windows::System::UserAuthenticationStatusChangeDeferral consume_Windows_System_IUserAuthenticationStatusChangingEventArgs<D>::GetDeferral() const
+{
+    Windows::System::UserAuthenticationStatusChangeDeferral deferral{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserAuthenticationStatusChangingEventArgs)->GetDeferral(put_abi(deferral)));
+    return deferral;
+}
+
+template <typename D> Windows::System::User consume_Windows_System_IUserAuthenticationStatusChangingEventArgs<D>::User() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserAuthenticationStatusChangingEventArgs)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::UserAuthenticationStatus consume_Windows_System_IUserAuthenticationStatusChangingEventArgs<D>::NewStatus() const
+{
+    Windows::System::UserAuthenticationStatus value{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserAuthenticationStatusChangingEventArgs)->get_NewStatus(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::UserAuthenticationStatus consume_Windows_System_IUserAuthenticationStatusChangingEventArgs<D>::CurrentStatus() const
+{
+    Windows::System::UserAuthenticationStatus value{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserAuthenticationStatusChangingEventArgs)->get_CurrentStatus(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::User consume_Windows_System_IUserChangedEventArgs<D>::User() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserChangedEventArgs)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_IUserDeviceAssociationChangedEventArgs<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserDeviceAssociationChangedEventArgs)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::User consume_Windows_System_IUserDeviceAssociationChangedEventArgs<D>::NewUser() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserDeviceAssociationChangedEventArgs)->get_NewUser(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::User consume_Windows_System_IUserDeviceAssociationChangedEventArgs<D>::OldUser() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserDeviceAssociationChangedEventArgs)->get_OldUser(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::User consume_Windows_System_IUserDeviceAssociationStatics<D>::FindUserFromDeviceId(param::hstring const& deviceId) const
+{
+    Windows::System::User user{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserDeviceAssociationStatics)->FindUserFromDeviceId(get_abi(deviceId), put_abi(user)));
+    return user;
+}
+
+template <typename D> event_token consume_Windows_System_IUserDeviceAssociationStatics<D>::UserDeviceAssociationChanged(Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserDeviceAssociationStatics)->add_UserDeviceAssociationChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::IUserDeviceAssociationStatics> consume_Windows_System_IUserDeviceAssociationStatics<D>::UserDeviceAssociationChanged(auto_revoke_t, Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::IUserDeviceAssociationStatics>(this, &abi_t<Windows::System::IUserDeviceAssociationStatics>::remove_UserDeviceAssociationChanged, UserDeviceAssociationChanged(handler));
+}
+
+template <typename D> void consume_Windows_System_IUserDeviceAssociationStatics<D>::UserDeviceAssociationChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserDeviceAssociationStatics)->remove_UserDeviceAssociationChanged(get_abi(token)));
+}
+
+template <typename D> bool consume_Windows_System_IUserPicker<D>::AllowGuestAccounts() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserPicker)->get_AllowGuestAccounts(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_IUserPicker<D>::AllowGuestAccounts(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserPicker)->put_AllowGuestAccounts(value));
+}
+
+template <typename D> Windows::System::User consume_Windows_System_IUserPicker<D>::SuggestedSelectedUser() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserPicker)->get_SuggestedSelectedUser(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_IUserPicker<D>::SuggestedSelectedUser(Windows::System::User const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserPicker)->put_SuggestedSelectedUser(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::User> consume_Windows_System_IUserPicker<D>::PickSingleUserAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::System::User> pickSingleUserOperation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserPicker)->PickSingleUserAsync(put_abi(pickSingleUserOperation)));
+    return pickSingleUserOperation;
+}
+
+template <typename D> bool consume_Windows_System_IUserPickerStatics<D>::IsSupported() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserPickerStatics)->IsSupported(&value));
+    return value;
+}
+
+template <typename D> Windows::System::UserWatcher consume_Windows_System_IUserStatics<D>::CreateWatcher() const
+{
+    Windows::System::UserWatcher watcher{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserStatics)->CreateWatcher(put_abi(watcher)));
+    return watcher;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> consume_Windows_System_IUserStatics<D>::FindAllAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserStatics)->FindAllAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> consume_Windows_System_IUserStatics<D>::FindAllAsync(Windows::System::UserType const& type) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserStatics)->FindAllAsyncByType(get_abi(type), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> consume_Windows_System_IUserStatics<D>::FindAllAsync(Windows::System::UserType const& type, Windows::System::UserAuthenticationStatus const& status) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserStatics)->FindAllAsyncByTypeAndStatus(get_abi(type), get_abi(status), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::System::User consume_Windows_System_IUserStatics<D>::GetFromId(param::hstring const& nonRoamableId) const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::IUserStatics)->GetFromId(get_abi(nonRoamableId), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::UserWatcherStatus consume_Windows_System_IUserWatcher<D>::Status() const
+{
+    Windows::System::UserWatcherStatus value{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_IUserWatcher<D>::Start() const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->Start());
+}
+
+template <typename D> void consume_Windows_System_IUserWatcher<D>::Stop() const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->Stop());
+}
+
+template <typename D> event_token consume_Windows_System_IUserWatcher<D>::Added(Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->add_Added(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::IUserWatcher> consume_Windows_System_IUserWatcher<D>::Added(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::IUserWatcher>(this, &abi_t<Windows::System::IUserWatcher>::remove_Added, Added(handler));
+}
+
+template <typename D> void consume_Windows_System_IUserWatcher<D>::Added(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->remove_Added(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_System_IUserWatcher<D>::Removed(Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->add_Removed(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::IUserWatcher> consume_Windows_System_IUserWatcher<D>::Removed(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::IUserWatcher>(this, &abi_t<Windows::System::IUserWatcher>::remove_Removed, Removed(handler));
+}
+
+template <typename D> void consume_Windows_System_IUserWatcher<D>::Removed(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->remove_Removed(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_System_IUserWatcher<D>::Updated(Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->add_Updated(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::IUserWatcher> consume_Windows_System_IUserWatcher<D>::Updated(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::IUserWatcher>(this, &abi_t<Windows::System::IUserWatcher>::remove_Updated, Updated(handler));
+}
+
+template <typename D> void consume_Windows_System_IUserWatcher<D>::Updated(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->remove_Updated(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_System_IUserWatcher<D>::AuthenticationStatusChanged(Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->add_AuthenticationStatusChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::IUserWatcher> consume_Windows_System_IUserWatcher<D>::AuthenticationStatusChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::IUserWatcher>(this, &abi_t<Windows::System::IUserWatcher>::remove_AuthenticationStatusChanged, AuthenticationStatusChanged(handler));
+}
+
+template <typename D> void consume_Windows_System_IUserWatcher<D>::AuthenticationStatusChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->remove_AuthenticationStatusChanged(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_System_IUserWatcher<D>::AuthenticationStatusChanging(Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserAuthenticationStatusChangingEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->add_AuthenticationStatusChanging(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::IUserWatcher> consume_Windows_System_IUserWatcher<D>::AuthenticationStatusChanging(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserAuthenticationStatusChangingEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::IUserWatcher>(this, &abi_t<Windows::System::IUserWatcher>::remove_AuthenticationStatusChanging, AuthenticationStatusChanging(handler));
+}
+
+template <typename D> void consume_Windows_System_IUserWatcher<D>::AuthenticationStatusChanging(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->remove_AuthenticationStatusChanging(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_System_IUserWatcher<D>::EnumerationCompleted(Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->add_EnumerationCompleted(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::IUserWatcher> consume_Windows_System_IUserWatcher<D>::EnumerationCompleted(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::IUserWatcher>(this, &abi_t<Windows::System::IUserWatcher>::remove_EnumerationCompleted, EnumerationCompleted(handler));
+}
+
+template <typename D> void consume_Windows_System_IUserWatcher<D>::EnumerationCompleted(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->remove_EnumerationCompleted(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_System_IUserWatcher<D>::Stopped(Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->add_Stopped(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::IUserWatcher> consume_Windows_System_IUserWatcher<D>::Stopped(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::IUserWatcher>(this, &abi_t<Windows::System::IUserWatcher>::remove_Stopped, Stopped(handler));
+}
+
+template <typename D> void consume_Windows_System_IUserWatcher<D>::Stopped(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::IUserWatcher)->remove_Stopped(get_abi(token)));
+}
 
 template <typename D>
 struct produce<D, Windows::System::IAppDiagnosticInfo> : produce_base<D, Windows::System::IAppDiagnosticInfo>
 {
-    HRESULT __stdcall get_AppInfo(impl::abi_arg_out<Windows::ApplicationModel::IAppInfo> value) noexcept override
+    HRESULT __stdcall get_AppInfo(::IUnknown** value) noexcept override
     {
         try
         {
@@ -43,7 +1136,7 @@ struct produce<D, Windows::System::IAppDiagnosticInfo> : produce_base<D, Windows
 template <typename D>
 struct produce<D, Windows::System::IAppDiagnosticInfoStatics> : produce_base<D, Windows::System::IAppDiagnosticInfoStatics>
 {
-    HRESULT __stdcall abi_RequestInfoAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::System::AppDiagnosticInfo>>> operation) noexcept override
+    HRESULT __stdcall RequestInfoAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -62,7 +1155,7 @@ struct produce<D, Windows::System::IAppDiagnosticInfoStatics> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::System::IAppMemoryReport> : produce_base<D, Windows::System::IAppMemoryReport>
 {
-    HRESULT __stdcall get_PrivateCommitUsage(uint64_t * value) noexcept override
+    HRESULT __stdcall get_PrivateCommitUsage(uint64_t* value) noexcept override
     {
         try
         {
@@ -76,7 +1169,7 @@ struct produce<D, Windows::System::IAppMemoryReport> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_PeakPrivateCommitUsage(uint64_t * value) noexcept override
+    HRESULT __stdcall get_PeakPrivateCommitUsage(uint64_t* value) noexcept override
     {
         try
         {
@@ -90,7 +1183,7 @@ struct produce<D, Windows::System::IAppMemoryReport> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_TotalCommitUsage(uint64_t * value) noexcept override
+    HRESULT __stdcall get_TotalCommitUsage(uint64_t* value) noexcept override
     {
         try
         {
@@ -104,7 +1197,7 @@ struct produce<D, Windows::System::IAppMemoryReport> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_TotalCommitLimit(uint64_t * value) noexcept override
+    HRESULT __stdcall get_TotalCommitLimit(uint64_t* value) noexcept override
     {
         try
         {
@@ -122,7 +1215,7 @@ struct produce<D, Windows::System::IAppMemoryReport> : produce_base<D, Windows::
 template <typename D>
 struct produce<D, Windows::System::IAppMemoryUsageLimitChangingEventArgs> : produce_base<D, Windows::System::IAppMemoryUsageLimitChangingEventArgs>
 {
-    HRESULT __stdcall get_OldLimit(uint64_t * value) noexcept override
+    HRESULT __stdcall get_OldLimit(uint64_t* value) noexcept override
     {
         try
         {
@@ -136,7 +1229,7 @@ struct produce<D, Windows::System::IAppMemoryUsageLimitChangingEventArgs> : prod
         }
     }
 
-    HRESULT __stdcall get_NewLimit(uint64_t * value) noexcept override
+    HRESULT __stdcall get_NewLimit(uint64_t* value) noexcept override
     {
         try
         {
@@ -154,7 +1247,7 @@ struct produce<D, Windows::System::IAppMemoryUsageLimitChangingEventArgs> : prod
 template <typename D>
 struct produce<D, Windows::System::IFolderLauncherOptions> : produce_base<D, Windows::System::IFolderLauncherOptions>
 {
-    HRESULT __stdcall get_ItemsToSelect(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Storage::IStorageItem>> value) noexcept override
+    HRESULT __stdcall get_ItemsToSelect(::IUnknown** value) noexcept override
     {
         try
         {
@@ -173,7 +1266,7 @@ struct produce<D, Windows::System::IFolderLauncherOptions> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::System::IKnownUserPropertiesStatics> : produce_base<D, Windows::System::IKnownUserPropertiesStatics>
 {
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -188,7 +1281,7 @@ struct produce<D, Windows::System::IKnownUserPropertiesStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_FirstName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FirstName(HSTRING* value) noexcept override
     {
         try
         {
@@ -203,7 +1296,7 @@ struct produce<D, Windows::System::IKnownUserPropertiesStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_LastName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LastName(HSTRING* value) noexcept override
     {
         try
         {
@@ -218,7 +1311,7 @@ struct produce<D, Windows::System::IKnownUserPropertiesStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_ProviderName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ProviderName(HSTRING* value) noexcept override
     {
         try
         {
@@ -233,7 +1326,7 @@ struct produce<D, Windows::System::IKnownUserPropertiesStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_AccountName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AccountName(HSTRING* value) noexcept override
     {
         try
         {
@@ -248,7 +1341,7 @@ struct produce<D, Windows::System::IKnownUserPropertiesStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_GuestHost(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_GuestHost(HSTRING* value) noexcept override
     {
         try
         {
@@ -263,7 +1356,7 @@ struct produce<D, Windows::System::IKnownUserPropertiesStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_PrincipalName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PrincipalName(HSTRING* value) noexcept override
     {
         try
         {
@@ -278,7 +1371,7 @@ struct produce<D, Windows::System::IKnownUserPropertiesStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_DomainName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DomainName(HSTRING* value) noexcept override
     {
         try
         {
@@ -293,7 +1386,7 @@ struct produce<D, Windows::System::IKnownUserPropertiesStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_SessionInitiationProtocolUri(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SessionInitiationProtocolUri(HSTRING* value) noexcept override
     {
         try
         {
@@ -312,7 +1405,7 @@ struct produce<D, Windows::System::IKnownUserPropertiesStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::System::ILaunchUriResult> : produce_base<D, Windows::System::ILaunchUriResult>
 {
-    HRESULT __stdcall get_Status(Windows::System::LaunchUriStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::System::LaunchUriStatus>* value) noexcept override
     {
         try
         {
@@ -326,7 +1419,7 @@ struct produce<D, Windows::System::ILaunchUriResult> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Result(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_Result(::IUnknown** value) noexcept override
     {
         try
         {
@@ -345,7 +1438,7 @@ struct produce<D, Windows::System::ILaunchUriResult> : produce_base<D, Windows::
 template <typename D>
 struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::System::ILauncherOptions>
 {
-    HRESULT __stdcall get_TreatAsUntrusted(bool * value) noexcept override
+    HRESULT __stdcall get_TreatAsUntrusted(bool* value) noexcept override
     {
         try
         {
@@ -373,7 +1466,7 @@ struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_DisplayApplicationPicker(bool * value) noexcept override
+    HRESULT __stdcall get_DisplayApplicationPicker(bool* value) noexcept override
     {
         try
         {
@@ -401,7 +1494,7 @@ struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_UI(impl::abi_arg_out<Windows::System::ILauncherUIOptions> value) noexcept override
+    HRESULT __stdcall get_UI(::IUnknown** value) noexcept override
     {
         try
         {
@@ -416,7 +1509,7 @@ struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_PreferredApplicationPackageFamilyName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PreferredApplicationPackageFamilyName(HSTRING* value) noexcept override
     {
         try
         {
@@ -431,12 +1524,12 @@ struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall put_PreferredApplicationPackageFamilyName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_PreferredApplicationPackageFamilyName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PreferredApplicationPackageFamilyName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().PreferredApplicationPackageFamilyName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -445,7 +1538,7 @@ struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_PreferredApplicationDisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PreferredApplicationDisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -460,12 +1553,12 @@ struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall put_PreferredApplicationDisplayName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_PreferredApplicationDisplayName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PreferredApplicationDisplayName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().PreferredApplicationDisplayName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -474,7 +1567,7 @@ struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_FallbackUri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_FallbackUri(::IUnknown** value) noexcept override
     {
         try
         {
@@ -489,12 +1582,12 @@ struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall put_FallbackUri(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall put_FallbackUri(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().FallbackUri(*reinterpret_cast<const Windows::Foundation::Uri *>(&value));
+            this->shim().FallbackUri(*reinterpret_cast<Windows::Foundation::Uri const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -503,7 +1596,7 @@ struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_ContentType(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ContentType(HSTRING* value) noexcept override
     {
         try
         {
@@ -518,12 +1611,12 @@ struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall put_ContentType(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_ContentType(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ContentType(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ContentType(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -536,7 +1629,7 @@ struct produce<D, Windows::System::ILauncherOptions> : produce_base<D, Windows::
 template <typename D>
 struct produce<D, Windows::System::ILauncherOptions2> : produce_base<D, Windows::System::ILauncherOptions2>
 {
-    HRESULT __stdcall get_TargetApplicationPackageFamilyName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TargetApplicationPackageFamilyName(HSTRING* value) noexcept override
     {
         try
         {
@@ -551,12 +1644,12 @@ struct produce<D, Windows::System::ILauncherOptions2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall put_TargetApplicationPackageFamilyName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_TargetApplicationPackageFamilyName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TargetApplicationPackageFamilyName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().TargetApplicationPackageFamilyName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -565,7 +1658,7 @@ struct produce<D, Windows::System::ILauncherOptions2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall get_NeighboringFilesQuery(impl::abi_arg_out<Windows::Storage::Search::IStorageFileQueryResult> value) noexcept override
+    HRESULT __stdcall get_NeighboringFilesQuery(::IUnknown** value) noexcept override
     {
         try
         {
@@ -580,12 +1673,12 @@ struct produce<D, Windows::System::ILauncherOptions2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall put_NeighboringFilesQuery(impl::abi_arg_in<Windows::Storage::Search::IStorageFileQueryResult> value) noexcept override
+    HRESULT __stdcall put_NeighboringFilesQuery(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().NeighboringFilesQuery(*reinterpret_cast<const Windows::Storage::Search::StorageFileQueryResult *>(&value));
+            this->shim().NeighboringFilesQuery(*reinterpret_cast<Windows::Storage::Search::StorageFileQueryResult const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -598,7 +1691,7 @@ struct produce<D, Windows::System::ILauncherOptions2> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::System::ILauncherOptions3> : produce_base<D, Windows::System::ILauncherOptions3>
 {
-    HRESULT __stdcall get_IgnoreAppUriHandlers(bool * value) noexcept override
+    HRESULT __stdcall get_IgnoreAppUriHandlers(bool* value) noexcept override
     {
         try
         {
@@ -630,7 +1723,7 @@ struct produce<D, Windows::System::ILauncherOptions3> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::System::ILauncherOptions4> : produce_base<D, Windows::System::ILauncherOptions4>
 {
-    HRESULT __stdcall get_LimitPickerToCurrentAppAndAppUriHandlers(bool * value) noexcept override
+    HRESULT __stdcall get_LimitPickerToCurrentAppAndAppUriHandlers(bool* value) noexcept override
     {
         try
         {
@@ -662,12 +1755,12 @@ struct produce<D, Windows::System::ILauncherOptions4> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::System::ILauncherStatics> : produce_base<D, Windows::System::ILauncherStatics>
 {
-    HRESULT __stdcall abi_LaunchFileAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall LaunchFileAsync(::IUnknown* file, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchFileAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file)));
+            *operation = detach_abi(this->shim().LaunchFileAsync(*reinterpret_cast<Windows::Storage::IStorageFile const*>(&file)));
             return S_OK;
         }
         catch (...)
@@ -677,12 +1770,12 @@ struct produce<D, Windows::System::ILauncherStatics> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_LaunchFileWithOptionsAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<Windows::System::ILauncherOptions> options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall LaunchFileWithOptionsAsync(::IUnknown* file, ::IUnknown* options, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchFileAsync(*reinterpret_cast<const Windows::Storage::IStorageFile *>(&file), *reinterpret_cast<const Windows::System::LauncherOptions *>(&options)));
+            *operation = detach_abi(this->shim().LaunchFileAsync(*reinterpret_cast<Windows::Storage::IStorageFile const*>(&file), *reinterpret_cast<Windows::System::LauncherOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -692,12 +1785,12 @@ struct produce<D, Windows::System::ILauncherStatics> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_LaunchUriAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall LaunchUriAsync(::IUnknown* uri, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
+            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -707,12 +1800,12 @@ struct produce<D, Windows::System::ILauncherStatics> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_LaunchUriWithOptionsAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::System::ILauncherOptions> options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall LaunchUriWithOptionsAsync(::IUnknown* uri, ::IUnknown* options, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::System::LauncherOptions *>(&options)));
+            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::LauncherOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -726,12 +1819,12 @@ struct produce<D, Windows::System::ILauncherStatics> : produce_base<D, Windows::
 template <typename D>
 struct produce<D, Windows::System::ILauncherStatics2> : produce_base<D, Windows::System::ILauncherStatics2>
 {
-    HRESULT __stdcall abi_LaunchUriForResultsAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::System::ILauncherOptions> options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult>> operation) noexcept override
+    HRESULT __stdcall LaunchUriForResultsAsync(::IUnknown* uri, ::IUnknown* options, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriForResultsAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::System::LauncherOptions *>(&options)));
+            *operation = detach_abi(this->shim().LaunchUriForResultsAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::LauncherOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -741,12 +1834,12 @@ struct produce<D, Windows::System::ILauncherStatics2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_LaunchUriForResultsWithDataAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::System::ILauncherOptions> options, impl::abi_arg_in<Windows::Foundation::Collections::IPropertySet> inputData, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult>> operation) noexcept override
+    HRESULT __stdcall LaunchUriForResultsWithDataAsync(::IUnknown* uri, ::IUnknown* options, ::IUnknown* inputData, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriForResultsAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::System::LauncherOptions *>(&options), *reinterpret_cast<const Windows::Foundation::Collections::ValueSet *>(&inputData)));
+            *operation = detach_abi(this->shim().LaunchUriForResultsAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::LauncherOptions const*>(&options), *reinterpret_cast<Windows::Foundation::Collections::ValueSet const*>(&inputData)));
             return S_OK;
         }
         catch (...)
@@ -756,12 +1849,12 @@ struct produce<D, Windows::System::ILauncherStatics2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_LaunchUriWithDataAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::System::ILauncherOptions> options, impl::abi_arg_in<Windows::Foundation::Collections::IPropertySet> inputData, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall LaunchUriWithDataAsync(::IUnknown* uri, ::IUnknown* options, ::IUnknown* inputData, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::System::LauncherOptions *>(&options), *reinterpret_cast<const Windows::Foundation::Collections::ValueSet *>(&inputData)));
+            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::LauncherOptions const*>(&options), *reinterpret_cast<Windows::Foundation::Collections::ValueSet const*>(&inputData)));
             return S_OK;
         }
         catch (...)
@@ -771,12 +1864,12 @@ struct produce<D, Windows::System::ILauncherStatics2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_QueryUriSupportAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, Windows::System::LaunchQuerySupportType launchQuerySupportType, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus>> operation) noexcept override
+    HRESULT __stdcall QueryUriSupportAsync(::IUnknown* uri, abi_t<Windows::System::LaunchQuerySupportType> launchQuerySupportType, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().QueryUriSupportAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), launchQuerySupportType));
+            *operation = detach_abi(this->shim().QueryUriSupportAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::LaunchQuerySupportType const*>(&launchQuerySupportType)));
             return S_OK;
         }
         catch (...)
@@ -786,12 +1879,12 @@ struct produce<D, Windows::System::ILauncherStatics2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_QueryUriSupportWithPackageFamilyNameAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, Windows::System::LaunchQuerySupportType launchQuerySupportType, impl::abi_arg_in<hstring> packageFamilyName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus>> operation) noexcept override
+    HRESULT __stdcall QueryUriSupportWithPackageFamilyNameAsync(::IUnknown* uri, abi_t<Windows::System::LaunchQuerySupportType> launchQuerySupportType, HSTRING packageFamilyName, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().QueryUriSupportAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), launchQuerySupportType, *reinterpret_cast<const hstring *>(&packageFamilyName)));
+            *operation = detach_abi(this->shim().QueryUriSupportAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::LaunchQuerySupportType const*>(&launchQuerySupportType), *reinterpret_cast<hstring const*>(&packageFamilyName)));
             return S_OK;
         }
         catch (...)
@@ -801,12 +1894,12 @@ struct produce<D, Windows::System::ILauncherStatics2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_QueryFileSupportAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus>> operation) noexcept override
+    HRESULT __stdcall QueryFileSupportAsync(::IUnknown* file, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().QueryFileSupportAsync(*reinterpret_cast<const Windows::Storage::StorageFile *>(&file)));
+            *operation = detach_abi(this->shim().QueryFileSupportAsync(*reinterpret_cast<Windows::Storage::StorageFile const*>(&file)));
             return S_OK;
         }
         catch (...)
@@ -816,12 +1909,12 @@ struct produce<D, Windows::System::ILauncherStatics2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_QueryFileSupportWithPackageFamilyNameAsync(impl::abi_arg_in<Windows::Storage::IStorageFile> file, impl::abi_arg_in<hstring> packageFamilyName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus>> operation) noexcept override
+    HRESULT __stdcall QueryFileSupportWithPackageFamilyNameAsync(::IUnknown* file, HSTRING packageFamilyName, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().QueryFileSupportAsync(*reinterpret_cast<const Windows::Storage::StorageFile *>(&file), *reinterpret_cast<const hstring *>(&packageFamilyName)));
+            *operation = detach_abi(this->shim().QueryFileSupportAsync(*reinterpret_cast<Windows::Storage::StorageFile const*>(&file), *reinterpret_cast<hstring const*>(&packageFamilyName)));
             return S_OK;
         }
         catch (...)
@@ -831,12 +1924,12 @@ struct produce<D, Windows::System::ILauncherStatics2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_FindUriSchemeHandlersAsync(impl::abi_arg_in<hstring> scheme, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>>> operation) noexcept override
+    HRESULT __stdcall FindUriSchemeHandlersAsync(HSTRING scheme, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().FindUriSchemeHandlersAsync(*reinterpret_cast<const hstring *>(&scheme)));
+            *operation = detach_abi(this->shim().FindUriSchemeHandlersAsync(*reinterpret_cast<hstring const*>(&scheme)));
             return S_OK;
         }
         catch (...)
@@ -846,12 +1939,12 @@ struct produce<D, Windows::System::ILauncherStatics2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_FindUriSchemeHandlersWithLaunchUriTypeAsync(impl::abi_arg_in<hstring> scheme, Windows::System::LaunchQuerySupportType launchQuerySupportType, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>>> operation) noexcept override
+    HRESULT __stdcall FindUriSchemeHandlersWithLaunchUriTypeAsync(HSTRING scheme, abi_t<Windows::System::LaunchQuerySupportType> launchQuerySupportType, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().FindUriSchemeHandlersAsync(*reinterpret_cast<const hstring *>(&scheme), launchQuerySupportType));
+            *operation = detach_abi(this->shim().FindUriSchemeHandlersAsync(*reinterpret_cast<hstring const*>(&scheme), *reinterpret_cast<Windows::System::LaunchQuerySupportType const*>(&launchQuerySupportType)));
             return S_OK;
         }
         catch (...)
@@ -861,12 +1954,12 @@ struct produce<D, Windows::System::ILauncherStatics2> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_FindFileHandlersAsync(impl::abi_arg_in<hstring> extension, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>>> operation) noexcept override
+    HRESULT __stdcall FindFileHandlersAsync(HSTRING extension, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().FindFileHandlersAsync(*reinterpret_cast<const hstring *>(&extension)));
+            *operation = detach_abi(this->shim().FindFileHandlersAsync(*reinterpret_cast<hstring const*>(&extension)));
             return S_OK;
         }
         catch (...)
@@ -880,12 +1973,12 @@ struct produce<D, Windows::System::ILauncherStatics2> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::System::ILauncherStatics3> : produce_base<D, Windows::System::ILauncherStatics3>
 {
-    HRESULT __stdcall abi_LaunchFolderAsync(impl::abi_arg_in<Windows::Storage::IStorageFolder> folder, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall LaunchFolderAsync(::IUnknown* folder, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchFolderAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&folder)));
+            *operation = detach_abi(this->shim().LaunchFolderAsync(*reinterpret_cast<Windows::Storage::IStorageFolder const*>(&folder)));
             return S_OK;
         }
         catch (...)
@@ -895,12 +1988,12 @@ struct produce<D, Windows::System::ILauncherStatics3> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_LaunchFolderWithOptionsAsync(impl::abi_arg_in<Windows::Storage::IStorageFolder> folder, impl::abi_arg_in<Windows::System::IFolderLauncherOptions> options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall LaunchFolderWithOptionsAsync(::IUnknown* folder, ::IUnknown* options, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchFolderAsync(*reinterpret_cast<const Windows::Storage::IStorageFolder *>(&folder), *reinterpret_cast<const Windows::System::FolderLauncherOptions *>(&options)));
+            *operation = detach_abi(this->shim().LaunchFolderAsync(*reinterpret_cast<Windows::Storage::IStorageFolder const*>(&folder), *reinterpret_cast<Windows::System::FolderLauncherOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -914,12 +2007,12 @@ struct produce<D, Windows::System::ILauncherStatics3> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::System::ILauncherStatics4> : produce_base<D, Windows::System::ILauncherStatics4>
 {
-    HRESULT __stdcall abi_QueryAppUriSupportAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus>> operation) noexcept override
+    HRESULT __stdcall QueryAppUriSupportAsync(::IUnknown* uri, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().QueryAppUriSupportAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
+            *operation = detach_abi(this->shim().QueryAppUriSupportAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -929,12 +2022,12 @@ struct produce<D, Windows::System::ILauncherStatics4> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_QueryAppUriSupportWithPackageFamilyNameAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<hstring> packageFamilyName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus>> operation) noexcept override
+    HRESULT __stdcall QueryAppUriSupportWithPackageFamilyNameAsync(::IUnknown* uri, HSTRING packageFamilyName, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().QueryAppUriSupportAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const hstring *>(&packageFamilyName)));
+            *operation = detach_abi(this->shim().QueryAppUriSupportAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<hstring const*>(&packageFamilyName)));
             return S_OK;
         }
         catch (...)
@@ -944,12 +2037,12 @@ struct produce<D, Windows::System::ILauncherStatics4> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_FindAppUriHandlersAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>>> operation) noexcept override
+    HRESULT __stdcall FindAppUriHandlersAsync(::IUnknown* uri, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().FindAppUriHandlersAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
+            *operation = detach_abi(this->shim().FindAppUriHandlersAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -959,12 +2052,12 @@ struct produce<D, Windows::System::ILauncherStatics4> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_LaunchUriForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus>> operation) noexcept override
+    HRESULT __stdcall LaunchUriForUserAsync(::IUnknown* user, ::IUnknown* uri, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
+            *operation = detach_abi(this->shim().LaunchUriForUserAsync(*reinterpret_cast<Windows::System::User const*>(&user), *reinterpret_cast<Windows::Foundation::Uri const*>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -974,12 +2067,12 @@ struct produce<D, Windows::System::ILauncherStatics4> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_LaunchUriWithOptionsForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::System::ILauncherOptions> options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus>> operation) noexcept override
+    HRESULT __stdcall LaunchUriWithOptionsForUserAsync(::IUnknown* user, ::IUnknown* uri, ::IUnknown* options, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::System::LauncherOptions *>(&options)));
+            *operation = detach_abi(this->shim().LaunchUriForUserAsync(*reinterpret_cast<Windows::System::User const*>(&user), *reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::LauncherOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -989,12 +2082,12 @@ struct produce<D, Windows::System::ILauncherStatics4> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_LaunchUriWithDataForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::System::ILauncherOptions> options, impl::abi_arg_in<Windows::Foundation::Collections::IPropertySet> inputData, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus>> operation) noexcept override
+    HRESULT __stdcall LaunchUriWithDataForUserAsync(::IUnknown* user, ::IUnknown* uri, ::IUnknown* options, ::IUnknown* inputData, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::System::LauncherOptions *>(&options), *reinterpret_cast<const Windows::Foundation::Collections::ValueSet *>(&inputData)));
+            *operation = detach_abi(this->shim().LaunchUriForUserAsync(*reinterpret_cast<Windows::System::User const*>(&user), *reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::LauncherOptions const*>(&options), *reinterpret_cast<Windows::Foundation::Collections::ValueSet const*>(&inputData)));
             return S_OK;
         }
         catch (...)
@@ -1004,12 +2097,12 @@ struct produce<D, Windows::System::ILauncherStatics4> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_LaunchUriForResultsForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::System::ILauncherOptions> options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult>> operation) noexcept override
+    HRESULT __stdcall LaunchUriForResultsForUserAsync(::IUnknown* user, ::IUnknown* uri, ::IUnknown* options, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriForResultsForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::System::LauncherOptions *>(&options)));
+            *operation = detach_abi(this->shim().LaunchUriForResultsForUserAsync(*reinterpret_cast<Windows::System::User const*>(&user), *reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::LauncherOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -1019,12 +2112,12 @@ struct produce<D, Windows::System::ILauncherStatics4> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_LaunchUriForResultsWithDataForUserAsync(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::System::ILauncherOptions> options, impl::abi_arg_in<Windows::Foundation::Collections::IPropertySet> inputData, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult>> operation) noexcept override
+    HRESULT __stdcall LaunchUriForResultsWithDataForUserAsync(::IUnknown* user, ::IUnknown* uri, ::IUnknown* options, ::IUnknown* inputData, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriForResultsForUserAsync(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::System::LauncherOptions *>(&options), *reinterpret_cast<const Windows::Foundation::Collections::ValueSet *>(&inputData)));
+            *operation = detach_abi(this->shim().LaunchUriForResultsForUserAsync(*reinterpret_cast<Windows::System::User const*>(&user), *reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::LauncherOptions const*>(&options), *reinterpret_cast<Windows::Foundation::Collections::ValueSet const*>(&inputData)));
             return S_OK;
         }
         catch (...)
@@ -1038,7 +2131,7 @@ struct produce<D, Windows::System::ILauncherStatics4> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::System::ILauncherUIOptions> : produce_base<D, Windows::System::ILauncherUIOptions>
 {
-    HRESULT __stdcall get_InvocationPoint(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::Point>> value) noexcept override
+    HRESULT __stdcall get_InvocationPoint(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1053,12 +2146,12 @@ struct produce<D, Windows::System::ILauncherUIOptions> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall put_InvocationPoint(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::Point>> value) noexcept override
+    HRESULT __stdcall put_InvocationPoint(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().InvocationPoint(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::Point> *>(&value));
+            this->shim().InvocationPoint(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::Point> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1067,7 +2160,7 @@ struct produce<D, Windows::System::ILauncherUIOptions> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_SelectionRect(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::Rect>> value) noexcept override
+    HRESULT __stdcall get_SelectionRect(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1082,12 +2175,12 @@ struct produce<D, Windows::System::ILauncherUIOptions> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall put_SelectionRect(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::Rect>> value) noexcept override
+    HRESULT __stdcall put_SelectionRect(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectionRect(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::Rect> *>(&value));
+            this->shim().SelectionRect(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::Rect> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1096,7 +2189,7 @@ struct produce<D, Windows::System::ILauncherUIOptions> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_PreferredPlacement(Windows::UI::Popups::Placement * value) noexcept override
+    HRESULT __stdcall get_PreferredPlacement(abi_t<Windows::UI::Popups::Placement>* value) noexcept override
     {
         try
         {
@@ -1110,12 +2203,12 @@ struct produce<D, Windows::System::ILauncherUIOptions> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall put_PreferredPlacement(Windows::UI::Popups::Placement value) noexcept override
+    HRESULT __stdcall put_PreferredPlacement(abi_t<Windows::UI::Popups::Placement> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PreferredPlacement(value);
+            this->shim().PreferredPlacement(*reinterpret_cast<Windows::UI::Popups::Placement const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1128,7 +2221,7 @@ struct produce<D, Windows::System::ILauncherUIOptions> : produce_base<D, Windows
 template <typename D>
 struct produce<D, Windows::System::ILauncherViewOptions> : produce_base<D, Windows::System::ILauncherViewOptions>
 {
-    HRESULT __stdcall get_DesiredRemainingView(Windows::UI::ViewManagement::ViewSizePreference * value) noexcept override
+    HRESULT __stdcall get_DesiredRemainingView(abi_t<Windows::UI::ViewManagement::ViewSizePreference>* value) noexcept override
     {
         try
         {
@@ -1142,12 +2235,12 @@ struct produce<D, Windows::System::ILauncherViewOptions> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall put_DesiredRemainingView(Windows::UI::ViewManagement::ViewSizePreference value) noexcept override
+    HRESULT __stdcall put_DesiredRemainingView(abi_t<Windows::UI::ViewManagement::ViewSizePreference> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DesiredRemainingView(value);
+            this->shim().DesiredRemainingView(*reinterpret_cast<Windows::UI::ViewManagement::ViewSizePreference const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1160,7 +2253,7 @@ struct produce<D, Windows::System::ILauncherViewOptions> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::System::IMemoryManagerStatics> : produce_base<D, Windows::System::IMemoryManagerStatics>
 {
-    HRESULT __stdcall get_AppMemoryUsage(uint64_t * value) noexcept override
+    HRESULT __stdcall get_AppMemoryUsage(uint64_t* value) noexcept override
     {
         try
         {
@@ -1174,7 +2267,7 @@ struct produce<D, Windows::System::IMemoryManagerStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_AppMemoryUsageLimit(uint64_t * value) noexcept override
+    HRESULT __stdcall get_AppMemoryUsageLimit(uint64_t* value) noexcept override
     {
         try
         {
@@ -1188,7 +2281,7 @@ struct produce<D, Windows::System::IMemoryManagerStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_AppMemoryUsageLevel(Windows::System::AppMemoryUsageLevel * value) noexcept override
+    HRESULT __stdcall get_AppMemoryUsageLevel(abi_t<Windows::System::AppMemoryUsageLevel>* value) noexcept override
     {
         try
         {
@@ -1202,12 +2295,12 @@ struct produce<D, Windows::System::IMemoryManagerStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall add_AppMemoryUsageIncreased(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_AppMemoryUsageIncreased(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().AppMemoryUsageIncreased(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().AppMemoryUsageIncreased(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1216,12 +2309,12 @@ struct produce<D, Windows::System::IMemoryManagerStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall remove_AppMemoryUsageIncreased(event_token token) noexcept override
+    HRESULT __stdcall remove_AppMemoryUsageIncreased(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AppMemoryUsageIncreased(token);
+            this->shim().AppMemoryUsageIncreased(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1230,12 +2323,12 @@ struct produce<D, Windows::System::IMemoryManagerStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall add_AppMemoryUsageDecreased(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_AppMemoryUsageDecreased(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().AppMemoryUsageDecreased(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().AppMemoryUsageDecreased(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1244,12 +2337,12 @@ struct produce<D, Windows::System::IMemoryManagerStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall remove_AppMemoryUsageDecreased(event_token token) noexcept override
+    HRESULT __stdcall remove_AppMemoryUsageDecreased(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AppMemoryUsageDecreased(token);
+            this->shim().AppMemoryUsageDecreased(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1258,12 +2351,12 @@ struct produce<D, Windows::System::IMemoryManagerStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall add_AppMemoryUsageLimitChanging(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_AppMemoryUsageLimitChanging(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().AppMemoryUsageLimitChanging(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().AppMemoryUsageLimitChanging(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1272,12 +2365,12 @@ struct produce<D, Windows::System::IMemoryManagerStatics> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall remove_AppMemoryUsageLimitChanging(event_token token) noexcept override
+    HRESULT __stdcall remove_AppMemoryUsageLimitChanging(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AppMemoryUsageLimitChanging(token);
+            this->shim().AppMemoryUsageLimitChanging(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1290,7 +2383,7 @@ struct produce<D, Windows::System::IMemoryManagerStatics> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::System::IMemoryManagerStatics2> : produce_base<D, Windows::System::IMemoryManagerStatics2>
 {
-    HRESULT __stdcall abi_GetAppMemoryReport(impl::abi_arg_out<Windows::System::IAppMemoryReport> memoryReport) noexcept override
+    HRESULT __stdcall GetAppMemoryReport(::IUnknown** memoryReport) noexcept override
     {
         try
         {
@@ -1305,7 +2398,7 @@ struct produce<D, Windows::System::IMemoryManagerStatics2> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_GetProcessMemoryReport(impl::abi_arg_out<Windows::System::IProcessMemoryReport> memoryReport) noexcept override
+    HRESULT __stdcall GetProcessMemoryReport(::IUnknown** memoryReport) noexcept override
     {
         try
         {
@@ -1324,7 +2417,7 @@ struct produce<D, Windows::System::IMemoryManagerStatics2> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::System::IMemoryManagerStatics3> : produce_base<D, Windows::System::IMemoryManagerStatics3>
 {
-    HRESULT __stdcall abi_TrySetAppMemoryUsageLimit(uint64_t value, bool * result) noexcept override
+    HRESULT __stdcall TrySetAppMemoryUsageLimit(uint64_t value, bool* result) noexcept override
     {
         try
         {
@@ -1342,7 +2435,7 @@ struct produce<D, Windows::System::IMemoryManagerStatics3> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::System::IProcessLauncherOptions> : produce_base<D, Windows::System::IProcessLauncherOptions>
 {
-    HRESULT __stdcall get_StandardInput(impl::abi_arg_out<Windows::Storage::Streams::IInputStream> value) noexcept override
+    HRESULT __stdcall get_StandardInput(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1357,12 +2450,12 @@ struct produce<D, Windows::System::IProcessLauncherOptions> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_StandardInput(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> value) noexcept override
+    HRESULT __stdcall put_StandardInput(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StandardInput(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&value));
+            this->shim().StandardInput(*reinterpret_cast<Windows::Storage::Streams::IInputStream const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1371,7 +2464,7 @@ struct produce<D, Windows::System::IProcessLauncherOptions> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_StandardOutput(impl::abi_arg_out<Windows::Storage::Streams::IOutputStream> value) noexcept override
+    HRESULT __stdcall get_StandardOutput(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1386,12 +2479,12 @@ struct produce<D, Windows::System::IProcessLauncherOptions> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_StandardOutput(impl::abi_arg_in<Windows::Storage::Streams::IOutputStream> value) noexcept override
+    HRESULT __stdcall put_StandardOutput(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StandardOutput(*reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&value));
+            this->shim().StandardOutput(*reinterpret_cast<Windows::Storage::Streams::IOutputStream const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1400,7 +2493,7 @@ struct produce<D, Windows::System::IProcessLauncherOptions> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_StandardError(impl::abi_arg_out<Windows::Storage::Streams::IOutputStream> value) noexcept override
+    HRESULT __stdcall get_StandardError(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1415,12 +2508,12 @@ struct produce<D, Windows::System::IProcessLauncherOptions> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_StandardError(impl::abi_arg_in<Windows::Storage::Streams::IOutputStream> value) noexcept override
+    HRESULT __stdcall put_StandardError(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StandardError(*reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&value));
+            this->shim().StandardError(*reinterpret_cast<Windows::Storage::Streams::IOutputStream const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1429,7 +2522,7 @@ struct produce<D, Windows::System::IProcessLauncherOptions> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_WorkingDirectory(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_WorkingDirectory(HSTRING* value) noexcept override
     {
         try
         {
@@ -1444,12 +2537,12 @@ struct produce<D, Windows::System::IProcessLauncherOptions> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_WorkingDirectory(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_WorkingDirectory(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().WorkingDirectory(*reinterpret_cast<const hstring *>(&value));
+            this->shim().WorkingDirectory(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1462,7 +2555,7 @@ struct produce<D, Windows::System::IProcessLauncherOptions> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::System::IProcessLauncherResult> : produce_base<D, Windows::System::IProcessLauncherResult>
 {
-    HRESULT __stdcall get_ExitCode(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ExitCode(uint32_t* value) noexcept override
     {
         try
         {
@@ -1480,12 +2573,12 @@ struct produce<D, Windows::System::IProcessLauncherResult> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::System::IProcessLauncherStatics> : produce_base<D, Windows::System::IProcessLauncherStatics>
 {
-    HRESULT __stdcall abi_RunToCompletionAsync(impl::abi_arg_in<hstring> fileName, impl::abi_arg_in<hstring> args, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult>> asyncOperationResult) noexcept override
+    HRESULT __stdcall RunToCompletionAsync(HSTRING fileName, HSTRING args, ::IUnknown** asyncOperationResult) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *asyncOperationResult = detach_abi(this->shim().RunToCompletionAsync(*reinterpret_cast<const hstring *>(&fileName), *reinterpret_cast<const hstring *>(&args)));
+            *asyncOperationResult = detach_abi(this->shim().RunToCompletionAsync(*reinterpret_cast<hstring const*>(&fileName), *reinterpret_cast<hstring const*>(&args)));
             return S_OK;
         }
         catch (...)
@@ -1495,12 +2588,12 @@ struct produce<D, Windows::System::IProcessLauncherStatics> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_RunToCompletionAsyncWithOptions(impl::abi_arg_in<hstring> fileName, impl::abi_arg_in<hstring> args, impl::abi_arg_in<Windows::System::IProcessLauncherOptions> options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult>> asyncOperationResult) noexcept override
+    HRESULT __stdcall RunToCompletionAsyncWithOptions(HSTRING fileName, HSTRING args, ::IUnknown* options, ::IUnknown** asyncOperationResult) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *asyncOperationResult = detach_abi(this->shim().RunToCompletionAsync(*reinterpret_cast<const hstring *>(&fileName), *reinterpret_cast<const hstring *>(&args), *reinterpret_cast<const Windows::System::ProcessLauncherOptions *>(&options)));
+            *asyncOperationResult = detach_abi(this->shim().RunToCompletionAsync(*reinterpret_cast<hstring const*>(&fileName), *reinterpret_cast<hstring const*>(&args), *reinterpret_cast<Windows::System::ProcessLauncherOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -1514,7 +2607,7 @@ struct produce<D, Windows::System::IProcessLauncherStatics> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::System::IProcessMemoryReport> : produce_base<D, Windows::System::IProcessMemoryReport>
 {
-    HRESULT __stdcall get_PrivateWorkingSetUsage(uint64_t * value) noexcept override
+    HRESULT __stdcall get_PrivateWorkingSetUsage(uint64_t* value) noexcept override
     {
         try
         {
@@ -1528,7 +2621,7 @@ struct produce<D, Windows::System::IProcessMemoryReport> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_TotalWorkingSetUsage(uint64_t * value) noexcept override
+    HRESULT __stdcall get_TotalWorkingSetUsage(uint64_t* value) noexcept override
     {
         try
         {
@@ -1546,12 +2639,12 @@ struct produce<D, Windows::System::IProcessMemoryReport> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::System::IProtocolForResultsOperation> : produce_base<D, Windows::System::IProtocolForResultsOperation>
 {
-    HRESULT __stdcall abi_ReportCompleted(impl::abi_arg_in<Windows::Foundation::Collections::IPropertySet> data) noexcept override
+    HRESULT __stdcall ReportCompleted(::IUnknown* data) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReportCompleted(*reinterpret_cast<const Windows::Foundation::Collections::ValueSet *>(&data));
+            this->shim().ReportCompleted(*reinterpret_cast<Windows::Foundation::Collections::ValueSet const*>(&data));
             return S_OK;
         }
         catch (...)
@@ -1564,7 +2657,7 @@ struct produce<D, Windows::System::IProtocolForResultsOperation> : produce_base<
 template <typename D>
 struct produce<D, Windows::System::IRemoteLauncherOptions> : produce_base<D, Windows::System::IRemoteLauncherOptions>
 {
-    HRESULT __stdcall get_FallbackUri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_FallbackUri(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1579,12 +2672,12 @@ struct produce<D, Windows::System::IRemoteLauncherOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_FallbackUri(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall put_FallbackUri(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().FallbackUri(*reinterpret_cast<const Windows::Foundation::Uri *>(&value));
+            this->shim().FallbackUri(*reinterpret_cast<Windows::Foundation::Uri const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1593,7 +2686,7 @@ struct produce<D, Windows::System::IRemoteLauncherOptions> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_PreferredAppIds(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_PreferredAppIds(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1612,12 +2705,12 @@ struct produce<D, Windows::System::IRemoteLauncherOptions> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::System::IRemoteLauncherStatics> : produce_base<D, Windows::System::IRemoteLauncherStatics>
 {
-    HRESULT __stdcall abi_LaunchUriAsync(impl::abi_arg_in<Windows::System::RemoteSystems::IRemoteSystemConnectionRequest> remoteSystemConnectionRequest, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus>> operation) noexcept override
+    HRESULT __stdcall LaunchUriAsync(::IUnknown* remoteSystemConnectionRequest, ::IUnknown* uri, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<const Windows::System::RemoteSystems::RemoteSystemConnectionRequest *>(&remoteSystemConnectionRequest), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
+            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<Windows::System::RemoteSystems::RemoteSystemConnectionRequest const*>(&remoteSystemConnectionRequest), *reinterpret_cast<Windows::Foundation::Uri const*>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -1627,12 +2720,12 @@ struct produce<D, Windows::System::IRemoteLauncherStatics> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_LaunchUriWithOptionsAsync(impl::abi_arg_in<Windows::System::RemoteSystems::IRemoteSystemConnectionRequest> remoteSystemConnectionRequest, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::System::IRemoteLauncherOptions> options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus>> operation) noexcept override
+    HRESULT __stdcall LaunchUriWithOptionsAsync(::IUnknown* remoteSystemConnectionRequest, ::IUnknown* uri, ::IUnknown* options, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<const Windows::System::RemoteSystems::RemoteSystemConnectionRequest *>(&remoteSystemConnectionRequest), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::System::RemoteLauncherOptions *>(&options)));
+            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<Windows::System::RemoteSystems::RemoteSystemConnectionRequest const*>(&remoteSystemConnectionRequest), *reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::RemoteLauncherOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -1642,12 +2735,12 @@ struct produce<D, Windows::System::IRemoteLauncherStatics> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_LaunchUriWithDataAsync(impl::abi_arg_in<Windows::System::RemoteSystems::IRemoteSystemConnectionRequest> remoteSystemConnectionRequest, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::System::IRemoteLauncherOptions> options, impl::abi_arg_in<Windows::Foundation::Collections::IPropertySet> inputData, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus>> operation) noexcept override
+    HRESULT __stdcall LaunchUriWithDataAsync(::IUnknown* remoteSystemConnectionRequest, ::IUnknown* uri, ::IUnknown* options, ::IUnknown* inputData, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<const Windows::System::RemoteSystems::RemoteSystemConnectionRequest *>(&remoteSystemConnectionRequest), *reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::System::RemoteLauncherOptions *>(&options), *reinterpret_cast<const Windows::Foundation::Collections::ValueSet *>(&inputData)));
+            *operation = detach_abi(this->shim().LaunchUriAsync(*reinterpret_cast<Windows::System::RemoteSystems::RemoteSystemConnectionRequest const*>(&remoteSystemConnectionRequest), *reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::System::RemoteLauncherOptions const*>(&options), *reinterpret_cast<Windows::Foundation::Collections::ValueSet const*>(&inputData)));
             return S_OK;
         }
         catch (...)
@@ -1661,12 +2754,12 @@ struct produce<D, Windows::System::IRemoteLauncherStatics> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::System::IShutdownManagerStatics> : produce_base<D, Windows::System::IShutdownManagerStatics>
 {
-    HRESULT __stdcall abi_BeginShutdown(Windows::System::ShutdownKind shutdownKind, impl::abi_arg_in<Windows::Foundation::TimeSpan> timeout) noexcept override
+    HRESULT __stdcall BeginShutdown(abi_t<Windows::System::ShutdownKind> shutdownKind, abi_t<Windows::Foundation::TimeSpan> timeout) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().BeginShutdown(shutdownKind, *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&timeout));
+            this->shim().BeginShutdown(*reinterpret_cast<Windows::System::ShutdownKind const*>(&shutdownKind), *reinterpret_cast<Windows::Foundation::TimeSpan const*>(&timeout));
             return S_OK;
         }
         catch (...)
@@ -1675,7 +2768,7 @@ struct produce<D, Windows::System::IShutdownManagerStatics> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_CancelShutdown() noexcept override
+    HRESULT __stdcall CancelShutdown() noexcept override
     {
         try
         {
@@ -1693,12 +2786,12 @@ struct produce<D, Windows::System::IShutdownManagerStatics> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::System::IShutdownManagerStatics2> : produce_base<D, Windows::System::IShutdownManagerStatics2>
 {
-    HRESULT __stdcall abi_IsPowerStateSupported(Windows::System::PowerState powerState, bool * value) noexcept override
+    HRESULT __stdcall IsPowerStateSupported(abi_t<Windows::System::PowerState> powerState, bool* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().IsPowerStateSupported(powerState));
+            *value = detach_abi(this->shim().IsPowerStateSupported(*reinterpret_cast<Windows::System::PowerState const*>(&powerState)));
             return S_OK;
         }
         catch (...)
@@ -1707,12 +2800,12 @@ struct produce<D, Windows::System::IShutdownManagerStatics2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_EnterPowerState(Windows::System::PowerState powerState) noexcept override
+    HRESULT __stdcall EnterPowerState(abi_t<Windows::System::PowerState> powerState) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().EnterPowerState(powerState);
+            this->shim().EnterPowerState(*reinterpret_cast<Windows::System::PowerState const*>(&powerState));
             return S_OK;
         }
         catch (...)
@@ -1721,12 +2814,12 @@ struct produce<D, Windows::System::IShutdownManagerStatics2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_EnterPowerStateWithTimeSpan(Windows::System::PowerState powerState, impl::abi_arg_in<Windows::Foundation::TimeSpan> wakeUpAfter) noexcept override
+    HRESULT __stdcall EnterPowerStateWithTimeSpan(abi_t<Windows::System::PowerState> powerState, abi_t<Windows::Foundation::TimeSpan> wakeUpAfter) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().EnterPowerState(powerState, *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&wakeUpAfter));
+            this->shim().EnterPowerState(*reinterpret_cast<Windows::System::PowerState const*>(&powerState), *reinterpret_cast<Windows::Foundation::TimeSpan const*>(&wakeUpAfter));
             return S_OK;
         }
         catch (...)
@@ -1739,7 +2832,7 @@ struct produce<D, Windows::System::IShutdownManagerStatics2> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::System::ITimeZoneSettingsStatics> : produce_base<D, Windows::System::ITimeZoneSettingsStatics>
 {
-    HRESULT __stdcall get_CurrentTimeZoneDisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CurrentTimeZoneDisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -1754,7 +2847,7 @@ struct produce<D, Windows::System::ITimeZoneSettingsStatics> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_SupportedTimeZoneDisplayNames(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_SupportedTimeZoneDisplayNames(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1769,7 +2862,7 @@ struct produce<D, Windows::System::ITimeZoneSettingsStatics> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_CanChangeTimeZone(bool * value) noexcept override
+    HRESULT __stdcall get_CanChangeTimeZone(bool* value) noexcept override
     {
         try
         {
@@ -1783,12 +2876,12 @@ struct produce<D, Windows::System::ITimeZoneSettingsStatics> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_ChangeTimeZoneByDisplayName(impl::abi_arg_in<hstring> timeZoneDisplayName) noexcept override
+    HRESULT __stdcall ChangeTimeZoneByDisplayName(HSTRING timeZoneDisplayName) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ChangeTimeZoneByDisplayName(*reinterpret_cast<const hstring *>(&timeZoneDisplayName));
+            this->shim().ChangeTimeZoneByDisplayName(*reinterpret_cast<hstring const*>(&timeZoneDisplayName));
             return S_OK;
         }
         catch (...)
@@ -1801,7 +2894,7 @@ struct produce<D, Windows::System::ITimeZoneSettingsStatics> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::System::IUser> : produce_base<D, Windows::System::IUser>
 {
-    HRESULT __stdcall get_NonRoamableId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NonRoamableId(HSTRING* value) noexcept override
     {
         try
         {
@@ -1816,7 +2909,7 @@ struct produce<D, Windows::System::IUser> : produce_base<D, Windows::System::IUs
         }
     }
 
-    HRESULT __stdcall get_AuthenticationStatus(Windows::System::UserAuthenticationStatus * value) noexcept override
+    HRESULT __stdcall get_AuthenticationStatus(abi_t<Windows::System::UserAuthenticationStatus>* value) noexcept override
     {
         try
         {
@@ -1830,7 +2923,7 @@ struct produce<D, Windows::System::IUser> : produce_base<D, Windows::System::IUs
         }
     }
 
-    HRESULT __stdcall get_Type(Windows::System::UserType * value) noexcept override
+    HRESULT __stdcall get_Type(abi_t<Windows::System::UserType>* value) noexcept override
     {
         try
         {
@@ -1844,12 +2937,12 @@ struct produce<D, Windows::System::IUser> : produce_base<D, Windows::System::IUs
         }
     }
 
-    HRESULT __stdcall abi_GetPropertyAsync(impl::abi_arg_in<hstring> value, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::IInspectable>> operation) noexcept override
+    HRESULT __stdcall GetPropertyAsync(HSTRING value, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().GetPropertyAsync(*reinterpret_cast<const hstring *>(&value)));
+            *operation = detach_abi(this->shim().GetPropertyAsync(*reinterpret_cast<hstring const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -1859,12 +2952,12 @@ struct produce<D, Windows::System::IUser> : produce_base<D, Windows::System::IUs
         }
     }
 
-    HRESULT __stdcall abi_GetPropertiesAsync(impl::abi_arg_in<Windows::Foundation::Collections::IVectorView<hstring>> values, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IPropertySet>> operation) noexcept override
+    HRESULT __stdcall GetPropertiesAsync(::IUnknown* values, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().GetPropertiesAsync(*reinterpret_cast<const Windows::Foundation::Collections::IVectorView<hstring> *>(&values)));
+            *operation = detach_abi(this->shim().GetPropertiesAsync(*reinterpret_cast<Windows::Foundation::Collections::IVectorView<hstring> const*>(&values)));
             return S_OK;
         }
         catch (...)
@@ -1874,12 +2967,12 @@ struct produce<D, Windows::System::IUser> : produce_base<D, Windows::System::IUs
         }
     }
 
-    HRESULT __stdcall abi_GetPictureAsync(Windows::System::UserPictureSize desiredSize, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamReference>> operation) noexcept override
+    HRESULT __stdcall GetPictureAsync(abi_t<Windows::System::UserPictureSize> desiredSize, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().GetPictureAsync(desiredSize));
+            *operation = detach_abi(this->shim().GetPictureAsync(*reinterpret_cast<Windows::System::UserPictureSize const*>(&desiredSize)));
             return S_OK;
         }
         catch (...)
@@ -1893,7 +2986,7 @@ struct produce<D, Windows::System::IUser> : produce_base<D, Windows::System::IUs
 template <typename D>
 struct produce<D, Windows::System::IUserAuthenticationStatusChangeDeferral> : produce_base<D, Windows::System::IUserAuthenticationStatusChangeDeferral>
 {
-    HRESULT __stdcall abi_Complete() noexcept override
+    HRESULT __stdcall Complete() noexcept override
     {
         try
         {
@@ -1911,7 +3004,7 @@ struct produce<D, Windows::System::IUserAuthenticationStatusChangeDeferral> : pr
 template <typename D>
 struct produce<D, Windows::System::IUserAuthenticationStatusChangingEventArgs> : produce_base<D, Windows::System::IUserAuthenticationStatusChangingEventArgs>
 {
-    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::System::IUserAuthenticationStatusChangeDeferral> deferral) noexcept override
+    HRESULT __stdcall GetDeferral(::IUnknown** deferral) noexcept override
     {
         try
         {
@@ -1926,7 +3019,7 @@ struct produce<D, Windows::System::IUserAuthenticationStatusChangingEventArgs> :
         }
     }
 
-    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_User(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1941,7 +3034,7 @@ struct produce<D, Windows::System::IUserAuthenticationStatusChangingEventArgs> :
         }
     }
 
-    HRESULT __stdcall get_NewStatus(Windows::System::UserAuthenticationStatus * value) noexcept override
+    HRESULT __stdcall get_NewStatus(abi_t<Windows::System::UserAuthenticationStatus>* value) noexcept override
     {
         try
         {
@@ -1955,7 +3048,7 @@ struct produce<D, Windows::System::IUserAuthenticationStatusChangingEventArgs> :
         }
     }
 
-    HRESULT __stdcall get_CurrentStatus(Windows::System::UserAuthenticationStatus * value) noexcept override
+    HRESULT __stdcall get_CurrentStatus(abi_t<Windows::System::UserAuthenticationStatus>* value) noexcept override
     {
         try
         {
@@ -1973,7 +3066,7 @@ struct produce<D, Windows::System::IUserAuthenticationStatusChangingEventArgs> :
 template <typename D>
 struct produce<D, Windows::System::IUserChangedEventArgs> : produce_base<D, Windows::System::IUserChangedEventArgs>
 {
-    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_User(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1992,7 +3085,7 @@ struct produce<D, Windows::System::IUserChangedEventArgs> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::System::IUserDeviceAssociationChangedEventArgs> : produce_base<D, Windows::System::IUserDeviceAssociationChangedEventArgs>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -2007,7 +3100,7 @@ struct produce<D, Windows::System::IUserDeviceAssociationChangedEventArgs> : pro
         }
     }
 
-    HRESULT __stdcall get_NewUser(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_NewUser(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2022,7 +3115,7 @@ struct produce<D, Windows::System::IUserDeviceAssociationChangedEventArgs> : pro
         }
     }
 
-    HRESULT __stdcall get_OldUser(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_OldUser(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2041,12 +3134,12 @@ struct produce<D, Windows::System::IUserDeviceAssociationChangedEventArgs> : pro
 template <typename D>
 struct produce<D, Windows::System::IUserDeviceAssociationStatics> : produce_base<D, Windows::System::IUserDeviceAssociationStatics>
 {
-    HRESULT __stdcall abi_FindUserFromDeviceId(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::System::IUser> user) noexcept override
+    HRESULT __stdcall FindUserFromDeviceId(HSTRING deviceId, ::IUnknown** user) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *user = detach_abi(this->shim().FindUserFromDeviceId(*reinterpret_cast<const hstring *>(&deviceId)));
+            *user = detach_abi(this->shim().FindUserFromDeviceId(*reinterpret_cast<hstring const*>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -2056,12 +3149,12 @@ struct produce<D, Windows::System::IUserDeviceAssociationStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall add_UserDeviceAssociationChanged(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_UserDeviceAssociationChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().UserDeviceAssociationChanged(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().UserDeviceAssociationChanged(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2070,12 +3163,12 @@ struct produce<D, Windows::System::IUserDeviceAssociationStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall remove_UserDeviceAssociationChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_UserDeviceAssociationChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().UserDeviceAssociationChanged(token);
+            this->shim().UserDeviceAssociationChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2088,7 +3181,7 @@ struct produce<D, Windows::System::IUserDeviceAssociationStatics> : produce_base
 template <typename D>
 struct produce<D, Windows::System::IUserPicker> : produce_base<D, Windows::System::IUserPicker>
 {
-    HRESULT __stdcall get_AllowGuestAccounts(bool * value) noexcept override
+    HRESULT __stdcall get_AllowGuestAccounts(bool* value) noexcept override
     {
         try
         {
@@ -2116,7 +3209,7 @@ struct produce<D, Windows::System::IUserPicker> : produce_base<D, Windows::Syste
         }
     }
 
-    HRESULT __stdcall get_SuggestedSelectedUser(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_SuggestedSelectedUser(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2131,12 +3224,12 @@ struct produce<D, Windows::System::IUserPicker> : produce_base<D, Windows::Syste
         }
     }
 
-    HRESULT __stdcall put_SuggestedSelectedUser(impl::abi_arg_in<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall put_SuggestedSelectedUser(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SuggestedSelectedUser(*reinterpret_cast<const Windows::System::User *>(&value));
+            this->shim().SuggestedSelectedUser(*reinterpret_cast<Windows::System::User const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2145,7 +3238,7 @@ struct produce<D, Windows::System::IUserPicker> : produce_base<D, Windows::Syste
         }
     }
 
-    HRESULT __stdcall abi_PickSingleUserAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::System::User>> pickSingleUserOperation) noexcept override
+    HRESULT __stdcall PickSingleUserAsync(::IUnknown** pickSingleUserOperation) noexcept override
     {
         try
         {
@@ -2164,7 +3257,7 @@ struct produce<D, Windows::System::IUserPicker> : produce_base<D, Windows::Syste
 template <typename D>
 struct produce<D, Windows::System::IUserPickerStatics> : produce_base<D, Windows::System::IUserPickerStatics>
 {
-    HRESULT __stdcall abi_IsSupported(bool * value) noexcept override
+    HRESULT __stdcall IsSupported(bool* value) noexcept override
     {
         try
         {
@@ -2182,7 +3275,7 @@ struct produce<D, Windows::System::IUserPickerStatics> : produce_base<D, Windows
 template <typename D>
 struct produce<D, Windows::System::IUserStatics> : produce_base<D, Windows::System::IUserStatics>
 {
-    HRESULT __stdcall abi_CreateWatcher(impl::abi_arg_out<Windows::System::IUserWatcher> watcher) noexcept override
+    HRESULT __stdcall CreateWatcher(::IUnknown** watcher) noexcept override
     {
         try
         {
@@ -2197,7 +3290,7 @@ struct produce<D, Windows::System::IUserStatics> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall abi_FindAllAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>>> operation) noexcept override
+    HRESULT __stdcall FindAllAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -2212,12 +3305,12 @@ struct produce<D, Windows::System::IUserStatics> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall abi_FindAllAsyncByType(Windows::System::UserType type, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>>> operation) noexcept override
+    HRESULT __stdcall FindAllAsyncByType(abi_t<Windows::System::UserType> type, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().FindAllAsync(type));
+            *operation = detach_abi(this->shim().FindAllAsync(*reinterpret_cast<Windows::System::UserType const*>(&type)));
             return S_OK;
         }
         catch (...)
@@ -2227,12 +3320,12 @@ struct produce<D, Windows::System::IUserStatics> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall abi_FindAllAsyncByTypeAndStatus(Windows::System::UserType type, Windows::System::UserAuthenticationStatus status, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>>> operation) noexcept override
+    HRESULT __stdcall FindAllAsyncByTypeAndStatus(abi_t<Windows::System::UserType> type, abi_t<Windows::System::UserAuthenticationStatus> status, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().FindAllAsync(type, status));
+            *operation = detach_abi(this->shim().FindAllAsync(*reinterpret_cast<Windows::System::UserType const*>(&type), *reinterpret_cast<Windows::System::UserAuthenticationStatus const*>(&status)));
             return S_OK;
         }
         catch (...)
@@ -2242,12 +3335,12 @@ struct produce<D, Windows::System::IUserStatics> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall abi_GetFromId(impl::abi_arg_in<hstring> nonRoamableId, impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall GetFromId(HSTRING nonRoamableId, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetFromId(*reinterpret_cast<const hstring *>(&nonRoamableId)));
+            *value = detach_abi(this->shim().GetFromId(*reinterpret_cast<hstring const*>(&nonRoamableId)));
             return S_OK;
         }
         catch (...)
@@ -2261,7 +3354,7 @@ struct produce<D, Windows::System::IUserStatics> : produce_base<D, Windows::Syst
 template <typename D>
 struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::System::IUserWatcher>
 {
-    HRESULT __stdcall get_Status(Windows::System::UserWatcherStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::System::UserWatcherStatus>* value) noexcept override
     {
         try
         {
@@ -2275,7 +3368,7 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall abi_Start() noexcept override
+    HRESULT __stdcall Start() noexcept override
     {
         try
         {
@@ -2289,7 +3382,7 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall abi_Stop() noexcept override
+    HRESULT __stdcall Stop() noexcept override
     {
         try
         {
@@ -2303,12 +3396,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall add_Added(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Added(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Added(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().Added(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2317,12 +3410,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall remove_Added(event_token token) noexcept override
+    HRESULT __stdcall remove_Added(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Added(token);
+            this->shim().Added(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2331,12 +3424,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall add_Removed(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Removed(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Removed(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().Removed(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2345,12 +3438,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall remove_Removed(event_token token) noexcept override
+    HRESULT __stdcall remove_Removed(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Removed(token);
+            this->shim().Removed(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2359,12 +3452,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall add_Updated(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Updated(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Updated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().Updated(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2373,12 +3466,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall remove_Updated(event_token token) noexcept override
+    HRESULT __stdcall remove_Updated(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Updated(token);
+            this->shim().Updated(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2387,12 +3480,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall add_AuthenticationStatusChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_AuthenticationStatusChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().AuthenticationStatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().AuthenticationStatusChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2401,12 +3494,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall remove_AuthenticationStatusChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_AuthenticationStatusChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AuthenticationStatusChanged(token);
+            this->shim().AuthenticationStatusChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2415,12 +3508,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall add_AuthenticationStatusChanging(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserAuthenticationStatusChangingEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_AuthenticationStatusChanging(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().AuthenticationStatusChanging(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserAuthenticationStatusChangingEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().AuthenticationStatusChanging(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserAuthenticationStatusChangingEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2429,12 +3522,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall remove_AuthenticationStatusChanging(event_token token) noexcept override
+    HRESULT __stdcall remove_AuthenticationStatusChanging(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AuthenticationStatusChanging(token);
+            this->shim().AuthenticationStatusChanging(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2443,12 +3536,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall add_EnumerationCompleted(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_EnumerationCompleted(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().EnumerationCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().EnumerationCompleted(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2457,12 +3550,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall remove_EnumerationCompleted(event_token token) noexcept override
+    HRESULT __stdcall remove_EnumerationCompleted(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().EnumerationCompleted(token);
+            this->shim().EnumerationCompleted(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2471,12 +3564,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall add_Stopped(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Stopped(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Stopped(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().Stopped(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2485,12 +3578,12 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
         }
     }
 
-    HRESULT __stdcall remove_Stopped(event_token token) noexcept override
+    HRESULT __stdcall remove_Stopped(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Stopped(token);
+            this->shim().Stopped(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2502,1104 +3595,11 @@ struct produce<D, Windows::System::IUserWatcher> : produce_base<D, Windows::Syst
 
 }
 
-namespace Windows::System {
-
-template <typename D> hstring impl_IUser<D>::NonRoamableId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IUser)->get_NonRoamableId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::UserAuthenticationStatus impl_IUser<D>::AuthenticationStatus() const
-{
-    Windows::System::UserAuthenticationStatus value {};
-    check_hresult(WINRT_SHIM(IUser)->get_AuthenticationStatus(&value));
-    return value;
-}
-
-template <typename D> Windows::System::UserType impl_IUser<D>::Type() const
-{
-    Windows::System::UserType value {};
-    check_hresult(WINRT_SHIM(IUser)->get_Type(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::IInspectable> impl_IUser<D>::GetPropertyAsync(hstring_view value) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::IInspectable> operation;
-    check_hresult(WINRT_SHIM(IUser)->abi_GetPropertyAsync(get_abi(value), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IPropertySet> impl_IUser<D>::GetPropertiesAsync(vector_view<hstring> values) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IPropertySet> operation;
-    check_hresult(WINRT_SHIM(IUser)->abi_GetPropertiesAsync(get_abi(values), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamReference> impl_IUser<D>::GetPictureAsync(Windows::System::UserPictureSize desiredSize) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamReference> operation;
-    check_hresult(WINRT_SHIM(IUser)->abi_GetPictureAsync(desiredSize, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::System::UserWatcher impl_IUserStatics<D>::CreateWatcher() const
-{
-    Windows::System::UserWatcher watcher { nullptr };
-    check_hresult(WINRT_SHIM(IUserStatics)->abi_CreateWatcher(put_abi(watcher)));
-    return watcher;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> impl_IUserStatics<D>::FindAllAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> operation;
-    check_hresult(WINRT_SHIM(IUserStatics)->abi_FindAllAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> impl_IUserStatics<D>::FindAllAsync(Windows::System::UserType type) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> operation;
-    check_hresult(WINRT_SHIM(IUserStatics)->abi_FindAllAsyncByType(type, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> impl_IUserStatics<D>::FindAllAsync(Windows::System::UserType type, Windows::System::UserAuthenticationStatus status) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> operation;
-    check_hresult(WINRT_SHIM(IUserStatics)->abi_FindAllAsyncByTypeAndStatus(type, status, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::System::User impl_IUserStatics<D>::GetFromId(hstring_view nonRoamableId) const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IUserStatics)->abi_GetFromId(get_abi(nonRoamableId), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::UserWatcherStatus impl_IUserWatcher<D>::Status() const
-{
-    Windows::System::UserWatcherStatus value {};
-    check_hresult(WINRT_SHIM(IUserWatcher)->get_Status(&value));
-    return value;
-}
-
-template <typename D> void impl_IUserWatcher<D>::Start() const
-{
-    check_hresult(WINRT_SHIM(IUserWatcher)->abi_Start());
-}
-
-template <typename D> void impl_IUserWatcher<D>::Stop() const
-{
-    check_hresult(WINRT_SHIM(IUserWatcher)->abi_Stop());
-}
-
-template <typename D> event_token impl_IUserWatcher<D>::Added(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IUserWatcher)->add_Added(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IUserWatcher> impl_IUserWatcher<D>::Added(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IUserWatcher>(this, &ABI::Windows::System::IUserWatcher::remove_Added, Added(handler));
-}
-
-template <typename D> void impl_IUserWatcher<D>::Added(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IUserWatcher)->remove_Added(token));
-}
-
-template <typename D> event_token impl_IUserWatcher<D>::Removed(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IUserWatcher)->add_Removed(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IUserWatcher> impl_IUserWatcher<D>::Removed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IUserWatcher>(this, &ABI::Windows::System::IUserWatcher::remove_Removed, Removed(handler));
-}
-
-template <typename D> void impl_IUserWatcher<D>::Removed(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IUserWatcher)->remove_Removed(token));
-}
-
-template <typename D> event_token impl_IUserWatcher<D>::Updated(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IUserWatcher)->add_Updated(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IUserWatcher> impl_IUserWatcher<D>::Updated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IUserWatcher>(this, &ABI::Windows::System::IUserWatcher::remove_Updated, Updated(handler));
-}
-
-template <typename D> void impl_IUserWatcher<D>::Updated(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IUserWatcher)->remove_Updated(token));
-}
-
-template <typename D> event_token impl_IUserWatcher<D>::AuthenticationStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IUserWatcher)->add_AuthenticationStatusChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IUserWatcher> impl_IUserWatcher<D>::AuthenticationStatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IUserWatcher>(this, &ABI::Windows::System::IUserWatcher::remove_AuthenticationStatusChanged, AuthenticationStatusChanged(handler));
-}
-
-template <typename D> void impl_IUserWatcher<D>::AuthenticationStatusChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IUserWatcher)->remove_AuthenticationStatusChanged(token));
-}
-
-template <typename D> event_token impl_IUserWatcher<D>::AuthenticationStatusChanging(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserAuthenticationStatusChangingEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IUserWatcher)->add_AuthenticationStatusChanging(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IUserWatcher> impl_IUserWatcher<D>::AuthenticationStatusChanging(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::System::UserAuthenticationStatusChangingEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IUserWatcher>(this, &ABI::Windows::System::IUserWatcher::remove_AuthenticationStatusChanging, AuthenticationStatusChanging(handler));
-}
-
-template <typename D> void impl_IUserWatcher<D>::AuthenticationStatusChanging(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IUserWatcher)->remove_AuthenticationStatusChanging(token));
-}
-
-template <typename D> event_token impl_IUserWatcher<D>::EnumerationCompleted(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IUserWatcher)->add_EnumerationCompleted(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IUserWatcher> impl_IUserWatcher<D>::EnumerationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IUserWatcher>(this, &ABI::Windows::System::IUserWatcher::remove_EnumerationCompleted, EnumerationCompleted(handler));
-}
-
-template <typename D> void impl_IUserWatcher<D>::EnumerationCompleted(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IUserWatcher)->remove_EnumerationCompleted(token));
-}
-
-template <typename D> event_token impl_IUserWatcher<D>::Stopped(const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IUserWatcher)->add_Stopped(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IUserWatcher> impl_IUserWatcher<D>::Stopped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::System::UserWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IUserWatcher>(this, &ABI::Windows::System::IUserWatcher::remove_Stopped, Stopped(handler));
-}
-
-template <typename D> void impl_IUserWatcher<D>::Stopped(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IUserWatcher)->remove_Stopped(token));
-}
-
-template <typename D> Windows::System::User impl_IUserChangedEventArgs<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IUserChangedEventArgs)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IUserAuthenticationStatusChangeDeferral<D>::Complete() const
-{
-    check_hresult(WINRT_SHIM(IUserAuthenticationStatusChangeDeferral)->abi_Complete());
-}
-
-template <typename D> Windows::System::UserAuthenticationStatusChangeDeferral impl_IUserAuthenticationStatusChangingEventArgs<D>::GetDeferral() const
-{
-    Windows::System::UserAuthenticationStatusChangeDeferral deferral { nullptr };
-    check_hresult(WINRT_SHIM(IUserAuthenticationStatusChangingEventArgs)->abi_GetDeferral(put_abi(deferral)));
-    return deferral;
-}
-
-template <typename D> Windows::System::User impl_IUserAuthenticationStatusChangingEventArgs<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IUserAuthenticationStatusChangingEventArgs)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::UserAuthenticationStatus impl_IUserAuthenticationStatusChangingEventArgs<D>::NewStatus() const
-{
-    Windows::System::UserAuthenticationStatus value {};
-    check_hresult(WINRT_SHIM(IUserAuthenticationStatusChangingEventArgs)->get_NewStatus(&value));
-    return value;
-}
-
-template <typename D> Windows::System::UserAuthenticationStatus impl_IUserAuthenticationStatusChangingEventArgs<D>::CurrentStatus() const
-{
-    Windows::System::UserAuthenticationStatus value {};
-    check_hresult(WINRT_SHIM(IUserAuthenticationStatusChangingEventArgs)->get_CurrentStatus(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownUserPropertiesStatics<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownUserPropertiesStatics)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownUserPropertiesStatics<D>::FirstName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownUserPropertiesStatics)->get_FirstName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownUserPropertiesStatics<D>::LastName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownUserPropertiesStatics)->get_LastName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownUserPropertiesStatics<D>::ProviderName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownUserPropertiesStatics)->get_ProviderName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownUserPropertiesStatics<D>::AccountName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownUserPropertiesStatics)->get_AccountName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownUserPropertiesStatics<D>::GuestHost() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownUserPropertiesStatics)->get_GuestHost(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownUserPropertiesStatics<D>::PrincipalName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownUserPropertiesStatics)->get_PrincipalName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownUserPropertiesStatics<D>::DomainName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownUserPropertiesStatics)->get_DomainName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownUserPropertiesStatics<D>::SessionInitiationProtocolUri() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownUserPropertiesStatics)->get_SessionInitiationProtocolUri(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IUserPickerStatics<D>::IsSupported() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IUserPickerStatics)->abi_IsSupported(&value));
-    return value;
-}
-
-template <typename D> bool impl_IUserPicker<D>::AllowGuestAccounts() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IUserPicker)->get_AllowGuestAccounts(&value));
-    return value;
-}
-
-template <typename D> void impl_IUserPicker<D>::AllowGuestAccounts(bool value) const
-{
-    check_hresult(WINRT_SHIM(IUserPicker)->put_AllowGuestAccounts(value));
-}
-
-template <typename D> Windows::System::User impl_IUserPicker<D>::SuggestedSelectedUser() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IUserPicker)->get_SuggestedSelectedUser(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IUserPicker<D>::SuggestedSelectedUser(const Windows::System::User & value) const
-{
-    check_hresult(WINRT_SHIM(IUserPicker)->put_SuggestedSelectedUser(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::User> impl_IUserPicker<D>::PickSingleUserAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::System::User> pickSingleUserOperation;
-    check_hresult(WINRT_SHIM(IUserPicker)->abi_PickSingleUserAsync(put_abi(pickSingleUserOperation)));
-    return pickSingleUserOperation;
-}
-
-template <typename D> hstring impl_IUserDeviceAssociationChangedEventArgs<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IUserDeviceAssociationChangedEventArgs)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::User impl_IUserDeviceAssociationChangedEventArgs<D>::NewUser() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IUserDeviceAssociationChangedEventArgs)->get_NewUser(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::User impl_IUserDeviceAssociationChangedEventArgs<D>::OldUser() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IUserDeviceAssociationChangedEventArgs)->get_OldUser(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::User impl_IUserDeviceAssociationStatics<D>::FindUserFromDeviceId(hstring_view deviceId) const
-{
-    Windows::System::User user { nullptr };
-    check_hresult(WINRT_SHIM(IUserDeviceAssociationStatics)->abi_FindUserFromDeviceId(get_abi(deviceId), put_abi(user)));
-    return user;
-}
-
-template <typename D> event_token impl_IUserDeviceAssociationStatics<D>::UserDeviceAssociationChanged(const Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IUserDeviceAssociationStatics)->add_UserDeviceAssociationChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IUserDeviceAssociationStatics> impl_IUserDeviceAssociationStatics<D>::UserDeviceAssociationChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IUserDeviceAssociationStatics>(this, &ABI::Windows::System::IUserDeviceAssociationStatics::remove_UserDeviceAssociationChanged, UserDeviceAssociationChanged(handler));
-}
-
-template <typename D> void impl_IUserDeviceAssociationStatics<D>::UserDeviceAssociationChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IUserDeviceAssociationStatics)->remove_UserDeviceAssociationChanged(token));
-}
-
-template <typename D> uint64_t impl_IAppMemoryReport<D>::PrivateCommitUsage() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IAppMemoryReport)->get_PrivateCommitUsage(&value));
-    return value;
-}
-
-template <typename D> uint64_t impl_IAppMemoryReport<D>::PeakPrivateCommitUsage() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IAppMemoryReport)->get_PeakPrivateCommitUsage(&value));
-    return value;
-}
-
-template <typename D> uint64_t impl_IAppMemoryReport<D>::TotalCommitUsage() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IAppMemoryReport)->get_TotalCommitUsage(&value));
-    return value;
-}
-
-template <typename D> uint64_t impl_IAppMemoryReport<D>::TotalCommitLimit() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IAppMemoryReport)->get_TotalCommitLimit(&value));
-    return value;
-}
-
-template <typename D> uint64_t impl_IProcessMemoryReport<D>::PrivateWorkingSetUsage() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IProcessMemoryReport)->get_PrivateWorkingSetUsage(&value));
-    return value;
-}
-
-template <typename D> uint64_t impl_IProcessMemoryReport<D>::TotalWorkingSetUsage() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IProcessMemoryReport)->get_TotalWorkingSetUsage(&value));
-    return value;
-}
-
-template <typename D> uint64_t impl_IAppMemoryUsageLimitChangingEventArgs<D>::OldLimit() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IAppMemoryUsageLimitChangingEventArgs)->get_OldLimit(&value));
-    return value;
-}
-
-template <typename D> uint64_t impl_IAppMemoryUsageLimitChangingEventArgs<D>::NewLimit() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IAppMemoryUsageLimitChangingEventArgs)->get_NewLimit(&value));
-    return value;
-}
-
-template <typename D> uint64_t impl_IMemoryManagerStatics<D>::AppMemoryUsage() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics)->get_AppMemoryUsage(&value));
-    return value;
-}
-
-template <typename D> uint64_t impl_IMemoryManagerStatics<D>::AppMemoryUsageLimit() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics)->get_AppMemoryUsageLimit(&value));
-    return value;
-}
-
-template <typename D> Windows::System::AppMemoryUsageLevel impl_IMemoryManagerStatics<D>::AppMemoryUsageLevel() const
-{
-    Windows::System::AppMemoryUsageLevel value {};
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics)->get_AppMemoryUsageLevel(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IMemoryManagerStatics<D>::AppMemoryUsageIncreased(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics)->add_AppMemoryUsageIncreased(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMemoryManagerStatics> impl_IMemoryManagerStatics<D>::AppMemoryUsageIncreased(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMemoryManagerStatics>(this, &ABI::Windows::System::IMemoryManagerStatics::remove_AppMemoryUsageIncreased, AppMemoryUsageIncreased(handler));
-}
-
-template <typename D> void impl_IMemoryManagerStatics<D>::AppMemoryUsageIncreased(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics)->remove_AppMemoryUsageIncreased(token));
-}
-
-template <typename D> event_token impl_IMemoryManagerStatics<D>::AppMemoryUsageDecreased(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics)->add_AppMemoryUsageDecreased(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMemoryManagerStatics> impl_IMemoryManagerStatics<D>::AppMemoryUsageDecreased(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IMemoryManagerStatics>(this, &ABI::Windows::System::IMemoryManagerStatics::remove_AppMemoryUsageDecreased, AppMemoryUsageDecreased(handler));
-}
-
-template <typename D> void impl_IMemoryManagerStatics<D>::AppMemoryUsageDecreased(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics)->remove_AppMemoryUsageDecreased(token));
-}
-
-template <typename D> event_token impl_IMemoryManagerStatics<D>::AppMemoryUsageLimitChanging(const Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics)->add_AppMemoryUsageLimitChanging(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMemoryManagerStatics> impl_IMemoryManagerStatics<D>::AppMemoryUsageLimitChanging(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IMemoryManagerStatics>(this, &ABI::Windows::System::IMemoryManagerStatics::remove_AppMemoryUsageLimitChanging, AppMemoryUsageLimitChanging(handler));
-}
-
-template <typename D> void impl_IMemoryManagerStatics<D>::AppMemoryUsageLimitChanging(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics)->remove_AppMemoryUsageLimitChanging(token));
-}
-
-template <typename D> Windows::System::AppMemoryReport impl_IMemoryManagerStatics2<D>::GetAppMemoryReport() const
-{
-    Windows::System::AppMemoryReport memoryReport { nullptr };
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics2)->abi_GetAppMemoryReport(put_abi(memoryReport)));
-    return memoryReport;
-}
-
-template <typename D> Windows::System::ProcessMemoryReport impl_IMemoryManagerStatics2<D>::GetProcessMemoryReport() const
-{
-    Windows::System::ProcessMemoryReport memoryReport { nullptr };
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics2)->abi_GetProcessMemoryReport(put_abi(memoryReport)));
-    return memoryReport;
-}
-
-template <typename D> bool impl_IMemoryManagerStatics3<D>::TrySetAppMemoryUsageLimit(uint64_t value) const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IMemoryManagerStatics3)->abi_TrySetAppMemoryUsageLimit(value, &result));
-    return result;
-}
-
-template <typename D> void impl_IProtocolForResultsOperation<D>::ReportCompleted(const Windows::Foundation::Collections::ValueSet & data) const
-{
-    check_hresult(WINRT_SHIM(IProtocolForResultsOperation)->abi_ReportCompleted(get_abi(data)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::System::AppDiagnosticInfo>> impl_IAppDiagnosticInfoStatics<D>::RequestInfoAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::System::AppDiagnosticInfo>> operation;
-    check_hresult(WINRT_SHIM(IAppDiagnosticInfoStatics)->abi_RequestInfoAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::ApplicationModel::AppInfo impl_IAppDiagnosticInfo<D>::AppInfo() const
-{
-    Windows::ApplicationModel::AppInfo value { nullptr };
-    check_hresult(WINRT_SHIM(IAppDiagnosticInfo)->get_AppInfo(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::LaunchUriStatus impl_ILaunchUriResult<D>::Status() const
-{
-    Windows::System::LaunchUriStatus value {};
-    check_hresult(WINRT_SHIM(ILaunchUriResult)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::ValueSet impl_ILaunchUriResult<D>::Result() const
-{
-    Windows::Foundation::Collections::ValueSet value { nullptr };
-    check_hresult(WINRT_SHIM(ILaunchUriResult)->get_Result(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::Point> impl_ILauncherUIOptions<D>::InvocationPoint() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::Point> value;
-    check_hresult(WINRT_SHIM(ILauncherUIOptions)->get_InvocationPoint(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILauncherUIOptions<D>::InvocationPoint(const optional<Windows::Foundation::Point> & value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherUIOptions)->put_InvocationPoint(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::Rect> impl_ILauncherUIOptions<D>::SelectionRect() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::Rect> value;
-    check_hresult(WINRT_SHIM(ILauncherUIOptions)->get_SelectionRect(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILauncherUIOptions<D>::SelectionRect(const optional<Windows::Foundation::Rect> & value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherUIOptions)->put_SelectionRect(get_abi(value)));
-}
-
-template <typename D> Windows::UI::Popups::Placement impl_ILauncherUIOptions<D>::PreferredPlacement() const
-{
-    Windows::UI::Popups::Placement value {};
-    check_hresult(WINRT_SHIM(ILauncherUIOptions)->get_PreferredPlacement(&value));
-    return value;
-}
-
-template <typename D> void impl_ILauncherUIOptions<D>::PreferredPlacement(Windows::UI::Popups::Placement value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherUIOptions)->put_PreferredPlacement(value));
-}
-
-template <typename D> bool impl_ILauncherOptions<D>::TreatAsUntrusted() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ILauncherOptions)->get_TreatAsUntrusted(&value));
-    return value;
-}
-
-template <typename D> void impl_ILauncherOptions<D>::TreatAsUntrusted(bool value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherOptions)->put_TreatAsUntrusted(value));
-}
-
-template <typename D> bool impl_ILauncherOptions<D>::DisplayApplicationPicker() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ILauncherOptions)->get_DisplayApplicationPicker(&value));
-    return value;
-}
-
-template <typename D> void impl_ILauncherOptions<D>::DisplayApplicationPicker(bool value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherOptions)->put_DisplayApplicationPicker(value));
-}
-
-template <typename D> Windows::System::LauncherUIOptions impl_ILauncherOptions<D>::UI() const
-{
-    Windows::System::LauncherUIOptions value { nullptr };
-    check_hresult(WINRT_SHIM(ILauncherOptions)->get_UI(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ILauncherOptions<D>::PreferredApplicationPackageFamilyName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ILauncherOptions)->get_PreferredApplicationPackageFamilyName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILauncherOptions<D>::PreferredApplicationPackageFamilyName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherOptions)->put_PreferredApplicationPackageFamilyName(get_abi(value)));
-}
-
-template <typename D> hstring impl_ILauncherOptions<D>::PreferredApplicationDisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ILauncherOptions)->get_PreferredApplicationDisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILauncherOptions<D>::PreferredApplicationDisplayName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherOptions)->put_PreferredApplicationDisplayName(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Uri impl_ILauncherOptions<D>::FallbackUri() const
-{
-    Windows::Foundation::Uri value { nullptr };
-    check_hresult(WINRT_SHIM(ILauncherOptions)->get_FallbackUri(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILauncherOptions<D>::FallbackUri(const Windows::Foundation::Uri & value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherOptions)->put_FallbackUri(get_abi(value)));
-}
-
-template <typename D> hstring impl_ILauncherOptions<D>::ContentType() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ILauncherOptions)->get_ContentType(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILauncherOptions<D>::ContentType(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherOptions)->put_ContentType(get_abi(value)));
-}
-
-template <typename D> hstring impl_ILauncherOptions2<D>::TargetApplicationPackageFamilyName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ILauncherOptions2)->get_TargetApplicationPackageFamilyName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILauncherOptions2<D>::TargetApplicationPackageFamilyName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherOptions2)->put_TargetApplicationPackageFamilyName(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Search::StorageFileQueryResult impl_ILauncherOptions2<D>::NeighboringFilesQuery() const
-{
-    Windows::Storage::Search::StorageFileQueryResult value { nullptr };
-    check_hresult(WINRT_SHIM(ILauncherOptions2)->get_NeighboringFilesQuery(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ILauncherOptions2<D>::NeighboringFilesQuery(const Windows::Storage::Search::StorageFileQueryResult & value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherOptions2)->put_NeighboringFilesQuery(get_abi(value)));
-}
-
-template <typename D> bool impl_ILauncherOptions3<D>::IgnoreAppUriHandlers() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ILauncherOptions3)->get_IgnoreAppUriHandlers(&value));
-    return value;
-}
-
-template <typename D> void impl_ILauncherOptions3<D>::IgnoreAppUriHandlers(bool value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherOptions3)->put_IgnoreAppUriHandlers(value));
-}
-
-template <typename D> bool impl_ILauncherOptions4<D>::LimitPickerToCurrentAppAndAppUriHandlers() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ILauncherOptions4)->get_LimitPickerToCurrentAppAndAppUriHandlers(&value));
-    return value;
-}
-
-template <typename D> void impl_ILauncherOptions4<D>::LimitPickerToCurrentAppAndAppUriHandlers(bool value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherOptions4)->put_LimitPickerToCurrentAppAndAppUriHandlers(value));
-}
-
-template <typename D> Windows::UI::ViewManagement::ViewSizePreference impl_ILauncherViewOptions<D>::DesiredRemainingView() const
-{
-    Windows::UI::ViewManagement::ViewSizePreference value {};
-    check_hresult(WINRT_SHIM(ILauncherViewOptions)->get_DesiredRemainingView(&value));
-    return value;
-}
-
-template <typename D> void impl_ILauncherViewOptions<D>::DesiredRemainingView(Windows::UI::ViewManagement::ViewSizePreference value) const
-{
-    check_hresult(WINRT_SHIM(ILauncherViewOptions)->put_DesiredRemainingView(value));
-}
-
-template <typename D> Windows::Foundation::Uri impl_IRemoteLauncherOptions<D>::FallbackUri() const
-{
-    Windows::Foundation::Uri value { nullptr };
-    check_hresult(WINRT_SHIM(IRemoteLauncherOptions)->get_FallbackUri(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IRemoteLauncherOptions<D>::FallbackUri(const Windows::Foundation::Uri & value) const
-{
-    check_hresult(WINRT_SHIM(IRemoteLauncherOptions)->put_FallbackUri(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IRemoteLauncherOptions<D>::PreferredAppIds() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IRemoteLauncherOptions)->get_PreferredAppIds(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Storage::IStorageItem> impl_IFolderLauncherOptions<D>::ItemsToSelect() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Storage::IStorageItem> value;
-    check_hresult(WINRT_SHIM(IFolderLauncherOptions)->get_ItemsToSelect(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_ILauncherStatics<D>::LaunchFileAsync(const Windows::Storage::IStorageFile & file) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics)->abi_LaunchFileAsync(get_abi(file), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_ILauncherStatics<D>::LaunchFileAsync(const Windows::Storage::IStorageFile & file, const Windows::System::LauncherOptions & options) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics)->abi_LaunchFileWithOptionsAsync(get_abi(file), get_abi(options), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_ILauncherStatics<D>::LaunchUriAsync(const Windows::Foundation::Uri & uri) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics)->abi_LaunchUriAsync(get_abi(uri), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_ILauncherStatics<D>::LaunchUriAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics)->abi_LaunchUriWithOptionsAsync(get_abi(uri), get_abi(options), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> impl_ILauncherStatics2<D>::LaunchUriForResultsAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics2)->abi_LaunchUriForResultsAsync(get_abi(uri), get_abi(options), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> impl_ILauncherStatics2<D>::LaunchUriForResultsAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics2)->abi_LaunchUriForResultsWithDataAsync(get_abi(uri), get_abi(options), get_abi(inputData), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_ILauncherStatics2<D>::LaunchUriAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics2)->abi_LaunchUriWithDataAsync(get_abi(uri), get_abi(options), get_abi(inputData), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> impl_ILauncherStatics2<D>::QueryUriSupportAsync(const Windows::Foundation::Uri & uri, Windows::System::LaunchQuerySupportType launchQuerySupportType) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics2)->abi_QueryUriSupportAsync(get_abi(uri), launchQuerySupportType, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> impl_ILauncherStatics2<D>::QueryUriSupportAsync(const Windows::Foundation::Uri & uri, Windows::System::LaunchQuerySupportType launchQuerySupportType, hstring_view packageFamilyName) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics2)->abi_QueryUriSupportWithPackageFamilyNameAsync(get_abi(uri), launchQuerySupportType, get_abi(packageFamilyName), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> impl_ILauncherStatics2<D>::QueryFileSupportAsync(const Windows::Storage::StorageFile & file) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics2)->abi_QueryFileSupportAsync(get_abi(file), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> impl_ILauncherStatics2<D>::QueryFileSupportAsync(const Windows::Storage::StorageFile & file, hstring_view packageFamilyName) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics2)->abi_QueryFileSupportWithPackageFamilyNameAsync(get_abi(file), get_abi(packageFamilyName), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> impl_ILauncherStatics2<D>::FindUriSchemeHandlersAsync(hstring_view scheme) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics2)->abi_FindUriSchemeHandlersAsync(get_abi(scheme), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> impl_ILauncherStatics2<D>::FindUriSchemeHandlersAsync(hstring_view scheme, Windows::System::LaunchQuerySupportType launchQuerySupportType) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics2)->abi_FindUriSchemeHandlersWithLaunchUriTypeAsync(get_abi(scheme), launchQuerySupportType, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> impl_ILauncherStatics2<D>::FindFileHandlersAsync(hstring_view extension) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics2)->abi_FindFileHandlersAsync(get_abi(extension), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_ILauncherStatics3<D>::LaunchFolderAsync(const Windows::Storage::IStorageFolder & folder) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics3)->abi_LaunchFolderAsync(get_abi(folder), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_ILauncherStatics3<D>::LaunchFolderAsync(const Windows::Storage::IStorageFolder & folder, const Windows::System::FolderLauncherOptions & options) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics3)->abi_LaunchFolderWithOptionsAsync(get_abi(folder), get_abi(options), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> impl_ILauncherStatics4<D>::QueryAppUriSupportAsync(const Windows::Foundation::Uri & uri) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics4)->abi_QueryAppUriSupportAsync(get_abi(uri), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> impl_ILauncherStatics4<D>::QueryAppUriSupportAsync(const Windows::Foundation::Uri & uri, hstring_view packageFamilyName) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics4)->abi_QueryAppUriSupportWithPackageFamilyNameAsync(get_abi(uri), get_abi(packageFamilyName), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> impl_ILauncherStatics4<D>::FindAppUriHandlersAsync(const Windows::Foundation::Uri & uri) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics4)->abi_FindAppUriHandlersAsync(get_abi(uri), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> impl_ILauncherStatics4<D>::LaunchUriForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics4)->abi_LaunchUriForUserAsync(get_abi(user), get_abi(uri), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> impl_ILauncherStatics4<D>::LaunchUriForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics4)->abi_LaunchUriWithOptionsForUserAsync(get_abi(user), get_abi(uri), get_abi(options), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> impl_ILauncherStatics4<D>::LaunchUriForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics4)->abi_LaunchUriWithDataForUserAsync(get_abi(user), get_abi(uri), get_abi(options), get_abi(inputData), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> impl_ILauncherStatics4<D>::LaunchUriForResultsForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics4)->abi_LaunchUriForResultsForUserAsync(get_abi(user), get_abi(uri), get_abi(options), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> impl_ILauncherStatics4<D>::LaunchUriForResultsForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> operation;
-    check_hresult(WINRT_SHIM(ILauncherStatics4)->abi_LaunchUriForResultsWithDataForUserAsync(get_abi(user), get_abi(uri), get_abi(options), get_abi(inputData), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> impl_IRemoteLauncherStatics<D>::LaunchUriAsync(const Windows::System::RemoteSystems::RemoteSystemConnectionRequest & remoteSystemConnectionRequest, const Windows::Foundation::Uri & uri) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> operation;
-    check_hresult(WINRT_SHIM(IRemoteLauncherStatics)->abi_LaunchUriAsync(get_abi(remoteSystemConnectionRequest), get_abi(uri), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> impl_IRemoteLauncherStatics<D>::LaunchUriAsync(const Windows::System::RemoteSystems::RemoteSystemConnectionRequest & remoteSystemConnectionRequest, const Windows::Foundation::Uri & uri, const Windows::System::RemoteLauncherOptions & options) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> operation;
-    check_hresult(WINRT_SHIM(IRemoteLauncherStatics)->abi_LaunchUriWithOptionsAsync(get_abi(remoteSystemConnectionRequest), get_abi(uri), get_abi(options), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> impl_IRemoteLauncherStatics<D>::LaunchUriAsync(const Windows::System::RemoteSystems::RemoteSystemConnectionRequest & remoteSystemConnectionRequest, const Windows::Foundation::Uri & uri, const Windows::System::RemoteLauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> operation;
-    check_hresult(WINRT_SHIM(IRemoteLauncherStatics)->abi_LaunchUriWithDataAsync(get_abi(remoteSystemConnectionRequest), get_abi(uri), get_abi(options), get_abi(inputData), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Storage::Streams::IInputStream impl_IProcessLauncherOptions<D>::StandardInput() const
-{
-    Windows::Storage::Streams::IInputStream value;
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_StandardInput(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IProcessLauncherOptions<D>::StandardInput(const Windows::Storage::Streams::IInputStream & value) const
-{
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_StandardInput(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Streams::IOutputStream impl_IProcessLauncherOptions<D>::StandardOutput() const
-{
-    Windows::Storage::Streams::IOutputStream value;
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_StandardOutput(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IProcessLauncherOptions<D>::StandardOutput(const Windows::Storage::Streams::IOutputStream & value) const
-{
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_StandardOutput(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Streams::IOutputStream impl_IProcessLauncherOptions<D>::StandardError() const
-{
-    Windows::Storage::Streams::IOutputStream value;
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_StandardError(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IProcessLauncherOptions<D>::StandardError(const Windows::Storage::Streams::IOutputStream & value) const
-{
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_StandardError(get_abi(value)));
-}
-
-template <typename D> hstring impl_IProcessLauncherOptions<D>::WorkingDirectory() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->get_WorkingDirectory(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IProcessLauncherOptions<D>::WorkingDirectory(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IProcessLauncherOptions)->put_WorkingDirectory(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> impl_IProcessLauncherStatics<D>::RunToCompletionAsync(hstring_view fileName, hstring_view args) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> asyncOperationResult;
-    check_hresult(WINRT_SHIM(IProcessLauncherStatics)->abi_RunToCompletionAsync(get_abi(fileName), get_abi(args), put_abi(asyncOperationResult)));
-    return asyncOperationResult;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> impl_IProcessLauncherStatics<D>::RunToCompletionAsync(hstring_view fileName, hstring_view args, const Windows::System::ProcessLauncherOptions & options) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> asyncOperationResult;
-    check_hresult(WINRT_SHIM(IProcessLauncherStatics)->abi_RunToCompletionAsyncWithOptions(get_abi(fileName), get_abi(args), get_abi(options), put_abi(asyncOperationResult)));
-    return asyncOperationResult;
-}
-
-template <typename D> uint32_t impl_IProcessLauncherResult<D>::ExitCode() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IProcessLauncherResult)->get_ExitCode(&value));
-    return value;
-}
-
-template <typename D> void impl_IShutdownManagerStatics<D>::BeginShutdown(Windows::System::ShutdownKind shutdownKind, const Windows::Foundation::TimeSpan & timeout) const
-{
-    check_hresult(WINRT_SHIM(IShutdownManagerStatics)->abi_BeginShutdown(shutdownKind, get_abi(timeout)));
-}
-
-template <typename D> void impl_IShutdownManagerStatics<D>::CancelShutdown() const
-{
-    check_hresult(WINRT_SHIM(IShutdownManagerStatics)->abi_CancelShutdown());
-}
-
-template <typename D> bool impl_IShutdownManagerStatics2<D>::IsPowerStateSupported(Windows::System::PowerState powerState) const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IShutdownManagerStatics2)->abi_IsPowerStateSupported(powerState, &value));
-    return value;
-}
-
-template <typename D> void impl_IShutdownManagerStatics2<D>::EnterPowerState(Windows::System::PowerState powerState) const
-{
-    check_hresult(WINRT_SHIM(IShutdownManagerStatics2)->abi_EnterPowerState(powerState));
-}
-
-template <typename D> void impl_IShutdownManagerStatics2<D>::EnterPowerState(Windows::System::PowerState powerState, const Windows::Foundation::TimeSpan & wakeUpAfter) const
-{
-    check_hresult(WINRT_SHIM(IShutdownManagerStatics2)->abi_EnterPowerStateWithTimeSpan(powerState, get_abi(wakeUpAfter)));
-}
-
-template <typename D> hstring impl_ITimeZoneSettingsStatics<D>::CurrentTimeZoneDisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->get_CurrentTimeZoneDisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_ITimeZoneSettingsStatics<D>::SupportedTimeZoneDisplayNames() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->get_SupportedTimeZoneDisplayNames(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_ITimeZoneSettingsStatics<D>::CanChangeTimeZone() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->get_CanChangeTimeZone(&value));
-    return value;
-}
-
-template <typename D> void impl_ITimeZoneSettingsStatics<D>::ChangeTimeZoneByDisplayName(hstring_view timeZoneDisplayName) const
-{
-    check_hresult(WINRT_SHIM(ITimeZoneSettingsStatics)->abi_ChangeTimeZoneByDisplayName(get_abi(timeZoneDisplayName)));
-}
+WINRT_EXPORT namespace winrt::Windows::System {
 
 inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::System::AppDiagnosticInfo>> AppDiagnosticInfo::RequestInfoAsync()
 {
-    return get_activation_factory<AppDiagnosticInfo, IAppDiagnosticInfoStatics>().RequestInfoAsync();
+    return get_activation_factory<AppDiagnosticInfo, Windows::System::IAppDiagnosticInfoStatics>().RequestInfoAsync();
 }
 
 inline FolderLauncherOptions::FolderLauncherOptions() :
@@ -3608,167 +3608,167 @@ inline FolderLauncherOptions::FolderLauncherOptions() :
 
 inline hstring KnownUserProperties::DisplayName()
 {
-    return get_activation_factory<KnownUserProperties, IKnownUserPropertiesStatics>().DisplayName();
+    return get_activation_factory<KnownUserProperties, Windows::System::IKnownUserPropertiesStatics>().DisplayName();
 }
 
 inline hstring KnownUserProperties::FirstName()
 {
-    return get_activation_factory<KnownUserProperties, IKnownUserPropertiesStatics>().FirstName();
+    return get_activation_factory<KnownUserProperties, Windows::System::IKnownUserPropertiesStatics>().FirstName();
 }
 
 inline hstring KnownUserProperties::LastName()
 {
-    return get_activation_factory<KnownUserProperties, IKnownUserPropertiesStatics>().LastName();
+    return get_activation_factory<KnownUserProperties, Windows::System::IKnownUserPropertiesStatics>().LastName();
 }
 
 inline hstring KnownUserProperties::ProviderName()
 {
-    return get_activation_factory<KnownUserProperties, IKnownUserPropertiesStatics>().ProviderName();
+    return get_activation_factory<KnownUserProperties, Windows::System::IKnownUserPropertiesStatics>().ProviderName();
 }
 
 inline hstring KnownUserProperties::AccountName()
 {
-    return get_activation_factory<KnownUserProperties, IKnownUserPropertiesStatics>().AccountName();
+    return get_activation_factory<KnownUserProperties, Windows::System::IKnownUserPropertiesStatics>().AccountName();
 }
 
 inline hstring KnownUserProperties::GuestHost()
 {
-    return get_activation_factory<KnownUserProperties, IKnownUserPropertiesStatics>().GuestHost();
+    return get_activation_factory<KnownUserProperties, Windows::System::IKnownUserPropertiesStatics>().GuestHost();
 }
 
 inline hstring KnownUserProperties::PrincipalName()
 {
-    return get_activation_factory<KnownUserProperties, IKnownUserPropertiesStatics>().PrincipalName();
+    return get_activation_factory<KnownUserProperties, Windows::System::IKnownUserPropertiesStatics>().PrincipalName();
 }
 
 inline hstring KnownUserProperties::DomainName()
 {
-    return get_activation_factory<KnownUserProperties, IKnownUserPropertiesStatics>().DomainName();
+    return get_activation_factory<KnownUserProperties, Windows::System::IKnownUserPropertiesStatics>().DomainName();
 }
 
 inline hstring KnownUserProperties::SessionInitiationProtocolUri()
 {
-    return get_activation_factory<KnownUserProperties, IKnownUserPropertiesStatics>().SessionInitiationProtocolUri();
+    return get_activation_factory<KnownUserProperties, Windows::System::IKnownUserPropertiesStatics>().SessionInitiationProtocolUri();
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchFileAsync(const Windows::Storage::IStorageFile & file)
+inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchFileAsync(Windows::Storage::IStorageFile const& file)
 {
-    return get_activation_factory<Launcher, ILauncherStatics>().LaunchFileAsync(file);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics>().LaunchFileAsync(file);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchFileAsync(const Windows::Storage::IStorageFile & file, const Windows::System::LauncherOptions & options)
+inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchFileAsync(Windows::Storage::IStorageFile const& file, Windows::System::LauncherOptions const& options)
 {
-    return get_activation_factory<Launcher, ILauncherStatics>().LaunchFileAsync(file, options);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics>().LaunchFileAsync(file, options);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchUriAsync(const Windows::Foundation::Uri & uri)
+inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchUriAsync(Windows::Foundation::Uri const& uri)
 {
-    return get_activation_factory<Launcher, ILauncherStatics>().LaunchUriAsync(uri);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics>().LaunchUriAsync(uri);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchUriAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options)
+inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchUriAsync(Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options)
 {
-    return get_activation_factory<Launcher, ILauncherStatics>().LaunchUriAsync(uri, options);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics>().LaunchUriAsync(uri, options);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> Launcher::LaunchUriForResultsAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> Launcher::LaunchUriForResultsAsync(Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options)
 {
-    return get_activation_factory<Launcher, ILauncherStatics2>().LaunchUriForResultsAsync(uri, options);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics2>().LaunchUriForResultsAsync(uri, options);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> Launcher::LaunchUriForResultsAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> Launcher::LaunchUriForResultsAsync(Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options, Windows::Foundation::Collections::ValueSet const& inputData)
 {
-    return get_activation_factory<Launcher, ILauncherStatics2>().LaunchUriForResultsAsync(uri, options, inputData);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics2>().LaunchUriForResultsAsync(uri, options, inputData);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchUriAsync(const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData)
+inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchUriAsync(Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options, Windows::Foundation::Collections::ValueSet const& inputData)
 {
-    return get_activation_factory<Launcher, ILauncherStatics2>().LaunchUriAsync(uri, options, inputData);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics2>().LaunchUriAsync(uri, options, inputData);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> Launcher::QueryUriSupportAsync(const Windows::Foundation::Uri & uri, Windows::System::LaunchQuerySupportType launchQuerySupportType)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> Launcher::QueryUriSupportAsync(Windows::Foundation::Uri const& uri, Windows::System::LaunchQuerySupportType const& launchQuerySupportType)
 {
-    return get_activation_factory<Launcher, ILauncherStatics2>().QueryUriSupportAsync(uri, launchQuerySupportType);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics2>().QueryUriSupportAsync(uri, launchQuerySupportType);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> Launcher::QueryUriSupportAsync(const Windows::Foundation::Uri & uri, Windows::System::LaunchQuerySupportType launchQuerySupportType, hstring_view packageFamilyName)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> Launcher::QueryUriSupportAsync(Windows::Foundation::Uri const& uri, Windows::System::LaunchQuerySupportType const& launchQuerySupportType, param::hstring const& packageFamilyName)
 {
-    return get_activation_factory<Launcher, ILauncherStatics2>().QueryUriSupportAsync(uri, launchQuerySupportType, packageFamilyName);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics2>().QueryUriSupportAsync(uri, launchQuerySupportType, packageFamilyName);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> Launcher::QueryFileSupportAsync(const Windows::Storage::StorageFile & file)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> Launcher::QueryFileSupportAsync(Windows::Storage::StorageFile const& file)
 {
-    return get_activation_factory<Launcher, ILauncherStatics2>().QueryFileSupportAsync(file);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics2>().QueryFileSupportAsync(file);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> Launcher::QueryFileSupportAsync(const Windows::Storage::StorageFile & file, hstring_view packageFamilyName)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> Launcher::QueryFileSupportAsync(Windows::Storage::StorageFile const& file, param::hstring const& packageFamilyName)
 {
-    return get_activation_factory<Launcher, ILauncherStatics2>().QueryFileSupportAsync(file, packageFamilyName);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics2>().QueryFileSupportAsync(file, packageFamilyName);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> Launcher::FindUriSchemeHandlersAsync(hstring_view scheme)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> Launcher::FindUriSchemeHandlersAsync(param::hstring const& scheme)
 {
-    return get_activation_factory<Launcher, ILauncherStatics2>().FindUriSchemeHandlersAsync(scheme);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics2>().FindUriSchemeHandlersAsync(scheme);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> Launcher::FindUriSchemeHandlersAsync(hstring_view scheme, Windows::System::LaunchQuerySupportType launchQuerySupportType)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> Launcher::FindUriSchemeHandlersAsync(param::hstring const& scheme, Windows::System::LaunchQuerySupportType const& launchQuerySupportType)
 {
-    return get_activation_factory<Launcher, ILauncherStatics2>().FindUriSchemeHandlersAsync(scheme, launchQuerySupportType);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics2>().FindUriSchemeHandlersAsync(scheme, launchQuerySupportType);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> Launcher::FindFileHandlersAsync(hstring_view extension)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> Launcher::FindFileHandlersAsync(param::hstring const& extension)
 {
-    return get_activation_factory<Launcher, ILauncherStatics2>().FindFileHandlersAsync(extension);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics2>().FindFileHandlersAsync(extension);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchFolderAsync(const Windows::Storage::IStorageFolder & folder)
+inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchFolderAsync(Windows::Storage::IStorageFolder const& folder)
 {
-    return get_activation_factory<Launcher, ILauncherStatics3>().LaunchFolderAsync(folder);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics3>().LaunchFolderAsync(folder);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchFolderAsync(const Windows::Storage::IStorageFolder & folder, const Windows::System::FolderLauncherOptions & options)
+inline Windows::Foundation::IAsyncOperation<bool> Launcher::LaunchFolderAsync(Windows::Storage::IStorageFolder const& folder, Windows::System::FolderLauncherOptions const& options)
 {
-    return get_activation_factory<Launcher, ILauncherStatics3>().LaunchFolderAsync(folder, options);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics3>().LaunchFolderAsync(folder, options);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> Launcher::QueryAppUriSupportAsync(const Windows::Foundation::Uri & uri)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> Launcher::QueryAppUriSupportAsync(Windows::Foundation::Uri const& uri)
 {
-    return get_activation_factory<Launcher, ILauncherStatics4>().QueryAppUriSupportAsync(uri);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics4>().QueryAppUriSupportAsync(uri);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchQuerySupportStatus> Launcher::QueryAppUriSupportAsync(const Windows::Foundation::Uri & uri, hstring_view packageFamilyName)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchQuerySupportStatus> Launcher::QueryAppUriSupportAsync(Windows::Foundation::Uri const& uri, param::hstring const& packageFamilyName)
 {
-    return get_activation_factory<Launcher, ILauncherStatics4>().QueryAppUriSupportAsync(uri, packageFamilyName);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics4>().QueryAppUriSupportAsync(uri, packageFamilyName);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> Launcher::FindAppUriHandlersAsync(const Windows::Foundation::Uri & uri)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::AppInfo>> Launcher::FindAppUriHandlersAsync(Windows::Foundation::Uri const& uri)
 {
-    return get_activation_factory<Launcher, ILauncherStatics4>().FindAppUriHandlersAsync(uri);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics4>().FindAppUriHandlersAsync(uri);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> Launcher::LaunchUriForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriStatus> Launcher::LaunchUriForUserAsync(Windows::System::User const& user, Windows::Foundation::Uri const& uri)
 {
-    return get_activation_factory<Launcher, ILauncherStatics4>().LaunchUriForUserAsync(user, uri);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics4>().LaunchUriForUserAsync(user, uri);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> Launcher::LaunchUriForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriStatus> Launcher::LaunchUriForUserAsync(Windows::System::User const& user, Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options)
 {
-    return get_activation_factory<Launcher, ILauncherStatics4>().LaunchUriForUserAsync(user, uri, options);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics4>().LaunchUriForUserAsync(user, uri, options);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::LaunchUriStatus> Launcher::LaunchUriForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriStatus> Launcher::LaunchUriForUserAsync(Windows::System::User const& user, Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options, Windows::Foundation::Collections::ValueSet const& inputData)
 {
-    return get_activation_factory<Launcher, ILauncherStatics4>().LaunchUriForUserAsync(user, uri, options, inputData);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics4>().LaunchUriForUserAsync(user, uri, options, inputData);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> Launcher::LaunchUriForResultsForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> Launcher::LaunchUriForResultsForUserAsync(Windows::System::User const& user, Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options)
 {
-    return get_activation_factory<Launcher, ILauncherStatics4>().LaunchUriForResultsForUserAsync(user, uri, options);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics4>().LaunchUriForResultsForUserAsync(user, uri, options);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> Launcher::LaunchUriForResultsForUserAsync(const Windows::System::User & user, const Windows::Foundation::Uri & uri, const Windows::System::LauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData)
+inline Windows::Foundation::IAsyncOperation<Windows::System::LaunchUriResult> Launcher::LaunchUriForResultsForUserAsync(Windows::System::User const& user, Windows::Foundation::Uri const& uri, Windows::System::LauncherOptions const& options, Windows::Foundation::Collections::ValueSet const& inputData)
 {
-    return get_activation_factory<Launcher, ILauncherStatics4>().LaunchUriForResultsForUserAsync(user, uri, options, inputData);
+    return get_activation_factory<Launcher, Windows::System::ILauncherStatics4>().LaunchUriForResultsForUserAsync(user, uri, options, inputData);
 }
 
 inline LauncherOptions::LauncherOptions() :
@@ -3777,204 +3777,204 @@ inline LauncherOptions::LauncherOptions() :
 
 inline uint64_t MemoryManager::AppMemoryUsage()
 {
-    return get_activation_factory<MemoryManager, IMemoryManagerStatics>().AppMemoryUsage();
+    return get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>().AppMemoryUsage();
 }
 
 inline uint64_t MemoryManager::AppMemoryUsageLimit()
 {
-    return get_activation_factory<MemoryManager, IMemoryManagerStatics>().AppMemoryUsageLimit();
+    return get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>().AppMemoryUsageLimit();
 }
 
 inline Windows::System::AppMemoryUsageLevel MemoryManager::AppMemoryUsageLevel()
 {
-    return get_activation_factory<MemoryManager, IMemoryManagerStatics>().AppMemoryUsageLevel();
+    return get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>().AppMemoryUsageLevel();
 }
 
-inline event_token MemoryManager::AppMemoryUsageIncreased(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
+inline event_token MemoryManager::AppMemoryUsageIncreased(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler)
 {
-    return get_activation_factory<MemoryManager, IMemoryManagerStatics>().AppMemoryUsageIncreased(handler);
+    return get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>().AppMemoryUsageIncreased(handler);
 }
 
-inline factory_event_revoker<IMemoryManagerStatics> MemoryManager::AppMemoryUsageIncreased(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
+inline factory_event_revoker<Windows::System::IMemoryManagerStatics> MemoryManager::AppMemoryUsageIncreased(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler)
 {
-    auto factory = get_activation_factory<MemoryManager, IMemoryManagerStatics>();
-    return { factory, &ABI::Windows::System::IMemoryManagerStatics::remove_AppMemoryUsageIncreased, factory.AppMemoryUsageIncreased(handler) };
+    auto factory = get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>();
+    return { factory, &abi_t<Windows::System::IMemoryManagerStatics>::remove_AppMemoryUsageIncreased, factory.AppMemoryUsageIncreased(handler) };
 }
 
-inline void MemoryManager::AppMemoryUsageIncreased(event_token token)
+inline void MemoryManager::AppMemoryUsageIncreased(event_token const& token)
 {
-    get_activation_factory<MemoryManager, IMemoryManagerStatics>().AppMemoryUsageIncreased(token);
+    get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>().AppMemoryUsageIncreased(token);
 }
 
-inline event_token MemoryManager::AppMemoryUsageDecreased(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
+inline event_token MemoryManager::AppMemoryUsageDecreased(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler)
 {
-    return get_activation_factory<MemoryManager, IMemoryManagerStatics>().AppMemoryUsageDecreased(handler);
+    return get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>().AppMemoryUsageDecreased(handler);
 }
 
-inline factory_event_revoker<IMemoryManagerStatics> MemoryManager::AppMemoryUsageDecreased(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
+inline factory_event_revoker<Windows::System::IMemoryManagerStatics> MemoryManager::AppMemoryUsageDecreased(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler)
 {
-    auto factory = get_activation_factory<MemoryManager, IMemoryManagerStatics>();
-    return { factory, &ABI::Windows::System::IMemoryManagerStatics::remove_AppMemoryUsageDecreased, factory.AppMemoryUsageDecreased(handler) };
+    auto factory = get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>();
+    return { factory, &abi_t<Windows::System::IMemoryManagerStatics>::remove_AppMemoryUsageDecreased, factory.AppMemoryUsageDecreased(handler) };
 }
 
-inline void MemoryManager::AppMemoryUsageDecreased(event_token token)
+inline void MemoryManager::AppMemoryUsageDecreased(event_token const& token)
 {
-    get_activation_factory<MemoryManager, IMemoryManagerStatics>().AppMemoryUsageDecreased(token);
+    get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>().AppMemoryUsageDecreased(token);
 }
 
-inline event_token MemoryManager::AppMemoryUsageLimitChanging(const Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> & handler)
+inline event_token MemoryManager::AppMemoryUsageLimitChanging(Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> const& handler)
 {
-    return get_activation_factory<MemoryManager, IMemoryManagerStatics>().AppMemoryUsageLimitChanging(handler);
+    return get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>().AppMemoryUsageLimitChanging(handler);
 }
 
-inline factory_event_revoker<IMemoryManagerStatics> MemoryManager::AppMemoryUsageLimitChanging(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> & handler)
+inline factory_event_revoker<Windows::System::IMemoryManagerStatics> MemoryManager::AppMemoryUsageLimitChanging(auto_revoke_t, Windows::Foundation::EventHandler<Windows::System::AppMemoryUsageLimitChangingEventArgs> const& handler)
 {
-    auto factory = get_activation_factory<MemoryManager, IMemoryManagerStatics>();
-    return { factory, &ABI::Windows::System::IMemoryManagerStatics::remove_AppMemoryUsageLimitChanging, factory.AppMemoryUsageLimitChanging(handler) };
+    auto factory = get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>();
+    return { factory, &abi_t<Windows::System::IMemoryManagerStatics>::remove_AppMemoryUsageLimitChanging, factory.AppMemoryUsageLimitChanging(handler) };
 }
 
-inline void MemoryManager::AppMemoryUsageLimitChanging(event_token token)
+inline void MemoryManager::AppMemoryUsageLimitChanging(event_token const& token)
 {
-    get_activation_factory<MemoryManager, IMemoryManagerStatics>().AppMemoryUsageLimitChanging(token);
+    get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics>().AppMemoryUsageLimitChanging(token);
 }
 
 inline Windows::System::AppMemoryReport MemoryManager::GetAppMemoryReport()
 {
-    return get_activation_factory<MemoryManager, IMemoryManagerStatics2>().GetAppMemoryReport();
+    return get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics2>().GetAppMemoryReport();
 }
 
 inline Windows::System::ProcessMemoryReport MemoryManager::GetProcessMemoryReport()
 {
-    return get_activation_factory<MemoryManager, IMemoryManagerStatics2>().GetProcessMemoryReport();
+    return get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics2>().GetProcessMemoryReport();
 }
 
 inline bool MemoryManager::TrySetAppMemoryUsageLimit(uint64_t value)
 {
-    return get_activation_factory<MemoryManager, IMemoryManagerStatics3>().TrySetAppMemoryUsageLimit(value);
+    return get_activation_factory<MemoryManager, Windows::System::IMemoryManagerStatics3>().TrySetAppMemoryUsageLimit(value);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> ProcessLauncher::RunToCompletionAsync(hstring_view fileName, hstring_view args)
+inline Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> ProcessLauncher::RunToCompletionAsync(param::hstring const& fileName, param::hstring const& args)
 {
-    return get_activation_factory<ProcessLauncher, IProcessLauncherStatics>().RunToCompletionAsync(fileName, args);
+    return get_activation_factory<ProcessLauncher, Windows::System::IProcessLauncherStatics>().RunToCompletionAsync(fileName, args);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> ProcessLauncher::RunToCompletionAsync(hstring_view fileName, hstring_view args, const Windows::System::ProcessLauncherOptions & options)
+inline Windows::Foundation::IAsyncOperation<Windows::System::ProcessLauncherResult> ProcessLauncher::RunToCompletionAsync(param::hstring const& fileName, param::hstring const& args, Windows::System::ProcessLauncherOptions const& options)
 {
-    return get_activation_factory<ProcessLauncher, IProcessLauncherStatics>().RunToCompletionAsync(fileName, args, options);
+    return get_activation_factory<ProcessLauncher, Windows::System::IProcessLauncherStatics>().RunToCompletionAsync(fileName, args, options);
 }
 
 inline ProcessLauncherOptions::ProcessLauncherOptions() :
     ProcessLauncherOptions(activate_instance<ProcessLauncherOptions>())
 {}
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> RemoteLauncher::LaunchUriAsync(const Windows::System::RemoteSystems::RemoteSystemConnectionRequest & remoteSystemConnectionRequest, const Windows::Foundation::Uri & uri)
+inline Windows::Foundation::IAsyncOperation<Windows::System::RemoteLaunchUriStatus> RemoteLauncher::LaunchUriAsync(Windows::System::RemoteSystems::RemoteSystemConnectionRequest const& remoteSystemConnectionRequest, Windows::Foundation::Uri const& uri)
 {
-    return get_activation_factory<RemoteLauncher, IRemoteLauncherStatics>().LaunchUriAsync(remoteSystemConnectionRequest, uri);
+    return get_activation_factory<RemoteLauncher, Windows::System::IRemoteLauncherStatics>().LaunchUriAsync(remoteSystemConnectionRequest, uri);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> RemoteLauncher::LaunchUriAsync(const Windows::System::RemoteSystems::RemoteSystemConnectionRequest & remoteSystemConnectionRequest, const Windows::Foundation::Uri & uri, const Windows::System::RemoteLauncherOptions & options)
+inline Windows::Foundation::IAsyncOperation<Windows::System::RemoteLaunchUriStatus> RemoteLauncher::LaunchUriAsync(Windows::System::RemoteSystems::RemoteSystemConnectionRequest const& remoteSystemConnectionRequest, Windows::Foundation::Uri const& uri, Windows::System::RemoteLauncherOptions const& options)
 {
-    return get_activation_factory<RemoteLauncher, IRemoteLauncherStatics>().LaunchUriAsync(remoteSystemConnectionRequest, uri, options);
+    return get_activation_factory<RemoteLauncher, Windows::System::IRemoteLauncherStatics>().LaunchUriAsync(remoteSystemConnectionRequest, uri, options);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::System::RemoteLaunchUriStatus> RemoteLauncher::LaunchUriAsync(const Windows::System::RemoteSystems::RemoteSystemConnectionRequest & remoteSystemConnectionRequest, const Windows::Foundation::Uri & uri, const Windows::System::RemoteLauncherOptions & options, const Windows::Foundation::Collections::ValueSet & inputData)
+inline Windows::Foundation::IAsyncOperation<Windows::System::RemoteLaunchUriStatus> RemoteLauncher::LaunchUriAsync(Windows::System::RemoteSystems::RemoteSystemConnectionRequest const& remoteSystemConnectionRequest, Windows::Foundation::Uri const& uri, Windows::System::RemoteLauncherOptions const& options, Windows::Foundation::Collections::ValueSet const& inputData)
 {
-    return get_activation_factory<RemoteLauncher, IRemoteLauncherStatics>().LaunchUriAsync(remoteSystemConnectionRequest, uri, options, inputData);
+    return get_activation_factory<RemoteLauncher, Windows::System::IRemoteLauncherStatics>().LaunchUriAsync(remoteSystemConnectionRequest, uri, options, inputData);
 }
 
 inline RemoteLauncherOptions::RemoteLauncherOptions() :
     RemoteLauncherOptions(activate_instance<RemoteLauncherOptions>())
 {}
 
-inline void ShutdownManager::BeginShutdown(Windows::System::ShutdownKind shutdownKind, const Windows::Foundation::TimeSpan & timeout)
+inline void ShutdownManager::BeginShutdown(Windows::System::ShutdownKind const& shutdownKind, Windows::Foundation::TimeSpan const& timeout)
 {
-    get_activation_factory<ShutdownManager, IShutdownManagerStatics>().BeginShutdown(shutdownKind, timeout);
+    get_activation_factory<ShutdownManager, Windows::System::IShutdownManagerStatics>().BeginShutdown(shutdownKind, timeout);
 }
 
 inline void ShutdownManager::CancelShutdown()
 {
-    get_activation_factory<ShutdownManager, IShutdownManagerStatics>().CancelShutdown();
+    get_activation_factory<ShutdownManager, Windows::System::IShutdownManagerStatics>().CancelShutdown();
 }
 
-inline bool ShutdownManager::IsPowerStateSupported(Windows::System::PowerState powerState)
+inline bool ShutdownManager::IsPowerStateSupported(Windows::System::PowerState const& powerState)
 {
-    return get_activation_factory<ShutdownManager, IShutdownManagerStatics2>().IsPowerStateSupported(powerState);
+    return get_activation_factory<ShutdownManager, Windows::System::IShutdownManagerStatics2>().IsPowerStateSupported(powerState);
 }
 
-inline void ShutdownManager::EnterPowerState(Windows::System::PowerState powerState)
+inline void ShutdownManager::EnterPowerState(Windows::System::PowerState const& powerState)
 {
-    get_activation_factory<ShutdownManager, IShutdownManagerStatics2>().EnterPowerState(powerState);
+    get_activation_factory<ShutdownManager, Windows::System::IShutdownManagerStatics2>().EnterPowerState(powerState);
 }
 
-inline void ShutdownManager::EnterPowerState(Windows::System::PowerState powerState, const Windows::Foundation::TimeSpan & wakeUpAfter)
+inline void ShutdownManager::EnterPowerState(Windows::System::PowerState const& powerState, Windows::Foundation::TimeSpan const& wakeUpAfter)
 {
-    get_activation_factory<ShutdownManager, IShutdownManagerStatics2>().EnterPowerState(powerState, wakeUpAfter);
+    get_activation_factory<ShutdownManager, Windows::System::IShutdownManagerStatics2>().EnterPowerState(powerState, wakeUpAfter);
 }
 
 inline hstring TimeZoneSettings::CurrentTimeZoneDisplayName()
 {
-    return get_activation_factory<TimeZoneSettings, ITimeZoneSettingsStatics>().CurrentTimeZoneDisplayName();
+    return get_activation_factory<TimeZoneSettings, Windows::System::ITimeZoneSettingsStatics>().CurrentTimeZoneDisplayName();
 }
 
 inline Windows::Foundation::Collections::IVectorView<hstring> TimeZoneSettings::SupportedTimeZoneDisplayNames()
 {
-    return get_activation_factory<TimeZoneSettings, ITimeZoneSettingsStatics>().SupportedTimeZoneDisplayNames();
+    return get_activation_factory<TimeZoneSettings, Windows::System::ITimeZoneSettingsStatics>().SupportedTimeZoneDisplayNames();
 }
 
 inline bool TimeZoneSettings::CanChangeTimeZone()
 {
-    return get_activation_factory<TimeZoneSettings, ITimeZoneSettingsStatics>().CanChangeTimeZone();
+    return get_activation_factory<TimeZoneSettings, Windows::System::ITimeZoneSettingsStatics>().CanChangeTimeZone();
 }
 
-inline void TimeZoneSettings::ChangeTimeZoneByDisplayName(hstring_view timeZoneDisplayName)
+inline void TimeZoneSettings::ChangeTimeZoneByDisplayName(param::hstring const& timeZoneDisplayName)
 {
-    get_activation_factory<TimeZoneSettings, ITimeZoneSettingsStatics>().ChangeTimeZoneByDisplayName(timeZoneDisplayName);
+    get_activation_factory<TimeZoneSettings, Windows::System::ITimeZoneSettingsStatics>().ChangeTimeZoneByDisplayName(timeZoneDisplayName);
 }
 
 inline Windows::System::UserWatcher User::CreateWatcher()
 {
-    return get_activation_factory<User, IUserStatics>().CreateWatcher();
+    return get_activation_factory<User, Windows::System::IUserStatics>().CreateWatcher();
 }
 
 inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> User::FindAllAsync()
 {
-    return get_activation_factory<User, IUserStatics>().FindAllAsync();
+    return get_activation_factory<User, Windows::System::IUserStatics>().FindAllAsync();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> User::FindAllAsync(Windows::System::UserType type)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> User::FindAllAsync(Windows::System::UserType const& type)
 {
-    return get_activation_factory<User, IUserStatics>().FindAllAsync(type);
+    return get_activation_factory<User, Windows::System::IUserStatics>().FindAllAsync(type);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> User::FindAllAsync(Windows::System::UserType type, Windows::System::UserAuthenticationStatus status)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::System::User>> User::FindAllAsync(Windows::System::UserType const& type, Windows::System::UserAuthenticationStatus const& status)
 {
-    return get_activation_factory<User, IUserStatics>().FindAllAsync(type, status);
+    return get_activation_factory<User, Windows::System::IUserStatics>().FindAllAsync(type, status);
 }
 
-inline Windows::System::User User::GetFromId(hstring_view nonRoamableId)
+inline Windows::System::User User::GetFromId(param::hstring const& nonRoamableId)
 {
-    return get_activation_factory<User, IUserStatics>().GetFromId(nonRoamableId);
+    return get_activation_factory<User, Windows::System::IUserStatics>().GetFromId(nonRoamableId);
 }
 
-inline Windows::System::User UserDeviceAssociation::FindUserFromDeviceId(hstring_view deviceId)
+inline Windows::System::User UserDeviceAssociation::FindUserFromDeviceId(param::hstring const& deviceId)
 {
-    return get_activation_factory<UserDeviceAssociation, IUserDeviceAssociationStatics>().FindUserFromDeviceId(deviceId);
+    return get_activation_factory<UserDeviceAssociation, Windows::System::IUserDeviceAssociationStatics>().FindUserFromDeviceId(deviceId);
 }
 
-inline event_token UserDeviceAssociation::UserDeviceAssociationChanged(const Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> & handler)
+inline event_token UserDeviceAssociation::UserDeviceAssociationChanged(Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> const& handler)
 {
-    return get_activation_factory<UserDeviceAssociation, IUserDeviceAssociationStatics>().UserDeviceAssociationChanged(handler);
+    return get_activation_factory<UserDeviceAssociation, Windows::System::IUserDeviceAssociationStatics>().UserDeviceAssociationChanged(handler);
 }
 
-inline factory_event_revoker<IUserDeviceAssociationStatics> UserDeviceAssociation::UserDeviceAssociationChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> & handler)
+inline factory_event_revoker<Windows::System::IUserDeviceAssociationStatics> UserDeviceAssociation::UserDeviceAssociationChanged(auto_revoke_t, Windows::Foundation::EventHandler<Windows::System::UserDeviceAssociationChangedEventArgs> const& handler)
 {
-    auto factory = get_activation_factory<UserDeviceAssociation, IUserDeviceAssociationStatics>();
-    return { factory, &ABI::Windows::System::IUserDeviceAssociationStatics::remove_UserDeviceAssociationChanged, factory.UserDeviceAssociationChanged(handler) };
+    auto factory = get_activation_factory<UserDeviceAssociation, Windows::System::IUserDeviceAssociationStatics>();
+    return { factory, &abi_t<Windows::System::IUserDeviceAssociationStatics>::remove_UserDeviceAssociationChanged, factory.UserDeviceAssociationChanged(handler) };
 }
 
-inline void UserDeviceAssociation::UserDeviceAssociationChanged(event_token token)
+inline void UserDeviceAssociation::UserDeviceAssociationChanged(event_token const& token)
 {
-    get_activation_factory<UserDeviceAssociation, IUserDeviceAssociationStatics>().UserDeviceAssociationChanged(token);
+    get_activation_factory<UserDeviceAssociation, Windows::System::IUserDeviceAssociationStatics>().UserDeviceAssociationChanged(token);
 }
 
 inline UserPicker::UserPicker() :
@@ -3983,542 +3983,214 @@ inline UserPicker::UserPicker() :
 
 inline bool UserPicker::IsSupported()
 {
-    return get_activation_factory<UserPicker, IUserPickerStatics>().IsSupported();
+    return get_activation_factory<UserPicker, Windows::System::IUserPickerStatics>().IsSupported();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::System::IAppDiagnosticInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IAppDiagnosticInfo> {};
+
+template<> struct hash<winrt::Windows::System::IAppDiagnosticInfoStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IAppDiagnosticInfoStatics> {};
+
+template<> struct hash<winrt::Windows::System::IAppMemoryReport> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IAppMemoryReport> {};
+
+template<> struct hash<winrt::Windows::System::IAppMemoryUsageLimitChangingEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IAppMemoryUsageLimitChangingEventArgs> {};
+
+template<> struct hash<winrt::Windows::System::IFolderLauncherOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IFolderLauncherOptions> {};
+
+template<> struct hash<winrt::Windows::System::IKnownUserPropertiesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IKnownUserPropertiesStatics> {};
+
+template<> struct hash<winrt::Windows::System::ILaunchUriResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ILaunchUriResult> {};
+
+template<> struct hash<winrt::Windows::System::ILauncherOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ILauncherOptions> {};
+
+template<> struct hash<winrt::Windows::System::ILauncherOptions2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ILauncherOptions2> {};
+
+template<> struct hash<winrt::Windows::System::ILauncherOptions3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ILauncherOptions3> {};
+
+template<> struct hash<winrt::Windows::System::ILauncherOptions4> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ILauncherOptions4> {};
+
+template<> struct hash<winrt::Windows::System::ILauncherStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ILauncherStatics> {};
+
+template<> struct hash<winrt::Windows::System::ILauncherStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ILauncherStatics2> {};
+
+template<> struct hash<winrt::Windows::System::ILauncherStatics3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ILauncherStatics3> {};
+
+template<> struct hash<winrt::Windows::System::ILauncherStatics4> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ILauncherStatics4> {};
+
+template<> struct hash<winrt::Windows::System::ILauncherUIOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ILauncherUIOptions> {};
+
+template<> struct hash<winrt::Windows::System::ILauncherViewOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ILauncherViewOptions> {};
+
+template<> struct hash<winrt::Windows::System::IMemoryManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IMemoryManagerStatics> {};
+
+template<> struct hash<winrt::Windows::System::IMemoryManagerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IMemoryManagerStatics2> {};
+
+template<> struct hash<winrt::Windows::System::IMemoryManagerStatics3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IMemoryManagerStatics3> {};
+
+template<> struct hash<winrt::Windows::System::IProcessLauncherOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IProcessLauncherOptions> {};
+
+template<> struct hash<winrt::Windows::System::IProcessLauncherResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IProcessLauncherResult> {};
+
+template<> struct hash<winrt::Windows::System::IProcessLauncherStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IProcessLauncherStatics> {};
+
+template<> struct hash<winrt::Windows::System::IProcessMemoryReport> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IProcessMemoryReport> {};
+
+template<> struct hash<winrt::Windows::System::IProtocolForResultsOperation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IProtocolForResultsOperation> {};
+
+template<> struct hash<winrt::Windows::System::IRemoteLauncherOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IRemoteLauncherOptions> {};
+
+template<> struct hash<winrt::Windows::System::IRemoteLauncherStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IRemoteLauncherStatics> {};
+
+template<> struct hash<winrt::Windows::System::IShutdownManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IShutdownManagerStatics> {};
+
+template<> struct hash<winrt::Windows::System::IShutdownManagerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IShutdownManagerStatics2> {};
+
+template<> struct hash<winrt::Windows::System::ITimeZoneSettingsStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ITimeZoneSettingsStatics> {};
+
+template<> struct hash<winrt::Windows::System::IUser> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IUser> {};
+
+template<> struct hash<winrt::Windows::System::IUserAuthenticationStatusChangeDeferral> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IUserAuthenticationStatusChangeDeferral> {};
+
+template<> struct hash<winrt::Windows::System::IUserAuthenticationStatusChangingEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IUserAuthenticationStatusChangingEventArgs> {};
+
+template<> struct hash<winrt::Windows::System::IUserChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IUserChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::System::IUserDeviceAssociationChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IUserDeviceAssociationChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::System::IUserDeviceAssociationStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IUserDeviceAssociationStatics> {};
+
+template<> struct hash<winrt::Windows::System::IUserPicker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IUserPicker> {};
+
+template<> struct hash<winrt::Windows::System::IUserPickerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IUserPickerStatics> {};
+
+template<> struct hash<winrt::Windows::System::IUserStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IUserStatics> {};
+
+template<> struct hash<winrt::Windows::System::IUserWatcher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::IUserWatcher> {};
+
+template<> struct hash<winrt::Windows::System::AppDiagnosticInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::AppDiagnosticInfo> {};
+
+template<> struct hash<winrt::Windows::System::AppMemoryReport> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::AppMemoryReport> {};
+
+template<> struct hash<winrt::Windows::System::AppMemoryUsageLimitChangingEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::AppMemoryUsageLimitChangingEventArgs> {};
+
+template<> struct hash<winrt::Windows::System::FolderLauncherOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::FolderLauncherOptions> {};
+
+template<> struct hash<winrt::Windows::System::KnownUserProperties> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::KnownUserProperties> {};
+
+template<> struct hash<winrt::Windows::System::LaunchUriResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::LaunchUriResult> {};
+
+template<> struct hash<winrt::Windows::System::Launcher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Launcher> {};
+
+template<> struct hash<winrt::Windows::System::LauncherOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::LauncherOptions> {};
+
+template<> struct hash<winrt::Windows::System::LauncherUIOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::LauncherUIOptions> {};
+
+template<> struct hash<winrt::Windows::System::MemoryManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::MemoryManager> {};
+
+template<> struct hash<winrt::Windows::System::ProcessLauncher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ProcessLauncher> {};
+
+template<> struct hash<winrt::Windows::System::ProcessLauncherOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ProcessLauncherOptions> {};
+
+template<> struct hash<winrt::Windows::System::ProcessLauncherResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ProcessLauncherResult> {};
+
+template<> struct hash<winrt::Windows::System::ProcessMemoryReport> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ProcessMemoryReport> {};
+
+template<> struct hash<winrt::Windows::System::ProtocolForResultsOperation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ProtocolForResultsOperation> {};
+
+template<> struct hash<winrt::Windows::System::RemoteLauncher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::RemoteLauncher> {};
+
+template<> struct hash<winrt::Windows::System::RemoteLauncherOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::RemoteLauncherOptions> {};
+
+template<> struct hash<winrt::Windows::System::ShutdownManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::ShutdownManager> {};
+
+template<> struct hash<winrt::Windows::System::TimeZoneSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::TimeZoneSettings> {};
+
+template<> struct hash<winrt::Windows::System::User> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::User> {};
+
+template<> struct hash<winrt::Windows::System::UserAuthenticationStatusChangeDeferral> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::UserAuthenticationStatusChangeDeferral> {};
+
+template<> struct hash<winrt::Windows::System::UserAuthenticationStatusChangingEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::UserAuthenticationStatusChangingEventArgs> {};
+
+template<> struct hash<winrt::Windows::System::UserChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::UserChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::System::UserDeviceAssociation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::UserDeviceAssociation> {};
+
+template<> struct hash<winrt::Windows::System::UserDeviceAssociationChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::UserDeviceAssociationChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::System::UserPicker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::UserPicker> {};
+
+template<> struct hash<winrt::Windows::System::UserWatcher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::UserWatcher> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::System::IAppDiagnosticInfo>
-{
-    size_t operator()(const winrt::Windows::System::IAppDiagnosticInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IAppDiagnosticInfoStatics>
-{
-    size_t operator()(const winrt::Windows::System::IAppDiagnosticInfoStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IAppMemoryReport>
-{
-    size_t operator()(const winrt::Windows::System::IAppMemoryReport & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IAppMemoryUsageLimitChangingEventArgs>
-{
-    size_t operator()(const winrt::Windows::System::IAppMemoryUsageLimitChangingEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IFolderLauncherOptions>
-{
-    size_t operator()(const winrt::Windows::System::IFolderLauncherOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IKnownUserPropertiesStatics>
-{
-    size_t operator()(const winrt::Windows::System::IKnownUserPropertiesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ILaunchUriResult>
-{
-    size_t operator()(const winrt::Windows::System::ILaunchUriResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ILauncherOptions>
-{
-    size_t operator()(const winrt::Windows::System::ILauncherOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ILauncherOptions2>
-{
-    size_t operator()(const winrt::Windows::System::ILauncherOptions2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ILauncherOptions3>
-{
-    size_t operator()(const winrt::Windows::System::ILauncherOptions3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ILauncherOptions4>
-{
-    size_t operator()(const winrt::Windows::System::ILauncherOptions4 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ILauncherStatics>
-{
-    size_t operator()(const winrt::Windows::System::ILauncherStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ILauncherStatics2>
-{
-    size_t operator()(const winrt::Windows::System::ILauncherStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ILauncherStatics3>
-{
-    size_t operator()(const winrt::Windows::System::ILauncherStatics3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ILauncherStatics4>
-{
-    size_t operator()(const winrt::Windows::System::ILauncherStatics4 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ILauncherUIOptions>
-{
-    size_t operator()(const winrt::Windows::System::ILauncherUIOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ILauncherViewOptions>
-{
-    size_t operator()(const winrt::Windows::System::ILauncherViewOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IMemoryManagerStatics>
-{
-    size_t operator()(const winrt::Windows::System::IMemoryManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IMemoryManagerStatics2>
-{
-    size_t operator()(const winrt::Windows::System::IMemoryManagerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IMemoryManagerStatics3>
-{
-    size_t operator()(const winrt::Windows::System::IMemoryManagerStatics3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IProcessLauncherOptions>
-{
-    size_t operator()(const winrt::Windows::System::IProcessLauncherOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IProcessLauncherResult>
-{
-    size_t operator()(const winrt::Windows::System::IProcessLauncherResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IProcessLauncherStatics>
-{
-    size_t operator()(const winrt::Windows::System::IProcessLauncherStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IProcessMemoryReport>
-{
-    size_t operator()(const winrt::Windows::System::IProcessMemoryReport & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IProtocolForResultsOperation>
-{
-    size_t operator()(const winrt::Windows::System::IProtocolForResultsOperation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IRemoteLauncherOptions>
-{
-    size_t operator()(const winrt::Windows::System::IRemoteLauncherOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IRemoteLauncherStatics>
-{
-    size_t operator()(const winrt::Windows::System::IRemoteLauncherStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IShutdownManagerStatics>
-{
-    size_t operator()(const winrt::Windows::System::IShutdownManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IShutdownManagerStatics2>
-{
-    size_t operator()(const winrt::Windows::System::IShutdownManagerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ITimeZoneSettingsStatics>
-{
-    size_t operator()(const winrt::Windows::System::ITimeZoneSettingsStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IUser>
-{
-    size_t operator()(const winrt::Windows::System::IUser & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IUserAuthenticationStatusChangeDeferral>
-{
-    size_t operator()(const winrt::Windows::System::IUserAuthenticationStatusChangeDeferral & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IUserAuthenticationStatusChangingEventArgs>
-{
-    size_t operator()(const winrt::Windows::System::IUserAuthenticationStatusChangingEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IUserChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::System::IUserChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IUserDeviceAssociationChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::System::IUserDeviceAssociationChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IUserDeviceAssociationStatics>
-{
-    size_t operator()(const winrt::Windows::System::IUserDeviceAssociationStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IUserPicker>
-{
-    size_t operator()(const winrt::Windows::System::IUserPicker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IUserPickerStatics>
-{
-    size_t operator()(const winrt::Windows::System::IUserPickerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IUserStatics>
-{
-    size_t operator()(const winrt::Windows::System::IUserStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::IUserWatcher>
-{
-    size_t operator()(const winrt::Windows::System::IUserWatcher & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::AppDiagnosticInfo>
-{
-    size_t operator()(const winrt::Windows::System::AppDiagnosticInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::AppMemoryReport>
-{
-    size_t operator()(const winrt::Windows::System::AppMemoryReport & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::AppMemoryUsageLimitChangingEventArgs>
-{
-    size_t operator()(const winrt::Windows::System::AppMemoryUsageLimitChangingEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::FolderLauncherOptions>
-{
-    size_t operator()(const winrt::Windows::System::FolderLauncherOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::LaunchUriResult>
-{
-    size_t operator()(const winrt::Windows::System::LaunchUriResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::LauncherOptions>
-{
-    size_t operator()(const winrt::Windows::System::LauncherOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::LauncherUIOptions>
-{
-    size_t operator()(const winrt::Windows::System::LauncherUIOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ProcessLauncherOptions>
-{
-    size_t operator()(const winrt::Windows::System::ProcessLauncherOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ProcessLauncherResult>
-{
-    size_t operator()(const winrt::Windows::System::ProcessLauncherResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ProcessMemoryReport>
-{
-    size_t operator()(const winrt::Windows::System::ProcessMemoryReport & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::ProtocolForResultsOperation>
-{
-    size_t operator()(const winrt::Windows::System::ProtocolForResultsOperation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::RemoteLauncherOptions>
-{
-    size_t operator()(const winrt::Windows::System::RemoteLauncherOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::User>
-{
-    size_t operator()(const winrt::Windows::System::User & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::UserAuthenticationStatusChangeDeferral>
-{
-    size_t operator()(const winrt::Windows::System::UserAuthenticationStatusChangeDeferral & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::UserAuthenticationStatusChangingEventArgs>
-{
-    size_t operator()(const winrt::Windows::System::UserAuthenticationStatusChangingEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::UserChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::System::UserChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::UserDeviceAssociationChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::System::UserDeviceAssociationChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::UserPicker>
-{
-    size_t operator()(const winrt::Windows::System::UserPicker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::UserWatcher>
-{
-    size_t operator()(const winrt::Windows::System::UserWatcher & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

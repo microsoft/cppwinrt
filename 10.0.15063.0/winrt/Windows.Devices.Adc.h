@@ -1,25 +1,113 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Devices.Adc.Provider.2.h"
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.Devices.Adc.2.h"
+#include "winrt/Windows.Devices.h"
 
-#include "internal/Windows.Devices.Adc.Provider.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Devices.Adc.3.h"
-#include "Windows.Devices.h"
-#include "Windows.Foundation.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Devices::Adc::AdcController consume_Windows_Devices_Adc_IAdcChannel<D>::Controller() const
+{
+    Windows::Devices::Adc::AdcController value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcChannel)->get_Controller(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> int32_t consume_Windows_Devices_Adc_IAdcChannel<D>::ReadValue() const
+{
+    int32_t result{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcChannel)->ReadValue(&result));
+    return result;
+}
+
+template <typename D> double consume_Windows_Devices_Adc_IAdcChannel<D>::ReadRatio() const
+{
+    double result{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcChannel)->ReadRatio(&result));
+    return result;
+}
+
+template <typename D> int32_t consume_Windows_Devices_Adc_IAdcController<D>::ChannelCount() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcController)->get_ChannelCount(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Devices_Adc_IAdcController<D>::ResolutionInBits() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcController)->get_ResolutionInBits(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Devices_Adc_IAdcController<D>::MinValue() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcController)->get_MinValue(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Devices_Adc_IAdcController<D>::MaxValue() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcController)->get_MaxValue(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Adc::AdcChannelMode consume_Windows_Devices_Adc_IAdcController<D>::ChannelMode() const
+{
+    Windows::Devices::Adc::AdcChannelMode value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcController)->get_ChannelMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Adc_IAdcController<D>::ChannelMode(Windows::Devices::Adc::AdcChannelMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcController)->put_ChannelMode(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_Devices_Adc_IAdcController<D>::IsChannelModeSupported(Windows::Devices::Adc::AdcChannelMode const& channelMode) const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcController)->IsChannelModeSupported(get_abi(channelMode), &result));
+    return result;
+}
+
+template <typename D> Windows::Devices::Adc::AdcChannel consume_Windows_Devices_Adc_IAdcController<D>::OpenChannel(int32_t channelNumber) const
+{
+    Windows::Devices::Adc::AdcChannel result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcController)->OpenChannel(channelNumber, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Adc::AdcController>> consume_Windows_Devices_Adc_IAdcControllerStatics<D>::GetControllersAsync(Windows::Devices::Adc::Provider::IAdcProvider const& provider) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Adc::AdcController>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcControllerStatics)->GetControllersAsync(get_abi(provider), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Adc::AdcController> consume_Windows_Devices_Adc_IAdcControllerStatics2<D>::GetDefaultAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Adc::AdcController> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Adc::IAdcControllerStatics2)->GetDefaultAsync(put_abi(operation)));
+    return operation;
+}
 
 template <typename D>
 struct produce<D, Windows::Devices::Adc::IAdcChannel> : produce_base<D, Windows::Devices::Adc::IAdcChannel>
 {
-    HRESULT __stdcall get_Controller(impl::abi_arg_out<Windows::Devices::Adc::IAdcController> value) noexcept override
+    HRESULT __stdcall get_Controller(::IUnknown** value) noexcept override
     {
         try
         {
@@ -34,7 +122,7 @@ struct produce<D, Windows::Devices::Adc::IAdcChannel> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_ReadValue(int32_t * result) noexcept override
+    HRESULT __stdcall ReadValue(int32_t* result) noexcept override
     {
         try
         {
@@ -48,7 +136,7 @@ struct produce<D, Windows::Devices::Adc::IAdcChannel> : produce_base<D, Windows:
         }
     }
 
-    HRESULT __stdcall abi_ReadRatio(double * result) noexcept override
+    HRESULT __stdcall ReadRatio(double* result) noexcept override
     {
         try
         {
@@ -66,7 +154,7 @@ struct produce<D, Windows::Devices::Adc::IAdcChannel> : produce_base<D, Windows:
 template <typename D>
 struct produce<D, Windows::Devices::Adc::IAdcController> : produce_base<D, Windows::Devices::Adc::IAdcController>
 {
-    HRESULT __stdcall get_ChannelCount(int32_t * value) noexcept override
+    HRESULT __stdcall get_ChannelCount(int32_t* value) noexcept override
     {
         try
         {
@@ -80,7 +168,7 @@ struct produce<D, Windows::Devices::Adc::IAdcController> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_ResolutionInBits(int32_t * value) noexcept override
+    HRESULT __stdcall get_ResolutionInBits(int32_t* value) noexcept override
     {
         try
         {
@@ -94,7 +182,7 @@ struct produce<D, Windows::Devices::Adc::IAdcController> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_MinValue(int32_t * value) noexcept override
+    HRESULT __stdcall get_MinValue(int32_t* value) noexcept override
     {
         try
         {
@@ -108,7 +196,7 @@ struct produce<D, Windows::Devices::Adc::IAdcController> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_MaxValue(int32_t * value) noexcept override
+    HRESULT __stdcall get_MaxValue(int32_t* value) noexcept override
     {
         try
         {
@@ -122,7 +210,7 @@ struct produce<D, Windows::Devices::Adc::IAdcController> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_ChannelMode(Windows::Devices::Adc::AdcChannelMode * value) noexcept override
+    HRESULT __stdcall get_ChannelMode(abi_t<Windows::Devices::Adc::AdcChannelMode>* value) noexcept override
     {
         try
         {
@@ -136,12 +224,12 @@ struct produce<D, Windows::Devices::Adc::IAdcController> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall put_ChannelMode(Windows::Devices::Adc::AdcChannelMode value) noexcept override
+    HRESULT __stdcall put_ChannelMode(abi_t<Windows::Devices::Adc::AdcChannelMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ChannelMode(value);
+            this->shim().ChannelMode(*reinterpret_cast<Windows::Devices::Adc::AdcChannelMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -150,12 +238,12 @@ struct produce<D, Windows::Devices::Adc::IAdcController> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_IsChannelModeSupported(Windows::Devices::Adc::AdcChannelMode channelMode, bool * result) noexcept override
+    HRESULT __stdcall IsChannelModeSupported(abi_t<Windows::Devices::Adc::AdcChannelMode> channelMode, bool* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().IsChannelModeSupported(channelMode));
+            *result = detach_abi(this->shim().IsChannelModeSupported(*reinterpret_cast<Windows::Devices::Adc::AdcChannelMode const*>(&channelMode)));
             return S_OK;
         }
         catch (...)
@@ -164,7 +252,7 @@ struct produce<D, Windows::Devices::Adc::IAdcController> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_OpenChannel(int32_t channelNumber, impl::abi_arg_out<Windows::Devices::Adc::IAdcChannel> result) noexcept override
+    HRESULT __stdcall OpenChannel(int32_t channelNumber, ::IUnknown** result) noexcept override
     {
         try
         {
@@ -183,12 +271,12 @@ struct produce<D, Windows::Devices::Adc::IAdcController> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Devices::Adc::IAdcControllerStatics> : produce_base<D, Windows::Devices::Adc::IAdcControllerStatics>
 {
-    HRESULT __stdcall abi_GetControllersAsync(impl::abi_arg_in<Windows::Devices::Adc::Provider::IAdcProvider> provider, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Adc::AdcController>>> operation) noexcept override
+    HRESULT __stdcall GetControllersAsync(::IUnknown* provider, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().GetControllersAsync(*reinterpret_cast<const Windows::Devices::Adc::Provider::IAdcProvider *>(&provider)));
+            *operation = detach_abi(this->shim().GetControllersAsync(*reinterpret_cast<Windows::Devices::Adc::Provider::IAdcProvider const*>(&provider)));
             return S_OK;
         }
         catch (...)
@@ -202,7 +290,7 @@ struct produce<D, Windows::Devices::Adc::IAdcControllerStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Adc::IAdcControllerStatics2> : produce_base<D, Windows::Devices::Adc::IAdcControllerStatics2>
 {
-    HRESULT __stdcall abi_GetDefaultAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Adc::AdcController>> operation) noexcept override
+    HRESULT __stdcall GetDefaultAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -220,163 +308,40 @@ struct produce<D, Windows::Devices::Adc::IAdcControllerStatics2> : produce_base<
 
 }
 
-namespace Windows::Devices::Adc {
+WINRT_EXPORT namespace winrt::Windows::Devices::Adc {
 
-template <typename D> int32_t impl_IAdcController<D>::ChannelCount() const
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Adc::AdcController>> AdcController::GetControllersAsync(Windows::Devices::Adc::Provider::IAdcProvider const& provider)
 {
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IAdcController)->get_ChannelCount(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_IAdcController<D>::ResolutionInBits() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IAdcController)->get_ResolutionInBits(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_IAdcController<D>::MinValue() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IAdcController)->get_MinValue(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_IAdcController<D>::MaxValue() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IAdcController)->get_MaxValue(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Adc::AdcChannelMode impl_IAdcController<D>::ChannelMode() const
-{
-    Windows::Devices::Adc::AdcChannelMode value {};
-    check_hresult(WINRT_SHIM(IAdcController)->get_ChannelMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IAdcController<D>::ChannelMode(Windows::Devices::Adc::AdcChannelMode value) const
-{
-    check_hresult(WINRT_SHIM(IAdcController)->put_ChannelMode(value));
-}
-
-template <typename D> bool impl_IAdcController<D>::IsChannelModeSupported(Windows::Devices::Adc::AdcChannelMode channelMode) const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IAdcController)->abi_IsChannelModeSupported(channelMode, &result));
-    return result;
-}
-
-template <typename D> Windows::Devices::Adc::AdcChannel impl_IAdcController<D>::OpenChannel(int32_t channelNumber) const
-{
-    Windows::Devices::Adc::AdcChannel result { nullptr };
-    check_hresult(WINRT_SHIM(IAdcController)->abi_OpenChannel(channelNumber, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Adc::AdcController>> impl_IAdcControllerStatics<D>::GetControllersAsync(const Windows::Devices::Adc::Provider::IAdcProvider & provider) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Adc::AdcController>> operation;
-    check_hresult(WINRT_SHIM(IAdcControllerStatics)->abi_GetControllersAsync(get_abi(provider), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Adc::AdcController> impl_IAdcControllerStatics2<D>::GetDefaultAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Adc::AdcController> operation;
-    check_hresult(WINRT_SHIM(IAdcControllerStatics2)->abi_GetDefaultAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Devices::Adc::AdcController impl_IAdcChannel<D>::Controller() const
-{
-    Windows::Devices::Adc::AdcController value { nullptr };
-    check_hresult(WINRT_SHIM(IAdcChannel)->get_Controller(put_abi(value)));
-    return value;
-}
-
-template <typename D> int32_t impl_IAdcChannel<D>::ReadValue() const
-{
-    int32_t result {};
-    check_hresult(WINRT_SHIM(IAdcChannel)->abi_ReadValue(&result));
-    return result;
-}
-
-template <typename D> double impl_IAdcChannel<D>::ReadRatio() const
-{
-    double result {};
-    check_hresult(WINRT_SHIM(IAdcChannel)->abi_ReadRatio(&result));
-    return result;
-}
-
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Adc::AdcController>> AdcController::GetControllersAsync(const Windows::Devices::Adc::Provider::IAdcProvider & provider)
-{
-    return get_activation_factory<AdcController, IAdcControllerStatics>().GetControllersAsync(provider);
+    return get_activation_factory<AdcController, Windows::Devices::Adc::IAdcControllerStatics>().GetControllersAsync(provider);
 }
 
 inline Windows::Foundation::IAsyncOperation<Windows::Devices::Adc::AdcController> AdcController::GetDefaultAsync()
 {
-    return get_activation_factory<AdcController, IAdcControllerStatics2>().GetDefaultAsync();
+    return get_activation_factory<AdcController, Windows::Devices::Adc::IAdcControllerStatics2>().GetDefaultAsync();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Devices::Adc::IAdcChannel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Adc::IAdcChannel> {};
+
+template<> struct hash<winrt::Windows::Devices::Adc::IAdcController> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Adc::IAdcController> {};
+
+template<> struct hash<winrt::Windows::Devices::Adc::IAdcControllerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Adc::IAdcControllerStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Adc::IAdcControllerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Adc::IAdcControllerStatics2> {};
+
+template<> struct hash<winrt::Windows::Devices::Adc::AdcChannel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Adc::AdcChannel> {};
+
+template<> struct hash<winrt::Windows::Devices::Adc::AdcController> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Adc::AdcController> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Devices::Adc::IAdcChannel>
-{
-    size_t operator()(const winrt::Windows::Devices::Adc::IAdcChannel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Adc::IAdcController>
-{
-    size_t operator()(const winrt::Windows::Devices::Adc::IAdcController & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Adc::IAdcControllerStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Adc::IAdcControllerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Adc::IAdcControllerStatics2>
-{
-    size_t operator()(const winrt::Windows::Devices::Adc::IAdcControllerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Adc::AdcChannel>
-{
-    size_t operator()(const winrt::Windows::Devices::Adc::AdcChannel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Adc::AdcController>
-{
-    size_t operator()(const winrt::Windows::Devices::Adc::AdcController & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

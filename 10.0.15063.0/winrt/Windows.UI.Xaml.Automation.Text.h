@@ -1,19 +1,25 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.UI.Xaml.Automation.Text.2.h"
+#include "winrt/Windows.UI.Xaml.Automation.h"
 
-#include "internal/Windows.UI.Xaml.Automation.Text.3.h"
-#include "Windows.UI.Xaml.Automation.h"
-
-WINRT_EXPORT namespace winrt {
-
-namespace impl {
+namespace winrt::impl {
 
 }
+
+WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Automation::Text {
+
+}
+
+WINRT_EXPORT namespace std {
 
 }
 

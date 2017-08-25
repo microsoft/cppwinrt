@@ -1,28 +1,193 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Storage.2.h"
+#include "winrt/impl/Windows.Storage.FileProperties.2.h"
+#include "winrt/impl/Windows.Storage.Search.2.h"
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.Storage.BulkAccess.2.h"
+#include "winrt/Windows.Storage.h"
 
-#include "internal/Windows.Storage.FileProperties.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Storage.Search.3.h"
-#include "internal/Windows.Storage.BulkAccess.3.h"
-#include "Windows.Storage.h"
-#include "Windows.Storage.Search.h"
-#include "Windows.Storage.Streams.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::IStorageItemInformation>> consume_Windows_Storage_BulkAccess_IFileInformationFactory<D>::GetItemsAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::IStorageItemInformation>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactory)->GetItemsAsync(startIndex, maxItemsToRetrieve, put_abi(operation)));
+    return operation;
+}
 
-namespace impl {
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::IStorageItemInformation>> consume_Windows_Storage_BulkAccess_IFileInformationFactory<D>::GetItemsAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::IStorageItemInformation>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactory)->GetItemsAsyncDefaultStartAndCount(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FileInformation>> consume_Windows_Storage_BulkAccess_IFileInformationFactory<D>::GetFilesAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FileInformation>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactory)->GetFilesAsync(startIndex, maxItemsToRetrieve, put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FileInformation>> consume_Windows_Storage_BulkAccess_IFileInformationFactory<D>::GetFilesAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FileInformation>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactory)->GetFilesAsyncDefaultStartAndCount(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FolderInformation>> consume_Windows_Storage_BulkAccess_IFileInformationFactory<D>::GetFoldersAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FolderInformation>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactory)->GetFoldersAsync(startIndex, maxItemsToRetrieve, put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FolderInformation>> consume_Windows_Storage_BulkAccess_IFileInformationFactory<D>::GetFoldersAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FolderInformation>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactory)->GetFoldersAsyncDefaultStartAndCount(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IInspectable consume_Windows_Storage_BulkAccess_IFileInformationFactory<D>::GetVirtualizedItemsVector() const
+{
+    Windows::Foundation::IInspectable vector{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactory)->GetVirtualizedItemsVector(put_abi(vector)));
+    return vector;
+}
+
+template <typename D> Windows::Foundation::IInspectable consume_Windows_Storage_BulkAccess_IFileInformationFactory<D>::GetVirtualizedFilesVector() const
+{
+    Windows::Foundation::IInspectable vector{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactory)->GetVirtualizedFilesVector(put_abi(vector)));
+    return vector;
+}
+
+template <typename D> Windows::Foundation::IInspectable consume_Windows_Storage_BulkAccess_IFileInformationFactory<D>::GetVirtualizedFoldersVector() const
+{
+    Windows::Foundation::IInspectable vector{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactory)->GetVirtualizedFoldersVector(put_abi(vector)));
+    return vector;
+}
+
+template <typename D> Windows::Storage::BulkAccess::FileInformationFactory consume_Windows_Storage_BulkAccess_IFileInformationFactoryFactory<D>::CreateWithMode(Windows::Storage::Search::IStorageQueryResultBase const& queryResult, Windows::Storage::FileProperties::ThumbnailMode const& mode) const
+{
+    Windows::Storage::BulkAccess::FileInformationFactory value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactoryFactory)->CreateWithMode(get_abi(queryResult), get_abi(mode), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::BulkAccess::FileInformationFactory consume_Windows_Storage_BulkAccess_IFileInformationFactoryFactory<D>::CreateWithModeAndSize(Windows::Storage::Search::IStorageQueryResultBase const& queryResult, Windows::Storage::FileProperties::ThumbnailMode const& mode, uint32_t requestedThumbnailSize) const
+{
+    Windows::Storage::BulkAccess::FileInformationFactory value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactoryFactory)->CreateWithModeAndSize(get_abi(queryResult), get_abi(mode), requestedThumbnailSize, put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::BulkAccess::FileInformationFactory consume_Windows_Storage_BulkAccess_IFileInformationFactoryFactory<D>::CreateWithModeAndSizeAndOptions(Windows::Storage::Search::IStorageQueryResultBase const& queryResult, Windows::Storage::FileProperties::ThumbnailMode const& mode, uint32_t requestedThumbnailSize, Windows::Storage::FileProperties::ThumbnailOptions const& thumbnailOptions) const
+{
+    Windows::Storage::BulkAccess::FileInformationFactory value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactoryFactory)->CreateWithModeAndSizeAndOptions(get_abi(queryResult), get_abi(mode), requestedThumbnailSize, get_abi(thumbnailOptions), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::BulkAccess::FileInformationFactory consume_Windows_Storage_BulkAccess_IFileInformationFactoryFactory<D>::CreateWithModeAndSizeAndOptionsAndFlags(Windows::Storage::Search::IStorageQueryResultBase const& queryResult, Windows::Storage::FileProperties::ThumbnailMode const& mode, uint32_t requestedThumbnailSize, Windows::Storage::FileProperties::ThumbnailOptions const& thumbnailOptions, bool delayLoad) const
+{
+    Windows::Storage::BulkAccess::FileInformationFactory value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IFileInformationFactoryFactory)->CreateWithModeAndSizeAndOptionsAndFlags(get_abi(queryResult), get_abi(mode), requestedThumbnailSize, get_abi(thumbnailOptions), delayLoad, put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::FileProperties::MusicProperties consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::MusicProperties() const
+{
+    Windows::Storage::FileProperties::MusicProperties value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IStorageItemInformation)->get_MusicProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::FileProperties::VideoProperties consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::VideoProperties() const
+{
+    Windows::Storage::FileProperties::VideoProperties value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IStorageItemInformation)->get_VideoProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::FileProperties::ImageProperties consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::ImageProperties() const
+{
+    Windows::Storage::FileProperties::ImageProperties value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IStorageItemInformation)->get_ImageProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::FileProperties::DocumentProperties consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::DocumentProperties() const
+{
+    Windows::Storage::FileProperties::DocumentProperties value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IStorageItemInformation)->get_DocumentProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::FileProperties::BasicProperties consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::BasicProperties() const
+{
+    Windows::Storage::FileProperties::BasicProperties value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IStorageItemInformation)->get_BasicProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::FileProperties::StorageItemThumbnail consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::Thumbnail() const
+{
+    Windows::Storage::FileProperties::StorageItemThumbnail value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IStorageItemInformation)->get_Thumbnail(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::ThumbnailUpdated(Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> const& changedHandler) const
+{
+    event_token eventCookie{};
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IStorageItemInformation)->add_ThumbnailUpdated(get_abi(changedHandler), put_abi(eventCookie)));
+    return eventCookie;
+}
+
+template <typename D> event_revoker<Windows::Storage::BulkAccess::IStorageItemInformation> consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::ThumbnailUpdated(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> const& changedHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Storage::BulkAccess::IStorageItemInformation>(this, &abi_t<Windows::Storage::BulkAccess::IStorageItemInformation>::remove_ThumbnailUpdated, ThumbnailUpdated(changedHandler));
+}
+
+template <typename D> void consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::ThumbnailUpdated(event_token const& eventCookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IStorageItemInformation)->remove_ThumbnailUpdated(get_abi(eventCookie)));
+}
+
+template <typename D> event_token consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::PropertiesUpdated(Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> const& changedHandler) const
+{
+    event_token eventCookie{};
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IStorageItemInformation)->add_PropertiesUpdated(get_abi(changedHandler), put_abi(eventCookie)));
+    return eventCookie;
+}
+
+template <typename D> event_revoker<Windows::Storage::BulkAccess::IStorageItemInformation> consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::PropertiesUpdated(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> const& changedHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Storage::BulkAccess::IStorageItemInformation>(this, &abi_t<Windows::Storage::BulkAccess::IStorageItemInformation>::remove_PropertiesUpdated, PropertiesUpdated(changedHandler));
+}
+
+template <typename D> void consume_Windows_Storage_BulkAccess_IStorageItemInformation<D>::PropertiesUpdated(event_token const& eventCookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::BulkAccess::IStorageItemInformation)->remove_PropertiesUpdated(get_abi(eventCookie)));
+}
 
 template <typename D>
 struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactory> : produce_base<D, Windows::Storage::BulkAccess::IFileInformationFactory>
 {
-    HRESULT __stdcall abi_GetItemsAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::IStorageItemInformation>>> operation) noexcept override
+    HRESULT __stdcall GetItemsAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve, ::IUnknown** operation) noexcept override
     {
         try
         {
@@ -37,7 +202,7 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactory> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetItemsAsyncDefaultStartAndCount(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::IStorageItemInformation>>> operation) noexcept override
+    HRESULT __stdcall GetItemsAsyncDefaultStartAndCount(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -52,7 +217,7 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactory> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetFilesAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FileInformation>>> operation) noexcept override
+    HRESULT __stdcall GetFilesAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve, ::IUnknown** operation) noexcept override
     {
         try
         {
@@ -67,7 +232,7 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactory> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetFilesAsyncDefaultStartAndCount(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FileInformation>>> operation) noexcept override
+    HRESULT __stdcall GetFilesAsyncDefaultStartAndCount(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -82,7 +247,7 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactory> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetFoldersAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FolderInformation>>> operation) noexcept override
+    HRESULT __stdcall GetFoldersAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve, ::IUnknown** operation) noexcept override
     {
         try
         {
@@ -97,7 +262,7 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactory> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetFoldersAsyncDefaultStartAndCount(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FolderInformation>>> operation) noexcept override
+    HRESULT __stdcall GetFoldersAsyncDefaultStartAndCount(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -112,7 +277,7 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactory> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetVirtualizedItemsVector(impl::abi_arg_out<Windows::Foundation::IInspectable> vector) noexcept override
+    HRESULT __stdcall GetVirtualizedItemsVector(::IUnknown** vector) noexcept override
     {
         try
         {
@@ -127,7 +292,7 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactory> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetVirtualizedFilesVector(impl::abi_arg_out<Windows::Foundation::IInspectable> vector) noexcept override
+    HRESULT __stdcall GetVirtualizedFilesVector(::IUnknown** vector) noexcept override
     {
         try
         {
@@ -142,7 +307,7 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactory> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetVirtualizedFoldersVector(impl::abi_arg_out<Windows::Foundation::IInspectable> vector) noexcept override
+    HRESULT __stdcall GetVirtualizedFoldersVector(::IUnknown** vector) noexcept override
     {
         try
         {
@@ -161,12 +326,12 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactory> : produ
 template <typename D>
 struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactoryFactory> : produce_base<D, Windows::Storage::BulkAccess::IFileInformationFactoryFactory>
 {
-    HRESULT __stdcall abi_CreateWithMode(impl::abi_arg_in<Windows::Storage::Search::IStorageQueryResultBase> queryResult, Windows::Storage::FileProperties::ThumbnailMode mode, impl::abi_arg_out<Windows::Storage::BulkAccess::IFileInformationFactory> value) noexcept override
+    HRESULT __stdcall CreateWithMode(::IUnknown* queryResult, abi_t<Windows::Storage::FileProperties::ThumbnailMode> mode, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().CreateWithMode(*reinterpret_cast<const Windows::Storage::Search::IStorageQueryResultBase *>(&queryResult), mode));
+            *value = detach_abi(this->shim().CreateWithMode(*reinterpret_cast<Windows::Storage::Search::IStorageQueryResultBase const*>(&queryResult), *reinterpret_cast<Windows::Storage::FileProperties::ThumbnailMode const*>(&mode)));
             return S_OK;
         }
         catch (...)
@@ -176,12 +341,12 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactoryFactory> 
         }
     }
 
-    HRESULT __stdcall abi_CreateWithModeAndSize(impl::abi_arg_in<Windows::Storage::Search::IStorageQueryResultBase> queryResult, Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedThumbnailSize, impl::abi_arg_out<Windows::Storage::BulkAccess::IFileInformationFactory> value) noexcept override
+    HRESULT __stdcall CreateWithModeAndSize(::IUnknown* queryResult, abi_t<Windows::Storage::FileProperties::ThumbnailMode> mode, uint32_t requestedThumbnailSize, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().CreateWithModeAndSize(*reinterpret_cast<const Windows::Storage::Search::IStorageQueryResultBase *>(&queryResult), mode, requestedThumbnailSize));
+            *value = detach_abi(this->shim().CreateWithModeAndSize(*reinterpret_cast<Windows::Storage::Search::IStorageQueryResultBase const*>(&queryResult), *reinterpret_cast<Windows::Storage::FileProperties::ThumbnailMode const*>(&mode), requestedThumbnailSize));
             return S_OK;
         }
         catch (...)
@@ -191,12 +356,12 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactoryFactory> 
         }
     }
 
-    HRESULT __stdcall abi_CreateWithModeAndSizeAndOptions(impl::abi_arg_in<Windows::Storage::Search::IStorageQueryResultBase> queryResult, Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedThumbnailSize, Windows::Storage::FileProperties::ThumbnailOptions thumbnailOptions, impl::abi_arg_out<Windows::Storage::BulkAccess::IFileInformationFactory> value) noexcept override
+    HRESULT __stdcall CreateWithModeAndSizeAndOptions(::IUnknown* queryResult, abi_t<Windows::Storage::FileProperties::ThumbnailMode> mode, uint32_t requestedThumbnailSize, abi_t<Windows::Storage::FileProperties::ThumbnailOptions> thumbnailOptions, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().CreateWithModeAndSizeAndOptions(*reinterpret_cast<const Windows::Storage::Search::IStorageQueryResultBase *>(&queryResult), mode, requestedThumbnailSize, thumbnailOptions));
+            *value = detach_abi(this->shim().CreateWithModeAndSizeAndOptions(*reinterpret_cast<Windows::Storage::Search::IStorageQueryResultBase const*>(&queryResult), *reinterpret_cast<Windows::Storage::FileProperties::ThumbnailMode const*>(&mode), requestedThumbnailSize, *reinterpret_cast<Windows::Storage::FileProperties::ThumbnailOptions const*>(&thumbnailOptions)));
             return S_OK;
         }
         catch (...)
@@ -206,12 +371,12 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactoryFactory> 
         }
     }
 
-    HRESULT __stdcall abi_CreateWithModeAndSizeAndOptionsAndFlags(impl::abi_arg_in<Windows::Storage::Search::IStorageQueryResultBase> queryResult, Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedThumbnailSize, Windows::Storage::FileProperties::ThumbnailOptions thumbnailOptions, bool delayLoad, impl::abi_arg_out<Windows::Storage::BulkAccess::IFileInformationFactory> value) noexcept override
+    HRESULT __stdcall CreateWithModeAndSizeAndOptionsAndFlags(::IUnknown* queryResult, abi_t<Windows::Storage::FileProperties::ThumbnailMode> mode, uint32_t requestedThumbnailSize, abi_t<Windows::Storage::FileProperties::ThumbnailOptions> thumbnailOptions, bool delayLoad, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().CreateWithModeAndSizeAndOptionsAndFlags(*reinterpret_cast<const Windows::Storage::Search::IStorageQueryResultBase *>(&queryResult), mode, requestedThumbnailSize, thumbnailOptions, delayLoad));
+            *value = detach_abi(this->shim().CreateWithModeAndSizeAndOptionsAndFlags(*reinterpret_cast<Windows::Storage::Search::IStorageQueryResultBase const*>(&queryResult), *reinterpret_cast<Windows::Storage::FileProperties::ThumbnailMode const*>(&mode), requestedThumbnailSize, *reinterpret_cast<Windows::Storage::FileProperties::ThumbnailOptions const*>(&thumbnailOptions), delayLoad));
             return S_OK;
         }
         catch (...)
@@ -225,7 +390,7 @@ struct produce<D, Windows::Storage::BulkAccess::IFileInformationFactoryFactory> 
 template <typename D>
 struct produce<D, Windows::Storage::BulkAccess::IStorageItemInformation> : produce_base<D, Windows::Storage::BulkAccess::IStorageItemInformation>
 {
-    HRESULT __stdcall get_MusicProperties(impl::abi_arg_out<Windows::Storage::FileProperties::IMusicProperties> value) noexcept override
+    HRESULT __stdcall get_MusicProperties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -240,7 +405,7 @@ struct produce<D, Windows::Storage::BulkAccess::IStorageItemInformation> : produ
         }
     }
 
-    HRESULT __stdcall get_VideoProperties(impl::abi_arg_out<Windows::Storage::FileProperties::IVideoProperties> value) noexcept override
+    HRESULT __stdcall get_VideoProperties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -255,7 +420,7 @@ struct produce<D, Windows::Storage::BulkAccess::IStorageItemInformation> : produ
         }
     }
 
-    HRESULT __stdcall get_ImageProperties(impl::abi_arg_out<Windows::Storage::FileProperties::IImageProperties> value) noexcept override
+    HRESULT __stdcall get_ImageProperties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -270,7 +435,7 @@ struct produce<D, Windows::Storage::BulkAccess::IStorageItemInformation> : produ
         }
     }
 
-    HRESULT __stdcall get_DocumentProperties(impl::abi_arg_out<Windows::Storage::FileProperties::IDocumentProperties> value) noexcept override
+    HRESULT __stdcall get_DocumentProperties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -285,7 +450,7 @@ struct produce<D, Windows::Storage::BulkAccess::IStorageItemInformation> : produ
         }
     }
 
-    HRESULT __stdcall get_BasicProperties(impl::abi_arg_out<Windows::Storage::FileProperties::IBasicProperties> value) noexcept override
+    HRESULT __stdcall get_BasicProperties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -300,7 +465,7 @@ struct produce<D, Windows::Storage::BulkAccess::IStorageItemInformation> : produ
         }
     }
 
-    HRESULT __stdcall get_Thumbnail(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamWithContentType> value) noexcept override
+    HRESULT __stdcall get_Thumbnail(::IUnknown** value) noexcept override
     {
         try
         {
@@ -315,12 +480,12 @@ struct produce<D, Windows::Storage::BulkAccess::IStorageItemInformation> : produ
         }
     }
 
-    HRESULT __stdcall add_ThumbnailUpdated(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable>> changedHandler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_ThumbnailUpdated(::IUnknown* changedHandler, abi_t<event_token>* eventCookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *eventCookie = detach_abi(this->shim().ThumbnailUpdated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> *>(&changedHandler)));
+            *eventCookie = detach_abi(this->shim().ThumbnailUpdated(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> const*>(&changedHandler)));
             return S_OK;
         }
         catch (...)
@@ -329,12 +494,12 @@ struct produce<D, Windows::Storage::BulkAccess::IStorageItemInformation> : produ
         }
     }
 
-    HRESULT __stdcall remove_ThumbnailUpdated(event_token eventCookie) noexcept override
+    HRESULT __stdcall remove_ThumbnailUpdated(abi_t<event_token> eventCookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ThumbnailUpdated(eventCookie);
+            this->shim().ThumbnailUpdated(*reinterpret_cast<event_token const*>(&eventCookie));
             return S_OK;
         }
         catch (...)
@@ -343,12 +508,12 @@ struct produce<D, Windows::Storage::BulkAccess::IStorageItemInformation> : produ
         }
     }
 
-    HRESULT __stdcall add_PropertiesUpdated(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable>> changedHandler, event_token * eventCookie) noexcept override
+    HRESULT __stdcall add_PropertiesUpdated(::IUnknown* changedHandler, abi_t<event_token>* eventCookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *eventCookie = detach_abi(this->shim().PropertiesUpdated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> *>(&changedHandler)));
+            *eventCookie = detach_abi(this->shim().PropertiesUpdated(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> const*>(&changedHandler)));
             return S_OK;
         }
         catch (...)
@@ -357,12 +522,12 @@ struct produce<D, Windows::Storage::BulkAccess::IStorageItemInformation> : produ
         }
     }
 
-    HRESULT __stdcall remove_PropertiesUpdated(event_token eventCookie) noexcept override
+    HRESULT __stdcall remove_PropertiesUpdated(abi_t<event_token> eventCookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PropertiesUpdated(eventCookie);
+            this->shim().PropertiesUpdated(*reinterpret_cast<event_token const*>(&eventCookie));
             return S_OK;
         }
         catch (...)
@@ -374,247 +539,46 @@ struct produce<D, Windows::Storage::BulkAccess::IStorageItemInformation> : produ
 
 }
 
-namespace Windows::Storage::BulkAccess {
+WINRT_EXPORT namespace winrt::Windows::Storage::BulkAccess {
 
-template <typename D> Windows::Storage::FileProperties::MusicProperties impl_IStorageItemInformation<D>::MusicProperties() const
-{
-    Windows::Storage::FileProperties::MusicProperties value { nullptr };
-    check_hresult(WINRT_SHIM(IStorageItemInformation)->get_MusicProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::FileProperties::VideoProperties impl_IStorageItemInformation<D>::VideoProperties() const
-{
-    Windows::Storage::FileProperties::VideoProperties value { nullptr };
-    check_hresult(WINRT_SHIM(IStorageItemInformation)->get_VideoProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::FileProperties::ImageProperties impl_IStorageItemInformation<D>::ImageProperties() const
-{
-    Windows::Storage::FileProperties::ImageProperties value { nullptr };
-    check_hresult(WINRT_SHIM(IStorageItemInformation)->get_ImageProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::FileProperties::DocumentProperties impl_IStorageItemInformation<D>::DocumentProperties() const
-{
-    Windows::Storage::FileProperties::DocumentProperties value { nullptr };
-    check_hresult(WINRT_SHIM(IStorageItemInformation)->get_DocumentProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::FileProperties::BasicProperties impl_IStorageItemInformation<D>::BasicProperties() const
-{
-    Windows::Storage::FileProperties::BasicProperties value { nullptr };
-    check_hresult(WINRT_SHIM(IStorageItemInformation)->get_BasicProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::FileProperties::StorageItemThumbnail impl_IStorageItemInformation<D>::Thumbnail() const
-{
-    Windows::Storage::FileProperties::StorageItemThumbnail value { nullptr };
-    check_hresult(WINRT_SHIM(IStorageItemInformation)->get_Thumbnail(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IStorageItemInformation<D>::ThumbnailUpdated(const Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> & changedHandler) const
-{
-    event_token eventCookie {};
-    check_hresult(WINRT_SHIM(IStorageItemInformation)->add_ThumbnailUpdated(get_abi(changedHandler), &eventCookie));
-    return eventCookie;
-}
-
-template <typename D> event_revoker<IStorageItemInformation> impl_IStorageItemInformation<D>::ThumbnailUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> & changedHandler) const
-{
-    return impl::make_event_revoker<D, IStorageItemInformation>(this, &ABI::Windows::Storage::BulkAccess::IStorageItemInformation::remove_ThumbnailUpdated, ThumbnailUpdated(changedHandler));
-}
-
-template <typename D> void impl_IStorageItemInformation<D>::ThumbnailUpdated(event_token eventCookie) const
-{
-    check_hresult(WINRT_SHIM(IStorageItemInformation)->remove_ThumbnailUpdated(eventCookie));
-}
-
-template <typename D> event_token impl_IStorageItemInformation<D>::PropertiesUpdated(const Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> & changedHandler) const
-{
-    event_token eventCookie {};
-    check_hresult(WINRT_SHIM(IStorageItemInformation)->add_PropertiesUpdated(get_abi(changedHandler), &eventCookie));
-    return eventCookie;
-}
-
-template <typename D> event_revoker<IStorageItemInformation> impl_IStorageItemInformation<D>::PropertiesUpdated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Storage::BulkAccess::IStorageItemInformation, Windows::Foundation::IInspectable> & changedHandler) const
-{
-    return impl::make_event_revoker<D, IStorageItemInformation>(this, &ABI::Windows::Storage::BulkAccess::IStorageItemInformation::remove_PropertiesUpdated, PropertiesUpdated(changedHandler));
-}
-
-template <typename D> void impl_IStorageItemInformation<D>::PropertiesUpdated(event_token eventCookie) const
-{
-    check_hresult(WINRT_SHIM(IStorageItemInformation)->remove_PropertiesUpdated(eventCookie));
-}
-
-template <typename D> Windows::Storage::BulkAccess::FileInformationFactory impl_IFileInformationFactoryFactory<D>::CreateWithMode(const Windows::Storage::Search::IStorageQueryResultBase & queryResult, Windows::Storage::FileProperties::ThumbnailMode mode) const
-{
-    Windows::Storage::BulkAccess::FileInformationFactory value { nullptr };
-    check_hresult(WINRT_SHIM(IFileInformationFactoryFactory)->abi_CreateWithMode(get_abi(queryResult), mode, put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::BulkAccess::FileInformationFactory impl_IFileInformationFactoryFactory<D>::CreateWithModeAndSize(const Windows::Storage::Search::IStorageQueryResultBase & queryResult, Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedThumbnailSize) const
-{
-    Windows::Storage::BulkAccess::FileInformationFactory value { nullptr };
-    check_hresult(WINRT_SHIM(IFileInformationFactoryFactory)->abi_CreateWithModeAndSize(get_abi(queryResult), mode, requestedThumbnailSize, put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::BulkAccess::FileInformationFactory impl_IFileInformationFactoryFactory<D>::CreateWithModeAndSizeAndOptions(const Windows::Storage::Search::IStorageQueryResultBase & queryResult, Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedThumbnailSize, Windows::Storage::FileProperties::ThumbnailOptions thumbnailOptions) const
-{
-    Windows::Storage::BulkAccess::FileInformationFactory value { nullptr };
-    check_hresult(WINRT_SHIM(IFileInformationFactoryFactory)->abi_CreateWithModeAndSizeAndOptions(get_abi(queryResult), mode, requestedThumbnailSize, thumbnailOptions, put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::BulkAccess::FileInformationFactory impl_IFileInformationFactoryFactory<D>::CreateWithModeAndSizeAndOptionsAndFlags(const Windows::Storage::Search::IStorageQueryResultBase & queryResult, Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedThumbnailSize, Windows::Storage::FileProperties::ThumbnailOptions thumbnailOptions, bool delayLoad) const
-{
-    Windows::Storage::BulkAccess::FileInformationFactory value { nullptr };
-    check_hresult(WINRT_SHIM(IFileInformationFactoryFactory)->abi_CreateWithModeAndSizeAndOptionsAndFlags(get_abi(queryResult), mode, requestedThumbnailSize, thumbnailOptions, delayLoad, put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::IStorageItemInformation>> impl_IFileInformationFactory<D>::GetItemsAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::IStorageItemInformation>> operation;
-    check_hresult(WINRT_SHIM(IFileInformationFactory)->abi_GetItemsAsync(startIndex, maxItemsToRetrieve, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::IStorageItemInformation>> impl_IFileInformationFactory<D>::GetItemsAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::IStorageItemInformation>> operation;
-    check_hresult(WINRT_SHIM(IFileInformationFactory)->abi_GetItemsAsyncDefaultStartAndCount(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FileInformation>> impl_IFileInformationFactory<D>::GetFilesAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FileInformation>> operation;
-    check_hresult(WINRT_SHIM(IFileInformationFactory)->abi_GetFilesAsync(startIndex, maxItemsToRetrieve, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FileInformation>> impl_IFileInformationFactory<D>::GetFilesAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FileInformation>> operation;
-    check_hresult(WINRT_SHIM(IFileInformationFactory)->abi_GetFilesAsyncDefaultStartAndCount(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FolderInformation>> impl_IFileInformationFactory<D>::GetFoldersAsync(uint32_t startIndex, uint32_t maxItemsToRetrieve) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FolderInformation>> operation;
-    check_hresult(WINRT_SHIM(IFileInformationFactory)->abi_GetFoldersAsync(startIndex, maxItemsToRetrieve, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FolderInformation>> impl_IFileInformationFactory<D>::GetFoldersAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::BulkAccess::FolderInformation>> operation;
-    check_hresult(WINRT_SHIM(IFileInformationFactory)->abi_GetFoldersAsyncDefaultStartAndCount(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IFileInformationFactory<D>::GetVirtualizedItemsVector() const
-{
-    Windows::Foundation::IInspectable vector;
-    check_hresult(WINRT_SHIM(IFileInformationFactory)->abi_GetVirtualizedItemsVector(put_abi(vector)));
-    return vector;
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IFileInformationFactory<D>::GetVirtualizedFilesVector() const
-{
-    Windows::Foundation::IInspectable vector;
-    check_hresult(WINRT_SHIM(IFileInformationFactory)->abi_GetVirtualizedFilesVector(put_abi(vector)));
-    return vector;
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IFileInformationFactory<D>::GetVirtualizedFoldersVector() const
-{
-    Windows::Foundation::IInspectable vector;
-    check_hresult(WINRT_SHIM(IFileInformationFactory)->abi_GetVirtualizedFoldersVector(put_abi(vector)));
-    return vector;
-}
-
-inline FileInformationFactory::FileInformationFactory(const Windows::Storage::Search::IStorageQueryResultBase & queryResult, Windows::Storage::FileProperties::ThumbnailMode mode) :
-    FileInformationFactory(get_activation_factory<FileInformationFactory, IFileInformationFactoryFactory>().CreateWithMode(queryResult, mode))
+inline FileInformationFactory::FileInformationFactory(Windows::Storage::Search::IStorageQueryResultBase const& queryResult, Windows::Storage::FileProperties::ThumbnailMode const& mode) :
+    FileInformationFactory(get_activation_factory<FileInformationFactory, Windows::Storage::BulkAccess::IFileInformationFactoryFactory>().CreateWithMode(queryResult, mode))
 {}
 
-inline FileInformationFactory::FileInformationFactory(const Windows::Storage::Search::IStorageQueryResultBase & queryResult, Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedThumbnailSize) :
-    FileInformationFactory(get_activation_factory<FileInformationFactory, IFileInformationFactoryFactory>().CreateWithModeAndSize(queryResult, mode, requestedThumbnailSize))
+inline FileInformationFactory::FileInformationFactory(Windows::Storage::Search::IStorageQueryResultBase const& queryResult, Windows::Storage::FileProperties::ThumbnailMode const& mode, uint32_t requestedThumbnailSize) :
+    FileInformationFactory(get_activation_factory<FileInformationFactory, Windows::Storage::BulkAccess::IFileInformationFactoryFactory>().CreateWithModeAndSize(queryResult, mode, requestedThumbnailSize))
 {}
 
-inline FileInformationFactory::FileInformationFactory(const Windows::Storage::Search::IStorageQueryResultBase & queryResult, Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedThumbnailSize, Windows::Storage::FileProperties::ThumbnailOptions thumbnailOptions) :
-    FileInformationFactory(get_activation_factory<FileInformationFactory, IFileInformationFactoryFactory>().CreateWithModeAndSizeAndOptions(queryResult, mode, requestedThumbnailSize, thumbnailOptions))
+inline FileInformationFactory::FileInformationFactory(Windows::Storage::Search::IStorageQueryResultBase const& queryResult, Windows::Storage::FileProperties::ThumbnailMode const& mode, uint32_t requestedThumbnailSize, Windows::Storage::FileProperties::ThumbnailOptions const& thumbnailOptions) :
+    FileInformationFactory(get_activation_factory<FileInformationFactory, Windows::Storage::BulkAccess::IFileInformationFactoryFactory>().CreateWithModeAndSizeAndOptions(queryResult, mode, requestedThumbnailSize, thumbnailOptions))
 {}
 
-inline FileInformationFactory::FileInformationFactory(const Windows::Storage::Search::IStorageQueryResultBase & queryResult, Windows::Storage::FileProperties::ThumbnailMode mode, uint32_t requestedThumbnailSize, Windows::Storage::FileProperties::ThumbnailOptions thumbnailOptions, bool delayLoad) :
-    FileInformationFactory(get_activation_factory<FileInformationFactory, IFileInformationFactoryFactory>().CreateWithModeAndSizeAndOptionsAndFlags(queryResult, mode, requestedThumbnailSize, thumbnailOptions, delayLoad))
+inline FileInformationFactory::FileInformationFactory(Windows::Storage::Search::IStorageQueryResultBase const& queryResult, Windows::Storage::FileProperties::ThumbnailMode const& mode, uint32_t requestedThumbnailSize, Windows::Storage::FileProperties::ThumbnailOptions const& thumbnailOptions, bool delayLoad) :
+    FileInformationFactory(get_activation_factory<FileInformationFactory, Windows::Storage::BulkAccess::IFileInformationFactoryFactory>().CreateWithModeAndSizeAndOptionsAndFlags(queryResult, mode, requestedThumbnailSize, thumbnailOptions, delayLoad))
 {}
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Storage::BulkAccess::IFileInformationFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::BulkAccess::IFileInformationFactory> {};
+
+template<> struct hash<winrt::Windows::Storage::BulkAccess::IFileInformationFactoryFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::BulkAccess::IFileInformationFactoryFactory> {};
+
+template<> struct hash<winrt::Windows::Storage::BulkAccess::IStorageItemInformation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::BulkAccess::IStorageItemInformation> {};
+
+template<> struct hash<winrt::Windows::Storage::BulkAccess::FileInformation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::BulkAccess::FileInformation> {};
+
+template<> struct hash<winrt::Windows::Storage::BulkAccess::FileInformationFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::BulkAccess::FileInformationFactory> {};
+
+template<> struct hash<winrt::Windows::Storage::BulkAccess::FolderInformation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::BulkAccess::FolderInformation> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Storage::BulkAccess::IFileInformationFactory>
-{
-    size_t operator()(const winrt::Windows::Storage::BulkAccess::IFileInformationFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::BulkAccess::IFileInformationFactoryFactory>
-{
-    size_t operator()(const winrt::Windows::Storage::BulkAccess::IFileInformationFactoryFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::BulkAccess::IStorageItemInformation>
-{
-    size_t operator()(const winrt::Windows::Storage::BulkAccess::IStorageItemInformation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::BulkAccess::FileInformation>
-{
-    size_t operator()(const winrt::Windows::Storage::BulkAccess::FileInformation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::BulkAccess::FileInformationFactory>
-{
-    size_t operator()(const winrt::Windows::Storage::BulkAccess::FileInformationFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::BulkAccess::FolderInformation>
-{
-    size_t operator()(const winrt::Windows::Storage::BulkAccess::FolderInformation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

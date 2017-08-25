@@ -1,23 +1,2448 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Globalization.2.h"
 
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Globalization.3.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_Globalization_IApplicationLanguagesStatics<D>::PrimaryLanguageOverride() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IApplicationLanguagesStatics)->get_PrimaryLanguageOverride(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> void consume_Windows_Globalization_IApplicationLanguagesStatics<D>::PrimaryLanguageOverride(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::IApplicationLanguagesStatics)->put_PrimaryLanguageOverride(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> consume_Windows_Globalization_IApplicationLanguagesStatics<D>::Languages() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::IApplicationLanguagesStatics)->get_Languages(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> consume_Windows_Globalization_IApplicationLanguagesStatics<D>::ManifestLanguages() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::IApplicationLanguagesStatics)->get_ManifestLanguages(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Globalization::Calendar consume_Windows_Globalization_ICalendar<D>::Clone() const
+{
+    Windows::Globalization::Calendar value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->Clone(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::SetToMin() const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->SetToMin());
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::SetToMax() const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->SetToMax());
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> consume_Windows_Globalization_ICalendar<D>::Languages() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_Languages(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::NumeralSystem() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_NumeralSystem(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::NumeralSystem(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->put_NumeralSystem(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::GetCalendarSystem() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->GetCalendarSystem(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::ChangeCalendarSystem(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->ChangeCalendarSystem(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::GetClock() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->GetClock(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::ChangeClock(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->ChangeClock(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Globalization_ICalendar<D>::GetDateTime() const
+{
+    Windows::Foundation::DateTime result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->GetDateTime(put_abi(result)));
+    return result;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::SetDateTime(Windows::Foundation::DateTime const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->SetDateTime(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::SetToNow() const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->SetToNow());
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::FirstEra() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_FirstEra(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::LastEra() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_LastEra(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::NumberOfEras() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_NumberOfEras(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::Era() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_Era(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::Era(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->put_Era(value));
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::AddEras(int32_t eras) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->AddEras(eras));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::EraAsString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->EraAsFullString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::EraAsString(int32_t idealLength) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->EraAsString(idealLength, put_abi(result)));
+    return result;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::FirstYearInThisEra() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_FirstYearInThisEra(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::LastYearInThisEra() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_LastYearInThisEra(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::NumberOfYearsInThisEra() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_NumberOfYearsInThisEra(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::Year() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_Year(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::Year(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->put_Year(value));
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::AddYears(int32_t years) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->AddYears(years));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::YearAsString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->YearAsString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::YearAsTruncatedString(int32_t remainingDigits) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->YearAsTruncatedString(remainingDigits, put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::YearAsPaddedString(int32_t minDigits) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->YearAsPaddedString(minDigits, put_abi(result)));
+    return result;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::FirstMonthInThisYear() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_FirstMonthInThisYear(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::LastMonthInThisYear() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_LastMonthInThisYear(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::NumberOfMonthsInThisYear() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_NumberOfMonthsInThisYear(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::Month() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_Month(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::Month(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->put_Month(value));
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::AddMonths(int32_t months) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->AddMonths(months));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::MonthAsString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->MonthAsFullString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::MonthAsString(int32_t idealLength) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->MonthAsString(idealLength, put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::MonthAsSoloString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->MonthAsFullSoloString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::MonthAsSoloString(int32_t idealLength) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->MonthAsSoloString(idealLength, put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::MonthAsNumericString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->MonthAsNumericString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::MonthAsPaddedNumericString(int32_t minDigits) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->MonthAsPaddedNumericString(minDigits, put_abi(result)));
+    return result;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::AddWeeks(int32_t weeks) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->AddWeeks(weeks));
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::FirstDayInThisMonth() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_FirstDayInThisMonth(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::LastDayInThisMonth() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_LastDayInThisMonth(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::NumberOfDaysInThisMonth() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_NumberOfDaysInThisMonth(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::Day() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_Day(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::Day(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->put_Day(value));
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::AddDays(int32_t days) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->AddDays(days));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::DayAsString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->DayAsString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::DayAsPaddedString(int32_t minDigits) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->DayAsPaddedString(minDigits, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Globalization::DayOfWeek consume_Windows_Globalization_ICalendar<D>::DayOfWeek() const
+{
+    Windows::Globalization::DayOfWeek value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_DayOfWeek(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::DayOfWeekAsString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->DayOfWeekAsFullString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::DayOfWeekAsString(int32_t idealLength) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->DayOfWeekAsString(idealLength, put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::DayOfWeekAsSoloString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->DayOfWeekAsFullSoloString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::DayOfWeekAsSoloString(int32_t idealLength) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->DayOfWeekAsSoloString(idealLength, put_abi(result)));
+    return result;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::FirstPeriodInThisDay() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_FirstPeriodInThisDay(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::LastPeriodInThisDay() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_LastPeriodInThisDay(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::NumberOfPeriodsInThisDay() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_NumberOfPeriodsInThisDay(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::Period() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_Period(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::Period(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->put_Period(value));
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::AddPeriods(int32_t periods) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->AddPeriods(periods));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::PeriodAsString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->PeriodAsFullString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::PeriodAsString(int32_t idealLength) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->PeriodAsString(idealLength, put_abi(result)));
+    return result;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::FirstHourInThisPeriod() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_FirstHourInThisPeriod(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::LastHourInThisPeriod() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_LastHourInThisPeriod(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::NumberOfHoursInThisPeriod() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_NumberOfHoursInThisPeriod(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::Hour() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_Hour(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::Hour(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->put_Hour(value));
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::AddHours(int32_t hours) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->AddHours(hours));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::HourAsString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->HourAsString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::HourAsPaddedString(int32_t minDigits) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->HourAsPaddedString(minDigits, put_abi(result)));
+    return result;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::Minute() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_Minute(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::Minute(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->put_Minute(value));
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::AddMinutes(int32_t minutes) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->AddMinutes(minutes));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::MinuteAsString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->MinuteAsString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::MinuteAsPaddedString(int32_t minDigits) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->MinuteAsPaddedString(minDigits, put_abi(result)));
+    return result;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::Second() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_Second(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::Second(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->put_Second(value));
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::AddSeconds(int32_t seconds) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->AddSeconds(seconds));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::SecondAsString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->SecondAsString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::SecondAsPaddedString(int32_t minDigits) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->SecondAsPaddedString(minDigits, put_abi(result)));
+    return result;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::Nanosecond() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_Nanosecond(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::Nanosecond(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->put_Nanosecond(value));
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::AddNanoseconds(int32_t nanoseconds) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->AddNanoseconds(nanoseconds));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::NanosecondAsString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->NanosecondAsString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::NanosecondAsPaddedString(int32_t minDigits) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->NanosecondAsPaddedString(minDigits, put_abi(result)));
+    return result;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::Compare(Windows::Globalization::Calendar const& other) const
+{
+    int32_t result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->Compare(get_abi(other), &result));
+    return result;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::CompareDateTime(Windows::Foundation::DateTime const& other) const
+{
+    int32_t result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->CompareDateTime(get_abi(other), &result));
+    return result;
+}
+
+template <typename D> void consume_Windows_Globalization_ICalendar<D>::CopyTo(Windows::Globalization::Calendar const& other) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->CopyTo(get_abi(other)));
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::FirstMinuteInThisHour() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_FirstMinuteInThisHour(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::LastMinuteInThisHour() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_LastMinuteInThisHour(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::NumberOfMinutesInThisHour() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_NumberOfMinutesInThisHour(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::FirstSecondInThisMinute() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_FirstSecondInThisMinute(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::LastSecondInThisMinute() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_LastSecondInThisMinute(&value));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Globalization_ICalendar<D>::NumberOfSecondsInThisMinute() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_NumberOfSecondsInThisMinute(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendar<D>::ResolvedLanguage() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_ResolvedLanguage(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Globalization_ICalendar<D>::IsDaylightSavingTime() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendar)->get_IsDaylightSavingTime(&value));
+    return value;
+}
+
+template <typename D> Windows::Globalization::Calendar consume_Windows_Globalization_ICalendarFactory<D>::CreateCalendarDefaultCalendarAndClock(param::iterable<hstring> const& languages) const
+{
+    Windows::Globalization::Calendar result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarFactory)->CreateCalendarDefaultCalendarAndClock(get_abi(languages), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Globalization::Calendar consume_Windows_Globalization_ICalendarFactory<D>::CreateCalendar(param::iterable<hstring> const& languages, param::hstring const& calendar, param::hstring const& clock) const
+{
+    Windows::Globalization::Calendar result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarFactory)->CreateCalendar(get_abi(languages), get_abi(calendar), get_abi(clock), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Globalization::Calendar consume_Windows_Globalization_ICalendarFactory2<D>::CreateCalendarWithTimeZone(param::iterable<hstring> const& languages, param::hstring const& calendar, param::hstring const& clock, param::hstring const& timeZoneId) const
+{
+    Windows::Globalization::Calendar result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarFactory2)->CreateCalendarWithTimeZone(get_abi(languages), get_abi(calendar), get_abi(clock), get_abi(timeZoneId), put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics<D>::Gregorian() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics)->get_Gregorian(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics<D>::Hebrew() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics)->get_Hebrew(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics<D>::Hijri() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics)->get_Hijri(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics<D>::Japanese() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics)->get_Japanese(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics<D>::Julian() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics)->get_Julian(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics<D>::Korean() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics)->get_Korean(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics<D>::Taiwan() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics)->get_Taiwan(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics<D>::Thai() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics)->get_Thai(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics<D>::UmAlQura() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics)->get_UmAlQura(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics2<D>::Persian() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics2)->get_Persian(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics3<D>::ChineseLunar() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics3)->get_ChineseLunar(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics3<D>::JapaneseLunar() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics3)->get_JapaneseLunar(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics3<D>::KoreanLunar() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics3)->get_KoreanLunar(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics3<D>::TaiwanLunar() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics3)->get_TaiwanLunar(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICalendarIdentifiersStatics3<D>::VietnameseLunar() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICalendarIdentifiersStatics3)->get_VietnameseLunar(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_IClockIdentifiersStatics<D>::TwelveHour() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IClockIdentifiersStatics)->get_TwelveHour(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_IClockIdentifiersStatics<D>::TwentyFourHour() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IClockIdentifiersStatics)->get_TwentyFourHour(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::AED() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_AED(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::AFN() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_AFN(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::ALL() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_ALL(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::AMD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_AMD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::ANG() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_ANG(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::AOA() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_AOA(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::ARS() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_ARS(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::AUD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_AUD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::AWG() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_AWG(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::AZN() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_AZN(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BAM() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BAM(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BBD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BBD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BDT() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BDT(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BGN() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BGN(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BHD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BHD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BIF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BIF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BMD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BMD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BND() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BND(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BOB() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BOB(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BRL() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BRL(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BSD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BSD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BTN() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BTN(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BWP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BWP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BYR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BYR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::BZD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_BZD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::CAD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_CAD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::CDF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_CDF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::CHF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_CHF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::CLP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_CLP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::CNY() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_CNY(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::COP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_COP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::CRC() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_CRC(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::CUP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_CUP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::CVE() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_CVE(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::CZK() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_CZK(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::DJF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_DJF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::DKK() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_DKK(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::DOP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_DOP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::DZD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_DZD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::EGP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_EGP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::ERN() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_ERN(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::ETB() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_ETB(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::EUR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_EUR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::FJD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_FJD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::FKP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_FKP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::GBP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_GBP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::GEL() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_GEL(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::GHS() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_GHS(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::GIP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_GIP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::GMD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_GMD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::GNF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_GNF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::GTQ() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_GTQ(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::GYD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_GYD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::HKD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_HKD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::HNL() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_HNL(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::HRK() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_HRK(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::HTG() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_HTG(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::HUF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_HUF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::IDR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_IDR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::ILS() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_ILS(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::INR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_INR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::IQD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_IQD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::IRR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_IRR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::ISK() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_ISK(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::JMD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_JMD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::JOD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_JOD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::JPY() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_JPY(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::KES() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_KES(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::KGS() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_KGS(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::KHR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_KHR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::KMF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_KMF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::KPW() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_KPW(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::KRW() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_KRW(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::KWD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_KWD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::KYD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_KYD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::KZT() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_KZT(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::LAK() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_LAK(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::LBP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_LBP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::LKR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_LKR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::LRD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_LRD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::LSL() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_LSL(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::LTL() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_LTL(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::LVL() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_LVL(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::LYD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_LYD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MAD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MAD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MDL() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MDL(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MGA() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MGA(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MKD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MKD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MMK() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MMK(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MNT() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MNT(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MOP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MOP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MRO() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MRO(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MUR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MUR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MVR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MVR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MWK() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MWK(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MXN() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MXN(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MYR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MYR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::MZN() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_MZN(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::NAD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_NAD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::NGN() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_NGN(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::NIO() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_NIO(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::NOK() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_NOK(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::NPR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_NPR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::NZD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_NZD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::OMR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_OMR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::PAB() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_PAB(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::PEN() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_PEN(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::PGK() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_PGK(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::PHP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_PHP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::PKR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_PKR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::PLN() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_PLN(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::PYG() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_PYG(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::QAR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_QAR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::RON() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_RON(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::RSD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_RSD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::RUB() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_RUB(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::RWF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_RWF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SAR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SAR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SBD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SBD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SCR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SCR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SDG() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SDG(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SEK() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SEK(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SGD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SGD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SHP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SHP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SLL() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SLL(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SOS() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SOS(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SRD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SRD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::STD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_STD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SYP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SYP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::SZL() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_SZL(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::THB() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_THB(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::TJS() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_TJS(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::TMT() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_TMT(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::TND() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_TND(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::TOP() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_TOP(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::TRY() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_TRY(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::TTD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_TTD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::TWD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_TWD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::TZS() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_TZS(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::UAH() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_UAH(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::UGX() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_UGX(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::USD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_USD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::UYU() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_UYU(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::UZS() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_UZS(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::VEF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_VEF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::VND() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_VND(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::VUV() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_VUV(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::WST() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_WST(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::XAF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_XAF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::XCD() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_XCD(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::XOF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_XOF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::XPF() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_XPF(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::XXX() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_XXX(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::YER() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_YER(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::ZAR() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_ZAR(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::ZMW() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_ZMW(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics<D>::ZWL() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics)->get_ZWL(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ICurrencyIdentifiersStatics2<D>::BYN() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ICurrencyIdentifiersStatics2)->get_BYN(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_IGeographicRegion<D>::Code() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IGeographicRegion)->get_Code(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_IGeographicRegion<D>::CodeTwoLetter() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IGeographicRegion)->get_CodeTwoLetter(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_IGeographicRegion<D>::CodeThreeLetter() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IGeographicRegion)->get_CodeThreeLetter(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_IGeographicRegion<D>::CodeThreeDigit() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IGeographicRegion)->get_CodeThreeDigit(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_IGeographicRegion<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IGeographicRegion)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_IGeographicRegion<D>::NativeName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IGeographicRegion)->get_NativeName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> consume_Windows_Globalization_IGeographicRegion<D>::CurrenciesInUse() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::IGeographicRegion)->get_CurrenciesInUse(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Globalization::GeographicRegion consume_Windows_Globalization_IGeographicRegionFactory<D>::CreateGeographicRegion(param::hstring const& geographicRegionCode) const
+{
+    Windows::Globalization::GeographicRegion result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::IGeographicRegionFactory)->CreateGeographicRegion(get_abi(geographicRegionCode), put_abi(result)));
+    return result;
+}
+
+template <typename D> bool consume_Windows_Globalization_IGeographicRegionStatics<D>::IsSupported(param::hstring const& geographicRegionCode) const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IGeographicRegionStatics)->IsSupported(get_abi(geographicRegionCode), &result));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_IJapanesePhoneme<D>::DisplayText() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IJapanesePhoneme)->get_DisplayText(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_IJapanesePhoneme<D>::YomiText() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IJapanesePhoneme)->get_YomiText(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Globalization_IJapanesePhoneme<D>::IsPhraseStart() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::IJapanesePhoneme)->get_IsPhraseStart(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> consume_Windows_Globalization_IJapanesePhoneticAnalyzerStatics<D>::GetWords(param::hstring const& input) const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::IJapanesePhoneticAnalyzerStatics)->GetWords(get_abi(input), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> consume_Windows_Globalization_IJapanesePhoneticAnalyzerStatics<D>::GetWords(param::hstring const& input, bool monoRuby) const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::IJapanesePhoneticAnalyzerStatics)->GetWordsWithMonoRubyOption(get_abi(input), monoRuby, put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ILanguage<D>::LanguageTag() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ILanguage)->get_LanguageTag(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ILanguage<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ILanguage)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ILanguage<D>::NativeName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ILanguage)->get_NativeName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ILanguage<D>::Script() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ILanguage)->get_Script(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> consume_Windows_Globalization_ILanguageExtensionSubtags<D>::GetExtensionSubtags(param::hstring const& singleton) const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::ILanguageExtensionSubtags)->GetExtensionSubtags(get_abi(singleton), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Globalization::Language consume_Windows_Globalization_ILanguageFactory<D>::CreateLanguage(param::hstring const& languageTag) const
+{
+    Windows::Globalization::Language result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Globalization::ILanguageFactory)->CreateLanguage(get_abi(languageTag), put_abi(result)));
+    return result;
+}
+
+template <typename D> bool consume_Windows_Globalization_ILanguageStatics<D>::IsWellFormed(param::hstring const& languageTag) const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ILanguageStatics)->IsWellFormed(get_abi(languageTag), &result));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ILanguageStatics<D>::CurrentInputMethodLanguageTag() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ILanguageStatics)->get_CurrentInputMethodLanguageTag(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Globalization_ILanguageStatics2<D>::TrySetInputMethodLanguageTag(param::hstring const& languageTag) const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ILanguageStatics2)->TrySetInputMethodLanguageTag(get_abi(languageTag), &result));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Arab() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Arab(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::ArabExt() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_ArabExt(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Bali() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Bali(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Beng() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Beng(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Cham() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Cham(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Deva() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Deva(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::FullWide() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_FullWide(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Gujr() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Gujr(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Guru() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Guru(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::HaniDec() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_HaniDec(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Java() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Java(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Kali() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Kali(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Khmr() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Khmr(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Knda() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Knda(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Lana() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Lana(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::LanaTham() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_LanaTham(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Laoo() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Laoo(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Latn() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Latn(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Lepc() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Lepc(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Limb() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Limb(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Mlym() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Mlym(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Mong() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Mong(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Mtei() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Mtei(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Mymr() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Mymr(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::MymrShan() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_MymrShan(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Nkoo() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Nkoo(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Olck() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Olck(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Orya() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Orya(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Saur() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Saur(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Sund() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Sund(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Talu() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Talu(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::TamlDec() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_TamlDec(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Telu() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Telu(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Thai() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Thai(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Tibt() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Tibt(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics<D>::Vaii() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics)->get_Vaii(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::Brah() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_Brah(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::Osma() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_Osma(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::MathBold() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_MathBold(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::MathDbl() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_MathDbl(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::MathSans() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_MathSans(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::MathSanb() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_MathSanb(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::MathMono() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_MathMono(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::ZmthBold() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_ZmthBold(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::ZmthDbl() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_ZmthDbl(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::ZmthSans() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_ZmthSans(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::ZmthSanb() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_ZmthSanb(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_INumeralSystemIdentifiersStatics2<D>::ZmthMono() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::INumeralSystemIdentifiersStatics2)->get_ZmthMono(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ITimeZoneOnCalendar<D>::GetTimeZone() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ITimeZoneOnCalendar)->GetTimeZone(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Globalization_ITimeZoneOnCalendar<D>::ChangeTimeZone(param::hstring const& timeZoneId) const
+{
+    check_hresult(WINRT_SHIM(Windows::Globalization::ITimeZoneOnCalendar)->ChangeTimeZone(get_abi(timeZoneId)));
+}
+
+template <typename D> hstring consume_Windows_Globalization_ITimeZoneOnCalendar<D>::TimeZoneAsString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ITimeZoneOnCalendar)->TimeZoneAsFullString(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Globalization_ITimeZoneOnCalendar<D>::TimeZoneAsString(int32_t idealLength) const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Globalization::ITimeZoneOnCalendar)->TimeZoneAsString(idealLength, put_abi(result)));
+    return result;
+}
 
 template <typename D>
 struct produce<D, Windows::Globalization::IApplicationLanguagesStatics> : produce_base<D, Windows::Globalization::IApplicationLanguagesStatics>
 {
-    HRESULT __stdcall get_PrimaryLanguageOverride(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PrimaryLanguageOverride(HSTRING* value) noexcept override
     {
         try
         {
@@ -32,12 +2457,12 @@ struct produce<D, Windows::Globalization::IApplicationLanguagesStatics> : produc
         }
     }
 
-    HRESULT __stdcall put_PrimaryLanguageOverride(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_PrimaryLanguageOverride(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PrimaryLanguageOverride(*reinterpret_cast<const hstring *>(&value));
+            this->shim().PrimaryLanguageOverride(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -46,7 +2471,7 @@ struct produce<D, Windows::Globalization::IApplicationLanguagesStatics> : produc
         }
     }
 
-    HRESULT __stdcall get_Languages(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_Languages(::IUnknown** value) noexcept override
     {
         try
         {
@@ -61,7 +2486,7 @@ struct produce<D, Windows::Globalization::IApplicationLanguagesStatics> : produc
         }
     }
 
-    HRESULT __stdcall get_ManifestLanguages(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_ManifestLanguages(::IUnknown** value) noexcept override
     {
         try
         {
@@ -80,7 +2505,7 @@ struct produce<D, Windows::Globalization::IApplicationLanguagesStatics> : produc
 template <typename D>
 struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::Globalization::ICalendar>
 {
-    HRESULT __stdcall abi_Clone(impl::abi_arg_out<Windows::Globalization::ICalendar> value) noexcept override
+    HRESULT __stdcall Clone(::IUnknown** value) noexcept override
     {
         try
         {
@@ -95,7 +2520,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_SetToMin() noexcept override
+    HRESULT __stdcall SetToMin() noexcept override
     {
         try
         {
@@ -109,7 +2534,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_SetToMax() noexcept override
+    HRESULT __stdcall SetToMax() noexcept override
     {
         try
         {
@@ -123,7 +2548,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Languages(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_Languages(::IUnknown** value) noexcept override
     {
         try
         {
@@ -138,7 +2563,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_NumeralSystem(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NumeralSystem(HSTRING* value) noexcept override
     {
         try
         {
@@ -153,12 +2578,12 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall put_NumeralSystem(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_NumeralSystem(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().NumeralSystem(*reinterpret_cast<const hstring *>(&value));
+            this->shim().NumeralSystem(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -167,7 +2592,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_GetCalendarSystem(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall GetCalendarSystem(HSTRING* value) noexcept override
     {
         try
         {
@@ -182,12 +2607,12 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_ChangeCalendarSystem(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall ChangeCalendarSystem(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ChangeCalendarSystem(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ChangeCalendarSystem(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -196,7 +2621,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_GetClock(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall GetClock(HSTRING* value) noexcept override
     {
         try
         {
@@ -211,12 +2636,12 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_ChangeClock(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall ChangeClock(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ChangeClock(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ChangeClock(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -225,7 +2650,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_GetDateTime(impl::abi_arg_out<Windows::Foundation::DateTime> result) noexcept override
+    HRESULT __stdcall GetDateTime(abi_t<Windows::Foundation::DateTime>* result) noexcept override
     {
         try
         {
@@ -239,12 +2664,12 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_SetDateTime(impl::abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall SetDateTime(abi_t<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SetDateTime(*reinterpret_cast<const Windows::Foundation::DateTime *>(&value));
+            this->shim().SetDateTime(*reinterpret_cast<Windows::Foundation::DateTime const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -253,7 +2678,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_SetToNow() noexcept override
+    HRESULT __stdcall SetToNow() noexcept override
     {
         try
         {
@@ -267,7 +2692,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_FirstEra(int32_t * value) noexcept override
+    HRESULT __stdcall get_FirstEra(int32_t* value) noexcept override
     {
         try
         {
@@ -281,7 +2706,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_LastEra(int32_t * value) noexcept override
+    HRESULT __stdcall get_LastEra(int32_t* value) noexcept override
     {
         try
         {
@@ -295,7 +2720,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_NumberOfEras(int32_t * value) noexcept override
+    HRESULT __stdcall get_NumberOfEras(int32_t* value) noexcept override
     {
         try
         {
@@ -309,7 +2734,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Era(int32_t * value) noexcept override
+    HRESULT __stdcall get_Era(int32_t* value) noexcept override
     {
         try
         {
@@ -337,7 +2762,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_AddEras(int32_t eras) noexcept override
+    HRESULT __stdcall AddEras(int32_t eras) noexcept override
     {
         try
         {
@@ -351,7 +2776,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_EraAsFullString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall EraAsFullString(HSTRING* result) noexcept override
     {
         try
         {
@@ -366,7 +2791,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_EraAsString(int32_t idealLength, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall EraAsString(int32_t idealLength, HSTRING* result) noexcept override
     {
         try
         {
@@ -381,7 +2806,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_FirstYearInThisEra(int32_t * value) noexcept override
+    HRESULT __stdcall get_FirstYearInThisEra(int32_t* value) noexcept override
     {
         try
         {
@@ -395,7 +2820,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_LastYearInThisEra(int32_t * value) noexcept override
+    HRESULT __stdcall get_LastYearInThisEra(int32_t* value) noexcept override
     {
         try
         {
@@ -409,7 +2834,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_NumberOfYearsInThisEra(int32_t * value) noexcept override
+    HRESULT __stdcall get_NumberOfYearsInThisEra(int32_t* value) noexcept override
     {
         try
         {
@@ -423,7 +2848,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Year(int32_t * value) noexcept override
+    HRESULT __stdcall get_Year(int32_t* value) noexcept override
     {
         try
         {
@@ -451,7 +2876,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_AddYears(int32_t years) noexcept override
+    HRESULT __stdcall AddYears(int32_t years) noexcept override
     {
         try
         {
@@ -465,7 +2890,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_YearAsString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall YearAsString(HSTRING* result) noexcept override
     {
         try
         {
@@ -480,7 +2905,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_YearAsTruncatedString(int32_t remainingDigits, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall YearAsTruncatedString(int32_t remainingDigits, HSTRING* result) noexcept override
     {
         try
         {
@@ -495,7 +2920,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_YearAsPaddedString(int32_t minDigits, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall YearAsPaddedString(int32_t minDigits, HSTRING* result) noexcept override
     {
         try
         {
@@ -510,7 +2935,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_FirstMonthInThisYear(int32_t * value) noexcept override
+    HRESULT __stdcall get_FirstMonthInThisYear(int32_t* value) noexcept override
     {
         try
         {
@@ -524,7 +2949,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_LastMonthInThisYear(int32_t * value) noexcept override
+    HRESULT __stdcall get_LastMonthInThisYear(int32_t* value) noexcept override
     {
         try
         {
@@ -538,7 +2963,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_NumberOfMonthsInThisYear(int32_t * value) noexcept override
+    HRESULT __stdcall get_NumberOfMonthsInThisYear(int32_t* value) noexcept override
     {
         try
         {
@@ -552,7 +2977,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Month(int32_t * value) noexcept override
+    HRESULT __stdcall get_Month(int32_t* value) noexcept override
     {
         try
         {
@@ -580,7 +3005,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_AddMonths(int32_t months) noexcept override
+    HRESULT __stdcall AddMonths(int32_t months) noexcept override
     {
         try
         {
@@ -594,7 +3019,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_MonthAsFullString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall MonthAsFullString(HSTRING* result) noexcept override
     {
         try
         {
@@ -609,7 +3034,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_MonthAsString(int32_t idealLength, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall MonthAsString(int32_t idealLength, HSTRING* result) noexcept override
     {
         try
         {
@@ -624,7 +3049,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_MonthAsFullSoloString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall MonthAsFullSoloString(HSTRING* result) noexcept override
     {
         try
         {
@@ -639,7 +3064,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_MonthAsSoloString(int32_t idealLength, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall MonthAsSoloString(int32_t idealLength, HSTRING* result) noexcept override
     {
         try
         {
@@ -654,7 +3079,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_MonthAsNumericString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall MonthAsNumericString(HSTRING* result) noexcept override
     {
         try
         {
@@ -669,7 +3094,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_MonthAsPaddedNumericString(int32_t minDigits, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall MonthAsPaddedNumericString(int32_t minDigits, HSTRING* result) noexcept override
     {
         try
         {
@@ -684,7 +3109,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_AddWeeks(int32_t weeks) noexcept override
+    HRESULT __stdcall AddWeeks(int32_t weeks) noexcept override
     {
         try
         {
@@ -698,7 +3123,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_FirstDayInThisMonth(int32_t * value) noexcept override
+    HRESULT __stdcall get_FirstDayInThisMonth(int32_t* value) noexcept override
     {
         try
         {
@@ -712,7 +3137,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_LastDayInThisMonth(int32_t * value) noexcept override
+    HRESULT __stdcall get_LastDayInThisMonth(int32_t* value) noexcept override
     {
         try
         {
@@ -726,7 +3151,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_NumberOfDaysInThisMonth(int32_t * value) noexcept override
+    HRESULT __stdcall get_NumberOfDaysInThisMonth(int32_t* value) noexcept override
     {
         try
         {
@@ -740,7 +3165,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Day(int32_t * value) noexcept override
+    HRESULT __stdcall get_Day(int32_t* value) noexcept override
     {
         try
         {
@@ -768,7 +3193,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_AddDays(int32_t days) noexcept override
+    HRESULT __stdcall AddDays(int32_t days) noexcept override
     {
         try
         {
@@ -782,7 +3207,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_DayAsString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall DayAsString(HSTRING* result) noexcept override
     {
         try
         {
@@ -797,7 +3222,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_DayAsPaddedString(int32_t minDigits, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall DayAsPaddedString(int32_t minDigits, HSTRING* result) noexcept override
     {
         try
         {
@@ -812,7 +3237,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_DayOfWeek(Windows::Globalization::DayOfWeek * value) noexcept override
+    HRESULT __stdcall get_DayOfWeek(abi_t<Windows::Globalization::DayOfWeek>* value) noexcept override
     {
         try
         {
@@ -826,7 +3251,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_DayOfWeekAsFullString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall DayOfWeekAsFullString(HSTRING* result) noexcept override
     {
         try
         {
@@ -841,7 +3266,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_DayOfWeekAsString(int32_t idealLength, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall DayOfWeekAsString(int32_t idealLength, HSTRING* result) noexcept override
     {
         try
         {
@@ -856,7 +3281,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_DayOfWeekAsFullSoloString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall DayOfWeekAsFullSoloString(HSTRING* result) noexcept override
     {
         try
         {
@@ -871,7 +3296,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_DayOfWeekAsSoloString(int32_t idealLength, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall DayOfWeekAsSoloString(int32_t idealLength, HSTRING* result) noexcept override
     {
         try
         {
@@ -886,7 +3311,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_FirstPeriodInThisDay(int32_t * value) noexcept override
+    HRESULT __stdcall get_FirstPeriodInThisDay(int32_t* value) noexcept override
     {
         try
         {
@@ -900,7 +3325,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_LastPeriodInThisDay(int32_t * value) noexcept override
+    HRESULT __stdcall get_LastPeriodInThisDay(int32_t* value) noexcept override
     {
         try
         {
@@ -914,7 +3339,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_NumberOfPeriodsInThisDay(int32_t * value) noexcept override
+    HRESULT __stdcall get_NumberOfPeriodsInThisDay(int32_t* value) noexcept override
     {
         try
         {
@@ -928,7 +3353,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Period(int32_t * value) noexcept override
+    HRESULT __stdcall get_Period(int32_t* value) noexcept override
     {
         try
         {
@@ -956,7 +3381,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_AddPeriods(int32_t periods) noexcept override
+    HRESULT __stdcall AddPeriods(int32_t periods) noexcept override
     {
         try
         {
@@ -970,7 +3395,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_PeriodAsFullString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall PeriodAsFullString(HSTRING* result) noexcept override
     {
         try
         {
@@ -985,7 +3410,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_PeriodAsString(int32_t idealLength, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall PeriodAsString(int32_t idealLength, HSTRING* result) noexcept override
     {
         try
         {
@@ -1000,7 +3425,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_FirstHourInThisPeriod(int32_t * value) noexcept override
+    HRESULT __stdcall get_FirstHourInThisPeriod(int32_t* value) noexcept override
     {
         try
         {
@@ -1014,7 +3439,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_LastHourInThisPeriod(int32_t * value) noexcept override
+    HRESULT __stdcall get_LastHourInThisPeriod(int32_t* value) noexcept override
     {
         try
         {
@@ -1028,7 +3453,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_NumberOfHoursInThisPeriod(int32_t * value) noexcept override
+    HRESULT __stdcall get_NumberOfHoursInThisPeriod(int32_t* value) noexcept override
     {
         try
         {
@@ -1042,7 +3467,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Hour(int32_t * value) noexcept override
+    HRESULT __stdcall get_Hour(int32_t* value) noexcept override
     {
         try
         {
@@ -1070,7 +3495,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_AddHours(int32_t hours) noexcept override
+    HRESULT __stdcall AddHours(int32_t hours) noexcept override
     {
         try
         {
@@ -1084,7 +3509,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_HourAsString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall HourAsString(HSTRING* result) noexcept override
     {
         try
         {
@@ -1099,7 +3524,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_HourAsPaddedString(int32_t minDigits, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall HourAsPaddedString(int32_t minDigits, HSTRING* result) noexcept override
     {
         try
         {
@@ -1114,7 +3539,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Minute(int32_t * value) noexcept override
+    HRESULT __stdcall get_Minute(int32_t* value) noexcept override
     {
         try
         {
@@ -1142,7 +3567,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_AddMinutes(int32_t minutes) noexcept override
+    HRESULT __stdcall AddMinutes(int32_t minutes) noexcept override
     {
         try
         {
@@ -1156,7 +3581,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_MinuteAsString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall MinuteAsString(HSTRING* result) noexcept override
     {
         try
         {
@@ -1171,7 +3596,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_MinuteAsPaddedString(int32_t minDigits, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall MinuteAsPaddedString(int32_t minDigits, HSTRING* result) noexcept override
     {
         try
         {
@@ -1186,7 +3611,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Second(int32_t * value) noexcept override
+    HRESULT __stdcall get_Second(int32_t* value) noexcept override
     {
         try
         {
@@ -1214,7 +3639,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_AddSeconds(int32_t seconds) noexcept override
+    HRESULT __stdcall AddSeconds(int32_t seconds) noexcept override
     {
         try
         {
@@ -1228,7 +3653,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_SecondAsString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall SecondAsString(HSTRING* result) noexcept override
     {
         try
         {
@@ -1243,7 +3668,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_SecondAsPaddedString(int32_t minDigits, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall SecondAsPaddedString(int32_t minDigits, HSTRING* result) noexcept override
     {
         try
         {
@@ -1258,7 +3683,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Nanosecond(int32_t * value) noexcept override
+    HRESULT __stdcall get_Nanosecond(int32_t* value) noexcept override
     {
         try
         {
@@ -1286,7 +3711,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_AddNanoseconds(int32_t nanoseconds) noexcept override
+    HRESULT __stdcall AddNanoseconds(int32_t nanoseconds) noexcept override
     {
         try
         {
@@ -1300,7 +3725,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_NanosecondAsString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall NanosecondAsString(HSTRING* result) noexcept override
     {
         try
         {
@@ -1315,7 +3740,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_NanosecondAsPaddedString(int32_t minDigits, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall NanosecondAsPaddedString(int32_t minDigits, HSTRING* result) noexcept override
     {
         try
         {
@@ -1330,12 +3755,12 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_Compare(impl::abi_arg_in<Windows::Globalization::ICalendar> other, int32_t * result) noexcept override
+    HRESULT __stdcall Compare(::IUnknown* other, int32_t* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Compare(*reinterpret_cast<const Windows::Globalization::Calendar *>(&other)));
+            *result = detach_abi(this->shim().Compare(*reinterpret_cast<Windows::Globalization::Calendar const*>(&other)));
             return S_OK;
         }
         catch (...)
@@ -1344,12 +3769,12 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_CompareDateTime(impl::abi_arg_in<Windows::Foundation::DateTime> other, int32_t * result) noexcept override
+    HRESULT __stdcall CompareDateTime(abi_t<Windows::Foundation::DateTime> other, int32_t* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CompareDateTime(*reinterpret_cast<const Windows::Foundation::DateTime *>(&other)));
+            *result = detach_abi(this->shim().CompareDateTime(*reinterpret_cast<Windows::Foundation::DateTime const*>(&other)));
             return S_OK;
         }
         catch (...)
@@ -1358,12 +3783,12 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall abi_CopyTo(impl::abi_arg_in<Windows::Globalization::ICalendar> other) noexcept override
+    HRESULT __stdcall CopyTo(::IUnknown* other) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CopyTo(*reinterpret_cast<const Windows::Globalization::Calendar *>(&other));
+            this->shim().CopyTo(*reinterpret_cast<Windows::Globalization::Calendar const*>(&other));
             return S_OK;
         }
         catch (...)
@@ -1372,7 +3797,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_FirstMinuteInThisHour(int32_t * value) noexcept override
+    HRESULT __stdcall get_FirstMinuteInThisHour(int32_t* value) noexcept override
     {
         try
         {
@@ -1386,7 +3811,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_LastMinuteInThisHour(int32_t * value) noexcept override
+    HRESULT __stdcall get_LastMinuteInThisHour(int32_t* value) noexcept override
     {
         try
         {
@@ -1400,7 +3825,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_NumberOfMinutesInThisHour(int32_t * value) noexcept override
+    HRESULT __stdcall get_NumberOfMinutesInThisHour(int32_t* value) noexcept override
     {
         try
         {
@@ -1414,7 +3839,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_FirstSecondInThisMinute(int32_t * value) noexcept override
+    HRESULT __stdcall get_FirstSecondInThisMinute(int32_t* value) noexcept override
     {
         try
         {
@@ -1428,7 +3853,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_LastSecondInThisMinute(int32_t * value) noexcept override
+    HRESULT __stdcall get_LastSecondInThisMinute(int32_t* value) noexcept override
     {
         try
         {
@@ -1442,7 +3867,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_NumberOfSecondsInThisMinute(int32_t * value) noexcept override
+    HRESULT __stdcall get_NumberOfSecondsInThisMinute(int32_t* value) noexcept override
     {
         try
         {
@@ -1456,7 +3881,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_ResolvedLanguage(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ResolvedLanguage(HSTRING* value) noexcept override
     {
         try
         {
@@ -1471,7 +3896,7 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_IsDaylightSavingTime(bool * value) noexcept override
+    HRESULT __stdcall get_IsDaylightSavingTime(bool* value) noexcept override
     {
         try
         {
@@ -1489,12 +3914,12 @@ struct produce<D, Windows::Globalization::ICalendar> : produce_base<D, Windows::
 template <typename D>
 struct produce<D, Windows::Globalization::ICalendarFactory> : produce_base<D, Windows::Globalization::ICalendarFactory>
 {
-    HRESULT __stdcall abi_CreateCalendarDefaultCalendarAndClock(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> languages, impl::abi_arg_out<Windows::Globalization::ICalendar> result) noexcept override
+    HRESULT __stdcall CreateCalendarDefaultCalendarAndClock(::IUnknown* languages, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateCalendarDefaultCalendarAndClock(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&languages)));
+            *result = detach_abi(this->shim().CreateCalendarDefaultCalendarAndClock(*reinterpret_cast<Windows::Foundation::Collections::IIterable<hstring> const*>(&languages)));
             return S_OK;
         }
         catch (...)
@@ -1504,12 +3929,12 @@ struct produce<D, Windows::Globalization::ICalendarFactory> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_CreateCalendar(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> languages, impl::abi_arg_in<hstring> calendar, impl::abi_arg_in<hstring> clock, impl::abi_arg_out<Windows::Globalization::ICalendar> result) noexcept override
+    HRESULT __stdcall CreateCalendar(::IUnknown* languages, HSTRING calendar, HSTRING clock, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateCalendar(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&languages), *reinterpret_cast<const hstring *>(&calendar), *reinterpret_cast<const hstring *>(&clock)));
+            *result = detach_abi(this->shim().CreateCalendar(*reinterpret_cast<Windows::Foundation::Collections::IIterable<hstring> const*>(&languages), *reinterpret_cast<hstring const*>(&calendar), *reinterpret_cast<hstring const*>(&clock)));
             return S_OK;
         }
         catch (...)
@@ -1523,12 +3948,12 @@ struct produce<D, Windows::Globalization::ICalendarFactory> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Globalization::ICalendarFactory2> : produce_base<D, Windows::Globalization::ICalendarFactory2>
 {
-    HRESULT __stdcall abi_CreateCalendarWithTimeZone(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> languages, impl::abi_arg_in<hstring> calendar, impl::abi_arg_in<hstring> clock, impl::abi_arg_in<hstring> timeZoneId, impl::abi_arg_out<Windows::Globalization::ICalendar> result) noexcept override
+    HRESULT __stdcall CreateCalendarWithTimeZone(::IUnknown* languages, HSTRING calendar, HSTRING clock, HSTRING timeZoneId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateCalendarWithTimeZone(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&languages), *reinterpret_cast<const hstring *>(&calendar), *reinterpret_cast<const hstring *>(&clock), *reinterpret_cast<const hstring *>(&timeZoneId)));
+            *result = detach_abi(this->shim().CreateCalendarWithTimeZone(*reinterpret_cast<Windows::Foundation::Collections::IIterable<hstring> const*>(&languages), *reinterpret_cast<hstring const*>(&calendar), *reinterpret_cast<hstring const*>(&clock), *reinterpret_cast<hstring const*>(&timeZoneId)));
             return S_OK;
         }
         catch (...)
@@ -1542,7 +3967,7 @@ struct produce<D, Windows::Globalization::ICalendarFactory2> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics> : produce_base<D, Windows::Globalization::ICalendarIdentifiersStatics>
 {
-    HRESULT __stdcall get_Gregorian(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Gregorian(HSTRING* value) noexcept override
     {
         try
         {
@@ -1557,7 +3982,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_Hebrew(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Hebrew(HSTRING* value) noexcept override
     {
         try
         {
@@ -1572,7 +3997,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_Hijri(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Hijri(HSTRING* value) noexcept override
     {
         try
         {
@@ -1587,7 +4012,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_Japanese(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Japanese(HSTRING* value) noexcept override
     {
         try
         {
@@ -1602,7 +4027,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_Julian(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Julian(HSTRING* value) noexcept override
     {
         try
         {
@@ -1617,7 +4042,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_Korean(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Korean(HSTRING* value) noexcept override
     {
         try
         {
@@ -1632,7 +4057,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_Taiwan(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Taiwan(HSTRING* value) noexcept override
     {
         try
         {
@@ -1647,7 +4072,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_Thai(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Thai(HSTRING* value) noexcept override
     {
         try
         {
@@ -1662,7 +4087,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_UmAlQura(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UmAlQura(HSTRING* value) noexcept override
     {
         try
         {
@@ -1681,7 +4106,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics> : produce
 template <typename D>
 struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics2> : produce_base<D, Windows::Globalization::ICalendarIdentifiersStatics2>
 {
-    HRESULT __stdcall get_Persian(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Persian(HSTRING* value) noexcept override
     {
         try
         {
@@ -1700,7 +4125,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics2> : produc
 template <typename D>
 struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics3> : produce_base<D, Windows::Globalization::ICalendarIdentifiersStatics3>
 {
-    HRESULT __stdcall get_ChineseLunar(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ChineseLunar(HSTRING* value) noexcept override
     {
         try
         {
@@ -1715,7 +4140,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics3> : produc
         }
     }
 
-    HRESULT __stdcall get_JapaneseLunar(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_JapaneseLunar(HSTRING* value) noexcept override
     {
         try
         {
@@ -1730,7 +4155,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics3> : produc
         }
     }
 
-    HRESULT __stdcall get_KoreanLunar(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_KoreanLunar(HSTRING* value) noexcept override
     {
         try
         {
@@ -1745,7 +4170,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics3> : produc
         }
     }
 
-    HRESULT __stdcall get_TaiwanLunar(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TaiwanLunar(HSTRING* value) noexcept override
     {
         try
         {
@@ -1760,7 +4185,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics3> : produc
         }
     }
 
-    HRESULT __stdcall get_VietnameseLunar(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_VietnameseLunar(HSTRING* value) noexcept override
     {
         try
         {
@@ -1779,7 +4204,7 @@ struct produce<D, Windows::Globalization::ICalendarIdentifiersStatics3> : produc
 template <typename D>
 struct produce<D, Windows::Globalization::IClockIdentifiersStatics> : produce_base<D, Windows::Globalization::IClockIdentifiersStatics>
 {
-    HRESULT __stdcall get_TwelveHour(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TwelveHour(HSTRING* value) noexcept override
     {
         try
         {
@@ -1794,7 +4219,7 @@ struct produce<D, Windows::Globalization::IClockIdentifiersStatics> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_TwentyFourHour(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TwentyFourHour(HSTRING* value) noexcept override
     {
         try
         {
@@ -1813,7 +4238,7 @@ struct produce<D, Windows::Globalization::IClockIdentifiersStatics> : produce_ba
 template <typename D>
 struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce_base<D, Windows::Globalization::ICurrencyIdentifiersStatics>
 {
-    HRESULT __stdcall get_AED(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AED(HSTRING* value) noexcept override
     {
         try
         {
@@ -1828,7 +4253,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_AFN(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AFN(HSTRING* value) noexcept override
     {
         try
         {
@@ -1843,7 +4268,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_ALL(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ALL(HSTRING* value) noexcept override
     {
         try
         {
@@ -1858,7 +4283,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_AMD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AMD(HSTRING* value) noexcept override
     {
         try
         {
@@ -1873,7 +4298,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_ANG(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ANG(HSTRING* value) noexcept override
     {
         try
         {
@@ -1888,7 +4313,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_AOA(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AOA(HSTRING* value) noexcept override
     {
         try
         {
@@ -1903,7 +4328,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_ARS(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ARS(HSTRING* value) noexcept override
     {
         try
         {
@@ -1918,7 +4343,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_AUD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AUD(HSTRING* value) noexcept override
     {
         try
         {
@@ -1933,7 +4358,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_AWG(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AWG(HSTRING* value) noexcept override
     {
         try
         {
@@ -1948,7 +4373,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_AZN(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AZN(HSTRING* value) noexcept override
     {
         try
         {
@@ -1963,7 +4388,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BAM(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BAM(HSTRING* value) noexcept override
     {
         try
         {
@@ -1978,7 +4403,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BBD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BBD(HSTRING* value) noexcept override
     {
         try
         {
@@ -1993,7 +4418,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BDT(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BDT(HSTRING* value) noexcept override
     {
         try
         {
@@ -2008,7 +4433,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BGN(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BGN(HSTRING* value) noexcept override
     {
         try
         {
@@ -2023,7 +4448,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BHD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BHD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2038,7 +4463,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BIF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BIF(HSTRING* value) noexcept override
     {
         try
         {
@@ -2053,7 +4478,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BMD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BMD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2068,7 +4493,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BND(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BND(HSTRING* value) noexcept override
     {
         try
         {
@@ -2083,7 +4508,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BOB(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BOB(HSTRING* value) noexcept override
     {
         try
         {
@@ -2098,7 +4523,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BRL(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BRL(HSTRING* value) noexcept override
     {
         try
         {
@@ -2113,7 +4538,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BSD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BSD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2128,7 +4553,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BTN(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BTN(HSTRING* value) noexcept override
     {
         try
         {
@@ -2143,7 +4568,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BWP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BWP(HSTRING* value) noexcept override
     {
         try
         {
@@ -2158,7 +4583,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BYR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BYR(HSTRING* value) noexcept override
     {
         try
         {
@@ -2173,7 +4598,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_BZD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BZD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2188,7 +4613,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_CAD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CAD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2203,7 +4628,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_CDF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CDF(HSTRING* value) noexcept override
     {
         try
         {
@@ -2218,7 +4643,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_CHF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CHF(HSTRING* value) noexcept override
     {
         try
         {
@@ -2233,7 +4658,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_CLP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CLP(HSTRING* value) noexcept override
     {
         try
         {
@@ -2248,7 +4673,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_CNY(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CNY(HSTRING* value) noexcept override
     {
         try
         {
@@ -2263,7 +4688,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_COP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_COP(HSTRING* value) noexcept override
     {
         try
         {
@@ -2278,7 +4703,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_CRC(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CRC(HSTRING* value) noexcept override
     {
         try
         {
@@ -2293,7 +4718,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_CUP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CUP(HSTRING* value) noexcept override
     {
         try
         {
@@ -2308,7 +4733,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_CVE(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CVE(HSTRING* value) noexcept override
     {
         try
         {
@@ -2323,7 +4748,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_CZK(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CZK(HSTRING* value) noexcept override
     {
         try
         {
@@ -2338,7 +4763,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_DJF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DJF(HSTRING* value) noexcept override
     {
         try
         {
@@ -2353,7 +4778,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_DKK(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DKK(HSTRING* value) noexcept override
     {
         try
         {
@@ -2368,7 +4793,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_DOP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DOP(HSTRING* value) noexcept override
     {
         try
         {
@@ -2383,7 +4808,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_DZD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DZD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2398,7 +4823,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_EGP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_EGP(HSTRING* value) noexcept override
     {
         try
         {
@@ -2413,7 +4838,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_ERN(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ERN(HSTRING* value) noexcept override
     {
         try
         {
@@ -2428,7 +4853,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_ETB(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ETB(HSTRING* value) noexcept override
     {
         try
         {
@@ -2443,7 +4868,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_EUR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_EUR(HSTRING* value) noexcept override
     {
         try
         {
@@ -2458,7 +4883,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_FJD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FJD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2473,7 +4898,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_FKP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FKP(HSTRING* value) noexcept override
     {
         try
         {
@@ -2488,7 +4913,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_GBP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_GBP(HSTRING* value) noexcept override
     {
         try
         {
@@ -2503,7 +4928,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_GEL(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_GEL(HSTRING* value) noexcept override
     {
         try
         {
@@ -2518,7 +4943,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_GHS(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_GHS(HSTRING* value) noexcept override
     {
         try
         {
@@ -2533,7 +4958,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_GIP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_GIP(HSTRING* value) noexcept override
     {
         try
         {
@@ -2548,7 +4973,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_GMD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_GMD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2563,7 +4988,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_GNF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_GNF(HSTRING* value) noexcept override
     {
         try
         {
@@ -2578,7 +5003,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_GTQ(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_GTQ(HSTRING* value) noexcept override
     {
         try
         {
@@ -2593,7 +5018,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_GYD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_GYD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2608,7 +5033,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_HKD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HKD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2623,7 +5048,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_HNL(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HNL(HSTRING* value) noexcept override
     {
         try
         {
@@ -2638,7 +5063,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_HRK(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HRK(HSTRING* value) noexcept override
     {
         try
         {
@@ -2653,7 +5078,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_HTG(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HTG(HSTRING* value) noexcept override
     {
         try
         {
@@ -2668,7 +5093,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_HUF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HUF(HSTRING* value) noexcept override
     {
         try
         {
@@ -2683,7 +5108,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_IDR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_IDR(HSTRING* value) noexcept override
     {
         try
         {
@@ -2698,7 +5123,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_ILS(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ILS(HSTRING* value) noexcept override
     {
         try
         {
@@ -2713,7 +5138,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_INR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_INR(HSTRING* value) noexcept override
     {
         try
         {
@@ -2728,7 +5153,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_IQD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_IQD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2743,7 +5168,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_IRR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_IRR(HSTRING* value) noexcept override
     {
         try
         {
@@ -2758,7 +5183,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_ISK(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ISK(HSTRING* value) noexcept override
     {
         try
         {
@@ -2773,7 +5198,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_JMD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_JMD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2788,7 +5213,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_JOD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_JOD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2803,7 +5228,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_JPY(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_JPY(HSTRING* value) noexcept override
     {
         try
         {
@@ -2818,7 +5243,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_KES(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_KES(HSTRING* value) noexcept override
     {
         try
         {
@@ -2833,7 +5258,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_KGS(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_KGS(HSTRING* value) noexcept override
     {
         try
         {
@@ -2848,7 +5273,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_KHR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_KHR(HSTRING* value) noexcept override
     {
         try
         {
@@ -2863,7 +5288,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_KMF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_KMF(HSTRING* value) noexcept override
     {
         try
         {
@@ -2878,7 +5303,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_KPW(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_KPW(HSTRING* value) noexcept override
     {
         try
         {
@@ -2893,7 +5318,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_KRW(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_KRW(HSTRING* value) noexcept override
     {
         try
         {
@@ -2908,7 +5333,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_KWD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_KWD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2923,7 +5348,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_KYD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_KYD(HSTRING* value) noexcept override
     {
         try
         {
@@ -2938,7 +5363,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_KZT(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_KZT(HSTRING* value) noexcept override
     {
         try
         {
@@ -2953,7 +5378,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_LAK(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LAK(HSTRING* value) noexcept override
     {
         try
         {
@@ -2968,7 +5393,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_LBP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LBP(HSTRING* value) noexcept override
     {
         try
         {
@@ -2983,7 +5408,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_LKR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LKR(HSTRING* value) noexcept override
     {
         try
         {
@@ -2998,7 +5423,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_LRD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LRD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3013,7 +5438,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_LSL(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LSL(HSTRING* value) noexcept override
     {
         try
         {
@@ -3028,7 +5453,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_LTL(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LTL(HSTRING* value) noexcept override
     {
         try
         {
@@ -3043,7 +5468,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_LVL(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LVL(HSTRING* value) noexcept override
     {
         try
         {
@@ -3058,7 +5483,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_LYD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LYD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3073,7 +5498,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MAD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MAD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3088,7 +5513,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MDL(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MDL(HSTRING* value) noexcept override
     {
         try
         {
@@ -3103,7 +5528,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MGA(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MGA(HSTRING* value) noexcept override
     {
         try
         {
@@ -3118,7 +5543,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MKD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MKD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3133,7 +5558,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MMK(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MMK(HSTRING* value) noexcept override
     {
         try
         {
@@ -3148,7 +5573,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MNT(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MNT(HSTRING* value) noexcept override
     {
         try
         {
@@ -3163,7 +5588,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MOP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MOP(HSTRING* value) noexcept override
     {
         try
         {
@@ -3178,7 +5603,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MRO(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MRO(HSTRING* value) noexcept override
     {
         try
         {
@@ -3193,7 +5618,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MUR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MUR(HSTRING* value) noexcept override
     {
         try
         {
@@ -3208,7 +5633,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MVR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MVR(HSTRING* value) noexcept override
     {
         try
         {
@@ -3223,7 +5648,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MWK(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MWK(HSTRING* value) noexcept override
     {
         try
         {
@@ -3238,7 +5663,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MXN(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MXN(HSTRING* value) noexcept override
     {
         try
         {
@@ -3253,7 +5678,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MYR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MYR(HSTRING* value) noexcept override
     {
         try
         {
@@ -3268,7 +5693,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_MZN(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MZN(HSTRING* value) noexcept override
     {
         try
         {
@@ -3283,7 +5708,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_NAD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NAD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3298,7 +5723,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_NGN(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NGN(HSTRING* value) noexcept override
     {
         try
         {
@@ -3313,7 +5738,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_NIO(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NIO(HSTRING* value) noexcept override
     {
         try
         {
@@ -3328,7 +5753,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_NOK(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NOK(HSTRING* value) noexcept override
     {
         try
         {
@@ -3343,7 +5768,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_NPR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NPR(HSTRING* value) noexcept override
     {
         try
         {
@@ -3358,7 +5783,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_NZD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NZD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3373,7 +5798,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_OMR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_OMR(HSTRING* value) noexcept override
     {
         try
         {
@@ -3388,7 +5813,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_PAB(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PAB(HSTRING* value) noexcept override
     {
         try
         {
@@ -3403,7 +5828,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_PEN(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PEN(HSTRING* value) noexcept override
     {
         try
         {
@@ -3418,7 +5843,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_PGK(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PGK(HSTRING* value) noexcept override
     {
         try
         {
@@ -3433,7 +5858,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_PHP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PHP(HSTRING* value) noexcept override
     {
         try
         {
@@ -3448,7 +5873,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_PKR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PKR(HSTRING* value) noexcept override
     {
         try
         {
@@ -3463,7 +5888,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_PLN(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PLN(HSTRING* value) noexcept override
     {
         try
         {
@@ -3478,7 +5903,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_PYG(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PYG(HSTRING* value) noexcept override
     {
         try
         {
@@ -3493,7 +5918,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_QAR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_QAR(HSTRING* value) noexcept override
     {
         try
         {
@@ -3508,7 +5933,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_RON(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RON(HSTRING* value) noexcept override
     {
         try
         {
@@ -3523,7 +5948,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_RSD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RSD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3538,7 +5963,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_RUB(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RUB(HSTRING* value) noexcept override
     {
         try
         {
@@ -3553,7 +5978,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_RWF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RWF(HSTRING* value) noexcept override
     {
         try
         {
@@ -3568,7 +5993,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SAR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SAR(HSTRING* value) noexcept override
     {
         try
         {
@@ -3583,7 +6008,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SBD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SBD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3598,7 +6023,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SCR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SCR(HSTRING* value) noexcept override
     {
         try
         {
@@ -3613,7 +6038,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SDG(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SDG(HSTRING* value) noexcept override
     {
         try
         {
@@ -3628,7 +6053,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SEK(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SEK(HSTRING* value) noexcept override
     {
         try
         {
@@ -3643,7 +6068,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SGD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SGD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3658,7 +6083,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SHP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SHP(HSTRING* value) noexcept override
     {
         try
         {
@@ -3673,7 +6098,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SLL(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SLL(HSTRING* value) noexcept override
     {
         try
         {
@@ -3688,7 +6113,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SOS(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SOS(HSTRING* value) noexcept override
     {
         try
         {
@@ -3703,7 +6128,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SRD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SRD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3718,7 +6143,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_STD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_STD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3733,7 +6158,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SYP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SYP(HSTRING* value) noexcept override
     {
         try
         {
@@ -3748,7 +6173,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_SZL(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SZL(HSTRING* value) noexcept override
     {
         try
         {
@@ -3763,7 +6188,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_THB(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_THB(HSTRING* value) noexcept override
     {
         try
         {
@@ -3778,7 +6203,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_TJS(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TJS(HSTRING* value) noexcept override
     {
         try
         {
@@ -3793,7 +6218,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_TMT(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TMT(HSTRING* value) noexcept override
     {
         try
         {
@@ -3808,7 +6233,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_TND(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TND(HSTRING* value) noexcept override
     {
         try
         {
@@ -3823,7 +6248,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_TOP(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TOP(HSTRING* value) noexcept override
     {
         try
         {
@@ -3838,7 +6263,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_TRY(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TRY(HSTRING* value) noexcept override
     {
         try
         {
@@ -3853,7 +6278,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_TTD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TTD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3868,7 +6293,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_TWD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TWD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3883,7 +6308,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_TZS(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TZS(HSTRING* value) noexcept override
     {
         try
         {
@@ -3898,7 +6323,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_UAH(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UAH(HSTRING* value) noexcept override
     {
         try
         {
@@ -3913,7 +6338,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_UGX(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UGX(HSTRING* value) noexcept override
     {
         try
         {
@@ -3928,7 +6353,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_USD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_USD(HSTRING* value) noexcept override
     {
         try
         {
@@ -3943,7 +6368,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_UYU(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UYU(HSTRING* value) noexcept override
     {
         try
         {
@@ -3958,7 +6383,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_UZS(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UZS(HSTRING* value) noexcept override
     {
         try
         {
@@ -3973,7 +6398,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_VEF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_VEF(HSTRING* value) noexcept override
     {
         try
         {
@@ -3988,7 +6413,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_VND(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_VND(HSTRING* value) noexcept override
     {
         try
         {
@@ -4003,7 +6428,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_VUV(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_VUV(HSTRING* value) noexcept override
     {
         try
         {
@@ -4018,7 +6443,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_WST(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_WST(HSTRING* value) noexcept override
     {
         try
         {
@@ -4033,7 +6458,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_XAF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_XAF(HSTRING* value) noexcept override
     {
         try
         {
@@ -4048,7 +6473,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_XCD(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_XCD(HSTRING* value) noexcept override
     {
         try
         {
@@ -4063,7 +6488,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_XOF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_XOF(HSTRING* value) noexcept override
     {
         try
         {
@@ -4078,7 +6503,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_XPF(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_XPF(HSTRING* value) noexcept override
     {
         try
         {
@@ -4093,7 +6518,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_XXX(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_XXX(HSTRING* value) noexcept override
     {
         try
         {
@@ -4108,7 +6533,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_YER(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_YER(HSTRING* value) noexcept override
     {
         try
         {
@@ -4123,7 +6548,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_ZAR(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ZAR(HSTRING* value) noexcept override
     {
         try
         {
@@ -4138,7 +6563,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_ZMW(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ZMW(HSTRING* value) noexcept override
     {
         try
         {
@@ -4153,7 +6578,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
         }
     }
 
-    HRESULT __stdcall get_ZWL(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ZWL(HSTRING* value) noexcept override
     {
         try
         {
@@ -4172,7 +6597,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics> : produce
 template <typename D>
 struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics2> : produce_base<D, Windows::Globalization::ICurrencyIdentifiersStatics2>
 {
-    HRESULT __stdcall get_BYN(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BYN(HSTRING* value) noexcept override
     {
         try
         {
@@ -4191,7 +6616,7 @@ struct produce<D, Windows::Globalization::ICurrencyIdentifiersStatics2> : produc
 template <typename D>
 struct produce<D, Windows::Globalization::IGeographicRegion> : produce_base<D, Windows::Globalization::IGeographicRegion>
 {
-    HRESULT __stdcall get_Code(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Code(HSTRING* value) noexcept override
     {
         try
         {
@@ -4206,7 +6631,7 @@ struct produce<D, Windows::Globalization::IGeographicRegion> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_CodeTwoLetter(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CodeTwoLetter(HSTRING* value) noexcept override
     {
         try
         {
@@ -4221,7 +6646,7 @@ struct produce<D, Windows::Globalization::IGeographicRegion> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_CodeThreeLetter(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CodeThreeLetter(HSTRING* value) noexcept override
     {
         try
         {
@@ -4236,7 +6661,7 @@ struct produce<D, Windows::Globalization::IGeographicRegion> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_CodeThreeDigit(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CodeThreeDigit(HSTRING* value) noexcept override
     {
         try
         {
@@ -4251,7 +6676,7 @@ struct produce<D, Windows::Globalization::IGeographicRegion> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -4266,7 +6691,7 @@ struct produce<D, Windows::Globalization::IGeographicRegion> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_NativeName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NativeName(HSTRING* value) noexcept override
     {
         try
         {
@@ -4281,7 +6706,7 @@ struct produce<D, Windows::Globalization::IGeographicRegion> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_CurrenciesInUse(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_CurrenciesInUse(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4300,12 +6725,12 @@ struct produce<D, Windows::Globalization::IGeographicRegion> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Globalization::IGeographicRegionFactory> : produce_base<D, Windows::Globalization::IGeographicRegionFactory>
 {
-    HRESULT __stdcall abi_CreateGeographicRegion(impl::abi_arg_in<hstring> geographicRegionCode, impl::abi_arg_out<Windows::Globalization::IGeographicRegion> result) noexcept override
+    HRESULT __stdcall CreateGeographicRegion(HSTRING geographicRegionCode, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateGeographicRegion(*reinterpret_cast<const hstring *>(&geographicRegionCode)));
+            *result = detach_abi(this->shim().CreateGeographicRegion(*reinterpret_cast<hstring const*>(&geographicRegionCode)));
             return S_OK;
         }
         catch (...)
@@ -4319,12 +6744,12 @@ struct produce<D, Windows::Globalization::IGeographicRegionFactory> : produce_ba
 template <typename D>
 struct produce<D, Windows::Globalization::IGeographicRegionStatics> : produce_base<D, Windows::Globalization::IGeographicRegionStatics>
 {
-    HRESULT __stdcall abi_IsSupported(impl::abi_arg_in<hstring> geographicRegionCode, bool * result) noexcept override
+    HRESULT __stdcall IsSupported(HSTRING geographicRegionCode, bool* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().IsSupported(*reinterpret_cast<const hstring *>(&geographicRegionCode)));
+            *result = detach_abi(this->shim().IsSupported(*reinterpret_cast<hstring const*>(&geographicRegionCode)));
             return S_OK;
         }
         catch (...)
@@ -4337,7 +6762,7 @@ struct produce<D, Windows::Globalization::IGeographicRegionStatics> : produce_ba
 template <typename D>
 struct produce<D, Windows::Globalization::IJapanesePhoneme> : produce_base<D, Windows::Globalization::IJapanesePhoneme>
 {
-    HRESULT __stdcall get_DisplayText(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayText(HSTRING* value) noexcept override
     {
         try
         {
@@ -4352,7 +6777,7 @@ struct produce<D, Windows::Globalization::IJapanesePhoneme> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_YomiText(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_YomiText(HSTRING* value) noexcept override
     {
         try
         {
@@ -4367,7 +6792,7 @@ struct produce<D, Windows::Globalization::IJapanesePhoneme> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_IsPhraseStart(bool * value) noexcept override
+    HRESULT __stdcall get_IsPhraseStart(bool* value) noexcept override
     {
         try
         {
@@ -4385,12 +6810,12 @@ struct produce<D, Windows::Globalization::IJapanesePhoneme> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Globalization::IJapanesePhoneticAnalyzerStatics> : produce_base<D, Windows::Globalization::IJapanesePhoneticAnalyzerStatics>
 {
-    HRESULT __stdcall abi_GetWords(impl::abi_arg_in<hstring> input, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme>> result) noexcept override
+    HRESULT __stdcall GetWords(HSTRING input, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetWords(*reinterpret_cast<const hstring *>(&input)));
+            *result = detach_abi(this->shim().GetWords(*reinterpret_cast<hstring const*>(&input)));
             return S_OK;
         }
         catch (...)
@@ -4400,12 +6825,12 @@ struct produce<D, Windows::Globalization::IJapanesePhoneticAnalyzerStatics> : pr
         }
     }
 
-    HRESULT __stdcall abi_GetWordsWithMonoRubyOption(impl::abi_arg_in<hstring> input, bool monoRuby, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme>> result) noexcept override
+    HRESULT __stdcall GetWordsWithMonoRubyOption(HSTRING input, bool monoRuby, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetWords(*reinterpret_cast<const hstring *>(&input), monoRuby));
+            *result = detach_abi(this->shim().GetWords(*reinterpret_cast<hstring const*>(&input), monoRuby));
             return S_OK;
         }
         catch (...)
@@ -4419,7 +6844,7 @@ struct produce<D, Windows::Globalization::IJapanesePhoneticAnalyzerStatics> : pr
 template <typename D>
 struct produce<D, Windows::Globalization::ILanguage> : produce_base<D, Windows::Globalization::ILanguage>
 {
-    HRESULT __stdcall get_LanguageTag(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LanguageTag(HSTRING* value) noexcept override
     {
         try
         {
@@ -4434,7 +6859,7 @@ struct produce<D, Windows::Globalization::ILanguage> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -4449,7 +6874,7 @@ struct produce<D, Windows::Globalization::ILanguage> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_NativeName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NativeName(HSTRING* value) noexcept override
     {
         try
         {
@@ -4464,7 +6889,7 @@ struct produce<D, Windows::Globalization::ILanguage> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Script(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Script(HSTRING* value) noexcept override
     {
         try
         {
@@ -4483,12 +6908,12 @@ struct produce<D, Windows::Globalization::ILanguage> : produce_base<D, Windows::
 template <typename D>
 struct produce<D, Windows::Globalization::ILanguageExtensionSubtags> : produce_base<D, Windows::Globalization::ILanguageExtensionSubtags>
 {
-    HRESULT __stdcall abi_GetExtensionSubtags(impl::abi_arg_in<hstring> singleton, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall GetExtensionSubtags(HSTRING singleton, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetExtensionSubtags(*reinterpret_cast<const hstring *>(&singleton)));
+            *value = detach_abi(this->shim().GetExtensionSubtags(*reinterpret_cast<hstring const*>(&singleton)));
             return S_OK;
         }
         catch (...)
@@ -4502,12 +6927,12 @@ struct produce<D, Windows::Globalization::ILanguageExtensionSubtags> : produce_b
 template <typename D>
 struct produce<D, Windows::Globalization::ILanguageFactory> : produce_base<D, Windows::Globalization::ILanguageFactory>
 {
-    HRESULT __stdcall abi_CreateLanguage(impl::abi_arg_in<hstring> languageTag, impl::abi_arg_out<Windows::Globalization::ILanguage> result) noexcept override
+    HRESULT __stdcall CreateLanguage(HSTRING languageTag, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateLanguage(*reinterpret_cast<const hstring *>(&languageTag)));
+            *result = detach_abi(this->shim().CreateLanguage(*reinterpret_cast<hstring const*>(&languageTag)));
             return S_OK;
         }
         catch (...)
@@ -4521,12 +6946,12 @@ struct produce<D, Windows::Globalization::ILanguageFactory> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Globalization::ILanguageStatics> : produce_base<D, Windows::Globalization::ILanguageStatics>
 {
-    HRESULT __stdcall abi_IsWellFormed(impl::abi_arg_in<hstring> languageTag, bool * result) noexcept override
+    HRESULT __stdcall IsWellFormed(HSTRING languageTag, bool* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().IsWellFormed(*reinterpret_cast<const hstring *>(&languageTag)));
+            *result = detach_abi(this->shim().IsWellFormed(*reinterpret_cast<hstring const*>(&languageTag)));
             return S_OK;
         }
         catch (...)
@@ -4535,7 +6960,7 @@ struct produce<D, Windows::Globalization::ILanguageStatics> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_CurrentInputMethodLanguageTag(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CurrentInputMethodLanguageTag(HSTRING* value) noexcept override
     {
         try
         {
@@ -4554,12 +6979,12 @@ struct produce<D, Windows::Globalization::ILanguageStatics> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Globalization::ILanguageStatics2> : produce_base<D, Windows::Globalization::ILanguageStatics2>
 {
-    HRESULT __stdcall abi_TrySetInputMethodLanguageTag(impl::abi_arg_in<hstring> languageTag, bool * result) noexcept override
+    HRESULT __stdcall TrySetInputMethodLanguageTag(HSTRING languageTag, bool* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TrySetInputMethodLanguageTag(*reinterpret_cast<const hstring *>(&languageTag)));
+            *result = detach_abi(this->shim().TrySetInputMethodLanguageTag(*reinterpret_cast<hstring const*>(&languageTag)));
             return S_OK;
         }
         catch (...)
@@ -4572,7 +6997,7 @@ struct produce<D, Windows::Globalization::ILanguageStatics2> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : produce_base<D, Windows::Globalization::INumeralSystemIdentifiersStatics>
 {
-    HRESULT __stdcall get_Arab(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Arab(HSTRING* value) noexcept override
     {
         try
         {
@@ -4587,7 +7012,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_ArabExt(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ArabExt(HSTRING* value) noexcept override
     {
         try
         {
@@ -4602,7 +7027,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Bali(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Bali(HSTRING* value) noexcept override
     {
         try
         {
@@ -4617,7 +7042,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Beng(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Beng(HSTRING* value) noexcept override
     {
         try
         {
@@ -4632,7 +7057,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Cham(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Cham(HSTRING* value) noexcept override
     {
         try
         {
@@ -4647,7 +7072,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Deva(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Deva(HSTRING* value) noexcept override
     {
         try
         {
@@ -4662,7 +7087,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_FullWide(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FullWide(HSTRING* value) noexcept override
     {
         try
         {
@@ -4677,7 +7102,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Gujr(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Gujr(HSTRING* value) noexcept override
     {
         try
         {
@@ -4692,7 +7117,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Guru(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Guru(HSTRING* value) noexcept override
     {
         try
         {
@@ -4707,7 +7132,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_HaniDec(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HaniDec(HSTRING* value) noexcept override
     {
         try
         {
@@ -4722,7 +7147,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Java(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Java(HSTRING* value) noexcept override
     {
         try
         {
@@ -4737,7 +7162,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Kali(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Kali(HSTRING* value) noexcept override
     {
         try
         {
@@ -4752,7 +7177,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Khmr(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Khmr(HSTRING* value) noexcept override
     {
         try
         {
@@ -4767,7 +7192,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Knda(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Knda(HSTRING* value) noexcept override
     {
         try
         {
@@ -4782,7 +7207,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Lana(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Lana(HSTRING* value) noexcept override
     {
         try
         {
@@ -4797,7 +7222,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_LanaTham(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LanaTham(HSTRING* value) noexcept override
     {
         try
         {
@@ -4812,7 +7237,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Laoo(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Laoo(HSTRING* value) noexcept override
     {
         try
         {
@@ -4827,7 +7252,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Latn(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Latn(HSTRING* value) noexcept override
     {
         try
         {
@@ -4842,7 +7267,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Lepc(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Lepc(HSTRING* value) noexcept override
     {
         try
         {
@@ -4857,7 +7282,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Limb(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Limb(HSTRING* value) noexcept override
     {
         try
         {
@@ -4872,7 +7297,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Mlym(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Mlym(HSTRING* value) noexcept override
     {
         try
         {
@@ -4887,7 +7312,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Mong(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Mong(HSTRING* value) noexcept override
     {
         try
         {
@@ -4902,7 +7327,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Mtei(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Mtei(HSTRING* value) noexcept override
     {
         try
         {
@@ -4917,7 +7342,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Mymr(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Mymr(HSTRING* value) noexcept override
     {
         try
         {
@@ -4932,7 +7357,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_MymrShan(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MymrShan(HSTRING* value) noexcept override
     {
         try
         {
@@ -4947,7 +7372,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Nkoo(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Nkoo(HSTRING* value) noexcept override
     {
         try
         {
@@ -4962,7 +7387,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Olck(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Olck(HSTRING* value) noexcept override
     {
         try
         {
@@ -4977,7 +7402,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Orya(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Orya(HSTRING* value) noexcept override
     {
         try
         {
@@ -4992,7 +7417,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Saur(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Saur(HSTRING* value) noexcept override
     {
         try
         {
@@ -5007,7 +7432,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Sund(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sund(HSTRING* value) noexcept override
     {
         try
         {
@@ -5022,7 +7447,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Talu(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Talu(HSTRING* value) noexcept override
     {
         try
         {
@@ -5037,7 +7462,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_TamlDec(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TamlDec(HSTRING* value) noexcept override
     {
         try
         {
@@ -5052,7 +7477,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Telu(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Telu(HSTRING* value) noexcept override
     {
         try
         {
@@ -5067,7 +7492,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Thai(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Thai(HSTRING* value) noexcept override
     {
         try
         {
@@ -5082,7 +7507,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Tibt(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Tibt(HSTRING* value) noexcept override
     {
         try
         {
@@ -5097,7 +7522,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
         }
     }
 
-    HRESULT __stdcall get_Vaii(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Vaii(HSTRING* value) noexcept override
     {
         try
         {
@@ -5116,7 +7541,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics> : pr
 template <typename D>
 struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : produce_base<D, Windows::Globalization::INumeralSystemIdentifiersStatics2>
 {
-    HRESULT __stdcall get_Brah(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Brah(HSTRING* value) noexcept override
     {
         try
         {
@@ -5131,7 +7556,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
         }
     }
 
-    HRESULT __stdcall get_Osma(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Osma(HSTRING* value) noexcept override
     {
         try
         {
@@ -5146,7 +7571,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
         }
     }
 
-    HRESULT __stdcall get_MathBold(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MathBold(HSTRING* value) noexcept override
     {
         try
         {
@@ -5161,7 +7586,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
         }
     }
 
-    HRESULT __stdcall get_MathDbl(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MathDbl(HSTRING* value) noexcept override
     {
         try
         {
@@ -5176,7 +7601,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
         }
     }
 
-    HRESULT __stdcall get_MathSans(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MathSans(HSTRING* value) noexcept override
     {
         try
         {
@@ -5191,7 +7616,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
         }
     }
 
-    HRESULT __stdcall get_MathSanb(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MathSanb(HSTRING* value) noexcept override
     {
         try
         {
@@ -5206,7 +7631,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
         }
     }
 
-    HRESULT __stdcall get_MathMono(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MathMono(HSTRING* value) noexcept override
     {
         try
         {
@@ -5221,7 +7646,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
         }
     }
 
-    HRESULT __stdcall get_ZmthBold(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ZmthBold(HSTRING* value) noexcept override
     {
         try
         {
@@ -5236,7 +7661,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
         }
     }
 
-    HRESULT __stdcall get_ZmthDbl(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ZmthDbl(HSTRING* value) noexcept override
     {
         try
         {
@@ -5251,7 +7676,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
         }
     }
 
-    HRESULT __stdcall get_ZmthSans(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ZmthSans(HSTRING* value) noexcept override
     {
         try
         {
@@ -5266,7 +7691,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
         }
     }
 
-    HRESULT __stdcall get_ZmthSanb(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ZmthSanb(HSTRING* value) noexcept override
     {
         try
         {
@@ -5281,7 +7706,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
         }
     }
 
-    HRESULT __stdcall get_ZmthMono(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ZmthMono(HSTRING* value) noexcept override
     {
         try
         {
@@ -5300,7 +7725,7 @@ struct produce<D, Windows::Globalization::INumeralSystemIdentifiersStatics2> : p
 template <typename D>
 struct produce<D, Windows::Globalization::ITimeZoneOnCalendar> : produce_base<D, Windows::Globalization::ITimeZoneOnCalendar>
 {
-    HRESULT __stdcall abi_GetTimeZone(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall GetTimeZone(HSTRING* value) noexcept override
     {
         try
         {
@@ -5315,12 +7740,12 @@ struct produce<D, Windows::Globalization::ITimeZoneOnCalendar> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_ChangeTimeZone(impl::abi_arg_in<hstring> timeZoneId) noexcept override
+    HRESULT __stdcall ChangeTimeZone(HSTRING timeZoneId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ChangeTimeZone(*reinterpret_cast<const hstring *>(&timeZoneId));
+            this->shim().ChangeTimeZone(*reinterpret_cast<hstring const*>(&timeZoneId));
             return S_OK;
         }
         catch (...)
@@ -5329,7 +7754,7 @@ struct produce<D, Windows::Globalization::ITimeZoneOnCalendar> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_TimeZoneAsFullString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall TimeZoneAsFullString(HSTRING* result) noexcept override
     {
         try
         {
@@ -5344,7 +7769,7 @@ struct produce<D, Windows::Globalization::ITimeZoneOnCalendar> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_TimeZoneAsString(int32_t idealLength, impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall TimeZoneAsString(int32_t idealLength, HSTRING* result) noexcept override
     {
         try
         {
@@ -5362,3873 +7787,1304 @@ struct produce<D, Windows::Globalization::ITimeZoneOnCalendar> : produce_base<D,
 
 }
 
-namespace Windows::Globalization {
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics<D>::Gregorian() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics)->get_Gregorian(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics<D>::Hebrew() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics)->get_Hebrew(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics<D>::Hijri() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics)->get_Hijri(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics<D>::Japanese() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics)->get_Japanese(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics<D>::Julian() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics)->get_Julian(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics<D>::Korean() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics)->get_Korean(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics<D>::Taiwan() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics)->get_Taiwan(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics<D>::Thai() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics)->get_Thai(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics<D>::UmAlQura() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics)->get_UmAlQura(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics2<D>::Persian() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics2)->get_Persian(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics3<D>::ChineseLunar() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics3)->get_ChineseLunar(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics3<D>::JapaneseLunar() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics3)->get_JapaneseLunar(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics3<D>::KoreanLunar() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics3)->get_KoreanLunar(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics3<D>::TaiwanLunar() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics3)->get_TaiwanLunar(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendarIdentifiersStatics3<D>::VietnameseLunar() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendarIdentifiersStatics3)->get_VietnameseLunar(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IClockIdentifiersStatics<D>::TwelveHour() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IClockIdentifiersStatics)->get_TwelveHour(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IClockIdentifiersStatics<D>::TwentyFourHour() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IClockIdentifiersStatics)->get_TwentyFourHour(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Arab() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Arab(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::ArabExt() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_ArabExt(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Bali() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Bali(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Beng() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Beng(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Cham() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Cham(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Deva() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Deva(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::FullWide() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_FullWide(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Gujr() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Gujr(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Guru() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Guru(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::HaniDec() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_HaniDec(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Java() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Java(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Kali() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Kali(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Khmr() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Khmr(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Knda() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Knda(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Lana() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Lana(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::LanaTham() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_LanaTham(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Laoo() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Laoo(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Latn() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Latn(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Lepc() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Lepc(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Limb() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Limb(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Mlym() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Mlym(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Mong() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Mong(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Mtei() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Mtei(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Mymr() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Mymr(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::MymrShan() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_MymrShan(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Nkoo() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Nkoo(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Olck() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Olck(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Orya() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Orya(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Saur() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Saur(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Sund() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Sund(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Talu() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Talu(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::TamlDec() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_TamlDec(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Telu() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Telu(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Thai() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Thai(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Tibt() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Tibt(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics<D>::Vaii() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics)->get_Vaii(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::Brah() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_Brah(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::Osma() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_Osma(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::MathBold() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_MathBold(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::MathDbl() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_MathDbl(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::MathSans() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_MathSans(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::MathSanb() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_MathSanb(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::MathMono() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_MathMono(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::ZmthBold() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_ZmthBold(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::ZmthDbl() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_ZmthDbl(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::ZmthSans() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_ZmthSans(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::ZmthSanb() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_ZmthSanb(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_INumeralSystemIdentifiersStatics2<D>::ZmthMono() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(INumeralSystemIdentifiersStatics2)->get_ZmthMono(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::AED() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_AED(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::AFN() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_AFN(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::ALL() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_ALL(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::AMD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_AMD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::ANG() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_ANG(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::AOA() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_AOA(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::ARS() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_ARS(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::AUD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_AUD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::AWG() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_AWG(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::AZN() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_AZN(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BAM() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BAM(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BBD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BBD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BDT() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BDT(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BGN() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BGN(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BHD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BHD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BIF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BIF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BMD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BMD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BND() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BND(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BOB() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BOB(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BRL() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BRL(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BSD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BSD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BTN() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BTN(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BWP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BWP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BYR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BYR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::BZD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_BZD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::CAD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_CAD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::CDF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_CDF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::CHF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_CHF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::CLP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_CLP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::CNY() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_CNY(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::COP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_COP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::CRC() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_CRC(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::CUP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_CUP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::CVE() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_CVE(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::CZK() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_CZK(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::DJF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_DJF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::DKK() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_DKK(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::DOP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_DOP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::DZD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_DZD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::EGP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_EGP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::ERN() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_ERN(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::ETB() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_ETB(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::EUR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_EUR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::FJD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_FJD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::FKP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_FKP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::GBP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_GBP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::GEL() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_GEL(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::GHS() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_GHS(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::GIP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_GIP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::GMD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_GMD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::GNF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_GNF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::GTQ() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_GTQ(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::GYD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_GYD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::HKD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_HKD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::HNL() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_HNL(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::HRK() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_HRK(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::HTG() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_HTG(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::HUF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_HUF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::IDR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_IDR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::ILS() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_ILS(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::INR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_INR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::IQD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_IQD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::IRR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_IRR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::ISK() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_ISK(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::JMD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_JMD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::JOD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_JOD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::JPY() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_JPY(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::KES() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_KES(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::KGS() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_KGS(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::KHR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_KHR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::KMF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_KMF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::KPW() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_KPW(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::KRW() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_KRW(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::KWD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_KWD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::KYD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_KYD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::KZT() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_KZT(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::LAK() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_LAK(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::LBP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_LBP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::LKR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_LKR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::LRD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_LRD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::LSL() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_LSL(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::LTL() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_LTL(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::LVL() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_LVL(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::LYD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_LYD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MAD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MAD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MDL() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MDL(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MGA() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MGA(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MKD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MKD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MMK() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MMK(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MNT() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MNT(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MOP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MOP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MRO() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MRO(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MUR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MUR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MVR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MVR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MWK() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MWK(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MXN() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MXN(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MYR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MYR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::MZN() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_MZN(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::NAD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_NAD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::NGN() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_NGN(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::NIO() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_NIO(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::NOK() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_NOK(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::NPR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_NPR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::NZD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_NZD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::OMR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_OMR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::PAB() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_PAB(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::PEN() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_PEN(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::PGK() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_PGK(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::PHP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_PHP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::PKR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_PKR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::PLN() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_PLN(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::PYG() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_PYG(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::QAR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_QAR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::RON() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_RON(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::RSD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_RSD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::RUB() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_RUB(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::RWF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_RWF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SAR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SAR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SBD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SBD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SCR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SCR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SDG() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SDG(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SEK() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SEK(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SGD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SGD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SHP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SHP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SLL() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SLL(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SOS() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SOS(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SRD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SRD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::STD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_STD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SYP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SYP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::SZL() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_SZL(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::THB() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_THB(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::TJS() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_TJS(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::TMT() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_TMT(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::TND() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_TND(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::TOP() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_TOP(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::TRY() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_TRY(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::TTD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_TTD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::TWD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_TWD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::TZS() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_TZS(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::UAH() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_UAH(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::UGX() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_UGX(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::USD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_USD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::UYU() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_UYU(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::UZS() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_UZS(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::VEF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_VEF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::VND() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_VND(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::VUV() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_VUV(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::WST() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_WST(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::XAF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_XAF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::XCD() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_XCD(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::XOF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_XOF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::XPF() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_XPF(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::XXX() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_XXX(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::YER() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_YER(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::ZAR() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_ZAR(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::ZMW() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_ZMW(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics<D>::ZWL() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics)->get_ZWL(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICurrencyIdentifiersStatics2<D>::BYN() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICurrencyIdentifiersStatics2)->get_BYN(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGeographicRegion<D>::Code() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGeographicRegion)->get_Code(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGeographicRegion<D>::CodeTwoLetter() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGeographicRegion)->get_CodeTwoLetter(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGeographicRegion<D>::CodeThreeLetter() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGeographicRegion)->get_CodeThreeLetter(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGeographicRegion<D>::CodeThreeDigit() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGeographicRegion)->get_CodeThreeDigit(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGeographicRegion<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGeographicRegion)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGeographicRegion<D>::NativeName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGeographicRegion)->get_NativeName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IGeographicRegion<D>::CurrenciesInUse() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IGeographicRegion)->get_CurrenciesInUse(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Globalization::GeographicRegion impl_IGeographicRegionFactory<D>::CreateGeographicRegion(hstring_view geographicRegionCode) const
-{
-    Windows::Globalization::GeographicRegion result { nullptr };
-    check_hresult(WINRT_SHIM(IGeographicRegionFactory)->abi_CreateGeographicRegion(get_abi(geographicRegionCode), put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_IGeographicRegionStatics<D>::IsSupported(hstring_view geographicRegionCode) const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IGeographicRegionStatics)->abi_IsSupported(get_abi(geographicRegionCode), &result));
-    return result;
-}
-
-template <typename D> hstring impl_ILanguage<D>::LanguageTag() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ILanguage)->get_LanguageTag(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ILanguage<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ILanguage)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ILanguage<D>::NativeName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ILanguage)->get_NativeName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ILanguage<D>::Script() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ILanguage)->get_Script(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_ILanguageExtensionSubtags<D>::GetExtensionSubtags(hstring_view singleton) const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(ILanguageExtensionSubtags)->abi_GetExtensionSubtags(get_abi(singleton), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Globalization::Language impl_ILanguageFactory<D>::CreateLanguage(hstring_view languageTag) const
-{
-    Windows::Globalization::Language result { nullptr };
-    check_hresult(WINRT_SHIM(ILanguageFactory)->abi_CreateLanguage(get_abi(languageTag), put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_ILanguageStatics<D>::IsWellFormed(hstring_view languageTag) const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(ILanguageStatics)->abi_IsWellFormed(get_abi(languageTag), &result));
-    return result;
-}
-
-template <typename D> hstring impl_ILanguageStatics<D>::CurrentInputMethodLanguageTag() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ILanguageStatics)->get_CurrentInputMethodLanguageTag(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_ILanguageStatics2<D>::TrySetInputMethodLanguageTag(hstring_view languageTag) const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(ILanguageStatics2)->abi_TrySetInputMethodLanguageTag(get_abi(languageTag), &result));
-    return result;
-}
-
-template <typename D> Windows::Globalization::Calendar impl_ICalendar<D>::Clone() const
-{
-    Windows::Globalization::Calendar value { nullptr };
-    check_hresult(WINRT_SHIM(ICalendar)->abi_Clone(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::SetToMin() const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_SetToMin());
-}
-
-template <typename D> void impl_ICalendar<D>::SetToMax() const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_SetToMax());
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_ICalendar<D>::Languages() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(ICalendar)->get_Languages(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendar<D>::NumeralSystem() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendar)->get_NumeralSystem(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::NumeralSystem(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->put_NumeralSystem(get_abi(value)));
-}
-
-template <typename D> hstring impl_ICalendar<D>::GetCalendarSystem() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_GetCalendarSystem(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::ChangeCalendarSystem(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_ChangeCalendarSystem(get_abi(value)));
-}
-
-template <typename D> hstring impl_ICalendar<D>::GetClock() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_GetClock(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::ChangeClock(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_ChangeClock(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::DateTime impl_ICalendar<D>::GetDateTime() const
-{
-    Windows::Foundation::DateTime result {};
-    check_hresult(WINRT_SHIM(ICalendar)->abi_GetDateTime(put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_ICalendar<D>::SetDateTime(const Windows::Foundation::DateTime & value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_SetDateTime(get_abi(value)));
-}
-
-template <typename D> void impl_ICalendar<D>::SetToNow() const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_SetToNow());
-}
-
-template <typename D> int32_t impl_ICalendar<D>::FirstEra() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_FirstEra(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::LastEra() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_LastEra(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::NumberOfEras() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_NumberOfEras(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::Era() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_Era(&value));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::Era(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->put_Era(value));
-}
-
-template <typename D> void impl_ICalendar<D>::AddEras(int32_t eras) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_AddEras(eras));
-}
-
-template <typename D> hstring impl_ICalendar<D>::EraAsString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_EraAsFullString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::EraAsString(int32_t idealLength) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_EraAsString(idealLength, put_abi(result)));
-    return result;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::FirstYearInThisEra() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_FirstYearInThisEra(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::LastYearInThisEra() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_LastYearInThisEra(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::NumberOfYearsInThisEra() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_NumberOfYearsInThisEra(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::Year() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_Year(&value));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::Year(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->put_Year(value));
-}
-
-template <typename D> void impl_ICalendar<D>::AddYears(int32_t years) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_AddYears(years));
-}
-
-template <typename D> hstring impl_ICalendar<D>::YearAsString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_YearAsString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::YearAsTruncatedString(int32_t remainingDigits) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_YearAsTruncatedString(remainingDigits, put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::YearAsPaddedString(int32_t minDigits) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_YearAsPaddedString(minDigits, put_abi(result)));
-    return result;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::FirstMonthInThisYear() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_FirstMonthInThisYear(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::LastMonthInThisYear() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_LastMonthInThisYear(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::NumberOfMonthsInThisYear() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_NumberOfMonthsInThisYear(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::Month() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_Month(&value));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::Month(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->put_Month(value));
-}
-
-template <typename D> void impl_ICalendar<D>::AddMonths(int32_t months) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_AddMonths(months));
-}
-
-template <typename D> hstring impl_ICalendar<D>::MonthAsString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_MonthAsFullString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::MonthAsString(int32_t idealLength) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_MonthAsString(idealLength, put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::MonthAsSoloString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_MonthAsFullSoloString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::MonthAsSoloString(int32_t idealLength) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_MonthAsSoloString(idealLength, put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::MonthAsNumericString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_MonthAsNumericString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::MonthAsPaddedNumericString(int32_t minDigits) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_MonthAsPaddedNumericString(minDigits, put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_ICalendar<D>::AddWeeks(int32_t weeks) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_AddWeeks(weeks));
-}
-
-template <typename D> int32_t impl_ICalendar<D>::FirstDayInThisMonth() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_FirstDayInThisMonth(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::LastDayInThisMonth() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_LastDayInThisMonth(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::NumberOfDaysInThisMonth() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_NumberOfDaysInThisMonth(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::Day() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_Day(&value));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::Day(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->put_Day(value));
-}
-
-template <typename D> void impl_ICalendar<D>::AddDays(int32_t days) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_AddDays(days));
-}
-
-template <typename D> hstring impl_ICalendar<D>::DayAsString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_DayAsString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::DayAsPaddedString(int32_t minDigits) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_DayAsPaddedString(minDigits, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Globalization::DayOfWeek impl_ICalendar<D>::DayOfWeek() const
-{
-    Windows::Globalization::DayOfWeek value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_DayOfWeek(&value));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendar<D>::DayOfWeekAsString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_DayOfWeekAsFullString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::DayOfWeekAsString(int32_t idealLength) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_DayOfWeekAsString(idealLength, put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::DayOfWeekAsSoloString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_DayOfWeekAsFullSoloString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::DayOfWeekAsSoloString(int32_t idealLength) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_DayOfWeekAsSoloString(idealLength, put_abi(result)));
-    return result;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::FirstPeriodInThisDay() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_FirstPeriodInThisDay(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::LastPeriodInThisDay() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_LastPeriodInThisDay(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::NumberOfPeriodsInThisDay() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_NumberOfPeriodsInThisDay(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::Period() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_Period(&value));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::Period(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->put_Period(value));
-}
-
-template <typename D> void impl_ICalendar<D>::AddPeriods(int32_t periods) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_AddPeriods(periods));
-}
-
-template <typename D> hstring impl_ICalendar<D>::PeriodAsString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_PeriodAsFullString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::PeriodAsString(int32_t idealLength) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_PeriodAsString(idealLength, put_abi(result)));
-    return result;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::FirstHourInThisPeriod() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_FirstHourInThisPeriod(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::LastHourInThisPeriod() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_LastHourInThisPeriod(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::NumberOfHoursInThisPeriod() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_NumberOfHoursInThisPeriod(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::Hour() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_Hour(&value));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::Hour(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->put_Hour(value));
-}
-
-template <typename D> void impl_ICalendar<D>::AddHours(int32_t hours) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_AddHours(hours));
-}
-
-template <typename D> hstring impl_ICalendar<D>::HourAsString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_HourAsString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::HourAsPaddedString(int32_t minDigits) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_HourAsPaddedString(minDigits, put_abi(result)));
-    return result;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::Minute() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_Minute(&value));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::Minute(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->put_Minute(value));
-}
-
-template <typename D> void impl_ICalendar<D>::AddMinutes(int32_t minutes) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_AddMinutes(minutes));
-}
-
-template <typename D> hstring impl_ICalendar<D>::MinuteAsString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_MinuteAsString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::MinuteAsPaddedString(int32_t minDigits) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_MinuteAsPaddedString(minDigits, put_abi(result)));
-    return result;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::Second() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_Second(&value));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::Second(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->put_Second(value));
-}
-
-template <typename D> void impl_ICalendar<D>::AddSeconds(int32_t seconds) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_AddSeconds(seconds));
-}
-
-template <typename D> hstring impl_ICalendar<D>::SecondAsString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_SecondAsString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::SecondAsPaddedString(int32_t minDigits) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_SecondAsPaddedString(minDigits, put_abi(result)));
-    return result;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::Nanosecond() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_Nanosecond(&value));
-    return value;
-}
-
-template <typename D> void impl_ICalendar<D>::Nanosecond(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->put_Nanosecond(value));
-}
-
-template <typename D> void impl_ICalendar<D>::AddNanoseconds(int32_t nanoseconds) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_AddNanoseconds(nanoseconds));
-}
-
-template <typename D> hstring impl_ICalendar<D>::NanosecondAsString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_NanosecondAsString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ICalendar<D>::NanosecondAsPaddedString(int32_t minDigits) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ICalendar)->abi_NanosecondAsPaddedString(minDigits, put_abi(result)));
-    return result;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::Compare(const Windows::Globalization::Calendar & other) const
-{
-    int32_t result {};
-    check_hresult(WINRT_SHIM(ICalendar)->abi_Compare(get_abi(other), &result));
-    return result;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::CompareDateTime(const Windows::Foundation::DateTime & other) const
-{
-    int32_t result {};
-    check_hresult(WINRT_SHIM(ICalendar)->abi_CompareDateTime(get_abi(other), &result));
-    return result;
-}
-
-template <typename D> void impl_ICalendar<D>::CopyTo(const Windows::Globalization::Calendar & other) const
-{
-    check_hresult(WINRT_SHIM(ICalendar)->abi_CopyTo(get_abi(other)));
-}
-
-template <typename D> int32_t impl_ICalendar<D>::FirstMinuteInThisHour() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_FirstMinuteInThisHour(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::LastMinuteInThisHour() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_LastMinuteInThisHour(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::NumberOfMinutesInThisHour() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_NumberOfMinutesInThisHour(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::FirstSecondInThisMinute() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_FirstSecondInThisMinute(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::LastSecondInThisMinute() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_LastSecondInThisMinute(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_ICalendar<D>::NumberOfSecondsInThisMinute() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_NumberOfSecondsInThisMinute(&value));
-    return value;
-}
-
-template <typename D> hstring impl_ICalendar<D>::ResolvedLanguage() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICalendar)->get_ResolvedLanguage(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_ICalendar<D>::IsDaylightSavingTime() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ICalendar)->get_IsDaylightSavingTime(&value));
-    return value;
-}
-
-template <typename D> Windows::Globalization::Calendar impl_ICalendarFactory2<D>::CreateCalendarWithTimeZone(iterable<hstring> languages, hstring_view calendar, hstring_view clock, hstring_view timeZoneId) const
-{
-    Windows::Globalization::Calendar result { nullptr };
-    check_hresult(WINRT_SHIM(ICalendarFactory2)->abi_CreateCalendarWithTimeZone(get_abi(languages), get_abi(calendar), get_abi(clock), get_abi(timeZoneId), put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ITimeZoneOnCalendar<D>::GetTimeZone() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ITimeZoneOnCalendar)->abi_GetTimeZone(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ITimeZoneOnCalendar<D>::ChangeTimeZone(hstring_view timeZoneId) const
-{
-    check_hresult(WINRT_SHIM(ITimeZoneOnCalendar)->abi_ChangeTimeZone(get_abi(timeZoneId)));
-}
-
-template <typename D> hstring impl_ITimeZoneOnCalendar<D>::TimeZoneAsString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ITimeZoneOnCalendar)->abi_TimeZoneAsFullString(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ITimeZoneOnCalendar<D>::TimeZoneAsString(int32_t idealLength) const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(ITimeZoneOnCalendar)->abi_TimeZoneAsString(idealLength, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Globalization::Calendar impl_ICalendarFactory<D>::CreateCalendarDefaultCalendarAndClock(iterable<hstring> languages) const
-{
-    Windows::Globalization::Calendar result { nullptr };
-    check_hresult(WINRT_SHIM(ICalendarFactory)->abi_CreateCalendarDefaultCalendarAndClock(get_abi(languages), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Globalization::Calendar impl_ICalendarFactory<D>::CreateCalendar(iterable<hstring> languages, hstring_view calendar, hstring_view clock) const
-{
-    Windows::Globalization::Calendar result { nullptr };
-    check_hresult(WINRT_SHIM(ICalendarFactory)->abi_CreateCalendar(get_abi(languages), get_abi(calendar), get_abi(clock), put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IApplicationLanguagesStatics<D>::PrimaryLanguageOverride() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IApplicationLanguagesStatics)->get_PrimaryLanguageOverride(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationLanguagesStatics<D>::PrimaryLanguageOverride(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationLanguagesStatics)->put_PrimaryLanguageOverride(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IApplicationLanguagesStatics<D>::Languages() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IApplicationLanguagesStatics)->get_Languages(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IApplicationLanguagesStatics<D>::ManifestLanguages() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IApplicationLanguagesStatics)->get_ManifestLanguages(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> impl_IJapanesePhoneticAnalyzerStatics<D>::GetWords(hstring_view input) const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> result;
-    check_hresult(WINRT_SHIM(IJapanesePhoneticAnalyzerStatics)->abi_GetWords(get_abi(input), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> impl_IJapanesePhoneticAnalyzerStatics<D>::GetWords(hstring_view input, bool monoRuby) const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> result;
-    check_hresult(WINRT_SHIM(IJapanesePhoneticAnalyzerStatics)->abi_GetWordsWithMonoRubyOption(get_abi(input), monoRuby, put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IJapanesePhoneme<D>::DisplayText() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IJapanesePhoneme)->get_DisplayText(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IJapanesePhoneme<D>::YomiText() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IJapanesePhoneme)->get_YomiText(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IJapanesePhoneme<D>::IsPhraseStart() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IJapanesePhoneme)->get_IsPhraseStart(&value));
-    return value;
-}
+WINRT_EXPORT namespace winrt::Windows::Globalization {
 
 inline hstring ApplicationLanguages::PrimaryLanguageOverride()
 {
-    return get_activation_factory<ApplicationLanguages, IApplicationLanguagesStatics>().PrimaryLanguageOverride();
+    return get_activation_factory<ApplicationLanguages, Windows::Globalization::IApplicationLanguagesStatics>().PrimaryLanguageOverride();
 }
 
-inline void ApplicationLanguages::PrimaryLanguageOverride(hstring_view value)
+inline void ApplicationLanguages::PrimaryLanguageOverride(param::hstring const& value)
 {
-    get_activation_factory<ApplicationLanguages, IApplicationLanguagesStatics>().PrimaryLanguageOverride(value);
+    get_activation_factory<ApplicationLanguages, Windows::Globalization::IApplicationLanguagesStatics>().PrimaryLanguageOverride(value);
 }
 
 inline Windows::Foundation::Collections::IVectorView<hstring> ApplicationLanguages::Languages()
 {
-    return get_activation_factory<ApplicationLanguages, IApplicationLanguagesStatics>().Languages();
+    return get_activation_factory<ApplicationLanguages, Windows::Globalization::IApplicationLanguagesStatics>().Languages();
 }
 
 inline Windows::Foundation::Collections::IVectorView<hstring> ApplicationLanguages::ManifestLanguages()
 {
-    return get_activation_factory<ApplicationLanguages, IApplicationLanguagesStatics>().ManifestLanguages();
+    return get_activation_factory<ApplicationLanguages, Windows::Globalization::IApplicationLanguagesStatics>().ManifestLanguages();
 }
 
 inline Calendar::Calendar() :
     Calendar(activate_instance<Calendar>())
 {}
 
-inline Calendar::Calendar(iterable<hstring> languages) :
-    Calendar(get_activation_factory<Calendar, ICalendarFactory>().CreateCalendarDefaultCalendarAndClock(languages))
+inline Calendar::Calendar(param::iterable<hstring> const& languages) :
+    Calendar(get_activation_factory<Calendar, Windows::Globalization::ICalendarFactory>().CreateCalendarDefaultCalendarAndClock(languages))
 {}
 
-inline Calendar::Calendar(iterable<hstring> languages, hstring_view calendar, hstring_view clock) :
-    Calendar(get_activation_factory<Calendar, ICalendarFactory>().CreateCalendar(languages, calendar, clock))
+inline Calendar::Calendar(param::iterable<hstring> const& languages, param::hstring const& calendar, param::hstring const& clock) :
+    Calendar(get_activation_factory<Calendar, Windows::Globalization::ICalendarFactory>().CreateCalendar(languages, calendar, clock))
 {}
 
-inline Calendar::Calendar(iterable<hstring> languages, hstring_view calendar, hstring_view clock, hstring_view timeZoneId) :
-    Calendar(get_activation_factory<Calendar, ICalendarFactory2>().CreateCalendarWithTimeZone(languages, calendar, clock, timeZoneId))
+inline Calendar::Calendar(param::iterable<hstring> const& languages, param::hstring const& calendar, param::hstring const& clock, param::hstring const& timeZoneId) :
+    Calendar(get_activation_factory<Calendar, Windows::Globalization::ICalendarFactory2>().CreateCalendarWithTimeZone(languages, calendar, clock, timeZoneId))
 {}
 
 inline hstring CalendarIdentifiers::Gregorian()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics>().Gregorian();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics>().Gregorian();
 }
 
 inline hstring CalendarIdentifiers::Hebrew()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics>().Hebrew();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics>().Hebrew();
 }
 
 inline hstring CalendarIdentifiers::Hijri()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics>().Hijri();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics>().Hijri();
 }
 
 inline hstring CalendarIdentifiers::Japanese()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics>().Japanese();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics>().Japanese();
 }
 
 inline hstring CalendarIdentifiers::Julian()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics>().Julian();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics>().Julian();
 }
 
 inline hstring CalendarIdentifiers::Korean()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics>().Korean();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics>().Korean();
 }
 
 inline hstring CalendarIdentifiers::Taiwan()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics>().Taiwan();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics>().Taiwan();
 }
 
 inline hstring CalendarIdentifiers::Thai()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics>().Thai();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics>().Thai();
 }
 
 inline hstring CalendarIdentifiers::UmAlQura()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics>().UmAlQura();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics>().UmAlQura();
 }
 
 inline hstring CalendarIdentifiers::Persian()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics2>().Persian();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics2>().Persian();
 }
 
 inline hstring CalendarIdentifiers::ChineseLunar()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics3>().ChineseLunar();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics3>().ChineseLunar();
 }
 
 inline hstring CalendarIdentifiers::JapaneseLunar()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics3>().JapaneseLunar();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics3>().JapaneseLunar();
 }
 
 inline hstring CalendarIdentifiers::KoreanLunar()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics3>().KoreanLunar();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics3>().KoreanLunar();
 }
 
 inline hstring CalendarIdentifiers::TaiwanLunar()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics3>().TaiwanLunar();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics3>().TaiwanLunar();
 }
 
 inline hstring CalendarIdentifiers::VietnameseLunar()
 {
-    return get_activation_factory<CalendarIdentifiers, ICalendarIdentifiersStatics3>().VietnameseLunar();
+    return get_activation_factory<CalendarIdentifiers, Windows::Globalization::ICalendarIdentifiersStatics3>().VietnameseLunar();
 }
 
 inline hstring ClockIdentifiers::TwelveHour()
 {
-    return get_activation_factory<ClockIdentifiers, IClockIdentifiersStatics>().TwelveHour();
+    return get_activation_factory<ClockIdentifiers, Windows::Globalization::IClockIdentifiersStatics>().TwelveHour();
 }
 
 inline hstring ClockIdentifiers::TwentyFourHour()
 {
-    return get_activation_factory<ClockIdentifiers, IClockIdentifiersStatics>().TwentyFourHour();
+    return get_activation_factory<ClockIdentifiers, Windows::Globalization::IClockIdentifiersStatics>().TwentyFourHour();
 }
 
 inline hstring CurrencyIdentifiers::AED()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().AED();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().AED();
 }
 
 inline hstring CurrencyIdentifiers::AFN()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().AFN();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().AFN();
 }
 
 inline hstring CurrencyIdentifiers::ALL()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().ALL();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().ALL();
 }
 
 inline hstring CurrencyIdentifiers::AMD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().AMD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().AMD();
 }
 
 inline hstring CurrencyIdentifiers::ANG()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().ANG();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().ANG();
 }
 
 inline hstring CurrencyIdentifiers::AOA()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().AOA();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().AOA();
 }
 
 inline hstring CurrencyIdentifiers::ARS()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().ARS();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().ARS();
 }
 
 inline hstring CurrencyIdentifiers::AUD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().AUD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().AUD();
 }
 
 inline hstring CurrencyIdentifiers::AWG()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().AWG();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().AWG();
 }
 
 inline hstring CurrencyIdentifiers::AZN()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().AZN();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().AZN();
 }
 
 inline hstring CurrencyIdentifiers::BAM()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BAM();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BAM();
 }
 
 inline hstring CurrencyIdentifiers::BBD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BBD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BBD();
 }
 
 inline hstring CurrencyIdentifiers::BDT()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BDT();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BDT();
 }
 
 inline hstring CurrencyIdentifiers::BGN()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BGN();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BGN();
 }
 
 inline hstring CurrencyIdentifiers::BHD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BHD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BHD();
 }
 
 inline hstring CurrencyIdentifiers::BIF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BIF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BIF();
 }
 
 inline hstring CurrencyIdentifiers::BMD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BMD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BMD();
 }
 
 inline hstring CurrencyIdentifiers::BND()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BND();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BND();
 }
 
 inline hstring CurrencyIdentifiers::BOB()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BOB();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BOB();
 }
 
 inline hstring CurrencyIdentifiers::BRL()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BRL();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BRL();
 }
 
 inline hstring CurrencyIdentifiers::BSD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BSD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BSD();
 }
 
 inline hstring CurrencyIdentifiers::BTN()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BTN();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BTN();
 }
 
 inline hstring CurrencyIdentifiers::BWP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BWP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BWP();
 }
 
 inline hstring CurrencyIdentifiers::BYR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BYR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BYR();
 }
 
 inline hstring CurrencyIdentifiers::BZD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().BZD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().BZD();
 }
 
 inline hstring CurrencyIdentifiers::CAD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().CAD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().CAD();
 }
 
 inline hstring CurrencyIdentifiers::CDF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().CDF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().CDF();
 }
 
 inline hstring CurrencyIdentifiers::CHF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().CHF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().CHF();
 }
 
 inline hstring CurrencyIdentifiers::CLP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().CLP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().CLP();
 }
 
 inline hstring CurrencyIdentifiers::CNY()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().CNY();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().CNY();
 }
 
 inline hstring CurrencyIdentifiers::COP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().COP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().COP();
 }
 
 inline hstring CurrencyIdentifiers::CRC()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().CRC();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().CRC();
 }
 
 inline hstring CurrencyIdentifiers::CUP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().CUP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().CUP();
 }
 
 inline hstring CurrencyIdentifiers::CVE()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().CVE();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().CVE();
 }
 
 inline hstring CurrencyIdentifiers::CZK()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().CZK();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().CZK();
 }
 
 inline hstring CurrencyIdentifiers::DJF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().DJF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().DJF();
 }
 
 inline hstring CurrencyIdentifiers::DKK()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().DKK();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().DKK();
 }
 
 inline hstring CurrencyIdentifiers::DOP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().DOP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().DOP();
 }
 
 inline hstring CurrencyIdentifiers::DZD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().DZD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().DZD();
 }
 
 inline hstring CurrencyIdentifiers::EGP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().EGP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().EGP();
 }
 
 inline hstring CurrencyIdentifiers::ERN()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().ERN();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().ERN();
 }
 
 inline hstring CurrencyIdentifiers::ETB()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().ETB();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().ETB();
 }
 
 inline hstring CurrencyIdentifiers::EUR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().EUR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().EUR();
 }
 
 inline hstring CurrencyIdentifiers::FJD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().FJD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().FJD();
 }
 
 inline hstring CurrencyIdentifiers::FKP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().FKP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().FKP();
 }
 
 inline hstring CurrencyIdentifiers::GBP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().GBP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().GBP();
 }
 
 inline hstring CurrencyIdentifiers::GEL()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().GEL();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().GEL();
 }
 
 inline hstring CurrencyIdentifiers::GHS()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().GHS();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().GHS();
 }
 
 inline hstring CurrencyIdentifiers::GIP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().GIP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().GIP();
 }
 
 inline hstring CurrencyIdentifiers::GMD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().GMD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().GMD();
 }
 
 inline hstring CurrencyIdentifiers::GNF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().GNF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().GNF();
 }
 
 inline hstring CurrencyIdentifiers::GTQ()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().GTQ();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().GTQ();
 }
 
 inline hstring CurrencyIdentifiers::GYD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().GYD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().GYD();
 }
 
 inline hstring CurrencyIdentifiers::HKD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().HKD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().HKD();
 }
 
 inline hstring CurrencyIdentifiers::HNL()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().HNL();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().HNL();
 }
 
 inline hstring CurrencyIdentifiers::HRK()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().HRK();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().HRK();
 }
 
 inline hstring CurrencyIdentifiers::HTG()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().HTG();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().HTG();
 }
 
 inline hstring CurrencyIdentifiers::HUF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().HUF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().HUF();
 }
 
 inline hstring CurrencyIdentifiers::IDR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().IDR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().IDR();
 }
 
 inline hstring CurrencyIdentifiers::ILS()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().ILS();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().ILS();
 }
 
 inline hstring CurrencyIdentifiers::INR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().INR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().INR();
 }
 
 inline hstring CurrencyIdentifiers::IQD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().IQD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().IQD();
 }
 
 inline hstring CurrencyIdentifiers::IRR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().IRR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().IRR();
 }
 
 inline hstring CurrencyIdentifiers::ISK()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().ISK();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().ISK();
 }
 
 inline hstring CurrencyIdentifiers::JMD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().JMD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().JMD();
 }
 
 inline hstring CurrencyIdentifiers::JOD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().JOD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().JOD();
 }
 
 inline hstring CurrencyIdentifiers::JPY()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().JPY();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().JPY();
 }
 
 inline hstring CurrencyIdentifiers::KES()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().KES();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().KES();
 }
 
 inline hstring CurrencyIdentifiers::KGS()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().KGS();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().KGS();
 }
 
 inline hstring CurrencyIdentifiers::KHR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().KHR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().KHR();
 }
 
 inline hstring CurrencyIdentifiers::KMF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().KMF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().KMF();
 }
 
 inline hstring CurrencyIdentifiers::KPW()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().KPW();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().KPW();
 }
 
 inline hstring CurrencyIdentifiers::KRW()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().KRW();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().KRW();
 }
 
 inline hstring CurrencyIdentifiers::KWD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().KWD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().KWD();
 }
 
 inline hstring CurrencyIdentifiers::KYD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().KYD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().KYD();
 }
 
 inline hstring CurrencyIdentifiers::KZT()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().KZT();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().KZT();
 }
 
 inline hstring CurrencyIdentifiers::LAK()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().LAK();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().LAK();
 }
 
 inline hstring CurrencyIdentifiers::LBP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().LBP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().LBP();
 }
 
 inline hstring CurrencyIdentifiers::LKR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().LKR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().LKR();
 }
 
 inline hstring CurrencyIdentifiers::LRD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().LRD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().LRD();
 }
 
 inline hstring CurrencyIdentifiers::LSL()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().LSL();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().LSL();
 }
 
 inline hstring CurrencyIdentifiers::LTL()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().LTL();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().LTL();
 }
 
 inline hstring CurrencyIdentifiers::LVL()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().LVL();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().LVL();
 }
 
 inline hstring CurrencyIdentifiers::LYD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().LYD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().LYD();
 }
 
 inline hstring CurrencyIdentifiers::MAD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MAD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MAD();
 }
 
 inline hstring CurrencyIdentifiers::MDL()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MDL();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MDL();
 }
 
 inline hstring CurrencyIdentifiers::MGA()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MGA();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MGA();
 }
 
 inline hstring CurrencyIdentifiers::MKD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MKD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MKD();
 }
 
 inline hstring CurrencyIdentifiers::MMK()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MMK();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MMK();
 }
 
 inline hstring CurrencyIdentifiers::MNT()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MNT();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MNT();
 }
 
 inline hstring CurrencyIdentifiers::MOP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MOP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MOP();
 }
 
 inline hstring CurrencyIdentifiers::MRO()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MRO();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MRO();
 }
 
 inline hstring CurrencyIdentifiers::MUR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MUR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MUR();
 }
 
 inline hstring CurrencyIdentifiers::MVR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MVR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MVR();
 }
 
 inline hstring CurrencyIdentifiers::MWK()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MWK();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MWK();
 }
 
 inline hstring CurrencyIdentifiers::MXN()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MXN();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MXN();
 }
 
 inline hstring CurrencyIdentifiers::MYR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MYR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MYR();
 }
 
 inline hstring CurrencyIdentifiers::MZN()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().MZN();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().MZN();
 }
 
 inline hstring CurrencyIdentifiers::NAD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().NAD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().NAD();
 }
 
 inline hstring CurrencyIdentifiers::NGN()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().NGN();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().NGN();
 }
 
 inline hstring CurrencyIdentifiers::NIO()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().NIO();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().NIO();
 }
 
 inline hstring CurrencyIdentifiers::NOK()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().NOK();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().NOK();
 }
 
 inline hstring CurrencyIdentifiers::NPR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().NPR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().NPR();
 }
 
 inline hstring CurrencyIdentifiers::NZD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().NZD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().NZD();
 }
 
 inline hstring CurrencyIdentifiers::OMR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().OMR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().OMR();
 }
 
 inline hstring CurrencyIdentifiers::PAB()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().PAB();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().PAB();
 }
 
 inline hstring CurrencyIdentifiers::PEN()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().PEN();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().PEN();
 }
 
 inline hstring CurrencyIdentifiers::PGK()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().PGK();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().PGK();
 }
 
 inline hstring CurrencyIdentifiers::PHP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().PHP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().PHP();
 }
 
 inline hstring CurrencyIdentifiers::PKR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().PKR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().PKR();
 }
 
 inline hstring CurrencyIdentifiers::PLN()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().PLN();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().PLN();
 }
 
 inline hstring CurrencyIdentifiers::PYG()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().PYG();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().PYG();
 }
 
 inline hstring CurrencyIdentifiers::QAR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().QAR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().QAR();
 }
 
 inline hstring CurrencyIdentifiers::RON()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().RON();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().RON();
 }
 
 inline hstring CurrencyIdentifiers::RSD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().RSD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().RSD();
 }
 
 inline hstring CurrencyIdentifiers::RUB()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().RUB();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().RUB();
 }
 
 inline hstring CurrencyIdentifiers::RWF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().RWF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().RWF();
 }
 
 inline hstring CurrencyIdentifiers::SAR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SAR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SAR();
 }
 
 inline hstring CurrencyIdentifiers::SBD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SBD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SBD();
 }
 
 inline hstring CurrencyIdentifiers::SCR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SCR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SCR();
 }
 
 inline hstring CurrencyIdentifiers::SDG()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SDG();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SDG();
 }
 
 inline hstring CurrencyIdentifiers::SEK()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SEK();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SEK();
 }
 
 inline hstring CurrencyIdentifiers::SGD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SGD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SGD();
 }
 
 inline hstring CurrencyIdentifiers::SHP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SHP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SHP();
 }
 
 inline hstring CurrencyIdentifiers::SLL()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SLL();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SLL();
 }
 
 inline hstring CurrencyIdentifiers::SOS()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SOS();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SOS();
 }
 
 inline hstring CurrencyIdentifiers::SRD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SRD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SRD();
 }
 
 inline hstring CurrencyIdentifiers::STD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().STD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().STD();
 }
 
 inline hstring CurrencyIdentifiers::SYP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SYP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SYP();
 }
 
 inline hstring CurrencyIdentifiers::SZL()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().SZL();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().SZL();
 }
 
 inline hstring CurrencyIdentifiers::THB()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().THB();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().THB();
 }
 
 inline hstring CurrencyIdentifiers::TJS()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().TJS();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().TJS();
 }
 
 inline hstring CurrencyIdentifiers::TMT()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().TMT();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().TMT();
 }
 
 inline hstring CurrencyIdentifiers::TND()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().TND();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().TND();
 }
 
 inline hstring CurrencyIdentifiers::TOP()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().TOP();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().TOP();
 }
 
 inline hstring CurrencyIdentifiers::TRY()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().TRY();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().TRY();
 }
 
 inline hstring CurrencyIdentifiers::TTD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().TTD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().TTD();
 }
 
 inline hstring CurrencyIdentifiers::TWD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().TWD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().TWD();
 }
 
 inline hstring CurrencyIdentifiers::TZS()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().TZS();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().TZS();
 }
 
 inline hstring CurrencyIdentifiers::UAH()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().UAH();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().UAH();
 }
 
 inline hstring CurrencyIdentifiers::UGX()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().UGX();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().UGX();
 }
 
 inline hstring CurrencyIdentifiers::USD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().USD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().USD();
 }
 
 inline hstring CurrencyIdentifiers::UYU()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().UYU();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().UYU();
 }
 
 inline hstring CurrencyIdentifiers::UZS()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().UZS();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().UZS();
 }
 
 inline hstring CurrencyIdentifiers::VEF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().VEF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().VEF();
 }
 
 inline hstring CurrencyIdentifiers::VND()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().VND();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().VND();
 }
 
 inline hstring CurrencyIdentifiers::VUV()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().VUV();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().VUV();
 }
 
 inline hstring CurrencyIdentifiers::WST()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().WST();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().WST();
 }
 
 inline hstring CurrencyIdentifiers::XAF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().XAF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().XAF();
 }
 
 inline hstring CurrencyIdentifiers::XCD()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().XCD();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().XCD();
 }
 
 inline hstring CurrencyIdentifiers::XOF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().XOF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().XOF();
 }
 
 inline hstring CurrencyIdentifiers::XPF()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().XPF();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().XPF();
 }
 
 inline hstring CurrencyIdentifiers::XXX()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().XXX();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().XXX();
 }
 
 inline hstring CurrencyIdentifiers::YER()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().YER();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().YER();
 }
 
 inline hstring CurrencyIdentifiers::ZAR()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().ZAR();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().ZAR();
 }
 
 inline hstring CurrencyIdentifiers::ZMW()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().ZMW();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().ZMW();
 }
 
 inline hstring CurrencyIdentifiers::ZWL()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics>().ZWL();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics>().ZWL();
 }
 
 inline hstring CurrencyIdentifiers::BYN()
 {
-    return get_activation_factory<CurrencyIdentifiers, ICurrencyIdentifiersStatics2>().BYN();
+    return get_activation_factory<CurrencyIdentifiers, Windows::Globalization::ICurrencyIdentifiersStatics2>().BYN();
 }
 
 inline GeographicRegion::GeographicRegion() :
     GeographicRegion(activate_instance<GeographicRegion>())
 {}
 
-inline GeographicRegion::GeographicRegion(hstring_view geographicRegionCode) :
-    GeographicRegion(get_activation_factory<GeographicRegion, IGeographicRegionFactory>().CreateGeographicRegion(geographicRegionCode))
+inline GeographicRegion::GeographicRegion(param::hstring const& geographicRegionCode) :
+    GeographicRegion(get_activation_factory<GeographicRegion, Windows::Globalization::IGeographicRegionFactory>().CreateGeographicRegion(geographicRegionCode))
 {}
 
-inline bool GeographicRegion::IsSupported(hstring_view geographicRegionCode)
+inline bool GeographicRegion::IsSupported(param::hstring const& geographicRegionCode)
 {
-    return get_activation_factory<GeographicRegion, IGeographicRegionStatics>().IsSupported(geographicRegionCode);
+    return get_activation_factory<GeographicRegion, Windows::Globalization::IGeographicRegionStatics>().IsSupported(geographicRegionCode);
 }
 
-inline Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> JapanesePhoneticAnalyzer::GetWords(hstring_view input)
+inline Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> JapanesePhoneticAnalyzer::GetWords(param::hstring const& input)
 {
-    return get_activation_factory<JapanesePhoneticAnalyzer, IJapanesePhoneticAnalyzerStatics>().GetWords(input);
+    return get_activation_factory<JapanesePhoneticAnalyzer, Windows::Globalization::IJapanesePhoneticAnalyzerStatics>().GetWords(input);
 }
 
-inline Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> JapanesePhoneticAnalyzer::GetWords(hstring_view input, bool monoRuby)
+inline Windows::Foundation::Collections::IVectorView<Windows::Globalization::JapanesePhoneme> JapanesePhoneticAnalyzer::GetWords(param::hstring const& input, bool monoRuby)
 {
-    return get_activation_factory<JapanesePhoneticAnalyzer, IJapanesePhoneticAnalyzerStatics>().GetWords(input, monoRuby);
+    return get_activation_factory<JapanesePhoneticAnalyzer, Windows::Globalization::IJapanesePhoneticAnalyzerStatics>().GetWords(input, monoRuby);
 }
 
-inline Language::Language(hstring_view languageTag) :
-    Language(get_activation_factory<Language, ILanguageFactory>().CreateLanguage(languageTag))
+inline Language::Language(param::hstring const& languageTag) :
+    Language(get_activation_factory<Language, Windows::Globalization::ILanguageFactory>().CreateLanguage(languageTag))
 {}
 
-inline bool Language::IsWellFormed(hstring_view languageTag)
+inline bool Language::IsWellFormed(param::hstring const& languageTag)
 {
-    return get_activation_factory<Language, ILanguageStatics>().IsWellFormed(languageTag);
+    return get_activation_factory<Language, Windows::Globalization::ILanguageStatics>().IsWellFormed(languageTag);
 }
 
 inline hstring Language::CurrentInputMethodLanguageTag()
 {
-    return get_activation_factory<Language, ILanguageStatics>().CurrentInputMethodLanguageTag();
+    return get_activation_factory<Language, Windows::Globalization::ILanguageStatics>().CurrentInputMethodLanguageTag();
 }
 
-inline bool Language::TrySetInputMethodLanguageTag(hstring_view languageTag)
+inline bool Language::TrySetInputMethodLanguageTag(param::hstring const& languageTag)
 {
-    return get_activation_factory<Language, ILanguageStatics2>().TrySetInputMethodLanguageTag(languageTag);
+    return get_activation_factory<Language, Windows::Globalization::ILanguageStatics2>().TrySetInputMethodLanguageTag(languageTag);
 }
 
 inline hstring NumeralSystemIdentifiers::Arab()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Arab();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Arab();
 }
 
 inline hstring NumeralSystemIdentifiers::ArabExt()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().ArabExt();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().ArabExt();
 }
 
 inline hstring NumeralSystemIdentifiers::Bali()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Bali();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Bali();
 }
 
 inline hstring NumeralSystemIdentifiers::Beng()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Beng();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Beng();
 }
 
 inline hstring NumeralSystemIdentifiers::Cham()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Cham();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Cham();
 }
 
 inline hstring NumeralSystemIdentifiers::Deva()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Deva();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Deva();
 }
 
 inline hstring NumeralSystemIdentifiers::FullWide()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().FullWide();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().FullWide();
 }
 
 inline hstring NumeralSystemIdentifiers::Gujr()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Gujr();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Gujr();
 }
 
 inline hstring NumeralSystemIdentifiers::Guru()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Guru();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Guru();
 }
 
 inline hstring NumeralSystemIdentifiers::HaniDec()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().HaniDec();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().HaniDec();
 }
 
 inline hstring NumeralSystemIdentifiers::Java()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Java();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Java();
 }
 
 inline hstring NumeralSystemIdentifiers::Kali()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Kali();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Kali();
 }
 
 inline hstring NumeralSystemIdentifiers::Khmr()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Khmr();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Khmr();
 }
 
 inline hstring NumeralSystemIdentifiers::Knda()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Knda();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Knda();
 }
 
 inline hstring NumeralSystemIdentifiers::Lana()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Lana();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Lana();
 }
 
 inline hstring NumeralSystemIdentifiers::LanaTham()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().LanaTham();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().LanaTham();
 }
 
 inline hstring NumeralSystemIdentifiers::Laoo()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Laoo();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Laoo();
 }
 
 inline hstring NumeralSystemIdentifiers::Latn()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Latn();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Latn();
 }
 
 inline hstring NumeralSystemIdentifiers::Lepc()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Lepc();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Lepc();
 }
 
 inline hstring NumeralSystemIdentifiers::Limb()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Limb();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Limb();
 }
 
 inline hstring NumeralSystemIdentifiers::Mlym()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Mlym();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Mlym();
 }
 
 inline hstring NumeralSystemIdentifiers::Mong()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Mong();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Mong();
 }
 
 inline hstring NumeralSystemIdentifiers::Mtei()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Mtei();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Mtei();
 }
 
 inline hstring NumeralSystemIdentifiers::Mymr()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Mymr();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Mymr();
 }
 
 inline hstring NumeralSystemIdentifiers::MymrShan()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().MymrShan();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().MymrShan();
 }
 
 inline hstring NumeralSystemIdentifiers::Nkoo()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Nkoo();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Nkoo();
 }
 
 inline hstring NumeralSystemIdentifiers::Olck()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Olck();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Olck();
 }
 
 inline hstring NumeralSystemIdentifiers::Orya()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Orya();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Orya();
 }
 
 inline hstring NumeralSystemIdentifiers::Saur()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Saur();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Saur();
 }
 
 inline hstring NumeralSystemIdentifiers::Sund()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Sund();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Sund();
 }
 
 inline hstring NumeralSystemIdentifiers::Talu()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Talu();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Talu();
 }
 
 inline hstring NumeralSystemIdentifiers::TamlDec()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().TamlDec();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().TamlDec();
 }
 
 inline hstring NumeralSystemIdentifiers::Telu()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Telu();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Telu();
 }
 
 inline hstring NumeralSystemIdentifiers::Thai()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Thai();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Thai();
 }
 
 inline hstring NumeralSystemIdentifiers::Tibt()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Tibt();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Tibt();
 }
 
 inline hstring NumeralSystemIdentifiers::Vaii()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics>().Vaii();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics>().Vaii();
 }
 
 inline hstring NumeralSystemIdentifiers::Brah()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().Brah();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().Brah();
 }
 
 inline hstring NumeralSystemIdentifiers::Osma()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().Osma();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().Osma();
 }
 
 inline hstring NumeralSystemIdentifiers::MathBold()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().MathBold();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().MathBold();
 }
 
 inline hstring NumeralSystemIdentifiers::MathDbl()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().MathDbl();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().MathDbl();
 }
 
 inline hstring NumeralSystemIdentifiers::MathSans()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().MathSans();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().MathSans();
 }
 
 inline hstring NumeralSystemIdentifiers::MathSanb()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().MathSanb();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().MathSanb();
 }
 
 inline hstring NumeralSystemIdentifiers::MathMono()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().MathMono();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().MathMono();
 }
 
 inline hstring NumeralSystemIdentifiers::ZmthBold()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().ZmthBold();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().ZmthBold();
 }
 
 inline hstring NumeralSystemIdentifiers::ZmthDbl()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().ZmthDbl();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().ZmthDbl();
 }
 
 inline hstring NumeralSystemIdentifiers::ZmthSans()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().ZmthSans();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().ZmthSans();
 }
 
 inline hstring NumeralSystemIdentifiers::ZmthSanb()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().ZmthSanb();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().ZmthSanb();
 }
 
 inline hstring NumeralSystemIdentifiers::ZmthMono()
 {
-    return get_activation_factory<NumeralSystemIdentifiers, INumeralSystemIdentifiersStatics2>().ZmthMono();
+    return get_activation_factory<NumeralSystemIdentifiers, Windows::Globalization::INumeralSystemIdentifiersStatics2>().ZmthMono();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Globalization::IApplicationLanguagesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::IApplicationLanguagesStatics> {};
+
+template<> struct hash<winrt::Windows::Globalization::ICalendar> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ICalendar> {};
+
+template<> struct hash<winrt::Windows::Globalization::ICalendarFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ICalendarFactory> {};
+
+template<> struct hash<winrt::Windows::Globalization::ICalendarFactory2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ICalendarFactory2> {};
+
+template<> struct hash<winrt::Windows::Globalization::ICalendarIdentifiersStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ICalendarIdentifiersStatics> {};
+
+template<> struct hash<winrt::Windows::Globalization::ICalendarIdentifiersStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ICalendarIdentifiersStatics2> {};
+
+template<> struct hash<winrt::Windows::Globalization::ICalendarIdentifiersStatics3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ICalendarIdentifiersStatics3> {};
+
+template<> struct hash<winrt::Windows::Globalization::IClockIdentifiersStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::IClockIdentifiersStatics> {};
+
+template<> struct hash<winrt::Windows::Globalization::ICurrencyIdentifiersStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ICurrencyIdentifiersStatics> {};
+
+template<> struct hash<winrt::Windows::Globalization::ICurrencyIdentifiersStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ICurrencyIdentifiersStatics2> {};
+
+template<> struct hash<winrt::Windows::Globalization::IGeographicRegion> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::IGeographicRegion> {};
+
+template<> struct hash<winrt::Windows::Globalization::IGeographicRegionFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::IGeographicRegionFactory> {};
+
+template<> struct hash<winrt::Windows::Globalization::IGeographicRegionStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::IGeographicRegionStatics> {};
+
+template<> struct hash<winrt::Windows::Globalization::IJapanesePhoneme> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::IJapanesePhoneme> {};
+
+template<> struct hash<winrt::Windows::Globalization::IJapanesePhoneticAnalyzerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::IJapanesePhoneticAnalyzerStatics> {};
+
+template<> struct hash<winrt::Windows::Globalization::ILanguage> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ILanguage> {};
+
+template<> struct hash<winrt::Windows::Globalization::ILanguageExtensionSubtags> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ILanguageExtensionSubtags> {};
+
+template<> struct hash<winrt::Windows::Globalization::ILanguageFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ILanguageFactory> {};
+
+template<> struct hash<winrt::Windows::Globalization::ILanguageStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ILanguageStatics> {};
+
+template<> struct hash<winrt::Windows::Globalization::ILanguageStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ILanguageStatics2> {};
+
+template<> struct hash<winrt::Windows::Globalization::INumeralSystemIdentifiersStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::INumeralSystemIdentifiersStatics> {};
+
+template<> struct hash<winrt::Windows::Globalization::INumeralSystemIdentifiersStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::INumeralSystemIdentifiersStatics2> {};
+
+template<> struct hash<winrt::Windows::Globalization::ITimeZoneOnCalendar> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ITimeZoneOnCalendar> {};
+
+template<> struct hash<winrt::Windows::Globalization::ApplicationLanguages> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ApplicationLanguages> {};
+
+template<> struct hash<winrt::Windows::Globalization::Calendar> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::Calendar> {};
+
+template<> struct hash<winrt::Windows::Globalization::CalendarIdentifiers> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::CalendarIdentifiers> {};
+
+template<> struct hash<winrt::Windows::Globalization::ClockIdentifiers> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::ClockIdentifiers> {};
+
+template<> struct hash<winrt::Windows::Globalization::CurrencyIdentifiers> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::CurrencyIdentifiers> {};
+
+template<> struct hash<winrt::Windows::Globalization::GeographicRegion> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::GeographicRegion> {};
+
+template<> struct hash<winrt::Windows::Globalization::JapanesePhoneme> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::JapanesePhoneme> {};
+
+template<> struct hash<winrt::Windows::Globalization::JapanesePhoneticAnalyzer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::JapanesePhoneticAnalyzer> {};
+
+template<> struct hash<winrt::Windows::Globalization::Language> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::Language> {};
+
+template<> struct hash<winrt::Windows::Globalization::NumeralSystemIdentifiers> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Globalization::NumeralSystemIdentifiers> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Globalization::IApplicationLanguagesStatics>
-{
-    size_t operator()(const winrt::Windows::Globalization::IApplicationLanguagesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ICalendar>
-{
-    size_t operator()(const winrt::Windows::Globalization::ICalendar & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ICalendarFactory>
-{
-    size_t operator()(const winrt::Windows::Globalization::ICalendarFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ICalendarFactory2>
-{
-    size_t operator()(const winrt::Windows::Globalization::ICalendarFactory2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ICalendarIdentifiersStatics>
-{
-    size_t operator()(const winrt::Windows::Globalization::ICalendarIdentifiersStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ICalendarIdentifiersStatics2>
-{
-    size_t operator()(const winrt::Windows::Globalization::ICalendarIdentifiersStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ICalendarIdentifiersStatics3>
-{
-    size_t operator()(const winrt::Windows::Globalization::ICalendarIdentifiersStatics3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::IClockIdentifiersStatics>
-{
-    size_t operator()(const winrt::Windows::Globalization::IClockIdentifiersStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ICurrencyIdentifiersStatics>
-{
-    size_t operator()(const winrt::Windows::Globalization::ICurrencyIdentifiersStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ICurrencyIdentifiersStatics2>
-{
-    size_t operator()(const winrt::Windows::Globalization::ICurrencyIdentifiersStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::IGeographicRegion>
-{
-    size_t operator()(const winrt::Windows::Globalization::IGeographicRegion & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::IGeographicRegionFactory>
-{
-    size_t operator()(const winrt::Windows::Globalization::IGeographicRegionFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::IGeographicRegionStatics>
-{
-    size_t operator()(const winrt::Windows::Globalization::IGeographicRegionStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::IJapanesePhoneme>
-{
-    size_t operator()(const winrt::Windows::Globalization::IJapanesePhoneme & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::IJapanesePhoneticAnalyzerStatics>
-{
-    size_t operator()(const winrt::Windows::Globalization::IJapanesePhoneticAnalyzerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ILanguage>
-{
-    size_t operator()(const winrt::Windows::Globalization::ILanguage & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ILanguageExtensionSubtags>
-{
-    size_t operator()(const winrt::Windows::Globalization::ILanguageExtensionSubtags & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ILanguageFactory>
-{
-    size_t operator()(const winrt::Windows::Globalization::ILanguageFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ILanguageStatics>
-{
-    size_t operator()(const winrt::Windows::Globalization::ILanguageStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ILanguageStatics2>
-{
-    size_t operator()(const winrt::Windows::Globalization::ILanguageStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::INumeralSystemIdentifiersStatics>
-{
-    size_t operator()(const winrt::Windows::Globalization::INumeralSystemIdentifiersStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::INumeralSystemIdentifiersStatics2>
-{
-    size_t operator()(const winrt::Windows::Globalization::INumeralSystemIdentifiersStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::ITimeZoneOnCalendar>
-{
-    size_t operator()(const winrt::Windows::Globalization::ITimeZoneOnCalendar & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::Calendar>
-{
-    size_t operator()(const winrt::Windows::Globalization::Calendar & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::GeographicRegion>
-{
-    size_t operator()(const winrt::Windows::Globalization::GeographicRegion & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::JapanesePhoneme>
-{
-    size_t operator()(const winrt::Windows::Globalization::JapanesePhoneme & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Globalization::Language>
-{
-    size_t operator()(const winrt::Windows::Globalization::Language & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

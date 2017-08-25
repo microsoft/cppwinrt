@@ -1,24 +1,192 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.ApplicationModel.2.h"
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.Management.Deployment.2.h"
+#include "winrt/impl/Windows.Phone.Management.Deployment.2.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Management.Deployment.3.h"
-#include "internal/Windows.Phone.Management.Deployment.3.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> GUID consume_Windows_Phone_Management_Deployment_IEnterprise<D>::Id() const
+{
+    GUID value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterprise)->get_Id(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> hstring consume_Windows_Phone_Management_Deployment_IEnterprise<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterprise)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Phone_Management_Deployment_IEnterprise<D>::WorkplaceId() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterprise)->get_WorkplaceId(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Phone_Management_Deployment_IEnterprise<D>::EnrollmentValidFrom() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterprise)->get_EnrollmentValidFrom(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Phone_Management_Deployment_IEnterprise<D>::EnrollmentValidTo() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterprise)->get_EnrollmentValidTo(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Phone::Management::Deployment::EnterpriseStatus consume_Windows_Phone_Management_Deployment_IEnterprise<D>::Status() const
+{
+    Windows::Phone::Management::Deployment::EnterpriseStatus value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterprise)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Phone::Management::Deployment::Enterprise> consume_Windows_Phone_Management_Deployment_IEnterpriseEnrollmentManager<D>::EnrolledEnterprises() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Phone::Management::Deployment::Enterprise> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager)->get_EnrolledEnterprises(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Phone::Management::Deployment::Enterprise consume_Windows_Phone_Management_Deployment_IEnterpriseEnrollmentManager<D>::CurrentEnterprise() const
+{
+    Windows::Phone::Management::Deployment::Enterprise result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager)->get_CurrentEnterprise(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Phone_Management_Deployment_IEnterpriseEnrollmentManager<D>::ValidateEnterprisesAsync() const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager)->ValidateEnterprisesAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> consume_Windows_Phone_Management_Deployment_IEnterpriseEnrollmentManager<D>::RequestEnrollmentAsync(param::hstring const& enrollmentToken) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager)->RequestEnrollmentAsync(get_abi(enrollmentToken), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_Phone_Management_Deployment_IEnterpriseEnrollmentManager<D>::RequestUnenrollmentAsync(Windows::Phone::Management::Deployment::Enterprise const& enterprise) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager)->RequestUnenrollmentAsync(get_abi(enterprise), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Phone::Management::Deployment::Enterprise consume_Windows_Phone_Management_Deployment_IEnterpriseEnrollmentResult<D>::EnrolledEnterprise() const
+{
+    Windows::Phone::Management::Deployment::Enterprise result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterpriseEnrollmentResult)->get_EnrolledEnterprise(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Phone::Management::Deployment::EnterpriseEnrollmentStatus consume_Windows_Phone_Management_Deployment_IEnterpriseEnrollmentResult<D>::Status() const
+{
+    Windows::Phone::Management::Deployment::EnterpriseEnrollmentStatus value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IEnterpriseEnrollmentResult)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> consume_Windows_Phone_Management_Deployment_IInstallationManagerStatics<D>::AddPackageAsync(param::hstring const& title, Windows::Foundation::Uri const& sourceLocation) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> asyncInfo{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IInstallationManagerStatics)->AddPackageAsync(get_abi(title), get_abi(sourceLocation), put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> consume_Windows_Phone_Management_Deployment_IInstallationManagerStatics<D>::AddPackageAsync(param::hstring const& title, Windows::Foundation::Uri const& sourceLocation, param::hstring const& instanceId, param::hstring const& offerId, Windows::Foundation::Uri const& license) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> asyncInfo{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IInstallationManagerStatics)->AddPackagePreloadedAsync(get_abi(title), get_abi(sourceLocation), get_abi(instanceId), get_abi(offerId), get_abi(license), put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> Windows::Foundation::Collections::IIterable<Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t>> consume_Windows_Phone_Management_Deployment_IInstallationManagerStatics<D>::GetPendingPackageInstalls() const
+{
+    Windows::Foundation::Collections::IIterable<Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t>> items{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IInstallationManagerStatics)->GetPendingPackageInstalls(put_abi(items)));
+    return items;
+}
+
+template <typename D> Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> consume_Windows_Phone_Management_Deployment_IInstallationManagerStatics<D>::FindPackagesForCurrentPublisher() const
+{
+    Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> items{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IInstallationManagerStatics)->FindPackagesForCurrentPublisher(put_abi(items)));
+    return items;
+}
+
+template <typename D> Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> consume_Windows_Phone_Management_Deployment_IInstallationManagerStatics<D>::FindPackages() const
+{
+    Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> items{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IInstallationManagerStatics)->FindPackages(put_abi(items)));
+    return items;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> consume_Windows_Phone_Management_Deployment_IInstallationManagerStatics2<D>::RemovePackageAsync(param::hstring const& packageFullName, Windows::Management::Deployment::RemovalOptions const& removalOptions) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> asyncInfo{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IInstallationManagerStatics2)->RemovePackageAsync(get_abi(packageFullName), get_abi(removalOptions), put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> consume_Windows_Phone_Management_Deployment_IInstallationManagerStatics2<D>::RegisterPackageAsync(Windows::Foundation::Uri const& manifestUri, param::async_iterable<Windows::Foundation::Uri> const& dependencyPackageUris, Windows::Management::Deployment::DeploymentOptions const& deploymentOptions) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> asyncInfo{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IInstallationManagerStatics2)->RegisterPackageAsync(get_abi(manifestUri), get_abi(dependencyPackageUris), get_abi(deploymentOptions), put_abi(asyncInfo)));
+    return asyncInfo;
+}
+
+template <typename D> Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> consume_Windows_Phone_Management_Deployment_IInstallationManagerStatics2<D>::FindPackages(param::hstring const& packageName, param::hstring const& packagePublisher) const
+{
+    Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> items{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IInstallationManagerStatics2)->FindPackagesByNamePublisher(get_abi(packageName), get_abi(packagePublisher), put_abi(items)));
+    return items;
+}
+
+template <typename D> hstring consume_Windows_Phone_Management_Deployment_IPackageInstallResult<D>::ProductId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IPackageInstallResult)->get_ProductId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Management::Deployment::PackageInstallState consume_Windows_Phone_Management_Deployment_IPackageInstallResult<D>::InstallState() const
+{
+    Windows::Management::Deployment::PackageInstallState value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IPackageInstallResult)->get_InstallState(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Phone_Management_Deployment_IPackageInstallResult2<D>::ErrorText() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Phone::Management::Deployment::IPackageInstallResult2)->get_ErrorText(put_abi(value)));
+    return value;
+}
 
 template <typename D>
 struct produce<D, Windows::Phone::Management::Deployment::IEnterprise> : produce_base<D, Windows::Phone::Management::Deployment::IEnterprise>
 {
-    HRESULT __stdcall get_Id(GUID * value) noexcept override
+    HRESULT __stdcall get_Id(abi_t<GUID>* value) noexcept override
     {
         try
         {
@@ -32,7 +200,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterprise> : produce
         }
     }
 
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -47,7 +215,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterprise> : produce
         }
     }
 
-    HRESULT __stdcall get_WorkplaceId(int32_t * value) noexcept override
+    HRESULT __stdcall get_WorkplaceId(int32_t* value) noexcept override
     {
         try
         {
@@ -61,7 +229,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterprise> : produce
         }
     }
 
-    HRESULT __stdcall get_EnrollmentValidFrom(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_EnrollmentValidFrom(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -75,7 +243,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterprise> : produce
         }
     }
 
-    HRESULT __stdcall get_EnrollmentValidTo(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_EnrollmentValidTo(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -89,7 +257,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterprise> : produce
         }
     }
 
-    HRESULT __stdcall get_Status(Windows::Phone::Management::Deployment::EnterpriseStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::Phone::Management::Deployment::EnterpriseStatus>* value) noexcept override
     {
         try
         {
@@ -107,7 +275,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterprise> : produce
 template <typename D>
 struct produce<D, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager> : produce_base<D, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager>
 {
-    HRESULT __stdcall get_EnrolledEnterprises(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Phone::Management::Deployment::Enterprise>> result) noexcept override
+    HRESULT __stdcall get_EnrolledEnterprises(::IUnknown** result) noexcept override
     {
         try
         {
@@ -122,7 +290,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentM
         }
     }
 
-    HRESULT __stdcall get_CurrentEnterprise(impl::abi_arg_out<Windows::Phone::Management::Deployment::IEnterprise> result) noexcept override
+    HRESULT __stdcall get_CurrentEnterprise(::IUnknown** result) noexcept override
     {
         try
         {
@@ -137,7 +305,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentM
         }
     }
 
-    HRESULT __stdcall abi_ValidateEnterprisesAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall ValidateEnterprisesAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -152,12 +320,12 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentM
         }
     }
 
-    HRESULT __stdcall abi_RequestEnrollmentAsync(impl::abi_arg_in<hstring> enrollmentToken, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult>> result) noexcept override
+    HRESULT __stdcall RequestEnrollmentAsync(HSTRING enrollmentToken, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().RequestEnrollmentAsync(*reinterpret_cast<const hstring *>(&enrollmentToken)));
+            *result = detach_abi(this->shim().RequestEnrollmentAsync(*reinterpret_cast<hstring const*>(&enrollmentToken)));
             return S_OK;
         }
         catch (...)
@@ -167,12 +335,12 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentM
         }
     }
 
-    HRESULT __stdcall abi_RequestUnenrollmentAsync(impl::abi_arg_in<Windows::Phone::Management::Deployment::IEnterprise> enterprise, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall RequestUnenrollmentAsync(::IUnknown* enterprise, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().RequestUnenrollmentAsync(*reinterpret_cast<const Windows::Phone::Management::Deployment::Enterprise *>(&enterprise)));
+            *result = detach_abi(this->shim().RequestUnenrollmentAsync(*reinterpret_cast<Windows::Phone::Management::Deployment::Enterprise const*>(&enterprise)));
             return S_OK;
         }
         catch (...)
@@ -186,7 +354,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentM
 template <typename D>
 struct produce<D, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentResult> : produce_base<D, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentResult>
 {
-    HRESULT __stdcall get_EnrolledEnterprise(impl::abi_arg_out<Windows::Phone::Management::Deployment::IEnterprise> result) noexcept override
+    HRESULT __stdcall get_EnrolledEnterprise(::IUnknown** result) noexcept override
     {
         try
         {
@@ -201,7 +369,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentR
         }
     }
 
-    HRESULT __stdcall get_Status(Windows::Phone::Management::Deployment::EnterpriseEnrollmentStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::Phone::Management::Deployment::EnterpriseEnrollmentStatus>* value) noexcept override
     {
         try
         {
@@ -219,12 +387,12 @@ struct produce<D, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentR
 template <typename D>
 struct produce<D, Windows::Phone::Management::Deployment::IInstallationManagerStatics> : produce_base<D, Windows::Phone::Management::Deployment::IInstallationManagerStatics>
 {
-    HRESULT __stdcall abi_AddPackageAsync(impl::abi_arg_in<hstring> title, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> sourceLocation, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t>> asyncInfo) noexcept override
+    HRESULT __stdcall AddPackageAsync(HSTRING title, ::IUnknown* sourceLocation, ::IUnknown** asyncInfo) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *asyncInfo = detach_abi(this->shim().AddPackageAsync(*reinterpret_cast<const hstring *>(&title), *reinterpret_cast<const Windows::Foundation::Uri *>(&sourceLocation)));
+            *asyncInfo = detach_abi(this->shim().AddPackageAsync(*reinterpret_cast<hstring const*>(&title), *reinterpret_cast<Windows::Foundation::Uri const*>(&sourceLocation)));
             return S_OK;
         }
         catch (...)
@@ -234,12 +402,12 @@ struct produce<D, Windows::Phone::Management::Deployment::IInstallationManagerSt
         }
     }
 
-    HRESULT __stdcall abi_AddPackagePreloadedAsync(impl::abi_arg_in<hstring> title, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> sourceLocation, impl::abi_arg_in<hstring> instanceId, impl::abi_arg_in<hstring> offerId, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> license, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t>> asyncInfo) noexcept override
+    HRESULT __stdcall AddPackagePreloadedAsync(HSTRING title, ::IUnknown* sourceLocation, HSTRING instanceId, HSTRING offerId, ::IUnknown* license, ::IUnknown** asyncInfo) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *asyncInfo = detach_abi(this->shim().AddPackageAsync(*reinterpret_cast<const hstring *>(&title), *reinterpret_cast<const Windows::Foundation::Uri *>(&sourceLocation), *reinterpret_cast<const hstring *>(&instanceId), *reinterpret_cast<const hstring *>(&offerId), *reinterpret_cast<const Windows::Foundation::Uri *>(&license)));
+            *asyncInfo = detach_abi(this->shim().AddPackageAsync(*reinterpret_cast<hstring const*>(&title), *reinterpret_cast<Windows::Foundation::Uri const*>(&sourceLocation), *reinterpret_cast<hstring const*>(&instanceId), *reinterpret_cast<hstring const*>(&offerId), *reinterpret_cast<Windows::Foundation::Uri const*>(&license)));
             return S_OK;
         }
         catch (...)
@@ -249,7 +417,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IInstallationManagerSt
         }
     }
 
-    HRESULT __stdcall abi_GetPendingPackageInstalls(impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t>>> items) noexcept override
+    HRESULT __stdcall GetPendingPackageInstalls(::IUnknown** items) noexcept override
     {
         try
         {
@@ -264,7 +432,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IInstallationManagerSt
         }
     }
 
-    HRESULT __stdcall abi_FindPackagesForCurrentPublisher(impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package>> items) noexcept override
+    HRESULT __stdcall FindPackagesForCurrentPublisher(::IUnknown** items) noexcept override
     {
         try
         {
@@ -279,7 +447,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IInstallationManagerSt
         }
     }
 
-    HRESULT __stdcall abi_FindPackages(impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package>> items) noexcept override
+    HRESULT __stdcall FindPackages(::IUnknown** items) noexcept override
     {
         try
         {
@@ -298,12 +466,12 @@ struct produce<D, Windows::Phone::Management::Deployment::IInstallationManagerSt
 template <typename D>
 struct produce<D, Windows::Phone::Management::Deployment::IInstallationManagerStatics2> : produce_base<D, Windows::Phone::Management::Deployment::IInstallationManagerStatics2>
 {
-    HRESULT __stdcall abi_RemovePackageAsync(impl::abi_arg_in<hstring> packageFullName, Windows::Management::Deployment::RemovalOptions removalOptions, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t>> asyncInfo) noexcept override
+    HRESULT __stdcall RemovePackageAsync(HSTRING packageFullName, abi_t<Windows::Management::Deployment::RemovalOptions> removalOptions, ::IUnknown** asyncInfo) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *asyncInfo = detach_abi(this->shim().RemovePackageAsync(*reinterpret_cast<const hstring *>(&packageFullName), removalOptions));
+            *asyncInfo = detach_abi(this->shim().RemovePackageAsync(*reinterpret_cast<hstring const*>(&packageFullName), *reinterpret_cast<Windows::Management::Deployment::RemovalOptions const*>(&removalOptions)));
             return S_OK;
         }
         catch (...)
@@ -313,12 +481,12 @@ struct produce<D, Windows::Phone::Management::Deployment::IInstallationManagerSt
         }
     }
 
-    HRESULT __stdcall abi_RegisterPackageAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> manifestUri, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri>> dependencyPackageUris, Windows::Management::Deployment::DeploymentOptions deploymentOptions, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t>> asyncInfo) noexcept override
+    HRESULT __stdcall RegisterPackageAsync(::IUnknown* manifestUri, ::IUnknown* dependencyPackageUris, abi_t<Windows::Management::Deployment::DeploymentOptions> deploymentOptions, ::IUnknown** asyncInfo) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *asyncInfo = detach_abi(this->shim().RegisterPackageAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&manifestUri), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri> *>(&dependencyPackageUris), deploymentOptions));
+            *asyncInfo = detach_abi(this->shim().RegisterPackageAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&manifestUri), *reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::Foundation::Uri> const*>(&dependencyPackageUris), *reinterpret_cast<Windows::Management::Deployment::DeploymentOptions const*>(&deploymentOptions)));
             return S_OK;
         }
         catch (...)
@@ -328,12 +496,12 @@ struct produce<D, Windows::Phone::Management::Deployment::IInstallationManagerSt
         }
     }
 
-    HRESULT __stdcall abi_FindPackagesByNamePublisher(impl::abi_arg_in<hstring> packageName, impl::abi_arg_in<hstring> packagePublisher, impl::abi_arg_out<Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package>> items) noexcept override
+    HRESULT __stdcall FindPackagesByNamePublisher(HSTRING packageName, HSTRING packagePublisher, ::IUnknown** items) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *items = detach_abi(this->shim().FindPackages(*reinterpret_cast<const hstring *>(&packageName), *reinterpret_cast<const hstring *>(&packagePublisher)));
+            *items = detach_abi(this->shim().FindPackages(*reinterpret_cast<hstring const*>(&packageName), *reinterpret_cast<hstring const*>(&packagePublisher)));
             return S_OK;
         }
         catch (...)
@@ -347,7 +515,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IInstallationManagerSt
 template <typename D>
 struct produce<D, Windows::Phone::Management::Deployment::IPackageInstallResult> : produce_base<D, Windows::Phone::Management::Deployment::IPackageInstallResult>
 {
-    HRESULT __stdcall get_ProductId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ProductId(HSTRING* value) noexcept override
     {
         try
         {
@@ -362,7 +530,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IPackageInstallResult>
         }
     }
 
-    HRESULT __stdcall get_InstallState(Windows::Management::Deployment::PackageInstallState * value) noexcept override
+    HRESULT __stdcall get_InstallState(abi_t<Windows::Management::Deployment::PackageInstallState>* value) noexcept override
     {
         try
         {
@@ -380,7 +548,7 @@ struct produce<D, Windows::Phone::Management::Deployment::IPackageInstallResult>
 template <typename D>
 struct produce<D, Windows::Phone::Management::Deployment::IPackageInstallResult2> : produce_base<D, Windows::Phone::Management::Deployment::IPackageInstallResult2>
 {
-    HRESULT __stdcall get_ErrorText(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ErrorText(HSTRING* value) noexcept override
     {
         try
         {
@@ -398,333 +566,113 @@ struct produce<D, Windows::Phone::Management::Deployment::IPackageInstallResult2
 
 }
 
-namespace Windows::Phone::Management::Deployment {
-
-template <typename D> GUID impl_IEnterprise<D>::Id() const
-{
-    GUID value {};
-    check_hresult(WINRT_SHIM(IEnterprise)->get_Id(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IEnterprise<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEnterprise)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> int32_t impl_IEnterprise<D>::WorkplaceId() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IEnterprise)->get_WorkplaceId(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IEnterprise<D>::EnrollmentValidFrom() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IEnterprise)->get_EnrollmentValidFrom(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IEnterprise<D>::EnrollmentValidTo() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IEnterprise)->get_EnrollmentValidTo(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Phone::Management::Deployment::EnterpriseStatus impl_IEnterprise<D>::Status() const
-{
-    Windows::Phone::Management::Deployment::EnterpriseStatus value {};
-    check_hresult(WINRT_SHIM(IEnterprise)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Phone::Management::Deployment::Enterprise> impl_IEnterpriseEnrollmentManager<D>::EnrolledEnterprises() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Phone::Management::Deployment::Enterprise> result;
-    check_hresult(WINRT_SHIM(IEnterpriseEnrollmentManager)->get_EnrolledEnterprises(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Phone::Management::Deployment::Enterprise impl_IEnterpriseEnrollmentManager<D>::CurrentEnterprise() const
-{
-    Windows::Phone::Management::Deployment::Enterprise result { nullptr };
-    check_hresult(WINRT_SHIM(IEnterpriseEnrollmentManager)->get_CurrentEnterprise(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEnterpriseEnrollmentManager<D>::ValidateEnterprisesAsync() const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEnterpriseEnrollmentManager)->abi_ValidateEnterprisesAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> impl_IEnterpriseEnrollmentManager<D>::RequestEnrollmentAsync(hstring_view enrollmentToken) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> result;
-    check_hresult(WINRT_SHIM(IEnterpriseEnrollmentManager)->abi_RequestEnrollmentAsync(get_abi(enrollmentToken), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEnterpriseEnrollmentManager<D>::RequestUnenrollmentAsync(const Windows::Phone::Management::Deployment::Enterprise & enterprise) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEnterpriseEnrollmentManager)->abi_RequestUnenrollmentAsync(get_abi(enterprise), put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IPackageInstallResult<D>::ProductId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPackageInstallResult)->get_ProductId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Management::Deployment::PackageInstallState impl_IPackageInstallResult<D>::InstallState() const
-{
-    Windows::Management::Deployment::PackageInstallState value {};
-    check_hresult(WINRT_SHIM(IPackageInstallResult)->get_InstallState(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IPackageInstallResult2<D>::ErrorText() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPackageInstallResult2)->get_ErrorText(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Phone::Management::Deployment::Enterprise impl_IEnterpriseEnrollmentResult<D>::EnrolledEnterprise() const
-{
-    Windows::Phone::Management::Deployment::Enterprise result { nullptr };
-    check_hresult(WINRT_SHIM(IEnterpriseEnrollmentResult)->get_EnrolledEnterprise(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Phone::Management::Deployment::EnterpriseEnrollmentStatus impl_IEnterpriseEnrollmentResult<D>::Status() const
-{
-    Windows::Phone::Management::Deployment::EnterpriseEnrollmentStatus value {};
-    check_hresult(WINRT_SHIM(IEnterpriseEnrollmentResult)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> impl_IInstallationManagerStatics<D>::AddPackageAsync(hstring_view title, const Windows::Foundation::Uri & sourceLocation) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> asyncInfo;
-    check_hresult(WINRT_SHIM(IInstallationManagerStatics)->abi_AddPackageAsync(get_abi(title), get_abi(sourceLocation), put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> impl_IInstallationManagerStatics<D>::AddPackageAsync(hstring_view title, const Windows::Foundation::Uri & sourceLocation, hstring_view instanceId, hstring_view offerId, const Windows::Foundation::Uri & license) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> asyncInfo;
-    check_hresult(WINRT_SHIM(IInstallationManagerStatics)->abi_AddPackagePreloadedAsync(get_abi(title), get_abi(sourceLocation), get_abi(instanceId), get_abi(offerId), get_abi(license), put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> Windows::Foundation::Collections::IIterable<Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t>> impl_IInstallationManagerStatics<D>::GetPendingPackageInstalls() const
-{
-    Windows::Foundation::Collections::IIterable<Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t>> items;
-    check_hresult(WINRT_SHIM(IInstallationManagerStatics)->abi_GetPendingPackageInstalls(put_abi(items)));
-    return items;
-}
-
-template <typename D> Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> impl_IInstallationManagerStatics<D>::FindPackagesForCurrentPublisher() const
-{
-    Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> items;
-    check_hresult(WINRT_SHIM(IInstallationManagerStatics)->abi_FindPackagesForCurrentPublisher(put_abi(items)));
-    return items;
-}
-
-template <typename D> Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> impl_IInstallationManagerStatics<D>::FindPackages() const
-{
-    Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> items;
-    check_hresult(WINRT_SHIM(IInstallationManagerStatics)->abi_FindPackages(put_abi(items)));
-    return items;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> impl_IInstallationManagerStatics2<D>::RemovePackageAsync(hstring_view packageFullName, Windows::Management::Deployment::RemovalOptions removalOptions) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> asyncInfo;
-    check_hresult(WINRT_SHIM(IInstallationManagerStatics2)->abi_RemovePackageAsync(get_abi(packageFullName), removalOptions, put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> impl_IInstallationManagerStatics2<D>::RegisterPackageAsync(const Windows::Foundation::Uri & manifestUri, iterable<Windows::Foundation::Uri> dependencyPackageUris, Windows::Management::Deployment::DeploymentOptions deploymentOptions) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> asyncInfo;
-    check_hresult(WINRT_SHIM(IInstallationManagerStatics2)->abi_RegisterPackageAsync(get_abi(manifestUri), get_abi(dependencyPackageUris), deploymentOptions, put_abi(asyncInfo)));
-    return asyncInfo;
-}
-
-template <typename D> Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> impl_IInstallationManagerStatics2<D>::FindPackages(hstring_view packageName, hstring_view packagePublisher) const
-{
-    Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> items;
-    check_hresult(WINRT_SHIM(IInstallationManagerStatics2)->abi_FindPackagesByNamePublisher(get_abi(packageName), get_abi(packagePublisher), put_abi(items)));
-    return items;
-}
+WINRT_EXPORT namespace winrt::Windows::Phone::Management::Deployment {
 
 inline Windows::Foundation::Collections::IVectorView<Windows::Phone::Management::Deployment::Enterprise> EnterpriseEnrollmentManager::EnrolledEnterprises()
 {
-    return get_activation_factory<EnterpriseEnrollmentManager, IEnterpriseEnrollmentManager>().EnrolledEnterprises();
+    return get_activation_factory<EnterpriseEnrollmentManager, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager>().EnrolledEnterprises();
 }
 
 inline Windows::Phone::Management::Deployment::Enterprise EnterpriseEnrollmentManager::CurrentEnterprise()
 {
-    return get_activation_factory<EnterpriseEnrollmentManager, IEnterpriseEnrollmentManager>().CurrentEnterprise();
+    return get_activation_factory<EnterpriseEnrollmentManager, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager>().CurrentEnterprise();
 }
 
 inline Windows::Foundation::IAsyncAction EnterpriseEnrollmentManager::ValidateEnterprisesAsync()
 {
-    return get_activation_factory<EnterpriseEnrollmentManager, IEnterpriseEnrollmentManager>().ValidateEnterprisesAsync();
+    return get_activation_factory<EnterpriseEnrollmentManager, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager>().ValidateEnterprisesAsync();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> EnterpriseEnrollmentManager::RequestEnrollmentAsync(hstring_view enrollmentToken)
+inline Windows::Foundation::IAsyncOperation<Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> EnterpriseEnrollmentManager::RequestEnrollmentAsync(param::hstring const& enrollmentToken)
 {
-    return get_activation_factory<EnterpriseEnrollmentManager, IEnterpriseEnrollmentManager>().RequestEnrollmentAsync(enrollmentToken);
+    return get_activation_factory<EnterpriseEnrollmentManager, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager>().RequestEnrollmentAsync(enrollmentToken);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> EnterpriseEnrollmentManager::RequestUnenrollmentAsync(const Windows::Phone::Management::Deployment::Enterprise & enterprise)
+inline Windows::Foundation::IAsyncOperation<bool> EnterpriseEnrollmentManager::RequestUnenrollmentAsync(Windows::Phone::Management::Deployment::Enterprise const& enterprise)
 {
-    return get_activation_factory<EnterpriseEnrollmentManager, IEnterpriseEnrollmentManager>().RequestUnenrollmentAsync(enterprise);
+    return get_activation_factory<EnterpriseEnrollmentManager, Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager>().RequestUnenrollmentAsync(enterprise);
 }
 
-inline Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> InstallationManager::AddPackageAsync(hstring_view title, const Windows::Foundation::Uri & sourceLocation)
+inline Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> InstallationManager::AddPackageAsync(param::hstring const& title, Windows::Foundation::Uri const& sourceLocation)
 {
-    return get_activation_factory<InstallationManager, IInstallationManagerStatics>().AddPackageAsync(title, sourceLocation);
+    return get_activation_factory<InstallationManager, Windows::Phone::Management::Deployment::IInstallationManagerStatics>().AddPackageAsync(title, sourceLocation);
 }
 
-inline Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> InstallationManager::AddPackageAsync(hstring_view title, const Windows::Foundation::Uri & sourceLocation, hstring_view instanceId, hstring_view offerId, const Windows::Foundation::Uri & license)
+inline Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> InstallationManager::AddPackageAsync(param::hstring const& title, Windows::Foundation::Uri const& sourceLocation, param::hstring const& instanceId, param::hstring const& offerId, Windows::Foundation::Uri const& license)
 {
-    return get_activation_factory<InstallationManager, IInstallationManagerStatics>().AddPackageAsync(title, sourceLocation, instanceId, offerId, license);
+    return get_activation_factory<InstallationManager, Windows::Phone::Management::Deployment::IInstallationManagerStatics>().AddPackageAsync(title, sourceLocation, instanceId, offerId, license);
 }
 
 inline Windows::Foundation::Collections::IIterable<Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t>> InstallationManager::GetPendingPackageInstalls()
 {
-    return get_activation_factory<InstallationManager, IInstallationManagerStatics>().GetPendingPackageInstalls();
+    return get_activation_factory<InstallationManager, Windows::Phone::Management::Deployment::IInstallationManagerStatics>().GetPendingPackageInstalls();
 }
 
 inline Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> InstallationManager::FindPackagesForCurrentPublisher()
 {
-    return get_activation_factory<InstallationManager, IInstallationManagerStatics>().FindPackagesForCurrentPublisher();
+    return get_activation_factory<InstallationManager, Windows::Phone::Management::Deployment::IInstallationManagerStatics>().FindPackagesForCurrentPublisher();
 }
 
 inline Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> InstallationManager::FindPackages()
 {
-    return get_activation_factory<InstallationManager, IInstallationManagerStatics>().FindPackages();
+    return get_activation_factory<InstallationManager, Windows::Phone::Management::Deployment::IInstallationManagerStatics>().FindPackages();
 }
 
-inline Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> InstallationManager::RemovePackageAsync(hstring_view packageFullName, Windows::Management::Deployment::RemovalOptions removalOptions)
+inline Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> InstallationManager::RemovePackageAsync(param::hstring const& packageFullName, Windows::Management::Deployment::RemovalOptions const& removalOptions)
 {
-    return get_activation_factory<InstallationManager, IInstallationManagerStatics2>().RemovePackageAsync(packageFullName, removalOptions);
+    return get_activation_factory<InstallationManager, Windows::Phone::Management::Deployment::IInstallationManagerStatics2>().RemovePackageAsync(packageFullName, removalOptions);
 }
 
-inline Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> InstallationManager::RegisterPackageAsync(const Windows::Foundation::Uri & manifestUri, iterable<Windows::Foundation::Uri> dependencyPackageUris, Windows::Management::Deployment::DeploymentOptions deploymentOptions)
+inline Windows::Foundation::IAsyncOperationWithProgress<Windows::Phone::Management::Deployment::PackageInstallResult, uint32_t> InstallationManager::RegisterPackageAsync(Windows::Foundation::Uri const& manifestUri, param::async_iterable<Windows::Foundation::Uri> const& dependencyPackageUris, Windows::Management::Deployment::DeploymentOptions const& deploymentOptions)
 {
-    return get_activation_factory<InstallationManager, IInstallationManagerStatics2>().RegisterPackageAsync(manifestUri, dependencyPackageUris, deploymentOptions);
+    return get_activation_factory<InstallationManager, Windows::Phone::Management::Deployment::IInstallationManagerStatics2>().RegisterPackageAsync(manifestUri, dependencyPackageUris, deploymentOptions);
 }
 
-inline Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> InstallationManager::FindPackages(hstring_view packageName, hstring_view packagePublisher)
+inline Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Package> InstallationManager::FindPackages(param::hstring const& packageName, param::hstring const& packagePublisher)
 {
-    return get_activation_factory<InstallationManager, IInstallationManagerStatics2>().FindPackages(packageName, packagePublisher);
+    return get_activation_factory<InstallationManager, Windows::Phone::Management::Deployment::IInstallationManagerStatics2>().FindPackages(packageName, packagePublisher);
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::IEnterprise> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::IEnterprise> {};
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager> {};
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::IEnterpriseEnrollmentResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::IEnterpriseEnrollmentResult> {};
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::IInstallationManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::IInstallationManagerStatics> {};
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::IInstallationManagerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::IInstallationManagerStatics2> {};
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::IPackageInstallResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::IPackageInstallResult> {};
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::IPackageInstallResult2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::IPackageInstallResult2> {};
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::Enterprise> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::Enterprise> {};
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::EnterpriseEnrollmentManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::EnterpriseEnrollmentManager> {};
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult> {};
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::InstallationManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::InstallationManager> {};
+
+template<> struct hash<winrt::Windows::Phone::Management::Deployment::PackageInstallResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Phone::Management::Deployment::PackageInstallResult> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Phone::Management::Deployment::IEnterprise>
-{
-    size_t operator()(const winrt::Windows::Phone::Management::Deployment::IEnterprise & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager>
-{
-    size_t operator()(const winrt::Windows::Phone::Management::Deployment::IEnterpriseEnrollmentManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::Management::Deployment::IEnterpriseEnrollmentResult>
-{
-    size_t operator()(const winrt::Windows::Phone::Management::Deployment::IEnterpriseEnrollmentResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::Management::Deployment::IInstallationManagerStatics>
-{
-    size_t operator()(const winrt::Windows::Phone::Management::Deployment::IInstallationManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::Management::Deployment::IInstallationManagerStatics2>
-{
-    size_t operator()(const winrt::Windows::Phone::Management::Deployment::IInstallationManagerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::Management::Deployment::IPackageInstallResult>
-{
-    size_t operator()(const winrt::Windows::Phone::Management::Deployment::IPackageInstallResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::Management::Deployment::IPackageInstallResult2>
-{
-    size_t operator()(const winrt::Windows::Phone::Management::Deployment::IPackageInstallResult2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::Management::Deployment::Enterprise>
-{
-    size_t operator()(const winrt::Windows::Phone::Management::Deployment::Enterprise & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult>
-{
-    size_t operator()(const winrt::Windows::Phone::Management::Deployment::EnterpriseEnrollmentResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Phone::Management::Deployment::PackageInstallResult>
-{
-    size_t operator()(const winrt::Windows::Phone::Management::Deployment::PackageInstallResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

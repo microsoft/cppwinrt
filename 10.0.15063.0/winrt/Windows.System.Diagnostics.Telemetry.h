@@ -1,27 +1,72 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.System.Diagnostics.Telemetry.2.h"
+#include "winrt/Windows.System.Diagnostics.h"
 
-#include "internal/Windows.System.Diagnostics.Telemetry.3.h"
-#include "Windows.System.Diagnostics.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult consume_Windows_System_Diagnostics_Telemetry_IPlatformTelemetryClientStatics<D>::Register(param::hstring const& id) const
+{
+    Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::Telemetry::IPlatformTelemetryClientStatics)->Register(get_abi(id), put_abi(result)));
+    return result;
+}
 
-namespace impl {
+template <typename D> Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult consume_Windows_System_Diagnostics_Telemetry_IPlatformTelemetryClientStatics<D>::Register(param::hstring const& id, Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationSettings const& settings) const
+{
+    Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::Telemetry::IPlatformTelemetryClientStatics)->RegisterWithSettings(get_abi(id), get_abi(settings), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationStatus consume_Windows_System_Diagnostics_Telemetry_IPlatformTelemetryRegistrationResult<D>::Status() const
+{
+    Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationStatus value{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationResult)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_System_Diagnostics_Telemetry_IPlatformTelemetryRegistrationSettings<D>::StorageSize() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationSettings)->get_StorageSize(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_Diagnostics_Telemetry_IPlatformTelemetryRegistrationSettings<D>::StorageSize(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationSettings)->put_StorageSize(value));
+}
+
+template <typename D> uint32_t consume_Windows_System_Diagnostics_Telemetry_IPlatformTelemetryRegistrationSettings<D>::UploadQuotaSize() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationSettings)->get_UploadQuotaSize(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_System_Diagnostics_Telemetry_IPlatformTelemetryRegistrationSettings<D>::UploadQuotaSize(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationSettings)->put_UploadQuotaSize(value));
+}
 
 template <typename D>
 struct produce<D, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryClientStatics> : produce_base<D, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryClientStatics>
 {
-    HRESULT __stdcall abi_Register(impl::abi_arg_in<hstring> id, impl::abi_arg_out<Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationResult> result) noexcept override
+    HRESULT __stdcall Register(HSTRING id, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Register(*reinterpret_cast<const hstring *>(&id)));
+            *result = detach_abi(this->shim().Register(*reinterpret_cast<hstring const*>(&id)));
             return S_OK;
         }
         catch (...)
@@ -31,12 +76,12 @@ struct produce<D, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryCli
         }
     }
 
-    HRESULT __stdcall abi_RegisterWithSettings(impl::abi_arg_in<hstring> id, impl::abi_arg_in<Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationSettings> settings, impl::abi_arg_out<Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationResult> result) noexcept override
+    HRESULT __stdcall RegisterWithSettings(HSTRING id, ::IUnknown* settings, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Register(*reinterpret_cast<const hstring *>(&id), *reinterpret_cast<const Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationSettings *>(&settings)));
+            *result = detach_abi(this->shim().Register(*reinterpret_cast<hstring const*>(&id), *reinterpret_cast<Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationSettings const*>(&settings)));
             return S_OK;
         }
         catch (...)
@@ -50,7 +95,7 @@ struct produce<D, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryCli
 template <typename D>
 struct produce<D, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationResult> : produce_base<D, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationResult>
 {
-    HRESULT __stdcall get_Status(Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationStatus>* value) noexcept override
     {
         try
         {
@@ -68,7 +113,7 @@ struct produce<D, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryReg
 template <typename D>
 struct produce<D, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationSettings> : produce_base<D, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationSettings>
 {
-    HRESULT __stdcall get_StorageSize(uint32_t * value) noexcept override
+    HRESULT __stdcall get_StorageSize(uint32_t* value) noexcept override
     {
         try
         {
@@ -96,7 +141,7 @@ struct produce<D, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryReg
         }
     }
 
-    HRESULT __stdcall get_UploadQuotaSize(uint32_t * value) noexcept override
+    HRESULT __stdcall get_UploadQuotaSize(uint32_t* value) noexcept override
     {
         try
         {
@@ -127,61 +172,16 @@ struct produce<D, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryReg
 
 }
 
-namespace Windows::System::Diagnostics::Telemetry {
+WINRT_EXPORT namespace winrt::Windows::System::Diagnostics::Telemetry {
 
-template <typename D> uint32_t impl_IPlatformTelemetryRegistrationSettings<D>::StorageSize() const
+inline Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult PlatformTelemetryClient::Register(param::hstring const& id)
 {
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPlatformTelemetryRegistrationSettings)->get_StorageSize(&value));
-    return value;
+    return get_activation_factory<PlatformTelemetryClient, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryClientStatics>().Register(id);
 }
 
-template <typename D> void impl_IPlatformTelemetryRegistrationSettings<D>::StorageSize(uint32_t value) const
+inline Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult PlatformTelemetryClient::Register(param::hstring const& id, Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationSettings const& settings)
 {
-    check_hresult(WINRT_SHIM(IPlatformTelemetryRegistrationSettings)->put_StorageSize(value));
-}
-
-template <typename D> uint32_t impl_IPlatformTelemetryRegistrationSettings<D>::UploadQuotaSize() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPlatformTelemetryRegistrationSettings)->get_UploadQuotaSize(&value));
-    return value;
-}
-
-template <typename D> void impl_IPlatformTelemetryRegistrationSettings<D>::UploadQuotaSize(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IPlatformTelemetryRegistrationSettings)->put_UploadQuotaSize(value));
-}
-
-template <typename D> Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationStatus impl_IPlatformTelemetryRegistrationResult<D>::Status() const
-{
-    Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationStatus value {};
-    check_hresult(WINRT_SHIM(IPlatformTelemetryRegistrationResult)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult impl_IPlatformTelemetryClientStatics<D>::Register(hstring_view id) const
-{
-    Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult result { nullptr };
-    check_hresult(WINRT_SHIM(IPlatformTelemetryClientStatics)->abi_Register(get_abi(id), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult impl_IPlatformTelemetryClientStatics<D>::Register(hstring_view id, const Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationSettings & settings) const
-{
-    Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult result { nullptr };
-    check_hresult(WINRT_SHIM(IPlatformTelemetryClientStatics)->abi_RegisterWithSettings(get_abi(id), get_abi(settings), put_abi(result)));
-    return result;
-}
-
-inline Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult PlatformTelemetryClient::Register(hstring_view id)
-{
-    return get_activation_factory<PlatformTelemetryClient, IPlatformTelemetryClientStatics>().Register(id);
-}
-
-inline Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult PlatformTelemetryClient::Register(hstring_view id, const Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationSettings & settings)
-{
-    return get_activation_factory<PlatformTelemetryClient, IPlatformTelemetryClientStatics>().Register(id, settings);
+    return get_activation_factory<PlatformTelemetryClient, Windows::System::Diagnostics::Telemetry::IPlatformTelemetryClientStatics>().Register(id, settings);
 }
 
 inline PlatformTelemetryRegistrationSettings::PlatformTelemetryRegistrationSettings() :
@@ -190,51 +190,26 @@ inline PlatformTelemetryRegistrationSettings::PlatformTelemetryRegistrationSetti
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryClientStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryClientStatics> {};
+
+template<> struct hash<winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationResult> {};
+
+template<> struct hash<winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationSettings> {};
+
+template<> struct hash<winrt::Windows::System::Diagnostics::Telemetry::PlatformTelemetryClient> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::Telemetry::PlatformTelemetryClient> {};
+
+template<> struct hash<winrt::Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult> {};
+
+template<> struct hash<winrt::Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationSettings> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryClientStatics>
-{
-    size_t operator()(const winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryClientStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationResult>
-{
-    size_t operator()(const winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationSettings>
-{
-    size_t operator()(const winrt::Windows::System::Diagnostics::Telemetry::IPlatformTelemetryRegistrationSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult>
-{
-    size_t operator()(const winrt::Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationSettings>
-{
-    size_t operator()(const winrt::Windows::System::Diagnostics::Telemetry::PlatformTelemetryRegistrationSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

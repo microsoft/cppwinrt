@@ -1,23 +1,57 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Devices.Background.2.h"
+#include "winrt/Windows.Devices.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Devices.Background.3.h"
-#include "Windows.Devices.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_Devices_Background_IDeviceServicingDetails<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Background::IDeviceServicingDetails)->get_DeviceId(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> hstring consume_Windows_Devices_Background_IDeviceServicingDetails<D>::Arguments() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Background::IDeviceServicingDetails)->get_Arguments(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::TimeSpan consume_Windows_Devices_Background_IDeviceServicingDetails<D>::ExpectedDuration() const
+{
+    Windows::Foundation::TimeSpan value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Background::IDeviceServicingDetails)->get_ExpectedDuration(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Background_IDeviceUseDetails<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Background::IDeviceUseDetails)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Background_IDeviceUseDetails<D>::Arguments() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Background::IDeviceUseDetails)->get_Arguments(put_abi(value)));
+    return value;
+}
 
 template <typename D>
 struct produce<D, Windows::Devices::Background::IDeviceServicingDetails> : produce_base<D, Windows::Devices::Background::IDeviceServicingDetails>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -32,7 +66,7 @@ struct produce<D, Windows::Devices::Background::IDeviceServicingDetails> : produ
         }
     }
 
-    HRESULT __stdcall get_Arguments(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Arguments(HSTRING* value) noexcept override
     {
         try
         {
@@ -47,7 +81,7 @@ struct produce<D, Windows::Devices::Background::IDeviceServicingDetails> : produ
         }
     }
 
-    HRESULT __stdcall get_ExpectedDuration(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_ExpectedDuration(abi_t<Windows::Foundation::TimeSpan>* value) noexcept override
     {
         try
         {
@@ -65,7 +99,7 @@ struct produce<D, Windows::Devices::Background::IDeviceServicingDetails> : produ
 template <typename D>
 struct produce<D, Windows::Devices::Background::IDeviceUseDetails> : produce_base<D, Windows::Devices::Background::IDeviceUseDetails>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -80,7 +114,7 @@ struct produce<D, Windows::Devices::Background::IDeviceUseDetails> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Arguments(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Arguments(HSTRING* value) noexcept override
     {
         try
         {
@@ -98,81 +132,24 @@ struct produce<D, Windows::Devices::Background::IDeviceUseDetails> : produce_bas
 
 }
 
-namespace Windows::Devices::Background {
-
-template <typename D> hstring impl_IDeviceUseDetails<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IDeviceUseDetails)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IDeviceUseDetails<D>::Arguments() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IDeviceUseDetails)->get_Arguments(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IDeviceServicingDetails<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IDeviceServicingDetails)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IDeviceServicingDetails<D>::Arguments() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IDeviceServicingDetails)->get_Arguments(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::TimeSpan impl_IDeviceServicingDetails<D>::ExpectedDuration() const
-{
-    Windows::Foundation::TimeSpan value {};
-    check_hresult(WINRT_SHIM(IDeviceServicingDetails)->get_ExpectedDuration(put_abi(value)));
-    return value;
-}
+WINRT_EXPORT namespace winrt::Windows::Devices::Background {
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Devices::Background::IDeviceServicingDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Background::IDeviceServicingDetails> {};
+
+template<> struct hash<winrt::Windows::Devices::Background::IDeviceUseDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Background::IDeviceUseDetails> {};
+
+template<> struct hash<winrt::Windows::Devices::Background::DeviceServicingDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Background::DeviceServicingDetails> {};
+
+template<> struct hash<winrt::Windows::Devices::Background::DeviceUseDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Background::DeviceUseDetails> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Devices::Background::IDeviceServicingDetails>
-{
-    size_t operator()(const winrt::Windows::Devices::Background::IDeviceServicingDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Background::IDeviceUseDetails>
-{
-    size_t operator()(const winrt::Windows::Devices::Background::IDeviceUseDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Background::DeviceServicingDetails>
-{
-    size_t operator()(const winrt::Windows::Devices::Background::DeviceServicingDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Background::DeviceUseDetails>
-{
-    size_t operator()(const winrt::Windows::Devices::Background::DeviceUseDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

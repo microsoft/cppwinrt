@@ -1,25 +1,132 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.System.2.h"
+#include "winrt/impl/Windows.Management.Policies.2.h"
+#include "winrt/Windows.Management.h"
 
-#include "internal/Windows.System.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Management.Policies.3.h"
-#include "Windows.Management.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_Management_Policies_INamedPolicyData<D>::Area() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->get_Area(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> hstring consume_Windows_Management_Policies_INamedPolicyData<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Management::Policies::NamedPolicyKind consume_Windows_Management_Policies_INamedPolicyData<D>::Kind() const
+{
+    Windows::Management::Policies::NamedPolicyKind value{};
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->get_Kind(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Management_Policies_INamedPolicyData<D>::IsManaged() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->get_IsManaged(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Management_Policies_INamedPolicyData<D>::IsUserPolicy() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->get_IsUserPolicy(&value));
+    return value;
+}
+
+template <typename D> Windows::System::User consume_Windows_Management_Policies_INamedPolicyData<D>::User() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Management_Policies_INamedPolicyData<D>::GetBoolean() const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->GetBoolean(&result));
+    return result;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Management_Policies_INamedPolicyData<D>::GetBinary() const
+{
+    Windows::Storage::Streams::IBuffer result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->GetBinary(put_abi(result)));
+    return result;
+}
+
+template <typename D> int32_t consume_Windows_Management_Policies_INamedPolicyData<D>::GetInt32() const
+{
+    int32_t result{};
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->GetInt32(&result));
+    return result;
+}
+
+template <typename D> int64_t consume_Windows_Management_Policies_INamedPolicyData<D>::GetInt64() const
+{
+    int64_t result{};
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->GetInt64(&result));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Management_Policies_INamedPolicyData<D>::GetString() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->GetString(put_abi(result)));
+    return result;
+}
+
+template <typename D> event_token consume_Windows_Management_Policies_INamedPolicyData<D>::Changed(Windows::Foundation::TypedEventHandler<Windows::Management::Policies::NamedPolicyData, Windows::Foundation::IInspectable> const& changedHandler) const
+{
+    event_token cookie{};
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->add_Changed(get_abi(changedHandler), put_abi(cookie)));
+    return cookie;
+}
+
+template <typename D> event_revoker<Windows::Management::Policies::INamedPolicyData> consume_Windows_Management_Policies_INamedPolicyData<D>::Changed(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Management::Policies::NamedPolicyData, Windows::Foundation::IInspectable> const& changedHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Management::Policies::INamedPolicyData>(this, &abi_t<Windows::Management::Policies::INamedPolicyData>::remove_Changed, Changed(changedHandler));
+}
+
+template <typename D> void consume_Windows_Management_Policies_INamedPolicyData<D>::Changed(event_token const& cookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyData)->remove_Changed(get_abi(cookie)));
+}
+
+template <typename D> Windows::Management::Policies::NamedPolicyData consume_Windows_Management_Policies_INamedPolicyStatics<D>::GetPolicyFromPath(param::hstring const& area, param::hstring const& name) const
+{
+    Windows::Management::Policies::NamedPolicyData result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyStatics)->GetPolicyFromPath(get_abi(area), get_abi(name), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Management::Policies::NamedPolicyData consume_Windows_Management_Policies_INamedPolicyStatics<D>::GetPolicyFromPathForUser(Windows::System::User const& user, param::hstring const& area, param::hstring const& name) const
+{
+    Windows::Management::Policies::NamedPolicyData result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Management::Policies::INamedPolicyStatics)->GetPolicyFromPathForUser(get_abi(user), get_abi(area), get_abi(name), put_abi(result)));
+    return result;
+}
 
 template <typename D>
 struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_base<D, Windows::Management::Policies::INamedPolicyData>
 {
-    HRESULT __stdcall get_Area(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Area(HSTRING* value) noexcept override
     {
         try
         {
@@ -34,7 +141,7 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -49,7 +156,7 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Kind(Windows::Management::Policies::NamedPolicyKind * value) noexcept override
+    HRESULT __stdcall get_Kind(abi_t<Windows::Management::Policies::NamedPolicyKind>* value) noexcept override
     {
         try
         {
@@ -63,7 +170,7 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_IsManaged(bool * value) noexcept override
+    HRESULT __stdcall get_IsManaged(bool* value) noexcept override
     {
         try
         {
@@ -77,7 +184,7 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_IsUserPolicy(bool * value) noexcept override
+    HRESULT __stdcall get_IsUserPolicy(bool* value) noexcept override
     {
         try
         {
@@ -91,7 +198,7 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_User(::IUnknown** value) noexcept override
     {
         try
         {
@@ -106,7 +213,7 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetBoolean(bool * result) noexcept override
+    HRESULT __stdcall GetBoolean(bool* result) noexcept override
     {
         try
         {
@@ -120,7 +227,7 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetBinary(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> result) noexcept override
+    HRESULT __stdcall GetBinary(::IUnknown** result) noexcept override
     {
         try
         {
@@ -135,7 +242,7 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetInt32(int32_t * result) noexcept override
+    HRESULT __stdcall GetInt32(int32_t* result) noexcept override
     {
         try
         {
@@ -149,7 +256,7 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetInt64(int64_t * result) noexcept override
+    HRESULT __stdcall GetInt64(int64_t* result) noexcept override
     {
         try
         {
@@ -163,7 +270,7 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetString(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall GetString(HSTRING* result) noexcept override
     {
         try
         {
@@ -178,12 +285,12 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall add_Changed(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Management::Policies::NamedPolicyData, Windows::Foundation::IInspectable>> changedHandler, event_token * cookie) noexcept override
+    HRESULT __stdcall add_Changed(::IUnknown* changedHandler, abi_t<event_token>* cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *cookie = detach_abi(this->shim().Changed(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Management::Policies::NamedPolicyData, Windows::Foundation::IInspectable> *>(&changedHandler)));
+            *cookie = detach_abi(this->shim().Changed(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Management::Policies::NamedPolicyData, Windows::Foundation::IInspectable> const*>(&changedHandler)));
             return S_OK;
         }
         catch (...)
@@ -192,12 +299,12 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
         }
     }
 
-    HRESULT __stdcall remove_Changed(event_token cookie) noexcept override
+    HRESULT __stdcall remove_Changed(abi_t<event_token> cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Changed(cookie);
+            this->shim().Changed(*reinterpret_cast<event_token const*>(&cookie));
             return S_OK;
         }
         catch (...)
@@ -210,12 +317,12 @@ struct produce<D, Windows::Management::Policies::INamedPolicyData> : produce_bas
 template <typename D>
 struct produce<D, Windows::Management::Policies::INamedPolicyStatics> : produce_base<D, Windows::Management::Policies::INamedPolicyStatics>
 {
-    HRESULT __stdcall abi_GetPolicyFromPath(impl::abi_arg_in<hstring> area, impl::abi_arg_in<hstring> name, impl::abi_arg_out<Windows::Management::Policies::INamedPolicyData> result) noexcept override
+    HRESULT __stdcall GetPolicyFromPath(HSTRING area, HSTRING name, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetPolicyFromPath(*reinterpret_cast<const hstring *>(&area), *reinterpret_cast<const hstring *>(&name)));
+            *result = detach_abi(this->shim().GetPolicyFromPath(*reinterpret_cast<hstring const*>(&area), *reinterpret_cast<hstring const*>(&name)));
             return S_OK;
         }
         catch (...)
@@ -225,12 +332,12 @@ struct produce<D, Windows::Management::Policies::INamedPolicyStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_GetPolicyFromPathForUser(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_in<hstring> area, impl::abi_arg_in<hstring> name, impl::abi_arg_out<Windows::Management::Policies::INamedPolicyData> result) noexcept override
+    HRESULT __stdcall GetPolicyFromPathForUser(::IUnknown* user, HSTRING area, HSTRING name, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetPolicyFromPathForUser(*reinterpret_cast<const Windows::System::User *>(&user), *reinterpret_cast<const hstring *>(&area), *reinterpret_cast<const hstring *>(&name)));
+            *result = detach_abi(this->shim().GetPolicyFromPathForUser(*reinterpret_cast<Windows::System::User const*>(&user), *reinterpret_cast<hstring const*>(&area), *reinterpret_cast<hstring const*>(&name)));
             return S_OK;
         }
         catch (...)
@@ -243,155 +350,34 @@ struct produce<D, Windows::Management::Policies::INamedPolicyStatics> : produce_
 
 }
 
-namespace Windows::Management::Policies {
+WINRT_EXPORT namespace winrt::Windows::Management::Policies {
 
-template <typename D> hstring impl_INamedPolicyData<D>::Area() const
+inline Windows::Management::Policies::NamedPolicyData NamedPolicy::GetPolicyFromPath(param::hstring const& area, param::hstring const& name)
 {
-    hstring value;
-    check_hresult(WINRT_SHIM(INamedPolicyData)->get_Area(put_abi(value)));
-    return value;
+    return get_activation_factory<NamedPolicy, Windows::Management::Policies::INamedPolicyStatics>().GetPolicyFromPath(area, name);
 }
 
-template <typename D> hstring impl_INamedPolicyData<D>::Name() const
+inline Windows::Management::Policies::NamedPolicyData NamedPolicy::GetPolicyFromPathForUser(Windows::System::User const& user, param::hstring const& area, param::hstring const& name)
 {
-    hstring value;
-    check_hresult(WINRT_SHIM(INamedPolicyData)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Management::Policies::NamedPolicyKind impl_INamedPolicyData<D>::Kind() const
-{
-    Windows::Management::Policies::NamedPolicyKind value {};
-    check_hresult(WINRT_SHIM(INamedPolicyData)->get_Kind(&value));
-    return value;
-}
-
-template <typename D> bool impl_INamedPolicyData<D>::IsManaged() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(INamedPolicyData)->get_IsManaged(&value));
-    return value;
-}
-
-template <typename D> bool impl_INamedPolicyData<D>::IsUserPolicy() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(INamedPolicyData)->get_IsUserPolicy(&value));
-    return value;
-}
-
-template <typename D> Windows::System::User impl_INamedPolicyData<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(INamedPolicyData)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_INamedPolicyData<D>::GetBoolean() const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(INamedPolicyData)->abi_GetBoolean(&result));
-    return result;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_INamedPolicyData<D>::GetBinary() const
-{
-    Windows::Storage::Streams::IBuffer result;
-    check_hresult(WINRT_SHIM(INamedPolicyData)->abi_GetBinary(put_abi(result)));
-    return result;
-}
-
-template <typename D> int32_t impl_INamedPolicyData<D>::GetInt32() const
-{
-    int32_t result {};
-    check_hresult(WINRT_SHIM(INamedPolicyData)->abi_GetInt32(&result));
-    return result;
-}
-
-template <typename D> int64_t impl_INamedPolicyData<D>::GetInt64() const
-{
-    int64_t result {};
-    check_hresult(WINRT_SHIM(INamedPolicyData)->abi_GetInt64(&result));
-    return result;
-}
-
-template <typename D> hstring impl_INamedPolicyData<D>::GetString() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(INamedPolicyData)->abi_GetString(put_abi(result)));
-    return result;
-}
-
-template <typename D> event_token impl_INamedPolicyData<D>::Changed(const Windows::Foundation::TypedEventHandler<Windows::Management::Policies::NamedPolicyData, Windows::Foundation::IInspectable> & changedHandler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(INamedPolicyData)->add_Changed(get_abi(changedHandler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<INamedPolicyData> impl_INamedPolicyData<D>::Changed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Management::Policies::NamedPolicyData, Windows::Foundation::IInspectable> & changedHandler) const
-{
-    return impl::make_event_revoker<D, INamedPolicyData>(this, &ABI::Windows::Management::Policies::INamedPolicyData::remove_Changed, Changed(changedHandler));
-}
-
-template <typename D> void impl_INamedPolicyData<D>::Changed(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(INamedPolicyData)->remove_Changed(cookie));
-}
-
-template <typename D> Windows::Management::Policies::NamedPolicyData impl_INamedPolicyStatics<D>::GetPolicyFromPath(hstring_view area, hstring_view name) const
-{
-    Windows::Management::Policies::NamedPolicyData result { nullptr };
-    check_hresult(WINRT_SHIM(INamedPolicyStatics)->abi_GetPolicyFromPath(get_abi(area), get_abi(name), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Management::Policies::NamedPolicyData impl_INamedPolicyStatics<D>::GetPolicyFromPathForUser(const Windows::System::User & user, hstring_view area, hstring_view name) const
-{
-    Windows::Management::Policies::NamedPolicyData result { nullptr };
-    check_hresult(WINRT_SHIM(INamedPolicyStatics)->abi_GetPolicyFromPathForUser(get_abi(user), get_abi(area), get_abi(name), put_abi(result)));
-    return result;
-}
-
-inline Windows::Management::Policies::NamedPolicyData NamedPolicy::GetPolicyFromPath(hstring_view area, hstring_view name)
-{
-    return get_activation_factory<NamedPolicy, INamedPolicyStatics>().GetPolicyFromPath(area, name);
-}
-
-inline Windows::Management::Policies::NamedPolicyData NamedPolicy::GetPolicyFromPathForUser(const Windows::System::User & user, hstring_view area, hstring_view name)
-{
-    return get_activation_factory<NamedPolicy, INamedPolicyStatics>().GetPolicyFromPathForUser(user, area, name);
+    return get_activation_factory<NamedPolicy, Windows::Management::Policies::INamedPolicyStatics>().GetPolicyFromPathForUser(user, area, name);
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Management::Policies::INamedPolicyData> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Management::Policies::INamedPolicyData> {};
+
+template<> struct hash<winrt::Windows::Management::Policies::INamedPolicyStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Management::Policies::INamedPolicyStatics> {};
+
+template<> struct hash<winrt::Windows::Management::Policies::NamedPolicy> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Management::Policies::NamedPolicy> {};
+
+template<> struct hash<winrt::Windows::Management::Policies::NamedPolicyData> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Management::Policies::NamedPolicyData> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Management::Policies::INamedPolicyData>
-{
-    size_t operator()(const winrt::Windows::Management::Policies::INamedPolicyData & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Management::Policies::INamedPolicyStatics>
-{
-    size_t operator()(const winrt::Windows::Management::Policies::INamedPolicyStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Management::Policies::NamedPolicyData>
-{
-    size_t operator()(const winrt::Windows::Management::Policies::NamedPolicyData & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

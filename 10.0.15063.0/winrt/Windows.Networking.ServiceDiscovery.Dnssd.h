@@ -1,29 +1,216 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Networking.2.h"
+#include "winrt/impl/Windows.Networking.Connectivity.2.h"
+#include "winrt/impl/Windows.Networking.Sockets.2.h"
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.Networking.ServiceDiscovery.Dnssd.2.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Networking.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Networking.Sockets.3.h"
-#include "internal/Windows.Networking.Connectivity.3.h"
-#include "internal/Windows.Networking.ServiceDiscovery.Dnssd.3.h"
-#include "Windows.Networking.h"
-#include "Windows.Foundation.h"
-#include "Windows.Foundation.Collections.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationStatus consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdRegistrationResult<D>::Status() const
+{
+    Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationStatus value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrationResult)->get_Status(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> Windows::Networking::HostName consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdRegistrationResult<D>::IPAddress() const
+{
+    Windows::Networking::HostName value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrationResult)->get_IPAddress(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdRegistrationResult<D>::HasInstanceNameChanged() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrationResult)->get_HasInstanceNameChanged(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::DnssdServiceInstanceName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->get_DnssdServiceInstanceName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::DnssdServiceInstanceName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->put_DnssdServiceInstanceName(get_abi(value)));
+}
+
+template <typename D> Windows::Networking::HostName consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::HostName() const
+{
+    Windows::Networking::HostName value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->get_HostName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::HostName(Windows::Networking::HostName const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->put_HostName(get_abi(value)));
+}
+
+template <typename D> uint16_t consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::Port() const
+{
+    uint16_t value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->get_Port(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::Port(uint16_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->put_Port(value));
+}
+
+template <typename D> uint16_t consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::Priority() const
+{
+    uint16_t value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->get_Priority(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::Priority(uint16_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->put_Priority(value));
+}
+
+template <typename D> uint16_t consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::Weight() const
+{
+    uint16_t value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->get_Weight(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::Weight(uint16_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->put_Weight(value));
+}
+
+template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::TextAttributes() const
+{
+    Windows::Foundation::Collections::IMap<hstring, hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->get_TextAttributes(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::RegisterStreamSocketListenerAsync(Windows::Networking::Sockets::StreamSocketListener const& socket) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->RegisterStreamSocketListenerAsync1(get_abi(socket), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::RegisterStreamSocketListenerAsync(Windows::Networking::Sockets::StreamSocketListener const& socket, Windows::Networking::Connectivity::NetworkAdapter const& adapter) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->RegisterStreamSocketListenerAsync2(get_abi(socket), get_abi(adapter), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::RegisterDatagramSocketAsync(Windows::Networking::Sockets::DatagramSocket const& socket) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->RegisterDatagramSocketAsync1(get_abi(socket), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstance<D>::RegisterDatagramSocketAsync(Windows::Networking::Sockets::DatagramSocket const& socket, Windows::Networking::Connectivity::NetworkAdapter const& adapter) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance)->RegisterDatagramSocketAsync2(get_abi(socket), get_abi(adapter), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceInstanceFactory<D>::Create(param::hstring const& dnssdServiceInstanceName, Windows::Networking::HostName const& hostName, uint16_t port) const
+{
+    Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstanceFactory)->Create(get_abi(dnssdServiceInstanceName), get_abi(hostName), port, put_abi(result)));
+    return result;
+}
+
+template <typename D> event_token consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::Added(Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher)->add_Added(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher> consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::Added(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher>(this, &abi_t<Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher>::remove_Added, Added(handler));
+}
+
+template <typename D> void consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::Added(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher)->remove_Added(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::EnumerationCompleted(Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher)->add_EnumerationCompleted(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher> consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::EnumerationCompleted(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher>(this, &abi_t<Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher>::remove_EnumerationCompleted, EnumerationCompleted(handler));
+}
+
+template <typename D> void consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::EnumerationCompleted(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher)->remove_EnumerationCompleted(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::Stopped(Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher)->add_Stopped(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher> consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::Stopped(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher>(this, &abi_t<Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher>::remove_Stopped, Stopped(handler));
+}
+
+template <typename D> void consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::Stopped(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher)->remove_Stopped(get_abi(token)));
+}
+
+template <typename D> Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcherStatus consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::Status() const
+{
+    Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcherStatus status{};
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher)->get_Status(put_abi(status)));
+    return status;
+}
+
+template <typename D> void consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::Start() const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher)->Start());
+}
+
+template <typename D> void consume_Windows_Networking_ServiceDiscovery_Dnssd_IDnssdServiceWatcher<D>::Stop() const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher)->Stop());
+}
 
 template <typename D>
 struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrationResult> : produce_base<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrationResult>
 {
-    HRESULT __stdcall get_Status(Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationStatus>* value) noexcept override
     {
         try
         {
@@ -37,7 +224,7 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrati
         }
     }
 
-    HRESULT __stdcall get_IPAddress(impl::abi_arg_out<Windows::Networking::IHostName> value) noexcept override
+    HRESULT __stdcall get_IPAddress(::IUnknown** value) noexcept override
     {
         try
         {
@@ -52,7 +239,7 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrati
         }
     }
 
-    HRESULT __stdcall get_HasInstanceNameChanged(bool * value) noexcept override
+    HRESULT __stdcall get_HasInstanceNameChanged(bool* value) noexcept override
     {
         try
         {
@@ -70,7 +257,7 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrati
 template <typename D>
 struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance> : produce_base<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance>
 {
-    HRESULT __stdcall get_DnssdServiceInstanceName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DnssdServiceInstanceName(HSTRING* value) noexcept override
     {
         try
         {
@@ -85,12 +272,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
         }
     }
 
-    HRESULT __stdcall put_DnssdServiceInstanceName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DnssdServiceInstanceName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DnssdServiceInstanceName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DnssdServiceInstanceName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -99,7 +286,7 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
         }
     }
 
-    HRESULT __stdcall get_HostName(impl::abi_arg_out<Windows::Networking::IHostName> value) noexcept override
+    HRESULT __stdcall get_HostName(::IUnknown** value) noexcept override
     {
         try
         {
@@ -114,12 +301,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
         }
     }
 
-    HRESULT __stdcall put_HostName(impl::abi_arg_in<Windows::Networking::IHostName> value) noexcept override
+    HRESULT __stdcall put_HostName(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().HostName(*reinterpret_cast<const Windows::Networking::HostName *>(&value));
+            this->shim().HostName(*reinterpret_cast<Windows::Networking::HostName const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -128,7 +315,7 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
         }
     }
 
-    HRESULT __stdcall get_Port(uint16_t * value) noexcept override
+    HRESULT __stdcall get_Port(uint16_t* value) noexcept override
     {
         try
         {
@@ -156,7 +343,7 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
         }
     }
 
-    HRESULT __stdcall get_Priority(uint16_t * value) noexcept override
+    HRESULT __stdcall get_Priority(uint16_t* value) noexcept override
     {
         try
         {
@@ -184,7 +371,7 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
         }
     }
 
-    HRESULT __stdcall get_Weight(uint16_t * value) noexcept override
+    HRESULT __stdcall get_Weight(uint16_t* value) noexcept override
     {
         try
         {
@@ -212,7 +399,7 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
         }
     }
 
-    HRESULT __stdcall get_TextAttributes(impl::abi_arg_out<Windows::Foundation::Collections::IMap<hstring, hstring>> value) noexcept override
+    HRESULT __stdcall get_TextAttributes(::IUnknown** value) noexcept override
     {
         try
         {
@@ -227,12 +414,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
         }
     }
 
-    HRESULT __stdcall abi_RegisterStreamSocketListenerAsync1(impl::abi_arg_in<Windows::Networking::Sockets::IStreamSocketListener> socket, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult>> result) noexcept override
+    HRESULT __stdcall RegisterStreamSocketListenerAsync1(::IUnknown* socket, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().RegisterStreamSocketListenerAsync(*reinterpret_cast<const Windows::Networking::Sockets::StreamSocketListener *>(&socket)));
+            *result = detach_abi(this->shim().RegisterStreamSocketListenerAsync(*reinterpret_cast<Windows::Networking::Sockets::StreamSocketListener const*>(&socket)));
             return S_OK;
         }
         catch (...)
@@ -242,12 +429,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
         }
     }
 
-    HRESULT __stdcall abi_RegisterStreamSocketListenerAsync2(impl::abi_arg_in<Windows::Networking::Sockets::IStreamSocketListener> socket, impl::abi_arg_in<Windows::Networking::Connectivity::INetworkAdapter> adapter, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult>> result) noexcept override
+    HRESULT __stdcall RegisterStreamSocketListenerAsync2(::IUnknown* socket, ::IUnknown* adapter, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().RegisterStreamSocketListenerAsync(*reinterpret_cast<const Windows::Networking::Sockets::StreamSocketListener *>(&socket), *reinterpret_cast<const Windows::Networking::Connectivity::NetworkAdapter *>(&adapter)));
+            *result = detach_abi(this->shim().RegisterStreamSocketListenerAsync(*reinterpret_cast<Windows::Networking::Sockets::StreamSocketListener const*>(&socket), *reinterpret_cast<Windows::Networking::Connectivity::NetworkAdapter const*>(&adapter)));
             return S_OK;
         }
         catch (...)
@@ -257,12 +444,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
         }
     }
 
-    HRESULT __stdcall abi_RegisterDatagramSocketAsync1(impl::abi_arg_in<Windows::Networking::Sockets::IDatagramSocket> socket, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult>> result) noexcept override
+    HRESULT __stdcall RegisterDatagramSocketAsync1(::IUnknown* socket, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().RegisterDatagramSocketAsync(*reinterpret_cast<const Windows::Networking::Sockets::DatagramSocket *>(&socket)));
+            *result = detach_abi(this->shim().RegisterDatagramSocketAsync(*reinterpret_cast<Windows::Networking::Sockets::DatagramSocket const*>(&socket)));
             return S_OK;
         }
         catch (...)
@@ -272,12 +459,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
         }
     }
 
-    HRESULT __stdcall abi_RegisterDatagramSocketAsync2(impl::abi_arg_in<Windows::Networking::Sockets::IDatagramSocket> socket, impl::abi_arg_in<Windows::Networking::Connectivity::INetworkAdapter> adapter, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult>> result) noexcept override
+    HRESULT __stdcall RegisterDatagramSocketAsync2(::IUnknown* socket, ::IUnknown* adapter, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().RegisterDatagramSocketAsync(*reinterpret_cast<const Windows::Networking::Sockets::DatagramSocket *>(&socket), *reinterpret_cast<const Windows::Networking::Connectivity::NetworkAdapter *>(&adapter)));
+            *result = detach_abi(this->shim().RegisterDatagramSocketAsync(*reinterpret_cast<Windows::Networking::Sockets::DatagramSocket const*>(&socket), *reinterpret_cast<Windows::Networking::Connectivity::NetworkAdapter const*>(&adapter)));
             return S_OK;
         }
         catch (...)
@@ -291,12 +478,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
 template <typename D>
 struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstanceFactory> : produce_base<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstanceFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<hstring> dnssdServiceInstanceName, impl::abi_arg_in<Windows::Networking::IHostName> hostName, uint16_t port, impl::abi_arg_out<Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance> result) noexcept override
+    HRESULT __stdcall Create(HSTRING dnssdServiceInstanceName, ::IUnknown* hostName, uint16_t port, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Create(*reinterpret_cast<const hstring *>(&dnssdServiceInstanceName), *reinterpret_cast<const Windows::Networking::HostName *>(&hostName), port));
+            *result = detach_abi(this->shim().Create(*reinterpret_cast<hstring const*>(&dnssdServiceInstanceName), *reinterpret_cast<Windows::Networking::HostName const*>(&hostName), port));
             return S_OK;
         }
         catch (...)
@@ -310,12 +497,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceIns
 template <typename D>
 struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher> : produce_base<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher>
 {
-    HRESULT __stdcall add_Added(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Added(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Added(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> *>(&handler)));
+            *token = detach_abi(this->shim().Added(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -324,12 +511,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWat
         }
     }
 
-    HRESULT __stdcall remove_Added(event_token token) noexcept override
+    HRESULT __stdcall remove_Added(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Added(token);
+            this->shim().Added(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -338,12 +525,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWat
         }
     }
 
-    HRESULT __stdcall add_EnumerationCompleted(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_EnumerationCompleted(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().EnumerationCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().EnumerationCompleted(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -352,12 +539,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWat
         }
     }
 
-    HRESULT __stdcall remove_EnumerationCompleted(event_token token) noexcept override
+    HRESULT __stdcall remove_EnumerationCompleted(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().EnumerationCompleted(token);
+            this->shim().EnumerationCompleted(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -366,12 +553,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWat
         }
     }
 
-    HRESULT __stdcall add_Stopped(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Stopped(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Stopped(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().Stopped(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -380,12 +567,12 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWat
         }
     }
 
-    HRESULT __stdcall remove_Stopped(event_token token) noexcept override
+    HRESULT __stdcall remove_Stopped(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Stopped(token);
+            this->shim().Stopped(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -394,7 +581,7 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWat
         }
     }
 
-    HRESULT __stdcall get_Status(Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcherStatus * status) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcherStatus>* status) noexcept override
     {
         try
         {
@@ -408,7 +595,7 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWat
         }
     }
 
-    HRESULT __stdcall abi_Start() noexcept override
+    HRESULT __stdcall Start() noexcept override
     {
         try
         {
@@ -422,7 +609,7 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWat
         }
     }
 
-    HRESULT __stdcall abi_Stop() noexcept override
+    HRESULT __stdcall Stop() noexcept override
     {
         try
         {
@@ -439,281 +626,44 @@ struct produce<D, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWat
 
 }
 
-namespace Windows::Networking::ServiceDiscovery::Dnssd {
-
-template <typename D> event_token impl_IDnssdServiceWatcher<D>::Added(const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IDnssdServiceWatcher)->add_Added(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IDnssdServiceWatcher> impl_IDnssdServiceWatcher<D>::Added(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> & handler) const
-{
-    return impl::make_event_revoker<D, IDnssdServiceWatcher>(this, &ABI::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher::remove_Added, Added(handler));
-}
-
-template <typename D> void impl_IDnssdServiceWatcher<D>::Added(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IDnssdServiceWatcher)->remove_Added(token));
-}
-
-template <typename D> event_token impl_IDnssdServiceWatcher<D>::EnumerationCompleted(const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IDnssdServiceWatcher)->add_EnumerationCompleted(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IDnssdServiceWatcher> impl_IDnssdServiceWatcher<D>::EnumerationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IDnssdServiceWatcher>(this, &ABI::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher::remove_EnumerationCompleted, EnumerationCompleted(handler));
-}
-
-template <typename D> void impl_IDnssdServiceWatcher<D>::EnumerationCompleted(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IDnssdServiceWatcher)->remove_EnumerationCompleted(token));
-}
-
-template <typename D> event_token impl_IDnssdServiceWatcher<D>::Stopped(const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IDnssdServiceWatcher)->add_Stopped(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IDnssdServiceWatcher> impl_IDnssdServiceWatcher<D>::Stopped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IDnssdServiceWatcher>(this, &ABI::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher::remove_Stopped, Stopped(handler));
-}
-
-template <typename D> void impl_IDnssdServiceWatcher<D>::Stopped(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IDnssdServiceWatcher)->remove_Stopped(token));
-}
-
-template <typename D> Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcherStatus impl_IDnssdServiceWatcher<D>::Status() const
-{
-    Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcherStatus status {};
-    check_hresult(WINRT_SHIM(IDnssdServiceWatcher)->get_Status(&status));
-    return status;
-}
-
-template <typename D> void impl_IDnssdServiceWatcher<D>::Start() const
-{
-    check_hresult(WINRT_SHIM(IDnssdServiceWatcher)->abi_Start());
-}
-
-template <typename D> void impl_IDnssdServiceWatcher<D>::Stop() const
-{
-    check_hresult(WINRT_SHIM(IDnssdServiceWatcher)->abi_Stop());
-}
-
-template <typename D> Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationStatus impl_IDnssdRegistrationResult<D>::Status() const
-{
-    Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationStatus value {};
-    check_hresult(WINRT_SHIM(IDnssdRegistrationResult)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::Networking::HostName impl_IDnssdRegistrationResult<D>::IPAddress() const
-{
-    Windows::Networking::HostName value { nullptr };
-    check_hresult(WINRT_SHIM(IDnssdRegistrationResult)->get_IPAddress(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IDnssdRegistrationResult<D>::HasInstanceNameChanged() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IDnssdRegistrationResult)->get_HasInstanceNameChanged(&value));
-    return value;
-}
-
-template <typename D> Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance impl_IDnssdServiceInstanceFactory<D>::Create(hstring_view dnssdServiceInstanceName, const Windows::Networking::HostName & hostName, uint16_t port) const
-{
-    Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance result { nullptr };
-    check_hresult(WINRT_SHIM(IDnssdServiceInstanceFactory)->abi_Create(get_abi(dnssdServiceInstanceName), get_abi(hostName), port, put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IDnssdServiceInstance<D>::DnssdServiceInstanceName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->get_DnssdServiceInstanceName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IDnssdServiceInstance<D>::DnssdServiceInstanceName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->put_DnssdServiceInstanceName(get_abi(value)));
-}
-
-template <typename D> Windows::Networking::HostName impl_IDnssdServiceInstance<D>::HostName() const
-{
-    Windows::Networking::HostName value { nullptr };
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->get_HostName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IDnssdServiceInstance<D>::HostName(const Windows::Networking::HostName & value) const
-{
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->put_HostName(get_abi(value)));
-}
-
-template <typename D> uint16_t impl_IDnssdServiceInstance<D>::Port() const
-{
-    uint16_t value {};
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->get_Port(&value));
-    return value;
-}
-
-template <typename D> void impl_IDnssdServiceInstance<D>::Port(uint16_t value) const
-{
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->put_Port(value));
-}
-
-template <typename D> uint16_t impl_IDnssdServiceInstance<D>::Priority() const
-{
-    uint16_t value {};
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->get_Priority(&value));
-    return value;
-}
-
-template <typename D> void impl_IDnssdServiceInstance<D>::Priority(uint16_t value) const
-{
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->put_Priority(value));
-}
-
-template <typename D> uint16_t impl_IDnssdServiceInstance<D>::Weight() const
-{
-    uint16_t value {};
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->get_Weight(&value));
-    return value;
-}
-
-template <typename D> void impl_IDnssdServiceInstance<D>::Weight(uint16_t value) const
-{
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->put_Weight(value));
-}
-
-template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> impl_IDnssdServiceInstance<D>::TextAttributes() const
-{
-    Windows::Foundation::Collections::IMap<hstring, hstring> value;
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->get_TextAttributes(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> impl_IDnssdServiceInstance<D>::RegisterStreamSocketListenerAsync(const Windows::Networking::Sockets::StreamSocketListener & socket) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> result;
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->abi_RegisterStreamSocketListenerAsync1(get_abi(socket), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> impl_IDnssdServiceInstance<D>::RegisterStreamSocketListenerAsync(const Windows::Networking::Sockets::StreamSocketListener & socket, const Windows::Networking::Connectivity::NetworkAdapter & adapter) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> result;
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->abi_RegisterStreamSocketListenerAsync2(get_abi(socket), get_abi(adapter), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> impl_IDnssdServiceInstance<D>::RegisterDatagramSocketAsync(const Windows::Networking::Sockets::DatagramSocket & socket) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> result;
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->abi_RegisterDatagramSocketAsync1(get_abi(socket), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> impl_IDnssdServiceInstance<D>::RegisterDatagramSocketAsync(const Windows::Networking::Sockets::DatagramSocket & socket, const Windows::Networking::Connectivity::NetworkAdapter & adapter) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> result;
-    check_hresult(WINRT_SHIM(IDnssdServiceInstance)->abi_RegisterDatagramSocketAsync2(get_abi(socket), get_abi(adapter), put_abi(result)));
-    return result;
-}
+WINRT_EXPORT namespace winrt::Windows::Networking::ServiceDiscovery::Dnssd {
 
 inline DnssdRegistrationResult::DnssdRegistrationResult() :
     DnssdRegistrationResult(activate_instance<DnssdRegistrationResult>())
 {}
 
-inline DnssdServiceInstance::DnssdServiceInstance(hstring_view dnssdServiceInstanceName, const Windows::Networking::HostName & hostName, uint16_t port) :
-    DnssdServiceInstance(get_activation_factory<DnssdServiceInstance, IDnssdServiceInstanceFactory>().Create(dnssdServiceInstanceName, hostName, port))
+inline DnssdServiceInstance::DnssdServiceInstance(param::hstring const& dnssdServiceInstanceName, Windows::Networking::HostName const& hostName, uint16_t port) :
+    DnssdServiceInstance(get_activation_factory<DnssdServiceInstance, Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstanceFactory>().Create(dnssdServiceInstanceName, hostName, port))
 {}
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrationResult> {};
+
+template<> struct hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance> {};
+
+template<> struct hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstanceFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstanceFactory> {};
+
+template<> struct hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher> {};
+
+template<> struct hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult> {};
+
+template<> struct hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance> {};
+
+template<> struct hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstanceCollection> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstanceCollection> {};
+
+template<> struct hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrationResult>
-{
-    size_t operator()(const winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdRegistrationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance>
-{
-    size_t operator()(const winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstance & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstanceFactory>
-{
-    size_t operator()(const winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceInstanceFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher>
-{
-    size_t operator()(const winrt::Windows::Networking::ServiceDiscovery::Dnssd::IDnssdServiceWatcher & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult>
-{
-    size_t operator()(const winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdRegistrationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance>
-{
-    size_t operator()(const winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstance & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstanceCollection>
-{
-    size_t operator()(const winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceInstanceCollection & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher>
-{
-    size_t operator()(const winrt::Windows::Networking::ServiceDiscovery::Dnssd::DnssdServiceWatcher & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

@@ -1,28 +1,139 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.System.Diagnostics.TraceReporting.2.h"
+#include "winrt/Windows.System.Diagnostics.h"
 
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.System.Diagnostics.TraceReporting.3.h"
-#include "Windows.System.Diagnostics.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> bool consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticActionsStatics<D>::IsScenarioEnabled(GUID const& scenarioId) const
+{
+    bool isActive{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics)->IsScenarioEnabled(get_abi(scenarioId), &isActive));
+    return isActive;
+}
 
-namespace impl {
+template <typename D> bool consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticActionsStatics<D>::TryEscalateScenario(GUID const& scenarioId, Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEscalationType const& escalationType, param::hstring const& outputDirectory, bool timestampOutputDirectory, bool forceEscalationUpload, param::map_view<hstring, hstring> const& triggers) const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics)->TryEscalateScenario(get_abi(scenarioId), get_abi(escalationType), get_abi(outputDirectory), timestampOutputDirectory, forceEscalationUpload, get_abi(triggers), &result));
+    return result;
+}
+
+template <typename D> Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticActionsStatics<D>::DownloadLatestSettingsForNamespace(param::hstring const& partner, param::hstring const& feature, bool isScenarioNamespace, bool downloadOverCostedNetwork, bool downloadOverBattery) const
+{
+    Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState result{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics)->DownloadLatestSettingsForNamespace(get_abi(partner), get_abi(feature), isScenarioNamespace, downloadOverCostedNetwork, downloadOverBattery, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<GUID> consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticActionsStatics<D>::GetActiveScenarioList() const
+{
+    Windows::Foundation::Collections::IVectorView<GUID> scenarioIds{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics)->GetActiveScenarioList(put_abi(scenarioIds)));
+    return scenarioIds;
+}
+
+template <typename D> Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticActionsStatics<D>::ForceUpload(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEventBufferLatencies const& latency, bool uploadOverCostedNetwork, bool uploadOverBattery) const
+{
+    Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState result{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics)->ForceUpload(get_abi(latency), uploadOverCostedNetwork, uploadOverBattery, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotState consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticActionsStatics<D>::IsTraceRunning(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType const& slotType, GUID const& scenarioId, uint64_t traceProfileHash) const
+{
+    Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotState slotState{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics)->IsTraceRunning(get_abi(slotType), get_abi(scenarioId), traceProfileHash, put_abi(slotState)));
+    return slotState;
+}
+
+template <typename D> Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceRuntimeInfo consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticActionsStatics<D>::GetActiveTraceRuntime(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType const& slotType) const
+{
+    Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceRuntimeInfo traceRuntimeInfo{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics)->GetActiveTraceRuntime(get_abi(slotType), put_abi(traceRuntimeInfo)));
+    return traceRuntimeInfo;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceInfo> consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticActionsStatics<D>::GetKnownTraceList(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType const& slotType) const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceInfo> traceInfo{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics)->GetKnownTraceList(get_abi(slotType), put_abi(traceInfo)));
+    return traceInfo;
+}
+
+template <typename D> GUID consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticTraceInfo<D>::ScenarioId() const
+{
+    GUID value{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo)->get_ScenarioId(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint64_t consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticTraceInfo<D>::ProfileHash() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo)->get_ProfileHash(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticTraceInfo<D>::IsExclusive() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo)->get_IsExclusive(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticTraceInfo<D>::IsAutoLogger() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo)->get_IsAutoLogger(&value));
+    return value;
+}
+
+template <typename D> int64_t consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticTraceInfo<D>::MaxTraceDurationFileTime() const
+{
+    int64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo)->get_MaxTraceDurationFileTime(&value));
+    return value;
+}
+
+template <typename D> Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTracePriority consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticTraceInfo<D>::Priority() const
+{
+    Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTracePriority value{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo)->get_Priority(put_abi(value)));
+    return value;
+}
+
+template <typename D> int64_t consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticTraceRuntimeInfo<D>::RuntimeFileTime() const
+{
+    int64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceRuntimeInfo)->get_RuntimeFileTime(&value));
+    return value;
+}
+
+template <typename D> int64_t consume_Windows_System_Diagnostics_TraceReporting_IPlatformDiagnosticTraceRuntimeInfo<D>::EtwRuntimeFileTime() const
+{
+    int64_t value{};
+    check_hresult(WINRT_SHIM(Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceRuntimeInfo)->get_EtwRuntimeFileTime(&value));
+    return value;
+}
 
 template <typename D>
 struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics> : produce_base<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics>
 {
-    HRESULT __stdcall abi_IsScenarioEnabled(GUID scenarioId, bool * isActive) noexcept override
+    HRESULT __stdcall IsScenarioEnabled(abi_t<GUID> scenarioId, bool* isActive) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *isActive = detach_abi(this->shim().IsScenarioEnabled(scenarioId));
+            *isActive = detach_abi(this->shim().IsScenarioEnabled(*reinterpret_cast<GUID const*>(&scenarioId)));
             return S_OK;
         }
         catch (...)
@@ -31,12 +142,12 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall abi_TryEscalateScenario(GUID scenarioId, Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEscalationType escalationType, impl::abi_arg_in<hstring> outputDirectory, bool timestampOutputDirectory, bool forceEscalationUpload, impl::abi_arg_in<Windows::Foundation::Collections::IMapView<hstring, hstring>> triggers, bool * result) noexcept override
+    HRESULT __stdcall TryEscalateScenario(abi_t<GUID> scenarioId, abi_t<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEscalationType> escalationType, HSTRING outputDirectory, bool timestampOutputDirectory, bool forceEscalationUpload, ::IUnknown* triggers, bool* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryEscalateScenario(scenarioId, escalationType, *reinterpret_cast<const hstring *>(&outputDirectory), timestampOutputDirectory, forceEscalationUpload, *reinterpret_cast<const Windows::Foundation::Collections::IMapView<hstring, hstring> *>(&triggers)));
+            *result = detach_abi(this->shim().TryEscalateScenario(*reinterpret_cast<GUID const*>(&scenarioId), *reinterpret_cast<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEscalationType const*>(&escalationType), *reinterpret_cast<hstring const*>(&outputDirectory), timestampOutputDirectory, forceEscalationUpload, *reinterpret_cast<Windows::Foundation::Collections::IMapView<hstring, hstring> const*>(&triggers)));
             return S_OK;
         }
         catch (...)
@@ -45,12 +156,12 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall abi_DownloadLatestSettingsForNamespace(impl::abi_arg_in<hstring> partner, impl::abi_arg_in<hstring> feature, bool isScenarioNamespace, bool downloadOverCostedNetwork, bool downloadOverBattery, Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState * result) noexcept override
+    HRESULT __stdcall DownloadLatestSettingsForNamespace(HSTRING partner, HSTRING feature, bool isScenarioNamespace, bool downloadOverCostedNetwork, bool downloadOverBattery, abi_t<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState>* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().DownloadLatestSettingsForNamespace(*reinterpret_cast<const hstring *>(&partner), *reinterpret_cast<const hstring *>(&feature), isScenarioNamespace, downloadOverCostedNetwork, downloadOverBattery));
+            *result = detach_abi(this->shim().DownloadLatestSettingsForNamespace(*reinterpret_cast<hstring const*>(&partner), *reinterpret_cast<hstring const*>(&feature), isScenarioNamespace, downloadOverCostedNetwork, downloadOverBattery));
             return S_OK;
         }
         catch (...)
@@ -59,7 +170,7 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall abi_GetActiveScenarioList(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<GUID>> scenarioIds) noexcept override
+    HRESULT __stdcall GetActiveScenarioList(::IUnknown** scenarioIds) noexcept override
     {
         try
         {
@@ -74,12 +185,12 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall abi_ForceUpload(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEventBufferLatencies latency, bool uploadOverCostedNetwork, bool uploadOverBattery, Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState * result) noexcept override
+    HRESULT __stdcall ForceUpload(abi_t<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEventBufferLatencies> latency, bool uploadOverCostedNetwork, bool uploadOverBattery, abi_t<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState>* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().ForceUpload(latency, uploadOverCostedNetwork, uploadOverBattery));
+            *result = detach_abi(this->shim().ForceUpload(*reinterpret_cast<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEventBufferLatencies const*>(&latency), uploadOverCostedNetwork, uploadOverBattery));
             return S_OK;
         }
         catch (...)
@@ -88,12 +199,12 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall abi_IsTraceRunning(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType slotType, GUID scenarioId, uint64_t traceProfileHash, Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotState * slotState) noexcept override
+    HRESULT __stdcall IsTraceRunning(abi_t<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType> slotType, abi_t<GUID> scenarioId, uint64_t traceProfileHash, abi_t<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotState>* slotState) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *slotState = detach_abi(this->shim().IsTraceRunning(slotType, scenarioId, traceProfileHash));
+            *slotState = detach_abi(this->shim().IsTraceRunning(*reinterpret_cast<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType const*>(&slotType), *reinterpret_cast<GUID const*>(&scenarioId), traceProfileHash));
             return S_OK;
         }
         catch (...)
@@ -102,12 +213,12 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall abi_GetActiveTraceRuntime(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType slotType, impl::abi_arg_out<Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceRuntimeInfo> traceRuntimeInfo) noexcept override
+    HRESULT __stdcall GetActiveTraceRuntime(abi_t<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType> slotType, ::IUnknown** traceRuntimeInfo) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *traceRuntimeInfo = detach_abi(this->shim().GetActiveTraceRuntime(slotType));
+            *traceRuntimeInfo = detach_abi(this->shim().GetActiveTraceRuntime(*reinterpret_cast<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType const*>(&slotType)));
             return S_OK;
         }
         catch (...)
@@ -117,12 +228,12 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall abi_GetKnownTraceList(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType slotType, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceInfo>> traceInfo) noexcept override
+    HRESULT __stdcall GetKnownTraceList(abi_t<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType> slotType, ::IUnknown** traceInfo) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *traceInfo = detach_abi(this->shim().GetKnownTraceList(slotType));
+            *traceInfo = detach_abi(this->shim().GetKnownTraceList(*reinterpret_cast<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType const*>(&slotType)));
             return S_OK;
         }
         catch (...)
@@ -136,7 +247,7 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
 template <typename D>
 struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo> : produce_base<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo>
 {
-    HRESULT __stdcall get_ScenarioId(GUID * value) noexcept override
+    HRESULT __stdcall get_ScenarioId(abi_t<GUID>* value) noexcept override
     {
         try
         {
@@ -150,7 +261,7 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall get_ProfileHash(uint64_t * value) noexcept override
+    HRESULT __stdcall get_ProfileHash(uint64_t* value) noexcept override
     {
         try
         {
@@ -164,7 +275,7 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall get_IsExclusive(bool * value) noexcept override
+    HRESULT __stdcall get_IsExclusive(bool* value) noexcept override
     {
         try
         {
@@ -178,7 +289,7 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall get_IsAutoLogger(bool * value) noexcept override
+    HRESULT __stdcall get_IsAutoLogger(bool* value) noexcept override
     {
         try
         {
@@ -192,7 +303,7 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall get_MaxTraceDurationFileTime(int64_t * value) noexcept override
+    HRESULT __stdcall get_MaxTraceDurationFileTime(int64_t* value) noexcept override
     {
         try
         {
@@ -206,7 +317,7 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall get_Priority(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTracePriority * value) noexcept override
+    HRESULT __stdcall get_Priority(abi_t<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTracePriority>* value) noexcept override
     {
         try
         {
@@ -224,7 +335,7 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
 template <typename D>
 struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceRuntimeInfo> : produce_base<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceRuntimeInfo>
 {
-    HRESULT __stdcall get_RuntimeFileTime(int64_t * value) noexcept override
+    HRESULT __stdcall get_RuntimeFileTime(int64_t* value) noexcept override
     {
         try
         {
@@ -238,7 +349,7 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
         }
     }
 
-    HRESULT __stdcall get_EtwRuntimeFileTime(int64_t * value) noexcept override
+    HRESULT __stdcall get_EtwRuntimeFileTime(int64_t* value) noexcept override
     {
         try
         {
@@ -255,207 +366,70 @@ struct produce<D, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnos
 
 }
 
-namespace Windows::System::Diagnostics::TraceReporting {
+WINRT_EXPORT namespace winrt::Windows::System::Diagnostics::TraceReporting {
 
-template <typename D> GUID impl_IPlatformDiagnosticTraceInfo<D>::ScenarioId() const
+inline bool PlatformDiagnosticActions::IsScenarioEnabled(GUID const& scenarioId)
 {
-    GUID value {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticTraceInfo)->get_ScenarioId(&value));
-    return value;
+    return get_activation_factory<PlatformDiagnosticActions, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics>().IsScenarioEnabled(scenarioId);
 }
 
-template <typename D> uint64_t impl_IPlatformDiagnosticTraceInfo<D>::ProfileHash() const
+inline bool PlatformDiagnosticActions::TryEscalateScenario(GUID const& scenarioId, Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEscalationType const& escalationType, param::hstring const& outputDirectory, bool timestampOutputDirectory, bool forceEscalationUpload, param::map_view<hstring, hstring> const& triggers)
 {
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticTraceInfo)->get_ProfileHash(&value));
-    return value;
+    return get_activation_factory<PlatformDiagnosticActions, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics>().TryEscalateScenario(scenarioId, escalationType, outputDirectory, timestampOutputDirectory, forceEscalationUpload, triggers);
 }
 
-template <typename D> bool impl_IPlatformDiagnosticTraceInfo<D>::IsExclusive() const
+inline Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState PlatformDiagnosticActions::DownloadLatestSettingsForNamespace(param::hstring const& partner, param::hstring const& feature, bool isScenarioNamespace, bool downloadOverCostedNetwork, bool downloadOverBattery)
 {
-    bool value {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticTraceInfo)->get_IsExclusive(&value));
-    return value;
-}
-
-template <typename D> bool impl_IPlatformDiagnosticTraceInfo<D>::IsAutoLogger() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticTraceInfo)->get_IsAutoLogger(&value));
-    return value;
-}
-
-template <typename D> int64_t impl_IPlatformDiagnosticTraceInfo<D>::MaxTraceDurationFileTime() const
-{
-    int64_t value {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticTraceInfo)->get_MaxTraceDurationFileTime(&value));
-    return value;
-}
-
-template <typename D> Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTracePriority impl_IPlatformDiagnosticTraceInfo<D>::Priority() const
-{
-    Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTracePriority value {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticTraceInfo)->get_Priority(&value));
-    return value;
-}
-
-template <typename D> int64_t impl_IPlatformDiagnosticTraceRuntimeInfo<D>::RuntimeFileTime() const
-{
-    int64_t value {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticTraceRuntimeInfo)->get_RuntimeFileTime(&value));
-    return value;
-}
-
-template <typename D> int64_t impl_IPlatformDiagnosticTraceRuntimeInfo<D>::EtwRuntimeFileTime() const
-{
-    int64_t value {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticTraceRuntimeInfo)->get_EtwRuntimeFileTime(&value));
-    return value;
-}
-
-template <typename D> bool impl_IPlatformDiagnosticActionsStatics<D>::IsScenarioEnabled(GUID scenarioId) const
-{
-    bool isActive {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticActionsStatics)->abi_IsScenarioEnabled(scenarioId, &isActive));
-    return isActive;
-}
-
-template <typename D> bool impl_IPlatformDiagnosticActionsStatics<D>::TryEscalateScenario(GUID scenarioId, Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEscalationType escalationType, hstring_view outputDirectory, bool timestampOutputDirectory, bool forceEscalationUpload, map_view<hstring, hstring> triggers) const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticActionsStatics)->abi_TryEscalateScenario(scenarioId, escalationType, get_abi(outputDirectory), timestampOutputDirectory, forceEscalationUpload, get_abi(triggers), &result));
-    return result;
-}
-
-template <typename D> Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState impl_IPlatformDiagnosticActionsStatics<D>::DownloadLatestSettingsForNamespace(hstring_view partner, hstring_view feature, bool isScenarioNamespace, bool downloadOverCostedNetwork, bool downloadOverBattery) const
-{
-    Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState result {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticActionsStatics)->abi_DownloadLatestSettingsForNamespace(get_abi(partner), get_abi(feature), isScenarioNamespace, downloadOverCostedNetwork, downloadOverBattery, &result));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<GUID> impl_IPlatformDiagnosticActionsStatics<D>::GetActiveScenarioList() const
-{
-    Windows::Foundation::Collections::IVectorView<GUID> scenarioIds;
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticActionsStatics)->abi_GetActiveScenarioList(put_abi(scenarioIds)));
-    return scenarioIds;
-}
-
-template <typename D> Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState impl_IPlatformDiagnosticActionsStatics<D>::ForceUpload(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEventBufferLatencies latency, bool uploadOverCostedNetwork, bool uploadOverBattery) const
-{
-    Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState result {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticActionsStatics)->abi_ForceUpload(latency, uploadOverCostedNetwork, uploadOverBattery, &result));
-    return result;
-}
-
-template <typename D> Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotState impl_IPlatformDiagnosticActionsStatics<D>::IsTraceRunning(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType slotType, GUID scenarioId, uint64_t traceProfileHash) const
-{
-    Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotState slotState {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticActionsStatics)->abi_IsTraceRunning(slotType, scenarioId, traceProfileHash, &slotState));
-    return slotState;
-}
-
-template <typename D> Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceRuntimeInfo impl_IPlatformDiagnosticActionsStatics<D>::GetActiveTraceRuntime(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType slotType) const
-{
-    Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceRuntimeInfo traceRuntimeInfo { nullptr };
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticActionsStatics)->abi_GetActiveTraceRuntime(slotType, put_abi(traceRuntimeInfo)));
-    return traceRuntimeInfo;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceInfo> impl_IPlatformDiagnosticActionsStatics<D>::GetKnownTraceList(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType slotType) const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceInfo> traceInfo;
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticActionsStatics)->abi_GetKnownTraceList(slotType, put_abi(traceInfo)));
-    return traceInfo;
-}
-
-inline bool PlatformDiagnosticActions::IsScenarioEnabled(GUID scenarioId)
-{
-    return get_activation_factory<PlatformDiagnosticActions, IPlatformDiagnosticActionsStatics>().IsScenarioEnabled(scenarioId);
-}
-
-inline bool PlatformDiagnosticActions::TryEscalateScenario(GUID scenarioId, Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEscalationType escalationType, hstring_view outputDirectory, bool timestampOutputDirectory, bool forceEscalationUpload, map_view<hstring, hstring> triggers)
-{
-    return get_activation_factory<PlatformDiagnosticActions, IPlatformDiagnosticActionsStatics>().TryEscalateScenario(scenarioId, escalationType, outputDirectory, timestampOutputDirectory, forceEscalationUpload, triggers);
-}
-
-inline Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState PlatformDiagnosticActions::DownloadLatestSettingsForNamespace(hstring_view partner, hstring_view feature, bool isScenarioNamespace, bool downloadOverCostedNetwork, bool downloadOverBattery)
-{
-    return get_activation_factory<PlatformDiagnosticActions, IPlatformDiagnosticActionsStatics>().DownloadLatestSettingsForNamespace(partner, feature, isScenarioNamespace, downloadOverCostedNetwork, downloadOverBattery);
+    return get_activation_factory<PlatformDiagnosticActions, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics>().DownloadLatestSettingsForNamespace(partner, feature, isScenarioNamespace, downloadOverCostedNetwork, downloadOverBattery);
 }
 
 inline Windows::Foundation::Collections::IVectorView<GUID> PlatformDiagnosticActions::GetActiveScenarioList()
 {
-    return get_activation_factory<PlatformDiagnosticActions, IPlatformDiagnosticActionsStatics>().GetActiveScenarioList();
+    return get_activation_factory<PlatformDiagnosticActions, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics>().GetActiveScenarioList();
 }
 
-inline Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState PlatformDiagnosticActions::ForceUpload(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEventBufferLatencies latency, bool uploadOverCostedNetwork, bool uploadOverBattery)
+inline Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActionState PlatformDiagnosticActions::ForceUpload(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticEventBufferLatencies const& latency, bool uploadOverCostedNetwork, bool uploadOverBattery)
 {
-    return get_activation_factory<PlatformDiagnosticActions, IPlatformDiagnosticActionsStatics>().ForceUpload(latency, uploadOverCostedNetwork, uploadOverBattery);
+    return get_activation_factory<PlatformDiagnosticActions, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics>().ForceUpload(latency, uploadOverCostedNetwork, uploadOverBattery);
 }
 
-inline Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotState PlatformDiagnosticActions::IsTraceRunning(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType slotType, GUID scenarioId, uint64_t traceProfileHash)
+inline Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotState PlatformDiagnosticActions::IsTraceRunning(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType const& slotType, GUID const& scenarioId, uint64_t traceProfileHash)
 {
-    return get_activation_factory<PlatformDiagnosticActions, IPlatformDiagnosticActionsStatics>().IsTraceRunning(slotType, scenarioId, traceProfileHash);
+    return get_activation_factory<PlatformDiagnosticActions, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics>().IsTraceRunning(slotType, scenarioId, traceProfileHash);
 }
 
-inline Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceRuntimeInfo PlatformDiagnosticActions::GetActiveTraceRuntime(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType slotType)
+inline Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceRuntimeInfo PlatformDiagnosticActions::GetActiveTraceRuntime(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType const& slotType)
 {
-    return get_activation_factory<PlatformDiagnosticActions, IPlatformDiagnosticActionsStatics>().GetActiveTraceRuntime(slotType);
+    return get_activation_factory<PlatformDiagnosticActions, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics>().GetActiveTraceRuntime(slotType);
 }
 
-inline Windows::Foundation::Collections::IVectorView<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceInfo> PlatformDiagnosticActions::GetKnownTraceList(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType slotType)
+inline Windows::Foundation::Collections::IVectorView<Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceInfo> PlatformDiagnosticActions::GetKnownTraceList(Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceSlotType const& slotType)
 {
-    return get_activation_factory<PlatformDiagnosticActions, IPlatformDiagnosticActionsStatics>().GetKnownTraceList(slotType);
+    return get_activation_factory<PlatformDiagnosticActions, Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics>().GetKnownTraceList(slotType);
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics> {};
+
+template<> struct hash<winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo> {};
+
+template<> struct hash<winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceRuntimeInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceRuntimeInfo> {};
+
+template<> struct hash<winrt::Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticActions> {};
+
+template<> struct hash<winrt::Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceInfo> {};
+
+template<> struct hash<winrt::Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceRuntimeInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceRuntimeInfo> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics>
-{
-    size_t operator()(const winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticActionsStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo>
-{
-    size_t operator()(const winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceRuntimeInfo>
-{
-    size_t operator()(const winrt::Windows::System::Diagnostics::TraceReporting::IPlatformDiagnosticTraceRuntimeInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceInfo>
-{
-    size_t operator()(const winrt::Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceRuntimeInfo>
-{
-    size_t operator()(const winrt::Windows::System::Diagnostics::TraceReporting::PlatformDiagnosticTraceRuntimeInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

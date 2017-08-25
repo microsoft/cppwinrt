@@ -1,28 +1,42 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Gaming.Input.Custom.2.h"
+#include "winrt/impl/Windows.Gaming.Input.Preview.2.h"
+#include "winrt/Windows.Gaming.Input.h"
 
-#include "internal/Windows.Gaming.Input.Custom.3.h"
-#include "internal/Windows.Gaming.Input.Preview.3.h"
-#include "Windows.Gaming.Input.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_Gaming_Input_Preview_IGameControllerProviderInfoStatics<D>::GetParentProviderId(Windows::Gaming::Input::Custom::IGameControllerProvider const& provider) const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Gaming::Input::Preview::IGameControllerProviderInfoStatics)->GetParentProviderId(get_abi(provider), put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> hstring consume_Windows_Gaming_Input_Preview_IGameControllerProviderInfoStatics<D>::GetProviderId(Windows::Gaming::Input::Custom::IGameControllerProvider const& provider) const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Gaming::Input::Preview::IGameControllerProviderInfoStatics)->GetProviderId(get_abi(provider), put_abi(value)));
+    return value;
+}
 
 template <typename D>
 struct produce<D, Windows::Gaming::Input::Preview::IGameControllerProviderInfoStatics> : produce_base<D, Windows::Gaming::Input::Preview::IGameControllerProviderInfoStatics>
 {
-    HRESULT __stdcall abi_GetParentProviderId(impl::abi_arg_in<Windows::Gaming::Input::Custom::IGameControllerProvider> provider, impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall GetParentProviderId(::IUnknown* provider, HSTRING* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetParentProviderId(*reinterpret_cast<const Windows::Gaming::Input::Custom::IGameControllerProvider *>(&provider)));
+            *value = detach_abi(this->shim().GetParentProviderId(*reinterpret_cast<Windows::Gaming::Input::Custom::IGameControllerProvider const*>(&provider)));
             return S_OK;
         }
         catch (...)
@@ -32,12 +46,12 @@ struct produce<D, Windows::Gaming::Input::Preview::IGameControllerProviderInfoSt
         }
     }
 
-    HRESULT __stdcall abi_GetProviderId(impl::abi_arg_in<Windows::Gaming::Input::Custom::IGameControllerProvider> provider, impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall GetProviderId(::IUnknown* provider, HSTRING* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetProviderId(*reinterpret_cast<const Windows::Gaming::Input::Custom::IGameControllerProvider *>(&provider)));
+            *value = detach_abi(this->shim().GetProviderId(*reinterpret_cast<Windows::Gaming::Input::Custom::IGameControllerProvider const*>(&provider)));
             return S_OK;
         }
         catch (...)
@@ -50,43 +64,28 @@ struct produce<D, Windows::Gaming::Input::Preview::IGameControllerProviderInfoSt
 
 }
 
-namespace Windows::Gaming::Input::Preview {
+WINRT_EXPORT namespace winrt::Windows::Gaming::Input::Preview {
 
-template <typename D> hstring impl_IGameControllerProviderInfoStatics<D>::GetParentProviderId(const Windows::Gaming::Input::Custom::IGameControllerProvider & provider) const
+inline hstring GameControllerProviderInfo::GetParentProviderId(Windows::Gaming::Input::Custom::IGameControllerProvider const& provider)
 {
-    hstring value;
-    check_hresult(WINRT_SHIM(IGameControllerProviderInfoStatics)->abi_GetParentProviderId(get_abi(provider), put_abi(value)));
-    return value;
+    return get_activation_factory<GameControllerProviderInfo, Windows::Gaming::Input::Preview::IGameControllerProviderInfoStatics>().GetParentProviderId(provider);
 }
 
-template <typename D> hstring impl_IGameControllerProviderInfoStatics<D>::GetProviderId(const Windows::Gaming::Input::Custom::IGameControllerProvider & provider) const
+inline hstring GameControllerProviderInfo::GetProviderId(Windows::Gaming::Input::Custom::IGameControllerProvider const& provider)
 {
-    hstring value;
-    check_hresult(WINRT_SHIM(IGameControllerProviderInfoStatics)->abi_GetProviderId(get_abi(provider), put_abi(value)));
-    return value;
-}
-
-inline hstring GameControllerProviderInfo::GetParentProviderId(const Windows::Gaming::Input::Custom::IGameControllerProvider & provider)
-{
-    return get_activation_factory<GameControllerProviderInfo, IGameControllerProviderInfoStatics>().GetParentProviderId(provider);
-}
-
-inline hstring GameControllerProviderInfo::GetProviderId(const Windows::Gaming::Input::Custom::IGameControllerProvider & provider)
-{
-    return get_activation_factory<GameControllerProviderInfo, IGameControllerProviderInfoStatics>().GetProviderId(provider);
+    return get_activation_factory<GameControllerProviderInfo, Windows::Gaming::Input::Preview::IGameControllerProviderInfoStatics>().GetProviderId(provider);
 }
 
 }
 
-}
+WINRT_EXPORT namespace std {
 
-template<>
-struct std::hash<winrt::Windows::Gaming::Input::Preview::IGameControllerProviderInfoStatics>
-{
-    size_t operator()(const winrt::Windows::Gaming::Input::Preview::IGameControllerProviderInfoStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Gaming::Input::Preview::IGameControllerProviderInfoStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Gaming::Input::Preview::IGameControllerProviderInfoStatics> {};
+
+template<> struct hash<winrt::Windows::Gaming::Input::Preview::GameControllerProviderInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Gaming::Input::Preview::GameControllerProviderInfo> {};
+
+}
 
 WINRT_WARNING_POP

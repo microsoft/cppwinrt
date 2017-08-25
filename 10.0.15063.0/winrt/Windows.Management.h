@@ -1,23 +1,180 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Management.2.h"
 
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Management.3.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_Management_IMdmAlert<D>::Data() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->get_Data(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> void consume_Windows_Management_IMdmAlert<D>::Data(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->put_Data(get_abi(value)));
+}
+
+template <typename D> Windows::Management::MdmAlertDataType consume_Windows_Management_IMdmAlert<D>::Format() const
+{
+    Windows::Management::MdmAlertDataType value{};
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->get_Format(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Management_IMdmAlert<D>::Format(Windows::Management::MdmAlertDataType const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->put_Format(get_abi(value)));
+}
+
+template <typename D> Windows::Management::MdmAlertMark consume_Windows_Management_IMdmAlert<D>::Mark() const
+{
+    Windows::Management::MdmAlertMark value{};
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->get_Mark(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Management_IMdmAlert<D>::Mark(Windows::Management::MdmAlertMark const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->put_Mark(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Management_IMdmAlert<D>::Source() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->get_Source(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Management_IMdmAlert<D>::Source(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->put_Source(get_abi(value)));
+}
+
+template <typename D> uint32_t consume_Windows_Management_IMdmAlert<D>::Status() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->get_Status(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Management_IMdmAlert<D>::Target() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->get_Target(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Management_IMdmAlert<D>::Target(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->put_Target(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Management_IMdmAlert<D>::Type() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->get_Type(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Management_IMdmAlert<D>::Type(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmAlert)->put_Type(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Management::MdmAlert> consume_Windows_Management_IMdmSession<D>::Alerts() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Management::MdmAlert> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSession)->get_Alerts(put_abi(value)));
+    return value;
+}
+
+template <typename D> HRESULT consume_Windows_Management_IMdmSession<D>::ExtendedError() const
+{
+    HRESULT value{};
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSession)->get_ExtendedError(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Management_IMdmSession<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSession)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Management::MdmSessionState consume_Windows_Management_IMdmSession<D>::State() const
+{
+    Windows::Management::MdmSessionState value{};
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSession)->get_State(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Management_IMdmSession<D>::AttachAsync() const
+{
+    Windows::Foundation::IAsyncAction action{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSession)->AttachAsync(put_abi(action)));
+    return action;
+}
+
+template <typename D> void consume_Windows_Management_IMdmSession<D>::Delete() const
+{
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSession)->Delete());
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Management_IMdmSession<D>::StartAsync() const
+{
+    Windows::Foundation::IAsyncAction action{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSession)->StartAsync(put_abi(action)));
+    return action;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Management_IMdmSession<D>::StartAsync(param::async_iterable<Windows::Management::MdmAlert> const& alerts) const
+{
+    Windows::Foundation::IAsyncAction action{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSession)->StartWithAlertsAsync(get_abi(alerts), put_abi(action)));
+    return action;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> consume_Windows_Management_IMdmSessionManagerStatics<D>::SessionIds() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSessionManagerStatics)->get_SessionIds(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Management::MdmSession consume_Windows_Management_IMdmSessionManagerStatics<D>::TryCreateSession() const
+{
+    Windows::Management::MdmSession result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSessionManagerStatics)->TryCreateSession(put_abi(result)));
+    return result;
+}
+
+template <typename D> void consume_Windows_Management_IMdmSessionManagerStatics<D>::DeleteSessionById(param::hstring const& sessionId) const
+{
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSessionManagerStatics)->DeleteSessionById(get_abi(sessionId)));
+}
+
+template <typename D> Windows::Management::MdmSession consume_Windows_Management_IMdmSessionManagerStatics<D>::GetSessionById(param::hstring const& sessionId) const
+{
+    Windows::Management::MdmSession result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Management::IMdmSessionManagerStatics)->GetSessionById(get_abi(sessionId), put_abi(result)));
+    return result;
+}
 
 template <typename D>
 struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Management::IMdmAlert>
 {
-    HRESULT __stdcall get_Data(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Data(HSTRING* value) noexcept override
     {
         try
         {
@@ -32,12 +189,12 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall put_Data(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Data(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Data(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Data(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -46,7 +203,7 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall get_Format(Windows::Management::MdmAlertDataType * value) noexcept override
+    HRESULT __stdcall get_Format(abi_t<Windows::Management::MdmAlertDataType>* value) noexcept override
     {
         try
         {
@@ -60,12 +217,12 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall put_Format(Windows::Management::MdmAlertDataType value) noexcept override
+    HRESULT __stdcall put_Format(abi_t<Windows::Management::MdmAlertDataType> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Format(value);
+            this->shim().Format(*reinterpret_cast<Windows::Management::MdmAlertDataType const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -74,7 +231,7 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall get_Mark(Windows::Management::MdmAlertMark * value) noexcept override
+    HRESULT __stdcall get_Mark(abi_t<Windows::Management::MdmAlertMark>* value) noexcept override
     {
         try
         {
@@ -88,12 +245,12 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall put_Mark(Windows::Management::MdmAlertMark value) noexcept override
+    HRESULT __stdcall put_Mark(abi_t<Windows::Management::MdmAlertMark> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Mark(value);
+            this->shim().Mark(*reinterpret_cast<Windows::Management::MdmAlertMark const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -102,7 +259,7 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall get_Source(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Source(HSTRING* value) noexcept override
     {
         try
         {
@@ -117,12 +274,12 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall put_Source(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Source(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Source(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Source(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -131,7 +288,7 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall get_Status(uint32_t * value) noexcept override
+    HRESULT __stdcall get_Status(uint32_t* value) noexcept override
     {
         try
         {
@@ -145,7 +302,7 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall get_Target(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Target(HSTRING* value) noexcept override
     {
         try
         {
@@ -160,12 +317,12 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall put_Target(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Target(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Target(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Target(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -174,7 +331,7 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall get_Type(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Type(HSTRING* value) noexcept override
     {
         try
         {
@@ -189,12 +346,12 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
         }
     }
 
-    HRESULT __stdcall put_Type(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Type(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Type(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Type(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -207,7 +364,7 @@ struct produce<D, Windows::Management::IMdmAlert> : produce_base<D, Windows::Man
 template <typename D>
 struct produce<D, Windows::Management::IMdmSession> : produce_base<D, Windows::Management::IMdmSession>
 {
-    HRESULT __stdcall get_Alerts(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Management::MdmAlert>> value) noexcept override
+    HRESULT __stdcall get_Alerts(::IUnknown** value) noexcept override
     {
         try
         {
@@ -222,7 +379,7 @@ struct produce<D, Windows::Management::IMdmSession> : produce_base<D, Windows::M
         }
     }
 
-    HRESULT __stdcall get_ExtendedError(HRESULT * value) noexcept override
+    HRESULT __stdcall get_ExtendedError(abi_t<HRESULT>* value) noexcept override
     {
         try
         {
@@ -236,7 +393,7 @@ struct produce<D, Windows::Management::IMdmSession> : produce_base<D, Windows::M
         }
     }
 
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -251,7 +408,7 @@ struct produce<D, Windows::Management::IMdmSession> : produce_base<D, Windows::M
         }
     }
 
-    HRESULT __stdcall get_State(Windows::Management::MdmSessionState * value) noexcept override
+    HRESULT __stdcall get_State(abi_t<Windows::Management::MdmSessionState>* value) noexcept override
     {
         try
         {
@@ -265,7 +422,7 @@ struct produce<D, Windows::Management::IMdmSession> : produce_base<D, Windows::M
         }
     }
 
-    HRESULT __stdcall abi_AttachAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall AttachAsync(::IUnknown** action) noexcept override
     {
         try
         {
@@ -280,7 +437,7 @@ struct produce<D, Windows::Management::IMdmSession> : produce_base<D, Windows::M
         }
     }
 
-    HRESULT __stdcall abi_Delete() noexcept override
+    HRESULT __stdcall Delete() noexcept override
     {
         try
         {
@@ -294,7 +451,7 @@ struct produce<D, Windows::Management::IMdmSession> : produce_base<D, Windows::M
         }
     }
 
-    HRESULT __stdcall abi_StartAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall StartAsync(::IUnknown** action) noexcept override
     {
         try
         {
@@ -309,12 +466,12 @@ struct produce<D, Windows::Management::IMdmSession> : produce_base<D, Windows::M
         }
     }
 
-    HRESULT __stdcall abi_StartWithAlertsAsync(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Management::MdmAlert>> alerts, impl::abi_arg_out<Windows::Foundation::IAsyncAction> action) noexcept override
+    HRESULT __stdcall StartWithAlertsAsync(::IUnknown* alerts, ::IUnknown** action) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *action = detach_abi(this->shim().StartAsync(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Management::MdmAlert> *>(&alerts)));
+            *action = detach_abi(this->shim().StartAsync(*reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::Management::MdmAlert> const*>(&alerts)));
             return S_OK;
         }
         catch (...)
@@ -328,7 +485,7 @@ struct produce<D, Windows::Management::IMdmSession> : produce_base<D, Windows::M
 template <typename D>
 struct produce<D, Windows::Management::IMdmSessionManagerStatics> : produce_base<D, Windows::Management::IMdmSessionManagerStatics>
 {
-    HRESULT __stdcall get_SessionIds(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_SessionIds(::IUnknown** value) noexcept override
     {
         try
         {
@@ -343,7 +500,7 @@ struct produce<D, Windows::Management::IMdmSessionManagerStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_TryCreateSession(impl::abi_arg_out<Windows::Management::IMdmSession> result) noexcept override
+    HRESULT __stdcall TryCreateSession(::IUnknown** result) noexcept override
     {
         try
         {
@@ -358,12 +515,12 @@ struct produce<D, Windows::Management::IMdmSessionManagerStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_DeleteSessionById(impl::abi_arg_in<hstring> sessionId) noexcept override
+    HRESULT __stdcall DeleteSessionById(HSTRING sessionId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DeleteSessionById(*reinterpret_cast<const hstring *>(&sessionId));
+            this->shim().DeleteSessionById(*reinterpret_cast<hstring const*>(&sessionId));
             return S_OK;
         }
         catch (...)
@@ -372,12 +529,12 @@ struct produce<D, Windows::Management::IMdmSessionManagerStatics> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetSessionById(impl::abi_arg_in<hstring> sessionId, impl::abi_arg_out<Windows::Management::IMdmSession> result) noexcept override
+    HRESULT __stdcall GetSessionById(HSTRING sessionId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetSessionById(*reinterpret_cast<const hstring *>(&sessionId)));
+            *result = detach_abi(this->shim().GetSessionById(*reinterpret_cast<hstring const*>(&sessionId)));
             return S_OK;
         }
         catch (...)
@@ -390,166 +547,7 @@ struct produce<D, Windows::Management::IMdmSessionManagerStatics> : produce_base
 
 }
 
-namespace Windows::Management {
-
-template <typename D> hstring impl_IMdmAlert<D>::Data() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMdmAlert)->get_Data(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IMdmAlert<D>::Data(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IMdmAlert)->put_Data(get_abi(value)));
-}
-
-template <typename D> Windows::Management::MdmAlertDataType impl_IMdmAlert<D>::Format() const
-{
-    Windows::Management::MdmAlertDataType value {};
-    check_hresult(WINRT_SHIM(IMdmAlert)->get_Format(&value));
-    return value;
-}
-
-template <typename D> void impl_IMdmAlert<D>::Format(Windows::Management::MdmAlertDataType value) const
-{
-    check_hresult(WINRT_SHIM(IMdmAlert)->put_Format(value));
-}
-
-template <typename D> Windows::Management::MdmAlertMark impl_IMdmAlert<D>::Mark() const
-{
-    Windows::Management::MdmAlertMark value {};
-    check_hresult(WINRT_SHIM(IMdmAlert)->get_Mark(&value));
-    return value;
-}
-
-template <typename D> void impl_IMdmAlert<D>::Mark(Windows::Management::MdmAlertMark value) const
-{
-    check_hresult(WINRT_SHIM(IMdmAlert)->put_Mark(value));
-}
-
-template <typename D> hstring impl_IMdmAlert<D>::Source() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMdmAlert)->get_Source(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IMdmAlert<D>::Source(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IMdmAlert)->put_Source(get_abi(value)));
-}
-
-template <typename D> uint32_t impl_IMdmAlert<D>::Status() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IMdmAlert)->get_Status(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IMdmAlert<D>::Target() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMdmAlert)->get_Target(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IMdmAlert<D>::Target(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IMdmAlert)->put_Target(get_abi(value)));
-}
-
-template <typename D> hstring impl_IMdmAlert<D>::Type() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMdmAlert)->get_Type(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IMdmAlert<D>::Type(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IMdmAlert)->put_Type(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Management::MdmAlert> impl_IMdmSession<D>::Alerts() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Management::MdmAlert> value;
-    check_hresult(WINRT_SHIM(IMdmSession)->get_Alerts(put_abi(value)));
-    return value;
-}
-
-template <typename D> HRESULT impl_IMdmSession<D>::ExtendedError() const
-{
-    HRESULT value {};
-    check_hresult(WINRT_SHIM(IMdmSession)->get_ExtendedError(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IMdmSession<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMdmSession)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Management::MdmSessionState impl_IMdmSession<D>::State() const
-{
-    Windows::Management::MdmSessionState value {};
-    check_hresult(WINRT_SHIM(IMdmSession)->get_State(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IMdmSession<D>::AttachAsync() const
-{
-    Windows::Foundation::IAsyncAction action;
-    check_hresult(WINRT_SHIM(IMdmSession)->abi_AttachAsync(put_abi(action)));
-    return action;
-}
-
-template <typename D> void impl_IMdmSession<D>::Delete() const
-{
-    check_hresult(WINRT_SHIM(IMdmSession)->abi_Delete());
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IMdmSession<D>::StartAsync() const
-{
-    Windows::Foundation::IAsyncAction action;
-    check_hresult(WINRT_SHIM(IMdmSession)->abi_StartAsync(put_abi(action)));
-    return action;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IMdmSession<D>::StartAsync(iterable<Windows::Management::MdmAlert> alerts) const
-{
-    Windows::Foundation::IAsyncAction action;
-    check_hresult(WINRT_SHIM(IMdmSession)->abi_StartWithAlertsAsync(get_abi(alerts), put_abi(action)));
-    return action;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IMdmSessionManagerStatics<D>::SessionIds() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IMdmSessionManagerStatics)->get_SessionIds(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Management::MdmSession impl_IMdmSessionManagerStatics<D>::TryCreateSession() const
-{
-    Windows::Management::MdmSession result { nullptr };
-    check_hresult(WINRT_SHIM(IMdmSessionManagerStatics)->abi_TryCreateSession(put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IMdmSessionManagerStatics<D>::DeleteSessionById(hstring_view sessionId) const
-{
-    check_hresult(WINRT_SHIM(IMdmSessionManagerStatics)->abi_DeleteSessionById(get_abi(sessionId)));
-}
-
-template <typename D> Windows::Management::MdmSession impl_IMdmSessionManagerStatics<D>::GetSessionById(hstring_view sessionId) const
-{
-    Windows::Management::MdmSession result { nullptr };
-    check_hresult(WINRT_SHIM(IMdmSessionManagerStatics)->abi_GetSessionById(get_abi(sessionId), put_abi(result)));
-    return result;
-}
+WINRT_EXPORT namespace winrt::Windows::Management {
 
 inline MdmAlert::MdmAlert() :
     MdmAlert(activate_instance<MdmAlert>())
@@ -557,71 +555,46 @@ inline MdmAlert::MdmAlert() :
 
 inline Windows::Foundation::Collections::IVectorView<hstring> MdmSessionManager::SessionIds()
 {
-    return get_activation_factory<MdmSessionManager, IMdmSessionManagerStatics>().SessionIds();
+    return get_activation_factory<MdmSessionManager, Windows::Management::IMdmSessionManagerStatics>().SessionIds();
 }
 
 inline Windows::Management::MdmSession MdmSessionManager::TryCreateSession()
 {
-    return get_activation_factory<MdmSessionManager, IMdmSessionManagerStatics>().TryCreateSession();
+    return get_activation_factory<MdmSessionManager, Windows::Management::IMdmSessionManagerStatics>().TryCreateSession();
 }
 
-inline void MdmSessionManager::DeleteSessionById(hstring_view sessionId)
+inline void MdmSessionManager::DeleteSessionById(param::hstring const& sessionId)
 {
-    get_activation_factory<MdmSessionManager, IMdmSessionManagerStatics>().DeleteSessionById(sessionId);
+    get_activation_factory<MdmSessionManager, Windows::Management::IMdmSessionManagerStatics>().DeleteSessionById(sessionId);
 }
 
-inline Windows::Management::MdmSession MdmSessionManager::GetSessionById(hstring_view sessionId)
+inline Windows::Management::MdmSession MdmSessionManager::GetSessionById(param::hstring const& sessionId)
 {
-    return get_activation_factory<MdmSessionManager, IMdmSessionManagerStatics>().GetSessionById(sessionId);
+    return get_activation_factory<MdmSessionManager, Windows::Management::IMdmSessionManagerStatics>().GetSessionById(sessionId);
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Management::IMdmAlert> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Management::IMdmAlert> {};
+
+template<> struct hash<winrt::Windows::Management::IMdmSession> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Management::IMdmSession> {};
+
+template<> struct hash<winrt::Windows::Management::IMdmSessionManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Management::IMdmSessionManagerStatics> {};
+
+template<> struct hash<winrt::Windows::Management::MdmAlert> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Management::MdmAlert> {};
+
+template<> struct hash<winrt::Windows::Management::MdmSession> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Management::MdmSession> {};
+
+template<> struct hash<winrt::Windows::Management::MdmSessionManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Management::MdmSessionManager> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Management::IMdmAlert>
-{
-    size_t operator()(const winrt::Windows::Management::IMdmAlert & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Management::IMdmSession>
-{
-    size_t operator()(const winrt::Windows::Management::IMdmSession & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Management::IMdmSessionManagerStatics>
-{
-    size_t operator()(const winrt::Windows::Management::IMdmSessionManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Management::MdmAlert>
-{
-    size_t operator()(const winrt::Windows::Management::MdmAlert & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Management::MdmSession>
-{
-    size_t operator()(const winrt::Windows::Management::MdmSession & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

@@ -1,23 +1,66 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.UI.Core.Preview.2.h"
+#include "winrt/Windows.UI.Core.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.UI.Core.Preview.3.h"
-#include "Windows.UI.Core.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> bool consume_Windows_UI_Core_Preview_ISystemNavigationCloseRequestedPreviewEventArgs<D>::Handled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::Preview::ISystemNavigationCloseRequestedPreviewEventArgs)->get_Handled(&value));
+    return value;
+}
 
-namespace impl {
+template <typename D> void consume_Windows_UI_Core_Preview_ISystemNavigationCloseRequestedPreviewEventArgs<D>::Handled(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Core::Preview::ISystemNavigationCloseRequestedPreviewEventArgs)->put_Handled(value));
+}
+
+template <typename D> Windows::Foundation::Deferral consume_Windows_UI_Core_Preview_ISystemNavigationCloseRequestedPreviewEventArgs<D>::GetDeferral() const
+{
+    Windows::Foundation::Deferral result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Core::Preview::ISystemNavigationCloseRequestedPreviewEventArgs)->GetDeferral(put_abi(result)));
+    return result;
+}
+
+template <typename D> event_token consume_Windows_UI_Core_Preview_ISystemNavigationManagerPreview<D>::CloseRequested(Windows::Foundation::EventHandler<Windows::UI::Core::Preview::SystemNavigationCloseRequestedPreviewEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::Core::Preview::ISystemNavigationManagerPreview)->add_CloseRequested(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::Core::Preview::ISystemNavigationManagerPreview> consume_Windows_UI_Core_Preview_ISystemNavigationManagerPreview<D>::CloseRequested(auto_revoke_t, Windows::Foundation::EventHandler<Windows::UI::Core::Preview::SystemNavigationCloseRequestedPreviewEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::Core::Preview::ISystemNavigationManagerPreview>(this, &abi_t<Windows::UI::Core::Preview::ISystemNavigationManagerPreview>::remove_CloseRequested, CloseRequested(handler));
+}
+
+template <typename D> void consume_Windows_UI_Core_Preview_ISystemNavigationManagerPreview<D>::CloseRequested(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Core::Preview::ISystemNavigationManagerPreview)->remove_CloseRequested(get_abi(token)));
+}
+
+template <typename D> Windows::UI::Core::Preview::SystemNavigationManagerPreview consume_Windows_UI_Core_Preview_ISystemNavigationManagerPreviewStatics<D>::GetForCurrentView() const
+{
+    Windows::UI::Core::Preview::SystemNavigationManagerPreview loader{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Core::Preview::ISystemNavigationManagerPreviewStatics)->GetForCurrentView(put_abi(loader)));
+    return loader;
+}
 
 template <typename D>
 struct produce<D, Windows::UI::Core::Preview::ISystemNavigationCloseRequestedPreviewEventArgs> : produce_base<D, Windows::UI::Core::Preview::ISystemNavigationCloseRequestedPreviewEventArgs>
 {
-    HRESULT __stdcall get_Handled(bool * value) noexcept override
+    HRESULT __stdcall get_Handled(bool* value) noexcept override
     {
         try
         {
@@ -45,7 +88,7 @@ struct produce<D, Windows::UI::Core::Preview::ISystemNavigationCloseRequestedPre
         }
     }
 
-    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::Foundation::IDeferral> result) noexcept override
+    HRESULT __stdcall GetDeferral(::IUnknown** result) noexcept override
     {
         try
         {
@@ -64,12 +107,12 @@ struct produce<D, Windows::UI::Core::Preview::ISystemNavigationCloseRequestedPre
 template <typename D>
 struct produce<D, Windows::UI::Core::Preview::ISystemNavigationManagerPreview> : produce_base<D, Windows::UI::Core::Preview::ISystemNavigationManagerPreview>
 {
-    HRESULT __stdcall add_CloseRequested(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::UI::Core::Preview::SystemNavigationCloseRequestedPreviewEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_CloseRequested(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().CloseRequested(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::UI::Core::Preview::SystemNavigationCloseRequestedPreviewEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().CloseRequested(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::UI::Core::Preview::SystemNavigationCloseRequestedPreviewEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -78,12 +121,12 @@ struct produce<D, Windows::UI::Core::Preview::ISystemNavigationManagerPreview> :
         }
     }
 
-    HRESULT __stdcall remove_CloseRequested(event_token token) noexcept override
+    HRESULT __stdcall remove_CloseRequested(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CloseRequested(token);
+            this->shim().CloseRequested(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -96,7 +139,7 @@ struct produce<D, Windows::UI::Core::Preview::ISystemNavigationManagerPreview> :
 template <typename D>
 struct produce<D, Windows::UI::Core::Preview::ISystemNavigationManagerPreviewStatics> : produce_base<D, Windows::UI::Core::Preview::ISystemNavigationManagerPreviewStatics>
 {
-    HRESULT __stdcall abi_GetForCurrentView(impl::abi_arg_out<Windows::UI::Core::Preview::ISystemNavigationManagerPreview> loader) noexcept override
+    HRESULT __stdcall GetForCurrentView(::IUnknown** loader) noexcept override
     {
         try
         {
@@ -114,103 +157,32 @@ struct produce<D, Windows::UI::Core::Preview::ISystemNavigationManagerPreviewSta
 
 }
 
-namespace Windows::UI::Core::Preview {
-
-template <typename D> event_token impl_ISystemNavigationManagerPreview<D>::CloseRequested(const Windows::Foundation::EventHandler<Windows::UI::Core::Preview::SystemNavigationCloseRequestedPreviewEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ISystemNavigationManagerPreview)->add_CloseRequested(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ISystemNavigationManagerPreview> impl_ISystemNavigationManagerPreview<D>::CloseRequested(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::UI::Core::Preview::SystemNavigationCloseRequestedPreviewEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, ISystemNavigationManagerPreview>(this, &ABI::Windows::UI::Core::Preview::ISystemNavigationManagerPreview::remove_CloseRequested, CloseRequested(handler));
-}
-
-template <typename D> void impl_ISystemNavigationManagerPreview<D>::CloseRequested(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ISystemNavigationManagerPreview)->remove_CloseRequested(token));
-}
-
-template <typename D> Windows::UI::Core::Preview::SystemNavigationManagerPreview impl_ISystemNavigationManagerPreviewStatics<D>::GetForCurrentView() const
-{
-    Windows::UI::Core::Preview::SystemNavigationManagerPreview loader { nullptr };
-    check_hresult(WINRT_SHIM(ISystemNavigationManagerPreviewStatics)->abi_GetForCurrentView(put_abi(loader)));
-    return loader;
-}
-
-template <typename D> bool impl_ISystemNavigationCloseRequestedPreviewEventArgs<D>::Handled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ISystemNavigationCloseRequestedPreviewEventArgs)->get_Handled(&value));
-    return value;
-}
-
-template <typename D> void impl_ISystemNavigationCloseRequestedPreviewEventArgs<D>::Handled(bool value) const
-{
-    check_hresult(WINRT_SHIM(ISystemNavigationCloseRequestedPreviewEventArgs)->put_Handled(value));
-}
-
-template <typename D> Windows::Foundation::Deferral impl_ISystemNavigationCloseRequestedPreviewEventArgs<D>::GetDeferral() const
-{
-    Windows::Foundation::Deferral result { nullptr };
-    check_hresult(WINRT_SHIM(ISystemNavigationCloseRequestedPreviewEventArgs)->abi_GetDeferral(put_abi(result)));
-    return result;
-}
+WINRT_EXPORT namespace winrt::Windows::UI::Core::Preview {
 
 inline Windows::UI::Core::Preview::SystemNavigationManagerPreview SystemNavigationManagerPreview::GetForCurrentView()
 {
-    return get_activation_factory<SystemNavigationManagerPreview, ISystemNavigationManagerPreviewStatics>().GetForCurrentView();
+    return get_activation_factory<SystemNavigationManagerPreview, Windows::UI::Core::Preview::ISystemNavigationManagerPreviewStatics>().GetForCurrentView();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::UI::Core::Preview::ISystemNavigationCloseRequestedPreviewEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::Preview::ISystemNavigationCloseRequestedPreviewEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Core::Preview::ISystemNavigationManagerPreview> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::Preview::ISystemNavigationManagerPreview> {};
+
+template<> struct hash<winrt::Windows::UI::Core::Preview::ISystemNavigationManagerPreviewStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::Preview::ISystemNavigationManagerPreviewStatics> {};
+
+template<> struct hash<winrt::Windows::UI::Core::Preview::SystemNavigationCloseRequestedPreviewEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::Preview::SystemNavigationCloseRequestedPreviewEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::Core::Preview::SystemNavigationManagerPreview> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Core::Preview::SystemNavigationManagerPreview> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::Preview::ISystemNavigationCloseRequestedPreviewEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Core::Preview::ISystemNavigationCloseRequestedPreviewEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::Preview::ISystemNavigationManagerPreview>
-{
-    size_t operator()(const winrt::Windows::UI::Core::Preview::ISystemNavigationManagerPreview & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::Preview::ISystemNavigationManagerPreviewStatics>
-{
-    size_t operator()(const winrt::Windows::UI::Core::Preview::ISystemNavigationManagerPreviewStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::Preview::SystemNavigationCloseRequestedPreviewEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::Core::Preview::SystemNavigationCloseRequestedPreviewEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Core::Preview::SystemNavigationManagerPreview>
-{
-    size_t operator()(const winrt::Windows::UI::Core::Preview::SystemNavigationManagerPreview & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

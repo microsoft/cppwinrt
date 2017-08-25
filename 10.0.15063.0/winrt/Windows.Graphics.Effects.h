@@ -1,22 +1,34 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Graphics.Effects.2.h"
+#include "winrt/Windows.Graphics.h"
 
-#include "internal/Windows.Graphics.Effects.3.h"
-#include "Windows.Graphics.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_Graphics_Effects_IGraphicsEffect<D>::Name() const
+{
+    hstring name{};
+    check_hresult(WINRT_SHIM(Windows::Graphics::Effects::IGraphicsEffect)->get_Name(put_abi(name)));
+    return name;
+}
 
-namespace impl {
+template <typename D> void consume_Windows_Graphics_Effects_IGraphicsEffect<D>::Name(param::hstring const& name) const
+{
+    check_hresult(WINRT_SHIM(Windows::Graphics::Effects::IGraphicsEffect)->put_Name(get_abi(name)));
+}
 
 template <typename D>
 struct produce<D, Windows::Graphics::Effects::IGraphicsEffect> : produce_base<D, Windows::Graphics::Effects::IGraphicsEffect>
 {
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> name) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* name) noexcept override
     {
         try
         {
@@ -31,12 +43,12 @@ struct produce<D, Windows::Graphics::Effects::IGraphicsEffect> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall put_Name(impl::abi_arg_in<hstring> name) noexcept override
+    HRESULT __stdcall put_Name(HSTRING name) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Name(*reinterpret_cast<const hstring *>(&name));
+            this->shim().Name(*reinterpret_cast<hstring const*>(&name));
             return S_OK;
         }
         catch (...)
@@ -52,40 +64,18 @@ struct produce<D, Windows::Graphics::Effects::IGraphicsEffectSource> : produce_b
 
 }
 
-namespace Windows::Graphics::Effects {
-
-template <typename D> hstring impl_IGraphicsEffect<D>::Name() const
-{
-    hstring name;
-    check_hresult(WINRT_SHIM(IGraphicsEffect)->get_Name(put_abi(name)));
-    return name;
-}
-
-template <typename D> void impl_IGraphicsEffect<D>::Name(hstring_view name) const
-{
-    check_hresult(WINRT_SHIM(IGraphicsEffect)->put_Name(get_abi(name)));
-}
+WINRT_EXPORT namespace winrt::Windows::Graphics::Effects {
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Graphics::Effects::IGraphicsEffect> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Effects::IGraphicsEffect> {};
+
+template<> struct hash<winrt::Windows::Graphics::Effects::IGraphicsEffectSource> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Graphics::Effects::IGraphicsEffectSource> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Effects::IGraphicsEffect>
-{
-    size_t operator()(const winrt::Windows::Graphics::Effects::IGraphicsEffect & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Graphics::Effects::IGraphicsEffectSource>
-{
-    size_t operator()(const winrt::Windows::Graphics::Effects::IGraphicsEffectSource & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

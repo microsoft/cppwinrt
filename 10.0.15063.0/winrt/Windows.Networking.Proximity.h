@@ -1,99 +1,598 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.Networking.2.h"
+#include "winrt/impl/Windows.Networking.Sockets.2.h"
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.Networking.Proximity.2.h"
+#include "winrt/Windows.Networking.h"
 
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Networking.Sockets.3.h"
-#include "internal/Windows.Networking.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Networking.Proximity.3.h"
-#include "Windows.Networking.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
-
-namespace Windows::Networking::Proximity {
-
-template <typename L> DeviceArrivedEventHandler::DeviceArrivedEventHandler(L lambda) :
-    DeviceArrivedEventHandler(impl::make_delegate<impl_DeviceArrivedEventHandler<L>, DeviceArrivedEventHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> DeviceArrivedEventHandler::DeviceArrivedEventHandler(F * function) :
-    DeviceArrivedEventHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> DeviceArrivedEventHandler::DeviceArrivedEventHandler(O * object, M method) :
-    DeviceArrivedEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void DeviceArrivedEventHandler::operator()(const Windows::Networking::Proximity::ProximityDevice & sender) const
+template <typename D> Windows::Networking::Proximity::PeerInformation consume_Windows_Networking_Proximity_IConnectionRequestedEventArgs<D>::PeerInformation() const
 {
-    check_hresult((*(abi<DeviceArrivedEventHandler> **)this)->abi_Invoke(get_abi(sender)));
+    Windows::Networking::Proximity::PeerInformation value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IConnectionRequestedEventArgs)->get_PeerInformation(put_abi(value)));
+    return value;
 }
 
-template <typename L> DeviceDepartedEventHandler::DeviceDepartedEventHandler(L lambda) :
-    DeviceDepartedEventHandler(impl::make_delegate<impl_DeviceDepartedEventHandler<L>, DeviceDepartedEventHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> DeviceDepartedEventHandler::DeviceDepartedEventHandler(F * function) :
-    DeviceDepartedEventHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> DeviceDepartedEventHandler::DeviceDepartedEventHandler(O * object, M method) :
-    DeviceDepartedEventHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void DeviceDepartedEventHandler::operator()(const Windows::Networking::Proximity::ProximityDevice & sender) const
+template <typename D> bool consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::AllowBluetooth() const
 {
-    check_hresult((*(abi<DeviceDepartedEventHandler> **)this)->abi_Invoke(get_abi(sender)));
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->get_AllowBluetooth(&value));
+    return value;
 }
 
-template <typename L> MessageReceivedHandler::MessageReceivedHandler(L lambda) :
-    MessageReceivedHandler(impl::make_delegate<impl_MessageReceivedHandler<L>, MessageReceivedHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> MessageReceivedHandler::MessageReceivedHandler(F * function) :
-    MessageReceivedHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> MessageReceivedHandler::MessageReceivedHandler(O * object, M method) :
-    MessageReceivedHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void MessageReceivedHandler::operator()(const Windows::Networking::Proximity::ProximityDevice & sender, const Windows::Networking::Proximity::ProximityMessage & message) const
+template <typename D> void consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::AllowBluetooth(bool value) const
 {
-    check_hresult((*(abi<MessageReceivedHandler> **)this)->abi_Invoke(get_abi(sender), get_abi(message)));
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->put_AllowBluetooth(value));
 }
 
-template <typename L> MessageTransmittedHandler::MessageTransmittedHandler(L lambda) :
-    MessageTransmittedHandler(impl::make_delegate<impl_MessageTransmittedHandler<L>, MessageTransmittedHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> MessageTransmittedHandler::MessageTransmittedHandler(F * function) :
-    MessageTransmittedHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> MessageTransmittedHandler::MessageTransmittedHandler(O * object, M method) :
-    MessageTransmittedHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void MessageTransmittedHandler::operator()(const Windows::Networking::Proximity::ProximityDevice & sender, int64_t messageId) const
+template <typename D> bool consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::AllowInfrastructure() const
 {
-    check_hresult((*(abi<MessageTransmittedHandler> **)this)->abi_Invoke(get_abi(sender), messageId));
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->get_AllowInfrastructure(&value));
+    return value;
 }
 
+template <typename D> void consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::AllowInfrastructure(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->put_AllowInfrastructure(value));
 }
 
-namespace impl {
+template <typename D> bool consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::AllowWiFiDirect() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->get_AllowWiFiDirect(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::AllowWiFiDirect(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->put_AllowWiFiDirect(value));
+}
+
+template <typename D> hstring consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::DisplayName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->put_DisplayName(get_abi(value)));
+}
+
+template <typename D> Windows::Networking::Proximity::PeerDiscoveryTypes consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::SupportedDiscoveryTypes() const
+{
+    Windows::Networking::Proximity::PeerDiscoveryTypes value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->get_SupportedDiscoveryTypes(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::AlternateIdentities() const
+{
+    Windows::Foundation::Collections::IMap<hstring, hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->get_AlternateIdentities(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::Start() const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->Start());
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::Start(param::hstring const& peerMessage) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->StartWithMessage(get_abi(peerMessage)));
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::Stop() const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->Stop());
+}
+
+template <typename D> event_token consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::TriggeredConnectionStateChanged(Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> const& handler) const
+{
+    event_token cookie{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->add_TriggeredConnectionStateChanged(get_abi(handler), put_abi(cookie)));
+    return cookie;
+}
+
+template <typename D> event_revoker<Windows::Networking::Proximity::IPeerFinderStatics> consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::TriggeredConnectionStateChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::Proximity::IPeerFinderStatics>(this, &abi_t<Windows::Networking::Proximity::IPeerFinderStatics>::remove_TriggeredConnectionStateChanged, TriggeredConnectionStateChanged(handler));
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::TriggeredConnectionStateChanged(event_token const& cookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->remove_TriggeredConnectionStateChanged(get_abi(cookie)));
+}
+
+template <typename D> event_token consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::ConnectionRequested(Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> const& handler) const
+{
+    event_token cookie{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->add_ConnectionRequested(get_abi(handler), put_abi(cookie)));
+    return cookie;
+}
+
+template <typename D> event_revoker<Windows::Networking::Proximity::IPeerFinderStatics> consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::ConnectionRequested(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::Proximity::IPeerFinderStatics>(this, &abi_t<Windows::Networking::Proximity::IPeerFinderStatics>::remove_ConnectionRequested, ConnectionRequested(handler));
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::ConnectionRequested(event_token const& cookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->remove_ConnectionRequested(get_abi(cookie)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::Proximity::PeerInformation>> consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::FindAllPeersAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::Proximity::PeerInformation>> asyncOp{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->FindAllPeersAsync(put_abi(asyncOp)));
+    return asyncOp;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Networking::Sockets::StreamSocket> consume_Windows_Networking_Proximity_IPeerFinderStatics<D>::ConnectAsync(Windows::Networking::Proximity::PeerInformation const& peerInformation) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Networking::Sockets::StreamSocket> asyncOp{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics)->ConnectAsync(get_abi(peerInformation), put_abi(asyncOp)));
+    return asyncOp;
+}
+
+template <typename D> Windows::Networking::Proximity::PeerRole consume_Windows_Networking_Proximity_IPeerFinderStatics2<D>::Role() const
+{
+    Windows::Networking::Proximity::PeerRole value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics2)->get_Role(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerFinderStatics2<D>::Role(Windows::Networking::Proximity::PeerRole const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics2)->put_Role(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Networking_Proximity_IPeerFinderStatics2<D>::DiscoveryData() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics2)->get_DiscoveryData(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerFinderStatics2<D>::DiscoveryData(Windows::Storage::Streams::IBuffer const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics2)->put_DiscoveryData(get_abi(value)));
+}
+
+template <typename D> Windows::Networking::Proximity::PeerWatcher consume_Windows_Networking_Proximity_IPeerFinderStatics2<D>::CreateWatcher() const
+{
+    Windows::Networking::Proximity::PeerWatcher watcher{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerFinderStatics2)->CreateWatcher(put_abi(watcher)));
+    return watcher;
+}
+
+template <typename D> hstring consume_Windows_Networking_Proximity_IPeerInformation<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerInformation)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Networking_Proximity_IPeerInformation3<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerInformation3)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Networking_Proximity_IPeerInformation3<D>::DiscoveryData() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerInformation3)->get_DiscoveryData(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Networking::HostName consume_Windows_Networking_Proximity_IPeerInformationWithHostAndService<D>::HostName() const
+{
+    Windows::Networking::HostName value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerInformationWithHostAndService)->get_HostName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Networking_Proximity_IPeerInformationWithHostAndService<D>::ServiceName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerInformationWithHostAndService)->get_ServiceName(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Networking_Proximity_IPeerWatcher<D>::Added(Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->add_Added(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Networking::Proximity::IPeerWatcher> consume_Windows_Networking_Proximity_IPeerWatcher<D>::Added(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::Proximity::IPeerWatcher>(this, &abi_t<Windows::Networking::Proximity::IPeerWatcher>::remove_Added, Added(handler));
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerWatcher<D>::Added(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->remove_Added(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_Networking_Proximity_IPeerWatcher<D>::Removed(Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->add_Removed(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Networking::Proximity::IPeerWatcher> consume_Windows_Networking_Proximity_IPeerWatcher<D>::Removed(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::Proximity::IPeerWatcher>(this, &abi_t<Windows::Networking::Proximity::IPeerWatcher>::remove_Removed, Removed(handler));
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerWatcher<D>::Removed(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->remove_Removed(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_Networking_Proximity_IPeerWatcher<D>::Updated(Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->add_Updated(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Networking::Proximity::IPeerWatcher> consume_Windows_Networking_Proximity_IPeerWatcher<D>::Updated(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::Proximity::IPeerWatcher>(this, &abi_t<Windows::Networking::Proximity::IPeerWatcher>::remove_Updated, Updated(handler));
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerWatcher<D>::Updated(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->remove_Updated(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_Networking_Proximity_IPeerWatcher<D>::EnumerationCompleted(Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->add_EnumerationCompleted(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Networking::Proximity::IPeerWatcher> consume_Windows_Networking_Proximity_IPeerWatcher<D>::EnumerationCompleted(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::Proximity::IPeerWatcher>(this, &abi_t<Windows::Networking::Proximity::IPeerWatcher>::remove_EnumerationCompleted, EnumerationCompleted(handler));
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerWatcher<D>::EnumerationCompleted(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->remove_EnumerationCompleted(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_Networking_Proximity_IPeerWatcher<D>::Stopped(Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->add_Stopped(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Networking::Proximity::IPeerWatcher> consume_Windows_Networking_Proximity_IPeerWatcher<D>::Stopped(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::Proximity::IPeerWatcher>(this, &abi_t<Windows::Networking::Proximity::IPeerWatcher>::remove_Stopped, Stopped(handler));
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerWatcher<D>::Stopped(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->remove_Stopped(get_abi(token)));
+}
+
+template <typename D> Windows::Networking::Proximity::PeerWatcherStatus consume_Windows_Networking_Proximity_IPeerWatcher<D>::Status() const
+{
+    Windows::Networking::Proximity::PeerWatcherStatus status{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->get_Status(put_abi(status)));
+    return status;
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerWatcher<D>::Start() const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->Start());
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IPeerWatcher<D>::Stop() const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IPeerWatcher)->Stop());
+}
+
+template <typename D> int64_t consume_Windows_Networking_Proximity_IProximityDevice<D>::SubscribeForMessage(param::hstring const& messageType, Windows::Networking::Proximity::MessageReceivedHandler const& messageReceivedHandler) const
+{
+    int64_t subscriptionId{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->SubscribeForMessage(get_abi(messageType), get_abi(messageReceivedHandler), &subscriptionId));
+    return subscriptionId;
+}
+
+template <typename D> int64_t consume_Windows_Networking_Proximity_IProximityDevice<D>::PublishMessage(param::hstring const& messageType, param::hstring const& message) const
+{
+    int64_t messageId{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->PublishMessage(get_abi(messageType), get_abi(message), &messageId));
+    return messageId;
+}
+
+template <typename D> int64_t consume_Windows_Networking_Proximity_IProximityDevice<D>::PublishMessage(param::hstring const& messageType, param::hstring const& message, Windows::Networking::Proximity::MessageTransmittedHandler const& messageTransmittedHandler) const
+{
+    int64_t messageId{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->PublishMessageWithCallback(get_abi(messageType), get_abi(message), get_abi(messageTransmittedHandler), &messageId));
+    return messageId;
+}
+
+template <typename D> int64_t consume_Windows_Networking_Proximity_IProximityDevice<D>::PublishBinaryMessage(param::hstring const& messageType, Windows::Storage::Streams::IBuffer const& message) const
+{
+    int64_t messageId{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->PublishBinaryMessage(get_abi(messageType), get_abi(message), &messageId));
+    return messageId;
+}
+
+template <typename D> int64_t consume_Windows_Networking_Proximity_IProximityDevice<D>::PublishBinaryMessage(param::hstring const& messageType, Windows::Storage::Streams::IBuffer const& message, Windows::Networking::Proximity::MessageTransmittedHandler const& messageTransmittedHandler) const
+{
+    int64_t messageId{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->PublishBinaryMessageWithCallback(get_abi(messageType), get_abi(message), get_abi(messageTransmittedHandler), &messageId));
+    return messageId;
+}
+
+template <typename D> int64_t consume_Windows_Networking_Proximity_IProximityDevice<D>::PublishUriMessage(Windows::Foundation::Uri const& message) const
+{
+    int64_t messageId{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->PublishUriMessage(get_abi(message), &messageId));
+    return messageId;
+}
+
+template <typename D> int64_t consume_Windows_Networking_Proximity_IProximityDevice<D>::PublishUriMessage(Windows::Foundation::Uri const& message, Windows::Networking::Proximity::MessageTransmittedHandler const& messageTransmittedHandler) const
+{
+    int64_t messageId{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->PublishUriMessageWithCallback(get_abi(message), get_abi(messageTransmittedHandler), &messageId));
+    return messageId;
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IProximityDevice<D>::StopSubscribingForMessage(int64_t subscriptionId) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->StopSubscribingForMessage(subscriptionId));
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IProximityDevice<D>::StopPublishingMessage(int64_t messageId) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->StopPublishingMessage(messageId));
+}
+
+template <typename D> event_token consume_Windows_Networking_Proximity_IProximityDevice<D>::DeviceArrived(Windows::Networking::Proximity::DeviceArrivedEventHandler const& arrivedHandler) const
+{
+    event_token cookie{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->add_DeviceArrived(get_abi(arrivedHandler), put_abi(cookie)));
+    return cookie;
+}
+
+template <typename D> event_revoker<Windows::Networking::Proximity::IProximityDevice> consume_Windows_Networking_Proximity_IProximityDevice<D>::DeviceArrived(auto_revoke_t, Windows::Networking::Proximity::DeviceArrivedEventHandler const& arrivedHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::Proximity::IProximityDevice>(this, &abi_t<Windows::Networking::Proximity::IProximityDevice>::remove_DeviceArrived, DeviceArrived(arrivedHandler));
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IProximityDevice<D>::DeviceArrived(event_token const& cookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->remove_DeviceArrived(get_abi(cookie)));
+}
+
+template <typename D> event_token consume_Windows_Networking_Proximity_IProximityDevice<D>::DeviceDeparted(Windows::Networking::Proximity::DeviceDepartedEventHandler const& departedHandler) const
+{
+    event_token cookie{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->add_DeviceDeparted(get_abi(departedHandler), put_abi(cookie)));
+    return cookie;
+}
+
+template <typename D> event_revoker<Windows::Networking::Proximity::IProximityDevice> consume_Windows_Networking_Proximity_IProximityDevice<D>::DeviceDeparted(auto_revoke_t, Windows::Networking::Proximity::DeviceDepartedEventHandler const& departedHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Networking::Proximity::IProximityDevice>(this, &abi_t<Windows::Networking::Proximity::IProximityDevice>::remove_DeviceDeparted, DeviceDeparted(departedHandler));
+}
+
+template <typename D> void consume_Windows_Networking_Proximity_IProximityDevice<D>::DeviceDeparted(event_token const& cookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->remove_DeviceDeparted(get_abi(cookie)));
+}
+
+template <typename D> uint32_t consume_Windows_Networking_Proximity_IProximityDevice<D>::MaxMessageBytes() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->get_MaxMessageBytes(&value));
+    return value;
+}
+
+template <typename D> uint64_t consume_Windows_Networking_Proximity_IProximityDevice<D>::BitsPerSecond() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->get_BitsPerSecond(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Networking_Proximity_IProximityDevice<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDevice)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Networking_Proximity_IProximityDeviceStatics<D>::GetDeviceSelector() const
+{
+    hstring selector{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDeviceStatics)->GetDeviceSelector(put_abi(selector)));
+    return selector;
+}
+
+template <typename D> Windows::Networking::Proximity::ProximityDevice consume_Windows_Networking_Proximity_IProximityDeviceStatics<D>::GetDefault() const
+{
+    Windows::Networking::Proximity::ProximityDevice proximityDevice{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDeviceStatics)->GetDefault(put_abi(proximityDevice)));
+    return proximityDevice;
+}
+
+template <typename D> Windows::Networking::Proximity::ProximityDevice consume_Windows_Networking_Proximity_IProximityDeviceStatics<D>::FromId(param::hstring const& deviceId) const
+{
+    Windows::Networking::Proximity::ProximityDevice proximityDevice{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityDeviceStatics)->FromId(get_abi(deviceId), put_abi(proximityDevice)));
+    return proximityDevice;
+}
+
+template <typename D> hstring consume_Windows_Networking_Proximity_IProximityMessage<D>::MessageType() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityMessage)->get_MessageType(put_abi(value)));
+    return value;
+}
+
+template <typename D> int64_t consume_Windows_Networking_Proximity_IProximityMessage<D>::SubscriptionId() const
+{
+    int64_t value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityMessage)->get_SubscriptionId(&value));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Networking_Proximity_IProximityMessage<D>::Data() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityMessage)->get_Data(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Networking_Proximity_IProximityMessage<D>::DataAsString() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::IProximityMessage)->get_DataAsString(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Networking::Proximity::TriggeredConnectState consume_Windows_Networking_Proximity_ITriggeredConnectionStateChangedEventArgs<D>::State() const
+{
+    Windows::Networking::Proximity::TriggeredConnectState value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::ITriggeredConnectionStateChangedEventArgs)->get_State(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Networking_Proximity_ITriggeredConnectionStateChangedEventArgs<D>::Id() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::ITriggeredConnectionStateChangedEventArgs)->get_Id(&value));
+    return value;
+}
+
+template <typename D> Windows::Networking::Sockets::StreamSocket consume_Windows_Networking_Proximity_ITriggeredConnectionStateChangedEventArgs<D>::Socket() const
+{
+    Windows::Networking::Sockets::StreamSocket value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Networking::Proximity::ITriggeredConnectionStateChangedEventArgs)->get_Socket(put_abi(value)));
+    return value;
+}
+
+template <> struct delegate<Windows::Networking::Proximity::DeviceArrivedEventHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::Networking::Proximity::DeviceArrivedEventHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::Networking::Proximity::DeviceArrivedEventHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Networking::Proximity::ProximityDevice const*>(&sender));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
+
+template <> struct delegate<Windows::Networking::Proximity::DeviceDepartedEventHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::Networking::Proximity::DeviceDepartedEventHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::Networking::Proximity::DeviceDepartedEventHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Networking::Proximity::ProximityDevice const*>(&sender));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
+
+template <> struct delegate<Windows::Networking::Proximity::MessageReceivedHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::Networking::Proximity::MessageReceivedHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::Networking::Proximity::MessageReceivedHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender, ::IUnknown* message) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Networking::Proximity::ProximityDevice const*>(&sender), *reinterpret_cast<Windows::Networking::Proximity::ProximityMessage const*>(&message));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
+
+template <> struct delegate<Windows::Networking::Proximity::MessageTransmittedHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::Networking::Proximity::MessageTransmittedHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::Networking::Proximity::MessageTransmittedHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender, int64_t messageId) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Networking::Proximity::ProximityDevice const*>(&sender), messageId);
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
 
 template <typename D>
 struct produce<D, Windows::Networking::Proximity::IConnectionRequestedEventArgs> : produce_base<D, Windows::Networking::Proximity::IConnectionRequestedEventArgs>
 {
-    HRESULT __stdcall get_PeerInformation(impl::abi_arg_out<Windows::Networking::Proximity::IPeerInformation> value) noexcept override
+    HRESULT __stdcall get_PeerInformation(::IUnknown** value) noexcept override
     {
         try
         {
@@ -112,7 +611,7 @@ struct produce<D, Windows::Networking::Proximity::IConnectionRequestedEventArgs>
 template <typename D>
 struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_base<D, Windows::Networking::Proximity::IPeerFinderStatics>
 {
-    HRESULT __stdcall get_AllowBluetooth(bool * value) noexcept override
+    HRESULT __stdcall get_AllowBluetooth(bool* value) noexcept override
     {
         try
         {
@@ -140,7 +639,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall get_AllowInfrastructure(bool * value) noexcept override
+    HRESULT __stdcall get_AllowInfrastructure(bool* value) noexcept override
     {
         try
         {
@@ -168,7 +667,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall get_AllowWiFiDirect(bool * value) noexcept override
+    HRESULT __stdcall get_AllowWiFiDirect(bool* value) noexcept override
     {
         try
         {
@@ -196,7 +695,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -211,12 +710,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall put_DisplayName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DisplayName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DisplayName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DisplayName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -225,7 +724,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall get_SupportedDiscoveryTypes(Windows::Networking::Proximity::PeerDiscoveryTypes * value) noexcept override
+    HRESULT __stdcall get_SupportedDiscoveryTypes(abi_t<Windows::Networking::Proximity::PeerDiscoveryTypes>* value) noexcept override
     {
         try
         {
@@ -239,7 +738,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall get_AlternateIdentities(impl::abi_arg_out<Windows::Foundation::Collections::IMap<hstring, hstring>> value) noexcept override
+    HRESULT __stdcall get_AlternateIdentities(::IUnknown** value) noexcept override
     {
         try
         {
@@ -254,7 +753,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_Start() noexcept override
+    HRESULT __stdcall Start() noexcept override
     {
         try
         {
@@ -268,12 +767,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_StartWithMessage(impl::abi_arg_in<hstring> peerMessage) noexcept override
+    HRESULT __stdcall StartWithMessage(HSTRING peerMessage) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Start(*reinterpret_cast<const hstring *>(&peerMessage));
+            this->shim().Start(*reinterpret_cast<hstring const*>(&peerMessage));
             return S_OK;
         }
         catch (...)
@@ -282,7 +781,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_Stop() noexcept override
+    HRESULT __stdcall Stop() noexcept override
     {
         try
         {
@@ -296,12 +795,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall add_TriggeredConnectionStateChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs>> handler, event_token * cookie) noexcept override
+    HRESULT __stdcall add_TriggeredConnectionStateChanged(::IUnknown* handler, abi_t<event_token>* cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *cookie = detach_abi(this->shim().TriggeredConnectionStateChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> *>(&handler)));
+            *cookie = detach_abi(this->shim().TriggeredConnectionStateChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -310,12 +809,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall remove_TriggeredConnectionStateChanged(event_token cookie) noexcept override
+    HRESULT __stdcall remove_TriggeredConnectionStateChanged(abi_t<event_token> cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TriggeredConnectionStateChanged(cookie);
+            this->shim().TriggeredConnectionStateChanged(*reinterpret_cast<event_token const*>(&cookie));
             return S_OK;
         }
         catch (...)
@@ -324,12 +823,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall add_ConnectionRequested(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs>> handler, event_token * cookie) noexcept override
+    HRESULT __stdcall add_ConnectionRequested(::IUnknown* handler, abi_t<event_token>* cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *cookie = detach_abi(this->shim().ConnectionRequested(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> *>(&handler)));
+            *cookie = detach_abi(this->shim().ConnectionRequested(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -338,12 +837,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall remove_ConnectionRequested(event_token cookie) noexcept override
+    HRESULT __stdcall remove_ConnectionRequested(abi_t<event_token> cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ConnectionRequested(cookie);
+            this->shim().ConnectionRequested(*reinterpret_cast<event_token const*>(&cookie));
             return S_OK;
         }
         catch (...)
@@ -352,7 +851,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_FindAllPeersAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::Proximity::PeerInformation>>> asyncOp) noexcept override
+    HRESULT __stdcall FindAllPeersAsync(::IUnknown** asyncOp) noexcept override
     {
         try
         {
@@ -367,12 +866,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_ConnectAsync(impl::abi_arg_in<Windows::Networking::Proximity::IPeerInformation> peerInformation, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Networking::Sockets::StreamSocket>> asyncOp) noexcept override
+    HRESULT __stdcall ConnectAsync(::IUnknown* peerInformation, ::IUnknown** asyncOp) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *asyncOp = detach_abi(this->shim().ConnectAsync(*reinterpret_cast<const Windows::Networking::Proximity::PeerInformation *>(&peerInformation)));
+            *asyncOp = detach_abi(this->shim().ConnectAsync(*reinterpret_cast<Windows::Networking::Proximity::PeerInformation const*>(&peerInformation)));
             return S_OK;
         }
         catch (...)
@@ -386,7 +885,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics> : produce_
 template <typename D>
 struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics2> : produce_base<D, Windows::Networking::Proximity::IPeerFinderStatics2>
 {
-    HRESULT __stdcall get_Role(Windows::Networking::Proximity::PeerRole * value) noexcept override
+    HRESULT __stdcall get_Role(abi_t<Windows::Networking::Proximity::PeerRole>* value) noexcept override
     {
         try
         {
@@ -400,12 +899,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics2> : produce
         }
     }
 
-    HRESULT __stdcall put_Role(Windows::Networking::Proximity::PeerRole value) noexcept override
+    HRESULT __stdcall put_Role(abi_t<Windows::Networking::Proximity::PeerRole> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Role(value);
+            this->shim().Role(*reinterpret_cast<Windows::Networking::Proximity::PeerRole const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -414,7 +913,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics2> : produce
         }
     }
 
-    HRESULT __stdcall get_DiscoveryData(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_DiscoveryData(::IUnknown** value) noexcept override
     {
         try
         {
@@ -429,12 +928,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics2> : produce
         }
     }
 
-    HRESULT __stdcall put_DiscoveryData(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall put_DiscoveryData(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DiscoveryData(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value));
+            this->shim().DiscoveryData(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -443,7 +942,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics2> : produce
         }
     }
 
-    HRESULT __stdcall abi_CreateWatcher(impl::abi_arg_out<Windows::Networking::Proximity::IPeerWatcher> watcher) noexcept override
+    HRESULT __stdcall CreateWatcher(::IUnknown** watcher) noexcept override
     {
         try
         {
@@ -462,7 +961,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerFinderStatics2> : produce
 template <typename D>
 struct produce<D, Windows::Networking::Proximity::IPeerInformation> : produce_base<D, Windows::Networking::Proximity::IPeerInformation>
 {
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -481,7 +980,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerInformation> : produce_ba
 template <typename D>
 struct produce<D, Windows::Networking::Proximity::IPeerInformation3> : produce_base<D, Windows::Networking::Proximity::IPeerInformation3>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -496,7 +995,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerInformation3> : produce_b
         }
     }
 
-    HRESULT __stdcall get_DiscoveryData(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_DiscoveryData(::IUnknown** value) noexcept override
     {
         try
         {
@@ -515,7 +1014,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerInformation3> : produce_b
 template <typename D>
 struct produce<D, Windows::Networking::Proximity::IPeerInformationWithHostAndService> : produce_base<D, Windows::Networking::Proximity::IPeerInformationWithHostAndService>
 {
-    HRESULT __stdcall get_HostName(impl::abi_arg_out<Windows::Networking::IHostName> value) noexcept override
+    HRESULT __stdcall get_HostName(::IUnknown** value) noexcept override
     {
         try
         {
@@ -530,7 +1029,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerInformationWithHostAndSer
         }
     }
 
-    HRESULT __stdcall get_ServiceName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ServiceName(HSTRING* value) noexcept override
     {
         try
         {
@@ -549,12 +1048,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerInformationWithHostAndSer
 template <typename D>
 struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D, Windows::Networking::Proximity::IPeerWatcher>
 {
-    HRESULT __stdcall add_Added(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Added(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Added(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> *>(&handler)));
+            *token = detach_abi(this->shim().Added(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -563,12 +1062,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall remove_Added(event_token token) noexcept override
+    HRESULT __stdcall remove_Added(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Added(token);
+            this->shim().Added(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -577,12 +1076,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall add_Removed(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Removed(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Removed(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> *>(&handler)));
+            *token = detach_abi(this->shim().Removed(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -591,12 +1090,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall remove_Removed(event_token token) noexcept override
+    HRESULT __stdcall remove_Removed(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Removed(token);
+            this->shim().Removed(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -605,12 +1104,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall add_Updated(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Updated(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Updated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> *>(&handler)));
+            *token = detach_abi(this->shim().Updated(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -619,12 +1118,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall remove_Updated(event_token token) noexcept override
+    HRESULT __stdcall remove_Updated(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Updated(token);
+            this->shim().Updated(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -633,12 +1132,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall add_EnumerationCompleted(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_EnumerationCompleted(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().EnumerationCompleted(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().EnumerationCompleted(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -647,12 +1146,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall remove_EnumerationCompleted(event_token token) noexcept override
+    HRESULT __stdcall remove_EnumerationCompleted(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().EnumerationCompleted(token);
+            this->shim().EnumerationCompleted(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -661,12 +1160,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall add_Stopped(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Stopped(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Stopped(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().Stopped(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -675,12 +1174,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall remove_Stopped(event_token token) noexcept override
+    HRESULT __stdcall remove_Stopped(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Stopped(token);
+            this->shim().Stopped(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -689,7 +1188,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_Status(Windows::Networking::Proximity::PeerWatcherStatus * status) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::Networking::Proximity::PeerWatcherStatus>* status) noexcept override
     {
         try
         {
@@ -703,7 +1202,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_Start() noexcept override
+    HRESULT __stdcall Start() noexcept override
     {
         try
         {
@@ -717,7 +1216,7 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_Stop() noexcept override
+    HRESULT __stdcall Stop() noexcept override
     {
         try
         {
@@ -735,12 +1234,12 @@ struct produce<D, Windows::Networking::Proximity::IPeerWatcher> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_base<D, Windows::Networking::Proximity::IProximityDevice>
 {
-    HRESULT __stdcall abi_SubscribeForMessage(impl::abi_arg_in<hstring> messageType, impl::abi_arg_in<Windows::Networking::Proximity::MessageReceivedHandler> messageReceivedHandler, int64_t * subscriptionId) noexcept override
+    HRESULT __stdcall SubscribeForMessage(HSTRING messageType, ::IUnknown* messageReceivedHandler, int64_t* subscriptionId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *subscriptionId = detach_abi(this->shim().SubscribeForMessage(*reinterpret_cast<const hstring *>(&messageType), *reinterpret_cast<const Windows::Networking::Proximity::MessageReceivedHandler *>(&messageReceivedHandler)));
+            *subscriptionId = detach_abi(this->shim().SubscribeForMessage(*reinterpret_cast<hstring const*>(&messageType), *reinterpret_cast<Windows::Networking::Proximity::MessageReceivedHandler const*>(&messageReceivedHandler)));
             return S_OK;
         }
         catch (...)
@@ -749,12 +1248,12 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_PublishMessage(impl::abi_arg_in<hstring> messageType, impl::abi_arg_in<hstring> message, int64_t * messageId) noexcept override
+    HRESULT __stdcall PublishMessage(HSTRING messageType, HSTRING message, int64_t* messageId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *messageId = detach_abi(this->shim().PublishMessage(*reinterpret_cast<const hstring *>(&messageType), *reinterpret_cast<const hstring *>(&message)));
+            *messageId = detach_abi(this->shim().PublishMessage(*reinterpret_cast<hstring const*>(&messageType), *reinterpret_cast<hstring const*>(&message)));
             return S_OK;
         }
         catch (...)
@@ -763,12 +1262,12 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_PublishMessageWithCallback(impl::abi_arg_in<hstring> messageType, impl::abi_arg_in<hstring> message, impl::abi_arg_in<Windows::Networking::Proximity::MessageTransmittedHandler> messageTransmittedHandler, int64_t * messageId) noexcept override
+    HRESULT __stdcall PublishMessageWithCallback(HSTRING messageType, HSTRING message, ::IUnknown* messageTransmittedHandler, int64_t* messageId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *messageId = detach_abi(this->shim().PublishMessage(*reinterpret_cast<const hstring *>(&messageType), *reinterpret_cast<const hstring *>(&message), *reinterpret_cast<const Windows::Networking::Proximity::MessageTransmittedHandler *>(&messageTransmittedHandler)));
+            *messageId = detach_abi(this->shim().PublishMessage(*reinterpret_cast<hstring const*>(&messageType), *reinterpret_cast<hstring const*>(&message), *reinterpret_cast<Windows::Networking::Proximity::MessageTransmittedHandler const*>(&messageTransmittedHandler)));
             return S_OK;
         }
         catch (...)
@@ -777,12 +1276,12 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_PublishBinaryMessage(impl::abi_arg_in<hstring> messageType, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> message, int64_t * messageId) noexcept override
+    HRESULT __stdcall PublishBinaryMessage(HSTRING messageType, ::IUnknown* message, int64_t* messageId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *messageId = detach_abi(this->shim().PublishBinaryMessage(*reinterpret_cast<const hstring *>(&messageType), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&message)));
+            *messageId = detach_abi(this->shim().PublishBinaryMessage(*reinterpret_cast<hstring const*>(&messageType), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&message)));
             return S_OK;
         }
         catch (...)
@@ -791,12 +1290,12 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_PublishBinaryMessageWithCallback(impl::abi_arg_in<hstring> messageType, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> message, impl::abi_arg_in<Windows::Networking::Proximity::MessageTransmittedHandler> messageTransmittedHandler, int64_t * messageId) noexcept override
+    HRESULT __stdcall PublishBinaryMessageWithCallback(HSTRING messageType, ::IUnknown* message, ::IUnknown* messageTransmittedHandler, int64_t* messageId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *messageId = detach_abi(this->shim().PublishBinaryMessage(*reinterpret_cast<const hstring *>(&messageType), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&message), *reinterpret_cast<const Windows::Networking::Proximity::MessageTransmittedHandler *>(&messageTransmittedHandler)));
+            *messageId = detach_abi(this->shim().PublishBinaryMessage(*reinterpret_cast<hstring const*>(&messageType), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&message), *reinterpret_cast<Windows::Networking::Proximity::MessageTransmittedHandler const*>(&messageTransmittedHandler)));
             return S_OK;
         }
         catch (...)
@@ -805,12 +1304,12 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_PublishUriMessage(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> message, int64_t * messageId) noexcept override
+    HRESULT __stdcall PublishUriMessage(::IUnknown* message, int64_t* messageId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *messageId = detach_abi(this->shim().PublishUriMessage(*reinterpret_cast<const Windows::Foundation::Uri *>(&message)));
+            *messageId = detach_abi(this->shim().PublishUriMessage(*reinterpret_cast<Windows::Foundation::Uri const*>(&message)));
             return S_OK;
         }
         catch (...)
@@ -819,12 +1318,12 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_PublishUriMessageWithCallback(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> message, impl::abi_arg_in<Windows::Networking::Proximity::MessageTransmittedHandler> messageTransmittedHandler, int64_t * messageId) noexcept override
+    HRESULT __stdcall PublishUriMessageWithCallback(::IUnknown* message, ::IUnknown* messageTransmittedHandler, int64_t* messageId) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *messageId = detach_abi(this->shim().PublishUriMessage(*reinterpret_cast<const Windows::Foundation::Uri *>(&message), *reinterpret_cast<const Windows::Networking::Proximity::MessageTransmittedHandler *>(&messageTransmittedHandler)));
+            *messageId = detach_abi(this->shim().PublishUriMessage(*reinterpret_cast<Windows::Foundation::Uri const*>(&message), *reinterpret_cast<Windows::Networking::Proximity::MessageTransmittedHandler const*>(&messageTransmittedHandler)));
             return S_OK;
         }
         catch (...)
@@ -833,7 +1332,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_StopSubscribingForMessage(int64_t subscriptionId) noexcept override
+    HRESULT __stdcall StopSubscribingForMessage(int64_t subscriptionId) noexcept override
     {
         try
         {
@@ -847,7 +1346,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_StopPublishingMessage(int64_t messageId) noexcept override
+    HRESULT __stdcall StopPublishingMessage(int64_t messageId) noexcept override
     {
         try
         {
@@ -861,12 +1360,12 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall add_DeviceArrived(impl::abi_arg_in<Windows::Networking::Proximity::DeviceArrivedEventHandler> arrivedHandler, event_token * cookie) noexcept override
+    HRESULT __stdcall add_DeviceArrived(::IUnknown* arrivedHandler, abi_t<event_token>* cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *cookie = detach_abi(this->shim().DeviceArrived(*reinterpret_cast<const Windows::Networking::Proximity::DeviceArrivedEventHandler *>(&arrivedHandler)));
+            *cookie = detach_abi(this->shim().DeviceArrived(*reinterpret_cast<Windows::Networking::Proximity::DeviceArrivedEventHandler const*>(&arrivedHandler)));
             return S_OK;
         }
         catch (...)
@@ -875,12 +1374,12 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall remove_DeviceArrived(event_token cookie) noexcept override
+    HRESULT __stdcall remove_DeviceArrived(abi_t<event_token> cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DeviceArrived(cookie);
+            this->shim().DeviceArrived(*reinterpret_cast<event_token const*>(&cookie));
             return S_OK;
         }
         catch (...)
@@ -889,12 +1388,12 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall add_DeviceDeparted(impl::abi_arg_in<Windows::Networking::Proximity::DeviceDepartedEventHandler> departedHandler, event_token * cookie) noexcept override
+    HRESULT __stdcall add_DeviceDeparted(::IUnknown* departedHandler, abi_t<event_token>* cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *cookie = detach_abi(this->shim().DeviceDeparted(*reinterpret_cast<const Windows::Networking::Proximity::DeviceDepartedEventHandler *>(&departedHandler)));
+            *cookie = detach_abi(this->shim().DeviceDeparted(*reinterpret_cast<Windows::Networking::Proximity::DeviceDepartedEventHandler const*>(&departedHandler)));
             return S_OK;
         }
         catch (...)
@@ -903,12 +1402,12 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall remove_DeviceDeparted(event_token cookie) noexcept override
+    HRESULT __stdcall remove_DeviceDeparted(abi_t<event_token> cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DeviceDeparted(cookie);
+            this->shim().DeviceDeparted(*reinterpret_cast<event_token const*>(&cookie));
             return S_OK;
         }
         catch (...)
@@ -917,7 +1416,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_MaxMessageBytes(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MaxMessageBytes(uint32_t* value) noexcept override
     {
         try
         {
@@ -931,7 +1430,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_BitsPerSecond(uint64_t * value) noexcept override
+    HRESULT __stdcall get_BitsPerSecond(uint64_t* value) noexcept override
     {
         try
         {
@@ -945,7 +1444,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -964,7 +1463,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityDevice> : produce_ba
 template <typename D>
 struct produce<D, Windows::Networking::Proximity::IProximityDeviceStatics> : produce_base<D, Windows::Networking::Proximity::IProximityDeviceStatics>
 {
-    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> selector) noexcept override
+    HRESULT __stdcall GetDeviceSelector(HSTRING* selector) noexcept override
     {
         try
         {
@@ -979,7 +1478,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityDeviceStatics> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Networking::Proximity::IProximityDevice> proximityDevice) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** proximityDevice) noexcept override
     {
         try
         {
@@ -994,12 +1493,12 @@ struct produce<D, Windows::Networking::Proximity::IProximityDeviceStatics> : pro
         }
     }
 
-    HRESULT __stdcall abi_FromId(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::Networking::Proximity::IProximityDevice> proximityDevice) noexcept override
+    HRESULT __stdcall FromId(HSTRING deviceId, ::IUnknown** proximityDevice) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *proximityDevice = detach_abi(this->shim().FromId(*reinterpret_cast<const hstring *>(&deviceId)));
+            *proximityDevice = detach_abi(this->shim().FromId(*reinterpret_cast<hstring const*>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -1013,7 +1512,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityDeviceStatics> : pro
 template <typename D>
 struct produce<D, Windows::Networking::Proximity::IProximityMessage> : produce_base<D, Windows::Networking::Proximity::IProximityMessage>
 {
-    HRESULT __stdcall get_MessageType(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MessageType(HSTRING* value) noexcept override
     {
         try
         {
@@ -1028,7 +1527,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityMessage> : produce_b
         }
     }
 
-    HRESULT __stdcall get_SubscriptionId(int64_t * value) noexcept override
+    HRESULT __stdcall get_SubscriptionId(int64_t* value) noexcept override
     {
         try
         {
@@ -1042,7 +1541,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityMessage> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Data(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Data(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1057,7 +1556,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityMessage> : produce_b
         }
     }
 
-    HRESULT __stdcall get_DataAsString(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DataAsString(HSTRING* value) noexcept override
     {
         try
         {
@@ -1076,7 +1575,7 @@ struct produce<D, Windows::Networking::Proximity::IProximityMessage> : produce_b
 template <typename D>
 struct produce<D, Windows::Networking::Proximity::ITriggeredConnectionStateChangedEventArgs> : produce_base<D, Windows::Networking::Proximity::ITriggeredConnectionStateChangedEventArgs>
 {
-    HRESULT __stdcall get_State(Windows::Networking::Proximity::TriggeredConnectState * value) noexcept override
+    HRESULT __stdcall get_State(abi_t<Windows::Networking::Proximity::TriggeredConnectState>* value) noexcept override
     {
         try
         {
@@ -1090,7 +1589,7 @@ struct produce<D, Windows::Networking::Proximity::ITriggeredConnectionStateChang
         }
     }
 
-    HRESULT __stdcall get_Id(uint32_t * value) noexcept override
+    HRESULT __stdcall get_Id(uint32_t* value) noexcept override
     {
         try
         {
@@ -1104,7 +1603,7 @@ struct produce<D, Windows::Networking::Proximity::ITriggeredConnectionStateChang
         }
     }
 
-    HRESULT __stdcall get_Socket(impl::abi_arg_out<Windows::Networking::Sockets::IStreamSocket> value) noexcept override
+    HRESULT __stdcall get_Socket(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1122,794 +1621,281 @@ struct produce<D, Windows::Networking::Proximity::ITriggeredConnectionStateChang
 
 }
 
-namespace Windows::Networking::Proximity {
-
-template <typename D> hstring impl_IProximityMessage<D>::MessageType() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IProximityMessage)->get_MessageType(put_abi(value)));
-    return value;
-}
-
-template <typename D> int64_t impl_IProximityMessage<D>::SubscriptionId() const
-{
-    int64_t value {};
-    check_hresult(WINRT_SHIM(IProximityMessage)->get_SubscriptionId(&value));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IProximityMessage<D>::Data() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IProximityMessage)->get_Data(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IProximityMessage<D>::DataAsString() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IProximityMessage)->get_DataAsString(put_abi(value)));
-    return value;
-}
-
-template <typename D> int64_t impl_IProximityDevice<D>::SubscribeForMessage(hstring_view messageType, const Windows::Networking::Proximity::MessageReceivedHandler & messageReceivedHandler) const
-{
-    int64_t subscriptionId {};
-    check_hresult(WINRT_SHIM(IProximityDevice)->abi_SubscribeForMessage(get_abi(messageType), get_abi(messageReceivedHandler), &subscriptionId));
-    return subscriptionId;
-}
-
-template <typename D> int64_t impl_IProximityDevice<D>::PublishMessage(hstring_view messageType, hstring_view message) const
-{
-    int64_t messageId {};
-    check_hresult(WINRT_SHIM(IProximityDevice)->abi_PublishMessage(get_abi(messageType), get_abi(message), &messageId));
-    return messageId;
-}
-
-template <typename D> int64_t impl_IProximityDevice<D>::PublishMessage(hstring_view messageType, hstring_view message, const Windows::Networking::Proximity::MessageTransmittedHandler & messageTransmittedHandler) const
-{
-    int64_t messageId {};
-    check_hresult(WINRT_SHIM(IProximityDevice)->abi_PublishMessageWithCallback(get_abi(messageType), get_abi(message), get_abi(messageTransmittedHandler), &messageId));
-    return messageId;
-}
-
-template <typename D> int64_t impl_IProximityDevice<D>::PublishBinaryMessage(hstring_view messageType, const Windows::Storage::Streams::IBuffer & message) const
-{
-    int64_t messageId {};
-    check_hresult(WINRT_SHIM(IProximityDevice)->abi_PublishBinaryMessage(get_abi(messageType), get_abi(message), &messageId));
-    return messageId;
-}
-
-template <typename D> int64_t impl_IProximityDevice<D>::PublishBinaryMessage(hstring_view messageType, const Windows::Storage::Streams::IBuffer & message, const Windows::Networking::Proximity::MessageTransmittedHandler & messageTransmittedHandler) const
-{
-    int64_t messageId {};
-    check_hresult(WINRT_SHIM(IProximityDevice)->abi_PublishBinaryMessageWithCallback(get_abi(messageType), get_abi(message), get_abi(messageTransmittedHandler), &messageId));
-    return messageId;
-}
-
-template <typename D> int64_t impl_IProximityDevice<D>::PublishUriMessage(const Windows::Foundation::Uri & message) const
-{
-    int64_t messageId {};
-    check_hresult(WINRT_SHIM(IProximityDevice)->abi_PublishUriMessage(get_abi(message), &messageId));
-    return messageId;
-}
-
-template <typename D> int64_t impl_IProximityDevice<D>::PublishUriMessage(const Windows::Foundation::Uri & message, const Windows::Networking::Proximity::MessageTransmittedHandler & messageTransmittedHandler) const
-{
-    int64_t messageId {};
-    check_hresult(WINRT_SHIM(IProximityDevice)->abi_PublishUriMessageWithCallback(get_abi(message), get_abi(messageTransmittedHandler), &messageId));
-    return messageId;
-}
-
-template <typename D> void impl_IProximityDevice<D>::StopSubscribingForMessage(int64_t subscriptionId) const
-{
-    check_hresult(WINRT_SHIM(IProximityDevice)->abi_StopSubscribingForMessage(subscriptionId));
-}
-
-template <typename D> void impl_IProximityDevice<D>::StopPublishingMessage(int64_t messageId) const
-{
-    check_hresult(WINRT_SHIM(IProximityDevice)->abi_StopPublishingMessage(messageId));
-}
-
-template <typename D> event_token impl_IProximityDevice<D>::DeviceArrived(const Windows::Networking::Proximity::DeviceArrivedEventHandler & arrivedHandler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IProximityDevice)->add_DeviceArrived(get_abi(arrivedHandler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IProximityDevice> impl_IProximityDevice<D>::DeviceArrived(auto_revoke_t, const Windows::Networking::Proximity::DeviceArrivedEventHandler & arrivedHandler) const
-{
-    return impl::make_event_revoker<D, IProximityDevice>(this, &ABI::Windows::Networking::Proximity::IProximityDevice::remove_DeviceArrived, DeviceArrived(arrivedHandler));
-}
-
-template <typename D> void impl_IProximityDevice<D>::DeviceArrived(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IProximityDevice)->remove_DeviceArrived(cookie));
-}
-
-template <typename D> event_token impl_IProximityDevice<D>::DeviceDeparted(const Windows::Networking::Proximity::DeviceDepartedEventHandler & departedHandler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IProximityDevice)->add_DeviceDeparted(get_abi(departedHandler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IProximityDevice> impl_IProximityDevice<D>::DeviceDeparted(auto_revoke_t, const Windows::Networking::Proximity::DeviceDepartedEventHandler & departedHandler) const
-{
-    return impl::make_event_revoker<D, IProximityDevice>(this, &ABI::Windows::Networking::Proximity::IProximityDevice::remove_DeviceDeparted, DeviceDeparted(departedHandler));
-}
-
-template <typename D> void impl_IProximityDevice<D>::DeviceDeparted(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IProximityDevice)->remove_DeviceDeparted(cookie));
-}
-
-template <typename D> uint32_t impl_IProximityDevice<D>::MaxMessageBytes() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IProximityDevice)->get_MaxMessageBytes(&value));
-    return value;
-}
-
-template <typename D> uint64_t impl_IProximityDevice<D>::BitsPerSecond() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IProximityDevice)->get_BitsPerSecond(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IProximityDevice<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IProximityDevice)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IProximityDeviceStatics<D>::GetDeviceSelector() const
-{
-    hstring selector;
-    check_hresult(WINRT_SHIM(IProximityDeviceStatics)->abi_GetDeviceSelector(put_abi(selector)));
-    return selector;
-}
-
-template <typename D> Windows::Networking::Proximity::ProximityDevice impl_IProximityDeviceStatics<D>::GetDefault() const
-{
-    Windows::Networking::Proximity::ProximityDevice proximityDevice { nullptr };
-    check_hresult(WINRT_SHIM(IProximityDeviceStatics)->abi_GetDefault(put_abi(proximityDevice)));
-    return proximityDevice;
-}
-
-template <typename D> Windows::Networking::Proximity::ProximityDevice impl_IProximityDeviceStatics<D>::FromId(hstring_view deviceId) const
-{
-    Windows::Networking::Proximity::ProximityDevice proximityDevice { nullptr };
-    check_hresult(WINRT_SHIM(IProximityDeviceStatics)->abi_FromId(get_abi(deviceId), put_abi(proximityDevice)));
-    return proximityDevice;
-}
-
-template <typename D> Windows::Networking::Proximity::TriggeredConnectState impl_ITriggeredConnectionStateChangedEventArgs<D>::State() const
-{
-    Windows::Networking::Proximity::TriggeredConnectState value {};
-    check_hresult(WINRT_SHIM(ITriggeredConnectionStateChangedEventArgs)->get_State(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_ITriggeredConnectionStateChangedEventArgs<D>::Id() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ITriggeredConnectionStateChangedEventArgs)->get_Id(&value));
-    return value;
-}
-
-template <typename D> Windows::Networking::Sockets::StreamSocket impl_ITriggeredConnectionStateChangedEventArgs<D>::Socket() const
-{
-    Windows::Networking::Sockets::StreamSocket value { nullptr };
-    check_hresult(WINRT_SHIM(ITriggeredConnectionStateChangedEventArgs)->get_Socket(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IPeerInformation<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPeerInformation)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Networking::HostName impl_IPeerInformationWithHostAndService<D>::HostName() const
-{
-    Windows::Networking::HostName value { nullptr };
-    check_hresult(WINRT_SHIM(IPeerInformationWithHostAndService)->get_HostName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IPeerInformationWithHostAndService<D>::ServiceName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPeerInformationWithHostAndService)->get_ServiceName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IPeerInformation3<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPeerInformation3)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IPeerInformation3<D>::DiscoveryData() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IPeerInformation3)->get_DiscoveryData(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Networking::Proximity::PeerInformation impl_IConnectionRequestedEventArgs<D>::PeerInformation() const
-{
-    Windows::Networking::Proximity::PeerInformation value { nullptr };
-    check_hresult(WINRT_SHIM(IConnectionRequestedEventArgs)->get_PeerInformation(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IPeerWatcher<D>::Added(const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPeerWatcher)->add_Added(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPeerWatcher> impl_IPeerWatcher<D>::Added(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> & handler) const
-{
-    return impl::make_event_revoker<D, IPeerWatcher>(this, &ABI::Windows::Networking::Proximity::IPeerWatcher::remove_Added, Added(handler));
-}
-
-template <typename D> void impl_IPeerWatcher<D>::Added(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPeerWatcher)->remove_Added(token));
-}
-
-template <typename D> event_token impl_IPeerWatcher<D>::Removed(const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPeerWatcher)->add_Removed(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPeerWatcher> impl_IPeerWatcher<D>::Removed(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> & handler) const
-{
-    return impl::make_event_revoker<D, IPeerWatcher>(this, &ABI::Windows::Networking::Proximity::IPeerWatcher::remove_Removed, Removed(handler));
-}
-
-template <typename D> void impl_IPeerWatcher<D>::Removed(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPeerWatcher)->remove_Removed(token));
-}
-
-template <typename D> event_token impl_IPeerWatcher<D>::Updated(const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPeerWatcher)->add_Updated(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPeerWatcher> impl_IPeerWatcher<D>::Updated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Networking::Proximity::PeerInformation> & handler) const
-{
-    return impl::make_event_revoker<D, IPeerWatcher>(this, &ABI::Windows::Networking::Proximity::IPeerWatcher::remove_Updated, Updated(handler));
-}
-
-template <typename D> void impl_IPeerWatcher<D>::Updated(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPeerWatcher)->remove_Updated(token));
-}
-
-template <typename D> event_token impl_IPeerWatcher<D>::EnumerationCompleted(const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPeerWatcher)->add_EnumerationCompleted(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPeerWatcher> impl_IPeerWatcher<D>::EnumerationCompleted(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IPeerWatcher>(this, &ABI::Windows::Networking::Proximity::IPeerWatcher::remove_EnumerationCompleted, EnumerationCompleted(handler));
-}
-
-template <typename D> void impl_IPeerWatcher<D>::EnumerationCompleted(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPeerWatcher)->remove_EnumerationCompleted(token));
-}
-
-template <typename D> event_token impl_IPeerWatcher<D>::Stopped(const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPeerWatcher)->add_Stopped(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPeerWatcher> impl_IPeerWatcher<D>::Stopped(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Networking::Proximity::PeerWatcher, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IPeerWatcher>(this, &ABI::Windows::Networking::Proximity::IPeerWatcher::remove_Stopped, Stopped(handler));
-}
-
-template <typename D> void impl_IPeerWatcher<D>::Stopped(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPeerWatcher)->remove_Stopped(token));
-}
-
-template <typename D> Windows::Networking::Proximity::PeerWatcherStatus impl_IPeerWatcher<D>::Status() const
-{
-    Windows::Networking::Proximity::PeerWatcherStatus status {};
-    check_hresult(WINRT_SHIM(IPeerWatcher)->get_Status(&status));
-    return status;
-}
-
-template <typename D> void impl_IPeerWatcher<D>::Start() const
-{
-    check_hresult(WINRT_SHIM(IPeerWatcher)->abi_Start());
-}
-
-template <typename D> void impl_IPeerWatcher<D>::Stop() const
-{
-    check_hresult(WINRT_SHIM(IPeerWatcher)->abi_Stop());
-}
-
-template <typename D> bool impl_IPeerFinderStatics<D>::AllowBluetooth() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->get_AllowBluetooth(&value));
-    return value;
-}
-
-template <typename D> void impl_IPeerFinderStatics<D>::AllowBluetooth(bool value) const
-{
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->put_AllowBluetooth(value));
-}
-
-template <typename D> bool impl_IPeerFinderStatics<D>::AllowInfrastructure() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->get_AllowInfrastructure(&value));
-    return value;
-}
-
-template <typename D> void impl_IPeerFinderStatics<D>::AllowInfrastructure(bool value) const
-{
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->put_AllowInfrastructure(value));
-}
-
-template <typename D> bool impl_IPeerFinderStatics<D>::AllowWiFiDirect() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->get_AllowWiFiDirect(&value));
-    return value;
-}
-
-template <typename D> void impl_IPeerFinderStatics<D>::AllowWiFiDirect(bool value) const
-{
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->put_AllowWiFiDirect(value));
-}
-
-template <typename D> hstring impl_IPeerFinderStatics<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPeerFinderStatics<D>::DisplayName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->put_DisplayName(get_abi(value)));
-}
-
-template <typename D> Windows::Networking::Proximity::PeerDiscoveryTypes impl_IPeerFinderStatics<D>::SupportedDiscoveryTypes() const
-{
-    Windows::Networking::Proximity::PeerDiscoveryTypes value {};
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->get_SupportedDiscoveryTypes(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IMap<hstring, hstring> impl_IPeerFinderStatics<D>::AlternateIdentities() const
-{
-    Windows::Foundation::Collections::IMap<hstring, hstring> value;
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->get_AlternateIdentities(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPeerFinderStatics<D>::Start() const
-{
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->abi_Start());
-}
-
-template <typename D> void impl_IPeerFinderStatics<D>::Start(hstring_view peerMessage) const
-{
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->abi_StartWithMessage(get_abi(peerMessage)));
-}
-
-template <typename D> void impl_IPeerFinderStatics<D>::Stop() const
-{
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->abi_Stop());
-}
-
-template <typename D> event_token impl_IPeerFinderStatics<D>::TriggeredConnectionStateChanged(const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->add_TriggeredConnectionStateChanged(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IPeerFinderStatics> impl_IPeerFinderStatics<D>::TriggeredConnectionStateChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IPeerFinderStatics>(this, &ABI::Windows::Networking::Proximity::IPeerFinderStatics::remove_TriggeredConnectionStateChanged, TriggeredConnectionStateChanged(handler));
-}
-
-template <typename D> void impl_IPeerFinderStatics<D>::TriggeredConnectionStateChanged(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->remove_TriggeredConnectionStateChanged(cookie));
-}
-
-template <typename D> event_token impl_IPeerFinderStatics<D>::ConnectionRequested(const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->add_ConnectionRequested(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IPeerFinderStatics> impl_IPeerFinderStatics<D>::ConnectionRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IPeerFinderStatics>(this, &ABI::Windows::Networking::Proximity::IPeerFinderStatics::remove_ConnectionRequested, ConnectionRequested(handler));
-}
-
-template <typename D> void impl_IPeerFinderStatics<D>::ConnectionRequested(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->remove_ConnectionRequested(cookie));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::Proximity::PeerInformation>> impl_IPeerFinderStatics<D>::FindAllPeersAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::Proximity::PeerInformation>> asyncOp;
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->abi_FindAllPeersAsync(put_abi(asyncOp)));
-    return asyncOp;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Networking::Sockets::StreamSocket> impl_IPeerFinderStatics<D>::ConnectAsync(const Windows::Networking::Proximity::PeerInformation & peerInformation) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Networking::Sockets::StreamSocket> asyncOp;
-    check_hresult(WINRT_SHIM(IPeerFinderStatics)->abi_ConnectAsync(get_abi(peerInformation), put_abi(asyncOp)));
-    return asyncOp;
-}
-
-template <typename D> Windows::Networking::Proximity::PeerRole impl_IPeerFinderStatics2<D>::Role() const
-{
-    Windows::Networking::Proximity::PeerRole value {};
-    check_hresult(WINRT_SHIM(IPeerFinderStatics2)->get_Role(&value));
-    return value;
-}
-
-template <typename D> void impl_IPeerFinderStatics2<D>::Role(Windows::Networking::Proximity::PeerRole value) const
-{
-    check_hresult(WINRT_SHIM(IPeerFinderStatics2)->put_Role(value));
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IPeerFinderStatics2<D>::DiscoveryData() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IPeerFinderStatics2)->get_DiscoveryData(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPeerFinderStatics2<D>::DiscoveryData(const Windows::Storage::Streams::IBuffer & value) const
-{
-    check_hresult(WINRT_SHIM(IPeerFinderStatics2)->put_DiscoveryData(get_abi(value)));
-}
-
-template <typename D> Windows::Networking::Proximity::PeerWatcher impl_IPeerFinderStatics2<D>::CreateWatcher() const
-{
-    Windows::Networking::Proximity::PeerWatcher watcher { nullptr };
-    check_hresult(WINRT_SHIM(IPeerFinderStatics2)->abi_CreateWatcher(put_abi(watcher)));
-    return watcher;
-}
+WINRT_EXPORT namespace winrt::Windows::Networking::Proximity {
 
 inline bool PeerFinder::AllowBluetooth()
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics>().AllowBluetooth();
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().AllowBluetooth();
 }
 
 inline void PeerFinder::AllowBluetooth(bool value)
 {
-    get_activation_factory<PeerFinder, IPeerFinderStatics>().AllowBluetooth(value);
+    get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().AllowBluetooth(value);
 }
 
 inline bool PeerFinder::AllowInfrastructure()
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics>().AllowInfrastructure();
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().AllowInfrastructure();
 }
 
 inline void PeerFinder::AllowInfrastructure(bool value)
 {
-    get_activation_factory<PeerFinder, IPeerFinderStatics>().AllowInfrastructure(value);
+    get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().AllowInfrastructure(value);
 }
 
 inline bool PeerFinder::AllowWiFiDirect()
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics>().AllowWiFiDirect();
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().AllowWiFiDirect();
 }
 
 inline void PeerFinder::AllowWiFiDirect(bool value)
 {
-    get_activation_factory<PeerFinder, IPeerFinderStatics>().AllowWiFiDirect(value);
+    get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().AllowWiFiDirect(value);
 }
 
 inline hstring PeerFinder::DisplayName()
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics>().DisplayName();
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().DisplayName();
 }
 
-inline void PeerFinder::DisplayName(hstring_view value)
+inline void PeerFinder::DisplayName(param::hstring const& value)
 {
-    get_activation_factory<PeerFinder, IPeerFinderStatics>().DisplayName(value);
+    get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().DisplayName(value);
 }
 
 inline Windows::Networking::Proximity::PeerDiscoveryTypes PeerFinder::SupportedDiscoveryTypes()
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics>().SupportedDiscoveryTypes();
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().SupportedDiscoveryTypes();
 }
 
 inline Windows::Foundation::Collections::IMap<hstring, hstring> PeerFinder::AlternateIdentities()
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics>().AlternateIdentities();
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().AlternateIdentities();
 }
 
 inline void PeerFinder::Start()
 {
-    get_activation_factory<PeerFinder, IPeerFinderStatics>().Start();
+    get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().Start();
 }
 
-inline void PeerFinder::Start(hstring_view peerMessage)
+inline void PeerFinder::Start(param::hstring const& peerMessage)
 {
-    get_activation_factory<PeerFinder, IPeerFinderStatics>().Start(peerMessage);
+    get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().Start(peerMessage);
 }
 
 inline void PeerFinder::Stop()
 {
-    get_activation_factory<PeerFinder, IPeerFinderStatics>().Stop();
+    get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().Stop();
 }
 
-inline event_token PeerFinder::TriggeredConnectionStateChanged(const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> & handler)
+inline event_token PeerFinder::TriggeredConnectionStateChanged(Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> const& handler)
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics>().TriggeredConnectionStateChanged(handler);
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().TriggeredConnectionStateChanged(handler);
 }
 
-inline factory_event_revoker<IPeerFinderStatics> PeerFinder::TriggeredConnectionStateChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> & handler)
+inline factory_event_revoker<Windows::Networking::Proximity::IPeerFinderStatics> PeerFinder::TriggeredConnectionStateChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> const& handler)
 {
-    auto factory = get_activation_factory<PeerFinder, IPeerFinderStatics>();
-    return { factory, &ABI::Windows::Networking::Proximity::IPeerFinderStatics::remove_TriggeredConnectionStateChanged, factory.TriggeredConnectionStateChanged(handler) };
+    auto factory = get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>();
+    return { factory, &abi_t<Windows::Networking::Proximity::IPeerFinderStatics>::remove_TriggeredConnectionStateChanged, factory.TriggeredConnectionStateChanged(handler) };
 }
 
-inline void PeerFinder::TriggeredConnectionStateChanged(event_token cookie)
+inline void PeerFinder::TriggeredConnectionStateChanged(event_token const& cookie)
 {
-    get_activation_factory<PeerFinder, IPeerFinderStatics>().TriggeredConnectionStateChanged(cookie);
+    get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().TriggeredConnectionStateChanged(cookie);
 }
 
-inline event_token PeerFinder::ConnectionRequested(const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> & handler)
+inline event_token PeerFinder::ConnectionRequested(Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> const& handler)
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics>().ConnectionRequested(handler);
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().ConnectionRequested(handler);
 }
 
-inline factory_event_revoker<IPeerFinderStatics> PeerFinder::ConnectionRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> & handler)
+inline factory_event_revoker<Windows::Networking::Proximity::IPeerFinderStatics> PeerFinder::ConnectionRequested(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Foundation::IInspectable, Windows::Networking::Proximity::ConnectionRequestedEventArgs> const& handler)
 {
-    auto factory = get_activation_factory<PeerFinder, IPeerFinderStatics>();
-    return { factory, &ABI::Windows::Networking::Proximity::IPeerFinderStatics::remove_ConnectionRequested, factory.ConnectionRequested(handler) };
+    auto factory = get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>();
+    return { factory, &abi_t<Windows::Networking::Proximity::IPeerFinderStatics>::remove_ConnectionRequested, factory.ConnectionRequested(handler) };
 }
 
-inline void PeerFinder::ConnectionRequested(event_token cookie)
+inline void PeerFinder::ConnectionRequested(event_token const& cookie)
 {
-    get_activation_factory<PeerFinder, IPeerFinderStatics>().ConnectionRequested(cookie);
+    get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().ConnectionRequested(cookie);
 }
 
 inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Networking::Proximity::PeerInformation>> PeerFinder::FindAllPeersAsync()
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics>().FindAllPeersAsync();
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().FindAllPeersAsync();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Networking::Sockets::StreamSocket> PeerFinder::ConnectAsync(const Windows::Networking::Proximity::PeerInformation & peerInformation)
+inline Windows::Foundation::IAsyncOperation<Windows::Networking::Sockets::StreamSocket> PeerFinder::ConnectAsync(Windows::Networking::Proximity::PeerInformation const& peerInformation)
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics>().ConnectAsync(peerInformation);
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics>().ConnectAsync(peerInformation);
 }
 
 inline Windows::Networking::Proximity::PeerRole PeerFinder::Role()
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics2>().Role();
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics2>().Role();
 }
 
-inline void PeerFinder::Role(Windows::Networking::Proximity::PeerRole value)
+inline void PeerFinder::Role(Windows::Networking::Proximity::PeerRole const& value)
 {
-    get_activation_factory<PeerFinder, IPeerFinderStatics2>().Role(value);
+    get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics2>().Role(value);
 }
 
 inline Windows::Storage::Streams::IBuffer PeerFinder::DiscoveryData()
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics2>().DiscoveryData();
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics2>().DiscoveryData();
 }
 
-inline void PeerFinder::DiscoveryData(const Windows::Storage::Streams::IBuffer & value)
+inline void PeerFinder::DiscoveryData(Windows::Storage::Streams::IBuffer const& value)
 {
-    get_activation_factory<PeerFinder, IPeerFinderStatics2>().DiscoveryData(value);
+    get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics2>().DiscoveryData(value);
 }
 
 inline Windows::Networking::Proximity::PeerWatcher PeerFinder::CreateWatcher()
 {
-    return get_activation_factory<PeerFinder, IPeerFinderStatics2>().CreateWatcher();
+    return get_activation_factory<PeerFinder, Windows::Networking::Proximity::IPeerFinderStatics2>().CreateWatcher();
 }
 
 inline hstring ProximityDevice::GetDeviceSelector()
 {
-    return get_activation_factory<ProximityDevice, IProximityDeviceStatics>().GetDeviceSelector();
+    return get_activation_factory<ProximityDevice, Windows::Networking::Proximity::IProximityDeviceStatics>().GetDeviceSelector();
 }
 
 inline Windows::Networking::Proximity::ProximityDevice ProximityDevice::GetDefault()
 {
-    return get_activation_factory<ProximityDevice, IProximityDeviceStatics>().GetDefault();
+    return get_activation_factory<ProximityDevice, Windows::Networking::Proximity::IProximityDeviceStatics>().GetDefault();
 }
 
-inline Windows::Networking::Proximity::ProximityDevice ProximityDevice::FromId(hstring_view deviceId)
+inline Windows::Networking::Proximity::ProximityDevice ProximityDevice::FromId(param::hstring const& deviceId)
 {
-    return get_activation_factory<ProximityDevice, IProximityDeviceStatics>().FromId(deviceId);
+    return get_activation_factory<ProximityDevice, Windows::Networking::Proximity::IProximityDeviceStatics>().FromId(deviceId);
+}
+
+template <typename L> DeviceArrivedEventHandler::DeviceArrivedEventHandler(L handler) :
+    DeviceArrivedEventHandler(impl::make_delegate<DeviceArrivedEventHandler>(std::forward<L>(handler)))
+{}
+
+template <typename F> DeviceArrivedEventHandler::DeviceArrivedEventHandler(F* handler) :
+    DeviceArrivedEventHandler([=](auto&& ... args) { handler(args ...); })
+{}
+
+template <typename O, typename M> DeviceArrivedEventHandler::DeviceArrivedEventHandler(O* object, M method) :
+    DeviceArrivedEventHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
+
+inline void DeviceArrivedEventHandler::operator()(Windows::Networking::Proximity::ProximityDevice const& sender) const
+{
+    check_hresult((*(abi_t<DeviceArrivedEventHandler>**)this)->Invoke(get_abi(sender)));
+}
+
+template <typename L> DeviceDepartedEventHandler::DeviceDepartedEventHandler(L handler) :
+    DeviceDepartedEventHandler(impl::make_delegate<DeviceDepartedEventHandler>(std::forward<L>(handler)))
+{}
+
+template <typename F> DeviceDepartedEventHandler::DeviceDepartedEventHandler(F* handler) :
+    DeviceDepartedEventHandler([=](auto&& ... args) { handler(args ...); })
+{}
+
+template <typename O, typename M> DeviceDepartedEventHandler::DeviceDepartedEventHandler(O* object, M method) :
+    DeviceDepartedEventHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
+
+inline void DeviceDepartedEventHandler::operator()(Windows::Networking::Proximity::ProximityDevice const& sender) const
+{
+    check_hresult((*(abi_t<DeviceDepartedEventHandler>**)this)->Invoke(get_abi(sender)));
+}
+
+template <typename L> MessageReceivedHandler::MessageReceivedHandler(L handler) :
+    MessageReceivedHandler(impl::make_delegate<MessageReceivedHandler>(std::forward<L>(handler)))
+{}
+
+template <typename F> MessageReceivedHandler::MessageReceivedHandler(F* handler) :
+    MessageReceivedHandler([=](auto&& ... args) { handler(args ...); })
+{}
+
+template <typename O, typename M> MessageReceivedHandler::MessageReceivedHandler(O* object, M method) :
+    MessageReceivedHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
+
+inline void MessageReceivedHandler::operator()(Windows::Networking::Proximity::ProximityDevice const& sender, Windows::Networking::Proximity::ProximityMessage const& message) const
+{
+    check_hresult((*(abi_t<MessageReceivedHandler>**)this)->Invoke(get_abi(sender), get_abi(message)));
+}
+
+template <typename L> MessageTransmittedHandler::MessageTransmittedHandler(L handler) :
+    MessageTransmittedHandler(impl::make_delegate<MessageTransmittedHandler>(std::forward<L>(handler)))
+{}
+
+template <typename F> MessageTransmittedHandler::MessageTransmittedHandler(F* handler) :
+    MessageTransmittedHandler([=](auto&& ... args) { handler(args ...); })
+{}
+
+template <typename O, typename M> MessageTransmittedHandler::MessageTransmittedHandler(O* object, M method) :
+    MessageTransmittedHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
+
+inline void MessageTransmittedHandler::operator()(Windows::Networking::Proximity::ProximityDevice const& sender, int64_t messageId) const
+{
+    check_hresult((*(abi_t<MessageTransmittedHandler>**)this)->Invoke(get_abi(sender), messageId));
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Networking::Proximity::IConnectionRequestedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::IConnectionRequestedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::IPeerFinderStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::IPeerFinderStatics> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::IPeerFinderStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::IPeerFinderStatics2> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::IPeerInformation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::IPeerInformation> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::IPeerInformation3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::IPeerInformation3> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::IPeerInformationWithHostAndService> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::IPeerInformationWithHostAndService> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::IPeerWatcher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::IPeerWatcher> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::IProximityDevice> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::IProximityDevice> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::IProximityDeviceStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::IProximityDeviceStatics> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::IProximityMessage> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::IProximityMessage> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::ITriggeredConnectionStateChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::ITriggeredConnectionStateChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::ConnectionRequestedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::ConnectionRequestedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::PeerFinder> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::PeerFinder> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::PeerInformation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::PeerInformation> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::PeerWatcher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::PeerWatcher> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::ProximityDevice> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::ProximityDevice> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::ProximityMessage> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::ProximityMessage> {};
+
+template<> struct hash<winrt::Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::IConnectionRequestedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::IConnectionRequestedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::IPeerFinderStatics>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::IPeerFinderStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::IPeerFinderStatics2>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::IPeerFinderStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::IPeerInformation>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::IPeerInformation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::IPeerInformation3>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::IPeerInformation3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::IPeerInformationWithHostAndService>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::IPeerInformationWithHostAndService & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::IPeerWatcher>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::IPeerWatcher & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::IProximityDevice>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::IProximityDevice & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::IProximityDeviceStatics>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::IProximityDeviceStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::IProximityMessage>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::IProximityMessage & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::ITriggeredConnectionStateChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::ITriggeredConnectionStateChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::ConnectionRequestedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::ConnectionRequestedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::PeerInformation>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::PeerInformation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::PeerWatcher>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::PeerWatcher & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::ProximityDevice>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::ProximityDevice & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::ProximityMessage>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::ProximityMessage & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Networking::Proximity::TriggeredConnectionStateChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

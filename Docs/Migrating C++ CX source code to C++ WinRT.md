@@ -1,4 +1,4 @@
-Migrating C++/CX source code to C++/WinRT
+﻿Migrating C++/CX source code to C++/WinRT
 =========================================
 
 Now that you've had a high-level introduction to working with Windows Runtime APIs using C++/WinRT, let's dive into some details showing construct-by-construct how to convert existing C++/CX code to its equivalent C++/WinRT form.
@@ -116,7 +116,7 @@ Setting a property to a new value follows a similar pattern. In C++/CX, you assi
 The equivalent C++/WinRT source code to set the value for a Windows Runtime property calls a method with the same name as the Windows Runtime property and a parameter for the new value:
 
 ```C++
-  Record.UserState(newValue); // Set the UserState property
+  record.UserState(newValue); // Set the UserState property
 ```
 
 Instantiating a C++/WinRT class
@@ -139,11 +139,11 @@ What does the above code actually do?
 
 -   The default constructor saves a reference to the default interface of the Windows Runtime PropertySet object as part of the state of the mySet variable.
 
-When the 'mySet' variable falls out of scope, it destructs and releases the reference to the default interface. Thus, when that reference is the last reference to the Windows Runtime PropertySet object, then the WinRT object destructs as well. As always, when other code also holds references to the same Windows Runtime PropertySet object, it lives on until the last reference disappears.
+When the 'mySet' variable falls out of scope, it destructs and releases the reference to the default interface. Thus, when that reference is the last reference to the Windows Runtime PropertySet object, the WinRT object destructs as well. As always, when other code also holds references to the same Windows Runtime PropertySet object, it lives on until the last reference disappears.
 
 In many ways, this 'mySet' variable, as well as instances of most of the other C++/WinRT types, is simply a smart pointer.
 
-However, there is one substantive difference between C++/WinRT types and many smart pointer types. This is the behavior of the default constructor. Default construction of smart pointer results in a NULL pointer. However, default construction of a C++/WinRT class results in a call to the default constructor of the respective Windows Runtime runtime class. The C++/WinRT value then holds a reference to the default interface of the WinRT runtime class.
+However, there is one substantive difference between C++/WinRT types and many smart pointer types. This is the behavior of the default constructor. Default construction of a typical smart pointer results in a NULL pointer. However, default construction of a C++/WinRT class results in a call to the default constructor of the respective Windows Runtime runtime class. The C++/WinRT value then holds a reference to the default interface of the WinRT runtime class.
 
 Sometimes, you want to create a projected type but not hook it up to a backing Windows Runtime type. Let's look at an example:
 
@@ -377,10 +377,10 @@ Now we passed a lambda as the function that the C++/CX EventHandler encapsulates
 For the C++/WinRT equivalent, we write this:
 
 ```C++
-  [=]( winrt::Windows::IInspectable const & , SignInCompletedEventArgs const &)
+  [=]( winrt::Windows::Foundation::IInspectable const & , SignInCompletedEventArgs const &)
 ```
 
-Note that in the preceding, we've use the winrt::Windows::IInspectable type in place of the C++/CX Platform::Object\^ type. I'll discuss this change in the next section. As always, we take both parameters by const reference instead of using a hat reference.
+Note that in the preceding, we've use the winrt::Windows::Foundation::IInspectable type in place of the C++/CX Platform::Object\^ type. I'll discuss this change in the next section. As always, we take both parameters by const reference instead of using a hat reference.
 
 Finally, we simplify the C++/WinRT code even more using type inference for the lambda function parameter types, like this:
 
@@ -447,18 +447,19 @@ The C++ Windows Runtime language extensions provide several C++/CX specific data
 
 | C++/CX | C++/WinRT |
 | ---- | ---- |
+| `Platform::Object^`  | `winrt::Windows::Foundation::IInspectable` |
 | `Platform::String^`  | `winrt::hstring` |
-| `Platform::InvalidArgumentException^` | `winrt::hresult_invalid_argument` |
 | `Platform::Exception^` | `winrt::hresult_error` |
+| `Platform::InvalidArgumentException^` | `winrt::hresult_invalid_argument` |
 
 ### Platform::Object\^
 
-`Platform::Object^` is the C++ Windows Runtime language extension type equivalent to the Windows Runtime IInspectable interface pointer. For C++/WinRT, the equivalent is `winrt::Windows::IInspectable`.
+`Platform::Object^` is the C++ Windows Runtime language extension type equivalent to the Windows Runtime IInspectable interface pointer. For C++/WinRT, the equivalent is `winrt::Windows::Foundation::IInspectable`.
 
-Like all C++/WinRT types, `winrt::Windows::IInspectable` is a value. Therefore, to declare a variable of that type to null, you write:
+Like all C++/WinRT types, `winrt::Windows::Foundation::IInspectable` is a value. Therefore, to declare a variable of that type to null, you write:
 
 ```C++
- winrt::Windows::IInspectable var = nullptr;
+ winrt::Windows::Foundation::IInspectable var = nullptr;
 ```
 
 ### Platform::String\^
@@ -538,79 +539,4 @@ becomes:
 
 ```C++
   throw winrt::hresult_invalid_argument(L"A valid User is required");
-```
-
-Using PPL with C++/WinRT types
-==============================
-
-There is one significant change that you will need to make to any code using PPL and C++/WinRT types.
-
-Let's look at the following C++/CX example:
-
-```C++
-  auto pAsyncOp = requester->SocialService->GetSocialRelationshipsAsync(
-                                               SocialRelationship::All,
-                                               startIndex,
-                                               maxItems);
-
-  create_task(pAsyncOp).then( [this, maxItems] (task<XboxSocialRelationshipResult^> resultTask)
-  {
-    int itemCount = 0;
-    try {
-      XboxSocialRelationshipResult^ lastResult = resultTask.get();
-      . . .
-    }
-    catch (winrt::hresult_error const & ex) {
-      . . .
-    }
-  });
-
-```
-
-Now the equivalent C++/WinRT rewrite:
-
-```C++
-  using namespace winrt::ppl;
-
-  auto pAsyncOp = requester.SocialService().GetSocialRelationshipsAsync(
-                                               SocialRelationship::All,
-                                               startIndex,
-                                               maxItems);
-
-  create_task(pAsyncOp).then( [this, maxItems] (task<adapter> const & resultTask)
-  {
-    int itemCount = 0;
-    try {
-      XboxSocialRelationshipResult lastResult = resultTask.get();
-      . . .
-    }
-    catch (winrt::hresult_error const & ex) {
-      . . .
-    }
-  });
-```
-
-Most of the changes you've already seen. We change arrows (-&gt;) to dots (.). We change property accessors to method calls. We remove hats (\^). And instead of receiving an argument by value, we receive it as a const reference.
-
-The only remaining change is the change of:
-
-```C++
- task<XboxSocialRelationshipResult^> resultTask
-```
-to
-
-```C++
-  task<adapter> const & resultTask
-```
-
-Eliminating the hat and const reference changes, already discussed, we simply changed task&lt;XboxSocialRelationshipResult&gt; to task&lt;adapter&gt;.
-
-Why? Unfortunately, the current implementation of PPL does not support types without a default constructor. As described previously, many Windows Runtime types do not have a default constructor. As such, the C++/WinRT projection of those types also do not have a default constructor. Therefore, these projected types don't work, as is, with PPL. 
-
-To adapt C++/WinRT types without a default constructor for use with PPL, the C++/WinRT header files define an `winrt::ppl::adapter` class that adapts C++/WinRT types without a default constructor in a way that allows them to be used by PPL. This adapter class allows the compiler to infer the necessary type from the type of the asynchronous operation passed to create\_task. Therefore, you do not need to specify the type mentioned in the original C++/CX code, `XboxSocialRelationshipResult` in this example.
-
-Tip: When you see the following error, followed by many, many lines of template errors, you likely need to change the task template type to 'winrt::ppl::adapter'.
-
-```C++
-error C2787: 'Concurrency::task<XboxSocialRelationshipResult>': no GUID has been associated with this object
 ```

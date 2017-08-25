@@ -1,24 +1,83 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Graphics.Effects.2.h"
+#include "winrt/impl/Windows.UI.Composition.Effects.2.h"
+#include "winrt/Windows.UI.Composition.h"
 
-#include "internal/Windows.Graphics.Effects.3.h"
-#include "internal/Windows.UI.Composition.Effects.3.h"
-#include "Windows.UI.Composition.h"
-#include "Windows.Graphics.Effects.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> float consume_Windows_UI_Composition_Effects_ISceneLightingEffect<D>::AmbientAmount() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Composition::Effects::ISceneLightingEffect)->get_AmbientAmount(&value));
+    return value;
+}
 
-namespace impl {
+template <typename D> void consume_Windows_UI_Composition_Effects_ISceneLightingEffect<D>::AmbientAmount(float value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Composition::Effects::ISceneLightingEffect)->put_AmbientAmount(value));
+}
+
+template <typename D> float consume_Windows_UI_Composition_Effects_ISceneLightingEffect<D>::DiffuseAmount() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Composition::Effects::ISceneLightingEffect)->get_DiffuseAmount(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Composition_Effects_ISceneLightingEffect<D>::DiffuseAmount(float value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Composition::Effects::ISceneLightingEffect)->put_DiffuseAmount(value));
+}
+
+template <typename D> Windows::Graphics::Effects::IGraphicsEffectSource consume_Windows_UI_Composition_Effects_ISceneLightingEffect<D>::NormalMapSource() const
+{
+    Windows::Graphics::Effects::IGraphicsEffectSource value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::Composition::Effects::ISceneLightingEffect)->get_NormalMapSource(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Composition_Effects_ISceneLightingEffect<D>::NormalMapSource(Windows::Graphics::Effects::IGraphicsEffectSource const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Composition::Effects::ISceneLightingEffect)->put_NormalMapSource(get_abi(value)));
+}
+
+template <typename D> float consume_Windows_UI_Composition_Effects_ISceneLightingEffect<D>::SpecularAmount() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Composition::Effects::ISceneLightingEffect)->get_SpecularAmount(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Composition_Effects_ISceneLightingEffect<D>::SpecularAmount(float value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Composition::Effects::ISceneLightingEffect)->put_SpecularAmount(value));
+}
+
+template <typename D> float consume_Windows_UI_Composition_Effects_ISceneLightingEffect<D>::SpecularShine() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::UI::Composition::Effects::ISceneLightingEffect)->get_SpecularShine(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_Composition_Effects_ISceneLightingEffect<D>::SpecularShine(float value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::Composition::Effects::ISceneLightingEffect)->put_SpecularShine(value));
+}
 
 template <typename D>
 struct produce<D, Windows::UI::Composition::Effects::ISceneLightingEffect> : produce_base<D, Windows::UI::Composition::Effects::ISceneLightingEffect>
 {
-    HRESULT __stdcall get_AmbientAmount(float * value) noexcept override
+    HRESULT __stdcall get_AmbientAmount(float* value) noexcept override
     {
         try
         {
@@ -46,7 +105,7 @@ struct produce<D, Windows::UI::Composition::Effects::ISceneLightingEffect> : pro
         }
     }
 
-    HRESULT __stdcall get_DiffuseAmount(float * value) noexcept override
+    HRESULT __stdcall get_DiffuseAmount(float* value) noexcept override
     {
         try
         {
@@ -74,7 +133,7 @@ struct produce<D, Windows::UI::Composition::Effects::ISceneLightingEffect> : pro
         }
     }
 
-    HRESULT __stdcall get_NormalMapSource(impl::abi_arg_out<Windows::Graphics::Effects::IGraphicsEffectSource> value) noexcept override
+    HRESULT __stdcall get_NormalMapSource(::IUnknown** value) noexcept override
     {
         try
         {
@@ -89,12 +148,12 @@ struct produce<D, Windows::UI::Composition::Effects::ISceneLightingEffect> : pro
         }
     }
 
-    HRESULT __stdcall put_NormalMapSource(impl::abi_arg_in<Windows::Graphics::Effects::IGraphicsEffectSource> value) noexcept override
+    HRESULT __stdcall put_NormalMapSource(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().NormalMapSource(*reinterpret_cast<const Windows::Graphics::Effects::IGraphicsEffectSource *>(&value));
+            this->shim().NormalMapSource(*reinterpret_cast<Windows::Graphics::Effects::IGraphicsEffectSource const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -103,7 +162,7 @@ struct produce<D, Windows::UI::Composition::Effects::ISceneLightingEffect> : pro
         }
     }
 
-    HRESULT __stdcall get_SpecularAmount(float * value) noexcept override
+    HRESULT __stdcall get_SpecularAmount(float* value) noexcept override
     {
         try
         {
@@ -131,7 +190,7 @@ struct produce<D, Windows::UI::Composition::Effects::ISceneLightingEffect> : pro
         }
     }
 
-    HRESULT __stdcall get_SpecularShine(float * value) noexcept override
+    HRESULT __stdcall get_SpecularShine(float* value) noexcept override
     {
         try
         {
@@ -162,67 +221,7 @@ struct produce<D, Windows::UI::Composition::Effects::ISceneLightingEffect> : pro
 
 }
 
-namespace Windows::UI::Composition::Effects {
-
-template <typename D> float impl_ISceneLightingEffect<D>::AmbientAmount() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISceneLightingEffect)->get_AmbientAmount(&value));
-    return value;
-}
-
-template <typename D> void impl_ISceneLightingEffect<D>::AmbientAmount(float value) const
-{
-    check_hresult(WINRT_SHIM(ISceneLightingEffect)->put_AmbientAmount(value));
-}
-
-template <typename D> float impl_ISceneLightingEffect<D>::DiffuseAmount() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISceneLightingEffect)->get_DiffuseAmount(&value));
-    return value;
-}
-
-template <typename D> void impl_ISceneLightingEffect<D>::DiffuseAmount(float value) const
-{
-    check_hresult(WINRT_SHIM(ISceneLightingEffect)->put_DiffuseAmount(value));
-}
-
-template <typename D> Windows::Graphics::Effects::IGraphicsEffectSource impl_ISceneLightingEffect<D>::NormalMapSource() const
-{
-    Windows::Graphics::Effects::IGraphicsEffectSource value;
-    check_hresult(WINRT_SHIM(ISceneLightingEffect)->get_NormalMapSource(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ISceneLightingEffect<D>::NormalMapSource(const Windows::Graphics::Effects::IGraphicsEffectSource & value) const
-{
-    check_hresult(WINRT_SHIM(ISceneLightingEffect)->put_NormalMapSource(get_abi(value)));
-}
-
-template <typename D> float impl_ISceneLightingEffect<D>::SpecularAmount() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISceneLightingEffect)->get_SpecularAmount(&value));
-    return value;
-}
-
-template <typename D> void impl_ISceneLightingEffect<D>::SpecularAmount(float value) const
-{
-    check_hresult(WINRT_SHIM(ISceneLightingEffect)->put_SpecularAmount(value));
-}
-
-template <typename D> float impl_ISceneLightingEffect<D>::SpecularShine() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISceneLightingEffect)->get_SpecularShine(&value));
-    return value;
-}
-
-template <typename D> void impl_ISceneLightingEffect<D>::SpecularShine(float value) const
-{
-    check_hresult(WINRT_SHIM(ISceneLightingEffect)->put_SpecularShine(value));
-}
+WINRT_EXPORT namespace winrt::Windows::UI::Composition::Effects {
 
 inline SceneLightingEffect::SceneLightingEffect() :
     SceneLightingEffect(activate_instance<SceneLightingEffect>())
@@ -230,24 +229,14 @@ inline SceneLightingEffect::SceneLightingEffect() :
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::UI::Composition::Effects::ISceneLightingEffect> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Composition::Effects::ISceneLightingEffect> {};
+
+template<> struct hash<winrt::Windows::UI::Composition::Effects::SceneLightingEffect> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::Composition::Effects::SceneLightingEffect> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::UI::Composition::Effects::ISceneLightingEffect>
-{
-    size_t operator()(const winrt::Windows::UI::Composition::Effects::ISceneLightingEffect & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::Composition::Effects::SceneLightingEffect>
-{
-    size_t operator()(const winrt::Windows::UI::Composition::Effects::SceneLightingEffect & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

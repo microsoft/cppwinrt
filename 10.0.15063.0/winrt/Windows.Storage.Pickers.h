@@ -1,26 +1,308 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Foundation.Collections.2.h"
+#include "winrt/impl/Windows.Storage.2.h"
+#include "winrt/impl/Windows.Storage.Pickers.2.h"
+#include "winrt/Windows.Storage.h"
 
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Storage.3.h"
-#include "internal/Windows.Storage.Pickers.3.h"
-#include "Windows.Storage.h"
-#include "Windows.Foundation.Collections.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Storage::Pickers::PickerViewMode consume_Windows_Storage_Pickers_IFileOpenPicker<D>::ViewMode() const
+{
+    Windows::Storage::Pickers::PickerViewMode value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker)->get_ViewMode(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> void consume_Windows_Storage_Pickers_IFileOpenPicker<D>::ViewMode(Windows::Storage::Pickers::PickerViewMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker)->put_ViewMode(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Storage_Pickers_IFileOpenPicker<D>::SettingsIdentifier() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker)->get_SettingsIdentifier(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileOpenPicker<D>::SettingsIdentifier(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker)->put_SettingsIdentifier(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Pickers::PickerLocationId consume_Windows_Storage_Pickers_IFileOpenPicker<D>::SuggestedStartLocation() const
+{
+    Windows::Storage::Pickers::PickerLocationId value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker)->get_SuggestedStartLocation(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileOpenPicker<D>::SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker)->put_SuggestedStartLocation(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Storage_Pickers_IFileOpenPicker<D>::CommitButtonText() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker)->get_CommitButtonText(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileOpenPicker<D>::CommitButtonText(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker)->put_CommitButtonText(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_Storage_Pickers_IFileOpenPicker<D>::FileTypeFilter() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker)->get_FileTypeFilter(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> consume_Windows_Storage_Pickers_IFileOpenPicker<D>::PickSingleFileAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> pickSingleFileOperation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker)->PickSingleFileAsync(put_abi(pickSingleFileOperation)));
+    return pickSingleFileOperation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> consume_Windows_Storage_Pickers_IFileOpenPicker<D>::PickMultipleFilesAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> pickMultipleFilesOperation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker)->PickMultipleFilesAsync(put_abi(pickMultipleFilesOperation)));
+    return pickMultipleFilesOperation;
+}
+
+template <typename D> Windows::Foundation::Collections::ValueSet consume_Windows_Storage_Pickers_IFileOpenPicker2<D>::ContinuationData() const
+{
+    Windows::Foundation::Collections::ValueSet value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker2)->get_ContinuationData(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileOpenPicker2<D>::PickSingleFileAndContinue() const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker2)->PickSingleFileAndContinue());
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileOpenPicker2<D>::PickMultipleFilesAndContinue() const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPicker2)->PickMultipleFilesAndContinue());
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> consume_Windows_Storage_Pickers_IFileOpenPickerStatics<D>::ResumePickSingleFileAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> pickSingleFileOperation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPickerStatics)->ResumePickSingleFileAsync(put_abi(pickSingleFileOperation)));
+    return pickSingleFileOperation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> consume_Windows_Storage_Pickers_IFileOpenPickerWithOperationId<D>::PickSingleFileAsync(param::hstring const& pickerOperationId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> pickSingleFileOperation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileOpenPickerWithOperationId)->PickSingleFileAsync(get_abi(pickerOperationId), put_abi(pickSingleFileOperation)));
+    return pickSingleFileOperation;
+}
+
+template <typename D> hstring consume_Windows_Storage_Pickers_IFileSavePicker<D>::SettingsIdentifier() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->get_SettingsIdentifier(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileSavePicker<D>::SettingsIdentifier(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->put_SettingsIdentifier(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Pickers::PickerLocationId consume_Windows_Storage_Pickers_IFileSavePicker<D>::SuggestedStartLocation() const
+{
+    Windows::Storage::Pickers::PickerLocationId value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->get_SuggestedStartLocation(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileSavePicker<D>::SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->put_SuggestedStartLocation(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Storage_Pickers_IFileSavePicker<D>::CommitButtonText() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->get_CommitButtonText(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileSavePicker<D>::CommitButtonText(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->put_CommitButtonText(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::Collections::IVector<hstring>> consume_Windows_Storage_Pickers_IFileSavePicker<D>::FileTypeChoices() const
+{
+    Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::Collections::IVector<hstring>> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->get_FileTypeChoices(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Storage_Pickers_IFileSavePicker<D>::DefaultFileExtension() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->get_DefaultFileExtension(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileSavePicker<D>::DefaultFileExtension(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->put_DefaultFileExtension(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::StorageFile consume_Windows_Storage_Pickers_IFileSavePicker<D>::SuggestedSaveFile() const
+{
+    Windows::Storage::StorageFile value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->get_SuggestedSaveFile(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileSavePicker<D>::SuggestedSaveFile(Windows::Storage::StorageFile const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->put_SuggestedSaveFile(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Storage_Pickers_IFileSavePicker<D>::SuggestedFileName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->get_SuggestedFileName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileSavePicker<D>::SuggestedFileName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->put_SuggestedFileName(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> consume_Windows_Storage_Pickers_IFileSavePicker<D>::PickSaveFileAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> pickSaveFileOperation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker)->PickSaveFileAsync(put_abi(pickSaveFileOperation)));
+    return pickSaveFileOperation;
+}
+
+template <typename D> Windows::Foundation::Collections::ValueSet consume_Windows_Storage_Pickers_IFileSavePicker2<D>::ContinuationData() const
+{
+    Windows::Foundation::Collections::ValueSet value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker2)->get_ContinuationData(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileSavePicker2<D>::PickSaveFileAndContinue() const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker2)->PickSaveFileAndContinue());
+}
+
+template <typename D> hstring consume_Windows_Storage_Pickers_IFileSavePicker3<D>::EnterpriseId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker3)->get_EnterpriseId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFileSavePicker3<D>::EnterpriseId(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFileSavePicker3)->put_EnterpriseId(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Pickers::PickerViewMode consume_Windows_Storage_Pickers_IFolderPicker<D>::ViewMode() const
+{
+    Windows::Storage::Pickers::PickerViewMode value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker)->get_ViewMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFolderPicker<D>::ViewMode(Windows::Storage::Pickers::PickerViewMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker)->put_ViewMode(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Storage_Pickers_IFolderPicker<D>::SettingsIdentifier() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker)->get_SettingsIdentifier(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFolderPicker<D>::SettingsIdentifier(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker)->put_SettingsIdentifier(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Pickers::PickerLocationId consume_Windows_Storage_Pickers_IFolderPicker<D>::SuggestedStartLocation() const
+{
+    Windows::Storage::Pickers::PickerLocationId value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker)->get_SuggestedStartLocation(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFolderPicker<D>::SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker)->put_SuggestedStartLocation(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Storage_Pickers_IFolderPicker<D>::CommitButtonText() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker)->get_CommitButtonText(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFolderPicker<D>::CommitButtonText(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker)->put_CommitButtonText(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_Storage_Pickers_IFolderPicker<D>::FileTypeFilter() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker)->get_FileTypeFilter(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> consume_Windows_Storage_Pickers_IFolderPicker<D>::PickSingleFolderAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> pickSingleFolderOperation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker)->PickSingleFolderAsync(put_abi(pickSingleFolderOperation)));
+    return pickSingleFolderOperation;
+}
+
+template <typename D> Windows::Foundation::Collections::ValueSet consume_Windows_Storage_Pickers_IFolderPicker2<D>::ContinuationData() const
+{
+    Windows::Foundation::Collections::ValueSet value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker2)->get_ContinuationData(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Storage_Pickers_IFolderPicker2<D>::PickFolderAndContinue() const
+{
+    check_hresult(WINRT_SHIM(Windows::Storage::Pickers::IFolderPicker2)->PickFolderAndContinue());
+}
 
 template <typename D>
 struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, Windows::Storage::Pickers::IFileOpenPicker>
 {
-    HRESULT __stdcall get_ViewMode(Windows::Storage::Pickers::PickerViewMode * value) noexcept override
+    HRESULT __stdcall get_ViewMode(abi_t<Windows::Storage::Pickers::PickerViewMode>* value) noexcept override
     {
         try
         {
@@ -34,12 +316,12 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_ViewMode(Windows::Storage::Pickers::PickerViewMode value) noexcept override
+    HRESULT __stdcall put_ViewMode(abi_t<Windows::Storage::Pickers::PickerViewMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ViewMode(value);
+            this->shim().ViewMode(*reinterpret_cast<Windows::Storage::Pickers::PickerViewMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -48,7 +330,7 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_SettingsIdentifier(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SettingsIdentifier(HSTRING* value) noexcept override
     {
         try
         {
@@ -63,12 +345,12 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_SettingsIdentifier(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_SettingsIdentifier(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SettingsIdentifier(*reinterpret_cast<const hstring *>(&value));
+            this->shim().SettingsIdentifier(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -77,7 +359,7 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId * value) noexcept override
+    HRESULT __stdcall get_SuggestedStartLocation(abi_t<Windows::Storage::Pickers::PickerLocationId>* value) noexcept override
     {
         try
         {
@@ -91,12 +373,12 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId value) noexcept override
+    HRESULT __stdcall put_SuggestedStartLocation(abi_t<Windows::Storage::Pickers::PickerLocationId> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SuggestedStartLocation(value);
+            this->shim().SuggestedStartLocation(*reinterpret_cast<Windows::Storage::Pickers::PickerLocationId const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -105,7 +387,7 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_CommitButtonText(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CommitButtonText(HSTRING* value) noexcept override
     {
         try
         {
@@ -120,12 +402,12 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_CommitButtonText(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_CommitButtonText(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CommitButtonText(*reinterpret_cast<const hstring *>(&value));
+            this->shim().CommitButtonText(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -134,7 +416,7 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_FileTypeFilter(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_FileTypeFilter(::IUnknown** value) noexcept override
     {
         try
         {
@@ -149,7 +431,7 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall abi_PickSingleFileAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> pickSingleFileOperation) noexcept override
+    HRESULT __stdcall PickSingleFileAsync(::IUnknown** pickSingleFileOperation) noexcept override
     {
         try
         {
@@ -164,7 +446,7 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall abi_PickMultipleFilesAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>>> pickMultipleFilesOperation) noexcept override
+    HRESULT __stdcall PickMultipleFilesAsync(::IUnknown** pickMultipleFilesOperation) noexcept override
     {
         try
         {
@@ -183,7 +465,7 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Storage::Pickers::IFileOpenPicker2> : produce_base<D, Windows::Storage::Pickers::IFileOpenPicker2>
 {
-    HRESULT __stdcall get_ContinuationData(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_ContinuationData(::IUnknown** value) noexcept override
     {
         try
         {
@@ -198,7 +480,7 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker2> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_PickSingleFileAndContinue() noexcept override
+    HRESULT __stdcall PickSingleFileAndContinue() noexcept override
     {
         try
         {
@@ -212,7 +494,7 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker2> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_PickMultipleFilesAndContinue() noexcept override
+    HRESULT __stdcall PickMultipleFilesAndContinue() noexcept override
     {
         try
         {
@@ -230,7 +512,7 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPicker2> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Storage::Pickers::IFileOpenPickerStatics> : produce_base<D, Windows::Storage::Pickers::IFileOpenPickerStatics>
 {
-    HRESULT __stdcall abi_ResumePickSingleFileAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> pickSingleFileOperation) noexcept override
+    HRESULT __stdcall ResumePickSingleFileAsync(::IUnknown** pickSingleFileOperation) noexcept override
     {
         try
         {
@@ -249,12 +531,12 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPickerStatics> : produce_b
 template <typename D>
 struct produce<D, Windows::Storage::Pickers::IFileOpenPickerWithOperationId> : produce_base<D, Windows::Storage::Pickers::IFileOpenPickerWithOperationId>
 {
-    HRESULT __stdcall abi_PickSingleFileAsync(impl::abi_arg_in<hstring> pickerOperationId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> pickSingleFileOperation) noexcept override
+    HRESULT __stdcall PickSingleFileAsync(HSTRING pickerOperationId, ::IUnknown** pickSingleFileOperation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *pickSingleFileOperation = detach_abi(this->shim().PickSingleFileAsync(*reinterpret_cast<const hstring *>(&pickerOperationId)));
+            *pickSingleFileOperation = detach_abi(this->shim().PickSingleFileAsync(*reinterpret_cast<hstring const*>(&pickerOperationId)));
             return S_OK;
         }
         catch (...)
@@ -268,7 +550,7 @@ struct produce<D, Windows::Storage::Pickers::IFileOpenPickerWithOperationId> : p
 template <typename D>
 struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, Windows::Storage::Pickers::IFileSavePicker>
 {
-    HRESULT __stdcall get_SettingsIdentifier(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SettingsIdentifier(HSTRING* value) noexcept override
     {
         try
         {
@@ -283,12 +565,12 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_SettingsIdentifier(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_SettingsIdentifier(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SettingsIdentifier(*reinterpret_cast<const hstring *>(&value));
+            this->shim().SettingsIdentifier(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -297,7 +579,7 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId * value) noexcept override
+    HRESULT __stdcall get_SuggestedStartLocation(abi_t<Windows::Storage::Pickers::PickerLocationId>* value) noexcept override
     {
         try
         {
@@ -311,12 +593,12 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId value) noexcept override
+    HRESULT __stdcall put_SuggestedStartLocation(abi_t<Windows::Storage::Pickers::PickerLocationId> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SuggestedStartLocation(value);
+            this->shim().SuggestedStartLocation(*reinterpret_cast<Windows::Storage::Pickers::PickerLocationId const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -325,7 +607,7 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_CommitButtonText(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CommitButtonText(HSTRING* value) noexcept override
     {
         try
         {
@@ -340,12 +622,12 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_CommitButtonText(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_CommitButtonText(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CommitButtonText(*reinterpret_cast<const hstring *>(&value));
+            this->shim().CommitButtonText(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -354,7 +636,7 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_FileTypeChoices(impl::abi_arg_out<Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::Collections::IVector<hstring>>> value) noexcept override
+    HRESULT __stdcall get_FileTypeChoices(::IUnknown** value) noexcept override
     {
         try
         {
@@ -369,7 +651,7 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_DefaultFileExtension(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DefaultFileExtension(HSTRING* value) noexcept override
     {
         try
         {
@@ -384,12 +666,12 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_DefaultFileExtension(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DefaultFileExtension(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DefaultFileExtension(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DefaultFileExtension(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -398,7 +680,7 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_SuggestedSaveFile(impl::abi_arg_out<Windows::Storage::IStorageFile> value) noexcept override
+    HRESULT __stdcall get_SuggestedSaveFile(::IUnknown** value) noexcept override
     {
         try
         {
@@ -413,12 +695,12 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_SuggestedSaveFile(impl::abi_arg_in<Windows::Storage::IStorageFile> value) noexcept override
+    HRESULT __stdcall put_SuggestedSaveFile(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SuggestedSaveFile(*reinterpret_cast<const Windows::Storage::StorageFile *>(&value));
+            this->shim().SuggestedSaveFile(*reinterpret_cast<Windows::Storage::StorageFile const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -427,7 +709,7 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_SuggestedFileName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SuggestedFileName(HSTRING* value) noexcept override
     {
         try
         {
@@ -442,12 +724,12 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall put_SuggestedFileName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_SuggestedFileName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SuggestedFileName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().SuggestedFileName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -456,7 +738,7 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall abi_PickSaveFileAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile>> pickSaveFileOperation) noexcept override
+    HRESULT __stdcall PickSaveFileAsync(::IUnknown** pickSaveFileOperation) noexcept override
     {
         try
         {
@@ -475,7 +757,7 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Storage::Pickers::IFileSavePicker2> : produce_base<D, Windows::Storage::Pickers::IFileSavePicker2>
 {
-    HRESULT __stdcall get_ContinuationData(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_ContinuationData(::IUnknown** value) noexcept override
     {
         try
         {
@@ -490,7 +772,7 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker2> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_PickSaveFileAndContinue() noexcept override
+    HRESULT __stdcall PickSaveFileAndContinue() noexcept override
     {
         try
         {
@@ -508,7 +790,7 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker2> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Storage::Pickers::IFileSavePicker3> : produce_base<D, Windows::Storage::Pickers::IFileSavePicker3>
 {
-    HRESULT __stdcall get_EnterpriseId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_EnterpriseId(HSTRING* value) noexcept override
     {
         try
         {
@@ -523,12 +805,12 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker3> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall put_EnterpriseId(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_EnterpriseId(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().EnterpriseId(*reinterpret_cast<const hstring *>(&value));
+            this->shim().EnterpriseId(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -541,7 +823,7 @@ struct produce<D, Windows::Storage::Pickers::IFileSavePicker3> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Storage::Pickers::IFolderPicker> : produce_base<D, Windows::Storage::Pickers::IFolderPicker>
 {
-    HRESULT __stdcall get_ViewMode(Windows::Storage::Pickers::PickerViewMode * value) noexcept override
+    HRESULT __stdcall get_ViewMode(abi_t<Windows::Storage::Pickers::PickerViewMode>* value) noexcept override
     {
         try
         {
@@ -555,12 +837,12 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_ViewMode(Windows::Storage::Pickers::PickerViewMode value) noexcept override
+    HRESULT __stdcall put_ViewMode(abi_t<Windows::Storage::Pickers::PickerViewMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ViewMode(value);
+            this->shim().ViewMode(*reinterpret_cast<Windows::Storage::Pickers::PickerViewMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -569,7 +851,7 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_SettingsIdentifier(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SettingsIdentifier(HSTRING* value) noexcept override
     {
         try
         {
@@ -584,12 +866,12 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_SettingsIdentifier(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_SettingsIdentifier(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SettingsIdentifier(*reinterpret_cast<const hstring *>(&value));
+            this->shim().SettingsIdentifier(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -598,7 +880,7 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId * value) noexcept override
+    HRESULT __stdcall get_SuggestedStartLocation(abi_t<Windows::Storage::Pickers::PickerLocationId>* value) noexcept override
     {
         try
         {
@@ -612,12 +894,12 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId value) noexcept override
+    HRESULT __stdcall put_SuggestedStartLocation(abi_t<Windows::Storage::Pickers::PickerLocationId> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SuggestedStartLocation(value);
+            this->shim().SuggestedStartLocation(*reinterpret_cast<Windows::Storage::Pickers::PickerLocationId const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -626,7 +908,7 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_CommitButtonText(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CommitButtonText(HSTRING* value) noexcept override
     {
         try
         {
@@ -641,12 +923,12 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall put_CommitButtonText(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_CommitButtonText(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CommitButtonText(*reinterpret_cast<const hstring *>(&value));
+            this->shim().CommitButtonText(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -655,7 +937,7 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_FileTypeFilter(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_FileTypeFilter(::IUnknown** value) noexcept override
     {
         try
         {
@@ -670,7 +952,7 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_PickSingleFolderAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder>> pickSingleFolderOperation) noexcept override
+    HRESULT __stdcall PickSingleFolderAsync(::IUnknown** pickSingleFolderOperation) noexcept override
     {
         try
         {
@@ -689,7 +971,7 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Storage::Pickers::IFolderPicker2> : produce_base<D, Windows::Storage::Pickers::IFolderPicker2>
 {
-    HRESULT __stdcall get_ContinuationData(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_ContinuationData(::IUnknown** value) noexcept override
     {
         try
         {
@@ -704,7 +986,7 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall abi_PickFolderAndContinue() noexcept override
+    HRESULT __stdcall PickFolderAndContinue() noexcept override
     {
         try
         {
@@ -721,291 +1003,7 @@ struct produce<D, Windows::Storage::Pickers::IFolderPicker2> : produce_base<D, W
 
 }
 
-namespace Windows::Storage::Pickers {
-
-template <typename D> Windows::Storage::Pickers::PickerViewMode impl_IFileOpenPicker<D>::ViewMode() const
-{
-    Windows::Storage::Pickers::PickerViewMode value {};
-    check_hresult(WINRT_SHIM(IFileOpenPicker)->get_ViewMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IFileOpenPicker<D>::ViewMode(Windows::Storage::Pickers::PickerViewMode value) const
-{
-    check_hresult(WINRT_SHIM(IFileOpenPicker)->put_ViewMode(value));
-}
-
-template <typename D> hstring impl_IFileOpenPicker<D>::SettingsIdentifier() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IFileOpenPicker)->get_SettingsIdentifier(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFileOpenPicker<D>::SettingsIdentifier(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IFileOpenPicker)->put_SettingsIdentifier(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Pickers::PickerLocationId impl_IFileOpenPicker<D>::SuggestedStartLocation() const
-{
-    Windows::Storage::Pickers::PickerLocationId value {};
-    check_hresult(WINRT_SHIM(IFileOpenPicker)->get_SuggestedStartLocation(&value));
-    return value;
-}
-
-template <typename D> void impl_IFileOpenPicker<D>::SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId value) const
-{
-    check_hresult(WINRT_SHIM(IFileOpenPicker)->put_SuggestedStartLocation(value));
-}
-
-template <typename D> hstring impl_IFileOpenPicker<D>::CommitButtonText() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IFileOpenPicker)->get_CommitButtonText(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFileOpenPicker<D>::CommitButtonText(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IFileOpenPicker)->put_CommitButtonText(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IFileOpenPicker<D>::FileTypeFilter() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IFileOpenPicker)->get_FileTypeFilter(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IFileOpenPicker<D>::PickSingleFileAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> pickSingleFileOperation;
-    check_hresult(WINRT_SHIM(IFileOpenPicker)->abi_PickSingleFileAsync(put_abi(pickSingleFileOperation)));
-    return pickSingleFileOperation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> impl_IFileOpenPicker<D>::PickMultipleFilesAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Storage::StorageFile>> pickMultipleFilesOperation;
-    check_hresult(WINRT_SHIM(IFileOpenPicker)->abi_PickMultipleFilesAsync(put_abi(pickMultipleFilesOperation)));
-    return pickMultipleFilesOperation;
-}
-
-template <typename D> Windows::Foundation::Collections::ValueSet impl_IFileOpenPicker2<D>::ContinuationData() const
-{
-    Windows::Foundation::Collections::ValueSet value { nullptr };
-    check_hresult(WINRT_SHIM(IFileOpenPicker2)->get_ContinuationData(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFileOpenPicker2<D>::PickSingleFileAndContinue() const
-{
-    check_hresult(WINRT_SHIM(IFileOpenPicker2)->abi_PickSingleFileAndContinue());
-}
-
-template <typename D> void impl_IFileOpenPicker2<D>::PickMultipleFilesAndContinue() const
-{
-    check_hresult(WINRT_SHIM(IFileOpenPicker2)->abi_PickMultipleFilesAndContinue());
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IFileOpenPickerWithOperationId<D>::PickSingleFileAsync(hstring_view pickerOperationId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> pickSingleFileOperation;
-    check_hresult(WINRT_SHIM(IFileOpenPickerWithOperationId)->abi_PickSingleFileAsync(get_abi(pickerOperationId), put_abi(pickSingleFileOperation)));
-    return pickSingleFileOperation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IFileOpenPickerStatics<D>::ResumePickSingleFileAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> pickSingleFileOperation;
-    check_hresult(WINRT_SHIM(IFileOpenPickerStatics)->abi_ResumePickSingleFileAsync(put_abi(pickSingleFileOperation)));
-    return pickSingleFileOperation;
-}
-
-template <typename D> hstring impl_IFileSavePicker<D>::SettingsIdentifier() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IFileSavePicker)->get_SettingsIdentifier(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFileSavePicker<D>::SettingsIdentifier(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IFileSavePicker)->put_SettingsIdentifier(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Pickers::PickerLocationId impl_IFileSavePicker<D>::SuggestedStartLocation() const
-{
-    Windows::Storage::Pickers::PickerLocationId value {};
-    check_hresult(WINRT_SHIM(IFileSavePicker)->get_SuggestedStartLocation(&value));
-    return value;
-}
-
-template <typename D> void impl_IFileSavePicker<D>::SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId value) const
-{
-    check_hresult(WINRT_SHIM(IFileSavePicker)->put_SuggestedStartLocation(value));
-}
-
-template <typename D> hstring impl_IFileSavePicker<D>::CommitButtonText() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IFileSavePicker)->get_CommitButtonText(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFileSavePicker<D>::CommitButtonText(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IFileSavePicker)->put_CommitButtonText(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::Collections::IVector<hstring>> impl_IFileSavePicker<D>::FileTypeChoices() const
-{
-    Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::Collections::IVector<hstring>> value;
-    check_hresult(WINRT_SHIM(IFileSavePicker)->get_FileTypeChoices(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IFileSavePicker<D>::DefaultFileExtension() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IFileSavePicker)->get_DefaultFileExtension(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFileSavePicker<D>::DefaultFileExtension(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IFileSavePicker)->put_DefaultFileExtension(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::StorageFile impl_IFileSavePicker<D>::SuggestedSaveFile() const
-{
-    Windows::Storage::StorageFile value { nullptr };
-    check_hresult(WINRT_SHIM(IFileSavePicker)->get_SuggestedSaveFile(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFileSavePicker<D>::SuggestedSaveFile(const Windows::Storage::StorageFile & value) const
-{
-    check_hresult(WINRT_SHIM(IFileSavePicker)->put_SuggestedSaveFile(get_abi(value)));
-}
-
-template <typename D> hstring impl_IFileSavePicker<D>::SuggestedFileName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IFileSavePicker)->get_SuggestedFileName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFileSavePicker<D>::SuggestedFileName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IFileSavePicker)->put_SuggestedFileName(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> impl_IFileSavePicker<D>::PickSaveFileAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> pickSaveFileOperation;
-    check_hresult(WINRT_SHIM(IFileSavePicker)->abi_PickSaveFileAsync(put_abi(pickSaveFileOperation)));
-    return pickSaveFileOperation;
-}
-
-template <typename D> Windows::Foundation::Collections::ValueSet impl_IFileSavePicker2<D>::ContinuationData() const
-{
-    Windows::Foundation::Collections::ValueSet value { nullptr };
-    check_hresult(WINRT_SHIM(IFileSavePicker2)->get_ContinuationData(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFileSavePicker2<D>::PickSaveFileAndContinue() const
-{
-    check_hresult(WINRT_SHIM(IFileSavePicker2)->abi_PickSaveFileAndContinue());
-}
-
-template <typename D> hstring impl_IFileSavePicker3<D>::EnterpriseId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IFileSavePicker3)->get_EnterpriseId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFileSavePicker3<D>::EnterpriseId(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IFileSavePicker3)->put_EnterpriseId(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Pickers::PickerViewMode impl_IFolderPicker<D>::ViewMode() const
-{
-    Windows::Storage::Pickers::PickerViewMode value {};
-    check_hresult(WINRT_SHIM(IFolderPicker)->get_ViewMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IFolderPicker<D>::ViewMode(Windows::Storage::Pickers::PickerViewMode value) const
-{
-    check_hresult(WINRT_SHIM(IFolderPicker)->put_ViewMode(value));
-}
-
-template <typename D> hstring impl_IFolderPicker<D>::SettingsIdentifier() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IFolderPicker)->get_SettingsIdentifier(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFolderPicker<D>::SettingsIdentifier(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IFolderPicker)->put_SettingsIdentifier(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Pickers::PickerLocationId impl_IFolderPicker<D>::SuggestedStartLocation() const
-{
-    Windows::Storage::Pickers::PickerLocationId value {};
-    check_hresult(WINRT_SHIM(IFolderPicker)->get_SuggestedStartLocation(&value));
-    return value;
-}
-
-template <typename D> void impl_IFolderPicker<D>::SuggestedStartLocation(Windows::Storage::Pickers::PickerLocationId value) const
-{
-    check_hresult(WINRT_SHIM(IFolderPicker)->put_SuggestedStartLocation(value));
-}
-
-template <typename D> hstring impl_IFolderPicker<D>::CommitButtonText() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IFolderPicker)->get_CommitButtonText(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFolderPicker<D>::CommitButtonText(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IFolderPicker)->put_CommitButtonText(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IFolderPicker<D>::FileTypeFilter() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IFolderPicker)->get_FileTypeFilter(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> impl_IFolderPicker<D>::PickSingleFolderAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFolder> pickSingleFolderOperation;
-    check_hresult(WINRT_SHIM(IFolderPicker)->abi_PickSingleFolderAsync(put_abi(pickSingleFolderOperation)));
-    return pickSingleFolderOperation;
-}
-
-template <typename D> Windows::Foundation::Collections::ValueSet impl_IFolderPicker2<D>::ContinuationData() const
-{
-    Windows::Foundation::Collections::ValueSet value { nullptr };
-    check_hresult(WINRT_SHIM(IFolderPicker2)->get_ContinuationData(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IFolderPicker2<D>::PickFolderAndContinue() const
-{
-    check_hresult(WINRT_SHIM(IFolderPicker2)->abi_PickFolderAndContinue());
-}
+WINRT_EXPORT namespace winrt::Windows::Storage::Pickers {
 
 inline FileOpenPicker::FileOpenPicker() :
     FileOpenPicker(activate_instance<FileOpenPicker>())
@@ -1013,7 +1011,7 @@ inline FileOpenPicker::FileOpenPicker() :
 
 inline Windows::Foundation::IAsyncOperation<Windows::Storage::StorageFile> FileOpenPicker::ResumePickSingleFileAsync()
 {
-    return get_activation_factory<FileOpenPicker, IFileOpenPickerStatics>().ResumePickSingleFileAsync();
+    return get_activation_factory<FileOpenPicker, Windows::Storage::Pickers::IFileOpenPickerStatics>().ResumePickSingleFileAsync();
 }
 
 inline FileSavePicker::FileSavePicker() :
@@ -1026,141 +1024,53 @@ inline FolderPicker::FolderPicker() :
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Storage::Pickers::IFileOpenPicker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::IFileOpenPicker> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::IFileOpenPicker2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::IFileOpenPicker2> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::IFileOpenPickerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::IFileOpenPickerStatics> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::IFileOpenPickerWithOperationId> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::IFileOpenPickerWithOperationId> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::IFileSavePicker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::IFileSavePicker> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::IFileSavePicker2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::IFileSavePicker2> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::IFileSavePicker3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::IFileSavePicker3> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::IFolderPicker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::IFolderPicker> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::IFolderPicker2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::IFolderPicker2> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::FileExtensionVector> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::FileExtensionVector> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::FileOpenPicker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::FileOpenPicker> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::FilePickerFileTypesOrderedMap> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::FilePickerFileTypesOrderedMap> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::FilePickerSelectedFilesArray> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::FilePickerSelectedFilesArray> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::FileSavePicker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::FileSavePicker> {};
+
+template<> struct hash<winrt::Windows::Storage::Pickers::FolderPicker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Storage::Pickers::FolderPicker> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::IFileOpenPicker>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::IFileOpenPicker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::IFileOpenPicker2>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::IFileOpenPicker2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::IFileOpenPickerStatics>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::IFileOpenPickerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::IFileOpenPickerWithOperationId>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::IFileOpenPickerWithOperationId & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::IFileSavePicker>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::IFileSavePicker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::IFileSavePicker2>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::IFileSavePicker2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::IFileSavePicker3>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::IFileSavePicker3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::IFolderPicker>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::IFolderPicker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::IFolderPicker2>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::IFolderPicker2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::FileExtensionVector>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::FileExtensionVector & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::FileOpenPicker>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::FileOpenPicker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::FilePickerFileTypesOrderedMap>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::FilePickerFileTypesOrderedMap & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::FilePickerSelectedFilesArray>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::FilePickerSelectedFilesArray & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::FileSavePicker>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::FileSavePicker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Storage::Pickers::FolderPicker>
-{
-    size_t operator()(const winrt::Windows::Storage::Pickers::FolderPicker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

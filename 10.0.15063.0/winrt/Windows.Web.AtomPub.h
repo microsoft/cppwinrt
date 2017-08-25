@@ -1,33 +1,163 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Data.Xml.Dom.2.h"
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.Security.Credentials.2.h"
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.Web.Syndication.2.h"
+#include "winrt/impl/Windows.Web.AtomPub.2.h"
+#include "winrt/Windows.Web.h"
 
-#include "internal/Windows.Web.Syndication.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.Security.Credentials.3.h"
-#include "internal/Windows.Web.AtomPub.3.h"
-#include "Windows.Web.h"
-#include "Windows.Web.Syndication.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::AtomPub::ServiceDocument, Windows::Web::Syndication::RetrievalProgress> consume_Windows_Web_AtomPub_IAtomPubClient<D>::RetrieveServiceDocumentAsync(Windows::Foundation::Uri const& uri) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::AtomPub::ServiceDocument, Windows::Web::Syndication::RetrievalProgress> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClient)->RetrieveServiceDocumentAsync(get_abi(uri), put_abi(operation)));
+    return operation;
+}
 
-namespace impl {
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IInputStream, Windows::Web::Syndication::RetrievalProgress> consume_Windows_Web_AtomPub_IAtomPubClient<D>::RetrieveMediaResourceAsync(Windows::Foundation::Uri const& uri) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IInputStream, Windows::Web::Syndication::RetrievalProgress> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClient)->RetrieveMediaResourceAsync(get_abi(uri), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::RetrievalProgress> consume_Windows_Web_AtomPub_IAtomPubClient<D>::RetrieveResourceAsync(Windows::Foundation::Uri const& uri) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::RetrievalProgress> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClient)->RetrieveResourceAsync(get_abi(uri), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress> consume_Windows_Web_AtomPub_IAtomPubClient<D>::CreateResourceAsync(Windows::Foundation::Uri const& uri, param::hstring const& description, Windows::Web::Syndication::SyndicationItem const& item) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClient)->CreateResourceAsync(get_abi(uri), get_abi(description), get_abi(item), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress> consume_Windows_Web_AtomPub_IAtomPubClient<D>::CreateMediaResourceAsync(Windows::Foundation::Uri const& uri, param::hstring const& mediaType, param::hstring const& description, Windows::Storage::Streams::IInputStream const& mediaStream) const
+{
+    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClient)->CreateMediaResourceAsync(get_abi(uri), get_abi(mediaType), get_abi(description), get_abi(mediaStream), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> consume_Windows_Web_AtomPub_IAtomPubClient<D>::UpdateMediaResourceAsync(Windows::Foundation::Uri const& uri, param::hstring const& mediaType, Windows::Storage::Streams::IInputStream const& mediaStream) const
+{
+    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClient)->UpdateMediaResourceAsync(get_abi(uri), get_abi(mediaType), get_abi(mediaStream), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> consume_Windows_Web_AtomPub_IAtomPubClient<D>::UpdateResourceAsync(Windows::Foundation::Uri const& uri, Windows::Web::Syndication::SyndicationItem const& item) const
+{
+    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClient)->UpdateResourceAsync(get_abi(uri), get_abi(item), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> consume_Windows_Web_AtomPub_IAtomPubClient<D>::UpdateResourceItemAsync(Windows::Web::Syndication::SyndicationItem const& item) const
+{
+    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClient)->UpdateResourceItemAsync(get_abi(item), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> consume_Windows_Web_AtomPub_IAtomPubClient<D>::DeleteResourceAsync(Windows::Foundation::Uri const& uri) const
+{
+    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClient)->DeleteResourceAsync(get_abi(uri), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> consume_Windows_Web_AtomPub_IAtomPubClient<D>::DeleteResourceItemAsync(Windows::Web::Syndication::SyndicationItem const& item) const
+{
+    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClient)->DeleteResourceItemAsync(get_abi(item), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> void consume_Windows_Web_AtomPub_IAtomPubClient<D>::CancelAsyncOperations() const
+{
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClient)->CancelAsyncOperations());
+}
+
+template <typename D> Windows::Web::AtomPub::AtomPubClient consume_Windows_Web_AtomPub_IAtomPubClientFactory<D>::CreateAtomPubClientWithCredentials(Windows::Security::Credentials::PasswordCredential const& serverCredential) const
+{
+    Windows::Web::AtomPub::AtomPubClient atomPubClient{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IAtomPubClientFactory)->CreateAtomPubClientWithCredentials(get_abi(serverCredential), put_abi(atomPubClient)));
+    return atomPubClient;
+}
+
+template <typename D> Windows::Web::Syndication::ISyndicationText consume_Windows_Web_AtomPub_IResourceCollection<D>::Title() const
+{
+    Windows::Web::Syndication::ISyndicationText value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IResourceCollection)->get_Title(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Uri consume_Windows_Web_AtomPub_IResourceCollection<D>::Uri() const
+{
+    Windows::Foundation::Uri value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IResourceCollection)->get_Uri(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Web::Syndication::SyndicationCategory> consume_Windows_Web_AtomPub_IResourceCollection<D>::Categories() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Web::Syndication::SyndicationCategory> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IResourceCollection)->get_Categories(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> consume_Windows_Web_AtomPub_IResourceCollection<D>::Accepts() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IResourceCollection)->get_Accepts(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::Workspace> consume_Windows_Web_AtomPub_IServiceDocument<D>::Workspaces() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::Workspace> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IServiceDocument)->get_Workspaces(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Web::Syndication::ISyndicationText consume_Windows_Web_AtomPub_IWorkspace<D>::Title() const
+{
+    Windows::Web::Syndication::ISyndicationText value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IWorkspace)->get_Title(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::ResourceCollection> consume_Windows_Web_AtomPub_IWorkspace<D>::Collections() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::ResourceCollection> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Web::AtomPub::IWorkspace)->get_Collections(put_abi(value)));
+    return value;
+}
 
 template <typename D>
 struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windows::Web::AtomPub::IAtomPubClient>
 {
-    HRESULT __stdcall abi_RetrieveServiceDocumentAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::AtomPub::ServiceDocument, Windows::Web::Syndication::RetrievalProgress>> operation) noexcept override
+    HRESULT __stdcall RetrieveServiceDocumentAsync(::IUnknown* uri, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RetrieveServiceDocumentAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
+            *operation = detach_abi(this->shim().RetrieveServiceDocumentAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -37,12 +167,12 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_RetrieveMediaResourceAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IInputStream, Windows::Web::Syndication::RetrievalProgress>> operation) noexcept override
+    HRESULT __stdcall RetrieveMediaResourceAsync(::IUnknown* uri, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RetrieveMediaResourceAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
+            *operation = detach_abi(this->shim().RetrieveMediaResourceAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -52,12 +182,12 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_RetrieveResourceAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::RetrievalProgress>> operation) noexcept override
+    HRESULT __stdcall RetrieveResourceAsync(::IUnknown* uri, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RetrieveResourceAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
+            *operation = detach_abi(this->shim().RetrieveResourceAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -67,12 +197,12 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_CreateResourceAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<hstring> description, impl::abi_arg_in<Windows::Web::Syndication::ISyndicationItem> item, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress>> operation) noexcept override
+    HRESULT __stdcall CreateResourceAsync(::IUnknown* uri, HSTRING description, ::IUnknown* item, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().CreateResourceAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const hstring *>(&description), *reinterpret_cast<const Windows::Web::Syndication::SyndicationItem *>(&item)));
+            *operation = detach_abi(this->shim().CreateResourceAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<hstring const*>(&description), *reinterpret_cast<Windows::Web::Syndication::SyndicationItem const*>(&item)));
             return S_OK;
         }
         catch (...)
@@ -82,12 +212,12 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_CreateMediaResourceAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<hstring> mediaType, impl::abi_arg_in<hstring> description, impl::abi_arg_in<Windows::Storage::Streams::IInputStream> mediaStream, impl::abi_arg_out<Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress>> operation) noexcept override
+    HRESULT __stdcall CreateMediaResourceAsync(::IUnknown* uri, HSTRING mediaType, HSTRING description, ::IUnknown* mediaStream, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().CreateMediaResourceAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const hstring *>(&mediaType), *reinterpret_cast<const hstring *>(&description), *reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&mediaStream)));
+            *operation = detach_abi(this->shim().CreateMediaResourceAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<hstring const*>(&mediaType), *reinterpret_cast<hstring const*>(&description), *reinterpret_cast<Windows::Storage::Streams::IInputStream const*>(&mediaStream)));
             return S_OK;
         }
         catch (...)
@@ -97,12 +227,12 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_UpdateMediaResourceAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<hstring> mediaType, impl::abi_arg_in<Windows::Storage::Streams::IInputStream> mediaStream, impl::abi_arg_out<Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress>> operation) noexcept override
+    HRESULT __stdcall UpdateMediaResourceAsync(::IUnknown* uri, HSTRING mediaType, ::IUnknown* mediaStream, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().UpdateMediaResourceAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const hstring *>(&mediaType), *reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&mediaStream)));
+            *operation = detach_abi(this->shim().UpdateMediaResourceAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<hstring const*>(&mediaType), *reinterpret_cast<Windows::Storage::Streams::IInputStream const*>(&mediaStream)));
             return S_OK;
         }
         catch (...)
@@ -112,12 +242,12 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_UpdateResourceAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_in<Windows::Web::Syndication::ISyndicationItem> item, impl::abi_arg_out<Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress>> operation) noexcept override
+    HRESULT __stdcall UpdateResourceAsync(::IUnknown* uri, ::IUnknown* item, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().UpdateResourceAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri), *reinterpret_cast<const Windows::Web::Syndication::SyndicationItem *>(&item)));
+            *operation = detach_abi(this->shim().UpdateResourceAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri), *reinterpret_cast<Windows::Web::Syndication::SyndicationItem const*>(&item)));
             return S_OK;
         }
         catch (...)
@@ -127,12 +257,12 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_UpdateResourceItemAsync(impl::abi_arg_in<Windows::Web::Syndication::ISyndicationItem> item, impl::abi_arg_out<Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress>> operation) noexcept override
+    HRESULT __stdcall UpdateResourceItemAsync(::IUnknown* item, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().UpdateResourceItemAsync(*reinterpret_cast<const Windows::Web::Syndication::SyndicationItem *>(&item)));
+            *operation = detach_abi(this->shim().UpdateResourceItemAsync(*reinterpret_cast<Windows::Web::Syndication::SyndicationItem const*>(&item)));
             return S_OK;
         }
         catch (...)
@@ -142,12 +272,12 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_DeleteResourceAsync(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> uri, impl::abi_arg_out<Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress>> operation) noexcept override
+    HRESULT __stdcall DeleteResourceAsync(::IUnknown* uri, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().DeleteResourceAsync(*reinterpret_cast<const Windows::Foundation::Uri *>(&uri)));
+            *operation = detach_abi(this->shim().DeleteResourceAsync(*reinterpret_cast<Windows::Foundation::Uri const*>(&uri)));
             return S_OK;
         }
         catch (...)
@@ -157,12 +287,12 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_DeleteResourceItemAsync(impl::abi_arg_in<Windows::Web::Syndication::ISyndicationItem> item, impl::abi_arg_out<Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress>> operation) noexcept override
+    HRESULT __stdcall DeleteResourceItemAsync(::IUnknown* item, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().DeleteResourceItemAsync(*reinterpret_cast<const Windows::Web::Syndication::SyndicationItem *>(&item)));
+            *operation = detach_abi(this->shim().DeleteResourceItemAsync(*reinterpret_cast<Windows::Web::Syndication::SyndicationItem const*>(&item)));
             return S_OK;
         }
         catch (...)
@@ -172,7 +302,7 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall abi_CancelAsyncOperations() noexcept override
+    HRESULT __stdcall CancelAsyncOperations() noexcept override
     {
         try
         {
@@ -190,12 +320,12 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClient> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Web::AtomPub::IAtomPubClientFactory> : produce_base<D, Windows::Web::AtomPub::IAtomPubClientFactory>
 {
-    HRESULT __stdcall abi_CreateAtomPubClientWithCredentials(impl::abi_arg_in<Windows::Security::Credentials::IPasswordCredential> serverCredential, impl::abi_arg_out<Windows::Web::AtomPub::IAtomPubClient> atomPubClient) noexcept override
+    HRESULT __stdcall CreateAtomPubClientWithCredentials(::IUnknown* serverCredential, ::IUnknown** atomPubClient) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *atomPubClient = detach_abi(this->shim().CreateAtomPubClientWithCredentials(*reinterpret_cast<const Windows::Security::Credentials::PasswordCredential *>(&serverCredential)));
+            *atomPubClient = detach_abi(this->shim().CreateAtomPubClientWithCredentials(*reinterpret_cast<Windows::Security::Credentials::PasswordCredential const*>(&serverCredential)));
             return S_OK;
         }
         catch (...)
@@ -209,7 +339,7 @@ struct produce<D, Windows::Web::AtomPub::IAtomPubClientFactory> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Web::AtomPub::IResourceCollection> : produce_base<D, Windows::Web::AtomPub::IResourceCollection>
 {
-    HRESULT __stdcall get_Title(impl::abi_arg_out<Windows::Web::Syndication::ISyndicationText> value) noexcept override
+    HRESULT __stdcall get_Title(::IUnknown** value) noexcept override
     {
         try
         {
@@ -224,7 +354,7 @@ struct produce<D, Windows::Web::AtomPub::IResourceCollection> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_Uri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_Uri(::IUnknown** value) noexcept override
     {
         try
         {
@@ -239,7 +369,7 @@ struct produce<D, Windows::Web::AtomPub::IResourceCollection> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_Categories(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Web::Syndication::SyndicationCategory>> value) noexcept override
+    HRESULT __stdcall get_Categories(::IUnknown** value) noexcept override
     {
         try
         {
@@ -254,7 +384,7 @@ struct produce<D, Windows::Web::AtomPub::IResourceCollection> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_Accepts(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_Accepts(::IUnknown** value) noexcept override
     {
         try
         {
@@ -273,7 +403,7 @@ struct produce<D, Windows::Web::AtomPub::IResourceCollection> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Web::AtomPub::IServiceDocument> : produce_base<D, Windows::Web::AtomPub::IServiceDocument>
 {
-    HRESULT __stdcall get_Workspaces(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::Workspace>> value) noexcept override
+    HRESULT __stdcall get_Workspaces(::IUnknown** value) noexcept override
     {
         try
         {
@@ -292,7 +422,7 @@ struct produce<D, Windows::Web::AtomPub::IServiceDocument> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Web::AtomPub::IWorkspace> : produce_base<D, Windows::Web::AtomPub::IWorkspace>
 {
-    HRESULT __stdcall get_Title(impl::abi_arg_out<Windows::Web::Syndication::ISyndicationText> value) noexcept override
+    HRESULT __stdcall get_Title(::IUnknown** value) noexcept override
     {
         try
         {
@@ -307,7 +437,7 @@ struct produce<D, Windows::Web::AtomPub::IWorkspace> : produce_base<D, Windows::
         }
     }
 
-    HRESULT __stdcall get_Collections(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::ResourceCollection>> value) noexcept override
+    HRESULT __stdcall get_Collections(::IUnknown** value) noexcept override
     {
         try
         {
@@ -325,230 +455,47 @@ struct produce<D, Windows::Web::AtomPub::IWorkspace> : produce_base<D, Windows::
 
 }
 
-namespace Windows::Web::AtomPub {
-
-template <typename D> Windows::Web::Syndication::ISyndicationText impl_IResourceCollection<D>::Title() const
-{
-    Windows::Web::Syndication::ISyndicationText value;
-    check_hresult(WINRT_SHIM(IResourceCollection)->get_Title(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Uri impl_IResourceCollection<D>::Uri() const
-{
-    Windows::Foundation::Uri value { nullptr };
-    check_hresult(WINRT_SHIM(IResourceCollection)->get_Uri(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Web::Syndication::SyndicationCategory> impl_IResourceCollection<D>::Categories() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Web::Syndication::SyndicationCategory> value;
-    check_hresult(WINRT_SHIM(IResourceCollection)->get_Categories(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IResourceCollection<D>::Accepts() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IResourceCollection)->get_Accepts(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Web::Syndication::ISyndicationText impl_IWorkspace<D>::Title() const
-{
-    Windows::Web::Syndication::ISyndicationText value;
-    check_hresult(WINRT_SHIM(IWorkspace)->get_Title(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::ResourceCollection> impl_IWorkspace<D>::Collections() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::ResourceCollection> value;
-    check_hresult(WINRT_SHIM(IWorkspace)->get_Collections(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::Workspace> impl_IServiceDocument<D>::Workspaces() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Web::AtomPub::Workspace> value;
-    check_hresult(WINRT_SHIM(IServiceDocument)->get_Workspaces(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::AtomPub::ServiceDocument, Windows::Web::Syndication::RetrievalProgress> impl_IAtomPubClient<D>::RetrieveServiceDocumentAsync(const Windows::Foundation::Uri & uri) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::AtomPub::ServiceDocument, Windows::Web::Syndication::RetrievalProgress> operation;
-    check_hresult(WINRT_SHIM(IAtomPubClient)->abi_RetrieveServiceDocumentAsync(get_abi(uri), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IInputStream, Windows::Web::Syndication::RetrievalProgress> impl_IAtomPubClient<D>::RetrieveMediaResourceAsync(const Windows::Foundation::Uri & uri) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Storage::Streams::IInputStream, Windows::Web::Syndication::RetrievalProgress> operation;
-    check_hresult(WINRT_SHIM(IAtomPubClient)->abi_RetrieveMediaResourceAsync(get_abi(uri), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::RetrievalProgress> impl_IAtomPubClient<D>::RetrieveResourceAsync(const Windows::Foundation::Uri & uri) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::RetrievalProgress> operation;
-    check_hresult(WINRT_SHIM(IAtomPubClient)->abi_RetrieveResourceAsync(get_abi(uri), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress> impl_IAtomPubClient<D>::CreateResourceAsync(const Windows::Foundation::Uri & uri, hstring_view description, const Windows::Web::Syndication::SyndicationItem & item) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress> operation;
-    check_hresult(WINRT_SHIM(IAtomPubClient)->abi_CreateResourceAsync(get_abi(uri), get_abi(description), get_abi(item), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress> impl_IAtomPubClient<D>::CreateMediaResourceAsync(const Windows::Foundation::Uri & uri, hstring_view mediaType, hstring_view description, const Windows::Storage::Streams::IInputStream & mediaStream) const
-{
-    Windows::Foundation::IAsyncOperationWithProgress<Windows::Web::Syndication::SyndicationItem, Windows::Web::Syndication::TransferProgress> operation;
-    check_hresult(WINRT_SHIM(IAtomPubClient)->abi_CreateMediaResourceAsync(get_abi(uri), get_abi(mediaType), get_abi(description), get_abi(mediaStream), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> impl_IAtomPubClient<D>::UpdateMediaResourceAsync(const Windows::Foundation::Uri & uri, hstring_view mediaType, const Windows::Storage::Streams::IInputStream & mediaStream) const
-{
-    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> operation;
-    check_hresult(WINRT_SHIM(IAtomPubClient)->abi_UpdateMediaResourceAsync(get_abi(uri), get_abi(mediaType), get_abi(mediaStream), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> impl_IAtomPubClient<D>::UpdateResourceAsync(const Windows::Foundation::Uri & uri, const Windows::Web::Syndication::SyndicationItem & item) const
-{
-    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> operation;
-    check_hresult(WINRT_SHIM(IAtomPubClient)->abi_UpdateResourceAsync(get_abi(uri), get_abi(item), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> impl_IAtomPubClient<D>::UpdateResourceItemAsync(const Windows::Web::Syndication::SyndicationItem & item) const
-{
-    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> operation;
-    check_hresult(WINRT_SHIM(IAtomPubClient)->abi_UpdateResourceItemAsync(get_abi(item), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> impl_IAtomPubClient<D>::DeleteResourceAsync(const Windows::Foundation::Uri & uri) const
-{
-    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> operation;
-    check_hresult(WINRT_SHIM(IAtomPubClient)->abi_DeleteResourceAsync(get_abi(uri), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> impl_IAtomPubClient<D>::DeleteResourceItemAsync(const Windows::Web::Syndication::SyndicationItem & item) const
-{
-    Windows::Foundation::IAsyncActionWithProgress<Windows::Web::Syndication::TransferProgress> operation;
-    check_hresult(WINRT_SHIM(IAtomPubClient)->abi_DeleteResourceItemAsync(get_abi(item), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> void impl_IAtomPubClient<D>::CancelAsyncOperations() const
-{
-    check_hresult(WINRT_SHIM(IAtomPubClient)->abi_CancelAsyncOperations());
-}
-
-template <typename D> Windows::Web::AtomPub::AtomPubClient impl_IAtomPubClientFactory<D>::CreateAtomPubClientWithCredentials(const Windows::Security::Credentials::PasswordCredential & serverCredential) const
-{
-    Windows::Web::AtomPub::AtomPubClient atomPubClient { nullptr };
-    check_hresult(WINRT_SHIM(IAtomPubClientFactory)->abi_CreateAtomPubClientWithCredentials(get_abi(serverCredential), put_abi(atomPubClient)));
-    return atomPubClient;
-}
+WINRT_EXPORT namespace winrt::Windows::Web::AtomPub {
 
 inline AtomPubClient::AtomPubClient() :
     AtomPubClient(activate_instance<AtomPubClient>())
 {}
 
-inline AtomPubClient::AtomPubClient(const Windows::Security::Credentials::PasswordCredential & serverCredential) :
-    AtomPubClient(get_activation_factory<AtomPubClient, IAtomPubClientFactory>().CreateAtomPubClientWithCredentials(serverCredential))
+inline AtomPubClient::AtomPubClient(Windows::Security::Credentials::PasswordCredential const& serverCredential) :
+    AtomPubClient(get_activation_factory<AtomPubClient, Windows::Web::AtomPub::IAtomPubClientFactory>().CreateAtomPubClientWithCredentials(serverCredential))
 {}
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Web::AtomPub::IAtomPubClient> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Web::AtomPub::IAtomPubClient> {};
+
+template<> struct hash<winrt::Windows::Web::AtomPub::IAtomPubClientFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Web::AtomPub::IAtomPubClientFactory> {};
+
+template<> struct hash<winrt::Windows::Web::AtomPub::IResourceCollection> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Web::AtomPub::IResourceCollection> {};
+
+template<> struct hash<winrt::Windows::Web::AtomPub::IServiceDocument> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Web::AtomPub::IServiceDocument> {};
+
+template<> struct hash<winrt::Windows::Web::AtomPub::IWorkspace> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Web::AtomPub::IWorkspace> {};
+
+template<> struct hash<winrt::Windows::Web::AtomPub::AtomPubClient> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Web::AtomPub::AtomPubClient> {};
+
+template<> struct hash<winrt::Windows::Web::AtomPub::ResourceCollection> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Web::AtomPub::ResourceCollection> {};
+
+template<> struct hash<winrt::Windows::Web::AtomPub::ServiceDocument> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Web::AtomPub::ServiceDocument> {};
+
+template<> struct hash<winrt::Windows::Web::AtomPub::Workspace> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Web::AtomPub::Workspace> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Web::AtomPub::IAtomPubClient>
-{
-    size_t operator()(const winrt::Windows::Web::AtomPub::IAtomPubClient & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Web::AtomPub::IAtomPubClientFactory>
-{
-    size_t operator()(const winrt::Windows::Web::AtomPub::IAtomPubClientFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Web::AtomPub::IResourceCollection>
-{
-    size_t operator()(const winrt::Windows::Web::AtomPub::IResourceCollection & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Web::AtomPub::IServiceDocument>
-{
-    size_t operator()(const winrt::Windows::Web::AtomPub::IServiceDocument & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Web::AtomPub::IWorkspace>
-{
-    size_t operator()(const winrt::Windows::Web::AtomPub::IWorkspace & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Web::AtomPub::AtomPubClient>
-{
-    size_t operator()(const winrt::Windows::Web::AtomPub::AtomPubClient & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Web::AtomPub::ResourceCollection>
-{
-    size_t operator()(const winrt::Windows::Web::AtomPub::ResourceCollection & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Web::AtomPub::ServiceDocument>
-{
-    size_t operator()(const winrt::Windows::Web::AtomPub::ServiceDocument & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Web::AtomPub::Workspace>
-{
-    size_t operator()(const winrt::Windows::Web::AtomPub::Workspace & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

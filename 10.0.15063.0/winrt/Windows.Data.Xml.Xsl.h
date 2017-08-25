@@ -1,27 +1,48 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Data.Xml.Dom.2.h"
+#include "winrt/impl/Windows.Data.Xml.Xsl.2.h"
 
-#include "internal/Windows.Data.Xml.Dom.3.h"
-#include "internal/Windows.Data.Xml.Xsl.3.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_Data_Xml_Xsl_IXsltProcessor<D>::TransformToString(Windows::Data::Xml::Dom::IXmlNode const& inputNode) const
+{
+    hstring output{};
+    check_hresult(WINRT_SHIM(Windows::Data::Xml::Xsl::IXsltProcessor)->TransformToString(get_abi(inputNode), put_abi(output)));
+    return output;
+}
 
-namespace impl {
+template <typename D> Windows::Data::Xml::Dom::XmlDocument consume_Windows_Data_Xml_Xsl_IXsltProcessor2<D>::TransformToDocument(Windows::Data::Xml::Dom::IXmlNode const& inputNode) const
+{
+    Windows::Data::Xml::Dom::XmlDocument output{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Data::Xml::Xsl::IXsltProcessor2)->TransformToDocument(get_abi(inputNode), put_abi(output)));
+    return output;
+}
+
+template <typename D> Windows::Data::Xml::Xsl::XsltProcessor consume_Windows_Data_Xml_Xsl_IXsltProcessorFactory<D>::CreateInstance(Windows::Data::Xml::Dom::XmlDocument const& document) const
+{
+    Windows::Data::Xml::Xsl::XsltProcessor xsltProcessor{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Data::Xml::Xsl::IXsltProcessorFactory)->CreateInstance(get_abi(document), put_abi(xsltProcessor)));
+    return xsltProcessor;
+}
 
 template <typename D>
 struct produce<D, Windows::Data::Xml::Xsl::IXsltProcessor> : produce_base<D, Windows::Data::Xml::Xsl::IXsltProcessor>
 {
-    HRESULT __stdcall abi_TransformToString(impl::abi_arg_in<Windows::Data::Xml::Dom::IXmlNode> inputNode, impl::abi_arg_out<hstring> output) noexcept override
+    HRESULT __stdcall TransformToString(::IUnknown* inputNode, HSTRING* output) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *output = detach_abi(this->shim().TransformToString(*reinterpret_cast<const Windows::Data::Xml::Dom::IXmlNode *>(&inputNode)));
+            *output = detach_abi(this->shim().TransformToString(*reinterpret_cast<Windows::Data::Xml::Dom::IXmlNode const*>(&inputNode)));
             return S_OK;
         }
         catch (...)
@@ -35,12 +56,12 @@ struct produce<D, Windows::Data::Xml::Xsl::IXsltProcessor> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Data::Xml::Xsl::IXsltProcessor2> : produce_base<D, Windows::Data::Xml::Xsl::IXsltProcessor2>
 {
-    HRESULT __stdcall abi_TransformToDocument(impl::abi_arg_in<Windows::Data::Xml::Dom::IXmlNode> inputNode, impl::abi_arg_out<Windows::Data::Xml::Dom::IXmlDocument> output) noexcept override
+    HRESULT __stdcall TransformToDocument(::IUnknown* inputNode, ::IUnknown** output) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *output = detach_abi(this->shim().TransformToDocument(*reinterpret_cast<const Windows::Data::Xml::Dom::IXmlNode *>(&inputNode)));
+            *output = detach_abi(this->shim().TransformToDocument(*reinterpret_cast<Windows::Data::Xml::Dom::IXmlNode const*>(&inputNode)));
             return S_OK;
         }
         catch (...)
@@ -54,12 +75,12 @@ struct produce<D, Windows::Data::Xml::Xsl::IXsltProcessor2> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Data::Xml::Xsl::IXsltProcessorFactory> : produce_base<D, Windows::Data::Xml::Xsl::IXsltProcessorFactory>
 {
-    HRESULT __stdcall abi_CreateInstance(impl::abi_arg_in<Windows::Data::Xml::Dom::IXmlDocument> document, impl::abi_arg_out<Windows::Data::Xml::Xsl::IXsltProcessor> xsltProcessor) noexcept override
+    HRESULT __stdcall CreateInstance(::IUnknown* document, ::IUnknown** xsltProcessor) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *xsltProcessor = detach_abi(this->shim().CreateInstance(*reinterpret_cast<const Windows::Data::Xml::Dom::XmlDocument *>(&document)));
+            *xsltProcessor = detach_abi(this->shim().CreateInstance(*reinterpret_cast<Windows::Data::Xml::Dom::XmlDocument const*>(&document)));
             return S_OK;
         }
         catch (...)
@@ -72,71 +93,28 @@ struct produce<D, Windows::Data::Xml::Xsl::IXsltProcessorFactory> : produce_base
 
 }
 
-namespace Windows::Data::Xml::Xsl {
+WINRT_EXPORT namespace winrt::Windows::Data::Xml::Xsl {
 
-template <typename D> hstring impl_IXsltProcessor<D>::TransformToString(const Windows::Data::Xml::Dom::IXmlNode & inputNode) const
-{
-    hstring output;
-    check_hresult(WINRT_SHIM(IXsltProcessor)->abi_TransformToString(get_abi(inputNode), put_abi(output)));
-    return output;
-}
-
-template <typename D> Windows::Data::Xml::Dom::XmlDocument impl_IXsltProcessor2<D>::TransformToDocument(const Windows::Data::Xml::Dom::IXmlNode & inputNode) const
-{
-    Windows::Data::Xml::Dom::XmlDocument output { nullptr };
-    check_hresult(WINRT_SHIM(IXsltProcessor2)->abi_TransformToDocument(get_abi(inputNode), put_abi(output)));
-    return output;
-}
-
-template <typename D> Windows::Data::Xml::Xsl::XsltProcessor impl_IXsltProcessorFactory<D>::CreateInstance(const Windows::Data::Xml::Dom::XmlDocument & document) const
-{
-    Windows::Data::Xml::Xsl::XsltProcessor xsltProcessor { nullptr };
-    check_hresult(WINRT_SHIM(IXsltProcessorFactory)->abi_CreateInstance(get_abi(document), put_abi(xsltProcessor)));
-    return xsltProcessor;
-}
-
-inline XsltProcessor::XsltProcessor(const Windows::Data::Xml::Dom::XmlDocument & document) :
-    XsltProcessor(get_activation_factory<XsltProcessor, IXsltProcessorFactory>().CreateInstance(document))
+inline XsltProcessor::XsltProcessor(Windows::Data::Xml::Dom::XmlDocument const& document) :
+    XsltProcessor(get_activation_factory<XsltProcessor, Windows::Data::Xml::Xsl::IXsltProcessorFactory>().CreateInstance(document))
 {}
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Data::Xml::Xsl::IXsltProcessor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Data::Xml::Xsl::IXsltProcessor> {};
+
+template<> struct hash<winrt::Windows::Data::Xml::Xsl::IXsltProcessor2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Data::Xml::Xsl::IXsltProcessor2> {};
+
+template<> struct hash<winrt::Windows::Data::Xml::Xsl::IXsltProcessorFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Data::Xml::Xsl::IXsltProcessorFactory> {};
+
+template<> struct hash<winrt::Windows::Data::Xml::Xsl::XsltProcessor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Data::Xml::Xsl::XsltProcessor> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Data::Xml::Xsl::IXsltProcessor>
-{
-    size_t operator()(const winrt::Windows::Data::Xml::Xsl::IXsltProcessor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Data::Xml::Xsl::IXsltProcessor2>
-{
-    size_t operator()(const winrt::Windows::Data::Xml::Xsl::IXsltProcessor2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Data::Xml::Xsl::IXsltProcessorFactory>
-{
-    size_t operator()(const winrt::Windows::Data::Xml::Xsl::IXsltProcessorFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Data::Xml::Xsl::XsltProcessor>
-{
-    size_t operator()(const winrt::Windows::Data::Xml::Xsl::XsltProcessor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

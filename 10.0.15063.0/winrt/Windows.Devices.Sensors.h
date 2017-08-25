@@ -1,26 +1,1555 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Graphics.Display.2.h"
+#include "winrt/impl/Windows.Devices.Sensors.2.h"
+#include "winrt/Windows.Devices.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Graphics.Display.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Devices.Sensors.3.h"
-#include "Windows.Devices.h"
-#include "Windows.Foundation.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Devices::Sensors::AccelerometerReading consume_Windows_Devices_Sensors_IAccelerometer<D>::GetCurrentReading() const
+{
+    Windows::Devices::Sensors::AccelerometerReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer)->GetCurrentReading(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IAccelerometer<D>::MinimumReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer)->get_MinimumReportInterval(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IAccelerometer<D>::ReportInterval(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer)->put_ReportInterval(value));
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IAccelerometer<D>::ReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer)->get_ReportInterval(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_IAccelerometer<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::IAccelerometer> consume_Windows_Devices_Sensors_IAccelerometer<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::IAccelerometer>(this, &abi_t<Windows::Devices::Sensors::IAccelerometer>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IAccelerometer<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_IAccelerometer<D>::Shaken(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer)->add_Shaken(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::IAccelerometer> consume_Windows_Devices_Sensors_IAccelerometer<D>::Shaken(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::IAccelerometer>(this, &abi_t<Windows::Devices::Sensors::IAccelerometer>::remove_Shaken, Shaken(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IAccelerometer<D>::Shaken(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer)->remove_Shaken(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IAccelerometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer2)->put_ReadingTransform(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Display::DisplayOrientations consume_Windows_Devices_Sensors_IAccelerometer2<D>::ReadingTransform() const
+{
+    Windows::Graphics::Display::DisplayOrientations value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer2)->get_ReadingTransform(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IAccelerometer3<D>::ReportLatency(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer3)->put_ReportLatency(value));
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IAccelerometer3<D>::ReportLatency() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer3)->get_ReportLatency(&value));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IAccelerometer3<D>::MaxBatchSize() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer3)->get_MaxBatchSize(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::AccelerometerReadingType consume_Windows_Devices_Sensors_IAccelerometer4<D>::ReadingType() const
+{
+    Windows::Devices::Sensors::AccelerometerReadingType type{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometer4)->get_ReadingType(put_abi(type)));
+    return type;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IAccelerometerDeviceId<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometerDeviceId)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_IAccelerometerReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometerReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_Devices_Sensors_IAccelerometerReading<D>::AccelerationX() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometerReading)->get_AccelerationX(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_Devices_Sensors_IAccelerometerReading<D>::AccelerationY() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometerReading)->get_AccelerationY(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_Devices_Sensors_IAccelerometerReading<D>::AccelerationZ() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometerReading)->get_AccelerationZ(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::AccelerometerReading consume_Windows_Devices_Sensors_IAccelerometerReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::AccelerometerReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_IAccelerometerShakenEventArgs<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometerShakenEventArgs)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::Accelerometer consume_Windows_Devices_Sensors_IAccelerometerStatics<D>::GetDefault() const
+{
+    Windows::Devices::Sensors::Accelerometer result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometerStatics)->GetDefault(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::Accelerometer consume_Windows_Devices_Sensors_IAccelerometerStatics2<D>::GetDefault(Windows::Devices::Sensors::AccelerometerReadingType const& readingType) const
+{
+    Windows::Devices::Sensors::Accelerometer result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAccelerometerStatics2)->GetDefaultWithAccelerometerReadingType(get_abi(readingType), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensorReading> consume_Windows_Devices_Sensors_IActivitySensor<D>::GetCurrentReadingAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensorReading> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensor)->GetCurrentReadingAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Devices::Sensors::ActivityType> consume_Windows_Devices_Sensors_IActivitySensor<D>::SubscribedActivities() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Devices::Sensors::ActivityType> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensor)->get_SubscribedActivities(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_Devices_Sensors_IActivitySensor<D>::PowerInMilliwatts() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensor)->get_PowerInMilliwatts(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IActivitySensor<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensor)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivityType> consume_Windows_Devices_Sensors_IActivitySensor<D>::SupportedActivities() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivityType> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensor)->get_SupportedActivities(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IActivitySensor<D>::MinimumReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensor)->get_MinimumReportInterval(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_IActivitySensor<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensor)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::IActivitySensor> consume_Windows_Devices_Sensors_IActivitySensor<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::IActivitySensor>(this, &abi_t<Windows::Devices::Sensors::IActivitySensor>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IActivitySensor<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensor)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_IActivitySensorReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensorReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::ActivityType consume_Windows_Devices_Sensors_IActivitySensorReading<D>::Activity() const
+{
+    Windows::Devices::Sensors::ActivityType value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensorReading)->get_Activity(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::ActivitySensorReadingConfidence consume_Windows_Devices_Sensors_IActivitySensorReading<D>::Confidence() const
+{
+    Windows::Devices::Sensors::ActivitySensorReadingConfidence value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensorReading)->get_Confidence(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::ActivitySensorReading consume_Windows_Devices_Sensors_IActivitySensorReadingChangeReport<D>::Reading() const
+{
+    Windows::Devices::Sensors::ActivitySensorReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensorReadingChangeReport)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::ActivitySensorReading consume_Windows_Devices_Sensors_IActivitySensorReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::ActivitySensorReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> consume_Windows_Devices_Sensors_IActivitySensorStatics<D>::GetDefaultAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensorStatics)->GetDefaultAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IActivitySensorStatics<D>::GetDeviceSelector() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensorStatics)->GetDeviceSelector(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> consume_Windows_Devices_Sensors_IActivitySensorStatics<D>::FromIdAsync(param::hstring const& deviceId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensorStatics)->FromIdAsync(get_abi(deviceId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> consume_Windows_Devices_Sensors_IActivitySensorStatics<D>::GetSystemHistoryAsync(Windows::Foundation::DateTime const& fromTime) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensorStatics)->GetSystemHistoryAsync(get_abi(fromTime), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> consume_Windows_Devices_Sensors_IActivitySensorStatics<D>::GetSystemHistoryAsync(Windows::Foundation::DateTime const& fromTime, Windows::Foundation::TimeSpan const& duration) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensorStatics)->GetSystemHistoryWithDurationAsync(get_abi(fromTime), get_abi(duration), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReadingChangeReport> consume_Windows_Devices_Sensors_IActivitySensorTriggerDetails<D>::ReadReports() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReadingChangeReport> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IActivitySensorTriggerDetails)->ReadReports(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::AltimeterReading consume_Windows_Devices_Sensors_IAltimeter<D>::GetCurrentReading() const
+{
+    Windows::Devices::Sensors::AltimeterReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAltimeter)->GetCurrentReading(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IAltimeter<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAltimeter)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IAltimeter<D>::MinimumReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAltimeter)->get_MinimumReportInterval(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IAltimeter<D>::ReportInterval(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAltimeter)->put_ReportInterval(value));
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IAltimeter<D>::ReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAltimeter)->get_ReportInterval(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_IAltimeter<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAltimeter)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::IAltimeter> consume_Windows_Devices_Sensors_IAltimeter<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::IAltimeter>(this, &abi_t<Windows::Devices::Sensors::IAltimeter>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IAltimeter<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAltimeter)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_IAltimeterReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAltimeterReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_Devices_Sensors_IAltimeterReading<D>::AltitudeChangeInMeters() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAltimeterReading)->get_AltitudeChangeInMeters(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::AltimeterReading consume_Windows_Devices_Sensors_IAltimeterReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::AltimeterReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::Altimeter consume_Windows_Devices_Sensors_IAltimeterStatics<D>::GetDefault() const
+{
+    Windows::Devices::Sensors::Altimeter result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IAltimeterStatics)->GetDefault(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::BarometerReading consume_Windows_Devices_Sensors_IBarometer<D>::GetCurrentReading() const
+{
+    Windows::Devices::Sensors::BarometerReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IBarometer)->GetCurrentReading(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IBarometer<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IBarometer)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IBarometer<D>::MinimumReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IBarometer)->get_MinimumReportInterval(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IBarometer<D>::ReportInterval(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IBarometer)->put_ReportInterval(value));
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IBarometer<D>::ReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IBarometer)->get_ReportInterval(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_IBarometer<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IBarometer)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::IBarometer> consume_Windows_Devices_Sensors_IBarometer<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::IBarometer>(this, &abi_t<Windows::Devices::Sensors::IBarometer>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IBarometer<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IBarometer)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_IBarometerReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IBarometerReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_Devices_Sensors_IBarometerReading<D>::StationPressureInHectopascals() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IBarometerReading)->get_StationPressureInHectopascals(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::BarometerReading consume_Windows_Devices_Sensors_IBarometerReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::BarometerReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IBarometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::Barometer consume_Windows_Devices_Sensors_IBarometerStatics<D>::GetDefault() const
+{
+    Windows::Devices::Sensors::Barometer result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IBarometerStatics)->GetDefault(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::CompassReading consume_Windows_Devices_Sensors_ICompass<D>::GetCurrentReading() const
+{
+    Windows::Devices::Sensors::CompassReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompass)->GetCurrentReading(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_ICompass<D>::MinimumReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompass)->get_MinimumReportInterval(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_ICompass<D>::ReportInterval(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompass)->put_ReportInterval(value));
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_ICompass<D>::ReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompass)->get_ReportInterval(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_ICompass<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompass)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::ICompass> consume_Windows_Devices_Sensors_ICompass<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::ICompass>(this, &abi_t<Windows::Devices::Sensors::ICompass>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_ICompass<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompass)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_ICompass2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompass2)->put_ReadingTransform(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Display::DisplayOrientations consume_Windows_Devices_Sensors_ICompass2<D>::ReadingTransform() const
+{
+    Windows::Graphics::Display::DisplayOrientations value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompass2)->get_ReadingTransform(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_ICompassDeviceId<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompassDeviceId)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_ICompassReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompassReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_Devices_Sensors_ICompassReading<D>::HeadingMagneticNorth() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompassReading)->get_HeadingMagneticNorth(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<double> consume_Windows_Devices_Sensors_ICompassReading<D>::HeadingTrueNorth() const
+{
+    Windows::Foundation::IReference<double> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompassReading)->get_HeadingTrueNorth(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::CompassReading consume_Windows_Devices_Sensors_ICompassReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::CompassReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompassReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy consume_Windows_Devices_Sensors_ICompassReadingHeadingAccuracy<D>::HeadingAccuracy() const
+{
+    Windows::Devices::Sensors::MagnetometerAccuracy value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompassReadingHeadingAccuracy)->get_HeadingAccuracy(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::Compass consume_Windows_Devices_Sensors_ICompassStatics<D>::GetDefault() const
+{
+    Windows::Devices::Sensors::Compass result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ICompassStatics)->GetDefault(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::GyrometerReading consume_Windows_Devices_Sensors_IGyrometer<D>::GetCurrentReading() const
+{
+    Windows::Devices::Sensors::GyrometerReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometer)->GetCurrentReading(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IGyrometer<D>::MinimumReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometer)->get_MinimumReportInterval(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IGyrometer<D>::ReportInterval(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometer)->put_ReportInterval(value));
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IGyrometer<D>::ReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometer)->get_ReportInterval(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_IGyrometer<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometer)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::IGyrometer> consume_Windows_Devices_Sensors_IGyrometer<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::IGyrometer>(this, &abi_t<Windows::Devices::Sensors::IGyrometer>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IGyrometer<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometer)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IGyrometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometer2)->put_ReadingTransform(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Display::DisplayOrientations consume_Windows_Devices_Sensors_IGyrometer2<D>::ReadingTransform() const
+{
+    Windows::Graphics::Display::DisplayOrientations value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometer2)->get_ReadingTransform(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IGyrometerDeviceId<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometerDeviceId)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_IGyrometerReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometerReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_Devices_Sensors_IGyrometerReading<D>::AngularVelocityX() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometerReading)->get_AngularVelocityX(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_Devices_Sensors_IGyrometerReading<D>::AngularVelocityY() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometerReading)->get_AngularVelocityY(&value));
+    return value;
+}
+
+template <typename D> double consume_Windows_Devices_Sensors_IGyrometerReading<D>::AngularVelocityZ() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometerReading)->get_AngularVelocityZ(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::GyrometerReading consume_Windows_Devices_Sensors_IGyrometerReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::GyrometerReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::Gyrometer consume_Windows_Devices_Sensors_IGyrometerStatics<D>::GetDefault() const
+{
+    Windows::Devices::Sensors::Gyrometer result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IGyrometerStatics)->GetDefault(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::InclinometerReading consume_Windows_Devices_Sensors_IInclinometer<D>::GetCurrentReading() const
+{
+    Windows::Devices::Sensors::InclinometerReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometer)->GetCurrentReading(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IInclinometer<D>::MinimumReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometer)->get_MinimumReportInterval(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IInclinometer<D>::ReportInterval(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometer)->put_ReportInterval(value));
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IInclinometer<D>::ReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometer)->get_ReportInterval(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_IInclinometer<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometer)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::IInclinometer> consume_Windows_Devices_Sensors_IInclinometer<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::IInclinometer>(this, &abi_t<Windows::Devices::Sensors::IInclinometer>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IInclinometer<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometer)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IInclinometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometer2)->put_ReadingTransform(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Display::DisplayOrientations consume_Windows_Devices_Sensors_IInclinometer2<D>::ReadingTransform() const
+{
+    Windows::Graphics::Display::DisplayOrientations value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometer2)->get_ReadingTransform(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::SensorReadingType consume_Windows_Devices_Sensors_IInclinometer2<D>::ReadingType() const
+{
+    Windows::Devices::Sensors::SensorReadingType type{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometer2)->get_ReadingType(put_abi(type)));
+    return type;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IInclinometerDeviceId<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometerDeviceId)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_IInclinometerReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometerReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_IInclinometerReading<D>::PitchDegrees() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometerReading)->get_PitchDegrees(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_IInclinometerReading<D>::RollDegrees() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometerReading)->get_RollDegrees(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_IInclinometerReading<D>::YawDegrees() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometerReading)->get_YawDegrees(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::InclinometerReading consume_Windows_Devices_Sensors_IInclinometerReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::InclinometerReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy consume_Windows_Devices_Sensors_IInclinometerReadingYawAccuracy<D>::YawAccuracy() const
+{
+    Windows::Devices::Sensors::MagnetometerAccuracy value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometerReadingYawAccuracy)->get_YawAccuracy(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::Inclinometer consume_Windows_Devices_Sensors_IInclinometerStatics<D>::GetDefault() const
+{
+    Windows::Devices::Sensors::Inclinometer result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometerStatics)->GetDefault(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::Inclinometer consume_Windows_Devices_Sensors_IInclinometerStatics2<D>::GetDefaultForRelativeReadings() const
+{
+    Windows::Devices::Sensors::Inclinometer result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometerStatics2)->GetDefaultForRelativeReadings(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::Inclinometer consume_Windows_Devices_Sensors_IInclinometerStatics3<D>::GetDefault(Windows::Devices::Sensors::SensorReadingType const& sensorReadingtype) const
+{
+    Windows::Devices::Sensors::Inclinometer result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IInclinometerStatics3)->GetDefaultWithSensorReadingType(get_abi(sensorReadingtype), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::LightSensorReading consume_Windows_Devices_Sensors_ILightSensor<D>::GetCurrentReading() const
+{
+    Windows::Devices::Sensors::LightSensorReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ILightSensor)->GetCurrentReading(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_ILightSensor<D>::MinimumReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ILightSensor)->get_MinimumReportInterval(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_ILightSensor<D>::ReportInterval(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ILightSensor)->put_ReportInterval(value));
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_ILightSensor<D>::ReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ILightSensor)->get_ReportInterval(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_ILightSensor<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ILightSensor)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::ILightSensor> consume_Windows_Devices_Sensors_ILightSensor<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::ILightSensor>(this, &abi_t<Windows::Devices::Sensors::ILightSensor>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_ILightSensor<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ILightSensor)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_ILightSensorDeviceId<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ILightSensorDeviceId)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_ILightSensorReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ILightSensorReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ILightSensorReading<D>::IlluminanceInLux() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ILightSensorReading)->get_IlluminanceInLux(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::LightSensorReading consume_Windows_Devices_Sensors_ILightSensorReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::LightSensorReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::LightSensor consume_Windows_Devices_Sensors_ILightSensorStatics<D>::GetDefault() const
+{
+    Windows::Devices::Sensors::LightSensor result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ILightSensorStatics)->GetDefault(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::MagnetometerReading consume_Windows_Devices_Sensors_IMagnetometer<D>::GetCurrentReading() const
+{
+    Windows::Devices::Sensors::MagnetometerReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometer)->GetCurrentReading(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IMagnetometer<D>::MinimumReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometer)->get_MinimumReportInterval(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IMagnetometer<D>::ReportInterval(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometer)->put_ReportInterval(value));
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IMagnetometer<D>::ReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometer)->get_ReportInterval(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_IMagnetometer<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometer)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::IMagnetometer> consume_Windows_Devices_Sensors_IMagnetometer<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::IMagnetometer>(this, &abi_t<Windows::Devices::Sensors::IMagnetometer>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IMagnetometer<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometer)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IMagnetometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometer2)->put_ReadingTransform(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Display::DisplayOrientations consume_Windows_Devices_Sensors_IMagnetometer2<D>::ReadingTransform() const
+{
+    Windows::Graphics::Display::DisplayOrientations value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometer2)->get_ReadingTransform(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IMagnetometerDeviceId<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometerDeviceId)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_IMagnetometerReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometerReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_IMagnetometerReading<D>::MagneticFieldX() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometerReading)->get_MagneticFieldX(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_IMagnetometerReading<D>::MagneticFieldY() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometerReading)->get_MagneticFieldY(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_IMagnetometerReading<D>::MagneticFieldZ() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometerReading)->get_MagneticFieldZ(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy consume_Windows_Devices_Sensors_IMagnetometerReading<D>::DirectionalAccuracy() const
+{
+    Windows::Devices::Sensors::MagnetometerAccuracy value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometerReading)->get_DirectionalAccuracy(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::MagnetometerReading consume_Windows_Devices_Sensors_IMagnetometerReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::MagnetometerReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::Magnetometer consume_Windows_Devices_Sensors_IMagnetometerStatics<D>::GetDefault() const
+{
+    Windows::Devices::Sensors::Magnetometer result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IMagnetometerStatics)->GetDefault(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::OrientationSensorReading consume_Windows_Devices_Sensors_IOrientationSensor<D>::GetCurrentReading() const
+{
+    Windows::Devices::Sensors::OrientationSensorReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensor)->GetCurrentReading(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IOrientationSensor<D>::MinimumReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensor)->get_MinimumReportInterval(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IOrientationSensor<D>::ReportInterval(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensor)->put_ReportInterval(value));
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IOrientationSensor<D>::ReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensor)->get_ReportInterval(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_IOrientationSensor<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensor)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::IOrientationSensor> consume_Windows_Devices_Sensors_IOrientationSensor<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::IOrientationSensor>(this, &abi_t<Windows::Devices::Sensors::IOrientationSensor>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IOrientationSensor<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensor)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IOrientationSensor2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensor2)->put_ReadingTransform(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Display::DisplayOrientations consume_Windows_Devices_Sensors_IOrientationSensor2<D>::ReadingTransform() const
+{
+    Windows::Graphics::Display::DisplayOrientations value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensor2)->get_ReadingTransform(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::SensorReadingType consume_Windows_Devices_Sensors_IOrientationSensor2<D>::ReadingType() const
+{
+    Windows::Devices::Sensors::SensorReadingType type{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensor2)->get_ReadingType(put_abi(type)));
+    return type;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IOrientationSensorDeviceId<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensorDeviceId)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_IOrientationSensorReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensorReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::SensorRotationMatrix consume_Windows_Devices_Sensors_IOrientationSensorReading<D>::RotationMatrix() const
+{
+    Windows::Devices::Sensors::SensorRotationMatrix value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensorReading)->get_RotationMatrix(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::SensorQuaternion consume_Windows_Devices_Sensors_IOrientationSensorReading<D>::Quaternion() const
+{
+    Windows::Devices::Sensors::SensorQuaternion value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensorReading)->get_Quaternion(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::OrientationSensorReading consume_Windows_Devices_Sensors_IOrientationSensorReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::OrientationSensorReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy consume_Windows_Devices_Sensors_IOrientationSensorReadingYawAccuracy<D>::YawAccuracy() const
+{
+    Windows::Devices::Sensors::MagnetometerAccuracy value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensorReadingYawAccuracy)->get_YawAccuracy(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::OrientationSensor consume_Windows_Devices_Sensors_IOrientationSensorStatics<D>::GetDefault() const
+{
+    Windows::Devices::Sensors::OrientationSensor result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensorStatics)->GetDefault(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::OrientationSensor consume_Windows_Devices_Sensors_IOrientationSensorStatics2<D>::GetDefaultForRelativeReadings() const
+{
+    Windows::Devices::Sensors::OrientationSensor result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensorStatics2)->GetDefaultForRelativeReadings(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::OrientationSensor consume_Windows_Devices_Sensors_IOrientationSensorStatics3<D>::GetDefault(Windows::Devices::Sensors::SensorReadingType const& sensorReadingtype) const
+{
+    Windows::Devices::Sensors::OrientationSensor result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensorStatics3)->GetDefaultWithSensorReadingType(get_abi(sensorReadingtype), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Sensors::OrientationSensor consume_Windows_Devices_Sensors_IOrientationSensorStatics3<D>::GetDefault(Windows::Devices::Sensors::SensorReadingType const& sensorReadingType, Windows::Devices::Sensors::SensorOptimizationGoal const& optimizationGoal) const
+{
+    Windows::Devices::Sensors::OrientationSensor result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IOrientationSensorStatics3)->GetDefaultWithSensorReadingTypeAndSensorOptimizationGoal(get_abi(sensorReadingType), get_abi(optimizationGoal), put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IPedometer<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometer)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_Devices_Sensors_IPedometer<D>::PowerInMilliwatts() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometer)->get_PowerInMilliwatts(&value));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IPedometer<D>::MinimumReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometer)->get_MinimumReportInterval(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IPedometer<D>::ReportInterval(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometer)->put_ReportInterval(value));
+}
+
+template <typename D> uint32_t consume_Windows_Devices_Sensors_IPedometer<D>::ReportInterval() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometer)->get_ReportInterval(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_IPedometer<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometer)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::IPedometer> consume_Windows_Devices_Sensors_IPedometer<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::IPedometer>(this, &abi_t<Windows::Devices::Sensors::IPedometer>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IPedometer<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometer)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::Collections::IMapView<Windows::Devices::Sensors::PedometerStepKind, Windows::Devices::Sensors::PedometerReading> consume_Windows_Devices_Sensors_IPedometer2<D>::GetCurrentReadings() const
+{
+    Windows::Foundation::Collections::IMapView<Windows::Devices::Sensors::PedometerStepKind, Windows::Devices::Sensors::PedometerReading> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometer2)->GetCurrentReadings(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::PedometerDataThreshold consume_Windows_Devices_Sensors_IPedometerDataThresholdFactory<D>::Create(Windows::Devices::Sensors::Pedometer const& sensor, int32_t stepGoal) const
+{
+    Windows::Devices::Sensors::PedometerDataThreshold threshold{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerDataThresholdFactory)->Create(get_abi(sensor), stepGoal, put_abi(threshold)));
+    return threshold;
+}
+
+template <typename D> Windows::Devices::Sensors::PedometerStepKind consume_Windows_Devices_Sensors_IPedometerReading<D>::StepKind() const
+{
+    Windows::Devices::Sensors::PedometerStepKind value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerReading)->get_StepKind(put_abi(value)));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_Devices_Sensors_IPedometerReading<D>::CumulativeSteps() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerReading)->get_CumulativeSteps(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_IPedometerReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::TimeSpan consume_Windows_Devices_Sensors_IPedometerReading<D>::CumulativeStepsDuration() const
+{
+    Windows::Foundation::TimeSpan value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerReading)->get_CumulativeStepsDuration(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::PedometerReading consume_Windows_Devices_Sensors_IPedometerReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::PedometerReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> consume_Windows_Devices_Sensors_IPedometerStatics<D>::FromIdAsync(param::hstring const& deviceId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerStatics)->FromIdAsync(get_abi(deviceId), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> consume_Windows_Devices_Sensors_IPedometerStatics<D>::GetDefaultAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerStatics)->GetDefaultAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IPedometerStatics<D>::GetDeviceSelector() const
+{
+    hstring result{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerStatics)->GetDeviceSelector(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> consume_Windows_Devices_Sensors_IPedometerStatics<D>::GetSystemHistoryAsync(Windows::Foundation::DateTime const& fromTime) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerStatics)->GetSystemHistoryAsync(get_abi(fromTime), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> consume_Windows_Devices_Sensors_IPedometerStatics<D>::GetSystemHistoryAsync(Windows::Foundation::DateTime const& fromTime, Windows::Foundation::TimeSpan const& duration) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerStatics)->GetSystemHistoryWithDurationAsync(get_abi(fromTime), get_abi(duration), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading> consume_Windows_Devices_Sensors_IPedometerStatics2<D>::GetReadingsFromTriggerDetails(Windows::Devices::Sensors::SensorDataThresholdTriggerDetails const& triggerDetails) const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IPedometerStatics2)->GetReadingsFromTriggerDetails(get_abi(triggerDetails), put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IProximitySensor<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensor)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<uint32_t> consume_Windows_Devices_Sensors_IProximitySensor<D>::MaxDistanceInMillimeters() const
+{
+    Windows::Foundation::IReference<uint32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensor)->get_MaxDistanceInMillimeters(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<uint32_t> consume_Windows_Devices_Sensors_IProximitySensor<D>::MinDistanceInMillimeters() const
+{
+    Windows::Foundation::IReference<uint32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensor)->get_MinDistanceInMillimeters(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::ProximitySensorReading consume_Windows_Devices_Sensors_IProximitySensor<D>::GetCurrentReading() const
+{
+    Windows::Devices::Sensors::ProximitySensorReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensor)->GetCurrentReading(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_IProximitySensor<D>::ReadingChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensor)->add_ReadingChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::IProximitySensor> consume_Windows_Devices_Sensors_IProximitySensor<D>::ReadingChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::IProximitySensor>(this, &abi_t<Windows::Devices::Sensors::IProximitySensor>::remove_ReadingChanged, ReadingChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_IProximitySensor<D>::ReadingChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensor)->remove_ReadingChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Devices::Sensors::ProximitySensorDisplayOnOffController consume_Windows_Devices_Sensors_IProximitySensor<D>::CreateDisplayOnOffController() const
+{
+    Windows::Devices::Sensors::ProximitySensorDisplayOnOffController controller{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensor)->CreateDisplayOnOffController(put_abi(controller)));
+    return controller;
+}
+
+template <typename D> Windows::Devices::Sensors::ProximitySensorDataThreshold consume_Windows_Devices_Sensors_IProximitySensorDataThresholdFactory<D>::Create(Windows::Devices::Sensors::ProximitySensor const& sensor) const
+{
+    Windows::Devices::Sensors::ProximitySensorDataThreshold threshold{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensorDataThresholdFactory)->Create(get_abi(sensor), put_abi(threshold)));
+    return threshold;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_IProximitySensorReading<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensorReading)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Devices_Sensors_IProximitySensorReading<D>::IsDetected() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensorReading)->get_IsDetected(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<uint32_t> consume_Windows_Devices_Sensors_IProximitySensorReading<D>::DistanceInMillimeters() const
+{
+    Windows::Foundation::IReference<uint32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensorReading)->get_DistanceInMillimeters(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::ProximitySensorReading consume_Windows_Devices_Sensors_IProximitySensorReadingChangedEventArgs<D>::Reading() const
+{
+    Windows::Devices::Sensors::ProximitySensorReading value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_IProximitySensorStatics<D>::GetDeviceSelector() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensorStatics)->GetDeviceSelector(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::ProximitySensor consume_Windows_Devices_Sensors_IProximitySensorStatics<D>::FromId(param::hstring const& sensorId) const
+{
+    Windows::Devices::Sensors::ProximitySensor result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensorStatics)->FromId(get_abi(sensorId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ProximitySensorReading> consume_Windows_Devices_Sensors_IProximitySensorStatics2<D>::GetReadingsFromTriggerDetails(Windows::Devices::Sensors::SensorDataThresholdTriggerDetails const& triggerDetails) const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ProximitySensorReading> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::IProximitySensorStatics2)->GetReadingsFromTriggerDetails(get_abi(triggerDetails), put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_ISensorDataThresholdTriggerDetails<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::SensorType consume_Windows_Devices_Sensors_ISensorDataThresholdTriggerDetails<D>::SensorType() const
+{
+    Windows::Devices::Sensors::SensorType value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails)->get_SensorType(put_abi(value)));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorQuaternion<D>::W() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorQuaternion)->get_W(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorQuaternion<D>::X() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorQuaternion)->get_X(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorQuaternion<D>::Y() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorQuaternion)->get_Y(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorQuaternion<D>::Z() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorQuaternion)->get_Z(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorRotationMatrix<D>::M11() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorRotationMatrix)->get_M11(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorRotationMatrix<D>::M12() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorRotationMatrix)->get_M12(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorRotationMatrix<D>::M13() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorRotationMatrix)->get_M13(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorRotationMatrix<D>::M21() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorRotationMatrix)->get_M21(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorRotationMatrix<D>::M22() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorRotationMatrix)->get_M22(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorRotationMatrix<D>::M23() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorRotationMatrix)->get_M23(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorRotationMatrix<D>::M31() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorRotationMatrix)->get_M31(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorRotationMatrix<D>::M32() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorRotationMatrix)->get_M32(&value));
+    return value;
+}
+
+template <typename D> float consume_Windows_Devices_Sensors_ISensorRotationMatrix<D>::M33() const
+{
+    float value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISensorRotationMatrix)->get_M33(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::SimpleOrientation consume_Windows_Devices_Sensors_ISimpleOrientationSensor<D>::GetCurrentOrientation() const
+{
+    Windows::Devices::Sensors::SimpleOrientation value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISimpleOrientationSensor)->GetCurrentOrientation(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Sensors_ISimpleOrientationSensor<D>::OrientationChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISimpleOrientationSensor)->add_OrientationChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Sensors::ISimpleOrientationSensor> consume_Windows_Devices_Sensors_ISimpleOrientationSensor<D>::OrientationChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Sensors::ISimpleOrientationSensor>(this, &abi_t<Windows::Devices::Sensors::ISimpleOrientationSensor>::remove_OrientationChanged, OrientationChanged(handler));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_ISimpleOrientationSensor<D>::OrientationChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISimpleOrientationSensor)->remove_OrientationChanged(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_Devices_Sensors_ISimpleOrientationSensor2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISimpleOrientationSensor2)->put_ReadingTransform(get_abi(value)));
+}
+
+template <typename D> Windows::Graphics::Display::DisplayOrientations consume_Windows_Devices_Sensors_ISimpleOrientationSensor2<D>::ReadingTransform() const
+{
+    Windows::Graphics::Display::DisplayOrientations value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISimpleOrientationSensor2)->get_ReadingTransform(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Sensors_ISimpleOrientationSensorDeviceId<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Sensors_ISimpleOrientationSensorOrientationChangedEventArgs<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::SimpleOrientation consume_Windows_Devices_Sensors_ISimpleOrientationSensorOrientationChangedEventArgs<D>::Orientation() const
+{
+    Windows::Devices::Sensors::SimpleOrientation value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs)->get_Orientation(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Sensors::SimpleOrientationSensor consume_Windows_Devices_Sensors_ISimpleOrientationSensorStatics<D>::GetDefault() const
+{
+    Windows::Devices::Sensors::SimpleOrientationSensor result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Sensors::ISimpleOrientationSensorStatics)->GetDefault(put_abi(result)));
+    return result;
+}
 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, Windows::Devices::Sensors::IAccelerometer>
 {
-    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IAccelerometerReading> value) noexcept override
+    HRESULT __stdcall GetCurrentReading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -35,7 +1564,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_MinimumReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MinimumReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -63,7 +1592,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_ReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -77,12 +1606,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -91,12 +1620,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -105,12 +1634,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall add_Shaken(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Shaken(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Shaken(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().Shaken(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -119,12 +1648,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall remove_Shaken(event_token token) noexcept override
+    HRESULT __stdcall remove_Shaken(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Shaken(token);
+            this->shim().Shaken(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -137,12 +1666,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometer2> : produce_base<D, Windows::Devices::Sensors::IAccelerometer2>
 {
-    HRESULT __stdcall put_ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) noexcept override
+    HRESULT __stdcall put_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingTransform(value);
+            this->shim().ReadingTransform(*reinterpret_cast<Windows::Graphics::Display::DisplayOrientations const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -151,7 +1680,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer2> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_ReadingTransform(Windows::Graphics::Display::DisplayOrientations * value) noexcept override
+    HRESULT __stdcall get_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations>* value) noexcept override
     {
         try
         {
@@ -183,7 +1712,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer3> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_ReportLatency(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ReportLatency(uint32_t* value) noexcept override
     {
         try
         {
@@ -197,7 +1726,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer3> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_MaxBatchSize(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MaxBatchSize(uint32_t* value) noexcept override
     {
         try
         {
@@ -215,7 +1744,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer3> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometer4> : produce_base<D, Windows::Devices::Sensors::IAccelerometer4>
 {
-    HRESULT __stdcall get_ReadingType(Windows::Devices::Sensors::AccelerometerReadingType * type) noexcept override
+    HRESULT __stdcall get_ReadingType(abi_t<Windows::Devices::Sensors::AccelerometerReadingType>* type) noexcept override
     {
         try
         {
@@ -233,7 +1762,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometer4> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerDeviceId> : produce_base<D, Windows::Devices::Sensors::IAccelerometerDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -252,7 +1781,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerDeviceId> : produce_b
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerReading> : produce_base<D, Windows::Devices::Sensors::IAccelerometerReading>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -266,7 +1795,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerReading> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_AccelerationX(double * value) noexcept override
+    HRESULT __stdcall get_AccelerationX(double* value) noexcept override
     {
         try
         {
@@ -280,7 +1809,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerReading> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_AccelerationY(double * value) noexcept override
+    HRESULT __stdcall get_AccelerationY(double* value) noexcept override
     {
         try
         {
@@ -294,7 +1823,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerReading> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_AccelerationZ(double * value) noexcept override
+    HRESULT __stdcall get_AccelerationZ(double* value) noexcept override
     {
         try
         {
@@ -312,7 +1841,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerReading> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IAccelerometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IAccelerometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -331,7 +1860,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerReadingChangedEventAr
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerShakenEventArgs> : produce_base<D, Windows::Devices::Sensors::IAccelerometerShakenEventArgs>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -349,7 +1878,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerShakenEventArgs> : pr
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerStatics> : produce_base<D, Windows::Devices::Sensors::IAccelerometerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IAccelerometer> result) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** result) noexcept override
     {
         try
         {
@@ -368,12 +1897,12 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerStatics> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAccelerometerStatics2> : produce_base<D, Windows::Devices::Sensors::IAccelerometerStatics2>
 {
-    HRESULT __stdcall abi_GetDefaultWithAccelerometerReadingType(Windows::Devices::Sensors::AccelerometerReadingType readingType, impl::abi_arg_out<Windows::Devices::Sensors::IAccelerometer> result) noexcept override
+    HRESULT __stdcall GetDefaultWithAccelerometerReadingType(abi_t<Windows::Devices::Sensors::AccelerometerReadingType> readingType, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetDefault(readingType));
+            *result = detach_abi(this->shim().GetDefault(*reinterpret_cast<Windows::Devices::Sensors::AccelerometerReadingType const*>(&readingType)));
             return S_OK;
         }
         catch (...)
@@ -387,7 +1916,7 @@ struct produce<D, Windows::Devices::Sensors::IAccelerometerStatics2> : produce_b
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, Windows::Devices::Sensors::IActivitySensor>
 {
-    HRESULT __stdcall abi_GetCurrentReadingAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensorReading>> result) noexcept override
+    HRESULT __stdcall GetCurrentReadingAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -402,7 +1931,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_SubscribedActivities(impl::abi_arg_out<Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sensors::ActivityType>> value) noexcept override
+    HRESULT __stdcall get_SubscribedActivities(::IUnknown** value) noexcept override
     {
         try
         {
@@ -417,7 +1946,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_PowerInMilliwatts(double * value) noexcept override
+    HRESULT __stdcall get_PowerInMilliwatts(double* value) noexcept override
     {
         try
         {
@@ -431,7 +1960,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -446,7 +1975,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_SupportedActivities(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<winrt::Windows::Devices::Sensors::ActivityType>> value) noexcept override
+    HRESULT __stdcall get_SupportedActivities(::IUnknown** value) noexcept override
     {
         try
         {
@@ -461,7 +1990,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_MinimumReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MinimumReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -475,12 +2004,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -489,12 +2018,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -507,7 +2036,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensor> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensorReading> : produce_base<D, Windows::Devices::Sensors::IActivitySensorReading>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -521,7 +2050,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorReading> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Activity(Windows::Devices::Sensors::ActivityType * value) noexcept override
+    HRESULT __stdcall get_Activity(abi_t<Windows::Devices::Sensors::ActivityType>* value) noexcept override
     {
         try
         {
@@ -535,7 +2064,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorReading> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Confidence(Windows::Devices::Sensors::ActivitySensorReadingConfidence * value) noexcept override
+    HRESULT __stdcall get_Confidence(abi_t<Windows::Devices::Sensors::ActivitySensorReadingConfidence>* value) noexcept override
     {
         try
         {
@@ -553,7 +2082,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorReading> : produce_b
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensorReadingChangeReport> : produce_base<D, Windows::Devices::Sensors::IActivitySensorReadingChangeReport>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IActivitySensorReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -572,7 +2101,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorReadingChangeReport>
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensorReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IActivitySensorReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IActivitySensorReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -591,7 +2120,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorReadingChangedEventA
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_base<D, Windows::Devices::Sensors::IActivitySensorStatics>
 {
-    HRESULT __stdcall abi_GetDefaultAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor>> result) noexcept override
+    HRESULT __stdcall GetDefaultAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -606,7 +2135,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall GetDeviceSelector(HSTRING* value) noexcept override
     {
         try
         {
@@ -621,12 +2150,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor>> result) noexcept override
+    HRESULT __stdcall FromIdAsync(HSTRING deviceId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
+            *result = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<hstring const*>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -636,12 +2165,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetSystemHistoryAsync(impl::abi_arg_in<Windows::Foundation::DateTime> fromTime, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>>> result) noexcept override
+    HRESULT __stdcall GetSystemHistoryAsync(abi_t<Windows::Foundation::DateTime> fromTime, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime)));
+            *result = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<Windows::Foundation::DateTime const*>(&fromTime)));
             return S_OK;
         }
         catch (...)
@@ -651,12 +2180,12 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetSystemHistoryWithDurationAsync(impl::abi_arg_in<Windows::Foundation::DateTime> fromTime, impl::abi_arg_in<Windows::Foundation::TimeSpan> duration, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>>> result) noexcept override
+    HRESULT __stdcall GetSystemHistoryWithDurationAsync(abi_t<Windows::Foundation::DateTime> fromTime, abi_t<Windows::Foundation::TimeSpan> duration, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&duration)));
+            *result = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<Windows::Foundation::DateTime const*>(&fromTime), *reinterpret_cast<Windows::Foundation::TimeSpan const*>(&duration)));
             return S_OK;
         }
         catch (...)
@@ -670,7 +2199,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorStatics> : produce_b
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IActivitySensorTriggerDetails> : produce_base<D, Windows::Devices::Sensors::IActivitySensorTriggerDetails>
 {
-    HRESULT __stdcall abi_ReadReports(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReadingChangeReport>> value) noexcept override
+    HRESULT __stdcall ReadReports(::IUnknown** value) noexcept override
     {
         try
         {
@@ -689,7 +2218,7 @@ struct produce<D, Windows::Devices::Sensors::IActivitySensorTriggerDetails> : pr
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windows::Devices::Sensors::IAltimeter>
 {
-    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IAltimeterReading> value) noexcept override
+    HRESULT __stdcall GetCurrentReading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -704,7 +2233,7 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -719,7 +2248,7 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_MinimumReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MinimumReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -747,7 +2276,7 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_ReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -761,12 +2290,12 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -775,12 +2304,12 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -793,7 +2322,7 @@ struct produce<D, Windows::Devices::Sensors::IAltimeter> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAltimeterReading> : produce_base<D, Windows::Devices::Sensors::IAltimeterReading>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -807,7 +2336,7 @@ struct produce<D, Windows::Devices::Sensors::IAltimeterReading> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_AltitudeChangeInMeters(double * value) noexcept override
+    HRESULT __stdcall get_AltitudeChangeInMeters(double* value) noexcept override
     {
         try
         {
@@ -825,7 +2354,7 @@ struct produce<D, Windows::Devices::Sensors::IAltimeterReading> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IAltimeterReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -844,7 +2373,7 @@ struct produce<D, Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs> 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IAltimeterStatics> : produce_base<D, Windows::Devices::Sensors::IAltimeterStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IAltimeter> result) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** result) noexcept override
     {
         try
         {
@@ -863,7 +2392,7 @@ struct produce<D, Windows::Devices::Sensors::IAltimeterStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windows::Devices::Sensors::IBarometer>
 {
-    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IBarometerReading> value) noexcept override
+    HRESULT __stdcall GetCurrentReading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -878,7 +2407,7 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -893,7 +2422,7 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_MinimumReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MinimumReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -921,7 +2450,7 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_ReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -935,12 +2464,12 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -949,12 +2478,12 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -967,7 +2496,7 @@ struct produce<D, Windows::Devices::Sensors::IBarometer> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IBarometerReading> : produce_base<D, Windows::Devices::Sensors::IBarometerReading>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -981,7 +2510,7 @@ struct produce<D, Windows::Devices::Sensors::IBarometerReading> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_StationPressureInHectopascals(double * value) noexcept override
+    HRESULT __stdcall get_StationPressureInHectopascals(double* value) noexcept override
     {
         try
         {
@@ -999,7 +2528,7 @@ struct produce<D, Windows::Devices::Sensors::IBarometerReading> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IBarometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IBarometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IBarometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1018,7 +2547,7 @@ struct produce<D, Windows::Devices::Sensors::IBarometerReadingChangedEventArgs> 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IBarometerStatics> : produce_base<D, Windows::Devices::Sensors::IBarometerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IBarometer> result) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** result) noexcept override
     {
         try
         {
@@ -1037,7 +2566,7 @@ struct produce<D, Windows::Devices::Sensors::IBarometerStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows::Devices::Sensors::ICompass>
 {
-    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::ICompassReading> value) noexcept override
+    HRESULT __stdcall GetCurrentReading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1052,7 +2581,7 @@ struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_MinimumReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MinimumReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -1080,7 +2609,7 @@ struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall get_ReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -1094,12 +2623,12 @@ struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1108,12 +2637,12 @@ struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1126,12 +2655,12 @@ struct produce<D, Windows::Devices::Sensors::ICompass> : produce_base<D, Windows
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompass2> : produce_base<D, Windows::Devices::Sensors::ICompass2>
 {
-    HRESULT __stdcall put_ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) noexcept override
+    HRESULT __stdcall put_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingTransform(value);
+            this->shim().ReadingTransform(*reinterpret_cast<Windows::Graphics::Display::DisplayOrientations const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1140,7 +2669,7 @@ struct produce<D, Windows::Devices::Sensors::ICompass2> : produce_base<D, Window
         }
     }
 
-    HRESULT __stdcall get_ReadingTransform(Windows::Graphics::Display::DisplayOrientations * value) noexcept override
+    HRESULT __stdcall get_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations>* value) noexcept override
     {
         try
         {
@@ -1158,7 +2687,7 @@ struct produce<D, Windows::Devices::Sensors::ICompass2> : produce_base<D, Window
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompassDeviceId> : produce_base<D, Windows::Devices::Sensors::ICompassDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -1177,7 +2706,7 @@ struct produce<D, Windows::Devices::Sensors::ICompassDeviceId> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompassReading> : produce_base<D, Windows::Devices::Sensors::ICompassReading>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -1191,7 +2720,7 @@ struct produce<D, Windows::Devices::Sensors::ICompassReading> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_HeadingMagneticNorth(double * value) noexcept override
+    HRESULT __stdcall get_HeadingMagneticNorth(double* value) noexcept override
     {
         try
         {
@@ -1205,7 +2734,7 @@ struct produce<D, Windows::Devices::Sensors::ICompassReading> : produce_base<D, 
         }
     }
 
-    HRESULT __stdcall get_HeadingTrueNorth(impl::abi_arg_out<Windows::Foundation::IReference<double>> value) noexcept override
+    HRESULT __stdcall get_HeadingTrueNorth(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1224,7 +2753,7 @@ struct produce<D, Windows::Devices::Sensors::ICompassReading> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompassReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::ICompassReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::ICompassReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1243,7 +2772,7 @@ struct produce<D, Windows::Devices::Sensors::ICompassReadingChangedEventArgs> : 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompassReadingHeadingAccuracy> : produce_base<D, Windows::Devices::Sensors::ICompassReadingHeadingAccuracy>
 {
-    HRESULT __stdcall get_HeadingAccuracy(Windows::Devices::Sensors::MagnetometerAccuracy * value) noexcept override
+    HRESULT __stdcall get_HeadingAccuracy(abi_t<Windows::Devices::Sensors::MagnetometerAccuracy>* value) noexcept override
     {
         try
         {
@@ -1261,7 +2790,7 @@ struct produce<D, Windows::Devices::Sensors::ICompassReadingHeadingAccuracy> : p
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ICompassStatics> : produce_base<D, Windows::Devices::Sensors::ICompassStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::ICompass> result) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** result) noexcept override
     {
         try
         {
@@ -1280,7 +2809,7 @@ struct produce<D, Windows::Devices::Sensors::ICompassStatics> : produce_base<D, 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windows::Devices::Sensors::IGyrometer>
 {
-    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IGyrometerReading> value) noexcept override
+    HRESULT __stdcall GetCurrentReading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1295,7 +2824,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_MinimumReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MinimumReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -1323,7 +2852,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_ReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -1337,12 +2866,12 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1351,12 +2880,12 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1369,12 +2898,12 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IGyrometer2> : produce_base<D, Windows::Devices::Sensors::IGyrometer2>
 {
-    HRESULT __stdcall put_ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) noexcept override
+    HRESULT __stdcall put_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingTransform(value);
+            this->shim().ReadingTransform(*reinterpret_cast<Windows::Graphics::Display::DisplayOrientations const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1383,7 +2912,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer2> : produce_base<D, Wind
         }
     }
 
-    HRESULT __stdcall get_ReadingTransform(Windows::Graphics::Display::DisplayOrientations * value) noexcept override
+    HRESULT __stdcall get_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations>* value) noexcept override
     {
         try
         {
@@ -1401,7 +2930,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometer2> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IGyrometerDeviceId> : produce_base<D, Windows::Devices::Sensors::IGyrometerDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -1420,7 +2949,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerDeviceId> : produce_base<
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IGyrometerReading> : produce_base<D, Windows::Devices::Sensors::IGyrometerReading>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -1434,7 +2963,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerReading> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_AngularVelocityX(double * value) noexcept override
+    HRESULT __stdcall get_AngularVelocityX(double* value) noexcept override
     {
         try
         {
@@ -1448,7 +2977,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerReading> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_AngularVelocityY(double * value) noexcept override
+    HRESULT __stdcall get_AngularVelocityY(double* value) noexcept override
     {
         try
         {
@@ -1462,7 +2991,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerReading> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_AngularVelocityZ(double * value) noexcept override
+    HRESULT __stdcall get_AngularVelocityZ(double* value) noexcept override
     {
         try
         {
@@ -1480,7 +3009,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerReading> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IGyrometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1499,7 +3028,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs> 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IGyrometerStatics> : produce_base<D, Windows::Devices::Sensors::IGyrometerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IGyrometer> result) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** result) noexcept override
     {
         try
         {
@@ -1518,7 +3047,7 @@ struct produce<D, Windows::Devices::Sensors::IGyrometerStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Windows::Devices::Sensors::IInclinometer>
 {
-    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IInclinometerReading> value) noexcept override
+    HRESULT __stdcall GetCurrentReading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1533,7 +3062,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_MinimumReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MinimumReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -1561,7 +3090,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_ReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -1575,12 +3104,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1589,12 +3118,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1607,12 +3136,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometer2> : produce_base<D, Windows::Devices::Sensors::IInclinometer2>
 {
-    HRESULT __stdcall put_ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) noexcept override
+    HRESULT __stdcall put_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingTransform(value);
+            this->shim().ReadingTransform(*reinterpret_cast<Windows::Graphics::Display::DisplayOrientations const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1621,7 +3150,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_ReadingTransform(Windows::Graphics::Display::DisplayOrientations * value) noexcept override
+    HRESULT __stdcall get_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations>* value) noexcept override
     {
         try
         {
@@ -1635,7 +3164,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_ReadingType(Windows::Devices::Sensors::SensorReadingType * type) noexcept override
+    HRESULT __stdcall get_ReadingType(abi_t<Windows::Devices::Sensors::SensorReadingType>* type) noexcept override
     {
         try
         {
@@ -1653,7 +3182,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometer2> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerDeviceId> : produce_base<D, Windows::Devices::Sensors::IInclinometerDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -1672,7 +3201,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerDeviceId> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerReading> : produce_base<D, Windows::Devices::Sensors::IInclinometerReading>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -1686,7 +3215,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReading> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_PitchDegrees(float * value) noexcept override
+    HRESULT __stdcall get_PitchDegrees(float* value) noexcept override
     {
         try
         {
@@ -1700,7 +3229,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReading> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_RollDegrees(float * value) noexcept override
+    HRESULT __stdcall get_RollDegrees(float* value) noexcept override
     {
         try
         {
@@ -1714,7 +3243,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReading> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_YawDegrees(float * value) noexcept override
+    HRESULT __stdcall get_YawDegrees(float* value) noexcept override
     {
         try
         {
@@ -1732,7 +3261,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReading> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IInclinometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IInclinometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1751,7 +3280,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReadingChangedEventArg
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerReadingYawAccuracy> : produce_base<D, Windows::Devices::Sensors::IInclinometerReadingYawAccuracy>
 {
-    HRESULT __stdcall get_YawAccuracy(Windows::Devices::Sensors::MagnetometerAccuracy * value) noexcept override
+    HRESULT __stdcall get_YawAccuracy(abi_t<Windows::Devices::Sensors::MagnetometerAccuracy>* value) noexcept override
     {
         try
         {
@@ -1769,7 +3298,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerReadingYawAccuracy> : 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerStatics> : produce_base<D, Windows::Devices::Sensors::IInclinometerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IInclinometer> result) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** result) noexcept override
     {
         try
         {
@@ -1788,7 +3317,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerStatics> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerStatics2> : produce_base<D, Windows::Devices::Sensors::IInclinometerStatics2>
 {
-    HRESULT __stdcall abi_GetDefaultForRelativeReadings(impl::abi_arg_out<Windows::Devices::Sensors::IInclinometer> result) noexcept override
+    HRESULT __stdcall GetDefaultForRelativeReadings(::IUnknown** result) noexcept override
     {
         try
         {
@@ -1807,12 +3336,12 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerStatics2> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IInclinometerStatics3> : produce_base<D, Windows::Devices::Sensors::IInclinometerStatics3>
 {
-    HRESULT __stdcall abi_GetDefaultWithSensorReadingType(Windows::Devices::Sensors::SensorReadingType sensorReadingtype, impl::abi_arg_out<Windows::Devices::Sensors::IInclinometer> result) noexcept override
+    HRESULT __stdcall GetDefaultWithSensorReadingType(abi_t<Windows::Devices::Sensors::SensorReadingType> sensorReadingtype, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetDefault(sensorReadingtype));
+            *result = detach_abi(this->shim().GetDefault(*reinterpret_cast<Windows::Devices::Sensors::SensorReadingType const*>(&sensorReadingtype)));
             return S_OK;
         }
         catch (...)
@@ -1826,7 +3355,7 @@ struct produce<D, Windows::Devices::Sensors::IInclinometerStatics3> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Windows::Devices::Sensors::ILightSensor>
 {
-    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::ILightSensorReading> value) noexcept override
+    HRESULT __stdcall GetCurrentReading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1841,7 +3370,7 @@ struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_MinimumReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MinimumReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -1869,7 +3398,7 @@ struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_ReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -1883,12 +3412,12 @@ struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1897,12 +3426,12 @@ struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1915,7 +3444,7 @@ struct produce<D, Windows::Devices::Sensors::ILightSensor> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ILightSensorDeviceId> : produce_base<D, Windows::Devices::Sensors::ILightSensorDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -1934,7 +3463,7 @@ struct produce<D, Windows::Devices::Sensors::ILightSensorDeviceId> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ILightSensorReading> : produce_base<D, Windows::Devices::Sensors::ILightSensorReading>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -1948,7 +3477,7 @@ struct produce<D, Windows::Devices::Sensors::ILightSensorReading> : produce_base
         }
     }
 
-    HRESULT __stdcall get_IlluminanceInLux(float * value) noexcept override
+    HRESULT __stdcall get_IlluminanceInLux(float* value) noexcept override
     {
         try
         {
@@ -1966,7 +3495,7 @@ struct produce<D, Windows::Devices::Sensors::ILightSensorReading> : produce_base
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::ILightSensorReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1985,7 +3514,7 @@ struct produce<D, Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ILightSensorStatics> : produce_base<D, Windows::Devices::Sensors::ILightSensorStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::ILightSensor> result) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** result) noexcept override
     {
         try
         {
@@ -2004,7 +3533,7 @@ struct produce<D, Windows::Devices::Sensors::ILightSensorStatics> : produce_base
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Windows::Devices::Sensors::IMagnetometer>
 {
-    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IMagnetometerReading> value) noexcept override
+    HRESULT __stdcall GetCurrentReading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2019,7 +3548,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_MinimumReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MinimumReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -2047,7 +3576,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_ReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -2061,12 +3590,12 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2075,12 +3604,12 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2093,12 +3622,12 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IMagnetometer2> : produce_base<D, Windows::Devices::Sensors::IMagnetometer2>
 {
-    HRESULT __stdcall put_ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) noexcept override
+    HRESULT __stdcall put_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingTransform(value);
+            this->shim().ReadingTransform(*reinterpret_cast<Windows::Graphics::Display::DisplayOrientations const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2107,7 +3636,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall get_ReadingTransform(Windows::Graphics::Display::DisplayOrientations * value) noexcept override
+    HRESULT __stdcall get_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations>* value) noexcept override
     {
         try
         {
@@ -2125,7 +3654,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometer2> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IMagnetometerDeviceId> : produce_base<D, Windows::Devices::Sensors::IMagnetometerDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -2144,7 +3673,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerDeviceId> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_base<D, Windows::Devices::Sensors::IMagnetometerReading>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -2158,7 +3687,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_MagneticFieldX(float * value) noexcept override
+    HRESULT __stdcall get_MagneticFieldX(float* value) noexcept override
     {
         try
         {
@@ -2172,7 +3701,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_MagneticFieldY(float * value) noexcept override
+    HRESULT __stdcall get_MagneticFieldY(float* value) noexcept override
     {
         try
         {
@@ -2186,7 +3715,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_MagneticFieldZ(float * value) noexcept override
+    HRESULT __stdcall get_MagneticFieldZ(float* value) noexcept override
     {
         try
         {
@@ -2200,7 +3729,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_DirectionalAccuracy(Windows::Devices::Sensors::MagnetometerAccuracy * value) noexcept override
+    HRESULT __stdcall get_DirectionalAccuracy(abi_t<Windows::Devices::Sensors::MagnetometerAccuracy>* value) noexcept override
     {
         try
         {
@@ -2218,7 +3747,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReading> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IMagnetometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IMagnetometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IMagnetometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2237,7 +3766,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerReadingChangedEventArg
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IMagnetometerStatics> : produce_base<D, Windows::Devices::Sensors::IMagnetometerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IMagnetometer> result) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** result) noexcept override
     {
         try
         {
@@ -2256,7 +3785,7 @@ struct produce<D, Windows::Devices::Sensors::IMagnetometerStatics> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<D, Windows::Devices::Sensors::IOrientationSensor>
 {
-    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensorReading> value) noexcept override
+    HRESULT __stdcall GetCurrentReading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2271,7 +3800,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_MinimumReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MinimumReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -2299,7 +3828,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_ReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -2313,12 +3842,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2327,12 +3856,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2345,12 +3874,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor> : produce_base<
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensor2> : produce_base<D, Windows::Devices::Sensors::IOrientationSensor2>
 {
-    HRESULT __stdcall put_ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) noexcept override
+    HRESULT __stdcall put_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingTransform(value);
+            this->shim().ReadingTransform(*reinterpret_cast<Windows::Graphics::Display::DisplayOrientations const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2359,7 +3888,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_ReadingTransform(Windows::Graphics::Display::DisplayOrientations * value) noexcept override
+    HRESULT __stdcall get_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations>* value) noexcept override
     {
         try
         {
@@ -2373,7 +3902,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_ReadingType(Windows::Devices::Sensors::SensorReadingType * type) noexcept override
+    HRESULT __stdcall get_ReadingType(abi_t<Windows::Devices::Sensors::SensorReadingType>* type) noexcept override
     {
         try
         {
@@ -2391,7 +3920,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensor2> : produce_base
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorDeviceId> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -2410,7 +3939,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorDeviceId> : produ
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorReading> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorReading>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -2424,7 +3953,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorReading> : produc
         }
     }
 
-    HRESULT __stdcall get_RotationMatrix(impl::abi_arg_out<Windows::Devices::Sensors::ISensorRotationMatrix> value) noexcept override
+    HRESULT __stdcall get_RotationMatrix(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2439,7 +3968,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorReading> : produc
         }
     }
 
-    HRESULT __stdcall get_Quaternion(impl::abi_arg_out<Windows::Devices::Sensors::ISensorQuaternion> value) noexcept override
+    HRESULT __stdcall get_Quaternion(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2458,7 +3987,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorReading> : produc
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensorReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2477,7 +4006,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorReadingChangedEve
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorReadingYawAccuracy> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorReadingYawAccuracy>
 {
-    HRESULT __stdcall get_YawAccuracy(Windows::Devices::Sensors::MagnetometerAccuracy * value) noexcept override
+    HRESULT __stdcall get_YawAccuracy(abi_t<Windows::Devices::Sensors::MagnetometerAccuracy>* value) noexcept override
     {
         try
         {
@@ -2495,7 +4024,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorReadingYawAccurac
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** result) noexcept override
     {
         try
         {
@@ -2514,7 +4043,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics> : produc
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics2> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorStatics2>
 {
-    HRESULT __stdcall abi_GetDefaultForRelativeReadings(impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
+    HRESULT __stdcall GetDefaultForRelativeReadings(::IUnknown** result) noexcept override
     {
         try
         {
@@ -2533,12 +4062,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics2> : produ
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics3> : produce_base<D, Windows::Devices::Sensors::IOrientationSensorStatics3>
 {
-    HRESULT __stdcall abi_GetDefaultWithSensorReadingType(Windows::Devices::Sensors::SensorReadingType sensorReadingtype, impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
+    HRESULT __stdcall GetDefaultWithSensorReadingType(abi_t<Windows::Devices::Sensors::SensorReadingType> sensorReadingtype, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetDefault(sensorReadingtype));
+            *result = detach_abi(this->shim().GetDefault(*reinterpret_cast<Windows::Devices::Sensors::SensorReadingType const*>(&sensorReadingtype)));
             return S_OK;
         }
         catch (...)
@@ -2548,12 +4077,12 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics3> : produ
         }
     }
 
-    HRESULT __stdcall abi_GetDefaultWithSensorReadingTypeAndSensorOptimizationGoal(Windows::Devices::Sensors::SensorReadingType sensorReadingType, Windows::Devices::Sensors::SensorOptimizationGoal optimizationGoal, impl::abi_arg_out<Windows::Devices::Sensors::IOrientationSensor> result) noexcept override
+    HRESULT __stdcall GetDefaultWithSensorReadingTypeAndSensorOptimizationGoal(abi_t<Windows::Devices::Sensors::SensorReadingType> sensorReadingType, abi_t<Windows::Devices::Sensors::SensorOptimizationGoal> optimizationGoal, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetDefault(sensorReadingType, optimizationGoal));
+            *result = detach_abi(this->shim().GetDefault(*reinterpret_cast<Windows::Devices::Sensors::SensorReadingType const*>(&sensorReadingType), *reinterpret_cast<Windows::Devices::Sensors::SensorOptimizationGoal const*>(&optimizationGoal)));
             return S_OK;
         }
         catch (...)
@@ -2567,7 +4096,7 @@ struct produce<D, Windows::Devices::Sensors::IOrientationSensorStatics3> : produ
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windows::Devices::Sensors::IPedometer>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -2582,7 +4111,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_PowerInMilliwatts(double * value) noexcept override
+    HRESULT __stdcall get_PowerInMilliwatts(double* value) noexcept override
     {
         try
         {
@@ -2596,7 +4125,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_MinimumReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MinimumReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -2624,7 +4153,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall get_ReportInterval(uint32_t * value) noexcept override
+    HRESULT __stdcall get_ReportInterval(uint32_t* value) noexcept override
     {
         try
         {
@@ -2638,12 +4167,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2652,12 +4181,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2670,7 +4199,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometer> : produce_base<D, Windo
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometer2> : produce_base<D, Windows::Devices::Sensors::IPedometer2>
 {
-    HRESULT __stdcall abi_GetCurrentReadings(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<winrt::Windows::Devices::Sensors::PedometerStepKind, Windows::Devices::Sensors::PedometerReading>> value) noexcept override
+    HRESULT __stdcall GetCurrentReadings(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2689,12 +4218,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometer2> : produce_base<D, Wind
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometerDataThresholdFactory> : produce_base<D, Windows::Devices::Sensors::IPedometerDataThresholdFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<Windows::Devices::Sensors::IPedometer> sensor, int32_t stepGoal, impl::abi_arg_out<Windows::Devices::Sensors::ISensorDataThreshold> threshold) noexcept override
+    HRESULT __stdcall Create(::IUnknown* sensor, int32_t stepGoal, ::IUnknown** threshold) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *threshold = detach_abi(this->shim().Create(*reinterpret_cast<const Windows::Devices::Sensors::Pedometer *>(&sensor), stepGoal));
+            *threshold = detach_abi(this->shim().Create(*reinterpret_cast<Windows::Devices::Sensors::Pedometer const*>(&sensor), stepGoal));
             return S_OK;
         }
         catch (...)
@@ -2708,7 +4237,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometerDataThresholdFactory> : p
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometerReading> : produce_base<D, Windows::Devices::Sensors::IPedometerReading>
 {
-    HRESULT __stdcall get_StepKind(Windows::Devices::Sensors::PedometerStepKind * value) noexcept override
+    HRESULT __stdcall get_StepKind(abi_t<Windows::Devices::Sensors::PedometerStepKind>* value) noexcept override
     {
         try
         {
@@ -2722,7 +4251,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometerReading> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_CumulativeSteps(int32_t * value) noexcept override
+    HRESULT __stdcall get_CumulativeSteps(int32_t* value) noexcept override
     {
         try
         {
@@ -2736,7 +4265,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometerReading> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -2750,7 +4279,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometerReading> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_CumulativeStepsDuration(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_CumulativeStepsDuration(abi_t<Windows::Foundation::TimeSpan>* value) noexcept override
     {
         try
         {
@@ -2768,7 +4297,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometerReading> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometerReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IPedometerReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IPedometerReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2787,12 +4316,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerReadingChangedEventArgs> 
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D, Windows::Devices::Sensors::IPedometerStatics>
 {
-    HRESULT __stdcall abi_FromIdAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer>> operation) noexcept override
+    HRESULT __stdcall FromIdAsync(HSTRING deviceId, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<const hstring *>(&deviceId)));
+            *operation = detach_abi(this->shim().FromIdAsync(*reinterpret_cast<hstring const*>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -2802,7 +4331,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_GetDefaultAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer>> operation) noexcept override
+    HRESULT __stdcall GetDefaultAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -2817,7 +4346,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> result) noexcept override
+    HRESULT __stdcall GetDeviceSelector(HSTRING* result) noexcept override
     {
         try
         {
@@ -2832,12 +4361,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_GetSystemHistoryAsync(impl::abi_arg_in<Windows::Foundation::DateTime> fromTime, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>>> operation) noexcept override
+    HRESULT __stdcall GetSystemHistoryAsync(abi_t<Windows::Foundation::DateTime> fromTime, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime)));
+            *operation = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<Windows::Foundation::DateTime const*>(&fromTime)));
             return S_OK;
         }
         catch (...)
@@ -2847,12 +4376,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall abi_GetSystemHistoryWithDurationAsync(impl::abi_arg_in<Windows::Foundation::DateTime> fromTime, impl::abi_arg_in<Windows::Foundation::TimeSpan> duration, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>>> operation) noexcept override
+    HRESULT __stdcall GetSystemHistoryWithDurationAsync(abi_t<Windows::Foundation::DateTime> fromTime, abi_t<Windows::Foundation::TimeSpan> duration, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<const Windows::Foundation::DateTime *>(&fromTime), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&duration)));
+            *operation = detach_abi(this->shim().GetSystemHistoryAsync(*reinterpret_cast<Windows::Foundation::DateTime const*>(&fromTime), *reinterpret_cast<Windows::Foundation::TimeSpan const*>(&duration)));
             return S_OK;
         }
         catch (...)
@@ -2866,12 +4395,12 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IPedometerStatics2> : produce_base<D, Windows::Devices::Sensors::IPedometerStatics2>
 {
-    HRESULT __stdcall abi_GetReadingsFromTriggerDetails(impl::abi_arg_in<Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails> triggerDetails, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> result) noexcept override
+    HRESULT __stdcall GetReadingsFromTriggerDetails(::IUnknown* triggerDetails, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetReadingsFromTriggerDetails(*reinterpret_cast<const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails *>(&triggerDetails)));
+            *result = detach_abi(this->shim().GetReadingsFromTriggerDetails(*reinterpret_cast<Windows::Devices::Sensors::SensorDataThresholdTriggerDetails const*>(&triggerDetails)));
             return S_OK;
         }
         catch (...)
@@ -2885,7 +4414,7 @@ struct produce<D, Windows::Devices::Sensors::IPedometerStatics2> : produce_base<
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D, Windows::Devices::Sensors::IProximitySensor>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -2900,7 +4429,7 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_MaxDistanceInMillimeters(impl::abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxDistanceInMillimeters(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2915,7 +4444,7 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall get_MinDistanceInMillimeters(impl::abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_MinDistanceInMillimeters(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2930,7 +4459,7 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_GetCurrentReading(impl::abi_arg_out<Windows::Devices::Sensors::IProximitySensorReading> value) noexcept override
+    HRESULT __stdcall GetCurrentReading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2945,12 +4474,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall add_ReadingChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ReadingChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().ReadingChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2959,12 +4488,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall remove_ReadingChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ReadingChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingChanged(token);
+            this->shim().ReadingChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2973,7 +4502,7 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
         }
     }
 
-    HRESULT __stdcall abi_CreateDisplayOnOffController(impl::abi_arg_out<Windows::Foundation::IClosable> controller) noexcept override
+    HRESULT __stdcall CreateDisplayOnOffController(::IUnknown** controller) noexcept override
     {
         try
         {
@@ -2992,12 +4521,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensor> : produce_base<D,
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensorDataThresholdFactory> : produce_base<D, Windows::Devices::Sensors::IProximitySensorDataThresholdFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<Windows::Devices::Sensors::IProximitySensor> sensor, impl::abi_arg_out<Windows::Devices::Sensors::ISensorDataThreshold> threshold) noexcept override
+    HRESULT __stdcall Create(::IUnknown* sensor, ::IUnknown** threshold) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *threshold = detach_abi(this->shim().Create(*reinterpret_cast<const Windows::Devices::Sensors::ProximitySensor *>(&sensor)));
+            *threshold = detach_abi(this->shim().Create(*reinterpret_cast<Windows::Devices::Sensors::ProximitySensor const*>(&sensor)));
             return S_OK;
         }
         catch (...)
@@ -3011,7 +4540,7 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorDataThresholdFactor
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensorReading> : produce_base<D, Windows::Devices::Sensors::IProximitySensorReading>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -3025,7 +4554,7 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorReading> : produce_
         }
     }
 
-    HRESULT __stdcall get_IsDetected(bool * value) noexcept override
+    HRESULT __stdcall get_IsDetected(bool* value) noexcept override
     {
         try
         {
@@ -3039,7 +4568,7 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorReading> : produce_
         }
     }
 
-    HRESULT __stdcall get_DistanceInMillimeters(impl::abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_DistanceInMillimeters(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3058,7 +4587,7 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorReading> : produce_
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensorReadingChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::IProximitySensorReadingChangedEventArgs>
 {
-    HRESULT __stdcall get_Reading(impl::abi_arg_out<Windows::Devices::Sensors::IProximitySensorReading> value) noexcept override
+    HRESULT __stdcall get_Reading(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3077,7 +4606,7 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorReadingChangedEvent
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensorStatics> : produce_base<D, Windows::Devices::Sensors::IProximitySensorStatics>
 {
-    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall GetDeviceSelector(HSTRING* value) noexcept override
     {
         try
         {
@@ -3092,12 +4621,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorStatics> : produce_
         }
     }
 
-    HRESULT __stdcall abi_FromId(impl::abi_arg_in<hstring> sensorId, impl::abi_arg_out<Windows::Devices::Sensors::IProximitySensor> result) noexcept override
+    HRESULT __stdcall FromId(HSTRING sensorId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().FromId(*reinterpret_cast<const hstring *>(&sensorId)));
+            *result = detach_abi(this->shim().FromId(*reinterpret_cast<hstring const*>(&sensorId)));
             return S_OK;
         }
         catch (...)
@@ -3111,12 +4640,12 @@ struct produce<D, Windows::Devices::Sensors::IProximitySensorStatics> : produce_
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::IProximitySensorStatics2> : produce_base<D, Windows::Devices::Sensors::IProximitySensorStatics2>
 {
-    HRESULT __stdcall abi_GetReadingsFromTriggerDetails(impl::abi_arg_in<Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails> triggerDetails, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ProximitySensorReading>> result) noexcept override
+    HRESULT __stdcall GetReadingsFromTriggerDetails(::IUnknown* triggerDetails, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetReadingsFromTriggerDetails(*reinterpret_cast<const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails *>(&triggerDetails)));
+            *result = detach_abi(this->shim().GetReadingsFromTriggerDetails(*reinterpret_cast<Windows::Devices::Sensors::SensorDataThresholdTriggerDetails const*>(&triggerDetails)));
             return S_OK;
         }
         catch (...)
@@ -3134,7 +4663,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorDataThreshold> : produce_bas
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails> : produce_base<D, Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -3149,7 +4678,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails>
         }
     }
 
-    HRESULT __stdcall get_SensorType(Windows::Devices::Sensors::SensorType * value) noexcept override
+    HRESULT __stdcall get_SensorType(abi_t<Windows::Devices::Sensors::SensorType>* value) noexcept override
     {
         try
         {
@@ -3167,7 +4696,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails>
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISensorQuaternion> : produce_base<D, Windows::Devices::Sensors::ISensorQuaternion>
 {
-    HRESULT __stdcall get_W(float * value) noexcept override
+    HRESULT __stdcall get_W(float* value) noexcept override
     {
         try
         {
@@ -3181,7 +4710,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorQuaternion> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_X(float * value) noexcept override
+    HRESULT __stdcall get_X(float* value) noexcept override
     {
         try
         {
@@ -3195,7 +4724,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorQuaternion> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_Y(float * value) noexcept override
+    HRESULT __stdcall get_Y(float* value) noexcept override
     {
         try
         {
@@ -3209,7 +4738,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorQuaternion> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_Z(float * value) noexcept override
+    HRESULT __stdcall get_Z(float* value) noexcept override
     {
         try
         {
@@ -3227,7 +4756,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorQuaternion> : produce_base<D
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_base<D, Windows::Devices::Sensors::ISensorRotationMatrix>
 {
-    HRESULT __stdcall get_M11(float * value) noexcept override
+    HRESULT __stdcall get_M11(float* value) noexcept override
     {
         try
         {
@@ -3241,7 +4770,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_M12(float * value) noexcept override
+    HRESULT __stdcall get_M12(float* value) noexcept override
     {
         try
         {
@@ -3255,7 +4784,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_M13(float * value) noexcept override
+    HRESULT __stdcall get_M13(float* value) noexcept override
     {
         try
         {
@@ -3269,7 +4798,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_M21(float * value) noexcept override
+    HRESULT __stdcall get_M21(float* value) noexcept override
     {
         try
         {
@@ -3283,7 +4812,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_M22(float * value) noexcept override
+    HRESULT __stdcall get_M22(float* value) noexcept override
     {
         try
         {
@@ -3297,7 +4826,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_M23(float * value) noexcept override
+    HRESULT __stdcall get_M23(float* value) noexcept override
     {
         try
         {
@@ -3311,7 +4840,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_M31(float * value) noexcept override
+    HRESULT __stdcall get_M31(float* value) noexcept override
     {
         try
         {
@@ -3325,7 +4854,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_M32(float * value) noexcept override
+    HRESULT __stdcall get_M32(float* value) noexcept override
     {
         try
         {
@@ -3339,7 +4868,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_M33(float * value) noexcept override
+    HRESULT __stdcall get_M33(float* value) noexcept override
     {
         try
         {
@@ -3357,7 +4886,7 @@ struct produce<D, Windows::Devices::Sensors::ISensorRotationMatrix> : produce_ba
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor> : produce_base<D, Windows::Devices::Sensors::ISimpleOrientationSensor>
 {
-    HRESULT __stdcall abi_GetCurrentOrientation(Windows::Devices::Sensors::SimpleOrientation * value) noexcept override
+    HRESULT __stdcall GetCurrentOrientation(abi_t<Windows::Devices::Sensors::SimpleOrientation>* value) noexcept override
     {
         try
         {
@@ -3371,12 +4900,12 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor> : produce
         }
     }
 
-    HRESULT __stdcall add_OrientationChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_OrientationChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().OrientationChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().OrientationChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -3385,12 +4914,12 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor> : produce
         }
     }
 
-    HRESULT __stdcall remove_OrientationChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_OrientationChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().OrientationChanged(token);
+            this->shim().OrientationChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -3403,12 +4932,12 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor> : produce
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor2> : produce_base<D, Windows::Devices::Sensors::ISimpleOrientationSensor2>
 {
-    HRESULT __stdcall put_ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) noexcept override
+    HRESULT __stdcall put_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReadingTransform(value);
+            this->shim().ReadingTransform(*reinterpret_cast<Windows::Graphics::Display::DisplayOrientations const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3417,7 +4946,7 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor2> : produc
         }
     }
 
-    HRESULT __stdcall get_ReadingTransform(Windows::Graphics::Display::DisplayOrientations * value) noexcept override
+    HRESULT __stdcall get_ReadingTransform(abi_t<Windows::Graphics::Display::DisplayOrientations>* value) noexcept override
     {
         try
         {
@@ -3435,7 +4964,7 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensor2> : produc
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId> : produce_base<D, Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -3454,7 +4983,7 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId> :
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs> : produce_base<D, Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs>
 {
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -3468,7 +4997,7 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorOrientation
         }
     }
 
-    HRESULT __stdcall get_Orientation(Windows::Devices::Sensors::SimpleOrientation * value) noexcept override
+    HRESULT __stdcall get_Orientation(abi_t<Windows::Devices::Sensors::SimpleOrientation>* value) noexcept override
     {
         try
         {
@@ -3486,7 +5015,7 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorOrientation
 template <typename D>
 struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorStatics> : produce_base<D, Windows::Devices::Sensors::ISimpleOrientationSensorStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::Devices::Sensors::ISimpleOrientationSensor> result) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** result) noexcept override
     {
         try
         {
@@ -3504,2915 +5033,575 @@ struct produce<D, Windows::Devices::Sensors::ISimpleOrientationSensorStatics> : 
 
 }
 
-namespace Windows::Devices::Sensors {
-
-template <typename D> hstring impl_ISensorDataThresholdTriggerDetails<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISensorDataThresholdTriggerDetails)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::SensorType impl_ISensorDataThresholdTriggerDetails<D>::SensorType() const
-{
-    Windows::Devices::Sensors::SensorType value {};
-    check_hresult(WINRT_SHIM(ISensorDataThresholdTriggerDetails)->get_SensorType(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IAccelerometerDeviceId<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAccelerometerDeviceId)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::Accelerometer impl_IAccelerometerStatics<D>::GetDefault() const
-{
-    Windows::Devices::Sensors::Accelerometer result { nullptr };
-    check_hresult(WINRT_SHIM(IAccelerometerStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::Accelerometer impl_IAccelerometerStatics2<D>::GetDefault(Windows::Devices::Sensors::AccelerometerReadingType readingType) const
-{
-    Windows::Devices::Sensors::Accelerometer result { nullptr };
-    check_hresult(WINRT_SHIM(IAccelerometerStatics2)->abi_GetDefaultWithAccelerometerReadingType(readingType, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::AccelerometerReading impl_IAccelerometer<D>::GetCurrentReading() const
-{
-    Windows::Devices::Sensors::AccelerometerReading value { nullptr };
-    check_hresult(WINRT_SHIM(IAccelerometer)->abi_GetCurrentReading(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IAccelerometer<D>::MinimumReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IAccelerometer)->get_MinimumReportInterval(&value));
-    return value;
-}
-
-template <typename D> void impl_IAccelerometer<D>::ReportInterval(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IAccelerometer)->put_ReportInterval(value));
-}
-
-template <typename D> uint32_t impl_IAccelerometer<D>::ReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IAccelerometer)->get_ReportInterval(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IAccelerometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IAccelerometer)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IAccelerometer> impl_IAccelerometer<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IAccelerometer>(this, &ABI::Windows::Devices::Sensors::IAccelerometer::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_IAccelerometer<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IAccelerometer)->remove_ReadingChanged(token));
-}
-
-template <typename D> event_token impl_IAccelerometer<D>::Shaken(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IAccelerometer)->add_Shaken(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IAccelerometer> impl_IAccelerometer<D>::Shaken(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Accelerometer, Windows::Devices::Sensors::AccelerometerShakenEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IAccelerometer>(this, &ABI::Windows::Devices::Sensors::IAccelerometer::remove_Shaken, Shaken(handler));
-}
-
-template <typename D> void impl_IAccelerometer<D>::Shaken(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IAccelerometer)->remove_Shaken(token));
-}
-
-template <typename D> void impl_IAccelerometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
-{
-    check_hresult(WINRT_SHIM(IAccelerometer2)->put_ReadingTransform(value));
-}
-
-template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IAccelerometer2<D>::ReadingTransform() const
-{
-    Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(WINRT_SHIM(IAccelerometer2)->get_ReadingTransform(&value));
-    return value;
-}
-
-template <typename D> void impl_IAccelerometer3<D>::ReportLatency(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IAccelerometer3)->put_ReportLatency(value));
-}
-
-template <typename D> uint32_t impl_IAccelerometer3<D>::ReportLatency() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IAccelerometer3)->get_ReportLatency(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IAccelerometer3<D>::MaxBatchSize() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IAccelerometer3)->get_MaxBatchSize(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::AccelerometerReadingType impl_IAccelerometer4<D>::ReadingType() const
-{
-    Windows::Devices::Sensors::AccelerometerReadingType type {};
-    check_hresult(WINRT_SHIM(IAccelerometer4)->get_ReadingType(&type));
-    return type;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IAccelerometerReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IAccelerometerReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IAccelerometerReading<D>::AccelerationX() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IAccelerometerReading)->get_AccelerationX(&value));
-    return value;
-}
-
-template <typename D> double impl_IAccelerometerReading<D>::AccelerationY() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IAccelerometerReading)->get_AccelerationY(&value));
-    return value;
-}
-
-template <typename D> double impl_IAccelerometerReading<D>::AccelerationZ() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IAccelerometerReading)->get_AccelerationZ(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::AccelerometerReading impl_IAccelerometerReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::AccelerometerReading value { nullptr };
-    check_hresult(WINRT_SHIM(IAccelerometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IAccelerometerShakenEventArgs<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IAccelerometerShakenEventArgs)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IInclinometerDeviceId<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IInclinometerDeviceId)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::Inclinometer impl_IInclinometerStatics<D>::GetDefault() const
-{
-    Windows::Devices::Sensors::Inclinometer result { nullptr };
-    check_hresult(WINRT_SHIM(IInclinometerStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::Inclinometer impl_IInclinometerStatics2<D>::GetDefaultForRelativeReadings() const
-{
-    Windows::Devices::Sensors::Inclinometer result { nullptr };
-    check_hresult(WINRT_SHIM(IInclinometerStatics2)->abi_GetDefaultForRelativeReadings(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::Inclinometer impl_IInclinometerStatics3<D>::GetDefault(Windows::Devices::Sensors::SensorReadingType sensorReadingtype) const
-{
-    Windows::Devices::Sensors::Inclinometer result { nullptr };
-    check_hresult(WINRT_SHIM(IInclinometerStatics3)->abi_GetDefaultWithSensorReadingType(sensorReadingtype, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::InclinometerReading impl_IInclinometer<D>::GetCurrentReading() const
-{
-    Windows::Devices::Sensors::InclinometerReading value { nullptr };
-    check_hresult(WINRT_SHIM(IInclinometer)->abi_GetCurrentReading(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IInclinometer<D>::MinimumReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IInclinometer)->get_MinimumReportInterval(&value));
-    return value;
-}
-
-template <typename D> void impl_IInclinometer<D>::ReportInterval(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IInclinometer)->put_ReportInterval(value));
-}
-
-template <typename D> uint32_t impl_IInclinometer<D>::ReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IInclinometer)->get_ReportInterval(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IInclinometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IInclinometer)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IInclinometer> impl_IInclinometer<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Inclinometer, Windows::Devices::Sensors::InclinometerReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IInclinometer>(this, &ABI::Windows::Devices::Sensors::IInclinometer::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_IInclinometer<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IInclinometer)->remove_ReadingChanged(token));
-}
-
-template <typename D> void impl_IInclinometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
-{
-    check_hresult(WINRT_SHIM(IInclinometer2)->put_ReadingTransform(value));
-}
-
-template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IInclinometer2<D>::ReadingTransform() const
-{
-    Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(WINRT_SHIM(IInclinometer2)->get_ReadingTransform(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::SensorReadingType impl_IInclinometer2<D>::ReadingType() const
-{
-    Windows::Devices::Sensors::SensorReadingType type {};
-    check_hresult(WINRT_SHIM(IInclinometer2)->get_ReadingType(&type));
-    return type;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IInclinometerReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IInclinometerReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> float impl_IInclinometerReading<D>::PitchDegrees() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(IInclinometerReading)->get_PitchDegrees(&value));
-    return value;
-}
-
-template <typename D> float impl_IInclinometerReading<D>::RollDegrees() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(IInclinometerReading)->get_RollDegrees(&value));
-    return value;
-}
-
-template <typename D> float impl_IInclinometerReading<D>::YawDegrees() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(IInclinometerReading)->get_YawDegrees(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy impl_IInclinometerReadingYawAccuracy<D>::YawAccuracy() const
-{
-    Windows::Devices::Sensors::MagnetometerAccuracy value {};
-    check_hresult(WINRT_SHIM(IInclinometerReadingYawAccuracy)->get_YawAccuracy(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::InclinometerReading impl_IInclinometerReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::InclinometerReading value { nullptr };
-    check_hresult(WINRT_SHIM(IInclinometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGyrometerDeviceId<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGyrometerDeviceId)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::Gyrometer impl_IGyrometerStatics<D>::GetDefault() const
-{
-    Windows::Devices::Sensors::Gyrometer result { nullptr };
-    check_hresult(WINRT_SHIM(IGyrometerStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::GyrometerReading impl_IGyrometer<D>::GetCurrentReading() const
-{
-    Windows::Devices::Sensors::GyrometerReading value { nullptr };
-    check_hresult(WINRT_SHIM(IGyrometer)->abi_GetCurrentReading(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IGyrometer<D>::MinimumReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IGyrometer)->get_MinimumReportInterval(&value));
-    return value;
-}
-
-template <typename D> void impl_IGyrometer<D>::ReportInterval(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IGyrometer)->put_ReportInterval(value));
-}
-
-template <typename D> uint32_t impl_IGyrometer<D>::ReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IGyrometer)->get_ReportInterval(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IGyrometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IGyrometer)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IGyrometer> impl_IGyrometer<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Gyrometer, Windows::Devices::Sensors::GyrometerReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IGyrometer>(this, &ABI::Windows::Devices::Sensors::IGyrometer::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_IGyrometer<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IGyrometer)->remove_ReadingChanged(token));
-}
-
-template <typename D> void impl_IGyrometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
-{
-    check_hresult(WINRT_SHIM(IGyrometer2)->put_ReadingTransform(value));
-}
-
-template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IGyrometer2<D>::ReadingTransform() const
-{
-    Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(WINRT_SHIM(IGyrometer2)->get_ReadingTransform(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IGyrometerReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IGyrometerReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IGyrometerReading<D>::AngularVelocityX() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IGyrometerReading)->get_AngularVelocityX(&value));
-    return value;
-}
-
-template <typename D> double impl_IGyrometerReading<D>::AngularVelocityY() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IGyrometerReading)->get_AngularVelocityY(&value));
-    return value;
-}
-
-template <typename D> double impl_IGyrometerReading<D>::AngularVelocityZ() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IGyrometerReading)->get_AngularVelocityZ(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::GyrometerReading impl_IGyrometerReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::GyrometerReading value { nullptr };
-    check_hresult(WINRT_SHIM(IGyrometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ICompassDeviceId<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ICompassDeviceId)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::Compass impl_ICompassStatics<D>::GetDefault() const
-{
-    Windows::Devices::Sensors::Compass result { nullptr };
-    check_hresult(WINRT_SHIM(ICompassStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::CompassReading impl_ICompass<D>::GetCurrentReading() const
-{
-    Windows::Devices::Sensors::CompassReading value { nullptr };
-    check_hresult(WINRT_SHIM(ICompass)->abi_GetCurrentReading(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_ICompass<D>::MinimumReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ICompass)->get_MinimumReportInterval(&value));
-    return value;
-}
-
-template <typename D> void impl_ICompass<D>::ReportInterval(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(ICompass)->put_ReportInterval(value));
-}
-
-template <typename D> uint32_t impl_ICompass<D>::ReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ICompass)->get_ReportInterval(&value));
-    return value;
-}
-
-template <typename D> event_token impl_ICompass<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ICompass)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ICompass> impl_ICompass<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Compass, Windows::Devices::Sensors::CompassReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, ICompass>(this, &ABI::Windows::Devices::Sensors::ICompass::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_ICompass<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ICompass)->remove_ReadingChanged(token));
-}
-
-template <typename D> void impl_ICompass2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
-{
-    check_hresult(WINRT_SHIM(ICompass2)->put_ReadingTransform(value));
-}
-
-template <typename D> Windows::Graphics::Display::DisplayOrientations impl_ICompass2<D>::ReadingTransform() const
-{
-    Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(WINRT_SHIM(ICompass2)->get_ReadingTransform(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_ICompassReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(ICompassReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_ICompassReading<D>::HeadingMagneticNorth() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(ICompassReading)->get_HeadingMagneticNorth(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<double> impl_ICompassReading<D>::HeadingTrueNorth() const
-{
-    Windows::Foundation::IReference<double> value;
-    check_hresult(WINRT_SHIM(ICompassReading)->get_HeadingTrueNorth(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy impl_ICompassReadingHeadingAccuracy<D>::HeadingAccuracy() const
-{
-    Windows::Devices::Sensors::MagnetometerAccuracy value {};
-    check_hresult(WINRT_SHIM(ICompassReadingHeadingAccuracy)->get_HeadingAccuracy(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::CompassReading impl_ICompassReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::CompassReading value { nullptr };
-    check_hresult(WINRT_SHIM(ICompassReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ILightSensorDeviceId<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ILightSensorDeviceId)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::LightSensor impl_ILightSensorStatics<D>::GetDefault() const
-{
-    Windows::Devices::Sensors::LightSensor result { nullptr };
-    check_hresult(WINRT_SHIM(ILightSensorStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::LightSensorReading impl_ILightSensor<D>::GetCurrentReading() const
-{
-    Windows::Devices::Sensors::LightSensorReading value { nullptr };
-    check_hresult(WINRT_SHIM(ILightSensor)->abi_GetCurrentReading(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_ILightSensor<D>::MinimumReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ILightSensor)->get_MinimumReportInterval(&value));
-    return value;
-}
-
-template <typename D> void impl_ILightSensor<D>::ReportInterval(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(ILightSensor)->put_ReportInterval(value));
-}
-
-template <typename D> uint32_t impl_ILightSensor<D>::ReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ILightSensor)->get_ReportInterval(&value));
-    return value;
-}
-
-template <typename D> event_token impl_ILightSensor<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ILightSensor)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ILightSensor> impl_ILightSensor<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::LightSensor, Windows::Devices::Sensors::LightSensorReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, ILightSensor>(this, &ABI::Windows::Devices::Sensors::ILightSensor::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_ILightSensor<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ILightSensor)->remove_ReadingChanged(token));
-}
-
-template <typename D> Windows::Foundation::DateTime impl_ILightSensorReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(ILightSensorReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> float impl_ILightSensorReading<D>::IlluminanceInLux() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ILightSensorReading)->get_IlluminanceInLux(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::LightSensorReading impl_ILightSensorReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::LightSensorReading value { nullptr };
-    check_hresult(WINRT_SHIM(ILightSensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> float impl_ISensorRotationMatrix<D>::M11() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M11(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorRotationMatrix<D>::M12() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M12(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorRotationMatrix<D>::M13() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M13(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorRotationMatrix<D>::M21() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M21(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorRotationMatrix<D>::M22() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M22(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorRotationMatrix<D>::M23() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M23(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorRotationMatrix<D>::M31() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M31(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorRotationMatrix<D>::M32() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M32(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorRotationMatrix<D>::M33() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorRotationMatrix)->get_M33(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorQuaternion<D>::W() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorQuaternion)->get_W(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorQuaternion<D>::X() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorQuaternion)->get_X(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorQuaternion<D>::Y() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorQuaternion)->get_Y(&value));
-    return value;
-}
-
-template <typename D> float impl_ISensorQuaternion<D>::Z() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(ISensorQuaternion)->get_Z(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IOrientationSensorDeviceId<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IOrientationSensorDeviceId)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::OrientationSensor impl_IOrientationSensorStatics<D>::GetDefault() const
-{
-    Windows::Devices::Sensors::OrientationSensor result { nullptr };
-    check_hresult(WINRT_SHIM(IOrientationSensorStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::OrientationSensor impl_IOrientationSensorStatics2<D>::GetDefaultForRelativeReadings() const
-{
-    Windows::Devices::Sensors::OrientationSensor result { nullptr };
-    check_hresult(WINRT_SHIM(IOrientationSensorStatics2)->abi_GetDefaultForRelativeReadings(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::OrientationSensor impl_IOrientationSensorStatics3<D>::GetDefault(Windows::Devices::Sensors::SensorReadingType sensorReadingtype) const
-{
-    Windows::Devices::Sensors::OrientationSensor result { nullptr };
-    check_hresult(WINRT_SHIM(IOrientationSensorStatics3)->abi_GetDefaultWithSensorReadingType(sensorReadingtype, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::OrientationSensor impl_IOrientationSensorStatics3<D>::GetDefault(Windows::Devices::Sensors::SensorReadingType sensorReadingType, Windows::Devices::Sensors::SensorOptimizationGoal optimizationGoal) const
-{
-    Windows::Devices::Sensors::OrientationSensor result { nullptr };
-    check_hresult(WINRT_SHIM(IOrientationSensorStatics3)->abi_GetDefaultWithSensorReadingTypeAndSensorOptimizationGoal(sensorReadingType, optimizationGoal, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::OrientationSensorReading impl_IOrientationSensor<D>::GetCurrentReading() const
-{
-    Windows::Devices::Sensors::OrientationSensorReading value { nullptr };
-    check_hresult(WINRT_SHIM(IOrientationSensor)->abi_GetCurrentReading(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IOrientationSensor<D>::MinimumReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IOrientationSensor)->get_MinimumReportInterval(&value));
-    return value;
-}
-
-template <typename D> void impl_IOrientationSensor<D>::ReportInterval(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IOrientationSensor)->put_ReportInterval(value));
-}
-
-template <typename D> uint32_t impl_IOrientationSensor<D>::ReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IOrientationSensor)->get_ReportInterval(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IOrientationSensor<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IOrientationSensor)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IOrientationSensor> impl_IOrientationSensor<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::OrientationSensor, Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IOrientationSensor>(this, &ABI::Windows::Devices::Sensors::IOrientationSensor::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_IOrientationSensor<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IOrientationSensor)->remove_ReadingChanged(token));
-}
-
-template <typename D> void impl_IOrientationSensor2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
-{
-    check_hresult(WINRT_SHIM(IOrientationSensor2)->put_ReadingTransform(value));
-}
-
-template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IOrientationSensor2<D>::ReadingTransform() const
-{
-    Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(WINRT_SHIM(IOrientationSensor2)->get_ReadingTransform(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::SensorReadingType impl_IOrientationSensor2<D>::ReadingType() const
-{
-    Windows::Devices::Sensors::SensorReadingType type {};
-    check_hresult(WINRT_SHIM(IOrientationSensor2)->get_ReadingType(&type));
-    return type;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IOrientationSensorReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IOrientationSensorReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::SensorRotationMatrix impl_IOrientationSensorReading<D>::RotationMatrix() const
-{
-    Windows::Devices::Sensors::SensorRotationMatrix value { nullptr };
-    check_hresult(WINRT_SHIM(IOrientationSensorReading)->get_RotationMatrix(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::SensorQuaternion impl_IOrientationSensorReading<D>::Quaternion() const
-{
-    Windows::Devices::Sensors::SensorQuaternion value { nullptr };
-    check_hresult(WINRT_SHIM(IOrientationSensorReading)->get_Quaternion(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy impl_IOrientationSensorReadingYawAccuracy<D>::YawAccuracy() const
-{
-    Windows::Devices::Sensors::MagnetometerAccuracy value {};
-    check_hresult(WINRT_SHIM(IOrientationSensorReadingYawAccuracy)->get_YawAccuracy(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::OrientationSensorReading impl_IOrientationSensorReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::OrientationSensorReading value { nullptr };
-    check_hresult(WINRT_SHIM(IOrientationSensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISimpleOrientationSensorDeviceId<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISimpleOrientationSensorDeviceId)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::SimpleOrientationSensor impl_ISimpleOrientationSensorStatics<D>::GetDefault() const
-{
-    Windows::Devices::Sensors::SimpleOrientationSensor result { nullptr };
-    check_hresult(WINRT_SHIM(ISimpleOrientationSensorStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::SimpleOrientation impl_ISimpleOrientationSensor<D>::GetCurrentOrientation() const
-{
-    Windows::Devices::Sensors::SimpleOrientation value {};
-    check_hresult(WINRT_SHIM(ISimpleOrientationSensor)->abi_GetCurrentOrientation(&value));
-    return value;
-}
-
-template <typename D> event_token impl_ISimpleOrientationSensor<D>::OrientationChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ISimpleOrientationSensor)->add_OrientationChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ISimpleOrientationSensor> impl_ISimpleOrientationSensor<D>::OrientationChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::SimpleOrientationSensor, Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, ISimpleOrientationSensor>(this, &ABI::Windows::Devices::Sensors::ISimpleOrientationSensor::remove_OrientationChanged, OrientationChanged(handler));
-}
-
-template <typename D> void impl_ISimpleOrientationSensor<D>::OrientationChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ISimpleOrientationSensor)->remove_OrientationChanged(token));
-}
-
-template <typename D> void impl_ISimpleOrientationSensor2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
-{
-    check_hresult(WINRT_SHIM(ISimpleOrientationSensor2)->put_ReadingTransform(value));
-}
-
-template <typename D> Windows::Graphics::Display::DisplayOrientations impl_ISimpleOrientationSensor2<D>::ReadingTransform() const
-{
-    Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(WINRT_SHIM(ISimpleOrientationSensor2)->get_ReadingTransform(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_ISimpleOrientationSensorOrientationChangedEventArgs<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(ISimpleOrientationSensorOrientationChangedEventArgs)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::SimpleOrientation impl_ISimpleOrientationSensorOrientationChangedEventArgs<D>::Orientation() const
-{
-    Windows::Devices::Sensors::SimpleOrientation value {};
-    check_hresult(WINRT_SHIM(ISimpleOrientationSensorOrientationChangedEventArgs)->get_Orientation(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IMagnetometerDeviceId<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMagnetometerDeviceId)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::Magnetometer impl_IMagnetometerStatics<D>::GetDefault() const
-{
-    Windows::Devices::Sensors::Magnetometer result { nullptr };
-    check_hresult(WINRT_SHIM(IMagnetometerStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::MagnetometerReading impl_IMagnetometer<D>::GetCurrentReading() const
-{
-    Windows::Devices::Sensors::MagnetometerReading value { nullptr };
-    check_hresult(WINRT_SHIM(IMagnetometer)->abi_GetCurrentReading(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IMagnetometer<D>::MinimumReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IMagnetometer)->get_MinimumReportInterval(&value));
-    return value;
-}
-
-template <typename D> void impl_IMagnetometer<D>::ReportInterval(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IMagnetometer)->put_ReportInterval(value));
-}
-
-template <typename D> uint32_t impl_IMagnetometer<D>::ReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IMagnetometer)->get_ReportInterval(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IMagnetometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IMagnetometer)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IMagnetometer> impl_IMagnetometer<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Magnetometer, Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IMagnetometer>(this, &ABI::Windows::Devices::Sensors::IMagnetometer::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_IMagnetometer<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IMagnetometer)->remove_ReadingChanged(token));
-}
-
-template <typename D> void impl_IMagnetometer2<D>::ReadingTransform(Windows::Graphics::Display::DisplayOrientations value) const
-{
-    check_hresult(WINRT_SHIM(IMagnetometer2)->put_ReadingTransform(value));
-}
-
-template <typename D> Windows::Graphics::Display::DisplayOrientations impl_IMagnetometer2<D>::ReadingTransform() const
-{
-    Windows::Graphics::Display::DisplayOrientations value {};
-    check_hresult(WINRT_SHIM(IMagnetometer2)->get_ReadingTransform(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IMagnetometerReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IMagnetometerReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> float impl_IMagnetometerReading<D>::MagneticFieldX() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(IMagnetometerReading)->get_MagneticFieldX(&value));
-    return value;
-}
-
-template <typename D> float impl_IMagnetometerReading<D>::MagneticFieldY() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(IMagnetometerReading)->get_MagneticFieldY(&value));
-    return value;
-}
-
-template <typename D> float impl_IMagnetometerReading<D>::MagneticFieldZ() const
-{
-    float value {};
-    check_hresult(WINRT_SHIM(IMagnetometerReading)->get_MagneticFieldZ(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::MagnetometerAccuracy impl_IMagnetometerReading<D>::DirectionalAccuracy() const
-{
-    Windows::Devices::Sensors::MagnetometerAccuracy value {};
-    check_hresult(WINRT_SHIM(IMagnetometerReading)->get_DirectionalAccuracy(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::MagnetometerReading impl_IMagnetometerReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::MagnetometerReading value { nullptr };
-    check_hresult(WINRT_SHIM(IMagnetometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> impl_IActivitySensorStatics<D>::GetDefaultAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> result;
-    check_hresult(WINRT_SHIM(IActivitySensorStatics)->abi_GetDefaultAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IActivitySensorStatics<D>::GetDeviceSelector() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IActivitySensorStatics)->abi_GetDeviceSelector(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> impl_IActivitySensorStatics<D>::FromIdAsync(hstring_view deviceId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> result;
-    check_hresult(WINRT_SHIM(IActivitySensorStatics)->abi_FromIdAsync(get_abi(deviceId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> impl_IActivitySensorStatics<D>::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> result;
-    check_hresult(WINRT_SHIM(IActivitySensorStatics)->abi_GetSystemHistoryAsync(get_abi(fromTime), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> impl_IActivitySensorStatics<D>::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime, const Windows::Foundation::TimeSpan & duration) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> result;
-    check_hresult(WINRT_SHIM(IActivitySensorStatics)->abi_GetSystemHistoryWithDurationAsync(get_abi(fromTime), get_abi(duration), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensorReading> impl_IActivitySensor<D>::GetCurrentReadingAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensorReading> result;
-    check_hresult(WINRT_SHIM(IActivitySensor)->abi_GetCurrentReadingAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sensors::ActivityType> impl_IActivitySensor<D>::SubscribedActivities() const
-{
-    Windows::Foundation::Collections::IVector<winrt::Windows::Devices::Sensors::ActivityType> value;
-    check_hresult(WINRT_SHIM(IActivitySensor)->get_SubscribedActivities(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IActivitySensor<D>::PowerInMilliwatts() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IActivitySensor)->get_PowerInMilliwatts(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IActivitySensor<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IActivitySensor)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<winrt::Windows::Devices::Sensors::ActivityType> impl_IActivitySensor<D>::SupportedActivities() const
-{
-    Windows::Foundation::Collections::IVectorView<winrt::Windows::Devices::Sensors::ActivityType> value;
-    check_hresult(WINRT_SHIM(IActivitySensor)->get_SupportedActivities(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IActivitySensor<D>::MinimumReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IActivitySensor)->get_MinimumReportInterval(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IActivitySensor<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IActivitySensor)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IActivitySensor> impl_IActivitySensor<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ActivitySensor, Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IActivitySensor>(this, &ABI::Windows::Devices::Sensors::IActivitySensor::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_IActivitySensor<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IActivitySensor)->remove_ReadingChanged(token));
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IActivitySensorReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IActivitySensorReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::ActivityType impl_IActivitySensorReading<D>::Activity() const
-{
-    Windows::Devices::Sensors::ActivityType value {};
-    check_hresult(WINRT_SHIM(IActivitySensorReading)->get_Activity(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::ActivitySensorReadingConfidence impl_IActivitySensorReading<D>::Confidence() const
-{
-    Windows::Devices::Sensors::ActivitySensorReadingConfidence value {};
-    check_hresult(WINRT_SHIM(IActivitySensorReading)->get_Confidence(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::ActivitySensorReading impl_IActivitySensorReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::ActivitySensorReading value { nullptr };
-    check_hresult(WINRT_SHIM(IActivitySensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::ActivitySensorReading impl_IActivitySensorReadingChangeReport<D>::Reading() const
-{
-    Windows::Devices::Sensors::ActivitySensorReading value { nullptr };
-    check_hresult(WINRT_SHIM(IActivitySensorReadingChangeReport)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReadingChangeReport> impl_IActivitySensorTriggerDetails<D>::ReadReports() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReadingChangeReport> value;
-    check_hresult(WINRT_SHIM(IActivitySensorTriggerDetails)->abi_ReadReports(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::Barometer impl_IBarometerStatics<D>::GetDefault() const
-{
-    Windows::Devices::Sensors::Barometer result { nullptr };
-    check_hresult(WINRT_SHIM(IBarometerStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::BarometerReading impl_IBarometer<D>::GetCurrentReading() const
-{
-    Windows::Devices::Sensors::BarometerReading value { nullptr };
-    check_hresult(WINRT_SHIM(IBarometer)->abi_GetCurrentReading(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IBarometer<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IBarometer)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IBarometer<D>::MinimumReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IBarometer)->get_MinimumReportInterval(&value));
-    return value;
-}
-
-template <typename D> void impl_IBarometer<D>::ReportInterval(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IBarometer)->put_ReportInterval(value));
-}
-
-template <typename D> uint32_t impl_IBarometer<D>::ReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IBarometer)->get_ReportInterval(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IBarometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IBarometer)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IBarometer> impl_IBarometer<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Barometer, Windows::Devices::Sensors::BarometerReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IBarometer>(this, &ABI::Windows::Devices::Sensors::IBarometer::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_IBarometer<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IBarometer)->remove_ReadingChanged(token));
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IBarometerReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IBarometerReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IBarometerReading<D>::StationPressureInHectopascals() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IBarometerReading)->get_StationPressureInHectopascals(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::BarometerReading impl_IBarometerReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::BarometerReading value { nullptr };
-    check_hresult(WINRT_SHIM(IBarometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::PedometerStepKind impl_IPedometerReading<D>::StepKind() const
-{
-    Windows::Devices::Sensors::PedometerStepKind value {};
-    check_hresult(WINRT_SHIM(IPedometerReading)->get_StepKind(&value));
-    return value;
-}
-
-template <typename D> int32_t impl_IPedometerReading<D>::CumulativeSteps() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IPedometerReading)->get_CumulativeSteps(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IPedometerReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IPedometerReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::TimeSpan impl_IPedometerReading<D>::CumulativeStepsDuration() const
-{
-    Windows::Foundation::TimeSpan value {};
-    check_hresult(WINRT_SHIM(IPedometerReading)->get_CumulativeStepsDuration(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::PedometerReading impl_IPedometerReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::PedometerReading value { nullptr };
-    check_hresult(WINRT_SHIM(IPedometerReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> impl_IPedometerStatics<D>::FromIdAsync(hstring_view deviceId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> operation;
-    check_hresult(WINRT_SHIM(IPedometerStatics)->abi_FromIdAsync(get_abi(deviceId), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> impl_IPedometerStatics<D>::GetDefaultAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> operation;
-    check_hresult(WINRT_SHIM(IPedometerStatics)->abi_GetDefaultAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> hstring impl_IPedometerStatics<D>::GetDeviceSelector() const
-{
-    hstring result;
-    check_hresult(WINRT_SHIM(IPedometerStatics)->abi_GetDeviceSelector(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> impl_IPedometerStatics<D>::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> operation;
-    check_hresult(WINRT_SHIM(IPedometerStatics)->abi_GetSystemHistoryAsync(get_abi(fromTime), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> impl_IPedometerStatics<D>::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime, const Windows::Foundation::TimeSpan & duration) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> operation;
-    check_hresult(WINRT_SHIM(IPedometerStatics)->abi_GetSystemHistoryWithDurationAsync(get_abi(fromTime), get_abi(duration), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading> impl_IPedometerStatics2<D>::GetReadingsFromTriggerDetails(const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails & triggerDetails) const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading> result;
-    check_hresult(WINRT_SHIM(IPedometerStatics2)->abi_GetReadingsFromTriggerDetails(get_abi(triggerDetails), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IMapView<winrt::Windows::Devices::Sensors::PedometerStepKind, Windows::Devices::Sensors::PedometerReading> impl_IPedometer2<D>::GetCurrentReadings() const
-{
-    Windows::Foundation::Collections::IMapView<winrt::Windows::Devices::Sensors::PedometerStepKind, Windows::Devices::Sensors::PedometerReading> value;
-    check_hresult(WINRT_SHIM(IPedometer2)->abi_GetCurrentReadings(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IPedometer<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPedometer)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IPedometer<D>::PowerInMilliwatts() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IPedometer)->get_PowerInMilliwatts(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IPedometer<D>::MinimumReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPedometer)->get_MinimumReportInterval(&value));
-    return value;
-}
-
-template <typename D> void impl_IPedometer<D>::ReportInterval(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IPedometer)->put_ReportInterval(value));
-}
-
-template <typename D> uint32_t impl_IPedometer<D>::ReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IPedometer)->get_ReportInterval(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IPedometer<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPedometer)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPedometer> impl_IPedometer<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Pedometer, Windows::Devices::Sensors::PedometerReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IPedometer>(this, &ABI::Windows::Devices::Sensors::IPedometer::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_IPedometer<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPedometer)->remove_ReadingChanged(token));
-}
-
-template <typename D> Windows::Devices::Sensors::PedometerDataThreshold impl_IPedometerDataThresholdFactory<D>::Create(const Windows::Devices::Sensors::Pedometer & sensor, int32_t stepGoal) const
-{
-    Windows::Devices::Sensors::PedometerDataThreshold threshold { nullptr };
-    check_hresult(WINRT_SHIM(IPedometerDataThresholdFactory)->abi_Create(get_abi(sensor), stepGoal, put_abi(threshold)));
-    return threshold;
-}
-
-template <typename D> hstring impl_IProximitySensorStatics<D>::GetDeviceSelector() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IProximitySensorStatics)->abi_GetDeviceSelector(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::ProximitySensor impl_IProximitySensorStatics<D>::FromId(hstring_view sensorId) const
-{
-    Windows::Devices::Sensors::ProximitySensor result { nullptr };
-    check_hresult(WINRT_SHIM(IProximitySensorStatics)->abi_FromId(get_abi(sensorId), put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IProximitySensor<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IProximitySensor)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<uint32_t> impl_IProximitySensor<D>::MaxDistanceInMillimeters() const
-{
-    Windows::Foundation::IReference<uint32_t> value;
-    check_hresult(WINRT_SHIM(IProximitySensor)->get_MaxDistanceInMillimeters(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<uint32_t> impl_IProximitySensor<D>::MinDistanceInMillimeters() const
-{
-    Windows::Foundation::IReference<uint32_t> value;
-    check_hresult(WINRT_SHIM(IProximitySensor)->get_MinDistanceInMillimeters(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::ProximitySensorReading impl_IProximitySensor<D>::GetCurrentReading() const
-{
-    Windows::Devices::Sensors::ProximitySensorReading value { nullptr };
-    check_hresult(WINRT_SHIM(IProximitySensor)->abi_GetCurrentReading(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IProximitySensor<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IProximitySensor)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IProximitySensor> impl_IProximitySensor<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::ProximitySensor, Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IProximitySensor>(this, &ABI::Windows::Devices::Sensors::IProximitySensor::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_IProximitySensor<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IProximitySensor)->remove_ReadingChanged(token));
-}
-
-template <typename D> Windows::Devices::Sensors::ProximitySensorDisplayOnOffController impl_IProximitySensor<D>::CreateDisplayOnOffController() const
-{
-    Windows::Devices::Sensors::ProximitySensorDisplayOnOffController controller { nullptr };
-    check_hresult(WINRT_SHIM(IProximitySensor)->abi_CreateDisplayOnOffController(put_abi(controller)));
-    return controller;
-}
-
-template <typename D> Windows::Devices::Sensors::ProximitySensorReading impl_IProximitySensorReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::ProximitySensorReading value { nullptr };
-    check_hresult(WINRT_SHIM(IProximitySensorReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IProximitySensorReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IProximitySensorReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IProximitySensorReading<D>::IsDetected() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IProximitySensorReading)->get_IsDetected(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<uint32_t> impl_IProximitySensorReading<D>::DistanceInMillimeters() const
-{
-    Windows::Foundation::IReference<uint32_t> value;
-    check_hresult(WINRT_SHIM(IProximitySensorReading)->get_DistanceInMillimeters(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::ProximitySensorDataThreshold impl_IProximitySensorDataThresholdFactory<D>::Create(const Windows::Devices::Sensors::ProximitySensor & sensor) const
-{
-    Windows::Devices::Sensors::ProximitySensorDataThreshold threshold { nullptr };
-    check_hresult(WINRT_SHIM(IProximitySensorDataThresholdFactory)->abi_Create(get_abi(sensor), put_abi(threshold)));
-    return threshold;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ProximitySensorReading> impl_IProximitySensorStatics2<D>::GetReadingsFromTriggerDetails(const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails & triggerDetails) const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ProximitySensorReading> result;
-    check_hresult(WINRT_SHIM(IProximitySensorStatics2)->abi_GetReadingsFromTriggerDetails(get_abi(triggerDetails), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::Altimeter impl_IAltimeterStatics<D>::GetDefault() const
-{
-    Windows::Devices::Sensors::Altimeter result { nullptr };
-    check_hresult(WINRT_SHIM(IAltimeterStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Sensors::AltimeterReading impl_IAltimeter<D>::GetCurrentReading() const
-{
-    Windows::Devices::Sensors::AltimeterReading value { nullptr };
-    check_hresult(WINRT_SHIM(IAltimeter)->abi_GetCurrentReading(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAltimeter<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAltimeter)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IAltimeter<D>::MinimumReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IAltimeter)->get_MinimumReportInterval(&value));
-    return value;
-}
-
-template <typename D> void impl_IAltimeter<D>::ReportInterval(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IAltimeter)->put_ReportInterval(value));
-}
-
-template <typename D> uint32_t impl_IAltimeter<D>::ReportInterval() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IAltimeter)->get_ReportInterval(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IAltimeter<D>::ReadingChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IAltimeter)->add_ReadingChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IAltimeter> impl_IAltimeter<D>::ReadingChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Sensors::Altimeter, Windows::Devices::Sensors::AltimeterReadingChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IAltimeter>(this, &ABI::Windows::Devices::Sensors::IAltimeter::remove_ReadingChanged, ReadingChanged(handler));
-}
-
-template <typename D> void impl_IAltimeter<D>::ReadingChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IAltimeter)->remove_ReadingChanged(token));
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IAltimeterReading<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IAltimeterReading)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IAltimeterReading<D>::AltitudeChangeInMeters() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IAltimeterReading)->get_AltitudeChangeInMeters(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Sensors::AltimeterReading impl_IAltimeterReadingChangedEventArgs<D>::Reading() const
-{
-    Windows::Devices::Sensors::AltimeterReading value { nullptr };
-    check_hresult(WINRT_SHIM(IAltimeterReadingChangedEventArgs)->get_Reading(put_abi(value)));
-    return value;
-}
+WINRT_EXPORT namespace winrt::Windows::Devices::Sensors {
 
 inline Windows::Devices::Sensors::Accelerometer Accelerometer::GetDefault()
 {
-    return get_activation_factory<Accelerometer, IAccelerometerStatics>().GetDefault();
+    return get_activation_factory<Accelerometer, Windows::Devices::Sensors::IAccelerometerStatics>().GetDefault();
 }
 
-inline Windows::Devices::Sensors::Accelerometer Accelerometer::GetDefault(Windows::Devices::Sensors::AccelerometerReadingType readingType)
+inline Windows::Devices::Sensors::Accelerometer Accelerometer::GetDefault(Windows::Devices::Sensors::AccelerometerReadingType const& readingType)
 {
-    return get_activation_factory<Accelerometer, IAccelerometerStatics2>().GetDefault(readingType);
+    return get_activation_factory<Accelerometer, Windows::Devices::Sensors::IAccelerometerStatics2>().GetDefault(readingType);
 }
 
 inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> ActivitySensor::GetDefaultAsync()
 {
-    return get_activation_factory<ActivitySensor, IActivitySensorStatics>().GetDefaultAsync();
+    return get_activation_factory<ActivitySensor, Windows::Devices::Sensors::IActivitySensorStatics>().GetDefaultAsync();
 }
 
 inline hstring ActivitySensor::GetDeviceSelector()
 {
-    return get_activation_factory<ActivitySensor, IActivitySensorStatics>().GetDeviceSelector();
+    return get_activation_factory<ActivitySensor, Windows::Devices::Sensors::IActivitySensorStatics>().GetDeviceSelector();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> ActivitySensor::FromIdAsync(hstring_view deviceId)
+inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::ActivitySensor> ActivitySensor::FromIdAsync(param::hstring const& deviceId)
 {
-    return get_activation_factory<ActivitySensor, IActivitySensorStatics>().FromIdAsync(deviceId);
+    return get_activation_factory<ActivitySensor, Windows::Devices::Sensors::IActivitySensorStatics>().FromIdAsync(deviceId);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> ActivitySensor::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> ActivitySensor::GetSystemHistoryAsync(Windows::Foundation::DateTime const& fromTime)
 {
-    return get_activation_factory<ActivitySensor, IActivitySensorStatics>().GetSystemHistoryAsync(fromTime);
+    return get_activation_factory<ActivitySensor, Windows::Devices::Sensors::IActivitySensorStatics>().GetSystemHistoryAsync(fromTime);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> ActivitySensor::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime, const Windows::Foundation::TimeSpan & duration)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ActivitySensorReading>> ActivitySensor::GetSystemHistoryAsync(Windows::Foundation::DateTime const& fromTime, Windows::Foundation::TimeSpan const& duration)
 {
-    return get_activation_factory<ActivitySensor, IActivitySensorStatics>().GetSystemHistoryAsync(fromTime, duration);
+    return get_activation_factory<ActivitySensor, Windows::Devices::Sensors::IActivitySensorStatics>().GetSystemHistoryAsync(fromTime, duration);
 }
 
 inline Windows::Devices::Sensors::Altimeter Altimeter::GetDefault()
 {
-    return get_activation_factory<Altimeter, IAltimeterStatics>().GetDefault();
+    return get_activation_factory<Altimeter, Windows::Devices::Sensors::IAltimeterStatics>().GetDefault();
 }
 
 inline Windows::Devices::Sensors::Barometer Barometer::GetDefault()
 {
-    return get_activation_factory<Barometer, IBarometerStatics>().GetDefault();
+    return get_activation_factory<Barometer, Windows::Devices::Sensors::IBarometerStatics>().GetDefault();
 }
 
 inline Windows::Devices::Sensors::Compass Compass::GetDefault()
 {
-    return get_activation_factory<Compass, ICompassStatics>().GetDefault();
+    return get_activation_factory<Compass, Windows::Devices::Sensors::ICompassStatics>().GetDefault();
 }
 
 inline Windows::Devices::Sensors::Gyrometer Gyrometer::GetDefault()
 {
-    return get_activation_factory<Gyrometer, IGyrometerStatics>().GetDefault();
+    return get_activation_factory<Gyrometer, Windows::Devices::Sensors::IGyrometerStatics>().GetDefault();
 }
 
 inline Windows::Devices::Sensors::Inclinometer Inclinometer::GetDefault()
 {
-    return get_activation_factory<Inclinometer, IInclinometerStatics>().GetDefault();
+    return get_activation_factory<Inclinometer, Windows::Devices::Sensors::IInclinometerStatics>().GetDefault();
 }
 
 inline Windows::Devices::Sensors::Inclinometer Inclinometer::GetDefaultForRelativeReadings()
 {
-    return get_activation_factory<Inclinometer, IInclinometerStatics2>().GetDefaultForRelativeReadings();
+    return get_activation_factory<Inclinometer, Windows::Devices::Sensors::IInclinometerStatics2>().GetDefaultForRelativeReadings();
 }
 
-inline Windows::Devices::Sensors::Inclinometer Inclinometer::GetDefault(Windows::Devices::Sensors::SensorReadingType sensorReadingtype)
+inline Windows::Devices::Sensors::Inclinometer Inclinometer::GetDefault(Windows::Devices::Sensors::SensorReadingType const& sensorReadingtype)
 {
-    return get_activation_factory<Inclinometer, IInclinometerStatics3>().GetDefault(sensorReadingtype);
+    return get_activation_factory<Inclinometer, Windows::Devices::Sensors::IInclinometerStatics3>().GetDefault(sensorReadingtype);
 }
 
 inline Windows::Devices::Sensors::LightSensor LightSensor::GetDefault()
 {
-    return get_activation_factory<LightSensor, ILightSensorStatics>().GetDefault();
+    return get_activation_factory<LightSensor, Windows::Devices::Sensors::ILightSensorStatics>().GetDefault();
 }
 
 inline Windows::Devices::Sensors::Magnetometer Magnetometer::GetDefault()
 {
-    return get_activation_factory<Magnetometer, IMagnetometerStatics>().GetDefault();
+    return get_activation_factory<Magnetometer, Windows::Devices::Sensors::IMagnetometerStatics>().GetDefault();
 }
 
 inline Windows::Devices::Sensors::OrientationSensor OrientationSensor::GetDefault()
 {
-    return get_activation_factory<OrientationSensor, IOrientationSensorStatics>().GetDefault();
+    return get_activation_factory<OrientationSensor, Windows::Devices::Sensors::IOrientationSensorStatics>().GetDefault();
 }
 
 inline Windows::Devices::Sensors::OrientationSensor OrientationSensor::GetDefaultForRelativeReadings()
 {
-    return get_activation_factory<OrientationSensor, IOrientationSensorStatics2>().GetDefaultForRelativeReadings();
+    return get_activation_factory<OrientationSensor, Windows::Devices::Sensors::IOrientationSensorStatics2>().GetDefaultForRelativeReadings();
 }
 
-inline Windows::Devices::Sensors::OrientationSensor OrientationSensor::GetDefault(Windows::Devices::Sensors::SensorReadingType sensorReadingtype)
+inline Windows::Devices::Sensors::OrientationSensor OrientationSensor::GetDefault(Windows::Devices::Sensors::SensorReadingType const& sensorReadingtype)
 {
-    return get_activation_factory<OrientationSensor, IOrientationSensorStatics3>().GetDefault(sensorReadingtype);
+    return get_activation_factory<OrientationSensor, Windows::Devices::Sensors::IOrientationSensorStatics3>().GetDefault(sensorReadingtype);
 }
 
-inline Windows::Devices::Sensors::OrientationSensor OrientationSensor::GetDefault(Windows::Devices::Sensors::SensorReadingType sensorReadingType, Windows::Devices::Sensors::SensorOptimizationGoal optimizationGoal)
+inline Windows::Devices::Sensors::OrientationSensor OrientationSensor::GetDefault(Windows::Devices::Sensors::SensorReadingType const& sensorReadingType, Windows::Devices::Sensors::SensorOptimizationGoal const& optimizationGoal)
 {
-    return get_activation_factory<OrientationSensor, IOrientationSensorStatics3>().GetDefault(sensorReadingType, optimizationGoal);
+    return get_activation_factory<OrientationSensor, Windows::Devices::Sensors::IOrientationSensorStatics3>().GetDefault(sensorReadingType, optimizationGoal);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> Pedometer::FromIdAsync(hstring_view deviceId)
+inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> Pedometer::FromIdAsync(param::hstring const& deviceId)
 {
-    return get_activation_factory<Pedometer, IPedometerStatics>().FromIdAsync(deviceId);
+    return get_activation_factory<Pedometer, Windows::Devices::Sensors::IPedometerStatics>().FromIdAsync(deviceId);
 }
 
 inline Windows::Foundation::IAsyncOperation<Windows::Devices::Sensors::Pedometer> Pedometer::GetDefaultAsync()
 {
-    return get_activation_factory<Pedometer, IPedometerStatics>().GetDefaultAsync();
+    return get_activation_factory<Pedometer, Windows::Devices::Sensors::IPedometerStatics>().GetDefaultAsync();
 }
 
 inline hstring Pedometer::GetDeviceSelector()
 {
-    return get_activation_factory<Pedometer, IPedometerStatics>().GetDeviceSelector();
+    return get_activation_factory<Pedometer, Windows::Devices::Sensors::IPedometerStatics>().GetDeviceSelector();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> Pedometer::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> Pedometer::GetSystemHistoryAsync(Windows::Foundation::DateTime const& fromTime)
 {
-    return get_activation_factory<Pedometer, IPedometerStatics>().GetSystemHistoryAsync(fromTime);
+    return get_activation_factory<Pedometer, Windows::Devices::Sensors::IPedometerStatics>().GetSystemHistoryAsync(fromTime);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> Pedometer::GetSystemHistoryAsync(const Windows::Foundation::DateTime & fromTime, const Windows::Foundation::TimeSpan & duration)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading>> Pedometer::GetSystemHistoryAsync(Windows::Foundation::DateTime const& fromTime, Windows::Foundation::TimeSpan const& duration)
 {
-    return get_activation_factory<Pedometer, IPedometerStatics>().GetSystemHistoryAsync(fromTime, duration);
+    return get_activation_factory<Pedometer, Windows::Devices::Sensors::IPedometerStatics>().GetSystemHistoryAsync(fromTime, duration);
 }
 
-inline Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading> Pedometer::GetReadingsFromTriggerDetails(const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails & triggerDetails)
+inline Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::PedometerReading> Pedometer::GetReadingsFromTriggerDetails(Windows::Devices::Sensors::SensorDataThresholdTriggerDetails const& triggerDetails)
 {
-    return get_activation_factory<Pedometer, IPedometerStatics2>().GetReadingsFromTriggerDetails(triggerDetails);
+    return get_activation_factory<Pedometer, Windows::Devices::Sensors::IPedometerStatics2>().GetReadingsFromTriggerDetails(triggerDetails);
 }
 
-inline PedometerDataThreshold::PedometerDataThreshold(const Windows::Devices::Sensors::Pedometer & sensor, int32_t stepGoal) :
-    PedometerDataThreshold(get_activation_factory<PedometerDataThreshold, IPedometerDataThresholdFactory>().Create(sensor, stepGoal))
+inline PedometerDataThreshold::PedometerDataThreshold(Windows::Devices::Sensors::Pedometer const& sensor, int32_t stepGoal) :
+    PedometerDataThreshold(get_activation_factory<PedometerDataThreshold, Windows::Devices::Sensors::IPedometerDataThresholdFactory>().Create(sensor, stepGoal))
 {}
 
 inline hstring ProximitySensor::GetDeviceSelector()
 {
-    return get_activation_factory<ProximitySensor, IProximitySensorStatics>().GetDeviceSelector();
+    return get_activation_factory<ProximitySensor, Windows::Devices::Sensors::IProximitySensorStatics>().GetDeviceSelector();
 }
 
-inline Windows::Devices::Sensors::ProximitySensor ProximitySensor::FromId(hstring_view sensorId)
+inline Windows::Devices::Sensors::ProximitySensor ProximitySensor::FromId(param::hstring const& sensorId)
 {
-    return get_activation_factory<ProximitySensor, IProximitySensorStatics>().FromId(sensorId);
+    return get_activation_factory<ProximitySensor, Windows::Devices::Sensors::IProximitySensorStatics>().FromId(sensorId);
 }
 
-inline Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ProximitySensorReading> ProximitySensor::GetReadingsFromTriggerDetails(const Windows::Devices::Sensors::SensorDataThresholdTriggerDetails & triggerDetails)
+inline Windows::Foundation::Collections::IVectorView<Windows::Devices::Sensors::ProximitySensorReading> ProximitySensor::GetReadingsFromTriggerDetails(Windows::Devices::Sensors::SensorDataThresholdTriggerDetails const& triggerDetails)
 {
-    return get_activation_factory<ProximitySensor, IProximitySensorStatics2>().GetReadingsFromTriggerDetails(triggerDetails);
+    return get_activation_factory<ProximitySensor, Windows::Devices::Sensors::IProximitySensorStatics2>().GetReadingsFromTriggerDetails(triggerDetails);
 }
 
-inline ProximitySensorDataThreshold::ProximitySensorDataThreshold(const Windows::Devices::Sensors::ProximitySensor & sensor) :
-    ProximitySensorDataThreshold(get_activation_factory<ProximitySensorDataThreshold, IProximitySensorDataThresholdFactory>().Create(sensor))
+inline ProximitySensorDataThreshold::ProximitySensorDataThreshold(Windows::Devices::Sensors::ProximitySensor const& sensor) :
+    ProximitySensorDataThreshold(get_activation_factory<ProximitySensorDataThreshold, Windows::Devices::Sensors::IProximitySensorDataThresholdFactory>().Create(sensor))
 {}
 
 inline Windows::Devices::Sensors::SimpleOrientationSensor SimpleOrientationSensor::GetDefault()
 {
-    return get_activation_factory<SimpleOrientationSensor, ISimpleOrientationSensorStatics>().GetDefault();
+    return get_activation_factory<SimpleOrientationSensor, Windows::Devices::Sensors::ISimpleOrientationSensorStatics>().GetDefault();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAccelerometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAccelerometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAccelerometer2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAccelerometer2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAccelerometer3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAccelerometer3> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAccelerometer4> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAccelerometer4> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAccelerometerDeviceId> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAccelerometerDeviceId> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAccelerometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAccelerometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAccelerometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAccelerometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAccelerometerShakenEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAccelerometerShakenEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAccelerometerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAccelerometerStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAccelerometerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAccelerometerStatics2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IActivitySensor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IActivitySensor> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IActivitySensorReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IActivitySensorReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IActivitySensorReadingChangeReport> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IActivitySensorReadingChangeReport> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IActivitySensorReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IActivitySensorReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IActivitySensorStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IActivitySensorStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IActivitySensorTriggerDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IActivitySensorTriggerDetails> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAltimeter> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAltimeter> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAltimeterReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAltimeterReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IAltimeterStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IAltimeterStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IBarometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IBarometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IBarometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IBarometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IBarometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IBarometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IBarometerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IBarometerStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ICompass> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ICompass> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ICompass2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ICompass2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ICompassDeviceId> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ICompassDeviceId> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ICompassReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ICompassReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ICompassReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ICompassReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ICompassReadingHeadingAccuracy> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ICompassReadingHeadingAccuracy> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ICompassStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ICompassStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IGyrometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IGyrometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IGyrometer2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IGyrometer2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IGyrometerDeviceId> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IGyrometerDeviceId> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IGyrometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IGyrometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IGyrometerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IGyrometerStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IInclinometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IInclinometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IInclinometer2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IInclinometer2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IInclinometerDeviceId> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IInclinometerDeviceId> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IInclinometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IInclinometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IInclinometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IInclinometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IInclinometerReadingYawAccuracy> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IInclinometerReadingYawAccuracy> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IInclinometerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IInclinometerStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IInclinometerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IInclinometerStatics2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IInclinometerStatics3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IInclinometerStatics3> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ILightSensor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ILightSensor> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ILightSensorDeviceId> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ILightSensorDeviceId> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ILightSensorReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ILightSensorReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ILightSensorStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ILightSensorStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IMagnetometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IMagnetometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IMagnetometer2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IMagnetometer2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IMagnetometerDeviceId> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IMagnetometerDeviceId> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IMagnetometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IMagnetometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IMagnetometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IMagnetometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IMagnetometerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IMagnetometerStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IOrientationSensor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IOrientationSensor> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IOrientationSensor2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IOrientationSensor2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IOrientationSensorDeviceId> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IOrientationSensorDeviceId> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IOrientationSensorReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IOrientationSensorReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IOrientationSensorReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IOrientationSensorReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IOrientationSensorReadingYawAccuracy> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IOrientationSensorReadingYawAccuracy> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IOrientationSensorStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IOrientationSensorStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IOrientationSensorStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IOrientationSensorStatics2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IOrientationSensorStatics3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IOrientationSensorStatics3> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IPedometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IPedometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IPedometer2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IPedometer2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IPedometerDataThresholdFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IPedometerDataThresholdFactory> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IPedometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IPedometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IPedometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IPedometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IPedometerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IPedometerStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IPedometerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IPedometerStatics2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IProximitySensor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IProximitySensor> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IProximitySensorDataThresholdFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IProximitySensorDataThresholdFactory> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IProximitySensorReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IProximitySensorReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IProximitySensorReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IProximitySensorReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IProximitySensorStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IProximitySensorStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::IProximitySensorStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::IProximitySensorStatics2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ISensorDataThreshold> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ISensorDataThreshold> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ISensorQuaternion> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ISensorQuaternion> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ISensorRotationMatrix> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ISensorRotationMatrix> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ISimpleOrientationSensor> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensor2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ISimpleOrientationSensor2> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::Accelerometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::Accelerometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::AccelerometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::AccelerometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::AccelerometerShakenEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::AccelerometerShakenEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ActivitySensor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ActivitySensor> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ActivitySensorReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ActivitySensorReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ActivitySensorReadingChangeReport> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ActivitySensorReadingChangeReport> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ActivitySensorTriggerDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ActivitySensorTriggerDetails> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::Altimeter> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::Altimeter> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::AltimeterReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::AltimeterReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::AltimeterReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::AltimeterReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::Barometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::Barometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::BarometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::BarometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::BarometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::BarometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::Compass> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::Compass> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::CompassReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::CompassReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::CompassReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::CompassReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::Gyrometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::Gyrometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::GyrometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::GyrometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::GyrometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::GyrometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::Inclinometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::Inclinometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::InclinometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::InclinometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::InclinometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::InclinometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::LightSensor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::LightSensor> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::LightSensorReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::LightSensorReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::LightSensorReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::LightSensorReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::Magnetometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::Magnetometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::MagnetometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::MagnetometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::OrientationSensor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::OrientationSensor> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::OrientationSensorReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::OrientationSensorReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::Pedometer> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::Pedometer> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::PedometerDataThreshold> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::PedometerDataThreshold> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::PedometerReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::PedometerReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::PedometerReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::PedometerReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ProximitySensor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ProximitySensor> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ProximitySensorDataThreshold> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ProximitySensorDataThreshold> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ProximitySensorDisplayOnOffController> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ProximitySensorDisplayOnOffController> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ProximitySensorReading> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ProximitySensorReading> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::SensorDataThresholdTriggerDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::SensorDataThresholdTriggerDetails> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::SensorQuaternion> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::SensorQuaternion> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::SensorRotationMatrix> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::SensorRotationMatrix> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::SimpleOrientationSensor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::SimpleOrientationSensor> {};
+
+template<> struct hash<winrt::Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometer2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometer2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometer3>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometer3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometer4>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometer4 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerDeviceId>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerDeviceId & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerShakenEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerShakenEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAccelerometerStatics2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAccelerometerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensor>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensorReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensorReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensorReadingChangeReport>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensorReadingChangeReport & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensorReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensorReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensorStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensorStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IActivitySensorTriggerDetails>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IActivitySensorTriggerDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAltimeter>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAltimeter & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAltimeterReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAltimeterReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAltimeterReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IAltimeterStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IAltimeterStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IBarometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IBarometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IBarometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IBarometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IBarometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IBarometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IBarometerStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IBarometerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ICompass>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ICompass & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ICompass2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ICompass2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ICompassDeviceId>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ICompassDeviceId & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ICompassReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ICompassReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ICompassReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ICompassReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ICompassReadingHeadingAccuracy>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ICompassReadingHeadingAccuracy & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ICompassStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ICompassStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IGyrometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IGyrometer2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometer2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IGyrometerDeviceId>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometerDeviceId & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IGyrometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IGyrometerStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IGyrometerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IInclinometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IInclinometer2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometer2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerDeviceId>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerDeviceId & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerReadingYawAccuracy>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerReadingYawAccuracy & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerStatics2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IInclinometerStatics3>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IInclinometerStatics3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ILightSensor>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ILightSensor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ILightSensorDeviceId>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ILightSensorDeviceId & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ILightSensorReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ILightSensorReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ILightSensorReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ILightSensorStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ILightSensorStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometer2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometer2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometerDeviceId>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometerDeviceId & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IMagnetometerStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IMagnetometerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensor>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensor2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensor2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorDeviceId>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorDeviceId & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorReadingYawAccuracy>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorReadingYawAccuracy & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorStatics2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IOrientationSensorStatics3>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IOrientationSensorStatics3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IPedometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IPedometer2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometer2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IPedometerDataThresholdFactory>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometerDataThresholdFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IPedometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IPedometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IPedometerStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IPedometerStatics2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IPedometerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensor>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensorDataThresholdFactory>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensorDataThresholdFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensorReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensorReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensorReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensorReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensorStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensorStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::IProximitySensorStatics2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::IProximitySensorStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ISensorDataThreshold>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ISensorDataThreshold & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ISensorDataThresholdTriggerDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ISensorQuaternion>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ISensorQuaternion & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ISensorRotationMatrix>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ISensorRotationMatrix & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensor>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ISimpleOrientationSensor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensor2>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ISimpleOrientationSensor2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ISimpleOrientationSensorDeviceId & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ISimpleOrientationSensorOrientationChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ISimpleOrientationSensorStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ISimpleOrientationSensorStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::Accelerometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::Accelerometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::AccelerometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::AccelerometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::AccelerometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::AccelerometerShakenEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::AccelerometerShakenEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ActivitySensor>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ActivitySensor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ActivitySensorReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ActivitySensorReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ActivitySensorReadingChangeReport>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ActivitySensorReadingChangeReport & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ActivitySensorReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ActivitySensorTriggerDetails>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ActivitySensorTriggerDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::Altimeter>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::Altimeter & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::AltimeterReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::AltimeterReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::AltimeterReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::AltimeterReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::Barometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::Barometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::BarometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::BarometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::BarometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::BarometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::Compass>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::Compass & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::CompassReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::CompassReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::CompassReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::CompassReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::Gyrometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::Gyrometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::GyrometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::GyrometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::GyrometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::GyrometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::Inclinometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::Inclinometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::InclinometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::InclinometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::InclinometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::InclinometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::LightSensor>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::LightSensor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::LightSensorReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::LightSensorReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::LightSensorReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::LightSensorReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::Magnetometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::Magnetometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::MagnetometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::MagnetometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::MagnetometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::OrientationSensor>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::OrientationSensor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::OrientationSensorReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::OrientationSensorReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::OrientationSensorReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::Pedometer>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::Pedometer & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::PedometerDataThreshold>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::PedometerDataThreshold & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::PedometerReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::PedometerReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::PedometerReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::PedometerReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ProximitySensor>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ProximitySensor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ProximitySensorDataThreshold>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ProximitySensorDataThreshold & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ProximitySensorDisplayOnOffController>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ProximitySensorDisplayOnOffController & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ProximitySensorReading>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ProximitySensorReading & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::ProximitySensorReadingChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::SensorDataThresholdTriggerDetails>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::SensorDataThresholdTriggerDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::SensorQuaternion>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::SensorQuaternion & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::SensorRotationMatrix>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::SensorRotationMatrix & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::SimpleOrientationSensor>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::SimpleOrientationSensor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Devices::Sensors::SimpleOrientationSensorOrientationChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

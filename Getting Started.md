@@ -1,7 +1,7 @@
-Install the C++/WinRT header files
+﻿Install the C++/WinRT header files
 ===============================================
 
-First, you need to copy the C++/WinRT header files to your local system. Download the headers.
+First, copy the C++/WinRT header files to your local system. Download the headers.
 Unzip and copy the header files to the desired location on your system. Typically, you
 will either:
 
@@ -68,32 +68,39 @@ are using one.
 > When you \#include "winrt/Windows.Foundation.h", you get the C++/WinRT
 > header file. This also allows you to include both files, if desired.
 
-Using the Visual Studio Update 3 C++ compiler
+Using the Visual Studio 2017 version 15.3 C++ compiler
 =============================================
 
-You need the C++ compiler from Visual Studio 2015 Update 3 or later to
-compile the C++/WinRT header files. You can determine the version of VS
-by going to Help – About Visual Studio.
+We developed and tested this version of the C++/WinRT library with 
+Visual Studio 2017 version 15.3 (and later) C++ compilers. We recommend
+that you use this version or later to compile C++/WinRT header files as you
+may encounter errors when using earlier compiler versions.  
+
+Visual Studio displays its version in Help | About Microsoft Visual Studio.  
 
 ![](./media/image3.png)
 
 Enabling the latest C++ standard language features
 ==================================================
 
-The C++/WinRT library uses a number of the latest C++ standard language 
+The C++/WinRT library uses a number of C++17 and later C++ standard language 
 features. By default, some of those features are not enabled in the Visual 
-Studio 2015 C++ compiler. You enable them by specifying the
+C++ compiler. You enable them by specifying the
 /await and /std:c++latest as additional command line options.
 
 ![](./media/image4.png)
 
-Use the Windows 10 Anniversary Update SDK
+and 
+
+![](./media/image5.png)
+
+Use the Windows 10 Creators Update SDK
 =========================================
 
-The C++/WinRT library requires at least version 10.0.14393.0 (Windows 10
-Anniversary Update) of the Windows 10 SDK. To set this in Visual Studio,
+The C++/WinRT library requires at least version 10.0.15063.0 (Windows 10
+Creators Update) of the Windows 10 SDK. To set this in Visual Studio,
 open the **Project Settings**, and set the **Target Platform Min.
-Version** to at least 10.0.14393.0.
+Version** to at least 10.0.15063.0.
 
 ![](./media/image2.png)
 
@@ -102,7 +109,7 @@ If you are not working in Visual Studio, set the **MinVersion** and
 
 ```XML
   <Dependencies>
-    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.14393.0" MaxVersionTested="10.0.14393.0" />
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.15063.0" MaxVersionTested="10.0.15063.0" />
   </Dependencies>
 ```
 Read the docs!

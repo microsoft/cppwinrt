@@ -1,27 +1,1153 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Devices.Enumeration.2.h"
+#include "winrt/impl/Windows.UI.2.h"
+#include "winrt/impl/Windows.UI.Core.2.h"
+#include "winrt/impl/Windows.UI.Popups.2.h"
+#include "winrt/impl/Windows.UI.ViewManagement.2.h"
+#include "winrt/Windows.UI.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.UI.Core.3.h"
-#include "internal/Windows.Devices.Enumeration.3.h"
-#include "internal/Windows.UI.Popups.3.h"
-#include "internal/Windows.UI.3.h"
-#include "internal/Windows.UI.ViewManagement.3.h"
-#include "Windows.UI.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> bool consume_Windows_UI_ViewManagement_IAccessibilitySettings<D>::HighContrast() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IAccessibilitySettings)->get_HighContrast(&value));
+    return value;
+}
 
-namespace impl {
+template <typename D> hstring consume_Windows_UI_ViewManagement_IAccessibilitySettings<D>::HighContrastScheme() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IAccessibilitySettings)->get_HighContrastScheme(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_ViewManagement_IAccessibilitySettings<D>::HighContrastChanged(Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::AccessibilitySettings, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token cookie{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IAccessibilitySettings)->add_HighContrastChanged(get_abi(handler), put_abi(cookie)));
+    return cookie;
+}
+
+template <typename D> event_revoker<Windows::UI::ViewManagement::IAccessibilitySettings> consume_Windows_UI_ViewManagement_IAccessibilitySettings<D>::HighContrastChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::AccessibilitySettings, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::ViewManagement::IAccessibilitySettings>(this, &abi_t<Windows::UI::ViewManagement::IAccessibilitySettings>::remove_HighContrastChanged, HighContrastChanged(handler));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IAccessibilitySettings<D>::HighContrastChanged(event_token const& cookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IAccessibilitySettings)->remove_HighContrastChanged(get_abi(cookie)));
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IActivationViewSwitcher<D>::ShowAsStandaloneAsync(int32_t viewId) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IActivationViewSwitcher)->ShowAsStandaloneAsync(viewId, put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IActivationViewSwitcher<D>::ShowAsStandaloneAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference const& sizePreference) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IActivationViewSwitcher)->ShowAsStandaloneWithSizePreferenceAsync(viewId, get_abi(sizePreference), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IActivationViewSwitcher<D>::IsViewPresentedOnActivationVirtualDesktop(int32_t viewId) const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IActivationViewSwitcher)->IsViewPresentedOnActivationVirtualDesktop(viewId, &value));
+    return value;
+}
+
+template <typename D> Windows::UI::ViewManagement::ApplicationViewOrientation consume_Windows_UI_ViewManagement_IApplicationView<D>::Orientation() const
+{
+    Windows::UI::ViewManagement::ApplicationViewOrientation value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->get_Orientation(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationView<D>::AdjacentToLeftDisplayEdge() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->get_AdjacentToLeftDisplayEdge(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationView<D>::AdjacentToRightDisplayEdge() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->get_AdjacentToRightDisplayEdge(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationView<D>::IsFullScreen() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->get_IsFullScreen(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationView<D>::IsOnLockScreen() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->get_IsOnLockScreen(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationView<D>::IsScreenCaptureEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->get_IsScreenCaptureEnabled(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationView<D>::IsScreenCaptureEnabled(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->put_IsScreenCaptureEnabled(value));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationView<D>::Title(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->put_Title(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_UI_ViewManagement_IApplicationView<D>::Title() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->get_Title(put_abi(value)));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_UI_ViewManagement_IApplicationView<D>::Id() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->get_Id(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_ViewManagement_IApplicationView<D>::Consolidated(Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->add_Consolidated(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::ViewManagement::IApplicationView> consume_Windows_UI_ViewManagement_IApplicationView<D>::Consolidated(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::ViewManagement::IApplicationView>(this, &abi_t<Windows::UI::ViewManagement::IApplicationView>::remove_Consolidated, Consolidated(handler));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationView<D>::Consolidated(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView)->remove_Consolidated(get_abi(token)));
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationView2<D>::SuppressSystemOverlays() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView2)->get_SuppressSystemOverlays(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationView2<D>::SuppressSystemOverlays(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView2)->put_SuppressSystemOverlays(value));
+}
+
+template <typename D> Windows::Foundation::Rect consume_Windows_UI_ViewManagement_IApplicationView2<D>::VisibleBounds() const
+{
+    Windows::Foundation::Rect value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView2)->get_VisibleBounds(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_ViewManagement_IApplicationView2<D>::VisibleBoundsChanged(Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView2)->add_VisibleBoundsChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::ViewManagement::IApplicationView2> consume_Windows_UI_ViewManagement_IApplicationView2<D>::VisibleBoundsChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::ViewManagement::IApplicationView2>(this, &abi_t<Windows::UI::ViewManagement::IApplicationView2>::remove_VisibleBoundsChanged, VisibleBoundsChanged(handler));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationView2<D>::VisibleBoundsChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView2)->remove_VisibleBoundsChanged(get_abi(token)));
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationView2<D>::SetDesiredBoundsMode(Windows::UI::ViewManagement::ApplicationViewBoundsMode const& boundsMode) const
+{
+    bool success{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView2)->SetDesiredBoundsMode(get_abi(boundsMode), &success));
+    return success;
+}
+
+template <typename D> Windows::UI::ViewManagement::ApplicationViewBoundsMode consume_Windows_UI_ViewManagement_IApplicationView2<D>::DesiredBoundsMode() const
+{
+    Windows::UI::ViewManagement::ApplicationViewBoundsMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView2)->get_DesiredBoundsMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::ViewManagement::ApplicationViewTitleBar consume_Windows_UI_ViewManagement_IApplicationView3<D>::TitleBar() const
+{
+    Windows::UI::ViewManagement::ApplicationViewTitleBar value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView3)->get_TitleBar(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::ViewManagement::FullScreenSystemOverlayMode consume_Windows_UI_ViewManagement_IApplicationView3<D>::FullScreenSystemOverlayMode() const
+{
+    Windows::UI::ViewManagement::FullScreenSystemOverlayMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView3)->get_FullScreenSystemOverlayMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationView3<D>::FullScreenSystemOverlayMode(Windows::UI::ViewManagement::FullScreenSystemOverlayMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView3)->put_FullScreenSystemOverlayMode(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationView3<D>::IsFullScreenMode() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView3)->get_IsFullScreenMode(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationView3<D>::TryEnterFullScreenMode() const
+{
+    bool success{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView3)->TryEnterFullScreenMode(&success));
+    return success;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationView3<D>::ExitFullScreenMode() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView3)->ExitFullScreenMode());
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationView3<D>::ShowStandardSystemOverlays() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView3)->ShowStandardSystemOverlays());
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationView3<D>::TryResizeView(Windows::Foundation::Size const& value) const
+{
+    bool success{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView3)->TryResizeView(get_abi(value), &success));
+    return success;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationView3<D>::SetPreferredMinSize(Windows::Foundation::Size const& minSize) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView3)->SetPreferredMinSize(get_abi(minSize)));
+}
+
+template <typename D> Windows::UI::ViewManagement::ApplicationViewMode consume_Windows_UI_ViewManagement_IApplicationView4<D>::ViewMode() const
+{
+    Windows::UI::ViewManagement::ApplicationViewMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView4)->get_ViewMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationView4<D>::IsViewModeSupported(Windows::UI::ViewManagement::ApplicationViewMode const& viewMode) const
+{
+    bool isViewModeSupported{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView4)->IsViewModeSupported(get_abi(viewMode), &isViewModeSupported));
+    return isViewModeSupported;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_UI_ViewManagement_IApplicationView4<D>::TryEnterViewModeAsync(Windows::UI::ViewManagement::ApplicationViewMode const& viewMode) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView4)->TryEnterViewModeAsync(get_abi(viewMode), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_UI_ViewManagement_IApplicationView4<D>::TryEnterViewModeAsync(Windows::UI::ViewManagement::ApplicationViewMode const& viewMode, Windows::UI::ViewManagement::ViewModePreferences const& viewModePreferences) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView4)->TryEnterViewModeWithPreferencesAsync(get_abi(viewMode), get_abi(viewModePreferences), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_UI_ViewManagement_IApplicationView4<D>::TryConsolidateAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationView4)->TryConsolidateAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationViewConsolidatedEventArgs<D>::IsUserInitiated() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs)->get_IsUserInitiated(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationViewConsolidatedEventArgs2<D>::IsAppInitiated() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs2)->get_IsAppInitiated(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationViewFullscreenStatics<D>::TryUnsnapToFullscreen() const
+{
+    bool success{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewFullscreenStatics)->TryUnsnapToFullscreen(&success));
+    return success;
+}
+
+template <typename D> int32_t consume_Windows_UI_ViewManagement_IApplicationViewInteropStatics<D>::GetApplicationViewIdForWindow(Windows::UI::Core::ICoreWindow const& window) const
+{
+    int32_t id{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewInteropStatics)->GetApplicationViewIdForWindow(get_abi(window), &id));
+    return id;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationViewScalingStatics<D>::DisableLayoutScaling() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewScalingStatics)->get_DisableLayoutScaling(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationViewScalingStatics<D>::TrySetDisableLayoutScaling(bool disableLayoutScaling) const
+{
+    bool success{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewScalingStatics)->TrySetDisableLayoutScaling(disableLayoutScaling, &success));
+    return success;
+}
+
+template <typename D> Windows::UI::ViewManagement::ApplicationViewState consume_Windows_UI_ViewManagement_IApplicationViewStatics<D>::Value() const
+{
+    Windows::UI::ViewManagement::ApplicationViewState value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewStatics)->get_Value(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationViewStatics<D>::TryUnsnap() const
+{
+    bool success{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewStatics)->TryUnsnap(&success));
+    return success;
+}
+
+template <typename D> Windows::UI::ViewManagement::ApplicationView consume_Windows_UI_ViewManagement_IApplicationViewStatics2<D>::GetForCurrentView() const
+{
+    Windows::UI::ViewManagement::ApplicationView current{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewStatics2)->GetForCurrentView(put_abi(current)));
+    return current;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IApplicationViewStatics2<D>::TerminateAppOnFinalViewClose() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewStatics2)->get_TerminateAppOnFinalViewClose(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewStatics2<D>::TerminateAppOnFinalViewClose(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewStatics2)->put_TerminateAppOnFinalViewClose(value));
+}
+
+template <typename D> Windows::UI::ViewManagement::ApplicationViewWindowingMode consume_Windows_UI_ViewManagement_IApplicationViewStatics3<D>::PreferredLaunchWindowingMode() const
+{
+    Windows::UI::ViewManagement::ApplicationViewWindowingMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewStatics3)->get_PreferredLaunchWindowingMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewStatics3<D>::PreferredLaunchWindowingMode(Windows::UI::ViewManagement::ApplicationViewWindowingMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewStatics3)->put_PreferredLaunchWindowingMode(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Size consume_Windows_UI_ViewManagement_IApplicationViewStatics3<D>::PreferredLaunchViewSize() const
+{
+    Windows::Foundation::Size value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewStatics3)->get_PreferredLaunchViewSize(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewStatics3<D>::PreferredLaunchViewSize(Windows::Foundation::Size const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewStatics3)->put_PreferredLaunchViewSize(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewSwitcherStatics<D>::DisableShowingMainViewOnActivation() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewSwitcherStatics)->DisableShowingMainViewOnActivation());
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_UI_ViewManagement_IApplicationViewSwitcherStatics<D>::TryShowAsStandaloneAsync(int32_t viewId) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewSwitcherStatics)->TryShowAsStandaloneAsync(viewId, put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_UI_ViewManagement_IApplicationViewSwitcherStatics<D>::TryShowAsStandaloneAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference const& sizePreference) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewSwitcherStatics)->TryShowAsStandaloneWithSizePreferenceAsync(viewId, get_abi(sizePreference), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_UI_ViewManagement_IApplicationViewSwitcherStatics<D>::TryShowAsStandaloneAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference const& sizePreference, int32_t anchorViewId, Windows::UI::ViewManagement::ViewSizePreference const& anchorSizePreference) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewSwitcherStatics)->TryShowAsStandaloneWithAnchorViewAndSizePreferenceAsync(viewId, get_abi(sizePreference), anchorViewId, get_abi(anchorSizePreference), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IApplicationViewSwitcherStatics<D>::SwitchAsync(int32_t viewId) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewSwitcherStatics)->SwitchAsync(viewId, put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IApplicationViewSwitcherStatics<D>::SwitchAsync(int32_t toViewId, int32_t fromViewId) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewSwitcherStatics)->SwitchFromViewAsync(toViewId, fromViewId, put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IApplicationViewSwitcherStatics<D>::SwitchAsync(int32_t toViewId, int32_t fromViewId, Windows::UI::ViewManagement::ApplicationViewSwitchingOptions const& options) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewSwitcherStatics)->SwitchFromViewWithOptionsAsync(toViewId, fromViewId, get_abi(options), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_UI_ViewManagement_IApplicationViewSwitcherStatics<D>::PrepareForCustomAnimatedSwitchAsync(int32_t toViewId, int32_t fromViewId, Windows::UI::ViewManagement::ApplicationViewSwitchingOptions const& options) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewSwitcherStatics)->PrepareForCustomAnimatedSwitchAsync(toViewId, fromViewId, get_abi(options), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewSwitcherStatics2<D>::DisableSystemViewActivationPolicy() const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewSwitcherStatics2)->DisableSystemViewActivationPolicy());
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_UI_ViewManagement_IApplicationViewSwitcherStatics3<D>::TryShowAsViewModeAsync(int32_t viewId, Windows::UI::ViewManagement::ApplicationViewMode const& viewMode) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3)->TryShowAsViewModeAsync(viewId, get_abi(viewMode), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_UI_ViewManagement_IApplicationViewSwitcherStatics3<D>::TryShowAsViewModeAsync(int32_t viewId, Windows::UI::ViewManagement::ApplicationViewMode const& viewMode, Windows::UI::ViewManagement::ViewModePreferences const& viewModePreferences) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3)->TryShowAsViewModeWithPreferencesAsync(viewId, get_abi(viewMode), get_abi(viewModePreferences), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ForegroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_ForegroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ForegroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_ForegroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::BackgroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_BackgroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::BackgroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_BackgroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonForegroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_ButtonForegroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonForegroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_ButtonForegroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonBackgroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_ButtonBackgroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonBackgroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_ButtonBackgroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonHoverForegroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_ButtonHoverForegroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonHoverForegroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_ButtonHoverForegroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonHoverBackgroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_ButtonHoverBackgroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonHoverBackgroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_ButtonHoverBackgroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonPressedForegroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_ButtonPressedForegroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonPressedForegroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_ButtonPressedForegroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonPressedBackgroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_ButtonPressedBackgroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonPressedBackgroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_ButtonPressedBackgroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::InactiveForegroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_InactiveForegroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::InactiveForegroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_InactiveForegroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::InactiveBackgroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_InactiveBackgroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::InactiveBackgroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_InactiveBackgroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonInactiveForegroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_ButtonInactiveForegroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonInactiveForegroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_ButtonInactiveForegroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonInactiveBackgroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->put_ButtonInactiveBackgroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IApplicationViewTitleBar<D>::ButtonInactiveBackgroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTitleBar)->get_ButtonInactiveBackgroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_UI_ViewManagement_IApplicationViewTransferContext<D>::ViewId() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTransferContext)->get_ViewId(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IApplicationViewTransferContext<D>::ViewId(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTransferContext)->put_ViewId(value));
+}
+
+template <typename D> hstring consume_Windows_UI_ViewManagement_IApplicationViewTransferContextStatics<D>::DataPackageFormatId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IApplicationViewTransferContextStatics)->get_DataPackageFormatId(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_ViewManagement_IInputPane<D>::Showing(Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPane)->add_Showing(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::ViewManagement::IInputPane> consume_Windows_UI_ViewManagement_IInputPane<D>::Showing(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::ViewManagement::IInputPane>(this, &abi_t<Windows::UI::ViewManagement::IInputPane>::remove_Showing, Showing(handler));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IInputPane<D>::Showing(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPane)->remove_Showing(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_UI_ViewManagement_IInputPane<D>::Hiding(Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPane)->add_Hiding(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::ViewManagement::IInputPane> consume_Windows_UI_ViewManagement_IInputPane<D>::Hiding(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::ViewManagement::IInputPane>(this, &abi_t<Windows::UI::ViewManagement::IInputPane>::remove_Hiding, Hiding(handler));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IInputPane<D>::Hiding(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPane)->remove_Hiding(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::Rect consume_Windows_UI_ViewManagement_IInputPane<D>::OccludedRect() const
+{
+    Windows::Foundation::Rect value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPane)->get_OccludedRect(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IInputPane2<D>::TryShow() const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPane2)->TryShow(&result));
+    return result;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IInputPane2<D>::TryHide() const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPane2)->TryHide(&result));
+    return result;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IInputPaneControl<D>::Visible() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPaneControl)->get_Visible(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IInputPaneControl<D>::Visible(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPaneControl)->put_Visible(value));
+}
+
+template <typename D> Windows::UI::ViewManagement::InputPane consume_Windows_UI_ViewManagement_IInputPaneStatics<D>::GetForCurrentView() const
+{
+    Windows::UI::ViewManagement::InputPane inputPane{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPaneStatics)->GetForCurrentView(put_abi(inputPane)));
+    return inputPane;
+}
+
+template <typename D> Windows::Foundation::Rect consume_Windows_UI_ViewManagement_IInputPaneVisibilityEventArgs<D>::OccludedRect() const
+{
+    Windows::Foundation::Rect value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPaneVisibilityEventArgs)->get_OccludedRect(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IInputPaneVisibilityEventArgs<D>::EnsuredFocusedElementInView(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPaneVisibilityEventArgs)->put_EnsuredFocusedElementInView(value));
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IInputPaneVisibilityEventArgs<D>::EnsuredFocusedElementInView() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IInputPaneVisibilityEventArgs)->get_EnsuredFocusedElementInView(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IProjectionManagerStatics<D>::StartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IProjectionManagerStatics)->StartProjectingAsync(projectionViewId, anchorViewId, put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IProjectionManagerStatics<D>::SwapDisplaysForViewsAsync(int32_t projectionViewId, int32_t anchorViewId) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IProjectionManagerStatics)->SwapDisplaysForViewsAsync(projectionViewId, anchorViewId, put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IProjectionManagerStatics<D>::StopProjectingAsync(int32_t projectionViewId, int32_t anchorViewId) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IProjectionManagerStatics)->StopProjectingAsync(projectionViewId, anchorViewId, put_abi(operation)));
+    return operation;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IProjectionManagerStatics<D>::ProjectionDisplayAvailable() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IProjectionManagerStatics)->get_ProjectionDisplayAvailable(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_ViewManagement_IProjectionManagerStatics<D>::ProjectionDisplayAvailableChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IProjectionManagerStatics)->add_ProjectionDisplayAvailableChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::ViewManagement::IProjectionManagerStatics> consume_Windows_UI_ViewManagement_IProjectionManagerStatics<D>::ProjectionDisplayAvailableChanged(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::ViewManagement::IProjectionManagerStatics>(this, &abi_t<Windows::UI::ViewManagement::IProjectionManagerStatics>::remove_ProjectionDisplayAvailableChanged, ProjectionDisplayAvailableChanged(handler));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IProjectionManagerStatics<D>::ProjectionDisplayAvailableChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IProjectionManagerStatics)->remove_ProjectionDisplayAvailableChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IProjectionManagerStatics2<D>::StartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, Windows::Devices::Enumeration::DeviceInformation const& displayDeviceInfo) const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IProjectionManagerStatics2)->StartProjectingWithDeviceInfoAsync(projectionViewId, anchorViewId, get_abi(displayDeviceInfo), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_UI_ViewManagement_IProjectionManagerStatics2<D>::RequestStartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, Windows::Foundation::Rect const& selection) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IProjectionManagerStatics2)->RequestStartProjectingAsync(projectionViewId, anchorViewId, get_abi(selection), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_UI_ViewManagement_IProjectionManagerStatics2<D>::RequestStartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, Windows::Foundation::Rect const& selection, Windows::UI::Popups::Placement const& prefferedPlacement) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IProjectionManagerStatics2)->RequestStartProjectingWithPlacementAsync(projectionViewId, anchorViewId, get_abi(selection), get_abi(prefferedPlacement), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> hstring consume_Windows_UI_ViewManagement_IProjectionManagerStatics2<D>::GetDeviceSelector() const
+{
+    hstring selector{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IProjectionManagerStatics2)->GetDeviceSelector(put_abi(selector)));
+    return selector;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IStatusBar<D>::ShowAsync() const
+{
+    Windows::Foundation::IAsyncAction returnValue{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->ShowAsync(put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IStatusBar<D>::HideAsync() const
+{
+    Windows::Foundation::IAsyncAction returnValue{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->HideAsync(put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> double consume_Windows_UI_ViewManagement_IStatusBar<D>::BackgroundOpacity() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->get_BackgroundOpacity(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IStatusBar<D>::BackgroundOpacity(double value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->put_BackgroundOpacity(value));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IStatusBar<D>::ForegroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->get_ForegroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IStatusBar<D>::ForegroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->put_ForegroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_UI_ViewManagement_IStatusBar<D>::BackgroundColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->get_BackgroundColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IStatusBar<D>::BackgroundColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->put_BackgroundColor(get_abi(value)));
+}
+
+template <typename D> Windows::UI::ViewManagement::StatusBarProgressIndicator consume_Windows_UI_ViewManagement_IStatusBar<D>::ProgressIndicator() const
+{
+    Windows::UI::ViewManagement::StatusBarProgressIndicator value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->get_ProgressIndicator(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Rect consume_Windows_UI_ViewManagement_IStatusBar<D>::OccludedRect() const
+{
+    Windows::Foundation::Rect value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->get_OccludedRect(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_ViewManagement_IStatusBar<D>::Showing(Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> const& eventHandler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->add_Showing(get_abi(eventHandler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::ViewManagement::IStatusBar> consume_Windows_UI_ViewManagement_IStatusBar<D>::Showing(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> const& eventHandler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::ViewManagement::IStatusBar>(this, &abi_t<Windows::UI::ViewManagement::IStatusBar>::remove_Showing, Showing(eventHandler));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IStatusBar<D>::Showing(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->remove_Showing(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_UI_ViewManagement_IStatusBar<D>::Hiding(Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> const& eventHandler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->add_Hiding(get_abi(eventHandler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::UI::ViewManagement::IStatusBar> consume_Windows_UI_ViewManagement_IStatusBar<D>::Hiding(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> const& eventHandler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::ViewManagement::IStatusBar>(this, &abi_t<Windows::UI::ViewManagement::IStatusBar>::remove_Hiding, Hiding(eventHandler));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IStatusBar<D>::Hiding(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBar)->remove_Hiding(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IStatusBarProgressIndicator<D>::ShowAsync() const
+{
+    Windows::Foundation::IAsyncAction returnValue{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBarProgressIndicator)->ShowAsync(put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_UI_ViewManagement_IStatusBarProgressIndicator<D>::HideAsync() const
+{
+    Windows::Foundation::IAsyncAction returnValue{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBarProgressIndicator)->HideAsync(put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> hstring consume_Windows_UI_ViewManagement_IStatusBarProgressIndicator<D>::Text() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBarProgressIndicator)->get_Text(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IStatusBarProgressIndicator<D>::Text(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBarProgressIndicator)->put_Text(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<double> consume_Windows_UI_ViewManagement_IStatusBarProgressIndicator<D>::ProgressValue() const
+{
+    Windows::Foundation::IReference<double> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBarProgressIndicator)->get_ProgressValue(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IStatusBarProgressIndicator<D>::ProgressValue(optional<double> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBarProgressIndicator)->put_ProgressValue(get_abi(value)));
+}
+
+template <typename D> Windows::UI::ViewManagement::StatusBar consume_Windows_UI_ViewManagement_IStatusBarStatics<D>::GetForCurrentView() const
+{
+    Windows::UI::ViewManagement::StatusBar value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IStatusBarStatics)->GetForCurrentView(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::ViewManagement::HandPreference consume_Windows_UI_ViewManagement_IUISettings<D>::HandPreference() const
+{
+    Windows::UI::ViewManagement::HandPreference value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_HandPreference(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Size consume_Windows_UI_ViewManagement_IUISettings<D>::CursorSize() const
+{
+    Windows::Foundation::Size value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_CursorSize(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Size consume_Windows_UI_ViewManagement_IUISettings<D>::ScrollBarSize() const
+{
+    Windows::Foundation::Size value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_ScrollBarSize(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Size consume_Windows_UI_ViewManagement_IUISettings<D>::ScrollBarArrowSize() const
+{
+    Windows::Foundation::Size value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_ScrollBarArrowSize(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Size consume_Windows_UI_ViewManagement_IUISettings<D>::ScrollBarThumbBoxSize() const
+{
+    Windows::Foundation::Size value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_ScrollBarThumbBoxSize(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_UI_ViewManagement_IUISettings<D>::MessageDuration() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_MessageDuration(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IUISettings<D>::AnimationsEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_AnimationsEnabled(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IUISettings<D>::CaretBrowsingEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_CaretBrowsingEnabled(&value));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_UI_ViewManagement_IUISettings<D>::CaretBlinkRate() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_CaretBlinkRate(&value));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_UI_ViewManagement_IUISettings<D>::CaretWidth() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_CaretWidth(&value));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_UI_ViewManagement_IUISettings<D>::DoubleClickTime() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_DoubleClickTime(&value));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_UI_ViewManagement_IUISettings<D>::MouseHoverTime() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->get_MouseHoverTime(&value));
+    return value;
+}
+
+template <typename D> Windows::UI::Color consume_Windows_UI_ViewManagement_IUISettings<D>::UIElementColor(Windows::UI::ViewManagement::UIElementType const& desiredElement) const
+{
+    Windows::UI::Color value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings)->UIElementColor(get_abi(desiredElement), put_abi(value)));
+    return value;
+}
+
+template <typename D> double consume_Windows_UI_ViewManagement_IUISettings2<D>::TextScaleFactor() const
+{
+    double value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings2)->get_TextScaleFactor(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_ViewManagement_IUISettings2<D>::TextScaleFactorChanged(Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token cookie{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings2)->add_TextScaleFactorChanged(get_abi(handler), put_abi(cookie)));
+    return cookie;
+}
+
+template <typename D> event_revoker<Windows::UI::ViewManagement::IUISettings2> consume_Windows_UI_ViewManagement_IUISettings2<D>::TextScaleFactorChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::ViewManagement::IUISettings2>(this, &abi_t<Windows::UI::ViewManagement::IUISettings2>::remove_TextScaleFactorChanged, TextScaleFactorChanged(handler));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IUISettings2<D>::TextScaleFactorChanged(event_token const& cookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings2)->remove_TextScaleFactorChanged(get_abi(cookie)));
+}
+
+template <typename D> Windows::UI::Color consume_Windows_UI_ViewManagement_IUISettings3<D>::GetColorValue(Windows::UI::ViewManagement::UIColorType const& desiredColor) const
+{
+    Windows::UI::Color value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings3)->GetColorValue(get_abi(desiredColor), put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_ViewManagement_IUISettings3<D>::ColorValuesChanged(Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token cookie{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings3)->add_ColorValuesChanged(get_abi(handler), put_abi(cookie)));
+    return cookie;
+}
+
+template <typename D> event_revoker<Windows::UI::ViewManagement::IUISettings3> consume_Windows_UI_ViewManagement_IUISettings3<D>::ColorValuesChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::ViewManagement::IUISettings3>(this, &abi_t<Windows::UI::ViewManagement::IUISettings3>::remove_ColorValuesChanged, ColorValuesChanged(handler));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IUISettings3<D>::ColorValuesChanged(event_token const& cookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings3)->remove_ColorValuesChanged(get_abi(cookie)));
+}
+
+template <typename D> bool consume_Windows_UI_ViewManagement_IUISettings4<D>::AdvancedEffectsEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings4)->get_AdvancedEffectsEnabled(&value));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_UI_ViewManagement_IUISettings4<D>::AdvancedEffectsEnabledChanged(Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token cookie{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings4)->add_AdvancedEffectsEnabledChanged(get_abi(handler), put_abi(cookie)));
+    return cookie;
+}
+
+template <typename D> event_revoker<Windows::UI::ViewManagement::IUISettings4> consume_Windows_UI_ViewManagement_IUISettings4<D>::AdvancedEffectsEnabledChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::UI::ViewManagement::IUISettings4>(this, &abi_t<Windows::UI::ViewManagement::IUISettings4>::remove_AdvancedEffectsEnabledChanged, AdvancedEffectsEnabledChanged(handler));
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IUISettings4<D>::AdvancedEffectsEnabledChanged(event_token const& cookie) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUISettings4)->remove_AdvancedEffectsEnabledChanged(get_abi(cookie)));
+}
+
+template <typename D> Windows::UI::ViewManagement::UserInteractionMode consume_Windows_UI_ViewManagement_IUIViewSettings<D>::UserInteractionMode() const
+{
+    Windows::UI::ViewManagement::UserInteractionMode value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUIViewSettings)->get_UserInteractionMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::UI::ViewManagement::UIViewSettings consume_Windows_UI_ViewManagement_IUIViewSettingsStatics<D>::GetForCurrentView() const
+{
+    Windows::UI::ViewManagement::UIViewSettings current{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IUIViewSettingsStatics)->GetForCurrentView(put_abi(current)));
+    return current;
+}
+
+template <typename D> Windows::UI::ViewManagement::ViewSizePreference consume_Windows_UI_ViewManagement_IViewModePreferences<D>::ViewSizePreference() const
+{
+    Windows::UI::ViewManagement::ViewSizePreference value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IViewModePreferences)->get_ViewSizePreference(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IViewModePreferences<D>::ViewSizePreference(Windows::UI::ViewManagement::ViewSizePreference const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IViewModePreferences)->put_ViewSizePreference(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Size consume_Windows_UI_ViewManagement_IViewModePreferences<D>::CustomSize() const
+{
+    Windows::Foundation::Size value{};
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IViewModePreferences)->get_CustomSize(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_UI_ViewManagement_IViewModePreferences<D>::CustomSize(Windows::Foundation::Size const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IViewModePreferences)->put_CustomSize(get_abi(value)));
+}
+
+template <typename D> Windows::UI::ViewManagement::ViewModePreferences consume_Windows_UI_ViewManagement_IViewModePreferencesStatics<D>::CreateDefault(Windows::UI::ViewManagement::ApplicationViewMode const& mode) const
+{
+    Windows::UI::ViewManagement::ViewModePreferences result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::UI::ViewManagement::IViewModePreferencesStatics)->CreateDefault(get_abi(mode), put_abi(result)));
+    return result;
+}
 
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IAccessibilitySettings> : produce_base<D, Windows::UI::ViewManagement::IAccessibilitySettings>
 {
-    HRESULT __stdcall get_HighContrast(bool * value) noexcept override
+    HRESULT __stdcall get_HighContrast(bool* value) noexcept override
     {
         try
         {
@@ -35,7 +1161,7 @@ struct produce<D, Windows::UI::ViewManagement::IAccessibilitySettings> : produce
         }
     }
 
-    HRESULT __stdcall get_HighContrastScheme(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HighContrastScheme(HSTRING* value) noexcept override
     {
         try
         {
@@ -50,12 +1176,12 @@ struct produce<D, Windows::UI::ViewManagement::IAccessibilitySettings> : produce
         }
     }
 
-    HRESULT __stdcall add_HighContrastChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::AccessibilitySettings, Windows::Foundation::IInspectable>> handler, event_token * cookie) noexcept override
+    HRESULT __stdcall add_HighContrastChanged(::IUnknown* handler, abi_t<event_token>* cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *cookie = detach_abi(this->shim().HighContrastChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::AccessibilitySettings, Windows::Foundation::IInspectable> *>(&handler)));
+            *cookie = detach_abi(this->shim().HighContrastChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::AccessibilitySettings, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -64,12 +1190,12 @@ struct produce<D, Windows::UI::ViewManagement::IAccessibilitySettings> : produce
         }
     }
 
-    HRESULT __stdcall remove_HighContrastChanged(event_token cookie) noexcept override
+    HRESULT __stdcall remove_HighContrastChanged(abi_t<event_token> cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().HighContrastChanged(cookie);
+            this->shim().HighContrastChanged(*reinterpret_cast<event_token const*>(&cookie));
             return S_OK;
         }
         catch (...)
@@ -82,7 +1208,7 @@ struct produce<D, Windows::UI::ViewManagement::IAccessibilitySettings> : produce
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IActivationViewSwitcher> : produce_base<D, Windows::UI::ViewManagement::IActivationViewSwitcher>
 {
-    HRESULT __stdcall abi_ShowAsStandaloneAsync(int32_t viewId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall ShowAsStandaloneAsync(int32_t viewId, ::IUnknown** operation) noexcept override
     {
         try
         {
@@ -97,12 +1223,12 @@ struct produce<D, Windows::UI::ViewManagement::IActivationViewSwitcher> : produc
         }
     }
 
-    HRESULT __stdcall abi_ShowAsStandaloneWithSizePreferenceAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference sizePreference, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall ShowAsStandaloneWithSizePreferenceAsync(int32_t viewId, abi_t<Windows::UI::ViewManagement::ViewSizePreference> sizePreference, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().ShowAsStandaloneAsync(viewId, sizePreference));
+            *operation = detach_abi(this->shim().ShowAsStandaloneAsync(viewId, *reinterpret_cast<Windows::UI::ViewManagement::ViewSizePreference const*>(&sizePreference)));
             return S_OK;
         }
         catch (...)
@@ -112,7 +1238,7 @@ struct produce<D, Windows::UI::ViewManagement::IActivationViewSwitcher> : produc
         }
     }
 
-    HRESULT __stdcall abi_IsViewPresentedOnActivationVirtualDesktop(int32_t viewId, bool * value) noexcept override
+    HRESULT __stdcall IsViewPresentedOnActivationVirtualDesktop(int32_t viewId, bool* value) noexcept override
     {
         try
         {
@@ -130,7 +1256,7 @@ struct produce<D, Windows::UI::ViewManagement::IActivationViewSwitcher> : produc
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<D, Windows::UI::ViewManagement::IApplicationView>
 {
-    HRESULT __stdcall get_Orientation(Windows::UI::ViewManagement::ApplicationViewOrientation * value) noexcept override
+    HRESULT __stdcall get_Orientation(abi_t<Windows::UI::ViewManagement::ApplicationViewOrientation>* value) noexcept override
     {
         try
         {
@@ -144,7 +1270,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_AdjacentToLeftDisplayEdge(bool * value) noexcept override
+    HRESULT __stdcall get_AdjacentToLeftDisplayEdge(bool* value) noexcept override
     {
         try
         {
@@ -158,7 +1284,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_AdjacentToRightDisplayEdge(bool * value) noexcept override
+    HRESULT __stdcall get_AdjacentToRightDisplayEdge(bool* value) noexcept override
     {
         try
         {
@@ -172,7 +1298,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_IsFullScreen(bool * value) noexcept override
+    HRESULT __stdcall get_IsFullScreen(bool* value) noexcept override
     {
         try
         {
@@ -186,7 +1312,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_IsOnLockScreen(bool * value) noexcept override
+    HRESULT __stdcall get_IsOnLockScreen(bool* value) noexcept override
     {
         try
         {
@@ -200,7 +1326,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_IsScreenCaptureEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_IsScreenCaptureEnabled(bool* value) noexcept override
     {
         try
         {
@@ -228,12 +1354,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<
         }
     }
 
-    HRESULT __stdcall put_Title(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Title(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Title(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Title(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -242,7 +1368,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_Title(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Title(HSTRING* value) noexcept override
     {
         try
         {
@@ -257,7 +1383,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_Id(int32_t * value) noexcept override
+    HRESULT __stdcall get_Id(int32_t* value) noexcept override
     {
         try
         {
@@ -271,12 +1397,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<
         }
     }
 
-    HRESULT __stdcall add_Consolidated(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Consolidated(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Consolidated(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().Consolidated(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -285,12 +1411,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<
         }
     }
 
-    HRESULT __stdcall remove_Consolidated(event_token token) noexcept override
+    HRESULT __stdcall remove_Consolidated(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Consolidated(token);
+            this->shim().Consolidated(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -303,7 +1429,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView> : produce_base<
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationView2> : produce_base<D, Windows::UI::ViewManagement::IApplicationView2>
 {
-    HRESULT __stdcall get_SuppressSystemOverlays(bool * value) noexcept override
+    HRESULT __stdcall get_SuppressSystemOverlays(bool* value) noexcept override
     {
         try
         {
@@ -331,7 +1457,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_VisibleBounds(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_VisibleBounds(abi_t<Windows::Foundation::Rect>* value) noexcept override
     {
         try
         {
@@ -345,12 +1471,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView2> : produce_base
         }
     }
 
-    HRESULT __stdcall add_VisibleBoundsChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_VisibleBoundsChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().VisibleBoundsChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().VisibleBoundsChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -359,12 +1485,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView2> : produce_base
         }
     }
 
-    HRESULT __stdcall remove_VisibleBoundsChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_VisibleBoundsChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().VisibleBoundsChanged(token);
+            this->shim().VisibleBoundsChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -373,12 +1499,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView2> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_SetDesiredBoundsMode(Windows::UI::ViewManagement::ApplicationViewBoundsMode boundsMode, bool * success) noexcept override
+    HRESULT __stdcall SetDesiredBoundsMode(abi_t<Windows::UI::ViewManagement::ApplicationViewBoundsMode> boundsMode, bool* success) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *success = detach_abi(this->shim().SetDesiredBoundsMode(boundsMode));
+            *success = detach_abi(this->shim().SetDesiredBoundsMode(*reinterpret_cast<Windows::UI::ViewManagement::ApplicationViewBoundsMode const*>(&boundsMode)));
             return S_OK;
         }
         catch (...)
@@ -387,7 +1513,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_DesiredBoundsMode(Windows::UI::ViewManagement::ApplicationViewBoundsMode * value) noexcept override
+    HRESULT __stdcall get_DesiredBoundsMode(abi_t<Windows::UI::ViewManagement::ApplicationViewBoundsMode>* value) noexcept override
     {
         try
         {
@@ -405,7 +1531,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView2> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationView3> : produce_base<D, Windows::UI::ViewManagement::IApplicationView3>
 {
-    HRESULT __stdcall get_TitleBar(impl::abi_arg_out<Windows::UI::ViewManagement::IApplicationViewTitleBar> value) noexcept override
+    HRESULT __stdcall get_TitleBar(::IUnknown** value) noexcept override
     {
         try
         {
@@ -420,7 +1546,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_FullScreenSystemOverlayMode(Windows::UI::ViewManagement::FullScreenSystemOverlayMode * value) noexcept override
+    HRESULT __stdcall get_FullScreenSystemOverlayMode(abi_t<Windows::UI::ViewManagement::FullScreenSystemOverlayMode>* value) noexcept override
     {
         try
         {
@@ -434,12 +1560,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView3> : produce_base
         }
     }
 
-    HRESULT __stdcall put_FullScreenSystemOverlayMode(Windows::UI::ViewManagement::FullScreenSystemOverlayMode value) noexcept override
+    HRESULT __stdcall put_FullScreenSystemOverlayMode(abi_t<Windows::UI::ViewManagement::FullScreenSystemOverlayMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().FullScreenSystemOverlayMode(value);
+            this->shim().FullScreenSystemOverlayMode(*reinterpret_cast<Windows::UI::ViewManagement::FullScreenSystemOverlayMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -448,7 +1574,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_IsFullScreenMode(bool * value) noexcept override
+    HRESULT __stdcall get_IsFullScreenMode(bool* value) noexcept override
     {
         try
         {
@@ -462,7 +1588,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView3> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_TryEnterFullScreenMode(bool * success) noexcept override
+    HRESULT __stdcall TryEnterFullScreenMode(bool* success) noexcept override
     {
         try
         {
@@ -476,7 +1602,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView3> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_ExitFullScreenMode() noexcept override
+    HRESULT __stdcall ExitFullScreenMode() noexcept override
     {
         try
         {
@@ -490,7 +1616,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView3> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_ShowStandardSystemOverlays() noexcept override
+    HRESULT __stdcall ShowStandardSystemOverlays() noexcept override
     {
         try
         {
@@ -504,12 +1630,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView3> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_TryResizeView(impl::abi_arg_in<Windows::Foundation::Size> value, bool * success) noexcept override
+    HRESULT __stdcall TryResizeView(abi_t<Windows::Foundation::Size> value, bool* success) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *success = detach_abi(this->shim().TryResizeView(*reinterpret_cast<const Windows::Foundation::Size *>(&value)));
+            *success = detach_abi(this->shim().TryResizeView(*reinterpret_cast<Windows::Foundation::Size const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -518,12 +1644,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView3> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_SetPreferredMinSize(impl::abi_arg_in<Windows::Foundation::Size> minSize) noexcept override
+    HRESULT __stdcall SetPreferredMinSize(abi_t<Windows::Foundation::Size> minSize) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SetPreferredMinSize(*reinterpret_cast<const Windows::Foundation::Size *>(&minSize));
+            this->shim().SetPreferredMinSize(*reinterpret_cast<Windows::Foundation::Size const*>(&minSize));
             return S_OK;
         }
         catch (...)
@@ -536,7 +1662,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView3> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationView4> : produce_base<D, Windows::UI::ViewManagement::IApplicationView4>
 {
-    HRESULT __stdcall get_ViewMode(Windows::UI::ViewManagement::ApplicationViewMode * value) noexcept override
+    HRESULT __stdcall get_ViewMode(abi_t<Windows::UI::ViewManagement::ApplicationViewMode>* value) noexcept override
     {
         try
         {
@@ -550,12 +1676,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView4> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_IsViewModeSupported(Windows::UI::ViewManagement::ApplicationViewMode viewMode, bool * isViewModeSupported) noexcept override
+    HRESULT __stdcall IsViewModeSupported(abi_t<Windows::UI::ViewManagement::ApplicationViewMode> viewMode, bool* isViewModeSupported) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *isViewModeSupported = detach_abi(this->shim().IsViewModeSupported(viewMode));
+            *isViewModeSupported = detach_abi(this->shim().IsViewModeSupported(*reinterpret_cast<Windows::UI::ViewManagement::ApplicationViewMode const*>(&viewMode)));
             return S_OK;
         }
         catch (...)
@@ -564,27 +1690,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView4> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_TryEnterViewModeAsync(Windows::UI::ViewManagement::ApplicationViewMode viewMode, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall TryEnterViewModeAsync(abi_t<Windows::UI::ViewManagement::ApplicationViewMode> viewMode, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().TryEnterViewModeAsync(viewMode));
-            return S_OK;
-        }
-        catch (...)
-        {
-            *operation = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall abi_TryEnterViewModeWithPreferencesAsync(Windows::UI::ViewManagement::ApplicationViewMode viewMode, impl::abi_arg_in<Windows::UI::ViewManagement::IViewModePreferences> viewModePreferences, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
-    {
-        try
-        {
-            typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().TryEnterViewModeAsync(viewMode, *reinterpret_cast<const Windows::UI::ViewManagement::ViewModePreferences *>(&viewModePreferences)));
+            *operation = detach_abi(this->shim().TryEnterViewModeAsync(*reinterpret_cast<Windows::UI::ViewManagement::ApplicationViewMode const*>(&viewMode)));
             return S_OK;
         }
         catch (...)
@@ -594,7 +1705,22 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView4> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_TryConsolidateAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall TryEnterViewModeWithPreferencesAsync(abi_t<Windows::UI::ViewManagement::ApplicationViewMode> viewMode, ::IUnknown* viewModePreferences, ::IUnknown** operation) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *operation = detach_abi(this->shim().TryEnterViewModeAsync(*reinterpret_cast<Windows::UI::ViewManagement::ApplicationViewMode const*>(&viewMode), *reinterpret_cast<Windows::UI::ViewManagement::ViewModePreferences const*>(&viewModePreferences)));
+            return S_OK;
+        }
+        catch (...)
+        {
+            *operation = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall TryConsolidateAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -613,7 +1739,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationView4> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs>
 {
-    HRESULT __stdcall get_IsUserInitiated(bool * value) noexcept override
+    HRESULT __stdcall get_IsUserInitiated(bool* value) noexcept override
     {
         try
         {
@@ -631,7 +1757,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewConsolidatedEvent
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs2> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs2>
 {
-    HRESULT __stdcall get_IsAppInitiated(bool * value) noexcept override
+    HRESULT __stdcall get_IsAppInitiated(bool* value) noexcept override
     {
         try
         {
@@ -649,7 +1775,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewConsolidatedEvent
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewFullscreenStatics> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewFullscreenStatics>
 {
-    HRESULT __stdcall abi_TryUnsnapToFullscreen(bool * success) noexcept override
+    HRESULT __stdcall TryUnsnapToFullscreen(bool* success) noexcept override
     {
         try
         {
@@ -667,12 +1793,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewFullscreenStatics
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewInteropStatics> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewInteropStatics>
 {
-    HRESULT __stdcall abi_GetApplicationViewIdForWindow(impl::abi_arg_in<Windows::UI::Core::ICoreWindow> window, int32_t * id) noexcept override
+    HRESULT __stdcall GetApplicationViewIdForWindow(::IUnknown* window, int32_t* id) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *id = detach_abi(this->shim().GetApplicationViewIdForWindow(*reinterpret_cast<const Windows::UI::Core::ICoreWindow *>(&window)));
+            *id = detach_abi(this->shim().GetApplicationViewIdForWindow(*reinterpret_cast<Windows::UI::Core::ICoreWindow const*>(&window)));
             return S_OK;
         }
         catch (...)
@@ -689,7 +1815,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewScaling> : produc
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewScalingStatics> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewScalingStatics>
 {
-    HRESULT __stdcall get_DisableLayoutScaling(bool * value) noexcept override
+    HRESULT __stdcall get_DisableLayoutScaling(bool* value) noexcept override
     {
         try
         {
@@ -703,7 +1829,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewScalingStatics> :
         }
     }
 
-    HRESULT __stdcall abi_TrySetDisableLayoutScaling(bool disableLayoutScaling, bool * success) noexcept override
+    HRESULT __stdcall TrySetDisableLayoutScaling(bool disableLayoutScaling, bool* success) noexcept override
     {
         try
         {
@@ -721,7 +1847,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewScalingStatics> :
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewStatics> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewStatics>
 {
-    HRESULT __stdcall get_Value(Windows::UI::ViewManagement::ApplicationViewState * value) noexcept override
+    HRESULT __stdcall get_Value(abi_t<Windows::UI::ViewManagement::ApplicationViewState>* value) noexcept override
     {
         try
         {
@@ -735,7 +1861,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewStatics> : produc
         }
     }
 
-    HRESULT __stdcall abi_TryUnsnap(bool * success) noexcept override
+    HRESULT __stdcall TryUnsnap(bool* success) noexcept override
     {
         try
         {
@@ -753,7 +1879,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewStatics> : produc
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewStatics2> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewStatics2>
 {
-    HRESULT __stdcall abi_GetForCurrentView(impl::abi_arg_out<Windows::UI::ViewManagement::IApplicationView> current) noexcept override
+    HRESULT __stdcall GetForCurrentView(::IUnknown** current) noexcept override
     {
         try
         {
@@ -768,7 +1894,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewStatics2> : produ
         }
     }
 
-    HRESULT __stdcall get_TerminateAppOnFinalViewClose(bool * value) noexcept override
+    HRESULT __stdcall get_TerminateAppOnFinalViewClose(bool* value) noexcept override
     {
         try
         {
@@ -800,7 +1926,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewStatics2> : produ
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewStatics3> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewStatics3>
 {
-    HRESULT __stdcall get_PreferredLaunchWindowingMode(Windows::UI::ViewManagement::ApplicationViewWindowingMode * value) noexcept override
+    HRESULT __stdcall get_PreferredLaunchWindowingMode(abi_t<Windows::UI::ViewManagement::ApplicationViewWindowingMode>* value) noexcept override
     {
         try
         {
@@ -814,12 +1940,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewStatics3> : produ
         }
     }
 
-    HRESULT __stdcall put_PreferredLaunchWindowingMode(Windows::UI::ViewManagement::ApplicationViewWindowingMode value) noexcept override
+    HRESULT __stdcall put_PreferredLaunchWindowingMode(abi_t<Windows::UI::ViewManagement::ApplicationViewWindowingMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PreferredLaunchWindowingMode(value);
+            this->shim().PreferredLaunchWindowingMode(*reinterpret_cast<Windows::UI::ViewManagement::ApplicationViewWindowingMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -828,7 +1954,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewStatics3> : produ
         }
     }
 
-    HRESULT __stdcall get_PreferredLaunchViewSize(impl::abi_arg_out<Windows::Foundation::Size> value) noexcept override
+    HRESULT __stdcall get_PreferredLaunchViewSize(abi_t<Windows::Foundation::Size>* value) noexcept override
     {
         try
         {
@@ -842,12 +1968,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewStatics3> : produ
         }
     }
 
-    HRESULT __stdcall put_PreferredLaunchViewSize(impl::abi_arg_in<Windows::Foundation::Size> value) noexcept override
+    HRESULT __stdcall put_PreferredLaunchViewSize(abi_t<Windows::Foundation::Size> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PreferredLaunchViewSize(*reinterpret_cast<const Windows::Foundation::Size *>(&value));
+            this->shim().PreferredLaunchViewSize(*reinterpret_cast<Windows::Foundation::Size const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -860,7 +1986,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewStatics3> : produ
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics>
 {
-    HRESULT __stdcall abi_DisableShowingMainViewOnActivation() noexcept override
+    HRESULT __stdcall DisableShowingMainViewOnActivation() noexcept override
     {
         try
         {
@@ -874,7 +2000,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics> 
         }
     }
 
-    HRESULT __stdcall abi_TryShowAsStandaloneAsync(int32_t viewId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall TryShowAsStandaloneAsync(int32_t viewId, ::IUnknown** operation) noexcept override
     {
         try
         {
@@ -889,12 +2015,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics> 
         }
     }
 
-    HRESULT __stdcall abi_TryShowAsStandaloneWithSizePreferenceAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference sizePreference, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall TryShowAsStandaloneWithSizePreferenceAsync(int32_t viewId, abi_t<Windows::UI::ViewManagement::ViewSizePreference> sizePreference, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().TryShowAsStandaloneAsync(viewId, sizePreference));
+            *operation = detach_abi(this->shim().TryShowAsStandaloneAsync(viewId, *reinterpret_cast<Windows::UI::ViewManagement::ViewSizePreference const*>(&sizePreference)));
             return S_OK;
         }
         catch (...)
@@ -904,12 +2030,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics> 
         }
     }
 
-    HRESULT __stdcall abi_TryShowAsStandaloneWithAnchorViewAndSizePreferenceAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference sizePreference, int32_t anchorViewId, Windows::UI::ViewManagement::ViewSizePreference anchorSizePreference, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall TryShowAsStandaloneWithAnchorViewAndSizePreferenceAsync(int32_t viewId, abi_t<Windows::UI::ViewManagement::ViewSizePreference> sizePreference, int32_t anchorViewId, abi_t<Windows::UI::ViewManagement::ViewSizePreference> anchorSizePreference, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().TryShowAsStandaloneAsync(viewId, sizePreference, anchorViewId, anchorSizePreference));
+            *operation = detach_abi(this->shim().TryShowAsStandaloneAsync(viewId, *reinterpret_cast<Windows::UI::ViewManagement::ViewSizePreference const*>(&sizePreference), anchorViewId, *reinterpret_cast<Windows::UI::ViewManagement::ViewSizePreference const*>(&anchorSizePreference)));
             return S_OK;
         }
         catch (...)
@@ -919,7 +2045,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics> 
         }
     }
 
-    HRESULT __stdcall abi_SwitchAsync(int32_t viewId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall SwitchAsync(int32_t viewId, ::IUnknown** operation) noexcept override
     {
         try
         {
@@ -934,7 +2060,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics> 
         }
     }
 
-    HRESULT __stdcall abi_SwitchFromViewAsync(int32_t toViewId, int32_t fromViewId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall SwitchFromViewAsync(int32_t toViewId, int32_t fromViewId, ::IUnknown** operation) noexcept override
     {
         try
         {
@@ -949,12 +2075,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics> 
         }
     }
 
-    HRESULT __stdcall abi_SwitchFromViewWithOptionsAsync(int32_t toViewId, int32_t fromViewId, Windows::UI::ViewManagement::ApplicationViewSwitchingOptions options, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall SwitchFromViewWithOptionsAsync(int32_t toViewId, int32_t fromViewId, abi_t<Windows::UI::ViewManagement::ApplicationViewSwitchingOptions> options, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().SwitchAsync(toViewId, fromViewId, options));
+            *operation = detach_abi(this->shim().SwitchAsync(toViewId, fromViewId, *reinterpret_cast<Windows::UI::ViewManagement::ApplicationViewSwitchingOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -964,12 +2090,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics> 
         }
     }
 
-    HRESULT __stdcall abi_PrepareForCustomAnimatedSwitchAsync(int32_t toViewId, int32_t fromViewId, Windows::UI::ViewManagement::ApplicationViewSwitchingOptions options, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall PrepareForCustomAnimatedSwitchAsync(int32_t toViewId, int32_t fromViewId, abi_t<Windows::UI::ViewManagement::ApplicationViewSwitchingOptions> options, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().PrepareForCustomAnimatedSwitchAsync(toViewId, fromViewId, options));
+            *operation = detach_abi(this->shim().PrepareForCustomAnimatedSwitchAsync(toViewId, fromViewId, *reinterpret_cast<Windows::UI::ViewManagement::ApplicationViewSwitchingOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -983,7 +2109,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics> 
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics2> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics2>
 {
-    HRESULT __stdcall abi_DisableSystemViewActivationPolicy() noexcept override
+    HRESULT __stdcall DisableSystemViewActivationPolicy() noexcept override
     {
         try
         {
@@ -1001,12 +2127,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics2>
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3>
 {
-    HRESULT __stdcall abi_TryShowAsViewModeAsync(int32_t viewId, Windows::UI::ViewManagement::ApplicationViewMode viewMode, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall TryShowAsViewModeAsync(int32_t viewId, abi_t<Windows::UI::ViewManagement::ApplicationViewMode> viewMode, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().TryShowAsViewModeAsync(viewId, viewMode));
+            *operation = detach_abi(this->shim().TryShowAsViewModeAsync(viewId, *reinterpret_cast<Windows::UI::ViewManagement::ApplicationViewMode const*>(&viewMode)));
             return S_OK;
         }
         catch (...)
@@ -1016,12 +2142,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3>
         }
     }
 
-    HRESULT __stdcall abi_TryShowAsViewModeWithPreferencesAsync(int32_t viewId, Windows::UI::ViewManagement::ApplicationViewMode viewMode, impl::abi_arg_in<Windows::UI::ViewManagement::IViewModePreferences> viewModePreferences, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall TryShowAsViewModeWithPreferencesAsync(int32_t viewId, abi_t<Windows::UI::ViewManagement::ApplicationViewMode> viewMode, ::IUnknown* viewModePreferences, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().TryShowAsViewModeAsync(viewId, viewMode, *reinterpret_cast<const Windows::UI::ViewManagement::ViewModePreferences *>(&viewModePreferences)));
+            *operation = detach_abi(this->shim().TryShowAsViewModeAsync(viewId, *reinterpret_cast<Windows::UI::ViewManagement::ApplicationViewMode const*>(&viewMode), *reinterpret_cast<Windows::UI::ViewManagement::ViewModePreferences const*>(&viewModePreferences)));
             return S_OK;
         }
         catch (...)
@@ -1035,12 +2161,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3>
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewTitleBar>
 {
-    HRESULT __stdcall put_ForegroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_ForegroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ForegroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().ForegroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1049,7 +2175,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_ForegroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_ForegroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1064,12 +2190,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall put_BackgroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_BackgroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().BackgroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().BackgroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1078,7 +2204,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_BackgroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_BackgroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1093,12 +2219,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall put_ButtonForegroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_ButtonForegroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ButtonForegroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().ButtonForegroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1107,7 +2233,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_ButtonForegroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_ButtonForegroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1122,12 +2248,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall put_ButtonBackgroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_ButtonBackgroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ButtonBackgroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().ButtonBackgroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1136,7 +2262,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_ButtonBackgroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_ButtonBackgroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1151,12 +2277,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall put_ButtonHoverForegroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_ButtonHoverForegroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ButtonHoverForegroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().ButtonHoverForegroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1165,7 +2291,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_ButtonHoverForegroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_ButtonHoverForegroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1180,12 +2306,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall put_ButtonHoverBackgroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_ButtonHoverBackgroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ButtonHoverBackgroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().ButtonHoverBackgroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1194,7 +2320,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_ButtonHoverBackgroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_ButtonHoverBackgroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1209,12 +2335,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall put_ButtonPressedForegroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_ButtonPressedForegroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ButtonPressedForegroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().ButtonPressedForegroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1223,7 +2349,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_ButtonPressedForegroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_ButtonPressedForegroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1238,12 +2364,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall put_ButtonPressedBackgroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_ButtonPressedBackgroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ButtonPressedBackgroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().ButtonPressedBackgroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1252,7 +2378,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_ButtonPressedBackgroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_ButtonPressedBackgroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1267,12 +2393,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall put_InactiveForegroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_InactiveForegroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().InactiveForegroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().InactiveForegroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1281,7 +2407,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_InactiveForegroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_InactiveForegroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1296,12 +2422,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall put_InactiveBackgroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_InactiveBackgroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().InactiveBackgroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().InactiveBackgroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1310,7 +2436,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_InactiveBackgroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_InactiveBackgroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1325,12 +2451,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall put_ButtonInactiveForegroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_ButtonInactiveForegroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ButtonInactiveForegroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().ButtonInactiveForegroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1339,7 +2465,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_ButtonInactiveForegroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_ButtonInactiveForegroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1354,12 +2480,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall put_ButtonInactiveBackgroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_ButtonInactiveBackgroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ButtonInactiveBackgroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().ButtonInactiveBackgroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1368,7 +2494,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
         }
     }
 
-    HRESULT __stdcall get_ButtonInactiveBackgroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_ButtonInactiveBackgroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1387,7 +2513,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTitleBar> : produ
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewTransferContext> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewTransferContext>
 {
-    HRESULT __stdcall get_ViewId(int32_t * value) noexcept override
+    HRESULT __stdcall get_ViewId(int32_t* value) noexcept override
     {
         try
         {
@@ -1419,7 +2545,7 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTransferContext> 
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IApplicationViewTransferContextStatics> : produce_base<D, Windows::UI::ViewManagement::IApplicationViewTransferContextStatics>
 {
-    HRESULT __stdcall get_DataPackageFormatId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DataPackageFormatId(HSTRING* value) noexcept override
     {
         try
         {
@@ -1438,12 +2564,12 @@ struct produce<D, Windows::UI::ViewManagement::IApplicationViewTransferContextSt
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IInputPane> : produce_base<D, Windows::UI::ViewManagement::IInputPane>
 {
-    HRESULT __stdcall add_Showing(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Showing(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Showing(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().Showing(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1452,12 +2578,12 @@ struct produce<D, Windows::UI::ViewManagement::IInputPane> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall remove_Showing(event_token token) noexcept override
+    HRESULT __stdcall remove_Showing(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Showing(token);
+            this->shim().Showing(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1466,12 +2592,12 @@ struct produce<D, Windows::UI::ViewManagement::IInputPane> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall add_Hiding(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Hiding(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Hiding(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().Hiding(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1480,12 +2606,12 @@ struct produce<D, Windows::UI::ViewManagement::IInputPane> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall remove_Hiding(event_token token) noexcept override
+    HRESULT __stdcall remove_Hiding(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Hiding(token);
+            this->shim().Hiding(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1494,7 +2620,7 @@ struct produce<D, Windows::UI::ViewManagement::IInputPane> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_OccludedRect(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_OccludedRect(abi_t<Windows::Foundation::Rect>* value) noexcept override
     {
         try
         {
@@ -1512,7 +2638,7 @@ struct produce<D, Windows::UI::ViewManagement::IInputPane> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IInputPane2> : produce_base<D, Windows::UI::ViewManagement::IInputPane2>
 {
-    HRESULT __stdcall abi_TryShow(bool * result) noexcept override
+    HRESULT __stdcall TryShow(bool* result) noexcept override
     {
         try
         {
@@ -1526,7 +2652,7 @@ struct produce<D, Windows::UI::ViewManagement::IInputPane2> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_TryHide(bool * result) noexcept override
+    HRESULT __stdcall TryHide(bool* result) noexcept override
     {
         try
         {
@@ -1544,7 +2670,7 @@ struct produce<D, Windows::UI::ViewManagement::IInputPane2> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IInputPaneControl> : produce_base<D, Windows::UI::ViewManagement::IInputPaneControl>
 {
-    HRESULT __stdcall get_Visible(bool * value) noexcept override
+    HRESULT __stdcall get_Visible(bool* value) noexcept override
     {
         try
         {
@@ -1576,7 +2702,7 @@ struct produce<D, Windows::UI::ViewManagement::IInputPaneControl> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IInputPaneStatics> : produce_base<D, Windows::UI::ViewManagement::IInputPaneStatics>
 {
-    HRESULT __stdcall abi_GetForCurrentView(impl::abi_arg_out<Windows::UI::ViewManagement::IInputPane> inputPane) noexcept override
+    HRESULT __stdcall GetForCurrentView(::IUnknown** inputPane) noexcept override
     {
         try
         {
@@ -1595,7 +2721,7 @@ struct produce<D, Windows::UI::ViewManagement::IInputPaneStatics> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IInputPaneVisibilityEventArgs> : produce_base<D, Windows::UI::ViewManagement::IInputPaneVisibilityEventArgs>
 {
-    HRESULT __stdcall get_OccludedRect(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_OccludedRect(abi_t<Windows::Foundation::Rect>* value) noexcept override
     {
         try
         {
@@ -1623,7 +2749,7 @@ struct produce<D, Windows::UI::ViewManagement::IInputPaneVisibilityEventArgs> : 
         }
     }
 
-    HRESULT __stdcall get_EnsuredFocusedElementInView(bool * value) noexcept override
+    HRESULT __stdcall get_EnsuredFocusedElementInView(bool* value) noexcept override
     {
         try
         {
@@ -1641,7 +2767,7 @@ struct produce<D, Windows::UI::ViewManagement::IInputPaneVisibilityEventArgs> : 
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics> : produce_base<D, Windows::UI::ViewManagement::IProjectionManagerStatics>
 {
-    HRESULT __stdcall abi_StartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall StartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, ::IUnknown** operation) noexcept override
     {
         try
         {
@@ -1656,7 +2782,7 @@ struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics> : prod
         }
     }
 
-    HRESULT __stdcall abi_SwapDisplaysForViewsAsync(int32_t projectionViewId, int32_t anchorViewId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall SwapDisplaysForViewsAsync(int32_t projectionViewId, int32_t anchorViewId, ::IUnknown** operation) noexcept override
     {
         try
         {
@@ -1671,7 +2797,7 @@ struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics> : prod
         }
     }
 
-    HRESULT __stdcall abi_StopProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall StopProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, ::IUnknown** operation) noexcept override
     {
         try
         {
@@ -1686,7 +2812,7 @@ struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics> : prod
         }
     }
 
-    HRESULT __stdcall get_ProjectionDisplayAvailable(bool * value) noexcept override
+    HRESULT __stdcall get_ProjectionDisplayAvailable(bool* value) noexcept override
     {
         try
         {
@@ -1700,12 +2826,12 @@ struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics> : prod
         }
     }
 
-    HRESULT __stdcall add_ProjectionDisplayAvailableChanged(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_ProjectionDisplayAvailableChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().ProjectionDisplayAvailableChanged(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().ProjectionDisplayAvailableChanged(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -1714,12 +2840,12 @@ struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics> : prod
         }
     }
 
-    HRESULT __stdcall remove_ProjectionDisplayAvailableChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_ProjectionDisplayAvailableChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ProjectionDisplayAvailableChanged(token);
+            this->shim().ProjectionDisplayAvailableChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1732,12 +2858,12 @@ struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics> : prod
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics2> : produce_base<D, Windows::UI::ViewManagement::IProjectionManagerStatics2>
 {
-    HRESULT __stdcall abi_StartProjectingWithDeviceInfoAsync(int32_t projectionViewId, int32_t anchorViewId, impl::abi_arg_in<Windows::Devices::Enumeration::IDeviceInformation> displayDeviceInfo, impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall StartProjectingWithDeviceInfoAsync(int32_t projectionViewId, int32_t anchorViewId, ::IUnknown* displayDeviceInfo, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().StartProjectingAsync(projectionViewId, anchorViewId, *reinterpret_cast<const Windows::Devices::Enumeration::DeviceInformation *>(&displayDeviceInfo)));
+            *operation = detach_abi(this->shim().StartProjectingAsync(projectionViewId, anchorViewId, *reinterpret_cast<Windows::Devices::Enumeration::DeviceInformation const*>(&displayDeviceInfo)));
             return S_OK;
         }
         catch (...)
@@ -1747,12 +2873,12 @@ struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics2> : pro
         }
     }
 
-    HRESULT __stdcall abi_RequestStartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, impl::abi_arg_in<Windows::Foundation::Rect> selection, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall RequestStartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, abi_t<Windows::Foundation::Rect> selection, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RequestStartProjectingAsync(projectionViewId, anchorViewId, *reinterpret_cast<const Windows::Foundation::Rect *>(&selection)));
+            *operation = detach_abi(this->shim().RequestStartProjectingAsync(projectionViewId, anchorViewId, *reinterpret_cast<Windows::Foundation::Rect const*>(&selection)));
             return S_OK;
         }
         catch (...)
@@ -1762,12 +2888,12 @@ struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics2> : pro
         }
     }
 
-    HRESULT __stdcall abi_RequestStartProjectingWithPlacementAsync(int32_t projectionViewId, int32_t anchorViewId, impl::abi_arg_in<Windows::Foundation::Rect> selection, Windows::UI::Popups::Placement prefferedPlacement, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall RequestStartProjectingWithPlacementAsync(int32_t projectionViewId, int32_t anchorViewId, abi_t<Windows::Foundation::Rect> selection, abi_t<Windows::UI::Popups::Placement> prefferedPlacement, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RequestStartProjectingAsync(projectionViewId, anchorViewId, *reinterpret_cast<const Windows::Foundation::Rect *>(&selection), prefferedPlacement));
+            *operation = detach_abi(this->shim().RequestStartProjectingAsync(projectionViewId, anchorViewId, *reinterpret_cast<Windows::Foundation::Rect const*>(&selection), *reinterpret_cast<Windows::UI::Popups::Placement const*>(&prefferedPlacement)));
             return S_OK;
         }
         catch (...)
@@ -1777,7 +2903,7 @@ struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics2> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetDeviceSelector(impl::abi_arg_out<hstring> selector) noexcept override
+    HRESULT __stdcall GetDeviceSelector(HSTRING* selector) noexcept override
     {
         try
         {
@@ -1796,7 +2922,7 @@ struct produce<D, Windows::UI::ViewManagement::IProjectionManagerStatics2> : pro
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Windows::UI::ViewManagement::IStatusBar>
 {
-    HRESULT __stdcall abi_ShowAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> returnValue) noexcept override
+    HRESULT __stdcall ShowAsync(::IUnknown** returnValue) noexcept override
     {
         try
         {
@@ -1811,7 +2937,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall abi_HideAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> returnValue) noexcept override
+    HRESULT __stdcall HideAsync(::IUnknown** returnValue) noexcept override
     {
         try
         {
@@ -1826,7 +2952,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_BackgroundOpacity(double * value) noexcept override
+    HRESULT __stdcall get_BackgroundOpacity(double* value) noexcept override
     {
         try
         {
@@ -1854,7 +2980,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_ForegroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_ForegroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1869,12 +2995,12 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_ForegroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_ForegroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ForegroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().ForegroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1883,7 +3009,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_BackgroundColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_BackgroundColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1898,12 +3024,12 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall put_BackgroundColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_BackgroundColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().BackgroundColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().BackgroundColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1912,7 +3038,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_ProgressIndicator(impl::abi_arg_out<Windows::UI::ViewManagement::IStatusBarProgressIndicator> value) noexcept override
+    HRESULT __stdcall get_ProgressIndicator(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1927,7 +3053,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall get_OccludedRect(impl::abi_arg_out<Windows::Foundation::Rect> value) noexcept override
+    HRESULT __stdcall get_OccludedRect(abi_t<Windows::Foundation::Rect>* value) noexcept override
     {
         try
         {
@@ -1941,12 +3067,12 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall add_Showing(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable>> eventHandler, event_token * token) noexcept override
+    HRESULT __stdcall add_Showing(::IUnknown* eventHandler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Showing(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> *>(&eventHandler)));
+            *token = detach_abi(this->shim().Showing(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> const*>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -1955,12 +3081,12 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall remove_Showing(event_token token) noexcept override
+    HRESULT __stdcall remove_Showing(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Showing(token);
+            this->shim().Showing(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -1969,12 +3095,12 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall add_Hiding(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable>> eventHandler, event_token * token) noexcept override
+    HRESULT __stdcall add_Hiding(::IUnknown* eventHandler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Hiding(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> *>(&eventHandler)));
+            *token = detach_abi(this->shim().Hiding(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> const*>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -1983,12 +3109,12 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
         }
     }
 
-    HRESULT __stdcall remove_Hiding(event_token token) noexcept override
+    HRESULT __stdcall remove_Hiding(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Hiding(token);
+            this->shim().Hiding(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2001,7 +3127,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBar> : produce_base<D, Win
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IStatusBarProgressIndicator> : produce_base<D, Windows::UI::ViewManagement::IStatusBarProgressIndicator>
 {
-    HRESULT __stdcall abi_ShowAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> returnValue) noexcept override
+    HRESULT __stdcall ShowAsync(::IUnknown** returnValue) noexcept override
     {
         try
         {
@@ -2016,7 +3142,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBarProgressIndicator> : pr
         }
     }
 
-    HRESULT __stdcall abi_HideAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> returnValue) noexcept override
+    HRESULT __stdcall HideAsync(::IUnknown** returnValue) noexcept override
     {
         try
         {
@@ -2031,7 +3157,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBarProgressIndicator> : pr
         }
     }
 
-    HRESULT __stdcall get_Text(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Text(HSTRING* value) noexcept override
     {
         try
         {
@@ -2046,12 +3172,12 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBarProgressIndicator> : pr
         }
     }
 
-    HRESULT __stdcall put_Text(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Text(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Text(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Text(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2060,7 +3186,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBarProgressIndicator> : pr
         }
     }
 
-    HRESULT __stdcall get_ProgressValue(impl::abi_arg_out<Windows::Foundation::IReference<double>> value) noexcept override
+    HRESULT __stdcall get_ProgressValue(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2075,12 +3201,12 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBarProgressIndicator> : pr
         }
     }
 
-    HRESULT __stdcall put_ProgressValue(impl::abi_arg_in<Windows::Foundation::IReference<double>> value) noexcept override
+    HRESULT __stdcall put_ProgressValue(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ProgressValue(*reinterpret_cast<const Windows::Foundation::IReference<double> *>(&value));
+            this->shim().ProgressValue(*reinterpret_cast<Windows::Foundation::IReference<double> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2093,7 +3219,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBarProgressIndicator> : pr
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IStatusBarStatics> : produce_base<D, Windows::UI::ViewManagement::IStatusBarStatics>
 {
-    HRESULT __stdcall abi_GetForCurrentView(impl::abi_arg_out<Windows::UI::ViewManagement::IStatusBar> value) noexcept override
+    HRESULT __stdcall GetForCurrentView(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2112,7 +3238,7 @@ struct produce<D, Windows::UI::ViewManagement::IStatusBarStatics> : produce_base
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Windows::UI::ViewManagement::IUISettings>
 {
-    HRESULT __stdcall get_HandPreference(Windows::UI::ViewManagement::HandPreference * value) noexcept override
+    HRESULT __stdcall get_HandPreference(abi_t<Windows::UI::ViewManagement::HandPreference>* value) noexcept override
     {
         try
         {
@@ -2126,7 +3252,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_CursorSize(impl::abi_arg_out<Windows::Foundation::Size> value) noexcept override
+    HRESULT __stdcall get_CursorSize(abi_t<Windows::Foundation::Size>* value) noexcept override
     {
         try
         {
@@ -2140,7 +3266,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_ScrollBarSize(impl::abi_arg_out<Windows::Foundation::Size> value) noexcept override
+    HRESULT __stdcall get_ScrollBarSize(abi_t<Windows::Foundation::Size>* value) noexcept override
     {
         try
         {
@@ -2154,7 +3280,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_ScrollBarArrowSize(impl::abi_arg_out<Windows::Foundation::Size> value) noexcept override
+    HRESULT __stdcall get_ScrollBarArrowSize(abi_t<Windows::Foundation::Size>* value) noexcept override
     {
         try
         {
@@ -2168,7 +3294,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_ScrollBarThumbBoxSize(impl::abi_arg_out<Windows::Foundation::Size> value) noexcept override
+    HRESULT __stdcall get_ScrollBarThumbBoxSize(abi_t<Windows::Foundation::Size>* value) noexcept override
     {
         try
         {
@@ -2182,7 +3308,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_MessageDuration(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MessageDuration(uint32_t* value) noexcept override
     {
         try
         {
@@ -2196,7 +3322,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_AnimationsEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_AnimationsEnabled(bool* value) noexcept override
     {
         try
         {
@@ -2210,7 +3336,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_CaretBrowsingEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_CaretBrowsingEnabled(bool* value) noexcept override
     {
         try
         {
@@ -2224,7 +3350,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_CaretBlinkRate(uint32_t * value) noexcept override
+    HRESULT __stdcall get_CaretBlinkRate(uint32_t* value) noexcept override
     {
         try
         {
@@ -2238,7 +3364,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_CaretWidth(uint32_t * value) noexcept override
+    HRESULT __stdcall get_CaretWidth(uint32_t* value) noexcept override
     {
         try
         {
@@ -2252,7 +3378,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_DoubleClickTime(uint32_t * value) noexcept override
+    HRESULT __stdcall get_DoubleClickTime(uint32_t* value) noexcept override
     {
         try
         {
@@ -2266,7 +3392,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_MouseHoverTime(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MouseHoverTime(uint32_t* value) noexcept override
     {
         try
         {
@@ -2280,12 +3406,12 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall abi_UIElementColor(Windows::UI::ViewManagement::UIElementType desiredElement, impl::abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall UIElementColor(abi_t<Windows::UI::ViewManagement::UIElementType> desiredElement, abi_t<Windows::UI::Color>* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().UIElementColor(desiredElement));
+            *value = detach_abi(this->shim().UIElementColor(*reinterpret_cast<Windows::UI::ViewManagement::UIElementType const*>(&desiredElement)));
             return S_OK;
         }
         catch (...)
@@ -2298,7 +3424,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IUISettings2> : produce_base<D, Windows::UI::ViewManagement::IUISettings2>
 {
-    HRESULT __stdcall get_TextScaleFactor(double * value) noexcept override
+    HRESULT __stdcall get_TextScaleFactor(double* value) noexcept override
     {
         try
         {
@@ -2312,12 +3438,12 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall add_TextScaleFactorChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable>> handler, event_token * cookie) noexcept override
+    HRESULT __stdcall add_TextScaleFactorChanged(::IUnknown* handler, abi_t<event_token>* cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *cookie = detach_abi(this->shim().TextScaleFactorChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> *>(&handler)));
+            *cookie = detach_abi(this->shim().TextScaleFactorChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2326,12 +3452,12 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings2> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall remove_TextScaleFactorChanged(event_token cookie) noexcept override
+    HRESULT __stdcall remove_TextScaleFactorChanged(abi_t<event_token> cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TextScaleFactorChanged(cookie);
+            this->shim().TextScaleFactorChanged(*reinterpret_cast<event_token const*>(&cookie));
             return S_OK;
         }
         catch (...)
@@ -2344,12 +3470,12 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings2> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IUISettings3> : produce_base<D, Windows::UI::ViewManagement::IUISettings3>
 {
-    HRESULT __stdcall abi_GetColorValue(Windows::UI::ViewManagement::UIColorType desiredColor, impl::abi_arg_out<Windows::UI::Color> value) noexcept override
+    HRESULT __stdcall GetColorValue(abi_t<Windows::UI::ViewManagement::UIColorType> desiredColor, abi_t<Windows::UI::Color>* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetColorValue(desiredColor));
+            *value = detach_abi(this->shim().GetColorValue(*reinterpret_cast<Windows::UI::ViewManagement::UIColorType const*>(&desiredColor)));
             return S_OK;
         }
         catch (...)
@@ -2358,12 +3484,12 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings3> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall add_ColorValuesChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable>> handler, event_token * cookie) noexcept override
+    HRESULT __stdcall add_ColorValuesChanged(::IUnknown* handler, abi_t<event_token>* cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *cookie = detach_abi(this->shim().ColorValuesChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> *>(&handler)));
+            *cookie = detach_abi(this->shim().ColorValuesChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2372,12 +3498,12 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings3> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall remove_ColorValuesChanged(event_token cookie) noexcept override
+    HRESULT __stdcall remove_ColorValuesChanged(abi_t<event_token> cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ColorValuesChanged(cookie);
+            this->shim().ColorValuesChanged(*reinterpret_cast<event_token const*>(&cookie));
             return S_OK;
         }
         catch (...)
@@ -2390,7 +3516,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings3> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IUISettings4> : produce_base<D, Windows::UI::ViewManagement::IUISettings4>
 {
-    HRESULT __stdcall get_AdvancedEffectsEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_AdvancedEffectsEnabled(bool* value) noexcept override
     {
         try
         {
@@ -2404,12 +3530,12 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings4> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall add_AdvancedEffectsEnabledChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable>> handler, event_token * cookie) noexcept override
+    HRESULT __stdcall add_AdvancedEffectsEnabledChanged(::IUnknown* handler, abi_t<event_token>* cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *cookie = detach_abi(this->shim().AdvancedEffectsEnabledChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> *>(&handler)));
+            *cookie = detach_abi(this->shim().AdvancedEffectsEnabledChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -2418,12 +3544,12 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings4> : produce_base<D, W
         }
     }
 
-    HRESULT __stdcall remove_AdvancedEffectsEnabledChanged(event_token cookie) noexcept override
+    HRESULT __stdcall remove_AdvancedEffectsEnabledChanged(abi_t<event_token> cookie) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AdvancedEffectsEnabledChanged(cookie);
+            this->shim().AdvancedEffectsEnabledChanged(*reinterpret_cast<event_token const*>(&cookie));
             return S_OK;
         }
         catch (...)
@@ -2436,7 +3562,7 @@ struct produce<D, Windows::UI::ViewManagement::IUISettings4> : produce_base<D, W
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IUIViewSettings> : produce_base<D, Windows::UI::ViewManagement::IUIViewSettings>
 {
-    HRESULT __stdcall get_UserInteractionMode(Windows::UI::ViewManagement::UserInteractionMode * value) noexcept override
+    HRESULT __stdcall get_UserInteractionMode(abi_t<Windows::UI::ViewManagement::UserInteractionMode>* value) noexcept override
     {
         try
         {
@@ -2454,7 +3580,7 @@ struct produce<D, Windows::UI::ViewManagement::IUIViewSettings> : produce_base<D
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IUIViewSettingsStatics> : produce_base<D, Windows::UI::ViewManagement::IUIViewSettingsStatics>
 {
-    HRESULT __stdcall abi_GetForCurrentView(impl::abi_arg_out<Windows::UI::ViewManagement::IUIViewSettings> current) noexcept override
+    HRESULT __stdcall GetForCurrentView(::IUnknown** current) noexcept override
     {
         try
         {
@@ -2473,7 +3599,7 @@ struct produce<D, Windows::UI::ViewManagement::IUIViewSettingsStatics> : produce
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IViewModePreferences> : produce_base<D, Windows::UI::ViewManagement::IViewModePreferences>
 {
-    HRESULT __stdcall get_ViewSizePreference(Windows::UI::ViewManagement::ViewSizePreference * value) noexcept override
+    HRESULT __stdcall get_ViewSizePreference(abi_t<Windows::UI::ViewManagement::ViewSizePreference>* value) noexcept override
     {
         try
         {
@@ -2487,12 +3613,12 @@ struct produce<D, Windows::UI::ViewManagement::IViewModePreferences> : produce_b
         }
     }
 
-    HRESULT __stdcall put_ViewSizePreference(Windows::UI::ViewManagement::ViewSizePreference value) noexcept override
+    HRESULT __stdcall put_ViewSizePreference(abi_t<Windows::UI::ViewManagement::ViewSizePreference> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ViewSizePreference(value);
+            this->shim().ViewSizePreference(*reinterpret_cast<Windows::UI::ViewManagement::ViewSizePreference const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2501,7 +3627,7 @@ struct produce<D, Windows::UI::ViewManagement::IViewModePreferences> : produce_b
         }
     }
 
-    HRESULT __stdcall get_CustomSize(impl::abi_arg_out<Windows::Foundation::Size> value) noexcept override
+    HRESULT __stdcall get_CustomSize(abi_t<Windows::Foundation::Size>* value) noexcept override
     {
         try
         {
@@ -2515,12 +3641,12 @@ struct produce<D, Windows::UI::ViewManagement::IViewModePreferences> : produce_b
         }
     }
 
-    HRESULT __stdcall put_CustomSize(impl::abi_arg_in<Windows::Foundation::Size> value) noexcept override
+    HRESULT __stdcall put_CustomSize(abi_t<Windows::Foundation::Size> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CustomSize(*reinterpret_cast<const Windows::Foundation::Size *>(&value));
+            this->shim().CustomSize(*reinterpret_cast<Windows::Foundation::Size const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2533,12 +3659,12 @@ struct produce<D, Windows::UI::ViewManagement::IViewModePreferences> : produce_b
 template <typename D>
 struct produce<D, Windows::UI::ViewManagement::IViewModePreferencesStatics> : produce_base<D, Windows::UI::ViewManagement::IViewModePreferencesStatics>
 {
-    HRESULT __stdcall abi_CreateDefault(Windows::UI::ViewManagement::ApplicationViewMode mode, impl::abi_arg_out<Windows::UI::ViewManagement::IViewModePreferences> result) noexcept override
+    HRESULT __stdcall CreateDefault(abi_t<Windows::UI::ViewManagement::ApplicationViewMode> mode, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateDefault(mode));
+            *result = detach_abi(this->shim().CreateDefault(*reinterpret_cast<Windows::UI::ViewManagement::ApplicationViewMode const*>(&mode)));
             return S_OK;
         }
         catch (...)
@@ -2551,1134 +3677,7 @@ struct produce<D, Windows::UI::ViewManagement::IViewModePreferencesStatics> : pr
 
 }
 
-namespace Windows::UI::ViewManagement {
-
-template <typename D> Windows::UI::ViewManagement::ViewSizePreference impl_IViewModePreferences<D>::ViewSizePreference() const
-{
-    Windows::UI::ViewManagement::ViewSizePreference value {};
-    check_hresult(WINRT_SHIM(IViewModePreferences)->get_ViewSizePreference(&value));
-    return value;
-}
-
-template <typename D> void impl_IViewModePreferences<D>::ViewSizePreference(Windows::UI::ViewManagement::ViewSizePreference value) const
-{
-    check_hresult(WINRT_SHIM(IViewModePreferences)->put_ViewSizePreference(value));
-}
-
-template <typename D> Windows::Foundation::Size impl_IViewModePreferences<D>::CustomSize() const
-{
-    Windows::Foundation::Size value {};
-    check_hresult(WINRT_SHIM(IViewModePreferences)->get_CustomSize(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IViewModePreferences<D>::CustomSize(const Windows::Foundation::Size & value) const
-{
-    check_hresult(WINRT_SHIM(IViewModePreferences)->put_CustomSize(get_abi(value)));
-}
-
-template <typename D> Windows::UI::ViewManagement::ViewModePreferences impl_IViewModePreferencesStatics<D>::CreateDefault(Windows::UI::ViewManagement::ApplicationViewMode mode) const
-{
-    Windows::UI::ViewManagement::ViewModePreferences result { nullptr };
-    check_hresult(WINRT_SHIM(IViewModePreferencesStatics)->abi_CreateDefault(mode, put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IApplicationViewSwitcherStatics<D>::DisableShowingMainViewOnActivation() const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewSwitcherStatics)->abi_DisableShowingMainViewOnActivation());
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IApplicationViewSwitcherStatics<D>::TryShowAsStandaloneAsync(int32_t viewId) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IApplicationViewSwitcherStatics)->abi_TryShowAsStandaloneAsync(viewId, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IApplicationViewSwitcherStatics<D>::TryShowAsStandaloneAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference sizePreference) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IApplicationViewSwitcherStatics)->abi_TryShowAsStandaloneWithSizePreferenceAsync(viewId, sizePreference, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IApplicationViewSwitcherStatics<D>::TryShowAsStandaloneAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference sizePreference, int32_t anchorViewId, Windows::UI::ViewManagement::ViewSizePreference anchorSizePreference) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IApplicationViewSwitcherStatics)->abi_TryShowAsStandaloneWithAnchorViewAndSizePreferenceAsync(viewId, sizePreference, anchorViewId, anchorSizePreference, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IApplicationViewSwitcherStatics<D>::SwitchAsync(int32_t viewId) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IApplicationViewSwitcherStatics)->abi_SwitchAsync(viewId, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IApplicationViewSwitcherStatics<D>::SwitchAsync(int32_t toViewId, int32_t fromViewId) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IApplicationViewSwitcherStatics)->abi_SwitchFromViewAsync(toViewId, fromViewId, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IApplicationViewSwitcherStatics<D>::SwitchAsync(int32_t toViewId, int32_t fromViewId, Windows::UI::ViewManagement::ApplicationViewSwitchingOptions options) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IApplicationViewSwitcherStatics)->abi_SwitchFromViewWithOptionsAsync(toViewId, fromViewId, options, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IApplicationViewSwitcherStatics<D>::PrepareForCustomAnimatedSwitchAsync(int32_t toViewId, int32_t fromViewId, Windows::UI::ViewManagement::ApplicationViewSwitchingOptions options) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IApplicationViewSwitcherStatics)->abi_PrepareForCustomAnimatedSwitchAsync(toViewId, fromViewId, options, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> void impl_IApplicationViewSwitcherStatics2<D>::DisableSystemViewActivationPolicy() const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewSwitcherStatics2)->abi_DisableSystemViewActivationPolicy());
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IApplicationViewSwitcherStatics3<D>::TryShowAsViewModeAsync(int32_t viewId, Windows::UI::ViewManagement::ApplicationViewMode viewMode) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IApplicationViewSwitcherStatics3)->abi_TryShowAsViewModeAsync(viewId, viewMode, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IApplicationViewSwitcherStatics3<D>::TryShowAsViewModeAsync(int32_t viewId, Windows::UI::ViewManagement::ApplicationViewMode viewMode, const Windows::UI::ViewManagement::ViewModePreferences & viewModePreferences) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IApplicationViewSwitcherStatics3)->abi_TryShowAsViewModeWithPreferencesAsync(viewId, viewMode, get_abi(viewModePreferences), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> int32_t impl_IApplicationViewInteropStatics<D>::GetApplicationViewIdForWindow(const Windows::UI::Core::ICoreWindow & window) const
-{
-    int32_t id {};
-    check_hresult(WINRT_SHIM(IApplicationViewInteropStatics)->abi_GetApplicationViewIdForWindow(get_abi(window), &id));
-    return id;
-}
-
-template <typename D> Windows::UI::ViewManagement::ApplicationViewState impl_IApplicationViewStatics<D>::Value() const
-{
-    Windows::UI::ViewManagement::ApplicationViewState value {};
-    check_hresult(WINRT_SHIM(IApplicationViewStatics)->get_Value(&value));
-    return value;
-}
-
-template <typename D> bool impl_IApplicationViewStatics<D>::TryUnsnap() const
-{
-    bool success {};
-    check_hresult(WINRT_SHIM(IApplicationViewStatics)->abi_TryUnsnap(&success));
-    return success;
-}
-
-template <typename D> Windows::UI::ViewManagement::ApplicationView impl_IApplicationViewStatics2<D>::GetForCurrentView() const
-{
-    Windows::UI::ViewManagement::ApplicationView current { nullptr };
-    check_hresult(WINRT_SHIM(IApplicationViewStatics2)->abi_GetForCurrentView(put_abi(current)));
-    return current;
-}
-
-template <typename D> bool impl_IApplicationViewStatics2<D>::TerminateAppOnFinalViewClose() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IApplicationViewStatics2)->get_TerminateAppOnFinalViewClose(&value));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewStatics2<D>::TerminateAppOnFinalViewClose(bool value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewStatics2)->put_TerminateAppOnFinalViewClose(value));
-}
-
-template <typename D> Windows::UI::ViewManagement::ApplicationViewWindowingMode impl_IApplicationViewStatics3<D>::PreferredLaunchWindowingMode() const
-{
-    Windows::UI::ViewManagement::ApplicationViewWindowingMode value {};
-    check_hresult(WINRT_SHIM(IApplicationViewStatics3)->get_PreferredLaunchWindowingMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewStatics3<D>::PreferredLaunchWindowingMode(Windows::UI::ViewManagement::ApplicationViewWindowingMode value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewStatics3)->put_PreferredLaunchWindowingMode(value));
-}
-
-template <typename D> Windows::Foundation::Size impl_IApplicationViewStatics3<D>::PreferredLaunchViewSize() const
-{
-    Windows::Foundation::Size value {};
-    check_hresult(WINRT_SHIM(IApplicationViewStatics3)->get_PreferredLaunchViewSize(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewStatics3<D>::PreferredLaunchViewSize(const Windows::Foundation::Size & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewStatics3)->put_PreferredLaunchViewSize(get_abi(value)));
-}
-
-template <typename D> Windows::UI::ViewManagement::ApplicationViewOrientation impl_IApplicationView<D>::Orientation() const
-{
-    Windows::UI::ViewManagement::ApplicationViewOrientation value {};
-    check_hresult(WINRT_SHIM(IApplicationView)->get_Orientation(&value));
-    return value;
-}
-
-template <typename D> bool impl_IApplicationView<D>::AdjacentToLeftDisplayEdge() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IApplicationView)->get_AdjacentToLeftDisplayEdge(&value));
-    return value;
-}
-
-template <typename D> bool impl_IApplicationView<D>::AdjacentToRightDisplayEdge() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IApplicationView)->get_AdjacentToRightDisplayEdge(&value));
-    return value;
-}
-
-template <typename D> bool impl_IApplicationView<D>::IsFullScreen() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IApplicationView)->get_IsFullScreen(&value));
-    return value;
-}
-
-template <typename D> bool impl_IApplicationView<D>::IsOnLockScreen() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IApplicationView)->get_IsOnLockScreen(&value));
-    return value;
-}
-
-template <typename D> bool impl_IApplicationView<D>::IsScreenCaptureEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IApplicationView)->get_IsScreenCaptureEnabled(&value));
-    return value;
-}
-
-template <typename D> void impl_IApplicationView<D>::IsScreenCaptureEnabled(bool value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationView)->put_IsScreenCaptureEnabled(value));
-}
-
-template <typename D> void impl_IApplicationView<D>::Title(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationView)->put_Title(get_abi(value)));
-}
-
-template <typename D> hstring impl_IApplicationView<D>::Title() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IApplicationView)->get_Title(put_abi(value)));
-    return value;
-}
-
-template <typename D> int32_t impl_IApplicationView<D>::Id() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IApplicationView)->get_Id(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IApplicationView<D>::Consolidated(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IApplicationView)->add_Consolidated(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IApplicationView> impl_IApplicationView<D>::Consolidated(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IApplicationView>(this, &ABI::Windows::UI::ViewManagement::IApplicationView::remove_Consolidated, Consolidated(handler));
-}
-
-template <typename D> void impl_IApplicationView<D>::Consolidated(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IApplicationView)->remove_Consolidated(token));
-}
-
-template <typename D> bool impl_IApplicationView2<D>::SuppressSystemOverlays() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IApplicationView2)->get_SuppressSystemOverlays(&value));
-    return value;
-}
-
-template <typename D> void impl_IApplicationView2<D>::SuppressSystemOverlays(bool value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationView2)->put_SuppressSystemOverlays(value));
-}
-
-template <typename D> Windows::Foundation::Rect impl_IApplicationView2<D>::VisibleBounds() const
-{
-    Windows::Foundation::Rect value {};
-    check_hresult(WINRT_SHIM(IApplicationView2)->get_VisibleBounds(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IApplicationView2<D>::VisibleBoundsChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IApplicationView2)->add_VisibleBoundsChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IApplicationView2> impl_IApplicationView2<D>::VisibleBoundsChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::ApplicationView, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IApplicationView2>(this, &ABI::Windows::UI::ViewManagement::IApplicationView2::remove_VisibleBoundsChanged, VisibleBoundsChanged(handler));
-}
-
-template <typename D> void impl_IApplicationView2<D>::VisibleBoundsChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IApplicationView2)->remove_VisibleBoundsChanged(token));
-}
-
-template <typename D> bool impl_IApplicationView2<D>::SetDesiredBoundsMode(Windows::UI::ViewManagement::ApplicationViewBoundsMode boundsMode) const
-{
-    bool success {};
-    check_hresult(WINRT_SHIM(IApplicationView2)->abi_SetDesiredBoundsMode(boundsMode, &success));
-    return success;
-}
-
-template <typename D> Windows::UI::ViewManagement::ApplicationViewBoundsMode impl_IApplicationView2<D>::DesiredBoundsMode() const
-{
-    Windows::UI::ViewManagement::ApplicationViewBoundsMode value {};
-    check_hresult(WINRT_SHIM(IApplicationView2)->get_DesiredBoundsMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::ForegroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_ForegroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::ForegroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_ForegroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::BackgroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_BackgroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::BackgroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_BackgroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::ButtonForegroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_ButtonForegroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::ButtonForegroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_ButtonForegroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::ButtonBackgroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_ButtonBackgroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::ButtonBackgroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_ButtonBackgroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::ButtonHoverForegroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_ButtonHoverForegroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::ButtonHoverForegroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_ButtonHoverForegroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::ButtonHoverBackgroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_ButtonHoverBackgroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::ButtonHoverBackgroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_ButtonHoverBackgroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::ButtonPressedForegroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_ButtonPressedForegroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::ButtonPressedForegroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_ButtonPressedForegroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::ButtonPressedBackgroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_ButtonPressedBackgroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::ButtonPressedBackgroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_ButtonPressedBackgroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::InactiveForegroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_InactiveForegroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::InactiveForegroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_InactiveForegroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::InactiveBackgroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_InactiveBackgroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::InactiveBackgroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_InactiveBackgroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::ButtonInactiveForegroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_ButtonInactiveForegroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::ButtonInactiveForegroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_ButtonInactiveForegroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTitleBar<D>::ButtonInactiveBackgroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->put_ButtonInactiveBackgroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IApplicationViewTitleBar<D>::ButtonInactiveBackgroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IApplicationViewTitleBar)->get_ButtonInactiveBackgroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::ViewManagement::ApplicationViewTitleBar impl_IApplicationView3<D>::TitleBar() const
-{
-    Windows::UI::ViewManagement::ApplicationViewTitleBar value { nullptr };
-    check_hresult(WINRT_SHIM(IApplicationView3)->get_TitleBar(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::ViewManagement::FullScreenSystemOverlayMode impl_IApplicationView3<D>::FullScreenSystemOverlayMode() const
-{
-    Windows::UI::ViewManagement::FullScreenSystemOverlayMode value {};
-    check_hresult(WINRT_SHIM(IApplicationView3)->get_FullScreenSystemOverlayMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IApplicationView3<D>::FullScreenSystemOverlayMode(Windows::UI::ViewManagement::FullScreenSystemOverlayMode value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationView3)->put_FullScreenSystemOverlayMode(value));
-}
-
-template <typename D> bool impl_IApplicationView3<D>::IsFullScreenMode() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IApplicationView3)->get_IsFullScreenMode(&value));
-    return value;
-}
-
-template <typename D> bool impl_IApplicationView3<D>::TryEnterFullScreenMode() const
-{
-    bool success {};
-    check_hresult(WINRT_SHIM(IApplicationView3)->abi_TryEnterFullScreenMode(&success));
-    return success;
-}
-
-template <typename D> void impl_IApplicationView3<D>::ExitFullScreenMode() const
-{
-    check_hresult(WINRT_SHIM(IApplicationView3)->abi_ExitFullScreenMode());
-}
-
-template <typename D> void impl_IApplicationView3<D>::ShowStandardSystemOverlays() const
-{
-    check_hresult(WINRT_SHIM(IApplicationView3)->abi_ShowStandardSystemOverlays());
-}
-
-template <typename D> bool impl_IApplicationView3<D>::TryResizeView(const Windows::Foundation::Size & value) const
-{
-    bool success {};
-    check_hresult(WINRT_SHIM(IApplicationView3)->abi_TryResizeView(get_abi(value), &success));
-    return success;
-}
-
-template <typename D> void impl_IApplicationView3<D>::SetPreferredMinSize(const Windows::Foundation::Size & minSize) const
-{
-    check_hresult(WINRT_SHIM(IApplicationView3)->abi_SetPreferredMinSize(get_abi(minSize)));
-}
-
-template <typename D> bool impl_IApplicationViewFullscreenStatics<D>::TryUnsnapToFullscreen() const
-{
-    bool success {};
-    check_hresult(WINRT_SHIM(IApplicationViewFullscreenStatics)->abi_TryUnsnapToFullscreen(&success));
-    return success;
-}
-
-template <typename D> Windows::UI::ViewManagement::ApplicationViewMode impl_IApplicationView4<D>::ViewMode() const
-{
-    Windows::UI::ViewManagement::ApplicationViewMode value {};
-    check_hresult(WINRT_SHIM(IApplicationView4)->get_ViewMode(&value));
-    return value;
-}
-
-template <typename D> bool impl_IApplicationView4<D>::IsViewModeSupported(Windows::UI::ViewManagement::ApplicationViewMode viewMode) const
-{
-    bool isViewModeSupported {};
-    check_hresult(WINRT_SHIM(IApplicationView4)->abi_IsViewModeSupported(viewMode, &isViewModeSupported));
-    return isViewModeSupported;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IApplicationView4<D>::TryEnterViewModeAsync(Windows::UI::ViewManagement::ApplicationViewMode viewMode) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IApplicationView4)->abi_TryEnterViewModeAsync(viewMode, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IApplicationView4<D>::TryEnterViewModeAsync(Windows::UI::ViewManagement::ApplicationViewMode viewMode, const Windows::UI::ViewManagement::ViewModePreferences & viewModePreferences) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IApplicationView4)->abi_TryEnterViewModeWithPreferencesAsync(viewMode, get_abi(viewModePreferences), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IApplicationView4<D>::TryConsolidateAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IApplicationView4)->abi_TryConsolidateAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> bool impl_IApplicationViewConsolidatedEventArgs<D>::IsUserInitiated() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IApplicationViewConsolidatedEventArgs)->get_IsUserInitiated(&value));
-    return value;
-}
-
-template <typename D> bool impl_IApplicationViewConsolidatedEventArgs2<D>::IsAppInitiated() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IApplicationViewConsolidatedEventArgs2)->get_IsAppInitiated(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IActivationViewSwitcher<D>::ShowAsStandaloneAsync(int32_t viewId) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IActivationViewSwitcher)->abi_ShowAsStandaloneAsync(viewId, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IActivationViewSwitcher<D>::ShowAsStandaloneAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference sizePreference) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IActivationViewSwitcher)->abi_ShowAsStandaloneWithSizePreferenceAsync(viewId, sizePreference, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> bool impl_IActivationViewSwitcher<D>::IsViewPresentedOnActivationVirtualDesktop(int32_t viewId) const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IActivationViewSwitcher)->abi_IsViewPresentedOnActivationVirtualDesktop(viewId, &value));
-    return value;
-}
-
-template <typename D> int32_t impl_IApplicationViewTransferContext<D>::ViewId() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IApplicationViewTransferContext)->get_ViewId(&value));
-    return value;
-}
-
-template <typename D> void impl_IApplicationViewTransferContext<D>::ViewId(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(IApplicationViewTransferContext)->put_ViewId(value));
-}
-
-template <typename D> hstring impl_IApplicationViewTransferContextStatics<D>::DataPackageFormatId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IApplicationViewTransferContextStatics)->get_DataPackageFormatId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Rect impl_IInputPaneVisibilityEventArgs<D>::OccludedRect() const
-{
-    Windows::Foundation::Rect value {};
-    check_hresult(WINRT_SHIM(IInputPaneVisibilityEventArgs)->get_OccludedRect(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IInputPaneVisibilityEventArgs<D>::EnsuredFocusedElementInView(bool value) const
-{
-    check_hresult(WINRT_SHIM(IInputPaneVisibilityEventArgs)->put_EnsuredFocusedElementInView(value));
-}
-
-template <typename D> bool impl_IInputPaneVisibilityEventArgs<D>::EnsuredFocusedElementInView() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IInputPaneVisibilityEventArgs)->get_EnsuredFocusedElementInView(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IInputPane<D>::Showing(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IInputPane)->add_Showing(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IInputPane> impl_IInputPane<D>::Showing(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IInputPane>(this, &ABI::Windows::UI::ViewManagement::IInputPane::remove_Showing, Showing(handler));
-}
-
-template <typename D> void impl_IInputPane<D>::Showing(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IInputPane)->remove_Showing(token));
-}
-
-template <typename D> event_token impl_IInputPane<D>::Hiding(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IInputPane)->add_Hiding(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IInputPane> impl_IInputPane<D>::Hiding(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::InputPane, Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IInputPane>(this, &ABI::Windows::UI::ViewManagement::IInputPane::remove_Hiding, Hiding(handler));
-}
-
-template <typename D> void impl_IInputPane<D>::Hiding(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IInputPane)->remove_Hiding(token));
-}
-
-template <typename D> Windows::Foundation::Rect impl_IInputPane<D>::OccludedRect() const
-{
-    Windows::Foundation::Rect value {};
-    check_hresult(WINRT_SHIM(IInputPane)->get_OccludedRect(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IInputPane2<D>::TryShow() const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IInputPane2)->abi_TryShow(&result));
-    return result;
-}
-
-template <typename D> bool impl_IInputPane2<D>::TryHide() const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IInputPane2)->abi_TryHide(&result));
-    return result;
-}
-
-template <typename D> bool impl_IInputPaneControl<D>::Visible() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IInputPaneControl)->get_Visible(&value));
-    return value;
-}
-
-template <typename D> void impl_IInputPaneControl<D>::Visible(bool value) const
-{
-    check_hresult(WINRT_SHIM(IInputPaneControl)->put_Visible(value));
-}
-
-template <typename D> Windows::UI::ViewManagement::InputPane impl_IInputPaneStatics<D>::GetForCurrentView() const
-{
-    Windows::UI::ViewManagement::InputPane inputPane { nullptr };
-    check_hresult(WINRT_SHIM(IInputPaneStatics)->abi_GetForCurrentView(put_abi(inputPane)));
-    return inputPane;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IProjectionManagerStatics<D>::StartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IProjectionManagerStatics)->abi_StartProjectingAsync(projectionViewId, anchorViewId, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IProjectionManagerStatics<D>::SwapDisplaysForViewsAsync(int32_t projectionViewId, int32_t anchorViewId) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IProjectionManagerStatics)->abi_SwapDisplaysForViewsAsync(projectionViewId, anchorViewId, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IProjectionManagerStatics<D>::StopProjectingAsync(int32_t projectionViewId, int32_t anchorViewId) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IProjectionManagerStatics)->abi_StopProjectingAsync(projectionViewId, anchorViewId, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> bool impl_IProjectionManagerStatics<D>::ProjectionDisplayAvailable() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IProjectionManagerStatics)->get_ProjectionDisplayAvailable(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IProjectionManagerStatics<D>::ProjectionDisplayAvailableChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IProjectionManagerStatics)->add_ProjectionDisplayAvailableChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IProjectionManagerStatics> impl_IProjectionManagerStatics<D>::ProjectionDisplayAvailableChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IProjectionManagerStatics>(this, &ABI::Windows::UI::ViewManagement::IProjectionManagerStatics::remove_ProjectionDisplayAvailableChanged, ProjectionDisplayAvailableChanged(handler));
-}
-
-template <typename D> void impl_IProjectionManagerStatics<D>::ProjectionDisplayAvailableChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IProjectionManagerStatics)->remove_ProjectionDisplayAvailableChanged(token));
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IProjectionManagerStatics2<D>::StartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, const Windows::Devices::Enumeration::DeviceInformation & displayDeviceInfo) const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(IProjectionManagerStatics2)->abi_StartProjectingWithDeviceInfoAsync(projectionViewId, anchorViewId, get_abi(displayDeviceInfo), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IProjectionManagerStatics2<D>::RequestStartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, const Windows::Foundation::Rect & selection) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IProjectionManagerStatics2)->abi_RequestStartProjectingAsync(projectionViewId, anchorViewId, get_abi(selection), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IProjectionManagerStatics2<D>::RequestStartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement prefferedPlacement) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IProjectionManagerStatics2)->abi_RequestStartProjectingWithPlacementAsync(projectionViewId, anchorViewId, get_abi(selection), prefferedPlacement, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> hstring impl_IProjectionManagerStatics2<D>::GetDeviceSelector() const
-{
-    hstring selector;
-    check_hresult(WINRT_SHIM(IProjectionManagerStatics2)->abi_GetDeviceSelector(put_abi(selector)));
-    return selector;
-}
-
-template <typename D> Windows::UI::ViewManagement::UserInteractionMode impl_IUIViewSettings<D>::UserInteractionMode() const
-{
-    Windows::UI::ViewManagement::UserInteractionMode value {};
-    check_hresult(WINRT_SHIM(IUIViewSettings)->get_UserInteractionMode(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::ViewManagement::UIViewSettings impl_IUIViewSettingsStatics<D>::GetForCurrentView() const
-{
-    Windows::UI::ViewManagement::UIViewSettings current { nullptr };
-    check_hresult(WINRT_SHIM(IUIViewSettingsStatics)->abi_GetForCurrentView(put_abi(current)));
-    return current;
-}
-
-template <typename D> bool impl_IAccessibilitySettings<D>::HighContrast() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IAccessibilitySettings)->get_HighContrast(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IAccessibilitySettings<D>::HighContrastScheme() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAccessibilitySettings)->get_HighContrastScheme(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IAccessibilitySettings<D>::HighContrastChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::AccessibilitySettings, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IAccessibilitySettings)->add_HighContrastChanged(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IAccessibilitySettings> impl_IAccessibilitySettings<D>::HighContrastChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::AccessibilitySettings, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IAccessibilitySettings>(this, &ABI::Windows::UI::ViewManagement::IAccessibilitySettings::remove_HighContrastChanged, HighContrastChanged(handler));
-}
-
-template <typename D> void impl_IAccessibilitySettings<D>::HighContrastChanged(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IAccessibilitySettings)->remove_HighContrastChanged(cookie));
-}
-
-template <typename D> Windows::UI::ViewManagement::HandPreference impl_IUISettings<D>::HandPreference() const
-{
-    Windows::UI::ViewManagement::HandPreference value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_HandPreference(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Size impl_IUISettings<D>::CursorSize() const
-{
-    Windows::Foundation::Size value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_CursorSize(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Size impl_IUISettings<D>::ScrollBarSize() const
-{
-    Windows::Foundation::Size value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_ScrollBarSize(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Size impl_IUISettings<D>::ScrollBarArrowSize() const
-{
-    Windows::Foundation::Size value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_ScrollBarArrowSize(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Size impl_IUISettings<D>::ScrollBarThumbBoxSize() const
-{
-    Windows::Foundation::Size value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_ScrollBarThumbBoxSize(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IUISettings<D>::MessageDuration() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_MessageDuration(&value));
-    return value;
-}
-
-template <typename D> bool impl_IUISettings<D>::AnimationsEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_AnimationsEnabled(&value));
-    return value;
-}
-
-template <typename D> bool impl_IUISettings<D>::CaretBrowsingEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_CaretBrowsingEnabled(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IUISettings<D>::CaretBlinkRate() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_CaretBlinkRate(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IUISettings<D>::CaretWidth() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_CaretWidth(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IUISettings<D>::DoubleClickTime() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_DoubleClickTime(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IUISettings<D>::MouseHoverTime() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IUISettings)->get_MouseHoverTime(&value));
-    return value;
-}
-
-template <typename D> Windows::UI::Color impl_IUISettings<D>::UIElementColor(Windows::UI::ViewManagement::UIElementType desiredElement) const
-{
-    Windows::UI::Color value {};
-    check_hresult(WINRT_SHIM(IUISettings)->abi_UIElementColor(desiredElement, put_abi(value)));
-    return value;
-}
-
-template <typename D> double impl_IUISettings2<D>::TextScaleFactor() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IUISettings2)->get_TextScaleFactor(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IUISettings2<D>::TextScaleFactorChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IUISettings2)->add_TextScaleFactorChanged(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IUISettings2> impl_IUISettings2<D>::TextScaleFactorChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IUISettings2>(this, &ABI::Windows::UI::ViewManagement::IUISettings2::remove_TextScaleFactorChanged, TextScaleFactorChanged(handler));
-}
-
-template <typename D> void impl_IUISettings2<D>::TextScaleFactorChanged(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IUISettings2)->remove_TextScaleFactorChanged(cookie));
-}
-
-template <typename D> Windows::UI::Color impl_IUISettings3<D>::GetColorValue(Windows::UI::ViewManagement::UIColorType desiredColor) const
-{
-    Windows::UI::Color value {};
-    check_hresult(WINRT_SHIM(IUISettings3)->abi_GetColorValue(desiredColor, put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IUISettings3<D>::ColorValuesChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IUISettings3)->add_ColorValuesChanged(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IUISettings3> impl_IUISettings3<D>::ColorValuesChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IUISettings3>(this, &ABI::Windows::UI::ViewManagement::IUISettings3::remove_ColorValuesChanged, ColorValuesChanged(handler));
-}
-
-template <typename D> void impl_IUISettings3<D>::ColorValuesChanged(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IUISettings3)->remove_ColorValuesChanged(cookie));
-}
-
-template <typename D> bool impl_IUISettings4<D>::AdvancedEffectsEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IUISettings4)->get_AdvancedEffectsEnabled(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IUISettings4<D>::AdvancedEffectsEnabledChanged(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token cookie {};
-    check_hresult(WINRT_SHIM(IUISettings4)->add_AdvancedEffectsEnabledChanged(get_abi(handler), &cookie));
-    return cookie;
-}
-
-template <typename D> event_revoker<IUISettings4> impl_IUISettings4<D>::AdvancedEffectsEnabledChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::UISettings, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IUISettings4>(this, &ABI::Windows::UI::ViewManagement::IUISettings4::remove_AdvancedEffectsEnabledChanged, AdvancedEffectsEnabledChanged(handler));
-}
-
-template <typename D> void impl_IUISettings4<D>::AdvancedEffectsEnabledChanged(event_token cookie) const
-{
-    check_hresult(WINRT_SHIM(IUISettings4)->remove_AdvancedEffectsEnabledChanged(cookie));
-}
-
-template <typename D> Windows::UI::ViewManagement::StatusBar impl_IStatusBarStatics<D>::GetForCurrentView() const
-{
-    Windows::UI::ViewManagement::StatusBar value { nullptr };
-    check_hresult(WINRT_SHIM(IStatusBarStatics)->abi_GetForCurrentView(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBar<D>::ShowAsync() const
-{
-    Windows::Foundation::IAsyncAction returnValue;
-    check_hresult(WINRT_SHIM(IStatusBar)->abi_ShowAsync(put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBar<D>::HideAsync() const
-{
-    Windows::Foundation::IAsyncAction returnValue;
-    check_hresult(WINRT_SHIM(IStatusBar)->abi_HideAsync(put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> double impl_IStatusBar<D>::BackgroundOpacity() const
-{
-    double value {};
-    check_hresult(WINRT_SHIM(IStatusBar)->get_BackgroundOpacity(&value));
-    return value;
-}
-
-template <typename D> void impl_IStatusBar<D>::BackgroundOpacity(double value) const
-{
-    check_hresult(WINRT_SHIM(IStatusBar)->put_BackgroundOpacity(value));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IStatusBar<D>::ForegroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IStatusBar)->get_ForegroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IStatusBar<D>::ForegroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IStatusBar)->put_ForegroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IStatusBar<D>::BackgroundColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IStatusBar)->get_BackgroundColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IStatusBar<D>::BackgroundColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IStatusBar)->put_BackgroundColor(get_abi(value)));
-}
-
-template <typename D> Windows::UI::ViewManagement::StatusBarProgressIndicator impl_IStatusBar<D>::ProgressIndicator() const
-{
-    Windows::UI::ViewManagement::StatusBarProgressIndicator value { nullptr };
-    check_hresult(WINRT_SHIM(IStatusBar)->get_ProgressIndicator(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Rect impl_IStatusBar<D>::OccludedRect() const
-{
-    Windows::Foundation::Rect value {};
-    check_hresult(WINRT_SHIM(IStatusBar)->get_OccludedRect(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IStatusBar<D>::Showing(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IStatusBar)->add_Showing(get_abi(eventHandler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IStatusBar> impl_IStatusBar<D>::Showing(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    return impl::make_event_revoker<D, IStatusBar>(this, &ABI::Windows::UI::ViewManagement::IStatusBar::remove_Showing, Showing(eventHandler));
-}
-
-template <typename D> void impl_IStatusBar<D>::Showing(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IStatusBar)->remove_Showing(token));
-}
-
-template <typename D> event_token impl_IStatusBar<D>::Hiding(const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IStatusBar)->add_Hiding(get_abi(eventHandler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IStatusBar> impl_IStatusBar<D>::Hiding(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::UI::ViewManagement::StatusBar, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    return impl::make_event_revoker<D, IStatusBar>(this, &ABI::Windows::UI::ViewManagement::IStatusBar::remove_Hiding, Hiding(eventHandler));
-}
-
-template <typename D> void impl_IStatusBar<D>::Hiding(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IStatusBar)->remove_Hiding(token));
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBarProgressIndicator<D>::ShowAsync() const
-{
-    Windows::Foundation::IAsyncAction returnValue;
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->abi_ShowAsync(put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IStatusBarProgressIndicator<D>::HideAsync() const
-{
-    Windows::Foundation::IAsyncAction returnValue;
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->abi_HideAsync(put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> hstring impl_IStatusBarProgressIndicator<D>::Text() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->get_Text(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IStatusBarProgressIndicator<D>::Text(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->put_Text(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<double> impl_IStatusBarProgressIndicator<D>::ProgressValue() const
-{
-    Windows::Foundation::IReference<double> value;
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->get_ProgressValue(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IStatusBarProgressIndicator<D>::ProgressValue(const optional<double> & value) const
-{
-    check_hresult(WINRT_SHIM(IStatusBarProgressIndicator)->put_ProgressValue(get_abi(value)));
-}
-
-template <typename D> bool impl_IApplicationViewScalingStatics<D>::DisableLayoutScaling() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IApplicationViewScalingStatics)->get_DisableLayoutScaling(&value));
-    return value;
-}
-
-template <typename D> bool impl_IApplicationViewScalingStatics<D>::TrySetDisableLayoutScaling(bool disableLayoutScaling) const
-{
-    bool success {};
-    check_hresult(WINRT_SHIM(IApplicationViewScalingStatics)->abi_TrySetDisableLayoutScaling(disableLayoutScaling, &success));
-    return success;
-}
+WINRT_EXPORT namespace winrt::Windows::UI::ViewManagement {
 
 inline AccessibilitySettings::AccessibilitySettings() :
     AccessibilitySettings(activate_instance<AccessibilitySettings>())
@@ -3686,122 +3685,122 @@ inline AccessibilitySettings::AccessibilitySettings() :
 
 inline bool ApplicationView::TryUnsnapToFullscreen()
 {
-    return get_activation_factory<ApplicationView, IApplicationViewFullscreenStatics>().TryUnsnapToFullscreen();
+    return get_activation_factory<ApplicationView, Windows::UI::ViewManagement::IApplicationViewFullscreenStatics>().TryUnsnapToFullscreen();
 }
 
-inline int32_t ApplicationView::GetApplicationViewIdForWindow(const Windows::UI::Core::ICoreWindow & window)
+inline int32_t ApplicationView::GetApplicationViewIdForWindow(Windows::UI::Core::ICoreWindow const& window)
 {
-    return get_activation_factory<ApplicationView, IApplicationViewInteropStatics>().GetApplicationViewIdForWindow(window);
+    return get_activation_factory<ApplicationView, Windows::UI::ViewManagement::IApplicationViewInteropStatics>().GetApplicationViewIdForWindow(window);
 }
 
 inline Windows::UI::ViewManagement::ApplicationViewState ApplicationView::Value()
 {
-    return get_activation_factory<ApplicationView, IApplicationViewStatics>().Value();
+    return get_activation_factory<ApplicationView, Windows::UI::ViewManagement::IApplicationViewStatics>().Value();
 }
 
 inline bool ApplicationView::TryUnsnap()
 {
-    return get_activation_factory<ApplicationView, IApplicationViewStatics>().TryUnsnap();
+    return get_activation_factory<ApplicationView, Windows::UI::ViewManagement::IApplicationViewStatics>().TryUnsnap();
 }
 
 inline Windows::UI::ViewManagement::ApplicationView ApplicationView::GetForCurrentView()
 {
-    return get_activation_factory<ApplicationView, IApplicationViewStatics2>().GetForCurrentView();
+    return get_activation_factory<ApplicationView, Windows::UI::ViewManagement::IApplicationViewStatics2>().GetForCurrentView();
 }
 
 inline bool ApplicationView::TerminateAppOnFinalViewClose()
 {
-    return get_activation_factory<ApplicationView, IApplicationViewStatics2>().TerminateAppOnFinalViewClose();
+    return get_activation_factory<ApplicationView, Windows::UI::ViewManagement::IApplicationViewStatics2>().TerminateAppOnFinalViewClose();
 }
 
 inline void ApplicationView::TerminateAppOnFinalViewClose(bool value)
 {
-    get_activation_factory<ApplicationView, IApplicationViewStatics2>().TerminateAppOnFinalViewClose(value);
+    get_activation_factory<ApplicationView, Windows::UI::ViewManagement::IApplicationViewStatics2>().TerminateAppOnFinalViewClose(value);
 }
 
 inline Windows::UI::ViewManagement::ApplicationViewWindowingMode ApplicationView::PreferredLaunchWindowingMode()
 {
-    return get_activation_factory<ApplicationView, IApplicationViewStatics3>().PreferredLaunchWindowingMode();
+    return get_activation_factory<ApplicationView, Windows::UI::ViewManagement::IApplicationViewStatics3>().PreferredLaunchWindowingMode();
 }
 
-inline void ApplicationView::PreferredLaunchWindowingMode(Windows::UI::ViewManagement::ApplicationViewWindowingMode value)
+inline void ApplicationView::PreferredLaunchWindowingMode(Windows::UI::ViewManagement::ApplicationViewWindowingMode const& value)
 {
-    get_activation_factory<ApplicationView, IApplicationViewStatics3>().PreferredLaunchWindowingMode(value);
+    get_activation_factory<ApplicationView, Windows::UI::ViewManagement::IApplicationViewStatics3>().PreferredLaunchWindowingMode(value);
 }
 
 inline Windows::Foundation::Size ApplicationView::PreferredLaunchViewSize()
 {
-    return get_activation_factory<ApplicationView, IApplicationViewStatics3>().PreferredLaunchViewSize();
+    return get_activation_factory<ApplicationView, Windows::UI::ViewManagement::IApplicationViewStatics3>().PreferredLaunchViewSize();
 }
 
-inline void ApplicationView::PreferredLaunchViewSize(const Windows::Foundation::Size & value)
+inline void ApplicationView::PreferredLaunchViewSize(Windows::Foundation::Size const& value)
 {
-    get_activation_factory<ApplicationView, IApplicationViewStatics3>().PreferredLaunchViewSize(value);
+    get_activation_factory<ApplicationView, Windows::UI::ViewManagement::IApplicationViewStatics3>().PreferredLaunchViewSize(value);
 }
 
 inline bool ApplicationViewScaling::DisableLayoutScaling()
 {
-    return get_activation_factory<ApplicationViewScaling, IApplicationViewScalingStatics>().DisableLayoutScaling();
+    return get_activation_factory<ApplicationViewScaling, Windows::UI::ViewManagement::IApplicationViewScalingStatics>().DisableLayoutScaling();
 }
 
 inline bool ApplicationViewScaling::TrySetDisableLayoutScaling(bool disableLayoutScaling)
 {
-    return get_activation_factory<ApplicationViewScaling, IApplicationViewScalingStatics>().TrySetDisableLayoutScaling(disableLayoutScaling);
+    return get_activation_factory<ApplicationViewScaling, Windows::UI::ViewManagement::IApplicationViewScalingStatics>().TrySetDisableLayoutScaling(disableLayoutScaling);
 }
 
 inline void ApplicationViewSwitcher::DisableShowingMainViewOnActivation()
 {
-    get_activation_factory<ApplicationViewSwitcher, IApplicationViewSwitcherStatics>().DisableShowingMainViewOnActivation();
+    get_activation_factory<ApplicationViewSwitcher, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics>().DisableShowingMainViewOnActivation();
 }
 
 inline Windows::Foundation::IAsyncOperation<bool> ApplicationViewSwitcher::TryShowAsStandaloneAsync(int32_t viewId)
 {
-    return get_activation_factory<ApplicationViewSwitcher, IApplicationViewSwitcherStatics>().TryShowAsStandaloneAsync(viewId);
+    return get_activation_factory<ApplicationViewSwitcher, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics>().TryShowAsStandaloneAsync(viewId);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> ApplicationViewSwitcher::TryShowAsStandaloneAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference sizePreference)
+inline Windows::Foundation::IAsyncOperation<bool> ApplicationViewSwitcher::TryShowAsStandaloneAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference const& sizePreference)
 {
-    return get_activation_factory<ApplicationViewSwitcher, IApplicationViewSwitcherStatics>().TryShowAsStandaloneAsync(viewId, sizePreference);
+    return get_activation_factory<ApplicationViewSwitcher, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics>().TryShowAsStandaloneAsync(viewId, sizePreference);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> ApplicationViewSwitcher::TryShowAsStandaloneAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference sizePreference, int32_t anchorViewId, Windows::UI::ViewManagement::ViewSizePreference anchorSizePreference)
+inline Windows::Foundation::IAsyncOperation<bool> ApplicationViewSwitcher::TryShowAsStandaloneAsync(int32_t viewId, Windows::UI::ViewManagement::ViewSizePreference const& sizePreference, int32_t anchorViewId, Windows::UI::ViewManagement::ViewSizePreference const& anchorSizePreference)
 {
-    return get_activation_factory<ApplicationViewSwitcher, IApplicationViewSwitcherStatics>().TryShowAsStandaloneAsync(viewId, sizePreference, anchorViewId, anchorSizePreference);
+    return get_activation_factory<ApplicationViewSwitcher, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics>().TryShowAsStandaloneAsync(viewId, sizePreference, anchorViewId, anchorSizePreference);
 }
 
 inline Windows::Foundation::IAsyncAction ApplicationViewSwitcher::SwitchAsync(int32_t viewId)
 {
-    return get_activation_factory<ApplicationViewSwitcher, IApplicationViewSwitcherStatics>().SwitchAsync(viewId);
+    return get_activation_factory<ApplicationViewSwitcher, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics>().SwitchAsync(viewId);
 }
 
 inline Windows::Foundation::IAsyncAction ApplicationViewSwitcher::SwitchAsync(int32_t toViewId, int32_t fromViewId)
 {
-    return get_activation_factory<ApplicationViewSwitcher, IApplicationViewSwitcherStatics>().SwitchAsync(toViewId, fromViewId);
+    return get_activation_factory<ApplicationViewSwitcher, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics>().SwitchAsync(toViewId, fromViewId);
 }
 
-inline Windows::Foundation::IAsyncAction ApplicationViewSwitcher::SwitchAsync(int32_t toViewId, int32_t fromViewId, Windows::UI::ViewManagement::ApplicationViewSwitchingOptions options)
+inline Windows::Foundation::IAsyncAction ApplicationViewSwitcher::SwitchAsync(int32_t toViewId, int32_t fromViewId, Windows::UI::ViewManagement::ApplicationViewSwitchingOptions const& options)
 {
-    return get_activation_factory<ApplicationViewSwitcher, IApplicationViewSwitcherStatics>().SwitchAsync(toViewId, fromViewId, options);
+    return get_activation_factory<ApplicationViewSwitcher, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics>().SwitchAsync(toViewId, fromViewId, options);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> ApplicationViewSwitcher::PrepareForCustomAnimatedSwitchAsync(int32_t toViewId, int32_t fromViewId, Windows::UI::ViewManagement::ApplicationViewSwitchingOptions options)
+inline Windows::Foundation::IAsyncOperation<bool> ApplicationViewSwitcher::PrepareForCustomAnimatedSwitchAsync(int32_t toViewId, int32_t fromViewId, Windows::UI::ViewManagement::ApplicationViewSwitchingOptions const& options)
 {
-    return get_activation_factory<ApplicationViewSwitcher, IApplicationViewSwitcherStatics>().PrepareForCustomAnimatedSwitchAsync(toViewId, fromViewId, options);
+    return get_activation_factory<ApplicationViewSwitcher, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics>().PrepareForCustomAnimatedSwitchAsync(toViewId, fromViewId, options);
 }
 
 inline void ApplicationViewSwitcher::DisableSystemViewActivationPolicy()
 {
-    get_activation_factory<ApplicationViewSwitcher, IApplicationViewSwitcherStatics2>().DisableSystemViewActivationPolicy();
+    get_activation_factory<ApplicationViewSwitcher, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics2>().DisableSystemViewActivationPolicy();
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> ApplicationViewSwitcher::TryShowAsViewModeAsync(int32_t viewId, Windows::UI::ViewManagement::ApplicationViewMode viewMode)
+inline Windows::Foundation::IAsyncOperation<bool> ApplicationViewSwitcher::TryShowAsViewModeAsync(int32_t viewId, Windows::UI::ViewManagement::ApplicationViewMode const& viewMode)
 {
-    return get_activation_factory<ApplicationViewSwitcher, IApplicationViewSwitcherStatics3>().TryShowAsViewModeAsync(viewId, viewMode);
+    return get_activation_factory<ApplicationViewSwitcher, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3>().TryShowAsViewModeAsync(viewId, viewMode);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> ApplicationViewSwitcher::TryShowAsViewModeAsync(int32_t viewId, Windows::UI::ViewManagement::ApplicationViewMode viewMode, const Windows::UI::ViewManagement::ViewModePreferences & viewModePreferences)
+inline Windows::Foundation::IAsyncOperation<bool> ApplicationViewSwitcher::TryShowAsViewModeAsync(int32_t viewId, Windows::UI::ViewManagement::ApplicationViewMode const& viewMode, Windows::UI::ViewManagement::ViewModePreferences const& viewModePreferences)
 {
-    return get_activation_factory<ApplicationViewSwitcher, IApplicationViewSwitcherStatics3>().TryShowAsViewModeAsync(viewId, viewMode, viewModePreferences);
+    return get_activation_factory<ApplicationViewSwitcher, Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3>().TryShowAsViewModeAsync(viewId, viewMode, viewModePreferences);
 }
 
 inline ApplicationViewTransferContext::ApplicationViewTransferContext() :
@@ -3810,73 +3809,73 @@ inline ApplicationViewTransferContext::ApplicationViewTransferContext() :
 
 inline hstring ApplicationViewTransferContext::DataPackageFormatId()
 {
-    return get_activation_factory<ApplicationViewTransferContext, IApplicationViewTransferContextStatics>().DataPackageFormatId();
+    return get_activation_factory<ApplicationViewTransferContext, Windows::UI::ViewManagement::IApplicationViewTransferContextStatics>().DataPackageFormatId();
 }
 
 inline Windows::UI::ViewManagement::InputPane InputPane::GetForCurrentView()
 {
-    return get_activation_factory<InputPane, IInputPaneStatics>().GetForCurrentView();
+    return get_activation_factory<InputPane, Windows::UI::ViewManagement::IInputPaneStatics>().GetForCurrentView();
 }
 
 inline Windows::Foundation::IAsyncAction ProjectionManager::StartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId)
 {
-    return get_activation_factory<ProjectionManager, IProjectionManagerStatics>().StartProjectingAsync(projectionViewId, anchorViewId);
+    return get_activation_factory<ProjectionManager, Windows::UI::ViewManagement::IProjectionManagerStatics>().StartProjectingAsync(projectionViewId, anchorViewId);
 }
 
 inline Windows::Foundation::IAsyncAction ProjectionManager::SwapDisplaysForViewsAsync(int32_t projectionViewId, int32_t anchorViewId)
 {
-    return get_activation_factory<ProjectionManager, IProjectionManagerStatics>().SwapDisplaysForViewsAsync(projectionViewId, anchorViewId);
+    return get_activation_factory<ProjectionManager, Windows::UI::ViewManagement::IProjectionManagerStatics>().SwapDisplaysForViewsAsync(projectionViewId, anchorViewId);
 }
 
 inline Windows::Foundation::IAsyncAction ProjectionManager::StopProjectingAsync(int32_t projectionViewId, int32_t anchorViewId)
 {
-    return get_activation_factory<ProjectionManager, IProjectionManagerStatics>().StopProjectingAsync(projectionViewId, anchorViewId);
+    return get_activation_factory<ProjectionManager, Windows::UI::ViewManagement::IProjectionManagerStatics>().StopProjectingAsync(projectionViewId, anchorViewId);
 }
 
 inline bool ProjectionManager::ProjectionDisplayAvailable()
 {
-    return get_activation_factory<ProjectionManager, IProjectionManagerStatics>().ProjectionDisplayAvailable();
+    return get_activation_factory<ProjectionManager, Windows::UI::ViewManagement::IProjectionManagerStatics>().ProjectionDisplayAvailable();
 }
 
-inline event_token ProjectionManager::ProjectionDisplayAvailableChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
+inline event_token ProjectionManager::ProjectionDisplayAvailableChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler)
 {
-    return get_activation_factory<ProjectionManager, IProjectionManagerStatics>().ProjectionDisplayAvailableChanged(handler);
+    return get_activation_factory<ProjectionManager, Windows::UI::ViewManagement::IProjectionManagerStatics>().ProjectionDisplayAvailableChanged(handler);
 }
 
-inline factory_event_revoker<IProjectionManagerStatics> ProjectionManager::ProjectionDisplayAvailableChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
+inline factory_event_revoker<Windows::UI::ViewManagement::IProjectionManagerStatics> ProjectionManager::ProjectionDisplayAvailableChanged(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler)
 {
-    auto factory = get_activation_factory<ProjectionManager, IProjectionManagerStatics>();
-    return { factory, &ABI::Windows::UI::ViewManagement::IProjectionManagerStatics::remove_ProjectionDisplayAvailableChanged, factory.ProjectionDisplayAvailableChanged(handler) };
+    auto factory = get_activation_factory<ProjectionManager, Windows::UI::ViewManagement::IProjectionManagerStatics>();
+    return { factory, &abi_t<Windows::UI::ViewManagement::IProjectionManagerStatics>::remove_ProjectionDisplayAvailableChanged, factory.ProjectionDisplayAvailableChanged(handler) };
 }
 
-inline void ProjectionManager::ProjectionDisplayAvailableChanged(event_token token)
+inline void ProjectionManager::ProjectionDisplayAvailableChanged(event_token const& token)
 {
-    get_activation_factory<ProjectionManager, IProjectionManagerStatics>().ProjectionDisplayAvailableChanged(token);
+    get_activation_factory<ProjectionManager, Windows::UI::ViewManagement::IProjectionManagerStatics>().ProjectionDisplayAvailableChanged(token);
 }
 
-inline Windows::Foundation::IAsyncAction ProjectionManager::StartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, const Windows::Devices::Enumeration::DeviceInformation & displayDeviceInfo)
+inline Windows::Foundation::IAsyncAction ProjectionManager::StartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, Windows::Devices::Enumeration::DeviceInformation const& displayDeviceInfo)
 {
-    return get_activation_factory<ProjectionManager, IProjectionManagerStatics2>().StartProjectingAsync(projectionViewId, anchorViewId, displayDeviceInfo);
+    return get_activation_factory<ProjectionManager, Windows::UI::ViewManagement::IProjectionManagerStatics2>().StartProjectingAsync(projectionViewId, anchorViewId, displayDeviceInfo);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> ProjectionManager::RequestStartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, const Windows::Foundation::Rect & selection)
+inline Windows::Foundation::IAsyncOperation<bool> ProjectionManager::RequestStartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, Windows::Foundation::Rect const& selection)
 {
-    return get_activation_factory<ProjectionManager, IProjectionManagerStatics2>().RequestStartProjectingAsync(projectionViewId, anchorViewId, selection);
+    return get_activation_factory<ProjectionManager, Windows::UI::ViewManagement::IProjectionManagerStatics2>().RequestStartProjectingAsync(projectionViewId, anchorViewId, selection);
 }
 
-inline Windows::Foundation::IAsyncOperation<bool> ProjectionManager::RequestStartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement prefferedPlacement)
+inline Windows::Foundation::IAsyncOperation<bool> ProjectionManager::RequestStartProjectingAsync(int32_t projectionViewId, int32_t anchorViewId, Windows::Foundation::Rect const& selection, Windows::UI::Popups::Placement const& prefferedPlacement)
 {
-    return get_activation_factory<ProjectionManager, IProjectionManagerStatics2>().RequestStartProjectingAsync(projectionViewId, anchorViewId, selection, prefferedPlacement);
+    return get_activation_factory<ProjectionManager, Windows::UI::ViewManagement::IProjectionManagerStatics2>().RequestStartProjectingAsync(projectionViewId, anchorViewId, selection, prefferedPlacement);
 }
 
 inline hstring ProjectionManager::GetDeviceSelector()
 {
-    return get_activation_factory<ProjectionManager, IProjectionManagerStatics2>().GetDeviceSelector();
+    return get_activation_factory<ProjectionManager, Windows::UI::ViewManagement::IProjectionManagerStatics2>().GetDeviceSelector();
 }
 
 inline Windows::UI::ViewManagement::StatusBar StatusBar::GetForCurrentView()
 {
-    return get_activation_factory<StatusBar, IStatusBarStatics>().GetForCurrentView();
+    return get_activation_factory<StatusBar, Windows::UI::ViewManagement::IStatusBarStatics>().GetForCurrentView();
 }
 
 inline UISettings::UISettings() :
@@ -3885,493 +3884,183 @@ inline UISettings::UISettings() :
 
 inline Windows::UI::ViewManagement::UIViewSettings UIViewSettings::GetForCurrentView()
 {
-    return get_activation_factory<UIViewSettings, IUIViewSettingsStatics>().GetForCurrentView();
+    return get_activation_factory<UIViewSettings, Windows::UI::ViewManagement::IUIViewSettingsStatics>().GetForCurrentView();
 }
 
-inline Windows::UI::ViewManagement::ViewModePreferences ViewModePreferences::CreateDefault(Windows::UI::ViewManagement::ApplicationViewMode mode)
+inline Windows::UI::ViewManagement::ViewModePreferences ViewModePreferences::CreateDefault(Windows::UI::ViewManagement::ApplicationViewMode const& mode)
 {
-    return get_activation_factory<ViewModePreferences, IViewModePreferencesStatics>().CreateDefault(mode);
+    return get_activation_factory<ViewModePreferences, Windows::UI::ViewManagement::IViewModePreferencesStatics>().CreateDefault(mode);
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IAccessibilitySettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IAccessibilitySettings> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IActivationViewSwitcher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IActivationViewSwitcher> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationView> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationView> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationView2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationView2> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationView3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationView3> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationView4> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationView4> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs2> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewFullscreenStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewFullscreenStatics> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewInteropStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewInteropStatics> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewScaling> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewScaling> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewScalingStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewScalingStatics> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewStatics> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewStatics2> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewStatics3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewStatics3> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics2> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewTitleBar> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewTitleBar> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewTransferContext> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewTransferContext> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IApplicationViewTransferContextStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IApplicationViewTransferContextStatics> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IInputPane> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IInputPane> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IInputPane2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IInputPane2> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IInputPaneControl> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IInputPaneControl> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IInputPaneStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IInputPaneStatics> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IInputPaneVisibilityEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IInputPaneVisibilityEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IProjectionManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IProjectionManagerStatics> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IProjectionManagerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IProjectionManagerStatics2> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IStatusBar> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IStatusBar> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IStatusBarProgressIndicator> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IStatusBarProgressIndicator> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IStatusBarStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IStatusBarStatics> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IUISettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IUISettings> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IUISettings2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IUISettings2> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IUISettings3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IUISettings3> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IUISettings4> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IUISettings4> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IUIViewSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IUIViewSettings> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IUIViewSettingsStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IUIViewSettingsStatics> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IViewModePreferences> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IViewModePreferences> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::IViewModePreferencesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::IViewModePreferencesStatics> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::AccessibilitySettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::AccessibilitySettings> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::ActivationViewSwitcher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::ActivationViewSwitcher> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::ApplicationView> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::ApplicationView> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::ApplicationViewScaling> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::ApplicationViewScaling> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::ApplicationViewSwitcher> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::ApplicationViewSwitcher> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::ApplicationViewTitleBar> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::ApplicationViewTitleBar> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::ApplicationViewTransferContext> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::ApplicationViewTransferContext> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::InputPane> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::InputPane> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::InputPaneVisibilityEventArgs> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::ProjectionManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::ProjectionManager> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::StatusBar> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::StatusBar> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::StatusBarProgressIndicator> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::StatusBarProgressIndicator> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::UISettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::UISettings> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::UIViewSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::UIViewSettings> {};
+
+template<> struct hash<winrt::Windows::UI::ViewManagement::ViewModePreferences> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::UI::ViewManagement::ViewModePreferences> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IAccessibilitySettings>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IAccessibilitySettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IActivationViewSwitcher>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IActivationViewSwitcher & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationView>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationView & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationView2>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationView2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationView3>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationView3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationView4>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationView4 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs2>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewConsolidatedEventArgs2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewFullscreenStatics>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewFullscreenStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewInteropStatics>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewInteropStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewScaling>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewScaling & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewScalingStatics>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewScalingStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewStatics>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewStatics2>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewStatics3>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewStatics3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics2>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewSwitcherStatics3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewTitleBar>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewTitleBar & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewTransferContext>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewTransferContext & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IApplicationViewTransferContextStatics>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IApplicationViewTransferContextStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IInputPane>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IInputPane & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IInputPane2>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IInputPane2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IInputPaneControl>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IInputPaneControl & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IInputPaneStatics>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IInputPaneStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IInputPaneVisibilityEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IInputPaneVisibilityEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IProjectionManagerStatics>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IProjectionManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IProjectionManagerStatics2>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IProjectionManagerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IStatusBar>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IStatusBar & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IStatusBarProgressIndicator>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IStatusBarProgressIndicator & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IStatusBarStatics>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IStatusBarStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IUISettings>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IUISettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IUISettings2>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IUISettings2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IUISettings3>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IUISettings3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IUISettings4>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IUISettings4 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IUIViewSettings>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IUIViewSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IUIViewSettingsStatics>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IUIViewSettingsStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IViewModePreferences>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IViewModePreferences & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::IViewModePreferencesStatics>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::IViewModePreferencesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::AccessibilitySettings>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::AccessibilitySettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::ActivationViewSwitcher>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::ActivationViewSwitcher & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::ApplicationView>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::ApplicationView & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::ApplicationViewConsolidatedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::ApplicationViewScaling>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::ApplicationViewScaling & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::ApplicationViewTitleBar>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::ApplicationViewTitleBar & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::ApplicationViewTransferContext>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::ApplicationViewTransferContext & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::InputPane>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::InputPane & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::InputPaneVisibilityEventArgs>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::InputPaneVisibilityEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::StatusBar>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::StatusBar & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::StatusBarProgressIndicator>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::StatusBarProgressIndicator & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::UISettings>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::UISettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::UIViewSettings>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::UIViewSettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::UI::ViewManagement::ViewModePreferences>
-{
-    size_t operator()(const winrt::Windows::UI::ViewManagement::ViewModePreferences & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

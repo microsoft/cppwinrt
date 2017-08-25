@@ -46,7 +46,7 @@ struct App : ApplicationT<App>
             return;
         }
 
-        thread_context ui_thread;
+        apartment_context ui_thread;
         co_await resume_background();
 
         auto stream = co_await file.OpenAsync(FileAccessMode::Read);

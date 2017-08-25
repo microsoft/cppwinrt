@@ -1,34 +1,2744 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Data.Text.2.h"
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.Foundation.Collections.2.h"
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.System.2.h"
+#include "winrt/impl/Windows.UI.2.h"
+#include "winrt/impl/Windows.UI.Popups.2.h"
+#include "winrt/impl/Windows.UI.ViewManagement.2.h"
+#include "winrt/impl/Windows.ApplicationModel.Contacts.2.h"
+#include "winrt/Windows.ApplicationModel.h"
 
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.UI.ViewManagement.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.UI.Popups.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.System.3.h"
-#include "internal/Windows.ApplicationModel.Contacts.3.h"
-#include "Windows.ApplicationModel.h"
-#include "Windows.Foundation.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> consume_Windows_ApplicationModel_Contacts_IAggregateContactManager<D>::FindRawContactsAsync(Windows::ApplicationModel::Contacts::Contact const& contact) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IAggregateContactManager)->FindRawContactsAsync(get_abi(contact), put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> consume_Windows_ApplicationModel_Contacts_IAggregateContactManager<D>::TryLinkContactsAsync(Windows::ApplicationModel::Contacts::Contact const& primaryContact, Windows::ApplicationModel::Contacts::Contact const& secondaryContact) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> contact{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IAggregateContactManager)->TryLinkContactsAsync(get_abi(primaryContact), get_abi(secondaryContact), put_abi(contact)));
+    return contact;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Contacts_IAggregateContactManager<D>::UnlinkRawContactAsync(Windows::ApplicationModel::Contacts::Contact const& contact) const
+{
+    Windows::Foundation::IAsyncAction value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IAggregateContactManager)->UnlinkRawContactAsync(get_abi(contact), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Contacts_IAggregateContactManager<D>::TrySetPreferredSourceForPictureAsync(Windows::ApplicationModel::Contacts::Contact const& aggregateContact, Windows::ApplicationModel::Contacts::Contact const& rawContact) const
+{
+    Windows::Foundation::IAsyncOperation<bool> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IAggregateContactManager)->TrySetPreferredSourceForPictureAsync(get_abi(aggregateContact), get_abi(rawContact), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Contacts_IAggregateContactManager2<D>::SetRemoteIdentificationInformationAsync(param::hstring const& contactListId, param::hstring const& remoteSourceId, param::hstring const& accountId) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IAggregateContactManager2)->SetRemoteIdentificationInformationAsync(get_abi(contactListId), get_abi(remoteSourceId), get_abi(accountId), put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContact<D>::Name(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact)->put_Name(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference consume_Windows_ApplicationModel_Contacts_IContact<D>::Thumbnail() const
+{
+    Windows::Storage::Streams::IRandomAccessStreamReference value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact)->get_Thumbnail(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContact<D>::Thumbnail(Windows::Storage::Streams::IRandomAccessStreamReference const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact)->put_Thumbnail(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::IContactField> consume_Windows_ApplicationModel_Contacts_IContact<D>::Fields() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::IContactField> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact)->get_Fields(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact2<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContact2<D>::Id(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->put_Id(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact2<D>::Notes() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_Notes(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContact2<D>::Notes(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->put_Notes(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactPhone> consume_Windows_ApplicationModel_Contacts_IContact2<D>::Phones() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactPhone> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_Phones(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactEmail> consume_Windows_ApplicationModel_Contacts_IContact2<D>::Emails() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactEmail> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_Emails(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactAddress> consume_Windows_ApplicationModel_Contacts_IContact2<D>::Addresses() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactAddress> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_Addresses(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactConnectedServiceAccount> consume_Windows_ApplicationModel_Contacts_IContact2<D>::ConnectedServiceAccounts() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactConnectedServiceAccount> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_ConnectedServiceAccounts(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactDate> consume_Windows_ApplicationModel_Contacts_IContact2<D>::ImportantDates() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactDate> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_ImportantDates(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_ApplicationModel_Contacts_IContact2<D>::DataSuppliers() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_DataSuppliers(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactJobInfo> consume_Windows_ApplicationModel_Contacts_IContact2<D>::JobInfo() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactJobInfo> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_JobInfo(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactSignificantOther> consume_Windows_ApplicationModel_Contacts_IContact2<D>::SignificantOthers() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactSignificantOther> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_SignificantOthers(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactWebsite> consume_Windows_ApplicationModel_Contacts_IContact2<D>::Websites() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactWebsite> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_Websites(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IPropertySet consume_Windows_ApplicationModel_Contacts_IContact2<D>::ProviderProperties() const
+{
+    Windows::Foundation::Collections::IPropertySet value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact2)->get_ProviderProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact3<D>::ContactListId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_ContactListId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_ApplicationModel_Contacts_IContact3<D>::DisplayPictureUserUpdateTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_DisplayPictureUserUpdateTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContact3<D>::DisplayPictureUserUpdateTime(Windows::Foundation::DateTime const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->put_DisplayPictureUserUpdateTime(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContact3<D>::IsMe() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_IsMe(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact3<D>::AggregateId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_AggregateId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact3<D>::RemoteId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_RemoteId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContact3<D>::RemoteId(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->put_RemoteId(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact3<D>::RingToneToken() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_RingToneToken(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContact3<D>::RingToneToken(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->put_RingToneToken(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContact3<D>::IsDisplayPictureManuallySet() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_IsDisplayPictureManuallySet(&value));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference consume_Windows_ApplicationModel_Contacts_IContact3<D>::LargeDisplayPicture() const
+{
+    Windows::Storage::Streams::IRandomAccessStreamReference value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_LargeDisplayPicture(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference consume_Windows_ApplicationModel_Contacts_IContact3<D>::SmallDisplayPicture() const
+{
+    Windows::Storage::Streams::IRandomAccessStreamReference value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_SmallDisplayPicture(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference consume_Windows_ApplicationModel_Contacts_IContact3<D>::SourceDisplayPicture() const
+{
+    Windows::Storage::Streams::IRandomAccessStreamReference value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_SourceDisplayPicture(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContact3<D>::SourceDisplayPicture(Windows::Storage::Streams::IRandomAccessStreamReference const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->put_SourceDisplayPicture(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact3<D>::TextToneToken() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_TextToneToken(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContact3<D>::TextToneToken(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->put_TextToneToken(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContact3<D>::IsAggregate() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_IsAggregate(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact3<D>::FullName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_FullName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact3<D>::DisplayNameOverride() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_DisplayNameOverride(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContact3<D>::DisplayNameOverride(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->put_DisplayNameOverride(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact3<D>::Nickname() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_Nickname(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContact3<D>::Nickname(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->put_Nickname(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContact3<D>::SortName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContact3)->get_SortName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::StreetAddress() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->get_StreetAddress(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::StreetAddress(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->put_StreetAddress(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::Locality() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->get_Locality(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::Locality(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->put_Locality(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::Region() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->get_Region(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::Region(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->put_Region(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::Country() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->get_Country(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::Country(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->put_Country(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::PostalCode() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->get_PostalCode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::PostalCode(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->put_PostalCode(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactAddressKind consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::Kind() const
+{
+    Windows::ApplicationModel::Contacts::ContactAddressKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->get_Kind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::Kind(Windows::ApplicationModel::Contacts::ContactAddressKind const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->put_Kind(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::Description() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->get_Description(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactAddress<D>::Description(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAddress)->put_Description(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAnnotation<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAnnotation<D>::AnnotationListId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation)->get_AnnotationListId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAnnotation<D>::ContactId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation)->get_ContactId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactAnnotation<D>::ContactId(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation)->put_ContactId(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAnnotation<D>::RemoteId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation)->get_RemoteId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactAnnotation<D>::RemoteId(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation)->put_RemoteId(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactAnnotationOperations consume_Windows_ApplicationModel_Contacts_IContactAnnotation<D>::SupportedOperations() const
+{
+    Windows::ApplicationModel::Contacts::ContactAnnotationOperations value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation)->get_SupportedOperations(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactAnnotation<D>::SupportedOperations(Windows::ApplicationModel::Contacts::ContactAnnotationOperations const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation)->put_SupportedOperations(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContactAnnotation<D>::IsDisabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation)->get_IsDisabled(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::ValueSet consume_Windows_ApplicationModel_Contacts_IContactAnnotation<D>::ProviderProperties() const
+{
+    Windows::Foundation::Collections::ValueSet value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation)->get_ProviderProperties(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAnnotation2<D>::ContactListId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation2)->get_ContactListId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactAnnotation2<D>::ContactListId(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotation2)->put_ContactListId(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAnnotationList<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationList)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAnnotationList<D>::ProviderPackageFamilyName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationList)->get_ProviderPackageFamilyName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactAnnotationList<D>::UserDataAccountId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationList)->get_UserDataAccountId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Contacts_IContactAnnotationList<D>::DeleteAsync() const
+{
+    Windows::Foundation::IAsyncAction value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationList)->DeleteAsync(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Contacts_IContactAnnotationList<D>::TrySaveAnnotationAsync(Windows::ApplicationModel::Contacts::ContactAnnotation const& annotation) const
+{
+    Windows::Foundation::IAsyncOperation<bool> ppResult{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationList)->TrySaveAnnotationAsync(get_abi(annotation), put_abi(ppResult)));
+    return ppResult;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotation> consume_Windows_ApplicationModel_Contacts_IContactAnnotationList<D>::GetAnnotationAsync(param::hstring const& annotationId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotation> annotation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationList)->GetAnnotationAsync(get_abi(annotationId), put_abi(annotation)));
+    return annotation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> consume_Windows_ApplicationModel_Contacts_IContactAnnotationList<D>::FindAnnotationsByRemoteIdAsync(param::hstring const& remoteId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> annotations{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationList)->FindAnnotationsByRemoteIdAsync(get_abi(remoteId), put_abi(annotations)));
+    return annotations;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> consume_Windows_ApplicationModel_Contacts_IContactAnnotationList<D>::FindAnnotationsAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> annotations{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationList)->FindAnnotationsAsync(put_abi(annotations)));
+    return annotations;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Contacts_IContactAnnotationList<D>::DeleteAnnotationAsync(Windows::ApplicationModel::Contacts::ContactAnnotation const& annotation) const
+{
+    Windows::Foundation::IAsyncAction value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationList)->DeleteAnnotationAsync(get_abi(annotation), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> consume_Windows_ApplicationModel_Contacts_IContactAnnotationStore<D>::FindContactIdsByEmailAsync(param::hstring const& emailAddress) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> contactIds{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationStore)->FindContactIdsByEmailAsync(get_abi(emailAddress), put_abi(contactIds)));
+    return contactIds;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> consume_Windows_ApplicationModel_Contacts_IContactAnnotationStore<D>::FindContactIdsByPhoneNumberAsync(param::hstring const& phoneNumber) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> contactIds{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationStore)->FindContactIdsByPhoneNumberAsync(get_abi(phoneNumber), put_abi(contactIds)));
+    return contactIds;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> consume_Windows_ApplicationModel_Contacts_IContactAnnotationStore<D>::FindAnnotationsForContactAsync(Windows::ApplicationModel::Contacts::Contact const& contact) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> annotations{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationStore)->FindAnnotationsForContactAsync(get_abi(contact), put_abi(annotations)));
+    return annotations;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Contacts_IContactAnnotationStore<D>::DisableAnnotationAsync(Windows::ApplicationModel::Contacts::ContactAnnotation const& annotation) const
+{
+    Windows::Foundation::IAsyncAction value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationStore)->DisableAnnotationAsync(get_abi(annotation), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> consume_Windows_ApplicationModel_Contacts_IContactAnnotationStore<D>::CreateAnnotationListAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationStore)->CreateAnnotationListAsync(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> consume_Windows_ApplicationModel_Contacts_IContactAnnotationStore<D>::CreateAnnotationListAsync(param::hstring const& userDataAccountId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationStore)->CreateAnnotationListInAccountAsync(get_abi(userDataAccountId), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> consume_Windows_ApplicationModel_Contacts_IContactAnnotationStore<D>::GetAnnotationListAsync(param::hstring const& annotationListId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationStore)->GetAnnotationListAsync(get_abi(annotationListId), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotationList>> consume_Windows_ApplicationModel_Contacts_IContactAnnotationStore<D>::FindAnnotationListsAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotationList>> lists{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationStore)->FindAnnotationListsAsync(put_abi(lists)));
+    return lists;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> consume_Windows_ApplicationModel_Contacts_IContactAnnotationStore2<D>::FindAnnotationsForContactListAsync(param::hstring const& contactListId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> annotations{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactAnnotationStore2)->FindAnnotationsForContactListAsync(get_abi(contactListId), put_abi(annotations)));
+    return annotations;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact> consume_Windows_ApplicationModel_Contacts_IContactBatch<D>::Contacts() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactBatch)->get_Contacts(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactBatchStatus consume_Windows_ApplicationModel_Contacts_IContactBatch<D>::Status() const
+{
+    Windows::ApplicationModel::Contacts::ContactBatchStatus value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactBatch)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactCardDelayedDataLoader<D>::SetData(Windows::ApplicationModel::Contacts::Contact const& contact) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactCardDelayedDataLoader)->SetData(get_abi(contact)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactCardHeaderKind consume_Windows_ApplicationModel_Contacts_IContactCardOptions<D>::HeaderKind() const
+{
+    Windows::ApplicationModel::Contacts::ContactCardHeaderKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactCardOptions)->get_HeaderKind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactCardOptions<D>::HeaderKind(Windows::ApplicationModel::Contacts::ContactCardHeaderKind const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactCardOptions)->put_HeaderKind(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactCardTabKind consume_Windows_ApplicationModel_Contacts_IContactCardOptions<D>::InitialTabKind() const
+{
+    Windows::ApplicationModel::Contacts::ContactCardTabKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactCardOptions)->get_InitialTabKind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactCardOptions<D>::InitialTabKind(Windows::ApplicationModel::Contacts::ContactCardTabKind const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactCardOptions)->put_InitialTabKind(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_ApplicationModel_Contacts_IContactCardOptions2<D>::ServerSearchContactListIds() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactCardOptions2)->get_ServerSearchContactListIds(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactChangeType consume_Windows_ApplicationModel_Contacts_IContactChange<D>::ChangeType() const
+{
+    Windows::ApplicationModel::Contacts::ContactChangeType value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactChange)->get_ChangeType(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::Contact consume_Windows_ApplicationModel_Contacts_IContactChange<D>::Contact() const
+{
+    Windows::ApplicationModel::Contacts::Contact value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactChange)->get_Contact(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactChangeReader<D>::AcceptChanges() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactChangeReader)->AcceptChanges());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactChangeReader<D>::AcceptChangesThrough(Windows::ApplicationModel::Contacts::ContactChange const& lastChangeToAccept) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactChangeReader)->AcceptChangesThrough(get_abi(lastChangeToAccept)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactChange>> consume_Windows_ApplicationModel_Contacts_IContactChangeReader<D>::ReadBatchAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactChange>> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactChangeReader)->ReadBatchAsync(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactChangeTracker<D>::Enable() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactChangeTracker)->Enable());
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactChangeReader consume_Windows_ApplicationModel_Contacts_IContactChangeTracker<D>::GetChangeReader() const
+{
+    Windows::ApplicationModel::Contacts::ContactChangeReader value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactChangeTracker)->GetChangeReader(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactChangeTracker<D>::Reset() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactChangeTracker)->Reset());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactChangedDeferral<D>::Complete() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactChangedDeferral)->Complete());
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactChangedDeferral consume_Windows_ApplicationModel_Contacts_IContactChangedEventArgs<D>::GetDeferral() const
+{
+    Windows::ApplicationModel::Contacts::ContactChangedDeferral value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactChangedEventArgs)->GetDeferral(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactConnectedServiceAccount<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactConnectedServiceAccount)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactConnectedServiceAccount<D>::Id(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactConnectedServiceAccount)->put_Id(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactConnectedServiceAccount<D>::ServiceName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactConnectedServiceAccount)->get_ServiceName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactConnectedServiceAccount<D>::ServiceName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactConnectedServiceAccount)->put_ServiceName(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<uint32_t> consume_Windows_ApplicationModel_Contacts_IContactDate<D>::Day() const
+{
+    Windows::Foundation::IReference<uint32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactDate)->get_Day(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactDate<D>::Day(optional<uint32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactDate)->put_Day(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<uint32_t> consume_Windows_ApplicationModel_Contacts_IContactDate<D>::Month() const
+{
+    Windows::Foundation::IReference<uint32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactDate)->get_Month(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactDate<D>::Month(optional<uint32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactDate)->put_Month(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactDate<D>::Year() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactDate)->get_Year(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactDate<D>::Year(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactDate)->put_Year(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactDateKind consume_Windows_ApplicationModel_Contacts_IContactDate<D>::Kind() const
+{
+    Windows::ApplicationModel::Contacts::ContactDateKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactDate)->get_Kind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactDate<D>::Kind(Windows::ApplicationModel::Contacts::ContactDateKind const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactDate)->put_Kind(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactDate<D>::Description() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactDate)->get_Description(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactDate<D>::Description(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactDate)->put_Description(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactEmail<D>::Address() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactEmail)->get_Address(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactEmail<D>::Address(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactEmail)->put_Address(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactEmailKind consume_Windows_ApplicationModel_Contacts_IContactEmail<D>::Kind() const
+{
+    Windows::ApplicationModel::Contacts::ContactEmailKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactEmail)->get_Kind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactEmail<D>::Kind(Windows::ApplicationModel::Contacts::ContactEmailKind const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactEmail)->put_Kind(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactEmail<D>::Description() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactEmail)->get_Description(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactEmail<D>::Description(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactEmail)->put_Description(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactFieldType consume_Windows_ApplicationModel_Contacts_IContactField<D>::Type() const
+{
+    Windows::ApplicationModel::Contacts::ContactFieldType value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactField)->get_Type(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactFieldCategory consume_Windows_ApplicationModel_Contacts_IContactField<D>::Category() const
+{
+    Windows::ApplicationModel::Contacts::ContactFieldCategory value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactField)->get_Category(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactField<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactField)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactField<D>::Value() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactField)->get_Value(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactField consume_Windows_ApplicationModel_Contacts_IContactFieldFactory<D>::CreateField(param::hstring const& value, Windows::ApplicationModel::Contacts::ContactFieldType const& type) const
+{
+    Windows::ApplicationModel::Contacts::ContactField field{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactFieldFactory)->CreateField_Default(get_abi(value), get_abi(type), put_abi(field)));
+    return field;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactField consume_Windows_ApplicationModel_Contacts_IContactFieldFactory<D>::CreateField(param::hstring const& value, Windows::ApplicationModel::Contacts::ContactFieldType const& type, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category) const
+{
+    Windows::ApplicationModel::Contacts::ContactField field{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactFieldFactory)->CreateField_Category(get_abi(value), get_abi(type), get_abi(category), put_abi(field)));
+    return field;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactField consume_Windows_ApplicationModel_Contacts_IContactFieldFactory<D>::CreateField(param::hstring const& name, param::hstring const& value, Windows::ApplicationModel::Contacts::ContactFieldType const& type, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category) const
+{
+    Windows::ApplicationModel::Contacts::ContactField field{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactFieldFactory)->CreateField_Custom(get_abi(name), get_abi(value), get_abi(type), get_abi(category), put_abi(field)));
+    return field;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactInformation<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInformation)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> consume_Windows_ApplicationModel_Contacts_IContactInformation<D>::GetThumbnailAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInformation)->GetThumbnailAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> consume_Windows_ApplicationModel_Contacts_IContactInformation<D>::Emails() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInformation)->get_Emails(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> consume_Windows_ApplicationModel_Contacts_IContactInformation<D>::PhoneNumbers() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInformation)->get_PhoneNumbers(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactLocationField> consume_Windows_ApplicationModel_Contacts_IContactInformation<D>::Locations() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactLocationField> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInformation)->get_Locations(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactInstantMessageField> consume_Windows_ApplicationModel_Contacts_IContactInformation<D>::InstantMessages() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactInstantMessageField> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInformation)->get_InstantMessages(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> consume_Windows_ApplicationModel_Contacts_IContactInformation<D>::CustomFields() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInformation)->get_CustomFields(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> consume_Windows_ApplicationModel_Contacts_IContactInformation<D>::QueryCustomFields(param::hstring const& customName) const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInformation)->QueryCustomFields(get_abi(customName), put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactInstantMessageField<D>::UserName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInstantMessageField)->get_UserName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactInstantMessageField<D>::Service() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInstantMessageField)->get_Service(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactInstantMessageField<D>::DisplayText() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInstantMessageField)->get_DisplayText(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Uri consume_Windows_ApplicationModel_Contacts_IContactInstantMessageField<D>::LaunchUri() const
+{
+    Windows::Foundation::Uri value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInstantMessageField)->get_LaunchUri(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactInstantMessageField consume_Windows_ApplicationModel_Contacts_IContactInstantMessageFieldFactory<D>::CreateInstantMessage(param::hstring const& userName) const
+{
+    Windows::ApplicationModel::Contacts::ContactInstantMessageField field{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory)->CreateInstantMessage_Default(get_abi(userName), put_abi(field)));
+    return field;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactInstantMessageField consume_Windows_ApplicationModel_Contacts_IContactInstantMessageFieldFactory<D>::CreateInstantMessage(param::hstring const& userName, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category) const
+{
+    Windows::ApplicationModel::Contacts::ContactInstantMessageField field{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory)->CreateInstantMessage_Category(get_abi(userName), get_abi(category), put_abi(field)));
+    return field;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactInstantMessageField consume_Windows_ApplicationModel_Contacts_IContactInstantMessageFieldFactory<D>::CreateInstantMessage(param::hstring const& userName, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category, param::hstring const& service, param::hstring const& displayText, Windows::Foundation::Uri const& verb) const
+{
+    Windows::ApplicationModel::Contacts::ContactInstantMessageField field{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory)->CreateInstantMessage_All(get_abi(userName), get_abi(category), get_abi(service), get_abi(displayText), get_abi(verb), put_abi(field)));
+    return field;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::CompanyName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->get_CompanyName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::CompanyName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->put_CompanyName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::CompanyYomiName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->get_CompanyYomiName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::CompanyYomiName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->put_CompanyYomiName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::Department() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->get_Department(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::Department(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->put_Department(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::Title() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->get_Title(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::Title(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->put_Title(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::Manager() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->get_Manager(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::Manager(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->put_Manager(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::Office() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->get_Office(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::Office(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->put_Office(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::CompanyAddress() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->get_CompanyAddress(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::CompanyAddress(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->put_CompanyAddress(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::Description() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->get_Description(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactJobInfo<D>::Description(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactJobInfo)->put_Description(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactLaunchActionVerbsStatics<D>::Call() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics)->get_Call(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactLaunchActionVerbsStatics<D>::Message() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics)->get_Message(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactLaunchActionVerbsStatics<D>::Map() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics)->get_Map(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactLaunchActionVerbsStatics<D>::Post() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics)->get_Post(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactLaunchActionVerbsStatics<D>::VideoCall() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics)->get_VideoCall(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactList<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactList<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactList<D>::DisplayName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->put_DisplayName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactList<D>::SourceDisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->get_SourceDisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContactList<D>::IsHidden() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->get_IsHidden(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactList<D>::IsHidden(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->put_IsHidden(value));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactListOtherAppReadAccess consume_Windows_ApplicationModel_Contacts_IContactList<D>::OtherAppReadAccess() const
+{
+    Windows::ApplicationModel::Contacts::ContactListOtherAppReadAccess value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->get_OtherAppReadAccess(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactList<D>::OtherAppReadAccess(Windows::ApplicationModel::Contacts::ContactListOtherAppReadAccess const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->put_OtherAppReadAccess(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactListOtherAppWriteAccess consume_Windows_ApplicationModel_Contacts_IContactList<D>::OtherAppWriteAccess() const
+{
+    Windows::ApplicationModel::Contacts::ContactListOtherAppWriteAccess value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->get_OtherAppWriteAccess(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactList<D>::OtherAppWriteAccess(Windows::ApplicationModel::Contacts::ContactListOtherAppWriteAccess const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->put_OtherAppWriteAccess(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactChangeTracker consume_Windows_ApplicationModel_Contacts_IContactList<D>::ChangeTracker() const
+{
+    Windows::ApplicationModel::Contacts::ContactChangeTracker value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->get_ChangeTracker(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactListSyncManager consume_Windows_ApplicationModel_Contacts_IContactList<D>::SyncManager() const
+{
+    Windows::ApplicationModel::Contacts::ContactListSyncManager value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->get_SyncManager(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContactList<D>::SupportsServerSearch() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->get_SupportsServerSearch(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactList<D>::UserDataAccountId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->get_UserDataAccountId(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_ApplicationModel_Contacts_IContactList<D>::ContactChanged(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactList, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> const& value) const
+{
+    event_token returnValue{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->add_ContactChanged(get_abi(value), put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> event_revoker<Windows::ApplicationModel::Contacts::IContactList> consume_Windows_ApplicationModel_Contacts_IContactList<D>::ContactChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactList, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> const& value) const
+{
+    return impl::make_event_revoker<D, Windows::ApplicationModel::Contacts::IContactList>(this, &abi_t<Windows::ApplicationModel::Contacts::IContactList>::remove_ContactChanged, ContactChanged(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactList<D>::ContactChanged(event_token const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->remove_ContactChanged(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Contacts_IContactList<D>::SaveAsync() const
+{
+    Windows::Foundation::IAsyncAction returnValue{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->SaveAsync(put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Contacts_IContactList<D>::DeleteAsync() const
+{
+    Windows::Foundation::IAsyncAction returnValue{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->DeleteAsync(put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> consume_Windows_ApplicationModel_Contacts_IContactList<D>::GetContactFromRemoteIdAsync(param::hstring const& remoteId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> contact{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->GetContactFromRemoteIdAsync(get_abi(remoteId), put_abi(contact)));
+    return contact;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> consume_Windows_ApplicationModel_Contacts_IContactList<D>::GetMeContactAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> meContact{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->GetMeContactAsync(put_abi(meContact)));
+    return meContact;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactReader consume_Windows_ApplicationModel_Contacts_IContactList<D>::GetContactReader() const
+{
+    Windows::ApplicationModel::Contacts::ContactReader value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->GetContactReader(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactReader consume_Windows_ApplicationModel_Contacts_IContactList<D>::GetContactReader(Windows::ApplicationModel::Contacts::ContactQueryOptions const& options) const
+{
+    Windows::ApplicationModel::Contacts::ContactReader value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->GetContactReaderWithOptions(get_abi(options), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Contacts_IContactList<D>::SaveContactAsync(Windows::ApplicationModel::Contacts::Contact const& contact) const
+{
+    Windows::Foundation::IAsyncAction value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->SaveContactAsync(get_abi(contact), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Contacts_IContactList<D>::DeleteContactAsync(Windows::ApplicationModel::Contacts::Contact const& contact) const
+{
+    Windows::Foundation::IAsyncAction value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->DeleteContactAsync(get_abi(contact), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> consume_Windows_ApplicationModel_Contacts_IContactList<D>::GetContactAsync(param::hstring const& contactId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> contacts{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList)->GetContactAsync(get_abi(contactId), put_abi(contacts)));
+    return contacts;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Contacts_IContactList2<D>::RegisterSyncManagerAsync() const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList2)->RegisterSyncManagerAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactList2<D>::SupportsServerSearch(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList2)->put_SupportsServerSearch(value));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactListSyncConstraints consume_Windows_ApplicationModel_Contacts_IContactList2<D>::SyncConstraints() const
+{
+    Windows::ApplicationModel::Contacts::ContactListSyncConstraints value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactList2)->get_SyncConstraints(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::CanSyncDescriptions() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_CanSyncDescriptions(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::CanSyncDescriptions(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_CanSyncDescriptions(value));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxHomePhoneNumbers() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxHomePhoneNumbers(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxHomePhoneNumbers(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxHomePhoneNumbers(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxMobilePhoneNumbers() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxMobilePhoneNumbers(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxMobilePhoneNumbers(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxMobilePhoneNumbers(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxWorkPhoneNumbers() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxWorkPhoneNumbers(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxWorkPhoneNumbers(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxWorkPhoneNumbers(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxOtherPhoneNumbers() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxOtherPhoneNumbers(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxOtherPhoneNumbers(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxOtherPhoneNumbers(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxPagerPhoneNumbers() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxPagerPhoneNumbers(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxPagerPhoneNumbers(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxPagerPhoneNumbers(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxBusinessFaxPhoneNumbers() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxBusinessFaxPhoneNumbers(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxBusinessFaxPhoneNumbers(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxBusinessFaxPhoneNumbers(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxHomeFaxPhoneNumbers() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxHomeFaxPhoneNumbers(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxHomeFaxPhoneNumbers(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxHomeFaxPhoneNumbers(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxCompanyPhoneNumbers() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxCompanyPhoneNumbers(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxCompanyPhoneNumbers(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxCompanyPhoneNumbers(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxAssistantPhoneNumbers() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxAssistantPhoneNumbers(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxAssistantPhoneNumbers(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxAssistantPhoneNumbers(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxRadioPhoneNumbers() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxRadioPhoneNumbers(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxRadioPhoneNumbers(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxRadioPhoneNumbers(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxPersonalEmailAddresses() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxPersonalEmailAddresses(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxPersonalEmailAddresses(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxPersonalEmailAddresses(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxWorkEmailAddresses() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxWorkEmailAddresses(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxWorkEmailAddresses(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxWorkEmailAddresses(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxOtherEmailAddresses() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxOtherEmailAddresses(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxOtherEmailAddresses(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxOtherEmailAddresses(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxHomeAddresses() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxHomeAddresses(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxHomeAddresses(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxHomeAddresses(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxWorkAddresses() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxWorkAddresses(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxWorkAddresses(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxWorkAddresses(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxOtherAddresses() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxOtherAddresses(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxOtherAddresses(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxOtherAddresses(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxBirthdayDates() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxBirthdayDates(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxBirthdayDates(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxBirthdayDates(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxAnniversaryDates() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxAnniversaryDates(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxAnniversaryDates(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxAnniversaryDates(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxOtherDates() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxOtherDates(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxOtherDates(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxOtherDates(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxOtherRelationships() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxOtherRelationships(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxOtherRelationships(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxOtherRelationships(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxSpouseRelationships() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxSpouseRelationships(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxSpouseRelationships(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxSpouseRelationships(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxPartnerRelationships() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxPartnerRelationships(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxPartnerRelationships(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxPartnerRelationships(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxSiblingRelationships() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxSiblingRelationships(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxSiblingRelationships(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxSiblingRelationships(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxParentRelationships() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxParentRelationships(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxParentRelationships(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxParentRelationships(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxChildRelationships() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxChildRelationships(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxChildRelationships(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxChildRelationships(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxJobInfo() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxJobInfo(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxJobInfo(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxJobInfo(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<int32_t> consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxWebsites() const
+{
+    Windows::Foundation::IReference<int32_t> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->get_MaxWebsites(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncConstraints<D>::MaxWebsites(optional<int32_t> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncConstraints)->put_MaxWebsites(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactListSyncStatus consume_Windows_ApplicationModel_Contacts_IContactListSyncManager<D>::Status() const
+{
+    Windows::ApplicationModel::Contacts::ContactListSyncStatus value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncManager)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_ApplicationModel_Contacts_IContactListSyncManager<D>::LastSuccessfulSyncTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncManager)->get_LastSuccessfulSyncTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_ApplicationModel_Contacts_IContactListSyncManager<D>::LastAttemptedSyncTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncManager)->get_LastAttemptedSyncTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Contacts_IContactListSyncManager<D>::SyncAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncManager)->SyncAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> event_token consume_Windows_ApplicationModel_Contacts_IContactListSyncManager<D>::SyncStatusChanged(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactListSyncManager, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncManager)->add_SyncStatusChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::ApplicationModel::Contacts::IContactListSyncManager> consume_Windows_ApplicationModel_Contacts_IContactListSyncManager<D>::SyncStatusChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactListSyncManager, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::ApplicationModel::Contacts::IContactListSyncManager>(this, &abi_t<Windows::ApplicationModel::Contacts::IContactListSyncManager>::remove_SyncStatusChanged, SyncStatusChanged(handler));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncManager<D>::SyncStatusChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncManager)->remove_SyncStatusChanged(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncManager2<D>::Status(Windows::ApplicationModel::Contacts::ContactListSyncStatus const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncManager2)->put_Status(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncManager2<D>::LastSuccessfulSyncTime(Windows::Foundation::DateTime const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncManager2)->put_LastSuccessfulSyncTime(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactListSyncManager2<D>::LastAttemptedSyncTime(Windows::Foundation::DateTime const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactListSyncManager2)->put_LastAttemptedSyncTime(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactLocationField<D>::UnstructuredAddress() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLocationField)->get_UnstructuredAddress(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactLocationField<D>::Street() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLocationField)->get_Street(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactLocationField<D>::City() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLocationField)->get_City(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactLocationField<D>::Region() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLocationField)->get_Region(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactLocationField<D>::Country() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLocationField)->get_Country(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactLocationField<D>::PostalCode() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLocationField)->get_PostalCode(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactLocationField consume_Windows_ApplicationModel_Contacts_IContactLocationFieldFactory<D>::CreateLocation(param::hstring const& unstructuredAddress) const
+{
+    Windows::ApplicationModel::Contacts::ContactLocationField field{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLocationFieldFactory)->CreateLocation_Default(get_abi(unstructuredAddress), put_abi(field)));
+    return field;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactLocationField consume_Windows_ApplicationModel_Contacts_IContactLocationFieldFactory<D>::CreateLocation(param::hstring const& unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category) const
+{
+    Windows::ApplicationModel::Contacts::ContactLocationField field{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLocationFieldFactory)->CreateLocation_Category(get_abi(unstructuredAddress), get_abi(category), put_abi(field)));
+    return field;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactLocationField consume_Windows_ApplicationModel_Contacts_IContactLocationFieldFactory<D>::CreateLocation(param::hstring const& unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category, param::hstring const& street, param::hstring const& city, param::hstring const& region, param::hstring const& country, param::hstring const& postalCode) const
+{
+    Windows::ApplicationModel::Contacts::ContactLocationField field{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactLocationFieldFactory)->CreateLocation_All(get_abi(unstructuredAddress), get_abi(category), get_abi(street), get_abi(city), get_abi(region), get_abi(country), get_abi(postalCode), put_abi(field)));
+    return field;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> consume_Windows_ApplicationModel_Contacts_IContactManagerForUser<D>::ConvertContactToVCardAsync(Windows::ApplicationModel::Contacts::Contact const& contact) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerForUser)->ConvertContactToVCardAsync(get_abi(contact), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> consume_Windows_ApplicationModel_Contacts_IContactManagerForUser<D>::ConvertContactToVCardAsync(Windows::ApplicationModel::Contacts::Contact const& contact, uint32_t maxBytes) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerForUser)->ConvertContactToVCardAsyncWithMaxBytes(get_abi(contact), maxBytes, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> consume_Windows_ApplicationModel_Contacts_IContactManagerForUser<D>::ConvertVCardToContactAsync(Windows::Storage::Streams::IRandomAccessStreamReference const& vCard) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerForUser)->ConvertVCardToContactAsync(get_abi(vCard), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> consume_Windows_ApplicationModel_Contacts_IContactManagerForUser<D>::RequestStoreAsync(Windows::ApplicationModel::Contacts::ContactStoreAccessType const& accessType) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerForUser)->RequestStoreAsync(get_abi(accessType), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore> consume_Windows_ApplicationModel_Contacts_IContactManagerForUser<D>::RequestAnnotationStoreAsync(Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType const& accessType) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerForUser)->RequestAnnotationStoreAsync(get_abi(accessType), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactNameOrder consume_Windows_ApplicationModel_Contacts_IContactManagerForUser<D>::SystemDisplayNameOrder() const
+{
+    Windows::ApplicationModel::Contacts::ContactNameOrder value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerForUser)->get_SystemDisplayNameOrder(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactManagerForUser<D>::SystemDisplayNameOrder(Windows::ApplicationModel::Contacts::ContactNameOrder const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerForUser)->put_SystemDisplayNameOrder(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactNameOrder consume_Windows_ApplicationModel_Contacts_IContactManagerForUser<D>::SystemSortOrder() const
+{
+    Windows::ApplicationModel::Contacts::ContactNameOrder value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerForUser)->get_SystemSortOrder(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactManagerForUser<D>::SystemSortOrder(Windows::ApplicationModel::Contacts::ContactNameOrder const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerForUser)->put_SystemSortOrder(get_abi(value)));
+}
+
+template <typename D> Windows::System::User consume_Windows_ApplicationModel_Contacts_IContactManagerForUser<D>::User() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerForUser)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactManagerForUser2<D>::ShowFullContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::ApplicationModel::Contacts::FullContactCardOptions const& fullContactCardOptions) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerForUser2)->ShowFullContactCard(get_abi(contact), get_abi(fullContactCardOptions)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactManagerStatics<D>::ShowContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::Foundation::Rect const& selection) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics)->ShowContactCard(get_abi(contact), get_abi(selection)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactManagerStatics<D>::ShowContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::Foundation::Rect const& selection, Windows::UI::Popups::Placement const& preferredPlacement) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics)->ShowContactCardWithPlacement(get_abi(contact), get_abi(selection), get_abi(preferredPlacement)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader consume_Windows_ApplicationModel_Contacts_IContactManagerStatics<D>::ShowDelayLoadedContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::Foundation::Rect const& selection, Windows::UI::Popups::Placement const& preferredPlacement) const
+{
+    Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader dataLoader{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics)->ShowDelayLoadedContactCard(get_abi(contact), get_abi(selection), get_abi(preferredPlacement), put_abi(dataLoader)));
+    return dataLoader;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> consume_Windows_ApplicationModel_Contacts_IContactManagerStatics2<D>::RequestStoreAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> store{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics2)->RequestStoreAsync(put_abi(store)));
+    return store;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::ConvertContactToVCardAsync(Windows::ApplicationModel::Contacts::Contact const& contact) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> vCard{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->ConvertContactToVCardAsync(get_abi(contact), put_abi(vCard)));
+    return vCard;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::ConvertContactToVCardAsync(Windows::ApplicationModel::Contacts::Contact const& contact, uint32_t maxBytes) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> vCard{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->ConvertContactToVCardAsyncWithMaxBytes(get_abi(contact), maxBytes, put_abi(vCard)));
+    return vCard;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::ConvertVCardToContactAsync(Windows::Storage::Streams::IRandomAccessStreamReference const& vCard) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> contact{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->ConvertVCardToContactAsync(get_abi(vCard), put_abi(contact)));
+    return contact;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::RequestStoreAsync(Windows::ApplicationModel::Contacts::ContactStoreAccessType const& accessType) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> store{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->RequestStoreAsyncWithAccessType(get_abi(accessType), put_abi(store)));
+    return store;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore> consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::RequestAnnotationStoreAsync(Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType const& accessType) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore> store{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->RequestAnnotationStoreAsync(get_abi(accessType), put_abi(store)));
+    return store;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::IsShowContactCardSupported() const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->IsShowContactCardSupported(&result));
+    return result;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::ShowContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::Foundation::Rect const& selection, Windows::UI::Popups::Placement const& preferredPlacement, Windows::ApplicationModel::Contacts::ContactCardOptions const& contactCardOptions) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->ShowContactCardWithOptions(get_abi(contact), get_abi(selection), get_abi(preferredPlacement), get_abi(contactCardOptions)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::IsShowDelayLoadedContactCardSupported() const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->IsShowDelayLoadedContactCardSupported(&result));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::ShowDelayLoadedContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::Foundation::Rect const& selection, Windows::UI::Popups::Placement const& preferredPlacement, Windows::ApplicationModel::Contacts::ContactCardOptions const& contactCardOptions) const
+{
+    Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader dataLoader{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->ShowDelayLoadedContactCardWithOptions(get_abi(contact), get_abi(selection), get_abi(preferredPlacement), get_abi(contactCardOptions), put_abi(dataLoader)));
+    return dataLoader;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::ShowFullContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::ApplicationModel::Contacts::FullContactCardOptions const& fullContactCardOptions) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->ShowFullContactCard(get_abi(contact), get_abi(fullContactCardOptions)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactNameOrder consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::SystemDisplayNameOrder() const
+{
+    Windows::ApplicationModel::Contacts::ContactNameOrder value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->get_SystemDisplayNameOrder(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::SystemDisplayNameOrder(Windows::ApplicationModel::Contacts::ContactNameOrder const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->put_SystemDisplayNameOrder(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactNameOrder consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::SystemSortOrder() const
+{
+    Windows::ApplicationModel::Contacts::ContactNameOrder value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->get_SystemSortOrder(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactManagerStatics3<D>::SystemSortOrder(Windows::ApplicationModel::Contacts::ContactNameOrder const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics3)->put_SystemSortOrder(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactManagerForUser consume_Windows_ApplicationModel_Contacts_IContactManagerStatics4<D>::GetForUser(Windows::System::User const& user) const
+{
+    Windows::ApplicationModel::Contacts::ContactManagerForUser result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics4)->GetForUser(get_abi(user), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Contacts_IContactManagerStatics5<D>::IsShowFullContactCardSupportedAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics5)->IsShowFullContactCardSupportedAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContactManagerStatics5<D>::IncludeMiddleNameInSystemDisplayAndSort() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics5)->get_IncludeMiddleNameInSystemDisplayAndSort(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactManagerStatics5<D>::IncludeMiddleNameInSystemDisplayAndSort(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactManagerStatics5)->put_IncludeMiddleNameInSystemDisplayAndSort(value));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactMatchReasonKind consume_Windows_ApplicationModel_Contacts_IContactMatchReason<D>::Field() const
+{
+    Windows::ApplicationModel::Contacts::ContactMatchReasonKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactMatchReason)->get_Field(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextSegment> consume_Windows_ApplicationModel_Contacts_IContactMatchReason<D>::Segments() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextSegment> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactMatchReason)->get_Segments(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactMatchReason<D>::Text() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactMatchReason)->get_Text(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactName<D>::FirstName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->get_FirstName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactName<D>::FirstName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->put_FirstName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactName<D>::LastName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->get_LastName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactName<D>::LastName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->put_LastName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactName<D>::MiddleName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->get_MiddleName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactName<D>::MiddleName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->put_MiddleName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactName<D>::YomiGivenName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->get_YomiGivenName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactName<D>::YomiGivenName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->put_YomiGivenName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactName<D>::YomiFamilyName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->get_YomiFamilyName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactName<D>::YomiFamilyName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->put_YomiFamilyName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactName<D>::HonorificNameSuffix() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->get_HonorificNameSuffix(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactName<D>::HonorificNameSuffix(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->put_HonorificNameSuffix(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactName<D>::HonorificNamePrefix() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->get_HonorificNamePrefix(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactName<D>::HonorificNamePrefix(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->put_HonorificNamePrefix(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactName<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactName<D>::YomiDisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactName)->get_YomiDisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactPanel<D>::ClosePanel() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPanel)->ClosePanel());
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::UI::Color> consume_Windows_ApplicationModel_Contacts_IContactPanel<D>::HeaderColor() const
+{
+    Windows::Foundation::IReference<Windows::UI::Color> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPanel)->get_HeaderColor(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactPanel<D>::HeaderColor(optional<Windows::UI::Color> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPanel)->put_HeaderColor(get_abi(value)));
+}
+
+template <typename D> event_token consume_Windows_ApplicationModel_Contacts_IContactPanel<D>::LaunchFullAppRequested(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelLaunchFullAppRequestedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPanel)->add_LaunchFullAppRequested(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::ApplicationModel::Contacts::IContactPanel> consume_Windows_ApplicationModel_Contacts_IContactPanel<D>::LaunchFullAppRequested(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelLaunchFullAppRequestedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::ApplicationModel::Contacts::IContactPanel>(this, &abi_t<Windows::ApplicationModel::Contacts::IContactPanel>::remove_LaunchFullAppRequested, LaunchFullAppRequested(handler));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactPanel<D>::LaunchFullAppRequested(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPanel)->remove_LaunchFullAppRequested(get_abi(token)));
+}
+
+template <typename D> event_token consume_Windows_ApplicationModel_Contacts_IContactPanel<D>::Closing(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelClosingEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPanel)->add_Closing(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::ApplicationModel::Contacts::IContactPanel> consume_Windows_ApplicationModel_Contacts_IContactPanel<D>::Closing(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelClosingEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::ApplicationModel::Contacts::IContactPanel>(this, &abi_t<Windows::ApplicationModel::Contacts::IContactPanel>::remove_Closing, Closing(handler));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactPanel<D>::Closing(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPanel)->remove_Closing(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::Deferral consume_Windows_ApplicationModel_Contacts_IContactPanelClosingEventArgs<D>::GetDeferral() const
+{
+    Windows::Foundation::Deferral deferral{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPanelClosingEventArgs)->GetDeferral(put_abi(deferral)));
+    return deferral;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContactPanelLaunchFullAppRequestedEventArgs<D>::Handled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPanelLaunchFullAppRequestedEventArgs)->get_Handled(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactPanelLaunchFullAppRequestedEventArgs<D>::Handled(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPanelLaunchFullAppRequestedEventArgs)->put_Handled(value));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactPhone<D>::Number() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPhone)->get_Number(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactPhone<D>::Number(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPhone)->put_Number(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactPhoneKind consume_Windows_ApplicationModel_Contacts_IContactPhone<D>::Kind() const
+{
+    Windows::ApplicationModel::Contacts::ContactPhoneKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPhone)->get_Kind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactPhone<D>::Kind(Windows::ApplicationModel::Contacts::ContactPhoneKind const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPhone)->put_Kind(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactPhone<D>::Description() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPhone)->get_Description(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactPhone<D>::Description(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPhone)->put_Description(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactPicker<D>::CommitButtonText() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPicker)->get_CommitButtonText(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactPicker<D>::CommitButtonText(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPicker)->put_CommitButtonText(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactSelectionMode consume_Windows_ApplicationModel_Contacts_IContactPicker<D>::SelectionMode() const
+{
+    Windows::ApplicationModel::Contacts::ContactSelectionMode value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPicker)->get_SelectionMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactPicker<D>::SelectionMode(Windows::ApplicationModel::Contacts::ContactSelectionMode const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPicker)->put_SelectionMode(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_ApplicationModel_Contacts_IContactPicker<D>::DesiredFields() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPicker)->get_DesiredFields(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactInformation> consume_Windows_ApplicationModel_Contacts_IContactPicker<D>::PickSingleContactAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactInformation> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPicker)->PickSingleContactAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactInformation>> consume_Windows_ApplicationModel_Contacts_IContactPicker<D>::PickMultipleContactsAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactInformation>> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPicker)->PickMultipleContactsAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactFieldType> consume_Windows_ApplicationModel_Contacts_IContactPicker2<D>::DesiredFieldsWithContactFieldType() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactFieldType> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPicker2)->get_DesiredFieldsWithContactFieldType(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> consume_Windows_ApplicationModel_Contacts_IContactPicker2<D>::PickContactAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPicker2)->PickContactAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::Contact>> consume_Windows_ApplicationModel_Contacts_IContactPicker2<D>::PickContactsAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::Contact>> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPicker2)->PickContactsAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::System::User consume_Windows_ApplicationModel_Contacts_IContactPicker3<D>::User() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPicker3)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactPicker consume_Windows_ApplicationModel_Contacts_IContactPickerStatics<D>::CreateForUser(Windows::System::User const& user) const
+{
+    Windows::ApplicationModel::Contacts::ContactPicker result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPickerStatics)->CreateForUser(get_abi(user), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Contacts_IContactPickerStatics<D>::IsSupportedAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactPickerStatics)->IsSupportedAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactQueryTextSearch consume_Windows_ApplicationModel_Contacts_IContactQueryOptions<D>::TextSearch() const
+{
+    Windows::ApplicationModel::Contacts::ContactQueryTextSearch value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryOptions)->get_TextSearch(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_ApplicationModel_Contacts_IContactQueryOptions<D>::ContactListIds() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryOptions)->get_ContactListIds(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IContactQueryOptions<D>::IncludeContactsFromHiddenLists() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryOptions)->get_IncludeContactsFromHiddenLists(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactQueryOptions<D>::IncludeContactsFromHiddenLists(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryOptions)->put_IncludeContactsFromHiddenLists(value));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactQueryDesiredFields consume_Windows_ApplicationModel_Contacts_IContactQueryOptions<D>::DesiredFields() const
+{
+    Windows::ApplicationModel::Contacts::ContactQueryDesiredFields value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryOptions)->get_DesiredFields(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactQueryOptions<D>::DesiredFields(Windows::ApplicationModel::Contacts::ContactQueryDesiredFields const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryOptions)->put_DesiredFields(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactAnnotationOperations consume_Windows_ApplicationModel_Contacts_IContactQueryOptions<D>::DesiredOperations() const
+{
+    Windows::ApplicationModel::Contacts::ContactAnnotationOperations value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryOptions)->get_DesiredOperations(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactQueryOptions<D>::DesiredOperations(Windows::ApplicationModel::Contacts::ContactAnnotationOperations const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryOptions)->put_DesiredOperations(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_ApplicationModel_Contacts_IContactQueryOptions<D>::AnnotationListIds() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryOptions)->get_AnnotationListIds(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactQueryOptions consume_Windows_ApplicationModel_Contacts_IContactQueryOptionsFactory<D>::CreateWithText(param::hstring const& text) const
+{
+    Windows::ApplicationModel::Contacts::ContactQueryOptions result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryOptionsFactory)->CreateWithText(get_abi(text), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactQueryOptions consume_Windows_ApplicationModel_Contacts_IContactQueryOptionsFactory<D>::CreateWithTextAndFields(param::hstring const& text, Windows::ApplicationModel::Contacts::ContactQuerySearchFields const& fields) const
+{
+    Windows::ApplicationModel::Contacts::ContactQueryOptions result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryOptionsFactory)->CreateWithTextAndFields(get_abi(text), get_abi(fields), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactQuerySearchFields consume_Windows_ApplicationModel_Contacts_IContactQueryTextSearch<D>::Fields() const
+{
+    Windows::ApplicationModel::Contacts::ContactQuerySearchFields value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryTextSearch)->get_Fields(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactQueryTextSearch<D>::Fields(Windows::ApplicationModel::Contacts::ContactQuerySearchFields const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryTextSearch)->put_Fields(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactQueryTextSearch<D>::Text() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryTextSearch)->get_Text(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactQueryTextSearch<D>::Text(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryTextSearch)->put_Text(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactQuerySearchScope consume_Windows_ApplicationModel_Contacts_IContactQueryTextSearch<D>::SearchScope() const
+{
+    Windows::ApplicationModel::Contacts::ContactQuerySearchScope value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryTextSearch)->get_SearchScope(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactQueryTextSearch<D>::SearchScope(Windows::ApplicationModel::Contacts::ContactQuerySearchScope const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactQueryTextSearch)->put_SearchScope(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactBatch> consume_Windows_ApplicationModel_Contacts_IContactReader<D>::ReadBatchAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactBatch> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactReader)->ReadBatchAsync(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactMatchReason> consume_Windows_ApplicationModel_Contacts_IContactReader<D>::GetMatchingPropertiesWithMatchReason(Windows::ApplicationModel::Contacts::Contact const& contact) const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactMatchReason> ppRetVal{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactReader)->GetMatchingPropertiesWithMatchReason(get_abi(contact), put_abi(ppRetVal)));
+    return ppRetVal;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactSignificantOther<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactSignificantOther)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactSignificantOther<D>::Name(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactSignificantOther)->put_Name(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactSignificantOther<D>::Description() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactSignificantOther)->get_Description(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactSignificantOther<D>::Description(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactSignificantOther)->put_Description(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactRelationship consume_Windows_ApplicationModel_Contacts_IContactSignificantOther2<D>::Relationship() const
+{
+    Windows::ApplicationModel::Contacts::ContactRelationship value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactSignificantOther2)->get_Relationship(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactSignificantOther2<D>::Relationship(Windows::ApplicationModel::Contacts::ContactRelationship const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactSignificantOther2)->put_Relationship(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> consume_Windows_ApplicationModel_Contacts_IContactStore<D>::FindContactsAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> contacts{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore)->FindContactsAsync(put_abi(contacts)));
+    return contacts;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> consume_Windows_ApplicationModel_Contacts_IContactStore<D>::FindContactsAsync(param::hstring const& searchText) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> contacts{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore)->FindContactsWithSearchTextAsync(get_abi(searchText), put_abi(contacts)));
+    return contacts;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> consume_Windows_ApplicationModel_Contacts_IContactStore<D>::GetContactAsync(param::hstring const& contactId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> contacts{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore)->GetContactAsync(get_abi(contactId), put_abi(contacts)));
+    return contacts;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactChangeTracker consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::ChangeTracker() const
+{
+    Windows::ApplicationModel::Contacts::ContactChangeTracker value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore2)->get_ChangeTracker(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::ContactChanged(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactStore, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> const& value) const
+{
+    event_token returnValue{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore2)->add_ContactChanged(get_abi(value), put_abi(returnValue)));
+    return returnValue;
+}
+
+template <typename D> event_revoker<Windows::ApplicationModel::Contacts::IContactStore2> consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::ContactChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactStore, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> const& value) const
+{
+    return impl::make_event_revoker<D, Windows::ApplicationModel::Contacts::IContactStore2>(this, &abi_t<Windows::ApplicationModel::Contacts::IContactStore2>::remove_ContactChanged, ContactChanged(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::ContactChanged(event_token const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore2)->remove_ContactChanged(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::AggregateContactManager consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::AggregateContactManager() const
+{
+    Windows::ApplicationModel::Contacts::AggregateContactManager value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore2)->get_AggregateContactManager(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactList>> consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::FindContactListsAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactList>> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore2)->FindContactListsAsync(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::GetContactListAsync(param::hstring const& contactListId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore2)->GetContactListAsync(get_abi(contactListId), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::CreateContactListAsync(param::hstring const& displayName) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore2)->CreateContactListAsync(get_abi(displayName), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::GetMeContactAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> meContact{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore2)->GetMeContactAsync(put_abi(meContact)));
+    return meContact;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactReader consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::GetContactReader() const
+{
+    Windows::ApplicationModel::Contacts::ContactReader value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore2)->GetContactReader(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactReader consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::GetContactReader(Windows::ApplicationModel::Contacts::ContactQueryOptions const& options) const
+{
+    Windows::ApplicationModel::Contacts::ContactReader value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore2)->GetContactReaderWithOptions(get_abi(options), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> consume_Windows_ApplicationModel_Contacts_IContactStore2<D>::CreateContactListAsync(param::hstring const& displayName, param::hstring const& userDataAccountId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactStore2)->CreateContactListInAccountAsync(get_abi(displayName), get_abi(userDataAccountId), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Uri consume_Windows_ApplicationModel_Contacts_IContactWebsite<D>::Uri() const
+{
+    Windows::Foundation::Uri value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactWebsite)->get_Uri(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactWebsite<D>::Uri(Windows::Foundation::Uri const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactWebsite)->put_Uri(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactWebsite<D>::Description() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactWebsite)->get_Description(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactWebsite<D>::Description(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactWebsite)->put_Description(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IContactWebsite2<D>::RawValue() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactWebsite2)->get_RawValue(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IContactWebsite2<D>::RawValue(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IContactWebsite2)->put_RawValue(get_abi(value)));
+}
+
+template <typename D> Windows::UI::ViewManagement::ViewSizePreference consume_Windows_ApplicationModel_Contacts_IFullContactCardOptions<D>::DesiredRemainingView() const
+{
+    Windows::UI::ViewManagement::ViewSizePreference value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IFullContactCardOptions)->get_DesiredRemainingView(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IFullContactCardOptions<D>::DesiredRemainingView(Windows::UI::ViewManagement::ViewSizePreference const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IFullContactCardOptions)->put_DesiredRemainingView(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IKnownContactFieldStatics<D>::Email() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IKnownContactFieldStatics)->get_Email(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IKnownContactFieldStatics<D>::PhoneNumber() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IKnownContactFieldStatics)->get_PhoneNumber(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IKnownContactFieldStatics<D>::Location() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IKnownContactFieldStatics)->get_Location(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IKnownContactFieldStatics<D>::InstantMessage() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IKnownContactFieldStatics)->get_InstantMessage(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::ContactFieldType consume_Windows_ApplicationModel_Contacts_IKnownContactFieldStatics<D>::ConvertNameToType(param::hstring const& name) const
+{
+    Windows::ApplicationModel::Contacts::ContactFieldType type{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IKnownContactFieldStatics)->ConvertNameToType(get_abi(name), put_abi(type)));
+    return type;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Contacts_IKnownContactFieldStatics<D>::ConvertTypeToName(Windows::ApplicationModel::Contacts::ContactFieldType const& type) const
+{
+    hstring name{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IKnownContactFieldStatics)->ConvertTypeToName(get_abi(type), put_abi(name)));
+    return name;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_ApplicationModel_Contacts_IPinnedContactIdsQueryResult<D>::ContactIds() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactIdsQueryResult)->get_ContactIds(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::User consume_Windows_ApplicationModel_Contacts_IPinnedContactManager<D>::User() const
+{
+    Windows::System::User user{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactManager)->get_User(put_abi(user)));
+    return user;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IPinnedContactManager<D>::IsPinSurfaceSupported(Windows::ApplicationModel::Contacts::PinnedContactSurface const& surface) const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactManager)->IsPinSurfaceSupported(get_abi(surface), &result));
+    return result;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IPinnedContactManager<D>::IsContactPinned(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::ApplicationModel::Contacts::PinnedContactSurface const& surface) const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactManager)->IsContactPinned(get_abi(contact), get_abi(surface), &result));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Contacts_IPinnedContactManager<D>::RequestPinContactAsync(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::ApplicationModel::Contacts::PinnedContactSurface const& surface) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactManager)->RequestPinContactAsync(get_abi(contact), get_abi(surface), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Contacts_IPinnedContactManager<D>::RequestPinContactsAsync(param::async_iterable<Windows::ApplicationModel::Contacts::Contact> const& contacts, Windows::ApplicationModel::Contacts::PinnedContactSurface const& surface) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactManager)->RequestPinContactsAsync(get_abi(contacts), get_abi(surface), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Contacts_IPinnedContactManager<D>::RequestUnpinContactAsync(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::ApplicationModel::Contacts::PinnedContactSurface const& surface) const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactManager)->RequestUnpinContactAsync(get_abi(contact), get_abi(surface), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Contacts_IPinnedContactManager<D>::SignalContactActivity(Windows::ApplicationModel::Contacts::Contact const& contact) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactManager)->SignalContactActivity(get_abi(contact)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::PinnedContactIdsQueryResult> consume_Windows_ApplicationModel_Contacts_IPinnedContactManager<D>::GetPinnedContactIdsAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::PinnedContactIdsQueryResult> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactManager)->GetPinnedContactIdsAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::PinnedContactManager consume_Windows_ApplicationModel_Contacts_IPinnedContactManagerStatics<D>::GetDefault() const
+{
+    Windows::ApplicationModel::Contacts::PinnedContactManager result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics)->GetDefault(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Contacts::PinnedContactManager consume_Windows_ApplicationModel_Contacts_IPinnedContactManagerStatics<D>::GetForUser(Windows::System::User const& user) const
+{
+    Windows::ApplicationModel::Contacts::PinnedContactManager result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics)->GetForUser(get_abi(user), put_abi(result)));
+    return result;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Contacts_IPinnedContactManagerStatics<D>::IsSupported() const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics)->IsSupported(&result));
+    return result;
+}
 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IAggregateContactManager> : produce_base<D, Windows::ApplicationModel::Contacts::IAggregateContactManager>
 {
-    HRESULT __stdcall abi_FindRawContactsAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>>> value) noexcept override
+    HRESULT __stdcall FindRawContactsAsync(::IUnknown* contact, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().FindRawContactsAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
+            *value = detach_abi(this->shim().FindRawContactsAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact)));
             return S_OK;
         }
         catch (...)
@@ -38,12 +2748,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IAggregateContactManager>
         }
     }
 
-    HRESULT __stdcall abi_TryLinkContactsAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> primaryContact, impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> secondaryContact, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact>> contact) noexcept override
+    HRESULT __stdcall TryLinkContactsAsync(::IUnknown* primaryContact, ::IUnknown* secondaryContact, ::IUnknown** contact) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *contact = detach_abi(this->shim().TryLinkContactsAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&primaryContact), *reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&secondaryContact)));
+            *contact = detach_abi(this->shim().TryLinkContactsAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&primaryContact), *reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&secondaryContact)));
             return S_OK;
         }
         catch (...)
@@ -53,12 +2763,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IAggregateContactManager>
         }
     }
 
-    HRESULT __stdcall abi_UnlinkRawContactAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_out<Windows::Foundation::IAsyncAction> value) noexcept override
+    HRESULT __stdcall UnlinkRawContactAsync(::IUnknown* contact, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().UnlinkRawContactAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
+            *value = detach_abi(this->shim().UnlinkRawContactAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact)));
             return S_OK;
         }
         catch (...)
@@ -68,12 +2778,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IAggregateContactManager>
         }
     }
 
-    HRESULT __stdcall abi_TrySetPreferredSourceForPictureAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> aggregateContact, impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> rawContact, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> value) noexcept override
+    HRESULT __stdcall TrySetPreferredSourceForPictureAsync(::IUnknown* aggregateContact, ::IUnknown* rawContact, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().TrySetPreferredSourceForPictureAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&aggregateContact), *reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&rawContact)));
+            *value = detach_abi(this->shim().TrySetPreferredSourceForPictureAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&aggregateContact), *reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&rawContact)));
             return S_OK;
         }
         catch (...)
@@ -87,12 +2797,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IAggregateContactManager>
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IAggregateContactManager2> : produce_base<D, Windows::ApplicationModel::Contacts::IAggregateContactManager2>
 {
-    HRESULT __stdcall abi_SetRemoteIdentificationInformationAsync(impl::abi_arg_in<hstring> contactListId, impl::abi_arg_in<hstring> remoteSourceId, impl::abi_arg_in<hstring> accountId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall SetRemoteIdentificationInformationAsync(HSTRING contactListId, HSTRING remoteSourceId, HSTRING accountId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().SetRemoteIdentificationInformationAsync(*reinterpret_cast<const hstring *>(&contactListId), *reinterpret_cast<const hstring *>(&remoteSourceId), *reinterpret_cast<const hstring *>(&accountId)));
+            *result = detach_abi(this->shim().SetRemoteIdentificationInformationAsync(*reinterpret_cast<hstring const*>(&contactListId), *reinterpret_cast<hstring const*>(&remoteSourceId), *reinterpret_cast<hstring const*>(&accountId)));
             return S_OK;
         }
         catch (...)
@@ -106,7 +2816,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IAggregateContactManager2
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContact> : produce_base<D, Windows::ApplicationModel::Contacts::IContact>
 {
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -121,12 +2831,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact> : produce_base<
         }
     }
 
-    HRESULT __stdcall put_Name(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Name(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Name(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Name(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -135,7 +2845,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_Thumbnail(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall get_Thumbnail(::IUnknown** value) noexcept override
     {
         try
         {
@@ -150,12 +2860,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact> : produce_base<
         }
     }
 
-    HRESULT __stdcall put_Thumbnail(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall put_Thumbnail(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Thumbnail(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&value));
+            this->shim().Thumbnail(*reinterpret_cast<Windows::Storage::Streams::IRandomAccessStreamReference const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -164,7 +2874,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact> : produce_base<
         }
     }
 
-    HRESULT __stdcall get_Fields(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::IContactField>> value) noexcept override
+    HRESULT __stdcall get_Fields(::IUnknown** value) noexcept override
     {
         try
         {
@@ -183,7 +2893,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact> : produce_base<
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base<D, Windows::ApplicationModel::Contacts::IContact2>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -198,12 +2908,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall put_Id(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Id(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Id(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Id(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -212,7 +2922,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_Notes(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Notes(HSTRING* value) noexcept override
     {
         try
         {
@@ -227,12 +2937,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall put_Notes(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Notes(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Notes(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Notes(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -241,7 +2951,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_Phones(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactPhone>> value) noexcept override
+    HRESULT __stdcall get_Phones(::IUnknown** value) noexcept override
     {
         try
         {
@@ -256,7 +2966,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_Emails(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactEmail>> value) noexcept override
+    HRESULT __stdcall get_Emails(::IUnknown** value) noexcept override
     {
         try
         {
@@ -271,7 +2981,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_Addresses(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactAddress>> value) noexcept override
+    HRESULT __stdcall get_Addresses(::IUnknown** value) noexcept override
     {
         try
         {
@@ -286,7 +2996,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_ConnectedServiceAccounts(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactConnectedServiceAccount>> value) noexcept override
+    HRESULT __stdcall get_ConnectedServiceAccounts(::IUnknown** value) noexcept override
     {
         try
         {
@@ -301,7 +3011,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_ImportantDates(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactDate>> value) noexcept override
+    HRESULT __stdcall get_ImportantDates(::IUnknown** value) noexcept override
     {
         try
         {
@@ -316,7 +3026,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_DataSuppliers(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_DataSuppliers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -331,7 +3041,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_JobInfo(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactJobInfo>> value) noexcept override
+    HRESULT __stdcall get_JobInfo(::IUnknown** value) noexcept override
     {
         try
         {
@@ -346,7 +3056,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_SignificantOthers(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactSignificantOther>> value) noexcept override
+    HRESULT __stdcall get_SignificantOthers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -361,7 +3071,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_Websites(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactWebsite>> value) noexcept override
+    HRESULT __stdcall get_Websites(::IUnknown** value) noexcept override
     {
         try
         {
@@ -376,7 +3086,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
         }
     }
 
-    HRESULT __stdcall get_ProviderProperties(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_ProviderProperties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -395,7 +3105,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact2> : produce_base
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base<D, Windows::ApplicationModel::Contacts::IContact3>
 {
-    HRESULT __stdcall get_ContactListId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ContactListId(HSTRING* value) noexcept override
     {
         try
         {
@@ -410,7 +3120,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_DisplayPictureUserUpdateTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_DisplayPictureUserUpdateTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -424,12 +3134,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall put_DisplayPictureUserUpdateTime(impl::abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall put_DisplayPictureUserUpdateTime(abi_t<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DisplayPictureUserUpdateTime(*reinterpret_cast<const Windows::Foundation::DateTime *>(&value));
+            this->shim().DisplayPictureUserUpdateTime(*reinterpret_cast<Windows::Foundation::DateTime const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -438,7 +3148,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_IsMe(bool * value) noexcept override
+    HRESULT __stdcall get_IsMe(bool* value) noexcept override
     {
         try
         {
@@ -452,7 +3162,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_AggregateId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AggregateId(HSTRING* value) noexcept override
     {
         try
         {
@@ -467,7 +3177,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_RemoteId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RemoteId(HSTRING* value) noexcept override
     {
         try
         {
@@ -482,12 +3192,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall put_RemoteId(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_RemoteId(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RemoteId(*reinterpret_cast<const hstring *>(&value));
+            this->shim().RemoteId(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -496,7 +3206,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_RingToneToken(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RingToneToken(HSTRING* value) noexcept override
     {
         try
         {
@@ -511,12 +3221,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall put_RingToneToken(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_RingToneToken(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RingToneToken(*reinterpret_cast<const hstring *>(&value));
+            this->shim().RingToneToken(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -525,7 +3235,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_IsDisplayPictureManuallySet(bool * value) noexcept override
+    HRESULT __stdcall get_IsDisplayPictureManuallySet(bool* value) noexcept override
     {
         try
         {
@@ -539,7 +3249,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_LargeDisplayPicture(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall get_LargeDisplayPicture(::IUnknown** value) noexcept override
     {
         try
         {
@@ -554,7 +3264,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_SmallDisplayPicture(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall get_SmallDisplayPicture(::IUnknown** value) noexcept override
     {
         try
         {
@@ -569,7 +3279,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_SourceDisplayPicture(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall get_SourceDisplayPicture(::IUnknown** value) noexcept override
     {
         try
         {
@@ -584,12 +3294,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall put_SourceDisplayPicture(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall put_SourceDisplayPicture(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SourceDisplayPicture(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&value));
+            this->shim().SourceDisplayPicture(*reinterpret_cast<Windows::Storage::Streams::IRandomAccessStreamReference const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -598,7 +3308,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_TextToneToken(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TextToneToken(HSTRING* value) noexcept override
     {
         try
         {
@@ -613,12 +3323,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall put_TextToneToken(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_TextToneToken(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TextToneToken(*reinterpret_cast<const hstring *>(&value));
+            this->shim().TextToneToken(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -627,7 +3337,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_IsAggregate(bool * value) noexcept override
+    HRESULT __stdcall get_IsAggregate(bool* value) noexcept override
     {
         try
         {
@@ -641,7 +3351,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_FullName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FullName(HSTRING* value) noexcept override
     {
         try
         {
@@ -656,7 +3366,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_DisplayNameOverride(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayNameOverride(HSTRING* value) noexcept override
     {
         try
         {
@@ -671,12 +3381,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall put_DisplayNameOverride(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DisplayNameOverride(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DisplayNameOverride(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DisplayNameOverride(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -685,7 +3395,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_Nickname(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Nickname(HSTRING* value) noexcept override
     {
         try
         {
@@ -700,12 +3410,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall put_Nickname(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Nickname(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Nickname(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Nickname(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -714,7 +3424,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
         }
     }
 
-    HRESULT __stdcall get_SortName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SortName(HSTRING* value) noexcept override
     {
         try
         {
@@ -733,7 +3443,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContact3> : produce_base
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produce_base<D, Windows::ApplicationModel::Contacts::IContactAddress>
 {
-    HRESULT __stdcall get_StreetAddress(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_StreetAddress(HSTRING* value) noexcept override
     {
         try
         {
@@ -748,12 +3458,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall put_StreetAddress(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_StreetAddress(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StreetAddress(*reinterpret_cast<const hstring *>(&value));
+            this->shim().StreetAddress(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -762,7 +3472,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall get_Locality(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Locality(HSTRING* value) noexcept override
     {
         try
         {
@@ -777,12 +3487,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall put_Locality(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Locality(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Locality(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Locality(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -791,7 +3501,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall get_Region(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Region(HSTRING* value) noexcept override
     {
         try
         {
@@ -806,12 +3516,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall put_Region(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Region(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Region(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Region(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -820,7 +3530,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall get_Country(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Country(HSTRING* value) noexcept override
     {
         try
         {
@@ -835,12 +3545,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall put_Country(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Country(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Country(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Country(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -849,7 +3559,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall get_PostalCode(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PostalCode(HSTRING* value) noexcept override
     {
         try
         {
@@ -864,12 +3574,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall put_PostalCode(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_PostalCode(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PostalCode(*reinterpret_cast<const hstring *>(&value));
+            this->shim().PostalCode(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -878,7 +3588,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall get_Kind(Windows::ApplicationModel::Contacts::ContactAddressKind * value) noexcept override
+    HRESULT __stdcall get_Kind(abi_t<Windows::ApplicationModel::Contacts::ContactAddressKind>* value) noexcept override
     {
         try
         {
@@ -892,12 +3602,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall put_Kind(Windows::ApplicationModel::Contacts::ContactAddressKind value) noexcept override
+    HRESULT __stdcall put_Kind(abi_t<Windows::ApplicationModel::Contacts::ContactAddressKind> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Kind(value);
+            this->shim().Kind(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactAddressKind const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -906,7 +3616,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall get_Description(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Description(HSTRING* value) noexcept override
     {
         try
         {
@@ -921,12 +3631,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
         }
     }
 
-    HRESULT __stdcall put_Description(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Description(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Description(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Description(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -939,7 +3649,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAddress> : produc
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation> : produce_base<D, Windows::ApplicationModel::Contacts::IContactAnnotation>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -954,7 +3664,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation> : pro
         }
     }
 
-    HRESULT __stdcall get_AnnotationListId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AnnotationListId(HSTRING* value) noexcept override
     {
         try
         {
@@ -969,7 +3679,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation> : pro
         }
     }
 
-    HRESULT __stdcall get_ContactId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ContactId(HSTRING* value) noexcept override
     {
         try
         {
@@ -984,12 +3694,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation> : pro
         }
     }
 
-    HRESULT __stdcall put_ContactId(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_ContactId(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ContactId(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ContactId(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -998,7 +3708,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation> : pro
         }
     }
 
-    HRESULT __stdcall get_RemoteId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RemoteId(HSTRING* value) noexcept override
     {
         try
         {
@@ -1013,12 +3723,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation> : pro
         }
     }
 
-    HRESULT __stdcall put_RemoteId(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_RemoteId(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RemoteId(*reinterpret_cast<const hstring *>(&value));
+            this->shim().RemoteId(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1027,7 +3737,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation> : pro
         }
     }
 
-    HRESULT __stdcall get_SupportedOperations(Windows::ApplicationModel::Contacts::ContactAnnotationOperations * value) noexcept override
+    HRESULT __stdcall get_SupportedOperations(abi_t<Windows::ApplicationModel::Contacts::ContactAnnotationOperations>* value) noexcept override
     {
         try
         {
@@ -1041,12 +3751,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation> : pro
         }
     }
 
-    HRESULT __stdcall put_SupportedOperations(Windows::ApplicationModel::Contacts::ContactAnnotationOperations value) noexcept override
+    HRESULT __stdcall put_SupportedOperations(abi_t<Windows::ApplicationModel::Contacts::ContactAnnotationOperations> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SupportedOperations(value);
+            this->shim().SupportedOperations(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactAnnotationOperations const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1055,7 +3765,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation> : pro
         }
     }
 
-    HRESULT __stdcall get_IsDisabled(bool * value) noexcept override
+    HRESULT __stdcall get_IsDisabled(bool* value) noexcept override
     {
         try
         {
@@ -1069,7 +3779,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation> : pro
         }
     }
 
-    HRESULT __stdcall get_ProviderProperties(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_ProviderProperties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1088,7 +3798,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation> : pro
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation2> : produce_base<D, Windows::ApplicationModel::Contacts::IContactAnnotation2>
 {
-    HRESULT __stdcall get_ContactListId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ContactListId(HSTRING* value) noexcept override
     {
         try
         {
@@ -1103,12 +3813,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation2> : pr
         }
     }
 
-    HRESULT __stdcall put_ContactListId(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_ContactListId(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ContactListId(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ContactListId(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1121,7 +3831,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotation2> : pr
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationList> : produce_base<D, Windows::ApplicationModel::Contacts::IContactAnnotationList>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -1136,7 +3846,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationList> :
         }
     }
 
-    HRESULT __stdcall get_ProviderPackageFamilyName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ProviderPackageFamilyName(HSTRING* value) noexcept override
     {
         try
         {
@@ -1151,7 +3861,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationList> :
         }
     }
 
-    HRESULT __stdcall get_UserDataAccountId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UserDataAccountId(HSTRING* value) noexcept override
     {
         try
         {
@@ -1166,7 +3876,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationList> :
         }
     }
 
-    HRESULT __stdcall abi_DeleteAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> value) noexcept override
+    HRESULT __stdcall DeleteAsync(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1181,12 +3891,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationList> :
         }
     }
 
-    HRESULT __stdcall abi_TrySaveAnnotationAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContactAnnotation> annotation, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> ppResult) noexcept override
+    HRESULT __stdcall TrySaveAnnotationAsync(::IUnknown* annotation, ::IUnknown** ppResult) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *ppResult = detach_abi(this->shim().TrySaveAnnotationAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::ContactAnnotation *>(&annotation)));
+            *ppResult = detach_abi(this->shim().TrySaveAnnotationAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactAnnotation const*>(&annotation)));
             return S_OK;
         }
         catch (...)
@@ -1196,12 +3906,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationList> :
         }
     }
 
-    HRESULT __stdcall abi_GetAnnotationAsync(impl::abi_arg_in<hstring> annotationId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotation>> annotation) noexcept override
+    HRESULT __stdcall GetAnnotationAsync(HSTRING annotationId, ::IUnknown** annotation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *annotation = detach_abi(this->shim().GetAnnotationAsync(*reinterpret_cast<const hstring *>(&annotationId)));
+            *annotation = detach_abi(this->shim().GetAnnotationAsync(*reinterpret_cast<hstring const*>(&annotationId)));
             return S_OK;
         }
         catch (...)
@@ -1211,12 +3921,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationList> :
         }
     }
 
-    HRESULT __stdcall abi_FindAnnotationsByRemoteIdAsync(impl::abi_arg_in<hstring> remoteId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>>> annotations) noexcept override
+    HRESULT __stdcall FindAnnotationsByRemoteIdAsync(HSTRING remoteId, ::IUnknown** annotations) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *annotations = detach_abi(this->shim().FindAnnotationsByRemoteIdAsync(*reinterpret_cast<const hstring *>(&remoteId)));
+            *annotations = detach_abi(this->shim().FindAnnotationsByRemoteIdAsync(*reinterpret_cast<hstring const*>(&remoteId)));
             return S_OK;
         }
         catch (...)
@@ -1226,7 +3936,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationList> :
         }
     }
 
-    HRESULT __stdcall abi_FindAnnotationsAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>>> annotations) noexcept override
+    HRESULT __stdcall FindAnnotationsAsync(::IUnknown** annotations) noexcept override
     {
         try
         {
@@ -1241,12 +3951,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationList> :
         }
     }
 
-    HRESULT __stdcall abi_DeleteAnnotationAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContactAnnotation> annotation, impl::abi_arg_out<Windows::Foundation::IAsyncAction> value) noexcept override
+    HRESULT __stdcall DeleteAnnotationAsync(::IUnknown* annotation, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().DeleteAnnotationAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::ContactAnnotation *>(&annotation)));
+            *value = detach_abi(this->shim().DeleteAnnotationAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactAnnotation const*>(&annotation)));
             return S_OK;
         }
         catch (...)
@@ -1260,12 +3970,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationList> :
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore> : produce_base<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore>
 {
-    HRESULT __stdcall abi_FindContactIdsByEmailAsync(impl::abi_arg_in<hstring> emailAddress, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>>> contactIds) noexcept override
+    HRESULT __stdcall FindContactIdsByEmailAsync(HSTRING emailAddress, ::IUnknown** contactIds) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *contactIds = detach_abi(this->shim().FindContactIdsByEmailAsync(*reinterpret_cast<const hstring *>(&emailAddress)));
+            *contactIds = detach_abi(this->shim().FindContactIdsByEmailAsync(*reinterpret_cast<hstring const*>(&emailAddress)));
             return S_OK;
         }
         catch (...)
@@ -1275,12 +3985,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore> 
         }
     }
 
-    HRESULT __stdcall abi_FindContactIdsByPhoneNumberAsync(impl::abi_arg_in<hstring> phoneNumber, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>>> contactIds) noexcept override
+    HRESULT __stdcall FindContactIdsByPhoneNumberAsync(HSTRING phoneNumber, ::IUnknown** contactIds) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *contactIds = detach_abi(this->shim().FindContactIdsByPhoneNumberAsync(*reinterpret_cast<const hstring *>(&phoneNumber)));
+            *contactIds = detach_abi(this->shim().FindContactIdsByPhoneNumberAsync(*reinterpret_cast<hstring const*>(&phoneNumber)));
             return S_OK;
         }
         catch (...)
@@ -1290,12 +4000,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore> 
         }
     }
 
-    HRESULT __stdcall abi_FindAnnotationsForContactAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>>> annotations) noexcept override
+    HRESULT __stdcall FindAnnotationsForContactAsync(::IUnknown* contact, ::IUnknown** annotations) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *annotations = detach_abi(this->shim().FindAnnotationsForContactAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
+            *annotations = detach_abi(this->shim().FindAnnotationsForContactAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact)));
             return S_OK;
         }
         catch (...)
@@ -1305,12 +4015,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore> 
         }
     }
 
-    HRESULT __stdcall abi_DisableAnnotationAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContactAnnotation> annotation, impl::abi_arg_out<Windows::Foundation::IAsyncAction> value) noexcept override
+    HRESULT __stdcall DisableAnnotationAsync(::IUnknown* annotation, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().DisableAnnotationAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::ContactAnnotation *>(&annotation)));
+            *value = detach_abi(this->shim().DisableAnnotationAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactAnnotation const*>(&annotation)));
             return S_OK;
         }
         catch (...)
@@ -1320,7 +4030,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore> 
         }
     }
 
-    HRESULT __stdcall abi_CreateAnnotationListAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList>> value) noexcept override
+    HRESULT __stdcall CreateAnnotationListAsync(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1335,12 +4045,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore> 
         }
     }
 
-    HRESULT __stdcall abi_CreateAnnotationListInAccountAsync(impl::abi_arg_in<hstring> userDataAccountId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList>> value) noexcept override
+    HRESULT __stdcall CreateAnnotationListInAccountAsync(HSTRING userDataAccountId, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().CreateAnnotationListAsync(*reinterpret_cast<const hstring *>(&userDataAccountId)));
+            *value = detach_abi(this->shim().CreateAnnotationListAsync(*reinterpret_cast<hstring const*>(&userDataAccountId)));
             return S_OK;
         }
         catch (...)
@@ -1350,12 +4060,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore> 
         }
     }
 
-    HRESULT __stdcall abi_GetAnnotationListAsync(impl::abi_arg_in<hstring> annotationListId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList>> value) noexcept override
+    HRESULT __stdcall GetAnnotationListAsync(HSTRING annotationListId, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetAnnotationListAsync(*reinterpret_cast<const hstring *>(&annotationListId)));
+            *value = detach_abi(this->shim().GetAnnotationListAsync(*reinterpret_cast<hstring const*>(&annotationListId)));
             return S_OK;
         }
         catch (...)
@@ -1365,7 +4075,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore> 
         }
     }
 
-    HRESULT __stdcall abi_FindAnnotationListsAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotationList>>> lists) noexcept override
+    HRESULT __stdcall FindAnnotationListsAsync(::IUnknown** lists) noexcept override
     {
         try
         {
@@ -1384,12 +4094,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore2> : produce_base<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore2>
 {
-    HRESULT __stdcall abi_FindAnnotationsForContactListAsync(impl::abi_arg_in<hstring> contactListId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>>> annotations) noexcept override
+    HRESULT __stdcall FindAnnotationsForContactListAsync(HSTRING contactListId, ::IUnknown** annotations) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *annotations = detach_abi(this->shim().FindAnnotationsForContactListAsync(*reinterpret_cast<const hstring *>(&contactListId)));
+            *annotations = detach_abi(this->shim().FindAnnotationsForContactListAsync(*reinterpret_cast<hstring const*>(&contactListId)));
             return S_OK;
         }
         catch (...)
@@ -1403,7 +4113,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactAnnotationStore2>
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactBatch> : produce_base<D, Windows::ApplicationModel::Contacts::IContactBatch>
 {
-    HRESULT __stdcall get_Contacts(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> value) noexcept override
+    HRESULT __stdcall get_Contacts(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1418,7 +4128,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactBatch> : produce_
         }
     }
 
-    HRESULT __stdcall get_Status(Windows::ApplicationModel::Contacts::ContactBatchStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::ApplicationModel::Contacts::ContactBatchStatus>* value) noexcept override
     {
         try
         {
@@ -1436,12 +4146,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactBatch> : produce_
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactCardDelayedDataLoader> : produce_base<D, Windows::ApplicationModel::Contacts::IContactCardDelayedDataLoader>
 {
-    HRESULT __stdcall abi_SetData(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact) noexcept override
+    HRESULT __stdcall SetData(::IUnknown* contact) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SetData(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact));
+            this->shim().SetData(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact));
             return S_OK;
         }
         catch (...)
@@ -1454,7 +4164,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactCardDelayedDataLo
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactCardOptions> : produce_base<D, Windows::ApplicationModel::Contacts::IContactCardOptions>
 {
-    HRESULT __stdcall get_HeaderKind(Windows::ApplicationModel::Contacts::ContactCardHeaderKind * value) noexcept override
+    HRESULT __stdcall get_HeaderKind(abi_t<Windows::ApplicationModel::Contacts::ContactCardHeaderKind>* value) noexcept override
     {
         try
         {
@@ -1468,12 +4178,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactCardOptions> : pr
         }
     }
 
-    HRESULT __stdcall put_HeaderKind(Windows::ApplicationModel::Contacts::ContactCardHeaderKind value) noexcept override
+    HRESULT __stdcall put_HeaderKind(abi_t<Windows::ApplicationModel::Contacts::ContactCardHeaderKind> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().HeaderKind(value);
+            this->shim().HeaderKind(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactCardHeaderKind const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1482,7 +4192,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactCardOptions> : pr
         }
     }
 
-    HRESULT __stdcall get_InitialTabKind(Windows::ApplicationModel::Contacts::ContactCardTabKind * value) noexcept override
+    HRESULT __stdcall get_InitialTabKind(abi_t<Windows::ApplicationModel::Contacts::ContactCardTabKind>* value) noexcept override
     {
         try
         {
@@ -1496,12 +4206,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactCardOptions> : pr
         }
     }
 
-    HRESULT __stdcall put_InitialTabKind(Windows::ApplicationModel::Contacts::ContactCardTabKind value) noexcept override
+    HRESULT __stdcall put_InitialTabKind(abi_t<Windows::ApplicationModel::Contacts::ContactCardTabKind> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().InitialTabKind(value);
+            this->shim().InitialTabKind(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactCardTabKind const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1514,7 +4224,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactCardOptions> : pr
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactCardOptions2> : produce_base<D, Windows::ApplicationModel::Contacts::IContactCardOptions2>
 {
-    HRESULT __stdcall get_ServerSearchContactListIds(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_ServerSearchContactListIds(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1533,7 +4243,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactCardOptions2> : p
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactChange> : produce_base<D, Windows::ApplicationModel::Contacts::IContactChange>
 {
-    HRESULT __stdcall get_ChangeType(Windows::ApplicationModel::Contacts::ContactChangeType * value) noexcept override
+    HRESULT __stdcall get_ChangeType(abi_t<Windows::ApplicationModel::Contacts::ContactChangeType>* value) noexcept override
     {
         try
         {
@@ -1547,7 +4257,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactChange> : produce
         }
     }
 
-    HRESULT __stdcall get_Contact(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContact> value) noexcept override
+    HRESULT __stdcall get_Contact(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1566,7 +4276,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactChange> : produce
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactChangeReader> : produce_base<D, Windows::ApplicationModel::Contacts::IContactChangeReader>
 {
-    HRESULT __stdcall abi_AcceptChanges() noexcept override
+    HRESULT __stdcall AcceptChanges() noexcept override
     {
         try
         {
@@ -1580,12 +4290,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactChangeReader> : p
         }
     }
 
-    HRESULT __stdcall abi_AcceptChangesThrough(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContactChange> lastChangeToAccept) noexcept override
+    HRESULT __stdcall AcceptChangesThrough(::IUnknown* lastChangeToAccept) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AcceptChangesThrough(*reinterpret_cast<const Windows::ApplicationModel::Contacts::ContactChange *>(&lastChangeToAccept));
+            this->shim().AcceptChangesThrough(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactChange const*>(&lastChangeToAccept));
             return S_OK;
         }
         catch (...)
@@ -1594,7 +4304,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactChangeReader> : p
         }
     }
 
-    HRESULT __stdcall abi_ReadBatchAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactChange>>> value) noexcept override
+    HRESULT __stdcall ReadBatchAsync(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1613,7 +4323,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactChangeReader> : p
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactChangeTracker> : produce_base<D, Windows::ApplicationModel::Contacts::IContactChangeTracker>
 {
-    HRESULT __stdcall abi_Enable() noexcept override
+    HRESULT __stdcall Enable() noexcept override
     {
         try
         {
@@ -1627,7 +4337,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactChangeTracker> : 
         }
     }
 
-    HRESULT __stdcall abi_GetChangeReader(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactChangeReader> value) noexcept override
+    HRESULT __stdcall GetChangeReader(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1642,7 +4352,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactChangeTracker> : 
         }
     }
 
-    HRESULT __stdcall abi_Reset() noexcept override
+    HRESULT __stdcall Reset() noexcept override
     {
         try
         {
@@ -1660,7 +4370,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactChangeTracker> : 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactChangedDeferral> : produce_base<D, Windows::ApplicationModel::Contacts::IContactChangedDeferral>
 {
-    HRESULT __stdcall abi_Complete() noexcept override
+    HRESULT __stdcall Complete() noexcept override
     {
         try
         {
@@ -1678,7 +4388,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactChangedDeferral> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactChangedEventArgs> : produce_base<D, Windows::ApplicationModel::Contacts::IContactChangedEventArgs>
 {
-    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactChangedDeferral> value) noexcept override
+    HRESULT __stdcall GetDeferral(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1697,7 +4407,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactChangedEventArgs>
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactConnectedServiceAccount> : produce_base<D, Windows::ApplicationModel::Contacts::IContactConnectedServiceAccount>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -1712,12 +4422,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactConnectedServiceA
         }
     }
 
-    HRESULT __stdcall put_Id(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Id(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Id(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Id(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1726,7 +4436,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactConnectedServiceA
         }
     }
 
-    HRESULT __stdcall get_ServiceName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ServiceName(HSTRING* value) noexcept override
     {
         try
         {
@@ -1741,12 +4451,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactConnectedServiceA
         }
     }
 
-    HRESULT __stdcall put_ServiceName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_ServiceName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ServiceName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ServiceName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1759,7 +4469,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactConnectedServiceA
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactDate> : produce_base<D, Windows::ApplicationModel::Contacts::IContactDate>
 {
-    HRESULT __stdcall get_Day(impl::abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_Day(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1774,12 +4484,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactDate> : produce_b
         }
     }
 
-    HRESULT __stdcall put_Day(impl::abi_arg_in<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall put_Day(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Day(*reinterpret_cast<const Windows::Foundation::IReference<uint32_t> *>(&value));
+            this->shim().Day(*reinterpret_cast<Windows::Foundation::IReference<uint32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1788,7 +4498,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactDate> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Month(impl::abi_arg_out<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall get_Month(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1803,12 +4513,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactDate> : produce_b
         }
     }
 
-    HRESULT __stdcall put_Month(impl::abi_arg_in<Windows::Foundation::IReference<uint32_t>> value) noexcept override
+    HRESULT __stdcall put_Month(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Month(*reinterpret_cast<const Windows::Foundation::IReference<uint32_t> *>(&value));
+            this->shim().Month(*reinterpret_cast<Windows::Foundation::IReference<uint32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1817,7 +4527,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactDate> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Year(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_Year(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1832,12 +4542,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactDate> : produce_b
         }
     }
 
-    HRESULT __stdcall put_Year(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_Year(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Year(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().Year(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1846,7 +4556,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactDate> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Kind(Windows::ApplicationModel::Contacts::ContactDateKind * value) noexcept override
+    HRESULT __stdcall get_Kind(abi_t<Windows::ApplicationModel::Contacts::ContactDateKind>* value) noexcept override
     {
         try
         {
@@ -1860,12 +4570,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactDate> : produce_b
         }
     }
 
-    HRESULT __stdcall put_Kind(Windows::ApplicationModel::Contacts::ContactDateKind value) noexcept override
+    HRESULT __stdcall put_Kind(abi_t<Windows::ApplicationModel::Contacts::ContactDateKind> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Kind(value);
+            this->shim().Kind(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactDateKind const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1874,7 +4584,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactDate> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Description(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Description(HSTRING* value) noexcept override
     {
         try
         {
@@ -1889,12 +4599,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactDate> : produce_b
         }
     }
 
-    HRESULT __stdcall put_Description(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Description(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Description(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Description(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1907,7 +4617,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactDate> : produce_b
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactEmail> : produce_base<D, Windows::ApplicationModel::Contacts::IContactEmail>
 {
-    HRESULT __stdcall get_Address(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Address(HSTRING* value) noexcept override
     {
         try
         {
@@ -1922,12 +4632,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactEmail> : produce_
         }
     }
 
-    HRESULT __stdcall put_Address(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Address(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Address(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Address(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1936,7 +4646,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactEmail> : produce_
         }
     }
 
-    HRESULT __stdcall get_Kind(Windows::ApplicationModel::Contacts::ContactEmailKind * value) noexcept override
+    HRESULT __stdcall get_Kind(abi_t<Windows::ApplicationModel::Contacts::ContactEmailKind>* value) noexcept override
     {
         try
         {
@@ -1950,12 +4660,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactEmail> : produce_
         }
     }
 
-    HRESULT __stdcall put_Kind(Windows::ApplicationModel::Contacts::ContactEmailKind value) noexcept override
+    HRESULT __stdcall put_Kind(abi_t<Windows::ApplicationModel::Contacts::ContactEmailKind> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Kind(value);
+            this->shim().Kind(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactEmailKind const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1964,7 +4674,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactEmail> : produce_
         }
     }
 
-    HRESULT __stdcall get_Description(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Description(HSTRING* value) noexcept override
     {
         try
         {
@@ -1979,12 +4689,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactEmail> : produce_
         }
     }
 
-    HRESULT __stdcall put_Description(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Description(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Description(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Description(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1997,7 +4707,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactEmail> : produce_
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactField> : produce_base<D, Windows::ApplicationModel::Contacts::IContactField>
 {
-    HRESULT __stdcall get_Type(Windows::ApplicationModel::Contacts::ContactFieldType * value) noexcept override
+    HRESULT __stdcall get_Type(abi_t<Windows::ApplicationModel::Contacts::ContactFieldType>* value) noexcept override
     {
         try
         {
@@ -2011,7 +4721,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactField> : produce_
         }
     }
 
-    HRESULT __stdcall get_Category(Windows::ApplicationModel::Contacts::ContactFieldCategory * value) noexcept override
+    HRESULT __stdcall get_Category(abi_t<Windows::ApplicationModel::Contacts::ContactFieldCategory>* value) noexcept override
     {
         try
         {
@@ -2025,7 +4735,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactField> : produce_
         }
     }
 
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -2040,7 +4750,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactField> : produce_
         }
     }
 
-    HRESULT __stdcall get_Value(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Value(HSTRING* value) noexcept override
     {
         try
         {
@@ -2059,12 +4769,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactField> : produce_
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactFieldFactory> : produce_base<D, Windows::ApplicationModel::Contacts::IContactFieldFactory>
 {
-    HRESULT __stdcall abi_CreateField_Default(impl::abi_arg_in<hstring> value, Windows::ApplicationModel::Contacts::ContactFieldType type, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactField> field) noexcept override
+    HRESULT __stdcall CreateField_Default(HSTRING value, abi_t<Windows::ApplicationModel::Contacts::ContactFieldType> type, ::IUnknown** field) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *field = detach_abi(this->shim().CreateField(*reinterpret_cast<const hstring *>(&value), type));
+            *field = detach_abi(this->shim().CreateField(*reinterpret_cast<hstring const*>(&value), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactFieldType const*>(&type)));
             return S_OK;
         }
         catch (...)
@@ -2074,12 +4784,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactFieldFactory> : p
         }
     }
 
-    HRESULT __stdcall abi_CreateField_Category(impl::abi_arg_in<hstring> value, Windows::ApplicationModel::Contacts::ContactFieldType type, Windows::ApplicationModel::Contacts::ContactFieldCategory category, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactField> field) noexcept override
+    HRESULT __stdcall CreateField_Category(HSTRING value, abi_t<Windows::ApplicationModel::Contacts::ContactFieldType> type, abi_t<Windows::ApplicationModel::Contacts::ContactFieldCategory> category, ::IUnknown** field) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *field = detach_abi(this->shim().CreateField(*reinterpret_cast<const hstring *>(&value), type, category));
+            *field = detach_abi(this->shim().CreateField(*reinterpret_cast<hstring const*>(&value), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactFieldType const*>(&type), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactFieldCategory const*>(&category)));
             return S_OK;
         }
         catch (...)
@@ -2089,12 +4799,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactFieldFactory> : p
         }
     }
 
-    HRESULT __stdcall abi_CreateField_Custom(impl::abi_arg_in<hstring> name, impl::abi_arg_in<hstring> value, Windows::ApplicationModel::Contacts::ContactFieldType type, Windows::ApplicationModel::Contacts::ContactFieldCategory category, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactField> field) noexcept override
+    HRESULT __stdcall CreateField_Custom(HSTRING name, HSTRING value, abi_t<Windows::ApplicationModel::Contacts::ContactFieldType> type, abi_t<Windows::ApplicationModel::Contacts::ContactFieldCategory> category, ::IUnknown** field) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *field = detach_abi(this->shim().CreateField(*reinterpret_cast<const hstring *>(&name), *reinterpret_cast<const hstring *>(&value), type, category));
+            *field = detach_abi(this->shim().CreateField(*reinterpret_cast<hstring const*>(&name), *reinterpret_cast<hstring const*>(&value), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactFieldType const*>(&type), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactFieldCategory const*>(&category)));
             return S_OK;
         }
         catch (...)
@@ -2112,7 +4822,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactGroup> : produce_
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactInformation> : produce_base<D, Windows::ApplicationModel::Contacts::IContactInformation>
 {
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -2127,7 +4837,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInformation> : pr
         }
     }
 
-    HRESULT __stdcall abi_GetThumbnailAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType>> operation) noexcept override
+    HRESULT __stdcall GetThumbnailAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -2142,7 +4852,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInformation> : pr
         }
     }
 
-    HRESULT __stdcall get_Emails(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField>> value) noexcept override
+    HRESULT __stdcall get_Emails(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2157,7 +4867,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInformation> : pr
         }
     }
 
-    HRESULT __stdcall get_PhoneNumbers(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField>> value) noexcept override
+    HRESULT __stdcall get_PhoneNumbers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2172,7 +4882,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInformation> : pr
         }
     }
 
-    HRESULT __stdcall get_Locations(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactLocationField>> value) noexcept override
+    HRESULT __stdcall get_Locations(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2187,7 +4897,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInformation> : pr
         }
     }
 
-    HRESULT __stdcall get_InstantMessages(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactInstantMessageField>> value) noexcept override
+    HRESULT __stdcall get_InstantMessages(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2202,7 +4912,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInformation> : pr
         }
     }
 
-    HRESULT __stdcall get_CustomFields(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField>> value) noexcept override
+    HRESULT __stdcall get_CustomFields(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2217,12 +4927,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInformation> : pr
         }
     }
 
-    HRESULT __stdcall abi_QueryCustomFields(impl::abi_arg_in<hstring> customName, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField>> value) noexcept override
+    HRESULT __stdcall QueryCustomFields(HSTRING customName, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().QueryCustomFields(*reinterpret_cast<const hstring *>(&customName)));
+            *value = detach_abi(this->shim().QueryCustomFields(*reinterpret_cast<hstring const*>(&customName)));
             return S_OK;
         }
         catch (...)
@@ -2236,7 +4946,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInformation> : pr
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactInstantMessageField> : produce_base<D, Windows::ApplicationModel::Contacts::IContactInstantMessageField>
 {
-    HRESULT __stdcall get_UserName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UserName(HSTRING* value) noexcept override
     {
         try
         {
@@ -2251,7 +4961,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInstantMessageFie
         }
     }
 
-    HRESULT __stdcall get_Service(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Service(HSTRING* value) noexcept override
     {
         try
         {
@@ -2266,7 +4976,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInstantMessageFie
         }
     }
 
-    HRESULT __stdcall get_DisplayText(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayText(HSTRING* value) noexcept override
     {
         try
         {
@@ -2281,7 +4991,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInstantMessageFie
         }
     }
 
-    HRESULT __stdcall get_LaunchUri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_LaunchUri(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2300,12 +5010,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInstantMessageFie
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory> : produce_base<D, Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory>
 {
-    HRESULT __stdcall abi_CreateInstantMessage_Default(impl::abi_arg_in<hstring> userName, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactInstantMessageField> field) noexcept override
+    HRESULT __stdcall CreateInstantMessage_Default(HSTRING userName, ::IUnknown** field) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *field = detach_abi(this->shim().CreateInstantMessage(*reinterpret_cast<const hstring *>(&userName)));
+            *field = detach_abi(this->shim().CreateInstantMessage(*reinterpret_cast<hstring const*>(&userName)));
             return S_OK;
         }
         catch (...)
@@ -2315,12 +5025,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInstantMessageFie
         }
     }
 
-    HRESULT __stdcall abi_CreateInstantMessage_Category(impl::abi_arg_in<hstring> userName, Windows::ApplicationModel::Contacts::ContactFieldCategory category, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactInstantMessageField> field) noexcept override
+    HRESULT __stdcall CreateInstantMessage_Category(HSTRING userName, abi_t<Windows::ApplicationModel::Contacts::ContactFieldCategory> category, ::IUnknown** field) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *field = detach_abi(this->shim().CreateInstantMessage(*reinterpret_cast<const hstring *>(&userName), category));
+            *field = detach_abi(this->shim().CreateInstantMessage(*reinterpret_cast<hstring const*>(&userName), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactFieldCategory const*>(&category)));
             return S_OK;
         }
         catch (...)
@@ -2330,12 +5040,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInstantMessageFie
         }
     }
 
-    HRESULT __stdcall abi_CreateInstantMessage_All(impl::abi_arg_in<hstring> userName, Windows::ApplicationModel::Contacts::ContactFieldCategory category, impl::abi_arg_in<hstring> service, impl::abi_arg_in<hstring> displayText, impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> verb, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactInstantMessageField> field) noexcept override
+    HRESULT __stdcall CreateInstantMessage_All(HSTRING userName, abi_t<Windows::ApplicationModel::Contacts::ContactFieldCategory> category, HSTRING service, HSTRING displayText, ::IUnknown* verb, ::IUnknown** field) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *field = detach_abi(this->shim().CreateInstantMessage(*reinterpret_cast<const hstring *>(&userName), category, *reinterpret_cast<const hstring *>(&service), *reinterpret_cast<const hstring *>(&displayText), *reinterpret_cast<const Windows::Foundation::Uri *>(&verb)));
+            *field = detach_abi(this->shim().CreateInstantMessage(*reinterpret_cast<hstring const*>(&userName), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactFieldCategory const*>(&category), *reinterpret_cast<hstring const*>(&service), *reinterpret_cast<hstring const*>(&displayText), *reinterpret_cast<Windows::Foundation::Uri const*>(&verb)));
             return S_OK;
         }
         catch (...)
@@ -2349,7 +5059,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactInstantMessageFie
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produce_base<D, Windows::ApplicationModel::Contacts::IContactJobInfo>
 {
-    HRESULT __stdcall get_CompanyName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CompanyName(HSTRING* value) noexcept override
     {
         try
         {
@@ -2364,12 +5074,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall put_CompanyName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_CompanyName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CompanyName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().CompanyName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2378,7 +5088,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall get_CompanyYomiName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CompanyYomiName(HSTRING* value) noexcept override
     {
         try
         {
@@ -2393,12 +5103,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall put_CompanyYomiName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_CompanyYomiName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CompanyYomiName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().CompanyYomiName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2407,7 +5117,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall get_Department(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Department(HSTRING* value) noexcept override
     {
         try
         {
@@ -2422,12 +5132,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall put_Department(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Department(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Department(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Department(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2436,7 +5146,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall get_Title(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Title(HSTRING* value) noexcept override
     {
         try
         {
@@ -2451,12 +5161,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall put_Title(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Title(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Title(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Title(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2465,7 +5175,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall get_Manager(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Manager(HSTRING* value) noexcept override
     {
         try
         {
@@ -2480,12 +5190,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall put_Manager(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Manager(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Manager(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Manager(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2494,7 +5204,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall get_Office(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Office(HSTRING* value) noexcept override
     {
         try
         {
@@ -2509,12 +5219,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall put_Office(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Office(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Office(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Office(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2523,7 +5233,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall get_CompanyAddress(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CompanyAddress(HSTRING* value) noexcept override
     {
         try
         {
@@ -2538,12 +5248,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall put_CompanyAddress(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_CompanyAddress(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CompanyAddress(*reinterpret_cast<const hstring *>(&value));
+            this->shim().CompanyAddress(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2552,7 +5262,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall get_Description(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Description(HSTRING* value) noexcept override
     {
         try
         {
@@ -2567,12 +5277,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
         }
     }
 
-    HRESULT __stdcall put_Description(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Description(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Description(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Description(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2585,7 +5295,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactJobInfo> : produc
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics> : produce_base<D, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics>
 {
-    HRESULT __stdcall get_Call(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Call(HSTRING* value) noexcept override
     {
         try
         {
@@ -2600,7 +5310,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbs
         }
     }
 
-    HRESULT __stdcall get_Message(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Message(HSTRING* value) noexcept override
     {
         try
         {
@@ -2615,7 +5325,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbs
         }
     }
 
-    HRESULT __stdcall get_Map(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Map(HSTRING* value) noexcept override
     {
         try
         {
@@ -2630,7 +5340,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbs
         }
     }
 
-    HRESULT __stdcall get_Post(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Post(HSTRING* value) noexcept override
     {
         try
         {
@@ -2645,7 +5355,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbs
         }
     }
 
-    HRESULT __stdcall get_VideoCall(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_VideoCall(HSTRING* value) noexcept override
     {
         try
         {
@@ -2664,7 +5374,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbs
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_base<D, Windows::ApplicationModel::Contacts::IContactList>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -2679,7 +5389,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -2694,12 +5404,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall put_DisplayName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DisplayName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DisplayName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DisplayName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2708,7 +5418,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall get_SourceDisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SourceDisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -2723,7 +5433,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall get_IsHidden(bool * value) noexcept override
+    HRESULT __stdcall get_IsHidden(bool* value) noexcept override
     {
         try
         {
@@ -2751,7 +5461,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall get_OtherAppReadAccess(Windows::ApplicationModel::Contacts::ContactListOtherAppReadAccess * value) noexcept override
+    HRESULT __stdcall get_OtherAppReadAccess(abi_t<Windows::ApplicationModel::Contacts::ContactListOtherAppReadAccess>* value) noexcept override
     {
         try
         {
@@ -2765,12 +5475,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall put_OtherAppReadAccess(Windows::ApplicationModel::Contacts::ContactListOtherAppReadAccess value) noexcept override
+    HRESULT __stdcall put_OtherAppReadAccess(abi_t<Windows::ApplicationModel::Contacts::ContactListOtherAppReadAccess> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().OtherAppReadAccess(value);
+            this->shim().OtherAppReadAccess(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactListOtherAppReadAccess const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2779,7 +5489,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall get_OtherAppWriteAccess(Windows::ApplicationModel::Contacts::ContactListOtherAppWriteAccess * value) noexcept override
+    HRESULT __stdcall get_OtherAppWriteAccess(abi_t<Windows::ApplicationModel::Contacts::ContactListOtherAppWriteAccess>* value) noexcept override
     {
         try
         {
@@ -2793,12 +5503,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall put_OtherAppWriteAccess(Windows::ApplicationModel::Contacts::ContactListOtherAppWriteAccess value) noexcept override
+    HRESULT __stdcall put_OtherAppWriteAccess(abi_t<Windows::ApplicationModel::Contacts::ContactListOtherAppWriteAccess> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().OtherAppWriteAccess(value);
+            this->shim().OtherAppWriteAccess(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactListOtherAppWriteAccess const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2807,7 +5517,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall get_ChangeTracker(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactChangeTracker> value) noexcept override
+    HRESULT __stdcall get_ChangeTracker(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2822,7 +5532,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall get_SyncManager(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactListSyncManager> value) noexcept override
+    HRESULT __stdcall get_SyncManager(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2837,7 +5547,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall get_SupportsServerSearch(bool * value) noexcept override
+    HRESULT __stdcall get_SupportsServerSearch(bool* value) noexcept override
     {
         try
         {
@@ -2851,7 +5561,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall get_UserDataAccountId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UserDataAccountId(HSTRING* value) noexcept override
     {
         try
         {
@@ -2866,12 +5576,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall add_ContactChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactList, Windows::ApplicationModel::Contacts::ContactChangedEventArgs>> value, event_token * returnValue) noexcept override
+    HRESULT __stdcall add_ContactChanged(::IUnknown* value, abi_t<event_token>* returnValue) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *returnValue = detach_abi(this->shim().ContactChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactList, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> *>(&value)));
+            *returnValue = detach_abi(this->shim().ContactChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactList, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -2880,12 +5590,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall remove_ContactChanged(event_token value) noexcept override
+    HRESULT __stdcall remove_ContactChanged(abi_t<event_token> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ContactChanged(value);
+            this->shim().ContactChanged(*reinterpret_cast<event_token const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2894,7 +5604,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_SaveAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> returnValue) noexcept override
+    HRESULT __stdcall SaveAsync(::IUnknown** returnValue) noexcept override
     {
         try
         {
@@ -2909,7 +5619,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_DeleteAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> returnValue) noexcept override
+    HRESULT __stdcall DeleteAsync(::IUnknown** returnValue) noexcept override
     {
         try
         {
@@ -2924,12 +5634,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetContactFromRemoteIdAsync(impl::abi_arg_in<hstring> remoteId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact>> contact) noexcept override
+    HRESULT __stdcall GetContactFromRemoteIdAsync(HSTRING remoteId, ::IUnknown** contact) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *contact = detach_abi(this->shim().GetContactFromRemoteIdAsync(*reinterpret_cast<const hstring *>(&remoteId)));
+            *contact = detach_abi(this->shim().GetContactFromRemoteIdAsync(*reinterpret_cast<hstring const*>(&remoteId)));
             return S_OK;
         }
         catch (...)
@@ -2939,7 +5649,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetMeContactAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact>> meContact) noexcept override
+    HRESULT __stdcall GetMeContactAsync(::IUnknown** meContact) noexcept override
     {
         try
         {
@@ -2954,7 +5664,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetContactReader(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactReader> value) noexcept override
+    HRESULT __stdcall GetContactReader(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2969,12 +5679,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetContactReaderWithOptions(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContactQueryOptions> options, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactReader> value) noexcept override
+    HRESULT __stdcall GetContactReaderWithOptions(::IUnknown* options, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetContactReader(*reinterpret_cast<const Windows::ApplicationModel::Contacts::ContactQueryOptions *>(&options)));
+            *value = detach_abi(this->shim().GetContactReader(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactQueryOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -2984,12 +5694,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_SaveContactAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_out<Windows::Foundation::IAsyncAction> value) noexcept override
+    HRESULT __stdcall SaveContactAsync(::IUnknown* contact, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().SaveContactAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
+            *value = detach_abi(this->shim().SaveContactAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact)));
             return S_OK;
         }
         catch (...)
@@ -2999,12 +5709,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_DeleteContactAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_out<Windows::Foundation::IAsyncAction> value) noexcept override
+    HRESULT __stdcall DeleteContactAsync(::IUnknown* contact, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().DeleteContactAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
+            *value = detach_abi(this->shim().DeleteContactAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact)));
             return S_OK;
         }
         catch (...)
@@ -3014,12 +5724,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
         }
     }
 
-    HRESULT __stdcall abi_GetContactAsync(impl::abi_arg_in<hstring> contactId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact>> contacts) noexcept override
+    HRESULT __stdcall GetContactAsync(HSTRING contactId, ::IUnknown** contacts) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *contacts = detach_abi(this->shim().GetContactAsync(*reinterpret_cast<const hstring *>(&contactId)));
+            *contacts = detach_abi(this->shim().GetContactAsync(*reinterpret_cast<hstring const*>(&contactId)));
             return S_OK;
         }
         catch (...)
@@ -3033,7 +5743,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList> : produce_b
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactList2> : produce_base<D, Windows::ApplicationModel::Contacts::IContactList2>
 {
-    HRESULT __stdcall abi_RegisterSyncManagerAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall RegisterSyncManagerAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -3062,7 +5772,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList2> : produce_
         }
     }
 
-    HRESULT __stdcall get_SyncConstraints(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactListSyncConstraints> value) noexcept override
+    HRESULT __stdcall get_SyncConstraints(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3081,7 +5791,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactList2> : produce_
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstraints> : produce_base<D, Windows::ApplicationModel::Contacts::IContactListSyncConstraints>
 {
-    HRESULT __stdcall get_CanSyncDescriptions(bool * value) noexcept override
+    HRESULT __stdcall get_CanSyncDescriptions(bool* value) noexcept override
     {
         try
         {
@@ -3109,7 +5819,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxHomePhoneNumbers(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxHomePhoneNumbers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3124,12 +5834,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxHomePhoneNumbers(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxHomePhoneNumbers(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxHomePhoneNumbers(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxHomePhoneNumbers(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3138,7 +5848,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxMobilePhoneNumbers(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxMobilePhoneNumbers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3153,12 +5863,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxMobilePhoneNumbers(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxMobilePhoneNumbers(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxMobilePhoneNumbers(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxMobilePhoneNumbers(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3167,7 +5877,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxWorkPhoneNumbers(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxWorkPhoneNumbers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3182,12 +5892,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxWorkPhoneNumbers(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxWorkPhoneNumbers(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxWorkPhoneNumbers(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxWorkPhoneNumbers(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3196,7 +5906,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxOtherPhoneNumbers(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxOtherPhoneNumbers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3211,12 +5921,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxOtherPhoneNumbers(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxOtherPhoneNumbers(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxOtherPhoneNumbers(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxOtherPhoneNumbers(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3225,7 +5935,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxPagerPhoneNumbers(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxPagerPhoneNumbers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3240,12 +5950,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxPagerPhoneNumbers(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxPagerPhoneNumbers(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxPagerPhoneNumbers(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxPagerPhoneNumbers(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3254,7 +5964,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxBusinessFaxPhoneNumbers(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxBusinessFaxPhoneNumbers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3269,12 +5979,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxBusinessFaxPhoneNumbers(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxBusinessFaxPhoneNumbers(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxBusinessFaxPhoneNumbers(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxBusinessFaxPhoneNumbers(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3283,7 +5993,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxHomeFaxPhoneNumbers(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxHomeFaxPhoneNumbers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3298,12 +6008,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxHomeFaxPhoneNumbers(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxHomeFaxPhoneNumbers(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxHomeFaxPhoneNumbers(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxHomeFaxPhoneNumbers(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3312,7 +6022,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxCompanyPhoneNumbers(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxCompanyPhoneNumbers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3327,12 +6037,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxCompanyPhoneNumbers(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxCompanyPhoneNumbers(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxCompanyPhoneNumbers(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxCompanyPhoneNumbers(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3341,7 +6051,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxAssistantPhoneNumbers(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxAssistantPhoneNumbers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3356,12 +6066,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxAssistantPhoneNumbers(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxAssistantPhoneNumbers(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxAssistantPhoneNumbers(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxAssistantPhoneNumbers(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3370,7 +6080,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxRadioPhoneNumbers(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxRadioPhoneNumbers(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3385,12 +6095,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxRadioPhoneNumbers(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxRadioPhoneNumbers(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxRadioPhoneNumbers(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxRadioPhoneNumbers(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3399,7 +6109,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxPersonalEmailAddresses(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxPersonalEmailAddresses(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3414,12 +6124,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxPersonalEmailAddresses(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxPersonalEmailAddresses(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxPersonalEmailAddresses(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxPersonalEmailAddresses(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3428,7 +6138,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxWorkEmailAddresses(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxWorkEmailAddresses(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3443,12 +6153,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxWorkEmailAddresses(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxWorkEmailAddresses(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxWorkEmailAddresses(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxWorkEmailAddresses(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3457,7 +6167,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxOtherEmailAddresses(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxOtherEmailAddresses(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3472,12 +6182,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxOtherEmailAddresses(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxOtherEmailAddresses(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxOtherEmailAddresses(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxOtherEmailAddresses(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3486,7 +6196,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxHomeAddresses(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxHomeAddresses(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3501,12 +6211,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxHomeAddresses(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxHomeAddresses(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxHomeAddresses(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxHomeAddresses(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3515,7 +6225,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxWorkAddresses(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxWorkAddresses(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3530,12 +6240,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxWorkAddresses(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxWorkAddresses(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxWorkAddresses(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxWorkAddresses(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3544,7 +6254,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxOtherAddresses(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxOtherAddresses(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3559,12 +6269,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxOtherAddresses(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxOtherAddresses(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxOtherAddresses(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxOtherAddresses(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3573,7 +6283,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxBirthdayDates(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxBirthdayDates(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3588,12 +6298,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxBirthdayDates(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxBirthdayDates(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxBirthdayDates(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxBirthdayDates(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3602,7 +6312,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxAnniversaryDates(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxAnniversaryDates(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3617,12 +6327,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxAnniversaryDates(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxAnniversaryDates(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxAnniversaryDates(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxAnniversaryDates(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3631,7 +6341,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxOtherDates(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxOtherDates(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3646,12 +6356,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxOtherDates(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxOtherDates(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxOtherDates(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxOtherDates(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3660,7 +6370,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxOtherRelationships(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxOtherRelationships(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3675,12 +6385,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxOtherRelationships(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxOtherRelationships(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxOtherRelationships(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxOtherRelationships(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3689,7 +6399,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxSpouseRelationships(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxSpouseRelationships(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3704,12 +6414,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxSpouseRelationships(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxSpouseRelationships(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxSpouseRelationships(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxSpouseRelationships(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3718,7 +6428,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxPartnerRelationships(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxPartnerRelationships(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3733,12 +6443,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxPartnerRelationships(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxPartnerRelationships(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxPartnerRelationships(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxPartnerRelationships(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3747,7 +6457,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxSiblingRelationships(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxSiblingRelationships(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3762,12 +6472,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxSiblingRelationships(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxSiblingRelationships(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxSiblingRelationships(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxSiblingRelationships(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3776,7 +6486,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxParentRelationships(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxParentRelationships(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3791,12 +6501,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxParentRelationships(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxParentRelationships(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxParentRelationships(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxParentRelationships(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3805,7 +6515,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxChildRelationships(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxChildRelationships(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3820,12 +6530,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxChildRelationships(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxChildRelationships(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxChildRelationships(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxChildRelationships(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3834,7 +6544,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxJobInfo(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxJobInfo(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3849,12 +6559,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxJobInfo(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxJobInfo(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxJobInfo(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxJobInfo(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3863,7 +6573,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall get_MaxWebsites(impl::abi_arg_out<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall get_MaxWebsites(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3878,12 +6588,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
         }
     }
 
-    HRESULT __stdcall put_MaxWebsites(impl::abi_arg_in<Windows::Foundation::IReference<int32_t>> value) noexcept override
+    HRESULT __stdcall put_MaxWebsites(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MaxWebsites(*reinterpret_cast<const Windows::Foundation::IReference<int32_t> *>(&value));
+            this->shim().MaxWebsites(*reinterpret_cast<Windows::Foundation::IReference<int32_t> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3896,7 +6606,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncConstrain
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncManager> : produce_base<D, Windows::ApplicationModel::Contacts::IContactListSyncManager>
 {
-    HRESULT __stdcall get_Status(Windows::ApplicationModel::Contacts::ContactListSyncStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::ApplicationModel::Contacts::ContactListSyncStatus>* value) noexcept override
     {
         try
         {
@@ -3910,7 +6620,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncManager> 
         }
     }
 
-    HRESULT __stdcall get_LastSuccessfulSyncTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_LastSuccessfulSyncTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -3924,7 +6634,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncManager> 
         }
     }
 
-    HRESULT __stdcall get_LastAttemptedSyncTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_LastAttemptedSyncTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -3938,7 +6648,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncManager> 
         }
     }
 
-    HRESULT __stdcall abi_SyncAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall SyncAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -3953,12 +6663,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncManager> 
         }
     }
 
-    HRESULT __stdcall add_SyncStatusChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactListSyncManager, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_SyncStatusChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().SyncStatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactListSyncManager, Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().SyncStatusChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactListSyncManager, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -3967,12 +6677,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncManager> 
         }
     }
 
-    HRESULT __stdcall remove_SyncStatusChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_SyncStatusChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SyncStatusChanged(token);
+            this->shim().SyncStatusChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -3985,12 +6695,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncManager> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncManager2> : produce_base<D, Windows::ApplicationModel::Contacts::IContactListSyncManager2>
 {
-    HRESULT __stdcall put_Status(Windows::ApplicationModel::Contacts::ContactListSyncStatus value) noexcept override
+    HRESULT __stdcall put_Status(abi_t<Windows::ApplicationModel::Contacts::ContactListSyncStatus> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Status(value);
+            this->shim().Status(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactListSyncStatus const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3999,12 +6709,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncManager2>
         }
     }
 
-    HRESULT __stdcall put_LastSuccessfulSyncTime(impl::abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall put_LastSuccessfulSyncTime(abi_t<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().LastSuccessfulSyncTime(*reinterpret_cast<const Windows::Foundation::DateTime *>(&value));
+            this->shim().LastSuccessfulSyncTime(*reinterpret_cast<Windows::Foundation::DateTime const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4013,12 +6723,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncManager2>
         }
     }
 
-    HRESULT __stdcall put_LastAttemptedSyncTime(impl::abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall put_LastAttemptedSyncTime(abi_t<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().LastAttemptedSyncTime(*reinterpret_cast<const Windows::Foundation::DateTime *>(&value));
+            this->shim().LastAttemptedSyncTime(*reinterpret_cast<Windows::Foundation::DateTime const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4031,7 +6741,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactListSyncManager2>
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactLocationField> : produce_base<D, Windows::ApplicationModel::Contacts::IContactLocationField>
 {
-    HRESULT __stdcall get_UnstructuredAddress(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UnstructuredAddress(HSTRING* value) noexcept override
     {
         try
         {
@@ -4046,7 +6756,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLocationField> : 
         }
     }
 
-    HRESULT __stdcall get_Street(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Street(HSTRING* value) noexcept override
     {
         try
         {
@@ -4061,7 +6771,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLocationField> : 
         }
     }
 
-    HRESULT __stdcall get_City(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_City(HSTRING* value) noexcept override
     {
         try
         {
@@ -4076,7 +6786,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLocationField> : 
         }
     }
 
-    HRESULT __stdcall get_Region(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Region(HSTRING* value) noexcept override
     {
         try
         {
@@ -4091,7 +6801,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLocationField> : 
         }
     }
 
-    HRESULT __stdcall get_Country(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Country(HSTRING* value) noexcept override
     {
         try
         {
@@ -4106,7 +6816,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLocationField> : 
         }
     }
 
-    HRESULT __stdcall get_PostalCode(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PostalCode(HSTRING* value) noexcept override
     {
         try
         {
@@ -4125,12 +6835,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLocationField> : 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactLocationFieldFactory> : produce_base<D, Windows::ApplicationModel::Contacts::IContactLocationFieldFactory>
 {
-    HRESULT __stdcall abi_CreateLocation_Default(impl::abi_arg_in<hstring> unstructuredAddress, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactLocationField> field) noexcept override
+    HRESULT __stdcall CreateLocation_Default(HSTRING unstructuredAddress, ::IUnknown** field) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *field = detach_abi(this->shim().CreateLocation(*reinterpret_cast<const hstring *>(&unstructuredAddress)));
+            *field = detach_abi(this->shim().CreateLocation(*reinterpret_cast<hstring const*>(&unstructuredAddress)));
             return S_OK;
         }
         catch (...)
@@ -4140,12 +6850,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLocationFieldFact
         }
     }
 
-    HRESULT __stdcall abi_CreateLocation_Category(impl::abi_arg_in<hstring> unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory category, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactLocationField> field) noexcept override
+    HRESULT __stdcall CreateLocation_Category(HSTRING unstructuredAddress, abi_t<Windows::ApplicationModel::Contacts::ContactFieldCategory> category, ::IUnknown** field) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *field = detach_abi(this->shim().CreateLocation(*reinterpret_cast<const hstring *>(&unstructuredAddress), category));
+            *field = detach_abi(this->shim().CreateLocation(*reinterpret_cast<hstring const*>(&unstructuredAddress), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactFieldCategory const*>(&category)));
             return S_OK;
         }
         catch (...)
@@ -4155,12 +6865,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLocationFieldFact
         }
     }
 
-    HRESULT __stdcall abi_CreateLocation_All(impl::abi_arg_in<hstring> unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory category, impl::abi_arg_in<hstring> street, impl::abi_arg_in<hstring> city, impl::abi_arg_in<hstring> region, impl::abi_arg_in<hstring> country, impl::abi_arg_in<hstring> postalCode, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactLocationField> field) noexcept override
+    HRESULT __stdcall CreateLocation_All(HSTRING unstructuredAddress, abi_t<Windows::ApplicationModel::Contacts::ContactFieldCategory> category, HSTRING street, HSTRING city, HSTRING region, HSTRING country, HSTRING postalCode, ::IUnknown** field) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *field = detach_abi(this->shim().CreateLocation(*reinterpret_cast<const hstring *>(&unstructuredAddress), category, *reinterpret_cast<const hstring *>(&street), *reinterpret_cast<const hstring *>(&city), *reinterpret_cast<const hstring *>(&region), *reinterpret_cast<const hstring *>(&country), *reinterpret_cast<const hstring *>(&postalCode)));
+            *field = detach_abi(this->shim().CreateLocation(*reinterpret_cast<hstring const*>(&unstructuredAddress), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactFieldCategory const*>(&category), *reinterpret_cast<hstring const*>(&street), *reinterpret_cast<hstring const*>(&city), *reinterpret_cast<hstring const*>(&region), *reinterpret_cast<hstring const*>(&country), *reinterpret_cast<hstring const*>(&postalCode)));
             return S_OK;
         }
         catch (...)
@@ -4174,12 +6884,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactLocationFieldFact
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser> : produce_base<D, Windows::ApplicationModel::Contacts::IContactManagerForUser>
 {
-    HRESULT __stdcall abi_ConvertContactToVCardAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference>> result) noexcept override
+    HRESULT __stdcall ConvertContactToVCardAsync(::IUnknown* contact, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().ConvertContactToVCardAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
+            *result = detach_abi(this->shim().ConvertContactToVCardAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact)));
             return S_OK;
         }
         catch (...)
@@ -4189,12 +6899,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser> :
         }
     }
 
-    HRESULT __stdcall abi_ConvertContactToVCardAsyncWithMaxBytes(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, uint32_t maxBytes, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference>> result) noexcept override
+    HRESULT __stdcall ConvertContactToVCardAsyncWithMaxBytes(::IUnknown* contact, uint32_t maxBytes, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().ConvertContactToVCardAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), maxBytes));
+            *result = detach_abi(this->shim().ConvertContactToVCardAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), maxBytes));
             return S_OK;
         }
         catch (...)
@@ -4204,12 +6914,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser> :
         }
     }
 
-    HRESULT __stdcall abi_ConvertVCardToContactAsync(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> vCard, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact>> result) noexcept override
+    HRESULT __stdcall ConvertVCardToContactAsync(::IUnknown* vCard, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().ConvertVCardToContactAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&vCard)));
+            *result = detach_abi(this->shim().ConvertVCardToContactAsync(*reinterpret_cast<Windows::Storage::Streams::IRandomAccessStreamReference const*>(&vCard)));
             return S_OK;
         }
         catch (...)
@@ -4219,12 +6929,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser> :
         }
     }
 
-    HRESULT __stdcall abi_RequestStoreAsync(Windows::ApplicationModel::Contacts::ContactStoreAccessType accessType, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore>> result) noexcept override
+    HRESULT __stdcall RequestStoreAsync(abi_t<Windows::ApplicationModel::Contacts::ContactStoreAccessType> accessType, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().RequestStoreAsync(accessType));
+            *result = detach_abi(this->shim().RequestStoreAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactStoreAccessType const*>(&accessType)));
             return S_OK;
         }
         catch (...)
@@ -4234,12 +6944,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser> :
         }
     }
 
-    HRESULT __stdcall abi_RequestAnnotationStoreAsync(Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType accessType, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore>> result) noexcept override
+    HRESULT __stdcall RequestAnnotationStoreAsync(abi_t<Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType> accessType, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().RequestAnnotationStoreAsync(accessType));
+            *result = detach_abi(this->shim().RequestAnnotationStoreAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType const*>(&accessType)));
             return S_OK;
         }
         catch (...)
@@ -4249,7 +6959,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser> :
         }
     }
 
-    HRESULT __stdcall get_SystemDisplayNameOrder(Windows::ApplicationModel::Contacts::ContactNameOrder * value) noexcept override
+    HRESULT __stdcall get_SystemDisplayNameOrder(abi_t<Windows::ApplicationModel::Contacts::ContactNameOrder>* value) noexcept override
     {
         try
         {
@@ -4263,12 +6973,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser> :
         }
     }
 
-    HRESULT __stdcall put_SystemDisplayNameOrder(Windows::ApplicationModel::Contacts::ContactNameOrder value) noexcept override
+    HRESULT __stdcall put_SystemDisplayNameOrder(abi_t<Windows::ApplicationModel::Contacts::ContactNameOrder> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SystemDisplayNameOrder(value);
+            this->shim().SystemDisplayNameOrder(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactNameOrder const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4277,7 +6987,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser> :
         }
     }
 
-    HRESULT __stdcall get_SystemSortOrder(Windows::ApplicationModel::Contacts::ContactNameOrder * value) noexcept override
+    HRESULT __stdcall get_SystemSortOrder(abi_t<Windows::ApplicationModel::Contacts::ContactNameOrder>* value) noexcept override
     {
         try
         {
@@ -4291,12 +7001,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser> :
         }
     }
 
-    HRESULT __stdcall put_SystemSortOrder(Windows::ApplicationModel::Contacts::ContactNameOrder value) noexcept override
+    HRESULT __stdcall put_SystemSortOrder(abi_t<Windows::ApplicationModel::Contacts::ContactNameOrder> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SystemSortOrder(value);
+            this->shim().SystemSortOrder(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactNameOrder const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4305,7 +7015,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser> :
         }
     }
 
-    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_User(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4324,12 +7034,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser> :
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser2> : produce_base<D, Windows::ApplicationModel::Contacts::IContactManagerForUser2>
 {
-    HRESULT __stdcall abi_ShowFullContactCard(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_in<Windows::ApplicationModel::Contacts::IFullContactCardOptions> fullContactCardOptions) noexcept override
+    HRESULT __stdcall ShowFullContactCard(::IUnknown* contact, ::IUnknown* fullContactCardOptions) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ShowFullContactCard(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), *reinterpret_cast<const Windows::ApplicationModel::Contacts::FullContactCardOptions *>(&fullContactCardOptions));
+            this->shim().ShowFullContactCard(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), *reinterpret_cast<Windows::ApplicationModel::Contacts::FullContactCardOptions const*>(&fullContactCardOptions));
             return S_OK;
         }
         catch (...)
@@ -4342,12 +7052,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerForUser2> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics> : produce_base<D, Windows::ApplicationModel::Contacts::IContactManagerStatics>
 {
-    HRESULT __stdcall abi_ShowContactCard(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_in<Windows::Foundation::Rect> selection) noexcept override
+    HRESULT __stdcall ShowContactCard(::IUnknown* contact, abi_t<Windows::Foundation::Rect> selection) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ShowContactCard(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), *reinterpret_cast<const Windows::Foundation::Rect *>(&selection));
+            this->shim().ShowContactCard(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), *reinterpret_cast<Windows::Foundation::Rect const*>(&selection));
             return S_OK;
         }
         catch (...)
@@ -4356,12 +7066,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics> :
         }
     }
 
-    HRESULT __stdcall abi_ShowContactCardWithPlacement(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_in<Windows::Foundation::Rect> selection, Windows::UI::Popups::Placement preferredPlacement) noexcept override
+    HRESULT __stdcall ShowContactCardWithPlacement(::IUnknown* contact, abi_t<Windows::Foundation::Rect> selection, abi_t<Windows::UI::Popups::Placement> preferredPlacement) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ShowContactCard(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), *reinterpret_cast<const Windows::Foundation::Rect *>(&selection), preferredPlacement);
+            this->shim().ShowContactCard(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), *reinterpret_cast<Windows::Foundation::Rect const*>(&selection), *reinterpret_cast<Windows::UI::Popups::Placement const*>(&preferredPlacement));
             return S_OK;
         }
         catch (...)
@@ -4370,12 +7080,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics> :
         }
     }
 
-    HRESULT __stdcall abi_ShowDelayLoadedContactCard(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_in<Windows::Foundation::Rect> selection, Windows::UI::Popups::Placement preferredPlacement, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactCardDelayedDataLoader> dataLoader) noexcept override
+    HRESULT __stdcall ShowDelayLoadedContactCard(::IUnknown* contact, abi_t<Windows::Foundation::Rect> selection, abi_t<Windows::UI::Popups::Placement> preferredPlacement, ::IUnknown** dataLoader) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *dataLoader = detach_abi(this->shim().ShowDelayLoadedContactCard(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), *reinterpret_cast<const Windows::Foundation::Rect *>(&selection), preferredPlacement));
+            *dataLoader = detach_abi(this->shim().ShowDelayLoadedContactCard(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), *reinterpret_cast<Windows::Foundation::Rect const*>(&selection), *reinterpret_cast<Windows::UI::Popups::Placement const*>(&preferredPlacement)));
             return S_OK;
         }
         catch (...)
@@ -4389,7 +7099,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics> :
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics2> : produce_base<D, Windows::ApplicationModel::Contacts::IContactManagerStatics2>
 {
-    HRESULT __stdcall abi_RequestStoreAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore>> store) noexcept override
+    HRESULT __stdcall RequestStoreAsync(::IUnknown** store) noexcept override
     {
         try
         {
@@ -4408,12 +7118,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics2> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> : produce_base<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3>
 {
-    HRESULT __stdcall abi_ConvertContactToVCardAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference>> vCard) noexcept override
+    HRESULT __stdcall ConvertContactToVCardAsync(::IUnknown* contact, ::IUnknown** vCard) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *vCard = detach_abi(this->shim().ConvertContactToVCardAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
+            *vCard = detach_abi(this->shim().ConvertContactToVCardAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact)));
             return S_OK;
         }
         catch (...)
@@ -4423,12 +7133,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall abi_ConvertContactToVCardAsyncWithMaxBytes(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, uint32_t maxBytes, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference>> vCard) noexcept override
+    HRESULT __stdcall ConvertContactToVCardAsyncWithMaxBytes(::IUnknown* contact, uint32_t maxBytes, ::IUnknown** vCard) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *vCard = detach_abi(this->shim().ConvertContactToVCardAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), maxBytes));
+            *vCard = detach_abi(this->shim().ConvertContactToVCardAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), maxBytes));
             return S_OK;
         }
         catch (...)
@@ -4438,12 +7148,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall abi_ConvertVCardToContactAsync(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> vCard, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact>> contact) noexcept override
+    HRESULT __stdcall ConvertVCardToContactAsync(::IUnknown* vCard, ::IUnknown** contact) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *contact = detach_abi(this->shim().ConvertVCardToContactAsync(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&vCard)));
+            *contact = detach_abi(this->shim().ConvertVCardToContactAsync(*reinterpret_cast<Windows::Storage::Streams::IRandomAccessStreamReference const*>(&vCard)));
             return S_OK;
         }
         catch (...)
@@ -4453,12 +7163,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall abi_RequestStoreAsyncWithAccessType(Windows::ApplicationModel::Contacts::ContactStoreAccessType accessType, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore>> store) noexcept override
+    HRESULT __stdcall RequestStoreAsyncWithAccessType(abi_t<Windows::ApplicationModel::Contacts::ContactStoreAccessType> accessType, ::IUnknown** store) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *store = detach_abi(this->shim().RequestStoreAsync(accessType));
+            *store = detach_abi(this->shim().RequestStoreAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactStoreAccessType const*>(&accessType)));
             return S_OK;
         }
         catch (...)
@@ -4468,12 +7178,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall abi_RequestAnnotationStoreAsync(Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType accessType, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore>> store) noexcept override
+    HRESULT __stdcall RequestAnnotationStoreAsync(abi_t<Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType> accessType, ::IUnknown** store) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *store = detach_abi(this->shim().RequestAnnotationStoreAsync(accessType));
+            *store = detach_abi(this->shim().RequestAnnotationStoreAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType const*>(&accessType)));
             return S_OK;
         }
         catch (...)
@@ -4483,7 +7193,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall abi_IsShowContactCardSupported(bool * result) noexcept override
+    HRESULT __stdcall IsShowContactCardSupported(bool* result) noexcept override
     {
         try
         {
@@ -4497,12 +7207,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall abi_ShowContactCardWithOptions(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_in<Windows::Foundation::Rect> selection, Windows::UI::Popups::Placement preferredPlacement, impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContactCardOptions> contactCardOptions) noexcept override
+    HRESULT __stdcall ShowContactCardWithOptions(::IUnknown* contact, abi_t<Windows::Foundation::Rect> selection, abi_t<Windows::UI::Popups::Placement> preferredPlacement, ::IUnknown* contactCardOptions) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ShowContactCard(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), *reinterpret_cast<const Windows::Foundation::Rect *>(&selection), preferredPlacement, *reinterpret_cast<const Windows::ApplicationModel::Contacts::ContactCardOptions *>(&contactCardOptions));
+            this->shim().ShowContactCard(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), *reinterpret_cast<Windows::Foundation::Rect const*>(&selection), *reinterpret_cast<Windows::UI::Popups::Placement const*>(&preferredPlacement), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactCardOptions const*>(&contactCardOptions));
             return S_OK;
         }
         catch (...)
@@ -4511,7 +7221,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall abi_IsShowDelayLoadedContactCardSupported(bool * result) noexcept override
+    HRESULT __stdcall IsShowDelayLoadedContactCardSupported(bool* result) noexcept override
     {
         try
         {
@@ -4525,12 +7235,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall abi_ShowDelayLoadedContactCardWithOptions(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_in<Windows::Foundation::Rect> selection, Windows::UI::Popups::Placement preferredPlacement, impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContactCardOptions> contactCardOptions, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactCardDelayedDataLoader> dataLoader) noexcept override
+    HRESULT __stdcall ShowDelayLoadedContactCardWithOptions(::IUnknown* contact, abi_t<Windows::Foundation::Rect> selection, abi_t<Windows::UI::Popups::Placement> preferredPlacement, ::IUnknown* contactCardOptions, ::IUnknown** dataLoader) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *dataLoader = detach_abi(this->shim().ShowDelayLoadedContactCard(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), *reinterpret_cast<const Windows::Foundation::Rect *>(&selection), preferredPlacement, *reinterpret_cast<const Windows::ApplicationModel::Contacts::ContactCardOptions *>(&contactCardOptions)));
+            *dataLoader = detach_abi(this->shim().ShowDelayLoadedContactCard(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), *reinterpret_cast<Windows::Foundation::Rect const*>(&selection), *reinterpret_cast<Windows::UI::Popups::Placement const*>(&preferredPlacement), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactCardOptions const*>(&contactCardOptions)));
             return S_OK;
         }
         catch (...)
@@ -4540,12 +7250,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall abi_ShowFullContactCard(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_in<Windows::ApplicationModel::Contacts::IFullContactCardOptions> fullContactCardOptions) noexcept override
+    HRESULT __stdcall ShowFullContactCard(::IUnknown* contact, ::IUnknown* fullContactCardOptions) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ShowFullContactCard(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), *reinterpret_cast<const Windows::ApplicationModel::Contacts::FullContactCardOptions *>(&fullContactCardOptions));
+            this->shim().ShowFullContactCard(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), *reinterpret_cast<Windows::ApplicationModel::Contacts::FullContactCardOptions const*>(&fullContactCardOptions));
             return S_OK;
         }
         catch (...)
@@ -4554,7 +7264,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall get_SystemDisplayNameOrder(Windows::ApplicationModel::Contacts::ContactNameOrder * value) noexcept override
+    HRESULT __stdcall get_SystemDisplayNameOrder(abi_t<Windows::ApplicationModel::Contacts::ContactNameOrder>* value) noexcept override
     {
         try
         {
@@ -4568,12 +7278,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall put_SystemDisplayNameOrder(Windows::ApplicationModel::Contacts::ContactNameOrder value) noexcept override
+    HRESULT __stdcall put_SystemDisplayNameOrder(abi_t<Windows::ApplicationModel::Contacts::ContactNameOrder> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SystemDisplayNameOrder(value);
+            this->shim().SystemDisplayNameOrder(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactNameOrder const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4582,7 +7292,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall get_SystemSortOrder(Windows::ApplicationModel::Contacts::ContactNameOrder * value) noexcept override
+    HRESULT __stdcall get_SystemSortOrder(abi_t<Windows::ApplicationModel::Contacts::ContactNameOrder>* value) noexcept override
     {
         try
         {
@@ -4596,12 +7306,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
         }
     }
 
-    HRESULT __stdcall put_SystemSortOrder(Windows::ApplicationModel::Contacts::ContactNameOrder value) noexcept override
+    HRESULT __stdcall put_SystemSortOrder(abi_t<Windows::ApplicationModel::Contacts::ContactNameOrder> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SystemSortOrder(value);
+            this->shim().SystemSortOrder(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactNameOrder const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4614,12 +7324,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics3> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics4> : produce_base<D, Windows::ApplicationModel::Contacts::IContactManagerStatics4>
 {
-    HRESULT __stdcall abi_GetForUser(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactManagerForUser> result) noexcept override
+    HRESULT __stdcall GetForUser(::IUnknown* user, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<const Windows::System::User *>(&user)));
+            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<Windows::System::User const*>(&user)));
             return S_OK;
         }
         catch (...)
@@ -4633,7 +7343,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics4> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics5> : produce_base<D, Windows::ApplicationModel::Contacts::IContactManagerStatics5>
 {
-    HRESULT __stdcall abi_IsShowFullContactCardSupportedAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall IsShowFullContactCardSupportedAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -4648,7 +7358,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics5> 
         }
     }
 
-    HRESULT __stdcall get_IncludeMiddleNameInSystemDisplayAndSort(bool * value) noexcept override
+    HRESULT __stdcall get_IncludeMiddleNameInSystemDisplayAndSort(bool* value) noexcept override
     {
         try
         {
@@ -4680,7 +7390,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactManagerStatics5> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactMatchReason> : produce_base<D, Windows::ApplicationModel::Contacts::IContactMatchReason>
 {
-    HRESULT __stdcall get_Field(Windows::ApplicationModel::Contacts::ContactMatchReasonKind * value) noexcept override
+    HRESULT __stdcall get_Field(abi_t<Windows::ApplicationModel::Contacts::ContactMatchReasonKind>* value) noexcept override
     {
         try
         {
@@ -4694,7 +7404,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactMatchReason> : pr
         }
     }
 
-    HRESULT __stdcall get_Segments(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextSegment>> value) noexcept override
+    HRESULT __stdcall get_Segments(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4709,7 +7419,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactMatchReason> : pr
         }
     }
 
-    HRESULT __stdcall get_Text(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Text(HSTRING* value) noexcept override
     {
         try
         {
@@ -4728,7 +7438,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactMatchReason> : pr
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_base<D, Windows::ApplicationModel::Contacts::IContactName>
 {
-    HRESULT __stdcall get_FirstName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FirstName(HSTRING* value) noexcept override
     {
         try
         {
@@ -4743,12 +7453,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall put_FirstName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_FirstName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().FirstName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().FirstName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4757,7 +7467,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall get_LastName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LastName(HSTRING* value) noexcept override
     {
         try
         {
@@ -4772,12 +7482,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall put_LastName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_LastName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().LastName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().LastName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4786,7 +7496,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall get_MiddleName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MiddleName(HSTRING* value) noexcept override
     {
         try
         {
@@ -4801,12 +7511,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall put_MiddleName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_MiddleName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MiddleName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().MiddleName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4815,7 +7525,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall get_YomiGivenName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_YomiGivenName(HSTRING* value) noexcept override
     {
         try
         {
@@ -4830,12 +7540,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall put_YomiGivenName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_YomiGivenName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().YomiGivenName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().YomiGivenName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4844,7 +7554,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall get_YomiFamilyName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_YomiFamilyName(HSTRING* value) noexcept override
     {
         try
         {
@@ -4859,12 +7569,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall put_YomiFamilyName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_YomiFamilyName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().YomiFamilyName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().YomiFamilyName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4873,7 +7583,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall get_HonorificNameSuffix(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HonorificNameSuffix(HSTRING* value) noexcept override
     {
         try
         {
@@ -4888,12 +7598,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall put_HonorificNameSuffix(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_HonorificNameSuffix(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().HonorificNameSuffix(*reinterpret_cast<const hstring *>(&value));
+            this->shim().HonorificNameSuffix(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4902,7 +7612,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall get_HonorificNamePrefix(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HonorificNamePrefix(HSTRING* value) noexcept override
     {
         try
         {
@@ -4917,12 +7627,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall put_HonorificNamePrefix(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_HonorificNamePrefix(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().HonorificNamePrefix(*reinterpret_cast<const hstring *>(&value));
+            this->shim().HonorificNamePrefix(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4931,7 +7641,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -4946,7 +7656,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
         }
     }
 
-    HRESULT __stdcall get_YomiDisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_YomiDisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -4965,7 +7675,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactName> : produce_b
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactPanel> : produce_base<D, Windows::ApplicationModel::Contacts::IContactPanel>
 {
-    HRESULT __stdcall abi_ClosePanel() noexcept override
+    HRESULT __stdcall ClosePanel() noexcept override
     {
         try
         {
@@ -4979,7 +7689,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPanel> : produce_
         }
     }
 
-    HRESULT __stdcall get_HeaderColor(impl::abi_arg_out<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall get_HeaderColor(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4994,12 +7704,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPanel> : produce_
         }
     }
 
-    HRESULT __stdcall put_HeaderColor(impl::abi_arg_in<Windows::Foundation::IReference<Windows::UI::Color>> value) noexcept override
+    HRESULT __stdcall put_HeaderColor(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().HeaderColor(*reinterpret_cast<const Windows::Foundation::IReference<Windows::UI::Color> *>(&value));
+            this->shim().HeaderColor(*reinterpret_cast<Windows::Foundation::IReference<Windows::UI::Color> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5008,12 +7718,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPanel> : produce_
         }
     }
 
-    HRESULT __stdcall add_LaunchFullAppRequested(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelLaunchFullAppRequestedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_LaunchFullAppRequested(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().LaunchFullAppRequested(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelLaunchFullAppRequestedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().LaunchFullAppRequested(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelLaunchFullAppRequestedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -5022,12 +7732,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPanel> : produce_
         }
     }
 
-    HRESULT __stdcall remove_LaunchFullAppRequested(event_token token) noexcept override
+    HRESULT __stdcall remove_LaunchFullAppRequested(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().LaunchFullAppRequested(token);
+            this->shim().LaunchFullAppRequested(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -5036,12 +7746,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPanel> : produce_
         }
     }
 
-    HRESULT __stdcall add_Closing(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelClosingEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_Closing(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().Closing(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelClosingEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().Closing(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelClosingEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -5050,12 +7760,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPanel> : produce_
         }
     }
 
-    HRESULT __stdcall remove_Closing(event_token token) noexcept override
+    HRESULT __stdcall remove_Closing(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Closing(token);
+            this->shim().Closing(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -5068,7 +7778,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPanel> : produce_
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactPanelClosingEventArgs> : produce_base<D, Windows::ApplicationModel::Contacts::IContactPanelClosingEventArgs>
 {
-    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::Foundation::IDeferral> deferral) noexcept override
+    HRESULT __stdcall GetDeferral(::IUnknown** deferral) noexcept override
     {
         try
         {
@@ -5087,7 +7797,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPanelClosingEvent
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactPanelLaunchFullAppRequestedEventArgs> : produce_base<D, Windows::ApplicationModel::Contacts::IContactPanelLaunchFullAppRequestedEventArgs>
 {
-    HRESULT __stdcall get_Handled(bool * value) noexcept override
+    HRESULT __stdcall get_Handled(bool* value) noexcept override
     {
         try
         {
@@ -5119,7 +7829,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPanelLaunchFullAp
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactPhone> : produce_base<D, Windows::ApplicationModel::Contacts::IContactPhone>
 {
-    HRESULT __stdcall get_Number(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Number(HSTRING* value) noexcept override
     {
         try
         {
@@ -5134,12 +7844,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPhone> : produce_
         }
     }
 
-    HRESULT __stdcall put_Number(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Number(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Number(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Number(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5148,7 +7858,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPhone> : produce_
         }
     }
 
-    HRESULT __stdcall get_Kind(Windows::ApplicationModel::Contacts::ContactPhoneKind * value) noexcept override
+    HRESULT __stdcall get_Kind(abi_t<Windows::ApplicationModel::Contacts::ContactPhoneKind>* value) noexcept override
     {
         try
         {
@@ -5162,12 +7872,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPhone> : produce_
         }
     }
 
-    HRESULT __stdcall put_Kind(Windows::ApplicationModel::Contacts::ContactPhoneKind value) noexcept override
+    HRESULT __stdcall put_Kind(abi_t<Windows::ApplicationModel::Contacts::ContactPhoneKind> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Kind(value);
+            this->shim().Kind(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactPhoneKind const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5176,7 +7886,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPhone> : produce_
         }
     }
 
-    HRESULT __stdcall get_Description(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Description(HSTRING* value) noexcept override
     {
         try
         {
@@ -5191,12 +7901,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPhone> : produce_
         }
     }
 
-    HRESULT __stdcall put_Description(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Description(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Description(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Description(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5209,7 +7919,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPhone> : produce_
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker> : produce_base<D, Windows::ApplicationModel::Contacts::IContactPicker>
 {
-    HRESULT __stdcall get_CommitButtonText(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CommitButtonText(HSTRING* value) noexcept override
     {
         try
         {
@@ -5224,12 +7934,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker> : produce
         }
     }
 
-    HRESULT __stdcall put_CommitButtonText(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_CommitButtonText(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CommitButtonText(*reinterpret_cast<const hstring *>(&value));
+            this->shim().CommitButtonText(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5238,7 +7948,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker> : produce
         }
     }
 
-    HRESULT __stdcall get_SelectionMode(Windows::ApplicationModel::Contacts::ContactSelectionMode * value) noexcept override
+    HRESULT __stdcall get_SelectionMode(abi_t<Windows::ApplicationModel::Contacts::ContactSelectionMode>* value) noexcept override
     {
         try
         {
@@ -5252,12 +7962,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker> : produce
         }
     }
 
-    HRESULT __stdcall put_SelectionMode(Windows::ApplicationModel::Contacts::ContactSelectionMode value) noexcept override
+    HRESULT __stdcall put_SelectionMode(abi_t<Windows::ApplicationModel::Contacts::ContactSelectionMode> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SelectionMode(value);
+            this->shim().SelectionMode(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactSelectionMode const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5266,7 +7976,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker> : produce
         }
     }
 
-    HRESULT __stdcall get_DesiredFields(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_DesiredFields(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5281,7 +7991,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker> : produce
         }
     }
 
-    HRESULT __stdcall abi_PickSingleContactAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactInformation>> result) noexcept override
+    HRESULT __stdcall PickSingleContactAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -5296,7 +8006,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker> : produce
         }
     }
 
-    HRESULT __stdcall abi_PickMultipleContactsAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactInformation>>> result) noexcept override
+    HRESULT __stdcall PickMultipleContactsAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -5315,7 +8025,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker> : produce
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker2> : produce_base<D, Windows::ApplicationModel::Contacts::IContactPicker2>
 {
-    HRESULT __stdcall get_DesiredFieldsWithContactFieldType(impl::abi_arg_out<Windows::Foundation::Collections::IVector<winrt::Windows::ApplicationModel::Contacts::ContactFieldType>> value) noexcept override
+    HRESULT __stdcall get_DesiredFieldsWithContactFieldType(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5330,7 +8040,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker2> : produc
         }
     }
 
-    HRESULT __stdcall abi_PickContactAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact>> result) noexcept override
+    HRESULT __stdcall PickContactAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -5345,7 +8055,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker2> : produc
         }
     }
 
-    HRESULT __stdcall abi_PickContactsAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::Contact>>> result) noexcept override
+    HRESULT __stdcall PickContactsAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -5364,7 +8074,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker2> : produc
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker3> : produce_base<D, Windows::ApplicationModel::Contacts::IContactPicker3>
 {
-    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_User(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5383,12 +8093,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPicker3> : produc
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactPickerStatics> : produce_base<D, Windows::ApplicationModel::Contacts::IContactPickerStatics>
 {
-    HRESULT __stdcall abi_CreateForUser(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactPicker> result) noexcept override
+    HRESULT __stdcall CreateForUser(::IUnknown* user, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateForUser(*reinterpret_cast<const Windows::System::User *>(&user)));
+            *result = detach_abi(this->shim().CreateForUser(*reinterpret_cast<Windows::System::User const*>(&user)));
             return S_OK;
         }
         catch (...)
@@ -5398,7 +8108,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPickerStatics> : 
         }
     }
 
-    HRESULT __stdcall abi_IsSupportedAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall IsSupportedAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -5417,7 +8127,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactPickerStatics> : 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptions> : produce_base<D, Windows::ApplicationModel::Contacts::IContactQueryOptions>
 {
-    HRESULT __stdcall get_TextSearch(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactQueryTextSearch> value) noexcept override
+    HRESULT __stdcall get_TextSearch(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5432,7 +8142,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptions> : p
         }
     }
 
-    HRESULT __stdcall get_ContactListIds(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_ContactListIds(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5447,7 +8157,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptions> : p
         }
     }
 
-    HRESULT __stdcall get_IncludeContactsFromHiddenLists(bool * value) noexcept override
+    HRESULT __stdcall get_IncludeContactsFromHiddenLists(bool* value) noexcept override
     {
         try
         {
@@ -5475,7 +8185,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptions> : p
         }
     }
 
-    HRESULT __stdcall get_DesiredFields(Windows::ApplicationModel::Contacts::ContactQueryDesiredFields * value) noexcept override
+    HRESULT __stdcall get_DesiredFields(abi_t<Windows::ApplicationModel::Contacts::ContactQueryDesiredFields>* value) noexcept override
     {
         try
         {
@@ -5489,12 +8199,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptions> : p
         }
     }
 
-    HRESULT __stdcall put_DesiredFields(Windows::ApplicationModel::Contacts::ContactQueryDesiredFields value) noexcept override
+    HRESULT __stdcall put_DesiredFields(abi_t<Windows::ApplicationModel::Contacts::ContactQueryDesiredFields> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DesiredFields(value);
+            this->shim().DesiredFields(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactQueryDesiredFields const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5503,7 +8213,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptions> : p
         }
     }
 
-    HRESULT __stdcall get_DesiredOperations(Windows::ApplicationModel::Contacts::ContactAnnotationOperations * value) noexcept override
+    HRESULT __stdcall get_DesiredOperations(abi_t<Windows::ApplicationModel::Contacts::ContactAnnotationOperations>* value) noexcept override
     {
         try
         {
@@ -5517,12 +8227,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptions> : p
         }
     }
 
-    HRESULT __stdcall put_DesiredOperations(Windows::ApplicationModel::Contacts::ContactAnnotationOperations value) noexcept override
+    HRESULT __stdcall put_DesiredOperations(abi_t<Windows::ApplicationModel::Contacts::ContactAnnotationOperations> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DesiredOperations(value);
+            this->shim().DesiredOperations(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactAnnotationOperations const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5531,7 +8241,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptions> : p
         }
     }
 
-    HRESULT __stdcall get_AnnotationListIds(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_AnnotationListIds(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5550,12 +8260,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptions> : p
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptionsFactory> : produce_base<D, Windows::ApplicationModel::Contacts::IContactQueryOptionsFactory>
 {
-    HRESULT __stdcall abi_CreateWithText(impl::abi_arg_in<hstring> text, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactQueryOptions> result) noexcept override
+    HRESULT __stdcall CreateWithText(HSTRING text, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateWithText(*reinterpret_cast<const hstring *>(&text)));
+            *result = detach_abi(this->shim().CreateWithText(*reinterpret_cast<hstring const*>(&text)));
             return S_OK;
         }
         catch (...)
@@ -5565,12 +8275,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptionsFacto
         }
     }
 
-    HRESULT __stdcall abi_CreateWithTextAndFields(impl::abi_arg_in<hstring> text, Windows::ApplicationModel::Contacts::ContactQuerySearchFields fields, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactQueryOptions> result) noexcept override
+    HRESULT __stdcall CreateWithTextAndFields(HSTRING text, abi_t<Windows::ApplicationModel::Contacts::ContactQuerySearchFields> fields, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateWithTextAndFields(*reinterpret_cast<const hstring *>(&text), fields));
+            *result = detach_abi(this->shim().CreateWithTextAndFields(*reinterpret_cast<hstring const*>(&text), *reinterpret_cast<Windows::ApplicationModel::Contacts::ContactQuerySearchFields const*>(&fields)));
             return S_OK;
         }
         catch (...)
@@ -5584,7 +8294,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryOptionsFacto
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryTextSearch> : produce_base<D, Windows::ApplicationModel::Contacts::IContactQueryTextSearch>
 {
-    HRESULT __stdcall get_Fields(Windows::ApplicationModel::Contacts::ContactQuerySearchFields * value) noexcept override
+    HRESULT __stdcall get_Fields(abi_t<Windows::ApplicationModel::Contacts::ContactQuerySearchFields>* value) noexcept override
     {
         try
         {
@@ -5598,12 +8308,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryTextSearch> 
         }
     }
 
-    HRESULT __stdcall put_Fields(Windows::ApplicationModel::Contacts::ContactQuerySearchFields value) noexcept override
+    HRESULT __stdcall put_Fields(abi_t<Windows::ApplicationModel::Contacts::ContactQuerySearchFields> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Fields(value);
+            this->shim().Fields(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactQuerySearchFields const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5612,7 +8322,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryTextSearch> 
         }
     }
 
-    HRESULT __stdcall get_Text(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Text(HSTRING* value) noexcept override
     {
         try
         {
@@ -5627,12 +8337,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryTextSearch> 
         }
     }
 
-    HRESULT __stdcall put_Text(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Text(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Text(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Text(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5641,7 +8351,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryTextSearch> 
         }
     }
 
-    HRESULT __stdcall get_SearchScope(Windows::ApplicationModel::Contacts::ContactQuerySearchScope * value) noexcept override
+    HRESULT __stdcall get_SearchScope(abi_t<Windows::ApplicationModel::Contacts::ContactQuerySearchScope>* value) noexcept override
     {
         try
         {
@@ -5655,12 +8365,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryTextSearch> 
         }
     }
 
-    HRESULT __stdcall put_SearchScope(Windows::ApplicationModel::Contacts::ContactQuerySearchScope value) noexcept override
+    HRESULT __stdcall put_SearchScope(abi_t<Windows::ApplicationModel::Contacts::ContactQuerySearchScope> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SearchScope(value);
+            this->shim().SearchScope(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactQuerySearchScope const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5673,7 +8383,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactQueryTextSearch> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactReader> : produce_base<D, Windows::ApplicationModel::Contacts::IContactReader>
 {
-    HRESULT __stdcall abi_ReadBatchAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactBatch>> value) noexcept override
+    HRESULT __stdcall ReadBatchAsync(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5688,12 +8398,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactReader> : produce
         }
     }
 
-    HRESULT __stdcall abi_GetMatchingPropertiesWithMatchReason(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactMatchReason>> ppRetVal) noexcept override
+    HRESULT __stdcall GetMatchingPropertiesWithMatchReason(::IUnknown* contact, ::IUnknown** ppRetVal) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *ppRetVal = detach_abi(this->shim().GetMatchingPropertiesWithMatchReason(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact)));
+            *ppRetVal = detach_abi(this->shim().GetMatchingPropertiesWithMatchReason(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact)));
             return S_OK;
         }
         catch (...)
@@ -5707,7 +8417,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactReader> : produce
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactSignificantOther> : produce_base<D, Windows::ApplicationModel::Contacts::IContactSignificantOther>
 {
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -5722,12 +8432,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactSignificantOther>
         }
     }
 
-    HRESULT __stdcall put_Name(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Name(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Name(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Name(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5736,7 +8446,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactSignificantOther>
         }
     }
 
-    HRESULT __stdcall get_Description(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Description(HSTRING* value) noexcept override
     {
         try
         {
@@ -5751,12 +8461,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactSignificantOther>
         }
     }
 
-    HRESULT __stdcall put_Description(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Description(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Description(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Description(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5769,7 +8479,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactSignificantOther>
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactSignificantOther2> : produce_base<D, Windows::ApplicationModel::Contacts::IContactSignificantOther2>
 {
-    HRESULT __stdcall get_Relationship(Windows::ApplicationModel::Contacts::ContactRelationship * value) noexcept override
+    HRESULT __stdcall get_Relationship(abi_t<Windows::ApplicationModel::Contacts::ContactRelationship>* value) noexcept override
     {
         try
         {
@@ -5783,12 +8493,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactSignificantOther2
         }
     }
 
-    HRESULT __stdcall put_Relationship(Windows::ApplicationModel::Contacts::ContactRelationship value) noexcept override
+    HRESULT __stdcall put_Relationship(abi_t<Windows::ApplicationModel::Contacts::ContactRelationship> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Relationship(value);
+            this->shim().Relationship(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactRelationship const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5801,7 +8511,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactSignificantOther2
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactStore> : produce_base<D, Windows::ApplicationModel::Contacts::IContactStore>
 {
-    HRESULT __stdcall abi_FindContactsAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>>> contacts) noexcept override
+    HRESULT __stdcall FindContactsAsync(::IUnknown** contacts) noexcept override
     {
         try
         {
@@ -5816,12 +8526,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore> : produce_
         }
     }
 
-    HRESULT __stdcall abi_FindContactsWithSearchTextAsync(impl::abi_arg_in<hstring> searchText, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>>> contacts) noexcept override
+    HRESULT __stdcall FindContactsWithSearchTextAsync(HSTRING searchText, ::IUnknown** contacts) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *contacts = detach_abi(this->shim().FindContactsAsync(*reinterpret_cast<const hstring *>(&searchText)));
+            *contacts = detach_abi(this->shim().FindContactsAsync(*reinterpret_cast<hstring const*>(&searchText)));
             return S_OK;
         }
         catch (...)
@@ -5831,12 +8541,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore> : produce_
         }
     }
 
-    HRESULT __stdcall abi_GetContactAsync(impl::abi_arg_in<hstring> contactId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact>> contacts) noexcept override
+    HRESULT __stdcall GetContactAsync(HSTRING contactId, ::IUnknown** contacts) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *contacts = detach_abi(this->shim().GetContactAsync(*reinterpret_cast<const hstring *>(&contactId)));
+            *contacts = detach_abi(this->shim().GetContactAsync(*reinterpret_cast<hstring const*>(&contactId)));
             return S_OK;
         }
         catch (...)
@@ -5850,7 +8560,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore> : produce_
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactStore2> : produce_base<D, Windows::ApplicationModel::Contacts::IContactStore2>
 {
-    HRESULT __stdcall get_ChangeTracker(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactChangeTracker> value) noexcept override
+    HRESULT __stdcall get_ChangeTracker(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5865,12 +8575,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore2> : produce
         }
     }
 
-    HRESULT __stdcall add_ContactChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactStore, Windows::ApplicationModel::Contacts::ContactChangedEventArgs>> value, event_token * returnValue) noexcept override
+    HRESULT __stdcall add_ContactChanged(::IUnknown* value, abi_t<event_token>* returnValue) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *returnValue = detach_abi(this->shim().ContactChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactStore, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> *>(&value)));
+            *returnValue = detach_abi(this->shim().ContactChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactStore, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> const*>(&value)));
             return S_OK;
         }
         catch (...)
@@ -5879,12 +8589,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore2> : produce
         }
     }
 
-    HRESULT __stdcall remove_ContactChanged(event_token value) noexcept override
+    HRESULT __stdcall remove_ContactChanged(abi_t<event_token> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ContactChanged(value);
+            this->shim().ContactChanged(*reinterpret_cast<event_token const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5893,7 +8603,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore2> : produce
         }
     }
 
-    HRESULT __stdcall get_AggregateContactManager(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IAggregateContactManager> value) noexcept override
+    HRESULT __stdcall get_AggregateContactManager(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5908,7 +8618,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore2> : produce
         }
     }
 
-    HRESULT __stdcall abi_FindContactListsAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactList>>> value) noexcept override
+    HRESULT __stdcall FindContactListsAsync(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5923,12 +8633,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore2> : produce
         }
     }
 
-    HRESULT __stdcall abi_GetContactListAsync(impl::abi_arg_in<hstring> contactListId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList>> value) noexcept override
+    HRESULT __stdcall GetContactListAsync(HSTRING contactListId, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetContactListAsync(*reinterpret_cast<const hstring *>(&contactListId)));
+            *value = detach_abi(this->shim().GetContactListAsync(*reinterpret_cast<hstring const*>(&contactListId)));
             return S_OK;
         }
         catch (...)
@@ -5938,12 +8648,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore2> : produce
         }
     }
 
-    HRESULT __stdcall abi_CreateContactListAsync(impl::abi_arg_in<hstring> displayName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList>> value) noexcept override
+    HRESULT __stdcall CreateContactListAsync(HSTRING displayName, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().CreateContactListAsync(*reinterpret_cast<const hstring *>(&displayName)));
+            *value = detach_abi(this->shim().CreateContactListAsync(*reinterpret_cast<hstring const*>(&displayName)));
             return S_OK;
         }
         catch (...)
@@ -5953,7 +8663,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore2> : produce
         }
     }
 
-    HRESULT __stdcall abi_GetMeContactAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact>> meContact) noexcept override
+    HRESULT __stdcall GetMeContactAsync(::IUnknown** meContact) noexcept override
     {
         try
         {
@@ -5968,7 +8678,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore2> : produce
         }
     }
 
-    HRESULT __stdcall abi_GetContactReader(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactReader> value) noexcept override
+    HRESULT __stdcall GetContactReader(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5983,12 +8693,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore2> : produce
         }
     }
 
-    HRESULT __stdcall abi_GetContactReaderWithOptions(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContactQueryOptions> options, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IContactReader> value) noexcept override
+    HRESULT __stdcall GetContactReaderWithOptions(::IUnknown* options, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().GetContactReader(*reinterpret_cast<const Windows::ApplicationModel::Contacts::ContactQueryOptions *>(&options)));
+            *value = detach_abi(this->shim().GetContactReader(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactQueryOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -5998,12 +8708,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStore2> : produce
         }
     }
 
-    HRESULT __stdcall abi_CreateContactListInAccountAsync(impl::abi_arg_in<hstring> displayName, impl::abi_arg_in<hstring> userDataAccountId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList>> value) noexcept override
+    HRESULT __stdcall CreateContactListInAccountAsync(HSTRING displayName, HSTRING userDataAccountId, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().CreateContactListAsync(*reinterpret_cast<const hstring *>(&displayName), *reinterpret_cast<const hstring *>(&userDataAccountId)));
+            *value = detach_abi(this->shim().CreateContactListAsync(*reinterpret_cast<hstring const*>(&displayName), *reinterpret_cast<hstring const*>(&userDataAccountId)));
             return S_OK;
         }
         catch (...)
@@ -6021,7 +8731,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactStoreNotification
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactWebsite> : produce_base<D, Windows::ApplicationModel::Contacts::IContactWebsite>
 {
-    HRESULT __stdcall get_Uri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_Uri(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6036,12 +8746,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactWebsite> : produc
         }
     }
 
-    HRESULT __stdcall put_Uri(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall put_Uri(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Uri(*reinterpret_cast<const Windows::Foundation::Uri *>(&value));
+            this->shim().Uri(*reinterpret_cast<Windows::Foundation::Uri const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -6050,7 +8760,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactWebsite> : produc
         }
     }
 
-    HRESULT __stdcall get_Description(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Description(HSTRING* value) noexcept override
     {
         try
         {
@@ -6065,12 +8775,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactWebsite> : produc
         }
     }
 
-    HRESULT __stdcall put_Description(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Description(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Description(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Description(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -6083,7 +8793,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactWebsite> : produc
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IContactWebsite2> : produce_base<D, Windows::ApplicationModel::Contacts::IContactWebsite2>
 {
-    HRESULT __stdcall get_RawValue(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RawValue(HSTRING* value) noexcept override
     {
         try
         {
@@ -6098,12 +8808,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactWebsite2> : produ
         }
     }
 
-    HRESULT __stdcall put_RawValue(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_RawValue(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RawValue(*reinterpret_cast<const hstring *>(&value));
+            this->shim().RawValue(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -6116,7 +8826,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IContactWebsite2> : produ
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IFullContactCardOptions> : produce_base<D, Windows::ApplicationModel::Contacts::IFullContactCardOptions>
 {
-    HRESULT __stdcall get_DesiredRemainingView(Windows::UI::ViewManagement::ViewSizePreference * value) noexcept override
+    HRESULT __stdcall get_DesiredRemainingView(abi_t<Windows::UI::ViewManagement::ViewSizePreference>* value) noexcept override
     {
         try
         {
@@ -6130,12 +8840,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IFullContactCardOptions> 
         }
     }
 
-    HRESULT __stdcall put_DesiredRemainingView(Windows::UI::ViewManagement::ViewSizePreference value) noexcept override
+    HRESULT __stdcall put_DesiredRemainingView(abi_t<Windows::UI::ViewManagement::ViewSizePreference> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DesiredRemainingView(value);
+            this->shim().DesiredRemainingView(*reinterpret_cast<Windows::UI::ViewManagement::ViewSizePreference const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -6148,7 +8858,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IFullContactCardOptions> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics> : produce_base<D, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics>
 {
-    HRESULT __stdcall get_Email(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Email(HSTRING* value) noexcept override
     {
         try
         {
@@ -6163,7 +8873,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics
         }
     }
 
-    HRESULT __stdcall get_PhoneNumber(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_PhoneNumber(HSTRING* value) noexcept override
     {
         try
         {
@@ -6178,7 +8888,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics
         }
     }
 
-    HRESULT __stdcall get_Location(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Location(HSTRING* value) noexcept override
     {
         try
         {
@@ -6193,7 +8903,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics
         }
     }
 
-    HRESULT __stdcall get_InstantMessage(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_InstantMessage(HSTRING* value) noexcept override
     {
         try
         {
@@ -6208,12 +8918,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics
         }
     }
 
-    HRESULT __stdcall abi_ConvertNameToType(impl::abi_arg_in<hstring> name, Windows::ApplicationModel::Contacts::ContactFieldType * type) noexcept override
+    HRESULT __stdcall ConvertNameToType(HSTRING name, abi_t<Windows::ApplicationModel::Contacts::ContactFieldType>* type) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *type = detach_abi(this->shim().ConvertNameToType(*reinterpret_cast<const hstring *>(&name)));
+            *type = detach_abi(this->shim().ConvertNameToType(*reinterpret_cast<hstring const*>(&name)));
             return S_OK;
         }
         catch (...)
@@ -6222,12 +8932,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics
         }
     }
 
-    HRESULT __stdcall abi_ConvertTypeToName(Windows::ApplicationModel::Contacts::ContactFieldType type, impl::abi_arg_out<hstring> name) noexcept override
+    HRESULT __stdcall ConvertTypeToName(abi_t<Windows::ApplicationModel::Contacts::ContactFieldType> type, HSTRING* name) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *name = detach_abi(this->shim().ConvertTypeToName(type));
+            *name = detach_abi(this->shim().ConvertTypeToName(*reinterpret_cast<Windows::ApplicationModel::Contacts::ContactFieldType const*>(&type)));
             return S_OK;
         }
         catch (...)
@@ -6241,7 +8951,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactIdsQueryResult> : produce_base<D, Windows::ApplicationModel::Contacts::IPinnedContactIdsQueryResult>
 {
-    HRESULT __stdcall get_ContactIds(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_ContactIds(::IUnknown** value) noexcept override
     {
         try
         {
@@ -6260,7 +8970,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactIdsQueryRes
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManager> : produce_base<D, Windows::ApplicationModel::Contacts::IPinnedContactManager>
 {
-    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> user) noexcept override
+    HRESULT __stdcall get_User(::IUnknown** user) noexcept override
     {
         try
         {
@@ -6275,12 +8985,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManager> : 
         }
     }
 
-    HRESULT __stdcall abi_IsPinSurfaceSupported(Windows::ApplicationModel::Contacts::PinnedContactSurface surface, bool * result) noexcept override
+    HRESULT __stdcall IsPinSurfaceSupported(abi_t<Windows::ApplicationModel::Contacts::PinnedContactSurface> surface, bool* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().IsPinSurfaceSupported(surface));
+            *result = detach_abi(this->shim().IsPinSurfaceSupported(*reinterpret_cast<Windows::ApplicationModel::Contacts::PinnedContactSurface const*>(&surface)));
             return S_OK;
         }
         catch (...)
@@ -6289,12 +8999,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManager> : 
         }
     }
 
-    HRESULT __stdcall abi_IsContactPinned(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, Windows::ApplicationModel::Contacts::PinnedContactSurface surface, bool * result) noexcept override
+    HRESULT __stdcall IsContactPinned(::IUnknown* contact, abi_t<Windows::ApplicationModel::Contacts::PinnedContactSurface> surface, bool* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().IsContactPinned(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), surface));
+            *result = detach_abi(this->shim().IsContactPinned(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), *reinterpret_cast<Windows::ApplicationModel::Contacts::PinnedContactSurface const*>(&surface)));
             return S_OK;
         }
         catch (...)
@@ -6303,27 +9013,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManager> : 
         }
     }
 
-    HRESULT __stdcall abi_RequestPinContactAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, Windows::ApplicationModel::Contacts::PinnedContactSurface surface, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall RequestPinContactAsync(::IUnknown* contact, abi_t<Windows::ApplicationModel::Contacts::PinnedContactSurface> surface, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RequestPinContactAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), surface));
-            return S_OK;
-        }
-        catch (...)
-        {
-            *operation = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall abi_RequestPinContactsAsync(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Contacts::Contact>> contacts, Windows::ApplicationModel::Contacts::PinnedContactSurface surface, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
-    {
-        try
-        {
-            typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RequestPinContactsAsync(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Contacts::Contact> *>(&contacts), surface));
+            *operation = detach_abi(this->shim().RequestPinContactAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), *reinterpret_cast<Windows::ApplicationModel::Contacts::PinnedContactSurface const*>(&surface)));
             return S_OK;
         }
         catch (...)
@@ -6333,12 +9028,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManager> : 
         }
     }
 
-    HRESULT __stdcall abi_RequestUnpinContactAsync(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact, Windows::ApplicationModel::Contacts::PinnedContactSurface surface, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall RequestPinContactsAsync(::IUnknown* contacts, abi_t<Windows::ApplicationModel::Contacts::PinnedContactSurface> surface, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RequestUnpinContactAsync(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact), surface));
+            *operation = detach_abi(this->shim().RequestPinContactsAsync(*reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Contacts::Contact> const*>(&contacts), *reinterpret_cast<Windows::ApplicationModel::Contacts::PinnedContactSurface const*>(&surface)));
             return S_OK;
         }
         catch (...)
@@ -6348,12 +9043,27 @@ struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManager> : 
         }
     }
 
-    HRESULT __stdcall abi_SignalContactActivity(impl::abi_arg_in<Windows::ApplicationModel::Contacts::IContact> contact) noexcept override
+    HRESULT __stdcall RequestUnpinContactAsync(::IUnknown* contact, abi_t<Windows::ApplicationModel::Contacts::PinnedContactSurface> surface, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SignalContactActivity(*reinterpret_cast<const Windows::ApplicationModel::Contacts::Contact *>(&contact));
+            *operation = detach_abi(this->shim().RequestUnpinContactAsync(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact), *reinterpret_cast<Windows::ApplicationModel::Contacts::PinnedContactSurface const*>(&surface)));
+            return S_OK;
+        }
+        catch (...)
+        {
+            *operation = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall SignalContactActivity(::IUnknown* contact) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            this->shim().SignalContactActivity(*reinterpret_cast<Windows::ApplicationModel::Contacts::Contact const*>(&contact));
             return S_OK;
         }
         catch (...)
@@ -6362,7 +9072,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManager> : 
         }
     }
 
-    HRESULT __stdcall abi_GetPinnedContactIdsAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::PinnedContactIdsQueryResult>> operation) noexcept override
+    HRESULT __stdcall GetPinnedContactIdsAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -6381,7 +9091,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManager> : 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics> : produce_base<D, Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics>
 {
-    HRESULT __stdcall abi_GetDefault(impl::abi_arg_out<Windows::ApplicationModel::Contacts::IPinnedContactManager> result) noexcept override
+    HRESULT __stdcall GetDefault(::IUnknown** result) noexcept override
     {
         try
         {
@@ -6396,12 +9106,12 @@ struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManagerStat
         }
     }
 
-    HRESULT __stdcall abi_GetForUser(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_out<Windows::ApplicationModel::Contacts::IPinnedContactManager> result) noexcept override
+    HRESULT __stdcall GetForUser(::IUnknown* user, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<const Windows::System::User *>(&user)));
+            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<Windows::System::User const*>(&user)));
             return S_OK;
         }
         catch (...)
@@ -6411,7 +9121,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManagerStat
         }
     }
 
-    HRESULT __stdcall abi_IsSupported(bool * result) noexcept override
+    HRESULT __stdcall IsSupported(bool* result) noexcept override
     {
         try
         {
@@ -6428,2716 +9138,7 @@ struct produce<D, Windows::ApplicationModel::Contacts::IPinnedContactManagerStat
 
 }
 
-namespace Windows::ApplicationModel::Contacts {
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactCardHeaderKind impl_IContactCardOptions<D>::HeaderKind() const
-{
-    Windows::ApplicationModel::Contacts::ContactCardHeaderKind value {};
-    check_hresult(WINRT_SHIM(IContactCardOptions)->get_HeaderKind(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactCardOptions<D>::HeaderKind(Windows::ApplicationModel::Contacts::ContactCardHeaderKind value) const
-{
-    check_hresult(WINRT_SHIM(IContactCardOptions)->put_HeaderKind(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactCardTabKind impl_IContactCardOptions<D>::InitialTabKind() const
-{
-    Windows::ApplicationModel::Contacts::ContactCardTabKind value {};
-    check_hresult(WINRT_SHIM(IContactCardOptions)->get_InitialTabKind(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactCardOptions<D>::InitialTabKind(Windows::ApplicationModel::Contacts::ContactCardTabKind value) const
-{
-    check_hresult(WINRT_SHIM(IContactCardOptions)->put_InitialTabKind(value));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IContactCardOptions2<D>::ServerSearchContactListIds() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IContactCardOptions2)->get_ServerSearchContactListIds(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::UI::ViewManagement::ViewSizePreference impl_IFullContactCardOptions<D>::DesiredRemainingView() const
-{
-    Windows::UI::ViewManagement::ViewSizePreference value {};
-    check_hresult(WINRT_SHIM(IFullContactCardOptions)->get_DesiredRemainingView(&value));
-    return value;
-}
-
-template <typename D> void impl_IFullContactCardOptions<D>::DesiredRemainingView(Windows::UI::ViewManagement::ViewSizePreference value) const
-{
-    check_hresult(WINRT_SHIM(IFullContactCardOptions)->put_DesiredRemainingView(value));
-}
-
-template <typename D> void impl_IContactCardDelayedDataLoader<D>::SetData(const Windows::ApplicationModel::Contacts::Contact & contact) const
-{
-    check_hresult(WINRT_SHIM(IContactCardDelayedDataLoader)->abi_SetData(get_abi(contact)));
-}
-
-template <typename D> void impl_IContactManagerStatics<D>::ShowContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::Foundation::Rect & selection) const
-{
-    check_hresult(WINRT_SHIM(IContactManagerStatics)->abi_ShowContactCard(get_abi(contact), get_abi(selection)));
-}
-
-template <typename D> void impl_IContactManagerStatics<D>::ShowContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement) const
-{
-    check_hresult(WINRT_SHIM(IContactManagerStatics)->abi_ShowContactCardWithPlacement(get_abi(contact), get_abi(selection), preferredPlacement));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader impl_IContactManagerStatics<D>::ShowDelayLoadedContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement) const
-{
-    Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader dataLoader { nullptr };
-    check_hresult(WINRT_SHIM(IContactManagerStatics)->abi_ShowDelayLoadedContactCard(get_abi(contact), get_abi(selection), preferredPlacement, put_abi(dataLoader)));
-    return dataLoader;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> impl_IContactManagerStatics2<D>::RequestStoreAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> store;
-    check_hresult(WINRT_SHIM(IContactManagerStatics2)->abi_RequestStoreAsync(put_abi(store)));
-    return store;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> impl_IContactManagerStatics3<D>::ConvertContactToVCardAsync(const Windows::ApplicationModel::Contacts::Contact & contact) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> vCard;
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->abi_ConvertContactToVCardAsync(get_abi(contact), put_abi(vCard)));
-    return vCard;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> impl_IContactManagerStatics3<D>::ConvertContactToVCardAsync(const Windows::ApplicationModel::Contacts::Contact & contact, uint32_t maxBytes) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> vCard;
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->abi_ConvertContactToVCardAsyncWithMaxBytes(get_abi(contact), maxBytes, put_abi(vCard)));
-    return vCard;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> impl_IContactManagerStatics3<D>::ConvertVCardToContactAsync(const Windows::Storage::Streams::IRandomAccessStreamReference & vCard) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> contact;
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->abi_ConvertVCardToContactAsync(get_abi(vCard), put_abi(contact)));
-    return contact;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> impl_IContactManagerStatics3<D>::RequestStoreAsync(Windows::ApplicationModel::Contacts::ContactStoreAccessType accessType) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> store;
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->abi_RequestStoreAsyncWithAccessType(accessType, put_abi(store)));
-    return store;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore> impl_IContactManagerStatics3<D>::RequestAnnotationStoreAsync(Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType accessType) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore> store;
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->abi_RequestAnnotationStoreAsync(accessType, put_abi(store)));
-    return store;
-}
-
-template <typename D> bool impl_IContactManagerStatics3<D>::IsShowContactCardSupported() const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->abi_IsShowContactCardSupported(&result));
-    return result;
-}
-
-template <typename D> void impl_IContactManagerStatics3<D>::ShowContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement, const Windows::ApplicationModel::Contacts::ContactCardOptions & contactCardOptions) const
-{
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->abi_ShowContactCardWithOptions(get_abi(contact), get_abi(selection), preferredPlacement, get_abi(contactCardOptions)));
-}
-
-template <typename D> bool impl_IContactManagerStatics3<D>::IsShowDelayLoadedContactCardSupported() const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->abi_IsShowDelayLoadedContactCardSupported(&result));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader impl_IContactManagerStatics3<D>::ShowDelayLoadedContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement, const Windows::ApplicationModel::Contacts::ContactCardOptions & contactCardOptions) const
-{
-    Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader dataLoader { nullptr };
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->abi_ShowDelayLoadedContactCardWithOptions(get_abi(contact), get_abi(selection), preferredPlacement, get_abi(contactCardOptions), put_abi(dataLoader)));
-    return dataLoader;
-}
-
-template <typename D> void impl_IContactManagerStatics3<D>::ShowFullContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::ApplicationModel::Contacts::FullContactCardOptions & fullContactCardOptions) const
-{
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->abi_ShowFullContactCard(get_abi(contact), get_abi(fullContactCardOptions)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactNameOrder impl_IContactManagerStatics3<D>::SystemDisplayNameOrder() const
-{
-    Windows::ApplicationModel::Contacts::ContactNameOrder value {};
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->get_SystemDisplayNameOrder(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactManagerStatics3<D>::SystemDisplayNameOrder(Windows::ApplicationModel::Contacts::ContactNameOrder value) const
-{
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->put_SystemDisplayNameOrder(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactNameOrder impl_IContactManagerStatics3<D>::SystemSortOrder() const
-{
-    Windows::ApplicationModel::Contacts::ContactNameOrder value {};
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->get_SystemSortOrder(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactManagerStatics3<D>::SystemSortOrder(Windows::ApplicationModel::Contacts::ContactNameOrder value) const
-{
-    check_hresult(WINRT_SHIM(IContactManagerStatics3)->put_SystemSortOrder(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactManagerForUser impl_IContactManagerStatics4<D>::GetForUser(const Windows::System::User & user) const
-{
-    Windows::ApplicationModel::Contacts::ContactManagerForUser result { nullptr };
-    check_hresult(WINRT_SHIM(IContactManagerStatics4)->abi_GetForUser(get_abi(user), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IContactManagerStatics5<D>::IsShowFullContactCardSupportedAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IContactManagerStatics5)->abi_IsShowFullContactCardSupportedAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_IContactManagerStatics5<D>::IncludeMiddleNameInSystemDisplayAndSort() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IContactManagerStatics5)->get_IncludeMiddleNameInSystemDisplayAndSort(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactManagerStatics5<D>::IncludeMiddleNameInSystemDisplayAndSort(bool value) const
-{
-    check_hresult(WINRT_SHIM(IContactManagerStatics5)->put_IncludeMiddleNameInSystemDisplayAndSort(value));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> impl_IContactManagerForUser<D>::ConvertContactToVCardAsync(const Windows::ApplicationModel::Contacts::Contact & contact) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> result;
-    check_hresult(WINRT_SHIM(IContactManagerForUser)->abi_ConvertContactToVCardAsync(get_abi(contact), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> impl_IContactManagerForUser<D>::ConvertContactToVCardAsync(const Windows::ApplicationModel::Contacts::Contact & contact, uint32_t maxBytes) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> result;
-    check_hresult(WINRT_SHIM(IContactManagerForUser)->abi_ConvertContactToVCardAsyncWithMaxBytes(get_abi(contact), maxBytes, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> impl_IContactManagerForUser<D>::ConvertVCardToContactAsync(const Windows::Storage::Streams::IRandomAccessStreamReference & vCard) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> result;
-    check_hresult(WINRT_SHIM(IContactManagerForUser)->abi_ConvertVCardToContactAsync(get_abi(vCard), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> impl_IContactManagerForUser<D>::RequestStoreAsync(Windows::ApplicationModel::Contacts::ContactStoreAccessType accessType) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> result;
-    check_hresult(WINRT_SHIM(IContactManagerForUser)->abi_RequestStoreAsync(accessType, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore> impl_IContactManagerForUser<D>::RequestAnnotationStoreAsync(Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType accessType) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore> result;
-    check_hresult(WINRT_SHIM(IContactManagerForUser)->abi_RequestAnnotationStoreAsync(accessType, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactNameOrder impl_IContactManagerForUser<D>::SystemDisplayNameOrder() const
-{
-    Windows::ApplicationModel::Contacts::ContactNameOrder value {};
-    check_hresult(WINRT_SHIM(IContactManagerForUser)->get_SystemDisplayNameOrder(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactManagerForUser<D>::SystemDisplayNameOrder(Windows::ApplicationModel::Contacts::ContactNameOrder value) const
-{
-    check_hresult(WINRT_SHIM(IContactManagerForUser)->put_SystemDisplayNameOrder(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactNameOrder impl_IContactManagerForUser<D>::SystemSortOrder() const
-{
-    Windows::ApplicationModel::Contacts::ContactNameOrder value {};
-    check_hresult(WINRT_SHIM(IContactManagerForUser)->get_SystemSortOrder(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactManagerForUser<D>::SystemSortOrder(Windows::ApplicationModel::Contacts::ContactNameOrder value) const
-{
-    check_hresult(WINRT_SHIM(IContactManagerForUser)->put_SystemSortOrder(value));
-}
-
-template <typename D> Windows::System::User impl_IContactManagerForUser<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IContactManagerForUser)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactManagerForUser2<D>::ShowFullContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::ApplicationModel::Contacts::FullContactCardOptions & fullContactCardOptions) const
-{
-    check_hresult(WINRT_SHIM(IContactManagerForUser2)->abi_ShowFullContactCard(get_abi(contact), get_abi(fullContactCardOptions)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> impl_IAggregateContactManager<D>::FindRawContactsAsync(const Windows::ApplicationModel::Contacts::Contact & contact) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> value;
-    check_hresult(WINRT_SHIM(IAggregateContactManager)->abi_FindRawContactsAsync(get_abi(contact), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> impl_IAggregateContactManager<D>::TryLinkContactsAsync(const Windows::ApplicationModel::Contacts::Contact & primaryContact, const Windows::ApplicationModel::Contacts::Contact & secondaryContact) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> contact;
-    check_hresult(WINRT_SHIM(IAggregateContactManager)->abi_TryLinkContactsAsync(get_abi(primaryContact), get_abi(secondaryContact), put_abi(contact)));
-    return contact;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IAggregateContactManager<D>::UnlinkRawContactAsync(const Windows::ApplicationModel::Contacts::Contact & contact) const
-{
-    Windows::Foundation::IAsyncAction value;
-    check_hresult(WINRT_SHIM(IAggregateContactManager)->abi_UnlinkRawContactAsync(get_abi(contact), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IAggregateContactManager<D>::TrySetPreferredSourceForPictureAsync(const Windows::ApplicationModel::Contacts::Contact & aggregateContact, const Windows::ApplicationModel::Contacts::Contact & rawContact) const
-{
-    Windows::Foundation::IAsyncOperation<bool> value;
-    check_hresult(WINRT_SHIM(IAggregateContactManager)->abi_TrySetPreferredSourceForPictureAsync(get_abi(aggregateContact), get_abi(rawContact), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IAggregateContactManager2<D>::SetRemoteIdentificationInformationAsync(hstring_view contactListId, hstring_view remoteSourceId, hstring_view accountId) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IAggregateContactManager2)->abi_SetRemoteIdentificationInformationAsync(get_abi(contactListId), get_abi(remoteSourceId), get_abi(accountId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> impl_IContactAnnotationStore<D>::FindContactIdsByEmailAsync(hstring_view emailAddress) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> contactIds;
-    check_hresult(WINRT_SHIM(IContactAnnotationStore)->abi_FindContactIdsByEmailAsync(get_abi(emailAddress), put_abi(contactIds)));
-    return contactIds;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> impl_IContactAnnotationStore<D>::FindContactIdsByPhoneNumberAsync(hstring_view phoneNumber) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<hstring>> contactIds;
-    check_hresult(WINRT_SHIM(IContactAnnotationStore)->abi_FindContactIdsByPhoneNumberAsync(get_abi(phoneNumber), put_abi(contactIds)));
-    return contactIds;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> impl_IContactAnnotationStore<D>::FindAnnotationsForContactAsync(const Windows::ApplicationModel::Contacts::Contact & contact) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> annotations;
-    check_hresult(WINRT_SHIM(IContactAnnotationStore)->abi_FindAnnotationsForContactAsync(get_abi(contact), put_abi(annotations)));
-    return annotations;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IContactAnnotationStore<D>::DisableAnnotationAsync(const Windows::ApplicationModel::Contacts::ContactAnnotation & annotation) const
-{
-    Windows::Foundation::IAsyncAction value;
-    check_hresult(WINRT_SHIM(IContactAnnotationStore)->abi_DisableAnnotationAsync(get_abi(annotation), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> impl_IContactAnnotationStore<D>::CreateAnnotationListAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> value;
-    check_hresult(WINRT_SHIM(IContactAnnotationStore)->abi_CreateAnnotationListAsync(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> impl_IContactAnnotationStore<D>::CreateAnnotationListAsync(hstring_view userDataAccountId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> value;
-    check_hresult(WINRT_SHIM(IContactAnnotationStore)->abi_CreateAnnotationListInAccountAsync(get_abi(userDataAccountId), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> impl_IContactAnnotationStore<D>::GetAnnotationListAsync(hstring_view annotationListId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationList> value;
-    check_hresult(WINRT_SHIM(IContactAnnotationStore)->abi_GetAnnotationListAsync(get_abi(annotationListId), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotationList>> impl_IContactAnnotationStore<D>::FindAnnotationListsAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotationList>> lists;
-    check_hresult(WINRT_SHIM(IContactAnnotationStore)->abi_FindAnnotationListsAsync(put_abi(lists)));
-    return lists;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> impl_IContactAnnotationStore2<D>::FindAnnotationsForContactListAsync(hstring_view contactListId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> annotations;
-    check_hresult(WINRT_SHIM(IContactAnnotationStore2)->abi_FindAnnotationsForContactListAsync(get_abi(contactListId), put_abi(annotations)));
-    return annotations;
-}
-
-template <typename D> hstring impl_IContactAnnotationList<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAnnotationList)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactAnnotationList<D>::ProviderPackageFamilyName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAnnotationList)->get_ProviderPackageFamilyName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactAnnotationList<D>::UserDataAccountId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAnnotationList)->get_UserDataAccountId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IContactAnnotationList<D>::DeleteAsync() const
-{
-    Windows::Foundation::IAsyncAction value;
-    check_hresult(WINRT_SHIM(IContactAnnotationList)->abi_DeleteAsync(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IContactAnnotationList<D>::TrySaveAnnotationAsync(const Windows::ApplicationModel::Contacts::ContactAnnotation & annotation) const
-{
-    Windows::Foundation::IAsyncOperation<bool> ppResult;
-    check_hresult(WINRT_SHIM(IContactAnnotationList)->abi_TrySaveAnnotationAsync(get_abi(annotation), put_abi(ppResult)));
-    return ppResult;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotation> impl_IContactAnnotationList<D>::GetAnnotationAsync(hstring_view annotationId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotation> annotation;
-    check_hresult(WINRT_SHIM(IContactAnnotationList)->abi_GetAnnotationAsync(get_abi(annotationId), put_abi(annotation)));
-    return annotation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> impl_IContactAnnotationList<D>::FindAnnotationsByRemoteIdAsync(hstring_view remoteId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> annotations;
-    check_hresult(WINRT_SHIM(IContactAnnotationList)->abi_FindAnnotationsByRemoteIdAsync(get_abi(remoteId), put_abi(annotations)));
-    return annotations;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> impl_IContactAnnotationList<D>::FindAnnotationsAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactAnnotation>> annotations;
-    check_hresult(WINRT_SHIM(IContactAnnotationList)->abi_FindAnnotationsAsync(put_abi(annotations)));
-    return annotations;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IContactAnnotationList<D>::DeleteAnnotationAsync(const Windows::ApplicationModel::Contacts::ContactAnnotation & annotation) const
-{
-    Windows::Foundation::IAsyncAction value;
-    check_hresult(WINRT_SHIM(IContactAnnotationList)->abi_DeleteAnnotationAsync(get_abi(annotation), put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactAnnotation<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAnnotation)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactAnnotation<D>::AnnotationListId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAnnotation)->get_AnnotationListId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactAnnotation<D>::ContactId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAnnotation)->get_ContactId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactAnnotation<D>::ContactId(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactAnnotation)->put_ContactId(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactAnnotation<D>::RemoteId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAnnotation)->get_RemoteId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactAnnotation<D>::RemoteId(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactAnnotation)->put_RemoteId(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactAnnotationOperations impl_IContactAnnotation<D>::SupportedOperations() const
-{
-    Windows::ApplicationModel::Contacts::ContactAnnotationOperations value {};
-    check_hresult(WINRT_SHIM(IContactAnnotation)->get_SupportedOperations(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactAnnotation<D>::SupportedOperations(Windows::ApplicationModel::Contacts::ContactAnnotationOperations value) const
-{
-    check_hresult(WINRT_SHIM(IContactAnnotation)->put_SupportedOperations(value));
-}
-
-template <typename D> bool impl_IContactAnnotation<D>::IsDisabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IContactAnnotation)->get_IsDisabled(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::ValueSet impl_IContactAnnotation<D>::ProviderProperties() const
-{
-    Windows::Foundation::Collections::ValueSet value { nullptr };
-    check_hresult(WINRT_SHIM(IContactAnnotation)->get_ProviderProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactAnnotation2<D>::ContactListId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAnnotation2)->get_ContactListId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactAnnotation2<D>::ContactListId(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactAnnotation2)->put_ContactListId(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> impl_IContactStore<D>::FindContactsAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> contacts;
-    check_hresult(WINRT_SHIM(IContactStore)->abi_FindContactsAsync(put_abi(contacts)));
-    return contacts;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> impl_IContactStore<D>::FindContactsAsync(hstring_view searchText) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact>> contacts;
-    check_hresult(WINRT_SHIM(IContactStore)->abi_FindContactsWithSearchTextAsync(get_abi(searchText), put_abi(contacts)));
-    return contacts;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> impl_IContactStore<D>::GetContactAsync(hstring_view contactId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> contacts;
-    check_hresult(WINRT_SHIM(IContactStore)->abi_GetContactAsync(get_abi(contactId), put_abi(contacts)));
-    return contacts;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactChangeTracker impl_IContactStore2<D>::ChangeTracker() const
-{
-    Windows::ApplicationModel::Contacts::ContactChangeTracker value { nullptr };
-    check_hresult(WINRT_SHIM(IContactStore2)->get_ChangeTracker(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IContactStore2<D>::ContactChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactStore, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> & value) const
-{
-    event_token returnValue {};
-    check_hresult(WINRT_SHIM(IContactStore2)->add_ContactChanged(get_abi(value), &returnValue));
-    return returnValue;
-}
-
-template <typename D> event_revoker<IContactStore2> impl_IContactStore2<D>::ContactChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactStore, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> & value) const
-{
-    return impl::make_event_revoker<D, IContactStore2>(this, &ABI::Windows::ApplicationModel::Contacts::IContactStore2::remove_ContactChanged, ContactChanged(value));
-}
-
-template <typename D> void impl_IContactStore2<D>::ContactChanged(event_token value) const
-{
-    check_hresult(WINRT_SHIM(IContactStore2)->remove_ContactChanged(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::AggregateContactManager impl_IContactStore2<D>::AggregateContactManager() const
-{
-    Windows::ApplicationModel::Contacts::AggregateContactManager value { nullptr };
-    check_hresult(WINRT_SHIM(IContactStore2)->get_AggregateContactManager(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactList>> impl_IContactStore2<D>::FindContactListsAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactList>> value;
-    check_hresult(WINRT_SHIM(IContactStore2)->abi_FindContactListsAsync(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> impl_IContactStore2<D>::GetContactListAsync(hstring_view contactListId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> value;
-    check_hresult(WINRT_SHIM(IContactStore2)->abi_GetContactListAsync(get_abi(contactListId), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> impl_IContactStore2<D>::CreateContactListAsync(hstring_view displayName) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> value;
-    check_hresult(WINRT_SHIM(IContactStore2)->abi_CreateContactListAsync(get_abi(displayName), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> impl_IContactStore2<D>::GetMeContactAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> meContact;
-    check_hresult(WINRT_SHIM(IContactStore2)->abi_GetMeContactAsync(put_abi(meContact)));
-    return meContact;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactReader impl_IContactStore2<D>::GetContactReader() const
-{
-    Windows::ApplicationModel::Contacts::ContactReader value { nullptr };
-    check_hresult(WINRT_SHIM(IContactStore2)->abi_GetContactReader(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactReader impl_IContactStore2<D>::GetContactReader(const Windows::ApplicationModel::Contacts::ContactQueryOptions & options) const
-{
-    Windows::ApplicationModel::Contacts::ContactReader value { nullptr };
-    check_hresult(WINRT_SHIM(IContactStore2)->abi_GetContactReaderWithOptions(get_abi(options), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> impl_IContactStore2<D>::CreateContactListAsync(hstring_view displayName, hstring_view userDataAccountId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactList> value;
-    check_hresult(WINRT_SHIM(IContactStore2)->abi_CreateContactListInAccountAsync(get_abi(displayName), get_abi(userDataAccountId), put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactList<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactList)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactList<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactList)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactList<D>::DisplayName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactList)->put_DisplayName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactList<D>::SourceDisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactList)->get_SourceDisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IContactList<D>::IsHidden() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IContactList)->get_IsHidden(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactList<D>::IsHidden(bool value) const
-{
-    check_hresult(WINRT_SHIM(IContactList)->put_IsHidden(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactListOtherAppReadAccess impl_IContactList<D>::OtherAppReadAccess() const
-{
-    Windows::ApplicationModel::Contacts::ContactListOtherAppReadAccess value {};
-    check_hresult(WINRT_SHIM(IContactList)->get_OtherAppReadAccess(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactList<D>::OtherAppReadAccess(Windows::ApplicationModel::Contacts::ContactListOtherAppReadAccess value) const
-{
-    check_hresult(WINRT_SHIM(IContactList)->put_OtherAppReadAccess(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactListOtherAppWriteAccess impl_IContactList<D>::OtherAppWriteAccess() const
-{
-    Windows::ApplicationModel::Contacts::ContactListOtherAppWriteAccess value {};
-    check_hresult(WINRT_SHIM(IContactList)->get_OtherAppWriteAccess(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactList<D>::OtherAppWriteAccess(Windows::ApplicationModel::Contacts::ContactListOtherAppWriteAccess value) const
-{
-    check_hresult(WINRT_SHIM(IContactList)->put_OtherAppWriteAccess(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactChangeTracker impl_IContactList<D>::ChangeTracker() const
-{
-    Windows::ApplicationModel::Contacts::ContactChangeTracker value { nullptr };
-    check_hresult(WINRT_SHIM(IContactList)->get_ChangeTracker(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactListSyncManager impl_IContactList<D>::SyncManager() const
-{
-    Windows::ApplicationModel::Contacts::ContactListSyncManager value { nullptr };
-    check_hresult(WINRT_SHIM(IContactList)->get_SyncManager(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IContactList<D>::SupportsServerSearch() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IContactList)->get_SupportsServerSearch(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IContactList<D>::UserDataAccountId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactList)->get_UserDataAccountId(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IContactList<D>::ContactChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactList, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> & value) const
-{
-    event_token returnValue {};
-    check_hresult(WINRT_SHIM(IContactList)->add_ContactChanged(get_abi(value), &returnValue));
-    return returnValue;
-}
-
-template <typename D> event_revoker<IContactList> impl_IContactList<D>::ContactChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactList, Windows::ApplicationModel::Contacts::ContactChangedEventArgs> & value) const
-{
-    return impl::make_event_revoker<D, IContactList>(this, &ABI::Windows::ApplicationModel::Contacts::IContactList::remove_ContactChanged, ContactChanged(value));
-}
-
-template <typename D> void impl_IContactList<D>::ContactChanged(event_token value) const
-{
-    check_hresult(WINRT_SHIM(IContactList)->remove_ContactChanged(value));
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IContactList<D>::SaveAsync() const
-{
-    Windows::Foundation::IAsyncAction returnValue;
-    check_hresult(WINRT_SHIM(IContactList)->abi_SaveAsync(put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IContactList<D>::DeleteAsync() const
-{
-    Windows::Foundation::IAsyncAction returnValue;
-    check_hresult(WINRT_SHIM(IContactList)->abi_DeleteAsync(put_abi(returnValue)));
-    return returnValue;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> impl_IContactList<D>::GetContactFromRemoteIdAsync(hstring_view remoteId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> contact;
-    check_hresult(WINRT_SHIM(IContactList)->abi_GetContactFromRemoteIdAsync(get_abi(remoteId), put_abi(contact)));
-    return contact;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> impl_IContactList<D>::GetMeContactAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> meContact;
-    check_hresult(WINRT_SHIM(IContactList)->abi_GetMeContactAsync(put_abi(meContact)));
-    return meContact;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactReader impl_IContactList<D>::GetContactReader() const
-{
-    Windows::ApplicationModel::Contacts::ContactReader value { nullptr };
-    check_hresult(WINRT_SHIM(IContactList)->abi_GetContactReader(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactReader impl_IContactList<D>::GetContactReader(const Windows::ApplicationModel::Contacts::ContactQueryOptions & options) const
-{
-    Windows::ApplicationModel::Contacts::ContactReader value { nullptr };
-    check_hresult(WINRT_SHIM(IContactList)->abi_GetContactReaderWithOptions(get_abi(options), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IContactList<D>::SaveContactAsync(const Windows::ApplicationModel::Contacts::Contact & contact) const
-{
-    Windows::Foundation::IAsyncAction value;
-    check_hresult(WINRT_SHIM(IContactList)->abi_SaveContactAsync(get_abi(contact), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IContactList<D>::DeleteContactAsync(const Windows::ApplicationModel::Contacts::Contact & contact) const
-{
-    Windows::Foundation::IAsyncAction value;
-    check_hresult(WINRT_SHIM(IContactList)->abi_DeleteContactAsync(get_abi(contact), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> impl_IContactList<D>::GetContactAsync(hstring_view contactId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> contacts;
-    check_hresult(WINRT_SHIM(IContactList)->abi_GetContactAsync(get_abi(contactId), put_abi(contacts)));
-    return contacts;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IContactList2<D>::RegisterSyncManagerAsync() const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IContactList2)->abi_RegisterSyncManagerAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IContactList2<D>::SupportsServerSearch(bool value) const
-{
-    check_hresult(WINRT_SHIM(IContactList2)->put_SupportsServerSearch(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactListSyncConstraints impl_IContactList2<D>::SyncConstraints() const
-{
-    Windows::ApplicationModel::Contacts::ContactListSyncConstraints value { nullptr };
-    check_hresult(WINRT_SHIM(IContactList2)->get_SyncConstraints(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactListSyncStatus impl_IContactListSyncManager<D>::Status() const
-{
-    Windows::ApplicationModel::Contacts::ContactListSyncStatus value {};
-    check_hresult(WINRT_SHIM(IContactListSyncManager)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IContactListSyncManager<D>::LastSuccessfulSyncTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IContactListSyncManager)->get_LastSuccessfulSyncTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IContactListSyncManager<D>::LastAttemptedSyncTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IContactListSyncManager)->get_LastAttemptedSyncTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IContactListSyncManager<D>::SyncAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IContactListSyncManager)->abi_SyncAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> event_token impl_IContactListSyncManager<D>::SyncStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactListSyncManager, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IContactListSyncManager)->add_SyncStatusChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IContactListSyncManager> impl_IContactListSyncManager<D>::SyncStatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactListSyncManager, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IContactListSyncManager>(this, &ABI::Windows::ApplicationModel::Contacts::IContactListSyncManager::remove_SyncStatusChanged, SyncStatusChanged(handler));
-}
-
-template <typename D> void impl_IContactListSyncManager<D>::SyncStatusChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncManager)->remove_SyncStatusChanged(token));
-}
-
-template <typename D> void impl_IContactListSyncManager2<D>::Status(Windows::ApplicationModel::Contacts::ContactListSyncStatus value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncManager2)->put_Status(value));
-}
-
-template <typename D> void impl_IContactListSyncManager2<D>::LastSuccessfulSyncTime(const Windows::Foundation::DateTime & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncManager2)->put_LastSuccessfulSyncTime(get_abi(value)));
-}
-
-template <typename D> void impl_IContactListSyncManager2<D>::LastAttemptedSyncTime(const Windows::Foundation::DateTime & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncManager2)->put_LastAttemptedSyncTime(get_abi(value)));
-}
-
-template <typename D> bool impl_IContactListSyncConstraints<D>::CanSyncDescriptions() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_CanSyncDescriptions(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::CanSyncDescriptions(bool value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_CanSyncDescriptions(value));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxHomePhoneNumbers() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxHomePhoneNumbers(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxHomePhoneNumbers(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxHomePhoneNumbers(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxMobilePhoneNumbers() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxMobilePhoneNumbers(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxMobilePhoneNumbers(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxMobilePhoneNumbers(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxWorkPhoneNumbers() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxWorkPhoneNumbers(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxWorkPhoneNumbers(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxWorkPhoneNumbers(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxOtherPhoneNumbers() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxOtherPhoneNumbers(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxOtherPhoneNumbers(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxOtherPhoneNumbers(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxPagerPhoneNumbers() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxPagerPhoneNumbers(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxPagerPhoneNumbers(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxPagerPhoneNumbers(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxBusinessFaxPhoneNumbers() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxBusinessFaxPhoneNumbers(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxBusinessFaxPhoneNumbers(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxBusinessFaxPhoneNumbers(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxHomeFaxPhoneNumbers() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxHomeFaxPhoneNumbers(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxHomeFaxPhoneNumbers(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxHomeFaxPhoneNumbers(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxCompanyPhoneNumbers() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxCompanyPhoneNumbers(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxCompanyPhoneNumbers(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxCompanyPhoneNumbers(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxAssistantPhoneNumbers() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxAssistantPhoneNumbers(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxAssistantPhoneNumbers(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxAssistantPhoneNumbers(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxRadioPhoneNumbers() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxRadioPhoneNumbers(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxRadioPhoneNumbers(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxRadioPhoneNumbers(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxPersonalEmailAddresses() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxPersonalEmailAddresses(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxPersonalEmailAddresses(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxPersonalEmailAddresses(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxWorkEmailAddresses() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxWorkEmailAddresses(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxWorkEmailAddresses(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxWorkEmailAddresses(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxOtherEmailAddresses() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxOtherEmailAddresses(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxOtherEmailAddresses(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxOtherEmailAddresses(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxHomeAddresses() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxHomeAddresses(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxHomeAddresses(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxHomeAddresses(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxWorkAddresses() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxWorkAddresses(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxWorkAddresses(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxWorkAddresses(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxOtherAddresses() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxOtherAddresses(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxOtherAddresses(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxOtherAddresses(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxBirthdayDates() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxBirthdayDates(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxBirthdayDates(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxBirthdayDates(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxAnniversaryDates() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxAnniversaryDates(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxAnniversaryDates(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxAnniversaryDates(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxOtherDates() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxOtherDates(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxOtherDates(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxOtherDates(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxOtherRelationships() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxOtherRelationships(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxOtherRelationships(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxOtherRelationships(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxSpouseRelationships() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxSpouseRelationships(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxSpouseRelationships(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxSpouseRelationships(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxPartnerRelationships() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxPartnerRelationships(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxPartnerRelationships(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxPartnerRelationships(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxSiblingRelationships() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxSiblingRelationships(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxSiblingRelationships(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxSiblingRelationships(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxParentRelationships() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxParentRelationships(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxParentRelationships(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxParentRelationships(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxChildRelationships() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxChildRelationships(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxChildRelationships(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxChildRelationships(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxJobInfo() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxJobInfo(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxJobInfo(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxJobInfo(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactListSyncConstraints<D>::MaxWebsites() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->get_MaxWebsites(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactListSyncConstraints<D>::MaxWebsites(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactListSyncConstraints)->put_MaxWebsites(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactChangeType impl_IContactChange<D>::ChangeType() const
-{
-    Windows::ApplicationModel::Contacts::ContactChangeType value {};
-    check_hresult(WINRT_SHIM(IContactChange)->get_ChangeType(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::Contact impl_IContactChange<D>::Contact() const
-{
-    Windows::ApplicationModel::Contacts::Contact value { nullptr };
-    check_hresult(WINRT_SHIM(IContactChange)->get_Contact(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactChangedDeferral<D>::Complete() const
-{
-    check_hresult(WINRT_SHIM(IContactChangedDeferral)->abi_Complete());
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactChangedDeferral impl_IContactChangedEventArgs<D>::GetDeferral() const
-{
-    Windows::ApplicationModel::Contacts::ContactChangedDeferral value { nullptr };
-    check_hresult(WINRT_SHIM(IContactChangedEventArgs)->abi_GetDeferral(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactChangeReader<D>::AcceptChanges() const
-{
-    check_hresult(WINRT_SHIM(IContactChangeReader)->abi_AcceptChanges());
-}
-
-template <typename D> void impl_IContactChangeReader<D>::AcceptChangesThrough(const Windows::ApplicationModel::Contacts::ContactChange & lastChangeToAccept) const
-{
-    check_hresult(WINRT_SHIM(IContactChangeReader)->abi_AcceptChangesThrough(get_abi(lastChangeToAccept)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactChange>> impl_IContactChangeReader<D>::ReadBatchAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactChange>> value;
-    check_hresult(WINRT_SHIM(IContactChangeReader)->abi_ReadBatchAsync(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactChangeTracker<D>::Enable() const
-{
-    check_hresult(WINRT_SHIM(IContactChangeTracker)->abi_Enable());
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactChangeReader impl_IContactChangeTracker<D>::GetChangeReader() const
-{
-    Windows::ApplicationModel::Contacts::ContactChangeReader value { nullptr };
-    check_hresult(WINRT_SHIM(IContactChangeTracker)->abi_GetChangeReader(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactChangeTracker<D>::Reset() const
-{
-    check_hresult(WINRT_SHIM(IContactChangeTracker)->abi_Reset());
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactBatch> impl_IContactReader<D>::ReadBatchAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactBatch> value;
-    check_hresult(WINRT_SHIM(IContactReader)->abi_ReadBatchAsync(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactMatchReason> impl_IContactReader<D>::GetMatchingPropertiesWithMatchReason(const Windows::ApplicationModel::Contacts::Contact & contact) const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactMatchReason> ppRetVal;
-    check_hresult(WINRT_SHIM(IContactReader)->abi_GetMatchingPropertiesWithMatchReason(get_abi(contact), put_abi(ppRetVal)));
-    return ppRetVal;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactQuerySearchFields impl_IContactQueryTextSearch<D>::Fields() const
-{
-    Windows::ApplicationModel::Contacts::ContactQuerySearchFields value {};
-    check_hresult(WINRT_SHIM(IContactQueryTextSearch)->get_Fields(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactQueryTextSearch<D>::Fields(Windows::ApplicationModel::Contacts::ContactQuerySearchFields value) const
-{
-    check_hresult(WINRT_SHIM(IContactQueryTextSearch)->put_Fields(value));
-}
-
-template <typename D> hstring impl_IContactQueryTextSearch<D>::Text() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactQueryTextSearch)->get_Text(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactQueryTextSearch<D>::Text(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactQueryTextSearch)->put_Text(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactQuerySearchScope impl_IContactQueryTextSearch<D>::SearchScope() const
-{
-    Windows::ApplicationModel::Contacts::ContactQuerySearchScope value {};
-    check_hresult(WINRT_SHIM(IContactQueryTextSearch)->get_SearchScope(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactQueryTextSearch<D>::SearchScope(Windows::ApplicationModel::Contacts::ContactQuerySearchScope value) const
-{
-    check_hresult(WINRT_SHIM(IContactQueryTextSearch)->put_SearchScope(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactQueryOptions impl_IContactQueryOptionsFactory<D>::CreateWithText(hstring_view text) const
-{
-    Windows::ApplicationModel::Contacts::ContactQueryOptions result { nullptr };
-    check_hresult(WINRT_SHIM(IContactQueryOptionsFactory)->abi_CreateWithText(get_abi(text), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactQueryOptions impl_IContactQueryOptionsFactory<D>::CreateWithTextAndFields(hstring_view text, Windows::ApplicationModel::Contacts::ContactQuerySearchFields fields) const
-{
-    Windows::ApplicationModel::Contacts::ContactQueryOptions result { nullptr };
-    check_hresult(WINRT_SHIM(IContactQueryOptionsFactory)->abi_CreateWithTextAndFields(get_abi(text), fields, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactQueryTextSearch impl_IContactQueryOptions<D>::TextSearch() const
-{
-    Windows::ApplicationModel::Contacts::ContactQueryTextSearch value { nullptr };
-    check_hresult(WINRT_SHIM(IContactQueryOptions)->get_TextSearch(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IContactQueryOptions<D>::ContactListIds() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IContactQueryOptions)->get_ContactListIds(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IContactQueryOptions<D>::IncludeContactsFromHiddenLists() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IContactQueryOptions)->get_IncludeContactsFromHiddenLists(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactQueryOptions<D>::IncludeContactsFromHiddenLists(bool value) const
-{
-    check_hresult(WINRT_SHIM(IContactQueryOptions)->put_IncludeContactsFromHiddenLists(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactQueryDesiredFields impl_IContactQueryOptions<D>::DesiredFields() const
-{
-    Windows::ApplicationModel::Contacts::ContactQueryDesiredFields value {};
-    check_hresult(WINRT_SHIM(IContactQueryOptions)->get_DesiredFields(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactQueryOptions<D>::DesiredFields(Windows::ApplicationModel::Contacts::ContactQueryDesiredFields value) const
-{
-    check_hresult(WINRT_SHIM(IContactQueryOptions)->put_DesiredFields(value));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactAnnotationOperations impl_IContactQueryOptions<D>::DesiredOperations() const
-{
-    Windows::ApplicationModel::Contacts::ContactAnnotationOperations value {};
-    check_hresult(WINRT_SHIM(IContactQueryOptions)->get_DesiredOperations(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactQueryOptions<D>::DesiredOperations(Windows::ApplicationModel::Contacts::ContactAnnotationOperations value) const
-{
-    check_hresult(WINRT_SHIM(IContactQueryOptions)->put_DesiredOperations(value));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IContactQueryOptions<D>::AnnotationListIds() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IContactQueryOptions)->get_AnnotationListIds(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact> impl_IContactBatch<D>::Contacts() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::Contact> value;
-    check_hresult(WINRT_SHIM(IContactBatch)->get_Contacts(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactBatchStatus impl_IContactBatch<D>::Status() const
-{
-    Windows::ApplicationModel::Contacts::ContactBatchStatus value {};
-    check_hresult(WINRT_SHIM(IContactBatch)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactMatchReasonKind impl_IContactMatchReason<D>::Field() const
-{
-    Windows::ApplicationModel::Contacts::ContactMatchReasonKind value {};
-    check_hresult(WINRT_SHIM(IContactMatchReason)->get_Field(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextSegment> impl_IContactMatchReason<D>::Segments() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Data::Text::TextSegment> value;
-    check_hresult(WINRT_SHIM(IContactMatchReason)->get_Segments(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactMatchReason<D>::Text() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactMatchReason)->get_Text(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactLaunchActionVerbsStatics<D>::Call() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactLaunchActionVerbsStatics)->get_Call(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactLaunchActionVerbsStatics<D>::Message() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactLaunchActionVerbsStatics)->get_Message(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactLaunchActionVerbsStatics<D>::Map() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactLaunchActionVerbsStatics)->get_Map(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactLaunchActionVerbsStatics<D>::Post() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactLaunchActionVerbsStatics)->get_Post(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactLaunchActionVerbsStatics<D>::VideoCall() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactLaunchActionVerbsStatics)->get_VideoCall(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactPicker<D>::CommitButtonText() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactPicker)->get_CommitButtonText(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactPicker<D>::CommitButtonText(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactPicker)->put_CommitButtonText(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactSelectionMode impl_IContactPicker<D>::SelectionMode() const
-{
-    Windows::ApplicationModel::Contacts::ContactSelectionMode value {};
-    check_hresult(WINRT_SHIM(IContactPicker)->get_SelectionMode(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactPicker<D>::SelectionMode(Windows::ApplicationModel::Contacts::ContactSelectionMode value) const
-{
-    check_hresult(WINRT_SHIM(IContactPicker)->put_SelectionMode(value));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IContactPicker<D>::DesiredFields() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IContactPicker)->get_DesiredFields(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactInformation> impl_IContactPicker<D>::PickSingleContactAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactInformation> result;
-    check_hresult(WINRT_SHIM(IContactPicker)->abi_PickSingleContactAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactInformation>> impl_IContactPicker<D>::PickMultipleContactsAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactInformation>> result;
-    check_hresult(WINRT_SHIM(IContactPicker)->abi_PickMultipleContactsAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<winrt::Windows::ApplicationModel::Contacts::ContactFieldType> impl_IContactPicker2<D>::DesiredFieldsWithContactFieldType() const
-{
-    Windows::Foundation::Collections::IVector<winrt::Windows::ApplicationModel::Contacts::ContactFieldType> value;
-    check_hresult(WINRT_SHIM(IContactPicker2)->get_DesiredFieldsWithContactFieldType(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> impl_IContactPicker2<D>::PickContactAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> result;
-    check_hresult(WINRT_SHIM(IContactPicker2)->abi_PickContactAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::Contact>> impl_IContactPicker2<D>::PickContactsAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::Contact>> result;
-    check_hresult(WINRT_SHIM(IContactPicker2)->abi_PickContactsAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::System::User impl_IContactPicker3<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IContactPicker3)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactPicker impl_IContactPickerStatics<D>::CreateForUser(const Windows::System::User & user) const
-{
-    Windows::ApplicationModel::Contacts::ContactPicker result { nullptr };
-    check_hresult(WINRT_SHIM(IContactPickerStatics)->abi_CreateForUser(get_abi(user), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IContactPickerStatics<D>::IsSupportedAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IContactPickerStatics)->abi_IsSupportedAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IContactConnectedServiceAccount<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactConnectedServiceAccount)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactConnectedServiceAccount<D>::Id(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactConnectedServiceAccount)->put_Id(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactConnectedServiceAccount<D>::ServiceName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactConnectedServiceAccount)->get_ServiceName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactConnectedServiceAccount<D>::ServiceName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactConnectedServiceAccount)->put_ServiceName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactSignificantOther<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactSignificantOther)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactSignificantOther<D>::Name(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactSignificantOther)->put_Name(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactSignificantOther<D>::Description() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactSignificantOther)->get_Description(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactSignificantOther<D>::Description(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactSignificantOther)->put_Description(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactRelationship impl_IContactSignificantOther2<D>::Relationship() const
-{
-    Windows::ApplicationModel::Contacts::ContactRelationship value {};
-    check_hresult(WINRT_SHIM(IContactSignificantOther2)->get_Relationship(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactSignificantOther2<D>::Relationship(Windows::ApplicationModel::Contacts::ContactRelationship value) const
-{
-    check_hresult(WINRT_SHIM(IContactSignificantOther2)->put_Relationship(value));
-}
-
-template <typename D> Windows::Foundation::Uri impl_IContactWebsite<D>::Uri() const
-{
-    Windows::Foundation::Uri value { nullptr };
-    check_hresult(WINRT_SHIM(IContactWebsite)->get_Uri(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactWebsite<D>::Uri(const Windows::Foundation::Uri & value) const
-{
-    check_hresult(WINRT_SHIM(IContactWebsite)->put_Uri(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactWebsite<D>::Description() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactWebsite)->get_Description(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactWebsite<D>::Description(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactWebsite)->put_Description(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactWebsite2<D>::RawValue() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactWebsite2)->get_RawValue(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactWebsite2<D>::RawValue(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactWebsite2)->put_RawValue(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactEmail<D>::Address() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactEmail)->get_Address(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactEmail<D>::Address(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactEmail)->put_Address(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactEmailKind impl_IContactEmail<D>::Kind() const
-{
-    Windows::ApplicationModel::Contacts::ContactEmailKind value {};
-    check_hresult(WINRT_SHIM(IContactEmail)->get_Kind(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactEmail<D>::Kind(Windows::ApplicationModel::Contacts::ContactEmailKind value) const
-{
-    check_hresult(WINRT_SHIM(IContactEmail)->put_Kind(value));
-}
-
-template <typename D> hstring impl_IContactEmail<D>::Description() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactEmail)->get_Description(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactEmail<D>::Description(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactEmail)->put_Description(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactPhone<D>::Number() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactPhone)->get_Number(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactPhone<D>::Number(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactPhone)->put_Number(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactPhoneKind impl_IContactPhone<D>::Kind() const
-{
-    Windows::ApplicationModel::Contacts::ContactPhoneKind value {};
-    check_hresult(WINRT_SHIM(IContactPhone)->get_Kind(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactPhone<D>::Kind(Windows::ApplicationModel::Contacts::ContactPhoneKind value) const
-{
-    check_hresult(WINRT_SHIM(IContactPhone)->put_Kind(value));
-}
-
-template <typename D> hstring impl_IContactPhone<D>::Description() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactPhone)->get_Description(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactPhone<D>::Description(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactPhone)->put_Description(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactAddress<D>::StreetAddress() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAddress)->get_StreetAddress(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactAddress<D>::StreetAddress(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactAddress)->put_StreetAddress(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactAddress<D>::Locality() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAddress)->get_Locality(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactAddress<D>::Locality(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactAddress)->put_Locality(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactAddress<D>::Region() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAddress)->get_Region(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactAddress<D>::Region(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactAddress)->put_Region(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactAddress<D>::Country() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAddress)->get_Country(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactAddress<D>::Country(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactAddress)->put_Country(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactAddress<D>::PostalCode() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAddress)->get_PostalCode(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactAddress<D>::PostalCode(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactAddress)->put_PostalCode(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactAddressKind impl_IContactAddress<D>::Kind() const
-{
-    Windows::ApplicationModel::Contacts::ContactAddressKind value {};
-    check_hresult(WINRT_SHIM(IContactAddress)->get_Kind(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactAddress<D>::Kind(Windows::ApplicationModel::Contacts::ContactAddressKind value) const
-{
-    check_hresult(WINRT_SHIM(IContactAddress)->put_Kind(value));
-}
-
-template <typename D> hstring impl_IContactAddress<D>::Description() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactAddress)->get_Description(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactAddress<D>::Description(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactAddress)->put_Description(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<uint32_t> impl_IContactDate<D>::Day() const
-{
-    Windows::Foundation::IReference<uint32_t> value;
-    check_hresult(WINRT_SHIM(IContactDate)->get_Day(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactDate<D>::Day(const optional<uint32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactDate)->put_Day(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<uint32_t> impl_IContactDate<D>::Month() const
-{
-    Windows::Foundation::IReference<uint32_t> value;
-    check_hresult(WINRT_SHIM(IContactDate)->get_Month(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactDate<D>::Month(const optional<uint32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactDate)->put_Month(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<int32_t> impl_IContactDate<D>::Year() const
-{
-    Windows::Foundation::IReference<int32_t> value;
-    check_hresult(WINRT_SHIM(IContactDate)->get_Year(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactDate<D>::Year(const optional<int32_t> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactDate)->put_Year(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactDateKind impl_IContactDate<D>::Kind() const
-{
-    Windows::ApplicationModel::Contacts::ContactDateKind value {};
-    check_hresult(WINRT_SHIM(IContactDate)->get_Kind(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactDate<D>::Kind(Windows::ApplicationModel::Contacts::ContactDateKind value) const
-{
-    check_hresult(WINRT_SHIM(IContactDate)->put_Kind(value));
-}
-
-template <typename D> hstring impl_IContactDate<D>::Description() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactDate)->get_Description(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactDate<D>::Description(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactDate)->put_Description(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactJobInfo<D>::CompanyName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactJobInfo)->get_CompanyName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactJobInfo<D>::CompanyName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactJobInfo)->put_CompanyName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactJobInfo<D>::CompanyYomiName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactJobInfo)->get_CompanyYomiName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactJobInfo<D>::CompanyYomiName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactJobInfo)->put_CompanyYomiName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactJobInfo<D>::Department() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactJobInfo)->get_Department(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactJobInfo<D>::Department(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactJobInfo)->put_Department(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactJobInfo<D>::Title() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactJobInfo)->get_Title(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactJobInfo<D>::Title(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactJobInfo)->put_Title(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactJobInfo<D>::Manager() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactJobInfo)->get_Manager(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactJobInfo<D>::Manager(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactJobInfo)->put_Manager(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactJobInfo<D>::Office() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactJobInfo)->get_Office(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactJobInfo<D>::Office(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactJobInfo)->put_Office(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactJobInfo<D>::CompanyAddress() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactJobInfo)->get_CompanyAddress(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactJobInfo<D>::CompanyAddress(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactJobInfo)->put_CompanyAddress(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactJobInfo<D>::Description() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactJobInfo)->get_Description(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactJobInfo<D>::Description(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactJobInfo)->put_Description(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContact<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContact<D>::Name(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContact)->put_Name(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference impl_IContact<D>::Thumbnail() const
-{
-    Windows::Storage::Streams::IRandomAccessStreamReference value;
-    check_hresult(WINRT_SHIM(IContact)->get_Thumbnail(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContact<D>::Thumbnail(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const
-{
-    check_hresult(WINRT_SHIM(IContact)->put_Thumbnail(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::IContactField> impl_IContact<D>::Fields() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::IContactField> value;
-    check_hresult(WINRT_SHIM(IContact)->get_Fields(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactFieldType impl_IContactField<D>::Type() const
-{
-    Windows::ApplicationModel::Contacts::ContactFieldType value {};
-    check_hresult(WINRT_SHIM(IContactField)->get_Type(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactFieldCategory impl_IContactField<D>::Category() const
-{
-    Windows::ApplicationModel::Contacts::ContactFieldCategory value {};
-    check_hresult(WINRT_SHIM(IContactField)->get_Category(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IContactField<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactField)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactField<D>::Value() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactField)->get_Value(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactName<D>::FirstName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactName)->get_FirstName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactName<D>::FirstName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactName)->put_FirstName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactName<D>::LastName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactName)->get_LastName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactName<D>::LastName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactName)->put_LastName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactName<D>::MiddleName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactName)->get_MiddleName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactName<D>::MiddleName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactName)->put_MiddleName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactName<D>::YomiGivenName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactName)->get_YomiGivenName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactName<D>::YomiGivenName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactName)->put_YomiGivenName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactName<D>::YomiFamilyName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactName)->get_YomiFamilyName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactName<D>::YomiFamilyName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactName)->put_YomiFamilyName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactName<D>::HonorificNameSuffix() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactName)->get_HonorificNameSuffix(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactName<D>::HonorificNameSuffix(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactName)->put_HonorificNameSuffix(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactName<D>::HonorificNamePrefix() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactName)->get_HonorificNamePrefix(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactName<D>::HonorificNamePrefix(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContactName)->put_HonorificNamePrefix(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContactName<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactName)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactName<D>::YomiDisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactName)->get_YomiDisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContact2<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact2)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContact2<D>::Id(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContact2)->put_Id(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContact2<D>::Notes() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact2)->get_Notes(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContact2<D>::Notes(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContact2)->put_Notes(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactPhone> impl_IContact2<D>::Phones() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactPhone> value;
-    check_hresult(WINRT_SHIM(IContact2)->get_Phones(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactEmail> impl_IContact2<D>::Emails() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactEmail> value;
-    check_hresult(WINRT_SHIM(IContact2)->get_Emails(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactAddress> impl_IContact2<D>::Addresses() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactAddress> value;
-    check_hresult(WINRT_SHIM(IContact2)->get_Addresses(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactConnectedServiceAccount> impl_IContact2<D>::ConnectedServiceAccounts() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactConnectedServiceAccount> value;
-    check_hresult(WINRT_SHIM(IContact2)->get_ConnectedServiceAccounts(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactDate> impl_IContact2<D>::ImportantDates() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactDate> value;
-    check_hresult(WINRT_SHIM(IContact2)->get_ImportantDates(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IContact2<D>::DataSuppliers() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IContact2)->get_DataSuppliers(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactJobInfo> impl_IContact2<D>::JobInfo() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactJobInfo> value;
-    check_hresult(WINRT_SHIM(IContact2)->get_JobInfo(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactSignificantOther> impl_IContact2<D>::SignificantOthers() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactSignificantOther> value;
-    check_hresult(WINRT_SHIM(IContact2)->get_SignificantOthers(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactWebsite> impl_IContact2<D>::Websites() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Contacts::ContactWebsite> value;
-    check_hresult(WINRT_SHIM(IContact2)->get_Websites(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IPropertySet impl_IContact2<D>::ProviderProperties() const
-{
-    Windows::Foundation::Collections::IPropertySet value;
-    check_hresult(WINRT_SHIM(IContact2)->get_ProviderProperties(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContact3<D>::ContactListId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact3)->get_ContactListId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IContact3<D>::DisplayPictureUserUpdateTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IContact3)->get_DisplayPictureUserUpdateTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContact3<D>::DisplayPictureUserUpdateTime(const Windows::Foundation::DateTime & value) const
-{
-    check_hresult(WINRT_SHIM(IContact3)->put_DisplayPictureUserUpdateTime(get_abi(value)));
-}
-
-template <typename D> bool impl_IContact3<D>::IsMe() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IContact3)->get_IsMe(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IContact3<D>::AggregateId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact3)->get_AggregateId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContact3<D>::RemoteId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact3)->get_RemoteId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContact3<D>::RemoteId(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContact3)->put_RemoteId(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContact3<D>::RingToneToken() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact3)->get_RingToneToken(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContact3<D>::RingToneToken(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContact3)->put_RingToneToken(get_abi(value)));
-}
-
-template <typename D> bool impl_IContact3<D>::IsDisplayPictureManuallySet() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IContact3)->get_IsDisplayPictureManuallySet(&value));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference impl_IContact3<D>::LargeDisplayPicture() const
-{
-    Windows::Storage::Streams::IRandomAccessStreamReference value;
-    check_hresult(WINRT_SHIM(IContact3)->get_LargeDisplayPicture(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference impl_IContact3<D>::SmallDisplayPicture() const
-{
-    Windows::Storage::Streams::IRandomAccessStreamReference value;
-    check_hresult(WINRT_SHIM(IContact3)->get_SmallDisplayPicture(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference impl_IContact3<D>::SourceDisplayPicture() const
-{
-    Windows::Storage::Streams::IRandomAccessStreamReference value;
-    check_hresult(WINRT_SHIM(IContact3)->get_SourceDisplayPicture(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContact3<D>::SourceDisplayPicture(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const
-{
-    check_hresult(WINRT_SHIM(IContact3)->put_SourceDisplayPicture(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContact3<D>::TextToneToken() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact3)->get_TextToneToken(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContact3<D>::TextToneToken(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContact3)->put_TextToneToken(get_abi(value)));
-}
-
-template <typename D> bool impl_IContact3<D>::IsAggregate() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IContact3)->get_IsAggregate(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IContact3<D>::FullName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact3)->get_FullName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContact3<D>::DisplayNameOverride() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact3)->get_DisplayNameOverride(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContact3<D>::DisplayNameOverride(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContact3)->put_DisplayNameOverride(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContact3<D>::Nickname() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact3)->get_Nickname(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContact3<D>::Nickname(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IContact3)->put_Nickname(get_abi(value)));
-}
-
-template <typename D> hstring impl_IContact3<D>::SortName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContact3)->get_SortName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactLocationField<D>::UnstructuredAddress() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactLocationField)->get_UnstructuredAddress(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactLocationField<D>::Street() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactLocationField)->get_Street(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactLocationField<D>::City() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactLocationField)->get_City(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactLocationField<D>::Region() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactLocationField)->get_Region(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactLocationField<D>::Country() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactLocationField)->get_Country(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactLocationField<D>::PostalCode() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactLocationField)->get_PostalCode(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactInstantMessageField<D>::UserName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactInstantMessageField)->get_UserName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactInstantMessageField<D>::Service() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactInstantMessageField)->get_Service(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IContactInstantMessageField<D>::DisplayText() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactInstantMessageField)->get_DisplayText(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Uri impl_IContactInstantMessageField<D>::LaunchUri() const
-{
-    Windows::Foundation::Uri value { nullptr };
-    check_hresult(WINRT_SHIM(IContactInstantMessageField)->get_LaunchUri(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownContactFieldStatics<D>::Email() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownContactFieldStatics)->get_Email(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownContactFieldStatics<D>::PhoneNumber() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownContactFieldStatics)->get_PhoneNumber(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownContactFieldStatics<D>::Location() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownContactFieldStatics)->get_Location(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownContactFieldStatics<D>::InstantMessage() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownContactFieldStatics)->get_InstantMessage(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactFieldType impl_IKnownContactFieldStatics<D>::ConvertNameToType(hstring_view name) const
-{
-    Windows::ApplicationModel::Contacts::ContactFieldType type {};
-    check_hresult(WINRT_SHIM(IKnownContactFieldStatics)->abi_ConvertNameToType(get_abi(name), &type));
-    return type;
-}
-
-template <typename D> hstring impl_IKnownContactFieldStatics<D>::ConvertTypeToName(Windows::ApplicationModel::Contacts::ContactFieldType type) const
-{
-    hstring name;
-    check_hresult(WINRT_SHIM(IKnownContactFieldStatics)->abi_ConvertTypeToName(type, put_abi(name)));
-    return name;
-}
-
-template <typename D> hstring impl_IContactInformation<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IContactInformation)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> impl_IContactInformation<D>::GetThumbnailAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IRandomAccessStreamWithContentType> operation;
-    check_hresult(WINRT_SHIM(IContactInformation)->abi_GetThumbnailAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> impl_IContactInformation<D>::Emails() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> value;
-    check_hresult(WINRT_SHIM(IContactInformation)->get_Emails(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> impl_IContactInformation<D>::PhoneNumbers() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> value;
-    check_hresult(WINRT_SHIM(IContactInformation)->get_PhoneNumbers(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactLocationField> impl_IContactInformation<D>::Locations() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactLocationField> value;
-    check_hresult(WINRT_SHIM(IContactInformation)->get_Locations(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactInstantMessageField> impl_IContactInformation<D>::InstantMessages() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactInstantMessageField> value;
-    check_hresult(WINRT_SHIM(IContactInformation)->get_InstantMessages(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> impl_IContactInformation<D>::CustomFields() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> value;
-    check_hresult(WINRT_SHIM(IContactInformation)->get_CustomFields(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> impl_IContactInformation<D>::QueryCustomFields(hstring_view customName) const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Contacts::ContactField> value;
-    check_hresult(WINRT_SHIM(IContactInformation)->abi_QueryCustomFields(get_abi(customName), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactField impl_IContactFieldFactory<D>::CreateField(hstring_view value, Windows::ApplicationModel::Contacts::ContactFieldType type) const
-{
-    Windows::ApplicationModel::Contacts::ContactField field { nullptr };
-    check_hresult(WINRT_SHIM(IContactFieldFactory)->abi_CreateField_Default(get_abi(value), type, put_abi(field)));
-    return field;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactField impl_IContactFieldFactory<D>::CreateField(hstring_view value, Windows::ApplicationModel::Contacts::ContactFieldType type, Windows::ApplicationModel::Contacts::ContactFieldCategory category) const
-{
-    Windows::ApplicationModel::Contacts::ContactField field { nullptr };
-    check_hresult(WINRT_SHIM(IContactFieldFactory)->abi_CreateField_Category(get_abi(value), type, category, put_abi(field)));
-    return field;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactField impl_IContactFieldFactory<D>::CreateField(hstring_view name, hstring_view value, Windows::ApplicationModel::Contacts::ContactFieldType type, Windows::ApplicationModel::Contacts::ContactFieldCategory category) const
-{
-    Windows::ApplicationModel::Contacts::ContactField field { nullptr };
-    check_hresult(WINRT_SHIM(IContactFieldFactory)->abi_CreateField_Custom(get_abi(name), get_abi(value), type, category, put_abi(field)));
-    return field;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactLocationField impl_IContactLocationFieldFactory<D>::CreateLocation(hstring_view unstructuredAddress) const
-{
-    Windows::ApplicationModel::Contacts::ContactLocationField field { nullptr };
-    check_hresult(WINRT_SHIM(IContactLocationFieldFactory)->abi_CreateLocation_Default(get_abi(unstructuredAddress), put_abi(field)));
-    return field;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactLocationField impl_IContactLocationFieldFactory<D>::CreateLocation(hstring_view unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory category) const
-{
-    Windows::ApplicationModel::Contacts::ContactLocationField field { nullptr };
-    check_hresult(WINRT_SHIM(IContactLocationFieldFactory)->abi_CreateLocation_Category(get_abi(unstructuredAddress), category, put_abi(field)));
-    return field;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactLocationField impl_IContactLocationFieldFactory<D>::CreateLocation(hstring_view unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory category, hstring_view street, hstring_view city, hstring_view region, hstring_view country, hstring_view postalCode) const
-{
-    Windows::ApplicationModel::Contacts::ContactLocationField field { nullptr };
-    check_hresult(WINRT_SHIM(IContactLocationFieldFactory)->abi_CreateLocation_All(get_abi(unstructuredAddress), category, get_abi(street), get_abi(city), get_abi(region), get_abi(country), get_abi(postalCode), put_abi(field)));
-    return field;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactInstantMessageField impl_IContactInstantMessageFieldFactory<D>::CreateInstantMessage(hstring_view userName) const
-{
-    Windows::ApplicationModel::Contacts::ContactInstantMessageField field { nullptr };
-    check_hresult(WINRT_SHIM(IContactInstantMessageFieldFactory)->abi_CreateInstantMessage_Default(get_abi(userName), put_abi(field)));
-    return field;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactInstantMessageField impl_IContactInstantMessageFieldFactory<D>::CreateInstantMessage(hstring_view userName, Windows::ApplicationModel::Contacts::ContactFieldCategory category) const
-{
-    Windows::ApplicationModel::Contacts::ContactInstantMessageField field { nullptr };
-    check_hresult(WINRT_SHIM(IContactInstantMessageFieldFactory)->abi_CreateInstantMessage_Category(get_abi(userName), category, put_abi(field)));
-    return field;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::ContactInstantMessageField impl_IContactInstantMessageFieldFactory<D>::CreateInstantMessage(hstring_view userName, Windows::ApplicationModel::Contacts::ContactFieldCategory category, hstring_view service, hstring_view displayText, const Windows::Foundation::Uri & verb) const
-{
-    Windows::ApplicationModel::Contacts::ContactInstantMessageField field { nullptr };
-    check_hresult(WINRT_SHIM(IContactInstantMessageFieldFactory)->abi_CreateInstantMessage_All(get_abi(userName), category, get_abi(service), get_abi(displayText), get_abi(verb), put_abi(field)));
-    return field;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IPinnedContactIdsQueryResult<D>::ContactIds() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IPinnedContactIdsQueryResult)->get_ContactIds(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::PinnedContactManager impl_IPinnedContactManagerStatics<D>::GetDefault() const
-{
-    Windows::ApplicationModel::Contacts::PinnedContactManager result { nullptr };
-    check_hresult(WINRT_SHIM(IPinnedContactManagerStatics)->abi_GetDefault(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Contacts::PinnedContactManager impl_IPinnedContactManagerStatics<D>::GetForUser(const Windows::System::User & user) const
-{
-    Windows::ApplicationModel::Contacts::PinnedContactManager result { nullptr };
-    check_hresult(WINRT_SHIM(IPinnedContactManagerStatics)->abi_GetForUser(get_abi(user), put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_IPinnedContactManagerStatics<D>::IsSupported() const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IPinnedContactManagerStatics)->abi_IsSupported(&result));
-    return result;
-}
-
-template <typename D> Windows::System::User impl_IPinnedContactManager<D>::User() const
-{
-    Windows::System::User user { nullptr };
-    check_hresult(WINRT_SHIM(IPinnedContactManager)->get_User(put_abi(user)));
-    return user;
-}
-
-template <typename D> bool impl_IPinnedContactManager<D>::IsPinSurfaceSupported(Windows::ApplicationModel::Contacts::PinnedContactSurface surface) const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IPinnedContactManager)->abi_IsPinSurfaceSupported(surface, &result));
-    return result;
-}
-
-template <typename D> bool impl_IPinnedContactManager<D>::IsContactPinned(const Windows::ApplicationModel::Contacts::Contact & contact, Windows::ApplicationModel::Contacts::PinnedContactSurface surface) const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IPinnedContactManager)->abi_IsContactPinned(get_abi(contact), surface, &result));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPinnedContactManager<D>::RequestPinContactAsync(const Windows::ApplicationModel::Contacts::Contact & contact, Windows::ApplicationModel::Contacts::PinnedContactSurface surface) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IPinnedContactManager)->abi_RequestPinContactAsync(get_abi(contact), surface, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPinnedContactManager<D>::RequestPinContactsAsync(iterable<Windows::ApplicationModel::Contacts::Contact> contacts, Windows::ApplicationModel::Contacts::PinnedContactSurface surface) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IPinnedContactManager)->abi_RequestPinContactsAsync(get_abi(contacts), surface, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IPinnedContactManager<D>::RequestUnpinContactAsync(const Windows::ApplicationModel::Contacts::Contact & contact, Windows::ApplicationModel::Contacts::PinnedContactSurface surface) const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(IPinnedContactManager)->abi_RequestUnpinContactAsync(get_abi(contact), surface, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> void impl_IPinnedContactManager<D>::SignalContactActivity(const Windows::ApplicationModel::Contacts::Contact & contact) const
-{
-    check_hresult(WINRT_SHIM(IPinnedContactManager)->abi_SignalContactActivity(get_abi(contact)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::PinnedContactIdsQueryResult> impl_IPinnedContactManager<D>::GetPinnedContactIdsAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::PinnedContactIdsQueryResult> operation;
-    check_hresult(WINRT_SHIM(IPinnedContactManager)->abi_GetPinnedContactIdsAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> bool impl_IContactPanelLaunchFullAppRequestedEventArgs<D>::Handled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IContactPanelLaunchFullAppRequestedEventArgs)->get_Handled(&value));
-    return value;
-}
-
-template <typename D> void impl_IContactPanelLaunchFullAppRequestedEventArgs<D>::Handled(bool value) const
-{
-    check_hresult(WINRT_SHIM(IContactPanelLaunchFullAppRequestedEventArgs)->put_Handled(value));
-}
-
-template <typename D> Windows::Foundation::Deferral impl_IContactPanelClosingEventArgs<D>::GetDeferral() const
-{
-    Windows::Foundation::Deferral deferral { nullptr };
-    check_hresult(WINRT_SHIM(IContactPanelClosingEventArgs)->abi_GetDeferral(put_abi(deferral)));
-    return deferral;
-}
-
-template <typename D> void impl_IContactPanel<D>::ClosePanel() const
-{
-    check_hresult(WINRT_SHIM(IContactPanel)->abi_ClosePanel());
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::UI::Color> impl_IContactPanel<D>::HeaderColor() const
-{
-    Windows::Foundation::IReference<Windows::UI::Color> value;
-    check_hresult(WINRT_SHIM(IContactPanel)->get_HeaderColor(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IContactPanel<D>::HeaderColor(const optional<Windows::UI::Color> & value) const
-{
-    check_hresult(WINRT_SHIM(IContactPanel)->put_HeaderColor(get_abi(value)));
-}
-
-template <typename D> event_token impl_IContactPanel<D>::LaunchFullAppRequested(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelLaunchFullAppRequestedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IContactPanel)->add_LaunchFullAppRequested(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IContactPanel> impl_IContactPanel<D>::LaunchFullAppRequested(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelLaunchFullAppRequestedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IContactPanel>(this, &ABI::Windows::ApplicationModel::Contacts::IContactPanel::remove_LaunchFullAppRequested, LaunchFullAppRequested(handler));
-}
-
-template <typename D> void impl_IContactPanel<D>::LaunchFullAppRequested(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IContactPanel)->remove_LaunchFullAppRequested(token));
-}
-
-template <typename D> event_token impl_IContactPanel<D>::Closing(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelClosingEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IContactPanel)->add_Closing(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IContactPanel> impl_IContactPanel<D>::Closing(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Contacts::ContactPanel, Windows::ApplicationModel::Contacts::ContactPanelClosingEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, IContactPanel>(this, &ABI::Windows::ApplicationModel::Contacts::IContactPanel::remove_Closing, Closing(handler));
-}
-
-template <typename D> void impl_IContactPanel<D>::Closing(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IContactPanel)->remove_Closing(token));
-}
+WINRT_EXPORT namespace winrt::Windows::ApplicationModel::Contacts {
 
 inline Contact::Contact() :
     Contact(activate_instance<Contact>())
@@ -9167,32 +9168,32 @@ inline ContactEmail::ContactEmail() :
     ContactEmail(activate_instance<ContactEmail>())
 {}
 
-inline ContactField::ContactField(hstring_view value, Windows::ApplicationModel::Contacts::ContactFieldType type) :
-    ContactField(get_activation_factory<ContactField, IContactFieldFactory>().CreateField(value, type))
+inline ContactField::ContactField(param::hstring const& value, Windows::ApplicationModel::Contacts::ContactFieldType const& type) :
+    ContactField(get_activation_factory<ContactField, Windows::ApplicationModel::Contacts::IContactFieldFactory>().CreateField(value, type))
 {}
 
-inline ContactField::ContactField(hstring_view value, Windows::ApplicationModel::Contacts::ContactFieldType type, Windows::ApplicationModel::Contacts::ContactFieldCategory category) :
-    ContactField(get_activation_factory<ContactField, IContactFieldFactory>().CreateField(value, type, category))
+inline ContactField::ContactField(param::hstring const& value, Windows::ApplicationModel::Contacts::ContactFieldType const& type, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category) :
+    ContactField(get_activation_factory<ContactField, Windows::ApplicationModel::Contacts::IContactFieldFactory>().CreateField(value, type, category))
 {}
 
-inline ContactField::ContactField(hstring_view name, hstring_view value, Windows::ApplicationModel::Contacts::ContactFieldType type, Windows::ApplicationModel::Contacts::ContactFieldCategory category) :
-    ContactField(get_activation_factory<ContactField, IContactFieldFactory>().CreateField(name, value, type, category))
+inline ContactField::ContactField(param::hstring const& name, param::hstring const& value, Windows::ApplicationModel::Contacts::ContactFieldType const& type, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category) :
+    ContactField(get_activation_factory<ContactField, Windows::ApplicationModel::Contacts::IContactFieldFactory>().CreateField(name, value, type, category))
 {}
 
 inline ContactFieldFactory::ContactFieldFactory() :
     ContactFieldFactory(activate_instance<ContactFieldFactory>())
 {}
 
-inline ContactInstantMessageField::ContactInstantMessageField(hstring_view userName) :
-    ContactInstantMessageField(get_activation_factory<ContactInstantMessageField, IContactInstantMessageFieldFactory>().CreateInstantMessage(userName))
+inline ContactInstantMessageField::ContactInstantMessageField(param::hstring const& userName) :
+    ContactInstantMessageField(get_activation_factory<ContactInstantMessageField, Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory>().CreateInstantMessage(userName))
 {}
 
-inline ContactInstantMessageField::ContactInstantMessageField(hstring_view userName, Windows::ApplicationModel::Contacts::ContactFieldCategory category) :
-    ContactInstantMessageField(get_activation_factory<ContactInstantMessageField, IContactInstantMessageFieldFactory>().CreateInstantMessage(userName, category))
+inline ContactInstantMessageField::ContactInstantMessageField(param::hstring const& userName, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category) :
+    ContactInstantMessageField(get_activation_factory<ContactInstantMessageField, Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory>().CreateInstantMessage(userName, category))
 {}
 
-inline ContactInstantMessageField::ContactInstantMessageField(hstring_view userName, Windows::ApplicationModel::Contacts::ContactFieldCategory category, hstring_view service, hstring_view displayText, const Windows::Foundation::Uri & verb) :
-    ContactInstantMessageField(get_activation_factory<ContactInstantMessageField, IContactInstantMessageFieldFactory>().CreateInstantMessage(userName, category, service, displayText, verb))
+inline ContactInstantMessageField::ContactInstantMessageField(param::hstring const& userName, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category, param::hstring const& service, param::hstring const& displayText, Windows::Foundation::Uri const& verb) :
+    ContactInstantMessageField(get_activation_factory<ContactInstantMessageField, Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory>().CreateInstantMessage(userName, category, service, displayText, verb))
 {}
 
 inline ContactJobInfo::ContactJobInfo() :
@@ -9201,149 +9202,149 @@ inline ContactJobInfo::ContactJobInfo() :
 
 inline hstring ContactLaunchActionVerbs::Call()
 {
-    return get_activation_factory<ContactLaunchActionVerbs, IContactLaunchActionVerbsStatics>().Call();
+    return get_activation_factory<ContactLaunchActionVerbs, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics>().Call();
 }
 
 inline hstring ContactLaunchActionVerbs::Message()
 {
-    return get_activation_factory<ContactLaunchActionVerbs, IContactLaunchActionVerbsStatics>().Message();
+    return get_activation_factory<ContactLaunchActionVerbs, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics>().Message();
 }
 
 inline hstring ContactLaunchActionVerbs::Map()
 {
-    return get_activation_factory<ContactLaunchActionVerbs, IContactLaunchActionVerbsStatics>().Map();
+    return get_activation_factory<ContactLaunchActionVerbs, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics>().Map();
 }
 
 inline hstring ContactLaunchActionVerbs::Post()
 {
-    return get_activation_factory<ContactLaunchActionVerbs, IContactLaunchActionVerbsStatics>().Post();
+    return get_activation_factory<ContactLaunchActionVerbs, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics>().Post();
 }
 
 inline hstring ContactLaunchActionVerbs::VideoCall()
 {
-    return get_activation_factory<ContactLaunchActionVerbs, IContactLaunchActionVerbsStatics>().VideoCall();
+    return get_activation_factory<ContactLaunchActionVerbs, Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics>().VideoCall();
 }
 
-inline ContactLocationField::ContactLocationField(hstring_view unstructuredAddress) :
-    ContactLocationField(get_activation_factory<ContactLocationField, IContactLocationFieldFactory>().CreateLocation(unstructuredAddress))
+inline ContactLocationField::ContactLocationField(param::hstring const& unstructuredAddress) :
+    ContactLocationField(get_activation_factory<ContactLocationField, Windows::ApplicationModel::Contacts::IContactLocationFieldFactory>().CreateLocation(unstructuredAddress))
 {}
 
-inline ContactLocationField::ContactLocationField(hstring_view unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory category) :
-    ContactLocationField(get_activation_factory<ContactLocationField, IContactLocationFieldFactory>().CreateLocation(unstructuredAddress, category))
+inline ContactLocationField::ContactLocationField(param::hstring const& unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category) :
+    ContactLocationField(get_activation_factory<ContactLocationField, Windows::ApplicationModel::Contacts::IContactLocationFieldFactory>().CreateLocation(unstructuredAddress, category))
 {}
 
-inline ContactLocationField::ContactLocationField(hstring_view unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory category, hstring_view street, hstring_view city, hstring_view region, hstring_view country, hstring_view postalCode) :
-    ContactLocationField(get_activation_factory<ContactLocationField, IContactLocationFieldFactory>().CreateLocation(unstructuredAddress, category, street, city, region, country, postalCode))
+inline ContactLocationField::ContactLocationField(param::hstring const& unstructuredAddress, Windows::ApplicationModel::Contacts::ContactFieldCategory const& category, param::hstring const& street, param::hstring const& city, param::hstring const& region, param::hstring const& country, param::hstring const& postalCode) :
+    ContactLocationField(get_activation_factory<ContactLocationField, Windows::ApplicationModel::Contacts::IContactLocationFieldFactory>().CreateLocation(unstructuredAddress, category, street, city, region, country, postalCode))
 {}
 
-inline void ContactManager::ShowContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::Foundation::Rect & selection)
+inline void ContactManager::ShowContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::Foundation::Rect const& selection)
 {
-    get_activation_factory<ContactManager, IContactManagerStatics>().ShowContactCard(contact, selection);
+    get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics>().ShowContactCard(contact, selection);
 }
 
-inline void ContactManager::ShowContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement)
+inline void ContactManager::ShowContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::Foundation::Rect const& selection, Windows::UI::Popups::Placement const& preferredPlacement)
 {
-    get_activation_factory<ContactManager, IContactManagerStatics>().ShowContactCard(contact, selection, preferredPlacement);
+    get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics>().ShowContactCard(contact, selection, preferredPlacement);
 }
 
-inline Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader ContactManager::ShowDelayLoadedContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement)
+inline Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader ContactManager::ShowDelayLoadedContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::Foundation::Rect const& selection, Windows::UI::Popups::Placement const& preferredPlacement)
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics>().ShowDelayLoadedContactCard(contact, selection, preferredPlacement);
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics>().ShowDelayLoadedContactCard(contact, selection, preferredPlacement);
 }
 
 inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> ContactManager::RequestStoreAsync()
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics2>().RequestStoreAsync();
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics2>().RequestStoreAsync();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> ContactManager::ConvertContactToVCardAsync(const Windows::ApplicationModel::Contacts::Contact & contact)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> ContactManager::ConvertContactToVCardAsync(Windows::ApplicationModel::Contacts::Contact const& contact)
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics3>().ConvertContactToVCardAsync(contact);
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().ConvertContactToVCardAsync(contact);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> ContactManager::ConvertContactToVCardAsync(const Windows::ApplicationModel::Contacts::Contact & contact, uint32_t maxBytes)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::RandomAccessStreamReference> ContactManager::ConvertContactToVCardAsync(Windows::ApplicationModel::Contacts::Contact const& contact, uint32_t maxBytes)
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics3>().ConvertContactToVCardAsync(contact, maxBytes);
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().ConvertContactToVCardAsync(contact, maxBytes);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> ContactManager::ConvertVCardToContactAsync(const Windows::Storage::Streams::IRandomAccessStreamReference & vCard)
+inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::Contact> ContactManager::ConvertVCardToContactAsync(Windows::Storage::Streams::IRandomAccessStreamReference const& vCard)
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics3>().ConvertVCardToContactAsync(vCard);
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().ConvertVCardToContactAsync(vCard);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> ContactManager::RequestStoreAsync(Windows::ApplicationModel::Contacts::ContactStoreAccessType accessType)
+inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactStore> ContactManager::RequestStoreAsync(Windows::ApplicationModel::Contacts::ContactStoreAccessType const& accessType)
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics3>().RequestStoreAsync(accessType);
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().RequestStoreAsync(accessType);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore> ContactManager::RequestAnnotationStoreAsync(Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType accessType)
+inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Contacts::ContactAnnotationStore> ContactManager::RequestAnnotationStoreAsync(Windows::ApplicationModel::Contacts::ContactAnnotationStoreAccessType const& accessType)
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics3>().RequestAnnotationStoreAsync(accessType);
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().RequestAnnotationStoreAsync(accessType);
 }
 
 inline bool ContactManager::IsShowContactCardSupported()
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics3>().IsShowContactCardSupported();
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().IsShowContactCardSupported();
 }
 
-inline void ContactManager::ShowContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement, const Windows::ApplicationModel::Contacts::ContactCardOptions & contactCardOptions)
+inline void ContactManager::ShowContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::Foundation::Rect const& selection, Windows::UI::Popups::Placement const& preferredPlacement, Windows::ApplicationModel::Contacts::ContactCardOptions const& contactCardOptions)
 {
-    get_activation_factory<ContactManager, IContactManagerStatics3>().ShowContactCard(contact, selection, preferredPlacement, contactCardOptions);
+    get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().ShowContactCard(contact, selection, preferredPlacement, contactCardOptions);
 }
 
 inline bool ContactManager::IsShowDelayLoadedContactCardSupported()
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics3>().IsShowDelayLoadedContactCardSupported();
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().IsShowDelayLoadedContactCardSupported();
 }
 
-inline Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader ContactManager::ShowDelayLoadedContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::Foundation::Rect & selection, Windows::UI::Popups::Placement preferredPlacement, const Windows::ApplicationModel::Contacts::ContactCardOptions & contactCardOptions)
+inline Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader ContactManager::ShowDelayLoadedContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::Foundation::Rect const& selection, Windows::UI::Popups::Placement const& preferredPlacement, Windows::ApplicationModel::Contacts::ContactCardOptions const& contactCardOptions)
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics3>().ShowDelayLoadedContactCard(contact, selection, preferredPlacement, contactCardOptions);
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().ShowDelayLoadedContactCard(contact, selection, preferredPlacement, contactCardOptions);
 }
 
-inline void ContactManager::ShowFullContactCard(const Windows::ApplicationModel::Contacts::Contact & contact, const Windows::ApplicationModel::Contacts::FullContactCardOptions & fullContactCardOptions)
+inline void ContactManager::ShowFullContactCard(Windows::ApplicationModel::Contacts::Contact const& contact, Windows::ApplicationModel::Contacts::FullContactCardOptions const& fullContactCardOptions)
 {
-    get_activation_factory<ContactManager, IContactManagerStatics3>().ShowFullContactCard(contact, fullContactCardOptions);
+    get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().ShowFullContactCard(contact, fullContactCardOptions);
 }
 
 inline Windows::ApplicationModel::Contacts::ContactNameOrder ContactManager::SystemDisplayNameOrder()
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics3>().SystemDisplayNameOrder();
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().SystemDisplayNameOrder();
 }
 
-inline void ContactManager::SystemDisplayNameOrder(Windows::ApplicationModel::Contacts::ContactNameOrder value)
+inline void ContactManager::SystemDisplayNameOrder(Windows::ApplicationModel::Contacts::ContactNameOrder const& value)
 {
-    get_activation_factory<ContactManager, IContactManagerStatics3>().SystemDisplayNameOrder(value);
+    get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().SystemDisplayNameOrder(value);
 }
 
 inline Windows::ApplicationModel::Contacts::ContactNameOrder ContactManager::SystemSortOrder()
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics3>().SystemSortOrder();
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().SystemSortOrder();
 }
 
-inline void ContactManager::SystemSortOrder(Windows::ApplicationModel::Contacts::ContactNameOrder value)
+inline void ContactManager::SystemSortOrder(Windows::ApplicationModel::Contacts::ContactNameOrder const& value)
 {
-    get_activation_factory<ContactManager, IContactManagerStatics3>().SystemSortOrder(value);
+    get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics3>().SystemSortOrder(value);
 }
 
-inline Windows::ApplicationModel::Contacts::ContactManagerForUser ContactManager::GetForUser(const Windows::System::User & user)
+inline Windows::ApplicationModel::Contacts::ContactManagerForUser ContactManager::GetForUser(Windows::System::User const& user)
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics4>().GetForUser(user);
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics4>().GetForUser(user);
 }
 
 inline Windows::Foundation::IAsyncOperation<bool> ContactManager::IsShowFullContactCardSupportedAsync()
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics5>().IsShowFullContactCardSupportedAsync();
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics5>().IsShowFullContactCardSupportedAsync();
 }
 
 inline bool ContactManager::IncludeMiddleNameInSystemDisplayAndSort()
 {
-    return get_activation_factory<ContactManager, IContactManagerStatics5>().IncludeMiddleNameInSystemDisplayAndSort();
+    return get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics5>().IncludeMiddleNameInSystemDisplayAndSort();
 }
 
 inline void ContactManager::IncludeMiddleNameInSystemDisplayAndSort(bool value)
 {
-    get_activation_factory<ContactManager, IContactManagerStatics5>().IncludeMiddleNameInSystemDisplayAndSort(value);
+    get_activation_factory<ContactManager, Windows::ApplicationModel::Contacts::IContactManagerStatics5>().IncludeMiddleNameInSystemDisplayAndSort(value);
 }
 
 inline ContactPhone::ContactPhone() :
@@ -9354,26 +9355,26 @@ inline ContactPicker::ContactPicker() :
     ContactPicker(activate_instance<ContactPicker>())
 {}
 
-inline Windows::ApplicationModel::Contacts::ContactPicker ContactPicker::CreateForUser(const Windows::System::User & user)
+inline Windows::ApplicationModel::Contacts::ContactPicker ContactPicker::CreateForUser(Windows::System::User const& user)
 {
-    return get_activation_factory<ContactPicker, IContactPickerStatics>().CreateForUser(user);
+    return get_activation_factory<ContactPicker, Windows::ApplicationModel::Contacts::IContactPickerStatics>().CreateForUser(user);
 }
 
 inline Windows::Foundation::IAsyncOperation<bool> ContactPicker::IsSupportedAsync()
 {
-    return get_activation_factory<ContactPicker, IContactPickerStatics>().IsSupportedAsync();
+    return get_activation_factory<ContactPicker, Windows::ApplicationModel::Contacts::IContactPickerStatics>().IsSupportedAsync();
 }
 
 inline ContactQueryOptions::ContactQueryOptions() :
     ContactQueryOptions(activate_instance<ContactQueryOptions>())
 {}
 
-inline ContactQueryOptions::ContactQueryOptions(hstring_view text) :
-    ContactQueryOptions(get_activation_factory<ContactQueryOptions, IContactQueryOptionsFactory>().CreateWithText(text))
+inline ContactQueryOptions::ContactQueryOptions(param::hstring const& text) :
+    ContactQueryOptions(get_activation_factory<ContactQueryOptions, Windows::ApplicationModel::Contacts::IContactQueryOptionsFactory>().CreateWithText(text))
 {}
 
-inline ContactQueryOptions::ContactQueryOptions(hstring_view text, Windows::ApplicationModel::Contacts::ContactQuerySearchFields fields) :
-    ContactQueryOptions(get_activation_factory<ContactQueryOptions, IContactQueryOptionsFactory>().CreateWithTextAndFields(text, fields))
+inline ContactQueryOptions::ContactQueryOptions(param::hstring const& text, Windows::ApplicationModel::Contacts::ContactQuerySearchFields const& fields) :
+    ContactQueryOptions(get_activation_factory<ContactQueryOptions, Windows::ApplicationModel::Contacts::IContactQueryOptionsFactory>().CreateWithTextAndFields(text, fields))
 {}
 
 inline ContactSignificantOther::ContactSignificantOther() :
@@ -9390,1086 +9391,407 @@ inline FullContactCardOptions::FullContactCardOptions() :
 
 inline hstring KnownContactField::Email()
 {
-    return get_activation_factory<KnownContactField, IKnownContactFieldStatics>().Email();
+    return get_activation_factory<KnownContactField, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics>().Email();
 }
 
 inline hstring KnownContactField::PhoneNumber()
 {
-    return get_activation_factory<KnownContactField, IKnownContactFieldStatics>().PhoneNumber();
+    return get_activation_factory<KnownContactField, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics>().PhoneNumber();
 }
 
 inline hstring KnownContactField::Location()
 {
-    return get_activation_factory<KnownContactField, IKnownContactFieldStatics>().Location();
+    return get_activation_factory<KnownContactField, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics>().Location();
 }
 
 inline hstring KnownContactField::InstantMessage()
 {
-    return get_activation_factory<KnownContactField, IKnownContactFieldStatics>().InstantMessage();
+    return get_activation_factory<KnownContactField, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics>().InstantMessage();
 }
 
-inline Windows::ApplicationModel::Contacts::ContactFieldType KnownContactField::ConvertNameToType(hstring_view name)
+inline Windows::ApplicationModel::Contacts::ContactFieldType KnownContactField::ConvertNameToType(param::hstring const& name)
 {
-    return get_activation_factory<KnownContactField, IKnownContactFieldStatics>().ConvertNameToType(name);
+    return get_activation_factory<KnownContactField, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics>().ConvertNameToType(name);
 }
 
-inline hstring KnownContactField::ConvertTypeToName(Windows::ApplicationModel::Contacts::ContactFieldType type)
+inline hstring KnownContactField::ConvertTypeToName(Windows::ApplicationModel::Contacts::ContactFieldType const& type)
 {
-    return get_activation_factory<KnownContactField, IKnownContactFieldStatics>().ConvertTypeToName(type);
+    return get_activation_factory<KnownContactField, Windows::ApplicationModel::Contacts::IKnownContactFieldStatics>().ConvertTypeToName(type);
 }
 
 inline Windows::ApplicationModel::Contacts::PinnedContactManager PinnedContactManager::GetDefault()
 {
-    return get_activation_factory<PinnedContactManager, IPinnedContactManagerStatics>().GetDefault();
+    return get_activation_factory<PinnedContactManager, Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics>().GetDefault();
 }
 
-inline Windows::ApplicationModel::Contacts::PinnedContactManager PinnedContactManager::GetForUser(const Windows::System::User & user)
+inline Windows::ApplicationModel::Contacts::PinnedContactManager PinnedContactManager::GetForUser(Windows::System::User const& user)
 {
-    return get_activation_factory<PinnedContactManager, IPinnedContactManagerStatics>().GetForUser(user);
+    return get_activation_factory<PinnedContactManager, Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics>().GetForUser(user);
 }
 
 inline bool PinnedContactManager::IsSupported()
 {
-    return get_activation_factory<PinnedContactManager, IPinnedContactManagerStatics>().IsSupported();
+    return get_activation_factory<PinnedContactManager, Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics>().IsSupported();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IAggregateContactManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IAggregateContactManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IAggregateContactManager2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IAggregateContactManager2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContact> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContact> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContact2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContact2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContact3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContact3> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactAddress> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactAddress> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactAnnotation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactAnnotation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactAnnotation2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactAnnotation2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactAnnotationList> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactAnnotationList> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactAnnotationStore> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactAnnotationStore> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactAnnotationStore2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactAnnotationStore2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactBatch> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactBatch> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactCardDelayedDataLoader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactCardDelayedDataLoader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactCardOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactCardOptions> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactCardOptions2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactCardOptions2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactChange> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactChange> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactChangeReader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactChangeReader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactChangeTracker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactChangeTracker> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactChangedDeferral> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactChangedDeferral> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactConnectedServiceAccount> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactConnectedServiceAccount> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactDate> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactDate> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactEmail> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactEmail> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactField> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactField> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactFieldFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactFieldFactory> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactGroup> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactInformation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactInformation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactInstantMessageField> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactInstantMessageField> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactJobInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactJobInfo> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactList> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactList> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactList2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactList2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactListSyncConstraints> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactListSyncConstraints> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactListSyncManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactListSyncManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactListSyncManager2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactListSyncManager2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactLocationField> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactLocationField> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactLocationFieldFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactLocationFieldFactory> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerForUser> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactManagerForUser> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerForUser2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactManagerForUser2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics3> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics4> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics4> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics5> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics5> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactMatchReason> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactMatchReason> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactName> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactName> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactPanel> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactPanelClosingEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactPanelClosingEventArgs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactPanelLaunchFullAppRequestedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactPanelLaunchFullAppRequestedEventArgs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactPhone> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactPhone> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactPicker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactPicker> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactPicker2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactPicker2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactPicker3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactPicker3> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactPickerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactPickerStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactQueryOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactQueryOptions> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactQueryOptionsFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactQueryOptionsFactory> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactQueryTextSearch> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactQueryTextSearch> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactReader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactReader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactSignificantOther> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactSignificantOther> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactSignificantOther2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactSignificantOther2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactStore> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactStore> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactStore2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactStore2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactStoreNotificationTriggerDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactStoreNotificationTriggerDetails> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactWebsite> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactWebsite> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IContactWebsite2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IContactWebsite2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IFullContactCardOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IFullContactCardOptions> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IKnownContactFieldStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IKnownContactFieldStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IPinnedContactIdsQueryResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IPinnedContactIdsQueryResult> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IPinnedContactManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IPinnedContactManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::AggregateContactManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::AggregateContactManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::Contact> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::Contact> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactAddress> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactAddress> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactAnnotation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactAnnotation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactAnnotationList> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactAnnotationList> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactAnnotationStore> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactAnnotationStore> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactBatch> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactBatch> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactCardOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactCardOptions> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactChange> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactChange> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactChangeReader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactChangeReader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactChangeTracker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactChangeTracker> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactChangedDeferral> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactChangedDeferral> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactConnectedServiceAccount> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactConnectedServiceAccount> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactDate> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactDate> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactEmail> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactEmail> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactField> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactField> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactFieldFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactFieldFactory> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactGroup> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactInformation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactInformation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactInstantMessageField> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactInstantMessageField> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactJobInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactJobInfo> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactLaunchActionVerbs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactLaunchActionVerbs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactList> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactList> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactListSyncConstraints> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactListSyncConstraints> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactListSyncManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactListSyncManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactLocationField> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactLocationField> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactManagerForUser> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactManagerForUser> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactMatchReason> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactMatchReason> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactPanel> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactPanel> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactPanelClosingEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactPanelClosingEventArgs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactPanelLaunchFullAppRequestedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactPanelLaunchFullAppRequestedEventArgs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactPhone> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactPhone> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactPicker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactPicker> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactQueryOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactQueryOptions> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactQueryTextSearch> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactQueryTextSearch> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactReader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactReader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactSignificantOther> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactSignificantOther> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactStore> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactStore> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactStoreNotificationTriggerDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactStoreNotificationTriggerDetails> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::ContactWebsite> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::ContactWebsite> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::FullContactCardOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::FullContactCardOptions> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::KnownContactField> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::KnownContactField> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::PinnedContactIdsQueryResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::PinnedContactIdsQueryResult> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Contacts::PinnedContactManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Contacts::PinnedContactManager> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IAggregateContactManager>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IAggregateContactManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IAggregateContactManager2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IAggregateContactManager2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContact>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContact & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContact2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContact2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContact3>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContact3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactAddress>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactAddress & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactAnnotation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactAnnotation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactAnnotation2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactAnnotation2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactAnnotationList>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactAnnotationList & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactAnnotationStore>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactAnnotationStore & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactAnnotationStore2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactAnnotationStore2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactBatch>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactBatch & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactCardDelayedDataLoader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactCardDelayedDataLoader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactCardOptions>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactCardOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactCardOptions2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactCardOptions2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactChange>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactChange & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactChangeReader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactChangeReader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactChangeTracker>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactChangeTracker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactChangedDeferral>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactChangedDeferral & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactConnectedServiceAccount>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactConnectedServiceAccount & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactDate>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactDate & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactEmail>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactEmail & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactField>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactField & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactFieldFactory>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactFieldFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactGroup>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactInformation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactInformation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactInstantMessageField>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactInstantMessageField & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactInstantMessageFieldFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactJobInfo>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactJobInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactLaunchActionVerbsStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactList>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactList & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactList2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactList2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactListSyncConstraints>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactListSyncConstraints & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactListSyncManager>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactListSyncManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactListSyncManager2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactListSyncManager2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactLocationField>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactLocationField & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactLocationFieldFactory>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactLocationFieldFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerForUser>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactManagerForUser & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerForUser2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactManagerForUser2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics3>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics4>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics4 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics5>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactManagerStatics5 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactMatchReason>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactMatchReason & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactName>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactName & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactPanel>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactPanelClosingEventArgs>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactPanelClosingEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactPanelLaunchFullAppRequestedEventArgs>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactPanelLaunchFullAppRequestedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactPhone>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactPhone & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactPicker>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactPicker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactPicker2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactPicker2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactPicker3>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactPicker3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactPickerStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactPickerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactQueryOptions>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactQueryOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactQueryOptionsFactory>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactQueryOptionsFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactQueryTextSearch>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactQueryTextSearch & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactReader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactReader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactSignificantOther>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactSignificantOther & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactSignificantOther2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactSignificantOther2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactStore>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactStore & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactStore2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactStore2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactStoreNotificationTriggerDetails>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactStoreNotificationTriggerDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactWebsite>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactWebsite & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IContactWebsite2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IContactWebsite2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IFullContactCardOptions>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IFullContactCardOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IKnownContactFieldStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IKnownContactFieldStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IPinnedContactIdsQueryResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IPinnedContactIdsQueryResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IPinnedContactManager>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IPinnedContactManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::IPinnedContactManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::AggregateContactManager>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::AggregateContactManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::Contact>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::Contact & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactAddress>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactAddress & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactAnnotation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactAnnotation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactAnnotationList>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactAnnotationList & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactAnnotationStore>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactAnnotationStore & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactBatch>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactBatch & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactCardDelayedDataLoader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactCardOptions>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactCardOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactChange>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactChange & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactChangeReader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactChangeReader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactChangeTracker>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactChangeTracker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactChangedDeferral>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactChangedDeferral & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactConnectedServiceAccount>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactConnectedServiceAccount & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactDate>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactDate & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactEmail>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactEmail & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactField>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactField & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactFieldFactory>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactFieldFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactGroup>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactInformation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactInformation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactInstantMessageField>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactInstantMessageField & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactJobInfo>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactJobInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactList>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactList & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactListSyncConstraints>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactListSyncConstraints & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactListSyncManager>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactListSyncManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactLocationField>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactLocationField & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactManagerForUser>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactManagerForUser & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactMatchReason>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactMatchReason & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactPanel>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactPanel & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactPanelClosingEventArgs>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactPanelClosingEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactPanelLaunchFullAppRequestedEventArgs>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactPanelLaunchFullAppRequestedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactPhone>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactPhone & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactPicker>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactPicker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactQueryOptions>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactQueryOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactQueryTextSearch>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactQueryTextSearch & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactReader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactReader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactSignificantOther>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactSignificantOther & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactStore>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactStore & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactStoreNotificationTriggerDetails>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactStoreNotificationTriggerDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::ContactWebsite>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::ContactWebsite & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::FullContactCardOptions>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::FullContactCardOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::PinnedContactIdsQueryResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::PinnedContactIdsQueryResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Contacts::PinnedContactManager>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Contacts::PinnedContactManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

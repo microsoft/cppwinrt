@@ -1,25 +1,147 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.ApplicationModel.SocialInfo.2.h"
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.ApplicationModel.SocialInfo.Provider.2.h"
+#include "winrt/Windows.ApplicationModel.SocialInfo.h"
 
-#include "internal/Windows.ApplicationModel.SocialInfo.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.ApplicationModel.SocialInfo.Provider.3.h"
-#include "Windows.ApplicationModel.SocialInfo.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialDashboardItemUpdater<D>::OwnerRemoteId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater)->get_OwnerRemoteId(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> Windows::ApplicationModel::SocialInfo::SocialFeedContent consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialDashboardItemUpdater<D>::Content() const
+{
+    Windows::ApplicationModel::SocialInfo::SocialFeedContent value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater)->get_Content(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialDashboardItemUpdater<D>::Timestamp() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater)->get_Timestamp(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialDashboardItemUpdater<D>::Timestamp(Windows::Foundation::DateTime const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater)->put_Timestamp(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialDashboardItemUpdater<D>::Thumbnail(Windows::ApplicationModel::SocialInfo::SocialItemThumbnail const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater)->put_Thumbnail(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::SocialInfo::SocialItemThumbnail consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialDashboardItemUpdater<D>::Thumbnail() const
+{
+    Windows::ApplicationModel::SocialInfo::SocialItemThumbnail value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater)->get_Thumbnail(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialDashboardItemUpdater<D>::CommitAsync() const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater)->CommitAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::Uri consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialDashboardItemUpdater<D>::TargetUri() const
+{
+    Windows::Foundation::Uri value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater)->get_TargetUri(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialDashboardItemUpdater<D>::TargetUri(Windows::Foundation::Uri const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater)->put_TargetUri(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialFeedUpdater<D>::OwnerRemoteId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUpdater)->get_OwnerRemoteId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::SocialInfo::SocialFeedKind consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialFeedUpdater<D>::Kind() const
+{
+    Windows::ApplicationModel::SocialInfo::SocialFeedKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUpdater)->get_Kind(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::SocialInfo::SocialFeedItem> consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialFeedUpdater<D>::Items() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::SocialInfo::SocialFeedItem> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUpdater)->get_Items(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialFeedUpdater<D>::CommitAsync() const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUpdater)->CommitAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater> consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialInfoProviderManagerStatics<D>::CreateSocialFeedUpdaterAsync(Windows::ApplicationModel::SocialInfo::SocialFeedKind const& kind, Windows::ApplicationModel::SocialInfo::SocialFeedUpdateMode const& mode, param::hstring const& ownerRemoteId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics)->CreateSocialFeedUpdaterAsync(get_abi(kind), get_abi(mode), get_abi(ownerRemoteId), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater> consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialInfoProviderManagerStatics<D>::CreateDashboardItemUpdaterAsync(param::hstring const& ownerRemoteId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics)->CreateDashboardItemUpdaterAsync(get_abi(ownerRemoteId), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialInfoProviderManagerStatics<D>::UpdateBadgeCountValue(param::hstring const& itemRemoteId, int32_t newCount) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics)->UpdateBadgeCountValue(get_abi(itemRemoteId), newCount));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialInfoProviderManagerStatics<D>::ReportNewContentAvailable(param::hstring const& contactRemoteId, Windows::ApplicationModel::SocialInfo::SocialFeedKind const& kind) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics)->ReportNewContentAvailable(get_abi(contactRemoteId), get_abi(kind)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialInfoProviderManagerStatics<D>::ProvisionAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics)->ProvisionAsync(put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_SocialInfo_Provider_ISocialInfoProviderManagerStatics<D>::DeprovisionAsync() const
+{
+    Windows::Foundation::IAsyncAction operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics)->DeprovisionAsync(put_abi(operation)));
+    return operation;
+}
 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater> : produce_base<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater>
 {
-    HRESULT __stdcall get_OwnerRemoteId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_OwnerRemoteId(HSTRING* value) noexcept override
     {
         try
         {
@@ -34,7 +156,7 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialDashbo
         }
     }
 
-    HRESULT __stdcall get_Content(impl::abi_arg_out<Windows::ApplicationModel::SocialInfo::ISocialFeedContent> value) noexcept override
+    HRESULT __stdcall get_Content(::IUnknown** value) noexcept override
     {
         try
         {
@@ -49,7 +171,7 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialDashbo
         }
     }
 
-    HRESULT __stdcall get_Timestamp(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_Timestamp(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -63,12 +185,12 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialDashbo
         }
     }
 
-    HRESULT __stdcall put_Timestamp(impl::abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall put_Timestamp(abi_t<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Timestamp(*reinterpret_cast<const Windows::Foundation::DateTime *>(&value));
+            this->shim().Timestamp(*reinterpret_cast<Windows::Foundation::DateTime const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -77,12 +199,12 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialDashbo
         }
     }
 
-    HRESULT __stdcall put_Thumbnail(impl::abi_arg_in<Windows::ApplicationModel::SocialInfo::ISocialItemThumbnail> value) noexcept override
+    HRESULT __stdcall put_Thumbnail(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Thumbnail(*reinterpret_cast<const Windows::ApplicationModel::SocialInfo::SocialItemThumbnail *>(&value));
+            this->shim().Thumbnail(*reinterpret_cast<Windows::ApplicationModel::SocialInfo::SocialItemThumbnail const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -91,7 +213,7 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialDashbo
         }
     }
 
-    HRESULT __stdcall get_Thumbnail(impl::abi_arg_out<Windows::ApplicationModel::SocialInfo::ISocialItemThumbnail> value) noexcept override
+    HRESULT __stdcall get_Thumbnail(::IUnknown** value) noexcept override
     {
         try
         {
@@ -106,7 +228,7 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialDashbo
         }
     }
 
-    HRESULT __stdcall abi_CommitAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall CommitAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -121,7 +243,7 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialDashbo
         }
     }
 
-    HRESULT __stdcall get_TargetUri(impl::abi_arg_out<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall get_TargetUri(::IUnknown** value) noexcept override
     {
         try
         {
@@ -136,12 +258,12 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialDashbo
         }
     }
 
-    HRESULT __stdcall put_TargetUri(impl::abi_arg_in<Windows::Foundation::IUriRuntimeClass> value) noexcept override
+    HRESULT __stdcall put_TargetUri(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().TargetUri(*reinterpret_cast<const Windows::Foundation::Uri *>(&value));
+            this->shim().TargetUri(*reinterpret_cast<Windows::Foundation::Uri const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -154,7 +276,7 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialDashbo
 template <typename D>
 struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUpdater> : produce_base<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUpdater>
 {
-    HRESULT __stdcall get_OwnerRemoteId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_OwnerRemoteId(HSTRING* value) noexcept override
     {
         try
         {
@@ -169,7 +291,7 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUp
         }
     }
 
-    HRESULT __stdcall get_Kind(Windows::ApplicationModel::SocialInfo::SocialFeedKind * value) noexcept override
+    HRESULT __stdcall get_Kind(abi_t<Windows::ApplicationModel::SocialInfo::SocialFeedKind>* value) noexcept override
     {
         try
         {
@@ -183,7 +305,7 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUp
         }
     }
 
-    HRESULT __stdcall get_Items(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::SocialInfo::SocialFeedItem>> value) noexcept override
+    HRESULT __stdcall get_Items(::IUnknown** value) noexcept override
     {
         try
         {
@@ -198,7 +320,7 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUp
         }
     }
 
-    HRESULT __stdcall abi_CommitAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall CommitAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -217,12 +339,12 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUp
 template <typename D>
 struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics> : produce_base<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics>
 {
-    HRESULT __stdcall abi_CreateSocialFeedUpdaterAsync(Windows::ApplicationModel::SocialInfo::SocialFeedKind kind, Windows::ApplicationModel::SocialInfo::SocialFeedUpdateMode mode, impl::abi_arg_in<hstring> ownerRemoteId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater>> operation) noexcept override
+    HRESULT __stdcall CreateSocialFeedUpdaterAsync(abi_t<Windows::ApplicationModel::SocialInfo::SocialFeedKind> kind, abi_t<Windows::ApplicationModel::SocialInfo::SocialFeedUpdateMode> mode, HSTRING ownerRemoteId, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().CreateSocialFeedUpdaterAsync(kind, mode, *reinterpret_cast<const hstring *>(&ownerRemoteId)));
+            *operation = detach_abi(this->shim().CreateSocialFeedUpdaterAsync(*reinterpret_cast<Windows::ApplicationModel::SocialInfo::SocialFeedKind const*>(&kind), *reinterpret_cast<Windows::ApplicationModel::SocialInfo::SocialFeedUpdateMode const*>(&mode), *reinterpret_cast<hstring const*>(&ownerRemoteId)));
             return S_OK;
         }
         catch (...)
@@ -232,12 +354,12 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoPr
         }
     }
 
-    HRESULT __stdcall abi_CreateDashboardItemUpdaterAsync(impl::abi_arg_in<hstring> ownerRemoteId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater>> operation) noexcept override
+    HRESULT __stdcall CreateDashboardItemUpdaterAsync(HSTRING ownerRemoteId, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().CreateDashboardItemUpdaterAsync(*reinterpret_cast<const hstring *>(&ownerRemoteId)));
+            *operation = detach_abi(this->shim().CreateDashboardItemUpdaterAsync(*reinterpret_cast<hstring const*>(&ownerRemoteId)));
             return S_OK;
         }
         catch (...)
@@ -247,12 +369,12 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoPr
         }
     }
 
-    HRESULT __stdcall abi_UpdateBadgeCountValue(impl::abi_arg_in<hstring> itemRemoteId, int32_t newCount) noexcept override
+    HRESULT __stdcall UpdateBadgeCountValue(HSTRING itemRemoteId, int32_t newCount) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().UpdateBadgeCountValue(*reinterpret_cast<const hstring *>(&itemRemoteId), newCount);
+            this->shim().UpdateBadgeCountValue(*reinterpret_cast<hstring const*>(&itemRemoteId), newCount);
             return S_OK;
         }
         catch (...)
@@ -261,12 +383,12 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoPr
         }
     }
 
-    HRESULT __stdcall abi_ReportNewContentAvailable(impl::abi_arg_in<hstring> contactRemoteId, Windows::ApplicationModel::SocialInfo::SocialFeedKind kind) noexcept override
+    HRESULT __stdcall ReportNewContentAvailable(HSTRING contactRemoteId, abi_t<Windows::ApplicationModel::SocialInfo::SocialFeedKind> kind) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ReportNewContentAvailable(*reinterpret_cast<const hstring *>(&contactRemoteId), kind);
+            this->shim().ReportNewContentAvailable(*reinterpret_cast<hstring const*>(&contactRemoteId), *reinterpret_cast<Windows::ApplicationModel::SocialInfo::SocialFeedKind const*>(&kind));
             return S_OK;
         }
         catch (...)
@@ -275,7 +397,7 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoPr
         }
     }
 
-    HRESULT __stdcall abi_ProvisionAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> operation) noexcept override
+    HRESULT __stdcall ProvisionAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -290,7 +412,7 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoPr
         }
     }
 
-    HRESULT __stdcall abi_DeprovisionAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> operation) noexcept override
+    HRESULT __stdcall DeprovisionAsync(::IUnknown** operation) noexcept override
     {
         try
         {
@@ -308,208 +430,60 @@ struct produce<D, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoPr
 
 }
 
-namespace Windows::ApplicationModel::SocialInfo::Provider {
+WINRT_EXPORT namespace winrt::Windows::ApplicationModel::SocialInfo::Provider {
 
-template <typename D> hstring impl_ISocialFeedUpdater<D>::OwnerRemoteId() const
+inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater> SocialInfoProviderManager::CreateSocialFeedUpdaterAsync(Windows::ApplicationModel::SocialInfo::SocialFeedKind const& kind, Windows::ApplicationModel::SocialInfo::SocialFeedUpdateMode const& mode, param::hstring const& ownerRemoteId)
 {
-    hstring value;
-    check_hresult(WINRT_SHIM(ISocialFeedUpdater)->get_OwnerRemoteId(put_abi(value)));
-    return value;
+    return get_activation_factory<SocialInfoProviderManager, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics>().CreateSocialFeedUpdaterAsync(kind, mode, ownerRemoteId);
 }
 
-template <typename D> Windows::ApplicationModel::SocialInfo::SocialFeedKind impl_ISocialFeedUpdater<D>::Kind() const
+inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater> SocialInfoProviderManager::CreateDashboardItemUpdaterAsync(param::hstring const& ownerRemoteId)
 {
-    Windows::ApplicationModel::SocialInfo::SocialFeedKind value {};
-    check_hresult(WINRT_SHIM(ISocialFeedUpdater)->get_Kind(&value));
-    return value;
+    return get_activation_factory<SocialInfoProviderManager, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics>().CreateDashboardItemUpdaterAsync(ownerRemoteId);
 }
 
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::SocialInfo::SocialFeedItem> impl_ISocialFeedUpdater<D>::Items() const
+inline void SocialInfoProviderManager::UpdateBadgeCountValue(param::hstring const& itemRemoteId, int32_t newCount)
 {
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::SocialInfo::SocialFeedItem> value;
-    check_hresult(WINRT_SHIM(ISocialFeedUpdater)->get_Items(put_abi(value)));
-    return value;
+    get_activation_factory<SocialInfoProviderManager, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics>().UpdateBadgeCountValue(itemRemoteId, newCount);
 }
 
-template <typename D> Windows::Foundation::IAsyncAction impl_ISocialFeedUpdater<D>::CommitAsync() const
+inline void SocialInfoProviderManager::ReportNewContentAvailable(param::hstring const& contactRemoteId, Windows::ApplicationModel::SocialInfo::SocialFeedKind const& kind)
 {
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(ISocialFeedUpdater)->abi_CommitAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> hstring impl_ISocialDashboardItemUpdater<D>::OwnerRemoteId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISocialDashboardItemUpdater)->get_OwnerRemoteId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::SocialInfo::SocialFeedContent impl_ISocialDashboardItemUpdater<D>::Content() const
-{
-    Windows::ApplicationModel::SocialInfo::SocialFeedContent value { nullptr };
-    check_hresult(WINRT_SHIM(ISocialDashboardItemUpdater)->get_Content(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_ISocialDashboardItemUpdater<D>::Timestamp() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(ISocialDashboardItemUpdater)->get_Timestamp(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ISocialDashboardItemUpdater<D>::Timestamp(const Windows::Foundation::DateTime & value) const
-{
-    check_hresult(WINRT_SHIM(ISocialDashboardItemUpdater)->put_Timestamp(get_abi(value)));
-}
-
-template <typename D> void impl_ISocialDashboardItemUpdater<D>::Thumbnail(const Windows::ApplicationModel::SocialInfo::SocialItemThumbnail & value) const
-{
-    check_hresult(WINRT_SHIM(ISocialDashboardItemUpdater)->put_Thumbnail(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::SocialInfo::SocialItemThumbnail impl_ISocialDashboardItemUpdater<D>::Thumbnail() const
-{
-    Windows::ApplicationModel::SocialInfo::SocialItemThumbnail value { nullptr };
-    check_hresult(WINRT_SHIM(ISocialDashboardItemUpdater)->get_Thumbnail(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISocialDashboardItemUpdater<D>::CommitAsync() const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(ISocialDashboardItemUpdater)->abi_CommitAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::Uri impl_ISocialDashboardItemUpdater<D>::TargetUri() const
-{
-    Windows::Foundation::Uri value { nullptr };
-    check_hresult(WINRT_SHIM(ISocialDashboardItemUpdater)->get_TargetUri(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_ISocialDashboardItemUpdater<D>::TargetUri(const Windows::Foundation::Uri & value) const
-{
-    check_hresult(WINRT_SHIM(ISocialDashboardItemUpdater)->put_TargetUri(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater> impl_ISocialInfoProviderManagerStatics<D>::CreateSocialFeedUpdaterAsync(Windows::ApplicationModel::SocialInfo::SocialFeedKind kind, Windows::ApplicationModel::SocialInfo::SocialFeedUpdateMode mode, hstring_view ownerRemoteId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater> operation;
-    check_hresult(WINRT_SHIM(ISocialInfoProviderManagerStatics)->abi_CreateSocialFeedUpdaterAsync(kind, mode, get_abi(ownerRemoteId), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater> impl_ISocialInfoProviderManagerStatics<D>::CreateDashboardItemUpdaterAsync(hstring_view ownerRemoteId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater> operation;
-    check_hresult(WINRT_SHIM(ISocialInfoProviderManagerStatics)->abi_CreateDashboardItemUpdaterAsync(get_abi(ownerRemoteId), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> void impl_ISocialInfoProviderManagerStatics<D>::UpdateBadgeCountValue(hstring_view itemRemoteId, int32_t newCount) const
-{
-    check_hresult(WINRT_SHIM(ISocialInfoProviderManagerStatics)->abi_UpdateBadgeCountValue(get_abi(itemRemoteId), newCount));
-}
-
-template <typename D> void impl_ISocialInfoProviderManagerStatics<D>::ReportNewContentAvailable(hstring_view contactRemoteId, Windows::ApplicationModel::SocialInfo::SocialFeedKind kind) const
-{
-    check_hresult(WINRT_SHIM(ISocialInfoProviderManagerStatics)->abi_ReportNewContentAvailable(get_abi(contactRemoteId), kind));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_ISocialInfoProviderManagerStatics<D>::ProvisionAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> operation;
-    check_hresult(WINRT_SHIM(ISocialInfoProviderManagerStatics)->abi_ProvisionAsync(put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISocialInfoProviderManagerStatics<D>::DeprovisionAsync() const
-{
-    Windows::Foundation::IAsyncAction operation;
-    check_hresult(WINRT_SHIM(ISocialInfoProviderManagerStatics)->abi_DeprovisionAsync(put_abi(operation)));
-    return operation;
-}
-
-inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater> SocialInfoProviderManager::CreateSocialFeedUpdaterAsync(Windows::ApplicationModel::SocialInfo::SocialFeedKind kind, Windows::ApplicationModel::SocialInfo::SocialFeedUpdateMode mode, hstring_view ownerRemoteId)
-{
-    return get_activation_factory<SocialInfoProviderManager, ISocialInfoProviderManagerStatics>().CreateSocialFeedUpdaterAsync(kind, mode, ownerRemoteId);
-}
-
-inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater> SocialInfoProviderManager::CreateDashboardItemUpdaterAsync(hstring_view ownerRemoteId)
-{
-    return get_activation_factory<SocialInfoProviderManager, ISocialInfoProviderManagerStatics>().CreateDashboardItemUpdaterAsync(ownerRemoteId);
-}
-
-inline void SocialInfoProviderManager::UpdateBadgeCountValue(hstring_view itemRemoteId, int32_t newCount)
-{
-    get_activation_factory<SocialInfoProviderManager, ISocialInfoProviderManagerStatics>().UpdateBadgeCountValue(itemRemoteId, newCount);
-}
-
-inline void SocialInfoProviderManager::ReportNewContentAvailable(hstring_view contactRemoteId, Windows::ApplicationModel::SocialInfo::SocialFeedKind kind)
-{
-    get_activation_factory<SocialInfoProviderManager, ISocialInfoProviderManagerStatics>().ReportNewContentAvailable(contactRemoteId, kind);
+    get_activation_factory<SocialInfoProviderManager, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics>().ReportNewContentAvailable(contactRemoteId, kind);
 }
 
 inline Windows::Foundation::IAsyncOperation<bool> SocialInfoProviderManager::ProvisionAsync()
 {
-    return get_activation_factory<SocialInfoProviderManager, ISocialInfoProviderManagerStatics>().ProvisionAsync();
+    return get_activation_factory<SocialInfoProviderManager, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics>().ProvisionAsync();
 }
 
 inline Windows::Foundation::IAsyncAction SocialInfoProviderManager::DeprovisionAsync()
 {
-    return get_activation_factory<SocialInfoProviderManager, ISocialInfoProviderManagerStatics>().DeprovisionAsync();
+    return get_activation_factory<SocialInfoProviderManager, Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics>().DeprovisionAsync();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUpdater> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUpdater> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::SocialInfo::Provider::SocialInfoProviderManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::SocialInfo::Provider::SocialInfoProviderManager> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialDashboardItemUpdater & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUpdater>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialFeedUpdater & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::SocialInfo::Provider::ISocialInfoProviderManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::SocialInfo::Provider::SocialDashboardItemUpdater & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::SocialInfo::Provider::SocialFeedUpdater & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

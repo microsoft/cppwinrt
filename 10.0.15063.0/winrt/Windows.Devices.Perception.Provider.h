@@ -1,68 +1,395 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Devices.Perception.2.h"
+#include "winrt/impl/Windows.Foundation.2.h"
+#include "winrt/impl/Windows.Foundation.Collections.2.h"
+#include "winrt/impl/Windows.Graphics.Imaging.2.h"
+#include "winrt/impl/Windows.Media.2.h"
+#include "winrt/impl/Windows.Devices.Perception.Provider.2.h"
+#include "winrt/Windows.Devices.Perception.h"
 
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Graphics.Imaging.3.h"
-#include "internal/Windows.Media.3.h"
-#include "internal/Windows.Devices.Perception.3.h"
-#include "internal/Windows.Devices.Perception.Provider.3.h"
-#include "Windows.Devices.Perception.h"
-#include "Windows.Foundation.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
-
-namespace Windows::Devices::Perception::Provider {
-
-template <typename L> PerceptionStartFaceAuthenticationHandler::PerceptionStartFaceAuthenticationHandler(L lambda) :
-    PerceptionStartFaceAuthenticationHandler(impl::make_delegate<impl_PerceptionStartFaceAuthenticationHandler<L>, PerceptionStartFaceAuthenticationHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> PerceptionStartFaceAuthenticationHandler::PerceptionStartFaceAuthenticationHandler(F * function) :
-    PerceptionStartFaceAuthenticationHandler([=](auto && ... args) { return function(args ...); })
-{}
-
-template <typename O, typename M> PerceptionStartFaceAuthenticationHandler::PerceptionStartFaceAuthenticationHandler(O * object, M method) :
-    PerceptionStartFaceAuthenticationHandler([=](auto && ... args) { return ((*object).*(method))(args ...); })
-{}
-
-inline bool PerceptionStartFaceAuthenticationHandler::operator()(const Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup & sender) const
+template <typename D> hstring consume_Windows_Devices_Perception_Provider_IKnownPerceptionFrameKindStatics<D>::Color() const
 {
-    bool result {};
-    check_hresult((*(abi<PerceptionStartFaceAuthenticationHandler> **)this)->abi_Invoke(get_abi(sender), &result));
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics)->get_Color(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Perception_Provider_IKnownPerceptionFrameKindStatics<D>::Depth() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics)->get_Depth(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Perception_Provider_IKnownPerceptionFrameKindStatics<D>::Infrared() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics)->get_Infrared(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> consume_Windows_Devices_Perception_Provider_IPerceptionControlGroup<D>::FrameProviderIds() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionControlGroup)->get_FrameProviderIds(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Perception::Provider::PerceptionControlGroup consume_Windows_Devices_Perception_Provider_IPerceptionControlGroupFactory<D>::Create(param::iterable<hstring> const& ids) const
+{
+    Windows::Devices::Perception::Provider::PerceptionControlGroup result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionControlGroupFactory)->Create(get_abi(ids), put_abi(result)));
     return result;
 }
 
-template <typename L> PerceptionStopFaceAuthenticationHandler::PerceptionStopFaceAuthenticationHandler(L lambda) :
-    PerceptionStopFaceAuthenticationHandler(impl::make_delegate<impl_PerceptionStopFaceAuthenticationHandler<L>, PerceptionStopFaceAuthenticationHandler>(std::forward<L>(lambda)))
-{}
-
-template <typename F> PerceptionStopFaceAuthenticationHandler::PerceptionStopFaceAuthenticationHandler(F * function) :
-    PerceptionStopFaceAuthenticationHandler([=](auto && ... args) { function(args ...); })
-{}
-
-template <typename O, typename M> PerceptionStopFaceAuthenticationHandler::PerceptionStopFaceAuthenticationHandler(O * object, M method) :
-    PerceptionStopFaceAuthenticationHandler([=](auto && ... args) { ((*object).*(method))(args ...); })
-{}
-
-inline void PerceptionStopFaceAuthenticationHandler::operator()(const Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup & sender) const
+template <typename D> hstring consume_Windows_Devices_Perception_Provider_IPerceptionCorrelation<D>::TargetId() const
 {
-    check_hresult((*(abi<PerceptionStopFaceAuthenticationHandler> **)this)->abi_Invoke(get_abi(sender)));
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionCorrelation)->get_TargetId(put_abi(value)));
+    return value;
 }
 
+template <typename D> Windows::Foundation::Numerics::float3 consume_Windows_Devices_Perception_Provider_IPerceptionCorrelation<D>::Position() const
+{
+    Windows::Foundation::Numerics::float3 value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionCorrelation)->get_Position(put_abi(value)));
+    return value;
 }
 
-namespace impl {
+template <typename D> Windows::Foundation::Numerics::quaternion consume_Windows_Devices_Perception_Provider_IPerceptionCorrelation<D>::Orientation() const
+{
+    Windows::Foundation::Numerics::quaternion value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionCorrelation)->get_Orientation(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Perception::Provider::PerceptionCorrelation consume_Windows_Devices_Perception_Provider_IPerceptionCorrelationFactory<D>::Create(param::hstring const& targetId, Windows::Foundation::Numerics::float3 const& position, Windows::Foundation::Numerics::quaternion const& orientation) const
+{
+    Windows::Devices::Perception::Provider::PerceptionCorrelation result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionCorrelationFactory)->Create(get_abi(targetId), get_abi(position), get_abi(orientation), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Perception::Provider::PerceptionCorrelation> consume_Windows_Devices_Perception_Provider_IPerceptionCorrelationGroup<D>::RelativeLocations() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Devices::Perception::Provider::PerceptionCorrelation> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionCorrelationGroup)->get_RelativeLocations(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Perception::Provider::PerceptionCorrelationGroup consume_Windows_Devices_Perception_Provider_IPerceptionCorrelationGroupFactory<D>::Create(param::iterable<Windows::Devices::Perception::Provider::PerceptionCorrelation> const& relativeLocations) const
+{
+    Windows::Devices::Perception::Provider::PerceptionCorrelationGroup result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionCorrelationGroupFactory)->Create(get_abi(relativeLocations), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> consume_Windows_Devices_Perception_Provider_IPerceptionFaceAuthenticationGroup<D>::FrameProviderIds() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup)->get_FrameProviderIds(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup consume_Windows_Devices_Perception_Provider_IPerceptionFaceAuthenticationGroupFactory<D>::Create(param::iterable<hstring> const& ids, Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler const& startHandler, Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler const& stopHandler) const
+{
+    Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroupFactory)->Create(get_abi(ids), get_abi(startHandler), get_abi(stopHandler), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::TimeSpan consume_Windows_Devices_Perception_Provider_IPerceptionFrame<D>::RelativeTime() const
+{
+    Windows::Foundation::TimeSpan value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrame)->get_RelativeTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrame<D>::RelativeTime(Windows::Foundation::TimeSpan const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrame)->put_RelativeTime(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::ValueSet consume_Windows_Devices_Perception_Provider_IPerceptionFrame<D>::Properties() const
+{
+    Windows::Foundation::Collections::ValueSet value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrame)->get_Properties(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IMemoryBuffer consume_Windows_Devices_Perception_Provider_IPerceptionFrame<D>::FrameData() const
+{
+    Windows::Foundation::IMemoryBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrame)->get_FrameData(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo consume_Windows_Devices_Perception_Provider_IPerceptionFrameProvider<D>::FrameProviderInfo() const
+{
+    Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProvider)->get_FrameProviderInfo(put_abi(result)));
+    return result;
+}
+
+template <typename D> bool consume_Windows_Devices_Perception_Provider_IPerceptionFrameProvider<D>::Available() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProvider)->get_Available(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IPropertySet consume_Windows_Devices_Perception_Provider_IPerceptionFrameProvider<D>::Properties() const
+{
+    Windows::Foundation::Collections::IPropertySet value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProvider)->get_Properties(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProvider<D>::Start() const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProvider)->Start());
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProvider<D>::Stop() const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProvider)->Stop());
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProvider<D>::SetProperty(Windows::Devices::Perception::Provider::PerceptionPropertyChangeRequest const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProvider)->SetProperty(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderInfo<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderInfo<D>::Id(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo)->put_Id(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderInfo<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderInfo<D>::DisplayName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo)->put_DisplayName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderInfo<D>::DeviceKind() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo)->get_DeviceKind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderInfo<D>::DeviceKind(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo)->put_DeviceKind(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderInfo<D>::FrameKind() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo)->get_FrameKind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderInfo<D>::FrameKind(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo)->put_FrameKind(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderInfo<D>::Hidden() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo)->get_Hidden(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderInfo<D>::Hidden(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo)->put_Hidden(value));
+}
+
+template <typename D> Windows::Devices::Perception::Provider::IPerceptionFrameProvider consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderManager<D>::GetFrameProvider(Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo const& frameProviderInfo) const
+{
+    Windows::Devices::Perception::Provider::IPerceptionFrameProvider result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager)->GetFrameProvider(get_abi(frameProviderInfo), put_abi(result)));
+    return result;
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderManagerServiceStatics<D>::RegisterFrameProviderInfo(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo const& frameProviderInfo) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics)->RegisterFrameProviderInfo(get_abi(manager), get_abi(frameProviderInfo)));
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderManagerServiceStatics<D>::UnregisterFrameProviderInfo(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo const& frameProviderInfo) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics)->UnregisterFrameProviderInfo(get_abi(manager), get_abi(frameProviderInfo)));
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderManagerServiceStatics<D>::RegisterFaceAuthenticationGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup const& faceAuthenticationGroup) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics)->RegisterFaceAuthenticationGroup(get_abi(manager), get_abi(faceAuthenticationGroup)));
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderManagerServiceStatics<D>::UnregisterFaceAuthenticationGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup const& faceAuthenticationGroup) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics)->UnregisterFaceAuthenticationGroup(get_abi(manager), get_abi(faceAuthenticationGroup)));
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderManagerServiceStatics<D>::RegisterControlGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionControlGroup const& controlGroup) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics)->RegisterControlGroup(get_abi(manager), get_abi(controlGroup)));
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderManagerServiceStatics<D>::UnregisterControlGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionControlGroup const& controlGroup) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics)->UnregisterControlGroup(get_abi(manager), get_abi(controlGroup)));
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderManagerServiceStatics<D>::RegisterCorrelationGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionCorrelationGroup const& correlationGroup) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics)->RegisterCorrelationGroup(get_abi(manager), get_abi(correlationGroup)));
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderManagerServiceStatics<D>::UnregisterCorrelationGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionCorrelationGroup const& correlationGroup) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics)->UnregisterCorrelationGroup(get_abi(manager), get_abi(correlationGroup)));
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderManagerServiceStatics<D>::UpdateAvailabilityForProvider(Windows::Devices::Perception::Provider::IPerceptionFrameProvider const& provider, bool available) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics)->UpdateAvailabilityForProvider(get_abi(provider), available));
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionFrameProviderManagerServiceStatics<D>::PublishFrameForProvider(Windows::Devices::Perception::Provider::IPerceptionFrameProvider const& provider, Windows::Devices::Perception::Provider::PerceptionFrame const& frame) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics)->PublishFrameForProvider(get_abi(provider), get_abi(frame)));
+}
+
+template <typename D> hstring consume_Windows_Devices_Perception_Provider_IPerceptionPropertyChangeRequest<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IInspectable consume_Windows_Devices_Perception_Provider_IPerceptionPropertyChangeRequest<D>::Value() const
+{
+    Windows::Foundation::IInspectable value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest)->get_Value(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Perception::PerceptionFrameSourcePropertyChangeStatus consume_Windows_Devices_Perception_Provider_IPerceptionPropertyChangeRequest<D>::Status() const
+{
+    Windows::Devices::Perception::PerceptionFrameSourcePropertyChangeStatus value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Devices_Perception_Provider_IPerceptionPropertyChangeRequest<D>::Status(Windows::Devices::Perception::PerceptionFrameSourcePropertyChangeStatus const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest)->put_Status(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Deferral consume_Windows_Devices_Perception_Provider_IPerceptionPropertyChangeRequest<D>::GetDeferral() const
+{
+    Windows::Foundation::Deferral result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest)->GetDeferral(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Devices::Perception::Provider::PerceptionFrame consume_Windows_Devices_Perception_Provider_IPerceptionVideoFrameAllocator<D>::AllocateFrame() const
+{
+    Windows::Devices::Perception::Provider::PerceptionFrame value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocator)->AllocateFrame(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Perception::Provider::PerceptionFrame consume_Windows_Devices_Perception_Provider_IPerceptionVideoFrameAllocator<D>::CopyFromVideoFrame(Windows::Media::VideoFrame const& frame) const
+{
+    Windows::Devices::Perception::Provider::PerceptionFrame value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocator)->CopyFromVideoFrame(get_abi(frame), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Perception::Provider::PerceptionVideoFrameAllocator consume_Windows_Devices_Perception_Provider_IPerceptionVideoFrameAllocatorFactory<D>::Create(uint32_t maxOutstandingFrameCountForWrite, Windows::Graphics::Imaging::BitmapPixelFormat const& format, Windows::Foundation::Size const& resolution, Windows::Graphics::Imaging::BitmapAlphaMode const& alpha) const
+{
+    Windows::Devices::Perception::Provider::PerceptionVideoFrameAllocator result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocatorFactory)->Create(maxOutstandingFrameCountForWrite, get_abi(format), get_abi(resolution), get_abi(alpha), put_abi(result)));
+    return result;
+}
+
+template <> struct delegate<Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender, bool* result) noexcept final
+        {
+            try
+            {
+                *result = detach_abi((*this)(*reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup const*>(&sender)));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
+
+template <> struct delegate<Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler>
+{
+    template <typename H>
+    struct type : implements_delegate<Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler, H>
+    {
+        type(H&& handler) : implements_delegate<Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler, H>(std::forward<H>(handler)) {}
+
+        HRESULT __stdcall Invoke(::IUnknown* sender) noexcept final
+        {
+            try
+            {
+                (*this)(*reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup const*>(&sender));
+                return S_OK;
+            }
+            catch (...)
+            {
+                return to_hresult();
+            }
+        }
+    };
+};
 
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics> : produce_base<D, Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics>
 {
-    HRESULT __stdcall get_Color(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Color(HSTRING* value) noexcept override
     {
         try
         {
@@ -77,7 +404,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IKnownPerceptionFrameK
         }
     }
 
-    HRESULT __stdcall get_Depth(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Depth(HSTRING* value) noexcept override
     {
         try
         {
@@ -92,7 +419,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IKnownPerceptionFrameK
         }
     }
 
-    HRESULT __stdcall get_Infrared(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Infrared(HSTRING* value) noexcept override
     {
         try
         {
@@ -111,7 +438,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IKnownPerceptionFrameK
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionControlGroup> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionControlGroup>
 {
-    HRESULT __stdcall get_FrameProviderIds(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_FrameProviderIds(::IUnknown** value) noexcept override
     {
         try
         {
@@ -130,12 +457,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionControlGrou
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionControlGroupFactory> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionControlGroupFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> ids, impl::abi_arg_out<Windows::Devices::Perception::Provider::IPerceptionControlGroup> result) noexcept override
+    HRESULT __stdcall Create(::IUnknown* ids, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Create(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&ids)));
+            *result = detach_abi(this->shim().Create(*reinterpret_cast<Windows::Foundation::Collections::IIterable<hstring> const*>(&ids)));
             return S_OK;
         }
         catch (...)
@@ -149,7 +476,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionControlGrou
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionCorrelation> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionCorrelation>
 {
-    HRESULT __stdcall get_TargetId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TargetId(HSTRING* value) noexcept override
     {
         try
         {
@@ -164,7 +491,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionCorrelation
         }
     }
 
-    HRESULT __stdcall get_Position(impl::abi_arg_out<Windows::Foundation::Numerics::float3> value) noexcept override
+    HRESULT __stdcall get_Position(abi_t<Windows::Foundation::Numerics::float3>* value) noexcept override
     {
         try
         {
@@ -178,7 +505,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionCorrelation
         }
     }
 
-    HRESULT __stdcall get_Orientation(impl::abi_arg_out<Windows::Foundation::Numerics::quaternion> value) noexcept override
+    HRESULT __stdcall get_Orientation(abi_t<Windows::Foundation::Numerics::quaternion>* value) noexcept override
     {
         try
         {
@@ -196,12 +523,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionCorrelation
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionCorrelationFactory> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionCorrelationFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<hstring> targetId, impl::abi_arg_in<Windows::Foundation::Numerics::float3> position, impl::abi_arg_in<Windows::Foundation::Numerics::quaternion> orientation, impl::abi_arg_out<Windows::Devices::Perception::Provider::IPerceptionCorrelation> result) noexcept override
+    HRESULT __stdcall Create(HSTRING targetId, abi_t<Windows::Foundation::Numerics::float3> position, abi_t<Windows::Foundation::Numerics::quaternion> orientation, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Create(*reinterpret_cast<const hstring *>(&targetId), *reinterpret_cast<const Windows::Foundation::Numerics::float3 *>(&position), *reinterpret_cast<const Windows::Foundation::Numerics::quaternion *>(&orientation)));
+            *result = detach_abi(this->shim().Create(*reinterpret_cast<hstring const*>(&targetId), *reinterpret_cast<Windows::Foundation::Numerics::float3 const*>(&position), *reinterpret_cast<Windows::Foundation::Numerics::quaternion const*>(&orientation)));
             return S_OK;
         }
         catch (...)
@@ -215,7 +542,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionCorrelation
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionCorrelationGroup> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionCorrelationGroup>
 {
-    HRESULT __stdcall get_RelativeLocations(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Perception::Provider::PerceptionCorrelation>> value) noexcept override
+    HRESULT __stdcall get_RelativeLocations(::IUnknown** value) noexcept override
     {
         try
         {
@@ -234,12 +561,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionCorrelation
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionCorrelationGroupFactory> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionCorrelationGroupFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Devices::Perception::Provider::PerceptionCorrelation>> relativeLocations, impl::abi_arg_out<Windows::Devices::Perception::Provider::IPerceptionCorrelationGroup> result) noexcept override
+    HRESULT __stdcall Create(::IUnknown* relativeLocations, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Create(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Devices::Perception::Provider::PerceptionCorrelation> *>(&relativeLocations)));
+            *result = detach_abi(this->shim().Create(*reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::Devices::Perception::Provider::PerceptionCorrelation> const*>(&relativeLocations)));
             return S_OK;
         }
         catch (...)
@@ -253,7 +580,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionCorrelation
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup>
 {
-    HRESULT __stdcall get_FrameProviderIds(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_FrameProviderIds(::IUnknown** value) noexcept override
     {
         try
         {
@@ -272,12 +599,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFaceAuthent
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroupFactory> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroupFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> ids, impl::abi_arg_in<Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler> startHandler, impl::abi_arg_in<Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler> stopHandler, impl::abi_arg_out<Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup> result) noexcept override
+    HRESULT __stdcall Create(::IUnknown* ids, ::IUnknown* startHandler, ::IUnknown* stopHandler, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Create(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&ids), *reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler *>(&startHandler), *reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler *>(&stopHandler)));
+            *result = detach_abi(this->shim().Create(*reinterpret_cast<Windows::Foundation::Collections::IIterable<hstring> const*>(&ids), *reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler const*>(&startHandler), *reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler const*>(&stopHandler)));
             return S_OK;
         }
         catch (...)
@@ -291,7 +618,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFaceAuthent
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrame> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionFrame>
 {
-    HRESULT __stdcall get_RelativeTime(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_RelativeTime(abi_t<Windows::Foundation::TimeSpan>* value) noexcept override
     {
         try
         {
@@ -305,12 +632,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrame> : pr
         }
     }
 
-    HRESULT __stdcall put_RelativeTime(impl::abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall put_RelativeTime(abi_t<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RelativeTime(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&value));
+            this->shim().RelativeTime(*reinterpret_cast<Windows::Foundation::TimeSpan const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -319,7 +646,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrame> : pr
         }
     }
 
-    HRESULT __stdcall get_Properties(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_Properties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -334,7 +661,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrame> : pr
         }
     }
 
-    HRESULT __stdcall get_FrameData(impl::abi_arg_out<Windows::Foundation::IMemoryBuffer> value) noexcept override
+    HRESULT __stdcall get_FrameData(::IUnknown** value) noexcept override
     {
         try
         {
@@ -353,7 +680,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrame> : pr
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvider> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvider>
 {
-    HRESULT __stdcall get_FrameProviderInfo(impl::abi_arg_out<Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo> result) noexcept override
+    HRESULT __stdcall get_FrameProviderInfo(::IUnknown** result) noexcept override
     {
         try
         {
@@ -368,7 +695,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall get_Available(bool * value) noexcept override
+    HRESULT __stdcall get_Available(bool* value) noexcept override
     {
         try
         {
@@ -382,7 +709,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall get_Properties(impl::abi_arg_out<Windows::Foundation::Collections::IPropertySet> value) noexcept override
+    HRESULT __stdcall get_Properties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -397,7 +724,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_Start() noexcept override
+    HRESULT __stdcall Start() noexcept override
     {
         try
         {
@@ -411,7 +738,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_Stop() noexcept override
+    HRESULT __stdcall Stop() noexcept override
     {
         try
         {
@@ -425,12 +752,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_SetProperty(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest> value) noexcept override
+    HRESULT __stdcall SetProperty(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SetProperty(*reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionPropertyChangeRequest *>(&value));
+            this->shim().SetProperty(*reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionPropertyChangeRequest const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -443,7 +770,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -458,12 +785,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall put_Id(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Id(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Id(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Id(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -472,7 +799,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -487,12 +814,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall put_DisplayName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DisplayName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DisplayName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DisplayName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -501,7 +828,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall get_DeviceKind(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceKind(HSTRING* value) noexcept override
     {
         try
         {
@@ -516,12 +843,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall put_DeviceKind(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DeviceKind(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DeviceKind(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DeviceKind(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -530,7 +857,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall get_FrameKind(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FrameKind(HSTRING* value) noexcept override
     {
         try
         {
@@ -545,12 +872,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall put_FrameKind(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_FrameKind(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().FrameKind(*reinterpret_cast<const hstring *>(&value));
+            this->shim().FrameKind(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -559,7 +886,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall get_Hidden(bool * value) noexcept override
+    HRESULT __stdcall get_Hidden(bool* value) noexcept override
     {
         try
         {
@@ -591,12 +918,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager>
 {
-    HRESULT __stdcall abi_GetFrameProvider(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo> frameProviderInfo, impl::abi_arg_out<Windows::Devices::Perception::Provider::IPerceptionFrameProvider> result) noexcept override
+    HRESULT __stdcall GetFrameProvider(::IUnknown* frameProviderInfo, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetFrameProvider(*reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo *>(&frameProviderInfo)));
+            *result = detach_abi(this->shim().GetFrameProvider(*reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo const*>(&frameProviderInfo)));
             return S_OK;
         }
         catch (...)
@@ -610,12 +937,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>
 {
-    HRESULT __stdcall abi_RegisterFrameProviderInfo(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager> manager, impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo> frameProviderInfo) noexcept override
+    HRESULT __stdcall RegisterFrameProviderInfo(::IUnknown* manager, ::IUnknown* frameProviderInfo) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RegisterFrameProviderInfo(*reinterpret_cast<const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager *>(&manager), *reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo *>(&frameProviderInfo));
+            this->shim().RegisterFrameProviderInfo(*reinterpret_cast<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const*>(&manager), *reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo const*>(&frameProviderInfo));
             return S_OK;
         }
         catch (...)
@@ -624,12 +951,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_UnregisterFrameProviderInfo(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager> manager, impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo> frameProviderInfo) noexcept override
+    HRESULT __stdcall UnregisterFrameProviderInfo(::IUnknown* manager, ::IUnknown* frameProviderInfo) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().UnregisterFrameProviderInfo(*reinterpret_cast<const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager *>(&manager), *reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo *>(&frameProviderInfo));
+            this->shim().UnregisterFrameProviderInfo(*reinterpret_cast<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const*>(&manager), *reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo const*>(&frameProviderInfo));
             return S_OK;
         }
         catch (...)
@@ -638,12 +965,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_RegisterFaceAuthenticationGroup(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager> manager, impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup> faceAuthenticationGroup) noexcept override
+    HRESULT __stdcall RegisterFaceAuthenticationGroup(::IUnknown* manager, ::IUnknown* faceAuthenticationGroup) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RegisterFaceAuthenticationGroup(*reinterpret_cast<const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager *>(&manager), *reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup *>(&faceAuthenticationGroup));
+            this->shim().RegisterFaceAuthenticationGroup(*reinterpret_cast<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const*>(&manager), *reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup const*>(&faceAuthenticationGroup));
             return S_OK;
         }
         catch (...)
@@ -652,12 +979,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_UnregisterFaceAuthenticationGroup(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager> manager, impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup> faceAuthenticationGroup) noexcept override
+    HRESULT __stdcall UnregisterFaceAuthenticationGroup(::IUnknown* manager, ::IUnknown* faceAuthenticationGroup) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().UnregisterFaceAuthenticationGroup(*reinterpret_cast<const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager *>(&manager), *reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup *>(&faceAuthenticationGroup));
+            this->shim().UnregisterFaceAuthenticationGroup(*reinterpret_cast<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const*>(&manager), *reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup const*>(&faceAuthenticationGroup));
             return S_OK;
         }
         catch (...)
@@ -666,12 +993,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_RegisterControlGroup(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager> manager, impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionControlGroup> controlGroup) noexcept override
+    HRESULT __stdcall RegisterControlGroup(::IUnknown* manager, ::IUnknown* controlGroup) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RegisterControlGroup(*reinterpret_cast<const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager *>(&manager), *reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionControlGroup *>(&controlGroup));
+            this->shim().RegisterControlGroup(*reinterpret_cast<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const*>(&manager), *reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionControlGroup const*>(&controlGroup));
             return S_OK;
         }
         catch (...)
@@ -680,12 +1007,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_UnregisterControlGroup(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager> manager, impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionControlGroup> controlGroup) noexcept override
+    HRESULT __stdcall UnregisterControlGroup(::IUnknown* manager, ::IUnknown* controlGroup) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().UnregisterControlGroup(*reinterpret_cast<const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager *>(&manager), *reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionControlGroup *>(&controlGroup));
+            this->shim().UnregisterControlGroup(*reinterpret_cast<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const*>(&manager), *reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionControlGroup const*>(&controlGroup));
             return S_OK;
         }
         catch (...)
@@ -694,12 +1021,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_RegisterCorrelationGroup(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager> manager, impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionCorrelationGroup> correlationGroup) noexcept override
+    HRESULT __stdcall RegisterCorrelationGroup(::IUnknown* manager, ::IUnknown* correlationGroup) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RegisterCorrelationGroup(*reinterpret_cast<const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager *>(&manager), *reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionCorrelationGroup *>(&correlationGroup));
+            this->shim().RegisterCorrelationGroup(*reinterpret_cast<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const*>(&manager), *reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionCorrelationGroup const*>(&correlationGroup));
             return S_OK;
         }
         catch (...)
@@ -708,12 +1035,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_UnregisterCorrelationGroup(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager> manager, impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionCorrelationGroup> correlationGroup) noexcept override
+    HRESULT __stdcall UnregisterCorrelationGroup(::IUnknown* manager, ::IUnknown* correlationGroup) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().UnregisterCorrelationGroup(*reinterpret_cast<const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager *>(&manager), *reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionCorrelationGroup *>(&correlationGroup));
+            this->shim().UnregisterCorrelationGroup(*reinterpret_cast<Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const*>(&manager), *reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionCorrelationGroup const*>(&correlationGroup));
             return S_OK;
         }
         catch (...)
@@ -722,12 +1049,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_UpdateAvailabilityForProvider(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProvider> provider, bool available) noexcept override
+    HRESULT __stdcall UpdateAvailabilityForProvider(::IUnknown* provider, bool available) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().UpdateAvailabilityForProvider(*reinterpret_cast<const Windows::Devices::Perception::Provider::IPerceptionFrameProvider *>(&provider), available);
+            this->shim().UpdateAvailabilityForProvider(*reinterpret_cast<Windows::Devices::Perception::Provider::IPerceptionFrameProvider const*>(&provider), available);
             return S_OK;
         }
         catch (...)
@@ -736,12 +1063,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
         }
     }
 
-    HRESULT __stdcall abi_PublishFrameForProvider(impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrameProvider> provider, impl::abi_arg_in<Windows::Devices::Perception::Provider::IPerceptionFrame> frame) noexcept override
+    HRESULT __stdcall PublishFrameForProvider(::IUnknown* provider, ::IUnknown* frame) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().PublishFrameForProvider(*reinterpret_cast<const Windows::Devices::Perception::Provider::IPerceptionFrameProvider *>(&provider), *reinterpret_cast<const Windows::Devices::Perception::Provider::PerceptionFrame *>(&frame));
+            this->shim().PublishFrameForProvider(*reinterpret_cast<Windows::Devices::Perception::Provider::IPerceptionFrameProvider const*>(&provider), *reinterpret_cast<Windows::Devices::Perception::Provider::PerceptionFrame const*>(&frame));
             return S_OK;
         }
         catch (...)
@@ -754,7 +1081,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionFrameProvid
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest>
 {
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -769,7 +1096,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionPropertyCha
         }
     }
 
-    HRESULT __stdcall get_Value(impl::abi_arg_out<Windows::Foundation::IInspectable> value) noexcept override
+    HRESULT __stdcall get_Value(::IUnknown** value) noexcept override
     {
         try
         {
@@ -784,7 +1111,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionPropertyCha
         }
     }
 
-    HRESULT __stdcall get_Status(Windows::Devices::Perception::PerceptionFrameSourcePropertyChangeStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::Devices::Perception::PerceptionFrameSourcePropertyChangeStatus>* value) noexcept override
     {
         try
         {
@@ -798,12 +1125,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionPropertyCha
         }
     }
 
-    HRESULT __stdcall put_Status(Windows::Devices::Perception::PerceptionFrameSourcePropertyChangeStatus value) noexcept override
+    HRESULT __stdcall put_Status(abi_t<Windows::Devices::Perception::PerceptionFrameSourcePropertyChangeStatus> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Status(value);
+            this->shim().Status(*reinterpret_cast<Windows::Devices::Perception::PerceptionFrameSourcePropertyChangeStatus const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -812,7 +1139,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionPropertyCha
         }
     }
 
-    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::Foundation::IDeferral> result) noexcept override
+    HRESULT __stdcall GetDeferral(::IUnknown** result) noexcept override
     {
         try
         {
@@ -831,7 +1158,7 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionPropertyCha
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocator> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocator>
 {
-    HRESULT __stdcall abi_AllocateFrame(impl::abi_arg_out<Windows::Devices::Perception::Provider::IPerceptionFrame> value) noexcept override
+    HRESULT __stdcall AllocateFrame(::IUnknown** value) noexcept override
     {
         try
         {
@@ -846,12 +1173,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionVideoFrameA
         }
     }
 
-    HRESULT __stdcall abi_CopyFromVideoFrame(impl::abi_arg_in<Windows::Media::IVideoFrame> frame, impl::abi_arg_out<Windows::Devices::Perception::Provider::IPerceptionFrame> value) noexcept override
+    HRESULT __stdcall CopyFromVideoFrame(::IUnknown* frame, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().CopyFromVideoFrame(*reinterpret_cast<const Windows::Media::VideoFrame *>(&frame)));
+            *value = detach_abi(this->shim().CopyFromVideoFrame(*reinterpret_cast<Windows::Media::VideoFrame const*>(&frame)));
             return S_OK;
         }
         catch (...)
@@ -865,12 +1192,12 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionVideoFrameA
 template <typename D>
 struct produce<D, Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocatorFactory> : produce_base<D, Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocatorFactory>
 {
-    HRESULT __stdcall abi_Create(uint32_t maxOutstandingFrameCountForWrite, Windows::Graphics::Imaging::BitmapPixelFormat format, impl::abi_arg_in<Windows::Foundation::Size> resolution, Windows::Graphics::Imaging::BitmapAlphaMode alpha, impl::abi_arg_out<Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocator> result) noexcept override
+    HRESULT __stdcall Create(uint32_t maxOutstandingFrameCountForWrite, abi_t<Windows::Graphics::Imaging::BitmapPixelFormat> format, abi_t<Windows::Foundation::Size> resolution, abi_t<Windows::Graphics::Imaging::BitmapAlphaMode> alpha, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Create(maxOutstandingFrameCountForWrite, format, *reinterpret_cast<const Windows::Foundation::Size *>(&resolution), alpha));
+            *result = detach_abi(this->shim().Create(maxOutstandingFrameCountForWrite, *reinterpret_cast<Windows::Graphics::Imaging::BitmapPixelFormat const*>(&format), *reinterpret_cast<Windows::Foundation::Size const*>(&resolution), *reinterpret_cast<Windows::Graphics::Imaging::BitmapAlphaMode const*>(&alpha)));
             return S_OK;
         }
         catch (...)
@@ -883,648 +1210,218 @@ struct produce<D, Windows::Devices::Perception::Provider::IPerceptionVideoFrameA
 
 }
 
-namespace Windows::Devices::Perception::Provider {
-
-template <typename D> hstring impl_IKnownPerceptionFrameKindStatics<D>::Color() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownPerceptionFrameKindStatics)->get_Color(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownPerceptionFrameKindStatics<D>::Depth() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownPerceptionFrameKindStatics)->get_Depth(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownPerceptionFrameKindStatics<D>::Infrared() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownPerceptionFrameKindStatics)->get_Infrared(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPerceptionFrameProviderManagerServiceStatics<D>::RegisterFrameProviderInfo(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo & frameProviderInfo) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderManagerServiceStatics)->abi_RegisterFrameProviderInfo(get_abi(manager), get_abi(frameProviderInfo)));
-}
-
-template <typename D> void impl_IPerceptionFrameProviderManagerServiceStatics<D>::UnregisterFrameProviderInfo(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo & frameProviderInfo) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderManagerServiceStatics)->abi_UnregisterFrameProviderInfo(get_abi(manager), get_abi(frameProviderInfo)));
-}
-
-template <typename D> void impl_IPerceptionFrameProviderManagerServiceStatics<D>::RegisterFaceAuthenticationGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup & faceAuthenticationGroup) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderManagerServiceStatics)->abi_RegisterFaceAuthenticationGroup(get_abi(manager), get_abi(faceAuthenticationGroup)));
-}
-
-template <typename D> void impl_IPerceptionFrameProviderManagerServiceStatics<D>::UnregisterFaceAuthenticationGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup & faceAuthenticationGroup) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderManagerServiceStatics)->abi_UnregisterFaceAuthenticationGroup(get_abi(manager), get_abi(faceAuthenticationGroup)));
-}
-
-template <typename D> void impl_IPerceptionFrameProviderManagerServiceStatics<D>::RegisterControlGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionControlGroup & controlGroup) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderManagerServiceStatics)->abi_RegisterControlGroup(get_abi(manager), get_abi(controlGroup)));
-}
-
-template <typename D> void impl_IPerceptionFrameProviderManagerServiceStatics<D>::UnregisterControlGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionControlGroup & controlGroup) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderManagerServiceStatics)->abi_UnregisterControlGroup(get_abi(manager), get_abi(controlGroup)));
-}
-
-template <typename D> void impl_IPerceptionFrameProviderManagerServiceStatics<D>::RegisterCorrelationGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionCorrelationGroup & correlationGroup) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderManagerServiceStatics)->abi_RegisterCorrelationGroup(get_abi(manager), get_abi(correlationGroup)));
-}
-
-template <typename D> void impl_IPerceptionFrameProviderManagerServiceStatics<D>::UnregisterCorrelationGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionCorrelationGroup & correlationGroup) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderManagerServiceStatics)->abi_UnregisterCorrelationGroup(get_abi(manager), get_abi(correlationGroup)));
-}
-
-template <typename D> void impl_IPerceptionFrameProviderManagerServiceStatics<D>::UpdateAvailabilityForProvider(const Windows::Devices::Perception::Provider::IPerceptionFrameProvider & provider, bool available) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderManagerServiceStatics)->abi_UpdateAvailabilityForProvider(get_abi(provider), available));
-}
-
-template <typename D> void impl_IPerceptionFrameProviderManagerServiceStatics<D>::PublishFrameForProvider(const Windows::Devices::Perception::Provider::IPerceptionFrameProvider & provider, const Windows::Devices::Perception::Provider::PerceptionFrame & frame) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderManagerServiceStatics)->abi_PublishFrameForProvider(get_abi(provider), get_abi(frame)));
-}
-
-template <typename D> Windows::Devices::Perception::Provider::IPerceptionFrameProvider impl_IPerceptionFrameProviderManager<D>::GetFrameProvider(const Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo & frameProviderInfo) const
-{
-    Windows::Devices::Perception::Provider::IPerceptionFrameProvider result;
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderManager)->abi_GetFrameProvider(get_abi(frameProviderInfo), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo impl_IPerceptionFrameProvider<D>::FrameProviderInfo() const
-{
-    Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo result { nullptr };
-    check_hresult(WINRT_SHIM(IPerceptionFrameProvider)->get_FrameProviderInfo(put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_IPerceptionFrameProvider<D>::Available() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPerceptionFrameProvider)->get_Available(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IPropertySet impl_IPerceptionFrameProvider<D>::Properties() const
-{
-    Windows::Foundation::Collections::IPropertySet value;
-    check_hresult(WINRT_SHIM(IPerceptionFrameProvider)->get_Properties(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPerceptionFrameProvider<D>::Start() const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProvider)->abi_Start());
-}
-
-template <typename D> void impl_IPerceptionFrameProvider<D>::Stop() const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProvider)->abi_Stop());
-}
-
-template <typename D> void impl_IPerceptionFrameProvider<D>::SetProperty(const Windows::Devices::Perception::Provider::PerceptionPropertyChangeRequest & value) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProvider)->abi_SetProperty(get_abi(value)));
-}
-
-template <typename D> hstring impl_IPerceptionFrameProviderInfo<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderInfo)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPerceptionFrameProviderInfo<D>::Id(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderInfo)->put_Id(get_abi(value)));
-}
-
-template <typename D> hstring impl_IPerceptionFrameProviderInfo<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderInfo)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPerceptionFrameProviderInfo<D>::DisplayName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderInfo)->put_DisplayName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IPerceptionFrameProviderInfo<D>::DeviceKind() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderInfo)->get_DeviceKind(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPerceptionFrameProviderInfo<D>::DeviceKind(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderInfo)->put_DeviceKind(get_abi(value)));
-}
-
-template <typename D> hstring impl_IPerceptionFrameProviderInfo<D>::FrameKind() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderInfo)->get_FrameKind(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPerceptionFrameProviderInfo<D>::FrameKind(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderInfo)->put_FrameKind(get_abi(value)));
-}
-
-template <typename D> bool impl_IPerceptionFrameProviderInfo<D>::Hidden() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderInfo)->get_Hidden(&value));
-    return value;
-}
-
-template <typename D> void impl_IPerceptionFrameProviderInfo<D>::Hidden(bool value) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrameProviderInfo)->put_Hidden(value));
-}
-
-template <typename D> Windows::Devices::Perception::Provider::PerceptionControlGroup impl_IPerceptionControlGroupFactory<D>::Create(iterable<hstring> ids) const
-{
-    Windows::Devices::Perception::Provider::PerceptionControlGroup result { nullptr };
-    check_hresult(WINRT_SHIM(IPerceptionControlGroupFactory)->abi_Create(get_abi(ids), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IPerceptionControlGroup<D>::FrameProviderIds() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IPerceptionControlGroup)->get_FrameProviderIds(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup impl_IPerceptionFaceAuthenticationGroupFactory<D>::Create(iterable<hstring> ids, const Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler & startHandler, const Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler & stopHandler) const
-{
-    Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup result { nullptr };
-    check_hresult(WINRT_SHIM(IPerceptionFaceAuthenticationGroupFactory)->abi_Create(get_abi(ids), get_abi(startHandler), get_abi(stopHandler), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IPerceptionFaceAuthenticationGroup<D>::FrameProviderIds() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IPerceptionFaceAuthenticationGroup)->get_FrameProviderIds(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Perception::Provider::PerceptionCorrelation impl_IPerceptionCorrelationFactory<D>::Create(hstring_view targetId, const Windows::Foundation::Numerics::float3 & position, const Windows::Foundation::Numerics::quaternion & orientation) const
-{
-    Windows::Devices::Perception::Provider::PerceptionCorrelation result { nullptr };
-    check_hresult(WINRT_SHIM(IPerceptionCorrelationFactory)->abi_Create(get_abi(targetId), get_abi(position), get_abi(orientation), put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IPerceptionCorrelation<D>::TargetId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPerceptionCorrelation)->get_TargetId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Numerics::float3 impl_IPerceptionCorrelation<D>::Position() const
-{
-    Windows::Foundation::Numerics::float3 value {};
-    check_hresult(WINRT_SHIM(IPerceptionCorrelation)->get_Position(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Numerics::quaternion impl_IPerceptionCorrelation<D>::Orientation() const
-{
-    Windows::Foundation::Numerics::quaternion value {};
-    check_hresult(WINRT_SHIM(IPerceptionCorrelation)->get_Orientation(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Perception::Provider::PerceptionCorrelationGroup impl_IPerceptionCorrelationGroupFactory<D>::Create(iterable<Windows::Devices::Perception::Provider::PerceptionCorrelation> relativeLocations) const
-{
-    Windows::Devices::Perception::Provider::PerceptionCorrelationGroup result { nullptr };
-    check_hresult(WINRT_SHIM(IPerceptionCorrelationGroupFactory)->abi_Create(get_abi(relativeLocations), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Perception::Provider::PerceptionCorrelation> impl_IPerceptionCorrelationGroup<D>::RelativeLocations() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Devices::Perception::Provider::PerceptionCorrelation> value;
-    check_hresult(WINRT_SHIM(IPerceptionCorrelationGroup)->get_RelativeLocations(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::TimeSpan impl_IPerceptionFrame<D>::RelativeTime() const
-{
-    Windows::Foundation::TimeSpan value {};
-    check_hresult(WINRT_SHIM(IPerceptionFrame)->get_RelativeTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IPerceptionFrame<D>::RelativeTime(const Windows::Foundation::TimeSpan & value) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionFrame)->put_RelativeTime(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::ValueSet impl_IPerceptionFrame<D>::Properties() const
-{
-    Windows::Foundation::Collections::ValueSet value { nullptr };
-    check_hresult(WINRT_SHIM(IPerceptionFrame)->get_Properties(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IMemoryBuffer impl_IPerceptionFrame<D>::FrameData() const
-{
-    Windows::Foundation::IMemoryBuffer value;
-    check_hresult(WINRT_SHIM(IPerceptionFrame)->get_FrameData(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Perception::Provider::PerceptionVideoFrameAllocator impl_IPerceptionVideoFrameAllocatorFactory<D>::Create(uint32_t maxOutstandingFrameCountForWrite, Windows::Graphics::Imaging::BitmapPixelFormat format, const Windows::Foundation::Size & resolution, Windows::Graphics::Imaging::BitmapAlphaMode alpha) const
-{
-    Windows::Devices::Perception::Provider::PerceptionVideoFrameAllocator result { nullptr };
-    check_hresult(WINRT_SHIM(IPerceptionVideoFrameAllocatorFactory)->abi_Create(maxOutstandingFrameCountForWrite, format, get_abi(resolution), alpha, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Devices::Perception::Provider::PerceptionFrame impl_IPerceptionVideoFrameAllocator<D>::AllocateFrame() const
-{
-    Windows::Devices::Perception::Provider::PerceptionFrame value { nullptr };
-    check_hresult(WINRT_SHIM(IPerceptionVideoFrameAllocator)->abi_AllocateFrame(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Perception::Provider::PerceptionFrame impl_IPerceptionVideoFrameAllocator<D>::CopyFromVideoFrame(const Windows::Media::VideoFrame & frame) const
-{
-    Windows::Devices::Perception::Provider::PerceptionFrame value { nullptr };
-    check_hresult(WINRT_SHIM(IPerceptionVideoFrameAllocator)->abi_CopyFromVideoFrame(get_abi(frame), put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IPerceptionPropertyChangeRequest<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IPerceptionPropertyChangeRequest)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IInspectable impl_IPerceptionPropertyChangeRequest<D>::Value() const
-{
-    Windows::Foundation::IInspectable value;
-    check_hresult(WINRT_SHIM(IPerceptionPropertyChangeRequest)->get_Value(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Perception::PerceptionFrameSourcePropertyChangeStatus impl_IPerceptionPropertyChangeRequest<D>::Status() const
-{
-    Windows::Devices::Perception::PerceptionFrameSourcePropertyChangeStatus value {};
-    check_hresult(WINRT_SHIM(IPerceptionPropertyChangeRequest)->get_Status(&value));
-    return value;
-}
-
-template <typename D> void impl_IPerceptionPropertyChangeRequest<D>::Status(Windows::Devices::Perception::PerceptionFrameSourcePropertyChangeStatus value) const
-{
-    check_hresult(WINRT_SHIM(IPerceptionPropertyChangeRequest)->put_Status(value));
-}
-
-template <typename D> Windows::Foundation::Deferral impl_IPerceptionPropertyChangeRequest<D>::GetDeferral() const
-{
-    Windows::Foundation::Deferral result { nullptr };
-    check_hresult(WINRT_SHIM(IPerceptionPropertyChangeRequest)->abi_GetDeferral(put_abi(result)));
-    return result;
-}
+WINRT_EXPORT namespace winrt::Windows::Devices::Perception::Provider {
 
 inline hstring KnownPerceptionFrameKind::Color()
 {
-    return get_activation_factory<KnownPerceptionFrameKind, IKnownPerceptionFrameKindStatics>().Color();
+    return get_activation_factory<KnownPerceptionFrameKind, Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics>().Color();
 }
 
 inline hstring KnownPerceptionFrameKind::Depth()
 {
-    return get_activation_factory<KnownPerceptionFrameKind, IKnownPerceptionFrameKindStatics>().Depth();
+    return get_activation_factory<KnownPerceptionFrameKind, Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics>().Depth();
 }
 
 inline hstring KnownPerceptionFrameKind::Infrared()
 {
-    return get_activation_factory<KnownPerceptionFrameKind, IKnownPerceptionFrameKindStatics>().Infrared();
+    return get_activation_factory<KnownPerceptionFrameKind, Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics>().Infrared();
 }
 
-inline PerceptionControlGroup::PerceptionControlGroup(iterable<hstring> ids) :
-    PerceptionControlGroup(get_activation_factory<PerceptionControlGroup, IPerceptionControlGroupFactory>().Create(ids))
+inline PerceptionControlGroup::PerceptionControlGroup(param::iterable<hstring> const& ids) :
+    PerceptionControlGroup(get_activation_factory<PerceptionControlGroup, Windows::Devices::Perception::Provider::IPerceptionControlGroupFactory>().Create(ids))
 {}
 
-inline PerceptionCorrelation::PerceptionCorrelation(hstring_view targetId, const Windows::Foundation::Numerics::float3 & position, const Windows::Foundation::Numerics::quaternion & orientation) :
-    PerceptionCorrelation(get_activation_factory<PerceptionCorrelation, IPerceptionCorrelationFactory>().Create(targetId, position, orientation))
+inline PerceptionCorrelation::PerceptionCorrelation(param::hstring const& targetId, Windows::Foundation::Numerics::float3 const& position, Windows::Foundation::Numerics::quaternion const& orientation) :
+    PerceptionCorrelation(get_activation_factory<PerceptionCorrelation, Windows::Devices::Perception::Provider::IPerceptionCorrelationFactory>().Create(targetId, position, orientation))
 {}
 
-inline PerceptionCorrelationGroup::PerceptionCorrelationGroup(iterable<Windows::Devices::Perception::Provider::PerceptionCorrelation> relativeLocations) :
-    PerceptionCorrelationGroup(get_activation_factory<PerceptionCorrelationGroup, IPerceptionCorrelationGroupFactory>().Create(relativeLocations))
+inline PerceptionCorrelationGroup::PerceptionCorrelationGroup(param::iterable<Windows::Devices::Perception::Provider::PerceptionCorrelation> const& relativeLocations) :
+    PerceptionCorrelationGroup(get_activation_factory<PerceptionCorrelationGroup, Windows::Devices::Perception::Provider::IPerceptionCorrelationGroupFactory>().Create(relativeLocations))
 {}
 
-inline PerceptionFaceAuthenticationGroup::PerceptionFaceAuthenticationGroup(iterable<hstring> ids, const Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler & startHandler, const Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler & stopHandler) :
-    PerceptionFaceAuthenticationGroup(get_activation_factory<PerceptionFaceAuthenticationGroup, IPerceptionFaceAuthenticationGroupFactory>().Create(ids, startHandler, stopHandler))
+inline PerceptionFaceAuthenticationGroup::PerceptionFaceAuthenticationGroup(param::iterable<hstring> const& ids, Windows::Devices::Perception::Provider::PerceptionStartFaceAuthenticationHandler const& startHandler, Windows::Devices::Perception::Provider::PerceptionStopFaceAuthenticationHandler const& stopHandler) :
+    PerceptionFaceAuthenticationGroup(get_activation_factory<PerceptionFaceAuthenticationGroup, Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroupFactory>().Create(ids, startHandler, stopHandler))
 {}
 
 inline PerceptionFrameProviderInfo::PerceptionFrameProviderInfo() :
     PerceptionFrameProviderInfo(activate_instance<PerceptionFrameProviderInfo>())
 {}
 
-inline void PerceptionFrameProviderManagerService::RegisterFrameProviderInfo(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo & frameProviderInfo)
+inline void PerceptionFrameProviderManagerService::RegisterFrameProviderInfo(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo const& frameProviderInfo)
 {
-    get_activation_factory<PerceptionFrameProviderManagerService, IPerceptionFrameProviderManagerServiceStatics>().RegisterFrameProviderInfo(manager, frameProviderInfo);
+    get_activation_factory<PerceptionFrameProviderManagerService, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>().RegisterFrameProviderInfo(manager, frameProviderInfo);
 }
 
-inline void PerceptionFrameProviderManagerService::UnregisterFrameProviderInfo(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo & frameProviderInfo)
+inline void PerceptionFrameProviderManagerService::UnregisterFrameProviderInfo(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo const& frameProviderInfo)
 {
-    get_activation_factory<PerceptionFrameProviderManagerService, IPerceptionFrameProviderManagerServiceStatics>().UnregisterFrameProviderInfo(manager, frameProviderInfo);
+    get_activation_factory<PerceptionFrameProviderManagerService, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>().UnregisterFrameProviderInfo(manager, frameProviderInfo);
 }
 
-inline void PerceptionFrameProviderManagerService::RegisterFaceAuthenticationGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup & faceAuthenticationGroup)
+inline void PerceptionFrameProviderManagerService::RegisterFaceAuthenticationGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup const& faceAuthenticationGroup)
 {
-    get_activation_factory<PerceptionFrameProviderManagerService, IPerceptionFrameProviderManagerServiceStatics>().RegisterFaceAuthenticationGroup(manager, faceAuthenticationGroup);
+    get_activation_factory<PerceptionFrameProviderManagerService, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>().RegisterFaceAuthenticationGroup(manager, faceAuthenticationGroup);
 }
 
-inline void PerceptionFrameProviderManagerService::UnregisterFaceAuthenticationGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup & faceAuthenticationGroup)
+inline void PerceptionFrameProviderManagerService::UnregisterFaceAuthenticationGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup const& faceAuthenticationGroup)
 {
-    get_activation_factory<PerceptionFrameProviderManagerService, IPerceptionFrameProviderManagerServiceStatics>().UnregisterFaceAuthenticationGroup(manager, faceAuthenticationGroup);
+    get_activation_factory<PerceptionFrameProviderManagerService, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>().UnregisterFaceAuthenticationGroup(manager, faceAuthenticationGroup);
 }
 
-inline void PerceptionFrameProviderManagerService::RegisterControlGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionControlGroup & controlGroup)
+inline void PerceptionFrameProviderManagerService::RegisterControlGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionControlGroup const& controlGroup)
 {
-    get_activation_factory<PerceptionFrameProviderManagerService, IPerceptionFrameProviderManagerServiceStatics>().RegisterControlGroup(manager, controlGroup);
+    get_activation_factory<PerceptionFrameProviderManagerService, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>().RegisterControlGroup(manager, controlGroup);
 }
 
-inline void PerceptionFrameProviderManagerService::UnregisterControlGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionControlGroup & controlGroup)
+inline void PerceptionFrameProviderManagerService::UnregisterControlGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionControlGroup const& controlGroup)
 {
-    get_activation_factory<PerceptionFrameProviderManagerService, IPerceptionFrameProviderManagerServiceStatics>().UnregisterControlGroup(manager, controlGroup);
+    get_activation_factory<PerceptionFrameProviderManagerService, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>().UnregisterControlGroup(manager, controlGroup);
 }
 
-inline void PerceptionFrameProviderManagerService::RegisterCorrelationGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionCorrelationGroup & correlationGroup)
+inline void PerceptionFrameProviderManagerService::RegisterCorrelationGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionCorrelationGroup const& correlationGroup)
 {
-    get_activation_factory<PerceptionFrameProviderManagerService, IPerceptionFrameProviderManagerServiceStatics>().RegisterCorrelationGroup(manager, correlationGroup);
+    get_activation_factory<PerceptionFrameProviderManagerService, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>().RegisterCorrelationGroup(manager, correlationGroup);
 }
 
-inline void PerceptionFrameProviderManagerService::UnregisterCorrelationGroup(const Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & manager, const Windows::Devices::Perception::Provider::PerceptionCorrelationGroup & correlationGroup)
+inline void PerceptionFrameProviderManagerService::UnregisterCorrelationGroup(Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager const& manager, Windows::Devices::Perception::Provider::PerceptionCorrelationGroup const& correlationGroup)
 {
-    get_activation_factory<PerceptionFrameProviderManagerService, IPerceptionFrameProviderManagerServiceStatics>().UnregisterCorrelationGroup(manager, correlationGroup);
+    get_activation_factory<PerceptionFrameProviderManagerService, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>().UnregisterCorrelationGroup(manager, correlationGroup);
 }
 
-inline void PerceptionFrameProviderManagerService::UpdateAvailabilityForProvider(const Windows::Devices::Perception::Provider::IPerceptionFrameProvider & provider, bool available)
+inline void PerceptionFrameProviderManagerService::UpdateAvailabilityForProvider(Windows::Devices::Perception::Provider::IPerceptionFrameProvider const& provider, bool available)
 {
-    get_activation_factory<PerceptionFrameProviderManagerService, IPerceptionFrameProviderManagerServiceStatics>().UpdateAvailabilityForProvider(provider, available);
+    get_activation_factory<PerceptionFrameProviderManagerService, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>().UpdateAvailabilityForProvider(provider, available);
 }
 
-inline void PerceptionFrameProviderManagerService::PublishFrameForProvider(const Windows::Devices::Perception::Provider::IPerceptionFrameProvider & provider, const Windows::Devices::Perception::Provider::PerceptionFrame & frame)
+inline void PerceptionFrameProviderManagerService::PublishFrameForProvider(Windows::Devices::Perception::Provider::IPerceptionFrameProvider const& provider, Windows::Devices::Perception::Provider::PerceptionFrame const& frame)
 {
-    get_activation_factory<PerceptionFrameProviderManagerService, IPerceptionFrameProviderManagerServiceStatics>().PublishFrameForProvider(provider, frame);
+    get_activation_factory<PerceptionFrameProviderManagerService, Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>().PublishFrameForProvider(provider, frame);
 }
 
-inline PerceptionVideoFrameAllocator::PerceptionVideoFrameAllocator(uint32_t maxOutstandingFrameCountForWrite, Windows::Graphics::Imaging::BitmapPixelFormat format, const Windows::Foundation::Size & resolution, Windows::Graphics::Imaging::BitmapAlphaMode alpha) :
-    PerceptionVideoFrameAllocator(get_activation_factory<PerceptionVideoFrameAllocator, IPerceptionVideoFrameAllocatorFactory>().Create(maxOutstandingFrameCountForWrite, format, resolution, alpha))
+inline PerceptionVideoFrameAllocator::PerceptionVideoFrameAllocator(uint32_t maxOutstandingFrameCountForWrite, Windows::Graphics::Imaging::BitmapPixelFormat const& format, Windows::Foundation::Size const& resolution, Windows::Graphics::Imaging::BitmapAlphaMode const& alpha) :
+    PerceptionVideoFrameAllocator(get_activation_factory<PerceptionVideoFrameAllocator, Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocatorFactory>().Create(maxOutstandingFrameCountForWrite, format, resolution, alpha))
 {}
 
+template <typename L> PerceptionStartFaceAuthenticationHandler::PerceptionStartFaceAuthenticationHandler(L handler) :
+    PerceptionStartFaceAuthenticationHandler(impl::make_delegate<PerceptionStartFaceAuthenticationHandler>(std::forward<L>(handler)))
+{}
+
+template <typename F> PerceptionStartFaceAuthenticationHandler::PerceptionStartFaceAuthenticationHandler(F* handler) :
+    PerceptionStartFaceAuthenticationHandler([=](auto&& ... args) { return handler(args ...); })
+{}
+
+template <typename O, typename M> PerceptionStartFaceAuthenticationHandler::PerceptionStartFaceAuthenticationHandler(O* object, M method) :
+    PerceptionStartFaceAuthenticationHandler([=](auto&& ... args) { return ((*object).*(method))(args ...); })
+{}
+
+inline bool PerceptionStartFaceAuthenticationHandler::operator()(Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup const& sender) const
+{
+    bool result{};
+    check_hresult((*(abi_t<PerceptionStartFaceAuthenticationHandler>**)this)->Invoke(get_abi(sender), &result));
+    return result;
+}
+
+template <typename L> PerceptionStopFaceAuthenticationHandler::PerceptionStopFaceAuthenticationHandler(L handler) :
+    PerceptionStopFaceAuthenticationHandler(impl::make_delegate<PerceptionStopFaceAuthenticationHandler>(std::forward<L>(handler)))
+{}
+
+template <typename F> PerceptionStopFaceAuthenticationHandler::PerceptionStopFaceAuthenticationHandler(F* handler) :
+    PerceptionStopFaceAuthenticationHandler([=](auto&& ... args) { handler(args ...); })
+{}
+
+template <typename O, typename M> PerceptionStopFaceAuthenticationHandler::PerceptionStopFaceAuthenticationHandler(O* object, M method) :
+    PerceptionStopFaceAuthenticationHandler([=](auto&& ... args) { ((*object).*(method))(args ...); })
+{}
+
+inline void PerceptionStopFaceAuthenticationHandler::operator()(Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup const& sender) const
+{
+    check_hresult((*(abi_t<PerceptionStopFaceAuthenticationHandler>**)this)->Invoke(get_abi(sender)));
 }
 
 }
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+WINRT_EXPORT namespace std {
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionControlGroup>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionControlGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IKnownPerceptionFrameKindStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionControlGroupFactory>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionControlGroupFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionControlGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionControlGroup> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelation>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionControlGroupFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionControlGroupFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationFactory>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelation> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationGroup>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationGroupFactory>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationGroupFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationGroup> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationGroupFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionCorrelationGroupFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroupFactory>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroupFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroup> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFrame>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionFrame & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroupFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionFaceAuthenticationGroupFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProvider>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFrame> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionFrame> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProvider> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderInfo> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderManager> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionFrameProviderManagerServiceStatics> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocator>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocator & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionPropertyChangeRequest> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocatorFactory>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocatorFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocator> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocator> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::PerceptionControlGroup>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::PerceptionControlGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocatorFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::IPerceptionVideoFrameAllocatorFactory> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::PerceptionCorrelation>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::PerceptionCorrelation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::KnownPerceptionFrameKind> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::KnownPerceptionFrameKind> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::PerceptionCorrelationGroup>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::PerceptionCorrelationGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::PerceptionControlGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::PerceptionControlGroup> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::PerceptionCorrelation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::PerceptionCorrelation> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::PerceptionFrame>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::PerceptionFrame & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::PerceptionCorrelationGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::PerceptionCorrelationGroup> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::PerceptionFaceAuthenticationGroup> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::PerceptionPropertyChangeRequest>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::PerceptionPropertyChangeRequest & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::PerceptionFrame> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::PerceptionFrame> {};
 
-template<>
-struct std::hash<winrt::Windows::Devices::Perception::Provider::PerceptionVideoFrameAllocator>
-{
-    size_t operator()(const winrt::Windows::Devices::Perception::Provider::PerceptionVideoFrameAllocator & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::PerceptionFrameProviderInfo> {};
+
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::PerceptionFrameProviderManagerService> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::PerceptionFrameProviderManagerService> {};
+
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::PerceptionPropertyChangeRequest> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::PerceptionPropertyChangeRequest> {};
+
+template<> struct hash<winrt::Windows::Devices::Perception::Provider::PerceptionVideoFrameAllocator> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Perception::Provider::PerceptionVideoFrameAllocator> {};
+
+}
 
 WINRT_WARNING_POP

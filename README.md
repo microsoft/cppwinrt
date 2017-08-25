@@ -1,26 +1,23 @@
-# cppwinrt
+# C++/WinRT
 C++/WinRT is a standard C++ language projection for the Windows Runtime implemented solely in header files. It allows you to both author and consume Windows Runtime APIs using any standards-compliant C++ compiler. C++/WinRT is designed to provide C++ developers with first-class access to the modern Windows API.
 
-**Note:** This is an RTM release. This release contains the C++ header files that comprise the library for the WinRT APIs documented in Windows 10 Anniversary Update SDK. This includes all Universal WinRT APIs plus all WinRT APIs documented in the various Extension SDKs that also ship in the Anniversary Update SDK.
+This release contains the C++ header files that comprise the library for the WinRT APIs documented in Windows 10 Creator's Update SDK. This includes all Universal WinRT APIs plus all WinRT APIs documented in the various Extension SDKs that also ship in the Creator's Update SDK.
 
-**Note:** This RTM release fully supports consuming Windows Runtime APIs. While you can use the current functionality to define a class that implements one or more existing WinRT interfaces (as shown by samples defining FrameworkView classes), the current release does not provide any infrastructure for implementing a module (DLL or EXE) that hosts activatable WinRT components. Future releases will provide this support.
+This release fully supports consuming Windows Runtime APIs. While you can use the current functionality to define a class that implements one or more existing WinRT interfaces (as shown by samples defining FrameworkView classes), the current release does not provide any infrastructure for implementing a module (DLL or EXE) that hosts activatable WinRT components. Future releases will provide this support.
 
-**TIMELINE:** I wanted to provide some general guidance for the development plan for C++/WinRT. While I won't provide exact dates, as they are subject to change, here's the overview roadmap for upcoming releases, ordered from soonest to sometime later.
+## Timeline
+Following is an overview roadmap for upcoming releases:
 
-* We will remove the 10.0.14393.0 headers. You can retrieve them, if needed, by syncing to a previous commit.
-* We will update the 10.0.15063.0 headers to our latest build. This build has full support for both consuming WinRT classes and implementing WinRT classes. One item of particular note is that the headers provide appropriate support for the generic WinRT types (e.g. IVector<MyStruct) obviating the need to determine the magic appropriate GUID value.
-  * As of this update, you must compile the C++/WinRT header files using the Visual Studio 2017 15.3 (or later) C++ compiler. Prior  compiler versions are not sufficiently standards compliant.
-  * Generally, C++/WinRT will stay abreast of C++ standards and require a modern and up-to-date compiler.
-  * For those developers needing to use VS2015, you can always retrieve the previous release by syncing to a previous commit.
 * The C++/WinRT headers *and the cppwinrt.exe compiler itself* ... &lt;waiting for the cheers to die down&gt; ... will ship in the Windows SDK. Expect to first see them in a Insider Preview build of the Windows SDK in late summer/early fall.
 * We are updating the XAML compiler to produce C++/WinRT code behind files.
 * We are adding C++/WinRT project support to Visual Studio 2017.
+* C++/WinRT will stay current with C++ standards and require a modern and up-to-date compiler, generally the latest release of Visual Studio.  Users requiring support for older compilers will need to sync to an earlier commit or tag. 
 
-# Documentation
+## Documentation
 * [Getting Started](Getting%20Started.md)
-* [Breaking Changes](Breaking%20Changes.md)
+* [Change Log](Changelog.md)
 
-# Reporting bugs & issues
+## Reporting bugs
 Issues and feature requests are submitted through the project's Issues section on GitHub. Please use the following guidelines when you submit issues and feature requests:
 * Make sure the issue is not already reported by searching through the list of issues 
 * Provide detailed description of the issue including the following information: 
@@ -33,7 +30,7 @@ Issues and feature requests are submitted through the project's Issues section o
 
 Issues are regularly reviewed and updated with additional information by the core team. Sometimes the core team may have questions about particular issue that might need clarifications so, please be ready to provide additional information. 
 
-# Feature requests
+## Feature requests
 
 #### Feature requests and Design Change Requests (DCRs) are an important part of the lifecycle of any software project. Please log these as Issues in  our GitHub repository. 
 
@@ -49,13 +46,13 @@ Note: A Contribution Legal Agreement (CLA) is required before the team can consi
 pull requests. Please read this entire page carefully. 
 ```
 
-# Contributing code
+## Contributing code
 
 #### From an engineering standpoint, please make sure that you can build and test the code. Familiarize yourself with our project guidelines and coding conventions. 
 We recommend that you read these great posts about open source: 
-* [Open Source Contribution Etiquette](http://tirania.org/blog/archive/2010/Dec-31.html) by Miguel de Icaza 
-* [Don't "Push" Your Pull Requests](https://www.igvita.com/2011/12/19/dont-push-your-pull-requests) by Ilya Grigorik 
-* [A Successful Git Branching Model](http://nvie.com/posts/a-successful-git-branching-model/) by Vincent Driessen 
+* [Open Source Contribution Etiquette] (http://tirania.org/blog/archive/2010/Dec-31.html) by Miguel de Icaza 
+* [Don't "Push" Your Pull Requests] (https://www.igvita.com/2011/12/19/dont-push-your-pull-requests) by Ilya Grigorik 
+* [A Successful Git Branching Model] (http://nvie.com/posts/a-successful-git-branching-model/) by Vincent Driessen 
 
 Before you start working on a feature or substantial code contribution please discuss it with the team and ensure it is an appropriate addition to the core product. 
 
@@ -67,7 +64,7 @@ For bug fixes, simply start a conversation in the related GitHub issue to notify
 
 In order to speed up the process of accepting your contributions, you should try to make your checkins as small as possible, avoid any unnecessary deltas and the need to rebase.
 
-# Contribution License Agreement (CLA)
+## Contribution License Agreement (CLA)
 #### In order to become a contributor to the Microsoft C++/WinRT project on GitHub you must follow some legal requirements.
 Until you meet the legal requirements, your pull requests / source contributions will not be considered or reviewed.
 
@@ -84,8 +81,8 @@ git config user.name Your Name
 git config user.email YourAlias@YourEmailDomain 
 ```
 
-# Step-by-step guide
-## Checkout the latest code
+## Step-by-step guide
+### Checkout the latest code
 
 In order to obtain the source code you need to become familiar with Git (see http://progit.org/book/) and Github (see http://help.github.com/) and you need to have Git installed on your local machine. You can obtain the source code from Github and start a contributor environment by following the these steps on your local machine:
 
@@ -96,7 +93,7 @@ In order to obtain the source code you need to become familiar with Git (see htt
 * When you clone the repository you should see, at least, 2 branches: dev and master. dev is the branch where the team does all the day to day development while master is the branch that is always up to date with the latest release. This means, before starting any work, you should switch to the dev branch. You can do so with the following command:
   * `git checkout dev`
 
-## Create bug fixes and features
+### Create bug fixes and features
 
 You can then start to make modifications to the code in your local Git repository. This can be done in your local dev branch or, if you prefer, in a branch out of dev. In the simplest scenario, working directly on dev, you can commit your work with following commands:
 
@@ -123,23 +120,23 @@ If there are conflicts between your fork and the main project one, github will w
   
 Please keep in mind that not all requests will be approved. Requests are reviewed by the C++/WinRT Team on a regular basis and will be updated with the status at each review. If your request is accepted you will receive information about the next steps and when the request will be integrated in the main branch. If your request is rejected you will receive information about the reasons why it was rejected.
 
-# Code Reviews
+## Code Reviews
 The Microsoft C++/WinRT team has an active Microsoft discussion group used for submitting code reviews and discussing design changes, best practices, and other important topics. 
 
 Part of the code review process involves using a code review tool, and for most open source projects, the team uses the built-in Pull Request functionality on GitHub for enabling annotations and comments on code before accepting the pull request/s. 
 
 Expect a good amount of feedback as part of any pull request: not only which branch to merge to and from, but also consistency guidelines, matching existing code, and making targeted, smart changes when fixing bugs. 
 
-# Contact the team
+## Contact the team
 
 The best way to get in touch with the team regarding feature ideas, developer designs and communicating about bug fixes is to use the Issues system built in to GitHub.
 
-# Code of Conduct
+## Code of Conduct
 
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-# License
+## License
 
 Copyright (c) Microsoft Corporation. All rights reserved.
 
-Licensed under the [MIT](license.txt) License.
+Licensed under the [MIT] (LICENSE) License.

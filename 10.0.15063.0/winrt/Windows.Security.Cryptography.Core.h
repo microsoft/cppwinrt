@@ -1,26 +1,1243 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Security.Cryptography.Certificates.2.h"
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.Security.Cryptography.Core.2.h"
+#include "winrt/Windows.Security.Cryptography.h"
 
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.Security.Cryptography.Certificates.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Security.Cryptography.Core.3.h"
-#include "Windows.Security.Cryptography.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaPkcs1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaPkcs1(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaOaepSha1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaOaepSha1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaOaepSha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaOaepSha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaOaepSha384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaOaepSha384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaOaepSha512() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaOaepSha512(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::EcdsaP256Sha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_EcdsaP256Sha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::EcdsaP384Sha384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_EcdsaP384Sha384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::EcdsaP521Sha512() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_EcdsaP521Sha512(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::DsaSha1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_DsaSha1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::DsaSha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_DsaSha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPkcs1Sha1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaSignPkcs1Sha1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPkcs1Sha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaSignPkcs1Sha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPkcs1Sha384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaSignPkcs1Sha384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPkcs1Sha512() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaSignPkcs1Sha512(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPssSha1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaSignPssSha1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPssSha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaSignPssSha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPssSha384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaSignPssSha384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPssSha512() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics)->get_RsaSignPssSha512(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics2<D>::EcdsaSha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2)->get_EcdsaSha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics2<D>::EcdsaSha384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2)->get_EcdsaSha384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricAlgorithmNamesStatics2<D>::EcdsaSha512() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2)->get_EcdsaSha512(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IAsymmetricKeyAlgorithmProvider<D>::AlgorithmName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider)->get_AlgorithmName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicKey consume_Windows_Security_Cryptography_Core_IAsymmetricKeyAlgorithmProvider<D>::CreateKeyPair(uint32_t keySize) const
+{
+    Windows::Security::Cryptography::Core::CryptographicKey key{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider)->CreateKeyPair(keySize, put_abi(key)));
+    return key;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicKey consume_Windows_Security_Cryptography_Core_IAsymmetricKeyAlgorithmProvider<D>::ImportKeyPair(Windows::Storage::Streams::IBuffer const& keyBlob) const
+{
+    Windows::Security::Cryptography::Core::CryptographicKey key{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider)->ImportDefaultPrivateKeyBlob(get_abi(keyBlob), put_abi(key)));
+    return key;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicKey consume_Windows_Security_Cryptography_Core_IAsymmetricKeyAlgorithmProvider<D>::ImportKeyPair(Windows::Storage::Streams::IBuffer const& keyBlob, Windows::Security::Cryptography::Core::CryptographicPrivateKeyBlobType const& BlobType) const
+{
+    Windows::Security::Cryptography::Core::CryptographicKey key{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider)->ImportKeyPairWithBlobType(get_abi(keyBlob), get_abi(BlobType), put_abi(key)));
+    return key;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicKey consume_Windows_Security_Cryptography_Core_IAsymmetricKeyAlgorithmProvider<D>::ImportPublicKey(Windows::Storage::Streams::IBuffer const& keyBlob) const
+{
+    Windows::Security::Cryptography::Core::CryptographicKey key{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider)->ImportDefaultPublicKeyBlob(get_abi(keyBlob), put_abi(key)));
+    return key;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicKey consume_Windows_Security_Cryptography_Core_IAsymmetricKeyAlgorithmProvider<D>::ImportPublicKey(Windows::Storage::Streams::IBuffer const& keyBlob, Windows::Security::Cryptography::Core::CryptographicPublicKeyBlobType const& BlobType) const
+{
+    Windows::Security::Cryptography::Core::CryptographicKey key{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider)->ImportPublicKeyWithBlobType(get_abi(keyBlob), get_abi(BlobType), put_abi(key)));
+    return key;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicKey consume_Windows_Security_Cryptography_Core_IAsymmetricKeyAlgorithmProvider2<D>::CreateKeyPairWithCurveName(param::hstring const& curveName) const
+{
+    Windows::Security::Cryptography::Core::CryptographicKey key{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider2)->CreateKeyPairWithCurveName(get_abi(curveName), put_abi(key)));
+    return key;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicKey consume_Windows_Security_Cryptography_Core_IAsymmetricKeyAlgorithmProvider2<D>::CreateKeyPairWithCurveParameters(array_view<uint8_t const> parameters) const
+{
+    Windows::Security::Cryptography::Core::CryptographicKey key{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider2)->CreateKeyPairWithCurveParameters(parameters.size(), get_abi(parameters), put_abi(key)));
+    return key;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider consume_Windows_Security_Cryptography_Core_IAsymmetricKeyAlgorithmProviderStatics<D>::OpenAlgorithm(param::hstring const& algorithm) const
+{
+    Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider provider{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProviderStatics)->OpenAlgorithm(get_abi(algorithm), put_abi(provider)));
+    return provider;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics<D>::Encrypt(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& iv) const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics)->Encrypt(get_abi(key), get_abi(data), get_abi(iv), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics<D>::Decrypt(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& iv) const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics)->Decrypt(get_abi(key), get_abi(data), get_abi(iv), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::EncryptedAndAuthenticatedData consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics<D>::EncryptAndAuthenticate(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& nonce, Windows::Storage::Streams::IBuffer const& authenticatedData) const
+{
+    Windows::Security::Cryptography::Core::EncryptedAndAuthenticatedData value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics)->EncryptAndAuthenticate(get_abi(key), get_abi(data), get_abi(nonce), get_abi(authenticatedData), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics<D>::DecryptAndAuthenticate(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& nonce, Windows::Storage::Streams::IBuffer const& authenticationTag, Windows::Storage::Streams::IBuffer const& authenticatedData) const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics)->DecryptAndAuthenticate(get_abi(key), get_abi(data), get_abi(nonce), get_abi(authenticationTag), get_abi(authenticatedData), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics<D>::Sign(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data) const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics)->Sign(get_abi(key), get_abi(data), put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics<D>::VerifySignature(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& signature) const
+{
+    bool isAuthenticated{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics)->VerifySignature(get_abi(key), get_abi(data), get_abi(signature), &isAuthenticated));
+    return isAuthenticated;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics<D>::DeriveKeyMaterial(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Security::Cryptography::Core::KeyDerivationParameters const& parameters, uint32_t desiredKeySize) const
+{
+    Windows::Storage::Streams::IBuffer keyMaterial{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics)->DeriveKeyMaterial(get_abi(key), get_abi(parameters), desiredKeySize, put_abi(keyMaterial)));
+    return keyMaterial;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics2<D>::SignHashedData(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data) const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics2)->SignHashedData(get_abi(key), get_abi(data), put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics2<D>::VerifySignatureWithHashInput(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& signature) const
+{
+    bool isAuthenticated{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics2)->VerifySignatureWithHashInput(get_abi(key), get_abi(data), get_abi(signature), &isAuthenticated));
+    return isAuthenticated;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics2<D>::DecryptAsync(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& iv) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics2)->DecryptAsync(get_abi(key), get_abi(data), get_abi(iv), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics2<D>::SignAsync(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics2)->SignAsync(get_abi(key), get_abi(data), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> consume_Windows_Security_Cryptography_Core_ICryptographicEngineStatics2<D>::SignHashedDataAsync(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicEngineStatics2)->SignHashedDataAsync(get_abi(key), get_abi(data), put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Security_Cryptography_Core_ICryptographicKey<D>::KeySize() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicKey)->get_KeySize(&value));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_ICryptographicKey<D>::Export() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicKey)->ExportDefaultPrivateKeyBlobType(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_ICryptographicKey<D>::Export(Windows::Security::Cryptography::Core::CryptographicPrivateKeyBlobType const& BlobType) const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicKey)->ExportPrivateKeyWithBlobType(get_abi(BlobType), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_ICryptographicKey<D>::ExportPublicKey() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicKey)->ExportDefaultPublicKeyBlobType(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_ICryptographicKey<D>::ExportPublicKey(Windows::Security::Cryptography::Core::CryptographicPublicKeyBlobType const& BlobType) const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ICryptographicKey)->ExportPublicKeyWithBlobType(get_abi(BlobType), put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP160r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP160r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP160t1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP160t1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP192r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP192r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP192t1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP192t1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP224r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP224r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP224t1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP224t1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP256r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP256r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP256t1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP256t1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP320r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP320r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP320t1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP320t1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP384r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP384r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP384t1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP384t1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP512r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP512r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::BrainpoolP512t1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_BrainpoolP512t1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::Curve25519() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_Curve25519(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::Ec192wapi() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_Ec192wapi(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::NistP192() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_NistP192(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::NistP224() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_NistP224(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::NistP256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_NistP256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::NistP384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_NistP384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::NistP521() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_NistP521(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::NumsP256t1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_NumsP256t1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::NumsP384t1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_NumsP384t1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::NumsP512t1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_NumsP512t1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::SecP160k1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_SecP160k1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::SecP160r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_SecP160r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::SecP160r2() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_SecP160r2(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::SecP192k1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_SecP192k1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::SecP192r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_SecP192r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::SecP224k1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_SecP224k1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::SecP224r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_SecP224r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::SecP256k1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_SecP256k1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::SecP256r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_SecP256r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::SecP384r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_SecP384r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::SecP521r1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_SecP521r1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::Wtls7() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_Wtls7(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::Wtls9() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_Wtls9(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::Wtls12() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_Wtls12(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::X962P192v1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_X962P192v1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::X962P192v2() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_X962P192v2(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::X962P192v3() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_X962P192v3(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::X962P239v1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_X962P239v1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::X962P239v2() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_X962P239v2(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::X962P239v3() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_X962P239v3(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::X962P256v1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_X962P256v1(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<hstring> consume_Windows_Security_Cryptography_Core_IEccCurveNamesStatics<D>::AllEccCurveNames() const
+{
+    Windows::Foundation::Collections::IVectorView<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEccCurveNamesStatics)->get_AllEccCurveNames(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_IEncryptedAndAuthenticatedData<D>::EncryptedData() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEncryptedAndAuthenticatedData)->get_EncryptedData(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_IEncryptedAndAuthenticatedData<D>::AuthenticationTag() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IEncryptedAndAuthenticatedData)->get_AuthenticationTag(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IHashAlgorithmNamesStatics<D>::Md5() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics)->get_Md5(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IHashAlgorithmNamesStatics<D>::Sha1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics)->get_Sha1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IHashAlgorithmNamesStatics<D>::Sha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics)->get_Sha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IHashAlgorithmNamesStatics<D>::Sha384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics)->get_Sha384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IHashAlgorithmNamesStatics<D>::Sha512() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics)->get_Sha512(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IHashAlgorithmProvider<D>::AlgorithmName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashAlgorithmProvider)->get_AlgorithmName(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Security_Cryptography_Core_IHashAlgorithmProvider<D>::HashLength() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashAlgorithmProvider)->get_HashLength(&value));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_IHashAlgorithmProvider<D>::HashData(Windows::Storage::Streams::IBuffer const& data) const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashAlgorithmProvider)->HashData(get_abi(data), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicHash consume_Windows_Security_Cryptography_Core_IHashAlgorithmProvider<D>::CreateHash() const
+{
+    Windows::Security::Cryptography::Core::CryptographicHash Value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashAlgorithmProvider)->CreateHash(put_abi(Value)));
+    return Value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::HashAlgorithmProvider consume_Windows_Security_Cryptography_Core_IHashAlgorithmProviderStatics<D>::OpenAlgorithm(param::hstring const& algorithm) const
+{
+    Windows::Security::Cryptography::Core::HashAlgorithmProvider provider{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashAlgorithmProviderStatics)->OpenAlgorithm(get_abi(algorithm), put_abi(provider)));
+    return provider;
+}
+
+template <typename D> void consume_Windows_Security_Cryptography_Core_IHashComputation<D>::Append(Windows::Storage::Streams::IBuffer const& data) const
+{
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashComputation)->Append(get_abi(data)));
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_IHashComputation<D>::GetValueAndReset() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IHashComputation)->GetValueAndReset(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Pbkdf2Md5() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Pbkdf2Md5(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Pbkdf2Sha1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Pbkdf2Sha1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Pbkdf2Sha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Pbkdf2Sha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Pbkdf2Sha384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Pbkdf2Sha384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Pbkdf2Sha512() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Pbkdf2Sha512(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Sp800108CtrHmacMd5() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Sp800108CtrHmacMd5(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Sp800108CtrHmacSha1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Sp800108CtrHmacSha1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Sp800108CtrHmacSha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Sp800108CtrHmacSha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Sp800108CtrHmacSha384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Sp800108CtrHmacSha384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Sp800108CtrHmacSha512() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Sp800108CtrHmacSha512(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Sp80056aConcatMd5() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Sp80056aConcatMd5(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Sp80056aConcatSha1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Sp80056aConcatSha1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Sp80056aConcatSha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Sp80056aConcatSha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Sp80056aConcatSha384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Sp80056aConcatSha384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics<D>::Sp80056aConcatSha512() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics)->get_Sp80056aConcatSha512(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics2<D>::CapiKdfMd5() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2)->get_CapiKdfMd5(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics2<D>::CapiKdfSha1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2)->get_CapiKdfSha1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics2<D>::CapiKdfSha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2)->get_CapiKdfSha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics2<D>::CapiKdfSha384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2)->get_CapiKdfSha384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmNamesStatics2<D>::CapiKdfSha512() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2)->get_CapiKdfSha512(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmProvider<D>::AlgorithmName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProvider)->get_AlgorithmName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicKey consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmProvider<D>::CreateKey(Windows::Storage::Streams::IBuffer const& keyMaterial) const
+{
+    Windows::Security::Cryptography::Core::CryptographicKey key{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProvider)->CreateKey(get_abi(keyMaterial), put_abi(key)));
+    return key;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider consume_Windows_Security_Cryptography_Core_IKeyDerivationAlgorithmProviderStatics<D>::OpenAlgorithm(param::hstring const& algorithm) const
+{
+    Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider provider{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProviderStatics)->OpenAlgorithm(get_abi(algorithm), put_abi(provider)));
+    return provider;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Cryptography_Core_IKeyDerivationParameters<D>::KdfGenericBinary() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationParameters)->get_KdfGenericBinary(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Security_Cryptography_Core_IKeyDerivationParameters<D>::KdfGenericBinary(Windows::Storage::Streams::IBuffer const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationParameters)->put_KdfGenericBinary(get_abi(value)));
+}
+
+template <typename D> uint32_t consume_Windows_Security_Cryptography_Core_IKeyDerivationParameters<D>::IterationCount() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationParameters)->get_IterationCount(&value));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm consume_Windows_Security_Cryptography_Core_IKeyDerivationParameters2<D>::Capi1KdfTargetAlgorithm() const
+{
+    Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationParameters2)->get_Capi1KdfTargetAlgorithm(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_Security_Cryptography_Core_IKeyDerivationParameters2<D>::Capi1KdfTargetAlgorithm(Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationParameters2)->put_Capi1KdfTargetAlgorithm(get_abi(value)));
+}
+
+template <typename D> Windows::Security::Cryptography::Core::KeyDerivationParameters consume_Windows_Security_Cryptography_Core_IKeyDerivationParametersStatics<D>::BuildForPbkdf2(Windows::Storage::Streams::IBuffer const& pbkdf2Salt, uint32_t iterationCount) const
+{
+    Windows::Security::Cryptography::Core::KeyDerivationParameters value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics)->BuildForPbkdf2(get_abi(pbkdf2Salt), iterationCount, put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::KeyDerivationParameters consume_Windows_Security_Cryptography_Core_IKeyDerivationParametersStatics<D>::BuildForSP800108(Windows::Storage::Streams::IBuffer const& label, Windows::Storage::Streams::IBuffer const& context) const
+{
+    Windows::Security::Cryptography::Core::KeyDerivationParameters value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics)->BuildForSP800108(get_abi(label), get_abi(context), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::KeyDerivationParameters consume_Windows_Security_Cryptography_Core_IKeyDerivationParametersStatics<D>::BuildForSP80056a(Windows::Storage::Streams::IBuffer const& algorithmId, Windows::Storage::Streams::IBuffer const& partyUInfo, Windows::Storage::Streams::IBuffer const& partyVInfo, Windows::Storage::Streams::IBuffer const& suppPubInfo, Windows::Storage::Streams::IBuffer const& suppPrivInfo) const
+{
+    Windows::Security::Cryptography::Core::KeyDerivationParameters value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics)->BuildForSP80056a(get_abi(algorithmId), get_abi(partyUInfo), get_abi(partyVInfo), get_abi(suppPubInfo), get_abi(suppPrivInfo), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::KeyDerivationParameters consume_Windows_Security_Cryptography_Core_IKeyDerivationParametersStatics2<D>::BuildForCapi1Kdf(Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm const& capi1KdfTargetAlgorithm) const
+{
+    Windows::Security::Cryptography::Core::KeyDerivationParameters value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics2)->BuildForCapi1Kdf(get_abi(capi1KdfTargetAlgorithm), put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IMacAlgorithmNamesStatics<D>::HmacMd5() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics)->get_HmacMd5(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IMacAlgorithmNamesStatics<D>::HmacSha1() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics)->get_HmacSha1(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IMacAlgorithmNamesStatics<D>::HmacSha256() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics)->get_HmacSha256(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IMacAlgorithmNamesStatics<D>::HmacSha384() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics)->get_HmacSha384(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IMacAlgorithmNamesStatics<D>::HmacSha512() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics)->get_HmacSha512(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IMacAlgorithmNamesStatics<D>::AesCmac() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics)->get_AesCmac(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_IMacAlgorithmProvider<D>::AlgorithmName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IMacAlgorithmProvider)->get_AlgorithmName(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Security_Cryptography_Core_IMacAlgorithmProvider<D>::MacLength() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IMacAlgorithmProvider)->get_MacLength(&value));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicKey consume_Windows_Security_Cryptography_Core_IMacAlgorithmProvider<D>::CreateKey(Windows::Storage::Streams::IBuffer const& keyMaterial) const
+{
+    Windows::Security::Cryptography::Core::CryptographicKey macKey{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IMacAlgorithmProvider)->CreateKey(get_abi(keyMaterial), put_abi(macKey)));
+    return macKey;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicHash consume_Windows_Security_Cryptography_Core_IMacAlgorithmProvider2<D>::CreateHash(Windows::Storage::Streams::IBuffer const& keyMaterial) const
+{
+    Windows::Security::Cryptography::Core::CryptographicHash value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IMacAlgorithmProvider2)->CreateHash(get_abi(keyMaterial), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::MacAlgorithmProvider consume_Windows_Security_Cryptography_Core_IMacAlgorithmProviderStatics<D>::OpenAlgorithm(param::hstring const& algorithm) const
+{
+    Windows::Security::Cryptography::Core::MacAlgorithmProvider provider{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IMacAlgorithmProviderStatics)->OpenAlgorithm(get_abi(algorithm), put_abi(provider)));
+    return provider;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> consume_Windows_Security_Cryptography_Core_IPersistedKeyProviderStatics<D>::OpenKeyPairFromCertificateAsync(Windows::Security::Cryptography::Certificates::Certificate const& certificate, param::hstring const& hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding const& padding) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IPersistedKeyProviderStatics)->OpenKeyPairFromCertificateAsync(get_abi(certificate), get_abi(hashAlgorithmName), get_abi(padding), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicKey consume_Windows_Security_Cryptography_Core_IPersistedKeyProviderStatics<D>::OpenPublicKeyFromCertificate(Windows::Security::Cryptography::Certificates::Certificate const& certificate, param::hstring const& hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding const& padding) const
+{
+    Windows::Security::Cryptography::Core::CryptographicKey key{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::IPersistedKeyProviderStatics)->OpenPublicKeyFromCertificate(get_abi(certificate), get_abi(hashAlgorithmName), get_abi(padding), put_abi(key)));
+    return key;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::DesCbc() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_DesCbc(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::DesEcb() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_DesEcb(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::TripleDesCbc() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_TripleDesCbc(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::TripleDesEcb() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_TripleDesEcb(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::Rc2Cbc() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_Rc2Cbc(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::Rc2Ecb() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_Rc2Ecb(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::AesCbc() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_AesCbc(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::AesEcb() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_AesEcb(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::AesGcm() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_AesGcm(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::AesCcm() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_AesCcm(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::AesCbcPkcs7() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_AesCbcPkcs7(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::AesEcbPkcs7() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_AesEcbPkcs7(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::DesCbcPkcs7() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_DesCbcPkcs7(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::DesEcbPkcs7() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_DesEcbPkcs7(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::TripleDesCbcPkcs7() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_TripleDesCbcPkcs7(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::TripleDesEcbPkcs7() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_TripleDesEcbPkcs7(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::Rc2CbcPkcs7() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_Rc2CbcPkcs7(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::Rc2EcbPkcs7() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_Rc2EcbPkcs7(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricAlgorithmNamesStatics<D>::Rc4() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics)->get_Rc4(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Cryptography_Core_ISymmetricKeyAlgorithmProvider<D>::AlgorithmName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProvider)->get_AlgorithmName(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_Security_Cryptography_Core_ISymmetricKeyAlgorithmProvider<D>::BlockLength() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProvider)->get_BlockLength(&value));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::CryptographicKey consume_Windows_Security_Cryptography_Core_ISymmetricKeyAlgorithmProvider<D>::CreateSymmetricKey(Windows::Storage::Streams::IBuffer const& keyMaterial) const
+{
+    Windows::Security::Cryptography::Core::CryptographicKey key{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProvider)->CreateSymmetricKey(get_abi(keyMaterial), put_abi(key)));
+    return key;
+}
+
+template <typename D> Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider consume_Windows_Security_Cryptography_Core_ISymmetricKeyAlgorithmProviderStatics<D>::OpenAlgorithm(param::hstring const& algorithm) const
+{
+    Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider provider{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProviderStatics)->OpenAlgorithm(get_abi(algorithm), put_abi(provider)));
+    return provider;
+}
 
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics> : produce_base<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>
 {
-    HRESULT __stdcall get_RsaPkcs1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaPkcs1(HSTRING* value) noexcept override
     {
         try
         {
@@ -35,7 +1252,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaOaepSha1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaOaepSha1(HSTRING* value) noexcept override
     {
         try
         {
@@ -50,7 +1267,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaOaepSha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaOaepSha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -65,7 +1282,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaOaepSha384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaOaepSha384(HSTRING* value) noexcept override
     {
         try
         {
@@ -80,7 +1297,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaOaepSha512(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaOaepSha512(HSTRING* value) noexcept override
     {
         try
         {
@@ -95,7 +1312,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_EcdsaP256Sha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_EcdsaP256Sha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -110,7 +1327,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_EcdsaP384Sha384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_EcdsaP384Sha384(HSTRING* value) noexcept override
     {
         try
         {
@@ -125,7 +1342,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_EcdsaP521Sha512(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_EcdsaP521Sha512(HSTRING* value) noexcept override
     {
         try
         {
@@ -140,7 +1357,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_DsaSha1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DsaSha1(HSTRING* value) noexcept override
     {
         try
         {
@@ -155,7 +1372,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_DsaSha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DsaSha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -170,7 +1387,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaSignPkcs1Sha1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaSignPkcs1Sha1(HSTRING* value) noexcept override
     {
         try
         {
@@ -185,7 +1402,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaSignPkcs1Sha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaSignPkcs1Sha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -200,7 +1417,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaSignPkcs1Sha384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaSignPkcs1Sha384(HSTRING* value) noexcept override
     {
         try
         {
@@ -215,7 +1432,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaSignPkcs1Sha512(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaSignPkcs1Sha512(HSTRING* value) noexcept override
     {
         try
         {
@@ -230,7 +1447,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaSignPssSha1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaSignPssSha1(HSTRING* value) noexcept override
     {
         try
         {
@@ -245,7 +1462,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaSignPssSha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaSignPssSha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -260,7 +1477,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaSignPssSha384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaSignPssSha384(HSTRING* value) noexcept override
     {
         try
         {
@@ -275,7 +1492,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_RsaSignPssSha512(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RsaSignPssSha512(HSTRING* value) noexcept override
     {
         try
         {
@@ -294,7 +1511,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2> : produce_base<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2>
 {
-    HRESULT __stdcall get_EcdsaSha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_EcdsaSha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -309,7 +1526,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_EcdsaSha384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_EcdsaSha384(HSTRING* value) noexcept override
     {
         try
         {
@@ -324,7 +1541,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
         }
     }
 
-    HRESULT __stdcall get_EcdsaSha512(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_EcdsaSha512(HSTRING* value) noexcept override
     {
         try
         {
@@ -343,7 +1560,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNam
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider> : produce_base<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider>
 {
-    HRESULT __stdcall get_AlgorithmName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AlgorithmName(HSTRING* value) noexcept override
     {
         try
         {
@@ -358,7 +1575,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithm
         }
     }
 
-    HRESULT __stdcall abi_CreateKeyPair(uint32_t keySize, impl::abi_arg_out<Windows::Security::Cryptography::Core::ICryptographicKey> key) noexcept override
+    HRESULT __stdcall CreateKeyPair(uint32_t keySize, ::IUnknown** key) noexcept override
     {
         try
         {
@@ -373,12 +1590,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithm
         }
     }
 
-    HRESULT __stdcall abi_ImportDefaultPrivateKeyBlob(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> keyBlob, impl::abi_arg_out<Windows::Security::Cryptography::Core::ICryptographicKey> key) noexcept override
+    HRESULT __stdcall ImportDefaultPrivateKeyBlob(::IUnknown* keyBlob, ::IUnknown** key) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *key = detach_abi(this->shim().ImportKeyPair(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&keyBlob)));
+            *key = detach_abi(this->shim().ImportKeyPair(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&keyBlob)));
             return S_OK;
         }
         catch (...)
@@ -388,12 +1605,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithm
         }
     }
 
-    HRESULT __stdcall abi_ImportKeyPairWithBlobType(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> keyBlob, Windows::Security::Cryptography::Core::CryptographicPrivateKeyBlobType BlobType, impl::abi_arg_out<Windows::Security::Cryptography::Core::ICryptographicKey> key) noexcept override
+    HRESULT __stdcall ImportKeyPairWithBlobType(::IUnknown* keyBlob, abi_t<Windows::Security::Cryptography::Core::CryptographicPrivateKeyBlobType> BlobType, ::IUnknown** key) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *key = detach_abi(this->shim().ImportKeyPair(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&keyBlob), BlobType));
+            *key = detach_abi(this->shim().ImportKeyPair(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&keyBlob), *reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicPrivateKeyBlobType const*>(&BlobType)));
             return S_OK;
         }
         catch (...)
@@ -403,12 +1620,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithm
         }
     }
 
-    HRESULT __stdcall abi_ImportDefaultPublicKeyBlob(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> keyBlob, impl::abi_arg_out<Windows::Security::Cryptography::Core::ICryptographicKey> key) noexcept override
+    HRESULT __stdcall ImportDefaultPublicKeyBlob(::IUnknown* keyBlob, ::IUnknown** key) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *key = detach_abi(this->shim().ImportPublicKey(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&keyBlob)));
+            *key = detach_abi(this->shim().ImportPublicKey(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&keyBlob)));
             return S_OK;
         }
         catch (...)
@@ -418,12 +1635,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithm
         }
     }
 
-    HRESULT __stdcall abi_ImportPublicKeyWithBlobType(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> keyBlob, Windows::Security::Cryptography::Core::CryptographicPublicKeyBlobType BlobType, impl::abi_arg_out<Windows::Security::Cryptography::Core::ICryptographicKey> key) noexcept override
+    HRESULT __stdcall ImportPublicKeyWithBlobType(::IUnknown* keyBlob, abi_t<Windows::Security::Cryptography::Core::CryptographicPublicKeyBlobType> BlobType, ::IUnknown** key) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *key = detach_abi(this->shim().ImportPublicKey(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&keyBlob), BlobType));
+            *key = detach_abi(this->shim().ImportPublicKey(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&keyBlob), *reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicPublicKeyBlobType const*>(&BlobType)));
             return S_OK;
         }
         catch (...)
@@ -437,12 +1654,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithm
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider2> : produce_base<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider2>
 {
-    HRESULT __stdcall abi_CreateKeyPairWithCurveName(impl::abi_arg_in<hstring> curveName, impl::abi_arg_out<Windows::Security::Cryptography::Core::ICryptographicKey> key) noexcept override
+    HRESULT __stdcall CreateKeyPairWithCurveName(HSTRING curveName, ::IUnknown** key) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *key = detach_abi(this->shim().CreateKeyPairWithCurveName(*reinterpret_cast<const hstring *>(&curveName)));
+            *key = detach_abi(this->shim().CreateKeyPairWithCurveName(*reinterpret_cast<hstring const*>(&curveName)));
             return S_OK;
         }
         catch (...)
@@ -452,12 +1669,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithm
         }
     }
 
-    HRESULT __stdcall abi_CreateKeyPairWithCurveParameters(uint32_t __parametersSize, impl::abi_arg_in<uint8_t> * parameters, impl::abi_arg_out<Windows::Security::Cryptography::Core::ICryptographicKey> key) noexcept override
+    HRESULT __stdcall CreateKeyPairWithCurveParameters(uint32_t __parametersSize, uint8_t* parameters, ::IUnknown** key) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *key = detach_abi(this->shim().CreateKeyPairWithCurveParameters(array_view<const uint8_t>(parameters, parameters + __parametersSize)));
+            *key = detach_abi(this->shim().CreateKeyPairWithCurveParameters(array_view<uint8_t const>(reinterpret_cast<uint8_t const *>(parameters), reinterpret_cast<uint8_t const *>(parameters) + __parametersSize)));
             return S_OK;
         }
         catch (...)
@@ -471,12 +1688,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithm
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProviderStatics> : produce_base<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProviderStatics>
 {
-    HRESULT __stdcall abi_OpenAlgorithm(impl::abi_arg_in<hstring> algorithm, impl::abi_arg_out<Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider> provider) noexcept override
+    HRESULT __stdcall OpenAlgorithm(HSTRING algorithm, ::IUnknown** provider) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *provider = detach_abi(this->shim().OpenAlgorithm(*reinterpret_cast<const hstring *>(&algorithm)));
+            *provider = detach_abi(this->shim().OpenAlgorithm(*reinterpret_cast<hstring const*>(&algorithm)));
             return S_OK;
         }
         catch (...)
@@ -490,12 +1707,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithm
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineStatics> : produce_base<D, Windows::Security::Cryptography::Core::ICryptographicEngineStatics>
 {
-    HRESULT __stdcall abi_Encrypt(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> iv, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall Encrypt(::IUnknown* key, ::IUnknown* data, ::IUnknown* iv, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().Encrypt(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&iv)));
+            *value = detach_abi(this->shim().Encrypt(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&iv)));
             return S_OK;
         }
         catch (...)
@@ -505,12 +1722,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineSta
         }
     }
 
-    HRESULT __stdcall abi_Decrypt(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> iv, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall Decrypt(::IUnknown* key, ::IUnknown* data, ::IUnknown* iv, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().Decrypt(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&iv)));
+            *value = detach_abi(this->shim().Decrypt(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&iv)));
             return S_OK;
         }
         catch (...)
@@ -520,12 +1737,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineSta
         }
     }
 
-    HRESULT __stdcall abi_EncryptAndAuthenticate(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> nonce, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> authenticatedData, impl::abi_arg_out<Windows::Security::Cryptography::Core::IEncryptedAndAuthenticatedData> value) noexcept override
+    HRESULT __stdcall EncryptAndAuthenticate(::IUnknown* key, ::IUnknown* data, ::IUnknown* nonce, ::IUnknown* authenticatedData, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().EncryptAndAuthenticate(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&nonce), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&authenticatedData)));
+            *value = detach_abi(this->shim().EncryptAndAuthenticate(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&nonce), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&authenticatedData)));
             return S_OK;
         }
         catch (...)
@@ -535,12 +1752,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineSta
         }
     }
 
-    HRESULT __stdcall abi_DecryptAndAuthenticate(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> nonce, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> authenticationTag, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> authenticatedData, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall DecryptAndAuthenticate(::IUnknown* key, ::IUnknown* data, ::IUnknown* nonce, ::IUnknown* authenticationTag, ::IUnknown* authenticatedData, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().DecryptAndAuthenticate(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&nonce), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&authenticationTag), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&authenticatedData)));
+            *value = detach_abi(this->shim().DecryptAndAuthenticate(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&nonce), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&authenticationTag), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&authenticatedData)));
             return S_OK;
         }
         catch (...)
@@ -550,12 +1767,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineSta
         }
     }
 
-    HRESULT __stdcall abi_Sign(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall Sign(::IUnknown* key, ::IUnknown* data, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().Sign(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data)));
+            *value = detach_abi(this->shim().Sign(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data)));
             return S_OK;
         }
         catch (...)
@@ -565,12 +1782,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineSta
         }
     }
 
-    HRESULT __stdcall abi_VerifySignature(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> signature, bool * isAuthenticated) noexcept override
+    HRESULT __stdcall VerifySignature(::IUnknown* key, ::IUnknown* data, ::IUnknown* signature, bool* isAuthenticated) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *isAuthenticated = detach_abi(this->shim().VerifySignature(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&signature)));
+            *isAuthenticated = detach_abi(this->shim().VerifySignature(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&signature)));
             return S_OK;
         }
         catch (...)
@@ -579,12 +1796,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineSta
         }
     }
 
-    HRESULT __stdcall abi_DeriveKeyMaterial(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Security::Cryptography::Core::IKeyDerivationParameters> parameters, uint32_t desiredKeySize, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> keyMaterial) noexcept override
+    HRESULT __stdcall DeriveKeyMaterial(::IUnknown* key, ::IUnknown* parameters, uint32_t desiredKeySize, ::IUnknown** keyMaterial) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *keyMaterial = detach_abi(this->shim().DeriveKeyMaterial(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Security::Cryptography::Core::KeyDerivationParameters *>(&parameters), desiredKeySize));
+            *keyMaterial = detach_abi(this->shim().DeriveKeyMaterial(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Security::Cryptography::Core::KeyDerivationParameters const*>(&parameters), desiredKeySize));
             return S_OK;
         }
         catch (...)
@@ -598,12 +1815,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineSta
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineStatics2> : produce_base<D, Windows::Security::Cryptography::Core::ICryptographicEngineStatics2>
 {
-    HRESULT __stdcall abi_SignHashedData(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall SignHashedData(::IUnknown* key, ::IUnknown* data, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().SignHashedData(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data)));
+            *value = detach_abi(this->shim().SignHashedData(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data)));
             return S_OK;
         }
         catch (...)
@@ -613,12 +1830,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineSta
         }
     }
 
-    HRESULT __stdcall abi_VerifySignatureWithHashInput(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> signature, bool * isAuthenticated) noexcept override
+    HRESULT __stdcall VerifySignatureWithHashInput(::IUnknown* key, ::IUnknown* data, ::IUnknown* signature, bool* isAuthenticated) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *isAuthenticated = detach_abi(this->shim().VerifySignatureWithHashInput(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&signature)));
+            *isAuthenticated = detach_abi(this->shim().VerifySignatureWithHashInput(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&signature)));
             return S_OK;
         }
         catch (...)
@@ -627,27 +1844,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineSta
         }
     }
 
-    HRESULT __stdcall abi_DecryptAsync(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> iv, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer>> value) noexcept override
+    HRESULT __stdcall DecryptAsync(::IUnknown* key, ::IUnknown* data, ::IUnknown* iv, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().DecryptAsync(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&iv)));
-            return S_OK;
-        }
-        catch (...)
-        {
-            *value = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall abi_SignAsync(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer>> value) noexcept override
-    {
-        try
-        {
-            typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().SignAsync(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data)));
+            *value = detach_abi(this->shim().DecryptAsync(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&iv)));
             return S_OK;
         }
         catch (...)
@@ -657,12 +1859,27 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineSta
         }
     }
 
-    HRESULT __stdcall abi_SignHashedDataAsync(impl::abi_arg_in<Windows::Security::Cryptography::Core::ICryptographicKey> key, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer>> value) noexcept override
+    HRESULT __stdcall SignAsync(::IUnknown* key, ::IUnknown* data, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().SignHashedDataAsync(*reinterpret_cast<const Windows::Security::Cryptography::Core::CryptographicKey *>(&key), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data)));
+            *value = detach_abi(this->shim().SignAsync(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data)));
+            return S_OK;
+        }
+        catch (...)
+        {
+            *value = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall SignHashedDataAsync(::IUnknown* key, ::IUnknown* data, ::IUnknown** value) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *value = detach_abi(this->shim().SignHashedDataAsync(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicKey const*>(&key), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data)));
             return S_OK;
         }
         catch (...)
@@ -676,7 +1893,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicEngineSta
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::ICryptographicKey> : produce_base<D, Windows::Security::Cryptography::Core::ICryptographicKey>
 {
-    HRESULT __stdcall get_KeySize(uint32_t * value) noexcept override
+    HRESULT __stdcall get_KeySize(uint32_t* value) noexcept override
     {
         try
         {
@@ -690,7 +1907,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicKey> : pr
         }
     }
 
-    HRESULT __stdcall abi_ExportDefaultPrivateKeyBlobType(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall ExportDefaultPrivateKeyBlobType(::IUnknown** value) noexcept override
     {
         try
         {
@@ -705,12 +1922,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicKey> : pr
         }
     }
 
-    HRESULT __stdcall abi_ExportPrivateKeyWithBlobType(Windows::Security::Cryptography::Core::CryptographicPrivateKeyBlobType BlobType, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall ExportPrivateKeyWithBlobType(abi_t<Windows::Security::Cryptography::Core::CryptographicPrivateKeyBlobType> BlobType, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().Export(BlobType));
+            *value = detach_abi(this->shim().Export(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicPrivateKeyBlobType const*>(&BlobType)));
             return S_OK;
         }
         catch (...)
@@ -720,7 +1937,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicKey> : pr
         }
     }
 
-    HRESULT __stdcall abi_ExportDefaultPublicKeyBlobType(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall ExportDefaultPublicKeyBlobType(::IUnknown** value) noexcept override
     {
         try
         {
@@ -735,12 +1952,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicKey> : pr
         }
     }
 
-    HRESULT __stdcall abi_ExportPublicKeyWithBlobType(Windows::Security::Cryptography::Core::CryptographicPublicKeyBlobType BlobType, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall ExportPublicKeyWithBlobType(abi_t<Windows::Security::Cryptography::Core::CryptographicPublicKeyBlobType> BlobType, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().ExportPublicKey(BlobType));
+            *value = detach_abi(this->shim().ExportPublicKey(*reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicPublicKeyBlobType const*>(&BlobType)));
             return S_OK;
         }
         catch (...)
@@ -754,7 +1971,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ICryptographicKey> : pr
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> : produce_base<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>
 {
-    HRESULT __stdcall get_BrainpoolP160r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP160r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -769,7 +1986,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP160t1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP160t1(HSTRING* value) noexcept override
     {
         try
         {
@@ -784,7 +2001,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP192r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP192r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -799,7 +2016,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP192t1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP192t1(HSTRING* value) noexcept override
     {
         try
         {
@@ -814,7 +2031,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP224r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP224r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -829,7 +2046,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP224t1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP224t1(HSTRING* value) noexcept override
     {
         try
         {
@@ -844,7 +2061,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP256r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP256r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -859,7 +2076,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP256t1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP256t1(HSTRING* value) noexcept override
     {
         try
         {
@@ -874,7 +2091,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP320r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP320r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -889,7 +2106,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP320t1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP320t1(HSTRING* value) noexcept override
     {
         try
         {
@@ -904,7 +2121,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP384r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP384r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -919,7 +2136,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP384t1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP384t1(HSTRING* value) noexcept override
     {
         try
         {
@@ -934,7 +2151,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP512r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP512r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -949,7 +2166,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_BrainpoolP512t1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BrainpoolP512t1(HSTRING* value) noexcept override
     {
         try
         {
@@ -964,7 +2181,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_Curve25519(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Curve25519(HSTRING* value) noexcept override
     {
         try
         {
@@ -979,7 +2196,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_Ec192wapi(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Ec192wapi(HSTRING* value) noexcept override
     {
         try
         {
@@ -994,7 +2211,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_NistP192(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NistP192(HSTRING* value) noexcept override
     {
         try
         {
@@ -1009,7 +2226,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_NistP224(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NistP224(HSTRING* value) noexcept override
     {
         try
         {
@@ -1024,7 +2241,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_NistP256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NistP256(HSTRING* value) noexcept override
     {
         try
         {
@@ -1039,7 +2256,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_NistP384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NistP384(HSTRING* value) noexcept override
     {
         try
         {
@@ -1054,7 +2271,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_NistP521(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NistP521(HSTRING* value) noexcept override
     {
         try
         {
@@ -1069,7 +2286,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_NumsP256t1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NumsP256t1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1084,7 +2301,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_NumsP384t1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NumsP384t1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1099,7 +2316,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_NumsP512t1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NumsP512t1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1114,7 +2331,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_SecP160k1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SecP160k1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1129,7 +2346,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_SecP160r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SecP160r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1144,7 +2361,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_SecP160r2(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SecP160r2(HSTRING* value) noexcept override
     {
         try
         {
@@ -1159,7 +2376,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_SecP192k1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SecP192k1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1174,7 +2391,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_SecP192r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SecP192r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1189,7 +2406,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_SecP224k1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SecP224k1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1204,7 +2421,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_SecP224r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SecP224r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1219,7 +2436,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_SecP256k1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SecP256k1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1234,7 +2451,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_SecP256r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SecP256r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1249,7 +2466,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_SecP384r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SecP384r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1264,7 +2481,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_SecP521r1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SecP521r1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1279,7 +2496,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_Wtls7(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Wtls7(HSTRING* value) noexcept override
     {
         try
         {
@@ -1294,7 +2511,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_Wtls9(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Wtls9(HSTRING* value) noexcept override
     {
         try
         {
@@ -1309,7 +2526,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_Wtls12(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Wtls12(HSTRING* value) noexcept override
     {
         try
         {
@@ -1324,7 +2541,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_X962P192v1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_X962P192v1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1339,7 +2556,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_X962P192v2(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_X962P192v2(HSTRING* value) noexcept override
     {
         try
         {
@@ -1354,7 +2571,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_X962P192v3(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_X962P192v3(HSTRING* value) noexcept override
     {
         try
         {
@@ -1369,7 +2586,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_X962P239v1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_X962P239v1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1384,7 +2601,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_X962P239v2(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_X962P239v2(HSTRING* value) noexcept override
     {
         try
         {
@@ -1399,7 +2616,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_X962P239v3(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_X962P239v3(HSTRING* value) noexcept override
     {
         try
         {
@@ -1414,7 +2631,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_X962P256v1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_X962P256v1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1429,7 +2646,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
         }
     }
 
-    HRESULT __stdcall get_AllEccCurveNames(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<hstring>> value) noexcept override
+    HRESULT __stdcall get_AllEccCurveNames(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1448,7 +2665,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEccCurveNamesStatics> 
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IEncryptedAndAuthenticatedData> : produce_base<D, Windows::Security::Cryptography::Core::IEncryptedAndAuthenticatedData>
 {
-    HRESULT __stdcall get_EncryptedData(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_EncryptedData(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1463,7 +2680,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEncryptedAndAuthentica
         }
     }
 
-    HRESULT __stdcall get_AuthenticationTag(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_AuthenticationTag(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1482,7 +2699,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IEncryptedAndAuthentica
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics> : produce_base<D, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics>
 {
-    HRESULT __stdcall get_Md5(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Md5(HSTRING* value) noexcept override
     {
         try
         {
@@ -1497,7 +2714,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStat
         }
     }
 
-    HRESULT __stdcall get_Sha1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sha1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1512,7 +2729,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStat
         }
     }
 
-    HRESULT __stdcall get_Sha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -1527,7 +2744,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStat
         }
     }
 
-    HRESULT __stdcall get_Sha384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sha384(HSTRING* value) noexcept override
     {
         try
         {
@@ -1542,7 +2759,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStat
         }
     }
 
-    HRESULT __stdcall get_Sha512(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sha512(HSTRING* value) noexcept override
     {
         try
         {
@@ -1561,7 +2778,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStat
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmProvider> : produce_base<D, Windows::Security::Cryptography::Core::IHashAlgorithmProvider>
 {
-    HRESULT __stdcall get_AlgorithmName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AlgorithmName(HSTRING* value) noexcept override
     {
         try
         {
@@ -1576,7 +2793,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmProvider>
         }
     }
 
-    HRESULT __stdcall get_HashLength(uint32_t * value) noexcept override
+    HRESULT __stdcall get_HashLength(uint32_t* value) noexcept override
     {
         try
         {
@@ -1590,12 +2807,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmProvider>
         }
     }
 
-    HRESULT __stdcall abi_HashData(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall HashData(::IUnknown* data, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().HashData(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data)));
+            *value = detach_abi(this->shim().HashData(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data)));
             return S_OK;
         }
         catch (...)
@@ -1605,7 +2822,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmProvider>
         }
     }
 
-    HRESULT __stdcall abi_CreateHash(impl::abi_arg_out<Windows::Security::Cryptography::Core::IHashComputation> Value) noexcept override
+    HRESULT __stdcall CreateHash(::IUnknown** Value) noexcept override
     {
         try
         {
@@ -1624,12 +2841,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmProvider>
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmProviderStatics> : produce_base<D, Windows::Security::Cryptography::Core::IHashAlgorithmProviderStatics>
 {
-    HRESULT __stdcall abi_OpenAlgorithm(impl::abi_arg_in<hstring> algorithm, impl::abi_arg_out<Windows::Security::Cryptography::Core::IHashAlgorithmProvider> provider) noexcept override
+    HRESULT __stdcall OpenAlgorithm(HSTRING algorithm, ::IUnknown** provider) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *provider = detach_abi(this->shim().OpenAlgorithm(*reinterpret_cast<const hstring *>(&algorithm)));
+            *provider = detach_abi(this->shim().OpenAlgorithm(*reinterpret_cast<hstring const*>(&algorithm)));
             return S_OK;
         }
         catch (...)
@@ -1643,12 +2860,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashAlgorithmProviderS
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IHashComputation> : produce_base<D, Windows::Security::Cryptography::Core::IHashComputation>
 {
-    HRESULT __stdcall abi_Append(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data) noexcept override
+    HRESULT __stdcall Append(::IUnknown* data) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Append(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data));
+            this->shim().Append(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data));
             return S_OK;
         }
         catch (...)
@@ -1657,7 +2874,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashComputation> : pro
         }
     }
 
-    HRESULT __stdcall abi_GetValueAndReset(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall GetValueAndReset(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1676,7 +2893,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IHashComputation> : pro
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics> : produce_base<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>
 {
-    HRESULT __stdcall get_Pbkdf2Md5(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Pbkdf2Md5(HSTRING* value) noexcept override
     {
         try
         {
@@ -1691,7 +2908,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Pbkdf2Sha1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Pbkdf2Sha1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1706,7 +2923,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Pbkdf2Sha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Pbkdf2Sha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -1721,7 +2938,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Pbkdf2Sha384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Pbkdf2Sha384(HSTRING* value) noexcept override
     {
         try
         {
@@ -1736,7 +2953,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Pbkdf2Sha512(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Pbkdf2Sha512(HSTRING* value) noexcept override
     {
         try
         {
@@ -1751,7 +2968,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Sp800108CtrHmacMd5(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sp800108CtrHmacMd5(HSTRING* value) noexcept override
     {
         try
         {
@@ -1766,7 +2983,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Sp800108CtrHmacSha1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sp800108CtrHmacSha1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1781,7 +2998,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Sp800108CtrHmacSha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sp800108CtrHmacSha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -1796,7 +3013,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Sp800108CtrHmacSha384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sp800108CtrHmacSha384(HSTRING* value) noexcept override
     {
         try
         {
@@ -1811,7 +3028,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Sp800108CtrHmacSha512(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sp800108CtrHmacSha512(HSTRING* value) noexcept override
     {
         try
         {
@@ -1826,7 +3043,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Sp80056aConcatMd5(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sp80056aConcatMd5(HSTRING* value) noexcept override
     {
         try
         {
@@ -1841,7 +3058,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Sp80056aConcatSha1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sp80056aConcatSha1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1856,7 +3073,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Sp80056aConcatSha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sp80056aConcatSha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -1871,7 +3088,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Sp80056aConcatSha384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sp80056aConcatSha384(HSTRING* value) noexcept override
     {
         try
         {
@@ -1886,7 +3103,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_Sp80056aConcatSha512(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Sp80056aConcatSha512(HSTRING* value) noexcept override
     {
         try
         {
@@ -1905,7 +3122,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2> : produce_base<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2>
 {
-    HRESULT __stdcall get_CapiKdfMd5(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CapiKdfMd5(HSTRING* value) noexcept override
     {
         try
         {
@@ -1920,7 +3137,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_CapiKdfSha1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CapiKdfSha1(HSTRING* value) noexcept override
     {
         try
         {
@@ -1935,7 +3152,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_CapiKdfSha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CapiKdfSha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -1950,7 +3167,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_CapiKdfSha384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CapiKdfSha384(HSTRING* value) noexcept override
     {
         try
         {
@@ -1965,7 +3182,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall get_CapiKdfSha512(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_CapiKdfSha512(HSTRING* value) noexcept override
     {
         try
         {
@@ -1984,7 +3201,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProvider> : produce_base<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProvider>
 {
-    HRESULT __stdcall get_AlgorithmName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AlgorithmName(HSTRING* value) noexcept override
     {
         try
         {
@@ -1999,12 +3216,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
         }
     }
 
-    HRESULT __stdcall abi_CreateKey(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> keyMaterial, impl::abi_arg_out<Windows::Security::Cryptography::Core::ICryptographicKey> key) noexcept override
+    HRESULT __stdcall CreateKey(::IUnknown* keyMaterial, ::IUnknown** key) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *key = detach_abi(this->shim().CreateKey(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&keyMaterial)));
+            *key = detach_abi(this->shim().CreateKey(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&keyMaterial)));
             return S_OK;
         }
         catch (...)
@@ -2018,12 +3235,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProviderStatics> : produce_base<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProviderStatics>
 {
-    HRESULT __stdcall abi_OpenAlgorithm(impl::abi_arg_in<hstring> algorithm, impl::abi_arg_out<Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProvider> provider) noexcept override
+    HRESULT __stdcall OpenAlgorithm(HSTRING algorithm, ::IUnknown** provider) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *provider = detach_abi(this->shim().OpenAlgorithm(*reinterpret_cast<const hstring *>(&algorithm)));
+            *provider = detach_abi(this->shim().OpenAlgorithm(*reinterpret_cast<hstring const*>(&algorithm)));
             return S_OK;
         }
         catch (...)
@@ -2037,7 +3254,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithm
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParameters> : produce_base<D, Windows::Security::Cryptography::Core::IKeyDerivationParameters>
 {
-    HRESULT __stdcall get_KdfGenericBinary(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_KdfGenericBinary(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2052,12 +3269,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParameter
         }
     }
 
-    HRESULT __stdcall put_KdfGenericBinary(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall put_KdfGenericBinary(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().KdfGenericBinary(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&value));
+            this->shim().KdfGenericBinary(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2066,7 +3283,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParameter
         }
     }
 
-    HRESULT __stdcall get_IterationCount(uint32_t * value) noexcept override
+    HRESULT __stdcall get_IterationCount(uint32_t* value) noexcept override
     {
         try
         {
@@ -2084,7 +3301,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParameter
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParameters2> : produce_base<D, Windows::Security::Cryptography::Core::IKeyDerivationParameters2>
 {
-    HRESULT __stdcall get_Capi1KdfTargetAlgorithm(Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm * value) noexcept override
+    HRESULT __stdcall get_Capi1KdfTargetAlgorithm(abi_t<Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm>* value) noexcept override
     {
         try
         {
@@ -2098,12 +3315,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParameter
         }
     }
 
-    HRESULT __stdcall put_Capi1KdfTargetAlgorithm(Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm value) noexcept override
+    HRESULT __stdcall put_Capi1KdfTargetAlgorithm(abi_t<Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Capi1KdfTargetAlgorithm(value);
+            this->shim().Capi1KdfTargetAlgorithm(*reinterpret_cast<Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2116,12 +3333,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParameter
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics> : produce_base<D, Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics>
 {
-    HRESULT __stdcall abi_BuildForPbkdf2(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> pbkdf2Salt, uint32_t iterationCount, impl::abi_arg_out<Windows::Security::Cryptography::Core::IKeyDerivationParameters> value) noexcept override
+    HRESULT __stdcall BuildForPbkdf2(::IUnknown* pbkdf2Salt, uint32_t iterationCount, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().BuildForPbkdf2(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&pbkdf2Salt), iterationCount));
+            *value = detach_abi(this->shim().BuildForPbkdf2(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&pbkdf2Salt), iterationCount));
             return S_OK;
         }
         catch (...)
@@ -2131,12 +3348,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParameter
         }
     }
 
-    HRESULT __stdcall abi_BuildForSP800108(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> label, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> context, impl::abi_arg_out<Windows::Security::Cryptography::Core::IKeyDerivationParameters> value) noexcept override
+    HRESULT __stdcall BuildForSP800108(::IUnknown* label, ::IUnknown* context, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().BuildForSP800108(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&label), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&context)));
+            *value = detach_abi(this->shim().BuildForSP800108(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&label), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&context)));
             return S_OK;
         }
         catch (...)
@@ -2146,12 +3363,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParameter
         }
     }
 
-    HRESULT __stdcall abi_BuildForSP80056a(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> algorithmId, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> partyUInfo, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> partyVInfo, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> suppPubInfo, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> suppPrivInfo, impl::abi_arg_out<Windows::Security::Cryptography::Core::IKeyDerivationParameters> value) noexcept override
+    HRESULT __stdcall BuildForSP80056a(::IUnknown* algorithmId, ::IUnknown* partyUInfo, ::IUnknown* partyVInfo, ::IUnknown* suppPubInfo, ::IUnknown* suppPrivInfo, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().BuildForSP80056a(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&algorithmId), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&partyUInfo), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&partyVInfo), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&suppPubInfo), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&suppPrivInfo)));
+            *value = detach_abi(this->shim().BuildForSP80056a(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&algorithmId), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&partyUInfo), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&partyVInfo), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&suppPubInfo), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&suppPrivInfo)));
             return S_OK;
         }
         catch (...)
@@ -2165,12 +3382,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParameter
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics2> : produce_base<D, Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics2>
 {
-    HRESULT __stdcall abi_BuildForCapi1Kdf(Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm capi1KdfTargetAlgorithm, impl::abi_arg_out<Windows::Security::Cryptography::Core::IKeyDerivationParameters> value) noexcept override
+    HRESULT __stdcall BuildForCapi1Kdf(abi_t<Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm> capi1KdfTargetAlgorithm, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().BuildForCapi1Kdf(capi1KdfTargetAlgorithm));
+            *value = detach_abi(this->shim().BuildForCapi1Kdf(*reinterpret_cast<Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm const*>(&capi1KdfTargetAlgorithm)));
             return S_OK;
         }
         catch (...)
@@ -2184,7 +3401,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IKeyDerivationParameter
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics> : produce_base<D, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics>
 {
-    HRESULT __stdcall get_HmacMd5(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HmacMd5(HSTRING* value) noexcept override
     {
         try
         {
@@ -2199,7 +3416,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStati
         }
     }
 
-    HRESULT __stdcall get_HmacSha1(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HmacSha1(HSTRING* value) noexcept override
     {
         try
         {
@@ -2214,7 +3431,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStati
         }
     }
 
-    HRESULT __stdcall get_HmacSha256(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HmacSha256(HSTRING* value) noexcept override
     {
         try
         {
@@ -2229,7 +3446,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStati
         }
     }
 
-    HRESULT __stdcall get_HmacSha384(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HmacSha384(HSTRING* value) noexcept override
     {
         try
         {
@@ -2244,7 +3461,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStati
         }
     }
 
-    HRESULT __stdcall get_HmacSha512(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HmacSha512(HSTRING* value) noexcept override
     {
         try
         {
@@ -2259,7 +3476,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStati
         }
     }
 
-    HRESULT __stdcall get_AesCmac(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AesCmac(HSTRING* value) noexcept override
     {
         try
         {
@@ -2278,7 +3495,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStati
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmProvider> : produce_base<D, Windows::Security::Cryptography::Core::IMacAlgorithmProvider>
 {
-    HRESULT __stdcall get_AlgorithmName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AlgorithmName(HSTRING* value) noexcept override
     {
         try
         {
@@ -2293,7 +3510,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmProvider> 
         }
     }
 
-    HRESULT __stdcall get_MacLength(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MacLength(uint32_t* value) noexcept override
     {
         try
         {
@@ -2307,12 +3524,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmProvider> 
         }
     }
 
-    HRESULT __stdcall abi_CreateKey(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> keyMaterial, impl::abi_arg_out<Windows::Security::Cryptography::Core::ICryptographicKey> macKey) noexcept override
+    HRESULT __stdcall CreateKey(::IUnknown* keyMaterial, ::IUnknown** macKey) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *macKey = detach_abi(this->shim().CreateKey(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&keyMaterial)));
+            *macKey = detach_abi(this->shim().CreateKey(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&keyMaterial)));
             return S_OK;
         }
         catch (...)
@@ -2326,12 +3543,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmProvider> 
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmProvider2> : produce_base<D, Windows::Security::Cryptography::Core::IMacAlgorithmProvider2>
 {
-    HRESULT __stdcall abi_CreateHash(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> keyMaterial, impl::abi_arg_out<Windows::Security::Cryptography::Core::IHashComputation> value) noexcept override
+    HRESULT __stdcall CreateHash(::IUnknown* keyMaterial, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().CreateHash(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&keyMaterial)));
+            *value = detach_abi(this->shim().CreateHash(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&keyMaterial)));
             return S_OK;
         }
         catch (...)
@@ -2345,12 +3562,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmProvider2>
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmProviderStatics> : produce_base<D, Windows::Security::Cryptography::Core::IMacAlgorithmProviderStatics>
 {
-    HRESULT __stdcall abi_OpenAlgorithm(impl::abi_arg_in<hstring> algorithm, impl::abi_arg_out<Windows::Security::Cryptography::Core::IMacAlgorithmProvider> provider) noexcept override
+    HRESULT __stdcall OpenAlgorithm(HSTRING algorithm, ::IUnknown** provider) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *provider = detach_abi(this->shim().OpenAlgorithm(*reinterpret_cast<const hstring *>(&algorithm)));
+            *provider = detach_abi(this->shim().OpenAlgorithm(*reinterpret_cast<hstring const*>(&algorithm)));
             return S_OK;
         }
         catch (...)
@@ -2364,12 +3581,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IMacAlgorithmProviderSt
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::IPersistedKeyProviderStatics> : produce_base<D, Windows::Security::Cryptography::Core::IPersistedKeyProviderStatics>
 {
-    HRESULT __stdcall abi_OpenKeyPairFromCertificateAsync(impl::abi_arg_in<Windows::Security::Cryptography::Certificates::ICertificate> certificate, impl::abi_arg_in<hstring> hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding padding, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey>> operation) noexcept override
+    HRESULT __stdcall OpenKeyPairFromCertificateAsync(::IUnknown* certificate, HSTRING hashAlgorithmName, abi_t<Windows::Security::Cryptography::Core::CryptographicPadding> padding, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().OpenKeyPairFromCertificateAsync(*reinterpret_cast<const Windows::Security::Cryptography::Certificates::Certificate *>(&certificate), *reinterpret_cast<const hstring *>(&hashAlgorithmName), padding));
+            *operation = detach_abi(this->shim().OpenKeyPairFromCertificateAsync(*reinterpret_cast<Windows::Security::Cryptography::Certificates::Certificate const*>(&certificate), *reinterpret_cast<hstring const*>(&hashAlgorithmName), *reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicPadding const*>(&padding)));
             return S_OK;
         }
         catch (...)
@@ -2379,12 +3596,12 @@ struct produce<D, Windows::Security::Cryptography::Core::IPersistedKeyProviderSt
         }
     }
 
-    HRESULT __stdcall abi_OpenPublicKeyFromCertificate(impl::abi_arg_in<Windows::Security::Cryptography::Certificates::ICertificate> certificate, impl::abi_arg_in<hstring> hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding padding, impl::abi_arg_out<Windows::Security::Cryptography::Core::ICryptographicKey> key) noexcept override
+    HRESULT __stdcall OpenPublicKeyFromCertificate(::IUnknown* certificate, HSTRING hashAlgorithmName, abi_t<Windows::Security::Cryptography::Core::CryptographicPadding> padding, ::IUnknown** key) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *key = detach_abi(this->shim().OpenPublicKeyFromCertificate(*reinterpret_cast<const Windows::Security::Cryptography::Certificates::Certificate *>(&certificate), *reinterpret_cast<const hstring *>(&hashAlgorithmName), padding));
+            *key = detach_abi(this->shim().OpenPublicKeyFromCertificate(*reinterpret_cast<Windows::Security::Cryptography::Certificates::Certificate const*>(&certificate), *reinterpret_cast<hstring const*>(&hashAlgorithmName), *reinterpret_cast<Windows::Security::Cryptography::Core::CryptographicPadding const*>(&padding)));
             return S_OK;
         }
         catch (...)
@@ -2398,7 +3615,7 @@ struct produce<D, Windows::Security::Cryptography::Core::IPersistedKeyProviderSt
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics> : produce_base<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>
 {
-    HRESULT __stdcall get_DesCbc(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DesCbc(HSTRING* value) noexcept override
     {
         try
         {
@@ -2413,7 +3630,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_DesEcb(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DesEcb(HSTRING* value) noexcept override
     {
         try
         {
@@ -2428,7 +3645,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_TripleDesCbc(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TripleDesCbc(HSTRING* value) noexcept override
     {
         try
         {
@@ -2443,7 +3660,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_TripleDesEcb(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TripleDesEcb(HSTRING* value) noexcept override
     {
         try
         {
@@ -2458,7 +3675,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_Rc2Cbc(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Rc2Cbc(HSTRING* value) noexcept override
     {
         try
         {
@@ -2473,7 +3690,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_Rc2Ecb(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Rc2Ecb(HSTRING* value) noexcept override
     {
         try
         {
@@ -2488,7 +3705,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_AesCbc(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AesCbc(HSTRING* value) noexcept override
     {
         try
         {
@@ -2503,7 +3720,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_AesEcb(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AesEcb(HSTRING* value) noexcept override
     {
         try
         {
@@ -2518,7 +3735,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_AesGcm(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AesGcm(HSTRING* value) noexcept override
     {
         try
         {
@@ -2533,7 +3750,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_AesCcm(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AesCcm(HSTRING* value) noexcept override
     {
         try
         {
@@ -2548,7 +3765,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_AesCbcPkcs7(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AesCbcPkcs7(HSTRING* value) noexcept override
     {
         try
         {
@@ -2563,7 +3780,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_AesEcbPkcs7(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AesEcbPkcs7(HSTRING* value) noexcept override
     {
         try
         {
@@ -2578,7 +3795,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_DesCbcPkcs7(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DesCbcPkcs7(HSTRING* value) noexcept override
     {
         try
         {
@@ -2593,7 +3810,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_DesEcbPkcs7(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DesEcbPkcs7(HSTRING* value) noexcept override
     {
         try
         {
@@ -2608,7 +3825,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_TripleDesCbcPkcs7(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TripleDesCbcPkcs7(HSTRING* value) noexcept override
     {
         try
         {
@@ -2623,7 +3840,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_TripleDesEcbPkcs7(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_TripleDesEcbPkcs7(HSTRING* value) noexcept override
     {
         try
         {
@@ -2638,7 +3855,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_Rc2CbcPkcs7(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Rc2CbcPkcs7(HSTRING* value) noexcept override
     {
         try
         {
@@ -2653,7 +3870,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_Rc2EcbPkcs7(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Rc2EcbPkcs7(HSTRING* value) noexcept override
     {
         try
         {
@@ -2668,7 +3885,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
         }
     }
 
-    HRESULT __stdcall get_Rc4(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Rc4(HSTRING* value) noexcept override
     {
         try
         {
@@ -2687,7 +3904,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricAlgorithmName
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProvider> : produce_base<D, Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProvider>
 {
-    HRESULT __stdcall get_AlgorithmName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AlgorithmName(HSTRING* value) noexcept override
     {
         try
         {
@@ -2702,7 +3919,7 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmP
         }
     }
 
-    HRESULT __stdcall get_BlockLength(uint32_t * value) noexcept override
+    HRESULT __stdcall get_BlockLength(uint32_t* value) noexcept override
     {
         try
         {
@@ -2716,12 +3933,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmP
         }
     }
 
-    HRESULT __stdcall abi_CreateSymmetricKey(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> keyMaterial, impl::abi_arg_out<Windows::Security::Cryptography::Core::ICryptographicKey> key) noexcept override
+    HRESULT __stdcall CreateSymmetricKey(::IUnknown* keyMaterial, ::IUnknown** key) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *key = detach_abi(this->shim().CreateSymmetricKey(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&keyMaterial)));
+            *key = detach_abi(this->shim().CreateSymmetricKey(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&keyMaterial)));
             return S_OK;
         }
         catch (...)
@@ -2735,12 +3952,12 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmP
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProviderStatics> : produce_base<D, Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProviderStatics>
 {
-    HRESULT __stdcall abi_OpenAlgorithm(impl::abi_arg_in<hstring> algorithm, impl::abi_arg_out<Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProvider> provider) noexcept override
+    HRESULT __stdcall OpenAlgorithm(HSTRING algorithm, ::IUnknown** provider) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *provider = detach_abi(this->shim().OpenAlgorithm(*reinterpret_cast<const hstring *>(&algorithm)));
+            *provider = detach_abi(this->shim().OpenAlgorithm(*reinterpret_cast<hstring const*>(&algorithm)));
             return S_OK;
         }
         catch (...)
@@ -2753,2280 +3970,853 @@ struct produce<D, Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmP
 
 }
 
-namespace Windows::Security::Cryptography::Core {
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IKeyDerivationParameters<D>::KdfGenericBinary() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IKeyDerivationParameters)->get_KdfGenericBinary(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IKeyDerivationParameters<D>::KdfGenericBinary(const Windows::Storage::Streams::IBuffer & value) const
-{
-    check_hresult(WINRT_SHIM(IKeyDerivationParameters)->put_KdfGenericBinary(get_abi(value)));
-}
-
-template <typename D> uint32_t impl_IKeyDerivationParameters<D>::IterationCount() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IKeyDerivationParameters)->get_IterationCount(&value));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm impl_IKeyDerivationParameters2<D>::Capi1KdfTargetAlgorithm() const
-{
-    Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm value {};
-    check_hresult(WINRT_SHIM(IKeyDerivationParameters2)->get_Capi1KdfTargetAlgorithm(&value));
-    return value;
-}
-
-template <typename D> void impl_IKeyDerivationParameters2<D>::Capi1KdfTargetAlgorithm(Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm value) const
-{
-    check_hresult(WINRT_SHIM(IKeyDerivationParameters2)->put_Capi1KdfTargetAlgorithm(value));
-}
-
-template <typename D> Windows::Security::Cryptography::Core::KeyDerivationParameters impl_IKeyDerivationParametersStatics<D>::BuildForPbkdf2(const Windows::Storage::Streams::IBuffer & pbkdf2Salt, uint32_t iterationCount) const
-{
-    Windows::Security::Cryptography::Core::KeyDerivationParameters value { nullptr };
-    check_hresult(WINRT_SHIM(IKeyDerivationParametersStatics)->abi_BuildForPbkdf2(get_abi(pbkdf2Salt), iterationCount, put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::KeyDerivationParameters impl_IKeyDerivationParametersStatics<D>::BuildForSP800108(const Windows::Storage::Streams::IBuffer & label, const Windows::Storage::Streams::IBuffer & context) const
-{
-    Windows::Security::Cryptography::Core::KeyDerivationParameters value { nullptr };
-    check_hresult(WINRT_SHIM(IKeyDerivationParametersStatics)->abi_BuildForSP800108(get_abi(label), get_abi(context), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::KeyDerivationParameters impl_IKeyDerivationParametersStatics<D>::BuildForSP80056a(const Windows::Storage::Streams::IBuffer & algorithmId, const Windows::Storage::Streams::IBuffer & partyUInfo, const Windows::Storage::Streams::IBuffer & partyVInfo, const Windows::Storage::Streams::IBuffer & suppPubInfo, const Windows::Storage::Streams::IBuffer & suppPrivInfo) const
-{
-    Windows::Security::Cryptography::Core::KeyDerivationParameters value { nullptr };
-    check_hresult(WINRT_SHIM(IKeyDerivationParametersStatics)->abi_BuildForSP80056a(get_abi(algorithmId), get_abi(partyUInfo), get_abi(partyVInfo), get_abi(suppPubInfo), get_abi(suppPrivInfo), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::KeyDerivationParameters impl_IKeyDerivationParametersStatics2<D>::BuildForCapi1Kdf(Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm capi1KdfTargetAlgorithm) const
-{
-    Windows::Security::Cryptography::Core::KeyDerivationParameters value { nullptr };
-    check_hresult(WINRT_SHIM(IKeyDerivationParametersStatics2)->abi_BuildForCapi1Kdf(capi1KdfTargetAlgorithm, put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_ICryptographicKey<D>::KeySize() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ICryptographicKey)->get_KeySize(&value));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ICryptographicKey<D>::Export() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ICryptographicKey)->abi_ExportDefaultPrivateKeyBlobType(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ICryptographicKey<D>::Export(Windows::Security::Cryptography::Core::CryptographicPrivateKeyBlobType BlobType) const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ICryptographicKey)->abi_ExportPrivateKeyWithBlobType(BlobType, put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ICryptographicKey<D>::ExportPublicKey() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ICryptographicKey)->abi_ExportDefaultPublicKeyBlobType(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ICryptographicKey<D>::ExportPublicKey(Windows::Security::Cryptography::Core::CryptographicPublicKeyBlobType BlobType) const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ICryptographicKey)->abi_ExportPublicKeyWithBlobType(BlobType, put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IHashComputation<D>::Append(const Windows::Storage::Streams::IBuffer & data) const
-{
-    check_hresult(WINRT_SHIM(IHashComputation)->abi_Append(get_abi(data)));
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IHashComputation<D>::GetValueAndReset() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IHashComputation)->abi_GetValueAndReset(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IHashAlgorithmProvider<D>::AlgorithmName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IHashAlgorithmProvider)->get_AlgorithmName(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IHashAlgorithmProvider<D>::HashLength() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IHashAlgorithmProvider)->get_HashLength(&value));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IHashAlgorithmProvider<D>::HashData(const Windows::Storage::Streams::IBuffer & data) const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IHashAlgorithmProvider)->abi_HashData(get_abi(data), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicHash impl_IHashAlgorithmProvider<D>::CreateHash() const
-{
-    Windows::Security::Cryptography::Core::CryptographicHash Value { nullptr };
-    check_hresult(WINRT_SHIM(IHashAlgorithmProvider)->abi_CreateHash(put_abi(Value)));
-    return Value;
-}
-
-template <typename D> hstring impl_IMacAlgorithmProvider<D>::AlgorithmName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMacAlgorithmProvider)->get_AlgorithmName(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IMacAlgorithmProvider<D>::MacLength() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IMacAlgorithmProvider)->get_MacLength(&value));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicKey impl_IMacAlgorithmProvider<D>::CreateKey(const Windows::Storage::Streams::IBuffer & keyMaterial) const
-{
-    Windows::Security::Cryptography::Core::CryptographicKey macKey { nullptr };
-    check_hresult(WINRT_SHIM(IMacAlgorithmProvider)->abi_CreateKey(get_abi(keyMaterial), put_abi(macKey)));
-    return macKey;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicHash impl_IMacAlgorithmProvider2<D>::CreateHash(const Windows::Storage::Streams::IBuffer & keyMaterial) const
-{
-    Windows::Security::Cryptography::Core::CryptographicHash value { nullptr };
-    check_hresult(WINRT_SHIM(IMacAlgorithmProvider2)->abi_CreateHash(get_abi(keyMaterial), put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmProvider<D>::AlgorithmName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmProvider)->get_AlgorithmName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicKey impl_IKeyDerivationAlgorithmProvider<D>::CreateKey(const Windows::Storage::Streams::IBuffer & keyMaterial) const
-{
-    Windows::Security::Cryptography::Core::CryptographicKey key { nullptr };
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmProvider)->abi_CreateKey(get_abi(keyMaterial), put_abi(key)));
-    return key;
-}
-
-template <typename D> hstring impl_ISymmetricKeyAlgorithmProvider<D>::AlgorithmName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricKeyAlgorithmProvider)->get_AlgorithmName(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_ISymmetricKeyAlgorithmProvider<D>::BlockLength() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(ISymmetricKeyAlgorithmProvider)->get_BlockLength(&value));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicKey impl_ISymmetricKeyAlgorithmProvider<D>::CreateSymmetricKey(const Windows::Storage::Streams::IBuffer & keyMaterial) const
-{
-    Windows::Security::Cryptography::Core::CryptographicKey key { nullptr };
-    check_hresult(WINRT_SHIM(ISymmetricKeyAlgorithmProvider)->abi_CreateSymmetricKey(get_abi(keyMaterial), put_abi(key)));
-    return key;
-}
-
-template <typename D> hstring impl_IAsymmetricKeyAlgorithmProvider<D>::AlgorithmName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricKeyAlgorithmProvider)->get_AlgorithmName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicKey impl_IAsymmetricKeyAlgorithmProvider<D>::CreateKeyPair(uint32_t keySize) const
-{
-    Windows::Security::Cryptography::Core::CryptographicKey key { nullptr };
-    check_hresult(WINRT_SHIM(IAsymmetricKeyAlgorithmProvider)->abi_CreateKeyPair(keySize, put_abi(key)));
-    return key;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicKey impl_IAsymmetricKeyAlgorithmProvider<D>::ImportKeyPair(const Windows::Storage::Streams::IBuffer & keyBlob) const
-{
-    Windows::Security::Cryptography::Core::CryptographicKey key { nullptr };
-    check_hresult(WINRT_SHIM(IAsymmetricKeyAlgorithmProvider)->abi_ImportDefaultPrivateKeyBlob(get_abi(keyBlob), put_abi(key)));
-    return key;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicKey impl_IAsymmetricKeyAlgorithmProvider<D>::ImportKeyPair(const Windows::Storage::Streams::IBuffer & keyBlob, Windows::Security::Cryptography::Core::CryptographicPrivateKeyBlobType BlobType) const
-{
-    Windows::Security::Cryptography::Core::CryptographicKey key { nullptr };
-    check_hresult(WINRT_SHIM(IAsymmetricKeyAlgorithmProvider)->abi_ImportKeyPairWithBlobType(get_abi(keyBlob), BlobType, put_abi(key)));
-    return key;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicKey impl_IAsymmetricKeyAlgorithmProvider<D>::ImportPublicKey(const Windows::Storage::Streams::IBuffer & keyBlob) const
-{
-    Windows::Security::Cryptography::Core::CryptographicKey key { nullptr };
-    check_hresult(WINRT_SHIM(IAsymmetricKeyAlgorithmProvider)->abi_ImportDefaultPublicKeyBlob(get_abi(keyBlob), put_abi(key)));
-    return key;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicKey impl_IAsymmetricKeyAlgorithmProvider<D>::ImportPublicKey(const Windows::Storage::Streams::IBuffer & keyBlob, Windows::Security::Cryptography::Core::CryptographicPublicKeyBlobType BlobType) const
-{
-    Windows::Security::Cryptography::Core::CryptographicKey key { nullptr };
-    check_hresult(WINRT_SHIM(IAsymmetricKeyAlgorithmProvider)->abi_ImportPublicKeyWithBlobType(get_abi(keyBlob), BlobType, put_abi(key)));
-    return key;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicKey impl_IAsymmetricKeyAlgorithmProvider2<D>::CreateKeyPairWithCurveName(hstring_view curveName) const
-{
-    Windows::Security::Cryptography::Core::CryptographicKey key { nullptr };
-    check_hresult(WINRT_SHIM(IAsymmetricKeyAlgorithmProvider2)->abi_CreateKeyPairWithCurveName(get_abi(curveName), put_abi(key)));
-    return key;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicKey impl_IAsymmetricKeyAlgorithmProvider2<D>::CreateKeyPairWithCurveParameters(array_view<const uint8_t> parameters) const
-{
-    Windows::Security::Cryptography::Core::CryptographicKey key { nullptr };
-    check_hresult(WINRT_SHIM(IAsymmetricKeyAlgorithmProvider2)->abi_CreateKeyPairWithCurveParameters(parameters.size(), get_abi(parameters), put_abi(key)));
-    return key;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> impl_IPersistedKeyProviderStatics<D>::OpenKeyPairFromCertificateAsync(const Windows::Security::Cryptography::Certificates::Certificate & certificate, hstring_view hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding padding) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> operation;
-    check_hresult(WINRT_SHIM(IPersistedKeyProviderStatics)->abi_OpenKeyPairFromCertificateAsync(get_abi(certificate), get_abi(hashAlgorithmName), padding, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::CryptographicKey impl_IPersistedKeyProviderStatics<D>::OpenPublicKeyFromCertificate(const Windows::Security::Cryptography::Certificates::Certificate & certificate, hstring_view hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding padding) const
-{
-    Windows::Security::Cryptography::Core::CryptographicKey key { nullptr };
-    check_hresult(WINRT_SHIM(IPersistedKeyProviderStatics)->abi_OpenPublicKeyFromCertificate(get_abi(certificate), get_abi(hashAlgorithmName), padding, put_abi(key)));
-    return key;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IEncryptedAndAuthenticatedData<D>::EncryptedData() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IEncryptedAndAuthenticatedData)->get_EncryptedData(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IEncryptedAndAuthenticatedData<D>::AuthenticationTag() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IEncryptedAndAuthenticatedData)->get_AuthenticationTag(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ICryptographicEngineStatics<D>::Encrypt(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & iv) const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics)->abi_Encrypt(get_abi(key), get_abi(data), get_abi(iv), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ICryptographicEngineStatics<D>::Decrypt(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & iv) const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics)->abi_Decrypt(get_abi(key), get_abi(data), get_abi(iv), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::EncryptedAndAuthenticatedData impl_ICryptographicEngineStatics<D>::EncryptAndAuthenticate(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & nonce, const Windows::Storage::Streams::IBuffer & authenticatedData) const
-{
-    Windows::Security::Cryptography::Core::EncryptedAndAuthenticatedData value { nullptr };
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics)->abi_EncryptAndAuthenticate(get_abi(key), get_abi(data), get_abi(nonce), get_abi(authenticatedData), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ICryptographicEngineStatics<D>::DecryptAndAuthenticate(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & nonce, const Windows::Storage::Streams::IBuffer & authenticationTag, const Windows::Storage::Streams::IBuffer & authenticatedData) const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics)->abi_DecryptAndAuthenticate(get_abi(key), get_abi(data), get_abi(nonce), get_abi(authenticationTag), get_abi(authenticatedData), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ICryptographicEngineStatics<D>::Sign(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data) const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics)->abi_Sign(get_abi(key), get_abi(data), put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_ICryptographicEngineStatics<D>::VerifySignature(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & signature) const
-{
-    bool isAuthenticated {};
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics)->abi_VerifySignature(get_abi(key), get_abi(data), get_abi(signature), &isAuthenticated));
-    return isAuthenticated;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ICryptographicEngineStatics<D>::DeriveKeyMaterial(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Security::Cryptography::Core::KeyDerivationParameters & parameters, uint32_t desiredKeySize) const
-{
-    Windows::Storage::Streams::IBuffer keyMaterial;
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics)->abi_DeriveKeyMaterial(get_abi(key), get_abi(parameters), desiredKeySize, put_abi(keyMaterial)));
-    return keyMaterial;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ICryptographicEngineStatics2<D>::SignHashedData(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data) const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics2)->abi_SignHashedData(get_abi(key), get_abi(data), put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_ICryptographicEngineStatics2<D>::VerifySignatureWithHashInput(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & signature) const
-{
-    bool isAuthenticated {};
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics2)->abi_VerifySignatureWithHashInput(get_abi(key), get_abi(data), get_abi(signature), &isAuthenticated));
-    return isAuthenticated;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> impl_ICryptographicEngineStatics2<D>::DecryptAsync(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & iv) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> value;
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics2)->abi_DecryptAsync(get_abi(key), get_abi(data), get_abi(iv), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> impl_ICryptographicEngineStatics2<D>::SignAsync(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> value;
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics2)->abi_SignAsync(get_abi(key), get_abi(data), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> impl_ICryptographicEngineStatics2<D>::SignHashedDataAsync(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> value;
-    check_hresult(WINRT_SHIM(ICryptographicEngineStatics2)->abi_SignHashedDataAsync(get_abi(key), get_abi(data), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::HashAlgorithmProvider impl_IHashAlgorithmProviderStatics<D>::OpenAlgorithm(hstring_view algorithm) const
-{
-    Windows::Security::Cryptography::Core::HashAlgorithmProvider provider { nullptr };
-    check_hresult(WINRT_SHIM(IHashAlgorithmProviderStatics)->abi_OpenAlgorithm(get_abi(algorithm), put_abi(provider)));
-    return provider;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::MacAlgorithmProvider impl_IMacAlgorithmProviderStatics<D>::OpenAlgorithm(hstring_view algorithm) const
-{
-    Windows::Security::Cryptography::Core::MacAlgorithmProvider provider { nullptr };
-    check_hresult(WINRT_SHIM(IMacAlgorithmProviderStatics)->abi_OpenAlgorithm(get_abi(algorithm), put_abi(provider)));
-    return provider;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider impl_IKeyDerivationAlgorithmProviderStatics<D>::OpenAlgorithm(hstring_view algorithm) const
-{
-    Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider provider { nullptr };
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmProviderStatics)->abi_OpenAlgorithm(get_abi(algorithm), put_abi(provider)));
-    return provider;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider impl_ISymmetricKeyAlgorithmProviderStatics<D>::OpenAlgorithm(hstring_view algorithm) const
-{
-    Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider provider { nullptr };
-    check_hresult(WINRT_SHIM(ISymmetricKeyAlgorithmProviderStatics)->abi_OpenAlgorithm(get_abi(algorithm), put_abi(provider)));
-    return provider;
-}
-
-template <typename D> Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider impl_IAsymmetricKeyAlgorithmProviderStatics<D>::OpenAlgorithm(hstring_view algorithm) const
-{
-    Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider provider { nullptr };
-    check_hresult(WINRT_SHIM(IAsymmetricKeyAlgorithmProviderStatics)->abi_OpenAlgorithm(get_abi(algorithm), put_abi(provider)));
-    return provider;
-}
-
-template <typename D> hstring impl_IHashAlgorithmNamesStatics<D>::Md5() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IHashAlgorithmNamesStatics)->get_Md5(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IHashAlgorithmNamesStatics<D>::Sha1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IHashAlgorithmNamesStatics)->get_Sha1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IHashAlgorithmNamesStatics<D>::Sha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IHashAlgorithmNamesStatics)->get_Sha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IHashAlgorithmNamesStatics<D>::Sha384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IHashAlgorithmNamesStatics)->get_Sha384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IHashAlgorithmNamesStatics<D>::Sha512() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IHashAlgorithmNamesStatics)->get_Sha512(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IMacAlgorithmNamesStatics<D>::HmacMd5() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMacAlgorithmNamesStatics)->get_HmacMd5(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IMacAlgorithmNamesStatics<D>::HmacSha1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMacAlgorithmNamesStatics)->get_HmacSha1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IMacAlgorithmNamesStatics<D>::HmacSha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMacAlgorithmNamesStatics)->get_HmacSha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IMacAlgorithmNamesStatics<D>::HmacSha384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMacAlgorithmNamesStatics)->get_HmacSha384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IMacAlgorithmNamesStatics<D>::HmacSha512() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMacAlgorithmNamesStatics)->get_HmacSha512(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IMacAlgorithmNamesStatics<D>::AesCmac() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IMacAlgorithmNamesStatics)->get_AesCmac(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::DesCbc() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_DesCbc(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::DesEcb() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_DesEcb(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::TripleDesCbc() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_TripleDesCbc(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::TripleDesEcb() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_TripleDesEcb(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::Rc2Cbc() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_Rc2Cbc(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::Rc2Ecb() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_Rc2Ecb(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::AesCbc() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_AesCbc(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::AesEcb() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_AesEcb(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::AesGcm() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_AesGcm(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::AesCcm() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_AesCcm(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::AesCbcPkcs7() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_AesCbcPkcs7(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::AesEcbPkcs7() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_AesEcbPkcs7(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::DesCbcPkcs7() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_DesCbcPkcs7(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::DesEcbPkcs7() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_DesEcbPkcs7(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::TripleDesCbcPkcs7() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_TripleDesCbcPkcs7(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::TripleDesEcbPkcs7() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_TripleDesEcbPkcs7(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::Rc2CbcPkcs7() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_Rc2CbcPkcs7(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::Rc2EcbPkcs7() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_Rc2EcbPkcs7(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISymmetricAlgorithmNamesStatics<D>::Rc4() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISymmetricAlgorithmNamesStatics)->get_Rc4(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaPkcs1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaPkcs1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaOaepSha1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaOaepSha1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaOaepSha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaOaepSha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaOaepSha384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaOaepSha384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaOaepSha512() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaOaepSha512(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::EcdsaP256Sha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_EcdsaP256Sha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::EcdsaP384Sha384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_EcdsaP384Sha384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::EcdsaP521Sha512() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_EcdsaP521Sha512(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::DsaSha1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_DsaSha1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::DsaSha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_DsaSha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPkcs1Sha1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaSignPkcs1Sha1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPkcs1Sha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaSignPkcs1Sha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPkcs1Sha384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaSignPkcs1Sha384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPkcs1Sha512() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaSignPkcs1Sha512(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPssSha1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaSignPssSha1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPssSha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaSignPssSha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPssSha384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaSignPssSha384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics<D>::RsaSignPssSha512() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics)->get_RsaSignPssSha512(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics2<D>::EcdsaSha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics2)->get_EcdsaSha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics2<D>::EcdsaSha384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics2)->get_EcdsaSha384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAsymmetricAlgorithmNamesStatics2<D>::EcdsaSha512() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAsymmetricAlgorithmNamesStatics2)->get_EcdsaSha512(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP160r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP160r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP160t1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP160t1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP192r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP192r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP192t1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP192t1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP224r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP224r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP224t1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP224t1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP256r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP256r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP256t1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP256t1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP320r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP320r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP320t1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP320t1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP384r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP384r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP384t1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP384t1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP512r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP512r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::BrainpoolP512t1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_BrainpoolP512t1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::Curve25519() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_Curve25519(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::Ec192wapi() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_Ec192wapi(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::NistP192() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_NistP192(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::NistP224() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_NistP224(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::NistP256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_NistP256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::NistP384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_NistP384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::NistP521() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_NistP521(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::NumsP256t1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_NumsP256t1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::NumsP384t1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_NumsP384t1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::NumsP512t1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_NumsP512t1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::SecP160k1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_SecP160k1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::SecP160r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_SecP160r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::SecP160r2() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_SecP160r2(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::SecP192k1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_SecP192k1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::SecP192r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_SecP192r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::SecP224k1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_SecP224k1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::SecP224r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_SecP224r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::SecP256k1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_SecP256k1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::SecP256r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_SecP256r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::SecP384r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_SecP384r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::SecP521r1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_SecP521r1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::Wtls7() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_Wtls7(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::Wtls9() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_Wtls9(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::Wtls12() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_Wtls12(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::X962P192v1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_X962P192v1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::X962P192v2() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_X962P192v2(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::X962P192v3() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_X962P192v3(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::X962P239v1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_X962P239v1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::X962P239v2() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_X962P239v2(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::X962P239v3() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_X962P239v3(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEccCurveNamesStatics<D>::X962P256v1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_X962P256v1(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<hstring> impl_IEccCurveNamesStatics<D>::AllEccCurveNames() const
-{
-    Windows::Foundation::Collections::IVectorView<hstring> value;
-    check_hresult(WINRT_SHIM(IEccCurveNamesStatics)->get_AllEccCurveNames(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Pbkdf2Md5() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Pbkdf2Md5(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Pbkdf2Sha1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Pbkdf2Sha1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Pbkdf2Sha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Pbkdf2Sha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Pbkdf2Sha384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Pbkdf2Sha384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Pbkdf2Sha512() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Pbkdf2Sha512(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Sp800108CtrHmacMd5() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Sp800108CtrHmacMd5(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Sp800108CtrHmacSha1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Sp800108CtrHmacSha1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Sp800108CtrHmacSha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Sp800108CtrHmacSha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Sp800108CtrHmacSha384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Sp800108CtrHmacSha384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Sp800108CtrHmacSha512() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Sp800108CtrHmacSha512(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Sp80056aConcatMd5() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Sp80056aConcatMd5(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Sp80056aConcatSha1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Sp80056aConcatSha1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Sp80056aConcatSha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Sp80056aConcatSha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Sp80056aConcatSha384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Sp80056aConcatSha384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics<D>::Sp80056aConcatSha512() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics)->get_Sp80056aConcatSha512(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics2<D>::CapiKdfMd5() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics2)->get_CapiKdfMd5(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics2<D>::CapiKdfSha1() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics2)->get_CapiKdfSha1(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics2<D>::CapiKdfSha256() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics2)->get_CapiKdfSha256(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics2<D>::CapiKdfSha384() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics2)->get_CapiKdfSha384(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKeyDerivationAlgorithmNamesStatics2<D>::CapiKdfSha512() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKeyDerivationAlgorithmNamesStatics2)->get_CapiKdfSha512(put_abi(value)));
-    return value;
-}
+WINRT_EXPORT namespace winrt::Windows::Security::Cryptography::Core {
 
 inline hstring AsymmetricAlgorithmNames::RsaPkcs1()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaPkcs1();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaPkcs1();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaOaepSha1()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaOaepSha1();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaOaepSha1();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaOaepSha256()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaOaepSha256();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaOaepSha256();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaOaepSha384()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaOaepSha384();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaOaepSha384();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaOaepSha512()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaOaepSha512();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaOaepSha512();
 }
 
 inline hstring AsymmetricAlgorithmNames::EcdsaP256Sha256()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().EcdsaP256Sha256();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().EcdsaP256Sha256();
 }
 
 inline hstring AsymmetricAlgorithmNames::EcdsaP384Sha384()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().EcdsaP384Sha384();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().EcdsaP384Sha384();
 }
 
 inline hstring AsymmetricAlgorithmNames::EcdsaP521Sha512()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().EcdsaP521Sha512();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().EcdsaP521Sha512();
 }
 
 inline hstring AsymmetricAlgorithmNames::DsaSha1()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().DsaSha1();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().DsaSha1();
 }
 
 inline hstring AsymmetricAlgorithmNames::DsaSha256()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().DsaSha256();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().DsaSha256();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaSignPkcs1Sha1()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaSignPkcs1Sha1();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaSignPkcs1Sha1();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaSignPkcs1Sha256()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaSignPkcs1Sha256();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaSignPkcs1Sha256();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaSignPkcs1Sha384()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaSignPkcs1Sha384();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaSignPkcs1Sha384();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaSignPkcs1Sha512()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaSignPkcs1Sha512();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaSignPkcs1Sha512();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaSignPssSha1()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaSignPssSha1();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaSignPssSha1();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaSignPssSha256()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaSignPssSha256();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaSignPssSha256();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaSignPssSha384()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaSignPssSha384();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaSignPssSha384();
 }
 
 inline hstring AsymmetricAlgorithmNames::RsaSignPssSha512()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics>().RsaSignPssSha512();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>().RsaSignPssSha512();
 }
 
 inline hstring AsymmetricAlgorithmNames::EcdsaSha256()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics2>().EcdsaSha256();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2>().EcdsaSha256();
 }
 
 inline hstring AsymmetricAlgorithmNames::EcdsaSha384()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics2>().EcdsaSha384();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2>().EcdsaSha384();
 }
 
 inline hstring AsymmetricAlgorithmNames::EcdsaSha512()
 {
-    return get_activation_factory<AsymmetricAlgorithmNames, IAsymmetricAlgorithmNamesStatics2>().EcdsaSha512();
+    return get_activation_factory<AsymmetricAlgorithmNames, Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2>().EcdsaSha512();
 }
 
-inline Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider AsymmetricKeyAlgorithmProvider::OpenAlgorithm(hstring_view algorithm)
+inline Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider AsymmetricKeyAlgorithmProvider::OpenAlgorithm(param::hstring const& algorithm)
 {
-    return get_activation_factory<AsymmetricKeyAlgorithmProvider, IAsymmetricKeyAlgorithmProviderStatics>().OpenAlgorithm(algorithm);
+    return get_activation_factory<AsymmetricKeyAlgorithmProvider, Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProviderStatics>().OpenAlgorithm(algorithm);
 }
 
-inline Windows::Storage::Streams::IBuffer CryptographicEngine::Encrypt(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & iv)
+inline Windows::Storage::Streams::IBuffer CryptographicEngine::Encrypt(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& iv)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics>().Encrypt(key, data, iv);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics>().Encrypt(key, data, iv);
 }
 
-inline Windows::Storage::Streams::IBuffer CryptographicEngine::Decrypt(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & iv)
+inline Windows::Storage::Streams::IBuffer CryptographicEngine::Decrypt(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& iv)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics>().Decrypt(key, data, iv);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics>().Decrypt(key, data, iv);
 }
 
-inline Windows::Security::Cryptography::Core::EncryptedAndAuthenticatedData CryptographicEngine::EncryptAndAuthenticate(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & nonce, const Windows::Storage::Streams::IBuffer & authenticatedData)
+inline Windows::Security::Cryptography::Core::EncryptedAndAuthenticatedData CryptographicEngine::EncryptAndAuthenticate(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& nonce, Windows::Storage::Streams::IBuffer const& authenticatedData)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics>().EncryptAndAuthenticate(key, data, nonce, authenticatedData);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics>().EncryptAndAuthenticate(key, data, nonce, authenticatedData);
 }
 
-inline Windows::Storage::Streams::IBuffer CryptographicEngine::DecryptAndAuthenticate(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & nonce, const Windows::Storage::Streams::IBuffer & authenticationTag, const Windows::Storage::Streams::IBuffer & authenticatedData)
+inline Windows::Storage::Streams::IBuffer CryptographicEngine::DecryptAndAuthenticate(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& nonce, Windows::Storage::Streams::IBuffer const& authenticationTag, Windows::Storage::Streams::IBuffer const& authenticatedData)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics>().DecryptAndAuthenticate(key, data, nonce, authenticationTag, authenticatedData);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics>().DecryptAndAuthenticate(key, data, nonce, authenticationTag, authenticatedData);
 }
 
-inline Windows::Storage::Streams::IBuffer CryptographicEngine::Sign(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data)
+inline Windows::Storage::Streams::IBuffer CryptographicEngine::Sign(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics>().Sign(key, data);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics>().Sign(key, data);
 }
 
-inline bool CryptographicEngine::VerifySignature(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & signature)
+inline bool CryptographicEngine::VerifySignature(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& signature)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics>().VerifySignature(key, data, signature);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics>().VerifySignature(key, data, signature);
 }
 
-inline Windows::Storage::Streams::IBuffer CryptographicEngine::DeriveKeyMaterial(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Security::Cryptography::Core::KeyDerivationParameters & parameters, uint32_t desiredKeySize)
+inline Windows::Storage::Streams::IBuffer CryptographicEngine::DeriveKeyMaterial(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Security::Cryptography::Core::KeyDerivationParameters const& parameters, uint32_t desiredKeySize)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics>().DeriveKeyMaterial(key, parameters, desiredKeySize);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics>().DeriveKeyMaterial(key, parameters, desiredKeySize);
 }
 
-inline Windows::Storage::Streams::IBuffer CryptographicEngine::SignHashedData(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data)
+inline Windows::Storage::Streams::IBuffer CryptographicEngine::SignHashedData(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics2>().SignHashedData(key, data);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics2>().SignHashedData(key, data);
 }
 
-inline bool CryptographicEngine::VerifySignatureWithHashInput(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & signature)
+inline bool CryptographicEngine::VerifySignatureWithHashInput(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& signature)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics2>().VerifySignatureWithHashInput(key, data, signature);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics2>().VerifySignatureWithHashInput(key, data, signature);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> CryptographicEngine::DecryptAsync(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data, const Windows::Storage::Streams::IBuffer & iv)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> CryptographicEngine::DecryptAsync(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data, Windows::Storage::Streams::IBuffer const& iv)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics2>().DecryptAsync(key, data, iv);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics2>().DecryptAsync(key, data, iv);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> CryptographicEngine::SignAsync(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> CryptographicEngine::SignAsync(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics2>().SignAsync(key, data);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics2>().SignAsync(key, data);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> CryptographicEngine::SignHashedDataAsync(const Windows::Security::Cryptography::Core::CryptographicKey & key, const Windows::Storage::Streams::IBuffer & data)
+inline Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> CryptographicEngine::SignHashedDataAsync(Windows::Security::Cryptography::Core::CryptographicKey const& key, Windows::Storage::Streams::IBuffer const& data)
 {
-    return get_activation_factory<CryptographicEngine, ICryptographicEngineStatics2>().SignHashedDataAsync(key, data);
+    return get_activation_factory<CryptographicEngine, Windows::Security::Cryptography::Core::ICryptographicEngineStatics2>().SignHashedDataAsync(key, data);
 }
 
 inline hstring EccCurveNames::BrainpoolP160r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP160r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP160r1();
 }
 
 inline hstring EccCurveNames::BrainpoolP160t1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP160t1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP160t1();
 }
 
 inline hstring EccCurveNames::BrainpoolP192r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP192r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP192r1();
 }
 
 inline hstring EccCurveNames::BrainpoolP192t1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP192t1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP192t1();
 }
 
 inline hstring EccCurveNames::BrainpoolP224r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP224r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP224r1();
 }
 
 inline hstring EccCurveNames::BrainpoolP224t1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP224t1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP224t1();
 }
 
 inline hstring EccCurveNames::BrainpoolP256r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP256r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP256r1();
 }
 
 inline hstring EccCurveNames::BrainpoolP256t1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP256t1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP256t1();
 }
 
 inline hstring EccCurveNames::BrainpoolP320r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP320r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP320r1();
 }
 
 inline hstring EccCurveNames::BrainpoolP320t1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP320t1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP320t1();
 }
 
 inline hstring EccCurveNames::BrainpoolP384r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP384r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP384r1();
 }
 
 inline hstring EccCurveNames::BrainpoolP384t1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP384t1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP384t1();
 }
 
 inline hstring EccCurveNames::BrainpoolP512r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP512r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP512r1();
 }
 
 inline hstring EccCurveNames::BrainpoolP512t1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().BrainpoolP512t1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().BrainpoolP512t1();
 }
 
 inline hstring EccCurveNames::Curve25519()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().Curve25519();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().Curve25519();
 }
 
 inline hstring EccCurveNames::Ec192wapi()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().Ec192wapi();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().Ec192wapi();
 }
 
 inline hstring EccCurveNames::NistP192()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().NistP192();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().NistP192();
 }
 
 inline hstring EccCurveNames::NistP224()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().NistP224();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().NistP224();
 }
 
 inline hstring EccCurveNames::NistP256()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().NistP256();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().NistP256();
 }
 
 inline hstring EccCurveNames::NistP384()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().NistP384();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().NistP384();
 }
 
 inline hstring EccCurveNames::NistP521()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().NistP521();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().NistP521();
 }
 
 inline hstring EccCurveNames::NumsP256t1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().NumsP256t1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().NumsP256t1();
 }
 
 inline hstring EccCurveNames::NumsP384t1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().NumsP384t1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().NumsP384t1();
 }
 
 inline hstring EccCurveNames::NumsP512t1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().NumsP512t1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().NumsP512t1();
 }
 
 inline hstring EccCurveNames::SecP160k1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().SecP160k1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().SecP160k1();
 }
 
 inline hstring EccCurveNames::SecP160r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().SecP160r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().SecP160r1();
 }
 
 inline hstring EccCurveNames::SecP160r2()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().SecP160r2();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().SecP160r2();
 }
 
 inline hstring EccCurveNames::SecP192k1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().SecP192k1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().SecP192k1();
 }
 
 inline hstring EccCurveNames::SecP192r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().SecP192r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().SecP192r1();
 }
 
 inline hstring EccCurveNames::SecP224k1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().SecP224k1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().SecP224k1();
 }
 
 inline hstring EccCurveNames::SecP224r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().SecP224r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().SecP224r1();
 }
 
 inline hstring EccCurveNames::SecP256k1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().SecP256k1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().SecP256k1();
 }
 
 inline hstring EccCurveNames::SecP256r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().SecP256r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().SecP256r1();
 }
 
 inline hstring EccCurveNames::SecP384r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().SecP384r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().SecP384r1();
 }
 
 inline hstring EccCurveNames::SecP521r1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().SecP521r1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().SecP521r1();
 }
 
 inline hstring EccCurveNames::Wtls7()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().Wtls7();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().Wtls7();
 }
 
 inline hstring EccCurveNames::Wtls9()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().Wtls9();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().Wtls9();
 }
 
 inline hstring EccCurveNames::Wtls12()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().Wtls12();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().Wtls12();
 }
 
 inline hstring EccCurveNames::X962P192v1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().X962P192v1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().X962P192v1();
 }
 
 inline hstring EccCurveNames::X962P192v2()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().X962P192v2();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().X962P192v2();
 }
 
 inline hstring EccCurveNames::X962P192v3()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().X962P192v3();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().X962P192v3();
 }
 
 inline hstring EccCurveNames::X962P239v1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().X962P239v1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().X962P239v1();
 }
 
 inline hstring EccCurveNames::X962P239v2()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().X962P239v2();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().X962P239v2();
 }
 
 inline hstring EccCurveNames::X962P239v3()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().X962P239v3();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().X962P239v3();
 }
 
 inline hstring EccCurveNames::X962P256v1()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().X962P256v1();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().X962P256v1();
 }
 
 inline Windows::Foundation::Collections::IVectorView<hstring> EccCurveNames::AllEccCurveNames()
 {
-    return get_activation_factory<EccCurveNames, IEccCurveNamesStatics>().AllEccCurveNames();
+    return get_activation_factory<EccCurveNames, Windows::Security::Cryptography::Core::IEccCurveNamesStatics>().AllEccCurveNames();
 }
 
 inline hstring HashAlgorithmNames::Md5()
 {
-    return get_activation_factory<HashAlgorithmNames, IHashAlgorithmNamesStatics>().Md5();
+    return get_activation_factory<HashAlgorithmNames, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics>().Md5();
 }
 
 inline hstring HashAlgorithmNames::Sha1()
 {
-    return get_activation_factory<HashAlgorithmNames, IHashAlgorithmNamesStatics>().Sha1();
+    return get_activation_factory<HashAlgorithmNames, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics>().Sha1();
 }
 
 inline hstring HashAlgorithmNames::Sha256()
 {
-    return get_activation_factory<HashAlgorithmNames, IHashAlgorithmNamesStatics>().Sha256();
+    return get_activation_factory<HashAlgorithmNames, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics>().Sha256();
 }
 
 inline hstring HashAlgorithmNames::Sha384()
 {
-    return get_activation_factory<HashAlgorithmNames, IHashAlgorithmNamesStatics>().Sha384();
+    return get_activation_factory<HashAlgorithmNames, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics>().Sha384();
 }
 
 inline hstring HashAlgorithmNames::Sha512()
 {
-    return get_activation_factory<HashAlgorithmNames, IHashAlgorithmNamesStatics>().Sha512();
+    return get_activation_factory<HashAlgorithmNames, Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics>().Sha512();
 }
 
-inline Windows::Security::Cryptography::Core::HashAlgorithmProvider HashAlgorithmProvider::OpenAlgorithm(hstring_view algorithm)
+inline Windows::Security::Cryptography::Core::HashAlgorithmProvider HashAlgorithmProvider::OpenAlgorithm(param::hstring const& algorithm)
 {
-    return get_activation_factory<HashAlgorithmProvider, IHashAlgorithmProviderStatics>().OpenAlgorithm(algorithm);
+    return get_activation_factory<HashAlgorithmProvider, Windows::Security::Cryptography::Core::IHashAlgorithmProviderStatics>().OpenAlgorithm(algorithm);
 }
 
 inline hstring KeyDerivationAlgorithmNames::Pbkdf2Md5()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Pbkdf2Md5();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Pbkdf2Md5();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Pbkdf2Sha1()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Pbkdf2Sha1();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Pbkdf2Sha1();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Pbkdf2Sha256()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Pbkdf2Sha256();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Pbkdf2Sha256();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Pbkdf2Sha384()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Pbkdf2Sha384();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Pbkdf2Sha384();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Pbkdf2Sha512()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Pbkdf2Sha512();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Pbkdf2Sha512();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Sp800108CtrHmacMd5()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Sp800108CtrHmacMd5();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Sp800108CtrHmacMd5();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Sp800108CtrHmacSha1()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Sp800108CtrHmacSha1();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Sp800108CtrHmacSha1();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Sp800108CtrHmacSha256()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Sp800108CtrHmacSha256();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Sp800108CtrHmacSha256();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Sp800108CtrHmacSha384()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Sp800108CtrHmacSha384();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Sp800108CtrHmacSha384();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Sp800108CtrHmacSha512()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Sp800108CtrHmacSha512();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Sp800108CtrHmacSha512();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Sp80056aConcatMd5()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Sp80056aConcatMd5();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Sp80056aConcatMd5();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Sp80056aConcatSha1()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Sp80056aConcatSha1();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Sp80056aConcatSha1();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Sp80056aConcatSha256()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Sp80056aConcatSha256();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Sp80056aConcatSha256();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Sp80056aConcatSha384()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Sp80056aConcatSha384();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Sp80056aConcatSha384();
 }
 
 inline hstring KeyDerivationAlgorithmNames::Sp80056aConcatSha512()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics>().Sp80056aConcatSha512();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>().Sp80056aConcatSha512();
 }
 
 inline hstring KeyDerivationAlgorithmNames::CapiKdfMd5()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics2>().CapiKdfMd5();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2>().CapiKdfMd5();
 }
 
 inline hstring KeyDerivationAlgorithmNames::CapiKdfSha1()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics2>().CapiKdfSha1();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2>().CapiKdfSha1();
 }
 
 inline hstring KeyDerivationAlgorithmNames::CapiKdfSha256()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics2>().CapiKdfSha256();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2>().CapiKdfSha256();
 }
 
 inline hstring KeyDerivationAlgorithmNames::CapiKdfSha384()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics2>().CapiKdfSha384();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2>().CapiKdfSha384();
 }
 
 inline hstring KeyDerivationAlgorithmNames::CapiKdfSha512()
 {
-    return get_activation_factory<KeyDerivationAlgorithmNames, IKeyDerivationAlgorithmNamesStatics2>().CapiKdfSha512();
+    return get_activation_factory<KeyDerivationAlgorithmNames, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2>().CapiKdfSha512();
 }
 
-inline Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider KeyDerivationAlgorithmProvider::OpenAlgorithm(hstring_view algorithm)
+inline Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider KeyDerivationAlgorithmProvider::OpenAlgorithm(param::hstring const& algorithm)
 {
-    return get_activation_factory<KeyDerivationAlgorithmProvider, IKeyDerivationAlgorithmProviderStatics>().OpenAlgorithm(algorithm);
+    return get_activation_factory<KeyDerivationAlgorithmProvider, Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProviderStatics>().OpenAlgorithm(algorithm);
 }
 
-inline Windows::Security::Cryptography::Core::KeyDerivationParameters KeyDerivationParameters::BuildForPbkdf2(const Windows::Storage::Streams::IBuffer & pbkdf2Salt, uint32_t iterationCount)
+inline Windows::Security::Cryptography::Core::KeyDerivationParameters KeyDerivationParameters::BuildForPbkdf2(Windows::Storage::Streams::IBuffer const& pbkdf2Salt, uint32_t iterationCount)
 {
-    return get_activation_factory<KeyDerivationParameters, IKeyDerivationParametersStatics>().BuildForPbkdf2(pbkdf2Salt, iterationCount);
+    return get_activation_factory<KeyDerivationParameters, Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics>().BuildForPbkdf2(pbkdf2Salt, iterationCount);
 }
 
-inline Windows::Security::Cryptography::Core::KeyDerivationParameters KeyDerivationParameters::BuildForSP800108(const Windows::Storage::Streams::IBuffer & label, const Windows::Storage::Streams::IBuffer & context)
+inline Windows::Security::Cryptography::Core::KeyDerivationParameters KeyDerivationParameters::BuildForSP800108(Windows::Storage::Streams::IBuffer const& label, Windows::Storage::Streams::IBuffer const& context)
 {
-    return get_activation_factory<KeyDerivationParameters, IKeyDerivationParametersStatics>().BuildForSP800108(label, context);
+    return get_activation_factory<KeyDerivationParameters, Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics>().BuildForSP800108(label, context);
 }
 
-inline Windows::Security::Cryptography::Core::KeyDerivationParameters KeyDerivationParameters::BuildForSP80056a(const Windows::Storage::Streams::IBuffer & algorithmId, const Windows::Storage::Streams::IBuffer & partyUInfo, const Windows::Storage::Streams::IBuffer & partyVInfo, const Windows::Storage::Streams::IBuffer & suppPubInfo, const Windows::Storage::Streams::IBuffer & suppPrivInfo)
+inline Windows::Security::Cryptography::Core::KeyDerivationParameters KeyDerivationParameters::BuildForSP80056a(Windows::Storage::Streams::IBuffer const& algorithmId, Windows::Storage::Streams::IBuffer const& partyUInfo, Windows::Storage::Streams::IBuffer const& partyVInfo, Windows::Storage::Streams::IBuffer const& suppPubInfo, Windows::Storage::Streams::IBuffer const& suppPrivInfo)
 {
-    return get_activation_factory<KeyDerivationParameters, IKeyDerivationParametersStatics>().BuildForSP80056a(algorithmId, partyUInfo, partyVInfo, suppPubInfo, suppPrivInfo);
+    return get_activation_factory<KeyDerivationParameters, Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics>().BuildForSP80056a(algorithmId, partyUInfo, partyVInfo, suppPubInfo, suppPrivInfo);
 }
 
-inline Windows::Security::Cryptography::Core::KeyDerivationParameters KeyDerivationParameters::BuildForCapi1Kdf(Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm capi1KdfTargetAlgorithm)
+inline Windows::Security::Cryptography::Core::KeyDerivationParameters KeyDerivationParameters::BuildForCapi1Kdf(Windows::Security::Cryptography::Core::Capi1KdfTargetAlgorithm const& capi1KdfTargetAlgorithm)
 {
-    return get_activation_factory<KeyDerivationParameters, IKeyDerivationParametersStatics2>().BuildForCapi1Kdf(capi1KdfTargetAlgorithm);
+    return get_activation_factory<KeyDerivationParameters, Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics2>().BuildForCapi1Kdf(capi1KdfTargetAlgorithm);
 }
 
 inline hstring MacAlgorithmNames::HmacMd5()
 {
-    return get_activation_factory<MacAlgorithmNames, IMacAlgorithmNamesStatics>().HmacMd5();
+    return get_activation_factory<MacAlgorithmNames, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics>().HmacMd5();
 }
 
 inline hstring MacAlgorithmNames::HmacSha1()
 {
-    return get_activation_factory<MacAlgorithmNames, IMacAlgorithmNamesStatics>().HmacSha1();
+    return get_activation_factory<MacAlgorithmNames, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics>().HmacSha1();
 }
 
 inline hstring MacAlgorithmNames::HmacSha256()
 {
-    return get_activation_factory<MacAlgorithmNames, IMacAlgorithmNamesStatics>().HmacSha256();
+    return get_activation_factory<MacAlgorithmNames, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics>().HmacSha256();
 }
 
 inline hstring MacAlgorithmNames::HmacSha384()
 {
-    return get_activation_factory<MacAlgorithmNames, IMacAlgorithmNamesStatics>().HmacSha384();
+    return get_activation_factory<MacAlgorithmNames, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics>().HmacSha384();
 }
 
 inline hstring MacAlgorithmNames::HmacSha512()
 {
-    return get_activation_factory<MacAlgorithmNames, IMacAlgorithmNamesStatics>().HmacSha512();
+    return get_activation_factory<MacAlgorithmNames, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics>().HmacSha512();
 }
 
 inline hstring MacAlgorithmNames::AesCmac()
 {
-    return get_activation_factory<MacAlgorithmNames, IMacAlgorithmNamesStatics>().AesCmac();
+    return get_activation_factory<MacAlgorithmNames, Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics>().AesCmac();
 }
 
-inline Windows::Security::Cryptography::Core::MacAlgorithmProvider MacAlgorithmProvider::OpenAlgorithm(hstring_view algorithm)
+inline Windows::Security::Cryptography::Core::MacAlgorithmProvider MacAlgorithmProvider::OpenAlgorithm(param::hstring const& algorithm)
 {
-    return get_activation_factory<MacAlgorithmProvider, IMacAlgorithmProviderStatics>().OpenAlgorithm(algorithm);
+    return get_activation_factory<MacAlgorithmProvider, Windows::Security::Cryptography::Core::IMacAlgorithmProviderStatics>().OpenAlgorithm(algorithm);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> PersistedKeyProvider::OpenKeyPairFromCertificateAsync(const Windows::Security::Cryptography::Certificates::Certificate & certificate, hstring_view hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding padding)
+inline Windows::Foundation::IAsyncOperation<Windows::Security::Cryptography::Core::CryptographicKey> PersistedKeyProvider::OpenKeyPairFromCertificateAsync(Windows::Security::Cryptography::Certificates::Certificate const& certificate, param::hstring const& hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding const& padding)
 {
-    return get_activation_factory<PersistedKeyProvider, IPersistedKeyProviderStatics>().OpenKeyPairFromCertificateAsync(certificate, hashAlgorithmName, padding);
+    return get_activation_factory<PersistedKeyProvider, Windows::Security::Cryptography::Core::IPersistedKeyProviderStatics>().OpenKeyPairFromCertificateAsync(certificate, hashAlgorithmName, padding);
 }
 
-inline Windows::Security::Cryptography::Core::CryptographicKey PersistedKeyProvider::OpenPublicKeyFromCertificate(const Windows::Security::Cryptography::Certificates::Certificate & certificate, hstring_view hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding padding)
+inline Windows::Security::Cryptography::Core::CryptographicKey PersistedKeyProvider::OpenPublicKeyFromCertificate(Windows::Security::Cryptography::Certificates::Certificate const& certificate, param::hstring const& hashAlgorithmName, Windows::Security::Cryptography::Core::CryptographicPadding const& padding)
 {
-    return get_activation_factory<PersistedKeyProvider, IPersistedKeyProviderStatics>().OpenPublicKeyFromCertificate(certificate, hashAlgorithmName, padding);
+    return get_activation_factory<PersistedKeyProvider, Windows::Security::Cryptography::Core::IPersistedKeyProviderStatics>().OpenPublicKeyFromCertificate(certificate, hashAlgorithmName, padding);
 }
 
 inline hstring SymmetricAlgorithmNames::DesCbc()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().DesCbc();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().DesCbc();
 }
 
 inline hstring SymmetricAlgorithmNames::DesEcb()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().DesEcb();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().DesEcb();
 }
 
 inline hstring SymmetricAlgorithmNames::TripleDesCbc()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().TripleDesCbc();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().TripleDesCbc();
 }
 
 inline hstring SymmetricAlgorithmNames::TripleDesEcb()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().TripleDesEcb();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().TripleDesEcb();
 }
 
 inline hstring SymmetricAlgorithmNames::Rc2Cbc()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().Rc2Cbc();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().Rc2Cbc();
 }
 
 inline hstring SymmetricAlgorithmNames::Rc2Ecb()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().Rc2Ecb();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().Rc2Ecb();
 }
 
 inline hstring SymmetricAlgorithmNames::AesCbc()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().AesCbc();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().AesCbc();
 }
 
 inline hstring SymmetricAlgorithmNames::AesEcb()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().AesEcb();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().AesEcb();
 }
 
 inline hstring SymmetricAlgorithmNames::AesGcm()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().AesGcm();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().AesGcm();
 }
 
 inline hstring SymmetricAlgorithmNames::AesCcm()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().AesCcm();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().AesCcm();
 }
 
 inline hstring SymmetricAlgorithmNames::AesCbcPkcs7()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().AesCbcPkcs7();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().AesCbcPkcs7();
 }
 
 inline hstring SymmetricAlgorithmNames::AesEcbPkcs7()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().AesEcbPkcs7();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().AesEcbPkcs7();
 }
 
 inline hstring SymmetricAlgorithmNames::DesCbcPkcs7()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().DesCbcPkcs7();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().DesCbcPkcs7();
 }
 
 inline hstring SymmetricAlgorithmNames::DesEcbPkcs7()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().DesEcbPkcs7();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().DesEcbPkcs7();
 }
 
 inline hstring SymmetricAlgorithmNames::TripleDesCbcPkcs7()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().TripleDesCbcPkcs7();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().TripleDesCbcPkcs7();
 }
 
 inline hstring SymmetricAlgorithmNames::TripleDesEcbPkcs7()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().TripleDesEcbPkcs7();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().TripleDesEcbPkcs7();
 }
 
 inline hstring SymmetricAlgorithmNames::Rc2CbcPkcs7()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().Rc2CbcPkcs7();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().Rc2CbcPkcs7();
 }
 
 inline hstring SymmetricAlgorithmNames::Rc2EcbPkcs7()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().Rc2EcbPkcs7();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().Rc2EcbPkcs7();
 }
 
 inline hstring SymmetricAlgorithmNames::Rc4()
 {
-    return get_activation_factory<SymmetricAlgorithmNames, ISymmetricAlgorithmNamesStatics>().Rc4();
+    return get_activation_factory<SymmetricAlgorithmNames, Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>().Rc4();
 }
 
-inline Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider SymmetricKeyAlgorithmProvider::OpenAlgorithm(hstring_view algorithm)
+inline Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider SymmetricKeyAlgorithmProvider::OpenAlgorithm(param::hstring const& algorithm)
 {
-    return get_activation_factory<SymmetricKeyAlgorithmProvider, ISymmetricKeyAlgorithmProviderStatics>().OpenAlgorithm(algorithm);
+    return get_activation_factory<SymmetricKeyAlgorithmProvider, Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProviderStatics>().OpenAlgorithm(algorithm);
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider2> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProviderStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProviderStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::ICryptographicEngineStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::ICryptographicEngineStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::ICryptographicEngineStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::ICryptographicEngineStatics2> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::ICryptographicKey> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::ICryptographicKey> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IEccCurveNamesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IEccCurveNamesStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IEncryptedAndAuthenticatedData> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IEncryptedAndAuthenticatedData> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IHashAlgorithmProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IHashAlgorithmProvider> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IHashAlgorithmProviderStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IHashAlgorithmProviderStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IHashComputation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IHashComputation> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProvider> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProviderStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProviderStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParameters> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParameters> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParameters2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParameters2> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics2> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProvider> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProvider2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProvider2> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProviderStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProviderStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::IPersistedKeyProviderStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::IPersistedKeyProviderStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProvider> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProviderStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProviderStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::AsymmetricAlgorithmNames> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::AsymmetricAlgorithmNames> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::CryptographicEngine> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::CryptographicEngine> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::CryptographicHash> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::CryptographicHash> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::CryptographicKey> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::CryptographicKey> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::EccCurveNames> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::EccCurveNames> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::EncryptedAndAuthenticatedData> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::EncryptedAndAuthenticatedData> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::HashAlgorithmNames> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::HashAlgorithmNames> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::HashAlgorithmProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::HashAlgorithmProvider> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::KeyDerivationAlgorithmNames> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::KeyDerivationAlgorithmNames> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::KeyDerivationParameters> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::KeyDerivationParameters> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::MacAlgorithmNames> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::MacAlgorithmNames> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::MacAlgorithmProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::MacAlgorithmProvider> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::PersistedKeyProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::PersistedKeyProvider> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::SymmetricAlgorithmNames> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::SymmetricAlgorithmNames> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IAsymmetricAlgorithmNamesStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider2>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProvider2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProviderStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IAsymmetricKeyAlgorithmProviderStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::ICryptographicEngineStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::ICryptographicEngineStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::ICryptographicEngineStatics2>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::ICryptographicEngineStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::ICryptographicKey>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::ICryptographicKey & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IEccCurveNamesStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IEccCurveNamesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IEncryptedAndAuthenticatedData>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IEncryptedAndAuthenticatedData & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IHashAlgorithmNamesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IHashAlgorithmProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IHashAlgorithmProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IHashAlgorithmProviderStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IHashAlgorithmProviderStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IHashComputation>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IHashComputation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmNamesStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProviderStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IKeyDerivationAlgorithmProviderStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParameters>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IKeyDerivationParameters & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParameters2>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IKeyDerivationParameters2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics2>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IKeyDerivationParametersStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IMacAlgorithmNamesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProvider2>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProvider2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProviderStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IMacAlgorithmProviderStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::IPersistedKeyProviderStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::IPersistedKeyProviderStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::ISymmetricAlgorithmNamesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProviderStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::ISymmetricKeyAlgorithmProviderStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::AsymmetricKeyAlgorithmProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::CryptographicHash>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::CryptographicHash & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::CryptographicKey>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::CryptographicKey & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::EncryptedAndAuthenticatedData>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::EncryptedAndAuthenticatedData & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::HashAlgorithmProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::HashAlgorithmProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::KeyDerivationAlgorithmProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::KeyDerivationParameters>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::KeyDerivationParameters & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::MacAlgorithmProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::MacAlgorithmProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::Core::SymmetricKeyAlgorithmProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

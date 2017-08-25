@@ -1,26 +1,328 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.System.2.h"
+#include "winrt/impl/Windows.System.Profile.2.h"
+#include "winrt/Windows.System.h"
 
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.System.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.System.Profile.3.h"
-#include "Windows.System.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::System::Profile::AnalyticsVersionInfo consume_Windows_System_Profile_IAnalyticsInfoStatics<D>::VersionInfo() const
+{
+    Windows::System::Profile::AnalyticsVersionInfo value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IAnalyticsInfoStatics)->get_VersionInfo(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> hstring consume_Windows_System_Profile_IAnalyticsInfoStatics<D>::DeviceForm() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IAnalyticsInfoStatics)->get_DeviceForm(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IAnalyticsVersionInfo<D>::DeviceFamily() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IAnalyticsVersionInfo)->get_DeviceFamily(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IAnalyticsVersionInfo<D>::DeviceFamilyVersion() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IAnalyticsVersionInfo)->get_DeviceFamilyVersion(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_System_Profile_IEducationSettingsStatics<D>::IsEducationEnvironment() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IEducationSettingsStatics)->get_IsEducationEnvironment(&value));
+    return value;
+}
+
+template <typename D> Windows::System::Profile::HardwareToken consume_Windows_System_Profile_IHardwareIdentificationStatics<D>::GetPackageSpecificToken(Windows::Storage::Streams::IBuffer const& nonce) const
+{
+    Windows::System::Profile::HardwareToken packageSpecificHardwareToken{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IHardwareIdentificationStatics)->GetPackageSpecificToken(get_abi(nonce), put_abi(packageSpecificHardwareToken)));
+    return packageSpecificHardwareToken;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_System_Profile_IHardwareToken<D>::Id() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IHardwareToken)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_System_Profile_IHardwareToken<D>::Signature() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IHardwareToken)->get_Signature(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_System_Profile_IHardwareToken<D>::Certificate() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IHardwareToken)->get_Certificate(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::RetailAccessCode() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_RetailAccessCode(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::ManufacturerName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_ManufacturerName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::ModelName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_ModelName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::DisplayModelName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_DisplayModelName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::Price() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_Price(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::IsFeatured() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_IsFeatured(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::FormFactor() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_FormFactor(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::ScreenSize() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_ScreenSize(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::Weight() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_Weight(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::DisplayDescription() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_DisplayDescription(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::BatteryLifeDescription() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_BatteryLifeDescription(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::ProcessorDescription() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_ProcessorDescription(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::Memory() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_Memory(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::StorageDescription() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_StorageDescription(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::GraphicsDescription() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_GraphicsDescription(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::FrontCameraDescription() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_FrontCameraDescription(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::RearCameraDescription() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_RearCameraDescription(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::HasNfc() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_HasNfc(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::HasSdSlot() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_HasSdSlot(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::HasOpticalDrive() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_HasOpticalDrive(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::IsOfficeInstalled() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_IsOfficeInstalled(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_System_Profile_IKnownRetailInfoPropertiesStatics<D>::WindowsEdition() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IKnownRetailInfoPropertiesStatics)->get_WindowsEdition(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::Profile::PlatformDataCollectionLevel consume_Windows_System_Profile_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevel() const
+{
+    Windows::System::Profile::PlatformDataCollectionLevel value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics)->get_CollectionLevel(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_System_Profile_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics)->add_CollectionLevelChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics> consume_Windows_System_Profile_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics>(this, &abi_t<Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics>::remove_CollectionLevelChanged, CollectionLevelChanged(handler));
+}
+
+template <typename D> void consume_Windows_System_Profile_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics)->remove_CollectionLevelChanged(get_abi(token)));
+}
+
+template <typename D> bool consume_Windows_System_Profile_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CanCollectDiagnostics(Windows::System::Profile::PlatformDataCollectionLevel const& level) const
+{
+    bool result{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics)->CanCollectDiagnostics(get_abi(level), &result));
+    return result;
+}
+
+template <typename D> bool consume_Windows_System_Profile_IRetailInfoStatics<D>::IsDemoModeEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IRetailInfoStatics)->get_IsDemoModeEnabled(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> consume_Windows_System_Profile_IRetailInfoStatics<D>::Properties() const
+{
+    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Profile::IRetailInfoStatics)->get_Properties(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_System_Profile_ISharedModeSettingsStatics<D>::IsEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::ISharedModeSettingsStatics)->get_IsEnabled(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_System_Profile_ISharedModeSettingsStatics2<D>::ShouldAvoidLocalStorage() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::ISharedModeSettingsStatics2)->get_ShouldAvoidLocalStorage(&value));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_System_Profile_ISystemIdentificationInfo<D>::Id() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Profile::ISystemIdentificationInfo)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::Profile::SystemIdentificationSource consume_Windows_System_Profile_ISystemIdentificationInfo<D>::Source() const
+{
+    Windows::System::Profile::SystemIdentificationSource value{};
+    check_hresult(WINRT_SHIM(Windows::System::Profile::ISystemIdentificationInfo)->get_Source(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::System::Profile::SystemIdentificationInfo consume_Windows_System_Profile_ISystemIdentificationStatics<D>::GetSystemIdForPublisher() const
+{
+    Windows::System::Profile::SystemIdentificationInfo result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Profile::ISystemIdentificationStatics)->GetSystemIdForPublisher(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::System::Profile::SystemIdentificationInfo consume_Windows_System_Profile_ISystemIdentificationStatics<D>::GetSystemIdForUser(Windows::System::User const& user) const
+{
+    Windows::System::Profile::SystemIdentificationInfo result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::System::Profile::ISystemIdentificationStatics)->GetSystemIdForUser(get_abi(user), put_abi(result)));
+    return result;
+}
 
 template <typename D>
 struct produce<D, Windows::System::Profile::IAnalyticsInfoStatics> : produce_base<D, Windows::System::Profile::IAnalyticsInfoStatics>
 {
-    HRESULT __stdcall get_VersionInfo(impl::abi_arg_out<Windows::System::Profile::IAnalyticsVersionInfo> value) noexcept override
+    HRESULT __stdcall get_VersionInfo(::IUnknown** value) noexcept override
     {
         try
         {
@@ -35,7 +337,7 @@ struct produce<D, Windows::System::Profile::IAnalyticsInfoStatics> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_DeviceForm(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceForm(HSTRING* value) noexcept override
     {
         try
         {
@@ -54,7 +356,7 @@ struct produce<D, Windows::System::Profile::IAnalyticsInfoStatics> : produce_bas
 template <typename D>
 struct produce<D, Windows::System::Profile::IAnalyticsVersionInfo> : produce_base<D, Windows::System::Profile::IAnalyticsVersionInfo>
 {
-    HRESULT __stdcall get_DeviceFamily(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceFamily(HSTRING* value) noexcept override
     {
         try
         {
@@ -69,7 +371,7 @@ struct produce<D, Windows::System::Profile::IAnalyticsVersionInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_DeviceFamilyVersion(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceFamilyVersion(HSTRING* value) noexcept override
     {
         try
         {
@@ -88,7 +390,7 @@ struct produce<D, Windows::System::Profile::IAnalyticsVersionInfo> : produce_bas
 template <typename D>
 struct produce<D, Windows::System::Profile::IEducationSettingsStatics> : produce_base<D, Windows::System::Profile::IEducationSettingsStatics>
 {
-    HRESULT __stdcall get_IsEducationEnvironment(bool * value) noexcept override
+    HRESULT __stdcall get_IsEducationEnvironment(bool* value) noexcept override
     {
         try
         {
@@ -106,12 +408,12 @@ struct produce<D, Windows::System::Profile::IEducationSettingsStatics> : produce
 template <typename D>
 struct produce<D, Windows::System::Profile::IHardwareIdentificationStatics> : produce_base<D, Windows::System::Profile::IHardwareIdentificationStatics>
 {
-    HRESULT __stdcall abi_GetPackageSpecificToken(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> nonce, impl::abi_arg_out<Windows::System::Profile::IHardwareToken> packageSpecificHardwareToken) noexcept override
+    HRESULT __stdcall GetPackageSpecificToken(::IUnknown* nonce, ::IUnknown** packageSpecificHardwareToken) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *packageSpecificHardwareToken = detach_abi(this->shim().GetPackageSpecificToken(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&nonce)));
+            *packageSpecificHardwareToken = detach_abi(this->shim().GetPackageSpecificToken(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&nonce)));
             return S_OK;
         }
         catch (...)
@@ -125,7 +427,7 @@ struct produce<D, Windows::System::Profile::IHardwareIdentificationStatics> : pr
 template <typename D>
 struct produce<D, Windows::System::Profile::IHardwareToken> : produce_base<D, Windows::System::Profile::IHardwareToken>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Id(::IUnknown** value) noexcept override
     {
         try
         {
@@ -140,7 +442,7 @@ struct produce<D, Windows::System::Profile::IHardwareToken> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Signature(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Signature(::IUnknown** value) noexcept override
     {
         try
         {
@@ -155,7 +457,7 @@ struct produce<D, Windows::System::Profile::IHardwareToken> : produce_base<D, Wi
         }
     }
 
-    HRESULT __stdcall get_Certificate(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Certificate(::IUnknown** value) noexcept override
     {
         try
         {
@@ -174,7 +476,7 @@ struct produce<D, Windows::System::Profile::IHardwareToken> : produce_base<D, Wi
 template <typename D>
 struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> : produce_base<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>
 {
-    HRESULT __stdcall get_RetailAccessCode(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RetailAccessCode(HSTRING* value) noexcept override
     {
         try
         {
@@ -189,7 +491,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_ManufacturerName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ManufacturerName(HSTRING* value) noexcept override
     {
         try
         {
@@ -204,7 +506,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_ModelName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ModelName(HSTRING* value) noexcept override
     {
         try
         {
@@ -219,7 +521,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_DisplayModelName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayModelName(HSTRING* value) noexcept override
     {
         try
         {
@@ -234,7 +536,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_Price(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Price(HSTRING* value) noexcept override
     {
         try
         {
@@ -249,7 +551,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_IsFeatured(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_IsFeatured(HSTRING* value) noexcept override
     {
         try
         {
@@ -264,7 +566,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_FormFactor(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FormFactor(HSTRING* value) noexcept override
     {
         try
         {
@@ -279,7 +581,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_ScreenSize(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ScreenSize(HSTRING* value) noexcept override
     {
         try
         {
@@ -294,7 +596,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_Weight(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Weight(HSTRING* value) noexcept override
     {
         try
         {
@@ -309,7 +611,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_DisplayDescription(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayDescription(HSTRING* value) noexcept override
     {
         try
         {
@@ -324,7 +626,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_BatteryLifeDescription(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_BatteryLifeDescription(HSTRING* value) noexcept override
     {
         try
         {
@@ -339,7 +641,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_ProcessorDescription(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ProcessorDescription(HSTRING* value) noexcept override
     {
         try
         {
@@ -354,7 +656,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_Memory(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Memory(HSTRING* value) noexcept override
     {
         try
         {
@@ -369,7 +671,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_StorageDescription(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_StorageDescription(HSTRING* value) noexcept override
     {
         try
         {
@@ -384,7 +686,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_GraphicsDescription(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_GraphicsDescription(HSTRING* value) noexcept override
     {
         try
         {
@@ -399,7 +701,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_FrontCameraDescription(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FrontCameraDescription(HSTRING* value) noexcept override
     {
         try
         {
@@ -414,7 +716,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_RearCameraDescription(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RearCameraDescription(HSTRING* value) noexcept override
     {
         try
         {
@@ -429,7 +731,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_HasNfc(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HasNfc(HSTRING* value) noexcept override
     {
         try
         {
@@ -444,7 +746,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_HasSdSlot(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HasSdSlot(HSTRING* value) noexcept override
     {
         try
         {
@@ -459,7 +761,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_HasOpticalDrive(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_HasOpticalDrive(HSTRING* value) noexcept override
     {
         try
         {
@@ -474,7 +776,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_IsOfficeInstalled(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_IsOfficeInstalled(HSTRING* value) noexcept override
     {
         try
         {
@@ -489,7 +791,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
         }
     }
 
-    HRESULT __stdcall get_WindowsEdition(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_WindowsEdition(HSTRING* value) noexcept override
     {
         try
         {
@@ -508,7 +810,7 @@ struct produce<D, Windows::System::Profile::IKnownRetailInfoPropertiesStatics> :
 template <typename D>
 struct produce<D, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics> : produce_base<D, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics>
 {
-    HRESULT __stdcall get_CollectionLevel(Windows::System::Profile::PlatformDataCollectionLevel * value) noexcept override
+    HRESULT __stdcall get_CollectionLevel(abi_t<Windows::System::Profile::PlatformDataCollectionLevel>* value) noexcept override
     {
         try
         {
@@ -522,12 +824,12 @@ struct produce<D, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSett
         }
     }
 
-    HRESULT __stdcall add_CollectionLevelChanged(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_CollectionLevelChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().CollectionLevelChanged(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().CollectionLevelChanged(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -536,12 +838,12 @@ struct produce<D, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSett
         }
     }
 
-    HRESULT __stdcall remove_CollectionLevelChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_CollectionLevelChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().CollectionLevelChanged(token);
+            this->shim().CollectionLevelChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -550,12 +852,12 @@ struct produce<D, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSett
         }
     }
 
-    HRESULT __stdcall abi_CanCollectDiagnostics(Windows::System::Profile::PlatformDataCollectionLevel level, bool * result) noexcept override
+    HRESULT __stdcall CanCollectDiagnostics(abi_t<Windows::System::Profile::PlatformDataCollectionLevel> level, bool* result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CanCollectDiagnostics(level));
+            *result = detach_abi(this->shim().CanCollectDiagnostics(*reinterpret_cast<Windows::System::Profile::PlatformDataCollectionLevel const*>(&level)));
             return S_OK;
         }
         catch (...)
@@ -568,7 +870,7 @@ struct produce<D, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSett
 template <typename D>
 struct produce<D, Windows::System::Profile::IRetailInfoStatics> : produce_base<D, Windows::System::Profile::IRetailInfoStatics>
 {
-    HRESULT __stdcall get_IsDemoModeEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_IsDemoModeEnabled(bool* value) noexcept override
     {
         try
         {
@@ -582,7 +884,7 @@ struct produce<D, Windows::System::Profile::IRetailInfoStatics> : produce_base<D
         }
     }
 
-    HRESULT __stdcall get_Properties(impl::abi_arg_out<Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable>> value) noexcept override
+    HRESULT __stdcall get_Properties(::IUnknown** value) noexcept override
     {
         try
         {
@@ -601,7 +903,7 @@ struct produce<D, Windows::System::Profile::IRetailInfoStatics> : produce_base<D
 template <typename D>
 struct produce<D, Windows::System::Profile::ISharedModeSettingsStatics> : produce_base<D, Windows::System::Profile::ISharedModeSettingsStatics>
 {
-    HRESULT __stdcall get_IsEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_IsEnabled(bool* value) noexcept override
     {
         try
         {
@@ -619,7 +921,7 @@ struct produce<D, Windows::System::Profile::ISharedModeSettingsStatics> : produc
 template <typename D>
 struct produce<D, Windows::System::Profile::ISharedModeSettingsStatics2> : produce_base<D, Windows::System::Profile::ISharedModeSettingsStatics2>
 {
-    HRESULT __stdcall get_ShouldAvoidLocalStorage(bool * value) noexcept override
+    HRESULT __stdcall get_ShouldAvoidLocalStorage(bool* value) noexcept override
     {
         try
         {
@@ -637,7 +939,7 @@ struct produce<D, Windows::System::Profile::ISharedModeSettingsStatics2> : produ
 template <typename D>
 struct produce<D, Windows::System::Profile::ISystemIdentificationInfo> : produce_base<D, Windows::System::Profile::ISystemIdentificationInfo>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_Id(::IUnknown** value) noexcept override
     {
         try
         {
@@ -652,7 +954,7 @@ struct produce<D, Windows::System::Profile::ISystemIdentificationInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_Source(Windows::System::Profile::SystemIdentificationSource * value) noexcept override
+    HRESULT __stdcall get_Source(abi_t<Windows::System::Profile::SystemIdentificationSource>* value) noexcept override
     {
         try
         {
@@ -670,7 +972,7 @@ struct produce<D, Windows::System::Profile::ISystemIdentificationInfo> : produce
 template <typename D>
 struct produce<D, Windows::System::Profile::ISystemIdentificationStatics> : produce_base<D, Windows::System::Profile::ISystemIdentificationStatics>
 {
-    HRESULT __stdcall abi_GetSystemIdForPublisher(impl::abi_arg_out<Windows::System::Profile::ISystemIdentificationInfo> result) noexcept override
+    HRESULT __stdcall GetSystemIdForPublisher(::IUnknown** result) noexcept override
     {
         try
         {
@@ -685,12 +987,12 @@ struct produce<D, Windows::System::Profile::ISystemIdentificationStatics> : prod
         }
     }
 
-    HRESULT __stdcall abi_GetSystemIdForUser(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_out<Windows::System::Profile::ISystemIdentificationInfo> result) noexcept override
+    HRESULT __stdcall GetSystemIdForUser(::IUnknown* user, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetSystemIdForUser(*reinterpret_cast<const Windows::System::User *>(&user)));
+            *result = detach_abi(this->shim().GetSystemIdForUser(*reinterpret_cast<Windows::System::User const*>(&user)));
             return S_OK;
         }
         catch (...)
@@ -703,635 +1005,267 @@ struct produce<D, Windows::System::Profile::ISystemIdentificationStatics> : prod
 
 }
 
-namespace Windows::System::Profile {
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ISystemIdentificationInfo<D>::Id() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ISystemIdentificationInfo)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::Profile::SystemIdentificationSource impl_ISystemIdentificationInfo<D>::Source() const
-{
-    Windows::System::Profile::SystemIdentificationSource value {};
-    check_hresult(WINRT_SHIM(ISystemIdentificationInfo)->get_Source(&value));
-    return value;
-}
-
-template <typename D> Windows::System::Profile::SystemIdentificationInfo impl_ISystemIdentificationStatics<D>::GetSystemIdForPublisher() const
-{
-    Windows::System::Profile::SystemIdentificationInfo result { nullptr };
-    check_hresult(WINRT_SHIM(ISystemIdentificationStatics)->abi_GetSystemIdForPublisher(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::System::Profile::SystemIdentificationInfo impl_ISystemIdentificationStatics<D>::GetSystemIdForUser(const Windows::System::User & user) const
-{
-    Windows::System::Profile::SystemIdentificationInfo result { nullptr };
-    check_hresult(WINRT_SHIM(ISystemIdentificationStatics)->abi_GetSystemIdForUser(get_abi(user), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::System::Profile::AnalyticsVersionInfo impl_IAnalyticsInfoStatics<D>::VersionInfo() const
-{
-    Windows::System::Profile::AnalyticsVersionInfo value { nullptr };
-    check_hresult(WINRT_SHIM(IAnalyticsInfoStatics)->get_VersionInfo(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAnalyticsInfoStatics<D>::DeviceForm() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAnalyticsInfoStatics)->get_DeviceForm(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAnalyticsVersionInfo<D>::DeviceFamily() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAnalyticsVersionInfo)->get_DeviceFamily(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IAnalyticsVersionInfo<D>::DeviceFamilyVersion() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IAnalyticsVersionInfo)->get_DeviceFamilyVersion(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IEducationSettingsStatics<D>::IsEducationEnvironment() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEducationSettingsStatics)->get_IsEducationEnvironment(&value));
-    return value;
-}
-
-template <typename D> Windows::System::Profile::PlatformDataCollectionLevel impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevel() const
-{
-    Windows::System::Profile::PlatformDataCollectionLevel value {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->get_CollectionLevel(&value));
-    return value;
-}
-
-template <typename D> event_token impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->add_CollectionLevelChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IPlatformDiagnosticsAndUsageDataSettingsStatics> impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IPlatformDiagnosticsAndUsageDataSettingsStatics>(this, &ABI::Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics::remove_CollectionLevelChanged, CollectionLevelChanged(handler));
-}
-
-template <typename D> void impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CollectionLevelChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->remove_CollectionLevelChanged(token));
-}
-
-template <typename D> bool impl_IPlatformDiagnosticsAndUsageDataSettingsStatics<D>::CanCollectDiagnostics(Windows::System::Profile::PlatformDataCollectionLevel level) const
-{
-    bool result {};
-    check_hresult(WINRT_SHIM(IPlatformDiagnosticsAndUsageDataSettingsStatics)->abi_CanCollectDiagnostics(level, &result));
-    return result;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IHardwareToken<D>::Id() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IHardwareToken)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IHardwareToken<D>::Signature() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IHardwareToken)->get_Signature(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_IHardwareToken<D>::Certificate() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(IHardwareToken)->get_Certificate(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::System::Profile::HardwareToken impl_IHardwareIdentificationStatics<D>::GetPackageSpecificToken(const Windows::Storage::Streams::IBuffer & nonce) const
-{
-    Windows::System::Profile::HardwareToken packageSpecificHardwareToken { nullptr };
-    check_hresult(WINRT_SHIM(IHardwareIdentificationStatics)->abi_GetPackageSpecificToken(get_abi(nonce), put_abi(packageSpecificHardwareToken)));
-    return packageSpecificHardwareToken;
-}
-
-template <typename D> bool impl_IRetailInfoStatics<D>::IsDemoModeEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IRetailInfoStatics)->get_IsDemoModeEnabled(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> impl_IRetailInfoStatics<D>::Properties() const
-{
-    Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> value;
-    check_hresult(WINRT_SHIM(IRetailInfoStatics)->get_Properties(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::RetailAccessCode() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_RetailAccessCode(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::ManufacturerName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_ManufacturerName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::ModelName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_ModelName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::DisplayModelName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_DisplayModelName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::Price() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_Price(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::IsFeatured() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_IsFeatured(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::FormFactor() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_FormFactor(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::ScreenSize() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_ScreenSize(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::Weight() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_Weight(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::DisplayDescription() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_DisplayDescription(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::BatteryLifeDescription() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_BatteryLifeDescription(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::ProcessorDescription() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_ProcessorDescription(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::Memory() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_Memory(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::StorageDescription() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_StorageDescription(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::GraphicsDescription() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_GraphicsDescription(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::FrontCameraDescription() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_FrontCameraDescription(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::RearCameraDescription() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_RearCameraDescription(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::HasNfc() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_HasNfc(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::HasSdSlot() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_HasSdSlot(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::HasOpticalDrive() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_HasOpticalDrive(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::IsOfficeInstalled() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_IsOfficeInstalled(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IKnownRetailInfoPropertiesStatics<D>::WindowsEdition() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IKnownRetailInfoPropertiesStatics)->get_WindowsEdition(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_ISharedModeSettingsStatics<D>::IsEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ISharedModeSettingsStatics)->get_IsEnabled(&value));
-    return value;
-}
-
-template <typename D> bool impl_ISharedModeSettingsStatics2<D>::ShouldAvoidLocalStorage() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ISharedModeSettingsStatics2)->get_ShouldAvoidLocalStorage(&value));
-    return value;
-}
+WINRT_EXPORT namespace winrt::Windows::System::Profile {
 
 inline Windows::System::Profile::AnalyticsVersionInfo AnalyticsInfo::VersionInfo()
 {
-    return get_activation_factory<AnalyticsInfo, IAnalyticsInfoStatics>().VersionInfo();
+    return get_activation_factory<AnalyticsInfo, Windows::System::Profile::IAnalyticsInfoStatics>().VersionInfo();
 }
 
 inline hstring AnalyticsInfo::DeviceForm()
 {
-    return get_activation_factory<AnalyticsInfo, IAnalyticsInfoStatics>().DeviceForm();
+    return get_activation_factory<AnalyticsInfo, Windows::System::Profile::IAnalyticsInfoStatics>().DeviceForm();
 }
 
 inline bool EducationSettings::IsEducationEnvironment()
 {
-    return get_activation_factory<EducationSettings, IEducationSettingsStatics>().IsEducationEnvironment();
+    return get_activation_factory<EducationSettings, Windows::System::Profile::IEducationSettingsStatics>().IsEducationEnvironment();
 }
 
-inline Windows::System::Profile::HardwareToken HardwareIdentification::GetPackageSpecificToken(const Windows::Storage::Streams::IBuffer & nonce)
+inline Windows::System::Profile::HardwareToken HardwareIdentification::GetPackageSpecificToken(Windows::Storage::Streams::IBuffer const& nonce)
 {
-    return get_activation_factory<HardwareIdentification, IHardwareIdentificationStatics>().GetPackageSpecificToken(nonce);
+    return get_activation_factory<HardwareIdentification, Windows::System::Profile::IHardwareIdentificationStatics>().GetPackageSpecificToken(nonce);
 }
 
 inline hstring KnownRetailInfoProperties::RetailAccessCode()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().RetailAccessCode();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().RetailAccessCode();
 }
 
 inline hstring KnownRetailInfoProperties::ManufacturerName()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().ManufacturerName();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().ManufacturerName();
 }
 
 inline hstring KnownRetailInfoProperties::ModelName()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().ModelName();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().ModelName();
 }
 
 inline hstring KnownRetailInfoProperties::DisplayModelName()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().DisplayModelName();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().DisplayModelName();
 }
 
 inline hstring KnownRetailInfoProperties::Price()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().Price();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().Price();
 }
 
 inline hstring KnownRetailInfoProperties::IsFeatured()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().IsFeatured();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().IsFeatured();
 }
 
 inline hstring KnownRetailInfoProperties::FormFactor()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().FormFactor();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().FormFactor();
 }
 
 inline hstring KnownRetailInfoProperties::ScreenSize()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().ScreenSize();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().ScreenSize();
 }
 
 inline hstring KnownRetailInfoProperties::Weight()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().Weight();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().Weight();
 }
 
 inline hstring KnownRetailInfoProperties::DisplayDescription()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().DisplayDescription();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().DisplayDescription();
 }
 
 inline hstring KnownRetailInfoProperties::BatteryLifeDescription()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().BatteryLifeDescription();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().BatteryLifeDescription();
 }
 
 inline hstring KnownRetailInfoProperties::ProcessorDescription()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().ProcessorDescription();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().ProcessorDescription();
 }
 
 inline hstring KnownRetailInfoProperties::Memory()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().Memory();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().Memory();
 }
 
 inline hstring KnownRetailInfoProperties::StorageDescription()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().StorageDescription();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().StorageDescription();
 }
 
 inline hstring KnownRetailInfoProperties::GraphicsDescription()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().GraphicsDescription();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().GraphicsDescription();
 }
 
 inline hstring KnownRetailInfoProperties::FrontCameraDescription()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().FrontCameraDescription();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().FrontCameraDescription();
 }
 
 inline hstring KnownRetailInfoProperties::RearCameraDescription()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().RearCameraDescription();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().RearCameraDescription();
 }
 
 inline hstring KnownRetailInfoProperties::HasNfc()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().HasNfc();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().HasNfc();
 }
 
 inline hstring KnownRetailInfoProperties::HasSdSlot()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().HasSdSlot();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().HasSdSlot();
 }
 
 inline hstring KnownRetailInfoProperties::HasOpticalDrive()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().HasOpticalDrive();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().HasOpticalDrive();
 }
 
 inline hstring KnownRetailInfoProperties::IsOfficeInstalled()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().IsOfficeInstalled();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().IsOfficeInstalled();
 }
 
 inline hstring KnownRetailInfoProperties::WindowsEdition()
 {
-    return get_activation_factory<KnownRetailInfoProperties, IKnownRetailInfoPropertiesStatics>().WindowsEdition();
+    return get_activation_factory<KnownRetailInfoProperties, Windows::System::Profile::IKnownRetailInfoPropertiesStatics>().WindowsEdition();
 }
 
 inline Windows::System::Profile::PlatformDataCollectionLevel PlatformDiagnosticsAndUsageDataSettings::CollectionLevel()
 {
-    return get_activation_factory<PlatformDiagnosticsAndUsageDataSettings, IPlatformDiagnosticsAndUsageDataSettingsStatics>().CollectionLevel();
+    return get_activation_factory<PlatformDiagnosticsAndUsageDataSettings, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics>().CollectionLevel();
 }
 
-inline event_token PlatformDiagnosticsAndUsageDataSettings::CollectionLevelChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
+inline event_token PlatformDiagnosticsAndUsageDataSettings::CollectionLevelChanged(Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler)
 {
-    return get_activation_factory<PlatformDiagnosticsAndUsageDataSettings, IPlatformDiagnosticsAndUsageDataSettingsStatics>().CollectionLevelChanged(handler);
+    return get_activation_factory<PlatformDiagnosticsAndUsageDataSettings, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics>().CollectionLevelChanged(handler);
 }
 
-inline factory_event_revoker<IPlatformDiagnosticsAndUsageDataSettingsStatics> PlatformDiagnosticsAndUsageDataSettings::CollectionLevelChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & handler)
+inline factory_event_revoker<Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics> PlatformDiagnosticsAndUsageDataSettings::CollectionLevelChanged(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> const& handler)
 {
-    auto factory = get_activation_factory<PlatformDiagnosticsAndUsageDataSettings, IPlatformDiagnosticsAndUsageDataSettingsStatics>();
-    return { factory, &ABI::Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics::remove_CollectionLevelChanged, factory.CollectionLevelChanged(handler) };
+    auto factory = get_activation_factory<PlatformDiagnosticsAndUsageDataSettings, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics>();
+    return { factory, &abi_t<Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics>::remove_CollectionLevelChanged, factory.CollectionLevelChanged(handler) };
 }
 
-inline void PlatformDiagnosticsAndUsageDataSettings::CollectionLevelChanged(event_token token)
+inline void PlatformDiagnosticsAndUsageDataSettings::CollectionLevelChanged(event_token const& token)
 {
-    get_activation_factory<PlatformDiagnosticsAndUsageDataSettings, IPlatformDiagnosticsAndUsageDataSettingsStatics>().CollectionLevelChanged(token);
+    get_activation_factory<PlatformDiagnosticsAndUsageDataSettings, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics>().CollectionLevelChanged(token);
 }
 
-inline bool PlatformDiagnosticsAndUsageDataSettings::CanCollectDiagnostics(Windows::System::Profile::PlatformDataCollectionLevel level)
+inline bool PlatformDiagnosticsAndUsageDataSettings::CanCollectDiagnostics(Windows::System::Profile::PlatformDataCollectionLevel const& level)
 {
-    return get_activation_factory<PlatformDiagnosticsAndUsageDataSettings, IPlatformDiagnosticsAndUsageDataSettingsStatics>().CanCollectDiagnostics(level);
+    return get_activation_factory<PlatformDiagnosticsAndUsageDataSettings, Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics>().CanCollectDiagnostics(level);
 }
 
 inline bool RetailInfo::IsDemoModeEnabled()
 {
-    return get_activation_factory<RetailInfo, IRetailInfoStatics>().IsDemoModeEnabled();
+    return get_activation_factory<RetailInfo, Windows::System::Profile::IRetailInfoStatics>().IsDemoModeEnabled();
 }
 
 inline Windows::Foundation::Collections::IMapView<hstring, Windows::Foundation::IInspectable> RetailInfo::Properties()
 {
-    return get_activation_factory<RetailInfo, IRetailInfoStatics>().Properties();
+    return get_activation_factory<RetailInfo, Windows::System::Profile::IRetailInfoStatics>().Properties();
 }
 
 inline bool SharedModeSettings::IsEnabled()
 {
-    return get_activation_factory<SharedModeSettings, ISharedModeSettingsStatics>().IsEnabled();
+    return get_activation_factory<SharedModeSettings, Windows::System::Profile::ISharedModeSettingsStatics>().IsEnabled();
 }
 
 inline bool SharedModeSettings::ShouldAvoidLocalStorage()
 {
-    return get_activation_factory<SharedModeSettings, ISharedModeSettingsStatics2>().ShouldAvoidLocalStorage();
+    return get_activation_factory<SharedModeSettings, Windows::System::Profile::ISharedModeSettingsStatics2>().ShouldAvoidLocalStorage();
 }
 
 inline Windows::System::Profile::SystemIdentificationInfo SystemIdentification::GetSystemIdForPublisher()
 {
-    return get_activation_factory<SystemIdentification, ISystemIdentificationStatics>().GetSystemIdForPublisher();
+    return get_activation_factory<SystemIdentification, Windows::System::Profile::ISystemIdentificationStatics>().GetSystemIdForPublisher();
 }
 
-inline Windows::System::Profile::SystemIdentificationInfo SystemIdentification::GetSystemIdForUser(const Windows::System::User & user)
+inline Windows::System::Profile::SystemIdentificationInfo SystemIdentification::GetSystemIdForUser(Windows::System::User const& user)
 {
-    return get_activation_factory<SystemIdentification, ISystemIdentificationStatics>().GetSystemIdForUser(user);
+    return get_activation_factory<SystemIdentification, Windows::System::Profile::ISystemIdentificationStatics>().GetSystemIdForUser(user);
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::System::Profile::IAnalyticsInfoStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::IAnalyticsInfoStatics> {};
+
+template<> struct hash<winrt::Windows::System::Profile::IAnalyticsVersionInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::IAnalyticsVersionInfo> {};
+
+template<> struct hash<winrt::Windows::System::Profile::IEducationSettingsStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::IEducationSettingsStatics> {};
+
+template<> struct hash<winrt::Windows::System::Profile::IHardwareIdentificationStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::IHardwareIdentificationStatics> {};
+
+template<> struct hash<winrt::Windows::System::Profile::IHardwareToken> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::IHardwareToken> {};
+
+template<> struct hash<winrt::Windows::System::Profile::IKnownRetailInfoPropertiesStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::IKnownRetailInfoPropertiesStatics> {};
+
+template<> struct hash<winrt::Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics> {};
+
+template<> struct hash<winrt::Windows::System::Profile::IRetailInfoStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::IRetailInfoStatics> {};
+
+template<> struct hash<winrt::Windows::System::Profile::ISharedModeSettingsStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::ISharedModeSettingsStatics> {};
+
+template<> struct hash<winrt::Windows::System::Profile::ISharedModeSettingsStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::ISharedModeSettingsStatics2> {};
+
+template<> struct hash<winrt::Windows::System::Profile::ISystemIdentificationInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::ISystemIdentificationInfo> {};
+
+template<> struct hash<winrt::Windows::System::Profile::ISystemIdentificationStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::ISystemIdentificationStatics> {};
+
+template<> struct hash<winrt::Windows::System::Profile::AnalyticsInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::AnalyticsInfo> {};
+
+template<> struct hash<winrt::Windows::System::Profile::AnalyticsVersionInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::AnalyticsVersionInfo> {};
+
+template<> struct hash<winrt::Windows::System::Profile::EducationSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::EducationSettings> {};
+
+template<> struct hash<winrt::Windows::System::Profile::HardwareIdentification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::HardwareIdentification> {};
+
+template<> struct hash<winrt::Windows::System::Profile::HardwareToken> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::HardwareToken> {};
+
+template<> struct hash<winrt::Windows::System::Profile::KnownRetailInfoProperties> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::KnownRetailInfoProperties> {};
+
+template<> struct hash<winrt::Windows::System::Profile::PlatformDiagnosticsAndUsageDataSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::PlatformDiagnosticsAndUsageDataSettings> {};
+
+template<> struct hash<winrt::Windows::System::Profile::RetailInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::RetailInfo> {};
+
+template<> struct hash<winrt::Windows::System::Profile::SharedModeSettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::SharedModeSettings> {};
+
+template<> struct hash<winrt::Windows::System::Profile::SystemIdentification> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::SystemIdentification> {};
+
+template<> struct hash<winrt::Windows::System::Profile::SystemIdentificationInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::System::Profile::SystemIdentificationInfo> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::IAnalyticsInfoStatics>
-{
-    size_t operator()(const winrt::Windows::System::Profile::IAnalyticsInfoStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::IAnalyticsVersionInfo>
-{
-    size_t operator()(const winrt::Windows::System::Profile::IAnalyticsVersionInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::IEducationSettingsStatics>
-{
-    size_t operator()(const winrt::Windows::System::Profile::IEducationSettingsStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::IHardwareIdentificationStatics>
-{
-    size_t operator()(const winrt::Windows::System::Profile::IHardwareIdentificationStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::IHardwareToken>
-{
-    size_t operator()(const winrt::Windows::System::Profile::IHardwareToken & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::IKnownRetailInfoPropertiesStatics>
-{
-    size_t operator()(const winrt::Windows::System::Profile::IKnownRetailInfoPropertiesStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics>
-{
-    size_t operator()(const winrt::Windows::System::Profile::IPlatformDiagnosticsAndUsageDataSettingsStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::IRetailInfoStatics>
-{
-    size_t operator()(const winrt::Windows::System::Profile::IRetailInfoStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::ISharedModeSettingsStatics>
-{
-    size_t operator()(const winrt::Windows::System::Profile::ISharedModeSettingsStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::ISharedModeSettingsStatics2>
-{
-    size_t operator()(const winrt::Windows::System::Profile::ISharedModeSettingsStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::ISystemIdentificationInfo>
-{
-    size_t operator()(const winrt::Windows::System::Profile::ISystemIdentificationInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::ISystemIdentificationStatics>
-{
-    size_t operator()(const winrt::Windows::System::Profile::ISystemIdentificationStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::AnalyticsVersionInfo>
-{
-    size_t operator()(const winrt::Windows::System::Profile::AnalyticsVersionInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::HardwareToken>
-{
-    size_t operator()(const winrt::Windows::System::Profile::HardwareToken & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::System::Profile::SystemIdentificationInfo>
-{
-    size_t operator()(const winrt::Windows::System::Profile::SystemIdentificationInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

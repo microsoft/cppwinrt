@@ -1,29 +1,63 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.Security.Cryptography.DataProtection.2.h"
+#include "winrt/Windows.Security.Cryptography.h"
 
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Security.Cryptography.DataProtection.3.h"
-#include "Windows.Security.Cryptography.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> consume_Windows_Security_Cryptography_DataProtection_IDataProtectionProvider<D>::ProtectAsync(Windows::Storage::Streams::IBuffer const& data) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::DataProtection::IDataProtectionProvider)->ProtectAsync(get_abi(data), put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> consume_Windows_Security_Cryptography_DataProtection_IDataProtectionProvider<D>::UnprotectAsync(Windows::Storage::Streams::IBuffer const& data) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::DataProtection::IDataProtectionProvider)->UnprotectAsync(get_abi(data), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Security_Cryptography_DataProtection_IDataProtectionProvider<D>::ProtectStreamAsync(Windows::Storage::Streams::IInputStream const& src, Windows::Storage::Streams::IOutputStream const& dest) const
+{
+    Windows::Foundation::IAsyncAction value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::DataProtection::IDataProtectionProvider)->ProtectStreamAsync(get_abi(src), get_abi(dest), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Security_Cryptography_DataProtection_IDataProtectionProvider<D>::UnprotectStreamAsync(Windows::Storage::Streams::IInputStream const& src, Windows::Storage::Streams::IOutputStream const& dest) const
+{
+    Windows::Foundation::IAsyncAction value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::DataProtection::IDataProtectionProvider)->UnprotectStreamAsync(get_abi(src), get_abi(dest), put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Cryptography::DataProtection::DataProtectionProvider consume_Windows_Security_Cryptography_DataProtection_IDataProtectionProviderFactory<D>::CreateOverloadExplicit(param::hstring const& protectionDescriptor) const
+{
+    Windows::Security::Cryptography::DataProtection::DataProtectionProvider value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Cryptography::DataProtection::IDataProtectionProviderFactory)->CreateOverloadExplicit(get_abi(protectionDescriptor), put_abi(value)));
+    return value;
+}
 
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::DataProtection::IDataProtectionProvider> : produce_base<D, Windows::Security::Cryptography::DataProtection::IDataProtectionProvider>
 {
-    HRESULT __stdcall abi_ProtectAsync(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer>> value) noexcept override
+    HRESULT __stdcall ProtectAsync(::IUnknown* data, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().ProtectAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data)));
+            *value = detach_abi(this->shim().ProtectAsync(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data)));
             return S_OK;
         }
         catch (...)
@@ -33,12 +67,12 @@ struct produce<D, Windows::Security::Cryptography::DataProtection::IDataProtecti
         }
     }
 
-    HRESULT __stdcall abi_UnprotectAsync(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> data, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer>> value) noexcept override
+    HRESULT __stdcall UnprotectAsync(::IUnknown* data, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().UnprotectAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&data)));
+            *value = detach_abi(this->shim().UnprotectAsync(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&data)));
             return S_OK;
         }
         catch (...)
@@ -48,12 +82,12 @@ struct produce<D, Windows::Security::Cryptography::DataProtection::IDataProtecti
         }
     }
 
-    HRESULT __stdcall abi_ProtectStreamAsync(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> src, impl::abi_arg_in<Windows::Storage::Streams::IOutputStream> dest, impl::abi_arg_out<Windows::Foundation::IAsyncAction> value) noexcept override
+    HRESULT __stdcall ProtectStreamAsync(::IUnknown* src, ::IUnknown* dest, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().ProtectStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&src), *reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&dest)));
+            *value = detach_abi(this->shim().ProtectStreamAsync(*reinterpret_cast<Windows::Storage::Streams::IInputStream const*>(&src), *reinterpret_cast<Windows::Storage::Streams::IOutputStream const*>(&dest)));
             return S_OK;
         }
         catch (...)
@@ -63,12 +97,12 @@ struct produce<D, Windows::Security::Cryptography::DataProtection::IDataProtecti
         }
     }
 
-    HRESULT __stdcall abi_UnprotectStreamAsync(impl::abi_arg_in<Windows::Storage::Streams::IInputStream> src, impl::abi_arg_in<Windows::Storage::Streams::IOutputStream> dest, impl::abi_arg_out<Windows::Foundation::IAsyncAction> value) noexcept override
+    HRESULT __stdcall UnprotectStreamAsync(::IUnknown* src, ::IUnknown* dest, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().UnprotectStreamAsync(*reinterpret_cast<const Windows::Storage::Streams::IInputStream *>(&src), *reinterpret_cast<const Windows::Storage::Streams::IOutputStream *>(&dest)));
+            *value = detach_abi(this->shim().UnprotectStreamAsync(*reinterpret_cast<Windows::Storage::Streams::IInputStream const*>(&src), *reinterpret_cast<Windows::Storage::Streams::IOutputStream const*>(&dest)));
             return S_OK;
         }
         catch (...)
@@ -82,12 +116,12 @@ struct produce<D, Windows::Security::Cryptography::DataProtection::IDataProtecti
 template <typename D>
 struct produce<D, Windows::Security::Cryptography::DataProtection::IDataProtectionProviderFactory> : produce_base<D, Windows::Security::Cryptography::DataProtection::IDataProtectionProviderFactory>
 {
-    HRESULT __stdcall abi_CreateOverloadExplicit(impl::abi_arg_in<hstring> protectionDescriptor, impl::abi_arg_out<Windows::Security::Cryptography::DataProtection::IDataProtectionProvider> value) noexcept override
+    HRESULT __stdcall CreateOverloadExplicit(HSTRING protectionDescriptor, ::IUnknown** value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *value = detach_abi(this->shim().CreateOverloadExplicit(*reinterpret_cast<const hstring *>(&protectionDescriptor)));
+            *value = detach_abi(this->shim().CreateOverloadExplicit(*reinterpret_cast<hstring const*>(&protectionDescriptor)));
             return S_OK;
         }
         catch (...)
@@ -100,80 +134,29 @@ struct produce<D, Windows::Security::Cryptography::DataProtection::IDataProtecti
 
 }
 
-namespace Windows::Security::Cryptography::DataProtection {
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> impl_IDataProtectionProvider<D>::ProtectAsync(const Windows::Storage::Streams::IBuffer & data) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> value;
-    check_hresult(WINRT_SHIM(IDataProtectionProvider)->abi_ProtectAsync(get_abi(data), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> impl_IDataProtectionProvider<D>::UnprotectAsync(const Windows::Storage::Streams::IBuffer & data) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Storage::Streams::IBuffer> value;
-    check_hresult(WINRT_SHIM(IDataProtectionProvider)->abi_UnprotectAsync(get_abi(data), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IDataProtectionProvider<D>::ProtectStreamAsync(const Windows::Storage::Streams::IInputStream & src, const Windows::Storage::Streams::IOutputStream & dest) const
-{
-    Windows::Foundation::IAsyncAction value;
-    check_hresult(WINRT_SHIM(IDataProtectionProvider)->abi_ProtectStreamAsync(get_abi(src), get_abi(dest), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IDataProtectionProvider<D>::UnprotectStreamAsync(const Windows::Storage::Streams::IInputStream & src, const Windows::Storage::Streams::IOutputStream & dest) const
-{
-    Windows::Foundation::IAsyncAction value;
-    check_hresult(WINRT_SHIM(IDataProtectionProvider)->abi_UnprotectStreamAsync(get_abi(src), get_abi(dest), put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Security::Cryptography::DataProtection::DataProtectionProvider impl_IDataProtectionProviderFactory<D>::CreateOverloadExplicit(hstring_view protectionDescriptor) const
-{
-    Windows::Security::Cryptography::DataProtection::DataProtectionProvider value { nullptr };
-    check_hresult(WINRT_SHIM(IDataProtectionProviderFactory)->abi_CreateOverloadExplicit(get_abi(protectionDescriptor), put_abi(value)));
-    return value;
-}
+WINRT_EXPORT namespace winrt::Windows::Security::Cryptography::DataProtection {
 
 inline DataProtectionProvider::DataProtectionProvider() :
     DataProtectionProvider(activate_instance<DataProtectionProvider>())
 {}
 
-inline DataProtectionProvider::DataProtectionProvider(hstring_view protectionDescriptor) :
-    DataProtectionProvider(get_activation_factory<DataProtectionProvider, IDataProtectionProviderFactory>().CreateOverloadExplicit(protectionDescriptor))
+inline DataProtectionProvider::DataProtectionProvider(param::hstring const& protectionDescriptor) :
+    DataProtectionProvider(get_activation_factory<DataProtectionProvider, Windows::Security::Cryptography::DataProtection::IDataProtectionProviderFactory>().CreateOverloadExplicit(protectionDescriptor))
 {}
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Security::Cryptography::DataProtection::IDataProtectionProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::DataProtection::IDataProtectionProvider> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::DataProtection::IDataProtectionProviderFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::DataProtection::IDataProtectionProviderFactory> {};
+
+template<> struct hash<winrt::Windows::Security::Cryptography::DataProtection::DataProtectionProvider> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Cryptography::DataProtection::DataProtectionProvider> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::DataProtection::IDataProtectionProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::DataProtection::IDataProtectionProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::DataProtection::IDataProtectionProviderFactory>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::DataProtection::IDataProtectionProviderFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Cryptography::DataProtection::DataProtectionProvider>
-{
-    size_t operator()(const winrt::Windows::Security::Cryptography::DataProtection::DataProtectionProvider & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

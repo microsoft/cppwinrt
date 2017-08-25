@@ -1,25 +1,197 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Devices.Geolocation.2.h"
+#include "winrt/impl/Windows.Devices.Geolocation.Geofencing.2.h"
+#include "winrt/Windows.Devices.Geolocation.h"
 
-#include "internal/Windows.Devices.Geolocation.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Devices.Geolocation.Geofencing.3.h"
-#include "Windows.Devices.Geolocation.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Foundation::DateTime consume_Windows_Devices_Geolocation_Geofencing_IGeofence<D>::StartTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofence)->get_StartTime(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> Windows::Foundation::TimeSpan consume_Windows_Devices_Geolocation_Geofencing_IGeofence<D>::Duration() const
+{
+    Windows::Foundation::TimeSpan value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofence)->get_Duration(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::TimeSpan consume_Windows_Devices_Geolocation_Geofencing_IGeofence<D>::DwellTime() const
+{
+    Windows::Foundation::TimeSpan value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofence)->get_DwellTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Devices_Geolocation_Geofencing_IGeofence<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofence)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates consume_Windows_Devices_Geolocation_Geofencing_IGeofence<D>::MonitoredStates() const
+{
+    Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofence)->get_MonitoredStates(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::IGeoshape consume_Windows_Devices_Geolocation_Geofencing_IGeofence<D>::Geoshape() const
+{
+    Windows::Devices::Geolocation::IGeoshape value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofence)->get_Geoshape(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_Devices_Geolocation_Geofencing_IGeofence<D>::SingleUse() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofence)->get_SingleUse(&value));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geofencing::Geofence consume_Windows_Devices_Geolocation_Geofencing_IGeofenceFactory<D>::Create(param::hstring const& id, Windows::Devices::Geolocation::IGeoshape const& geoshape) const
+{
+    Windows::Devices::Geolocation::Geofencing::Geofence geofence{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceFactory)->Create(get_abi(id), get_abi(geoshape), put_abi(geofence)));
+    return geofence;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geofencing::Geofence consume_Windows_Devices_Geolocation_Geofencing_IGeofenceFactory<D>::CreateWithMonitorStates(param::hstring const& id, Windows::Devices::Geolocation::IGeoshape const& geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates const& monitoredStates, bool singleUse) const
+{
+    Windows::Devices::Geolocation::Geofencing::Geofence geofence{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceFactory)->CreateWithMonitorStates(get_abi(id), get_abi(geoshape), get_abi(monitoredStates), singleUse, put_abi(geofence)));
+    return geofence;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geofencing::Geofence consume_Windows_Devices_Geolocation_Geofencing_IGeofenceFactory<D>::CreateWithMonitorStatesAndDwellTime(param::hstring const& id, Windows::Devices::Geolocation::IGeoshape const& geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates const& monitoredStates, bool singleUse, Windows::Foundation::TimeSpan const& dwellTime) const
+{
+    Windows::Devices::Geolocation::Geofencing::Geofence geofence{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceFactory)->CreateWithMonitorStatesAndDwellTime(get_abi(id), get_abi(geoshape), get_abi(monitoredStates), singleUse, get_abi(dwellTime), put_abi(geofence)));
+    return geofence;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geofencing::Geofence consume_Windows_Devices_Geolocation_Geofencing_IGeofenceFactory<D>::CreateWithMonitorStatesDwellTimeStartTimeAndDuration(param::hstring const& id, Windows::Devices::Geolocation::IGeoshape const& geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates const& monitoredStates, bool singleUse, Windows::Foundation::TimeSpan const& dwellTime, Windows::Foundation::DateTime const& startTime, Windows::Foundation::TimeSpan const& duration) const
+{
+    Windows::Devices::Geolocation::Geofencing::Geofence geofence{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceFactory)->CreateWithMonitorStatesDwellTimeStartTimeAndDuration(get_abi(id), get_abi(geoshape), get_abi(monitoredStates), singleUse, get_abi(dwellTime), get_abi(startTime), get_abi(duration), put_abi(geofence)));
+    return geofence;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geofencing::GeofenceMonitorStatus consume_Windows_Devices_Geolocation_Geofencing_IGeofenceMonitor<D>::Status() const
+{
+    Windows::Devices::Geolocation::Geofencing::GeofenceMonitorStatus value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::Devices::Geolocation::Geofencing::Geofence> consume_Windows_Devices_Geolocation_Geofencing_IGeofenceMonitor<D>::Geofences() const
+{
+    Windows::Foundation::Collections::IVector<Windows::Devices::Geolocation::Geofencing::Geofence> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor)->get_Geofences(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geoposition consume_Windows_Devices_Geolocation_Geofencing_IGeofenceMonitor<D>::LastKnownGeoposition() const
+{
+    Windows::Devices::Geolocation::Geoposition value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor)->get_LastKnownGeoposition(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Geolocation_Geofencing_IGeofenceMonitor<D>::GeofenceStateChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> const& eventHandler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor)->add_GeofenceStateChanged(get_abi(eventHandler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> consume_Windows_Devices_Geolocation_Geofencing_IGeofenceMonitor<D>::GeofenceStateChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> const& eventHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor>(this, &abi_t<Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor>::remove_GeofenceStateChanged, GeofenceStateChanged(eventHandler));
+}
+
+template <typename D> void consume_Windows_Devices_Geolocation_Geofencing_IGeofenceMonitor<D>::GeofenceStateChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor)->remove_GeofenceStateChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Geolocation::Geofencing::GeofenceStateChangeReport> consume_Windows_Devices_Geolocation_Geofencing_IGeofenceMonitor<D>::ReadReports() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Devices::Geolocation::Geofencing::GeofenceStateChangeReport> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor)->ReadReports(put_abi(value)));
+    return value;
+}
+
+template <typename D> event_token consume_Windows_Devices_Geolocation_Geofencing_IGeofenceMonitor<D>::StatusChanged(Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> const& eventHandler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor)->add_StatusChanged(get_abi(eventHandler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> consume_Windows_Devices_Geolocation_Geofencing_IGeofenceMonitor<D>::StatusChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> const& eventHandler) const
+{
+    return impl::make_event_revoker<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor>(this, &abi_t<Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor>::remove_StatusChanged, StatusChanged(eventHandler));
+}
+
+template <typename D> void consume_Windows_Devices_Geolocation_Geofencing_IGeofenceMonitor<D>::StatusChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor)->remove_StatusChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Devices::Geolocation::Geofencing::GeofenceMonitor consume_Windows_Devices_Geolocation_Geofencing_IGeofenceMonitorStatics<D>::Current() const
+{
+    Windows::Devices::Geolocation::Geofencing::GeofenceMonitor value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceMonitorStatics)->get_Current(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geofencing::GeofenceState consume_Windows_Devices_Geolocation_Geofencing_IGeofenceStateChangeReport<D>::NewState() const
+{
+    Windows::Devices::Geolocation::Geofencing::GeofenceState value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceStateChangeReport)->get_NewState(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geofencing::Geofence consume_Windows_Devices_Geolocation_Geofencing_IGeofenceStateChangeReport<D>::Geofence() const
+{
+    Windows::Devices::Geolocation::Geofencing::Geofence value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceStateChangeReport)->get_Geofence(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geoposition consume_Windows_Devices_Geolocation_Geofencing_IGeofenceStateChangeReport<D>::Geoposition() const
+{
+    Windows::Devices::Geolocation::Geoposition value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceStateChangeReport)->get_Geoposition(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Devices::Geolocation::Geofencing::GeofenceRemovalReason consume_Windows_Devices_Geolocation_Geofencing_IGeofenceStateChangeReport<D>::RemovalReason() const
+{
+    Windows::Devices::Geolocation::Geofencing::GeofenceRemovalReason value{};
+    check_hresult(WINRT_SHIM(Windows::Devices::Geolocation::Geofencing::IGeofenceStateChangeReport)->get_RemovalReason(put_abi(value)));
+    return value;
+}
 
 template <typename D>
 struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofence> : produce_base<D, Windows::Devices::Geolocation::Geofencing::IGeofence>
 {
-    HRESULT __stdcall get_StartTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_StartTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -33,7 +205,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofence> : produc
         }
     }
 
-    HRESULT __stdcall get_Duration(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_Duration(abi_t<Windows::Foundation::TimeSpan>* value) noexcept override
     {
         try
         {
@@ -47,7 +219,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofence> : produc
         }
     }
 
-    HRESULT __stdcall get_DwellTime(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_DwellTime(abi_t<Windows::Foundation::TimeSpan>* value) noexcept override
     {
         try
         {
@@ -61,7 +233,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofence> : produc
         }
     }
 
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -76,7 +248,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofence> : produc
         }
     }
 
-    HRESULT __stdcall get_MonitoredStates(Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates * value) noexcept override
+    HRESULT __stdcall get_MonitoredStates(abi_t<Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates>* value) noexcept override
     {
         try
         {
@@ -90,7 +262,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofence> : produc
         }
     }
 
-    HRESULT __stdcall get_Geoshape(impl::abi_arg_out<Windows::Devices::Geolocation::IGeoshape> value) noexcept override
+    HRESULT __stdcall get_Geoshape(::IUnknown** value) noexcept override
     {
         try
         {
@@ -105,7 +277,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofence> : produc
         }
     }
 
-    HRESULT __stdcall get_SingleUse(bool * value) noexcept override
+    HRESULT __stdcall get_SingleUse(bool* value) noexcept override
     {
         try
         {
@@ -123,12 +295,12 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofence> : produc
 template <typename D>
 struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceFactory> : produce_base<D, Windows::Devices::Geolocation::Geofencing::IGeofenceFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<hstring> id, impl::abi_arg_in<Windows::Devices::Geolocation::IGeoshape> geoshape, impl::abi_arg_out<Windows::Devices::Geolocation::Geofencing::IGeofence> geofence) noexcept override
+    HRESULT __stdcall Create(HSTRING id, ::IUnknown* geoshape, ::IUnknown** geofence) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *geofence = detach_abi(this->shim().Create(*reinterpret_cast<const hstring *>(&id), *reinterpret_cast<const Windows::Devices::Geolocation::IGeoshape *>(&geoshape)));
+            *geofence = detach_abi(this->shim().Create(*reinterpret_cast<hstring const*>(&id), *reinterpret_cast<Windows::Devices::Geolocation::IGeoshape const*>(&geoshape)));
             return S_OK;
         }
         catch (...)
@@ -138,12 +310,12 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceFactory> :
         }
     }
 
-    HRESULT __stdcall abi_CreateWithMonitorStates(impl::abi_arg_in<hstring> id, impl::abi_arg_in<Windows::Devices::Geolocation::IGeoshape> geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates monitoredStates, bool singleUse, impl::abi_arg_out<Windows::Devices::Geolocation::Geofencing::IGeofence> geofence) noexcept override
+    HRESULT __stdcall CreateWithMonitorStates(HSTRING id, ::IUnknown* geoshape, abi_t<Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates> monitoredStates, bool singleUse, ::IUnknown** geofence) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *geofence = detach_abi(this->shim().CreateWithMonitorStates(*reinterpret_cast<const hstring *>(&id), *reinterpret_cast<const Windows::Devices::Geolocation::IGeoshape *>(&geoshape), monitoredStates, singleUse));
+            *geofence = detach_abi(this->shim().CreateWithMonitorStates(*reinterpret_cast<hstring const*>(&id), *reinterpret_cast<Windows::Devices::Geolocation::IGeoshape const*>(&geoshape), *reinterpret_cast<Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates const*>(&monitoredStates), singleUse));
             return S_OK;
         }
         catch (...)
@@ -153,12 +325,12 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceFactory> :
         }
     }
 
-    HRESULT __stdcall abi_CreateWithMonitorStatesAndDwellTime(impl::abi_arg_in<hstring> id, impl::abi_arg_in<Windows::Devices::Geolocation::IGeoshape> geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates monitoredStates, bool singleUse, impl::abi_arg_in<Windows::Foundation::TimeSpan> dwellTime, impl::abi_arg_out<Windows::Devices::Geolocation::Geofencing::IGeofence> geofence) noexcept override
+    HRESULT __stdcall CreateWithMonitorStatesAndDwellTime(HSTRING id, ::IUnknown* geoshape, abi_t<Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates> monitoredStates, bool singleUse, abi_t<Windows::Foundation::TimeSpan> dwellTime, ::IUnknown** geofence) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *geofence = detach_abi(this->shim().CreateWithMonitorStatesAndDwellTime(*reinterpret_cast<const hstring *>(&id), *reinterpret_cast<const Windows::Devices::Geolocation::IGeoshape *>(&geoshape), monitoredStates, singleUse, *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&dwellTime)));
+            *geofence = detach_abi(this->shim().CreateWithMonitorStatesAndDwellTime(*reinterpret_cast<hstring const*>(&id), *reinterpret_cast<Windows::Devices::Geolocation::IGeoshape const*>(&geoshape), *reinterpret_cast<Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates const*>(&monitoredStates), singleUse, *reinterpret_cast<Windows::Foundation::TimeSpan const*>(&dwellTime)));
             return S_OK;
         }
         catch (...)
@@ -168,12 +340,12 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceFactory> :
         }
     }
 
-    HRESULT __stdcall abi_CreateWithMonitorStatesDwellTimeStartTimeAndDuration(impl::abi_arg_in<hstring> id, impl::abi_arg_in<Windows::Devices::Geolocation::IGeoshape> geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates monitoredStates, bool singleUse, impl::abi_arg_in<Windows::Foundation::TimeSpan> dwellTime, impl::abi_arg_in<Windows::Foundation::DateTime> startTime, impl::abi_arg_in<Windows::Foundation::TimeSpan> duration, impl::abi_arg_out<Windows::Devices::Geolocation::Geofencing::IGeofence> geofence) noexcept override
+    HRESULT __stdcall CreateWithMonitorStatesDwellTimeStartTimeAndDuration(HSTRING id, ::IUnknown* geoshape, abi_t<Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates> monitoredStates, bool singleUse, abi_t<Windows::Foundation::TimeSpan> dwellTime, abi_t<Windows::Foundation::DateTime> startTime, abi_t<Windows::Foundation::TimeSpan> duration, ::IUnknown** geofence) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *geofence = detach_abi(this->shim().CreateWithMonitorStatesDwellTimeStartTimeAndDuration(*reinterpret_cast<const hstring *>(&id), *reinterpret_cast<const Windows::Devices::Geolocation::IGeoshape *>(&geoshape), monitoredStates, singleUse, *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&dwellTime), *reinterpret_cast<const Windows::Foundation::DateTime *>(&startTime), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&duration)));
+            *geofence = detach_abi(this->shim().CreateWithMonitorStatesDwellTimeStartTimeAndDuration(*reinterpret_cast<hstring const*>(&id), *reinterpret_cast<Windows::Devices::Geolocation::IGeoshape const*>(&geoshape), *reinterpret_cast<Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates const*>(&monitoredStates), singleUse, *reinterpret_cast<Windows::Foundation::TimeSpan const*>(&dwellTime), *reinterpret_cast<Windows::Foundation::DateTime const*>(&startTime), *reinterpret_cast<Windows::Foundation::TimeSpan const*>(&duration)));
             return S_OK;
         }
         catch (...)
@@ -187,7 +359,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceFactory> :
 template <typename D>
 struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> : produce_base<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor>
 {
-    HRESULT __stdcall get_Status(Windows::Devices::Geolocation::Geofencing::GeofenceMonitorStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::Devices::Geolocation::Geofencing::GeofenceMonitorStatus>* value) noexcept override
     {
         try
         {
@@ -201,7 +373,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> :
         }
     }
 
-    HRESULT __stdcall get_Geofences(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::Devices::Geolocation::Geofencing::Geofence>> value) noexcept override
+    HRESULT __stdcall get_Geofences(::IUnknown** value) noexcept override
     {
         try
         {
@@ -216,7 +388,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> :
         }
     }
 
-    HRESULT __stdcall get_LastKnownGeoposition(impl::abi_arg_out<Windows::Devices::Geolocation::IGeoposition> value) noexcept override
+    HRESULT __stdcall get_LastKnownGeoposition(::IUnknown** value) noexcept override
     {
         try
         {
@@ -231,12 +403,12 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> :
         }
     }
 
-    HRESULT __stdcall add_GeofenceStateChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable>> eventHandler, event_token * token) noexcept override
+    HRESULT __stdcall add_GeofenceStateChanged(::IUnknown* eventHandler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().GeofenceStateChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> *>(&eventHandler)));
+            *token = detach_abi(this->shim().GeofenceStateChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> const*>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -245,12 +417,12 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> :
         }
     }
 
-    HRESULT __stdcall remove_GeofenceStateChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_GeofenceStateChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().GeofenceStateChanged(token);
+            this->shim().GeofenceStateChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -259,7 +431,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> :
         }
     }
 
-    HRESULT __stdcall abi_ReadReports(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Devices::Geolocation::Geofencing::GeofenceStateChangeReport>> value) noexcept override
+    HRESULT __stdcall ReadReports(::IUnknown** value) noexcept override
     {
         try
         {
@@ -274,12 +446,12 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> :
         }
     }
 
-    HRESULT __stdcall add_StatusChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable>> eventHandler, event_token * token) noexcept override
+    HRESULT __stdcall add_StatusChanged(::IUnknown* eventHandler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().StatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> *>(&eventHandler)));
+            *token = detach_abi(this->shim().StatusChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> const*>(&eventHandler)));
             return S_OK;
         }
         catch (...)
@@ -288,12 +460,12 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> :
         }
     }
 
-    HRESULT __stdcall remove_StatusChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_StatusChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StatusChanged(token);
+            this->shim().StatusChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -306,7 +478,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> :
 template <typename D>
 struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitorStatics> : produce_base<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitorStatics>
 {
-    HRESULT __stdcall get_Current(impl::abi_arg_out<Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> value) noexcept override
+    HRESULT __stdcall get_Current(::IUnknown** value) noexcept override
     {
         try
         {
@@ -325,7 +497,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitorSta
 template <typename D>
 struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceStateChangeReport> : produce_base<D, Windows::Devices::Geolocation::Geofencing::IGeofenceStateChangeReport>
 {
-    HRESULT __stdcall get_NewState(Windows::Devices::Geolocation::Geofencing::GeofenceState * value) noexcept override
+    HRESULT __stdcall get_NewState(abi_t<Windows::Devices::Geolocation::Geofencing::GeofenceState>* value) noexcept override
     {
         try
         {
@@ -339,7 +511,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceStateChang
         }
     }
 
-    HRESULT __stdcall get_Geofence(impl::abi_arg_out<Windows::Devices::Geolocation::Geofencing::IGeofence> value) noexcept override
+    HRESULT __stdcall get_Geofence(::IUnknown** value) noexcept override
     {
         try
         {
@@ -354,7 +526,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceStateChang
         }
     }
 
-    HRESULT __stdcall get_Geoposition(impl::abi_arg_out<Windows::Devices::Geolocation::IGeoposition> value) noexcept override
+    HRESULT __stdcall get_Geoposition(::IUnknown** value) noexcept override
     {
         try
         {
@@ -369,7 +541,7 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceStateChang
         }
     }
 
-    HRESULT __stdcall get_RemovalReason(Windows::Devices::Geolocation::Geofencing::GeofenceRemovalReason * value) noexcept override
+    HRESULT __stdcall get_RemovalReason(abi_t<Windows::Devices::Geolocation::Geofencing::GeofenceRemovalReason>* value) noexcept override
     {
         try
         {
@@ -386,277 +558,57 @@ struct produce<D, Windows::Devices::Geolocation::Geofencing::IGeofenceStateChang
 
 }
 
-namespace Windows::Devices::Geolocation::Geofencing {
+WINRT_EXPORT namespace winrt::Windows::Devices::Geolocation::Geofencing {
 
-template <typename D> Windows::Devices::Geolocation::Geofencing::Geofence impl_IGeofenceFactory<D>::Create(hstring_view id, const Windows::Devices::Geolocation::IGeoshape & geoshape) const
-{
-    Windows::Devices::Geolocation::Geofencing::Geofence geofence { nullptr };
-    check_hresult(WINRT_SHIM(IGeofenceFactory)->abi_Create(get_abi(id), get_abi(geoshape), put_abi(geofence)));
-    return geofence;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geofencing::Geofence impl_IGeofenceFactory<D>::CreateWithMonitorStates(hstring_view id, const Windows::Devices::Geolocation::IGeoshape & geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates monitoredStates, bool singleUse) const
-{
-    Windows::Devices::Geolocation::Geofencing::Geofence geofence { nullptr };
-    check_hresult(WINRT_SHIM(IGeofenceFactory)->abi_CreateWithMonitorStates(get_abi(id), get_abi(geoshape), monitoredStates, singleUse, put_abi(geofence)));
-    return geofence;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geofencing::Geofence impl_IGeofenceFactory<D>::CreateWithMonitorStatesAndDwellTime(hstring_view id, const Windows::Devices::Geolocation::IGeoshape & geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates monitoredStates, bool singleUse, const Windows::Foundation::TimeSpan & dwellTime) const
-{
-    Windows::Devices::Geolocation::Geofencing::Geofence geofence { nullptr };
-    check_hresult(WINRT_SHIM(IGeofenceFactory)->abi_CreateWithMonitorStatesAndDwellTime(get_abi(id), get_abi(geoshape), monitoredStates, singleUse, get_abi(dwellTime), put_abi(geofence)));
-    return geofence;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geofencing::Geofence impl_IGeofenceFactory<D>::CreateWithMonitorStatesDwellTimeStartTimeAndDuration(hstring_view id, const Windows::Devices::Geolocation::IGeoshape & geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates monitoredStates, bool singleUse, const Windows::Foundation::TimeSpan & dwellTime, const Windows::Foundation::DateTime & startTime, const Windows::Foundation::TimeSpan & duration) const
-{
-    Windows::Devices::Geolocation::Geofencing::Geofence geofence { nullptr };
-    check_hresult(WINRT_SHIM(IGeofenceFactory)->abi_CreateWithMonitorStatesDwellTimeStartTimeAndDuration(get_abi(id), get_abi(geoshape), monitoredStates, singleUse, get_abi(dwellTime), get_abi(startTime), get_abi(duration), put_abi(geofence)));
-    return geofence;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IGeofence<D>::StartTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IGeofence)->get_StartTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::TimeSpan impl_IGeofence<D>::Duration() const
-{
-    Windows::Foundation::TimeSpan value {};
-    check_hresult(WINRT_SHIM(IGeofence)->get_Duration(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::TimeSpan impl_IGeofence<D>::DwellTime() const
-{
-    Windows::Foundation::TimeSpan value {};
-    check_hresult(WINRT_SHIM(IGeofence)->get_DwellTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IGeofence<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IGeofence)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates impl_IGeofence<D>::MonitoredStates() const
-{
-    Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates value {};
-    check_hresult(WINRT_SHIM(IGeofence)->get_MonitoredStates(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::IGeoshape impl_IGeofence<D>::Geoshape() const
-{
-    Windows::Devices::Geolocation::IGeoshape value;
-    check_hresult(WINRT_SHIM(IGeofence)->get_Geoshape(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IGeofence<D>::SingleUse() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IGeofence)->get_SingleUse(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geofencing::GeofenceState impl_IGeofenceStateChangeReport<D>::NewState() const
-{
-    Windows::Devices::Geolocation::Geofencing::GeofenceState value {};
-    check_hresult(WINRT_SHIM(IGeofenceStateChangeReport)->get_NewState(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geofencing::Geofence impl_IGeofenceStateChangeReport<D>::Geofence() const
-{
-    Windows::Devices::Geolocation::Geofencing::Geofence value { nullptr };
-    check_hresult(WINRT_SHIM(IGeofenceStateChangeReport)->get_Geofence(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geoposition impl_IGeofenceStateChangeReport<D>::Geoposition() const
-{
-    Windows::Devices::Geolocation::Geoposition value { nullptr };
-    check_hresult(WINRT_SHIM(IGeofenceStateChangeReport)->get_Geoposition(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geofencing::GeofenceRemovalReason impl_IGeofenceStateChangeReport<D>::RemovalReason() const
-{
-    Windows::Devices::Geolocation::Geofencing::GeofenceRemovalReason value {};
-    check_hresult(WINRT_SHIM(IGeofenceStateChangeReport)->get_RemovalReason(&value));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geofencing::GeofenceMonitor impl_IGeofenceMonitorStatics<D>::Current() const
-{
-    Windows::Devices::Geolocation::Geofencing::GeofenceMonitor value { nullptr };
-    check_hresult(WINRT_SHIM(IGeofenceMonitorStatics)->get_Current(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geofencing::GeofenceMonitorStatus impl_IGeofenceMonitor<D>::Status() const
-{
-    Windows::Devices::Geolocation::Geofencing::GeofenceMonitorStatus value {};
-    check_hresult(WINRT_SHIM(IGeofenceMonitor)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::Devices::Geolocation::Geofencing::Geofence> impl_IGeofenceMonitor<D>::Geofences() const
-{
-    Windows::Foundation::Collections::IVector<Windows::Devices::Geolocation::Geofencing::Geofence> value;
-    check_hresult(WINRT_SHIM(IGeofenceMonitor)->get_Geofences(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Devices::Geolocation::Geoposition impl_IGeofenceMonitor<D>::LastKnownGeoposition() const
-{
-    Windows::Devices::Geolocation::Geoposition value { nullptr };
-    check_hresult(WINRT_SHIM(IGeofenceMonitor)->get_LastKnownGeoposition(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IGeofenceMonitor<D>::GeofenceStateChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IGeofenceMonitor)->add_GeofenceStateChanged(get_abi(eventHandler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IGeofenceMonitor> impl_IGeofenceMonitor<D>::GeofenceStateChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    return impl::make_event_revoker<D, IGeofenceMonitor>(this, &ABI::Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor::remove_GeofenceStateChanged, GeofenceStateChanged(eventHandler));
-}
-
-template <typename D> void impl_IGeofenceMonitor<D>::GeofenceStateChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IGeofenceMonitor)->remove_GeofenceStateChanged(token));
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Devices::Geolocation::Geofencing::GeofenceStateChangeReport> impl_IGeofenceMonitor<D>::ReadReports() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Devices::Geolocation::Geofencing::GeofenceStateChangeReport> value;
-    check_hresult(WINRT_SHIM(IGeofenceMonitor)->abi_ReadReports(put_abi(value)));
-    return value;
-}
-
-template <typename D> event_token impl_IGeofenceMonitor<D>::StatusChanged(const Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IGeofenceMonitor)->add_StatusChanged(get_abi(eventHandler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IGeofenceMonitor> impl_IGeofenceMonitor<D>::StatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::Devices::Geolocation::Geofencing::GeofenceMonitor, Windows::Foundation::IInspectable> & eventHandler) const
-{
-    return impl::make_event_revoker<D, IGeofenceMonitor>(this, &ABI::Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor::remove_StatusChanged, StatusChanged(eventHandler));
-}
-
-template <typename D> void impl_IGeofenceMonitor<D>::StatusChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IGeofenceMonitor)->remove_StatusChanged(token));
-}
-
-inline Geofence::Geofence(hstring_view id, const Windows::Devices::Geolocation::IGeoshape & geoshape) :
-    Geofence(get_activation_factory<Geofence, IGeofenceFactory>().Create(id, geoshape))
+inline Geofence::Geofence(param::hstring const& id, Windows::Devices::Geolocation::IGeoshape const& geoshape) :
+    Geofence(get_activation_factory<Geofence, Windows::Devices::Geolocation::Geofencing::IGeofenceFactory>().Create(id, geoshape))
 {}
 
-inline Geofence::Geofence(hstring_view id, const Windows::Devices::Geolocation::IGeoshape & geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates monitoredStates, bool singleUse) :
-    Geofence(get_activation_factory<Geofence, IGeofenceFactory>().CreateWithMonitorStates(id, geoshape, monitoredStates, singleUse))
+inline Geofence::Geofence(param::hstring const& id, Windows::Devices::Geolocation::IGeoshape const& geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates const& monitoredStates, bool singleUse) :
+    Geofence(get_activation_factory<Geofence, Windows::Devices::Geolocation::Geofencing::IGeofenceFactory>().CreateWithMonitorStates(id, geoshape, monitoredStates, singleUse))
 {}
 
-inline Geofence::Geofence(hstring_view id, const Windows::Devices::Geolocation::IGeoshape & geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates monitoredStates, bool singleUse, const Windows::Foundation::TimeSpan & dwellTime) :
-    Geofence(get_activation_factory<Geofence, IGeofenceFactory>().CreateWithMonitorStatesAndDwellTime(id, geoshape, monitoredStates, singleUse, dwellTime))
+inline Geofence::Geofence(param::hstring const& id, Windows::Devices::Geolocation::IGeoshape const& geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates const& monitoredStates, bool singleUse, Windows::Foundation::TimeSpan const& dwellTime) :
+    Geofence(get_activation_factory<Geofence, Windows::Devices::Geolocation::Geofencing::IGeofenceFactory>().CreateWithMonitorStatesAndDwellTime(id, geoshape, monitoredStates, singleUse, dwellTime))
 {}
 
-inline Geofence::Geofence(hstring_view id, const Windows::Devices::Geolocation::IGeoshape & geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates monitoredStates, bool singleUse, const Windows::Foundation::TimeSpan & dwellTime, const Windows::Foundation::DateTime & startTime, const Windows::Foundation::TimeSpan & duration) :
-    Geofence(get_activation_factory<Geofence, IGeofenceFactory>().CreateWithMonitorStatesDwellTimeStartTimeAndDuration(id, geoshape, monitoredStates, singleUse, dwellTime, startTime, duration))
+inline Geofence::Geofence(param::hstring const& id, Windows::Devices::Geolocation::IGeoshape const& geoshape, Windows::Devices::Geolocation::Geofencing::MonitoredGeofenceStates const& monitoredStates, bool singleUse, Windows::Foundation::TimeSpan const& dwellTime, Windows::Foundation::DateTime const& startTime, Windows::Foundation::TimeSpan const& duration) :
+    Geofence(get_activation_factory<Geofence, Windows::Devices::Geolocation::Geofencing::IGeofenceFactory>().CreateWithMonitorStatesDwellTimeStartTimeAndDuration(id, geoshape, monitoredStates, singleUse, dwellTime, startTime, duration))
 {}
 
 inline Windows::Devices::Geolocation::Geofencing::GeofenceMonitor GeofenceMonitor::Current()
 {
-    return get_activation_factory<GeofenceMonitor, IGeofenceMonitorStatics>().Current();
+    return get_activation_factory<GeofenceMonitor, Windows::Devices::Geolocation::Geofencing::IGeofenceMonitorStatics>().Current();
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Devices::Geolocation::Geofencing::IGeofence> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Geolocation::Geofencing::IGeofence> {};
+
+template<> struct hash<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceFactory> {};
+
+template<> struct hash<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor> {};
+
+template<> struct hash<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceMonitorStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceMonitorStatics> {};
+
+template<> struct hash<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceStateChangeReport> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceStateChangeReport> {};
+
+template<> struct hash<winrt::Windows::Devices::Geolocation::Geofencing::Geofence> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Geolocation::Geofencing::Geofence> {};
+
+template<> struct hash<winrt::Windows::Devices::Geolocation::Geofencing::GeofenceMonitor> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Geolocation::Geofencing::GeofenceMonitor> {};
+
+template<> struct hash<winrt::Windows::Devices::Geolocation::Geofencing::GeofenceStateChangeReport> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Devices::Geolocation::Geofencing::GeofenceStateChangeReport> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Devices::Geolocation::Geofencing::IGeofence>
-{
-    size_t operator()(const winrt::Windows::Devices::Geolocation::Geofencing::IGeofence & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceFactory>
-{
-    size_t operator()(const winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor>
-{
-    size_t operator()(const winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceMonitor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceMonitorStatics>
-{
-    size_t operator()(const winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceMonitorStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceStateChangeReport>
-{
-    size_t operator()(const winrt::Windows::Devices::Geolocation::Geofencing::IGeofenceStateChangeReport & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Geolocation::Geofencing::Geofence>
-{
-    size_t operator()(const winrt::Windows::Devices::Geolocation::Geofencing::Geofence & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Geolocation::Geofencing::GeofenceMonitor>
-{
-    size_t operator()(const winrt::Windows::Devices::Geolocation::Geofencing::GeofenceMonitor & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Devices::Geolocation::Geofencing::GeofenceStateChangeReport>
-{
-    size_t operator()(const winrt::Windows::Devices::Geolocation::Geofencing::GeofenceStateChangeReport & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

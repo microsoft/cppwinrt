@@ -1,27 +1,2416 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.ApplicationModel.Appointments.2.h"
+#include "winrt/impl/Windows.Security.Cryptography.Certificates.2.h"
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.System.2.h"
+#include "winrt/impl/Windows.ApplicationModel.Email.2.h"
+#include "winrt/Windows.ApplicationModel.h"
 
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.System.3.h"
-#include "internal/Windows.Foundation.Collections.3.h"
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.ApplicationModel.Appointments.3.h"
-#include "internal/Windows.ApplicationModel.Email.3.h"
-#include "Windows.ApplicationModel.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailAttachment<D>::FileName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment)->get_FileName(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailAttachment<D>::FileName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment)->put_FileName(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference consume_Windows_ApplicationModel_Email_IEmailAttachment<D>::Data() const
+{
+    Windows::Storage::Streams::IRandomAccessStreamReference value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment)->get_Data(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailAttachment<D>::Data(Windows::Storage::Streams::IRandomAccessStreamReference const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment)->put_Data(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::ContentId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->get_ContentId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::ContentId(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->put_ContentId(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::ContentLocation() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->get_ContentLocation(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::ContentLocation(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->put_ContentLocation(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailAttachmentDownloadState consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::DownloadState() const
+{
+    Windows::ApplicationModel::Email::EmailAttachmentDownloadState value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->get_DownloadState(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::DownloadState(Windows::ApplicationModel::Email::EmailAttachmentDownloadState const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->put_DownloadState(get_abi(value)));
+}
+
+template <typename D> uint64_t consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::EstimatedDownloadSizeInBytes() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->get_EstimatedDownloadSizeInBytes(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::EstimatedDownloadSizeInBytes(uint64_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->put_EstimatedDownloadSizeInBytes(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::IsFromBaseMessage() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->get_IsFromBaseMessage(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::IsInline() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->get_IsInline(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::IsInline(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->put_IsInline(value));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::MimeType() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->get_MimeType(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailAttachment2<D>::MimeType(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachment2)->put_MimeType(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailAttachment consume_Windows_ApplicationModel_Email_IEmailAttachmentFactory<D>::Create(param::hstring const& fileName, Windows::Storage::Streams::IRandomAccessStreamReference const& data) const
+{
+    Windows::ApplicationModel::Email::EmailAttachment result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachmentFactory)->Create(get_abi(fileName), get_abi(data), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailAttachment consume_Windows_ApplicationModel_Email_IEmailAttachmentFactory2<D>::Create(param::hstring const& fileName, Windows::Storage::Streams::IRandomAccessStreamReference const& data, param::hstring const& mimeType) const
+{
+    Windows::ApplicationModel::Email::EmailAttachment result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailAttachmentFactory2)->Create(get_abi(fileName), get_abi(data), get_abi(mimeType), put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailConversation<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailConversation<D>::MailboxId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_MailboxId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailFlagState consume_Windows_ApplicationModel_Email_IEmailConversation<D>::FlagState() const
+{
+    Windows::ApplicationModel::Email::EmailFlagState value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_FlagState(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailConversation<D>::HasAttachment() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_HasAttachment(&value));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailImportance consume_Windows_ApplicationModel_Email_IEmailConversation<D>::Importance() const
+{
+    Windows::ApplicationModel::Email::EmailImportance value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_Importance(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMessageResponseKind consume_Windows_ApplicationModel_Email_IEmailConversation<D>::LastEmailResponseKind() const
+{
+    Windows::ApplicationModel::Email::EmailMessageResponseKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_LastEmailResponseKind(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_ApplicationModel_Email_IEmailConversation<D>::MessageCount() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_MessageCount(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailConversation<D>::MostRecentMessageId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_MostRecentMessageId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_ApplicationModel_Email_IEmailConversation<D>::MostRecentMessageTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_MostRecentMessageTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailConversation<D>::Preview() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_Preview(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailRecipient consume_Windows_ApplicationModel_Email_IEmailConversation<D>::LatestSender() const
+{
+    Windows::ApplicationModel::Email::EmailRecipient value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_LatestSender(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailConversation<D>::Subject() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_Subject(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_ApplicationModel_Email_IEmailConversation<D>::UnreadMessageCount() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->get_UnreadMessageCount(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage>> consume_Windows_ApplicationModel_Email_IEmailConversation<D>::FindMessagesAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage>> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->FindMessagesAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage>> consume_Windows_ApplicationModel_Email_IEmailConversation<D>::FindMessagesAsync(uint32_t count) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage>> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversation)->FindMessagesWithCountAsync(count, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailConversation> consume_Windows_ApplicationModel_Email_IEmailConversationBatch<D>::Conversations() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailConversation> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversationBatch)->get_Conversations(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailBatchStatus consume_Windows_ApplicationModel_Email_IEmailConversationBatch<D>::Status() const
+{
+    Windows::ApplicationModel::Email::EmailBatchStatus value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversationBatch)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversationBatch> consume_Windows_ApplicationModel_Email_IEmailConversationReader<D>::ReadBatchAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversationBatch> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailConversationReader)->ReadBatchAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailFolder<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailFolder<D>::RemoteId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->get_RemoteId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailFolder<D>::RemoteId(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->put_RemoteId(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailFolder<D>::MailboxId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->get_MailboxId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailFolder<D>::ParentFolderId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->get_ParentFolderId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailFolder<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailFolder<D>::DisplayName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->put_DisplayName(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailFolder<D>::IsSyncEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->get_IsSyncEnabled(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailFolder<D>::IsSyncEnabled(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->put_IsSyncEnabled(value));
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_ApplicationModel_Email_IEmailFolder<D>::LastSuccessfulSyncTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->get_LastSuccessfulSyncTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailFolder<D>::LastSuccessfulSyncTime(Windows::Foundation::DateTime const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->put_LastSuccessfulSyncTime(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailSpecialFolderKind consume_Windows_ApplicationModel_Email_IEmailFolder<D>::Kind() const
+{
+    Windows::ApplicationModel::Email::EmailSpecialFolderKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->get_Kind(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> consume_Windows_ApplicationModel_Email_IEmailFolder<D>::CreateFolderAsync(param::hstring const& name) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->CreateFolderAsync(get_abi(name), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailFolder<D>::DeleteAsync() const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->DeleteAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailFolder>> consume_Windows_ApplicationModel_Email_IEmailFolder<D>::FindChildFoldersAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailFolder>> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->FindChildFoldersAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailConversationReader consume_Windows_ApplicationModel_Email_IEmailFolder<D>::GetConversationReader() const
+{
+    Windows::ApplicationModel::Email::EmailConversationReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->GetConversationReader(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailConversationReader consume_Windows_ApplicationModel_Email_IEmailFolder<D>::GetConversationReader(Windows::ApplicationModel::Email::EmailQueryOptions const& options) const
+{
+    Windows::ApplicationModel::Email::EmailConversationReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->GetConversationReaderWithOptions(get_abi(options), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> consume_Windows_ApplicationModel_Email_IEmailFolder<D>::GetMessageAsync(param::hstring const& id) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->GetMessageAsync(get_abi(id), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMessageReader consume_Windows_ApplicationModel_Email_IEmailFolder<D>::GetMessageReader() const
+{
+    Windows::ApplicationModel::Email::EmailMessageReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->GetMessageReader(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMessageReader consume_Windows_ApplicationModel_Email_IEmailFolder<D>::GetMessageReader(Windows::ApplicationModel::Email::EmailQueryOptions const& options) const
+{
+    Windows::ApplicationModel::Email::EmailMessageReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->GetMessageReaderWithOptions(get_abi(options), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailItemCounts> consume_Windows_ApplicationModel_Email_IEmailFolder<D>::GetMessageCountsAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailItemCounts> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->GetMessageCountsAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Email_IEmailFolder<D>::TryMoveAsync(Windows::ApplicationModel::Email::EmailFolder const& newParentFolder) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->TryMoveAsync(get_abi(newParentFolder), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Email_IEmailFolder<D>::TryMoveAsync(Windows::ApplicationModel::Email::EmailFolder const& newParentFolder, param::hstring const& newFolderName) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->TryMoveWithNewNameAsync(get_abi(newParentFolder), get_abi(newFolderName), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Email_IEmailFolder<D>::TrySaveAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->TrySaveAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailFolder<D>::SaveMessageAsync(Windows::ApplicationModel::Email::EmailMessage const& message) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailFolder)->SaveMessageAsync(get_abi(message), put_abi(result)));
+    return result;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanEdit() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_CanEdit(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanEdit(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_CanEdit(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanExtractData() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_CanExtractData(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanExtractData(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_CanExtractData(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanForward() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_CanForward(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanForward(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_CanForward(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanModifyRecipientsOnResponse() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_CanModifyRecipientsOnResponse(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanModifyRecipientsOnResponse(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_CanModifyRecipientsOnResponse(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanPrintData() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_CanPrintData(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanPrintData(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_CanPrintData(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanRemoveIrmOnResponse() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_CanRemoveIrmOnResponse(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanRemoveIrmOnResponse(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_CanRemoveIrmOnResponse(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanReply() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_CanReply(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanReply(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_CanReply(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanReplyAll() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_CanReplyAll(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::CanReplyAll(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_CanReplyAll(value));
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::ExpirationDate() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_ExpirationDate(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::ExpirationDate(Windows::Foundation::DateTime const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_ExpirationDate(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::IsIrmOriginator() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_IsIrmOriginator(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::IsIrmOriginator(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_IsIrmOriginator(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::IsProgramaticAccessAllowed() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_IsProgramaticAccessAllowed(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::IsProgramaticAccessAllowed(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_IsProgramaticAccessAllowed(value));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailIrmTemplate consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::Template() const
+{
+    Windows::ApplicationModel::Email::EmailIrmTemplate value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->get_Template(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmInfo<D>::Template(Windows::ApplicationModel::Email::EmailIrmTemplate const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfo)->put_Template(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailIrmInfo consume_Windows_ApplicationModel_Email_IEmailIrmInfoFactory<D>::Create(Windows::Foundation::DateTime const& expiration, Windows::ApplicationModel::Email::EmailIrmTemplate const& irmTemplate) const
+{
+    Windows::ApplicationModel::Email::EmailIrmInfo result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmInfoFactory)->Create(get_abi(expiration), get_abi(irmTemplate), put_abi(result)));
+    return result;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailIrmTemplate<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmTemplate)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmTemplate<D>::Id(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmTemplate)->put_Id(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailIrmTemplate<D>::Description() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmTemplate)->get_Description(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmTemplate<D>::Description(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmTemplate)->put_Description(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailIrmTemplate<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmTemplate)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailIrmTemplate<D>::Name(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmTemplate)->put_Name(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailIrmTemplate consume_Windows_ApplicationModel_Email_IEmailIrmTemplateFactory<D>::Create(param::hstring const& id, param::hstring const& name, param::hstring const& description) const
+{
+    Windows::ApplicationModel::Email::EmailIrmTemplate result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailIrmTemplateFactory)->Create(get_abi(id), get_abi(name), get_abi(description), put_abi(result)));
+    return result;
+}
+
+template <typename D> uint32_t consume_Windows_ApplicationModel_Email_IEmailItemCounts<D>::Flagged() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailItemCounts)->get_Flagged(&value));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_ApplicationModel_Email_IEmailItemCounts<D>::Important() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailItemCounts)->get_Important(&value));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_ApplicationModel_Email_IEmailItemCounts<D>::Total() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailItemCounts)->get_Total(&value));
+    return value;
+}
+
+template <typename D> uint32_t consume_Windows_ApplicationModel_Email_IEmailItemCounts<D>::Unread() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailItemCounts)->get_Unread(&value));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxCapabilities consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::Capabilities() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxCapabilities value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_Capabilities(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxChangeTracker consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::ChangeTracker() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxChangeTracker value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_ChangeTracker(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::DisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_DisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::DisplayName(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->put_DisplayName(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::IsOwnedByCurrentApp() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_IsOwnedByCurrentApp(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::IsDataEncryptedUnderLock() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_IsDataEncryptedUnderLock(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::MailAddress() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_MailAddress(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::MailAddress(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->put_MailAddress(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::MailAddressAliases() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_MailAddressAliases(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxOtherAppReadAccess consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::OtherAppReadAccess() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxOtherAppReadAccess value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_OtherAppReadAccess(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::OtherAppReadAccess(Windows::ApplicationModel::Email::EmailMailboxOtherAppReadAccess const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->put_OtherAppReadAccess(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxOtherAppWriteAccess consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::OtherAppWriteAccess() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxOtherAppWriteAccess value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_OtherAppWriteAccess(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::OtherAppWriteAccess(Windows::ApplicationModel::Email::EmailMailboxOtherAppWriteAccess const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->put_OtherAppWriteAccess(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxPolicies consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::Policies() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxPolicies value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_Policies(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::SourceDisplayName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_SourceDisplayName(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxSyncManager consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::SyncManager() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxSyncManager value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_SyncManager(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::UserDataAccountId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->get_UserDataAccountId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailConversationReader consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::GetConversationReader() const
+{
+    Windows::ApplicationModel::Email::EmailConversationReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->GetConversationReader(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailConversationReader consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::GetConversationReader(Windows::ApplicationModel::Email::EmailQueryOptions const& options) const
+{
+    Windows::ApplicationModel::Email::EmailConversationReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->GetConversationReaderWithOptions(get_abi(options), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMessageReader consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::GetMessageReader() const
+{
+    Windows::ApplicationModel::Email::EmailMessageReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->GetMessageReader(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMessageReader consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::GetMessageReader(Windows::ApplicationModel::Email::EmailQueryOptions const& options) const
+{
+    Windows::ApplicationModel::Email::EmailMessageReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->GetMessageReaderWithOptions(get_abi(options), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::DeleteAsync() const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->DeleteAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversation> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::GetConversationAsync(param::hstring const& id) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversation> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->GetConversationAsync(get_abi(id), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::GetFolderAsync(param::hstring const& id) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->GetFolderAsync(get_abi(id), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::GetMessageAsync(param::hstring const& id) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->GetMessageAsync(get_abi(id), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::GetSpecialFolderAsync(Windows::ApplicationModel::Email::EmailSpecialFolderKind const& folderType) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->GetSpecialFolderAsync(get_abi(folderType), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::SaveAsync() const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->SaveAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::MarkMessageAsSeenAsync(param::hstring const& messageId) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->MarkMessageAsSeenAsync(get_abi(messageId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::MarkFolderAsSeenAsync(param::hstring const& folderId) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->MarkFolderAsSeenAsync(get_abi(folderId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::MarkMessageReadAsync(param::hstring const& messageId, bool isRead) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->MarkMessageReadAsync(get_abi(messageId), isRead, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::ChangeMessageFlagStateAsync(param::hstring const& messageId, Windows::ApplicationModel::Email::EmailFlagState const& flagState) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->ChangeMessageFlagStateAsync(get_abi(messageId), get_abi(flagState), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::TryMoveMessageAsync(param::hstring const& messageId, param::hstring const& newParentFolderId) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->TryMoveMessageAsync(get_abi(messageId), get_abi(newParentFolderId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::TryMoveFolderAsync(param::hstring const& folderId, param::hstring const& newParentFolderId) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->TryMoveFolderAsync(get_abi(folderId), get_abi(newParentFolderId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::TryMoveFolderAsync(param::hstring const& folderId, param::hstring const& newParentFolderId, param::hstring const& newFolderName) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->TryMoveFolderWithNewNameAsync(get_abi(folderId), get_abi(newParentFolderId), get_abi(newFolderName), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::DeleteMessageAsync(param::hstring const& messageId) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->DeleteMessageAsync(get_abi(messageId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::MarkFolderSyncEnabledAsync(param::hstring const& folderId, bool isSyncEnabled) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->MarkFolderSyncEnabledAsync(get_abi(folderId), isSyncEnabled, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::SendMessageAsync(Windows::ApplicationModel::Email::EmailMessage const& message) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->SendMessageAsync(get_abi(message), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::SaveDraftAsync(Windows::ApplicationModel::Email::EmailMessage const& message) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->SaveDraftAsync(get_abi(message), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::DownloadMessageAsync(param::hstring const& messageId) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->DownloadMessageAsync(get_abi(messageId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::DownloadAttachmentAsync(param::hstring const& attachmentId) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->DownloadAttachmentAsync(get_abi(attachmentId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::CreateResponseMessageAsync(param::hstring const& messageId, Windows::ApplicationModel::Email::EmailMessageResponseKind const& responseType, param::hstring const& subject, Windows::ApplicationModel::Email::EmailMessageBodyKind const& responseHeaderType, param::hstring const& responseHeader) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->CreateResponseMessageAsync(get_abi(messageId), get_abi(responseType), get_abi(subject), get_abi(responseHeaderType), get_abi(responseHeader), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::TryUpdateMeetingResponseAsync(Windows::ApplicationModel::Email::EmailMessage const& meeting, Windows::ApplicationModel::Email::EmailMeetingResponseType const& response, param::hstring const& subject, param::hstring const& comment, bool sendUpdate) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->TryUpdateMeetingResponseAsync(get_abi(meeting), get_abi(response), get_abi(subject), get_abi(comment), sendUpdate, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::TryForwardMeetingAsync(Windows::ApplicationModel::Email::EmailMessage const& meeting, param::async_iterable<Windows::ApplicationModel::Email::EmailRecipient> const& recipients, param::hstring const& subject, Windows::ApplicationModel::Email::EmailMessageBodyKind const& forwardHeaderType, param::hstring const& forwardHeader, param::hstring const& comment) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->TryForwardMeetingAsync(get_abi(meeting), get_abi(recipients), get_abi(subject), get_abi(forwardHeaderType), get_abi(forwardHeader), get_abi(comment), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::TryProposeNewTimeForMeetingAsync(Windows::ApplicationModel::Email::EmailMessage const& meeting, Windows::Foundation::DateTime const& newStartTime, Windows::Foundation::TimeSpan const& newDuration, param::hstring const& subject, param::hstring const& comment) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->TryProposeNewTimeForMeetingAsync(get_abi(meeting), get_abi(newStartTime), get_abi(newDuration), get_abi(subject), get_abi(comment), put_abi(result)));
+    return result;
+}
+
+template <typename D> event_token consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::MailboxChanged(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailbox, Windows::ApplicationModel::Email::EmailMailboxChangedEventArgs> const& pHandler) const
+{
+    event_token pToken{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->add_MailboxChanged(get_abi(pHandler), put_abi(pToken)));
+    return pToken;
+}
+
+template <typename D> event_revoker<Windows::ApplicationModel::Email::IEmailMailbox> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::MailboxChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailbox, Windows::ApplicationModel::Email::EmailMailboxChangedEventArgs> const& pHandler) const
+{
+    return impl::make_event_revoker<D, Windows::ApplicationModel::Email::IEmailMailbox>(this, &abi_t<Windows::ApplicationModel::Email::IEmailMailbox>::remove_MailboxChanged, MailboxChanged(pHandler));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::MailboxChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->remove_MailboxChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::SendMessageAsync(Windows::ApplicationModel::Email::EmailMessage const& message, bool smartSend) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->SmartSendMessageAsync(get_abi(message), smartSend, put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::TrySetAutoReplySettingsAsync(Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings const& autoReplySettings) const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->TrySetAutoReplySettingsAsync(get_abi(autoReplySettings), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings> consume_Windows_ApplicationModel_Email_IEmailMailbox<D>::TryGetAutoReplySettingsAsync(Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind const& requestedFormat) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings> autoReplySettings{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox)->TryGetAutoReplySettingsAsync(get_abi(requestedFormat), put_abi(autoReplySettings)));
+    return autoReplySettings;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMailbox2<D>::LinkedMailboxId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox2)->get_LinkedMailboxId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMailbox2<D>::NetworkAccountId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox2)->get_NetworkAccountId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMailbox2<D>::NetworkId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox2)->get_NetworkId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailRecipientResolutionResult>> consume_Windows_ApplicationModel_Email_IEmailMailbox3<D>::ResolveRecipientsAsync(param::async_iterable<hstring> const& recipients) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailRecipientResolutionResult>> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox3)->ResolveRecipientsAsync(get_abi(recipients), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailCertificateValidationStatus>> consume_Windows_ApplicationModel_Email_IEmailMailbox3<D>::ValidateCertificatesAsync(param::async_iterable<Windows::Security::Cryptography::Certificates::Certificate> const& certificates) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailCertificateValidationStatus>> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox3)->ValidateCertificatesAsync(get_abi(certificates), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxEmptyFolderStatus> consume_Windows_ApplicationModel_Email_IEmailMailbox3<D>::TryEmptyFolderAsync(param::hstring const& folderId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxEmptyFolderStatus> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox3)->TryEmptyFolderAsync(get_abi(folderId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxCreateFolderResult> consume_Windows_ApplicationModel_Email_IEmailMailbox3<D>::TryCreateFolderAsync(param::hstring const& parentFolderId, param::hstring const& name) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxCreateFolderResult> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox3)->TryCreateFolderAsync(get_abi(parentFolderId), get_abi(name), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxDeleteFolderStatus> consume_Windows_ApplicationModel_Email_IEmailMailbox3<D>::TryDeleteFolderAsync(param::hstring const& folderId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxDeleteFolderStatus> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox3)->TryDeleteFolderAsync(get_abi(folderId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailMailbox4<D>::RegisterSyncManagerAsync() const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailbox4)->RegisterSyncManagerAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxActionKind consume_Windows_ApplicationModel_Email_IEmailMailboxAction<D>::Kind() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxActionKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAction)->get_Kind(put_abi(value)));
+    return value;
+}
+
+template <typename D> uint64_t consume_Windows_ApplicationModel_Email_IEmailMailboxAction<D>::ChangeNumber() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAction)->get_ChangeNumber(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReply<D>::IsEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReply)->get_IsEnabled(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReply<D>::IsEnabled(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReply)->put_IsEnabled(value));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReply<D>::Response() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReply)->get_Response(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReply<D>::Response(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReply)->put_Response(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReplySettings<D>::IsEnabled() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings)->get_IsEnabled(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReplySettings<D>::IsEnabled(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings)->put_IsEnabled(value));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReplySettings<D>::ResponseKind() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings)->get_ResponseKind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReplySettings<D>::ResponseKind(Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings)->put_ResponseKind(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReplySettings<D>::StartTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings)->get_StartTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReplySettings<D>::StartTime(optional<Windows::Foundation::DateTime> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings)->put_StartTime(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReplySettings<D>::EndTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings)->get_EndTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReplySettings<D>::EndTime(optional<Windows::Foundation::DateTime> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings)->put_EndTime(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxAutoReply consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReplySettings<D>::InternalReply() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxAutoReply value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings)->get_InternalReply(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxAutoReply consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReplySettings<D>::KnownExternalReply() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxAutoReply value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings)->get_KnownExternalReply(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxAutoReply consume_Windows_ApplicationModel_Email_IEmailMailboxAutoReplySettings<D>::UnknownExternalReply() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxAutoReply value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings)->get_UnknownExternalReply(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities<D>::CanForwardMeetings() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities)->get_CanForwardMeetings(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities<D>::CanGetAndSetExternalAutoReplies() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities)->get_CanGetAndSetExternalAutoReplies(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities<D>::CanGetAndSetInternalAutoReplies() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities)->get_CanGetAndSetInternalAutoReplies(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities<D>::CanUpdateMeetingResponses() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities)->get_CanUpdateMeetingResponses(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities<D>::CanServerSearchFolders() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities)->get_CanServerSearchFolders(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities<D>::CanServerSearchMailbox() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities)->get_CanServerSearchMailbox(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities<D>::CanProposeNewTimeForMeetings() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities)->get_CanProposeNewTimeForMeetings(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities<D>::CanSmartSend() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities)->get_CanSmartSend(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities2<D>::CanResolveRecipients() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities2)->get_CanResolveRecipients(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities2<D>::CanValidateCertificates() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities2)->get_CanValidateCertificates(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities2<D>::CanEmptyFolder() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities2)->get_CanEmptyFolder(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities2<D>::CanCreateFolder() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities2)->get_CanCreateFolder(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities2<D>::CanDeleteFolder() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities2)->get_CanDeleteFolder(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities2<D>::CanMoveFolder() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities2)->get_CanMoveFolder(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanForwardMeetings(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanForwardMeetings(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanGetAndSetExternalAutoReplies(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanGetAndSetExternalAutoReplies(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanGetAndSetInternalAutoReplies(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanGetAndSetInternalAutoReplies(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanUpdateMeetingResponses(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanUpdateMeetingResponses(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanServerSearchFolders(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanServerSearchFolders(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanServerSearchMailbox(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanServerSearchMailbox(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanProposeNewTimeForMeetings(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanProposeNewTimeForMeetings(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanSmartSend(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanSmartSend(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanResolveRecipients(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanResolveRecipients(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanValidateCertificates(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanValidateCertificates(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanEmptyFolder(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanEmptyFolder(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanCreateFolder(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanCreateFolder(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanDeleteFolder(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanDeleteFolder(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxCapabilities3<D>::CanMoveFolder(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCapabilities3)->put_CanMoveFolder(value));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxChangeType consume_Windows_ApplicationModel_Email_IEmailMailboxChange<D>::ChangeType() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxChangeType value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChange)->get_ChangeType(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailMailboxAction> consume_Windows_ApplicationModel_Email_IEmailMailboxChange<D>::MailboxActions() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailMailboxAction> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChange)->get_MailboxActions(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMessage consume_Windows_ApplicationModel_Email_IEmailMailboxChange<D>::Message() const
+{
+    Windows::ApplicationModel::Email::EmailMessage value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChange)->get_Message(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailFolder consume_Windows_ApplicationModel_Email_IEmailMailboxChange<D>::Folder() const
+{
+    Windows::ApplicationModel::Email::EmailFolder value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChange)->get_Folder(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxChangeReader<D>::AcceptChanges() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChangeReader)->AcceptChanges());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxChangeReader<D>::AcceptChangesThrough(Windows::ApplicationModel::Email::EmailMailboxChange const& lastChangeToAcknowledge) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChangeReader)->AcceptChangesThrough(get_abi(lastChangeToAcknowledge)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMailboxChange>> consume_Windows_ApplicationModel_Email_IEmailMailboxChangeReader<D>::ReadBatchAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMailboxChange>> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChangeReader)->ReadBatchAsync(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxChangeTracker<D>::IsTracking() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChangeTracker)->get_IsTracking(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxChangeTracker<D>::Enable() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChangeTracker)->Enable());
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxChangeReader consume_Windows_ApplicationModel_Email_IEmailMailboxChangeTracker<D>::GetChangeReader() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxChangeReader value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChangeTracker)->GetChangeReader(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxChangeTracker<D>::Reset() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChangeTracker)->Reset());
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxChangedDeferral<D>::Complete() const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChangedDeferral)->Complete());
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxChangedDeferral consume_Windows_ApplicationModel_Email_IEmailMailboxChangedEventArgs<D>::GetDeferral() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxChangedDeferral result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxChangedEventArgs)->GetDeferral(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxCreateFolderStatus consume_Windows_ApplicationModel_Email_IEmailMailboxCreateFolderResult<D>::Status() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxCreateFolderStatus value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCreateFolderResult)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailFolder consume_Windows_ApplicationModel_Email_IEmailMailboxCreateFolderResult<D>::Folder() const
+{
+    Windows::ApplicationModel::Email::EmailFolder value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxCreateFolderResult)->get_Folder(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies<D>::AllowedSmimeEncryptionAlgorithmNegotiation() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies)->get_AllowedSmimeEncryptionAlgorithmNegotiation(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies<D>::AllowSmimeSoftCertificates() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies)->get_AllowSmimeSoftCertificates(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::ApplicationModel::Email::EmailMailboxSmimeEncryptionAlgorithm> consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies<D>::RequiredSmimeEncryptionAlgorithm() const
+{
+    Windows::Foundation::IReference<Windows::ApplicationModel::Email::EmailMailboxSmimeEncryptionAlgorithm> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies)->get_RequiredSmimeEncryptionAlgorithm(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::ApplicationModel::Email::EmailMailboxSmimeSigningAlgorithm> consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies<D>::RequiredSmimeSigningAlgorithm() const
+{
+    Windows::Foundation::IReference<Windows::ApplicationModel::Email::EmailMailboxSmimeSigningAlgorithm> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies)->get_RequiredSmimeSigningAlgorithm(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies2<D>::MustEncryptSmimeMessages() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies2)->get_MustEncryptSmimeMessages(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies2<D>::MustSignSmimeMessages() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies2)->get_MustSignSmimeMessages(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies3<D>::AllowedSmimeEncryptionAlgorithmNegotiation(Windows::ApplicationModel::Email::EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies3)->put_AllowedSmimeEncryptionAlgorithmNegotiation(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies3<D>::AllowSmimeSoftCertificates(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies3)->put_AllowSmimeSoftCertificates(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies3<D>::RequiredSmimeEncryptionAlgorithm(optional<Windows::ApplicationModel::Email::EmailMailboxSmimeEncryptionAlgorithm> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies3)->put_RequiredSmimeEncryptionAlgorithm(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies3<D>::RequiredSmimeSigningAlgorithm(optional<Windows::ApplicationModel::Email::EmailMailboxSmimeSigningAlgorithm> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies3)->put_RequiredSmimeSigningAlgorithm(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies3<D>::MustEncryptSmimeMessages(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies3)->put_MustEncryptSmimeMessages(value));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxPolicies3<D>::MustSignSmimeMessages(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxPolicies3)->put_MustSignSmimeMessages(value));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMailboxSyncStatus consume_Windows_ApplicationModel_Email_IEmailMailboxSyncManager<D>::Status() const
+{
+    Windows::ApplicationModel::Email::EmailMailboxSyncStatus value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxSyncManager)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_ApplicationModel_Email_IEmailMailboxSyncManager<D>::LastSuccessfulSyncTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxSyncManager)->get_LastSuccessfulSyncTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_ApplicationModel_Email_IEmailMailboxSyncManager<D>::LastAttemptedSyncTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxSyncManager)->get_LastAttemptedSyncTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<bool> consume_Windows_ApplicationModel_Email_IEmailMailboxSyncManager<D>::SyncAsync() const
+{
+    Windows::Foundation::IAsyncOperation<bool> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxSyncManager)->SyncAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> event_token consume_Windows_ApplicationModel_Email_IEmailMailboxSyncManager<D>::SyncStatusChanged(Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailboxSyncManager, Windows::Foundation::IInspectable> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxSyncManager)->add_SyncStatusChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::ApplicationModel::Email::IEmailMailboxSyncManager> consume_Windows_ApplicationModel_Email_IEmailMailboxSyncManager<D>::SyncStatusChanged(auto_revoke_t, Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailboxSyncManager, Windows::Foundation::IInspectable> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager>(this, &abi_t<Windows::ApplicationModel::Email::IEmailMailboxSyncManager>::remove_SyncStatusChanged, SyncStatusChanged(handler));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxSyncManager<D>::SyncStatusChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxSyncManager)->remove_SyncStatusChanged(get_abi(token)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxSyncManager2<D>::Status(Windows::ApplicationModel::Email::EmailMailboxSyncStatus const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxSyncManager2)->put_Status(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxSyncManager2<D>::LastSuccessfulSyncTime(Windows::Foundation::DateTime const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxSyncManager2)->put_LastSuccessfulSyncTime(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMailboxSyncManager2<D>::LastAttemptedSyncTime(Windows::Foundation::DateTime const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMailboxSyncManager2)->put_LastAttemptedSyncTime(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailManagerForUser<D>::ShowComposeNewEmailAsync(Windows::ApplicationModel::Email::EmailMessage const& message) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailManagerForUser)->ShowComposeNewEmailAsync(get_abi(message), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore> consume_Windows_ApplicationModel_Email_IEmailManagerForUser<D>::RequestStoreAsync(Windows::ApplicationModel::Email::EmailStoreAccessType const& accessType) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailManagerForUser)->RequestStoreAsync(get_abi(accessType), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::System::User consume_Windows_ApplicationModel_Email_IEmailManagerForUser<D>::User() const
+{
+    Windows::System::User value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailManagerForUser)->get_User(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_ApplicationModel_Email_IEmailManagerStatics<D>::ShowComposeNewEmailAsync(Windows::ApplicationModel::Email::EmailMessage const& message) const
+{
+    Windows::Foundation::IAsyncAction asyncAction{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailManagerStatics)->ShowComposeNewEmailAsync(get_abi(message), put_abi(asyncAction)));
+    return asyncAction;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore> consume_Windows_ApplicationModel_Email_IEmailManagerStatics2<D>::RequestStoreAsync(Windows::ApplicationModel::Email::EmailStoreAccessType const& accessType) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailManagerStatics2)->RequestStoreAsync(get_abi(accessType), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailManagerForUser consume_Windows_ApplicationModel_Email_IEmailManagerStatics3<D>::GetForUser(Windows::System::User const& user) const
+{
+    Windows::ApplicationModel::Email::EmailManagerForUser result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailManagerStatics3)->GetForUser(get_abi(user), put_abi(result)));
+    return result;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::AllowNewTimeProposal() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_AllowNewTimeProposal(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::AllowNewTimeProposal(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_AllowNewTimeProposal(value));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::AppointmentRoamingId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_AppointmentRoamingId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::AppointmentRoamingId(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_AppointmentRoamingId(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::AppointmentOriginalStartTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_AppointmentOriginalStartTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::AppointmentOriginalStartTime(optional<Windows::Foundation::DateTime> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_AppointmentOriginalStartTime(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::TimeSpan consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::Duration() const
+{
+    Windows::Foundation::TimeSpan value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_Duration(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::Duration(Windows::Foundation::TimeSpan const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_Duration(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::IsAllDay() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_IsAllDay(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::IsAllDay(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_IsAllDay(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::IsResponseRequested() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_IsResponseRequested(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::IsResponseRequested(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_IsResponseRequested(value));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::Location() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_Location(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::Location(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_Location(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::ProposedStartTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> proposedStartTime{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_ProposedStartTime(put_abi(proposedStartTime)));
+    return proposedStartTime;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::ProposedStartTime(optional<Windows::Foundation::DateTime> const& proposedStartTime) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_ProposedStartTime(get_abi(proposedStartTime)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::TimeSpan> consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::ProposedDuration() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> duration{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_ProposedDuration(put_abi(duration)));
+    return duration;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::ProposedDuration(optional<Windows::Foundation::TimeSpan> const& duration) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_ProposedDuration(get_abi(duration)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::RecurrenceStartTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_RecurrenceStartTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::RecurrenceStartTime(optional<Windows::Foundation::DateTime> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_RecurrenceStartTime(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Appointments::AppointmentRecurrence consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::Recurrence() const
+{
+    Windows::ApplicationModel::Appointments::AppointmentRecurrence value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_Recurrence(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::Recurrence(Windows::ApplicationModel::Appointments::AppointmentRecurrence const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_Recurrence(get_abi(value)));
+}
+
+template <typename D> uint64_t consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::RemoteChangeNumber() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_RemoteChangeNumber(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::RemoteChangeNumber(uint64_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_RemoteChangeNumber(value));
+}
+
+template <typename D> Windows::Foundation::DateTime consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::StartTime() const
+{
+    Windows::Foundation::DateTime value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->get_StartTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMeetingInfo<D>::StartTime(Windows::Foundation::DateTime const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo)->put_StartTime(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMeetingInfo2<D>::IsReportedOutOfDateByServer() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMeetingInfo2)->get_IsReportedOutOfDateByServer(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMessage<D>::Subject() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage)->get_Subject(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage<D>::Subject(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage)->put_Subject(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMessage<D>::Body() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage)->get_Body(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage<D>::Body(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage)->put_Body(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> consume_Windows_ApplicationModel_Email_IEmailMessage<D>::To() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage)->get_To(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> consume_Windows_ApplicationModel_Email_IEmailMessage<D>::CC() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage)->get_CC(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> consume_Windows_ApplicationModel_Email_IEmailMessage<D>::Bcc() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage)->get_Bcc(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailAttachment> consume_Windows_ApplicationModel_Email_IEmailMessage<D>::Attachments() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailAttachment> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage)->get_Attachments(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::Id() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_Id(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::RemoteId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_RemoteId(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::RemoteId(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_RemoteId(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::MailboxId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_MailboxId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::ConversationId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_ConversationId(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::FolderId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_FolderId(put_abi(value)));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::AllowInternetImages() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_AllowInternetImages(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::AllowInternetImages(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_AllowInternetImages(value));
+}
+
+template <typename D> uint64_t consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::ChangeNumber() const
+{
+    uint64_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_ChangeNumber(&value));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMessageDownloadState consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::DownloadState() const
+{
+    Windows::ApplicationModel::Email::EmailMessageDownloadState value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_DownloadState(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::DownloadState(Windows::ApplicationModel::Email::EmailMessageDownloadState const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_DownloadState(get_abi(value)));
+}
+
+template <typename D> uint32_t consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::EstimatedDownloadSizeInBytes() const
+{
+    uint32_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_EstimatedDownloadSizeInBytes(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::EstimatedDownloadSizeInBytes(uint32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_EstimatedDownloadSizeInBytes(value));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailFlagState consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::FlagState() const
+{
+    Windows::ApplicationModel::Email::EmailFlagState value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_FlagState(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::FlagState(Windows::ApplicationModel::Email::EmailFlagState const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_FlagState(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::HasPartialBodies() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_HasPartialBodies(&value));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailImportance consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::Importance() const
+{
+    Windows::ApplicationModel::Email::EmailImportance value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_Importance(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::Importance(Windows::ApplicationModel::Email::EmailImportance const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_Importance(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::InResponseToMessageId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_InResponseToMessageId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailIrmInfo consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::IrmInfo() const
+{
+    Windows::ApplicationModel::Email::EmailIrmInfo value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_IrmInfo(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::IrmInfo(Windows::ApplicationModel::Email::EmailIrmInfo const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_IrmInfo(get_abi(value)));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::IsDraftMessage() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_IsDraftMessage(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::IsRead() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_IsRead(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::IsRead(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_IsRead(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::IsSeen() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_IsSeen(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::IsSeen(bool value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_IsSeen(value));
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::IsServerSearchMessage() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_IsServerSearchMessage(&value));
+    return value;
+}
+
+template <typename D> bool consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::IsSmartSendable() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_IsSmartSendable(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::MessageClass() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_MessageClass(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::MessageClass(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_MessageClass(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::NormalizedSubject() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_NormalizedSubject(put_abi(value)));
+    return value;
+}
+
+template <typename D> int32_t consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::OriginalCodePage() const
+{
+    int32_t value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_OriginalCodePage(&value));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::OriginalCodePage(int32_t value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_OriginalCodePage(value));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::Preview() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_Preview(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::Preview(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_Preview(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMessageResponseKind consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::LastResponseKind() const
+{
+    Windows::ApplicationModel::Email::EmailMessageResponseKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_LastResponseKind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::LastResponseKind(Windows::ApplicationModel::Email::EmailMessageResponseKind const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_LastResponseKind(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailRecipient consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::Sender() const
+{
+    Windows::ApplicationModel::Email::EmailRecipient value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_Sender(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::Sender(Windows::ApplicationModel::Email::EmailRecipient const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_Sender(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::SentTime() const
+{
+    Windows::Foundation::IReference<Windows::Foundation::DateTime> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_SentTime(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::SentTime(optional<Windows::Foundation::DateTime> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_SentTime(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMeetingInfo consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::MeetingInfo() const
+{
+    Windows::ApplicationModel::Email::EmailMeetingInfo value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->get_MeetingInfo(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::MeetingInfo(Windows::ApplicationModel::Email::EmailMeetingInfo const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->put_MeetingInfo(get_abi(value)));
+}
+
+template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::GetBodyStream(Windows::ApplicationModel::Email::EmailMessageBodyKind const& type) const
+{
+    Windows::Storage::Streams::IRandomAccessStreamReference result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->GetBodyStream(get_abi(type), put_abi(result)));
+    return result;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage2<D>::SetBodyStream(Windows::ApplicationModel::Email::EmailMessageBodyKind const& type, Windows::Storage::Streams::IRandomAccessStreamReference const& stream) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage2)->SetBodyStream(get_abi(type), get_abi(stream)));
+}
+
+template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference consume_Windows_ApplicationModel_Email_IEmailMessage3<D>::SmimeData() const
+{
+    Windows::Storage::Streams::IRandomAccessStreamReference value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage3)->get_SmimeData(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage3<D>::SmimeData(Windows::Storage::Streams::IRandomAccessStreamReference const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage3)->put_SmimeData(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMessageSmimeKind consume_Windows_ApplicationModel_Email_IEmailMessage3<D>::SmimeKind() const
+{
+    Windows::ApplicationModel::Email::EmailMessageSmimeKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage3)->get_SmimeKind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage3<D>::SmimeKind(Windows::ApplicationModel::Email::EmailMessageSmimeKind const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage3)->put_SmimeKind(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> consume_Windows_ApplicationModel_Email_IEmailMessage4<D>::ReplyTo() const
+{
+    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage4)->get_ReplyTo(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailRecipient consume_Windows_ApplicationModel_Email_IEmailMessage4<D>::SentRepresenting() const
+{
+    Windows::ApplicationModel::Email::EmailRecipient value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage4)->get_SentRepresenting(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailMessage4<D>::SentRepresenting(Windows::ApplicationModel::Email::EmailRecipient const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessage4)->put_SentRepresenting(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage> consume_Windows_ApplicationModel_Email_IEmailMessageBatch<D>::Messages() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessageBatch)->get_Messages(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailBatchStatus consume_Windows_ApplicationModel_Email_IEmailMessageBatch<D>::Status() const
+{
+    Windows::ApplicationModel::Email::EmailBatchStatus value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessageBatch)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessageBatch> consume_Windows_ApplicationModel_Email_IEmailMessageReader<D>::ReadBatchAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessageBatch> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailMessageReader)->ReadBatchAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailQueryTextSearch consume_Windows_ApplicationModel_Email_IEmailQueryOptions<D>::TextSearch() const
+{
+    Windows::ApplicationModel::Email::EmailQueryTextSearch value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryOptions)->get_TextSearch(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailQuerySortDirection consume_Windows_ApplicationModel_Email_IEmailQueryOptions<D>::SortDirection() const
+{
+    Windows::ApplicationModel::Email::EmailQuerySortDirection value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryOptions)->get_SortDirection(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailQueryOptions<D>::SortDirection(Windows::ApplicationModel::Email::EmailQuerySortDirection const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryOptions)->put_SortDirection(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailQuerySortProperty consume_Windows_ApplicationModel_Email_IEmailQueryOptions<D>::SortProperty() const
+{
+    Windows::ApplicationModel::Email::EmailQuerySortProperty value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryOptions)->get_SortProperty(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailQueryOptions<D>::SortProperty(Windows::ApplicationModel::Email::EmailQuerySortProperty const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryOptions)->put_SortProperty(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailQueryKind consume_Windows_ApplicationModel_Email_IEmailQueryOptions<D>::Kind() const
+{
+    Windows::ApplicationModel::Email::EmailQueryKind value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryOptions)->get_Kind(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailQueryOptions<D>::Kind(Windows::ApplicationModel::Email::EmailQueryKind const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryOptions)->put_Kind(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::Collections::IVector<hstring> consume_Windows_ApplicationModel_Email_IEmailQueryOptions<D>::FolderIds() const
+{
+    Windows::Foundation::Collections::IVector<hstring> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryOptions)->get_FolderIds(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailQueryOptions consume_Windows_ApplicationModel_Email_IEmailQueryOptionsFactory<D>::CreateWithText(param::hstring const& text) const
+{
+    Windows::ApplicationModel::Email::EmailQueryOptions result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryOptionsFactory)->CreateWithText(get_abi(text), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailQueryOptions consume_Windows_ApplicationModel_Email_IEmailQueryOptionsFactory<D>::CreateWithTextAndFields(param::hstring const& text, Windows::ApplicationModel::Email::EmailQuerySearchFields const& fields) const
+{
+    Windows::ApplicationModel::Email::EmailQueryOptions result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryOptionsFactory)->CreateWithTextAndFields(get_abi(text), get_abi(fields), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailQuerySearchFields consume_Windows_ApplicationModel_Email_IEmailQueryTextSearch<D>::Fields() const
+{
+    Windows::ApplicationModel::Email::EmailQuerySearchFields value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryTextSearch)->get_Fields(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailQueryTextSearch<D>::Fields(Windows::ApplicationModel::Email::EmailQuerySearchFields const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryTextSearch)->put_Fields(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailQuerySearchScope consume_Windows_ApplicationModel_Email_IEmailQueryTextSearch<D>::SearchScope() const
+{
+    Windows::ApplicationModel::Email::EmailQuerySearchScope value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryTextSearch)->get_SearchScope(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailQueryTextSearch<D>::SearchScope(Windows::ApplicationModel::Email::EmailQuerySearchScope const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryTextSearch)->put_SearchScope(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailQueryTextSearch<D>::Text() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryTextSearch)->get_Text(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailQueryTextSearch<D>::Text(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailQueryTextSearch)->put_Text(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailRecipient<D>::Name() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailRecipient)->get_Name(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailRecipient<D>::Name(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailRecipient)->put_Name(get_abi(value)));
+}
+
+template <typename D> hstring consume_Windows_ApplicationModel_Email_IEmailRecipient<D>::Address() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailRecipient)->get_Address(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailRecipient<D>::Address(param::hstring const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailRecipient)->put_Address(get_abi(value)));
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailRecipient consume_Windows_ApplicationModel_Email_IEmailRecipientFactory<D>::Create(param::hstring const& address) const
+{
+    Windows::ApplicationModel::Email::EmailRecipient result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailRecipientFactory)->Create(get_abi(address), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailRecipient consume_Windows_ApplicationModel_Email_IEmailRecipientFactory<D>::CreateWithName(param::hstring const& address, param::hstring const& name) const
+{
+    Windows::ApplicationModel::Email::EmailRecipient result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailRecipientFactory)->CreateWithName(get_abi(address), get_abi(name), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailRecipientResolutionStatus consume_Windows_ApplicationModel_Email_IEmailRecipientResolutionResult<D>::Status() const
+{
+    Windows::ApplicationModel::Email::EmailRecipientResolutionStatus value{};
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailRecipientResolutionResult)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> consume_Windows_ApplicationModel_Email_IEmailRecipientResolutionResult<D>::PublicKeys() const
+{
+    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailRecipientResolutionResult)->get_PublicKeys(put_abi(value)));
+    return value;
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailRecipientResolutionResult2<D>::Status(Windows::ApplicationModel::Email::EmailRecipientResolutionStatus const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailRecipientResolutionResult2)->put_Status(get_abi(value)));
+}
+
+template <typename D> void consume_Windows_ApplicationModel_Email_IEmailRecipientResolutionResult2<D>::SetPublicKeys(param::iterable<Windows::Security::Cryptography::Certificates::Certificate> const& value) const
+{
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailRecipientResolutionResult2)->SetPublicKeys(get_abi(value)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMailbox>> consume_Windows_ApplicationModel_Email_IEmailStore<D>::FindMailboxesAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMailbox>> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailStore)->FindMailboxesAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailConversationReader consume_Windows_ApplicationModel_Email_IEmailStore<D>::GetConversationReader() const
+{
+    Windows::ApplicationModel::Email::EmailConversationReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailStore)->GetConversationReader(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailConversationReader consume_Windows_ApplicationModel_Email_IEmailStore<D>::GetConversationReader(Windows::ApplicationModel::Email::EmailQueryOptions const& options) const
+{
+    Windows::ApplicationModel::Email::EmailConversationReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailStore)->GetConversationReaderWithOptions(get_abi(options), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMessageReader consume_Windows_ApplicationModel_Email_IEmailStore<D>::GetMessageReader() const
+{
+    Windows::ApplicationModel::Email::EmailMessageReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailStore)->GetMessageReader(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::ApplicationModel::Email::EmailMessageReader consume_Windows_ApplicationModel_Email_IEmailStore<D>::GetMessageReader(Windows::ApplicationModel::Email::EmailQueryOptions const& options) const
+{
+    Windows::ApplicationModel::Email::EmailMessageReader result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailStore)->GetMessageReaderWithOptions(get_abi(options), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> consume_Windows_ApplicationModel_Email_IEmailStore<D>::GetMailboxAsync(param::hstring const& id) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailStore)->GetMailboxAsync(get_abi(id), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversation> consume_Windows_ApplicationModel_Email_IEmailStore<D>::GetConversationAsync(param::hstring const& id) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversation> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailStore)->GetConversationAsync(get_abi(id), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> consume_Windows_ApplicationModel_Email_IEmailStore<D>::GetFolderAsync(param::hstring const& id) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailStore)->GetFolderAsync(get_abi(id), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> consume_Windows_ApplicationModel_Email_IEmailStore<D>::GetMessageAsync(param::hstring const& id) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailStore)->GetMessageAsync(get_abi(id), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> consume_Windows_ApplicationModel_Email_IEmailStore<D>::CreateMailboxAsync(param::hstring const& accountName, param::hstring const& accountAddress) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailStore)->CreateMailboxAsync(get_abi(accountName), get_abi(accountAddress), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> consume_Windows_ApplicationModel_Email_IEmailStore<D>::CreateMailboxAsync(param::hstring const& accountName, param::hstring const& accountAddress, param::hstring const& userDataAccountId) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::ApplicationModel::Email::IEmailStore)->CreateMailboxInAccountAsync(get_abi(accountName), get_abi(accountAddress), get_abi(userDataAccountId), put_abi(result)));
+    return result;
+}
 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment> : produce_base<D, Windows::ApplicationModel::Email::IEmailAttachment>
 {
-    HRESULT __stdcall get_FileName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FileName(HSTRING* value) noexcept override
     {
         try
         {
@@ -36,12 +2425,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment> : produce_
         }
     }
 
-    HRESULT __stdcall put_FileName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_FileName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().FileName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().FileName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -50,7 +2439,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment> : produce_
         }
     }
 
-    HRESULT __stdcall get_Data(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall get_Data(::IUnknown** value) noexcept override
     {
         try
         {
@@ -65,12 +2454,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment> : produce_
         }
     }
 
-    HRESULT __stdcall put_Data(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall put_Data(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Data(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&value));
+            this->shim().Data(*reinterpret_cast<Windows::Storage::Streams::IRandomAccessStreamReference const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -83,7 +2472,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment> : produce_
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce_base<D, Windows::ApplicationModel::Email::IEmailAttachment2>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -98,7 +2487,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
         }
     }
 
-    HRESULT __stdcall get_ContentId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ContentId(HSTRING* value) noexcept override
     {
         try
         {
@@ -113,12 +2502,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
         }
     }
 
-    HRESULT __stdcall put_ContentId(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_ContentId(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ContentId(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ContentId(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -127,7 +2516,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
         }
     }
 
-    HRESULT __stdcall get_ContentLocation(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ContentLocation(HSTRING* value) noexcept override
     {
         try
         {
@@ -142,12 +2531,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
         }
     }
 
-    HRESULT __stdcall put_ContentLocation(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_ContentLocation(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ContentLocation(*reinterpret_cast<const hstring *>(&value));
+            this->shim().ContentLocation(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -156,7 +2545,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
         }
     }
 
-    HRESULT __stdcall get_DownloadState(Windows::ApplicationModel::Email::EmailAttachmentDownloadState * value) noexcept override
+    HRESULT __stdcall get_DownloadState(abi_t<Windows::ApplicationModel::Email::EmailAttachmentDownloadState>* value) noexcept override
     {
         try
         {
@@ -170,12 +2559,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
         }
     }
 
-    HRESULT __stdcall put_DownloadState(Windows::ApplicationModel::Email::EmailAttachmentDownloadState value) noexcept override
+    HRESULT __stdcall put_DownloadState(abi_t<Windows::ApplicationModel::Email::EmailAttachmentDownloadState> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DownloadState(value);
+            this->shim().DownloadState(*reinterpret_cast<Windows::ApplicationModel::Email::EmailAttachmentDownloadState const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -184,7 +2573,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
         }
     }
 
-    HRESULT __stdcall get_EstimatedDownloadSizeInBytes(uint64_t * value) noexcept override
+    HRESULT __stdcall get_EstimatedDownloadSizeInBytes(uint64_t* value) noexcept override
     {
         try
         {
@@ -212,7 +2601,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
         }
     }
 
-    HRESULT __stdcall get_IsFromBaseMessage(bool * value) noexcept override
+    HRESULT __stdcall get_IsFromBaseMessage(bool* value) noexcept override
     {
         try
         {
@@ -226,7 +2615,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
         }
     }
 
-    HRESULT __stdcall get_IsInline(bool * value) noexcept override
+    HRESULT __stdcall get_IsInline(bool* value) noexcept override
     {
         try
         {
@@ -254,7 +2643,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
         }
     }
 
-    HRESULT __stdcall get_MimeType(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MimeType(HSTRING* value) noexcept override
     {
         try
         {
@@ -269,12 +2658,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
         }
     }
 
-    HRESULT __stdcall put_MimeType(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_MimeType(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MimeType(*reinterpret_cast<const hstring *>(&value));
+            this->shim().MimeType(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -287,12 +2676,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachment2> : produce
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailAttachmentFactory> : produce_base<D, Windows::ApplicationModel::Email::IEmailAttachmentFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<hstring> fileName, impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> data, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailAttachment> result) noexcept override
+    HRESULT __stdcall Create(HSTRING fileName, ::IUnknown* data, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Create(*reinterpret_cast<const hstring *>(&fileName), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&data)));
+            *result = detach_abi(this->shim().Create(*reinterpret_cast<hstring const*>(&fileName), *reinterpret_cast<Windows::Storage::Streams::IRandomAccessStreamReference const*>(&data)));
             return S_OK;
         }
         catch (...)
@@ -306,12 +2695,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachmentFactory> : p
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailAttachmentFactory2> : produce_base<D, Windows::ApplicationModel::Email::IEmailAttachmentFactory2>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<hstring> fileName, impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> data, impl::abi_arg_in<hstring> mimeType, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailAttachment> result) noexcept override
+    HRESULT __stdcall Create(HSTRING fileName, ::IUnknown* data, HSTRING mimeType, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Create(*reinterpret_cast<const hstring *>(&fileName), *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&data), *reinterpret_cast<const hstring *>(&mimeType)));
+            *result = detach_abi(this->shim().Create(*reinterpret_cast<hstring const*>(&fileName), *reinterpret_cast<Windows::Storage::Streams::IRandomAccessStreamReference const*>(&data), *reinterpret_cast<hstring const*>(&mimeType)));
             return S_OK;
         }
         catch (...)
@@ -325,7 +2714,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailAttachmentFactory2> : 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produce_base<D, Windows::ApplicationModel::Email::IEmailConversation>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -340,7 +2729,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_MailboxId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MailboxId(HSTRING* value) noexcept override
     {
         try
         {
@@ -355,7 +2744,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_FlagState(Windows::ApplicationModel::Email::EmailFlagState * value) noexcept override
+    HRESULT __stdcall get_FlagState(abi_t<Windows::ApplicationModel::Email::EmailFlagState>* value) noexcept override
     {
         try
         {
@@ -369,7 +2758,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_HasAttachment(bool * value) noexcept override
+    HRESULT __stdcall get_HasAttachment(bool* value) noexcept override
     {
         try
         {
@@ -383,7 +2772,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_Importance(Windows::ApplicationModel::Email::EmailImportance * value) noexcept override
+    HRESULT __stdcall get_Importance(abi_t<Windows::ApplicationModel::Email::EmailImportance>* value) noexcept override
     {
         try
         {
@@ -397,7 +2786,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_LastEmailResponseKind(Windows::ApplicationModel::Email::EmailMessageResponseKind * value) noexcept override
+    HRESULT __stdcall get_LastEmailResponseKind(abi_t<Windows::ApplicationModel::Email::EmailMessageResponseKind>* value) noexcept override
     {
         try
         {
@@ -411,7 +2800,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_MessageCount(uint32_t * value) noexcept override
+    HRESULT __stdcall get_MessageCount(uint32_t* value) noexcept override
     {
         try
         {
@@ -425,7 +2814,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_MostRecentMessageId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MostRecentMessageId(HSTRING* value) noexcept override
     {
         try
         {
@@ -440,7 +2829,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_MostRecentMessageTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_MostRecentMessageTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -454,7 +2843,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_Preview(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Preview(HSTRING* value) noexcept override
     {
         try
         {
@@ -469,7 +2858,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_LatestSender(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailRecipient> value) noexcept override
+    HRESULT __stdcall get_LatestSender(::IUnknown** value) noexcept override
     {
         try
         {
@@ -484,7 +2873,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_Subject(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Subject(HSTRING* value) noexcept override
     {
         try
         {
@@ -499,7 +2888,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall get_UnreadMessageCount(uint32_t * value) noexcept override
+    HRESULT __stdcall get_UnreadMessageCount(uint32_t* value) noexcept override
     {
         try
         {
@@ -513,7 +2902,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall abi_FindMessagesAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage>>> result) noexcept override
+    HRESULT __stdcall FindMessagesAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -528,7 +2917,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
         }
     }
 
-    HRESULT __stdcall abi_FindMessagesWithCountAsync(uint32_t count, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage>>> result) noexcept override
+    HRESULT __stdcall FindMessagesWithCountAsync(uint32_t count, ::IUnknown** result) noexcept override
     {
         try
         {
@@ -547,7 +2936,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversation> : produc
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailConversationBatch> : produce_base<D, Windows::ApplicationModel::Email::IEmailConversationBatch>
 {
-    HRESULT __stdcall get_Conversations(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailConversation>> value) noexcept override
+    HRESULT __stdcall get_Conversations(::IUnknown** value) noexcept override
     {
         try
         {
@@ -562,7 +2951,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversationBatch> : p
         }
     }
 
-    HRESULT __stdcall get_Status(Windows::ApplicationModel::Email::EmailBatchStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::ApplicationModel::Email::EmailBatchStatus>* value) noexcept override
     {
         try
         {
@@ -580,7 +2969,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversationBatch> : p
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailConversationReader> : produce_base<D, Windows::ApplicationModel::Email::IEmailConversationReader>
 {
-    HRESULT __stdcall abi_ReadBatchAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversationBatch>> result) noexcept override
+    HRESULT __stdcall ReadBatchAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -599,7 +2988,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailConversationReader> : 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base<D, Windows::ApplicationModel::Email::IEmailFolder>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -614,7 +3003,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall get_RemoteId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RemoteId(HSTRING* value) noexcept override
     {
         try
         {
@@ -629,12 +3018,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall put_RemoteId(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_RemoteId(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RemoteId(*reinterpret_cast<const hstring *>(&value));
+            this->shim().RemoteId(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -643,7 +3032,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall get_MailboxId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MailboxId(HSTRING* value) noexcept override
     {
         try
         {
@@ -658,7 +3047,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall get_ParentFolderId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ParentFolderId(HSTRING* value) noexcept override
     {
         try
         {
@@ -673,7 +3062,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -688,12 +3077,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall put_DisplayName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DisplayName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DisplayName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DisplayName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -702,7 +3091,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall get_IsSyncEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_IsSyncEnabled(bool* value) noexcept override
     {
         try
         {
@@ -730,7 +3119,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall get_LastSuccessfulSyncTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_LastSuccessfulSyncTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -744,12 +3133,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall put_LastSuccessfulSyncTime(impl::abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall put_LastSuccessfulSyncTime(abi_t<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().LastSuccessfulSyncTime(*reinterpret_cast<const Windows::Foundation::DateTime *>(&value));
+            this->shim().LastSuccessfulSyncTime(*reinterpret_cast<Windows::Foundation::DateTime const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -758,7 +3147,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall get_Kind(Windows::ApplicationModel::Email::EmailSpecialFolderKind * value) noexcept override
+    HRESULT __stdcall get_Kind(abi_t<Windows::ApplicationModel::Email::EmailSpecialFolderKind>* value) noexcept override
     {
         try
         {
@@ -772,12 +3161,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_CreateFolderAsync(impl::abi_arg_in<hstring> name, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder>> result) noexcept override
+    HRESULT __stdcall CreateFolderAsync(HSTRING name, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateFolderAsync(*reinterpret_cast<const hstring *>(&name)));
+            *result = detach_abi(this->shim().CreateFolderAsync(*reinterpret_cast<hstring const*>(&name)));
             return S_OK;
         }
         catch (...)
@@ -787,7 +3176,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_DeleteAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall DeleteAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -802,7 +3191,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_FindChildFoldersAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailFolder>>> result) noexcept override
+    HRESULT __stdcall FindChildFoldersAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -817,7 +3206,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetConversationReader(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailConversationReader> result) noexcept override
+    HRESULT __stdcall GetConversationReader(::IUnknown** result) noexcept override
     {
         try
         {
@@ -832,12 +3221,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetConversationReaderWithOptions(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailQueryOptions> options, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailConversationReader> result) noexcept override
+    HRESULT __stdcall GetConversationReaderWithOptions(::IUnknown* options, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetConversationReader(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailQueryOptions *>(&options)));
+            *result = detach_abi(this->shim().GetConversationReader(*reinterpret_cast<Windows::ApplicationModel::Email::EmailQueryOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -847,12 +3236,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetMessageAsync(impl::abi_arg_in<hstring> id, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage>> result) noexcept override
+    HRESULT __stdcall GetMessageAsync(HSTRING id, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetMessageAsync(*reinterpret_cast<const hstring *>(&id)));
+            *result = detach_abi(this->shim().GetMessageAsync(*reinterpret_cast<hstring const*>(&id)));
             return S_OK;
         }
         catch (...)
@@ -862,7 +3251,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetMessageReader(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMessageReader> result) noexcept override
+    HRESULT __stdcall GetMessageReader(::IUnknown** result) noexcept override
     {
         try
         {
@@ -877,12 +3266,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetMessageReaderWithOptions(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailQueryOptions> options, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMessageReader> result) noexcept override
+    HRESULT __stdcall GetMessageReaderWithOptions(::IUnknown* options, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetMessageReader(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailQueryOptions *>(&options)));
+            *result = detach_abi(this->shim().GetMessageReader(*reinterpret_cast<Windows::ApplicationModel::Email::EmailQueryOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -892,7 +3281,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_GetMessageCountsAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailItemCounts>> result) noexcept override
+    HRESULT __stdcall GetMessageCountsAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -907,12 +3296,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_TryMoveAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailFolder> newParentFolder, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall TryMoveAsync(::IUnknown* newParentFolder, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryMoveAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailFolder *>(&newParentFolder)));
+            *result = detach_abi(this->shim().TryMoveAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailFolder const*>(&newParentFolder)));
             return S_OK;
         }
         catch (...)
@@ -922,12 +3311,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_TryMoveWithNewNameAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailFolder> newParentFolder, impl::abi_arg_in<hstring> newFolderName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall TryMoveWithNewNameAsync(::IUnknown* newParentFolder, HSTRING newFolderName, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryMoveAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailFolder *>(&newParentFolder), *reinterpret_cast<const hstring *>(&newFolderName)));
+            *result = detach_abi(this->shim().TryMoveAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailFolder const*>(&newParentFolder), *reinterpret_cast<hstring const*>(&newFolderName)));
             return S_OK;
         }
         catch (...)
@@ -937,7 +3326,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_TrySaveAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall TrySaveAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -952,12 +3341,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
         }
     }
 
-    HRESULT __stdcall abi_SaveMessageAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMessage> message, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall SaveMessageAsync(::IUnknown* message, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().SaveMessageAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMessage *>(&message)));
+            *result = detach_abi(this->shim().SaveMessageAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessage const*>(&message)));
             return S_OK;
         }
         catch (...)
@@ -971,7 +3360,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailFolder> : produce_base
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_base<D, Windows::ApplicationModel::Email::IEmailIrmInfo>
 {
-    HRESULT __stdcall get_CanEdit(bool * value) noexcept override
+    HRESULT __stdcall get_CanEdit(bool* value) noexcept override
     {
         try
         {
@@ -999,7 +3388,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_CanExtractData(bool * value) noexcept override
+    HRESULT __stdcall get_CanExtractData(bool* value) noexcept override
     {
         try
         {
@@ -1027,7 +3416,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_CanForward(bool * value) noexcept override
+    HRESULT __stdcall get_CanForward(bool* value) noexcept override
     {
         try
         {
@@ -1055,7 +3444,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_CanModifyRecipientsOnResponse(bool * value) noexcept override
+    HRESULT __stdcall get_CanModifyRecipientsOnResponse(bool* value) noexcept override
     {
         try
         {
@@ -1083,7 +3472,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_CanPrintData(bool * value) noexcept override
+    HRESULT __stdcall get_CanPrintData(bool* value) noexcept override
     {
         try
         {
@@ -1111,7 +3500,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_CanRemoveIrmOnResponse(bool * value) noexcept override
+    HRESULT __stdcall get_CanRemoveIrmOnResponse(bool* value) noexcept override
     {
         try
         {
@@ -1139,7 +3528,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_CanReply(bool * value) noexcept override
+    HRESULT __stdcall get_CanReply(bool* value) noexcept override
     {
         try
         {
@@ -1167,7 +3556,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_CanReplyAll(bool * value) noexcept override
+    HRESULT __stdcall get_CanReplyAll(bool* value) noexcept override
     {
         try
         {
@@ -1195,7 +3584,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_ExpirationDate(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_ExpirationDate(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -1209,12 +3598,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_ExpirationDate(impl::abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall put_ExpirationDate(abi_t<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ExpirationDate(*reinterpret_cast<const Windows::Foundation::DateTime *>(&value));
+            this->shim().ExpirationDate(*reinterpret_cast<Windows::Foundation::DateTime const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1223,7 +3612,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_IsIrmOriginator(bool * value) noexcept override
+    HRESULT __stdcall get_IsIrmOriginator(bool* value) noexcept override
     {
         try
         {
@@ -1251,7 +3640,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_IsProgramaticAccessAllowed(bool * value) noexcept override
+    HRESULT __stdcall get_IsProgramaticAccessAllowed(bool* value) noexcept override
     {
         try
         {
@@ -1279,7 +3668,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Template(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailIrmTemplate> value) noexcept override
+    HRESULT __stdcall get_Template(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1294,12 +3683,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Template(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailIrmTemplate> value) noexcept override
+    HRESULT __stdcall put_Template(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Template(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailIrmTemplate *>(&value));
+            this->shim().Template(*reinterpret_cast<Windows::ApplicationModel::Email::EmailIrmTemplate const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1312,12 +3701,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfo> : produce_bas
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfoFactory> : produce_base<D, Windows::ApplicationModel::Email::IEmailIrmInfoFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<Windows::Foundation::DateTime> expiration, impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailIrmTemplate> irmTemplate, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailIrmInfo> result) noexcept override
+    HRESULT __stdcall Create(abi_t<Windows::Foundation::DateTime> expiration, ::IUnknown* irmTemplate, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Create(*reinterpret_cast<const Windows::Foundation::DateTime *>(&expiration), *reinterpret_cast<const Windows::ApplicationModel::Email::EmailIrmTemplate *>(&irmTemplate)));
+            *result = detach_abi(this->shim().Create(*reinterpret_cast<Windows::Foundation::DateTime const*>(&expiration), *reinterpret_cast<Windows::ApplicationModel::Email::EmailIrmTemplate const*>(&irmTemplate)));
             return S_OK;
         }
         catch (...)
@@ -1331,7 +3720,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmInfoFactory> : prod
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailIrmTemplate> : produce_base<D, Windows::ApplicationModel::Email::IEmailIrmTemplate>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -1346,12 +3735,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmTemplate> : produce
         }
     }
 
-    HRESULT __stdcall put_Id(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Id(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Id(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Id(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1360,7 +3749,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmTemplate> : produce
         }
     }
 
-    HRESULT __stdcall get_Description(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Description(HSTRING* value) noexcept override
     {
         try
         {
@@ -1375,12 +3764,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmTemplate> : produce
         }
     }
 
-    HRESULT __stdcall put_Description(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Description(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Description(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Description(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1389,7 +3778,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmTemplate> : produce
         }
     }
 
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -1404,12 +3793,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmTemplate> : produce
         }
     }
 
-    HRESULT __stdcall put_Name(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Name(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Name(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Name(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1422,12 +3811,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmTemplate> : produce
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailIrmTemplateFactory> : produce_base<D, Windows::ApplicationModel::Email::IEmailIrmTemplateFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<hstring> id, impl::abi_arg_in<hstring> name, impl::abi_arg_in<hstring> description, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailIrmTemplate> result) noexcept override
+    HRESULT __stdcall Create(HSTRING id, HSTRING name, HSTRING description, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Create(*reinterpret_cast<const hstring *>(&id), *reinterpret_cast<const hstring *>(&name), *reinterpret_cast<const hstring *>(&description)));
+            *result = detach_abi(this->shim().Create(*reinterpret_cast<hstring const*>(&id), *reinterpret_cast<hstring const*>(&name), *reinterpret_cast<hstring const*>(&description)));
             return S_OK;
         }
         catch (...)
@@ -1441,7 +3830,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailIrmTemplateFactory> : 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailItemCounts> : produce_base<D, Windows::ApplicationModel::Email::IEmailItemCounts>
 {
-    HRESULT __stdcall get_Flagged(uint32_t * value) noexcept override
+    HRESULT __stdcall get_Flagged(uint32_t* value) noexcept override
     {
         try
         {
@@ -1455,7 +3844,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailItemCounts> : produce_
         }
     }
 
-    HRESULT __stdcall get_Important(uint32_t * value) noexcept override
+    HRESULT __stdcall get_Important(uint32_t* value) noexcept override
     {
         try
         {
@@ -1469,7 +3858,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailItemCounts> : produce_
         }
     }
 
-    HRESULT __stdcall get_Total(uint32_t * value) noexcept override
+    HRESULT __stdcall get_Total(uint32_t* value) noexcept override
     {
         try
         {
@@ -1483,7 +3872,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailItemCounts> : produce_
         }
     }
 
-    HRESULT __stdcall get_Unread(uint32_t * value) noexcept override
+    HRESULT __stdcall get_Unread(uint32_t* value) noexcept override
     {
         try
         {
@@ -1501,7 +3890,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailItemCounts> : produce_
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailbox>
 {
-    HRESULT __stdcall get_Capabilities(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMailboxCapabilities> value) noexcept override
+    HRESULT __stdcall get_Capabilities(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1516,7 +3905,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_ChangeTracker(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMailboxChangeTracker> value) noexcept override
+    HRESULT __stdcall get_ChangeTracker(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1531,7 +3920,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_DisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -1546,12 +3935,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_DisplayName(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_DisplayName(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DisplayName(*reinterpret_cast<const hstring *>(&value));
+            this->shim().DisplayName(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1560,7 +3949,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -1575,7 +3964,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_IsOwnedByCurrentApp(bool * value) noexcept override
+    HRESULT __stdcall get_IsOwnedByCurrentApp(bool* value) noexcept override
     {
         try
         {
@@ -1589,7 +3978,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_IsDataEncryptedUnderLock(bool * value) noexcept override
+    HRESULT __stdcall get_IsDataEncryptedUnderLock(bool* value) noexcept override
     {
         try
         {
@@ -1603,7 +3992,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_MailAddress(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MailAddress(HSTRING* value) noexcept override
     {
         try
         {
@@ -1618,12 +4007,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_MailAddress(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_MailAddress(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MailAddress(*reinterpret_cast<const hstring *>(&value));
+            this->shim().MailAddress(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1632,7 +4021,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_MailAddressAliases(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_MailAddressAliases(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1647,7 +4036,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_OtherAppReadAccess(Windows::ApplicationModel::Email::EmailMailboxOtherAppReadAccess * value) noexcept override
+    HRESULT __stdcall get_OtherAppReadAccess(abi_t<Windows::ApplicationModel::Email::EmailMailboxOtherAppReadAccess>* value) noexcept override
     {
         try
         {
@@ -1661,12 +4050,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_OtherAppReadAccess(Windows::ApplicationModel::Email::EmailMailboxOtherAppReadAccess value) noexcept override
+    HRESULT __stdcall put_OtherAppReadAccess(abi_t<Windows::ApplicationModel::Email::EmailMailboxOtherAppReadAccess> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().OtherAppReadAccess(value);
+            this->shim().OtherAppReadAccess(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMailboxOtherAppReadAccess const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1675,7 +4064,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_OtherAppWriteAccess(Windows::ApplicationModel::Email::EmailMailboxOtherAppWriteAccess * value) noexcept override
+    HRESULT __stdcall get_OtherAppWriteAccess(abi_t<Windows::ApplicationModel::Email::EmailMailboxOtherAppWriteAccess>* value) noexcept override
     {
         try
         {
@@ -1689,12 +4078,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_OtherAppWriteAccess(Windows::ApplicationModel::Email::EmailMailboxOtherAppWriteAccess value) noexcept override
+    HRESULT __stdcall put_OtherAppWriteAccess(abi_t<Windows::ApplicationModel::Email::EmailMailboxOtherAppWriteAccess> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().OtherAppWriteAccess(value);
+            this->shim().OtherAppWriteAccess(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMailboxOtherAppWriteAccess const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -1703,7 +4092,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Policies(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMailboxPolicies> value) noexcept override
+    HRESULT __stdcall get_Policies(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1718,7 +4107,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_SourceDisplayName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_SourceDisplayName(HSTRING* value) noexcept override
     {
         try
         {
@@ -1733,7 +4122,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_SyncManager(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMailboxSyncManager> value) noexcept override
+    HRESULT __stdcall get_SyncManager(::IUnknown** value) noexcept override
     {
         try
         {
@@ -1748,7 +4137,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_UserDataAccountId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_UserDataAccountId(HSTRING* value) noexcept override
     {
         try
         {
@@ -1763,7 +4152,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetConversationReader(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailConversationReader> result) noexcept override
+    HRESULT __stdcall GetConversationReader(::IUnknown** result) noexcept override
     {
         try
         {
@@ -1778,12 +4167,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetConversationReaderWithOptions(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailQueryOptions> options, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailConversationReader> result) noexcept override
+    HRESULT __stdcall GetConversationReaderWithOptions(::IUnknown* options, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetConversationReader(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailQueryOptions *>(&options)));
+            *result = detach_abi(this->shim().GetConversationReader(*reinterpret_cast<Windows::ApplicationModel::Email::EmailQueryOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -1793,7 +4182,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetMessageReader(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMessageReader> result) noexcept override
+    HRESULT __stdcall GetMessageReader(::IUnknown** result) noexcept override
     {
         try
         {
@@ -1808,12 +4197,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetMessageReaderWithOptions(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailQueryOptions> options, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMessageReader> result) noexcept override
+    HRESULT __stdcall GetMessageReaderWithOptions(::IUnknown* options, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetMessageReader(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailQueryOptions *>(&options)));
+            *result = detach_abi(this->shim().GetMessageReader(*reinterpret_cast<Windows::ApplicationModel::Email::EmailQueryOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -1823,7 +4212,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_DeleteAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall DeleteAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -1838,12 +4227,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetConversationAsync(impl::abi_arg_in<hstring> id, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversation>> result) noexcept override
+    HRESULT __stdcall GetConversationAsync(HSTRING id, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetConversationAsync(*reinterpret_cast<const hstring *>(&id)));
+            *result = detach_abi(this->shim().GetConversationAsync(*reinterpret_cast<hstring const*>(&id)));
             return S_OK;
         }
         catch (...)
@@ -1853,12 +4242,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetFolderAsync(impl::abi_arg_in<hstring> id, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder>> result) noexcept override
+    HRESULT __stdcall GetFolderAsync(HSTRING id, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetFolderAsync(*reinterpret_cast<const hstring *>(&id)));
+            *result = detach_abi(this->shim().GetFolderAsync(*reinterpret_cast<hstring const*>(&id)));
             return S_OK;
         }
         catch (...)
@@ -1868,12 +4257,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetMessageAsync(impl::abi_arg_in<hstring> id, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage>> result) noexcept override
+    HRESULT __stdcall GetMessageAsync(HSTRING id, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetMessageAsync(*reinterpret_cast<const hstring *>(&id)));
+            *result = detach_abi(this->shim().GetMessageAsync(*reinterpret_cast<hstring const*>(&id)));
             return S_OK;
         }
         catch (...)
@@ -1883,12 +4272,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_GetSpecialFolderAsync(Windows::ApplicationModel::Email::EmailSpecialFolderKind folderType, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder>> result) noexcept override
+    HRESULT __stdcall GetSpecialFolderAsync(abi_t<Windows::ApplicationModel::Email::EmailSpecialFolderKind> folderType, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetSpecialFolderAsync(folderType));
+            *result = detach_abi(this->shim().GetSpecialFolderAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailSpecialFolderKind const*>(&folderType)));
             return S_OK;
         }
         catch (...)
@@ -1898,7 +4287,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_SaveAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall SaveAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -1913,12 +4302,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_MarkMessageAsSeenAsync(impl::abi_arg_in<hstring> messageId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall MarkMessageAsSeenAsync(HSTRING messageId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().MarkMessageAsSeenAsync(*reinterpret_cast<const hstring *>(&messageId)));
+            *result = detach_abi(this->shim().MarkMessageAsSeenAsync(*reinterpret_cast<hstring const*>(&messageId)));
             return S_OK;
         }
         catch (...)
@@ -1928,12 +4317,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_MarkFolderAsSeenAsync(impl::abi_arg_in<hstring> folderId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall MarkFolderAsSeenAsync(HSTRING folderId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().MarkFolderAsSeenAsync(*reinterpret_cast<const hstring *>(&folderId)));
+            *result = detach_abi(this->shim().MarkFolderAsSeenAsync(*reinterpret_cast<hstring const*>(&folderId)));
             return S_OK;
         }
         catch (...)
@@ -1943,12 +4332,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_MarkMessageReadAsync(impl::abi_arg_in<hstring> messageId, bool isRead, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall MarkMessageReadAsync(HSTRING messageId, bool isRead, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().MarkMessageReadAsync(*reinterpret_cast<const hstring *>(&messageId), isRead));
+            *result = detach_abi(this->shim().MarkMessageReadAsync(*reinterpret_cast<hstring const*>(&messageId), isRead));
             return S_OK;
         }
         catch (...)
@@ -1958,12 +4347,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_ChangeMessageFlagStateAsync(impl::abi_arg_in<hstring> messageId, Windows::ApplicationModel::Email::EmailFlagState flagState, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall ChangeMessageFlagStateAsync(HSTRING messageId, abi_t<Windows::ApplicationModel::Email::EmailFlagState> flagState, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().ChangeMessageFlagStateAsync(*reinterpret_cast<const hstring *>(&messageId), flagState));
+            *result = detach_abi(this->shim().ChangeMessageFlagStateAsync(*reinterpret_cast<hstring const*>(&messageId), *reinterpret_cast<Windows::ApplicationModel::Email::EmailFlagState const*>(&flagState)));
             return S_OK;
         }
         catch (...)
@@ -1973,12 +4362,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_TryMoveMessageAsync(impl::abi_arg_in<hstring> messageId, impl::abi_arg_in<hstring> newParentFolderId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall TryMoveMessageAsync(HSTRING messageId, HSTRING newParentFolderId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryMoveMessageAsync(*reinterpret_cast<const hstring *>(&messageId), *reinterpret_cast<const hstring *>(&newParentFolderId)));
+            *result = detach_abi(this->shim().TryMoveMessageAsync(*reinterpret_cast<hstring const*>(&messageId), *reinterpret_cast<hstring const*>(&newParentFolderId)));
             return S_OK;
         }
         catch (...)
@@ -1988,12 +4377,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_TryMoveFolderAsync(impl::abi_arg_in<hstring> folderId, impl::abi_arg_in<hstring> newParentFolderId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall TryMoveFolderAsync(HSTRING folderId, HSTRING newParentFolderId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryMoveFolderAsync(*reinterpret_cast<const hstring *>(&folderId), *reinterpret_cast<const hstring *>(&newParentFolderId)));
+            *result = detach_abi(this->shim().TryMoveFolderAsync(*reinterpret_cast<hstring const*>(&folderId), *reinterpret_cast<hstring const*>(&newParentFolderId)));
             return S_OK;
         }
         catch (...)
@@ -2003,12 +4392,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_TryMoveFolderWithNewNameAsync(impl::abi_arg_in<hstring> folderId, impl::abi_arg_in<hstring> newParentFolderId, impl::abi_arg_in<hstring> newFolderName, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall TryMoveFolderWithNewNameAsync(HSTRING folderId, HSTRING newParentFolderId, HSTRING newFolderName, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryMoveFolderAsync(*reinterpret_cast<const hstring *>(&folderId), *reinterpret_cast<const hstring *>(&newParentFolderId), *reinterpret_cast<const hstring *>(&newFolderName)));
+            *result = detach_abi(this->shim().TryMoveFolderAsync(*reinterpret_cast<hstring const*>(&folderId), *reinterpret_cast<hstring const*>(&newParentFolderId), *reinterpret_cast<hstring const*>(&newFolderName)));
             return S_OK;
         }
         catch (...)
@@ -2018,12 +4407,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_DeleteMessageAsync(impl::abi_arg_in<hstring> messageId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall DeleteMessageAsync(HSTRING messageId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().DeleteMessageAsync(*reinterpret_cast<const hstring *>(&messageId)));
+            *result = detach_abi(this->shim().DeleteMessageAsync(*reinterpret_cast<hstring const*>(&messageId)));
             return S_OK;
         }
         catch (...)
@@ -2033,12 +4422,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_MarkFolderSyncEnabledAsync(impl::abi_arg_in<hstring> folderId, bool isSyncEnabled, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall MarkFolderSyncEnabledAsync(HSTRING folderId, bool isSyncEnabled, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().MarkFolderSyncEnabledAsync(*reinterpret_cast<const hstring *>(&folderId), isSyncEnabled));
+            *result = detach_abi(this->shim().MarkFolderSyncEnabledAsync(*reinterpret_cast<hstring const*>(&folderId), isSyncEnabled));
             return S_OK;
         }
         catch (...)
@@ -2048,12 +4437,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_SendMessageAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMessage> message, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall SendMessageAsync(::IUnknown* message, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().SendMessageAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMessage *>(&message)));
+            *result = detach_abi(this->shim().SendMessageAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessage const*>(&message)));
             return S_OK;
         }
         catch (...)
@@ -2063,12 +4452,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_SaveDraftAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMessage> message, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall SaveDraftAsync(::IUnknown* message, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().SaveDraftAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMessage *>(&message)));
+            *result = detach_abi(this->shim().SaveDraftAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessage const*>(&message)));
             return S_OK;
         }
         catch (...)
@@ -2078,12 +4467,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_DownloadMessageAsync(impl::abi_arg_in<hstring> messageId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall DownloadMessageAsync(HSTRING messageId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().DownloadMessageAsync(*reinterpret_cast<const hstring *>(&messageId)));
+            *result = detach_abi(this->shim().DownloadMessageAsync(*reinterpret_cast<hstring const*>(&messageId)));
             return S_OK;
         }
         catch (...)
@@ -2093,12 +4482,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_DownloadAttachmentAsync(impl::abi_arg_in<hstring> attachmentId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall DownloadAttachmentAsync(HSTRING attachmentId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().DownloadAttachmentAsync(*reinterpret_cast<const hstring *>(&attachmentId)));
+            *result = detach_abi(this->shim().DownloadAttachmentAsync(*reinterpret_cast<hstring const*>(&attachmentId)));
             return S_OK;
         }
         catch (...)
@@ -2108,12 +4497,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_CreateResponseMessageAsync(impl::abi_arg_in<hstring> messageId, Windows::ApplicationModel::Email::EmailMessageResponseKind responseType, impl::abi_arg_in<hstring> subject, Windows::ApplicationModel::Email::EmailMessageBodyKind responseHeaderType, impl::abi_arg_in<hstring> responseHeader, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage>> result) noexcept override
+    HRESULT __stdcall CreateResponseMessageAsync(HSTRING messageId, abi_t<Windows::ApplicationModel::Email::EmailMessageResponseKind> responseType, HSTRING subject, abi_t<Windows::ApplicationModel::Email::EmailMessageBodyKind> responseHeaderType, HSTRING responseHeader, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateResponseMessageAsync(*reinterpret_cast<const hstring *>(&messageId), responseType, *reinterpret_cast<const hstring *>(&subject), responseHeaderType, *reinterpret_cast<const hstring *>(&responseHeader)));
+            *result = detach_abi(this->shim().CreateResponseMessageAsync(*reinterpret_cast<hstring const*>(&messageId), *reinterpret_cast<Windows::ApplicationModel::Email::EmailMessageResponseKind const*>(&responseType), *reinterpret_cast<hstring const*>(&subject), *reinterpret_cast<Windows::ApplicationModel::Email::EmailMessageBodyKind const*>(&responseHeaderType), *reinterpret_cast<hstring const*>(&responseHeader)));
             return S_OK;
         }
         catch (...)
@@ -2123,12 +4512,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_TryUpdateMeetingResponseAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMessage> meeting, Windows::ApplicationModel::Email::EmailMeetingResponseType response, impl::abi_arg_in<hstring> subject, impl::abi_arg_in<hstring> comment, bool sendUpdate, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall TryUpdateMeetingResponseAsync(::IUnknown* meeting, abi_t<Windows::ApplicationModel::Email::EmailMeetingResponseType> response, HSTRING subject, HSTRING comment, bool sendUpdate, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryUpdateMeetingResponseAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMessage *>(&meeting), response, *reinterpret_cast<const hstring *>(&subject), *reinterpret_cast<const hstring *>(&comment), sendUpdate));
+            *result = detach_abi(this->shim().TryUpdateMeetingResponseAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessage const*>(&meeting), *reinterpret_cast<Windows::ApplicationModel::Email::EmailMeetingResponseType const*>(&response), *reinterpret_cast<hstring const*>(&subject), *reinterpret_cast<hstring const*>(&comment), sendUpdate));
             return S_OK;
         }
         catch (...)
@@ -2138,12 +4527,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_TryForwardMeetingAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMessage> meeting, impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Email::EmailRecipient>> recipients, impl::abi_arg_in<hstring> subject, Windows::ApplicationModel::Email::EmailMessageBodyKind forwardHeaderType, impl::abi_arg_in<hstring> forwardHeader, impl::abi_arg_in<hstring> comment, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall TryForwardMeetingAsync(::IUnknown* meeting, ::IUnknown* recipients, HSTRING subject, abi_t<Windows::ApplicationModel::Email::EmailMessageBodyKind> forwardHeaderType, HSTRING forwardHeader, HSTRING comment, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryForwardMeetingAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMessage *>(&meeting), *reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Email::EmailRecipient> *>(&recipients), *reinterpret_cast<const hstring *>(&subject), forwardHeaderType, *reinterpret_cast<const hstring *>(&forwardHeader), *reinterpret_cast<const hstring *>(&comment)));
+            *result = detach_abi(this->shim().TryForwardMeetingAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessage const*>(&meeting), *reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::ApplicationModel::Email::EmailRecipient> const*>(&recipients), *reinterpret_cast<hstring const*>(&subject), *reinterpret_cast<Windows::ApplicationModel::Email::EmailMessageBodyKind const*>(&forwardHeaderType), *reinterpret_cast<hstring const*>(&forwardHeader), *reinterpret_cast<hstring const*>(&comment)));
             return S_OK;
         }
         catch (...)
@@ -2153,12 +4542,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_TryProposeNewTimeForMeetingAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMessage> meeting, impl::abi_arg_in<Windows::Foundation::DateTime> newStartTime, impl::abi_arg_in<Windows::Foundation::TimeSpan> newDuration, impl::abi_arg_in<hstring> subject, impl::abi_arg_in<hstring> comment, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall TryProposeNewTimeForMeetingAsync(::IUnknown* meeting, abi_t<Windows::Foundation::DateTime> newStartTime, abi_t<Windows::Foundation::TimeSpan> newDuration, HSTRING subject, HSTRING comment, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryProposeNewTimeForMeetingAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMessage *>(&meeting), *reinterpret_cast<const Windows::Foundation::DateTime *>(&newStartTime), *reinterpret_cast<const Windows::Foundation::TimeSpan *>(&newDuration), *reinterpret_cast<const hstring *>(&subject), *reinterpret_cast<const hstring *>(&comment)));
+            *result = detach_abi(this->shim().TryProposeNewTimeForMeetingAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessage const*>(&meeting), *reinterpret_cast<Windows::Foundation::DateTime const*>(&newStartTime), *reinterpret_cast<Windows::Foundation::TimeSpan const*>(&newDuration), *reinterpret_cast<hstring const*>(&subject), *reinterpret_cast<hstring const*>(&comment)));
             return S_OK;
         }
         catch (...)
@@ -2168,12 +4557,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall add_MailboxChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailbox, Windows::ApplicationModel::Email::EmailMailboxChangedEventArgs>> pHandler, event_token * pToken) noexcept override
+    HRESULT __stdcall add_MailboxChanged(::IUnknown* pHandler, abi_t<event_token>* pToken) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *pToken = detach_abi(this->shim().MailboxChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailbox, Windows::ApplicationModel::Email::EmailMailboxChangedEventArgs> *>(&pHandler)));
+            *pToken = detach_abi(this->shim().MailboxChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailbox, Windows::ApplicationModel::Email::EmailMailboxChangedEventArgs> const*>(&pHandler)));
             return S_OK;
         }
         catch (...)
@@ -2182,12 +4571,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall remove_MailboxChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_MailboxChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MailboxChanged(token);
+            this->shim().MailboxChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -2196,27 +4585,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_SmartSendMessageAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMessage> message, bool smartSend, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall SmartSendMessageAsync(::IUnknown* message, bool smartSend, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().SendMessageAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMessage *>(&message), smartSend));
-            return S_OK;
-        }
-        catch (...)
-        {
-            *result = nullptr;
-            return impl::to_hresult();
-        }
-    }
-
-    HRESULT __stdcall abi_TrySetAutoReplySettingsAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings> autoReplySettings, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
-    {
-        try
-        {
-            typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TrySetAutoReplySettingsAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings *>(&autoReplySettings)));
+            *result = detach_abi(this->shim().SendMessageAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessage const*>(&message), smartSend));
             return S_OK;
         }
         catch (...)
@@ -2226,12 +4600,27 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
         }
     }
 
-    HRESULT __stdcall abi_TryGetAutoReplySettingsAsync(Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind requestedFormat, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings>> autoReplySettings) noexcept override
+    HRESULT __stdcall TrySetAutoReplySettingsAsync(::IUnknown* autoReplySettings, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *autoReplySettings = detach_abi(this->shim().TryGetAutoReplySettingsAsync(requestedFormat));
+            *result = detach_abi(this->shim().TrySetAutoReplySettingsAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings const*>(&autoReplySettings)));
+            return S_OK;
+        }
+        catch (...)
+        {
+            *result = nullptr;
+            return impl::to_hresult();
+        }
+    }
+
+    HRESULT __stdcall TryGetAutoReplySettingsAsync(abi_t<Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind> requestedFormat, ::IUnknown** autoReplySettings) noexcept override
+    {
+        try
+        {
+            typename D::abi_guard guard(this->shim());
+            *autoReplySettings = detach_abi(this->shim().TryGetAutoReplySettingsAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind const*>(&requestedFormat)));
             return S_OK;
         }
         catch (...)
@@ -2245,7 +4634,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox> : produce_bas
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox2> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailbox2>
 {
-    HRESULT __stdcall get_LinkedMailboxId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_LinkedMailboxId(HSTRING* value) noexcept override
     {
         try
         {
@@ -2260,7 +4649,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_NetworkAccountId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NetworkAccountId(HSTRING* value) noexcept override
     {
         try
         {
@@ -2275,7 +4664,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_NetworkId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NetworkId(HSTRING* value) noexcept override
     {
         try
         {
@@ -2294,12 +4683,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox2> : produce_ba
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox3> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailbox3>
 {
-    HRESULT __stdcall abi_ResolveRecipientsAsync(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<hstring>> recipients, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailRecipientResolutionResult>>> result) noexcept override
+    HRESULT __stdcall ResolveRecipientsAsync(::IUnknown* recipients, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().ResolveRecipientsAsync(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<hstring> *>(&recipients)));
+            *result = detach_abi(this->shim().ResolveRecipientsAsync(*reinterpret_cast<Windows::Foundation::Collections::IIterable<hstring> const*>(&recipients)));
             return S_OK;
         }
         catch (...)
@@ -2309,12 +4698,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox3> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_ValidateCertificatesAsync(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::Certificate>> certificates, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<winrt::Windows::ApplicationModel::Email::EmailCertificateValidationStatus>>> result) noexcept override
+    HRESULT __stdcall ValidateCertificatesAsync(::IUnknown* certificates, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().ValidateCertificatesAsync(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::Certificate> *>(&certificates)));
+            *result = detach_abi(this->shim().ValidateCertificatesAsync(*reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::Certificate> const*>(&certificates)));
             return S_OK;
         }
         catch (...)
@@ -2324,12 +4713,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox3> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_TryEmptyFolderAsync(impl::abi_arg_in<hstring> folderId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::Email::EmailMailboxEmptyFolderStatus>> result) noexcept override
+    HRESULT __stdcall TryEmptyFolderAsync(HSTRING folderId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryEmptyFolderAsync(*reinterpret_cast<const hstring *>(&folderId)));
+            *result = detach_abi(this->shim().TryEmptyFolderAsync(*reinterpret_cast<hstring const*>(&folderId)));
             return S_OK;
         }
         catch (...)
@@ -2339,12 +4728,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox3> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_TryCreateFolderAsync(impl::abi_arg_in<hstring> parentFolderId, impl::abi_arg_in<hstring> name, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxCreateFolderResult>> result) noexcept override
+    HRESULT __stdcall TryCreateFolderAsync(HSTRING parentFolderId, HSTRING name, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryCreateFolderAsync(*reinterpret_cast<const hstring *>(&parentFolderId), *reinterpret_cast<const hstring *>(&name)));
+            *result = detach_abi(this->shim().TryCreateFolderAsync(*reinterpret_cast<hstring const*>(&parentFolderId), *reinterpret_cast<hstring const*>(&name)));
             return S_OK;
         }
         catch (...)
@@ -2354,12 +4743,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox3> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_TryDeleteFolderAsync(impl::abi_arg_in<hstring> folderId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::Email::EmailMailboxDeleteFolderStatus>> result) noexcept override
+    HRESULT __stdcall TryDeleteFolderAsync(HSTRING folderId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().TryDeleteFolderAsync(*reinterpret_cast<const hstring *>(&folderId)));
+            *result = detach_abi(this->shim().TryDeleteFolderAsync(*reinterpret_cast<hstring const*>(&folderId)));
             return S_OK;
         }
         catch (...)
@@ -2373,7 +4762,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox3> : produce_ba
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox4> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailbox4>
 {
-    HRESULT __stdcall abi_RegisterSyncManagerAsync(impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall RegisterSyncManagerAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -2392,7 +4781,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailbox4> : produce_ba
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAction> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxAction>
 {
-    HRESULT __stdcall get_Kind(Windows::ApplicationModel::Email::EmailMailboxActionKind * value) noexcept override
+    HRESULT __stdcall get_Kind(abi_t<Windows::ApplicationModel::Email::EmailMailboxActionKind>* value) noexcept override
     {
         try
         {
@@ -2406,7 +4795,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAction> : produ
         }
     }
 
-    HRESULT __stdcall get_ChangeNumber(uint64_t * value) noexcept override
+    HRESULT __stdcall get_ChangeNumber(uint64_t* value) noexcept override
     {
         try
         {
@@ -2424,7 +4813,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAction> : produ
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReply> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReply>
 {
-    HRESULT __stdcall get_IsEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_IsEnabled(bool* value) noexcept override
     {
         try
         {
@@ -2452,7 +4841,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReply> : pr
         }
     }
 
-    HRESULT __stdcall get_Response(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Response(HSTRING* value) noexcept override
     {
         try
         {
@@ -2467,12 +4856,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReply> : pr
         }
     }
 
-    HRESULT __stdcall put_Response(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Response(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Response(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Response(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2485,7 +4874,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReply> : pr
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings>
 {
-    HRESULT __stdcall get_IsEnabled(bool * value) noexcept override
+    HRESULT __stdcall get_IsEnabled(bool* value) noexcept override
     {
         try
         {
@@ -2513,7 +4902,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettin
         }
     }
 
-    HRESULT __stdcall get_ResponseKind(Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind * value) noexcept override
+    HRESULT __stdcall get_ResponseKind(abi_t<Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind>* value) noexcept override
     {
         try
         {
@@ -2527,12 +4916,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettin
         }
     }
 
-    HRESULT __stdcall put_ResponseKind(Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind value) noexcept override
+    HRESULT __stdcall put_ResponseKind(abi_t<Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ResponseKind(value);
+            this->shim().ResponseKind(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2541,7 +4930,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettin
         }
     }
 
-    HRESULT __stdcall get_StartTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_StartTime(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2556,12 +4945,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettin
         }
     }
 
-    HRESULT __stdcall put_StartTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall put_StartTime(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StartTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&value));
+            this->shim().StartTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2570,7 +4959,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettin
         }
     }
 
-    HRESULT __stdcall get_EndTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_EndTime(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2585,12 +4974,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettin
         }
     }
 
-    HRESULT __stdcall put_EndTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall put_EndTime(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().EndTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&value));
+            this->shim().EndTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -2599,7 +4988,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettin
         }
     }
 
-    HRESULT __stdcall get_InternalReply(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMailboxAutoReply> value) noexcept override
+    HRESULT __stdcall get_InternalReply(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2614,7 +5003,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettin
         }
     }
 
-    HRESULT __stdcall get_KnownExternalReply(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMailboxAutoReply> value) noexcept override
+    HRESULT __stdcall get_KnownExternalReply(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2629,7 +5018,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettin
         }
     }
 
-    HRESULT __stdcall get_UnknownExternalReply(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMailboxAutoReply> value) noexcept override
+    HRESULT __stdcall get_UnknownExternalReply(::IUnknown** value) noexcept override
     {
         try
         {
@@ -2648,7 +5037,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettin
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities>
 {
-    HRESULT __stdcall get_CanForwardMeetings(bool * value) noexcept override
+    HRESULT __stdcall get_CanForwardMeetings(bool* value) noexcept override
     {
         try
         {
@@ -2662,7 +5051,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities> :
         }
     }
 
-    HRESULT __stdcall get_CanGetAndSetExternalAutoReplies(bool * value) noexcept override
+    HRESULT __stdcall get_CanGetAndSetExternalAutoReplies(bool* value) noexcept override
     {
         try
         {
@@ -2676,7 +5065,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities> :
         }
     }
 
-    HRESULT __stdcall get_CanGetAndSetInternalAutoReplies(bool * value) noexcept override
+    HRESULT __stdcall get_CanGetAndSetInternalAutoReplies(bool* value) noexcept override
     {
         try
         {
@@ -2690,7 +5079,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities> :
         }
     }
 
-    HRESULT __stdcall get_CanUpdateMeetingResponses(bool * value) noexcept override
+    HRESULT __stdcall get_CanUpdateMeetingResponses(bool* value) noexcept override
     {
         try
         {
@@ -2704,7 +5093,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities> :
         }
     }
 
-    HRESULT __stdcall get_CanServerSearchFolders(bool * value) noexcept override
+    HRESULT __stdcall get_CanServerSearchFolders(bool* value) noexcept override
     {
         try
         {
@@ -2718,7 +5107,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities> :
         }
     }
 
-    HRESULT __stdcall get_CanServerSearchMailbox(bool * value) noexcept override
+    HRESULT __stdcall get_CanServerSearchMailbox(bool* value) noexcept override
     {
         try
         {
@@ -2732,7 +5121,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities> :
         }
     }
 
-    HRESULT __stdcall get_CanProposeNewTimeForMeetings(bool * value) noexcept override
+    HRESULT __stdcall get_CanProposeNewTimeForMeetings(bool* value) noexcept override
     {
         try
         {
@@ -2746,7 +5135,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities> :
         }
     }
 
-    HRESULT __stdcall get_CanSmartSend(bool * value) noexcept override
+    HRESULT __stdcall get_CanSmartSend(bool* value) noexcept override
     {
         try
         {
@@ -2764,7 +5153,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities> :
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities2> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities2>
 {
-    HRESULT __stdcall get_CanResolveRecipients(bool * value) noexcept override
+    HRESULT __stdcall get_CanResolveRecipients(bool* value) noexcept override
     {
         try
         {
@@ -2778,7 +5167,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities2> 
         }
     }
 
-    HRESULT __stdcall get_CanValidateCertificates(bool * value) noexcept override
+    HRESULT __stdcall get_CanValidateCertificates(bool* value) noexcept override
     {
         try
         {
@@ -2792,7 +5181,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities2> 
         }
     }
 
-    HRESULT __stdcall get_CanEmptyFolder(bool * value) noexcept override
+    HRESULT __stdcall get_CanEmptyFolder(bool* value) noexcept override
     {
         try
         {
@@ -2806,7 +5195,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities2> 
         }
     }
 
-    HRESULT __stdcall get_CanCreateFolder(bool * value) noexcept override
+    HRESULT __stdcall get_CanCreateFolder(bool* value) noexcept override
     {
         try
         {
@@ -2820,7 +5209,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities2> 
         }
     }
 
-    HRESULT __stdcall get_CanDeleteFolder(bool * value) noexcept override
+    HRESULT __stdcall get_CanDeleteFolder(bool* value) noexcept override
     {
         try
         {
@@ -2834,7 +5223,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities2> 
         }
     }
 
-    HRESULT __stdcall get_CanMoveFolder(bool * value) noexcept override
+    HRESULT __stdcall get_CanMoveFolder(bool* value) noexcept override
     {
         try
         {
@@ -3052,7 +5441,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCapabilities3> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChange> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxChange>
 {
-    HRESULT __stdcall get_ChangeType(Windows::ApplicationModel::Email::EmailMailboxChangeType * value) noexcept override
+    HRESULT __stdcall get_ChangeType(abi_t<Windows::ApplicationModel::Email::EmailMailboxChangeType>* value) noexcept override
     {
         try
         {
@@ -3066,7 +5455,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChange> : produ
         }
     }
 
-    HRESULT __stdcall get_MailboxActions(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailMailboxAction>> value) noexcept override
+    HRESULT __stdcall get_MailboxActions(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3081,7 +5470,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChange> : produ
         }
     }
 
-    HRESULT __stdcall get_Message(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMessage> value) noexcept override
+    HRESULT __stdcall get_Message(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3096,7 +5485,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChange> : produ
         }
     }
 
-    HRESULT __stdcall get_Folder(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailFolder> value) noexcept override
+    HRESULT __stdcall get_Folder(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3115,7 +5504,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChange> : produ
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangeReader> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxChangeReader>
 {
-    HRESULT __stdcall abi_AcceptChanges() noexcept override
+    HRESULT __stdcall AcceptChanges() noexcept override
     {
         try
         {
@@ -3129,12 +5518,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangeReader> :
         }
     }
 
-    HRESULT __stdcall abi_AcceptChangesThrough(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMailboxChange> lastChangeToAcknowledge) noexcept override
+    HRESULT __stdcall AcceptChangesThrough(::IUnknown* lastChangeToAcknowledge) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AcceptChangesThrough(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMailboxChange *>(&lastChangeToAcknowledge));
+            this->shim().AcceptChangesThrough(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMailboxChange const*>(&lastChangeToAcknowledge));
             return S_OK;
         }
         catch (...)
@@ -3143,7 +5532,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangeReader> :
         }
     }
 
-    HRESULT __stdcall abi_ReadBatchAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMailboxChange>>> value) noexcept override
+    HRESULT __stdcall ReadBatchAsync(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3162,7 +5551,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangeReader> :
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangeTracker> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxChangeTracker>
 {
-    HRESULT __stdcall get_IsTracking(bool * value) noexcept override
+    HRESULT __stdcall get_IsTracking(bool* value) noexcept override
     {
         try
         {
@@ -3176,7 +5565,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangeTracker> 
         }
     }
 
-    HRESULT __stdcall abi_Enable() noexcept override
+    HRESULT __stdcall Enable() noexcept override
     {
         try
         {
@@ -3190,7 +5579,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangeTracker> 
         }
     }
 
-    HRESULT __stdcall abi_GetChangeReader(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMailboxChangeReader> value) noexcept override
+    HRESULT __stdcall GetChangeReader(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3205,7 +5594,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangeTracker> 
         }
     }
 
-    HRESULT __stdcall abi_Reset() noexcept override
+    HRESULT __stdcall Reset() noexcept override
     {
         try
         {
@@ -3223,7 +5612,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangeTracker> 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangedDeferral> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxChangedDeferral>
 {
-    HRESULT __stdcall abi_Complete() noexcept override
+    HRESULT __stdcall Complete() noexcept override
     {
         try
         {
@@ -3241,7 +5630,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangedDeferral
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangedEventArgs> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxChangedEventArgs>
 {
-    HRESULT __stdcall abi_GetDeferral(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMailboxChangedDeferral> result) noexcept override
+    HRESULT __stdcall GetDeferral(::IUnknown** result) noexcept override
     {
         try
         {
@@ -3260,7 +5649,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxChangedEventArg
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCreateFolderResult> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxCreateFolderResult>
 {
-    HRESULT __stdcall get_Status(Windows::ApplicationModel::Email::EmailMailboxCreateFolderStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::ApplicationModel::Email::EmailMailboxCreateFolderStatus>* value) noexcept override
     {
         try
         {
@@ -3274,7 +5663,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCreateFolderRes
         }
     }
 
-    HRESULT __stdcall get_Folder(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailFolder> value) noexcept override
+    HRESULT __stdcall get_Folder(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3293,7 +5682,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxCreateFolderRes
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies>
 {
-    HRESULT __stdcall get_AllowedSmimeEncryptionAlgorithmNegotiation(Windows::ApplicationModel::Email::EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation * value) noexcept override
+    HRESULT __stdcall get_AllowedSmimeEncryptionAlgorithmNegotiation(abi_t<Windows::ApplicationModel::Email::EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation>* value) noexcept override
     {
         try
         {
@@ -3307,7 +5696,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies> : pro
         }
     }
 
-    HRESULT __stdcall get_AllowSmimeSoftCertificates(bool * value) noexcept override
+    HRESULT __stdcall get_AllowSmimeSoftCertificates(bool* value) noexcept override
     {
         try
         {
@@ -3321,7 +5710,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies> : pro
         }
     }
 
-    HRESULT __stdcall get_RequiredSmimeEncryptionAlgorithm(impl::abi_arg_out<Windows::Foundation::IReference<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeEncryptionAlgorithm>> value) noexcept override
+    HRESULT __stdcall get_RequiredSmimeEncryptionAlgorithm(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3336,7 +5725,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies> : pro
         }
     }
 
-    HRESULT __stdcall get_RequiredSmimeSigningAlgorithm(impl::abi_arg_out<Windows::Foundation::IReference<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeSigningAlgorithm>> value) noexcept override
+    HRESULT __stdcall get_RequiredSmimeSigningAlgorithm(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3355,7 +5744,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies> : pro
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies2> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies2>
 {
-    HRESULT __stdcall get_MustEncryptSmimeMessages(bool * value) noexcept override
+    HRESULT __stdcall get_MustEncryptSmimeMessages(bool* value) noexcept override
     {
         try
         {
@@ -3369,7 +5758,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies2> : pr
         }
     }
 
-    HRESULT __stdcall get_MustSignSmimeMessages(bool * value) noexcept override
+    HRESULT __stdcall get_MustSignSmimeMessages(bool* value) noexcept override
     {
         try
         {
@@ -3387,12 +5776,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies2> : pr
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies3> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies3>
 {
-    HRESULT __stdcall put_AllowedSmimeEncryptionAlgorithmNegotiation(Windows::ApplicationModel::Email::EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation value) noexcept override
+    HRESULT __stdcall put_AllowedSmimeEncryptionAlgorithmNegotiation(abi_t<Windows::ApplicationModel::Email::EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AllowedSmimeEncryptionAlgorithmNegotiation(value);
+            this->shim().AllowedSmimeEncryptionAlgorithmNegotiation(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3415,12 +5804,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies3> : pr
         }
     }
 
-    HRESULT __stdcall put_RequiredSmimeEncryptionAlgorithm(impl::abi_arg_in<Windows::Foundation::IReference<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeEncryptionAlgorithm>> value) noexcept override
+    HRESULT __stdcall put_RequiredSmimeEncryptionAlgorithm(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RequiredSmimeEncryptionAlgorithm(*reinterpret_cast<const Windows::Foundation::IReference<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeEncryptionAlgorithm> *>(&value));
+            this->shim().RequiredSmimeEncryptionAlgorithm(*reinterpret_cast<Windows::Foundation::IReference<Windows::ApplicationModel::Email::EmailMailboxSmimeEncryptionAlgorithm> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3429,12 +5818,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies3> : pr
         }
     }
 
-    HRESULT __stdcall put_RequiredSmimeSigningAlgorithm(impl::abi_arg_in<Windows::Foundation::IReference<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeSigningAlgorithm>> value) noexcept override
+    HRESULT __stdcall put_RequiredSmimeSigningAlgorithm(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RequiredSmimeSigningAlgorithm(*reinterpret_cast<const Windows::Foundation::IReference<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeSigningAlgorithm> *>(&value));
+            this->shim().RequiredSmimeSigningAlgorithm(*reinterpret_cast<Windows::Foundation::IReference<Windows::ApplicationModel::Email::EmailMailboxSmimeSigningAlgorithm> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3475,7 +5864,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxPolicies3> : pr
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager>
 {
-    HRESULT __stdcall get_Status(Windows::ApplicationModel::Email::EmailMailboxSyncStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::ApplicationModel::Email::EmailMailboxSyncStatus>* value) noexcept override
     {
         try
         {
@@ -3489,7 +5878,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager> : 
         }
     }
 
-    HRESULT __stdcall get_LastSuccessfulSyncTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_LastSuccessfulSyncTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -3503,7 +5892,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager> : 
         }
     }
 
-    HRESULT __stdcall get_LastAttemptedSyncTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_LastAttemptedSyncTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -3517,7 +5906,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager> : 
         }
     }
 
-    HRESULT __stdcall abi_SyncAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<bool>> result) noexcept override
+    HRESULT __stdcall SyncAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -3532,12 +5921,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager> : 
         }
     }
 
-    HRESULT __stdcall add_SyncStatusChanged(impl::abi_arg_in<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailboxSyncManager, Windows::Foundation::IInspectable>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_SyncStatusChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().SyncStatusChanged(*reinterpret_cast<const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailboxSyncManager, Windows::Foundation::IInspectable> *>(&handler)));
+            *token = detach_abi(this->shim().SyncStatusChanged(*reinterpret_cast<Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailboxSyncManager, Windows::Foundation::IInspectable> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -3546,12 +5935,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager> : 
         }
     }
 
-    HRESULT __stdcall remove_SyncStatusChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_SyncStatusChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SyncStatusChanged(token);
+            this->shim().SyncStatusChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -3564,12 +5953,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager> : 
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager2> : produce_base<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager2>
 {
-    HRESULT __stdcall put_Status(Windows::ApplicationModel::Email::EmailMailboxSyncStatus value) noexcept override
+    HRESULT __stdcall put_Status(abi_t<Windows::ApplicationModel::Email::EmailMailboxSyncStatus> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Status(value);
+            this->shim().Status(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMailboxSyncStatus const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3578,12 +5967,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager2> :
         }
     }
 
-    HRESULT __stdcall put_LastSuccessfulSyncTime(impl::abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall put_LastSuccessfulSyncTime(abi_t<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().LastSuccessfulSyncTime(*reinterpret_cast<const Windows::Foundation::DateTime *>(&value));
+            this->shim().LastSuccessfulSyncTime(*reinterpret_cast<Windows::Foundation::DateTime const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3592,12 +5981,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager2> :
         }
     }
 
-    HRESULT __stdcall put_LastAttemptedSyncTime(impl::abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall put_LastAttemptedSyncTime(abi_t<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().LastAttemptedSyncTime(*reinterpret_cast<const Windows::Foundation::DateTime *>(&value));
+            this->shim().LastAttemptedSyncTime(*reinterpret_cast<Windows::Foundation::DateTime const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3610,12 +5999,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMailboxSyncManager2> :
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailManagerForUser> : produce_base<D, Windows::ApplicationModel::Email::IEmailManagerForUser>
 {
-    HRESULT __stdcall abi_ShowComposeNewEmailAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMessage> message, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall ShowComposeNewEmailAsync(::IUnknown* message, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().ShowComposeNewEmailAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMessage *>(&message)));
+            *result = detach_abi(this->shim().ShowComposeNewEmailAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessage const*>(&message)));
             return S_OK;
         }
         catch (...)
@@ -3625,12 +6014,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailManagerForUser> : prod
         }
     }
 
-    HRESULT __stdcall abi_RequestStoreAsync(Windows::ApplicationModel::Email::EmailStoreAccessType accessType, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore>> result) noexcept override
+    HRESULT __stdcall RequestStoreAsync(abi_t<Windows::ApplicationModel::Email::EmailStoreAccessType> accessType, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().RequestStoreAsync(accessType));
+            *result = detach_abi(this->shim().RequestStoreAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailStoreAccessType const*>(&accessType)));
             return S_OK;
         }
         catch (...)
@@ -3640,7 +6029,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailManagerForUser> : prod
         }
     }
 
-    HRESULT __stdcall get_User(impl::abi_arg_out<Windows::System::IUser> value) noexcept override
+    HRESULT __stdcall get_User(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3659,12 +6048,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailManagerForUser> : prod
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailManagerStatics> : produce_base<D, Windows::ApplicationModel::Email::IEmailManagerStatics>
 {
-    HRESULT __stdcall abi_ShowComposeNewEmailAsync(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMessage> message, impl::abi_arg_out<Windows::Foundation::IAsyncAction> asyncAction) noexcept override
+    HRESULT __stdcall ShowComposeNewEmailAsync(::IUnknown* message, ::IUnknown** asyncAction) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *asyncAction = detach_abi(this->shim().ShowComposeNewEmailAsync(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMessage *>(&message)));
+            *asyncAction = detach_abi(this->shim().ShowComposeNewEmailAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessage const*>(&message)));
             return S_OK;
         }
         catch (...)
@@ -3678,12 +6067,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailManagerStatics> : prod
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailManagerStatics2> : produce_base<D, Windows::ApplicationModel::Email::IEmailManagerStatics2>
 {
-    HRESULT __stdcall abi_RequestStoreAsync(Windows::ApplicationModel::Email::EmailStoreAccessType accessType, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore>> result) noexcept override
+    HRESULT __stdcall RequestStoreAsync(abi_t<Windows::ApplicationModel::Email::EmailStoreAccessType> accessType, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().RequestStoreAsync(accessType));
+            *result = detach_abi(this->shim().RequestStoreAsync(*reinterpret_cast<Windows::ApplicationModel::Email::EmailStoreAccessType const*>(&accessType)));
             return S_OK;
         }
         catch (...)
@@ -3697,12 +6086,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailManagerStatics2> : pro
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailManagerStatics3> : produce_base<D, Windows::ApplicationModel::Email::IEmailManagerStatics3>
 {
-    HRESULT __stdcall abi_GetForUser(impl::abi_arg_in<Windows::System::IUser> user, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailManagerForUser> result) noexcept override
+    HRESULT __stdcall GetForUser(::IUnknown* user, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<const Windows::System::User *>(&user)));
+            *result = detach_abi(this->shim().GetForUser(*reinterpret_cast<Windows::System::User const*>(&user)));
             return S_OK;
         }
         catch (...)
@@ -3716,7 +6105,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailManagerStatics3> : pro
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce_base<D, Windows::ApplicationModel::Email::IEmailMeetingInfo>
 {
-    HRESULT __stdcall get_AllowNewTimeProposal(bool * value) noexcept override
+    HRESULT __stdcall get_AllowNewTimeProposal(bool* value) noexcept override
     {
         try
         {
@@ -3744,7 +6133,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_AppointmentRoamingId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_AppointmentRoamingId(HSTRING* value) noexcept override
     {
         try
         {
@@ -3759,12 +6148,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall put_AppointmentRoamingId(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_AppointmentRoamingId(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AppointmentRoamingId(*reinterpret_cast<const hstring *>(&value));
+            this->shim().AppointmentRoamingId(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3773,7 +6162,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_AppointmentOriginalStartTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_AppointmentOriginalStartTime(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3788,12 +6177,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall put_AppointmentOriginalStartTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall put_AppointmentOriginalStartTime(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AppointmentOriginalStartTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&value));
+            this->shim().AppointmentOriginalStartTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3802,7 +6191,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_Duration(impl::abi_arg_out<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall get_Duration(abi_t<Windows::Foundation::TimeSpan>* value) noexcept override
     {
         try
         {
@@ -3816,12 +6205,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall put_Duration(impl::abi_arg_in<Windows::Foundation::TimeSpan> value) noexcept override
+    HRESULT __stdcall put_Duration(abi_t<Windows::Foundation::TimeSpan> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Duration(*reinterpret_cast<const Windows::Foundation::TimeSpan *>(&value));
+            this->shim().Duration(*reinterpret_cast<Windows::Foundation::TimeSpan const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3830,7 +6219,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_IsAllDay(bool * value) noexcept override
+    HRESULT __stdcall get_IsAllDay(bool* value) noexcept override
     {
         try
         {
@@ -3858,7 +6247,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_IsResponseRequested(bool * value) noexcept override
+    HRESULT __stdcall get_IsResponseRequested(bool* value) noexcept override
     {
         try
         {
@@ -3886,7 +6275,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_Location(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Location(HSTRING* value) noexcept override
     {
         try
         {
@@ -3901,12 +6290,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall put_Location(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Location(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Location(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Location(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -3915,7 +6304,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_ProposedStartTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> proposedStartTime) noexcept override
+    HRESULT __stdcall get_ProposedStartTime(::IUnknown** proposedStartTime) noexcept override
     {
         try
         {
@@ -3930,12 +6319,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall put_ProposedStartTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> proposedStartTime) noexcept override
+    HRESULT __stdcall put_ProposedStartTime(::IUnknown* proposedStartTime) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ProposedStartTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&proposedStartTime));
+            this->shim().ProposedStartTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&proposedStartTime));
             return S_OK;
         }
         catch (...)
@@ -3944,7 +6333,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_ProposedDuration(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::TimeSpan>> duration) noexcept override
+    HRESULT __stdcall get_ProposedDuration(::IUnknown** duration) noexcept override
     {
         try
         {
@@ -3959,12 +6348,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall put_ProposedDuration(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::TimeSpan>> duration) noexcept override
+    HRESULT __stdcall put_ProposedDuration(::IUnknown* duration) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().ProposedDuration(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::TimeSpan> *>(&duration));
+            this->shim().ProposedDuration(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::TimeSpan> const*>(&duration));
             return S_OK;
         }
         catch (...)
@@ -3973,7 +6362,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_RecurrenceStartTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_RecurrenceStartTime(::IUnknown** value) noexcept override
     {
         try
         {
@@ -3988,12 +6377,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall put_RecurrenceStartTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall put_RecurrenceStartTime(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RecurrenceStartTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&value));
+            this->shim().RecurrenceStartTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4002,7 +6391,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_Recurrence(impl::abi_arg_out<Windows::ApplicationModel::Appointments::IAppointmentRecurrence> value) noexcept override
+    HRESULT __stdcall get_Recurrence(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4017,12 +6406,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall put_Recurrence(impl::abi_arg_in<Windows::ApplicationModel::Appointments::IAppointmentRecurrence> value) noexcept override
+    HRESULT __stdcall put_Recurrence(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Recurrence(*reinterpret_cast<const Windows::ApplicationModel::Appointments::AppointmentRecurrence *>(&value));
+            this->shim().Recurrence(*reinterpret_cast<Windows::ApplicationModel::Appointments::AppointmentRecurrence const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4031,7 +6420,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_RemoteChangeNumber(uint64_t * value) noexcept override
+    HRESULT __stdcall get_RemoteChangeNumber(uint64_t* value) noexcept override
     {
         try
         {
@@ -4059,7 +6448,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall get_StartTime(impl::abi_arg_out<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall get_StartTime(abi_t<Windows::Foundation::DateTime>* value) noexcept override
     {
         try
         {
@@ -4073,12 +6462,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
         }
     }
 
-    HRESULT __stdcall put_StartTime(impl::abi_arg_in<Windows::Foundation::DateTime> value) noexcept override
+    HRESULT __stdcall put_StartTime(abi_t<Windows::Foundation::DateTime> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().StartTime(*reinterpret_cast<const Windows::Foundation::DateTime *>(&value));
+            this->shim().StartTime(*reinterpret_cast<Windows::Foundation::DateTime const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4091,7 +6480,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo> : produce
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo2> : produce_base<D, Windows::ApplicationModel::Email::IEmailMeetingInfo2>
 {
-    HRESULT __stdcall get_IsReportedOutOfDateByServer(bool * value) noexcept override
+    HRESULT __stdcall get_IsReportedOutOfDateByServer(bool* value) noexcept override
     {
         try
         {
@@ -4109,7 +6498,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMeetingInfo2> : produc
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMessage> : produce_base<D, Windows::ApplicationModel::Email::IEmailMessage>
 {
-    HRESULT __stdcall get_Subject(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Subject(HSTRING* value) noexcept override
     {
         try
         {
@@ -4124,12 +6513,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Subject(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Subject(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Subject(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Subject(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4138,7 +6527,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Body(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Body(HSTRING* value) noexcept override
     {
         try
         {
@@ -4153,12 +6542,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage> : produce_bas
         }
     }
 
-    HRESULT __stdcall put_Body(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Body(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Body(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Body(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4167,7 +6556,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_To(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient>> value) noexcept override
+    HRESULT __stdcall get_To(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4182,7 +6571,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_CC(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient>> value) noexcept override
+    HRESULT __stdcall get_CC(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4197,7 +6586,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Bcc(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient>> value) noexcept override
+    HRESULT __stdcall get_Bcc(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4212,7 +6601,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage> : produce_bas
         }
     }
 
-    HRESULT __stdcall get_Attachments(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailAttachment>> value) noexcept override
+    HRESULT __stdcall get_Attachments(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4231,7 +6620,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage> : produce_bas
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_base<D, Windows::ApplicationModel::Email::IEmailMessage2>
 {
-    HRESULT __stdcall get_Id(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Id(HSTRING* value) noexcept override
     {
         try
         {
@@ -4246,7 +6635,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_RemoteId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_RemoteId(HSTRING* value) noexcept override
     {
         try
         {
@@ -4261,12 +6650,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_RemoteId(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_RemoteId(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().RemoteId(*reinterpret_cast<const hstring *>(&value));
+            this->shim().RemoteId(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4275,7 +6664,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_MailboxId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MailboxId(HSTRING* value) noexcept override
     {
         try
         {
@@ -4290,7 +6679,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_ConversationId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_ConversationId(HSTRING* value) noexcept override
     {
         try
         {
@@ -4305,7 +6694,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_FolderId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_FolderId(HSTRING* value) noexcept override
     {
         try
         {
@@ -4320,7 +6709,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_AllowInternetImages(bool * value) noexcept override
+    HRESULT __stdcall get_AllowInternetImages(bool* value) noexcept override
     {
         try
         {
@@ -4348,7 +6737,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_ChangeNumber(uint64_t * value) noexcept override
+    HRESULT __stdcall get_ChangeNumber(uint64_t* value) noexcept override
     {
         try
         {
@@ -4362,7 +6751,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_DownloadState(Windows::ApplicationModel::Email::EmailMessageDownloadState * value) noexcept override
+    HRESULT __stdcall get_DownloadState(abi_t<Windows::ApplicationModel::Email::EmailMessageDownloadState>* value) noexcept override
     {
         try
         {
@@ -4376,12 +6765,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_DownloadState(Windows::ApplicationModel::Email::EmailMessageDownloadState value) noexcept override
+    HRESULT __stdcall put_DownloadState(abi_t<Windows::ApplicationModel::Email::EmailMessageDownloadState> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().DownloadState(value);
+            this->shim().DownloadState(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessageDownloadState const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4390,7 +6779,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_EstimatedDownloadSizeInBytes(uint32_t * value) noexcept override
+    HRESULT __stdcall get_EstimatedDownloadSizeInBytes(uint32_t* value) noexcept override
     {
         try
         {
@@ -4418,7 +6807,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_FlagState(Windows::ApplicationModel::Email::EmailFlagState * value) noexcept override
+    HRESULT __stdcall get_FlagState(abi_t<Windows::ApplicationModel::Email::EmailFlagState>* value) noexcept override
     {
         try
         {
@@ -4432,12 +6821,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_FlagState(Windows::ApplicationModel::Email::EmailFlagState value) noexcept override
+    HRESULT __stdcall put_FlagState(abi_t<Windows::ApplicationModel::Email::EmailFlagState> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().FlagState(value);
+            this->shim().FlagState(*reinterpret_cast<Windows::ApplicationModel::Email::EmailFlagState const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4446,7 +6835,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_HasPartialBodies(bool * value) noexcept override
+    HRESULT __stdcall get_HasPartialBodies(bool* value) noexcept override
     {
         try
         {
@@ -4460,7 +6849,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_Importance(Windows::ApplicationModel::Email::EmailImportance * value) noexcept override
+    HRESULT __stdcall get_Importance(abi_t<Windows::ApplicationModel::Email::EmailImportance>* value) noexcept override
     {
         try
         {
@@ -4474,12 +6863,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_Importance(Windows::ApplicationModel::Email::EmailImportance value) noexcept override
+    HRESULT __stdcall put_Importance(abi_t<Windows::ApplicationModel::Email::EmailImportance> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Importance(value);
+            this->shim().Importance(*reinterpret_cast<Windows::ApplicationModel::Email::EmailImportance const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4488,7 +6877,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_InResponseToMessageId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_InResponseToMessageId(HSTRING* value) noexcept override
     {
         try
         {
@@ -4503,7 +6892,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_IrmInfo(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailIrmInfo> value) noexcept override
+    HRESULT __stdcall get_IrmInfo(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4518,12 +6907,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_IrmInfo(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailIrmInfo> value) noexcept override
+    HRESULT __stdcall put_IrmInfo(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().IrmInfo(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailIrmInfo *>(&value));
+            this->shim().IrmInfo(*reinterpret_cast<Windows::ApplicationModel::Email::EmailIrmInfo const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4532,7 +6921,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_IsDraftMessage(bool * value) noexcept override
+    HRESULT __stdcall get_IsDraftMessage(bool* value) noexcept override
     {
         try
         {
@@ -4546,7 +6935,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_IsRead(bool * value) noexcept override
+    HRESULT __stdcall get_IsRead(bool* value) noexcept override
     {
         try
         {
@@ -4574,7 +6963,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_IsSeen(bool * value) noexcept override
+    HRESULT __stdcall get_IsSeen(bool* value) noexcept override
     {
         try
         {
@@ -4602,7 +6991,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_IsServerSearchMessage(bool * value) noexcept override
+    HRESULT __stdcall get_IsServerSearchMessage(bool* value) noexcept override
     {
         try
         {
@@ -4616,7 +7005,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_IsSmartSendable(bool * value) noexcept override
+    HRESULT __stdcall get_IsSmartSendable(bool* value) noexcept override
     {
         try
         {
@@ -4630,7 +7019,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_MessageClass(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_MessageClass(HSTRING* value) noexcept override
     {
         try
         {
@@ -4645,12 +7034,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_MessageClass(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_MessageClass(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MessageClass(*reinterpret_cast<const hstring *>(&value));
+            this->shim().MessageClass(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4659,7 +7048,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_NormalizedSubject(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_NormalizedSubject(HSTRING* value) noexcept override
     {
         try
         {
@@ -4674,7 +7063,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_OriginalCodePage(int32_t * value) noexcept override
+    HRESULT __stdcall get_OriginalCodePage(int32_t* value) noexcept override
     {
         try
         {
@@ -4702,7 +7091,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_Preview(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Preview(HSTRING* value) noexcept override
     {
         try
         {
@@ -4717,12 +7106,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_Preview(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Preview(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Preview(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Preview(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4731,7 +7120,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_LastResponseKind(Windows::ApplicationModel::Email::EmailMessageResponseKind * value) noexcept override
+    HRESULT __stdcall get_LastResponseKind(abi_t<Windows::ApplicationModel::Email::EmailMessageResponseKind>* value) noexcept override
     {
         try
         {
@@ -4745,12 +7134,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_LastResponseKind(Windows::ApplicationModel::Email::EmailMessageResponseKind value) noexcept override
+    HRESULT __stdcall put_LastResponseKind(abi_t<Windows::ApplicationModel::Email::EmailMessageResponseKind> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().LastResponseKind(value);
+            this->shim().LastResponseKind(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessageResponseKind const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4759,7 +7148,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_Sender(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailRecipient> value) noexcept override
+    HRESULT __stdcall get_Sender(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4774,12 +7163,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_Sender(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailRecipient> value) noexcept override
+    HRESULT __stdcall put_Sender(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Sender(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailRecipient *>(&value));
+            this->shim().Sender(*reinterpret_cast<Windows::ApplicationModel::Email::EmailRecipient const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4788,7 +7177,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_SentTime(impl::abi_arg_out<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall get_SentTime(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4803,12 +7192,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_SentTime(impl::abi_arg_in<Windows::Foundation::IReference<Windows::Foundation::DateTime>> value) noexcept override
+    HRESULT __stdcall put_SentTime(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SentTime(*reinterpret_cast<const Windows::Foundation::IReference<Windows::Foundation::DateTime> *>(&value));
+            this->shim().SentTime(*reinterpret_cast<Windows::Foundation::IReference<Windows::Foundation::DateTime> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4817,7 +7206,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_MeetingInfo(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMeetingInfo> value) noexcept override
+    HRESULT __stdcall get_MeetingInfo(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4832,12 +7221,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_MeetingInfo(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailMeetingInfo> value) noexcept override
+    HRESULT __stdcall put_MeetingInfo(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().MeetingInfo(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailMeetingInfo *>(&value));
+            this->shim().MeetingInfo(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMeetingInfo const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4846,12 +7235,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_GetBodyStream(Windows::ApplicationModel::Email::EmailMessageBodyKind type, impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> result) noexcept override
+    HRESULT __stdcall GetBodyStream(abi_t<Windows::ApplicationModel::Email::EmailMessageBodyKind> type, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetBodyStream(type));
+            *result = detach_abi(this->shim().GetBodyStream(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessageBodyKind const*>(&type)));
             return S_OK;
         }
         catch (...)
@@ -4861,12 +7250,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
         }
     }
 
-    HRESULT __stdcall abi_SetBodyStream(Windows::ApplicationModel::Email::EmailMessageBodyKind type, impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> stream) noexcept override
+    HRESULT __stdcall SetBodyStream(abi_t<Windows::ApplicationModel::Email::EmailMessageBodyKind> type, ::IUnknown* stream) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SetBodyStream(type, *reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&stream));
+            this->shim().SetBodyStream(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessageBodyKind const*>(&type), *reinterpret_cast<Windows::Storage::Streams::IRandomAccessStreamReference const*>(&stream));
             return S_OK;
         }
         catch (...)
@@ -4879,7 +7268,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage2> : produce_ba
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMessage3> : produce_base<D, Windows::ApplicationModel::Email::IEmailMessage3>
 {
-    HRESULT __stdcall get_SmimeData(impl::abi_arg_out<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall get_SmimeData(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4894,12 +7283,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage3> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_SmimeData(impl::abi_arg_in<Windows::Storage::Streams::IRandomAccessStreamReference> value) noexcept override
+    HRESULT __stdcall put_SmimeData(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SmimeData(*reinterpret_cast<const Windows::Storage::Streams::IRandomAccessStreamReference *>(&value));
+            this->shim().SmimeData(*reinterpret_cast<Windows::Storage::Streams::IRandomAccessStreamReference const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4908,7 +7297,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage3> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_SmimeKind(Windows::ApplicationModel::Email::EmailMessageSmimeKind * value) noexcept override
+    HRESULT __stdcall get_SmimeKind(abi_t<Windows::ApplicationModel::Email::EmailMessageSmimeKind>* value) noexcept override
     {
         try
         {
@@ -4922,12 +7311,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage3> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_SmimeKind(Windows::ApplicationModel::Email::EmailMessageSmimeKind value) noexcept override
+    HRESULT __stdcall put_SmimeKind(abi_t<Windows::ApplicationModel::Email::EmailMessageSmimeKind> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SmimeKind(value);
+            this->shim().SmimeKind(*reinterpret_cast<Windows::ApplicationModel::Email::EmailMessageSmimeKind const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4940,7 +7329,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage3> : produce_ba
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMessage4> : produce_base<D, Windows::ApplicationModel::Email::IEmailMessage4>
 {
-    HRESULT __stdcall get_ReplyTo(impl::abi_arg_out<Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient>> value) noexcept override
+    HRESULT __stdcall get_ReplyTo(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4955,7 +7344,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage4> : produce_ba
         }
     }
 
-    HRESULT __stdcall get_SentRepresenting(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailRecipient> value) noexcept override
+    HRESULT __stdcall get_SentRepresenting(::IUnknown** value) noexcept override
     {
         try
         {
@@ -4970,12 +7359,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage4> : produce_ba
         }
     }
 
-    HRESULT __stdcall put_SentRepresenting(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailRecipient> value) noexcept override
+    HRESULT __stdcall put_SentRepresenting(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SentRepresenting(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailRecipient *>(&value));
+            this->shim().SentRepresenting(*reinterpret_cast<Windows::ApplicationModel::Email::EmailRecipient const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -4988,7 +7377,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessage4> : produce_ba
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMessageBatch> : produce_base<D, Windows::ApplicationModel::Email::IEmailMessageBatch>
 {
-    HRESULT __stdcall get_Messages(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage>> value) noexcept override
+    HRESULT __stdcall get_Messages(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5003,7 +7392,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessageBatch> : produc
         }
     }
 
-    HRESULT __stdcall get_Status(Windows::ApplicationModel::Email::EmailBatchStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::ApplicationModel::Email::EmailBatchStatus>* value) noexcept override
     {
         try
         {
@@ -5021,7 +7410,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessageBatch> : produc
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailMessageReader> : produce_base<D, Windows::ApplicationModel::Email::IEmailMessageReader>
 {
-    HRESULT __stdcall abi_ReadBatchAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessageBatch>> result) noexcept override
+    HRESULT __stdcall ReadBatchAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -5040,7 +7429,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailMessageReader> : produ
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptions> : produce_base<D, Windows::ApplicationModel::Email::IEmailQueryOptions>
 {
-    HRESULT __stdcall get_TextSearch(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailQueryTextSearch> value) noexcept override
+    HRESULT __stdcall get_TextSearch(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5055,7 +7444,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptions> : produc
         }
     }
 
-    HRESULT __stdcall get_SortDirection(Windows::ApplicationModel::Email::EmailQuerySortDirection * value) noexcept override
+    HRESULT __stdcall get_SortDirection(abi_t<Windows::ApplicationModel::Email::EmailQuerySortDirection>* value) noexcept override
     {
         try
         {
@@ -5069,12 +7458,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptions> : produc
         }
     }
 
-    HRESULT __stdcall put_SortDirection(Windows::ApplicationModel::Email::EmailQuerySortDirection value) noexcept override
+    HRESULT __stdcall put_SortDirection(abi_t<Windows::ApplicationModel::Email::EmailQuerySortDirection> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SortDirection(value);
+            this->shim().SortDirection(*reinterpret_cast<Windows::ApplicationModel::Email::EmailQuerySortDirection const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5083,7 +7472,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptions> : produc
         }
     }
 
-    HRESULT __stdcall get_SortProperty(Windows::ApplicationModel::Email::EmailQuerySortProperty * value) noexcept override
+    HRESULT __stdcall get_SortProperty(abi_t<Windows::ApplicationModel::Email::EmailQuerySortProperty>* value) noexcept override
     {
         try
         {
@@ -5097,12 +7486,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptions> : produc
         }
     }
 
-    HRESULT __stdcall put_SortProperty(Windows::ApplicationModel::Email::EmailQuerySortProperty value) noexcept override
+    HRESULT __stdcall put_SortProperty(abi_t<Windows::ApplicationModel::Email::EmailQuerySortProperty> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SortProperty(value);
+            this->shim().SortProperty(*reinterpret_cast<Windows::ApplicationModel::Email::EmailQuerySortProperty const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5111,7 +7500,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptions> : produc
         }
     }
 
-    HRESULT __stdcall get_Kind(Windows::ApplicationModel::Email::EmailQueryKind * value) noexcept override
+    HRESULT __stdcall get_Kind(abi_t<Windows::ApplicationModel::Email::EmailQueryKind>* value) noexcept override
     {
         try
         {
@@ -5125,12 +7514,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptions> : produc
         }
     }
 
-    HRESULT __stdcall put_Kind(Windows::ApplicationModel::Email::EmailQueryKind value) noexcept override
+    HRESULT __stdcall put_Kind(abi_t<Windows::ApplicationModel::Email::EmailQueryKind> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Kind(value);
+            this->shim().Kind(*reinterpret_cast<Windows::ApplicationModel::Email::EmailQueryKind const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5139,7 +7528,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptions> : produc
         }
     }
 
-    HRESULT __stdcall get_FolderIds(impl::abi_arg_out<Windows::Foundation::Collections::IVector<hstring>> value) noexcept override
+    HRESULT __stdcall get_FolderIds(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5158,12 +7547,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptions> : produc
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptionsFactory> : produce_base<D, Windows::ApplicationModel::Email::IEmailQueryOptionsFactory>
 {
-    HRESULT __stdcall abi_CreateWithText(impl::abi_arg_in<hstring> text, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailQueryOptions> result) noexcept override
+    HRESULT __stdcall CreateWithText(HSTRING text, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateWithText(*reinterpret_cast<const hstring *>(&text)));
+            *result = detach_abi(this->shim().CreateWithText(*reinterpret_cast<hstring const*>(&text)));
             return S_OK;
         }
         catch (...)
@@ -5173,12 +7562,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptionsFactory> :
         }
     }
 
-    HRESULT __stdcall abi_CreateWithTextAndFields(impl::abi_arg_in<hstring> text, Windows::ApplicationModel::Email::EmailQuerySearchFields fields, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailQueryOptions> result) noexcept override
+    HRESULT __stdcall CreateWithTextAndFields(HSTRING text, abi_t<Windows::ApplicationModel::Email::EmailQuerySearchFields> fields, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateWithTextAndFields(*reinterpret_cast<const hstring *>(&text), fields));
+            *result = detach_abi(this->shim().CreateWithTextAndFields(*reinterpret_cast<hstring const*>(&text), *reinterpret_cast<Windows::ApplicationModel::Email::EmailQuerySearchFields const*>(&fields)));
             return S_OK;
         }
         catch (...)
@@ -5192,7 +7581,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryOptionsFactory> :
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailQueryTextSearch> : produce_base<D, Windows::ApplicationModel::Email::IEmailQueryTextSearch>
 {
-    HRESULT __stdcall get_Fields(Windows::ApplicationModel::Email::EmailQuerySearchFields * value) noexcept override
+    HRESULT __stdcall get_Fields(abi_t<Windows::ApplicationModel::Email::EmailQuerySearchFields>* value) noexcept override
     {
         try
         {
@@ -5206,12 +7595,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryTextSearch> : pro
         }
     }
 
-    HRESULT __stdcall put_Fields(Windows::ApplicationModel::Email::EmailQuerySearchFields value) noexcept override
+    HRESULT __stdcall put_Fields(abi_t<Windows::ApplicationModel::Email::EmailQuerySearchFields> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Fields(value);
+            this->shim().Fields(*reinterpret_cast<Windows::ApplicationModel::Email::EmailQuerySearchFields const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5220,7 +7609,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryTextSearch> : pro
         }
     }
 
-    HRESULT __stdcall get_SearchScope(Windows::ApplicationModel::Email::EmailQuerySearchScope * value) noexcept override
+    HRESULT __stdcall get_SearchScope(abi_t<Windows::ApplicationModel::Email::EmailQuerySearchScope>* value) noexcept override
     {
         try
         {
@@ -5234,12 +7623,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryTextSearch> : pro
         }
     }
 
-    HRESULT __stdcall put_SearchScope(Windows::ApplicationModel::Email::EmailQuerySearchScope value) noexcept override
+    HRESULT __stdcall put_SearchScope(abi_t<Windows::ApplicationModel::Email::EmailQuerySearchScope> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SearchScope(value);
+            this->shim().SearchScope(*reinterpret_cast<Windows::ApplicationModel::Email::EmailQuerySearchScope const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5248,7 +7637,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryTextSearch> : pro
         }
     }
 
-    HRESULT __stdcall get_Text(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Text(HSTRING* value) noexcept override
     {
         try
         {
@@ -5263,12 +7652,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryTextSearch> : pro
         }
     }
 
-    HRESULT __stdcall put_Text(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Text(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Text(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Text(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5281,7 +7670,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailQueryTextSearch> : pro
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailRecipient> : produce_base<D, Windows::ApplicationModel::Email::IEmailRecipient>
 {
-    HRESULT __stdcall get_Name(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Name(HSTRING* value) noexcept override
     {
         try
         {
@@ -5296,12 +7685,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailRecipient> : produce_b
         }
     }
 
-    HRESULT __stdcall put_Name(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Name(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Name(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Name(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5310,7 +7699,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailRecipient> : produce_b
         }
     }
 
-    HRESULT __stdcall get_Address(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_Address(HSTRING* value) noexcept override
     {
         try
         {
@@ -5325,12 +7714,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailRecipient> : produce_b
         }
     }
 
-    HRESULT __stdcall put_Address(impl::abi_arg_in<hstring> value) noexcept override
+    HRESULT __stdcall put_Address(HSTRING value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Address(*reinterpret_cast<const hstring *>(&value));
+            this->shim().Address(*reinterpret_cast<hstring const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5343,12 +7732,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailRecipient> : produce_b
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailRecipientFactory> : produce_base<D, Windows::ApplicationModel::Email::IEmailRecipientFactory>
 {
-    HRESULT __stdcall abi_Create(impl::abi_arg_in<hstring> address, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailRecipient> result) noexcept override
+    HRESULT __stdcall Create(HSTRING address, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().Create(*reinterpret_cast<const hstring *>(&address)));
+            *result = detach_abi(this->shim().Create(*reinterpret_cast<hstring const*>(&address)));
             return S_OK;
         }
         catch (...)
@@ -5358,12 +7747,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailRecipientFactory> : pr
         }
     }
 
-    HRESULT __stdcall abi_CreateWithName(impl::abi_arg_in<hstring> address, impl::abi_arg_in<hstring> name, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailRecipient> result) noexcept override
+    HRESULT __stdcall CreateWithName(HSTRING address, HSTRING name, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateWithName(*reinterpret_cast<const hstring *>(&address), *reinterpret_cast<const hstring *>(&name)));
+            *result = detach_abi(this->shim().CreateWithName(*reinterpret_cast<hstring const*>(&address), *reinterpret_cast<hstring const*>(&name)));
             return S_OK;
         }
         catch (...)
@@ -5377,7 +7766,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailRecipientFactory> : pr
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailRecipientResolutionResult> : produce_base<D, Windows::ApplicationModel::Email::IEmailRecipientResolutionResult>
 {
-    HRESULT __stdcall get_Status(Windows::ApplicationModel::Email::EmailRecipientResolutionStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::ApplicationModel::Email::EmailRecipientResolutionStatus>* value) noexcept override
     {
         try
         {
@@ -5391,7 +7780,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailRecipientResolutionRes
         }
     }
 
-    HRESULT __stdcall get_PublicKeys(impl::abi_arg_out<Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate>> value) noexcept override
+    HRESULT __stdcall get_PublicKeys(::IUnknown** value) noexcept override
     {
         try
         {
@@ -5410,12 +7799,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailRecipientResolutionRes
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailRecipientResolutionResult2> : produce_base<D, Windows::ApplicationModel::Email::IEmailRecipientResolutionResult2>
 {
-    HRESULT __stdcall put_Status(Windows::ApplicationModel::Email::EmailRecipientResolutionStatus value) noexcept override
+    HRESULT __stdcall put_Status(abi_t<Windows::ApplicationModel::Email::EmailRecipientResolutionStatus> value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().Status(value);
+            this->shim().Status(*reinterpret_cast<Windows::ApplicationModel::Email::EmailRecipientResolutionStatus const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5424,12 +7813,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailRecipientResolutionRes
         }
     }
 
-    HRESULT __stdcall abi_SetPublicKeys(impl::abi_arg_in<Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::Certificate>> value) noexcept override
+    HRESULT __stdcall SetPublicKeys(::IUnknown* value) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().SetPublicKeys(*reinterpret_cast<const Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::Certificate> *>(&value));
+            this->shim().SetPublicKeys(*reinterpret_cast<Windows::Foundation::Collections::IIterable<Windows::Security::Cryptography::Certificates::Certificate> const*>(&value));
             return S_OK;
         }
         catch (...)
@@ -5442,7 +7831,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailRecipientResolutionRes
 template <typename D>
 struct produce<D, Windows::ApplicationModel::Email::IEmailStore> : produce_base<D, Windows::ApplicationModel::Email::IEmailStore>
 {
-    HRESULT __stdcall abi_FindMailboxesAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMailbox>>> result) noexcept override
+    HRESULT __stdcall FindMailboxesAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -5457,7 +7846,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_GetConversationReader(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailConversationReader> result) noexcept override
+    HRESULT __stdcall GetConversationReader(::IUnknown** result) noexcept override
     {
         try
         {
@@ -5472,12 +7861,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_GetConversationReaderWithOptions(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailQueryOptions> options, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailConversationReader> result) noexcept override
+    HRESULT __stdcall GetConversationReaderWithOptions(::IUnknown* options, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetConversationReader(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailQueryOptions *>(&options)));
+            *result = detach_abi(this->shim().GetConversationReader(*reinterpret_cast<Windows::ApplicationModel::Email::EmailQueryOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -5487,7 +7876,7 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_GetMessageReader(impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMessageReader> result) noexcept override
+    HRESULT __stdcall GetMessageReader(::IUnknown** result) noexcept override
     {
         try
         {
@@ -5502,12 +7891,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_GetMessageReaderWithOptions(impl::abi_arg_in<Windows::ApplicationModel::Email::IEmailQueryOptions> options, impl::abi_arg_out<Windows::ApplicationModel::Email::IEmailMessageReader> result) noexcept override
+    HRESULT __stdcall GetMessageReaderWithOptions(::IUnknown* options, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetMessageReader(*reinterpret_cast<const Windows::ApplicationModel::Email::EmailQueryOptions *>(&options)));
+            *result = detach_abi(this->shim().GetMessageReader(*reinterpret_cast<Windows::ApplicationModel::Email::EmailQueryOptions const*>(&options)));
             return S_OK;
         }
         catch (...)
@@ -5517,12 +7906,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_GetMailboxAsync(impl::abi_arg_in<hstring> id, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox>> result) noexcept override
+    HRESULT __stdcall GetMailboxAsync(HSTRING id, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetMailboxAsync(*reinterpret_cast<const hstring *>(&id)));
+            *result = detach_abi(this->shim().GetMailboxAsync(*reinterpret_cast<hstring const*>(&id)));
             return S_OK;
         }
         catch (...)
@@ -5532,12 +7921,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_GetConversationAsync(impl::abi_arg_in<hstring> id, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversation>> result) noexcept override
+    HRESULT __stdcall GetConversationAsync(HSTRING id, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetConversationAsync(*reinterpret_cast<const hstring *>(&id)));
+            *result = detach_abi(this->shim().GetConversationAsync(*reinterpret_cast<hstring const*>(&id)));
             return S_OK;
         }
         catch (...)
@@ -5547,12 +7936,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_GetFolderAsync(impl::abi_arg_in<hstring> id, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder>> result) noexcept override
+    HRESULT __stdcall GetFolderAsync(HSTRING id, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetFolderAsync(*reinterpret_cast<const hstring *>(&id)));
+            *result = detach_abi(this->shim().GetFolderAsync(*reinterpret_cast<hstring const*>(&id)));
             return S_OK;
         }
         catch (...)
@@ -5562,12 +7951,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_GetMessageAsync(impl::abi_arg_in<hstring> id, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage>> result) noexcept override
+    HRESULT __stdcall GetMessageAsync(HSTRING id, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().GetMessageAsync(*reinterpret_cast<const hstring *>(&id)));
+            *result = detach_abi(this->shim().GetMessageAsync(*reinterpret_cast<hstring const*>(&id)));
             return S_OK;
         }
         catch (...)
@@ -5577,12 +7966,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_CreateMailboxAsync(impl::abi_arg_in<hstring> accountName, impl::abi_arg_in<hstring> accountAddress, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox>> result) noexcept override
+    HRESULT __stdcall CreateMailboxAsync(HSTRING accountName, HSTRING accountAddress, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateMailboxAsync(*reinterpret_cast<const hstring *>(&accountName), *reinterpret_cast<const hstring *>(&accountAddress)));
+            *result = detach_abi(this->shim().CreateMailboxAsync(*reinterpret_cast<hstring const*>(&accountName), *reinterpret_cast<hstring const*>(&accountAddress)));
             return S_OK;
         }
         catch (...)
@@ -5592,12 +7981,12 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailStore> : produce_base<
         }
     }
 
-    HRESULT __stdcall abi_CreateMailboxInAccountAsync(impl::abi_arg_in<hstring> accountName, impl::abi_arg_in<hstring> accountAddress, impl::abi_arg_in<hstring> userDataAccountId, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox>> result) noexcept override
+    HRESULT __stdcall CreateMailboxInAccountAsync(HSTRING accountName, HSTRING accountAddress, HSTRING userDataAccountId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().CreateMailboxAsync(*reinterpret_cast<const hstring *>(&accountName), *reinterpret_cast<const hstring *>(&accountAddress), *reinterpret_cast<const hstring *>(&userDataAccountId)));
+            *result = detach_abi(this->shim().CreateMailboxAsync(*reinterpret_cast<hstring const*>(&accountName), *reinterpret_cast<hstring const*>(&accountAddress), *reinterpret_cast<hstring const*>(&userDataAccountId)));
             return S_OK;
         }
         catch (...)
@@ -5614,2443 +8003,53 @@ struct produce<D, Windows::ApplicationModel::Email::IEmailStoreNotificationTrigg
 
 }
 
-namespace Windows::ApplicationModel::Email {
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailManagerStatics<D>::ShowComposeNewEmailAsync(const Windows::ApplicationModel::Email::EmailMessage & message) const
-{
-    Windows::Foundation::IAsyncAction asyncAction;
-    check_hresult(WINRT_SHIM(IEmailManagerStatics)->abi_ShowComposeNewEmailAsync(get_abi(message), put_abi(asyncAction)));
-    return asyncAction;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore> impl_IEmailManagerStatics2<D>::RequestStoreAsync(Windows::ApplicationModel::Email::EmailStoreAccessType accessType) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore> result;
-    check_hresult(WINRT_SHIM(IEmailManagerStatics2)->abi_RequestStoreAsync(accessType, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailManagerForUser impl_IEmailManagerStatics3<D>::GetForUser(const Windows::System::User & user) const
-{
-    Windows::ApplicationModel::Email::EmailManagerForUser result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailManagerStatics3)->abi_GetForUser(get_abi(user), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailManagerForUser<D>::ShowComposeNewEmailAsync(const Windows::ApplicationModel::Email::EmailMessage & message) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailManagerForUser)->abi_ShowComposeNewEmailAsync(get_abi(message), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore> impl_IEmailManagerForUser<D>::RequestStoreAsync(Windows::ApplicationModel::Email::EmailStoreAccessType accessType) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore> result;
-    check_hresult(WINRT_SHIM(IEmailManagerForUser)->abi_RequestStoreAsync(accessType, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::System::User impl_IEmailManagerForUser<D>::User() const
-{
-    Windows::System::User value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailManagerForUser)->get_User(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMailbox>> impl_IEmailStore<D>::FindMailboxesAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMailbox>> result;
-    check_hresult(WINRT_SHIM(IEmailStore)->abi_FindMailboxesAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailConversationReader impl_IEmailStore<D>::GetConversationReader() const
-{
-    Windows::ApplicationModel::Email::EmailConversationReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailStore)->abi_GetConversationReader(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailConversationReader impl_IEmailStore<D>::GetConversationReader(const Windows::ApplicationModel::Email::EmailQueryOptions & options) const
-{
-    Windows::ApplicationModel::Email::EmailConversationReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailStore)->abi_GetConversationReaderWithOptions(get_abi(options), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMessageReader impl_IEmailStore<D>::GetMessageReader() const
-{
-    Windows::ApplicationModel::Email::EmailMessageReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailStore)->abi_GetMessageReader(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMessageReader impl_IEmailStore<D>::GetMessageReader(const Windows::ApplicationModel::Email::EmailQueryOptions & options) const
-{
-    Windows::ApplicationModel::Email::EmailMessageReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailStore)->abi_GetMessageReaderWithOptions(get_abi(options), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> impl_IEmailStore<D>::GetMailboxAsync(hstring_view id) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> result;
-    check_hresult(WINRT_SHIM(IEmailStore)->abi_GetMailboxAsync(get_abi(id), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversation> impl_IEmailStore<D>::GetConversationAsync(hstring_view id) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversation> result;
-    check_hresult(WINRT_SHIM(IEmailStore)->abi_GetConversationAsync(get_abi(id), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> impl_IEmailStore<D>::GetFolderAsync(hstring_view id) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> result;
-    check_hresult(WINRT_SHIM(IEmailStore)->abi_GetFolderAsync(get_abi(id), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> impl_IEmailStore<D>::GetMessageAsync(hstring_view id) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> result;
-    check_hresult(WINRT_SHIM(IEmailStore)->abi_GetMessageAsync(get_abi(id), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> impl_IEmailStore<D>::CreateMailboxAsync(hstring_view accountName, hstring_view accountAddress) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> result;
-    check_hresult(WINRT_SHIM(IEmailStore)->abi_CreateMailboxAsync(get_abi(accountName), get_abi(accountAddress), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> impl_IEmailStore<D>::CreateMailboxAsync(hstring_view accountName, hstring_view accountAddress, hstring_view userDataAccountId) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailbox> result;
-    check_hresult(WINRT_SHIM(IEmailStore)->abi_CreateMailboxInAccountAsync(get_abi(accountName), get_abi(accountAddress), get_abi(userDataAccountId), put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IEmailRecipient<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailRecipient)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailRecipient<D>::Name(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailRecipient)->put_Name(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailRecipient<D>::Address() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailRecipient)->get_Address(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailRecipient<D>::Address(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailRecipient)->put_Address(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailRecipient impl_IEmailRecipientFactory<D>::Create(hstring_view address) const
-{
-    Windows::ApplicationModel::Email::EmailRecipient result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailRecipientFactory)->abi_Create(get_abi(address), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailRecipient impl_IEmailRecipientFactory<D>::CreateWithName(hstring_view address, hstring_view name) const
-{
-    Windows::ApplicationModel::Email::EmailRecipient result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailRecipientFactory)->abi_CreateWithName(get_abi(address), get_abi(name), put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IEmailIrmTemplate<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailIrmTemplate)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmTemplate<D>::Id(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmTemplate)->put_Id(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailIrmTemplate<D>::Description() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailIrmTemplate)->get_Description(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmTemplate<D>::Description(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmTemplate)->put_Description(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailIrmTemplate<D>::Name() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailIrmTemplate)->get_Name(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmTemplate<D>::Name(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmTemplate)->put_Name(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailIrmTemplate impl_IEmailIrmTemplateFactory<D>::Create(hstring_view id, hstring_view name, hstring_view description) const
-{
-    Windows::ApplicationModel::Email::EmailIrmTemplate result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailIrmTemplateFactory)->abi_Create(get_abi(id), get_abi(name), get_abi(description), put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_IEmailIrmInfo<D>::CanEdit() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_CanEdit(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::CanEdit(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_CanEdit(value));
-}
-
-template <typename D> bool impl_IEmailIrmInfo<D>::CanExtractData() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_CanExtractData(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::CanExtractData(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_CanExtractData(value));
-}
-
-template <typename D> bool impl_IEmailIrmInfo<D>::CanForward() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_CanForward(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::CanForward(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_CanForward(value));
-}
-
-template <typename D> bool impl_IEmailIrmInfo<D>::CanModifyRecipientsOnResponse() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_CanModifyRecipientsOnResponse(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::CanModifyRecipientsOnResponse(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_CanModifyRecipientsOnResponse(value));
-}
-
-template <typename D> bool impl_IEmailIrmInfo<D>::CanPrintData() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_CanPrintData(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::CanPrintData(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_CanPrintData(value));
-}
-
-template <typename D> bool impl_IEmailIrmInfo<D>::CanRemoveIrmOnResponse() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_CanRemoveIrmOnResponse(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::CanRemoveIrmOnResponse(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_CanRemoveIrmOnResponse(value));
-}
-
-template <typename D> bool impl_IEmailIrmInfo<D>::CanReply() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_CanReply(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::CanReply(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_CanReply(value));
-}
-
-template <typename D> bool impl_IEmailIrmInfo<D>::CanReplyAll() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_CanReplyAll(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::CanReplyAll(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_CanReplyAll(value));
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IEmailIrmInfo<D>::ExpirationDate() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_ExpirationDate(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::ExpirationDate(const Windows::Foundation::DateTime & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_ExpirationDate(get_abi(value)));
-}
-
-template <typename D> bool impl_IEmailIrmInfo<D>::IsIrmOriginator() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_IsIrmOriginator(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::IsIrmOriginator(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_IsIrmOriginator(value));
-}
-
-template <typename D> bool impl_IEmailIrmInfo<D>::IsProgramaticAccessAllowed() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_IsProgramaticAccessAllowed(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::IsProgramaticAccessAllowed(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_IsProgramaticAccessAllowed(value));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailIrmTemplate impl_IEmailIrmInfo<D>::Template() const
-{
-    Windows::ApplicationModel::Email::EmailIrmTemplate value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->get_Template(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailIrmInfo<D>::Template(const Windows::ApplicationModel::Email::EmailIrmTemplate & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailIrmInfo)->put_Template(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailIrmInfo impl_IEmailIrmInfoFactory<D>::Create(const Windows::Foundation::DateTime & expiration, const Windows::ApplicationModel::Email::EmailIrmTemplate & irmTemplate) const
-{
-    Windows::ApplicationModel::Email::EmailIrmInfo result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailIrmInfoFactory)->abi_Create(get_abi(expiration), get_abi(irmTemplate), put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IEmailMessage<D>::Subject() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMessage)->get_Subject(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage<D>::Subject(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage)->put_Subject(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailMessage<D>::Body() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMessage)->get_Body(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage<D>::Body(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage)->put_Body(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> impl_IEmailMessage<D>::To() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> value;
-    check_hresult(WINRT_SHIM(IEmailMessage)->get_To(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> impl_IEmailMessage<D>::CC() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> value;
-    check_hresult(WINRT_SHIM(IEmailMessage)->get_CC(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> impl_IEmailMessage<D>::Bcc() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> value;
-    check_hresult(WINRT_SHIM(IEmailMessage)->get_Bcc(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailAttachment> impl_IEmailMessage<D>::Attachments() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailAttachment> value;
-    check_hresult(WINRT_SHIM(IEmailMessage)->get_Attachments(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailMessage2<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailMessage2<D>::RemoteId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_RemoteId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::RemoteId(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_RemoteId(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailMessage2<D>::MailboxId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_MailboxId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailMessage2<D>::ConversationId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_ConversationId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailMessage2<D>::FolderId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_FolderId(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMessage2<D>::AllowInternetImages() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_AllowInternetImages(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::AllowInternetImages(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_AllowInternetImages(value));
-}
-
-template <typename D> uint64_t impl_IEmailMessage2<D>::ChangeNumber() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_ChangeNumber(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMessageDownloadState impl_IEmailMessage2<D>::DownloadState() const
-{
-    Windows::ApplicationModel::Email::EmailMessageDownloadState value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_DownloadState(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::DownloadState(Windows::ApplicationModel::Email::EmailMessageDownloadState value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_DownloadState(value));
-}
-
-template <typename D> uint32_t impl_IEmailMessage2<D>::EstimatedDownloadSizeInBytes() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_EstimatedDownloadSizeInBytes(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::EstimatedDownloadSizeInBytes(uint32_t value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_EstimatedDownloadSizeInBytes(value));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailFlagState impl_IEmailMessage2<D>::FlagState() const
-{
-    Windows::ApplicationModel::Email::EmailFlagState value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_FlagState(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::FlagState(Windows::ApplicationModel::Email::EmailFlagState value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_FlagState(value));
-}
-
-template <typename D> bool impl_IEmailMessage2<D>::HasPartialBodies() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_HasPartialBodies(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailImportance impl_IEmailMessage2<D>::Importance() const
-{
-    Windows::ApplicationModel::Email::EmailImportance value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_Importance(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::Importance(Windows::ApplicationModel::Email::EmailImportance value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_Importance(value));
-}
-
-template <typename D> hstring impl_IEmailMessage2<D>::InResponseToMessageId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_InResponseToMessageId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailIrmInfo impl_IEmailMessage2<D>::IrmInfo() const
-{
-    Windows::ApplicationModel::Email::EmailIrmInfo value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_IrmInfo(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::IrmInfo(const Windows::ApplicationModel::Email::EmailIrmInfo & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_IrmInfo(get_abi(value)));
-}
-
-template <typename D> bool impl_IEmailMessage2<D>::IsDraftMessage() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_IsDraftMessage(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMessage2<D>::IsRead() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_IsRead(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::IsRead(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_IsRead(value));
-}
-
-template <typename D> bool impl_IEmailMessage2<D>::IsSeen() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_IsSeen(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::IsSeen(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_IsSeen(value));
-}
-
-template <typename D> bool impl_IEmailMessage2<D>::IsServerSearchMessage() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_IsServerSearchMessage(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMessage2<D>::IsSmartSendable() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_IsSmartSendable(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailMessage2<D>::MessageClass() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_MessageClass(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::MessageClass(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_MessageClass(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailMessage2<D>::NormalizedSubject() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_NormalizedSubject(put_abi(value)));
-    return value;
-}
-
-template <typename D> int32_t impl_IEmailMessage2<D>::OriginalCodePage() const
-{
-    int32_t value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_OriginalCodePage(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::OriginalCodePage(int32_t value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_OriginalCodePage(value));
-}
-
-template <typename D> hstring impl_IEmailMessage2<D>::Preview() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_Preview(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::Preview(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_Preview(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMessageResponseKind impl_IEmailMessage2<D>::LastResponseKind() const
-{
-    Windows::ApplicationModel::Email::EmailMessageResponseKind value {};
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_LastResponseKind(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::LastResponseKind(Windows::ApplicationModel::Email::EmailMessageResponseKind value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_LastResponseKind(value));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailRecipient impl_IEmailMessage2<D>::Sender() const
-{
-    Windows::ApplicationModel::Email::EmailRecipient value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_Sender(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::Sender(const Windows::ApplicationModel::Email::EmailRecipient & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_Sender(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IEmailMessage2<D>::SentTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_SentTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::SentTime(const optional<Windows::Foundation::DateTime> & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_SentTime(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMeetingInfo impl_IEmailMessage2<D>::MeetingInfo() const
-{
-    Windows::ApplicationModel::Email::EmailMeetingInfo value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMessage2)->get_MeetingInfo(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::MeetingInfo(const Windows::ApplicationModel::Email::EmailMeetingInfo & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->put_MeetingInfo(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference impl_IEmailMessage2<D>::GetBodyStream(Windows::ApplicationModel::Email::EmailMessageBodyKind type) const
-{
-    Windows::Storage::Streams::IRandomAccessStreamReference result;
-    check_hresult(WINRT_SHIM(IEmailMessage2)->abi_GetBodyStream(type, put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IEmailMessage2<D>::SetBodyStream(Windows::ApplicationModel::Email::EmailMessageBodyKind type, const Windows::Storage::Streams::IRandomAccessStreamReference & stream) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage2)->abi_SetBodyStream(type, get_abi(stream)));
-}
-
-template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference impl_IEmailMessage3<D>::SmimeData() const
-{
-    Windows::Storage::Streams::IRandomAccessStreamReference value;
-    check_hresult(WINRT_SHIM(IEmailMessage3)->get_SmimeData(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage3<D>::SmimeData(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage3)->put_SmimeData(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMessageSmimeKind impl_IEmailMessage3<D>::SmimeKind() const
-{
-    Windows::ApplicationModel::Email::EmailMessageSmimeKind value {};
-    check_hresult(WINRT_SHIM(IEmailMessage3)->get_SmimeKind(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage3<D>::SmimeKind(Windows::ApplicationModel::Email::EmailMessageSmimeKind value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage3)->put_SmimeKind(value));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> impl_IEmailMessage4<D>::ReplyTo() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailRecipient> value;
-    check_hresult(WINRT_SHIM(IEmailMessage4)->get_ReplyTo(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailRecipient impl_IEmailMessage4<D>::SentRepresenting() const
-{
-    Windows::ApplicationModel::Email::EmailRecipient value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMessage4)->get_SentRepresenting(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMessage4<D>::SentRepresenting(const Windows::ApplicationModel::Email::EmailRecipient & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMessage4)->put_SentRepresenting(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailAttachment<D>::FileName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailAttachment)->get_FileName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailAttachment<D>::FileName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailAttachment)->put_FileName(get_abi(value)));
-}
-
-template <typename D> Windows::Storage::Streams::IRandomAccessStreamReference impl_IEmailAttachment<D>::Data() const
-{
-    Windows::Storage::Streams::IRandomAccessStreamReference value;
-    check_hresult(WINRT_SHIM(IEmailAttachment)->get_Data(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailAttachment<D>::Data(const Windows::Storage::Streams::IRandomAccessStreamReference & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailAttachment)->put_Data(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailAttachment2<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailAttachment2<D>::ContentId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->get_ContentId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailAttachment2<D>::ContentId(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->put_ContentId(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailAttachment2<D>::ContentLocation() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->get_ContentLocation(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailAttachment2<D>::ContentLocation(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->put_ContentLocation(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailAttachmentDownloadState impl_IEmailAttachment2<D>::DownloadState() const
-{
-    Windows::ApplicationModel::Email::EmailAttachmentDownloadState value {};
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->get_DownloadState(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailAttachment2<D>::DownloadState(Windows::ApplicationModel::Email::EmailAttachmentDownloadState value) const
-{
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->put_DownloadState(value));
-}
-
-template <typename D> uint64_t impl_IEmailAttachment2<D>::EstimatedDownloadSizeInBytes() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->get_EstimatedDownloadSizeInBytes(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailAttachment2<D>::EstimatedDownloadSizeInBytes(uint64_t value) const
-{
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->put_EstimatedDownloadSizeInBytes(value));
-}
-
-template <typename D> bool impl_IEmailAttachment2<D>::IsFromBaseMessage() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->get_IsFromBaseMessage(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailAttachment2<D>::IsInline() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->get_IsInline(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailAttachment2<D>::IsInline(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->put_IsInline(value));
-}
-
-template <typename D> hstring impl_IEmailAttachment2<D>::MimeType() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->get_MimeType(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailAttachment2<D>::MimeType(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailAttachment2)->put_MimeType(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailAttachment impl_IEmailAttachmentFactory<D>::Create(hstring_view fileName, const Windows::Storage::Streams::IRandomAccessStreamReference & data) const
-{
-    Windows::ApplicationModel::Email::EmailAttachment result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailAttachmentFactory)->abi_Create(get_abi(fileName), get_abi(data), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailAttachment impl_IEmailAttachmentFactory2<D>::Create(hstring_view fileName, const Windows::Storage::Streams::IRandomAccessStreamReference & data, hstring_view mimeType) const
-{
-    Windows::ApplicationModel::Email::EmailAttachment result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailAttachmentFactory2)->abi_Create(get_abi(fileName), get_abi(data), get_abi(mimeType), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxChangedDeferral impl_IEmailMailboxChangedEventArgs<D>::GetDeferral() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxChangedDeferral result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailboxChangedEventArgs)->abi_GetDeferral(put_abi(result)));
-    return result;
-}
-
-template <typename D> void impl_IEmailMailboxChangedDeferral<D>::Complete() const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxChangedDeferral)->abi_Complete());
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation impl_IEmailMailboxPolicies<D>::AllowedSmimeEncryptionAlgorithmNegotiation() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies)->get_AllowedSmimeEncryptionAlgorithmNegotiation(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxPolicies<D>::AllowSmimeSoftCertificates() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies)->get_AllowSmimeSoftCertificates(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeEncryptionAlgorithm> impl_IEmailMailboxPolicies<D>::RequiredSmimeEncryptionAlgorithm() const
-{
-    Windows::Foundation::IReference<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeEncryptionAlgorithm> value;
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies)->get_RequiredSmimeEncryptionAlgorithm(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IReference<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeSigningAlgorithm> impl_IEmailMailboxPolicies<D>::RequiredSmimeSigningAlgorithm() const
-{
-    Windows::Foundation::IReference<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeSigningAlgorithm> value;
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies)->get_RequiredSmimeSigningAlgorithm(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxPolicies2<D>::MustEncryptSmimeMessages() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies2)->get_MustEncryptSmimeMessages(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxPolicies2<D>::MustSignSmimeMessages() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies2)->get_MustSignSmimeMessages(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailboxPolicies3<D>::AllowedSmimeEncryptionAlgorithmNegotiation(Windows::ApplicationModel::Email::EmailMailboxAllowedSmimeEncryptionAlgorithmNegotiation value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies3)->put_AllowedSmimeEncryptionAlgorithmNegotiation(value));
-}
-
-template <typename D> void impl_IEmailMailboxPolicies3<D>::AllowSmimeSoftCertificates(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies3)->put_AllowSmimeSoftCertificates(value));
-}
-
-template <typename D> void impl_IEmailMailboxPolicies3<D>::RequiredSmimeEncryptionAlgorithm(const optional<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeEncryptionAlgorithm> & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies3)->put_RequiredSmimeEncryptionAlgorithm(get_abi(value)));
-}
-
-template <typename D> void impl_IEmailMailboxPolicies3<D>::RequiredSmimeSigningAlgorithm(const optional<winrt::Windows::ApplicationModel::Email::EmailMailboxSmimeSigningAlgorithm> & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies3)->put_RequiredSmimeSigningAlgorithm(get_abi(value)));
-}
-
-template <typename D> void impl_IEmailMailboxPolicies3<D>::MustEncryptSmimeMessages(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies3)->put_MustEncryptSmimeMessages(value));
-}
-
-template <typename D> void impl_IEmailMailboxPolicies3<D>::MustSignSmimeMessages(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxPolicies3)->put_MustSignSmimeMessages(value));
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities<D>::CanForwardMeetings() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities)->get_CanForwardMeetings(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities<D>::CanGetAndSetExternalAutoReplies() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities)->get_CanGetAndSetExternalAutoReplies(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities<D>::CanGetAndSetInternalAutoReplies() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities)->get_CanGetAndSetInternalAutoReplies(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities<D>::CanUpdateMeetingResponses() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities)->get_CanUpdateMeetingResponses(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities<D>::CanServerSearchFolders() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities)->get_CanServerSearchFolders(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities<D>::CanServerSearchMailbox() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities)->get_CanServerSearchMailbox(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities<D>::CanProposeNewTimeForMeetings() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities)->get_CanProposeNewTimeForMeetings(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities<D>::CanSmartSend() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities)->get_CanSmartSend(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities2<D>::CanResolveRecipients() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities2)->get_CanResolveRecipients(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities2<D>::CanValidateCertificates() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities2)->get_CanValidateCertificates(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities2<D>::CanEmptyFolder() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities2)->get_CanEmptyFolder(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities2<D>::CanCreateFolder() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities2)->get_CanCreateFolder(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities2<D>::CanDeleteFolder() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities2)->get_CanDeleteFolder(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxCapabilities2<D>::CanMoveFolder() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities2)->get_CanMoveFolder(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanForwardMeetings(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanForwardMeetings(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanGetAndSetExternalAutoReplies(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanGetAndSetExternalAutoReplies(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanGetAndSetInternalAutoReplies(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanGetAndSetInternalAutoReplies(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanUpdateMeetingResponses(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanUpdateMeetingResponses(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanServerSearchFolders(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanServerSearchFolders(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanServerSearchMailbox(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanServerSearchMailbox(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanProposeNewTimeForMeetings(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanProposeNewTimeForMeetings(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanSmartSend(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanSmartSend(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanResolveRecipients(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanResolveRecipients(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanValidateCertificates(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanValidateCertificates(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanEmptyFolder(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanEmptyFolder(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanCreateFolder(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanCreateFolder(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanDeleteFolder(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanDeleteFolder(value));
-}
-
-template <typename D> void impl_IEmailMailboxCapabilities3<D>::CanMoveFolder(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxCapabilities3)->put_CanMoveFolder(value));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxCapabilities impl_IEmailMailbox<D>::Capabilities() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxCapabilities value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_Capabilities(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxChangeTracker impl_IEmailMailbox<D>::ChangeTracker() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxChangeTracker value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_ChangeTracker(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailMailbox<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailbox<D>::DisplayName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailbox)->put_DisplayName(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailMailbox<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailbox<D>::IsOwnedByCurrentApp() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_IsOwnedByCurrentApp(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailbox<D>::IsDataEncryptedUnderLock() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_IsDataEncryptedUnderLock(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailMailbox<D>::MailAddress() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_MailAddress(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailbox<D>::MailAddress(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailbox)->put_MailAddress(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IEmailMailbox<D>::MailAddressAliases() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_MailAddressAliases(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxOtherAppReadAccess impl_IEmailMailbox<D>::OtherAppReadAccess() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxOtherAppReadAccess value {};
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_OtherAppReadAccess(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailbox<D>::OtherAppReadAccess(Windows::ApplicationModel::Email::EmailMailboxOtherAppReadAccess value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailbox)->put_OtherAppReadAccess(value));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxOtherAppWriteAccess impl_IEmailMailbox<D>::OtherAppWriteAccess() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxOtherAppWriteAccess value {};
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_OtherAppWriteAccess(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailbox<D>::OtherAppWriteAccess(Windows::ApplicationModel::Email::EmailMailboxOtherAppWriteAccess value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailbox)->put_OtherAppWriteAccess(value));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxPolicies impl_IEmailMailbox<D>::Policies() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxPolicies value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_Policies(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailMailbox<D>::SourceDisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_SourceDisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxSyncManager impl_IEmailMailbox<D>::SyncManager() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxSyncManager value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_SyncManager(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailMailbox<D>::UserDataAccountId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->get_UserDataAccountId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailConversationReader impl_IEmailMailbox<D>::GetConversationReader() const
-{
-    Windows::ApplicationModel::Email::EmailConversationReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_GetConversationReader(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailConversationReader impl_IEmailMailbox<D>::GetConversationReader(const Windows::ApplicationModel::Email::EmailQueryOptions & options) const
-{
-    Windows::ApplicationModel::Email::EmailConversationReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_GetConversationReaderWithOptions(get_abi(options), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMessageReader impl_IEmailMailbox<D>::GetMessageReader() const
-{
-    Windows::ApplicationModel::Email::EmailMessageReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_GetMessageReader(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMessageReader impl_IEmailMailbox<D>::GetMessageReader(const Windows::ApplicationModel::Email::EmailQueryOptions & options) const
-{
-    Windows::ApplicationModel::Email::EmailMessageReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_GetMessageReaderWithOptions(get_abi(options), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::DeleteAsync() const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_DeleteAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversation> impl_IEmailMailbox<D>::GetConversationAsync(hstring_view id) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversation> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_GetConversationAsync(get_abi(id), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> impl_IEmailMailbox<D>::GetFolderAsync(hstring_view id) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_GetFolderAsync(get_abi(id), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> impl_IEmailMailbox<D>::GetMessageAsync(hstring_view id) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_GetMessageAsync(get_abi(id), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> impl_IEmailMailbox<D>::GetSpecialFolderAsync(Windows::ApplicationModel::Email::EmailSpecialFolderKind folderType) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_GetSpecialFolderAsync(folderType, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::SaveAsync() const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_SaveAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::MarkMessageAsSeenAsync(hstring_view messageId) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_MarkMessageAsSeenAsync(get_abi(messageId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::MarkFolderAsSeenAsync(hstring_view folderId) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_MarkFolderAsSeenAsync(get_abi(folderId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::MarkMessageReadAsync(hstring_view messageId, bool isRead) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_MarkMessageReadAsync(get_abi(messageId), isRead, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::ChangeMessageFlagStateAsync(hstring_view messageId, Windows::ApplicationModel::Email::EmailFlagState flagState) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_ChangeMessageFlagStateAsync(get_abi(messageId), flagState, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEmailMailbox<D>::TryMoveMessageAsync(hstring_view messageId, hstring_view newParentFolderId) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_TryMoveMessageAsync(get_abi(messageId), get_abi(newParentFolderId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEmailMailbox<D>::TryMoveFolderAsync(hstring_view folderId, hstring_view newParentFolderId) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_TryMoveFolderAsync(get_abi(folderId), get_abi(newParentFolderId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEmailMailbox<D>::TryMoveFolderAsync(hstring_view folderId, hstring_view newParentFolderId, hstring_view newFolderName) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_TryMoveFolderWithNewNameAsync(get_abi(folderId), get_abi(newParentFolderId), get_abi(newFolderName), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::DeleteMessageAsync(hstring_view messageId) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_DeleteMessageAsync(get_abi(messageId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::MarkFolderSyncEnabledAsync(hstring_view folderId, bool isSyncEnabled) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_MarkFolderSyncEnabledAsync(get_abi(folderId), isSyncEnabled, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::SendMessageAsync(const Windows::ApplicationModel::Email::EmailMessage & message) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_SendMessageAsync(get_abi(message), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::SaveDraftAsync(const Windows::ApplicationModel::Email::EmailMessage & message) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_SaveDraftAsync(get_abi(message), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::DownloadMessageAsync(hstring_view messageId) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_DownloadMessageAsync(get_abi(messageId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::DownloadAttachmentAsync(hstring_view attachmentId) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_DownloadAttachmentAsync(get_abi(attachmentId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> impl_IEmailMailbox<D>::CreateResponseMessageAsync(hstring_view messageId, Windows::ApplicationModel::Email::EmailMessageResponseKind responseType, hstring_view subject, Windows::ApplicationModel::Email::EmailMessageBodyKind responseHeaderType, hstring_view responseHeader) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_CreateResponseMessageAsync(get_abi(messageId), responseType, get_abi(subject), responseHeaderType, get_abi(responseHeader), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEmailMailbox<D>::TryUpdateMeetingResponseAsync(const Windows::ApplicationModel::Email::EmailMessage & meeting, Windows::ApplicationModel::Email::EmailMeetingResponseType response, hstring_view subject, hstring_view comment, bool sendUpdate) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_TryUpdateMeetingResponseAsync(get_abi(meeting), response, get_abi(subject), get_abi(comment), sendUpdate, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEmailMailbox<D>::TryForwardMeetingAsync(const Windows::ApplicationModel::Email::EmailMessage & meeting, iterable<Windows::ApplicationModel::Email::EmailRecipient> recipients, hstring_view subject, Windows::ApplicationModel::Email::EmailMessageBodyKind forwardHeaderType, hstring_view forwardHeader, hstring_view comment) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_TryForwardMeetingAsync(get_abi(meeting), get_abi(recipients), get_abi(subject), forwardHeaderType, get_abi(forwardHeader), get_abi(comment), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEmailMailbox<D>::TryProposeNewTimeForMeetingAsync(const Windows::ApplicationModel::Email::EmailMessage & meeting, const Windows::Foundation::DateTime & newStartTime, const Windows::Foundation::TimeSpan & newDuration, hstring_view subject, hstring_view comment) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_TryProposeNewTimeForMeetingAsync(get_abi(meeting), get_abi(newStartTime), get_abi(newDuration), get_abi(subject), get_abi(comment), put_abi(result)));
-    return result;
-}
-
-template <typename D> event_token impl_IEmailMailbox<D>::MailboxChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailbox, Windows::ApplicationModel::Email::EmailMailboxChangedEventArgs> & pHandler) const
-{
-    event_token pToken {};
-    check_hresult(WINRT_SHIM(IEmailMailbox)->add_MailboxChanged(get_abi(pHandler), &pToken));
-    return pToken;
-}
-
-template <typename D> event_revoker<IEmailMailbox> impl_IEmailMailbox<D>::MailboxChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailbox, Windows::ApplicationModel::Email::EmailMailboxChangedEventArgs> & pHandler) const
-{
-    return impl::make_event_revoker<D, IEmailMailbox>(this, &ABI::Windows::ApplicationModel::Email::IEmailMailbox::remove_MailboxChanged, MailboxChanged(pHandler));
-}
-
-template <typename D> void impl_IEmailMailbox<D>::MailboxChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailbox)->remove_MailboxChanged(token));
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox<D>::SendMessageAsync(const Windows::ApplicationModel::Email::EmailMessage & message, bool smartSend) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_SmartSendMessageAsync(get_abi(message), smartSend, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEmailMailbox<D>::TrySetAutoReplySettingsAsync(const Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings & autoReplySettings) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_TrySetAutoReplySettingsAsync(get_abi(autoReplySettings), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings> impl_IEmailMailbox<D>::TryGetAutoReplySettingsAsync(Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind requestedFormat) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings> autoReplySettings;
-    check_hresult(WINRT_SHIM(IEmailMailbox)->abi_TryGetAutoReplySettingsAsync(requestedFormat, put_abi(autoReplySettings)));
-    return autoReplySettings;
-}
-
-template <typename D> hstring impl_IEmailMailbox2<D>::LinkedMailboxId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMailbox2)->get_LinkedMailboxId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailMailbox2<D>::NetworkAccountId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMailbox2)->get_NetworkAccountId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailMailbox2<D>::NetworkId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMailbox2)->get_NetworkId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailRecipientResolutionResult>> impl_IEmailMailbox3<D>::ResolveRecipientsAsync(iterable<hstring> recipients) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailRecipientResolutionResult>> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox3)->abi_ResolveRecipientsAsync(get_abi(recipients), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<winrt::Windows::ApplicationModel::Email::EmailCertificateValidationStatus>> impl_IEmailMailbox3<D>::ValidateCertificatesAsync(iterable<Windows::Security::Cryptography::Certificates::Certificate> certificates) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<winrt::Windows::ApplicationModel::Email::EmailCertificateValidationStatus>> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox3)->abi_ValidateCertificatesAsync(get_abi(certificates), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::Email::EmailMailboxEmptyFolderStatus> impl_IEmailMailbox3<D>::TryEmptyFolderAsync(hstring_view folderId) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::Email::EmailMailboxEmptyFolderStatus> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox3)->abi_TryEmptyFolderAsync(get_abi(folderId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxCreateFolderResult> impl_IEmailMailbox3<D>::TryCreateFolderAsync(hstring_view parentFolderId, hstring_view name) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMailboxCreateFolderResult> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox3)->abi_TryCreateFolderAsync(get_abi(parentFolderId), get_abi(name), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::Email::EmailMailboxDeleteFolderStatus> impl_IEmailMailbox3<D>::TryDeleteFolderAsync(hstring_view folderId) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::ApplicationModel::Email::EmailMailboxDeleteFolderStatus> result;
-    check_hresult(WINRT_SHIM(IEmailMailbox3)->abi_TryDeleteFolderAsync(get_abi(folderId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailMailbox4<D>::RegisterSyncManagerAsync() const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailMailbox4)->abi_RegisterSyncManagerAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailRecipientResolutionStatus impl_IEmailRecipientResolutionResult<D>::Status() const
-{
-    Windows::ApplicationModel::Email::EmailRecipientResolutionStatus value {};
-    check_hresult(WINRT_SHIM(IEmailRecipientResolutionResult)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> impl_IEmailRecipientResolutionResult<D>::PublicKeys() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::Security::Cryptography::Certificates::Certificate> value;
-    check_hresult(WINRT_SHIM(IEmailRecipientResolutionResult)->get_PublicKeys(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailRecipientResolutionResult2<D>::Status(Windows::ApplicationModel::Email::EmailRecipientResolutionStatus value) const
-{
-    check_hresult(WINRT_SHIM(IEmailRecipientResolutionResult2)->put_Status(value));
-}
-
-template <typename D> void impl_IEmailRecipientResolutionResult2<D>::SetPublicKeys(iterable<Windows::Security::Cryptography::Certificates::Certificate> value) const
-{
-    check_hresult(WINRT_SHIM(IEmailRecipientResolutionResult2)->abi_SetPublicKeys(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxCreateFolderStatus impl_IEmailMailboxCreateFolderResult<D>::Status() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxCreateFolderStatus value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxCreateFolderResult)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailFolder impl_IEmailMailboxCreateFolderResult<D>::Folder() const
-{
-    Windows::ApplicationModel::Email::EmailFolder value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailboxCreateFolderResult)->get_Folder(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxAutoReplySettings<D>::IsEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReplySettings)->get_IsEnabled(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailboxAutoReplySettings<D>::IsEnabled(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReplySettings)->put_IsEnabled(value));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind impl_IEmailMailboxAutoReplySettings<D>::ResponseKind() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReplySettings)->get_ResponseKind(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailboxAutoReplySettings<D>::ResponseKind(Windows::ApplicationModel::Email::EmailMailboxAutoReplyMessageResponseKind value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReplySettings)->put_ResponseKind(value));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IEmailMailboxAutoReplySettings<D>::StartTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReplySettings)->get_StartTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailboxAutoReplySettings<D>::StartTime(const optional<Windows::Foundation::DateTime> & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReplySettings)->put_StartTime(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IEmailMailboxAutoReplySettings<D>::EndTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReplySettings)->get_EndTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailboxAutoReplySettings<D>::EndTime(const optional<Windows::Foundation::DateTime> & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReplySettings)->put_EndTime(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxAutoReply impl_IEmailMailboxAutoReplySettings<D>::InternalReply() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxAutoReply value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReplySettings)->get_InternalReply(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxAutoReply impl_IEmailMailboxAutoReplySettings<D>::KnownExternalReply() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxAutoReply value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReplySettings)->get_KnownExternalReply(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxAutoReply impl_IEmailMailboxAutoReplySettings<D>::UnknownExternalReply() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxAutoReply value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReplySettings)->get_UnknownExternalReply(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxAutoReply<D>::IsEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReply)->get_IsEnabled(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailboxAutoReply<D>::IsEnabled(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReply)->put_IsEnabled(value));
-}
-
-template <typename D> hstring impl_IEmailMailboxAutoReply<D>::Response() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReply)->get_Response(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailboxAutoReply<D>::Response(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxAutoReply)->put_Response(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxSyncStatus impl_IEmailMailboxSyncManager<D>::Status() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxSyncStatus value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxSyncManager)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IEmailMailboxSyncManager<D>::LastSuccessfulSyncTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxSyncManager)->get_LastSuccessfulSyncTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IEmailMailboxSyncManager<D>::LastAttemptedSyncTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxSyncManager)->get_LastAttemptedSyncTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEmailMailboxSyncManager<D>::SyncAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEmailMailboxSyncManager)->abi_SyncAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> event_token impl_IEmailMailboxSyncManager<D>::SyncStatusChanged(const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailboxSyncManager, Windows::Foundation::IInspectable> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(IEmailMailboxSyncManager)->add_SyncStatusChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<IEmailMailboxSyncManager> impl_IEmailMailboxSyncManager<D>::SyncStatusChanged(auto_revoke_t, const Windows::Foundation::TypedEventHandler<Windows::ApplicationModel::Email::EmailMailboxSyncManager, Windows::Foundation::IInspectable> & handler) const
-{
-    return impl::make_event_revoker<D, IEmailMailboxSyncManager>(this, &ABI::Windows::ApplicationModel::Email::IEmailMailboxSyncManager::remove_SyncStatusChanged, SyncStatusChanged(handler));
-}
-
-template <typename D> void impl_IEmailMailboxSyncManager<D>::SyncStatusChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxSyncManager)->remove_SyncStatusChanged(token));
-}
-
-template <typename D> void impl_IEmailMailboxSyncManager2<D>::Status(Windows::ApplicationModel::Email::EmailMailboxSyncStatus value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxSyncManager2)->put_Status(value));
-}
-
-template <typename D> void impl_IEmailMailboxSyncManager2<D>::LastSuccessfulSyncTime(const Windows::Foundation::DateTime & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxSyncManager2)->put_LastSuccessfulSyncTime(get_abi(value)));
-}
-
-template <typename D> void impl_IEmailMailboxSyncManager2<D>::LastAttemptedSyncTime(const Windows::Foundation::DateTime & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxSyncManager2)->put_LastAttemptedSyncTime(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailFolder<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailFolder)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailFolder<D>::RemoteId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailFolder)->get_RemoteId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailFolder<D>::RemoteId(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailFolder)->put_RemoteId(get_abi(value)));
-}
-
-template <typename D> hstring impl_IEmailFolder<D>::MailboxId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailFolder)->get_MailboxId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailFolder<D>::ParentFolderId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailFolder)->get_ParentFolderId(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailFolder<D>::DisplayName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailFolder)->get_DisplayName(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailFolder<D>::DisplayName(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailFolder)->put_DisplayName(get_abi(value)));
-}
-
-template <typename D> bool impl_IEmailFolder<D>::IsSyncEnabled() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailFolder)->get_IsSyncEnabled(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailFolder<D>::IsSyncEnabled(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailFolder)->put_IsSyncEnabled(value));
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IEmailFolder<D>::LastSuccessfulSyncTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IEmailFolder)->get_LastSuccessfulSyncTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailFolder<D>::LastSuccessfulSyncTime(const Windows::Foundation::DateTime & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailFolder)->put_LastSuccessfulSyncTime(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailSpecialFolderKind impl_IEmailFolder<D>::Kind() const
-{
-    Windows::ApplicationModel::Email::EmailSpecialFolderKind value {};
-    check_hresult(WINRT_SHIM(IEmailFolder)->get_Kind(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> impl_IEmailFolder<D>::CreateFolderAsync(hstring_view name) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailFolder> result;
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_CreateFolderAsync(get_abi(name), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailFolder<D>::DeleteAsync() const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_DeleteAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailFolder>> impl_IEmailFolder<D>::FindChildFoldersAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailFolder>> result;
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_FindChildFoldersAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailConversationReader impl_IEmailFolder<D>::GetConversationReader() const
-{
-    Windows::ApplicationModel::Email::EmailConversationReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_GetConversationReader(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailConversationReader impl_IEmailFolder<D>::GetConversationReader(const Windows::ApplicationModel::Email::EmailQueryOptions & options) const
-{
-    Windows::ApplicationModel::Email::EmailConversationReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_GetConversationReaderWithOptions(get_abi(options), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> impl_IEmailFolder<D>::GetMessageAsync(hstring_view id) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessage> result;
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_GetMessageAsync(get_abi(id), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMessageReader impl_IEmailFolder<D>::GetMessageReader() const
-{
-    Windows::ApplicationModel::Email::EmailMessageReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_GetMessageReader(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMessageReader impl_IEmailFolder<D>::GetMessageReader(const Windows::ApplicationModel::Email::EmailQueryOptions & options) const
-{
-    Windows::ApplicationModel::Email::EmailMessageReader result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_GetMessageReaderWithOptions(get_abi(options), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailItemCounts> impl_IEmailFolder<D>::GetMessageCountsAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailItemCounts> result;
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_GetMessageCountsAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEmailFolder<D>::TryMoveAsync(const Windows::ApplicationModel::Email::EmailFolder & newParentFolder) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_TryMoveAsync(get_abi(newParentFolder), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEmailFolder<D>::TryMoveAsync(const Windows::ApplicationModel::Email::EmailFolder & newParentFolder, hstring_view newFolderName) const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_TryMoveWithNewNameAsync(get_abi(newParentFolder), get_abi(newFolderName), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<bool> impl_IEmailFolder<D>::TrySaveAsync() const
-{
-    Windows::Foundation::IAsyncOperation<bool> result;
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_TrySaveAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_IEmailFolder<D>::SaveMessageAsync(const Windows::ApplicationModel::Email::EmailMessage & message) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(IEmailFolder)->abi_SaveMessageAsync(get_abi(message), put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_IEmailConversation<D>::Id() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_Id(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailConversation<D>::MailboxId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_MailboxId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailFlagState impl_IEmailConversation<D>::FlagState() const
-{
-    Windows::ApplicationModel::Email::EmailFlagState value {};
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_FlagState(&value));
-    return value;
-}
-
-template <typename D> bool impl_IEmailConversation<D>::HasAttachment() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_HasAttachment(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailImportance impl_IEmailConversation<D>::Importance() const
-{
-    Windows::ApplicationModel::Email::EmailImportance value {};
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_Importance(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMessageResponseKind impl_IEmailConversation<D>::LastEmailResponseKind() const
-{
-    Windows::ApplicationModel::Email::EmailMessageResponseKind value {};
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_LastEmailResponseKind(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IEmailConversation<D>::MessageCount() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_MessageCount(&value));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailConversation<D>::MostRecentMessageId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_MostRecentMessageId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IEmailConversation<D>::MostRecentMessageTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_MostRecentMessageTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailConversation<D>::Preview() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_Preview(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailRecipient impl_IEmailConversation<D>::LatestSender() const
-{
-    Windows::ApplicationModel::Email::EmailRecipient value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_LatestSender(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_IEmailConversation<D>::Subject() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_Subject(put_abi(value)));
-    return value;
-}
-
-template <typename D> uint32_t impl_IEmailConversation<D>::UnreadMessageCount() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IEmailConversation)->get_UnreadMessageCount(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage>> impl_IEmailConversation<D>::FindMessagesAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage>> result;
-    check_hresult(WINRT_SHIM(IEmailConversation)->abi_FindMessagesAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage>> impl_IEmailConversation<D>::FindMessagesAsync(uint32_t count) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage>> result;
-    check_hresult(WINRT_SHIM(IEmailConversation)->abi_FindMessagesWithCountAsync(count, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxActionKind impl_IEmailMailboxAction<D>::Kind() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxActionKind value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxAction)->get_Kind(&value));
-    return value;
-}
-
-template <typename D> uint64_t impl_IEmailMailboxAction<D>::ChangeNumber() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxAction)->get_ChangeNumber(&value));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailQuerySearchFields impl_IEmailQueryTextSearch<D>::Fields() const
-{
-    Windows::ApplicationModel::Email::EmailQuerySearchFields value {};
-    check_hresult(WINRT_SHIM(IEmailQueryTextSearch)->get_Fields(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailQueryTextSearch<D>::Fields(Windows::ApplicationModel::Email::EmailQuerySearchFields value) const
-{
-    check_hresult(WINRT_SHIM(IEmailQueryTextSearch)->put_Fields(value));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailQuerySearchScope impl_IEmailQueryTextSearch<D>::SearchScope() const
-{
-    Windows::ApplicationModel::Email::EmailQuerySearchScope value {};
-    check_hresult(WINRT_SHIM(IEmailQueryTextSearch)->get_SearchScope(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailQueryTextSearch<D>::SearchScope(Windows::ApplicationModel::Email::EmailQuerySearchScope value) const
-{
-    check_hresult(WINRT_SHIM(IEmailQueryTextSearch)->put_SearchScope(value));
-}
-
-template <typename D> hstring impl_IEmailQueryTextSearch<D>::Text() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailQueryTextSearch)->get_Text(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailQueryTextSearch<D>::Text(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailQueryTextSearch)->put_Text(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailQueryOptions impl_IEmailQueryOptionsFactory<D>::CreateWithText(hstring_view text) const
-{
-    Windows::ApplicationModel::Email::EmailQueryOptions result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailQueryOptionsFactory)->abi_CreateWithText(get_abi(text), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailQueryOptions impl_IEmailQueryOptionsFactory<D>::CreateWithTextAndFields(hstring_view text, Windows::ApplicationModel::Email::EmailQuerySearchFields fields) const
-{
-    Windows::ApplicationModel::Email::EmailQueryOptions result { nullptr };
-    check_hresult(WINRT_SHIM(IEmailQueryOptionsFactory)->abi_CreateWithTextAndFields(get_abi(text), fields, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailQueryTextSearch impl_IEmailQueryOptions<D>::TextSearch() const
-{
-    Windows::ApplicationModel::Email::EmailQueryTextSearch value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailQueryOptions)->get_TextSearch(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailQuerySortDirection impl_IEmailQueryOptions<D>::SortDirection() const
-{
-    Windows::ApplicationModel::Email::EmailQuerySortDirection value {};
-    check_hresult(WINRT_SHIM(IEmailQueryOptions)->get_SortDirection(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailQueryOptions<D>::SortDirection(Windows::ApplicationModel::Email::EmailQuerySortDirection value) const
-{
-    check_hresult(WINRT_SHIM(IEmailQueryOptions)->put_SortDirection(value));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailQuerySortProperty impl_IEmailQueryOptions<D>::SortProperty() const
-{
-    Windows::ApplicationModel::Email::EmailQuerySortProperty value {};
-    check_hresult(WINRT_SHIM(IEmailQueryOptions)->get_SortProperty(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailQueryOptions<D>::SortProperty(Windows::ApplicationModel::Email::EmailQuerySortProperty value) const
-{
-    check_hresult(WINRT_SHIM(IEmailQueryOptions)->put_SortProperty(value));
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailQueryKind impl_IEmailQueryOptions<D>::Kind() const
-{
-    Windows::ApplicationModel::Email::EmailQueryKind value {};
-    check_hresult(WINRT_SHIM(IEmailQueryOptions)->get_Kind(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailQueryOptions<D>::Kind(Windows::ApplicationModel::Email::EmailQueryKind value) const
-{
-    check_hresult(WINRT_SHIM(IEmailQueryOptions)->put_Kind(value));
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<hstring> impl_IEmailQueryOptions<D>::FolderIds() const
-{
-    Windows::Foundation::Collections::IVector<hstring> value;
-    check_hresult(WINRT_SHIM(IEmailQueryOptions)->get_FolderIds(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailConversation> impl_IEmailConversationBatch<D>::Conversations() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailConversation> value;
-    check_hresult(WINRT_SHIM(IEmailConversationBatch)->get_Conversations(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailBatchStatus impl_IEmailConversationBatch<D>::Status() const
-{
-    Windows::ApplicationModel::Email::EmailBatchStatus value {};
-    check_hresult(WINRT_SHIM(IEmailConversationBatch)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversationBatch> impl_IEmailConversationReader<D>::ReadBatchAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailConversationBatch> result;
-    check_hresult(WINRT_SHIM(IEmailConversationReader)->abi_ReadBatchAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage> impl_IEmailMessageBatch<D>::Messages() const
-{
-    Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMessage> value;
-    check_hresult(WINRT_SHIM(IEmailMessageBatch)->get_Messages(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailBatchStatus impl_IEmailMessageBatch<D>::Status() const
-{
-    Windows::ApplicationModel::Email::EmailBatchStatus value {};
-    check_hresult(WINRT_SHIM(IEmailMessageBatch)->get_Status(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessageBatch> impl_IEmailMessageReader<D>::ReadBatchAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailMessageBatch> result;
-    check_hresult(WINRT_SHIM(IEmailMessageReader)->abi_ReadBatchAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxChangeType impl_IEmailMailboxChange<D>::ChangeType() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxChangeType value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxChange)->get_ChangeType(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailMailboxAction> impl_IEmailMailboxChange<D>::MailboxActions() const
-{
-    Windows::Foundation::Collections::IVector<Windows::ApplicationModel::Email::EmailMailboxAction> value;
-    check_hresult(WINRT_SHIM(IEmailMailboxChange)->get_MailboxActions(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMessage impl_IEmailMailboxChange<D>::Message() const
-{
-    Windows::ApplicationModel::Email::EmailMessage value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailboxChange)->get_Message(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailFolder impl_IEmailMailboxChange<D>::Folder() const
-{
-    Windows::ApplicationModel::Email::EmailFolder value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailboxChange)->get_Folder(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailboxChangeReader<D>::AcceptChanges() const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxChangeReader)->abi_AcceptChanges());
-}
-
-template <typename D> void impl_IEmailMailboxChangeReader<D>::AcceptChangesThrough(const Windows::ApplicationModel::Email::EmailMailboxChange & lastChangeToAcknowledge) const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxChangeReader)->abi_AcceptChangesThrough(get_abi(lastChangeToAcknowledge)));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMailboxChange>> impl_IEmailMailboxChangeReader<D>::ReadBatchAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::ApplicationModel::Email::EmailMailboxChange>> value;
-    check_hresult(WINRT_SHIM(IEmailMailboxChangeReader)->abi_ReadBatchAsync(put_abi(value)));
-    return value;
-}
-
-template <typename D> bool impl_IEmailMailboxChangeTracker<D>::IsTracking() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMailboxChangeTracker)->get_IsTracking(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailboxChangeTracker<D>::Enable() const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxChangeTracker)->abi_Enable());
-}
-
-template <typename D> Windows::ApplicationModel::Email::EmailMailboxChangeReader impl_IEmailMailboxChangeTracker<D>::GetChangeReader() const
-{
-    Windows::ApplicationModel::Email::EmailMailboxChangeReader value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMailboxChangeTracker)->abi_GetChangeReader(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMailboxChangeTracker<D>::Reset() const
-{
-    check_hresult(WINRT_SHIM(IEmailMailboxChangeTracker)->abi_Reset());
-}
-
-template <typename D> bool impl_IEmailMeetingInfo<D>::AllowNewTimeProposal() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_AllowNewTimeProposal(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::AllowNewTimeProposal(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_AllowNewTimeProposal(value));
-}
-
-template <typename D> hstring impl_IEmailMeetingInfo<D>::AppointmentRoamingId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_AppointmentRoamingId(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::AppointmentRoamingId(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_AppointmentRoamingId(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IEmailMeetingInfo<D>::AppointmentOriginalStartTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_AppointmentOriginalStartTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::AppointmentOriginalStartTime(const optional<Windows::Foundation::DateTime> & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_AppointmentOriginalStartTime(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::TimeSpan impl_IEmailMeetingInfo<D>::Duration() const
-{
-    Windows::Foundation::TimeSpan value {};
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_Duration(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::Duration(const Windows::Foundation::TimeSpan & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_Duration(get_abi(value)));
-}
-
-template <typename D> bool impl_IEmailMeetingInfo<D>::IsAllDay() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_IsAllDay(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::IsAllDay(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_IsAllDay(value));
-}
-
-template <typename D> bool impl_IEmailMeetingInfo<D>::IsResponseRequested() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_IsResponseRequested(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::IsResponseRequested(bool value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_IsResponseRequested(value));
-}
-
-template <typename D> hstring impl_IEmailMeetingInfo<D>::Location() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_Location(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::Location(hstring_view value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_Location(get_abi(value)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IEmailMeetingInfo<D>::ProposedStartTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> proposedStartTime;
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_ProposedStartTime(put_abi(proposedStartTime)));
-    return proposedStartTime;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::ProposedStartTime(const optional<Windows::Foundation::DateTime> & proposedStartTime) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_ProposedStartTime(get_abi(proposedStartTime)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::TimeSpan> impl_IEmailMeetingInfo<D>::ProposedDuration() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::TimeSpan> duration;
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_ProposedDuration(put_abi(duration)));
-    return duration;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::ProposedDuration(const optional<Windows::Foundation::TimeSpan> & duration) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_ProposedDuration(get_abi(duration)));
-}
-
-template <typename D> Windows::Foundation::IReference<Windows::Foundation::DateTime> impl_IEmailMeetingInfo<D>::RecurrenceStartTime() const
-{
-    Windows::Foundation::IReference<Windows::Foundation::DateTime> value;
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_RecurrenceStartTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::RecurrenceStartTime(const optional<Windows::Foundation::DateTime> & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_RecurrenceStartTime(get_abi(value)));
-}
-
-template <typename D> Windows::ApplicationModel::Appointments::AppointmentRecurrence impl_IEmailMeetingInfo<D>::Recurrence() const
-{
-    Windows::ApplicationModel::Appointments::AppointmentRecurrence value { nullptr };
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_Recurrence(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::Recurrence(const Windows::ApplicationModel::Appointments::AppointmentRecurrence & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_Recurrence(get_abi(value)));
-}
-
-template <typename D> uint64_t impl_IEmailMeetingInfo<D>::RemoteChangeNumber() const
-{
-    uint64_t value {};
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_RemoteChangeNumber(&value));
-    return value;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::RemoteChangeNumber(uint64_t value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_RemoteChangeNumber(value));
-}
-
-template <typename D> Windows::Foundation::DateTime impl_IEmailMeetingInfo<D>::StartTime() const
-{
-    Windows::Foundation::DateTime value {};
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->get_StartTime(put_abi(value)));
-    return value;
-}
-
-template <typename D> void impl_IEmailMeetingInfo<D>::StartTime(const Windows::Foundation::DateTime & value) const
-{
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo)->put_StartTime(get_abi(value)));
-}
-
-template <typename D> bool impl_IEmailMeetingInfo2<D>::IsReportedOutOfDateByServer() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(IEmailMeetingInfo2)->get_IsReportedOutOfDateByServer(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IEmailItemCounts<D>::Flagged() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IEmailItemCounts)->get_Flagged(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IEmailItemCounts<D>::Important() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IEmailItemCounts)->get_Important(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IEmailItemCounts<D>::Total() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IEmailItemCounts)->get_Total(&value));
-    return value;
-}
-
-template <typename D> uint32_t impl_IEmailItemCounts<D>::Unread() const
-{
-    uint32_t value {};
-    check_hresult(WINRT_SHIM(IEmailItemCounts)->get_Unread(&value));
-    return value;
-}
+WINRT_EXPORT namespace winrt::Windows::ApplicationModel::Email {
 
 inline EmailAttachment::EmailAttachment() :
     EmailAttachment(activate_instance<EmailAttachment>())
 {}
 
-inline EmailAttachment::EmailAttachment(hstring_view fileName, const Windows::Storage::Streams::IRandomAccessStreamReference & data, hstring_view mimeType) :
-    EmailAttachment(get_activation_factory<EmailAttachment, IEmailAttachmentFactory2>().Create(fileName, data, mimeType))
+inline EmailAttachment::EmailAttachment(param::hstring const& fileName, Windows::Storage::Streams::IRandomAccessStreamReference const& data) :
+    EmailAttachment(get_activation_factory<EmailAttachment, Windows::ApplicationModel::Email::IEmailAttachmentFactory>().Create(fileName, data))
 {}
 
-inline EmailAttachment::EmailAttachment(hstring_view fileName, const Windows::Storage::Streams::IRandomAccessStreamReference & data) :
-    EmailAttachment(get_activation_factory<EmailAttachment, IEmailAttachmentFactory>().Create(fileName, data))
+inline EmailAttachment::EmailAttachment(param::hstring const& fileName, Windows::Storage::Streams::IRandomAccessStreamReference const& data, param::hstring const& mimeType) :
+    EmailAttachment(get_activation_factory<EmailAttachment, Windows::ApplicationModel::Email::IEmailAttachmentFactory2>().Create(fileName, data, mimeType))
 {}
 
 inline EmailIrmInfo::EmailIrmInfo() :
     EmailIrmInfo(activate_instance<EmailIrmInfo>())
 {}
 
-inline EmailIrmInfo::EmailIrmInfo(const Windows::Foundation::DateTime & expiration, const Windows::ApplicationModel::Email::EmailIrmTemplate & irmTemplate) :
-    EmailIrmInfo(get_activation_factory<EmailIrmInfo, IEmailIrmInfoFactory>().Create(expiration, irmTemplate))
+inline EmailIrmInfo::EmailIrmInfo(Windows::Foundation::DateTime const& expiration, Windows::ApplicationModel::Email::EmailIrmTemplate const& irmTemplate) :
+    EmailIrmInfo(get_activation_factory<EmailIrmInfo, Windows::ApplicationModel::Email::IEmailIrmInfoFactory>().Create(expiration, irmTemplate))
 {}
 
 inline EmailIrmTemplate::EmailIrmTemplate() :
     EmailIrmTemplate(activate_instance<EmailIrmTemplate>())
 {}
 
-inline EmailIrmTemplate::EmailIrmTemplate(hstring_view id, hstring_view name, hstring_view description) :
-    EmailIrmTemplate(get_activation_factory<EmailIrmTemplate, IEmailIrmTemplateFactory>().Create(id, name, description))
+inline EmailIrmTemplate::EmailIrmTemplate(param::hstring const& id, param::hstring const& name, param::hstring const& description) :
+    EmailIrmTemplate(get_activation_factory<EmailIrmTemplate, Windows::ApplicationModel::Email::IEmailIrmTemplateFactory>().Create(id, name, description))
 {}
 
 inline EmailMailboxAutoReplySettings::EmailMailboxAutoReplySettings() :
     EmailMailboxAutoReplySettings(activate_instance<EmailMailboxAutoReplySettings>())
 {}
 
-inline Windows::Foundation::IAsyncAction EmailManager::ShowComposeNewEmailAsync(const Windows::ApplicationModel::Email::EmailMessage & message)
+inline Windows::Foundation::IAsyncAction EmailManager::ShowComposeNewEmailAsync(Windows::ApplicationModel::Email::EmailMessage const& message)
 {
-    return get_activation_factory<EmailManager, IEmailManagerStatics>().ShowComposeNewEmailAsync(message);
+    return get_activation_factory<EmailManager, Windows::ApplicationModel::Email::IEmailManagerStatics>().ShowComposeNewEmailAsync(message);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore> EmailManager::RequestStoreAsync(Windows::ApplicationModel::Email::EmailStoreAccessType accessType)
+inline Windows::Foundation::IAsyncOperation<Windows::ApplicationModel::Email::EmailStore> EmailManager::RequestStoreAsync(Windows::ApplicationModel::Email::EmailStoreAccessType const& accessType)
 {
-    return get_activation_factory<EmailManager, IEmailManagerStatics2>().RequestStoreAsync(accessType);
+    return get_activation_factory<EmailManager, Windows::ApplicationModel::Email::IEmailManagerStatics2>().RequestStoreAsync(accessType);
 }
 
-inline Windows::ApplicationModel::Email::EmailManagerForUser EmailManager::GetForUser(const Windows::System::User & user)
+inline Windows::ApplicationModel::Email::EmailManagerForUser EmailManager::GetForUser(Windows::System::User const& user)
 {
-    return get_activation_factory<EmailManager, IEmailManagerStatics3>().GetForUser(user);
+    return get_activation_factory<EmailManager, Windows::ApplicationModel::Email::IEmailManagerStatics3>().GetForUser(user);
 }
 
 inline EmailMeetingInfo::EmailMeetingInfo() :
@@ -8065,24 +8064,24 @@ inline EmailQueryOptions::EmailQueryOptions() :
     EmailQueryOptions(activate_instance<EmailQueryOptions>())
 {}
 
-inline EmailQueryOptions::EmailQueryOptions(hstring_view text) :
-    EmailQueryOptions(get_activation_factory<EmailQueryOptions, IEmailQueryOptionsFactory>().CreateWithText(text))
+inline EmailQueryOptions::EmailQueryOptions(param::hstring const& text) :
+    EmailQueryOptions(get_activation_factory<EmailQueryOptions, Windows::ApplicationModel::Email::IEmailQueryOptionsFactory>().CreateWithText(text))
 {}
 
-inline EmailQueryOptions::EmailQueryOptions(hstring_view text, Windows::ApplicationModel::Email::EmailQuerySearchFields fields) :
-    EmailQueryOptions(get_activation_factory<EmailQueryOptions, IEmailQueryOptionsFactory>().CreateWithTextAndFields(text, fields))
+inline EmailQueryOptions::EmailQueryOptions(param::hstring const& text, Windows::ApplicationModel::Email::EmailQuerySearchFields const& fields) :
+    EmailQueryOptions(get_activation_factory<EmailQueryOptions, Windows::ApplicationModel::Email::IEmailQueryOptionsFactory>().CreateWithTextAndFields(text, fields))
 {}
 
 inline EmailRecipient::EmailRecipient() :
     EmailRecipient(activate_instance<EmailRecipient>())
 {}
 
-inline EmailRecipient::EmailRecipient(hstring_view address) :
-    EmailRecipient(get_activation_factory<EmailRecipient, IEmailRecipientFactory>().Create(address))
+inline EmailRecipient::EmailRecipient(param::hstring const& address) :
+    EmailRecipient(get_activation_factory<EmailRecipient, Windows::ApplicationModel::Email::IEmailRecipientFactory>().Create(address))
 {}
 
-inline EmailRecipient::EmailRecipient(hstring_view address, hstring_view name) :
-    EmailRecipient(get_activation_factory<EmailRecipient, IEmailRecipientFactory>().CreateWithName(address, name))
+inline EmailRecipient::EmailRecipient(param::hstring const& address, param::hstring const& name) :
+    EmailRecipient(get_activation_factory<EmailRecipient, Windows::ApplicationModel::Email::IEmailRecipientFactory>().CreateWithName(address, name))
 {}
 
 inline EmailRecipientResolutionResult::EmailRecipientResolutionResult() :
@@ -8091,789 +8090,272 @@ inline EmailRecipientResolutionResult::EmailRecipientResolutionResult() :
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailAttachment> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailAttachment> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailAttachment2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailAttachment2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailAttachmentFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailAttachmentFactory> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailAttachmentFactory2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailAttachmentFactory2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailConversation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailConversation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailConversationBatch> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailConversationBatch> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailConversationReader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailConversationReader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailFolder> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailFolder> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailIrmInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailIrmInfo> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailIrmInfoFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailIrmInfoFactory> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailIrmTemplate> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailIrmTemplate> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailIrmTemplateFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailIrmTemplateFactory> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailItemCounts> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailItemCounts> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailbox> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailbox> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailbox2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailbox2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailbox3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailbox3> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailbox4> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailbox4> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxAction> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxAction> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxAutoReply> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxAutoReply> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities3> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxChange> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxChange> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangeReader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangeReader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangeTracker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangeTracker> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangedDeferral> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangedDeferral> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxCreateFolderResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxCreateFolderResult> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies3> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxSyncManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxSyncManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxSyncManager2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMailboxSyncManager2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailManagerForUser> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailManagerForUser> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailManagerStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailManagerStatics> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailManagerStatics2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailManagerStatics2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailManagerStatics3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailManagerStatics3> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMeetingInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMeetingInfo> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMeetingInfo2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMeetingInfo2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMessage> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMessage> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMessage2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMessage2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMessage3> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMessage3> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMessage4> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMessage4> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMessageBatch> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMessageBatch> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailMessageReader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailMessageReader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailQueryOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailQueryOptions> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailQueryOptionsFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailQueryOptionsFactory> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailQueryTextSearch> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailQueryTextSearch> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailRecipient> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailRecipient> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailRecipientFactory> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailRecipientFactory> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailRecipientResolutionResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailRecipientResolutionResult> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailRecipientResolutionResult2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailRecipientResolutionResult2> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailStore> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailStore> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::IEmailStoreNotificationTriggerDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::IEmailStoreNotificationTriggerDetails> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailAttachment> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailAttachment> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailConversation> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailConversation> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailConversationBatch> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailConversationBatch> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailConversationReader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailConversationReader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailFolder> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailFolder> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailIrmInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailIrmInfo> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailIrmTemplate> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailIrmTemplate> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailItemCounts> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailItemCounts> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailbox> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailbox> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxAction> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxAction> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxAutoReply> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxAutoReply> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxCapabilities> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxCapabilities> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxChange> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxChange> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxChangeReader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxChangeReader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxChangeTracker> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxChangeTracker> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxChangedDeferral> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxChangedDeferral> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxCreateFolderResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxCreateFolderResult> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxPolicies> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxPolicies> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMailboxSyncManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMailboxSyncManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailManager> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailManager> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailManagerForUser> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailManagerForUser> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMeetingInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMeetingInfo> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMessage> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMessage> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMessageBatch> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMessageBatch> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailMessageReader> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailMessageReader> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailQueryOptions> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailQueryOptions> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailQueryTextSearch> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailQueryTextSearch> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailRecipient> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailRecipient> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailRecipientResolutionResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailRecipientResolutionResult> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailStore> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailStore> {};
+
+template<> struct hash<winrt::Windows::ApplicationModel::Email::EmailStoreNotificationTriggerDetails> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::ApplicationModel::Email::EmailStoreNotificationTriggerDetails> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailAttachment>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailAttachment & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailAttachment2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailAttachment2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailAttachmentFactory>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailAttachmentFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailAttachmentFactory2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailAttachmentFactory2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailConversation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailConversation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailConversationBatch>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailConversationBatch & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailConversationReader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailConversationReader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailFolder>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailFolder & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailIrmInfo>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailIrmInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailIrmInfoFactory>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailIrmInfoFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailIrmTemplate>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailIrmTemplate & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailIrmTemplateFactory>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailIrmTemplateFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailItemCounts>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailItemCounts & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailbox>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailbox & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailbox2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailbox2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailbox3>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailbox3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailbox4>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailbox4 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxAction>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxAction & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxAutoReply>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxAutoReply & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxAutoReplySettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities3>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxCapabilities3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxChange>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxChange & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangeReader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxChangeReader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangeTracker>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxChangeTracker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangedDeferral>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxChangedDeferral & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxCreateFolderResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxCreateFolderResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies3>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxPolicies3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxSyncManager>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxSyncManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMailboxSyncManager2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMailboxSyncManager2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailManagerForUser>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailManagerForUser & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailManagerStatics>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailManagerStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailManagerStatics2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailManagerStatics2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailManagerStatics3>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailManagerStatics3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMeetingInfo>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMeetingInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMeetingInfo2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMeetingInfo2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMessage>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMessage & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMessage2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMessage2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMessage3>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMessage3 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMessage4>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMessage4 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMessageBatch>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMessageBatch & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailMessageReader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailMessageReader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailQueryOptions>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailQueryOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailQueryOptionsFactory>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailQueryOptionsFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailQueryTextSearch>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailQueryTextSearch & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailRecipient>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailRecipient & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailRecipientFactory>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailRecipientFactory & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailRecipientResolutionResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailRecipientResolutionResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailRecipientResolutionResult2>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailRecipientResolutionResult2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailStore>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailStore & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::IEmailStoreNotificationTriggerDetails>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::IEmailStoreNotificationTriggerDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailAttachment>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailAttachment & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailConversation>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailConversation & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailConversationBatch>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailConversationBatch & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailConversationReader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailConversationReader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailFolder>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailFolder & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailIrmInfo>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailIrmInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailIrmTemplate>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailIrmTemplate & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailItemCounts>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailItemCounts & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailbox>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailbox & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxAction>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxAction & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxAutoReply>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxAutoReply & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxAutoReplySettings & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxCapabilities>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxCapabilities & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxChange>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxChange & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxChangeReader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxChangeReader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxChangeTracker>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxChangeTracker & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxChangedDeferral>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxChangedDeferral & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxCreateFolderResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxCreateFolderResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxPolicies>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxPolicies & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMailboxSyncManager>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMailboxSyncManager & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailManagerForUser>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailManagerForUser & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMeetingInfo>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMeetingInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMessage>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMessage & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMessageBatch>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMessageBatch & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailMessageReader>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailMessageReader & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailQueryOptions>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailQueryOptions & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailQueryTextSearch>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailQueryTextSearch & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailRecipient>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailRecipient & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailRecipientResolutionResult>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailRecipientResolutionResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailStore>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailStore & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::ApplicationModel::Email::EmailStoreNotificationTriggerDetails>
-{
-    size_t operator()(const winrt::Windows::ApplicationModel::Email::EmailStoreNotificationTriggerDetails & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP

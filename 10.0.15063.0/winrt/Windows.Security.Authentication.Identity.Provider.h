@@ -1,24 +1,278 @@
-// C++ for the Windows Runtime v1.0.170406.6
+﻿// C++/WinRT v1.0.170825.9
 // Copyright (c) 2017 Microsoft Corporation. All rights reserved.
 
 #pragma once
+#include "winrt/base.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/Windows.Foundation.Collections.h"
+#include "winrt/impl/complex_structs.h"
 
-#include "base.h"
 WINRT_WARNING_PUSH
+#include "winrt/impl/Windows.Storage.Streams.2.h"
+#include "winrt/impl/Windows.Security.Authentication.Identity.Provider.2.h"
+#include "winrt/Windows.Security.Authentication.Identity.h"
 
-#include "internal/Windows.Storage.Streams.3.h"
-#include "internal/Windows.Foundation.3.h"
-#include "internal/Windows.Security.Authentication.Identity.Provider.3.h"
-#include "Windows.Security.Authentication.Identity.h"
+namespace winrt::impl {
 
-WINRT_EXPORT namespace winrt {
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthentication<D>::ServiceAuthenticationHmac() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication)->get_ServiceAuthenticationHmac(put_abi(value)));
+    return value;
+}
 
-namespace impl {
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthentication<D>::SessionNonce() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication)->get_SessionNonce(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthentication<D>::DeviceNonce() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication)->get_DeviceNonce(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthentication<D>::DeviceConfigurationData() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication)->get_DeviceConfigurationData(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorFinishAuthenticationStatus> consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthentication<D>::FinishAuthenticationAsync(Windows::Storage::Streams::IBuffer const& deviceHmac, Windows::Storage::Streams::IBuffer const& sessionHmac) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorFinishAuthenticationStatus> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication)->FinishAuthenticationAsync(get_abi(deviceHmac), get_abi(sessionHmac), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthentication<D>::AbortAuthenticationAsync(param::hstring const& errorLogMessage) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication)->AbortAuthenticationAsync(get_abi(errorLogMessage), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStatus consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationResult<D>::Status() const
+{
+    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStatus value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationResult)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthentication consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationResult<D>::Authentication() const
+{
+    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthentication value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationResult)->get_Authentication(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs<D>::StageInfo() const
+{
+    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs)->get_StageInfo(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStage consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationStageInfo<D>::Stage() const
+{
+    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStage value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageInfo)->get_Stage(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationScenario consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationStageInfo<D>::Scenario() const
+{
+    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationScenario value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageInfo)->get_Scenario(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationStageInfo<D>::DeviceId() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageInfo)->get_DeviceId(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationStatics<D>::ShowNotificationMessageAsync(param::hstring const& deviceName, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationMessage const& message) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics)->ShowNotificationMessageAsync(get_abi(deviceName), get_abi(message), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationResult> consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationStatics<D>::StartAuthenticationAsync(param::hstring const& deviceId, Windows::Storage::Streams::IBuffer const& serviceAuthenticationNonce) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationResult> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics)->StartAuthenticationAsync(get_abi(deviceId), get_abi(serviceAuthenticationNonce), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> event_token consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationStatics<D>::AuthenticationStageChanged(Windows::Foundation::EventHandler<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> const& handler) const
+{
+    event_token token{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics)->add_AuthenticationStageChanged(get_abi(handler), put_abi(token)));
+    return token;
+}
+
+template <typename D> event_revoker<Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics> consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationStatics<D>::AuthenticationStageChanged(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> const& handler) const
+{
+    return impl::make_event_revoker<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics>(this, &abi_t<Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics>::remove_AuthenticationStageChanged, AuthenticationStageChanged(handler));
+}
+
+template <typename D> void consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationStatics<D>::AuthenticationStageChanged(event_token const& token) const
+{
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics)->remove_AuthenticationStageChanged(get_abi(token)));
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo> consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorAuthenticationStatics<D>::GetAuthenticationStageInfoAsync() const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo> result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics)->GetAuthenticationStageInfoAsync(put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics<D>::RegisterDevicePresenceMonitoringAsync(param::hstring const& deviceId, param::hstring const& deviceInstancePath, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode const& monitoringMode) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics)->RegisterDevicePresenceMonitoringAsync(get_abi(deviceId), get_abi(deviceInstancePath), get_abi(monitoringMode), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics<D>::RegisterDevicePresenceMonitoringAsync(param::hstring const& deviceId, param::hstring const& deviceInstancePath, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode const& monitoringMode, param::hstring const& deviceFriendlyName, param::hstring const& deviceModelNumber, Windows::Storage::Streams::IBuffer const& deviceConfigurationData) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics)->RegisterDevicePresenceMonitoringWithNewDeviceAsync(get_abi(deviceId), get_abi(deviceInstancePath), get_abi(monitoringMode), get_abi(deviceFriendlyName), get_abi(deviceModelNumber), get_abi(deviceConfigurationData), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics<D>::UnregisterDevicePresenceMonitoringAsync(param::hstring const& deviceId) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics)->UnregisterDevicePresenceMonitoringAsync(get_abi(deviceId), put_abi(result)));
+    return result;
+}
+
+template <typename D> bool consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics<D>::IsDevicePresenceMonitoringSupported() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics)->IsDevicePresenceMonitoringSupported(&value));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorInfo<D>::DeviceId() const
+{
+    hstring deviceId{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo)->get_DeviceId(put_abi(deviceId)));
+    return deviceId;
+}
+
+template <typename D> hstring consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorInfo<D>::DeviceFriendlyName() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo)->get_DeviceFriendlyName(put_abi(value)));
+    return value;
+}
+
+template <typename D> hstring consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorInfo<D>::DeviceModelNumber() const
+{
+    hstring value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo)->get_DeviceModelNumber(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Storage::Streams::IBuffer consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorInfo<D>::DeviceConfigurationData() const
+{
+    Windows::Storage::Streams::IBuffer value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo)->get_DeviceConfigurationData(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorInfo2<D>::PresenceMonitoringMode() const
+{
+    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo2)->get_PresenceMonitoringMode(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorInfo2<D>::UpdateDevicePresenceAsync(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresence const& presenceState) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo2)->UpdateDevicePresenceAsync(get_abi(presenceState), put_abi(result)));
+    return result;
+}
+
+template <typename D> bool consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorInfo2<D>::IsAuthenticationSupported() const
+{
+    bool value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo2)->get_IsAuthenticationSupported(&value));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorRegistration<D>::FinishRegisteringDeviceAsync(Windows::Storage::Streams::IBuffer const& deviceConfigurationData) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistration)->FinishRegisteringDeviceAsync(get_abi(deviceConfigurationData), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorRegistration<D>::AbortRegisteringDeviceAsync(param::hstring const& errorLogMessage) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistration)->AbortRegisteringDeviceAsync(get_abi(errorLogMessage), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationStatus consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorRegistrationResult<D>::Status() const
+{
+    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationStatus value{};
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationResult)->get_Status(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistration consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorRegistrationResult<D>::Registration() const
+{
+    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistration value{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationResult)->get_Registration(put_abi(value)));
+    return value;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationResult> consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorRegistrationStatics<D>::RequestStartRegisteringDeviceAsync(param::hstring const& deviceId, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceCapabilities const& capabilities, param::hstring const& deviceFriendlyName, param::hstring const& deviceModelNumber, Windows::Storage::Streams::IBuffer const& deviceKey, Windows::Storage::Streams::IBuffer const& mutualAuthenticationKey) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationResult> operation{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics)->RequestStartRegisteringDeviceAsync(get_abi(deviceId), get_abi(capabilities), get_abi(deviceFriendlyName), get_abi(deviceModelNumber), get_abi(deviceKey), get_abi(mutualAuthenticationKey), put_abi(operation)));
+    return operation;
+}
+
+template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorInfo>> consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorRegistrationStatics<D>::FindAllRegisteredDeviceInfoAsync(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceFindScope const& queryType) const
+{
+    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorInfo>> deviceInfoList{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics)->FindAllRegisteredDeviceInfoAsync(get_abi(queryType), put_abi(deviceInfoList)));
+    return deviceInfoList;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorRegistrationStatics<D>::UnregisterDeviceAsync(param::hstring const& deviceId) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics)->UnregisterDeviceAsync(get_abi(deviceId), put_abi(result)));
+    return result;
+}
+
+template <typename D> Windows::Foundation::IAsyncAction consume_Windows_Security_Authentication_Identity_Provider_ISecondaryAuthenticationFactorRegistrationStatics<D>::UpdateDeviceConfigurationDataAsync(param::hstring const& deviceId, Windows::Storage::Streams::IBuffer const& deviceConfigurationData) const
+{
+    Windows::Foundation::IAsyncAction result{ nullptr };
+    check_hresult(WINRT_SHIM(Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics)->UpdateDeviceConfigurationDataAsync(get_abi(deviceId), get_abi(deviceConfigurationData), put_abi(result)));
+    return result;
+}
 
 template <typename D>
 struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication> : produce_base<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication>
 {
-    HRESULT __stdcall get_ServiceAuthenticationHmac(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_ServiceAuthenticationHmac(::IUnknown** value) noexcept override
     {
         try
         {
@@ -33,7 +287,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall get_SessionNonce(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_SessionNonce(::IUnknown** value) noexcept override
     {
         try
         {
@@ -48,7 +302,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall get_DeviceNonce(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_DeviceNonce(::IUnknown** value) noexcept override
     {
         try
         {
@@ -63,7 +317,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall get_DeviceConfigurationData(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_DeviceConfigurationData(::IUnknown** value) noexcept override
     {
         try
         {
@@ -78,12 +332,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_FinishAuthenticationAsync(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> deviceHmac, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> sessionHmac, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorFinishAuthenticationStatus>> result) noexcept override
+    HRESULT __stdcall FinishAuthenticationAsync(::IUnknown* deviceHmac, ::IUnknown* sessionHmac, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().FinishAuthenticationAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&deviceHmac), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&sessionHmac)));
+            *result = detach_abi(this->shim().FinishAuthenticationAsync(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&deviceHmac), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&sessionHmac)));
             return S_OK;
         }
         catch (...)
@@ -93,12 +347,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_AbortAuthenticationAsync(impl::abi_arg_in<hstring> errorLogMessage, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall AbortAuthenticationAsync(HSTRING errorLogMessage, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().AbortAuthenticationAsync(*reinterpret_cast<const hstring *>(&errorLogMessage)));
+            *result = detach_abi(this->shim().AbortAuthenticationAsync(*reinterpret_cast<hstring const*>(&errorLogMessage)));
             return S_OK;
         }
         catch (...)
@@ -112,7 +366,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
 template <typename D>
 struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationResult> : produce_base<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationResult>
 {
-    HRESULT __stdcall get_Status(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStatus>* value) noexcept override
     {
         try
         {
@@ -126,7 +380,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall get_Authentication(impl::abi_arg_out<Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication> value) noexcept override
+    HRESULT __stdcall get_Authentication(::IUnknown** value) noexcept override
     {
         try
         {
@@ -145,7 +399,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
 template <typename D>
 struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> : produce_base<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>
 {
-    HRESULT __stdcall get_StageInfo(impl::abi_arg_out<Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageInfo> value) noexcept override
+    HRESULT __stdcall get_StageInfo(::IUnknown** value) noexcept override
     {
         try
         {
@@ -164,7 +418,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
 template <typename D>
 struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageInfo> : produce_base<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageInfo>
 {
-    HRESULT __stdcall get_Stage(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStage * value) noexcept override
+    HRESULT __stdcall get_Stage(abi_t<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStage>* value) noexcept override
     {
         try
         {
@@ -178,7 +432,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall get_Scenario(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationScenario * value) noexcept override
+    HRESULT __stdcall get_Scenario(abi_t<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationScenario>* value) noexcept override
     {
         try
         {
@@ -192,7 +446,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* value) noexcept override
     {
         try
         {
@@ -211,12 +465,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
 template <typename D>
 struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics> : produce_base<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics>
 {
-    HRESULT __stdcall abi_ShowNotificationMessageAsync(impl::abi_arg_in<hstring> deviceName, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationMessage message, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall ShowNotificationMessageAsync(HSTRING deviceName, abi_t<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationMessage> message, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().ShowNotificationMessageAsync(*reinterpret_cast<const hstring *>(&deviceName), message));
+            *result = detach_abi(this->shim().ShowNotificationMessageAsync(*reinterpret_cast<hstring const*>(&deviceName), *reinterpret_cast<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationMessage const*>(&message)));
             return S_OK;
         }
         catch (...)
@@ -226,12 +480,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_StartAuthenticationAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> serviceAuthenticationNonce, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationResult>> operation) noexcept override
+    HRESULT __stdcall StartAuthenticationAsync(HSTRING deviceId, ::IUnknown* serviceAuthenticationNonce, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().StartAuthenticationAsync(*reinterpret_cast<const hstring *>(&deviceId), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&serviceAuthenticationNonce)));
+            *operation = detach_abi(this->shim().StartAuthenticationAsync(*reinterpret_cast<hstring const*>(&deviceId), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&serviceAuthenticationNonce)));
             return S_OK;
         }
         catch (...)
@@ -241,12 +495,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall add_AuthenticationStageChanged(impl::abi_arg_in<Windows::Foundation::EventHandler<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>> handler, event_token * token) noexcept override
+    HRESULT __stdcall add_AuthenticationStageChanged(::IUnknown* handler, abi_t<event_token>* token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *token = detach_abi(this->shim().AuthenticationStageChanged(*reinterpret_cast<const Windows::Foundation::EventHandler<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> *>(&handler)));
+            *token = detach_abi(this->shim().AuthenticationStageChanged(*reinterpret_cast<Windows::Foundation::EventHandler<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> const*>(&handler)));
             return S_OK;
         }
         catch (...)
@@ -255,12 +509,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall remove_AuthenticationStageChanged(event_token token) noexcept override
+    HRESULT __stdcall remove_AuthenticationStageChanged(abi_t<event_token> token) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            this->shim().AuthenticationStageChanged(token);
+            this->shim().AuthenticationStageChanged(*reinterpret_cast<event_token const*>(&token));
             return S_OK;
         }
         catch (...)
@@ -269,7 +523,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_GetAuthenticationStageInfoAsync(impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo>> result) noexcept override
+    HRESULT __stdcall GetAuthenticationStageInfoAsync(::IUnknown** result) noexcept override
     {
         try
         {
@@ -288,12 +542,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
 template <typename D>
 struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics> : produce_base<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>
 {
-    HRESULT __stdcall abi_RegisterDevicePresenceMonitoringAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_in<hstring> deviceInstancePath, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode monitoringMode, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>> operation) noexcept override
+    HRESULT __stdcall RegisterDevicePresenceMonitoringAsync(HSTRING deviceId, HSTRING deviceInstancePath, abi_t<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode> monitoringMode, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RegisterDevicePresenceMonitoringAsync(*reinterpret_cast<const hstring *>(&deviceId), *reinterpret_cast<const hstring *>(&deviceInstancePath), monitoringMode));
+            *operation = detach_abi(this->shim().RegisterDevicePresenceMonitoringAsync(*reinterpret_cast<hstring const*>(&deviceId), *reinterpret_cast<hstring const*>(&deviceInstancePath), *reinterpret_cast<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode const*>(&monitoringMode)));
             return S_OK;
         }
         catch (...)
@@ -303,12 +557,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_RegisterDevicePresenceMonitoringWithNewDeviceAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_in<hstring> deviceInstancePath, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode monitoringMode, impl::abi_arg_in<hstring> deviceFriendlyName, impl::abi_arg_in<hstring> deviceModelNumber, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> deviceConfigurationData, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus>> operation) noexcept override
+    HRESULT __stdcall RegisterDevicePresenceMonitoringWithNewDeviceAsync(HSTRING deviceId, HSTRING deviceInstancePath, abi_t<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode> monitoringMode, HSTRING deviceFriendlyName, HSTRING deviceModelNumber, ::IUnknown* deviceConfigurationData, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RegisterDevicePresenceMonitoringAsync(*reinterpret_cast<const hstring *>(&deviceId), *reinterpret_cast<const hstring *>(&deviceInstancePath), monitoringMode, *reinterpret_cast<const hstring *>(&deviceFriendlyName), *reinterpret_cast<const hstring *>(&deviceModelNumber), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&deviceConfigurationData)));
+            *operation = detach_abi(this->shim().RegisterDevicePresenceMonitoringAsync(*reinterpret_cast<hstring const*>(&deviceId), *reinterpret_cast<hstring const*>(&deviceInstancePath), *reinterpret_cast<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode const*>(&monitoringMode), *reinterpret_cast<hstring const*>(&deviceFriendlyName), *reinterpret_cast<hstring const*>(&deviceModelNumber), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&deviceConfigurationData)));
             return S_OK;
         }
         catch (...)
@@ -318,12 +572,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_UnregisterDevicePresenceMonitoringAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall UnregisterDevicePresenceMonitoringAsync(HSTRING deviceId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().UnregisterDevicePresenceMonitoringAsync(*reinterpret_cast<const hstring *>(&deviceId)));
+            *result = detach_abi(this->shim().UnregisterDevicePresenceMonitoringAsync(*reinterpret_cast<hstring const*>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -333,7 +587,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_IsDevicePresenceMonitoringSupported(bool * value) noexcept override
+    HRESULT __stdcall IsDevicePresenceMonitoringSupported(bool* value) noexcept override
     {
         try
         {
@@ -351,7 +605,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
 template <typename D>
 struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo> : produce_base<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo>
 {
-    HRESULT __stdcall get_DeviceId(impl::abi_arg_out<hstring> deviceId) noexcept override
+    HRESULT __stdcall get_DeviceId(HSTRING* deviceId) noexcept override
     {
         try
         {
@@ -366,7 +620,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall get_DeviceFriendlyName(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceFriendlyName(HSTRING* value) noexcept override
     {
         try
         {
@@ -381,7 +635,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall get_DeviceModelNumber(impl::abi_arg_out<hstring> value) noexcept override
+    HRESULT __stdcall get_DeviceModelNumber(HSTRING* value) noexcept override
     {
         try
         {
@@ -396,7 +650,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall get_DeviceConfigurationData(impl::abi_arg_out<Windows::Storage::Streams::IBuffer> value) noexcept override
+    HRESULT __stdcall get_DeviceConfigurationData(::IUnknown** value) noexcept override
     {
         try
         {
@@ -415,7 +669,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
 template <typename D>
 struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo2> : produce_base<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo2>
 {
-    HRESULT __stdcall get_PresenceMonitoringMode(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode * value) noexcept override
+    HRESULT __stdcall get_PresenceMonitoringMode(abi_t<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode>* value) noexcept override
     {
         try
         {
@@ -429,12 +683,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_UpdateDevicePresenceAsync(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresence presenceState, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall UpdateDevicePresenceAsync(abi_t<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresence> presenceState, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().UpdateDevicePresenceAsync(presenceState));
+            *result = detach_abi(this->shim().UpdateDevicePresenceAsync(*reinterpret_cast<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresence const*>(&presenceState)));
             return S_OK;
         }
         catch (...)
@@ -444,7 +698,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall get_IsAuthenticationSupported(bool * value) noexcept override
+    HRESULT __stdcall get_IsAuthenticationSupported(bool* value) noexcept override
     {
         try
         {
@@ -462,12 +716,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
 template <typename D>
 struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistration> : produce_base<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistration>
 {
-    HRESULT __stdcall abi_FinishRegisteringDeviceAsync(impl::abi_arg_in<Windows::Storage::Streams::IBuffer> deviceConfigurationData, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall FinishRegisteringDeviceAsync(::IUnknown* deviceConfigurationData, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().FinishRegisteringDeviceAsync(*reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&deviceConfigurationData)));
+            *result = detach_abi(this->shim().FinishRegisteringDeviceAsync(*reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&deviceConfigurationData)));
             return S_OK;
         }
         catch (...)
@@ -477,12 +731,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_AbortRegisteringDeviceAsync(impl::abi_arg_in<hstring> errorLogMessage, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall AbortRegisteringDeviceAsync(HSTRING errorLogMessage, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().AbortRegisteringDeviceAsync(*reinterpret_cast<const hstring *>(&errorLogMessage)));
+            *result = detach_abi(this->shim().AbortRegisteringDeviceAsync(*reinterpret_cast<hstring const*>(&errorLogMessage)));
             return S_OK;
         }
         catch (...)
@@ -496,7 +750,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
 template <typename D>
 struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationResult> : produce_base<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationResult>
 {
-    HRESULT __stdcall get_Status(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationStatus * value) noexcept override
+    HRESULT __stdcall get_Status(abi_t<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationStatus>* value) noexcept override
     {
         try
         {
@@ -510,7 +764,7 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall get_Registration(impl::abi_arg_out<Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistration> value) noexcept override
+    HRESULT __stdcall get_Registration(::IUnknown** value) noexcept override
     {
         try
         {
@@ -529,12 +783,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
 template <typename D>
 struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics> : produce_base<D, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics>
 {
-    HRESULT __stdcall abi_RequestStartRegisteringDeviceAsync(impl::abi_arg_in<hstring> deviceId, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceCapabilities capabilities, impl::abi_arg_in<hstring> deviceFriendlyName, impl::abi_arg_in<hstring> deviceModelNumber, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> deviceKey, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> mutualAuthenticationKey, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationResult>> operation) noexcept override
+    HRESULT __stdcall RequestStartRegisteringDeviceAsync(HSTRING deviceId, abi_t<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceCapabilities> capabilities, HSTRING deviceFriendlyName, HSTRING deviceModelNumber, ::IUnknown* deviceKey, ::IUnknown* mutualAuthenticationKey, ::IUnknown** operation) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *operation = detach_abi(this->shim().RequestStartRegisteringDeviceAsync(*reinterpret_cast<const hstring *>(&deviceId), capabilities, *reinterpret_cast<const hstring *>(&deviceFriendlyName), *reinterpret_cast<const hstring *>(&deviceModelNumber), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&deviceKey), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&mutualAuthenticationKey)));
+            *operation = detach_abi(this->shim().RequestStartRegisteringDeviceAsync(*reinterpret_cast<hstring const*>(&deviceId), *reinterpret_cast<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceCapabilities const*>(&capabilities), *reinterpret_cast<hstring const*>(&deviceFriendlyName), *reinterpret_cast<hstring const*>(&deviceModelNumber), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&deviceKey), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&mutualAuthenticationKey)));
             return S_OK;
         }
         catch (...)
@@ -544,12 +798,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_FindAllRegisteredDeviceInfoAsync(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceFindScope queryType, impl::abi_arg_out<Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorInfo>>> deviceInfoList) noexcept override
+    HRESULT __stdcall FindAllRegisteredDeviceInfoAsync(abi_t<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceFindScope> queryType, ::IUnknown** deviceInfoList) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *deviceInfoList = detach_abi(this->shim().FindAllRegisteredDeviceInfoAsync(queryType));
+            *deviceInfoList = detach_abi(this->shim().FindAllRegisteredDeviceInfoAsync(*reinterpret_cast<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceFindScope const*>(&queryType)));
             return S_OK;
         }
         catch (...)
@@ -559,12 +813,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_UnregisterDeviceAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall UnregisterDeviceAsync(HSTRING deviceId, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().UnregisterDeviceAsync(*reinterpret_cast<const hstring *>(&deviceId)));
+            *result = detach_abi(this->shim().UnregisterDeviceAsync(*reinterpret_cast<hstring const*>(&deviceId)));
             return S_OK;
         }
         catch (...)
@@ -574,12 +828,12 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
         }
     }
 
-    HRESULT __stdcall abi_UpdateDeviceConfigurationDataAsync(impl::abi_arg_in<hstring> deviceId, impl::abi_arg_in<Windows::Storage::Streams::IBuffer> deviceConfigurationData, impl::abi_arg_out<Windows::Foundation::IAsyncAction> result) noexcept override
+    HRESULT __stdcall UpdateDeviceConfigurationDataAsync(HSTRING deviceId, ::IUnknown* deviceConfigurationData, ::IUnknown** result) noexcept override
     {
         try
         {
             typename D::abi_guard guard(this->shim());
-            *result = detach_abi(this->shim().UpdateDeviceConfigurationDataAsync(*reinterpret_cast<const hstring *>(&deviceId), *reinterpret_cast<const Windows::Storage::Streams::IBuffer *>(&deviceConfigurationData)));
+            *result = detach_abi(this->shim().UpdateDeviceConfigurationDataAsync(*reinterpret_cast<hstring const*>(&deviceId), *reinterpret_cast<Windows::Storage::Streams::IBuffer const*>(&deviceConfigurationData)));
             return S_OK;
         }
         catch (...)
@@ -592,498 +846,137 @@ struct produce<D, Windows::Security::Authentication::Identity::Provider::ISecond
 
 }
 
-namespace Windows::Security::Authentication::Identity::Provider {
+WINRT_EXPORT namespace winrt::Windows::Security::Authentication::Identity::Provider {
 
-template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationStatus impl_ISecondaryAuthenticationFactorRegistrationResult<D>::Status() const
+inline Windows::Foundation::IAsyncAction SecondaryAuthenticationFactorAuthentication::ShowNotificationMessageAsync(param::hstring const& deviceName, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationMessage const& message)
 {
-    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationStatus value {};
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorRegistrationResult)->get_Status(&value));
-    return value;
+    return get_activation_factory<SecondaryAuthenticationFactorAuthentication, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics>().ShowNotificationMessageAsync(deviceName, message);
 }
 
-template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistration impl_ISecondaryAuthenticationFactorRegistrationResult<D>::Registration() const
+inline Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationResult> SecondaryAuthenticationFactorAuthentication::StartAuthenticationAsync(param::hstring const& deviceId, Windows::Storage::Streams::IBuffer const& serviceAuthenticationNonce)
 {
-    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistration value { nullptr };
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorRegistrationResult)->get_Registration(put_abi(value)));
-    return value;
+    return get_activation_factory<SecondaryAuthenticationFactorAuthentication, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics>().StartAuthenticationAsync(deviceId, serviceAuthenticationNonce);
 }
 
-template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStatus impl_ISecondaryAuthenticationFactorAuthenticationResult<D>::Status() const
+inline event_token SecondaryAuthenticationFactorAuthentication::AuthenticationStageChanged(Windows::Foundation::EventHandler<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> const& handler)
 {
-    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStatus value {};
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthenticationResult)->get_Status(&value));
-    return value;
+    return get_activation_factory<SecondaryAuthenticationFactorAuthentication, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics>().AuthenticationStageChanged(handler);
 }
 
-template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthentication impl_ISecondaryAuthenticationFactorAuthenticationResult<D>::Authentication() const
+inline factory_event_revoker<Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics> SecondaryAuthenticationFactorAuthentication::AuthenticationStageChanged(auto_revoke_t, Windows::Foundation::EventHandler<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> const& handler)
 {
-    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthentication value { nullptr };
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthenticationResult)->get_Authentication(put_abi(value)));
-    return value;
+    auto factory = get_activation_factory<SecondaryAuthenticationFactorAuthentication, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics>();
+    return { factory, &abi_t<Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics>::remove_AuthenticationStageChanged, factory.AuthenticationStageChanged(handler) };
 }
 
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationResult> impl_ISecondaryAuthenticationFactorRegistrationStatics<D>::RequestStartRegisteringDeviceAsync(hstring_view deviceId, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceCapabilities capabilities, hstring_view deviceFriendlyName, hstring_view deviceModelNumber, const Windows::Storage::Streams::IBuffer & deviceKey, const Windows::Storage::Streams::IBuffer & mutualAuthenticationKey) const
+inline void SecondaryAuthenticationFactorAuthentication::AuthenticationStageChanged(event_token const& token)
 {
-    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationResult> operation;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorRegistrationStatics)->abi_RequestStartRegisteringDeviceAsync(get_abi(deviceId), capabilities, get_abi(deviceFriendlyName), get_abi(deviceModelNumber), get_abi(deviceKey), get_abi(mutualAuthenticationKey), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorInfo>> impl_ISecondaryAuthenticationFactorRegistrationStatics<D>::FindAllRegisteredDeviceInfoAsync(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceFindScope queryType) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorInfo>> deviceInfoList;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorRegistrationStatics)->abi_FindAllRegisteredDeviceInfoAsync(queryType, put_abi(deviceInfoList)));
-    return deviceInfoList;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISecondaryAuthenticationFactorRegistrationStatics<D>::UnregisterDeviceAsync(hstring_view deviceId) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorRegistrationStatics)->abi_UnregisterDeviceAsync(get_abi(deviceId), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISecondaryAuthenticationFactorRegistrationStatics<D>::UpdateDeviceConfigurationDataAsync(hstring_view deviceId, const Windows::Storage::Streams::IBuffer & deviceConfigurationData) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorRegistrationStatics)->abi_UpdateDeviceConfigurationDataAsync(get_abi(deviceId), get_abi(deviceConfigurationData), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> impl_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics<D>::RegisterDevicePresenceMonitoringAsync(hstring_view deviceId, hstring_view deviceInstancePath, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode monitoringMode) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> operation;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics)->abi_RegisterDevicePresenceMonitoringAsync(get_abi(deviceId), get_abi(deviceInstancePath), monitoringMode, put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> impl_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics<D>::RegisterDevicePresenceMonitoringAsync(hstring_view deviceId, hstring_view deviceInstancePath, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode monitoringMode, hstring_view deviceFriendlyName, hstring_view deviceModelNumber, const Windows::Storage::Streams::IBuffer & deviceConfigurationData) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> operation;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics)->abi_RegisterDevicePresenceMonitoringWithNewDeviceAsync(get_abi(deviceId), get_abi(deviceInstancePath), monitoringMode, get_abi(deviceFriendlyName), get_abi(deviceModelNumber), get_abi(deviceConfigurationData), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics<D>::UnregisterDevicePresenceMonitoringAsync(hstring_view deviceId) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics)->abi_UnregisterDevicePresenceMonitoringAsync(get_abi(deviceId), put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics<D>::IsDevicePresenceMonitoringSupported() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics)->abi_IsDevicePresenceMonitoringSupported(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISecondaryAuthenticationFactorRegistration<D>::FinishRegisteringDeviceAsync(const Windows::Storage::Streams::IBuffer & deviceConfigurationData) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorRegistration)->abi_FinishRegisteringDeviceAsync(get_abi(deviceConfigurationData), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISecondaryAuthenticationFactorRegistration<D>::AbortRegisteringDeviceAsync(hstring_view errorLogMessage) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorRegistration)->abi_AbortRegisteringDeviceAsync(get_abi(errorLogMessage), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISecondaryAuthenticationFactorAuthenticationStatics<D>::ShowNotificationMessageAsync(hstring_view deviceName, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationMessage message) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthenticationStatics)->abi_ShowNotificationMessageAsync(get_abi(deviceName), message, put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationResult> impl_ISecondaryAuthenticationFactorAuthenticationStatics<D>::StartAuthenticationAsync(hstring_view deviceId, const Windows::Storage::Streams::IBuffer & serviceAuthenticationNonce) const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationResult> operation;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthenticationStatics)->abi_StartAuthenticationAsync(get_abi(deviceId), get_abi(serviceAuthenticationNonce), put_abi(operation)));
-    return operation;
-}
-
-template <typename D> event_token impl_ISecondaryAuthenticationFactorAuthenticationStatics<D>::AuthenticationStageChanged(const Windows::Foundation::EventHandler<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> & handler) const
-{
-    event_token token {};
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthenticationStatics)->add_AuthenticationStageChanged(get_abi(handler), &token));
-    return token;
-}
-
-template <typename D> event_revoker<ISecondaryAuthenticationFactorAuthenticationStatics> impl_ISecondaryAuthenticationFactorAuthenticationStatics<D>::AuthenticationStageChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> & handler) const
-{
-    return impl::make_event_revoker<D, ISecondaryAuthenticationFactorAuthenticationStatics>(this, &ABI::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics::remove_AuthenticationStageChanged, AuthenticationStageChanged(handler));
-}
-
-template <typename D> void impl_ISecondaryAuthenticationFactorAuthenticationStatics<D>::AuthenticationStageChanged(event_token token) const
-{
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthenticationStatics)->remove_AuthenticationStageChanged(token));
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo> impl_ISecondaryAuthenticationFactorAuthenticationStatics<D>::GetAuthenticationStageInfoAsync() const
-{
-    Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo> result;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthenticationStatics)->abi_GetAuthenticationStageInfoAsync(put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ISecondaryAuthenticationFactorAuthentication<D>::ServiceAuthenticationHmac() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthentication)->get_ServiceAuthenticationHmac(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ISecondaryAuthenticationFactorAuthentication<D>::SessionNonce() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthentication)->get_SessionNonce(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ISecondaryAuthenticationFactorAuthentication<D>::DeviceNonce() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthentication)->get_DeviceNonce(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ISecondaryAuthenticationFactorAuthentication<D>::DeviceConfigurationData() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthentication)->get_DeviceConfigurationData(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorFinishAuthenticationStatus> impl_ISecondaryAuthenticationFactorAuthentication<D>::FinishAuthenticationAsync(const Windows::Storage::Streams::IBuffer & deviceHmac, const Windows::Storage::Streams::IBuffer & sessionHmac) const
-{
-    Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorFinishAuthenticationStatus> result;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthentication)->abi_FinishAuthenticationAsync(get_abi(deviceHmac), get_abi(sessionHmac), put_abi(result)));
-    return result;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISecondaryAuthenticationFactorAuthentication<D>::AbortAuthenticationAsync(hstring_view errorLogMessage) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthentication)->abi_AbortAuthenticationAsync(get_abi(errorLogMessage), put_abi(result)));
-    return result;
-}
-
-template <typename D> hstring impl_ISecondaryAuthenticationFactorInfo<D>::DeviceId() const
-{
-    hstring deviceId;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorInfo)->get_DeviceId(put_abi(deviceId)));
-    return deviceId;
-}
-
-template <typename D> hstring impl_ISecondaryAuthenticationFactorInfo<D>::DeviceFriendlyName() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorInfo)->get_DeviceFriendlyName(put_abi(value)));
-    return value;
-}
-
-template <typename D> hstring impl_ISecondaryAuthenticationFactorInfo<D>::DeviceModelNumber() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorInfo)->get_DeviceModelNumber(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Storage::Streams::IBuffer impl_ISecondaryAuthenticationFactorInfo<D>::DeviceConfigurationData() const
-{
-    Windows::Storage::Streams::IBuffer value;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorInfo)->get_DeviceConfigurationData(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode impl_ISecondaryAuthenticationFactorInfo2<D>::PresenceMonitoringMode() const
-{
-    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode value {};
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorInfo2)->get_PresenceMonitoringMode(&value));
-    return value;
-}
-
-template <typename D> Windows::Foundation::IAsyncAction impl_ISecondaryAuthenticationFactorInfo2<D>::UpdateDevicePresenceAsync(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresence presenceState) const
-{
-    Windows::Foundation::IAsyncAction result;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorInfo2)->abi_UpdateDevicePresenceAsync(presenceState, put_abi(result)));
-    return result;
-}
-
-template <typename D> bool impl_ISecondaryAuthenticationFactorInfo2<D>::IsAuthenticationSupported() const
-{
-    bool value {};
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorInfo2)->get_IsAuthenticationSupported(&value));
-    return value;
-}
-
-template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStage impl_ISecondaryAuthenticationFactorAuthenticationStageInfo<D>::Stage() const
-{
-    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStage value {};
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthenticationStageInfo)->get_Stage(&value));
-    return value;
-}
-
-template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationScenario impl_ISecondaryAuthenticationFactorAuthenticationStageInfo<D>::Scenario() const
-{
-    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationScenario value {};
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthenticationStageInfo)->get_Scenario(&value));
-    return value;
-}
-
-template <typename D> hstring impl_ISecondaryAuthenticationFactorAuthenticationStageInfo<D>::DeviceId() const
-{
-    hstring value;
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthenticationStageInfo)->get_DeviceId(put_abi(value)));
-    return value;
-}
-
-template <typename D> Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo impl_ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs<D>::StageInfo() const
-{
-    Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo value { nullptr };
-    check_hresult(WINRT_SHIM(ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs)->get_StageInfo(put_abi(value)));
-    return value;
-}
-
-inline Windows::Foundation::IAsyncAction SecondaryAuthenticationFactorAuthentication::ShowNotificationMessageAsync(hstring_view deviceName, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationMessage message)
-{
-    return get_activation_factory<SecondaryAuthenticationFactorAuthentication, ISecondaryAuthenticationFactorAuthenticationStatics>().ShowNotificationMessageAsync(deviceName, message);
-}
-
-inline Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationResult> SecondaryAuthenticationFactorAuthentication::StartAuthenticationAsync(hstring_view deviceId, const Windows::Storage::Streams::IBuffer & serviceAuthenticationNonce)
-{
-    return get_activation_factory<SecondaryAuthenticationFactorAuthentication, ISecondaryAuthenticationFactorAuthenticationStatics>().StartAuthenticationAsync(deviceId, serviceAuthenticationNonce);
-}
-
-inline event_token SecondaryAuthenticationFactorAuthentication::AuthenticationStageChanged(const Windows::Foundation::EventHandler<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> & handler)
-{
-    return get_activation_factory<SecondaryAuthenticationFactorAuthentication, ISecondaryAuthenticationFactorAuthenticationStatics>().AuthenticationStageChanged(handler);
-}
-
-inline factory_event_revoker<ISecondaryAuthenticationFactorAuthenticationStatics> SecondaryAuthenticationFactorAuthentication::AuthenticationStageChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> & handler)
-{
-    auto factory = get_activation_factory<SecondaryAuthenticationFactorAuthentication, ISecondaryAuthenticationFactorAuthenticationStatics>();
-    return { factory, &ABI::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics::remove_AuthenticationStageChanged, factory.AuthenticationStageChanged(handler) };
-}
-
-inline void SecondaryAuthenticationFactorAuthentication::AuthenticationStageChanged(event_token token)
-{
-    get_activation_factory<SecondaryAuthenticationFactorAuthentication, ISecondaryAuthenticationFactorAuthenticationStatics>().AuthenticationStageChanged(token);
+    get_activation_factory<SecondaryAuthenticationFactorAuthentication, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics>().AuthenticationStageChanged(token);
 }
 
 inline Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo> SecondaryAuthenticationFactorAuthentication::GetAuthenticationStageInfoAsync()
 {
-    return get_activation_factory<SecondaryAuthenticationFactorAuthentication, ISecondaryAuthenticationFactorAuthenticationStatics>().GetAuthenticationStageInfoAsync();
+    return get_activation_factory<SecondaryAuthenticationFactorAuthentication, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics>().GetAuthenticationStageInfoAsync();
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> SecondaryAuthenticationFactorRegistration::RegisterDevicePresenceMonitoringAsync(hstring_view deviceId, hstring_view deviceInstancePath, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode monitoringMode)
+inline Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> SecondaryAuthenticationFactorRegistration::RegisterDevicePresenceMonitoringAsync(param::hstring const& deviceId, param::hstring const& deviceInstancePath, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode const& monitoringMode)
 {
-    return get_activation_factory<SecondaryAuthenticationFactorRegistration, ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>().RegisterDevicePresenceMonitoringAsync(deviceId, deviceInstancePath, monitoringMode);
+    return get_activation_factory<SecondaryAuthenticationFactorRegistration, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>().RegisterDevicePresenceMonitoringAsync(deviceId, deviceInstancePath, monitoringMode);
 }
 
-inline Windows::Foundation::IAsyncOperation<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> SecondaryAuthenticationFactorRegistration::RegisterDevicePresenceMonitoringAsync(hstring_view deviceId, hstring_view deviceInstancePath, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode monitoringMode, hstring_view deviceFriendlyName, hstring_view deviceModelNumber, const Windows::Storage::Streams::IBuffer & deviceConfigurationData)
+inline Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatus> SecondaryAuthenticationFactorRegistration::RegisterDevicePresenceMonitoringAsync(param::hstring const& deviceId, param::hstring const& deviceInstancePath, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDevicePresenceMonitoringMode const& monitoringMode, param::hstring const& deviceFriendlyName, param::hstring const& deviceModelNumber, Windows::Storage::Streams::IBuffer const& deviceConfigurationData)
 {
-    return get_activation_factory<SecondaryAuthenticationFactorRegistration, ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>().RegisterDevicePresenceMonitoringAsync(deviceId, deviceInstancePath, monitoringMode, deviceFriendlyName, deviceModelNumber, deviceConfigurationData);
+    return get_activation_factory<SecondaryAuthenticationFactorRegistration, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>().RegisterDevicePresenceMonitoringAsync(deviceId, deviceInstancePath, monitoringMode, deviceFriendlyName, deviceModelNumber, deviceConfigurationData);
 }
 
-inline Windows::Foundation::IAsyncAction SecondaryAuthenticationFactorRegistration::UnregisterDevicePresenceMonitoringAsync(hstring_view deviceId)
+inline Windows::Foundation::IAsyncAction SecondaryAuthenticationFactorRegistration::UnregisterDevicePresenceMonitoringAsync(param::hstring const& deviceId)
 {
-    return get_activation_factory<SecondaryAuthenticationFactorRegistration, ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>().UnregisterDevicePresenceMonitoringAsync(deviceId);
+    return get_activation_factory<SecondaryAuthenticationFactorRegistration, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>().UnregisterDevicePresenceMonitoringAsync(deviceId);
 }
 
 inline bool SecondaryAuthenticationFactorRegistration::IsDevicePresenceMonitoringSupported()
 {
-    return get_activation_factory<SecondaryAuthenticationFactorRegistration, ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>().IsDevicePresenceMonitoringSupported();
+    return get_activation_factory<SecondaryAuthenticationFactorRegistration, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>().IsDevicePresenceMonitoringSupported();
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationResult> SecondaryAuthenticationFactorRegistration::RequestStartRegisteringDeviceAsync(hstring_view deviceId, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceCapabilities capabilities, hstring_view deviceFriendlyName, hstring_view deviceModelNumber, const Windows::Storage::Streams::IBuffer & deviceKey, const Windows::Storage::Streams::IBuffer & mutualAuthenticationKey)
+inline Windows::Foundation::IAsyncOperation<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationResult> SecondaryAuthenticationFactorRegistration::RequestStartRegisteringDeviceAsync(param::hstring const& deviceId, Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceCapabilities const& capabilities, param::hstring const& deviceFriendlyName, param::hstring const& deviceModelNumber, Windows::Storage::Streams::IBuffer const& deviceKey, Windows::Storage::Streams::IBuffer const& mutualAuthenticationKey)
 {
-    return get_activation_factory<SecondaryAuthenticationFactorRegistration, ISecondaryAuthenticationFactorRegistrationStatics>().RequestStartRegisteringDeviceAsync(deviceId, capabilities, deviceFriendlyName, deviceModelNumber, deviceKey, mutualAuthenticationKey);
+    return get_activation_factory<SecondaryAuthenticationFactorRegistration, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics>().RequestStartRegisteringDeviceAsync(deviceId, capabilities, deviceFriendlyName, deviceModelNumber, deviceKey, mutualAuthenticationKey);
 }
 
-inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorInfo>> SecondaryAuthenticationFactorRegistration::FindAllRegisteredDeviceInfoAsync(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceFindScope queryType)
+inline Windows::Foundation::IAsyncOperation<Windows::Foundation::Collections::IVectorView<Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorInfo>> SecondaryAuthenticationFactorRegistration::FindAllRegisteredDeviceInfoAsync(Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorDeviceFindScope const& queryType)
 {
-    return get_activation_factory<SecondaryAuthenticationFactorRegistration, ISecondaryAuthenticationFactorRegistrationStatics>().FindAllRegisteredDeviceInfoAsync(queryType);
+    return get_activation_factory<SecondaryAuthenticationFactorRegistration, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics>().FindAllRegisteredDeviceInfoAsync(queryType);
 }
 
-inline Windows::Foundation::IAsyncAction SecondaryAuthenticationFactorRegistration::UnregisterDeviceAsync(hstring_view deviceId)
+inline Windows::Foundation::IAsyncAction SecondaryAuthenticationFactorRegistration::UnregisterDeviceAsync(param::hstring const& deviceId)
 {
-    return get_activation_factory<SecondaryAuthenticationFactorRegistration, ISecondaryAuthenticationFactorRegistrationStatics>().UnregisterDeviceAsync(deviceId);
+    return get_activation_factory<SecondaryAuthenticationFactorRegistration, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics>().UnregisterDeviceAsync(deviceId);
 }
 
-inline Windows::Foundation::IAsyncAction SecondaryAuthenticationFactorRegistration::UpdateDeviceConfigurationDataAsync(hstring_view deviceId, const Windows::Storage::Streams::IBuffer & deviceConfigurationData)
+inline Windows::Foundation::IAsyncAction SecondaryAuthenticationFactorRegistration::UpdateDeviceConfigurationDataAsync(param::hstring const& deviceId, Windows::Storage::Streams::IBuffer const& deviceConfigurationData)
 {
-    return get_activation_factory<SecondaryAuthenticationFactorRegistration, ISecondaryAuthenticationFactorRegistrationStatics>().UpdateDeviceConfigurationDataAsync(deviceId, deviceConfigurationData);
+    return get_activation_factory<SecondaryAuthenticationFactorRegistration, Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics>().UpdateDeviceConfigurationDataAsync(deviceId, deviceConfigurationData);
 }
 
 }
 
+WINRT_EXPORT namespace std {
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationResult> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageInfo> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo2> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo2> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistration> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistration> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationResult> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthentication> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthentication> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationResult> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorInfo> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorInfo> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistration> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistration> {};
+
+template<> struct hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationResult> : 
+    winrt::impl::impl_hash_unknown<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationResult> {};
+
 }
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthentication & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationResult>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageInfo>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStageInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorAuthenticationStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorDevicePresenceMonitoringRegistrationStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo2>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorInfo2 & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistration>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistration & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationResult>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::ISecondaryAuthenticationFactorRegistrationStatics & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthentication>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthentication & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationResult>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageChangedEventArgs & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorAuthenticationStageInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorInfo>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorInfo & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistration>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistration & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
-
-template<>
-struct std::hash<winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationResult>
-{
-    size_t operator()(const winrt::Windows::Security::Authentication::Identity::Provider::SecondaryAuthenticationFactorRegistrationResult & value) const noexcept
-    {
-        return winrt::impl::hash_unknown(value);
-    }
-};
 
 WINRT_WARNING_POP
