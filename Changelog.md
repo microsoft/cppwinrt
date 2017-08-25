@@ -60,7 +60,8 @@ As we’ve improved the quality and maturity of the projection, we’ve also red
 
 While the C++/WinRT language projection is designed to provide no-compromise access to the modern Windows API, we recognize that there are instances where you need to interop with other libraries or tools that may not support C++/WinRT directly. The base library (winrt/base.h) provides a set of helper functions that assist in converting between C++/WinRT types and their equivalents in other language projections such as C++/CX or the Windows SDK headers produced by the MIDL compiler. Although we don’t directly support interop with other language projections, to avoid cross-dependencies, you can use the following helper functions to streamline the process as you migrate your code to C++/WinRT.
 
-See this document for all the details and examples:
+See the [Interoperability Helper Functions] (./Docs/Interoperability Helper Functions.md) document for all the details and examples.
+
 
 #### Simplified and more intuitive parameter binding for strings and collections
 Strings, arrays, and collections all present unique challenges to any language projection. C++/WinRT is unique in that it provides blazingly fast performance for all three, avoiding copies, and minimizing machine instructions at call sites. We also provide natural conversion support for std::wstring_view and most C++ standard library containers without introducing copies.
