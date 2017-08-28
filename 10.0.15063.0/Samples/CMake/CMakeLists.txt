@@ -1,0 +1,56 @@
+cmake_minimum_required(VERSION 3.6)
+project(IBuffer)
+
+set (APP_MANIFEST_NAME Package.appxmanifest)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
+
+set(EXE_NAME IBuffer)
+set(SHORT_NAME ${EXE_NAME})
+set(PACKAGE_GUID "594AD614-3523-48C4-9E3E-9C320DC6BFA7")
+
+configure_file(
+	cmake/Package.appxmanifest.in
+	${CMAKE_CURRENT_BINARY_DIR}/${APP_MANIFEST_NAME}
+	@ONLY)
+
+set(SOURCE_FILES 
+	IBuffer/App.cpp
+	IBuffer/pch.cpp
+)
+
+set(HEADER_FILES
+	IBuffer/pch.h
+)
+
+include_directories("${CMAKE_CURRENT_LIST_DIR}/../../")
+
+set(CONTENT_FILES ${CONTENT_FILES}
+	${CMAKE_CURRENT_BINARY_DIR}/${APP_MANIFEST_NAME}
+	)
+
+set(ASSET_FILES ${ASSET_FILES}
+	IBuffer/Assets/Logo.png
+	IBuffer/Assets/SmallLogo.png
+	IBuffer/Assets/SplashScreen.png
+	IBuffer/Assets/StoreLogo.png
+)
+
+set(RESOURCE_FILES
+	${CONTENT_FILES} ${DEBUG_CONTENT_FILES} ${RELEASE_CONTENT_FILES} ${ASSET_FILES}
+	IBuffer/IBuffer_TemporaryKey.pfx)
+
+set_property(SOURCE ${CONTENT_FILES} PROPERTY VS_DEPLOYMENT_CONTENT 1)
+set_property(SOURCE ${ASSET_FILES} PROPERTY VS_DEPLOYMENT_CONTENT 1)
+set_property(SOURCE ${ASSET_FILES} PROPERTY VS_DEPLOYMENT_LOCATION "Assets")
+set_property(SOURCE ${DEBUG_CONTENT_FILES} PROPERTY VS_DEPLOYMENT_CONTENT $<CONFIG:Debug>)
+set_property(SOURCE ${RELEASE_CONTENT_FILES} PROPERTY VS_DEPLOYMENT_CONTENT $<OR:$<CONFIG:Release>,$<CONFIG:RelWithDebInfo>,$<CONFIG:MinSizeRel>>)
+
+source_group("Source Files" FILES ${SOURCE_FILES})
+source_group("Header Files" FILES ${HEADER_FILES})
+source_group("Resource Files" FILES ${RESOURCE_FILES})
+
+add_executable(${EXE_NAME} WIN32 ${SOURCE_FILES} ${HEADER_FILES} ${RESOURCE_FILES})
+set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${EXE_NAME})
+
+SET(CPPWINRT_REQUIRED_COMPILER_FLAGS "/std:c++latest /await")
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CPPWINRT_REQUIRED_COMPILER_FLAGS}")
