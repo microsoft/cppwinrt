@@ -60,7 +60,7 @@ As we’ve improved the quality and maturity of the projection, we’ve also red
 
 While the C++/WinRT language projection is designed to provide no-compromise access to the modern Windows API, we recognize that there are instances where you need to interop with other libraries or tools that may not support C++/WinRT directly. The base library (winrt/base.h) provides a set of helper functions that assist in converting between C++/WinRT types and their equivalents in other language projections such as C++/CX or the Windows SDK headers produced by the MIDL compiler. Although we don’t directly support interop with other language projections, to avoid cross-dependencies, you can use the following helper functions to streamline the process as you migrate your code to C++/WinRT.
 
-See the [Interoperability Helper Functions] (./Docs/Interoperability Helper Functions.md) document for all the details and examples.
+See the [Interoperability Helper Functions](./Docs/Interoperability%20Helper%20Functions.md) document for all the details and examples.
 
 
 #### Simplified and more intuitive parameter binding for strings and collections
@@ -90,7 +90,7 @@ You may notice that objects created with winrt::implements now provide a default
 C++/WinRT provides the fastest factory caching of any language projection. However, due to the unfortunate relationship between COM statics, the CRT, and the OS loader it is entirely possible that those statics are not torn down correctly when C++/WinRT is used within a DLL. We now provide an option to disable caching in those cases. We are also investigating how we might finally solve the problem of COM statics once and for all.
 
 #### Experimental natvis support
-The experimental natvis support makes it easier to interrogate C++/WinRT types from within a debugger.
+The experimental natvis support makes it easier to interrogate C++/WinRT types from within a debugger.  See [Debug Visualization - Experimental](./Docs/Debug%20Visualization%20-%20Experimental.md) for details on how to use this support.
 
 ### Summary
 Those are just a few highlights for now. We have worked hard to build a world-class language projection for the systems programmer and the app developer alike. Our goal is to enable C++ developers to write beautiful high-performance apps and components with incredible ease.

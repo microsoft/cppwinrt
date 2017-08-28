@@ -50,9 +50,9 @@ pull requests. Please read this entire page carefully.
 
 #### From an engineering standpoint, please make sure that you can build and test the code. Familiarize yourself with our project guidelines and coding conventions. 
 We recommend that you read these great posts about open source: 
-* [Open Source Contribution Etiquette] (http://tirania.org/blog/archive/2010/Dec-31.html) by Miguel de Icaza 
-* [Don't "Push" Your Pull Requests] (https://www.igvita.com/2011/12/19/dont-push-your-pull-requests) by Ilya Grigorik 
-* [A Successful Git Branching Model] (http://nvie.com/posts/a-successful-git-branching-model/) by Vincent Driessen 
+* [Open Source Contribution Etiquette](http://tirania.org/blog/archive/2010/Dec-31.html) by Miguel de Icaza 
+* [Don't "Push" Your Pull Requests](https://www.igvita.com/2011/12/19/dont-push-your-pull-requests) by Ilya Grigorik 
+* [A Successful Git Branching Model](http://nvie.com/posts/a-successful-git-branching-model/) by Vincent Driessen 
 
 Before you start working on a feature or substantial code contribution please discuss it with the team and ensure it is an appropriate addition to the core product. 
 
@@ -139,4 +139,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 Copyright (c) Microsoft Corporation. All rights reserved.
 
-Licensed under the [MIT] (LICENSE) License.
+Licensed under the [MIT](LICENSE) License.
