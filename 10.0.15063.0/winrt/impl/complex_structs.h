@@ -1,6 +1,0 @@
-﻿#include "winrt/impl/Windows.Services.Store.0.h"
-#include "winrt/impl/Windows.Storage.AccessCache.0.h"
-#include "winrt/impl/Windows.Storage.Search.0.h"
-#include "winrt/impl/Windows.UI.Xaml.Interop.0.h"
-#include "winrt/impl/Windows.UI.Xaml.Markup.0.h"
-#include "winrt/impl/Windows.Web.Http.0.h"

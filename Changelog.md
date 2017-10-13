@@ -1,6 +1,10 @@
-# C++/WinRT Change Log
+﻿# C++/WinRT Change Log
 
-## August 2017 release for Creator's Update SDK and Visual Studio 2017 v15.3
+## October 2017 release for Fall Creators Update SDK (16299) and Visual Studio 2017 v15.3
+
+This release provides a projection refresh for the [Fall Creators Update SDK](https://developer.microsoft.com/en-us/windows/downloads/windows-10-sdk), which is included with Visual Studio 2017 v15.4.
+
+## August 2017 release for Spring Creators Update SDK (15063) and Visual Studio 2017 v15.3
 
 This release removes the Anniversary Update (10.0.14393.0) headers and now requires Visual Studio 2017 v15.3 or later.  If you require the older headers or support for Visual Studio 2015, you can sync to a previous commit such as the
 [February 2017 Release](https://github.com/Microsoft/cppwinrt/tree/february_2017_release).
@@ -38,7 +42,7 @@ using namespace Windows::Storage::Pickers;
 FileOpenPicker::ResumePickSingleFileAsync();
 error C4996: 'winrt::Windows::Storage::Pickers::FileOpenPicker::ResumePickSingleFileAsync': Instead, use PickSingleFileAsync
 ```
-Arguably, this should be a warning, but the Visual C++ compiler currently treats it as an error.
+Note that with the VC /sdl switch, this will generate an error C4996 as above.  To treat this as a warning that can be disabled, turn off the /sdl switch.
 
 #### Improved support for WinRT error origination, propagation, chaining, and extensibility
 This is largely an improvement to enable the Windows Runtime to produce more coherent crash dumps for postmortem debugging, but a few small changes inside the C++/WinRT exception type – winrt::hresult_error – have also been made to provide improved error messages during live debugging. The debugger team has also done work to make it easier to debug errors that occur in a brokered process.
@@ -96,7 +100,7 @@ The experimental natvis support makes it easier to interrogate C++/WinRT types f
 Those are just a few highlights for now. We have worked hard to build a world-class language projection for the systems programmer and the app developer alike. Our goal is to enable C++ developers to write beautiful high-performance apps and components with incredible ease.
 
 
-## February 2017 release for Windows Anniversary SDK 
+## February 2017 release for Windows Anniversary SDK (14393)
 
 ### Breaking Changes
 
