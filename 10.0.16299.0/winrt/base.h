@@ -3976,7 +3976,7 @@ WINRT_EXPORT namespace winrt
 
         explicit operator bool() const noexcept
         {
-            return m_object != nullptr;
+            return static_cast<bool>(m_object);
         }
 
     private:
