@@ -8,9 +8,12 @@ This release fully supports consuming Windows Runtime APIs. While you can use th
 ## Timeline
 Following is an overview roadmap for upcoming releases:
 
-* The C++/WinRT headers *and the cppwinrt.exe compiler itself* ... &lt;waiting for the cheers to die down&gt; ... will ship in the Windows SDK. Expect to first see them in a Insider Preview build of the Windows SDK in late summer/early fall.
-* We are updating the XAML compiler to produce C++/WinRT code behind files.
-* We are adding C++/WinRT project support to Visual Studio 2017.
+* The C++/WinRT headers *and the cppwinrt.exe compiler itself* ... &lt;waiting for the cheers to die down&gt; ... are currently included in Insider releases of the RS4 Windows SDK. Note that a Windows 10 Insider SDK release can only be installed on an Windows 10 Insider Preview OS.
+* The latest Windows Insider Previews (OS and Windows SDK) are here: https://www.microsoft.com/en-us/software-download/windowsinsiderpreviewSDK
+* We are updating the XAML compiler to produce C++/WinRT code behind files. We currently plan to have a preview, aka experimental, release of the C++/WinRT + XAML support available around the time of the //Build Conference. Plans are, of course, subject to change.
+* We are adding C++/WinRT project support to Visual Studio 2017 via a Visual Studio 2017 Extension (VSIX). We currently plan to publish that VSIX in the Visual Studio Extension Markplace around the time of the //Build conference. Plans are, of course, subject to change.
+
+## C++ standards
 * C++/WinRT will stay current with C++ standards and require a modern and up-to-date compiler, generally the latest release of Visual Studio.  Users requiring support for older compilers will need to sync to an earlier commit or tag. 
 
 ## Documentation
