@@ -1,3 +1,6 @@
+# C++/WinRT is now delivered in the Windows SDK. This content is archived for historical reference.
+For the latest information on C++/WinRT, go to http://aka.ms/cppwinrt
+
 # C++/WinRT
 C++/WinRT is a standard C++ language projection for the Windows Runtime implemented solely in header files. It allows you to both author and consume Windows Runtime APIs using any standards-compliant C++ compiler. C++/WinRT is designed to provide C++ developers with first-class access to the modern Windows API.
 
