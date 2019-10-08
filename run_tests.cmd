@@ -1,6 +1,6 @@
-..\..\..\_build\Windows\x64\Debug\tool\cppwinrt\test.exe
-..\..\..\_build\Windows\x64\Debug\tool\cppwinrt\test_fast.exe
-..\..\..\_build\Windows\x64\Debug\tool\cppwinrt\test_slow.exe
-..\..\..\_build\Windows\x64\Debug\tool\cppwinrt\test_old.exe
-..\..\..\_build\Windows\x64\Debug\tool\cppwinrt\test_module_lock_custom.exe
-..\..\..\_build\Windows\x64\Debug\tool\cppwinrt\test_module_lock_none.exe
+build\x64\Debug\test.exe
+build\x64\Debug\test_fast.exe
+build\x64\Debug\test_slow.exe
+build\x64\Debug\test_old.exe
+build\x64\Debug\test_module_lock_custom.exe
+build\x64\Debug\test_module_lock_none.exe
