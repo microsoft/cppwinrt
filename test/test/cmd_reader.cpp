@@ -2,7 +2,7 @@
 #include "cmd_reader.h"
 #include <fstream>
 
-using namespace xlang::cmd;
+using namespace cppwinrt;
 
 class response_file
 {
