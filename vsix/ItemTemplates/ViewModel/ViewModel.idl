@@ -1,0 +1,10 @@
+namespace $rootnamespace$
+{
+    [bindable]
+    [default_interface]
+    runtimeclass $safeitemname$ 
+    {
+        $safeitemname$();
+        Int32 MyProperty;
+    }
+}

@@ -1,0 +1,87 @@
+import "Windows.Foundation.idl";
+
+namespace Composable
+{
+    runtimeclass Base;
+    runtimeclass Derived;
+
+    [version(1.0), uuid(1B0CDE64-5FAF-4316-AF37-48C790329D32), exclusiveto(Base)]
+    interface IBase : IInspectable
+    {
+        HRESULT VirtualMethod([out, retval] HSTRING* value);
+        HRESULT CallOverridableMethod([out, retval] HSTRING* value);
+        HRESULT CallOverridableVirtualMethod([out, retval] HSTRING* value);
+
+        [propget] HRESULT Name([out, retval] HSTRING* value);
+    };
+
+    [version(1.0), uuid(37AF44A4-8FC6-4BD8-A12F-D63ED119EF45), exclusiveto(Base)]
+    interface IBaseFactory : IInspectable
+    {
+        HRESULT CreateInstance([in] IInspectable* outer, [out] IInspectable** inner, [out][retval] Composable.Base** instance);
+        HRESULT CreateInstanceWithName([in] HSTRING name, [in] IInspectable* outer, [out] IInspectable** inner, [out][retval] Composable.Base** instance);
+    };
+
+    [version(1.0), uuid(A4DB9277-E6B7-4936-BF41-CDF042E278E2), exclusiveto(Base)]
+    interface IBaseOverrides : IInspectable
+    {
+        HRESULT OverridableMethod([out, retval] HSTRING* value);
+        HRESULT OverridableVirtualMethod([out, retval] HSTRING* value);
+    };
+    
+    [version(1.0), uuid(5f3996e1-3cf7-4716-9a3d-11eb5d32caff), exclusiveto(Derived)]
+    interface IDerived : IInspectable
+    {
+    };
+
+    [version(1.0), uuid(56dc2c28-edd1-4fa3-91e5-f63c3db47070), exclusiveto(Derived)]
+    interface IDerivedFactory : IInspectable
+    {
+        HRESULT CreateInstance([in] IInspectable* outer, [out] IInspectable** inner, [out][retval] Composable.Derived** instance);
+        HRESULT CreateInstanceWithName([in] HSTRING name, [in] IInspectable* outer, [out] IInspectable** inner, [out][retval] Composable.Derived** instance);
+    };
+
+    [composable(Composable.IBaseFactory, public, 1.0)]
+    [version(1.0)]
+    [threading(both)]
+    [marshaling_behavior(agile)]
+    runtimeclass Base
+    {
+        [default] interface IBase;
+        [overridable] interface Composable.IBaseOverrides;
+    };
+
+    [composable(Composable.IDerivedFactory, public, 1.0)]
+    [version(1.0)]
+    [threading(both)]
+    [marshaling_behavior(agile)]
+    runtimeclass Derived : Base
+    {
+        [default] interface IDerived;
+    };
+
+    typedef enum TestStructCodeGenType TestStructCodeGenType;
+    typedef struct TestStructCodeGen TestStructCodeGen;
+
+    [version(1.0)]
+    enum TestStructCodeGenType
+    {
+        Auto = 0,
+        Pixel = 1,
+        Star = 2
+    };
+
+    [version(1.0)]
+    struct TestStructCodeGen
+    {
+        DOUBLE Value;
+        TestStructCodeGenType GridUnitType;
+    };
+
+    [version(1.0), uuid(9849e7b1-e906-4d32-a696-5df471b1727d)]
+    interface ITestStructCodeGen : IInspectable
+    {
+        HRESULT Test1([in] int a, [in] TestStructCodeGen b, [out,retval] DOUBLE* result);
+        HRESULT Test2([in] TestStructCodeGen b, [in] int a, [out, retval] DOUBLE* result);
+    };
+}

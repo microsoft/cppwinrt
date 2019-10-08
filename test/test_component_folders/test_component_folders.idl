@@ -1,0 +1,21 @@
+import "Windows.Foundation.idl";
+
+namespace test_component_folders
+{
+    runtimeclass Class
+    {
+        Class();
+
+        void Method();
+    }
+
+    namespace Nested
+    {
+        runtimeclass NestedClass
+        {
+            NestedClass();
+
+            void Method();
+        }
+    }
+}

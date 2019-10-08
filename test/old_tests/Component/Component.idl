@@ -1,0 +1,310 @@
+﻿import "Windows.Foundation.idl";
+import "Composable.idl";
+
+namespace Component
+{
+    //
+    // The Parameters class covers the interop functions (e.g. get_abi/put_abi/etc)
+    // and the way they are used to convert to and from the ABI in support of 
+    // consumption and production of types.
+    //
+
+    runtimeclass Parameters;
+
+    [version(1.0), uuid(461c8806-8bc2-4622-8eac-b547c39f867e), exclusiveto(Parameters)]
+    interface IParameters : IInspectable
+    {
+        HRESULT SetInt32([in] INT32 value);
+        HRESULT GetInt32([out, retval] INT32* value);
+        HRESULT OutInt32([out] INT32* value);
+
+        HRESULT SetString([in] HSTRING value);
+        HRESULT GetString([out,retval] HSTRING* value);
+        HRESULT OutString([out] HSTRING* value);
+
+        HRESULT SetObject([in] IInspectable* value);
+        HRESULT GetObject([out, retval] IInspectable** value);
+        HRESULT OutObject([out] IInspectable** value);
+
+        HRESULT SetInt32Array([in] UINT32 count, [in][size_is(count)] INT32* value);
+        HRESULT GetInt32Array([out] UINT32* count, [out,retval][size_is(, *count)] INT32** value);
+        HRESULT OutInt32Array([out] UINT32* count, [out][size_is(, *count)] INT32** value);
+        HRESULT CopyInt32Array([in] UINT32 count, [out][size_is(count)] INT32* value);
+
+        HRESULT SetStringArray([in] UINT32 count, [in][size_is(count)] HSTRING* value);
+        HRESULT GetStringArray([out] UINT32* count, [out, retval][size_is(, *count)] HSTRING** value);
+        HRESULT OutStringArray([out] UINT32* count, [out][size_is(, *count)] HSTRING** value);
+        HRESULT CopyStringArray([in] UINT32 count, [out][size_is(count)] HSTRING* value);
+
+        HRESULT SetObjectArray([in] UINT32 count, [in][size_is(count)] IInspectable** value);
+        HRESULT GetObjectArray([out] UINT32* count, [out, retval][size_is(, *count)] IInspectable*** value);
+        HRESULT OutObjectArray([out] UINT32* count, [out][size_is(, *count)] IInspectable*** value);
+        HRESULT CopyObjectArray([in] UINT32 count, [out][size_is(count)] IInspectable** value);
+    };
+
+    [version(1.0), activatable(1.0)]
+    runtimeclass Parameters
+    {
+        // Note that the [default] attribute is intentionally omitted from the following line to reproduce an edge 
+        // case in the internal Windows metadata where a runtime class has a single interface and it is assumed to
+        // be the default interface.
+        [default] interface IParameters;
+    };
+
+    //
+    // The Structures class covers various issues with supporting WinRT structs in the projection.
+    //
+
+    runtimeclass Structures;
+    typedef struct SimpleStructure SimpleStructure;
+    typedef struct ComplexStructure ComplexStructure;
+    typedef struct WrapStructure WrapStructure;
+
+    [version(1.0)]
+    struct SimpleStructure
+    {
+        UINT32 Value;
+        HRESULT Value2;
+        EventRegistrationToken Value3;
+        GUID Value4;
+    };
+
+    [version(1.0)]
+    struct ComplexStructure
+    {
+        HSTRING String;
+        Windows.Foundation.IReference<UINT32>* Object;
+        Windows.Foundation.IReference<EventRegistrationToken>* Object2;
+        Windows.Foundation.IReference<GUID>* Object3;
+
+        // Ensures that the SimpleStructure structure is defined first in C++. This covers an edge case currently
+        // only present in the internal Windows metadata.
+        SimpleStructure Simple;
+    };
+
+    [version(1.0)]
+    struct WrapStructure
+    {
+        ComplexStructure Inner;
+    };
+
+    [version(1.0), uuid(f591f768-96d6-48f0-9d20-0b70bc0e41f2), exclusiveto(Structures)]
+    interface IStructures : IInspectable
+    {
+        HRESULT Set([in] WrapStructure value);
+        HRESULT Get([out, retval] WrapStructure* value);
+        HRESULT Out([out] WrapStructure* value);
+        HRESULT Ref([in] WrapStructure const* value);
+
+        HRESULT SetArray([in] UINT32 count, [in][size_is(count)] WrapStructure* value);
+        HRESULT GetArray([out] UINT32* count, [out, retval][size_is(, *count)] WrapStructure** value);
+        HRESULT OutArray([out] UINT32* count, [out][size_is(, *count)] WrapStructure** value);
+        HRESULT CopyArray([in] UINT32 count, [out][size_is(count)] WrapStructure* value);
+    };
+
+    [version(1.0), activatable(1.0)]
+    runtimeclass Structures
+    {
+        [default] interface IStructures;
+    };
+
+    //
+    // The Events class covers various issues with supporting WinRT events and delegates in the projection.
+    //
+
+    runtimeclass Events;
+
+    [version(1.0), uuid(da38922c-3d3a-404f-8477-de9c104c4f34)]
+    delegate HRESULT CustomDelegate([in] int value);
+
+    [version(1.0), uuid(fe92ce62-9f80-48f0-8264-86735adb9f8b)]
+    delegate HRESULT ReturnDelegate([out, retval] HSTRING* value);
+
+    [version(1.0), uuid(e85655d9-9972-4aa5-92ad-83ecb01017dd)]
+    delegate HRESULT TwoArgDelegate([in] int sender, [in] int args);
+
+    [version(1.0), uuid(7034aeb1-302a-40b5-a616-04941dd6ee83)]
+    delegate HRESULT TwoArgDelegateReturn([in] int sender, [in] int args, [out,retval] BOOL* result);
+
+    [version(1.0), uuid(3669e5e1-9fc9-4c99-891a-aac6256cc4c9), exclusiveto(Events)]
+    interface IEventsStatics : IInspectable
+    {
+        [eventadd] HRESULT StaticEvent([in] Windows.Foundation.EventHandler<int>* handler, [out][retval] EventRegistrationToken* cookie);
+        [eventremove] HRESULT StaticEvent([in] EventRegistrationToken cookie);
+        HRESULT RaiseStaticEvent([in] int value);
+    };
+
+    [version(1.0), uuid(6ac35d2c-b2cf-4c36-995c-a9c0764636c9), exclusiveto(Events)]
+    interface IEvents : IInspectable
+    {
+        [eventadd] HRESULT SimpleEvent([in] Windows.Foundation.EventHandler<int>* handler, [out][retval] EventRegistrationToken* cookie);
+        [eventremove] HRESULT SimpleEvent([in] EventRegistrationToken cookie);
+        HRESULT RaiseSimpleEvent([in] int value);
+
+        [eventadd] HRESULT TypedEvent([in] Windows.Foundation.TypedEventHandler<Events*, int>* handler, [out][retval] EventRegistrationToken* cookie);
+        [eventremove] HRESULT TypedEvent([in] EventRegistrationToken cookie);
+        HRESULT RaiseTypedEvent([in] int value);
+
+        [eventadd] HRESULT CustomEvent([in] CustomDelegate* handler, [out][retval] EventRegistrationToken* cookie);
+        [eventremove] HRESULT CustomEvent([in] EventRegistrationToken cookie);
+        HRESULT RaiseCustomEvent([in] int value);
+    };
+
+    [version(1.0), activatable(1.0), static(IEventsStatics, 1.0)]
+    runtimeclass Events
+    {
+        [default] interface IEvents;
+    };
+
+    [version(1.0), uuid(c242f075-4be5-4000-b77e-5634bc87547f)]
+    interface IStatic : IInspectable
+    {
+        [eventadd] HRESULT StaticEvent([in] Windows.Foundation.EventHandler<int>* handler, [out][retval] EventRegistrationToken* cookie);
+        [eventremove] HRESULT StaticEvent([in] EventRegistrationToken cookie);
+        HRESULT RaiseStaticEvent([in] int value);
+    };
+
+    [version(1.0), static(IStatic, 1.0)]
+    runtimeclass Static
+    {
+    }
+
+    [version(1.0), static(IStatic, 1.0)]
+    runtimeclass NonCachedStatic
+    {
+    }
+
+    //
+    // The Errors class allows us to test some error propagation scenarios.
+    //
+
+    runtimeclass Errors;
+
+    [version(1.0), uuid(04fa8f8b-70c0-4b7c-998d-8c44d9614786), exclusiveto(Errors)]
+    interface IErrors : IInspectable
+    {
+        HRESULT Fail([in] HSTRING message);
+        HRESULT Propagate();
+        HRESULT std_bad_alloc();
+        HRESULT std_out_of_range();
+        HRESULT std_invalid_argument();
+        HRESULT std_exception();
+    };
+
+    [version(1.0), activatable(1.0)]
+    runtimeclass Errors
+    {
+        [default] interface IErrors;
+    };
+
+    //
+    // The FastInput class covers the various optimizations to speed up input parameters
+    // and silently handle C++ standard library input.
+    //
+
+    runtimeclass FastInput;
+
+    [version(1.0), uuid(a2a8d27d-9836-4f21-9a84-066ddb90652d), exclusiveto(FastInput)]
+    interface IFastInput : IInspectable
+    {
+        HRESULT String([in] HSTRING _in, [out, retval] HSTRING* _out);
+        HRESULT Array([in] UINT32 count, [in][size_is(count)] HSTRING* _in, [out, retval] HSTRING* _out);
+
+        HRESULT Iterable([in] Windows.Foundation.Collections.IIterable<HSTRING>* _in, [out, retval] HSTRING* _out);
+        HRESULT VectorView([in] Windows.Foundation.Collections.IVectorView<HSTRING>* _in, [out, retval] HSTRING* _out);
+        HRESULT Vector([in] Windows.Foundation.Collections.IVector<HSTRING>* _in, [out, retval] HSTRING* _out);
+
+        HRESULT IterablePair([in] Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<HSTRING, HSTRING>*>* _in, [out, retval] HSTRING* _out);
+        HRESULT MapView([in] Windows.Foundation.Collections.IMapView<HSTRING, HSTRING>* _in, [out, retval] HSTRING* _out);
+        HRESULT Map([in] Windows.Foundation.Collections.IMap<HSTRING, HSTRING>* _in, [out, retval] HSTRING* _out);
+
+        HRESULT IterableAsync([in] Windows.Foundation.Collections.IIterable<HSTRING>* _in, [out, retval] Windows.Foundation.IAsyncOperation<HSTRING>** _out);
+        HRESULT VectorViewAsync([in] Windows.Foundation.Collections.IVectorView<HSTRING>* _in, [out, retval] Windows.Foundation.IAsyncOperation<HSTRING>** _out);
+        HRESULT IterablePairAsync([in] Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<HSTRING, HSTRING>*>* _in, [out, retval] Windows.Foundation.IAsyncOperation<HSTRING>** _out);
+        HRESULT MapViewAsync([in] Windows.Foundation.Collections.IMapView<HSTRING, HSTRING>* _in, [out, retval] Windows.Foundation.IAsyncOperation<HSTRING>** _out);
+
+        HRESULT UseIterable();
+        HRESULT UseIterablePair();
+    };
+
+    [version(1.0), activatable(1.0)]
+    runtimeclass FastInput
+    {
+        [default] interface IFastInput;
+    };
+
+    runtimeclass FastInputVector;
+
+    [version(1.0), uuid(bb649b98-7582-4970-8adc-e2a13aca24aa), exclusiveto(FastInputVector)]
+    interface IFastInputVectorFactory : IInspectable
+    {
+        HRESULT Create([in] Windows.Foundation.Collections.IVectorView<HSTRING>* _in, [out, retval] FastInputVector** _out);
+    };
+
+    [version(1.0), activatable(IFastInputVectorFactory, 1.0)]
+    runtimeclass FastInputVector
+    {
+        // Don't confuse this for a high-performance vector. This is for testing fast-input binding support.
+        // The default interface is intentionally not one of the collection intefaces to force them to be convertible for testing.
+        [default] interface Windows.Foundation.IClosable;
+        interface Windows.Foundation.Collections.IVector<HSTRING>;
+        interface Windows.Foundation.Collections.IVectorView<HSTRING>;
+    };
+
+    runtimeclass FastInputMap;
+
+    [version(1.0), uuid(26b63306-8ddc-4ddb-8612-a4ef8fbc3abd), exclusiveto(FastInputMap)]
+    interface IFastInputMapFactory : IInspectable
+    {
+        HRESULT Create([in] Windows.Foundation.Collections.IMapView<HSTRING, HSTRING>* _in, [out, retval] FastInputMap** _out);
+    };
+
+    [version(1.0), activatable(IFastInputMapFactory, 1.0)]
+    runtimeclass FastInputMap
+    {
+        // Don't confuse this for a high-performance map. This is for testing fast-input binding support.
+        // The default interface is intentionally not one of the collection intefaces to force them to be convertible for testing.
+        [default] interface Windows.Foundation.IClosable;
+        interface Windows.Foundation.Collections.IMap<HSTRING, HSTRING>;
+        interface Windows.Foundation.Collections.IMapView<HSTRING, HSTRING>;
+    };
+
+    //
+    // Boxing support for enums and their underlying types.
+    //
+
+    [version(1.0)]
+    enum SignedEnum
+    {
+        Negative = -5,
+        Positive = 5
+    };
+
+    [version(1.0), flags]
+    enum UnsignedEnum
+    {
+        First = 0x01,
+        Second = 0x02
+    };
+
+    //
+    // Cross-component composable tests.
+    //
+
+    runtimeclass CustomBase;
+    runtimeclass CustomDerived;
+
+    [version(1.0), uuid(c0f867fc-c8a8-49ff-b327-81dc306695ff), exclusiveto(CustomBase)]
+    interface ICustomBase : IInspectable
+    {
+        HRESULT CustomVirtualMethod([out, retval] HSTRING* value);
+    };
+
+    [version(1.0), activatable(1.0)]
+    [threading(both)]
+    [marshaling_behavior(agile)]
+    runtimeclass CustomBase : Composable.Base
+    {
+        [default] interface ICustomBase;
+    };
+}

@@ -1,0 +1,172 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="$(OutDir)strings.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="code_writers.h" />
+    <ClInclude Include="component_writers.h" />
+    <ClInclude Include="file_writers.h" />
+    <ClInclude Include="helpers.h" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="settings.h" />
+    <ClInclude Include="type_writers.h" />
+    <ClInclude Include="..\strings\base_abi.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_activation.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_agile_ref.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_array.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_chrono.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_collections.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_collections_base.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_collections_input_iterable.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_collections_input_map.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_collections_input_map_view.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_collections_input_vector.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_collections_input_vector_view.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_collections_map.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_collections_vector.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_com_ptr.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_composable.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_coroutine_foundation.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_coroutine_system.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_coroutine_threadpool.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_coroutine_ui_core.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_delegate.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_dependencies.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_error.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_events.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_extern.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_foundation.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_handle.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_identity.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_implements.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_lock.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_macros.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_marshaler.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_meta.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_natvis.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_reference_produce.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_security.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_std_hash.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_string.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_string_input.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_string_operators.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_types.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_version.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_weak_ref.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_windows.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_xaml_typename.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_fast_forward.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_coroutine.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_deferral.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="$(OutDir)version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="strings">
+      <UniqueIdentifier>{2eff9026-81b1-4243-9983-b055bd61534c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+</Project>

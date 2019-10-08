@@ -1,0 +1,298 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{559A7CF4-DC5F-4D62-BA6B-0C2B025593F8}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Component</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\cppwinrt.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
+    <ExecutablePath>..\..;$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
+    <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
+    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
+    <ExecutablePath>..\..;$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
+    <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
+    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
+    <ExecutablePath>..\..;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
+    <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
+    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <GenerateManifest>false</GenerateManifest>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
+    <ExecutablePath>..\..;$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
+    <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
+    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <CustomBuildStep>
+      <Command>$(OutputPath)cppwinrt.exe -in $(OutputPath)Component.winmd -comp $(ProjectDir) -out "$(ProjectDir)Generated Files" -ref sdk $(OutputPath)Composable.winmd -verbose</Command>
+      <Message>C++/WinRT compiler</Message>
+      <Outputs>Generated Files\module.g.cpp</Outputs>
+      <Inputs>$(OutputPath)Component.winmd</Inputs>
+    </CustomBuildStep>
+    <ClCompile />
+    <ClCompile />
+    <Midl />
+    <Midl />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\Composable\Generated Files</AdditionalIncludeDirectories>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <ModuleDefinitionFile>module.def</ModuleDefinitionFile>
+      <GenerateMapFile>true</GenerateMapFile>
+    </Link>
+    <Midl>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <PrependWithABINamepsace>
+      </PrependWithABINamepsace>
+      <TypeLibraryName />
+      <AdditionalIncludeDirectories>..\Composable</AdditionalIncludeDirectories>
+      <HeaderFileName>
+      </HeaderFileName>
+      <MetadataFileName>
+      </MetadataFileName>
+      <AdditionalMetadataDirectories>
+      </AdditionalMetadataDirectories>
+      <EnableWindowsRuntime>
+      </EnableWindowsRuntime>
+      <MinimumTargetSystem />
+    </Midl>
+    <CustomBuildStep />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\Composable\Generated Files</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <ModuleDefinitionFile>module.def</ModuleDefinitionFile>
+      <GenerateMapFile>true</GenerateMapFile>
+    </Link>
+    <Midl>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <PrependWithABINamepsace>
+      </PrependWithABINamepsace>
+      <TypeLibraryName />
+      <AdditionalIncludeDirectories>..\Composable</AdditionalIncludeDirectories>
+      <HeaderFileName>
+      </HeaderFileName>
+      <MetadataFileName>
+      </MetadataFileName>
+      <AdditionalMetadataDirectories>
+      </AdditionalMetadataDirectories>
+      <EnableWindowsRuntime>
+      </EnableWindowsRuntime>
+      <MinimumTargetSystem />
+    </Midl>
+    <CustomBuildStep />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\Composable\Generated Files</AdditionalIncludeDirectories>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <ModuleDefinitionFile>module.def</ModuleDefinitionFile>
+      <GenerateMapFile>true</GenerateMapFile>
+    </Link>
+    <Midl>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <PrependWithABINamepsace>
+      </PrependWithABINamepsace>
+      <TypeLibraryName />
+      <AdditionalIncludeDirectories>..\Composable</AdditionalIncludeDirectories>
+      <HeaderFileName>
+      </HeaderFileName>
+      <MetadataFileName>
+      </MetadataFileName>
+      <AdditionalMetadataDirectories>
+      </AdditionalMetadataDirectories>
+      <EnableWindowsRuntime>
+      </EnableWindowsRuntime>
+      <MinimumTargetSystem />
+    </Midl>
+    <CustomBuildStep />
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\Composable\Generated Files</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
+      <ModuleDefinitionFile>module.def</ModuleDefinitionFile>
+      <GenerateMapFile>true</GenerateMapFile>
+    </Link>
+    <Midl>
+      <AdditionalOptions>
+      </AdditionalOptions>
+      <PrependWithABINamepsace>
+      </PrependWithABINamepsace>
+      <TypeLibraryName />
+      <AdditionalIncludeDirectories>..\Composable</AdditionalIncludeDirectories>
+      <HeaderFileName>
+      </HeaderFileName>
+      <MetadataFileName>
+      </MetadataFileName>
+      <AdditionalMetadataDirectories>
+      </AdditionalMetadataDirectories>
+      <EnableWindowsRuntime>
+      </EnableWindowsRuntime>
+      <MinimumTargetSystem />
+    </Midl>
+    <CustomBuildStep />
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="CustomBase.h" />
+    <ClInclude Include="pch.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CustomBase.cpp" />
+    <ClCompile Include="Errors.cpp" />
+    <ClCompile Include="Events.cpp" />
+    <ClCompile Include="FastInput.cpp" />
+    <ClCompile Include="FastInputMap.cpp" />
+    <ClCompile Include="FastInputVector.cpp" />
+    <ClCompile Include="Generated Files\module.g.cpp" />
+    <ClCompile Include="NonCachedStatic.cpp" />
+    <ClCompile Include="Parameters.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Static.cpp" />
+    <ClCompile Include="Structures.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="module.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <Midl Include="Component.idl">
+      <AdditionalMetadataDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SystemRoot)\System32\WinMetadata</AdditionalMetadataDirectories>
+      <AdditionalMetadataDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SystemRoot)\System32\WinMetadata</AdditionalMetadataDirectories>
+      <AdditionalMetadataDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(SystemRoot)\System32\WinMetadata</AdditionalMetadataDirectories>
+      <AdditionalMetadataDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(SystemRoot)\System32\WinMetadata</AdditionalMetadataDirectories>
+      <MetadataFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutputPath)$(ProjectName).winmd</MetadataFileName>
+      <MetadataFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutputPath)$(ProjectName).winmd</MetadataFileName>
+      <MetadataFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutputPath)$(ProjectName).winmd</MetadataFileName>
+      <MetadataFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutputPath)$(ProjectName).winmd</MetadataFileName>
+      <EnableWindowsRuntime Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</EnableWindowsRuntime>
+      <EnableWindowsRuntime Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</EnableWindowsRuntime>
+      <EnableWindowsRuntime Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</EnableWindowsRuntime>
+      <EnableWindowsRuntime Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</EnableWindowsRuntime>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(OutputPath)$(ProjectName)_h.h</HeaderFileName>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(OutputPath)$(ProjectName)_h.h</HeaderFileName>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(OutputPath)$(ProjectName)_h.h</HeaderFileName>
+      <HeaderFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(OutputPath)$(ProjectName)_h.h</HeaderFileName>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\Composable</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\Composable</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\Composable</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\Composable</AdditionalIncludeDirectories>
+      <PrependWithABINamepsace Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</PrependWithABINamepsace>
+      <PrependWithABINamepsace Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</PrependWithABINamepsace>
+      <PrependWithABINamepsace Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</PrependWithABINamepsace>
+      <PrependWithABINamepsace Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</PrependWithABINamepsace>
+    </Midl>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

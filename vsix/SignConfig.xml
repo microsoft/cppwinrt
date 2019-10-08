@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<SignConfigXML> 
+  <job configuration="Release" dest="__OUTPATHROOT__" jobname="CppWinRT VSIX" approvers=""> 
+     <file src="__INPATHROOT__\Microsoft.Windows.CppWinRT.vsix" signType="100040160" dest="__OUTPATHROOT__\Microsoft.Windows.CppWinRT.vsix" /> 
+  </job> 
+</SignConfigXML> 

@@ -1,0 +1,10 @@
+namespace TestRuntimeComponentEmpty
+{
+    [default_interface]
+    runtimeclass TestStaticLibrary5Class 
+    {
+        TestStaticLibrary5Class();
+
+        Windows.UI.Xaml.Core.Direct.XamlDirect Test();
+    }
+}

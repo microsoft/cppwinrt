@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project TreatAsLocalProperty="OutDir;IntDir" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!-- This file is automatically imported by MSBuild for each project in under this folder, 
+         see https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build -->
+
+    <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.targets','$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets','$(MSBuildThisFileDirectory)../'))" />
+
+    <Import Project="..\..\..\..\package\cppwinrt\nuget\Microsoft.Windows.CppWinRT.targets" />
+
+</Project>

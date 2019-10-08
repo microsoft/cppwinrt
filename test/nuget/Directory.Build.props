@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project TreatAsLocalProperty="OutDir;IntDir" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <!-- This file is automatically imported by MSBuild for each project in under this folder, 
+         see https://docs.microsoft.com/en-us/visualstudio/msbuild/customize-your-build -->
+
+    <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.props','$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props','$(MSBuildThisFileDirectory)../'))" />
+
+    <PropertyGroup>        
+        <!-- Consistent output directory for AppContainer and non-AppContainer projects -->
+        <!-- Build overrides the roots. -->
+        <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
+        <OutDirWasSpecified>true</OutDirWasSpecified>
+        <OutDirRoot Condition="'$(OutDirRoot)' == ''" >$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDirRoot>
+        <OutDir>$(OutDirRoot)$(MSBuildProjectName)\</OutDir>
+        <IntDirRoot Condition="'$(IntDirRoot)' == ''" >$(SolutionDir)obj\$(Platform)\$(Configuration)\</IntDirRoot>
+        <IntDir>$(IntDirRoot)$(MSBuildProjectName)\</IntDir>
+        <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
+        <CppWinRTVerbosity>high</CppWinRTVerbosity>
+        <CppWinRTPlatform>$(Platform)</CppWinRTPlatform>
+        <CppWinRTPlatform Condition="'$(Platform)'=='Win32' or '$(Platform)'=='ARM' or '$(Platform)'=='ARM64'">x86</CppWinRTPlatform>
+        <CppWinRTPath>$(SolutionDir)..\..\..\..\..\_build\Windows\$(CppWinRTPlatform)\$(Configuration)\tool\cppwinrt\</CppWinRTPath>
+    </PropertyGroup>
+
+    <Import Project="..\..\..\..\package\cppwinrt\nuget\Microsoft.Windows.CppWinRT.props" />
+
+</Project>

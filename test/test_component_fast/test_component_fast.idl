@@ -1,0 +1,157 @@
+import "Windows.Foundation.idl";
+
+namespace Windows.Foundation.Metadata
+{
+    [attributeusage(target_method, target_property)]
+    [attributename("noexcept2")]
+    attribute NoExceptionAttribute
+    {
+    }
+
+    [attributeusage(target_runtimeclass)]
+    [attributename("fastabi2")]
+    [contract(Windows.Foundation.FoundationContract, 4)]
+    attribute FastAbiAttribute
+    {
+        type Contract;
+        unsigned __int32 Version;
+    }
+}
+
+namespace test_component_fast
+{
+    [contractversion(4)]
+    apicontract SimpleContract{};
+
+    [fastabi2(SimpleContract, 1)]
+    [contract(SimpleContract, 1)]
+    runtimeclass Simple
+    {
+        Simple();
+
+        String Method1();
+
+        [contract(SimpleContract, 1.2)]
+        {
+            String Method2();
+        }
+
+        [contract(SimpleContract, 2.1)]
+        {
+            String Method3();
+        }
+    }
+
+    namespace Composition
+    {
+        [contractversion(4)]
+        apicontract FastContract{};
+
+        runtimeclass Visual;
+        runtimeclass Compositor;
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [exclusiveto(CompositionObject)]
+        [uuid(51205C5E-558A-4F2A-8D39-37BFE1E20DDD)]
+        interface ICompositionObjectFactory
+        {
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [exclusiveto(Visual)]
+        [uuid(AD0FF93E-B502-4EB5-87B4-9A38A71D0137)]
+        interface IVisualFactory
+        {
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [exclusiveto(CompositionObject)]
+        [uuid(BCB4AD45-7609-4550-934F-16002A68FDED)]
+        interface ICompositionObject
+        {
+            [noexcept2] Compositor Compositor();
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 3.0)]
+        [exclusiveto(CompositionObject)]
+        [uuid(EF874EA1-5CFF-4B68-9E30-A1519D08BA03)]
+        interface ICompositionObject2
+        {
+            [noexcept2] void StartAnimationGroup();
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [exclusiveto(Visual)]
+        [uuid(117E202D-A859-4C89-873B-C2AA566788E3)]
+        interface IVisual
+        {
+            [noexcept2] Int32 Offset{ get; set; };
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 4.0)]
+        [exclusiveto(Visual)]
+        [uuid(3052B611-56C3-4C3E-8BF3-F6E1AD473F06)]
+        interface IVisual2
+        {
+            [noexcept2] void ParentForTransform(test_component_fast.Composition.Visual value);
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [exclusiveto(SpriteVisual)]
+        [uuid(08E05581-1AD1-4F97-9757-402D76E4233B)]
+        interface ISpriteVisual
+        {
+            [noexcept2] void Brush();
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 3.0)]
+        [exclusiveto(SpriteVisual)]
+        [uuid(588C9664-997A-4850-91FE-53CB58F81CE9)]
+        interface ISpriteVisual2
+        {
+            [noexcept2] void Shadow();
+        }
+
+        [composable(test_component_fast.Composition.ICompositionObjectFactory, protected, test_component_fast.Composition.FastContract, 2.0)]
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [marshaling_behavior(agile)]
+        [threading(both)]
+        [fastabi2(test_component_fast.Composition.FastContract, 2.0)]
+        runtimeclass CompositionObject
+        {
+            [default] interface test_component_fast.Composition.ICompositionObject;
+            interface Windows.Foundation.IClosable;
+            [contract(test_component_fast.Composition.FastContract, 3.0)] interface test_component_fast.Composition.ICompositionObject2;
+        }
+
+        [composable(test_component_fast.Composition.IVisualFactory, protected, test_component_fast.Composition.FastContract, 2.0)]
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [marshaling_behavior(agile)]
+        [threading(both)]
+        [fastabi2(test_component_fast.Composition.FastContract, 2.0)]
+        runtimeclass Visual : test_component_fast.Composition.CompositionObject
+        {
+            [default] interface test_component_fast.Composition.IVisual;
+            [contract(test_component_fast.Composition.FastContract, 4.0)] interface test_component_fast.Composition.IVisual2;
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [marshaling_behavior(agile)]
+        [threading(both)]
+        [fastabi2(test_component_fast.Composition.FastContract, 2.0)]
+        runtimeclass SpriteVisual : test_component_fast.Composition.Visual
+        {
+            [default] interface test_component_fast.Composition.ISpriteVisual;
+            [contract(test_component_fast.Composition.FastContract, 3.0)] interface test_component_fast.Composition.ISpriteVisual2;
+        }
+
+        [contract(test_component_fast.Composition.FastContract, 2.0)]
+        [fastabi2(test_component_fast.Composition.FastContract, 2.0)]
+        runtimeclass Compositor
+        {
+            Compositor();
+
+            [noexcept2] test_component_fast.Composition.SpriteVisual CreateSpriteVisual();
+        }
+    }
+}

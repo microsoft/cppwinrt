@@ -1,0 +1,10 @@
+namespace TestRuntimeComponent3
+{
+    [default_interface]
+    runtimeclass TestStaticLibrary3Class
+    {
+        TestStaticLibrary3Class();
+        
+        void Test();
+    }
+}

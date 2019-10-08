@@ -1,0 +1,10 @@
+{
+    "$schema": "http://json.schemastore.org/vsix-publish",
+    "categories": [ "Build", "Coding", "Programming Languages" ],  
+    "identity": {
+        "internalName": "cppwinrt101804264" 
+    },
+    "overview": "overview.md",
+    "publisher": "CppWinRTTeam",       
+    "repo": "https://github.com/Microsoft/xlang/tree/master/src/package/cppwinrt/vsix" 
+}

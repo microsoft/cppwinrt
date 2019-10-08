@@ -1,0 +1,276 @@
+import "Windows.Foundation.Numerics.idl";
+
+namespace Windows.Foundation.Metadata
+{
+    [attributeusage(target_method, target_property)]
+    [attributename("noexcept2")]
+    attribute NoExceptionAttribute
+    {
+    }
+}
+
+namespace test_component
+{
+    namespace Delegates
+    {
+        delegate void AgileDelegate();
+        delegate void InDelegate(String value);
+        delegate String ReturnStringDelegate();
+        delegate Int32 ReturnInt32Delegate();
+        delegate void OutStringDelegate(out String value);
+        delegate void OutInt32Delegate(out Int32 value);
+        delegate String[] ReturnStringArrayDelegate();
+        delegate void OutStringArrayDelegate(out String[] value);
+        delegate void RefStringArrayDelegate(ref String[] value);
+    }
+
+    enum Signed
+    {
+        First = -1,
+        Second = 0,
+        Third = 1
+    };
+
+    [flags]
+    enum Unsigned
+    {
+        First = 0,
+        Second = 1,
+        Third = 2
+    };
+
+    struct Struct
+    {
+        String First;
+        String Second;
+    };
+
+    runtimeclass Simple
+    {
+        Simple();
+
+        void Method();
+        Windows.Foundation.IReference<Int32> Reference(Windows.Foundation.DateTime value);
+        Windows.Foundation.IAsyncOperation<Int32> Operation(Windows.Foundation.DateTime value);
+        Windows.Foundation.IAsyncAction Action(Windows.Foundation.DateTime value);
+        Object Object(Windows.Foundation.DateTime value);
+    }
+
+    runtimeclass DeferrableEventArgs
+    {
+        Windows.Foundation.Deferral GetDeferral();
+        void IncrementCounter();
+    }
+
+    runtimeclass Class
+    {
+        Class();
+        Class(String name);
+        static void StaticTest();
+        static Int32 StaticTestReturn();
+        static Int32 StaticProperty{ get; };
+
+        Class(Windows.Foundation.Collections.IIterable<String> arg, Int32 dummy1);
+        Class(Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > arg, Int32 dummy1, Int32 dummy2);
+        Class(Windows.Foundation.Collections.IMap<String, String> arg, Int32 dummy1, Int32 dummy2, Int32 dummy3);
+        Class(Windows.Foundation.Collections.IMapView<String, String> arg, Int32 dummy1, Int32 dummy2, Int32 dummy3, Int32 dummy4);
+        Class(Windows.Foundation.Collections.IVector<String> arg, Int32 dummy1, Int32 dummy2, Int32 dummy3, Int32 dummy4, Int32 dummy5);
+        Class(Windows.Foundation.Collections.IVectorView<String> arg, Int32 dummy1, Int32 dummy2, Int32 dummy3, Int32 dummy4, Int32 dummy5, Int32 dummy6);
+
+        static String InIterable(Windows.Foundation.Collections.IIterable<String> value);
+        static String InIterablePair(Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > value);
+        static Windows.Foundation.IAsyncOperation<String> InAsyncIterable(Windows.Foundation.Collections.IIterable<String> value);
+        static Windows.Foundation.IAsyncOperation<String> InAsyncIterablePair(Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<String, String> > value);
+        static String InMap(Windows.Foundation.Collections.IMap<String, String> value);
+        static String InMapView(Windows.Foundation.Collections.IMapView<String, String> value);
+        static Windows.Foundation.IAsyncOperation<String> InAsyncMapView(Windows.Foundation.Collections.IMapView<String, String> value);
+        static String InVector(Windows.Foundation.Collections.IVector<String> value);
+        static String InVectorView(Windows.Foundation.Collections.IVectorView<String> value);
+        static Windows.Foundation.IAsyncOperation<String> InAsyncVectorView(Windows.Foundation.Collections.IVectorView<String> value);
+
+        void Fail(Boolean value);
+
+        String InInt32(Int32 value);
+        String InString(String value);
+        String InObject(Object value);
+        String InStringable(Windows.Foundation.IStringable value);
+        String InStruct(Struct value);
+        String InStructRef(ref const Struct value);
+        String InEnum(Signed value);
+
+        void OutInt32(out Int32 value);
+        void OutString(out String value);
+        void OutObject(out Object value);
+        void OutStringable(out Windows.Foundation.IStringable value);
+        void OutStruct(out Struct value);
+        void OutEnum(out Signed value);
+
+        Int32 ReturnInt32();
+        String ReturnString();
+        Object ReturnObject();
+        Windows.Foundation.IStringable ReturnStringable();
+        Struct ReturnStruct();
+        Signed ReturnEnum();
+
+        String InInt32Array(Int32[] value);
+        String InStringArray(String[] value);
+        String InObjectArray(Object[] value);
+        String InStringableArray(Windows.Foundation.IStringable[] value);
+        String InStructArray(Struct[] value);
+        String InEnumArray(Signed[] value);
+
+        void OutInt32Array(out Int32[] value);
+        void OutStringArray(out String[] value);
+        void OutObjectArray(out Object[] value);
+        void OutStringableArray(out Windows.Foundation.IStringable[] value);
+        void OutStructArray(out Struct[] value);
+        void OutEnumArray(out Signed[] value);
+
+        void RefInt32Array(ref Int32[] value);
+        void RefStringArray(ref String[] value);
+        void RefObjectArray(ref Object[] value);
+        void RefStringableArray(ref Windows.Foundation.IStringable[] value);
+        void RefStructArray(ref Struct[] value);
+        void RefEnumArray(ref Signed[] value);
+
+        Int32[] ReturnInt32Array();
+        String[] ReturnStringArray();
+        Object[] ReturnObjectArray();
+        Windows.Foundation.IStringable[] ReturnStringableArray();
+        Struct[] ReturnStructArray();
+        Signed[] ReturnEnumArray();
+
+        [noexcept2] void NoexceptVoid();
+        [noexcept2] Int32 NoexceptInt32();
+        [noexcept2] String NoexceptString();
+
+        event Windows.Foundation.TypedEventHandler<Class, DeferrableEventArgs> DeferrableEvent;
+        Windows.Foundation.IAsyncOperation<Int32> RaiseDeferrableEventAsync();
+    }
+
+    namespace Structs
+    {
+        struct All
+        {
+            Windows.Foundation.Numerics.Matrix3x2 A;
+            Windows.Foundation.Numerics.Matrix4x4 B;
+            Windows.Foundation.Numerics.Plane C;
+            Windows.Foundation.Numerics.Quaternion D;
+            Windows.Foundation.Numerics.Vector2 E;
+            Windows.Foundation.Numerics.Vector3 F;
+            Windows.Foundation.Numerics.Vector4 G;
+            Guid H;
+
+            // TODO: uncomment when build server has newer version of midlrt.
+            //HRESULT I;
+            //EventRegistrationToken J;
+        };
+
+        struct Inner
+        {
+            Int32 InnerValue;
+        };
+
+        namespace Nested
+        {
+            struct Outer
+            {
+                test_component.Structs.Inner Depends;
+                Int32 OuterValue;
+            };
+        }
+    }
+
+    namespace Parent
+    {
+        // This validates namespace inclusion rules. The "...Three.h" header must include the 
+        // "...Parent.h" header but skip over the intermediate namespaces as they are empty
+        // and won't be generated and those won't exist.
+
+        struct ParentStruct
+        {
+            Int32 Value;
+        };
+
+        namespace One.Two.Three
+        {
+            struct ThreeStruct
+            {
+                Int32 Value;
+            };
+        }
+    }
+
+    namespace Velocity
+    {
+        // Don't ever define these feature_name definitions yourself!
+        // This is only for testing.
+        // API authors must use the feature macros generated by the build in
+        // order to allow features to be disabled/enabled on given branches.
+        feature_name Feature_AlwaysDisabled = { AlwaysDisabled, TRUE };
+        feature_name Feature_AlwaysEnabled = { AlwaysEnabled, TRUE };
+
+        // This interface is AlwaysDisabled in the type system but not
+        // included in any implementation by default.
+        [feature(Feature_AlwaysDisabled)]
+        interface IInterface1
+        {
+            void IInterface1_Method();
+        }
+
+        // This interface is AlwaysEnabled thus in the type system and thus
+        // always required for compilation.
+        [feature(Feature_AlwaysEnabled)]
+        interface IInterface2
+        {
+            void IInterface2_Method();
+        }
+
+        // The .cpp is included in the project but AlwaysDisabled and thus won't show up
+        // in the module.g.cpp so activation requests will fail.
+        [feature(Feature_AlwaysDisabled)]
+        runtimeclass Class1
+        {
+            Class1();
+            void Class1_Method();
+        }
+
+        // This class is AlwaysEnabled which is treated just like a class with no
+        // feature attribute, thus included and required for compilation.
+        [feature(Feature_AlwaysEnabled)]
+        runtimeclass Class2
+        {
+            Class2();
+            void Class2_Method();
+        }
+
+        // This class is has no source in the project but is AlwaysDisabled and thus
+        // not required for compilation.
+        [feature(Feature_AlwaysDisabled)]
+        runtimeclass Class3
+        {
+            Class3();
+            void Class3_Method();
+        }
+
+        // This class has no feature attribute but requires interfaces with feature attributes.
+        // One interface is always disabled and the other is always enabled.
+        runtimeclass Class4 : IInterface1, IInterface2
+        {
+            Class4();
+            void Class4_Method();
+
+            [feature(Feature_AlwaysDisabled)]
+            {
+                Class4(Int32 one);
+                static void Class4_Static1();
+            }
+
+            [feature(Feature_AlwaysEnabled)]
+            {
+                Class4(Int32 one, Int32 two);
+                static void Class4_Static2();
+            }
+        }
+    }
+}

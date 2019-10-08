@@ -1,0 +1,10 @@
+namespace TestRuntimeComponentEmpty.SubNamespace1
+{
+    [default_interface]
+    runtimeclass TestStaticLibrary6Class 
+    {
+        TestStaticLibrary6Class();
+
+        Windows.UI.Xaml.Core.Direct.XamlDirect Test();
+    }
+}

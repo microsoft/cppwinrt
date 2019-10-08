@@ -1,0 +1,10 @@
+namespace TestApp
+{
+    [default_interface]
+    runtimeclass TestStaticLibrary4Class 
+    {
+        TestStaticLibrary4Class();
+
+        Windows.UI.Xaml.Core.Direct.XamlDirect Test();
+    }
+}

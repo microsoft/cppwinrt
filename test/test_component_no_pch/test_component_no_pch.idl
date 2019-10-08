@@ -1,0 +1,36 @@
+import "Windows.Foundation.idl";
+
+namespace test_component_no_pch
+{
+    runtimeclass Class
+    {
+        Class();
+
+        void Method();
+    }
+
+    namespace Peer1
+    {
+        delegate void Delegate(test_component_no_pch.Peer2.B value);
+
+        struct A
+        {
+            Int32 Value;
+        };
+
+        struct B
+        {
+            A First;
+            Int32 Second;
+        };
+    }
+
+    namespace Peer2
+    {
+        struct B
+        {
+            test_component_no_pch.Peer1.A First;
+            Int32 Second;
+        };
+    }
+}

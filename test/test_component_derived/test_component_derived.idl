@@ -1,0 +1,24 @@
+import "Windows.Foundation.idl";
+import "test_component_base.idl";
+
+namespace test_component_derived
+{
+    namespace Nested
+    {
+        unsealed runtimeclass HierarchyC : test_component_base.HierarchyB
+        {
+            HierarchyC();
+            HierarchyC(String name);
+
+            void HierarchyC_Method();
+        }
+
+        unsealed runtimeclass HierarchyD : HierarchyC
+        {
+            HierarchyD();
+            HierarchyD(String name);
+
+            void HierarchyD_Method();
+        }
+    }
+}

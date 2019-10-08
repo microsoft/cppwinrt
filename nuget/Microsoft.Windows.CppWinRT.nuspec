@@ -1,0 +1,30 @@
+﻿<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata minClientVersion="2.5">
+    <id>Microsoft.Windows.CppWinRT</id>
+    <version>1.0.0.0</version>
+    <title>C++/WinRT Build Support</title>
+    <authors>Microsoft</authors>
+    <owners>Microsoft</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>C++/WinRT is a standard C++ language projection for the Windows Runtime implemented solely in header files. It allows you to both author and consume Windows Runtime APIs using any standards-compliant C++ compiler. C++/WinRT is designed to provide C++ developers with first-class access to the modern Windows API.</description>
+    <releaseNotes></releaseNotes>
+    <tags>native C++ WinRT nativepackage</tags>
+    <copyright>© Microsoft Corporation. All rights reserved.</copyright>
+    <license type="file">LICENSE</license>
+    <projectUrl>https://github.com/Microsoft/xlang/tree/master/src/package/cppwinrt/nuget</projectUrl>
+    <iconUrl>https://aka.ms/cppwinrt.ico</iconUrl>
+  </metadata>
+  <files>
+    <file src="..\LICENSE"/>
+    <file src="$cppwinrt_exe$" target="bin"/>
+    <file src="$cppwinrt_fast_fwd_x86$" target="build\native\lib\win32"/>
+    <file src="$cppwinrt_fast_fwd_x64$" target="build\native\lib\x64"/>
+    <file src="$cppwinrt_fast_fwd_arm$" target="build\native\lib\arm"/>
+    <file src="$cppwinrt_fast_fwd_arm64$" target="build\native\lib\arm64"/>
+    <file src="Microsoft.Windows.CppWinRT.props" target="build\native"/>
+    <file src="Microsoft.Windows.CppWinRT.targets" target="build\native"/>
+    <file src="CppWinrtRules.Project.xml" target="build\native"/>
+    <file src="readme.txt"/>
+  </files>
+</package>

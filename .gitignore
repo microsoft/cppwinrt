@@ -3,3 +3,5 @@
 x86
 x64
 *.user
+build
+packages

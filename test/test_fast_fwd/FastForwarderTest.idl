@@ -1,0 +1,127 @@
+import "Windows.Foundation.Idl";
+
+namespace Windows.Foundation.Metadata
+{
+    [attributeusage(target_runtimeclass)]
+    [attributename("fastabi2")]
+    [contract(Windows.Foundation.FoundationContract, 4)]
+    attribute FastAbiAttribute
+    {
+        type Contract;
+        unsigned __int32 Version;
+    }
+}
+
+namespace FastForwarderTest
+{
+    [internal]
+    [contractversion(1.0)]
+    apicontract InternalContract{};
+
+    [contract(Windows.Foundation.UniversalApiContract, 7)]
+    struct Struct
+    {
+        Int32 Field1;
+        Int32 Field2;
+    };
+
+    [contract(FastForwarderTest.InternalContract, 1)]
+    interface IInterface1
+    {
+        Boolean BooleanProp;
+        Char    CharProp;
+        Int16   Int16Prop;
+        Int32   Int32Prop;
+        Int64   Int64Prop;
+        Single  SingleProp;
+        UInt8   UInt8Prop;
+        UInt16  UInt16Prop;
+        UInt32  UInt32Prop;
+        UInt64  UInt64Prop;
+        Double  DoubleProp;
+        Guid    GuidProp;
+        Struct  StructProp;
+    }
+
+    [contract(FastForwarderTest.InternalContract, 1)]
+    interface IInterface2
+    {
+        String GetString();
+        void SetString(String value);
+    }
+
+    [contract(FastForwarderTest.InternalContract, 1)]
+    interface IInterface3
+    {
+        // Ensure that args are preserved and propagated to the target in a worst case scenario 
+        // of register spilling. (ARM64 can fill 8 integer args and 8 SIMD/floating point args.)
+        Struct BigMethod(
+            Boolean arg1,
+            Char    arg2,
+            Int16   arg3,
+            Int32   arg4,
+            Int64   arg5,
+            UInt8   arg6,
+            UInt16  arg7,
+            UInt32  arg8,
+            UInt64  arg9,
+            Single  arg10,
+            Double  arg11,
+            Single  arg12,
+            Double  arg13,
+            Single  arg14,
+            Double  arg15,
+            Single  arg16,
+            Double  arg17,
+            Single  arg18);
+    }
+
+    [contract(FastForwarderTest.InternalContract, 1)]
+    [fastabi2(FastForwarderTest.InternalContract, 1)]
+    runtimeclass Class
+    {
+        Class();
+
+        [default][interface_name("IInterface")]
+        {
+            // Interface1 members
+            Boolean BooleanProp;
+            Char    CharProp;
+            Int16   Int16Prop;
+            Int32   Int32Prop;
+            Int64   Int64Prop;
+            Single  SingleProp;
+            UInt8   UInt8Prop;
+            UInt16  UInt16Prop;
+            UInt32  UInt32Prop;
+            UInt64  UInt64Prop;
+            Double  DoubleProp;
+            Guid    GuidProp;
+
+            // Interface2 members
+            String GetString();
+            void SetString(String value);
+
+            // Interface3 members
+            Struct BigMethod(
+                Boolean arg1,
+                Char    arg2,
+                Int16   arg3,
+                Int32   arg4,
+                Int64   arg5,
+                UInt8   arg6,
+                UInt16  arg7,
+                UInt32  arg8,
+                UInt64  arg9,
+                Single  arg10,
+                Double  arg11,
+                Single  arg12,
+                Double  arg13,
+                Single  arg14,
+                Double  arg15,
+                Single  arg16,
+                Double  arg17,
+                Single  arg18);
+        }
+    }
+}

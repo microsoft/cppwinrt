@@ -1,0 +1,7 @@
+<VSTemplateManifest Version="1.0" xmlns="http://schemas.microsoft.com/developer/vstemplatemanifest/2015">
+  <VSTemplateDir>
+    <RelativePath>VC\C++ WinRT</RelativePath>
+    <LocalizedName>C++/WinRT</LocalizedName>
+    <SortOrder>1</SortOrder>
+  </VSTemplateDir>
+</VSTemplateManifest>

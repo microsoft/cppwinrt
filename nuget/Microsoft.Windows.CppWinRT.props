@@ -1,0 +1,57 @@
+﻿<!--
+***********************************************************************************************
+Copyright (C) Microsoft Corporation. All rights reserved.
+***********************************************************************************************
+-->
+<!--Set compiler and linker options for projects requiring C++/WinRT. -->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+    <PropertyGroup>
+        <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+        <CanReferenceWinRT>true</CanReferenceWinRT>
+        <CppWinRTPackage Condition="'$(CppWinRTEnabled)' != 'true'">true</CppWinRTPackage>
+        <CppWinRTPackage Condition="'$(CppWinRTPackage)' != 'true'">false</CppWinRTPackage>
+        <XamlLanguage>CppWinRT</XamlLanguage>
+        <IsNativeLanguage>true</IsNativeLanguage>
+        <!-- This causes VS to add the platform WinMD references for the target SDK -->
+        <WinMDAssembly>true</WinMDAssembly>
+    </PropertyGroup>
+
+    <!-- For a static library we don't want the winmd/lib/pdb to be packaged -->
+    <PropertyGroup Condition="'$(ConfigurationType)' == 'StaticLibrary'">
+        <IncludeCopyWinMDArtifactsOutputGroup>false</IncludeCopyWinMDArtifactsOutputGroup>
+        <IncludeBuiltProjectOutputGroup>false</IncludeBuiltProjectOutputGroup>
+        <IncludeDebugSymbolsProjectOutputGroup>false</IncludeDebugSymbolsProjectOutputGroup>
+    </PropertyGroup>
+
+    <ItemDefinitionGroup>
+        <ClCompile>
+            <CompileAsWinRT Condition="'$(CppWinRTProjectLanguage)' != 'C++/CX' And '%(ClCompile.CompileAsWinRT)' == ''">false</CompileAsWinRT>
+            <LanguageStandard Condition="'%(ClCompile.LanguageStandard)' == ''">stdcpp17</LanguageStandard>
+            <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
+            <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(GeneratedFilesDir)</AdditionalIncludeDirectories>
+        </ClCompile>
+        <Midl Condition="'$(CppWinRTModernIDL)' != 'false'">
+            <AdditionalOptions>%(AdditionalOptions) /nomidl</AdditionalOptions>
+            <EnableWindowsRuntime>true</EnableWindowsRuntime>
+            <MetadataFileName>$(IntDir)Unmerged\%(Filename).winmd</MetadataFileName>
+            <GenerateClientFiles Condition="'%(Midl.GenerateClientFiles)'==''">None</GenerateClientFiles>
+            <GenerateServerFiles Condition="'%(Midl.GenerateServerFiles)'==''">None</GenerateServerFiles>
+            <GenerateStublessProxies Condition="'%(Midl.GenerateStublessProxies)'==''">false</GenerateStublessProxies>
+            <GenerateTypeLibrary Condition="'%(Midl.GenerateTypeLibrary)'==''">false</GenerateTypeLibrary>
+            <HeaderFileName Condition="'%(Midl.HeaderFileName)'==''">nul</HeaderFileName>
+            <DllDataFileName Condition="'%(Midl.DllDataFileName)'==''">nul</DllDataFileName>
+            <InterfaceIdentifierFileName Condition="'%(Midl.InterfaceIdentifierFileName)'==''">nul</InterfaceIdentifierFileName>
+            <ProxyFileName Condition="'%(Midl.ProxyFileName)'==''">nul</ProxyFileName>
+            <TypeLibraryName Condition="'%(Midl.TypeLibraryName)'==''"></TypeLibraryName>
+        </Midl>
+        <Link>
+            <AdditionalDependencies Condition="'$(CppWinRTLibs)' != 'false'">WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+        </Link>
+    </ItemDefinitionGroup>
+
+    <ItemGroup>
+        <PropertyPageSchema Include="$(MSBuildThisFileDirectory)\CppWinrtRules.Project.xml"/>
+    </ItemGroup>
+
+</Project>

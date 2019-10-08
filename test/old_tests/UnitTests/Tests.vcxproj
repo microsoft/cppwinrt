@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="abi_guard.cpp" />
+    <ClCompile Include="agile_ref.cpp" />
+    <ClCompile Include="agility.cpp" />
+    <ClCompile Include="apartment_context.cpp" />
+    <ClCompile Include="array.cpp" />
+    <ClCompile Include="as.cpp" />
+    <ClCompile Include="async.cpp" />
+    <ClCompile Include="async_cancel.cpp" />
+    <ClCompile Include="as_implements.cpp" />
+    <ClCompile Include="Bindable.cpp" />
+    <ClCompile Include="boxing.cpp" />
+    <ClCompile Include="Boxing2.cpp" />
+    <ClCompile Include="buffer.cpp" />
+    <ClCompile Include="capture.cpp" />
+    <ClCompile Include="casts.cpp" />
+    <ClCompile Include="char16.cpp" />
+    <ClCompile Include="clock.cpp" />
+    <ClCompile Include="collection_base.cpp" />
+    <ClCompile Include="Composable.cpp" />
+    <ClCompile Include="com_ref.cpp" />
+    <ClCompile Include="conditional_implements.cpp" />
+    <ClCompile Include="conditional_implements_pure.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="constexpr.cpp" />
+    <ClCompile Include="create_instance.cpp" />
+    <ClCompile Include="delegate_weak_strong.cpp" />
+    <ClCompile Include="enum_flags.cpp" />
+    <ClCompile Include="Errors.cpp" />
+    <ClCompile Include="error_chaining.cpp" />
+    <ClCompile Include="Events.cpp" />
+    <ClCompile Include="factory_cache.cpp" />
+    <ClCompile Include="FastInput.cpp" />
+    <ClCompile Include="FastStrings.cpp" />
+    <ClCompile Include="foundation.cpp" />
+    <ClCompile Include="Generics.cpp" />
+    <ClCompile Include="get_activation_factory.cpp" />
+    <ClCompile Include="hstring_builder.cpp" />
+    <ClCompile Include="implements_nested.cpp" />
+    <ClCompile Include="interop.cpp" />
+    <ClCompile Include="lock.cpp" />
+    <ClCompile Include="Parameters.cpp" />
+    <ClCompile Include="param_hstring.cpp" />
+    <ClCompile Include="param_iterable.cpp" />
+    <ClCompile Include="param_map.cpp" />
+    <ClCompile Include="param_vector.cpp" />
+    <ClCompile Include="properties.cpp" />
+    <ClCompile Include="References.cpp" />
+    <ClCompile Include="sdk.cpp" />
+    <ClCompile Include="Security.cpp" />
+    <ClCompile Include="single_threaded_map.cpp" />
+    <ClCompile Include="param_map_view.cpp" />
+    <ClCompile Include="single_threaded_vector.cpp" />
+    <ClCompile Include="param_vector_view.cpp" />
+    <ClCompile Include="com_ptr.cpp" />
+    <ClCompile Include="delegate.cpp" />
+    <ClCompile Include="delegate_lambda.cpp" />
+    <ClCompile Include="event_consume.cpp" />
+    <ClCompile Include="event_produce.cpp" />
+    <ClCompile Include="handle.cpp" />
+    <ClCompile Include="Hash.cpp" />
+    <ClCompile Include="hresult_error.cpp" />
+    <ClCompile Include="hstring.cpp" />
+    <ClCompile Include="IInspectable_GetIids.cpp" />
+    <ClCompile Include="IInspectable_GetRuntimeClassName.cpp" />
+    <ClCompile Include="IInspectable_GetTrustLevel.cpp" />
+    <ClCompile Include="IReference.cpp" />
+    <ClCompile Include="IUnknown_QueryInterface.cpp" />
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="make_self.cpp" />
+    <ClCompile Include="marshal.cpp" />
+    <ClCompile Include="meta.cpp" />
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="produce.cpp" />
+    <ClCompile Include="produce_async.cpp" />
+    <ClCompile Include="produce_map.cpp" />
+    <ClCompile Include="produce_vector.cpp" />
+    <ClCompile Include="range_for.cpp" />
+    <ClCompile Include="Reference.cpp" />
+    <ClCompile Include="Release.cpp" />
+    <ClCompile Include="smart_pointers.cpp" />
+    <ClCompile Include="struct.cpp" />
+    <ClCompile Include="StructCodeGen.cpp" />
+    <ClCompile Include="Structures.cpp" />
+    <ClCompile Include="to_hstring.cpp" />
+    <ClCompile Include="TryLookup.cpp" />
+    <ClCompile Include="VariadicDelegate.cpp" />
+    <ClCompile Include="weak.cpp" />
+    <ClCompile Include="xaml_typename.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="catch.hpp" />
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="produce_IPropertyValue.h" />
+    <ClInclude Include="string_view_compare.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C8B95FCB-9B0B-4E9F-B7D5-643883C192C9}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Tests</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>test_old</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(SolutionDir)\cppwinrt.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(OutputPath);..\Composable\Generated Files;..\Component\Generated Files;..\Composable;..\Reflection\Generated Files;..\..\..\..\library</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <MinimalRebuild>false</MinimalRebuild>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateMapFile>false</GenerateMapFile>
+      <OutputFile>$(OutDir)test_old.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(OutputPath);..\Composable\Generated Files;..\Component\Generated Files;..\Composable;..\Reflection\Generated Files;..\..\..\..\library</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <MinimalRebuild>false</MinimalRebuild>
+      <CompileAsWinRT>false</CompileAsWinRT>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateMapFile>false</GenerateMapFile>
+      <OutputFile>$(OutDir)test_old.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(OutputPath);..\Composable\Generated Files;..\Component\Generated Files;..\Composable;..\Reflection\Generated Files;..\..\..\..\library</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateMapFile>false</GenerateMapFile>
+      <OutputFile>$(OutDir)test_old.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(OutputPath);..\Composable\Generated Files;..\Component\Generated Files;..\Composable;..\Reflection\Generated Files;..\..\..\..\library</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <GenerateMapFile>false</GenerateMapFile>
+      <OutputFile>$(OutDir)test_old.exe</OutputFile>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

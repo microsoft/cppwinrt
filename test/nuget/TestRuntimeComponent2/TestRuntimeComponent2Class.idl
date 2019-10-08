@@ -1,0 +1,10 @@
+namespace TestRuntimeComponent2
+{
+    [default_interface]
+    runtimeclass TestRuntimeComponent2Class
+    {
+        TestRuntimeComponent2Class();
+
+        void Test();
+    }
+}
