@@ -1,7 +1,0 @@
-# Set default line ending behavior to autocrlf=true for all text files
-* text=auto
-
-# Any files not listed here will apply the autocrlf setting defined in the repo's clone.
-
-# Source files
-*.h text
