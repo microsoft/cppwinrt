@@ -1,7 +1,11 @@
 .vscode
 .vs
-x86
-x64
 *.user
+*_i.c
+*_p.c
+*.c
 build
 packages
+Debug
+Release
+Generated Files

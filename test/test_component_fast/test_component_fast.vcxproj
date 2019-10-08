@@ -313,7 +313,7 @@
     <Midl Include="test_component_fast.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\fast_fwd\fast_fwd.vcxproj">
+    <ProjectReference Include="..\..\fast_fwd\fast_fwd.vcxproj">
       <Project>{a63b3ad1-ab7b-461e-9fff-2447f5bcd459}</Project>
     </ProjectReference>
   </ItemGroup>
