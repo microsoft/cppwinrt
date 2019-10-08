@@ -1,8 +1,6 @@
 #pragma once
 
-#include "impl/base.h"
-
-namespace xlang
+namespace cppwinrt
 {
     struct task_group
     {
@@ -22,7 +20,7 @@ namespace xlang
         template <typename T>
         void add(T&& callback)
         {
-#if defined(XLANG_DEBUG)
+#if defined(_DEBUG)
             callback();
 #else
             m_tasks.push_back(std::async(std::forward<T>(callback)));

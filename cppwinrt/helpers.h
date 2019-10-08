@@ -1,6 +1,6 @@
 #pragma once
 
-namespace xlang
+namespace cppwinrt
 {
     static auto get_start_time()
     {
@@ -10,18 +10,6 @@ namespace xlang
     static auto get_elapsed_time(decltype(get_start_time()) const& start)
     {
         return std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now() - start).count();
-    }
-
-    [[noreturn]] inline void throw_invalid(std::string const& message)
-    {
-        throw std::invalid_argument(message);
-    }
-
-    template <typename...T>
-    [[noreturn]] inline void throw_invalid(std::string message, T const&... args)
-    {
-        (message.append(args), ...);
-        throw std::invalid_argument(message);
     }
 
     static bool is_put_overload(MethodDef const& method)

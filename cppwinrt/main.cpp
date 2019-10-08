@@ -9,16 +9,16 @@
 #include "file_writers.h"
 #include "type_writers.h"
 
-namespace xlang
+namespace cppwinrt
 {
     settings_type settings;
 
     struct usage_exception {};
 
-    static constexpr cmd::option options[]
+    static constexpr option options[]
     {
-        { "input", 0, cmd::option::no_max, "<spec>", "Windows metadata to include in projection" },
-        { "reference", 0, cmd::option::no_max, "<spec>", "Windows metadata to reference from projection" },
+        { "input", 0, option::no_max, "<spec>", "Windows metadata to include in projection" },
+        { "reference", 0, option::no_max, "<spec>", "Windows metadata to reference from projection" },
         { "output", 0, 1, "<path>", "Location of generated projection and component templates" },
         { "component", 0, 1, "[<path>]", "Generate component templates, and optional implementation" },
         { "name", 0, 1, "<name>", "Specify explicit name for component files" },
@@ -26,11 +26,11 @@ namespace xlang
         { "overwrite", 0, 0, {}, "Overwrite generated component files" },
         { "prefix", 0, 0, {}, "Use dotted namespace convention for component files (defaults to folders)" },
         { "pch", 0, 1, "<name>", "Specify name of precompiled header file (defaults to pch.h)" },
-        { "include", 0, cmd::option::no_max, "<prefix>", "One or more prefixes to include in input" },
-        { "exclude", 0, cmd::option::no_max, "<prefix>", "One or more prefixes to exclude from input" },
+        { "include", 0, option::no_max, "<prefix>", "One or more prefixes to include in input" },
+        { "exclude", 0, option::no_max, "<prefix>", "One or more prefixes to exclude from input" },
         { "base", 0, 0, {}, "Generate base.h unconditionally" },
         { "optimize", 0, 0, {}, "Generate component projection with unified construction support" },
-        { "help", 0, cmd::option::no_max, {}, "Show detailed help with examples" },
+        { "help", 0, option::no_max, {}, "Show detailed help with examples" },
         { "library", 0, 1, "<prefix>", "Specify library prefix (defaults to winrt)" },
         { "filter" }, // One or more prefixes to include in input (same as -include)
         { "license", 0, 0 }, // Generate license comment
@@ -46,7 +46,7 @@ namespace xlang
             w.write_printf("  %-20s%s\n", col1.data(), col2.data());
         };
 
-        static auto printOption = [](writer& w, cmd::option const& opt)
+        static auto printOption = [](writer& w, option const& opt)
         {
             if(opt.desc.empty())
             {
@@ -72,10 +72,10 @@ Where <spec> is one or more of:
   sdk[+]              Current version of Windows SDK [with extensions]
   10.0.12345.0[+]     Specific version of Windows SDK [with extensions]
 )";
-        w.write(format, XLANG_VERSION_STRING, bind_each(printOption, options));
+        w.write(format, CPPWINRT_VERSION_STRING, bind_each(printOption, options));
     }
 
-    static void process_args(cmd::reader const& args)
+    static void process_args(reader const& args)
     {
         settings.verbose = args.exists("verbose");
         settings.fastabi = args.exists("fastabi");
@@ -250,7 +250,7 @@ Where <spec> is one or more of:
         {
             auto start = get_start_time();
 
-            cmd::reader args{ argc, argv, options };
+            reader args{ argc, argv, options };
 
             if (!args || args.exists("help"))
             {
@@ -267,7 +267,7 @@ Where <spec> is one or more of:
             if (settings.verbose)
             {
                 w.write(" tool:  %\n", canonical(path(argv[0]).replace_extension("exe")).string());
-                w.write(" ver:   %\n", XLANG_VERSION_STRING);
+                w.write(" ver:   %\n", CPPWINRT_VERSION_STRING);
 
                 for (auto&& file : settings.input)
                 {
@@ -365,5 +365,5 @@ Where <spec> is one or more of:
 
 int main(int const argc, char** argv)
 {
-    return xlang::run(argc, argv);
+    return cppwinrt::run(argc, argv);
 }

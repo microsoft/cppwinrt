@@ -7,7 +7,7 @@
 #include <string>
 #include <string_view>
 
-namespace xlang::text
+namespace cppwinrt
 {
     inline std::string file_to_string(std::string const& filename)
     {
@@ -29,10 +29,10 @@ namespace xlang::text
         template <typename... Args>
         void write(std::string_view const& value, Args const&... args)
         {
-#if defined(XLANG_DEBUG)
+#if defined(_DEBUG)
             auto expected = count_placeholders(value);
             auto actual = sizeof...(Args);
-            XLANG_ASSERT(expected == actual);
+            assert(expected == actual);
 #endif
             write_segment(value, args...);
         }
@@ -40,19 +40,19 @@ namespace xlang::text
         template <typename... Args>
         std::string write_temp(std::string_view const& value, Args const&... args)
         {
-#if defined(XLANG_DEBUG)
+#if defined(_DEBUG)
             bool restore_debug_trace = debug_trace;
             debug_trace = false;
 #endif
             auto const size = m_first.size();
 
-            XLANG_ASSERT(count_placeholders(value) == sizeof...(Args));
+            assert(count_placeholders(value) == sizeof...(Args));
             write_segment(value, args...);
 
             std::string result{ m_first.data() + size, m_first.size() - size };
             m_first.resize(size);
 
-#if defined(XLANG_DEBUG)
+#if defined(_DEBUG)
             debug_trace = restore_debug_trace;
 #endif
             return result;
@@ -62,7 +62,7 @@ namespace xlang::text
         {
             m_first.insert(m_first.end(), value.begin(), value.end());
 
-#if defined(XLANG_DEBUG)
+#if defined(_DEBUG)
             if (debug_trace)
             {
                 ::printf("%.*s", static_cast<int>(value.size()), value.data());
@@ -74,7 +74,7 @@ namespace xlang::text
         {
             m_first.push_back(value);
 
-#if defined(XLANG_DEBUG)
+#if defined(_DEBUG)
             if (debug_trace)
             {
                 ::printf("%c", value);
@@ -127,11 +127,7 @@ namespace xlang::text
         void write_printf(char const* format, Args const&... args)
         {
             char buffer[128];
-#if XLANG_PLATFORM_WINDOWS
             size_t const size = sprintf_s(buffer, format, args...);
-#else
-            size_t const size = snprintf(buffer, sizeof(buffer), format, args...);
-#endif
             write(std::string_view{ buffer, size });
         }
 
@@ -212,7 +208,7 @@ namespace xlang::text
             return std::equal(m_second.begin(), m_second.end(), file.begin() + m_first.size(), file.end());
         }
 
-#if defined(XLANG_DEBUG)
+#if defined(_DEBUG)
         bool debug_trace{};
 #endif
 

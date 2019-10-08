@@ -1,6 +1,6 @@
 #pragma once
 
-namespace xlang
+namespace cppwinrt
 {
     static void write_component_override_defaults(writer& w, TypeDef const& type)
     {

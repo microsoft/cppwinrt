@@ -1,6 +1,6 @@
 #pragma once
 
-namespace xlang
+namespace cppwinrt
 {
     struct settings_type
     {

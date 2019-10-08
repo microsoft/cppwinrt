@@ -1,9 +1,8 @@
 #pragma once
 
-namespace xlang
+namespace cppwinrt
 {
     using namespace std::filesystem;
-    using namespace text;
     using namespace winmd::reader;
     using namespace std::literals;
 
@@ -457,7 +456,7 @@ namespace xlang
                     }
                     else
                     {
-                        XLANG_ASSERT(false);
+                        assert(false);
                     }
                 },
                 [&](GenericTypeIndex var)

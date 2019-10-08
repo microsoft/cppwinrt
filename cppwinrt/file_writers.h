@@ -1,6 +1,6 @@
 #pragma once
 
-namespace xlang
+namespace cppwinrt
 {
     static void write_base_h()
     {
@@ -39,7 +39,7 @@ namespace xlang
         w.write(strings::base_std_hash);
         w.write(strings::base_coroutine_threadpool);
         w.write(strings::base_natvis);
-        w.write(strings::base_version, XLANG_VERSION_STRING);
+        w.write(strings::base_version, CPPWINRT_VERSION_STRING);
 
         write_endif(w);
         w.flush_to_file(settings.output_folder + "winrt/base.h");

@@ -157,6 +157,9 @@
     <ClInclude Include="..\strings\base_deferral.h">
       <Filter>strings</Filter>
     </ClInclude>
+    <ClInclude Include="cmd_reader.h" />
+    <ClInclude Include="task_group.h" />
+    <ClInclude Include="text_writer.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(OutDir)version.rc" />

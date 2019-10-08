@@ -68,12 +68,15 @@
     <ClInclude Include="..\strings\base_weak_ref.h" />
     <ClInclude Include="..\strings\base_windows.h" />
     <ClInclude Include="..\strings\base_xaml_typename.h" />
+    <ClInclude Include="cmd_reader.h" />
     <ClInclude Include="code_writers.h" />
     <ClInclude Include="component_writers.h" />
     <ClInclude Include="file_writers.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="settings.h" />
+    <ClInclude Include="task_group.h" />
+    <ClInclude Include="text_writer.h" />
     <ClInclude Include="type_writers.h" />
   </ItemGroup>
   <ItemGroup>

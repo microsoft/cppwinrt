@@ -36,7 +36,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
 
   <PropertyGroup>
-    <XlangBuildVersion Condition="'$(XlangBuildVersion)'==''">2.3.4.5</XlangBuildVersion>
+    <CppWinRTBuildVersion Condition="'$(CppWinRTBuildVersion)'==''">2.3.4.5</CppWinRTBuildVersion>
     <CmakePlatform>$(Platform)</CmakePlatform>
     <CmakePlatform Condition="'$(Platform)'=='Win32'">x86</CmakePlatform>
     <CmakeOutDir Condition="'$(CmakeOutDir)'==''">$(SolutionDir)build\$(CmakePlatform)\$(Configuration)</CmakeOutDir>
@@ -53,7 +53,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <PreprocessorDefinitions>XLANG_VERSION_STRING="$(XlangBuildVersion)";NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CPPWINRT_VERSION_STRING="$(CppWinRTBuildVersion)";NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/await /bigobj</AdditionalOptions>
       <AdditionalOptions Condition="'$(Clang)'=='1'">-Wno-unused-command-line-argument -fno-delayed-template-parsing -Xclang -fcoroutines-ts -mcx16</AdditionalOptions>
@@ -62,7 +62,7 @@
       <AdditionalDependencies>onecore.lib</AdditionalDependencies>
     </Link>
     <ResourceCompile>
-      <PreprocessorDefinitions>XLANG_VERSION_STRING="$(XlangBuildVersion)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>CPPWINRT_VERSION_STRING="$(CppWinRTBuildVersion)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
 

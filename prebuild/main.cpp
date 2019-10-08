@@ -1,6 +1,6 @@
 #include "pch.h"
 
-struct writer : xlang::text::writer_base<writer>
+struct writer : cppwinrt::writer_base<writer>
 {
 
 };
@@ -18,11 +18,11 @@ int main(int const argc, char** argv)
 
     strings_h.write(R"(
 #pragma once
-namespace xlang::strings {
+namespace cppwinrt::strings {
 )");
 
     strings_cpp.write(R"(
-namespace xlang::strings {
+namespace cppwinrt::strings {
 )");
 
     for (auto&& file : std::filesystem::directory_iterator(argv[1]))
@@ -36,7 +36,7 @@ namespace xlang::strings {
         auto name = path.filename();
         name.replace_extension();
 
-        auto view = xlang::text::file_to_string(path.string());
+        auto view = cppwinrt::file_to_string(path.string());
 
         strings_h.write(R"(extern char const %[%];
 )",
@@ -109,7 +109,7 @@ BEGIN
     END
 END
 )",
-    XLANG_VERSION_STRING);
+    CPPWINRT_VERSION_STRING);
 
     std::filesystem::create_directories(argv[2]);
     auto const output = std::filesystem::canonical(argv[2]);
