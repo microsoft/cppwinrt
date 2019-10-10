@@ -5,16 +5,6 @@ using namespace Windows::Foundation;
 
 namespace
 {
-    struct notification
-    {
-        uint32_t suspend{};
-        uint32_t resume{};
-    };
-
-    std::map<void const*, notification> watcher;
-    slim_mutex lock;
-    handle start_racing{ CreateEventW(nullptr, true, false, nullptr) };
-
     struct free_awaitable
     {
     };
@@ -122,6 +112,18 @@ namespace
         co_return 0;
     }
 
+    struct notification
+    {
+        uint32_t suspend{};
+        uint32_t resume{};
+    };
+
+    static std::map<void const*, notification> watcher;
+    static slim_mutex lock;
+    static handle start_racing{ CreateEventW(nullptr, true, false, nullptr) };
+    constexpr size_t test_coroutines = 10;
+    constexpr size_t test_suspension_points = 12;
+
     IAsyncAction Async()
     {
         co_await resume_on_signal(start_racing.get());
@@ -137,13 +139,15 @@ namespace
         co_await AsyncOperation();
         co_await AsyncOperationWithProgress();
     }
-
-    constexpr size_t test_coroutines = 10;
-    constexpr size_t test_suspension_points = 12;
 }
 
 TEST_CASE("notify_awaiter")
 {
+    // TODO: another test is creating a coroutine that may be running after this test
+    // starts. This bumps into the notify handlers and breaks this test.
+    // Find and destroy.
+    Sleep(2000);
+
     // Everything works fine when nobody is watching.
 
     REQUIRE(!winrt_suspend_handler);
@@ -178,10 +182,11 @@ TEST_CASE("notify_awaiter")
 
     // Give coroutines a moment to get to the racing line.
 
-    Sleep(500);
+    Sleep(1000);
 
     // Each coroutine should have suspended once.
 
+    REQUIRE(concurrency.size() == test_coroutines);
     REQUIRE(watcher.size() == test_coroutines);
 
     for (auto&& [_, tally] : watcher)
