@@ -5,10 +5,10 @@
 
 using namespace Microsoft::VisualStudio::Debugger;
 using namespace Microsoft::VisualStudio::Debugger::Evaluation;
+using namespace std::literals;
 using namespace winrt;
-using namespace xlang;
-using namespace xlang::meta;
-using namespace xlang::meta::reader;
+using namespace winmd::impl;
+using namespace winmd::reader;
 
 template <typename...T> struct overloaded : T... { using T::operator()...; };
 template <typename...T> overloaded(T...)->overloaded<T...>;

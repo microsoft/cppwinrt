@@ -9,9 +9,7 @@ using namespace Microsoft::VisualStudio::Debugger::Telemetry;
 using namespace Microsoft::VisualStudio::Debugger::DefaultPort;
 using namespace std::filesystem;
 using namespace winrt;
-using namespace xlang;
-using namespace xlang::meta;
-using namespace xlang::meta::reader;
+using namespace winmd::reader;
 
 std::vector<std::string> db_files;
 std::unique_ptr<cache> db;

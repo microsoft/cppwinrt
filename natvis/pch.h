@@ -17,7 +17,7 @@
 #include <memory>
 #include <variant>
 #include <cmd_reader.h>
-#include <meta_reader.h>
+#include <winmd_reader.h>
 
 #ifndef IF_FAIL_RET
 #define IF_FAIL_RET(expr) { HRESULT _hr = (expr); if(FAILED(_hr)) { return(_hr); } }
@@ -31,7 +31,7 @@ winrt::com_ptr<T> make_com_ptr(T* ptr)
     return result;
 }
 
-xlang::meta::reader::TypeDef FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
+winmd::reader::TypeDef FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
 
 enum class NatvisDiagnosticLevel
 {
