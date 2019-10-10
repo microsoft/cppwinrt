@@ -171,7 +171,7 @@
     <Copy SourceFiles="@(Templates)" DestinationFolder="%(StagingFolder)" />
     <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:WizardData/ns:packages/ns:package/@version" Value="$(CppWinRTVersion)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
     <ItemGroup>
-      <TemplateItems Include="@(OtherTemplateFiles);&#xA;                              @(Templates->'%(StagingFolder)%(Filename).vstemplate');&#xA;                              @(Templates->'cppwinrt.ico');&#xA;                              @(Templates->'cppwinrt.png')">
+      <TemplateItems Include="@(OtherTemplateFiles);@(Templates->'%(StagingFolder)%(Filename).vstemplate');@(Templates->'cppwinrt.ico');@(Templates->'cppwinrt.png')">
         <IncludeInVSIX>true</IncludeInVSIX>
         <IsAssembly>false</IsAssembly>
         <VSIXSubPath>%(RecursiveDir)</VSIXSubPath>
