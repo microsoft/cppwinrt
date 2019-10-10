@@ -53,6 +53,150 @@ namespace winrt::impl
             }
         }
     }
+
+    template <typename T>
+    class has_awaitable_member
+    {
+        template <typename U, typename = decltype(std::declval<U>().await_ready())> static constexpr bool get_value(int) { return true; }
+        template <typename> static constexpr bool get_value(...) { return false; }
+
+    public:
+
+        static constexpr bool value = get_value<T>(0);
+    };
+
+    template <typename T>
+    class has_awaitable_free
+    {
+        template <typename U, typename = decltype(await_ready(std::declval<U>()))> static constexpr bool get_value(int) { return true; }
+        template <typename> static constexpr bool get_value(...) { return false; }
+
+    public:
+
+        static constexpr bool value = get_value<T>(0);
+    };
+
+    template <typename T>
+    struct free_await_adapter_impl
+    {
+        T&& awaitable;
+
+        bool ready()
+        {
+            return await_ready(awaitable);
+        }
+
+        template <typename U>
+        auto suspend(std::experimental::coroutine_handle<U> handle)
+        {
+            return await_suspend(awaitable, handle);
+        }
+
+        auto resume()
+        {
+            return await_resume(awaitable);
+        }
+    };
+
+    template <typename T>
+    struct free_await_adapter
+    {
+        free_await_adapter_impl<T>&& awaitable;
+
+        bool await_ready()
+        {
+            return awaitable.ready();
+        }
+
+        template <typename U>
+        auto await_suspend(std::experimental::coroutine_handle<U> handle)
+        {
+            return awaitable.suspend(handle);
+        }
+
+        auto await_resume()
+        {
+            return awaitable.resume();
+        }
+    };
+
+    template <typename T>
+    struct member_await_adapter
+    {
+        T&& awaitable;
+
+        bool await_ready()
+        {
+            return awaitable.await_ready();
+        }
+
+        template <typename U>
+        auto await_suspend(std::experimental::coroutine_handle<U> handle)
+        {
+            return awaitable.await_suspend(handle);
+        }
+
+        auto await_resume()
+        {
+            return awaitable.await_resume();
+        }
+    };
+
+    template <typename T>
+    auto get_awaiter(T&& value) noexcept -> decltype(static_cast<T&&>(value).operator co_await())
+    {
+        return static_cast<T&&>(value).operator co_await();
+    }
+
+    template <typename T>
+    auto get_awaiter(T&& value) noexcept -> decltype(operator co_await(static_cast<T&&>(value)))
+    {
+        return operator co_await(static_cast<T&&>(value));
+    }
+
+    template <typename T, std::enable_if_t<has_awaitable_member<T>::value, int> = 0>
+    auto get_awaiter(T&& value) noexcept
+    {
+        return member_await_adapter<T>{ static_cast<T&&>(value) };
+    }
+
+    template <typename T, std::enable_if_t<has_awaitable_free<T>::value, int> = 0>
+    auto get_awaiter(T&& value) noexcept
+    {
+        return free_await_adapter<T>{ { static_cast<T&&>(value) }};
+    }
+
+    template <typename T>
+    struct notify_awaiter
+    {
+        decltype(get_awaiter(std::declval<T&&>())) && awaitable;
+
+        bool await_ready()
+        {
+            if (winrt_suspend_handler)
+            {
+                winrt_suspend_handler(this);
+            }
+
+            return awaitable.await_ready();
+        }
+
+        template <typename U>
+        auto await_suspend(std::experimental::coroutine_handle<U> handle)
+        {
+            return awaitable.await_suspend(handle);
+        }
+
+        auto await_resume()
+        {
+            if (winrt_resume_handler)
+            {
+                winrt_resume_handler(this);
+            }
+
+            return awaitable.await_resume();
+        }
+    };
 }
 
 WINRT_EXPORT namespace winrt
@@ -377,6 +521,12 @@ namespace std::experimental
             void unhandled_exception() const noexcept
             {
                 winrt::terminate();
+            }
+
+            template <typename Expression>
+            auto await_transform(Expression&& expression) noexcept
+            {
+                return winrt::impl::notify_awaiter<Expression>{ winrt::impl::get_awaiter<Expression>(static_cast<Expression&&>(expression)) };
             }
         };
     };
