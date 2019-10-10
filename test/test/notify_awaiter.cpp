@@ -121,7 +121,7 @@ namespace
     static std::map<void const*, notification> watcher;
     static slim_mutex lock;
     static handle start_racing{ CreateEventW(nullptr, true, false, nullptr) };
-    constexpr size_t test_coroutines = 10;
+    constexpr size_t test_coroutines = 20;
     constexpr size_t test_suspension_points = 12;
 
     IAsyncAction Async()
@@ -175,7 +175,7 @@ TEST_CASE("notify_awaiter")
         concurrency.push_back(Async());
     }
 
-    // Give coroutines a moment to get to the racing line.
+    // Give coroutines a moment to get to the starting line.
 
     Sleep(1000);
 
