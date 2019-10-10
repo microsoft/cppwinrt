@@ -225,6 +225,7 @@
     </ClCompile>
     <ClCompile Include="names.cpp" />
     <ClCompile Include="noexcept.cpp" />
+    <ClCompile Include="notify_awaiter.cpp" />
     <ClCompile Include="no_make_detection.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>

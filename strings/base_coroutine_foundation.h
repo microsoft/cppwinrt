@@ -260,6 +260,128 @@ namespace winrt::impl
         Promise* m_promise;
     };
 
+    template <typename T>
+    class has_awaitable_member
+    {
+        template <typename U, typename = decltype(std::declval<U>().await_ready())> static constexpr bool get_value(int) { return true; }
+        template <typename> static constexpr bool get_value(...) { return false; }
+
+    public:
+
+        static constexpr bool value = get_value<T>(0);
+    };
+
+    template <typename T>
+    class has_awaitable_free
+    {
+        template <typename U, typename = decltype(await_ready(std::declval<U>()))> static constexpr bool get_value(int) { return true; }
+        template <typename> static constexpr bool get_value(...) { return false; }
+
+    public:
+
+        static constexpr bool value = get_value<T>(0);
+    };
+
+    template <typename T>
+    struct member_await_adapter_impl
+    {
+        T&& awaitable;
+
+        bool ready() noexcept
+        {
+            return await_ready(awaitable);
+        }
+
+        template <typename U>
+        auto suspend(std::experimental::coroutine_handle<U> handle) noexcept
+        {
+            return await_suspend(awaitable, handle);
+        }
+
+        auto resume() noexcept
+        {
+            return await_resume(awaitable);
+        }
+    };
+
+    template <typename T>
+    struct member_await_adapter
+    {
+        T&& awaitable;
+
+        bool await_ready() noexcept
+        {
+            return member_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.ready();
+        }
+
+        template <typename U>
+        auto await_suspend(std::experimental::coroutine_handle<U> handle) noexcept
+        {
+            return member_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.suspend(handle);
+        }
+
+        auto await_resume() noexcept
+        {
+            return member_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.resume();
+        }
+    };
+
+    template <typename T>
+    auto get_awaiter(T&& value) noexcept -> decltype(static_cast<T&&>(value).operator co_await())
+    {
+        return static_cast<T&&>(value).operator co_await();
+    }
+
+    template <typename T>
+    auto get_awaiter(T&& value) noexcept -> decltype(operator co_await(static_cast<T&&>(value)))
+    {
+        return operator co_await(static_cast<T&&>(value));
+    }
+
+    template <typename T, std::enable_if_t<has_awaitable_member<T>::value, int> = 0>
+    auto get_awaiter(T&& value) noexcept
+    {
+        return static_cast<T&&>(value);
+    }
+
+    template <typename T, std::enable_if_t<has_awaitable_free<T>::value, int> = 0>
+    auto get_awaiter(T&& value) noexcept
+    {
+        return member_await_adapter<T>{ static_cast<T&&>(value) };
+    }
+
+    template <typename T>
+    struct notify_awaiter
+    {
+        T&& awaitable;
+
+        bool await_ready() noexcept
+        {
+            if (winrt_suspend_handler)
+            {
+                winrt_suspend_handler(this);
+            }
+
+            return get_awaiter(static_cast<T&&>(awaitable)).await_ready();
+        }
+
+        template <typename U>
+        auto await_suspend(std::experimental::coroutine_handle<U> handle) noexcept
+        {
+            return get_awaiter(static_cast<T&&>(awaitable)).await_suspend(handle);
+        }
+
+        auto await_resume() noexcept
+        {
+            if (winrt_resume_handler)
+            {
+                winrt_resume_handler(this);
+            }
+
+            return get_awaiter(static_cast<T&&>(awaitable)).await_resume();
+        }
+    };
+
     template <typename Derived, typename AsyncInterface, typename TProgress = void>
     struct promise_base : implements<Derived, AsyncInterface, Windows::Foundation::IAsyncInfo>
     {
@@ -467,14 +589,14 @@ namespace winrt::impl
         }
 
         template <typename Expression>
-        Expression&& await_transform(Expression&& expression)
+        auto await_transform(Expression&& expression)
         {
             if (Status() == AsyncStatus::Canceled)
             {
                 throw winrt::hresult_canceled();
             }
 
-            return std::forward<Expression>(expression);
+            return notify_awaiter<Expression>{ static_cast<Expression&&>(expression) };
         }
 
         cancellation_token<Derived> await_transform(get_cancellation_token_t) noexcept
