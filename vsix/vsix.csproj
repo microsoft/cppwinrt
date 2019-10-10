@@ -153,7 +153,7 @@
   </Target>
   <Import Project=".\packages\Microsoft.VSSDK.BuildTools.16.0.2258\build\Microsoft.VSSDK.BuildTools.targets" Condition="Exists('.\packages\Microsoft.VSSDK.BuildTools.16.0.2258\build\Microsoft.VSSDK.BuildTools.targets')" />
   <Target Name="GetCppWinRTVersion" Outputs="$(CppWinRTVersion)" />
-  <Target Name="PrepareBuild" BeforeTargets="Build">
+  <Target Name="PrepareBuild" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(CppWinRTVersion)' == ''" Text="The project must be supplied with a CppWinRTVersion property value" />
     <Error Condition="'$(NatvisDirx86)' == ''" Text="The project must be supplied with a NatvisDirx86 property value" />
     <Error Condition="'$(NatvisDirx64)' == ''" Text="The project must be supplied with a NatvisDirx64 property value" />
