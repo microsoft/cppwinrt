@@ -1,4 +1,4 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata minClientVersion="2.5">
     <id>Microsoft.Windows.CppWinRT</id>
@@ -12,8 +12,7 @@
     <tags>native C++ WinRT nativepackage</tags>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
     <license type="file">LICENSE</license>
-    <projectUrl>https://github.com/Microsoft/cppwinrt/tree/master/nuget</projectUrl>
-    <iconUrl>https://aka.ms/cppwinrt.ico</iconUrl>
+    <projectUrl>https://github.com/Microsoft/xlang/tree/master/src/package/cppwinrt/nuget</projectUrl>
   </metadata>
   <files>
     <file src="..\LICENSE"/>
