@@ -143,11 +143,6 @@ namespace
 
 TEST_CASE("notify_awaiter")
 {
-    // TODO: another test is creating a coroutine that may be running after this test
-    // starts. This bumps into the notify handlers and breaks this test.
-    // Find and destroy.
-    Sleep(2000);
-
     // Everything works fine when nobody is watching.
 
     REQUIRE(!winrt_suspend_handler);
