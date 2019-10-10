@@ -283,24 +283,46 @@ namespace winrt::impl
     };
 
     template <typename T>
-    struct member_await_adapter_impl
+    struct free_await_adapter_impl
     {
         T&& awaitable;
 
-        bool ready() noexcept
+        bool ready()
         {
             return await_ready(awaitable);
         }
 
         template <typename U>
-        auto suspend(std::experimental::coroutine_handle<U> handle) noexcept
+        auto suspend(std::experimental::coroutine_handle<U> handle)
         {
             return await_suspend(awaitable, handle);
         }
 
-        auto resume() noexcept
+        auto resume()
         {
             return await_resume(awaitable);
+        }
+    };
+
+    template <typename T>
+    struct free_await_adapter
+    {
+        T&& awaitable;
+
+        bool await_ready()
+        {
+            return free_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.ready();
+        }
+
+        template <typename U>
+        auto await_suspend(std::experimental::coroutine_handle<U> handle)
+        {
+            return free_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.suspend(handle);
+        }
+
+        auto await_resume()
+        {
+            return free_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.resume();
         }
     };
 
@@ -309,20 +331,20 @@ namespace winrt::impl
     {
         T&& awaitable;
 
-        bool await_ready() noexcept
+        bool await_ready()
         {
-            return member_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.ready();
+            return awaitable.await_ready();
         }
 
         template <typename U>
-        auto await_suspend(std::experimental::coroutine_handle<U> handle) noexcept
+        auto await_suspend(std::experimental::coroutine_handle<U> handle)
         {
-            return member_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.suspend(handle);
+            return awaitable.await_suspend(handle);
         }
 
-        auto await_resume() noexcept
+        auto await_resume()
         {
-            return member_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.resume();
+            return awaitable.await_resume();
         }
     };
 
@@ -341,44 +363,48 @@ namespace winrt::impl
     template <typename T, std::enable_if_t<has_awaitable_member<T>::value, int> = 0>
     auto get_awaiter(T&& value) noexcept
     {
-        return static_cast<T&&>(value);
+        return member_await_adapter<T>{ static_cast<T&&>(value) };
     }
 
     template <typename T, std::enable_if_t<has_awaitable_free<T>::value, int> = 0>
     auto get_awaiter(T&& value) noexcept
     {
-        return member_await_adapter<T>{ static_cast<T&&>(value) };
+        return free_await_adapter<T>{ static_cast<T&&>(value) };
     }
 
     template <typename T>
     struct notify_awaiter
     {
-        T&& awaitable;
+        decltype(get_awaiter(std::declval<T&&>())) awaitable;
 
-        bool await_ready() noexcept
+        notify_awaiter(T&& awaitable) : awaitable(get_awaiter(static_cast<T&&>(awaitable)))
+        {
+        }
+
+        bool await_ready()
         {
             if (winrt_suspend_handler)
             {
                 winrt_suspend_handler(this);
             }
 
-            return get_awaiter(static_cast<T&&>(awaitable)).await_ready();
+            return awaitable.await_ready();
         }
 
         template <typename U>
-        auto await_suspend(std::experimental::coroutine_handle<U> handle) noexcept
+        auto await_suspend(std::experimental::coroutine_handle<U> handle)
         {
-            return get_awaiter(static_cast<T&&>(awaitable)).await_suspend(handle);
+            return awaitable.await_suspend(handle);
         }
 
-        auto await_resume() noexcept
+        auto await_resume()
         {
             if (winrt_resume_handler)
             {
                 winrt_resume_handler(this);
             }
 
-            return get_awaiter(static_cast<T&&>(awaitable)).await_resume();
+            return awaitable.await_resume();
         }
     };
 

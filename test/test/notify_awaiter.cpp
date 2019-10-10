@@ -87,6 +87,24 @@ namespace
         }
     };
 
+    struct no_copy_awaitable
+    {
+        no_copy_awaitable() = default;
+        no_copy_awaitable(no_copy_awaitable const&) = delete;
+
+        bool await_ready()
+        {
+            return true;
+        }
+        void await_suspend(std::experimental::coroutine_handle<>)
+        {
+        }
+        void await_resume()
+        {
+
+        }
+    };
+
     IAsyncAction AsyncAction()
     {
         co_return;
@@ -113,6 +131,7 @@ namespace
         co_await member_awaitable{};
         co_await free_operator_awaitable{};
         co_await member_operator_awaitable{};
+        co_await no_copy_awaitable{};
         co_await AsyncAction();
         co_await AsyncActionWithProgress();
         co_await AsyncOperation();
@@ -120,7 +139,7 @@ namespace
     }
 
     constexpr size_t test_coroutines = 10;
-    constexpr size_t test_suspension_points = 11;
+    constexpr size_t test_suspension_points = 12;
 }
 
 TEST_CASE("notify_awaiter")
