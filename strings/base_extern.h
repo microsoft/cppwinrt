@@ -62,6 +62,8 @@ extern "C"
     void    __stdcall WINRT_WakeAllConditionVariable(winrt::impl::condition_variable* cv) noexcept;
     void*   __stdcall WINRT_InterlockedPushEntrySList(void* head, void* entry) noexcept;
     void*   __stdcall WINRT_InterlockedFlushSList(void* head) noexcept;
+    int32_t __stdcall WINRT_WaitOnAddress(volatile void* address, void* compare_address, size_t address_size, uint32_t milliseconds) noexcept;
+    void    __stdcall WINRT_WakeByAddressAll(void* address) noexcept;
 
     void* __stdcall WINRT_CreateEventW(void*, int32_t, int32_t, void*) noexcept;
     int32_t __stdcall WINRT_SetEvent(void*) noexcept;
@@ -157,6 +159,8 @@ WINRT_IMPL_LINK(WakeConditionVariable, 4)
 WINRT_IMPL_LINK(WakeAllConditionVariable, 4)
 WINRT_IMPL_LINK(InterlockedPushEntrySList, 8)
 WINRT_IMPL_LINK(InterlockedFlushSList, 4)
+WINRT_IMPL_LINK(WaitOnAddress, 16)
+WINRT_IMPL_LINK(WakeByAddressAll, 4)
 
 WINRT_IMPL_LINK(CreateEventW, 16)
 WINRT_IMPL_LINK(SetEvent, 4)

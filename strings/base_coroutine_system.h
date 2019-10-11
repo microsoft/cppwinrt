@@ -25,19 +25,22 @@ WINRT_EXPORT namespace winrt
 
             bool await_suspend(std::experimental::coroutine_handle<> handle)
             {
-                m_queued = m_dispatcher.TryEnqueue(m_priority, [handle]
-                    {
-                        handle();
-                    });
+                bool const queued = m_dispatcher.TryEnqueue(m_priority, [handle, this]
+                {
+                    m_ready.wait();
+                    handle();
+                });
+                m_queued = queued;
+                m_ready.signal(); // all member variables potentially invalid after this point
 
-                return m_queued;
+                return queued;
             }
 
         private:
-
             Windows::System::DispatcherQueue const& m_dispatcher;
             Windows::System::DispatcherQueuePriority const m_priority;
             bool m_queued{};
+            slim_event m_ready;
         };
 
         return awaitable{ dispatcher, priority };

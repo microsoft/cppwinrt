@@ -118,4 +118,29 @@ WINRT_EXPORT namespace winrt
     private:
         impl::condition_variable m_cv{};
     };
+
+    struct slim_event
+    {
+        slim_event(slim_event const&) = delete;
+        slim_event const& operator=(slim_event const&) = delete;
+        slim_event() noexcept = default;
+
+        void signal() noexcept
+        {
+            signaled = true;
+            WINRT_WakeByAddressAll(&signaled);
+        }
+
+        void wait() noexcept
+        {
+            while (!signaled)
+            {
+                bool not_ready = false;
+                WINRT_WaitOnAddress(&signaled, &not_ready, sizeof(not_ready), 0xFFFFFFFF); // INFINITE
+            }
+        }
+
+    private:
+        bool signaled = false;
+    };
 }
