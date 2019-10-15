@@ -307,22 +307,22 @@ namespace winrt::impl
     template <typename T>
     struct free_await_adapter
     {
-        free_await_adapter_impl<T>&& awaitable;
+        T&& awaitable;
 
         bool await_ready()
         {
-            return awaitable.ready();
+            return free_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.ready();
         }
 
         template <typename U>
         auto await_suspend(std::experimental::coroutine_handle<U> handle)
         {
-            return awaitable.suspend(handle);
+            return free_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.suspend(handle);
         }
 
         auto await_resume()
         {
-            return awaitable.resume();
+            return free_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.resume();
         }
     };
 
@@ -369,13 +369,17 @@ namespace winrt::impl
     template <typename T, std::enable_if_t<has_awaitable_free<T>::value, int> = 0>
     auto get_awaiter(T&& value) noexcept
     {
-        return free_await_adapter<T>{ { static_cast<T&&>(value) }};
+        return free_await_adapter<T>{ static_cast<T&&>(value) };
     }
 
     template <typename T>
     struct notify_awaiter
     {
-        decltype(get_awaiter(std::declval<T&&>()))&& awaitable;
+        decltype(get_awaiter(std::declval<T&&>())) awaitable;
+
+        notify_awaiter(T&& awaitable) : awaitable(get_awaiter(static_cast<T&&>(awaitable)))
+        {
+        }
 
         bool await_ready()
         {
@@ -618,7 +622,7 @@ namespace winrt::impl
                 throw winrt::hresult_canceled();
             }
 
-            return notify_awaiter<Expression>{ get_awaiter<Expression>(static_cast<Expression&&>(expression)) };
+            return notify_awaiter<Expression>{ static_cast<Expression&&>(expression) };
         }
 
         cancellation_token<Derived> await_transform(get_cancellation_token_t) noexcept
