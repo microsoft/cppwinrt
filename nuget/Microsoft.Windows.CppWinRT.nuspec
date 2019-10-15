@@ -12,7 +12,7 @@
     <tags>native C++ WinRT nativepackage</tags>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
     <license type="file">LICENSE</license>
-    <projectUrl>https://github.com/Microsoft/xlang/tree/master/src/package/cppwinrt/nuget</projectUrl>
+    <projectUrl>https://github.com/Microsoft/cppwinrt/tree/master/nuget</projectUrl>
     <iconUrl>https://aka.ms/cppwinrt.ico</iconUrl>
   </metadata>
   <files>
