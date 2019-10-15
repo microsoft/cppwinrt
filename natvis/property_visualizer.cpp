@@ -5,9 +5,7 @@
 using namespace Microsoft::VisualStudio::Debugger;
 using namespace Microsoft::VisualStudio::Debugger::Evaluation;
 
-using namespace xlang;
-using namespace xlang::meta;
-using namespace xlang::meta::reader;
+using namespace winmd::reader;
 
 HRESULT property_visualizer::GetChildren(
         _In_ UINT32 InitialRequestSize,
