@@ -478,15 +478,15 @@ catch (...) { return winrt::to_hresult(); }
 
                     if (is_add_overload(method) || is_remove_overload(method))
                     {
-                        auto format = R"(    auto %::%(%)
+                        auto format = R"(    % %::%(%)
     {
         auto f = make<winrt::@::factory_implementation::%>().as<%>();
         return f.%(%);
     }
 )";
 
-
                         w.write(format,
+                            signature.return_signature(),
                             type_name,
                             method_name,
                             bind<write_consume_params>(signature),
