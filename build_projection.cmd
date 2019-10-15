@@ -28,5 +28,5 @@ if "%target_configuration%"=="" (
 )
 
 echo Building projection into %target_platform% %target_configuration%
-%~p0\build\x64\Release\cppwinrt.exe -in local -out %~p0\build\%target_platform%\%target_configuration% -verbose
+%~p0\_build\x64\Release\cppwinrt.exe -in local -out %~p0\_build\%target_platform%\%target_configuration% -verbose
 echo.
