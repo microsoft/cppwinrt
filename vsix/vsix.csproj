@@ -65,9 +65,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="..\LICENSE">
+    <Content Include="LICENSE">
       <IncludeInVSIX>true</IncludeInVSIX>
-      <Link>LICENSE</Link>
     </Content>
     <Content Include="Microsoft.Cpp.CppWinRT.props">
       <InstallRoot>VCTargets</InstallRoot>
@@ -159,6 +158,7 @@
     <Error Condition="'$(NatvisDirx86)' == ''" Text="The project must be supplied with a NatvisDirx86 property value" />
     <Error Condition="'$(NatvisDirx64)' == ''" Text="The project must be supplied with a NatvisDirx64 property value" />
     <Error Condition="'$(NupkgDir)' == ''" Text="The project must be supplied with a NupkgDir property value" />
+    <Copy SourceFiles="..\LICENSE" DestinationFolder="$(MSBuildProjectDirectory)" />
     <ItemGroup>
       <VSTemplateFiles Include="*Templates\*\**\*.vstemplate" />
       <OtherTemplateFiles Include="*Templates\*\**\*" />
