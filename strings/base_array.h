@@ -31,27 +31,17 @@ WINRT_EXPORT namespace winrt
             array_view(value, N)
         {}
 
-        template <typename = std::enable_if_t<std::is_same_v<T, bool>>>
-        array_view(std::vector<bool>& value) noexcept
-        {
-            static_assert(false, "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
-        }
-
-        template <typename = std::enable_if_t<std::is_same_v<T, bool>>>
-        array_view(std::vector<bool> const& value) noexcept
-        {
-            static_assert(false, "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
-        }
-
         template <typename C>
         array_view(std::vector<C>& value) noexcept :
-            array_view(value.data(), static_cast<size_type>(value.size()))
-        {}
+            array_view(data(value), static_cast<size_type>(value.size()))
+        {
+        }
 
         template <typename C>
         array_view(std::vector<C> const& value) noexcept :
-            array_view(value.data(), static_cast<size_type>(value.size()))
-        {}
+            array_view(data(value), static_cast<size_type>(value.size()))
+        {
+        }
 
         template <typename C, size_t N>
         array_view(std::array<C, N>& value) noexcept :
@@ -208,6 +198,22 @@ WINRT_EXPORT namespace winrt
 
         pointer m_data{ nullptr };
         size_type m_size{ 0 };
+
+    private:
+
+        template <typename C>
+        auto data(std::vector<C> const& value) noexcept
+        {
+            static_assert(!std::is_same_v<C, bool>, "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
+            return value.data();
+        }
+
+        template <typename C>
+        auto data(std::vector<C>& value) noexcept
+        {
+            static_assert(!std::is_same_v<C, bool>, "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
+            return value.data();
+        }
     };
 
     template <typename T>
