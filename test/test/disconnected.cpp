@@ -79,16 +79,20 @@ TEST_CASE("disconnected")
 
     {
         auto async = ActionProgress();
+        handle signal{ CreateEventW(nullptr, true, false, nullptr) };
 
         async.Progress([](auto&&...)
             {
                 throw hresult_error(RPC_E_DISCONNECTED);
             });
 
-        async.Completed([](auto&&...)
+        async.Completed([&](auto&&...)
             {
+                SetEvent(signal.get());
                 throw hresult_error(RPC_E_DISCONNECTED);
             });
+
+        WaitForSingleObject(signal.get(), INFINITE);
     }
 
     {
@@ -102,15 +106,19 @@ TEST_CASE("disconnected")
 
     {
         auto async = OperationProgress();
+        handle signal{ CreateEventW(nullptr, true, false, nullptr) };
 
         async.Progress([](auto&&...)
             {
                 throw hresult_error(RPC_E_DISCONNECTED);
             });
 
-        async.Completed([](auto&&...)
+        async.Completed([&](auto&&...)
             {
+                SetEvent(signal.get());
                 throw hresult_error(RPC_E_DISCONNECTED);
             });
+
+        WaitForSingleObject(signal.get(), INFINITE);
     }
 }

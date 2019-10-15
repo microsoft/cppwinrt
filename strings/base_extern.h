@@ -1,4 +1,8 @@
 
+__declspec(selectany) int32_t(__stdcall* winrt_to_hresult_handler)(void* address) noexcept {};
+__declspec(selectany) void(__stdcall* winrt_suspend_handler)(void const* token) noexcept {};
+__declspec(selectany) void(__stdcall* winrt_resume_handler)(void const* token) noexcept {};
+
 extern "C"
 {
     int32_t __stdcall WINRT_GetRestrictedErrorInfo(void** info) noexcept;

@@ -467,14 +467,14 @@ namespace winrt::impl
         }
 
         template <typename Expression>
-        Expression&& await_transform(Expression&& expression)
+        auto await_transform(Expression&& expression)
         {
             if (Status() == AsyncStatus::Canceled)
             {
                 throw winrt::hresult_canceled();
             }
 
-            return std::forward<Expression>(expression);
+            return notify_awaiter<Expression>{ static_cast<Expression&&>(expression) };
         }
 
         cancellation_token<Derived> await_transform(get_cancellation_token_t) noexcept

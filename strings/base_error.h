@@ -1,6 +1,4 @@
 
-__declspec(selectany) int32_t (__stdcall *winrt_to_hresult_handler)(void* address) noexcept{};
-
 namespace winrt::impl
 {
     struct heap_traits
