@@ -4,6 +4,7 @@
 *_i.c
 *_p.c
 *.c
+test*.xml
 build
 packages
 Debug
