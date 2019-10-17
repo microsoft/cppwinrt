@@ -10,8 +10,8 @@ if "%target_version%"=="" set target_version=1.2.3.4
 
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
 
-if "%target_platform%"=="arm" goto :exit
-if "%target_platform%"=="arm64" goto :exit
+if "%target_platform%"=="arm" goto :eof
+if "%target_platform%"=="arm64" goto :eof
 
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:cppwinrt
 _build\%target_platform%\%target_configuration%\cppwinrt.exe -in local -out _build\%target_platform%\%target_configuration% -verbose
