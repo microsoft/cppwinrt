@@ -13,10 +13,8 @@ call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platfor
 if "%target_platform%"=="ARM" goto :exit
 if "%target_platform%"=="ARM64" goto :exit
 
-call nuget restore cppwinrt.sln
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:cppwinrt
 call build_projection %target_platform% %target_configuration%
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:test\test
 
-call nuget restore natvis\cppwinrtvisualizer.sln
 call msbuild /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln

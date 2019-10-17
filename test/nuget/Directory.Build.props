@@ -19,9 +19,9 @@
         <CppWinRTVerbosity>high</CppWinRTVerbosity>
         <CppWinRTPlatform>$(Platform)</CppWinRTPlatform>
         <CppWinRTPlatform Condition="'$(Platform)'=='Win32' or '$(Platform)'=='ARM' or '$(Platform)'=='ARM64'">x86</CppWinRTPlatform>
-        <CppWinRTPath>$(SolutionDir)..\..\..\..\..\_build\Windows\$(CppWinRTPlatform)\$(Configuration)\</CppWinRTPath>
+        <CppWinRTPath>$(SolutionDir)..\..\_build\$(CppWinRTPlatform)\$(Configuration)\</CppWinRTPath>
     </PropertyGroup>
 
-    <Import Project="..\..\..\..\nuget\Microsoft.Windows.CppWinRT.props" />
+    <Import Project="$(SolutionDir)..\..\nuget\Microsoft.Windows.CppWinRT.props" />
 
 </Project>
