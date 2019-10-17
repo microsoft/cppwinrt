@@ -14,7 +14,7 @@ if "%target_platform%"=="ARM" goto :exit
 if "%target_platform%"=="ARM64" goto :exit
 
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:cppwinrt
-call build_projection %target_platform% %target_configuration%
+_build\%target_platform%\%target_configuration%\cppwinrt.exe -in local -out _build\%target_platform%\%target_configuration% -verbose
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:test\test
 
 call msbuild /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
