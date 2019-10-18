@@ -417,7 +417,7 @@ $(XamlMetaDataProviderPch)
             Condition="'$(CppWinRTEnablePlatformProjection)' == 'true' AND '$(CppWinRTOverrideSDKReferences)' != 'true'"
             DependsOnTargets="GetCppWinRTPlatformWinMDInputs;$(CppWinRTMakePlatformProjectionDependsOn)"
             Inputs="@(CppWinRTPlatformWinMDInputs)"
-            Outputs="$(GeneratedFilesDir)winrt\base.h">
+            Outputs="$(IntDir)cppwinrt_plat.rsp">
         <PropertyGroup>
             <CppWinRTCommand>$(CppWinRTPath)cppwinrt %40"$(IntDir)cppwinrt_plat.rsp"</CppWinRTCommand>
         </PropertyGroup>
@@ -446,7 +446,7 @@ $(XamlMetaDataProviderPch)
           Condition="'$(CppWinRTEnableReferenceProjection)' == 'true'"
           DependsOnTargets="GetCppWinRTProjectWinMDReferences;GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;$(CppWinRTMakeReferenceProjectionDependsOn)"
           Inputs="@(CppWinRTDirectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
-          Outputs="@(CppWinRTDirectWinMDReferences->'$(GeneratedFilesDir)winrt\%(Filename).h');@(CppWinRTDynamicProjectWinMDReferences->'$(GeneratedFilesDir)winrt\%(Filename).h')">
+          Outputs="$(IntDir)cppwinrt_ref.rsp">
     <PropertyGroup>
       <CppWinRTCommand>$(CppWinRTPath)cppwinrt %40"$(IntDir)cppwinrt_ref.rsp"</CppWinRTCommand>
     </PropertyGroup>
@@ -479,7 +479,7 @@ $(XamlMetaDataProviderPch)
             Condition="'$(CppWinRTEnableComponentProjection)' == 'true'"
             DependsOnTargets="GetCppWinRTProjectWinMDReferences;GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;$(CppWinRTMakeComponentProjectionDependsOn)"
             Inputs="@(Midl->'%(MetadataFileName)');@(CppWinRTStaticProjectWinMDReferences)"
-            Outputs="$(GeneratedFilesDir)winrt\$(RootNamespace).h">
+            Outputs="$(IntDir)cppwinrt_comp.rsp">
         <PropertyGroup>
             <_PCH>@(ClCompile->Metadata('PrecompiledHeaderFile')->Distinct())</_PCH>
         </PropertyGroup>
