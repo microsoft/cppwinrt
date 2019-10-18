@@ -13,7 +13,7 @@
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
     <license type="file">LICENSE</license>
     <projectUrl>https://github.com/Microsoft/cppwinrt</projectUrl>
-    <icon>cppwinrt.ico</icon>
+    <iconUrl>https://aka.ms/cppwinrt.ico</iconUrl>
   </metadata>
   <files>
     <file src="..\LICENSE"/>
@@ -26,6 +26,5 @@
     <file src="Microsoft.Windows.CppWinRT.targets" target="build\native"/>
     <file src="CppWinrtRules.Project.xml" target="build\native"/>
     <file src="readme.txt"/>
-    <file src="..\vsix\cppwinrt.ico"/>
   </files>
 </package>
