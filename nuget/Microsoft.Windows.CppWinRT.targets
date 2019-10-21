@@ -443,7 +443,7 @@ $(XamlMetaDataProviderPch)
 
   <!--Build reference projection from WinMD project references and dynamic library project references-->
   <Target Name="CppWinRTMakeReferenceProjection"
-          Condition="'$(CppWinRTEnableReferenceProjection)' == 'true'"
+          Condition="'@(CppWinRTDirectWinMDReferences)@(CppWinRTDynamicProjectWinMDReferences)' != '' AND '$(CppWinRTEnableReferenceProjection)' == 'true'"
           DependsOnTargets="GetCppWinRTProjectWinMDReferences;GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;$(CppWinRTMakeReferenceProjectionDependsOn)"
           Inputs="@(CppWinRTDirectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
           Outputs="@(CppWinRTDirectWinMDReferences->'$(GeneratedFilesDir)winrt\%(Filename).h');@(CppWinRTDynamicProjectWinMDReferences->'$(GeneratedFilesDir)winrt\%(Filename).h')">
