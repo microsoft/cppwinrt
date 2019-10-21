@@ -37,7 +37,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <WindowsSDK_MetadataFoundationPath Condition="('$(WindowsSDK_MetadataFoundationPath)'!='') And !Exists($(WindowsSDK_MetadataFoundationPath))">$(WindowsSDK_MetadataPathVersioned)</WindowsSDK_MetadataFoundationPath>
 
         <GetTargetPathDependsOn>
-            $(GetTargetPathDependsOn);CppWinRTResolveWinMD;
+            $(GetTargetPathDependsOn);GetCppWinRTMdMergeInputs;CppWinRTResolveWinMD;
         </GetTargetPathDependsOn>
         <PrepareForBuildDependsOn>
             $(PrepareForBuildDependsOn);CppWinRTVerifyKitVersion;
@@ -114,7 +114,6 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
     <Target Name="CppWinRTResolveWinMD"
             Condition="'@(CppWinRTMdMergeInputs)' != '' AND '$(CppWinRTEnableComponentProjection)' == 'true'"
-            DependsOnTargets="GetCppWinRTMdMergeInputs"
             Returns="@(WinMDFullPath)">
         <ItemGroup>
             <WinMDFullPath Remove="@(WinMDFullPath)"/>
@@ -523,13 +522,6 @@ $(XamlMetaDataProviderPch)
 
     <!-- Main target that generates all the CppWinRT projections. -->
     <Target Name="CppWinRTMakeProjections" DependsOnTargets="CppWinRTMakePlatformProjection;CppWinRTMakeReferenceProjection;CppWinRTMakeComponentProjection;$(CppWinRTMakeProjectionsDependsOn)" />
-
-    <!--Add references to all merged project WinMD files for Xaml Compiler-->
-    <Target Name="CppWinRTAddXamlReferences" DependsOnTargets="$(CppWinRTAddXamlReferencesDependsOn)">
-        <ItemGroup>
-            <XamlReferencesToCompile Include="$(OutDir)*.winmd" />
-        </ItemGroup>
-    </Target>
 
     <!--Clear merged assembly and set local assembly for Xaml Compiler.
         (Note: this can be removed when CppWinRT references are removed from the Xaml targets file.)-->
