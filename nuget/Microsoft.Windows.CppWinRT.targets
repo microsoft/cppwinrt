@@ -520,9 +520,15 @@ $(XamlMetaDataProviderPch)
         <Exec Command="$(CppWinRTCommand)" Condition="'@(_CppwinrtCompInputs)' != ''"/>
     </Target>
 
-    <!-- Main target that generates all the CppWinRT projections. -->
-    <Target Name="CppWinRTMakeProjections" DependsOnTargets="CppWinRTMakePlatformProjection;CppWinRTMakeReferenceProjection;CppWinRTMakeComponentProjection;$(CppWinRTMakeProjectionsDependsOn)" />
+    <Target Name="CppWinRTMakeProjections" DependsOnTargets="CppWinRTCalculateEnabledProjections;CppWinRTMakePlatformProjection;CppWinRTMakeReferenceProjection;CppWinRTMakeComponentProjection;$(CppWinRTMakeProjectionsDependsOn)" />
 
+    <!--Add references to all merged project WinMD files for Xaml Compiler-->
+    <Target Name="CppWinRTAddXamlReferences" DependsOnTargets="$(CppWinRTAddXamlReferencesDependsOn)">
+        <ItemGroup>
+            <XamlReferencesToCompile Include="$(OutDir)*.winmd" />
+        </ItemGroup>
+    </Target>
+    
     <!--Clear merged assembly and set local assembly for Xaml Compiler.
         (Note: this can be removed when CppWinRT references are removed from the Xaml targets file.)-->
     <Target Name="CppWinRTSetXamlLocalAssembly" DependsOnTargets="$(CppWinRTSetXamlLocalAssemblyDependsOn)">
