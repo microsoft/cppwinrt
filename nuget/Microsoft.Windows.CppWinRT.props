@@ -17,13 +17,6 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <WinMDAssembly>true</WinMDAssembly>
     </PropertyGroup>
 
-    <!-- For a static library we don't want the winmd/lib/pdb to be packaged -->
-    <PropertyGroup Condition="'$(ConfigurationType)' == 'StaticLibrary'">
-        <IncludeCopyWinMDArtifactsOutputGroup>false</IncludeCopyWinMDArtifactsOutputGroup>
-        <IncludeBuiltProjectOutputGroup>false</IncludeBuiltProjectOutputGroup>
-        <IncludeDebugSymbolsProjectOutputGroup>false</IncludeDebugSymbolsProjectOutputGroup>
-    </PropertyGroup>
-
     <ItemDefinitionGroup>
         <ClCompile>
             <CompileAsWinRT Condition="'$(CppWinRTProjectLanguage)' != 'C++/CX' And '%(ClCompile.CompileAsWinRT)' == ''">false</CompileAsWinRT>

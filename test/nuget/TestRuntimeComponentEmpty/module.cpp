@@ -13,10 +13,16 @@ bool __stdcall winrt_can_unload_now() noexcept
 }
 
 void* __stdcall TestStaticLibrary5_get_activation_factory(std::wstring_view const& name);
+void* __stdcall TestStaticLibrary6_get_activation_factory(std::wstring_view const& name);
 
 void* __stdcall winrt_get_activation_factory(std::wstring_view const& name)
 {
     void* factory = TestStaticLibrary5_get_activation_factory(name);
+    if (factory)
+    {
+        return factory;
+    }
+    factory = TestStaticLibrary6_get_activation_factory(name);
     if (factory)
     {
         return factory;
