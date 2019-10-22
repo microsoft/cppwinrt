@@ -520,7 +520,7 @@ $(XamlMetaDataProviderPch)
         <Exec Command="$(CppWinRTCommand)" Condition="'@(_CppwinrtCompInputs)' != ''"/>
     </Target>
 
-    <Target Name="CppWinRTMakeProjections" DependsOnTargets="CppWinRTCalculateEnabledProjections;CppWinRTMakePlatformProjection;CppWinRTMakeReferenceProjection;CppWinRTMakeComponentProjection;$(CppWinRTMakeProjectionsDependsOn)" />
+    <Target Name="CppWinRTMakeProjections" DependsOnTargets="CppWinRTMakePlatformProjection;CppWinRTMakeReferenceProjection;CppWinRTMakeComponentProjection;$(CppWinRTMakeProjectionsDependsOn)" />
 
     <!--Add references to all merged project WinMD files for Xaml Compiler-->
     <Target Name="CppWinRTAddXamlReferences"
