@@ -432,6 +432,7 @@ $(XamlMetaDataProviderPch)
 
     <!--Build reference projection from WinMD project references and dynamic library project references-->
     <Target Name="CppWinRTMakeReferenceProjection"
+            Condition="'@(CppWinRTDirectWinMDReferences)@(CppWinRTDynamicProjectWinMDReferences)' != '' AND '$(CppWinRTEnableReferenceProjection)' == 'true'"
             Condition="'$(CppWinRTEnableReferenceProjection)' == 'true'"
             DependsOnTargets="GetCppWinRTProjectWinMDReferences;GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;$(CppWinRTMakeReferenceProjectionDependsOn)"
             Inputs="@(CppWinRTDirectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
