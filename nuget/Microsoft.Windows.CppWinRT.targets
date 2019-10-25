@@ -365,6 +365,9 @@ $(XamlMetaDataProviderPch)
         <Message Text="CppWinRTMidlReferences: @(_MidlReferences->'%(WinMDPath)')" Importance="$(CppWinRTVerbosity)"/>
     </Target>
 
+    <!--Ctrl+F7 (selected file) midl compilation support-->
+    <Target Name="CppWinRTSetSelectMidlReferences" BeforeTargets="SelectMidl" DependsOnTargets="CppWinRTSetMidlReferences" />
+
     <!--Merge project-generated WinMDs and project-referenced static library WinMDs into project WinMD-->
     <Target Name="CppWinRTMergeProjectWinMDInputs"
             DependsOnTargets="Midl;GetCppWinRTMdMergeInputs;$(CppWinRTMergeProjectWinMDInputsDependsOn)"
