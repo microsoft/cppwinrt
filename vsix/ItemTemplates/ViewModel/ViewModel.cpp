@@ -4,9 +4,6 @@
 #include "$safeitemname$.g.cpp"
 #endif
 
-using namespace winrt;
-using namespace Windows::UI::Xaml;
-
 namespace winrt::$rootnamespace$::implementation
 {
     int32_t $safeitemname$::MyProperty()
