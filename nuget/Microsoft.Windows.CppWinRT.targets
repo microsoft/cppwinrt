@@ -29,7 +29,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTEnableComponentProjection Condition="'$(CppWinRTEnableComponentProjection)' == ''">true</CppWinRTEnableComponentProjection>
         <CppWinRTEnablePlatformProjection Condition="'$(CppWinRTEnablePlatformProjection)' == ''">true</CppWinRTEnablePlatformProjection>
         <CppWinRTEnableReferenceProjection Condition="'$(CppWinRTEnableReferenceProjection)' == ''">true</CppWinRTEnableReferenceProjection>
-        
+
         <GeneratedFilesDir Condition="'$(GeneratedFilesDir)' == ''">$(IntDir)Generated Files\</GeneratedFilesDir>
         <!--Override SDK's uap.props setting to ensure version-matched headers-->
         <CppWinRT_IncludePath>$(GeneratedFilesDir)</CppWinRT_IncludePath>
@@ -219,9 +219,11 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <Message Text="CppWinRTDynamicProjectWinMDReferences: @(CppWinRTDynamicProjectWinMDReferences->'%(WinMDPath)')" Importance="$(CppWinRTVerbosity)"/>
     </Target>
 
+    <Target Name="CppWinRTResolveReferences" DependsOnTargets="GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;GetCppWinRTProjectWinMDReferences;$(CppWinRTResolveReferencesDependsOn)" />
+
     <!-- Calculates the input files and metadata directories to be passed to MdMerge -->
     <Target Name="GetCppWinRTMdMergeInputs"
-                DependsOnTargets="CppWinRTComputeXamlGeneratedMidlInputs;GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;GetCppWinRTProjectWinMDReferences;"
+                DependsOnTargets="CppWinRTComputeXamlGeneratedMidlInputs;CppWinRTResolveReferences;"
                 Returns="@(CppWinRTMdMergeMetadataDirectories);@(CppWinRTMdMergeInputs)">
         <ItemGroup>
             <_MdMergeInputs Remove="@(_MdMergeInputs)"/>
@@ -248,6 +250,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     </Target>
 
     <!-- Adds the XamlMetadataProvider idl to the Midl itemgroup, if building any xaml content -->
+    <!-- Note that Condition is evaluated before DependsOnTargets are run -->
     <Target Name="CppWinRTComputeXamlGeneratedMidlInputs"
             DependsOnTargets="$(CppWinRTComputeXamlGeneratedMidlInputsDependsOn)"
             Condition="'@(Page)@(ApplicationDefinition)' != '' and '$(XamlLanguage)' == 'CppWinRT' and '$(CppWinRTAddXamlMetaDataProviderIdl)' == 'true'">
@@ -265,6 +268,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     </Target>
 
     <!-- Adds the XamlMetadataProvider cpp to the ClCompile itemgroup, if building any xaml content -->
+    <!-- Note that Condition is evaluated before DependsOnTargets are run -->
     <Target Name="CppWinRTComputeXamlGeneratedCompileInputs"
             DependsOnTargets="$(CppWinRTComputeXamlGeneratedCompileInputsDependsOn)"
             Condition="'@(Page)@(ApplicationDefinition)' != '' and '$(XamlLanguage)' == 'CppWinRT' and '$(CppWinRTAddXamlMetaDataProviderIdl)' == 'true'">
@@ -361,6 +365,9 @@ $(XamlMetaDataProviderPch)
         <Message Text="CppWinRTMidlReferences: @(_MidlReferences->'%(WinMDPath)')" Importance="$(CppWinRTVerbosity)"/>
     </Target>
 
+    <!--Ctrl+F7 (selected file) midl compilation support-->
+    <Target Name="CppWinRTSetSelectMidlReferences" BeforeTargets="SelectMidl" DependsOnTargets="CppWinRTSetMidlReferences" />
+
     <!--Merge project-generated WinMDs and project-referenced static library WinMDs into project WinMD-->
     <Target Name="CppWinRTMergeProjectWinMDInputs"
             DependsOnTargets="Midl;GetCppWinRTMdMergeInputs;$(CppWinRTMergeProjectWinMDInputsDependsOn)"
@@ -402,6 +409,7 @@ $(XamlMetaDataProviderPch)
     </Target>
 
     <!-- Build the platform projection from the winmds that sip with the platform in the Windows SDK -->
+    <!-- Note that Condition is evaluated before DependsOnTargets are run -->
     <Target Name="CppWinRTMakePlatformProjection"
             Condition="'$(CppWinRTEnablePlatformProjection)' == 'true' AND '$(CppWinRTOverrideSDKReferences)' != 'true'"
             DependsOnTargets="GetCppWinRTPlatformWinMDInputs;$(CppWinRTMakePlatformProjectionDependsOn)"
@@ -431,9 +439,10 @@ $(XamlMetaDataProviderPch)
     </Target>
 
     <!--Build reference projection from WinMD project references and dynamic library project references-->
+    <!-- Note that Condition is evaluated before DependsOnTargets are run -->
     <Target Name="CppWinRTMakeReferenceProjection"
             Condition="'@(CppWinRTDirectWinMDReferences)@(CppWinRTDynamicProjectWinMDReferences)' != '' AND '$(CppWinRTEnableReferenceProjection)' == 'true'"
-            DependsOnTargets="GetCppWinRTProjectWinMDReferences;GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;$(CppWinRTMakeReferenceProjectionDependsOn)"
+            DependsOnTargets="$(CppWinRTMakeReferenceProjectionDependsOn)"
             Inputs="@(CppWinRTDirectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
             Outputs="$(IntDir)cppwinrt_ref.rsp">
         <PropertyGroup>
@@ -464,9 +473,10 @@ $(XamlMetaDataProviderPch)
     </Target>
 
     <!--Build component projection from project WinMD file and static library project references-->
+    <!-- Note that Condition is evaluated before DependsOnTargets are run -->
     <Target Name="CppWinRTMakeComponentProjection"
             Condition="'$(CppWinRTEnableComponentProjection)' == 'true'"
-            DependsOnTargets="GetCppWinRTProjectWinMDReferences;GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;GetCppWinRTMdMergeInputs;$(CppWinRTMakeComponentProjectionDependsOn)"
+            DependsOnTargets="GetCppWinRTMdMergeInputs;$(CppWinRTMakeComponentProjectionDependsOn)"
             Inputs="@(CppWinRTMdMergeInputs);@(CppWinRTStaticProjectWinMDReferences)"
             Outputs="$(IntDir)cppwinrt_comp.rsp">
         <PropertyGroup>
@@ -520,7 +530,7 @@ $(XamlMetaDataProviderPch)
         <Exec Command="$(CppWinRTCommand)" Condition="'@(_CppwinrtCompInputs)' != ''"/>
     </Target>
 
-    <Target Name="CppWinRTMakeProjections" DependsOnTargets="CppWinRTMakePlatformProjection;CppWinRTMakeReferenceProjection;CppWinRTMakeComponentProjection;$(CppWinRTMakeProjectionsDependsOn)" />
+    <Target Name="CppWinRTMakeProjections" DependsOnTargets="CppWinRTResolveReferences;CppWinRTMakePlatformProjection;CppWinRTMakeReferenceProjection;CppWinRTMakeComponentProjection;$(CppWinRTMakeProjectionsDependsOn)" />
 
     <!--Add references to all merged project WinMD files for Xaml Compiler-->
     <Target Name="CppWinRTAddXamlReferences"
@@ -530,10 +540,10 @@ $(XamlMetaDataProviderPch)
             <XamlReferencesToCompile Include="$(OutDir)*.winmd" />
         </ItemGroup>
     </Target>
-    
+
     <!--Clear merged assembly and set local assembly for Xaml Compiler.
         (Note: this can be removed when CppWinRT references are removed from the Xaml targets file.)-->
-    <Target Name="CppWinRTSetXamlLocalAssembly"            
+    <Target Name="CppWinRTSetXamlLocalAssembly"
             Condition="'@(Page)@(ApplicationDefinition)' != '' and '$(XamlLanguage)' == 'CppWinRT'"
             DependsOnTargets="$(CppWinRTSetXamlLocalAssemblyDependsOn)">
         <PropertyGroup>
