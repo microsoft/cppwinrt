@@ -23,6 +23,12 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <XamlNamespace Condition="'$(XamlNamespace)' == ''">Windows.UI.Xaml</XamlNamespace>
         <XamlMetaDataProviderIdl Condition="'$(XamlMetaDataProviderIdl)'== ''">$(GeneratedFilesDir)XamlMetaDataProvider.idl</XamlMetaDataProviderIdl>
         <XamlMetaDataProviderCpp Condition="'$(XamlMetaDataProviderCpp)'== ''">$(GeneratedFilesDir)XamlMetaDataProvider.cpp</XamlMetaDataProviderCpp>
+
+        <!-- For CX projects, CppWinRT will never output a winmd-->
+        <!-- NOTE: We don't set a default here as the default requires evaluation of project references
+             and this is done by the ComputeCppWinRTResolvedWinMD target. -->
+        <CppWinRTGenerateWindowsMetadata Condition="'$(CppWinRTGenerateWindowsMetadata)' == '' AND '$(CppWinRTProjectLanguage)' == 'C++/CX' ">false</CppWinRTGenerateWindowsMetadata>
+        <CppWinRTGenerateWindowsMetadata Condition="'$(CppWinRTGenerateWindowsMetadata)' == '' AND '$(XamlLanguage)' == 'C++' ">false</CppWinRTGenerateWindowsMetadata>
         <!-- For CX projects, turn off the component projection generation-->
         <CppWinRTEnableComponentProjection Condition="'$(CppWinRTEnableComponentProjection)' == '' AND '$(CppWinRTProjectLanguage)' == 'C++/CX' ">false</CppWinRTEnableComponentProjection>
         <CppWinRTEnableComponentProjection Condition="'$(CppWinRTEnableComponentProjection)' == '' AND '$(XamlLanguage)' == 'C++' ">false</CppWinRTEnableComponentProjection>
