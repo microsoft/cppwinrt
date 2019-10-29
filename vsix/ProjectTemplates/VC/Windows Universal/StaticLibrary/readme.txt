@@ -6,8 +6,8 @@ This project demonstrates how to get started authoring Windows Runtime
 classes directly with standard C++, using the C++/WinRT SDK component 
 to generate implementation headers from interface (IDL) files.  The
 generated static library should be consumed by a single Runtime Component 
-or App project and the and types will automatically be added to that 
-binary.
+or App project and the types will automatically be added to that binary.
+
 To be able to instantiate types from the static library you need to 
 update the activation factory in the consuming binary to call the 
 activation factory exposed by this static library using code similar to:
