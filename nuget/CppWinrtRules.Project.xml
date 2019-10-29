@@ -73,7 +73,7 @@
     
   <BoolProperty Name="CppWinRTGenerateWindowsMetadata"
                 DisplayName="Generate Windows Metadata"
-                Description="Enables or disabled the generation of Windows Metadata"
+                Description="Enables or disables the generation of Windows Metadata"
                 Category="General" />
 
 </Rule>
