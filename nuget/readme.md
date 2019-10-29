@@ -67,7 +67,7 @@ C++/WinRT behavior can be customized with these project properties:
 | CppWinRTFastAbi | true \| *false | Enables Fast ABI feature for both consuming and producing projections |
 | CppWinRTProjectLanguage | C++/CX \| *C++/WinRT | Selects the C++ dialect for the project.  C++/WinRT provides full projection support, C++/CX permits consuming projection headers. |
 | CppWinRTOptimized | true \| *false | Enables component projection [optimization features](https://kennykerr.ca/2019/06/07/cppwinrt-optimizing-components/) |
-| CppWinRTGenerateWindowsMetadata | true \| *false | Enables or disabled the generation of Windows Metadata as the project output |
+| CppWinRTGenerateWindowsMetadata | true \| *false | Indicates whether this project produces Windows Metadata |
 \*Default value
 
 To customize common C++/WinRT project properties: 
