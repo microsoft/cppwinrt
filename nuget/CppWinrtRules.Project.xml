@@ -70,5 +70,10 @@
                 DisplayName="Optimized"
                 Description="Enables component projection optimization features (e.g., unified construction)"
                 Category="General" />
+    
+  <BoolProperty Name="CppWinRTGenerateWindowsMetadata"
+                DisplayName="Generate Windows Metadata"
+                Description="Enables or disabled the generation of Windows Metadata"
+                Category="General" />
 
 </Rule>

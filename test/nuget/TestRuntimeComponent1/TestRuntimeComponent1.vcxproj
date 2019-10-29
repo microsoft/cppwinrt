@@ -87,7 +87,7 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateWindowsMetadata>true</GenerateWindowsMetadata>
+      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
       <ModuleDefinitionFile>TestRuntimeComponent1.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
