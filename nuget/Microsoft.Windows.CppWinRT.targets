@@ -37,7 +37,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <WindowsSDK_MetadataFoundationPath Condition="('$(WindowsSDK_MetadataFoundationPath)'!='') And !Exists($(WindowsSDK_MetadataFoundationPath))">$(WindowsSDK_MetadataPathVersioned)</WindowsSDK_MetadataFoundationPath>
 
         <GetTargetPathDependsOn>
-            $(GetTargetPathDependsOn);GetCppWinRTMdMergeInputs;CppWinRTResolveWinMD;
+            $(GetTargetPathDependsOn);ComputeCppWinRTResolvedWinMD;CppWinRTResolvedWinMD;
         </GetTargetPathDependsOn>
         <PrepareForBuildDependsOn>
             $(PrepareForBuildDependsOn);CppWinRTVerifyKitVersion;
@@ -50,7 +50,12 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             $(ComputeMidlInputsTargets);CppWinRTComputeXamlGeneratedMidlInputs;CppWinRTSetMidlReferences;
         </ComputeMidlInputsTargets>
         <AfterMidlTargets>
-            $(AfterMidlTargets);GetCppWinRTMdMergeInputs;CppWinRTMergeProjectWinMDInputs;CppWinRTResolveWinMD;
+            $(AfterMidlTargets);
+            GetCppWinRTMdMergeInputs;
+            CppWinRTMergeProjectWinMDInputs;
+            ComputeCppWinRTResolvedWinMD;
+            CppWinRTResolvedWinMD;
+            CppWinRTResolvedWinMDToOutputDirectory;
         </AfterMidlTargets>
         <ResolveAssemblyReferencesDependsOn>
             $(ResolveAssemblyReferencesDependsOn);GetCppWinRTProjectWinMDReferences;CppWinRTRemoveStaticLibraries;
@@ -112,8 +117,18 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         </ItemGroup>
     </Target>
 
-    <Target Name="CppWinRTResolveWinMD"
-            Condition="'@(CppWinRTMdMergeInputs)' != '' AND '$(CppWinRTEnableComponentProjection)' == 'true'"
+    <!-- Target used only to evaluate CppWinRTGenerateWindowsMetadata if it doesn't already have a value -->
+    <Target Name="ComputeCppWinRTResolvedWinMD"
+            Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''"
+            DependsOnTargets="GetCppWinRTMdMergeInputs">
+        <PropertyGroup>
+            <CppWinRTGenerateWindowsMetadata Condition="'@(CppWinRTMdMergeInputs)'!= ''">true</CppWinRTGenerateWindowsMetadata>
+            <CppWinRTGenerateWindowsMetadata Condition="'@(CppWinRTMdMergeInputs)'== ''">false</CppWinRTGenerateWindowsMetadata>
+        </PropertyGroup>
+    </Target>
+
+    <Target Name="CppWinRTResolvedWinMD"
+            Condition="'$(CppWinRTGenerateWindowsMetadata)' == 'true'"
             Returns="@(WinMDFullPath)">
         <ItemGroup>
             <WinMDFullPath Remove="@(WinMDFullPath)"/>
@@ -127,7 +142,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
                 <ProjectType>$(ConfigurationType)</ProjectType>
             </WinMDFullPath>
         </ItemGroup>
-        <Message Text="CppWinRTResolveWinMD: @(WinMDFullPath->'%(FullPath)')" Importance="$(CppWinRTVerbosity)"/>
+        <Message Text="CppWinRTResolvedWinMD: @(WinMDFullPath->'%(FullPath)')" Importance="$(CppWinRTVerbosity)"/>
     </Target>
 
     <!-- Static library reference files are merged into the project that
@@ -372,7 +387,7 @@ $(XamlMetaDataProviderPch)
     <Target Name="CppWinRTMergeProjectWinMDInputs"
             DependsOnTargets="Midl;GetCppWinRTMdMergeInputs;$(CppWinRTMergeProjectWinMDInputsDependsOn)"
             Inputs="@(CppWinRTMdMergeInputs)"
-            Outputs="$(CppWinRTProjectWinMD)">
+            Outputs="@(_MdMergedOutput);$(IntDir)mdmerge.rsp">
         <PropertyGroup>
             <!--Note: CppWinRTNamespaceMergeDepth supersedes CppWinRTMergeDepth-->
             <_MdMergeDepth Condition="'$(CppWinRTNamespaceMergeDepth)' != ''">-n:$(CppWinRTNamespaceMergeDepth)</_MdMergeDepth>
@@ -401,11 +416,20 @@ $(XamlMetaDataProviderPch)
             <_MdMergedOutput Remove="@(_MdMergedOutput)"/>
             <_MdMergedOutput Include="$(CppWinRTMergedDir)*.winmd"/>
         </ItemGroup>
+        <Message Text="CppWinRTMdMerge output: @(MdMergeOutput)" Importance="$(CppWinRTVerbosity)"/>
+    </Target>
+
+    <!-- Only copy winmd to output folder if CppWinRTGenerateWindowsMetadata is true -->
+    <!-- Note that Condition is evaluated before DependsOnTargets are run -->
+    <Target Name="CppWinRTResolvedWinMDToOutputDirectory"
+            Condition="'$(CppWinRTGenerateWindowsMetadata)' == 'true'"
+            DependsOnTargets="CppWinRTMergeProjectWinMDInputs;$(CppWinRTResolvedWinMDToOutputDirectoryDependsOn)"
+            Inputs="@(_MdMergedOutput)"
+            Outputs="$(CppWinRTProjectWinMD)">
         <Copy UseHardlinksIfPossible="$(CppWinRTUseHardlinksIfPossible)"
             SkipUnchangedFiles="$(CppWinRTSkipUnchangedFiles)"
             SourceFiles="@(_MdMergedOutput)"
             DestinationFiles="@(_MdMergedOutput->'$(OutDir)%(Filename)%(Extension)')" />
-        <Message Text="CppWinRTMdMerge output: @(MdMergeOutput)" Importance="$(CppWinRTVerbosity)"/>
     </Target>
 
     <!-- Build the platform projection from the winmds that sip with the platform in the Windows SDK -->
