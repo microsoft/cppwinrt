@@ -3,6 +3,7 @@
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
+    <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
     <CppWinRTParameters>-lib $(MSBuildProjectName)</CppWinRTParameters>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{$guid1$}</ProjectGuid>

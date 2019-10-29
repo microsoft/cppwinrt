@@ -117,6 +117,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         </ItemGroup>
     </Target>
 
+    <!-- Target used only to evaluate CppWinRTGenerateWindowsMetadata if it doesn't already have a value -->
     <Target Name="ComputeCppWinRTResolvedWinMD"
             Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''"
             DependsOnTargets="GetCppWinRTMdMergeInputs">
@@ -419,6 +420,7 @@ $(XamlMetaDataProviderPch)
     </Target>
 
     <!-- Only copy winmd to output folder if CppWinRTGenerateWindowsMetadata is true -->
+    <!-- Note that Condition is evaluated before DependsOnTargets are run -->
     <Target Name="CppWinRTResolvedWinMDToOutputDirectory"
             Condition="'$(CppWinRTGenerateWindowsMetadata)' == 'true'"
             DependsOnTargets="CppWinRTMergeProjectWinMDInputs;$(CppWinRTResolvedWinMDToOutputDirectoryDependsOn)"
