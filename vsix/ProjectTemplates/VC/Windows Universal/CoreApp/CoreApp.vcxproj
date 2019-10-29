@@ -76,6 +76,7 @@
       <WarningLevel>Level4</WarningLevel>
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <DisableSpecificWarnings></DisableSpecificWarnings>
+      <PreprocessorDefinitions>WIN32_LEAN_AND_MEAN;WINRT_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
