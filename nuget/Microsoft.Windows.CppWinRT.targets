@@ -125,13 +125,13 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <ItemGroup>
             <_FixedSDKIncludes Remove="@(_FixedSDKIncludes)"/>
             <_FixedSDKIncludes Include="$(WindowsSDK_IncludePath)"/>
-            <_FixedSDKIncludes Condition="'$(CppWinRT_OldIncludePath)' != ''" Remove="$(CppWinRT_OldIncludePath)"/>
+            <_FixedSDKIncludes Remove="$(CppWinRT_OldIncludePath)"/>
             <_FixedSDKIncludes Include="$(CppWinRT_IncludePath)"/>
         </ItemGroup>
         <ItemGroup>
             <_FixedIncludes Remove="@(_FixedIncludes)"/>
             <_FixedIncludes Include="$(IncludePath)"/>
-            <_FixedIncludes Condition="'$(CppWinRT_OldIncludePath)' != ''" Remove="$(CppWinRT_OldIncludePath)"/>
+            <_FixedIncludes Remove="$(CppWinRT_OldIncludePath)"/>
             <_FixedIncludes Include="$(CppWinRT_IncludePath)"/>
         </ItemGroup>
         <PropertyGroup>
