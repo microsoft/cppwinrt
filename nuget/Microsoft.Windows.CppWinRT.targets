@@ -116,7 +116,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             </ClCompile>
         </ItemGroup>
     </Target>
-  
+
     <!-- Target used only to evaluate CppWinRTGenerateWindowsMetadata if it doesn't already have a value -->
     <Target Name="ComputeCppWinRTResolvedWinMD"
             Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''"
