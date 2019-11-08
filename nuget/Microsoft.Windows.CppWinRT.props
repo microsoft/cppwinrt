@@ -15,6 +15,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <IsNativeLanguage>true</IsNativeLanguage>
         <!-- This causes VS to add the platform WinMD references for the target SDK -->
         <WinMDAssembly>true</WinMDAssembly>
+        <!--Set a value to prevent SDK's uap.props from setting it and pointing to the wrong headers-->
+        <CppWinRT_IncludePath>PreventSdkUapPropsAssignment</CppWinRT_IncludePath>
     </PropertyGroup>
 
     <ItemDefinitionGroup>

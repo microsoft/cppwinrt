@@ -32,7 +32,6 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
         <GeneratedFilesDir Condition="'$(GeneratedFilesDir)' == ''">$(IntDir)Generated Files\</GeneratedFilesDir>
         <!--Override SDK's uap.props setting to ensure version-matched headers-->
-        <CppWinRT_OldIncludePath>$(CppWinRT_IncludePath)</CppWinRT_OldIncludePath>
         <CppWinRT_IncludePath>$(GeneratedFilesDir)</CppWinRT_IncludePath>
         <!--TEMP: Override NuGet SDK's erroneous setting in uap.props -->
         <WindowsSDK_MetadataFoundationPath Condition="('$(WindowsSDK_MetadataFoundationPath)'!='') And !Exists($(WindowsSDK_MetadataFoundationPath))">$(WindowsSDK_MetadataPathVersioned)</WindowsSDK_MetadataFoundationPath>
@@ -41,7 +40,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             $(GetTargetPathDependsOn);ComputeCppWinRTResolvedWinMD;CppWinRTResolvedWinMD;
         </GetTargetPathDependsOn>
         <PrepareForBuildDependsOn>
-            $(PrepareForBuildDependsOn);CppWinRTVerifyKitVersion;CppWinRTFixSDKIncludes;
+            $(PrepareForBuildDependsOn);CppWinRTVerifyKitVersion;
         </PrepareForBuildDependsOn>
         <!-- Note: Before* targets run before Compute* targets. -->
         <BeforeMidlCompileTargets>
@@ -118,28 +117,6 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         </ItemGroup>
     </Target>
   
-    <!-- Fix includes to point to the generated C++/WinRT headers rather than the one in the SDK -->
-    <Target Name="CppWinRTFixSDKIncludes"
-            BeforeTargets="SetBuildDefaultEnvironmentVariables"
-            Condition="'$(CppWinRT_IncludePath)' != '$(CppWinRT_OldIncludePath)'">
-        <ItemGroup>
-            <_FixedSDKIncludes Remove="@(_FixedSDKIncludes)"/>
-            <_FixedSDKIncludes Include="$(WindowsSDK_IncludePath)"/>
-            <_FixedSDKIncludes Remove="$(CppWinRT_OldIncludePath)"/>
-            <_FixedSDKIncludes Include="$(CppWinRT_IncludePath)"/>
-        </ItemGroup>
-        <ItemGroup>
-            <_FixedIncludes Remove="@(_FixedIncludes)"/>
-            <_FixedIncludes Include="$(IncludePath)"/>
-            <_FixedIncludes Remove="$(CppWinRT_OldIncludePath)"/>
-            <_FixedIncludes Include="$(CppWinRT_IncludePath)"/>
-        </ItemGroup>
-        <PropertyGroup>
-            <WindowsSDK_IncludePath>@(_FixedSDKIncludes)</WindowsSDK_IncludePath>
-            <IncludePath>@(_FixedIncludes)</IncludePath>
-        </PropertyGroup>    
-    </Target>
-
     <!-- Target used only to evaluate CppWinRTGenerateWindowsMetadata if it doesn't already have a value -->
     <Target Name="ComputeCppWinRTResolvedWinMD"
             Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''"
