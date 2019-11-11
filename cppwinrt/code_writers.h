@@ -1780,7 +1780,7 @@ namespace cppwinrt
         }
     }
 
-    static void write_produce(writer& w, TypeDef const& type)
+    static void write_produce(writer& w, TypeDef const& type, cache const& c)
     {
         auto format = R"(    template <typename D%>
     struct produce<D, %> : produce_base<D, %>
@@ -1790,7 +1790,7 @@ namespace cppwinrt
 
         auto generics = type.GenericParam();
         auto guard{ w.push_generic_params(generics) };
-        bool const lean_and_mean = !can_produce(type);
+        bool const lean_and_mean = !can_produce(type, c);
 
         if (lean_and_mean)
         {
