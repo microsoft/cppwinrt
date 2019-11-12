@@ -176,7 +176,7 @@ namespace cppwinrt
         write_impl_namespace(w);
         w.write_each<write_consume_definitions>(members.interfaces);
         w.write_each<write_delegate_implementation>(members.delegates);
-        w.write_each<write_produce>(members.interfaces);
+        w.write_each<write_produce>(members.interfaces, c);
         w.write_each<write_dispatch_overridable>(members.classes);
         write_close_namespace(w);
 
