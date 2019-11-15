@@ -2777,7 +2777,8 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     {
                         method_signature signature{ method };
 
-                        w.write("        %(%);\n",
+                        w.write("        %%(%);\n",
+                            signature.params().size() == 1 ? "explicit " : "",
                             type_name,
                             bind<write_consume_params>(signature));
                     }
@@ -2791,7 +2792,8 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     auto& params = signature.params();
                     params.resize(params.size() - 2);
 
-                    w.write("        %(%);\n",
+                    w.write("        %%(%);\n",
+                        signature.params().size() == 1 ? "explicit " : "",
                         type_name,
                         bind<write_consume_params>(signature));
                 }
