@@ -2,10 +2,22 @@
 
 TEST_CASE("box_guid")
 {
-    winrt::guid const guid_a = winrt::guid_of<winrt::Windows::Foundation::IUnknown>();
-    GUID const guid_b = guid_a;
+    winrt::guid const winrt_guid = __uuidof(::IUnknown);
+    GUID const sdk_guid = winrt_guid;
 
-    auto box_a = winrt::box_value(guid_a);
-    auto box_b = winrt::box_value(guid_b);
+    auto box_a = winrt::box_value(winrt_guid);
+    auto box_b = winrt::box_value(sdk_guid);
+
+    auto unbox_a = winrt::unbox_value<winrt::guid>(box_a);
+    auto unbox_b = winrt::unbox_value<GUID>(box_a);
+
+    REQUIRE(unbox_a == winrt_guid);
+    REQUIRE(unbox_b == sdk_guid);
+
+    unbox_a = winrt::unbox_value_or<winrt::guid>(box_a, {});
+    unbox_b = winrt::unbox_value_or<GUID>(box_a, {});
+
+    REQUIRE(unbox_a == winrt_guid);
+    REQUIRE(unbox_b == sdk_guid);
 }
 
