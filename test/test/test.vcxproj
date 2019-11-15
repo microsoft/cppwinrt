@@ -286,6 +286,7 @@
     <ClCompile Include="async_auto_cancel.cpp" />
     <ClCompile Include="async_cancel_callback.cpp" />
     <ClCompile Include="async_check_cancel.cpp" />
+    <ClCompile Include="box_guid.cpp" />
     <ClCompile Include="error_info.cpp" />
     <ClCompile Include="event_deferral.cpp" />
     <ClCompile Include="async_local.cpp" />

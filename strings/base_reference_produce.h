@@ -197,6 +197,14 @@ namespace winrt::impl
         static auto make(guid const& value) { return Windows::Foundation::PropertyValue::CreateGuid(value); }
     };
 
+#ifdef __IUnknown_INTERFACE_DEFINED__
+    template <>
+    struct reference_traits<GUID>
+    {
+        static auto make(GUID const& value) { return Windows::Foundation::PropertyValue::CreateGuid(value); }
+    };
+#endif
+
     template <>
     struct reference_traits<Windows::Foundation::DateTime>
     {
@@ -291,6 +299,12 @@ WINRT_EXPORT namespace winrt
                 return static_cast<T>(value.as<Windows::Foundation::IReference<std::underlying_type_t<T>>>().Value());
             }
         }
+#ifdef __IUnknown_INTERFACE_DEFINED__
+        else if constexpr (std::is_same_v<T, GUID>)
+        {
+            return value.as<Windows::Foundation::IReference<guid>>().Value();
+        }
+#endif
         else
         {
             return value.as<Windows::Foundation::IReference<T>>().Value();
@@ -335,6 +349,15 @@ WINRT_EXPORT namespace winrt
                     return static_cast<T>(temp.Value());
                 }
             }
+#ifdef __IUnknown_INTERFACE_DEFINED__
+            else if constexpr (std::is_same_v<T, GUID>)
+            {
+                if (auto temp = value.try_as<Windows::Foundation::IReference<guid>>())
+                {
+                    return temp.Value();
+                }
+            }
+#endif
             else
             {
                 if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
