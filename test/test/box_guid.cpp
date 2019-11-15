@@ -20,4 +20,3 @@ TEST_CASE("box_guid")
     REQUIRE(unbox_a == winrt_guid);
     REQUIRE(unbox_b == sdk_guid);
 }
-
