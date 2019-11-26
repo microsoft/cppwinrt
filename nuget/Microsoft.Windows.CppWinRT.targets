@@ -40,11 +40,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <!--TEMP: Override NuGet SDK's erroneous setting in uap.props -->
         <WindowsSDK_MetadataFoundationPath Condition="('$(WindowsSDK_MetadataFoundationPath)'!='') And !Exists($(WindowsSDK_MetadataFoundationPath))">$(WindowsSDK_MetadataPathVersioned)</WindowsSDK_MetadataFoundationPath>
 
-        <GetTargetPathDependsOn>
-            CppWinRTComputeGenerateWindowsMetadata;$(GetTargetPathDependsOn)
-        </GetTargetPathDependsOn>
         <PrepareForBuildDependsOn>
-            $(PrepareForBuildDependsOn);CppWinRTVerifyKitVersion;
+            $(PrepareForBuildDependsOn);
+            CppWinRTVerifyKitVersion;
         </PrepareForBuildDependsOn>
         <!-- Note: Before* targets run before Compute* targets. -->
         <BeforeMidlCompileTargets>
@@ -57,7 +55,6 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             $(AfterMidlTargets);
             GetCppWinRTMdMergeInputs;
             CppWinRTMergeProjectWinMDInputs;
-            CppWinRTComputeGenerateWindowsMetadata;
             GetResolvedWinMD;
             CppWinRTCopyWinMDToOutputDirectory;
         </AfterMidlTargets>
@@ -123,7 +120,6 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
     <!-- Target used only to evaluate CppWinRTGenerateWindowsMetadata if it doesn't already have a value -->
     <Target Name="CppWinRTComputeGenerateWindowsMetadata"
-            Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''"
             DependsOnTargets="GetCppWinRTMdMergeInputs">
         <PropertyGroup>
             <CppWinRTGenerateWindowsMetadata Condition="'@(CppWinRTMdMergeInputs)'!= ''">true</CppWinRTGenerateWindowsMetadata>
@@ -137,6 +133,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
          we need to keep the CX logic as well. -->
     <Target Name="GetResolvedWinMD"
             Returns="@(WinMDFullPath)">
+
+        <!-- If CppWinRTGenerateWindowsMetadata is not defined, compute it.-->
+        <CallTarget Targets="CppWinRTComputeGenerateWindowsMetadata" Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''" />
         
         <!-- Copied from the CX GetResolvedWinMD target in Microsoft.CppBuild.targets -->
         <ItemGroup>
@@ -145,7 +144,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
                 <DeleteSoon>true</DeleteSoon>
             </Link>
 
-            <!-- COndition is modified to only do this if CppWinRTGenerateWindowsMetadata is not set. -->
+            <!-- Condition is modified to only do this if CppWinRTGenerateWindowsMetadata is not true. -->
             <WinMDFullPath Condition="'%(Link.GenerateWindowsMetadata)' == 'true' AND '$(CppWinRTGenerateWindowsMetadata)' != 'true'" 
                            Include="@(Link->Metadata('WindowsMetadataFile')->FullPath()->Distinct()->ClearMetadata())">
                 <TargetPath>$([System.IO.Path]::GetFileName('%(Link.WindowsMetadataFile)'))</TargetPath>
