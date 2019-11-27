@@ -22,6 +22,4 @@
         <CppWinRTPath>$(SolutionDir)..\..\_build\$(CppWinRTPlatform)\$(Configuration)\</CppWinRTPath>
     </PropertyGroup>
 
-    <Import Project="$(SolutionDir)..\..\nuget\Microsoft.Windows.CppWinRT.props" />
-
 </Project>
