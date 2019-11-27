@@ -146,7 +146,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
     <!-- This target overrides the GetResolvedWinMD target used to resolve the WinMD for native projects
          so it is aware of the C++/WinRT generated WinMD.
-         Since not every project that consumesd C++/WinRT uses it to generate a WinMD,
+         Since not every project that consumes C++/WinRT uses it to generate a WinMD,
          we need to keep the CX logic as well. -->
     <Target Name="GetResolvedWinMD"
             DependsOnTargets="ComputeGetResolvedWinMD"
