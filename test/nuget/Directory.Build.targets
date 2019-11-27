@@ -6,6 +6,4 @@
 
     <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.targets','$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.targets','$(MSBuildThisFileDirectory)../'))" />
 
-    <Import Project="$(SolutionDir)..\..\nuget\Microsoft.Windows.CppWinRT.targets" />
-
 </Project>
