@@ -30,23 +30,6 @@ TEST_CASE("IReference guids")
     REQUIRE(guid_of<IReference<Numerics::float4x4>>() == ireference_matrix4x4);
     REQUIRE(guid_of<IReference<Numerics::plane>>() == ireference_plane);
     REQUIRE(guid_of<IReference<Numerics::quaternion>>() == ireference_quaternion);
-
-    REQUIRE(guid_of<IReference<bool>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<bool>)));
-    REQUIRE(guid_of<IReference<uint8_t>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<uint8_t>)));
-    REQUIRE(guid_of<IReference<int16_t>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<int16_t>)));
-    REQUIRE(guid_of<IReference<uint32_t>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<uint32_t>)));
-    REQUIRE(guid_of<IReference<int32_t>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<int32_t>)));
-    REQUIRE(guid_of<IReference<uint64_t>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<uint64_t>)));
-    REQUIRE(guid_of<IReference<int64_t>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<int64_t>)));
-    REQUIRE(guid_of<IReference<float>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<float>)));
-    REQUIRE(guid_of<IReference<double>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<double>)));
-    REQUIRE(guid_of<IReference<guid>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<GUID>)));
-
-    REQUIRE(guid_of<IReference<winrt::Windows::Foundation::Point>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<::ABI::Windows::Foundation::Point>)));
-    REQUIRE(guid_of<IReference<winrt::Windows::Foundation::Rect>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<::ABI::Windows::Foundation::Rect>)));
-
-    REQUIRE(guid_of<IReference<winrt::Windows::Foundation::DateTime>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<::ABI::Windows::Foundation::DateTime>)));
-    REQUIRE(guid_of<IReference<winrt::Windows::Foundation::TimeSpan>>() == guid(__uuidof(::ABI::Windows::Foundation::IReference<::ABI::Windows::Foundation::TimeSpan>)));
 }
 
 TEST_CASE("IReference, constructor and getter")

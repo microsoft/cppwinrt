@@ -366,14 +366,14 @@ namespace cppwinrt
 
         if (empty(generics))
         {
-            auto format = R"(    template <> inline constexpr auto& name_v<%>{ L"%.%" };
+            auto format = R"(    template <> inline constexpr auto& name_v<%> = L"%.%";
 )";
 
             w.write(format, type, type_name.name_space, type_name.name);
         }
         else
         {
-            auto format = R"(    template <%> inline constexpr auto name_v<%>{ zcombine(L"%.%<"%, L">") };
+            auto format = R"(    template <%> inline constexpr auto name_v<%> = zcombine(L"%.%<"%, L">");
 )";
 
             w.write(format,
@@ -916,8 +916,9 @@ namespace cppwinrt
         auto method_name = get_name(method);
         auto type = method.Parent();
 
-        w.write("        %auto %(%) const%;\n",
+        w.write("        %WINRT_IMPL_AUTO(%) %(%) const%;\n",
             is_get_overload(method) ? "[[nodiscard]] " : "",
+            signature.return_signature(),
             method_name,
             bind<write_consume_params>(signature),
             is_noexcept(method) ? " noexcept" : "");
@@ -1054,7 +1055,7 @@ namespace cppwinrt
 
         if (is_noexcept(method))
         {
-            format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
+            format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
     {%
         WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%
     }
@@ -1062,7 +1063,7 @@ namespace cppwinrt
         }
         else
         {
-            format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
+            format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const
     {%
         check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
     }
@@ -1071,6 +1072,7 @@ namespace cppwinrt
 
         w.write(format,
             bind<write_comma_generic_typenames>(generics),
+            signature.return_signature(),
             type_impl_name,
             bind<write_comma_generic_types>(generics),
             method_name,
@@ -1118,13 +1120,14 @@ namespace cppwinrt
         // return static_cast<% const&>(*this).%(%);
         //
 
-        std::string_view format = R"(    inline auto %::%(%) const%
+        std::string_view format = R"(    inline WINRT_IMPL_AUTO(%) %::%(%) const%
     {
         return [&](% const& winrt_impl_base) { return winrt_impl_base.%(%); }(*this);
     }
 )";
 
         w.write(format,
+            signature.return_signature(),
             class_type.TypeName(),
             method_name,
             bind<write_consume_params>(signature),
