@@ -102,9 +102,9 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
 namespace winrt::impl
 {
-    template <> inline constexpr auto& name_v<Windows::Foundation::Point>{ L"Windows.Foundation.Point" };
-    template <> inline constexpr auto& name_v<Windows::Foundation::Size>{ L"Windows.Foundation.Size" };
-    template <> inline constexpr auto& name_v<Windows::Foundation::Rect>{ L"Windows.Foundation.Rect" };
+    template <> inline constexpr auto& name_v<Windows::Foundation::Point> = L"Windows.Foundation.Point";
+    template <> inline constexpr auto& name_v<Windows::Foundation::Size> = L"Windows.Foundation.Size";
+    template <> inline constexpr auto& name_v<Windows::Foundation::Rect> = L"Windows.Foundation.Rect";
 
     template <> struct category<Windows::Foundation::Point>
     {
@@ -123,13 +123,13 @@ namespace winrt::impl
 
 #ifdef WINRT_IMPL_NUMERICS
 
-    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::float2>{ L"Windows.Foundation.Numerics.Vector2" };
-    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::float3>{ L"Windows.Foundation.Numerics.Vector3" };
-    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::float4>{ L"Windows.Foundation.Numerics.Vector4" };
-    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::float3x2>{ L"Windows.Foundation.Numerics.Matrix3x2" };
-    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::float4x4>{ L"Windows.Foundation.Numerics.Matrix4x4" };
-    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::quaternion>{ L"Windows.Foundation.Numerics.Quaternion" };
-    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::plane>{ L"Windows.Foundation.Numerics.Plane" };
+    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::float2> = L"Windows.Foundation.Numerics.Vector2";
+    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::float3> = L"Windows.Foundation.Numerics.Vector3";
+    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::float4> = L"Windows.Foundation.Numerics.Vector4";
+    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::float3x2> = L"Windows.Foundation.Numerics.Matrix3x2";
+    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::float4x4> = L"Windows.Foundation.Numerics.Matrix4x4";
+    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::quaternion> = L"Windows.Foundation.Numerics.Quaternion";
+    template <> inline constexpr auto& name_v<Windows::Foundation::Numerics::plane> = L"Windows.Foundation.Numerics.Plane";
 
     template <> struct category<Windows::Foundation::Numerics::float2>
     {

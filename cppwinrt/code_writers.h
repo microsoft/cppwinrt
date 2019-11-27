@@ -366,14 +366,14 @@ namespace cppwinrt
 
         if (empty(generics))
         {
-            auto format = R"(    template <> inline constexpr auto& name_v<%>{ L"%.%" };
+            auto format = R"(    template <> inline constexpr auto& name_v<%> = L"%.%";
 )";
 
             w.write(format, type, type_name.name_space, type_name.name);
         }
         else
         {
-            auto format = R"(    template <%> inline constexpr auto name_v<%>{ zcombine(L"%.%<"%, L">") };
+            auto format = R"(    template <%> inline constexpr auto name_v<%> = zcombine(L"%.%<"%, L">");
 )";
 
             w.write(format,
