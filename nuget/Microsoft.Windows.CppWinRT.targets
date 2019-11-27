@@ -120,11 +120,28 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
     <!-- Target used only to evaluate CppWinRTGenerateWindowsMetadata if it doesn't already have a value -->
     <Target Name="CppWinRTComputeGenerateWindowsMetadata"
-            DependsOnTargets="GetCppWinRTMdMergeInputs">
+            DependsOnTargets="CppWinRTComputeXamlGeneratedMidlInputs;GetCppWinRTProjectWinMDReferences;$(CppWinRTComputeGenerateWindowsMetadataDependsOn)">
+        
         <PropertyGroup>
-            <CppWinRTGenerateWindowsMetadata Condition="'@(CppWinRTMdMergeInputs)'!= ''">true</CppWinRTGenerateWindowsMetadata>
-            <CppWinRTGenerateWindowsMetadata Condition="'@(CppWinRTMdMergeInputs)'== ''">false</CppWinRTGenerateWindowsMetadata>
+            <!-- For static libraries, only idl causes a winmd to be generated. 
+                 For exe/dll, static libraries that produce a WinMD will be merged, 
+                 so they also cause a WinMD to be generated-->
+            <CppWinRTGenerateWindowsMetadata Condition="'$(ConfigurationType)' != 'StaticLibrary' AND '@(CppWinRTStaticProjectWinMDReferences)@(Midl)'!= ''">true</CppWinRTGenerateWindowsMetadata>
+            <CppWinRTGenerateWindowsMetadata Condition="'$(ConfigurationType)' == 'StaticLibrary' AND '@(Midl)'!= ''">true</CppWinRTGenerateWindowsMetadata>
+            
+            <!-- At this point we checked all cases where we do generate a WinMD.
+                 The remaining option is no WinMD. -->
+            <CppWinRTGenerateWindowsMetadata Condition="'$(CppWinRTGenerateWindowsMetadata)'== ''">false</CppWinRTGenerateWindowsMetadata>
         </PropertyGroup>
+        
+    </Target>
+
+    <Target Name="ComputeGetResolvedWinMD"
+            Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''">
+        <!-- If CppWinRTGenerateWindowsMetadata is not defined, compute it.-->
+        <!-- We use Calltarget, so we don't run anything including DependsOnTargets
+             targets if $(CppWinRTGenerateWindowsMetadata) already has a value.-->
+        <CallTarget Targets="CppWinRTComputeGenerateWindowsMetadata" />
     </Target>
 
     <!-- This target overrides the GetResolvedWinMD target used to resolve the WinMD for native projects
@@ -132,11 +149,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
          Since not every project that consumesd C++/WinRT uses it to generate a WinMD,
          we need to keep the CX logic as well. -->
     <Target Name="GetResolvedWinMD"
+            DependsOnTargets="ComputeGetResolvedWinMD"
             Returns="@(WinMDFullPath)">
 
-        <!-- If CppWinRTGenerateWindowsMetadata is not defined, compute it.-->
-        <CallTarget Targets="CppWinRTComputeGenerateWindowsMetadata" Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''" />
-        
         <!-- Copied from the CX GetResolvedWinMD target in Microsoft.CppBuild.targets -->
         <ItemGroup>
             <!-- To evaluate the GenerateWindowsMetadata value we need @(Link) to contains at least one element-->
