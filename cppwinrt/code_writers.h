@@ -1001,7 +1001,7 @@ namespace cppwinrt
         }
         else
         {
-            auto format = "\n        % %;";
+            auto format = "\n        % %{};";
             w.write(format, signature.return_signature(), signature.return_param_name());
         }
     }
@@ -2021,7 +2021,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         auto format = R"(        %T(%)
         {
-            % { f.%(%%*this, this->m_inner); });
+            % { [[maybe_unused]] auto winrt_impl_discarded = f.%(%%*this, this->m_inner); });
         }
 )";
 
