@@ -609,7 +609,7 @@ catch (...) { return winrt::to_hresult(); }
 
                 auto format = R"(        %_base(%)
         {
-            impl::call_factory<%, %>([&](% const& f) { f.%(%%*this, this->m_inner); });
+            impl::call_factory<%, %>([&](% const& f) { [[maybe_unused]] auto winrt_impl_discarded = f.%(%%*this, this->m_inner); });
         }
 )";
 
