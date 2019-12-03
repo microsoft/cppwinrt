@@ -1,14 +1,14 @@
 
 namespace winrt::impl
 {
+    inline void __stdcall resume_background_callback(void*, void* context) noexcept
+    {
+        std::experimental::coroutine_handle<>::from_address(context)();
+    };
+
     inline auto resume_background(std::experimental::coroutine_handle<> handle)
     {
-        auto callback = [](void*, void* context) noexcept
-        {
-            std::experimental::coroutine_handle<>::from_address(context)();
-        };
-
-        if (!WINRT_TrySubmitThreadpoolCallback(callback, handle.address(), nullptr))
+        if (!WINRT_TrySubmitThreadpoolCallback(resume_background_callback, handle.address(), nullptr))
         {
             throw_last_error();
         }
@@ -26,6 +26,12 @@ namespace winrt::impl
         return is_sta() ? capture<IContextCallback>(WINRT_CoGetObjectContext) : nullptr;
     }
 
+    inline int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
+    {
+        std::experimental::coroutine_handle<>::from_address(args->data)();
+        return 0;
+    };
+
     inline auto resume_apartment(com_ptr<IContextCallback> const& sta_context, std::experimental::coroutine_handle<> handle)
     {
         if (sta_context)
@@ -33,13 +39,7 @@ namespace winrt::impl
             com_callback_args args{};
             args.data = handle.address();
 
-            auto callback = [](com_callback_args* args) noexcept -> int32_t
-            {
-                std::experimental::coroutine_handle<>::from_address(args->data)();
-                return 0;
-            };
-
-            check_hresult(sta_context->ContextCallback(callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
+            check_hresult(sta_context->ContextCallback(resume_apartment_callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
         }
         else
         {
