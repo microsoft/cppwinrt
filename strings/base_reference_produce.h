@@ -15,7 +15,21 @@ namespace winrt::impl
 
         Windows::Foundation::PropertyType Type() const noexcept
         {
-            return Windows::Foundation::PropertyType::OtherType;
+            if constexpr (std::is_enum_v<T>)
+            {
+                if constexpr (std::is_same_v<std::underlying_type_t<T>, uint32_t>)
+                {
+                    return Windows::Foundation::PropertyType::UInt32;
+                }
+                else
+                {
+                    return Windows::Foundation::PropertyType::Int32;
+                }
+            }
+            else
+            {
+                return Windows::Foundation::PropertyType::OtherType;
+            }
         }
 
         static constexpr bool IsNumericScalar() noexcept
