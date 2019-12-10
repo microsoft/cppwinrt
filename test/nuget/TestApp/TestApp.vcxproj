@@ -78,7 +78,8 @@
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
       <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -154,6 +155,9 @@
     </ProjectReference>
     <ProjectReference Include="..\TestRuntimeComponent2\TestRuntimeComponent2.vcxproj">
       <Project>{4bbb2de7-4596-4da6-a923-e65e838363b5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TestRuntimeComponentCSharp\TestRuntimeComponentCSharp.csproj">
+      <Project>{c47f8562-a2b9-4ba3-87ac-b42d015e241d}</Project>
     </ProjectReference>
     <ProjectReference Include="..\TestRuntimeComponentCX\TestRuntimeComponentCX.vcxproj">
       <Project>{adc53200-b456-4386-9851-5bf69dfb8928}</Project>

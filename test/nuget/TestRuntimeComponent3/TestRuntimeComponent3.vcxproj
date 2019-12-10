@@ -132,6 +132,9 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TestRuntimeComponentCSharp\TestRuntimeComponentCSharp.csproj">
+      <Project>{c47f8562-a2b9-4ba3-87ac-b42d015e241d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\TestStaticLibrary3\TestStaticLibrary3.vcxproj">
       <Project>{1350e626-038b-4bdf-8e1d-c751ef33d90f}</Project>
     </ProjectReference>
