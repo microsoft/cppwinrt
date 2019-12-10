@@ -6,6 +6,10 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
     <PropertyGroup>
+        <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <CppWinRTVerbosity Condition="'$(CppWinRTVerbosity)' == ''">normal</CppWinRTVerbosity>
         <CppWinRTCommandVerbosity Condition="'$(CppWinRTVerbosity)' == 'high'">-verbose</CppWinRTCommandVerbosity>
         <CppWinRTProjectWinMD>$(OutDir)$(RootNamespace).winmd</CppWinRTProjectWinMD>
@@ -404,7 +408,7 @@ $(XamlMetaDataProviderPch)
     <Target Name="CppWinRTSetMidlReferences"
             Condition="'$(CppWinRTModernIDL)' != 'false'"
             DependsOnTargets="GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;GetCppWinRTProjectWinMDReferences;$(CppWinRTSetMidlReferencesDependsOn)"
-            Inputs="@(CppWinRTDirectWinMDReferences);@(CppWinRTStaticProjectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
+            Inputs="$(MSBuildAllProjects);@(CppWinRTDirectWinMDReferences);@(CppWinRTStaticProjectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
             Outputs="$(IntDir)midlrt.rsp">
         <ItemGroup>
             <_MidlReferences Remove="@(_MidlReferences)"/>
@@ -434,7 +438,7 @@ $(XamlMetaDataProviderPch)
     <!--Merge project-generated WinMDs and project-referenced static library WinMDs into project WinMD-->
     <Target Name="CppWinRTMergeProjectWinMDInputs"
             DependsOnTargets="Midl;GetCppWinRTMdMergeInputs;$(CppWinRTMergeProjectWinMDInputsDependsOn)"
-            Inputs="@(CppWinRTMdMergeInputs)"
+            Inputs="$(MSBuildAllProjects);@(CppWinRTMdMergeInputs)"
             Outputs="@(_MdMergedOutput);$(IntDir)mdmerge.rsp">
         <PropertyGroup>
             <!--Note: CppWinRTNamespaceMergeDepth supersedes CppWinRTMergeDepth-->
@@ -482,7 +486,7 @@ $(XamlMetaDataProviderPch)
     <Target Name="CppWinRTMakePlatformProjection"
             Condition="'$(CppWinRTEnablePlatformProjection)' == 'true' AND '$(CppWinRTOverrideSDKReferences)' != 'true'"
             DependsOnTargets="GetCppWinRTPlatformWinMDInputs;$(CppWinRTMakePlatformProjectionDependsOn)"
-            Inputs="@(CppWinRTPlatformWinMDInputs)"
+            Inputs="$(MSBuildAllProjects);@(CppWinRTPlatformWinMDInputs)"
             Outputs="$(IntDir)cppwinrt_plat.rsp">
         <PropertyGroup>
             <CppWinRTCommand>$(CppWinRTPath)cppwinrt %40"$(IntDir)cppwinrt_plat.rsp"</CppWinRTCommand>
@@ -509,7 +513,7 @@ $(XamlMetaDataProviderPch)
     <Target Name="CppWinRTMakeReferenceProjection"
             Condition="'@(CppWinRTDirectWinMDReferences)@(CppWinRTDynamicProjectWinMDReferences)' != '' AND '$(CppWinRTEnableReferenceProjection)' == 'true'"
             DependsOnTargets="$(CppWinRTMakeReferenceProjectionDependsOn)"
-            Inputs="@(CppWinRTDirectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
+            Inputs="$(MSBuildAllProjects);@(CppWinRTDirectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
             Outputs="$(IntDir)cppwinrt_ref.rsp">
         <PropertyGroup>
             <CppWinRTCommand>$(CppWinRTPath)cppwinrt %40"$(IntDir)cppwinrt_ref.rsp"</CppWinRTCommand>
@@ -540,7 +544,7 @@ $(XamlMetaDataProviderPch)
     <Target Name="CppWinRTMakeComponentProjection"
             Condition="'$(CppWinRTEnableComponentProjection)' == 'true'"
             DependsOnTargets="GetCppWinRTMdMergeInputs;$(CppWinRTMakeComponentProjectionDependsOn)"
-            Inputs="@(CppWinRTMdMergeInputs);@(CppWinRTStaticProjectWinMDReferences)"
+            Inputs="$(MSBuildAllProjects);@(CppWinRTMdMergeInputs);@(CppWinRTStaticProjectWinMDReferences)"
             Outputs="$(IntDir)cppwinrt_comp.rsp">
         <PropertyGroup>
             <_PCH>@(ClCompile->Metadata('PrecompiledHeaderFile')->Distinct())</_PCH>
