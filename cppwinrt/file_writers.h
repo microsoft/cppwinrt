@@ -84,14 +84,12 @@ namespace cppwinrt
 
         // Class names are always required for activation.
         // Class, enum, and struct names are required for producing GUIDs for generic types.
-        // Interface and delegates names are not required by WinRT.
+        // Interface and delegates names are required for Xaml compatibility.
         w.write_each<write_name>(members.classes);
         w.write_each<write_name>(members.enums);
         w.write_each<write_name>(members.structs);
-        write_lean_and_mean(w);
         w.write_each<write_name>(members.interfaces);
         w.write_each<write_name>(members.delegates);
-        write_endif(w);
 
         w.write_each<write_guid>(members.interfaces);
         w.write_each<write_guid>(members.delegates);
