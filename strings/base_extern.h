@@ -41,6 +41,7 @@ extern "C"
     int32_t  __stdcall WINRT_IIDFromString(wchar_t const* string, winrt::guid* iid) noexcept;
     int32_t  __stdcall WINRT_MultiByteToWideChar(uint32_t codepage, uint32_t flags, char const* in_string, int32_t in_size, wchar_t* out_string, int32_t out_size) noexcept;
     int32_t  __stdcall WINRT_WideCharToMultiByte(uint32_t codepage, uint32_t flags, wchar_t const* int_string, int32_t in_size, char* out_string, int32_t out_size, char const* default_char, int32_t* default_used) noexcept;
+    void* __stdcall    WINRT_HeapAlloc(void* heap, uint32_t flags, size_t bytes) noexcept;
     int32_t  __stdcall WINRT_HeapFree(void* heap, uint32_t flags, void* value) noexcept;
     void*    __stdcall WINRT_GetProcessHeap() noexcept;
     uint32_t __stdcall WINRT_FormatMessageW(uint32_t flags, void const* source, uint32_t code, uint32_t language, wchar_t* buffer, uint32_t size, va_list* arguments) noexcept;

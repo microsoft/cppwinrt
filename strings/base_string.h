@@ -1,6 +1,122 @@
 
 namespace winrt::impl
 {
+    struct atomic_ref_count
+    {
+        atomic_ref_count() noexcept = default;
+
+        explicit atomic_ref_count(uint32_t count) noexcept : m_count(count)
+        {
+        }
+
+        uint32_t operator=(uint32_t count) noexcept
+        {
+            return m_count = count;
+        }
+
+        uint32_t operator++() noexcept
+        {
+            return m_count.fetch_add(1, std::memory_order_relaxed) + 1;
+        }
+
+        uint32_t operator--() noexcept
+        {
+            auto const remaining = m_count.fetch_sub(1, std::memory_order_release) - 1;
+
+            if (remaining == 0)
+            {
+                std::atomic_thread_fence(std::memory_order_acquire);
+            }
+
+            return remaining;
+        }
+
+        operator uint32_t() const noexcept
+        {
+            return m_count;
+        }
+
+    private:
+
+        std::atomic<uint32_t> m_count;
+    };
+
+    constexpr uint32_t hstring_reference_flag{ 1 };
+
+    struct hstring_header
+    {
+        uint32_t flags;
+        uint32_t length;
+        uint32_t padding1;
+        uint32_t padding2;
+        wchar_t const* ptr;
+    };
+
+    struct shared_hstring_header : hstring_header
+    {
+        atomic_ref_count count;
+        wchar_t buffer[1];
+    };
+
+    inline void release_hstring(hstring_header* handle) noexcept
+    {
+        WINRT_ASSERT((handle->flags & hstring_reference_flag) == 0);
+
+        if (0 == --static_cast<shared_hstring_header*>(handle)->count)
+        {
+            WINRT_HeapFree(WINRT_GetProcessHeap(), 0, handle);
+        }
+    }
+
+    inline bool create_hstring_on_heap(wchar_t const* value, uint32_t length, hstring_header** result) noexcept
+    {
+        WINRT_ASSERT(value);
+        WINRT_ASSERT(length != 0);
+
+        auto header = static_cast<shared_hstring_header*>(WINRT_HeapAlloc(WINRT_GetProcessHeap(), 0, sizeof(shared_hstring_header) + sizeof(wchar_t) * length));
+
+        if (!header)
+        {
+            return false;
+        }
+
+        header->flags = 0;
+        header->length = length;
+        header->ptr = header->buffer;
+        header->count = 1;
+        memcpy(header->buffer, value, sizeof(wchar_t) * length);
+        header->buffer[length] = 0;
+        *result = header;
+        return true;
+    }
+
+    inline void create_hstring_on_stack(hstring_header& header, wchar_t const* value, uint32_t length) noexcept
+    {
+        WINRT_ASSERT(value);
+        WINRT_ASSERT(length != 0);
+        WINRT_ASSERT(value[length] == 0);
+
+        header.flags = hstring_reference_flag;
+        header.length = length;
+        header.ptr = value;
+    }
+
+    inline bool duplicate_hstring(hstring_header* handle, hstring_header** result) noexcept
+    {
+        if ((handle->flags & hstring_reference_flag) == 0)
+        {
+            ++static_cast<shared_hstring_header*>(handle)->count;
+            *result = handle;
+            return true;
+        }
+        else
+        {
+            return create_hstring_on_heap(handle->ptr, handle->length, result);
+        }
+    }
+
+
+
     inline void* duplicate_string(void* other)
     {
         void* result = nullptr;
