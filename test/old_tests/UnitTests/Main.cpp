@@ -19,7 +19,7 @@ bool starts_with(std::wstring_view value, std::wstring_view match) noexcept
 int32_t __stdcall WINRT_RoGetActivationFactory(void* classId, winrt::guid const& iid, void** factory) noexcept
 {
     *factory = nullptr;
-    std::wstring_view name{ WINRT_WindowsGetStringRawBuffer(classId, nullptr), WINRT_WindowsGetStringLen(classId) };
+    std::wstring_view const name{ *reinterpret_cast<winrt::hstring*>(&classId) };
     HMODULE library{ nullptr };
 
     if (starts_with(name, L"Component."))
