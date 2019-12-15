@@ -89,6 +89,11 @@ namespace winrt::impl
 
     inline hstring_header* create_hstring_on_heap(wchar_t const* value, uint32_t length)
     {
+        if (!length)
+        {
+            return nullptr;
+        }
+
         auto header = precreate_hstring_on_heap(length);
         memcpy(header->buffer, value, sizeof(wchar_t) * length);
         return header;
@@ -111,7 +116,11 @@ namespace winrt::impl
 
     inline hstring_header* duplicate_hstring(hstring_header* handle)
     {
-        if ((handle->flags & hstring_reference_flag) == 0)
+        if (!handle)
+        {
+            return nullptr;
+        }
+        else if ((handle->flags & hstring_reference_flag) == 0)
         {
             ++static_cast<shared_hstring_header*>(handle)->count;
             return handle;
