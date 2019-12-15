@@ -68,83 +68,67 @@ namespace winrt::impl
         }
     }
 
-    inline bool create_hstring_on_heap(wchar_t const* value, uint32_t length, hstring_header** result) noexcept
+    inline shared_hstring_header* precreate_hstring_on_heap(uint32_t length)
     {
-        WINRT_ASSERT(value);
         WINRT_ASSERT(length != 0);
 
         auto header = static_cast<shared_hstring_header*>(WINRT_HeapAlloc(WINRT_GetProcessHeap(), 0, sizeof(shared_hstring_header) + sizeof(wchar_t) * length));
 
         if (!header)
         {
-            return false;
+            throw std::bad_alloc();
         }
 
         header->flags = 0;
         header->length = length;
         header->ptr = header->buffer;
         header->count = 1;
-        memcpy(header->buffer, value, sizeof(wchar_t) * length);
         header->buffer[length] = 0;
-        *result = header;
-        return true;
+        return header;
+    }
+
+    inline hstring_header* create_hstring_on_heap(wchar_t const* value, uint32_t length)
+    {
+        auto header = precreate_hstring_on_heap(length);
+        memcpy(header->buffer, value, sizeof(wchar_t) * length);
+        return header;
     }
 
     inline void create_hstring_on_stack(hstring_header& header, wchar_t const* value, uint32_t length) noexcept
     {
         WINRT_ASSERT(value);
         WINRT_ASSERT(length != 0);
-        WINRT_ASSERT(value[length] == 0);
+
+        if (value[length] != 0)
+        {
+            std::terminate();
+        }
 
         header.flags = hstring_reference_flag;
         header.length = length;
         header.ptr = value;
     }
 
-    inline bool duplicate_hstring(hstring_header* handle, hstring_header** result) noexcept
+    inline hstring_header* duplicate_hstring(hstring_header* handle)
     {
         if ((handle->flags & hstring_reference_flag) == 0)
         {
             ++static_cast<shared_hstring_header*>(handle)->count;
-            *result = handle;
-            return true;
+            return handle;
         }
         else
         {
-            return create_hstring_on_heap(handle->ptr, handle->length, result);
+            return create_hstring_on_heap(handle->ptr, handle->length);
         }
-    }
-
-
-
-    inline void* duplicate_string(void* other)
-    {
-        void* result = nullptr;
-        check_hresult(WINRT_WindowsDuplicateString(other, &result));
-        return result;
-    }
-
-    inline void* create_string(wchar_t const* value, uint32_t const length)
-    {
-        void* result = nullptr;
-        check_hresult(WINRT_WindowsCreateString(value, length, &result));
-        return result;
-    }
-
-    inline bool embedded_null(void* value) noexcept
-    {
-        int32_t result = 0;
-        WINRT_VERIFY_(0, WINRT_WindowsStringHasEmbeddedNull(value, &result));
-        return 0 != result;
     }
 
     struct hstring_traits
     {
-        using type = void*;
+        using type = hstring_header*;
 
         static void close(type value) noexcept
         {
-            WINRT_VERIFY_(0, WINRT_WindowsDeleteString(value));
+            release_hstring(value);
         }
 
         static constexpr type invalid() noexcept
@@ -168,17 +152,17 @@ WINRT_EXPORT namespace winrt
 
         hstring() noexcept = default;
 
-        hstring(void* ptr, take_ownership_from_abi_t) noexcept : m_handle(ptr)
+        hstring(void* ptr, take_ownership_from_abi_t) noexcept : m_handle(static_cast<impl::hstring_header*>(ptr))
         {
         }
 
         hstring(hstring const& value) :
-            m_handle(impl::duplicate_string(value.m_handle.get()))
+            m_handle(impl::duplicate_hstring(value.m_handle.get()))
         {}
 
         hstring& operator=(hstring const& value)
         {
-            m_handle.attach(impl::duplicate_string(value.m_handle.get()));
+            m_handle.attach(impl::duplicate_hstring(value.m_handle.get()));
             return*this;
         }
 
@@ -195,7 +179,7 @@ WINRT_EXPORT namespace winrt
         {}
 
         hstring(wchar_t const* value, size_type size) :
-            m_handle(impl::create_string(value, size))
+            m_handle(impl::create_hstring_on_heap(value, size))
         {}
 
         explicit hstring(std::wstring_view const& value) :
@@ -224,9 +208,14 @@ WINRT_EXPORT namespace winrt
 
         operator std::wstring_view() const noexcept
         {
-            uint32_t size;
-            wchar_t const* data = WINRT_WindowsGetStringRawBuffer(m_handle.get(), &size);
-            return std::wstring_view(data, size);
+            if (m_handle)
+            {
+                return{ m_handle.get()->ptr, m_handle.get()->length };
+            }
+            else
+            {
+                return {};
+            }
         }
 
         const_reference operator[](size_type pos) const noexcept
@@ -259,7 +248,14 @@ WINRT_EXPORT namespace winrt
 
         const_iterator begin() const noexcept
         {
-            return WINRT_WindowsGetStringRawBuffer(m_handle.get(), nullptr);
+            if (m_handle)
+            {
+                return m_handle.get()->ptr;
+            }
+            else
+            {
+                return {};
+            }
         }
 
         const_iterator cbegin() const noexcept
@@ -269,9 +265,14 @@ WINRT_EXPORT namespace winrt
 
         const_iterator end() const noexcept
         {
-            uint32_t length = 0;
-            const_pointer buffer = WINRT_WindowsGetStringRawBuffer(m_handle.get(), &length);
-            return buffer + length;
+            if (m_handle)
+            {
+                return m_handle.get()->ptr + m_handle.get()->length;
+            }
+            else
+            {
+                return {};
+            }
         }
 
         const_iterator cend() const noexcept
@@ -306,7 +307,14 @@ WINRT_EXPORT namespace winrt
 
         size_type size() const noexcept
         {
-            return WINRT_WindowsGetStringLen(m_handle.get());
+            if (m_handle)
+            {
+                return m_handle.get()->length;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
         friend void swap(hstring& left, hstring& right) noexcept
@@ -350,23 +358,23 @@ WINRT_EXPORT namespace winrt
 
     inline void copy_from_abi(hstring& object, void* value)
     {
-        attach_abi(object, impl::duplicate_string(value));
+        attach_abi(object, impl::duplicate_hstring(static_cast<impl::hstring_header*>(value)));
     }
 
     inline void copy_to_abi(hstring const& object, void*& value)
     {
         WINRT_ASSERT(value == nullptr);
-        value = impl::duplicate_string(get_abi(object));
+        value = impl::duplicate_hstring(static_cast<impl::hstring_header*>(get_abi(object)));
     }
 
     inline void* detach_abi(std::wstring_view const& value)
     {
-        return impl::create_string(value.data(), static_cast<uint32_t>(value.size()));
+        return impl::create_hstring_on_heap(value.data(), static_cast<uint32_t>(value.size()));
     }
 
     inline void* detach_abi(wchar_t const* const value)
     {
-        return impl::create_string(value, static_cast<uint32_t>(wcslen(value)));
+        return impl::create_hstring_on_heap(value, static_cast<uint32_t>(wcslen(value)));
     }
 }
 
@@ -387,38 +395,24 @@ namespace winrt::impl
         hstring_builder(hstring_builder const&) = delete;
         hstring_builder& operator=(hstring_builder const&) = delete;
 
-        explicit hstring_builder(uint32_t const size)
+        explicit hstring_builder(uint32_t const size) :
+            m_handle(impl::precreate_hstring_on_heap(size))
         {
-            check_hresult(WINRT_WindowsPreallocateStringBuffer(size, &m_data, &m_buffer));
-        }
-
-        ~hstring_builder() noexcept
-        {
-            if (m_buffer != nullptr)
-            {
-                WINRT_VERIFY_(0, WINRT_WindowsDeleteStringBuffer(m_buffer));
-            }
         }
 
         wchar_t* data() noexcept
         {
-            WINRT_ASSERT(m_buffer != nullptr);
-            return m_data;
+            return const_cast<wchar_t*>(m_handle.get()->ptr);
         }
 
         hstring to_hstring()
         {
-            WINRT_ASSERT(m_buffer != nullptr);
-            void* result{};
-            check_hresult(WINRT_WindowsPromoteStringBuffer(m_buffer, &result));
-            m_buffer = nullptr;
-            return { result, take_ownership_from_abi };
+            return { m_handle.detach(), take_ownership_from_abi };
         }
 
     private:
 
-        wchar_t* m_data{ nullptr };
-        void* m_buffer{ nullptr };
+        handle_type<impl::hstring_traits> m_handle;
     };
 
     template <typename T>
@@ -498,7 +492,15 @@ WINRT_EXPORT namespace winrt
 {
     inline bool embedded_null(hstring const& value) noexcept
     {
-        return impl::embedded_null(get_abi(value));
+        for (auto&& item : value)
+        {
+            if (item == 0)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     inline hstring to_hstring(uint8_t value)

@@ -17,18 +17,6 @@ extern "C"
     [[noreturn]] void __stdcall WINRT_RoFailFastWithErrorContext(int32_t error) noexcept;
     int32_t __stdcall WINRT_RoTransformError(int32_t oldError, int32_t newError, void* message) noexcept;
 
-    int32_t __stdcall WINRT_WindowsCreateString(wchar_t const* sourceString, uint32_t length, void** string) noexcept;
-    int32_t __stdcall WINRT_WindowsCreateStringReference(wchar_t const* sourceString, uint32_t length, void* hstringHeader, void** string) noexcept;
-    int32_t __stdcall WINRT_WindowsDuplicateString(void* string, void** newString) noexcept;
-    int32_t __stdcall WINRT_WindowsDeleteString(void* string) noexcept;
-    int32_t __stdcall WINRT_WindowsStringHasEmbeddedNull(void* string, int* hasEmbedNull) noexcept;
-    int32_t __stdcall WINRT_WindowsPreallocateStringBuffer(uint32_t length, wchar_t** charBuffer, void** bufferHandle) noexcept;
-    int32_t __stdcall WINRT_WindowsDeleteStringBuffer(void* bufferHandle) noexcept;
-    int32_t __stdcall WINRT_WindowsPromoteStringBuffer(void* bufferHandle, void** string) noexcept;
-    int32_t __stdcall WINRT_WindowsConcatString(void* string1, void* string2, void** newString) noexcept;
-    wchar_t const* __stdcall WINRT_WindowsGetStringRawBuffer(void* string, uint32_t* length) noexcept;
-    uint32_t __stdcall WINRT_WindowsGetStringLen(void* string) noexcept;
-
     int32_t  __stdcall WINRT_CoCreateFreeThreadedMarshaler(void* outer, void** marshaler) noexcept;
     int32_t  __stdcall WINRT_CoCreateInstance(winrt::guid const& clsid, void* outer, uint32_t context, winrt::guid const& iid, void** object) noexcept;
     int32_t  __stdcall WINRT_CoGetCallContext(winrt::guid const& iid, void** object) noexcept;
