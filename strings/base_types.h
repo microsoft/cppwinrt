@@ -1,6 +1,7 @@
 
 namespace winrt::impl
 {
+    // TODO: get rid of these nontypes...
     using ptp_io = struct tp_io*;
     using ptp_timer = struct tp_timer*;
     using ptp_wait = struct tp_wait*;
@@ -8,6 +9,7 @@ namespace winrt::impl
     using srwlock = struct srwlock_*;
     using condition_variable = struct condition_variable_*;
     using bstr = wchar_t*;
+
     using filetime_period = std::ratio_multiply<std::ratio<100>, std::nano>;
     struct IAgileObject;
 

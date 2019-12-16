@@ -10,6 +10,7 @@ extern "C"
     void* __stdcall WINRT_LoadLibraryW(wchar_t const* name) noexcept;
     void* __stdcall WINRT_GetProcAddress(void* library, char const* name) noexcept;
 
+    int32_t __stdcall WINRT_SetErrorInfo(uint32_t reserved, void* info) noexcept;
     int32_t __stdcall WINRT_GetErrorInfo(uint32_t reserved, void** info) noexcept;
     int32_t __stdcall WINRT_RoGetActivationFactory(void* classId, winrt::guid const& iid, void** factory) noexcept;
     int32_t __stdcall WINRT_CoInitializeEx(void*, uint32_t type) noexcept;
@@ -27,6 +28,7 @@ extern "C"
     int32_t  __stdcall WINRT_CoGetApartmentType(int32_t* type, int32_t* qualifier) noexcept;
     void*    __stdcall WINRT_CoTaskMemAlloc(std::size_t size) noexcept;
     void     __stdcall WINRT_CoTaskMemFree(void* ptr) noexcept;
+    winrt::impl::bstr __stdcall WINRT_SysAllocString(wchar_t const* value) noexcept;
     void     __stdcall WINRT_SysFreeString(winrt::impl::bstr string) noexcept;
     uint32_t __stdcall WINRT_SysStringLen(winrt::impl::bstr string) noexcept;
     int32_t  __stdcall WINRT_IIDFromString(wchar_t const* string, winrt::guid* iid) noexcept;
@@ -95,6 +97,7 @@ extern "C"
 WINRT_IMPL_LINK(LoadLibraryW, 4)
 WINRT_IMPL_LINK(GetProcAddress, 8)
 
+WINRT_IMPL_LINK(SetErrorInfo, 8)
 WINRT_IMPL_LINK(GetErrorInfo, 8)
 WINRT_IMPL_LINK(RoGetActivationFactory, 12)
 WINRT_IMPL_LINK(CoInitializeEx, 8)
@@ -112,6 +115,7 @@ WINRT_IMPL_LINK(CoGetObjectContext, 8)
 WINRT_IMPL_LINK(CoGetApartmentType, 8)
 WINRT_IMPL_LINK(CoTaskMemAlloc, 4)
 WINRT_IMPL_LINK(CoTaskMemFree, 4)
+WINRT_IMPL_LINK(SysAllocString, 4)
 WINRT_IMPL_LINK(SysFreeString, 4)
 WINRT_IMPL_LINK(SysStringLen, 4)
 WINRT_IMPL_LINK(IIDFromString, 8)
