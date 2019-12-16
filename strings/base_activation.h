@@ -342,13 +342,13 @@ WINRT_EXPORT namespace winrt
 {
     enum class apartment_type : int32_t
     {
-        single_threaded,
-        multi_threaded
+        multi_threaded = 0,
+        single_threaded = 2,
     };
 
     inline void init_apartment(apartment_type const type = apartment_type::multi_threaded)
     {
-        hresult const result = WINRT_RoInitialize(static_cast<uint32_t>(type));
+        hresult const result = WINRT_CoInitializeEx(nullptr, static_cast<uint32_t>(type));
 
         if (result < 0)
         {
