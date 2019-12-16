@@ -5,7 +5,6 @@ __declspec(selectany) void(__stdcall* winrt_resume_handler)(void const* token) n
 
 extern "C"
 {
-    int32_t __stdcall WINRT_GetRestrictedErrorInfo(void** info) noexcept;
     int32_t __stdcall WINRT_GetErrorInfo(uint32_t reserved, void** info) noexcept;
     int32_t __stdcall WINRT_RoGetActivationFactory(void* classId, winrt::guid const& iid, void** factory) noexcept;
     int32_t __stdcall WINRT_CoInitializeEx(void*, uint32_t type) noexcept;
@@ -89,7 +88,6 @@ extern "C"
 #define WINRT_IMPL_LINK(function, count) __pragma(comment(linker, "/alternatename:WINRT_" #function "=" #function))
 #endif
 
-WINRT_IMPL_LINK(GetRestrictedErrorInfo, 4)
 WINRT_IMPL_LINK(GetErrorInfo, 8)
 WINRT_IMPL_LINK(RoGetActivationFactory, 12)
 WINRT_IMPL_LINK(CoInitializeEx, 8)

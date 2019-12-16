@@ -189,7 +189,9 @@ WINRT_EXPORT namespace winrt
         void originate(hresult const code, void* message) noexcept
         {
             WINRT_VERIFY(WINRT_RoOriginateLanguageException(code, message, nullptr));
-            WINRT_VERIFY_(0, WINRT_GetRestrictedErrorInfo(m_info.put_void()));
+            com_ptr<impl::IErrorInfo> info;
+            WINRT_VERIFY_(0, WINRT_GetErrorInfo(0, info.put_void()));
+            WINRT_VERIFY(info.try_as(m_info));
         }
 
 #ifdef __clang__
