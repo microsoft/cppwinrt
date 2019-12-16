@@ -55,6 +55,24 @@ namespace winrt::impl
     {
         return ((int32_t)((x) | 0x10000000));
     }
+
+    template <typename F, typename L>
+    void load_runtime_function(char const* name, F& result, L fallback) noexcept
+    {
+        if (result)
+        {
+            return;
+        }
+
+        result = static_cast<F>(WINRT_GetProcAddress(WINRT_LoadLibraryW(L"combase.dll"), name));
+
+        if (result)
+        {
+            return;
+        }
+
+        result = fallback;
+    }
 }
 
 WINRT_EXPORT namespace winrt
@@ -188,7 +206,18 @@ WINRT_EXPORT namespace winrt
 
         void originate(hresult const code, void* message) noexcept
         {
-            WINRT_VERIFY(WINRT_RoOriginateLanguageException(code, message, nullptr));
+            using handler_t = int32_t(__stdcall*)(int32_t error, void* message, void* exception) noexcept;
+            static handler_t handler;
+
+            impl::load_runtime_function("RoOriginateLanguageException", handler, 
+                [](int32_t /*error*/, void* /*message*/, void*) noexcept
+                {
+                    // TODO: add fallback for Win7 similar to onecore/com/combase/WinRT/error/RestrictedError.cpp
+                    WINRT_ASSERT(false);
+                    return 0;
+                });
+
+            WINRT_VERIFY(handler(code, message, nullptr));
             com_ptr<impl::IErrorInfo> info;
             WINRT_VERIFY_(0, WINRT_GetErrorInfo(0, info.put_void()));
             WINRT_VERIFY(info.try_as(m_info));
