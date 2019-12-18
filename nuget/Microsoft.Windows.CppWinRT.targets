@@ -278,7 +278,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             <!--Get dynamic library project references-->
             <_CppWinRTDynamicProjectReferences Remove="@(_CppWinRTDynamicProjectReferences)"/>
             <_CppWinRTDynamicProjectReferences Include="@(_ResolvedProjectReferencePaths)"
-                Condition= "'%(_ResolvedProjectReferencePaths.ProjectType)'!='StaticLibrary'  AND '%(_ResolvedProjectReferencePaths.WinMDFile)' == 'true'"/>
+                Condition= "'%(_ResolvedProjectReferencePaths.ProjectType)'!='StaticLibrary' AND 
+                ('%(_ResolvedProjectReferencePaths.WinMDFile)' == 'true' OR
+                    ('%(_ResolvedProjectReferencePaths.WinMDFile)' == '' AND '%(_ResolvedProjectReferencePaths.Extension)' == '.winmd'))"/>
         </ItemGroup>
         <ItemGroup>
             <CppWinRTStaticProjectWinMDReferences Remove="@(CppWinRTStaticProjectWinMDReferences)" />
