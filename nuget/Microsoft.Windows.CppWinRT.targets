@@ -6,6 +6,12 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
     <PropertyGroup>
+        <!-- Only do this for MSBuild versions below 16.0
+             as it is since done automatically, see https://github.com/microsoft/msbuild/pull/3605-->
+        <MSBuildAllProjects Condition="'$(MSBuildToolsVersion)'  &lt;= '15'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <CppWinRTVerbosity Condition="'$(CppWinRTVerbosity)' == ''">normal</CppWinRTVerbosity>
         <CppWinRTCommandVerbosity Condition="'$(CppWinRTVerbosity)' == 'high'">-verbose</CppWinRTCommandVerbosity>
         <CppWinRTProjectWinMD>$(OutDir)$(RootNamespace).winmd</CppWinRTProjectWinMD>
@@ -88,6 +94,13 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <IncludeCopyWinMDArtifactsOutputGroup>false</IncludeCopyWinMDArtifactsOutputGroup>
     </PropertyGroup>
 
+    <ItemDefinitionGroup>
+        <Midl Condition="'$(CppWinRTModernIDL)' != 'false'">
+            <AdditionalMetadataDirectories Condition="'%(AdditionalMetadataDirectories)' == '' And '$(WindowsSDK_MetadataFoundationPath)' != ''">$(WindowsSDK_MetadataFoundationPath);%(AdditionalMetadataDirectories)</AdditionalMetadataDirectories>
+            <AdditionalMetadataDirectories Condition="'%(AdditionalMetadataDirectories)' == '' And '$(WindowsSDK_MetadataFoundationPath)' == ''">$(WindowsSDK_MetadataPath);%(AdditionalMetadataDirectories)</AdditionalMetadataDirectories>
+        </Midl>
+    </ItemDefinitionGroup>
+
     <Target Name="CppWinRTVerifyKitVersion" Condition="'$(CppWinRTOverrideSDKReferences)' != 'true'">
         <PropertyGroup>
             <_CppWinRT_RS4OrGreater>false</_CppWinRT_RS4OrGreater>
@@ -121,19 +134,19 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     <!-- Target used only to evaluate CppWinRTGenerateWindowsMetadata if it doesn't already have a value -->
     <Target Name="CppWinRTComputeGenerateWindowsMetadata"
             DependsOnTargets="CppWinRTComputeXamlGeneratedMidlInputs;GetCppWinRTProjectWinMDReferences;$(CppWinRTComputeGenerateWindowsMetadataDependsOn)">
-        
+
         <PropertyGroup>
             <!-- For static libraries, only idl causes a winmd to be generated. 
                  For exe/dll, static libraries that produce a WinMD will be merged, 
                  so they also cause a WinMD to be generated-->
             <CppWinRTGenerateWindowsMetadata Condition="'$(ConfigurationType)' != 'StaticLibrary' AND '@(CppWinRTStaticProjectWinMDReferences)@(Midl)'!= ''">true</CppWinRTGenerateWindowsMetadata>
             <CppWinRTGenerateWindowsMetadata Condition="'$(ConfigurationType)' == 'StaticLibrary' AND '@(Midl)'!= ''">true</CppWinRTGenerateWindowsMetadata>
-            
+
             <!-- At this point we checked all cases where we do generate a WinMD.
                  The remaining option is no WinMD. -->
             <CppWinRTGenerateWindowsMetadata Condition="'$(CppWinRTGenerateWindowsMetadata)'== ''">false</CppWinRTGenerateWindowsMetadata>
         </PropertyGroup>
-        
+
     </Target>
 
     <Target Name="ComputeGetResolvedWinMD"
@@ -160,7 +173,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             </Link>
 
             <!-- Condition is modified to only do this if CppWinRTGenerateWindowsMetadata is not true. -->
-            <WinMDFullPath Condition="'%(Link.GenerateWindowsMetadata)' == 'true' AND '$(CppWinRTGenerateWindowsMetadata)' != 'true'" 
+            <WinMDFullPath Condition="'%(Link.GenerateWindowsMetadata)' == 'true' AND '$(CppWinRTGenerateWindowsMetadata)' != 'true'"
                            Include="@(Link->Metadata('WindowsMetadataFile')->FullPath()->Distinct()->ClearMetadata())">
                 <TargetPath>$([System.IO.Path]::GetFileName('%(Link.WindowsMetadataFile)'))</TargetPath>
                 <Primary>true</Primary>
@@ -172,7 +185,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
                 <WinMDFile>true</WinMDFile>
                 <ProjectType>$(ConfigurationType)</ProjectType>
             </WinMDFullPath>
-            
+
             <Link Remove="@(Link)" Condition="'%(Link.DeleteSoon)' == 'true'" />
         </ItemGroup>
 
@@ -397,8 +410,11 @@ $(XamlMetaDataProviderPch)
 
     <!--Insert Midl /references to Platform WinMDs, library reference WinMDs, and direct reference WinMDs-->
     <Target Name="CppWinRTSetMidlReferences"
-            DependsOnTargets="GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;GetCppWinRTProjectWinMDReferences;$(CppWinRTSetMidlReferencesDependsOn)">
-        <ItemGroup Condition="'$(CppWinRTModernIDL)' != 'false'">
+            Condition="'$(CppWinRTModernIDL)' != 'false'"
+            DependsOnTargets="GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;GetCppWinRTProjectWinMDReferences;$(CppWinRTSetMidlReferencesDependsOn)"
+            Inputs="$(MSBuildAllProjects);@(CppWinRTDirectWinMDReferences);@(CppWinRTStaticProjectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
+            Outputs="$(IntDir)midlrt.rsp">
+        <ItemGroup>
             <_MidlReferences Remove="@(_MidlReferences)"/>
             <_MidlReferences Include="@(CppWinRTDirectWinMDReferences)"/>
             <_MidlReferences Include="@(CppWinRTStaticProjectWinMDReferences)"/>
@@ -410,22 +426,13 @@ $(XamlMetaDataProviderPch)
                 <AdditionalOptions>%(Midl.AdditionalOptions) %40"$(IntDir)midlrt.rsp"</AdditionalOptions>
             </Midl>
         </ItemGroup>
-        <ItemGroup>
-            <Midl Condition="'%(Midl.AdditionalMetadataDirectories)'==''">
-                <AdditionalMetadataDirectories Condition="'$(WindowsSDK_MetadataFoundationPath)' != ''">%(Midl.AdditionalMetadataDirectories);$(WindowsSDK_MetadataFoundationPath);</AdditionalMetadataDirectories>
-                <AdditionalMetadataDirectories Condition="'$(WindowsSDK_MetadataFoundationPath)' == ''">%(Midl.AdditionalMetadataDirectories);$(WindowsSDK_MetadataPath);</AdditionalMetadataDirectories>
-            </Midl>
-        </ItemGroup>
         <PropertyGroup>
             <_MidlrtParameters>@(_MidlReferencesDistinct->'/reference &quot;%(WinMDPath)&quot;','&#x0d;&#x0a;')</_MidlrtParameters>
         </PropertyGroup>
-        <WriteLinesToFile Condition="!$(CppWinRTWriteOnlyWhenDifferent)"
+        <!-- Always write the midlrt.rsp file when the target runs, because the file is used as the output of this target. -->
+        <WriteLinesToFile
             File="$(IntDir)midlrt.rsp" Lines="$(_MidlrtParameters)"
             ContinueOnError="true" Overwrite="true" />
-        <WriteLinesToFile Condition="$(CppWinRTWriteOnlyWhenDifferent)"
-            File="$(IntDir)midlrt.rsp" Lines="$(_MidlrtParameters)"
-            ContinueOnError="true" Overwrite="true"
-            WriteOnlyWhenDifferent="true" />
         <Message Text="CppWinRTMidlReferences: @(_MidlReferences->'%(WinMDPath)')" Importance="$(CppWinRTVerbosity)"/>
     </Target>
 
@@ -435,7 +442,7 @@ $(XamlMetaDataProviderPch)
     <!--Merge project-generated WinMDs and project-referenced static library WinMDs into project WinMD-->
     <Target Name="CppWinRTMergeProjectWinMDInputs"
             DependsOnTargets="Midl;GetCppWinRTMdMergeInputs;$(CppWinRTMergeProjectWinMDInputsDependsOn)"
-            Inputs="@(CppWinRTMdMergeInputs)"
+            Inputs="$(MSBuildAllProjects);@(CppWinRTMdMergeInputs)"
             Outputs="@(_MdMergedOutput);$(IntDir)mdmerge.rsp">
         <PropertyGroup>
             <!--Note: CppWinRTNamespaceMergeDepth supersedes CppWinRTMergeDepth-->
@@ -451,13 +458,10 @@ $(XamlMetaDataProviderPch)
             <_MdMergeParameters>$(_MdMergeParameters) @(CppWinRTMdMergeInputs->'-i &quot;%(Identity)&quot;', '&#x0d;&#x0a;')</_MdMergeParameters>
             <_MdMergeParameters>$(_MdMergeParameters) -o &quot;$(CppWinRTMergedDir.TrimEnd('\'))&quot; -partial $(_MdMergeDepth)</_MdMergeParameters>
         </PropertyGroup>
-        <WriteLinesToFile Condition="!$(CppWinRTWriteOnlyWhenDifferent)"
+        <!-- Always write the mdmerge.rsp file when the target runs, because the file is used as the output of this target. -->
+        <WriteLinesToFile
             File="$(IntDir)mdmerge.rsp" Lines="$(_MdMergeParameters)"
             ContinueOnError="true" Overwrite="true" />
-        <WriteLinesToFile Condition="$(CppWinRTWriteOnlyWhenDifferent)"
-            File="$(IntDir)mdmerge.rsp" Lines="$(_MdMergeParameters)"
-            ContinueOnError="true" Overwrite="true"
-            WriteOnlyWhenDifferent="true" />
         <MakeDir Directories="$(CppWinRTUnmergedDir);$(CppWinRTMergedDir)" />
         <Message Text="$(_MdMergeCommand)" Importance="$(CppWinRTVerbosity)"/>
         <Exec Command="$(_MdMergeCommand)" />
@@ -486,7 +490,7 @@ $(XamlMetaDataProviderPch)
     <Target Name="CppWinRTMakePlatformProjection"
             Condition="'$(CppWinRTEnablePlatformProjection)' == 'true' AND '$(CppWinRTOverrideSDKReferences)' != 'true'"
             DependsOnTargets="GetCppWinRTPlatformWinMDInputs;$(CppWinRTMakePlatformProjectionDependsOn)"
-            Inputs="@(CppWinRTPlatformWinMDInputs)"
+            Inputs="$(MSBuildAllProjects);@(CppWinRTPlatformWinMDInputs)"
             Outputs="$(IntDir)cppwinrt_plat.rsp">
         <PropertyGroup>
             <CppWinRTCommand>$(CppWinRTPath)cppwinrt %40"$(IntDir)cppwinrt_plat.rsp"</CppWinRTCommand>
@@ -500,13 +504,10 @@ $(XamlMetaDataProviderPch)
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtInputs->'-in &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) -out &quot;$(GeneratedFilesDir).&quot;</_CppwinrtParameters>
         </PropertyGroup>
-        <WriteLinesToFile Condition="!$(CppWinRTWriteOnlyWhenDifferent)"
+        <!-- Always write the cppwinrt_plat.rsp file when the target runs, because the file is used as the output of this target. -->
+        <WriteLinesToFile
             File="$(IntDir)cppwinrt_plat.rsp" Lines="$(_CppwinrtParameters)"
             ContinueOnError="true" Overwrite="true" />
-        <WriteLinesToFile Condition="$(CppWinRTWriteOnlyWhenDifferent)"
-            File="$(IntDir)cppwinrt_plat.rsp" Lines="$(_CppwinrtParameters)"
-            ContinueOnError="true" Overwrite="true"
-            WriteOnlyWhenDifferent="true" />
         <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)"/>
         <Exec Command="$(CppWinRTCommand)" />
     </Target>
@@ -516,7 +517,7 @@ $(XamlMetaDataProviderPch)
     <Target Name="CppWinRTMakeReferenceProjection"
             Condition="'@(CppWinRTDirectWinMDReferences)@(CppWinRTDynamicProjectWinMDReferences)' != '' AND '$(CppWinRTEnableReferenceProjection)' == 'true'"
             DependsOnTargets="$(CppWinRTMakeReferenceProjectionDependsOn)"
-            Inputs="@(CppWinRTDirectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
+            Inputs="$(MSBuildAllProjects);@(CppWinRTDirectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
             Outputs="$(IntDir)cppwinrt_ref.rsp">
         <PropertyGroup>
             <CppWinRTCommand>$(CppWinRTPath)cppwinrt %40"$(IntDir)cppwinrt_ref.rsp"</CppWinRTCommand>
@@ -534,13 +535,10 @@ $(XamlMetaDataProviderPch)
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtRefRefs->'-ref &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) -out &quot;$(GeneratedFilesDir).&quot;</_CppwinrtParameters>
         </PropertyGroup>
-        <WriteLinesToFile Condition="!$(CppWinRTWriteOnlyWhenDifferent)"
+        <!-- Always write the cppwinrt_ref.rsp file when the target runs, because the file is used as the output of this target. -->
+        <WriteLinesToFile
             File="$(IntDir)cppwinrt_ref.rsp" Lines="$(_CppwinrtParameters)"
             ContinueOnError="true" Overwrite="true" />
-        <WriteLinesToFile Condition="$(CppWinRTWriteOnlyWhenDifferent)"
-            File="$(IntDir)cppwinrt_ref.rsp" Lines="$(_CppwinrtParameters)"
-            ContinueOnError="true" Overwrite="true"
-            WriteOnlyWhenDifferent="true" />
         <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)"/>
         <Exec Command="$(CppWinRTCommand)" />
     </Target>
@@ -550,7 +548,7 @@ $(XamlMetaDataProviderPch)
     <Target Name="CppWinRTMakeComponentProjection"
             Condition="'$(CppWinRTEnableComponentProjection)' == 'true'"
             DependsOnTargets="GetCppWinRTMdMergeInputs;$(CppWinRTMakeComponentProjectionDependsOn)"
-            Inputs="@(CppWinRTMdMergeInputs);@(CppWinRTStaticProjectWinMDReferences)"
+            Inputs="$(MSBuildAllProjects);@(CppWinRTMdMergeInputs);@(CppWinRTStaticProjectWinMDReferences)"
             Outputs="$(IntDir)cppwinrt_comp.rsp">
         <PropertyGroup>
             <_PCH>@(ClCompile->Metadata('PrecompiledHeaderFile')->Distinct())</_PCH>
@@ -592,13 +590,10 @@ $(XamlMetaDataProviderPch)
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtCompRefs->'-ref &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) -out &quot;$(GeneratedFilesDir).&quot;</_CppwinrtParameters>
         </PropertyGroup>
-        <WriteLinesToFile Condition="!$(CppWinRTWriteOnlyWhenDifferent)"
+        <!-- Always write the cppwinrt_comp.rsp file when the target runs, because the file is used as the output of this target. -->
+        <WriteLinesToFile
             File="$(IntDir)cppwinrt_comp.rsp" Lines="$(_CppwinrtParameters)"
             ContinueOnError="true" Overwrite="true" />
-        <WriteLinesToFile Condition="$(CppWinRTWriteOnlyWhenDifferent)"
-            File="$(IntDir)cppwinrt_comp.rsp" Lines="$(_CppwinrtParameters)"
-            ContinueOnError="true" Overwrite="true"
-            WriteOnlyWhenDifferent="true" />
         <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)" Condition="'@(_CppwinrtCompInputs)' != ''"/>
         <Exec Command="$(CppWinRTCommand)" Condition="'@(_CppwinrtCompInputs)' != ''"/>
     </Target>
