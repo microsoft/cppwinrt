@@ -463,8 +463,9 @@ $(XamlMetaDataProviderPch)
             File="$(IntDir)mdmerge.rsp" Lines="$(_MdMergeParameters)"
             ContinueOnError="true" Overwrite="true" />
         <MakeDir Directories="$(CppWinRTUnmergedDir);$(CppWinRTMergedDir)" />
-        <Message Text="$(_MdMergeCommand)" Importance="$(CppWinRTVerbosity)"/>
-        <Exec Command="$(_MdMergeCommand)" />
+        <Message Text="$(_MdMergeCommand)" Importance="$(CppWinRTVerbosity)" Condition="'@(CppWinRTMdMergeInputs)' != ''" />
+        <!-- Only run mdmerge.exe when we actually have inputs -->
+        <Exec Command="$(_MdMergeCommand)" Condition="'@(CppWinRTMdMergeInputs)' != ''" />
         <ItemGroup>
             <_MdMergedOutput Remove="@(_MdMergedOutput)"/>
             <_MdMergedOutput Include="$(CppWinRTMergedDir)*.winmd"/>
@@ -508,8 +509,8 @@ $(XamlMetaDataProviderPch)
         <WriteLinesToFile
             File="$(IntDir)cppwinrt_plat.rsp" Lines="$(_CppwinrtParameters)"
             ContinueOnError="true" Overwrite="true" />
-        <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)"/>
-        <Exec Command="$(CppWinRTCommand)" />
+        <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)" Condition="'@(_CppwinrtInputs) != ''" />
+        <Exec Command="$(CppWinRTCommand)" Condition="'@(_CppwinrtInputs) != ''" />
     </Target>
 
     <!--Build reference projection from WinMD project references and dynamic library project references-->
@@ -539,8 +540,8 @@ $(XamlMetaDataProviderPch)
         <WriteLinesToFile
             File="$(IntDir)cppwinrt_ref.rsp" Lines="$(_CppwinrtParameters)"
             ContinueOnError="true" Overwrite="true" />
-        <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)"/>
-        <Exec Command="$(CppWinRTCommand)" />
+        <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)" Condition="'@(_CppwinrtRefInputs)' != ''" />
+        <Exec Command="$(CppWinRTCommand)" Condition="'@(_CppwinrtRefInputs)' != ''" />
     </Target>
 
     <!--Build component projection from project WinMD file and static library project references-->
