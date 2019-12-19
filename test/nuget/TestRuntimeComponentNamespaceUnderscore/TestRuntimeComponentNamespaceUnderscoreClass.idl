@@ -1,0 +1,10 @@
+namespace TestRuntimeComponent_NamespaceUnderscore
+{
+    [default_interface]
+    runtimeclass TestRuntimeComponentNamespaceUnderscoreClass
+    {
+        TestRuntimeComponentNamespaceUnderscoreClass();
+
+        void Test();
+    }
+}
