@@ -509,8 +509,8 @@ $(XamlMetaDataProviderPch)
         <WriteLinesToFile
             File="$(IntDir)cppwinrt_plat.rsp" Lines="$(_CppwinrtParameters)"
             ContinueOnError="true" Overwrite="true" />
-        <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)" Condition="'@(_CppwinrtInputs) != ''" />
-        <Exec Command="$(CppWinRTCommand)" Condition="'@(_CppwinrtInputs) != ''" />
+        <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)" Condition="'@(_CppwinrtInputs)' != ''" />
+        <Exec Command="$(CppWinRTCommand)" Condition="'@(_CppwinrtInputs)' != ''" />
     </Target>
 
     <!--Build reference projection from WinMD project references and dynamic library project references-->

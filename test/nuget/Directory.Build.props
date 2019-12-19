@@ -11,10 +11,12 @@
         <!-- Build overrides the roots. -->
         <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
         <OutDirWasSpecified>true</OutDirWasSpecified>
-        <OutDirRoot Condition="'$(OutDirRoot)' == ''" >$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDirRoot>
-        <OutDir>$(OutDirRoot)$(MSBuildProjectName)\</OutDir>
-        <IntDirRoot Condition="'$(IntDirRoot)' == ''" >$(SolutionDir)obj\$(Platform)\$(Configuration)\</IntDirRoot>
-        <IntDir>$(IntDirRoot)$(MSBuildProjectName)\</IntDir>
+        <OutDirRoot Condition="'$(OutDirRoot)' == ''">$(SolutionDir)bin\</OutDirRoot>
+        <OutDir>$(OutDirRoot)$(Configuration)\$(PlatformDirectoryName)\$(MSBuildProjectName)\</OutDir>
+        <OutputPath>$(OutDir)</OutputPath>
+        <IntDirRoot Condition="'$(IntDirRoot)' == ''" >$(SolutionDir)obj\</IntDirRoot>
+        <IntDir>$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\$(MSBuildProjectName)\</IntDir>
+        <IntermediateOutputPath>$(IntDir)</IntermediateOutputPath>
         <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
         <CppWinRTVerbosity>high</CppWinRTVerbosity>
         <CppWinRTPlatform>$(Platform)</CppWinRTPlatform>
