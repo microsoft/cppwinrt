@@ -21,6 +21,13 @@ namespace winrt::impl
         return (0 == WINRT_CoGetApartmentType(&aptType, &aptTypeQualifier)) && ((aptType == 0 /*APTTYPE_STA*/) || (aptType == 3 /*APTTYPE_MAINSTA*/));
     }
 
+    inline bool is_mta() noexcept
+    {
+        int32_t aptType;
+        int32_t aptTypeQualifier;
+        return (0 == WINRT_CoGetApartmentType(&aptType, &aptTypeQualifier)) && ((aptType == 1 /*APTTYPE_MTA*/));
+    }
+
     inline auto sta_apartment_context()
     {
         return is_sta() ? capture<IContextCallback>(WINRT_CoGetObjectContext) : nullptr;
@@ -43,13 +50,13 @@ namespace winrt::impl
         }
         else
         {
-            if (is_sta())
+            if (is_mta())
             {
-                resume_background(handle);
+                handle();
             }
             else
             {
-                handle();
+                resume_background(handle);
             }
         }
     }
