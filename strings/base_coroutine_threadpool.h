@@ -30,7 +30,7 @@ namespace winrt::impl
 
     inline auto sta_apartment_context()
     {
-        return is_sta() ? capture<IContextCallback>(WINRT_CoGetObjectContext) : nullptr;
+        return is_mta() ? nullptr : capture<IContextCallback>(WINRT_CoGetObjectContext);
     }
 
     inline int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
