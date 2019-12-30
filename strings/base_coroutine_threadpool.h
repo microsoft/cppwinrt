@@ -21,16 +21,16 @@ namespace winrt::impl
         return (0 == WINRT_CoGetApartmentType(&aptType, &aptTypeQualifier)) && ((aptType == 0 /*APTTYPE_STA*/) || (aptType == 3 /*APTTYPE_MAINSTA*/));
     }
 
-    inline bool is_mta() noexcept
+    inline bool requires_apartment_context() noexcept
     {
         int32_t aptType;
         int32_t aptTypeQualifier;
-        return (0 == WINRT_CoGetApartmentType(&aptType, &aptTypeQualifier)) && ((aptType == 1 /*APTTYPE_MTA*/));
+        return (0 == WINRT_CoGetApartmentType(&aptType, &aptTypeQualifier)) && ((aptType == 0 /*APTTYPE_STA*/) || (aptType == 2 /*APTTYPE_NA*/) || (aptType == 3 /*APTTYPE_MAINSTA*/));
     }
 
-    inline auto sta_apartment_context()
+    inline auto apartment_context()
     {
-        return is_mta() ? nullptr : capture<IContextCallback>(WINRT_CoGetObjectContext);
+        return requires_apartment_context() ? capture<IContextCallback>(WINRT_CoGetObjectContext) : nullptr;
     }
 
     inline int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
@@ -39,24 +39,24 @@ namespace winrt::impl
         return 0;
     };
 
-    inline auto resume_apartment(com_ptr<IContextCallback> const& sta_context, std::experimental::coroutine_handle<> handle)
+    inline auto resume_apartment(com_ptr<IContextCallback> const& context, std::experimental::coroutine_handle<> handle)
     {
-        if (sta_context)
+        if (context)
         {
             com_callback_args args{};
             args.data = handle.address();
 
-            check_hresult(sta_context->ContextCallback(resume_apartment_callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
+            check_hresult(context->ContextCallback(resume_apartment_callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
         }
         else
         {
-            if (is_mta())
+            if (requires_apartment_context())
             {
-                handle();
+                resume_background(handle);
             }
             else
             {
-                resume_background(handle);
+                handle();
             }
         }
     }
