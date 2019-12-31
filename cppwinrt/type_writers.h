@@ -129,7 +129,7 @@ namespace cppwinrt
             generic_param_guard(generic_param_guard&& other)
                 : owner(other.owner)
             {
-                owner = nullptr;
+                other.owner = nullptr;
             }
 
             generic_param_guard& operator=(generic_param_guard&& other)
