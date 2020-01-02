@@ -291,10 +291,10 @@ WINRT_EXPORT namespace winrt
 
         void await_suspend(std::experimental::coroutine_handle<> handle) const
         {
-            impl::resume_apartment(sta_context, handle);
+            impl::resume_apartment(context, handle);
         }
 
-        com_ptr<impl::IContextCallback> sta_context = impl::sta_apartment_context();
+        com_ptr<impl::IContextCallback> context = impl::apartment_context();
     };
 
     [[nodiscard]] inline auto resume_after(Windows::Foundation::TimeSpan duration) noexcept

@@ -88,7 +88,7 @@ namespace winrt::impl
 
         void await_suspend(std::experimental::coroutine_handle<> handle) const
         {
-            async.Completed([handle, context = impl::sta_apartment_context()](auto&& ...)
+            async.Completed([handle, context = impl::apartment_context()](auto&& ...)
             {
                 impl::resume_apartment(context, handle);
             });
