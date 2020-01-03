@@ -4,10 +4,11 @@
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
+    <CppWinRTGenerateWindowsMetadata>true</CppWinRTGenerateWindowsMetadata>
     <MinimalCoreWin>true</MinimalCoreWin>
-    <ProjectGuid>{C2820B98-A31F-46D0-A96D-B8F24392B049}</ProjectGuid>
-    <ProjectName>TestRuntimeComponent3</ProjectName>
-    <RootNamespace>TestRuntimeComponent3</RootNamespace>
+    <ProjectGuid>{8717fa32-34a8-457d-b77b-ae005703eb55}</ProjectGuid>
+    <ProjectName>TestRuntimeComponentNamespaceUnderscore</ProjectName>
+    <RootNamespace>TestRuntimeComponent_NamespaceUnderscore</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>
@@ -15,7 +16,6 @@
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
     <WindowsTargetPlatformVersion Condition=" '$(WindowsTargetPlatformVersion)' == '' ">10.0.18362.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.17134.0</WindowsTargetPlatformMinVersion>
-    <CppWinRTParameters>-lib $(MSBuildProjectName)</CppWinRTParameters>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
@@ -83,14 +83,15 @@
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
       <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings>28204</DisableSpecificWarnings>
-      <PreprocessorDefinitions>_WINRT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
+      <PreprocessorDefinitions>_WINRT_DLL;WIN32_LEAN_AND_MEAN;WINRT_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>TestRuntimeComponent3.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>TestRuntimeComponentNamespaceUnderscore.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -102,42 +103,38 @@
     <ClCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="TestRuntimeComponent3Class.h">
-      <DependentUpon>TestRuntimeComponent3Class.idl</DependentUpon>
+    <ClInclude Include="TestRuntimeComponentNamespaceUnderscoreClass.h">
+      <DependentUpon>TestRuntimeComponentNamespaceUnderscoreClass.idl</DependentUpon>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="module.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="TestRuntimeComponent3Class.cpp">
-      <DependentUpon>TestRuntimeComponent3Class.idl</DependentUpon>
+    <ClCompile Include="TestRuntimeComponentNamespaceUnderscoreClass.cpp">
+      <DependentUpon>TestRuntimeComponentNamespaceUnderscoreClass.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="TestRuntimeComponent3Class.idl" />
+    <Midl Include="TestRuntimeComponentNamespaceUnderscoreClass.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestRuntimeComponent3.def" />
+    <None Include="packages.config" />
+    <None Include="TestRuntimeComponentNamespaceUnderscore.def" />
   </ItemGroup>
   <ItemGroup>
     <None Include="PropertySheet.props" />
     <Text Include="readme.txt">
       <DeploymentContent>false</DeploymentContent>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\TestRuntimeComponentCSharp\TestRuntimeComponentCSharp.csproj">
-      <Project>{c47f8562-a2b9-4ba3-87ac-b42d015e241d}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\TestStaticLibrary3\TestStaticLibrary3.vcxproj">
-      <Project>{1350e626-038b-4bdf-8e1d-c751ef33d90f}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(ProjectDir)..\..\..\nuget\Microsoft.Windows.CppWinRT.targets" />
