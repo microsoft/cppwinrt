@@ -54,5 +54,5 @@ namespace std
         {
             return winrt::impl::hash_data(&value, sizeof(value));
         }
-    }
+    };
 }
