@@ -358,7 +358,7 @@ WINRT_EXPORT namespace winrt
 
     inline void uninit_apartment() noexcept
     {
-        WINRT_RoUninitialize();
+        WINRT_CoUninitialize();
     }
 
     template <typename Class, typename Interface = Windows::Foundation::IActivationFactory>

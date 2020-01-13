@@ -342,7 +342,7 @@ WINRT_EXPORT namespace winrt
         {
             if (m_info)
             {
-                WINRT_SetRestrictedErrorInfo(m_info.get());
+                WINRT_SetErrorInfo(0, m_info.try_as<impl::IErrorInfo>().get());
             }
 
             return m_code;

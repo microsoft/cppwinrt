@@ -5,8 +5,6 @@ __declspec(selectany) void(__stdcall* winrt_resume_handler)(void const* token) n
 
 extern "C"
 {
-    // TODO: change all of these to WINRT_IMPL_Xxxx
-
     void* __stdcall WINRT_LoadLibraryW(wchar_t const* name) noexcept;
     void* __stdcall WINRT_GetProcAddress(void* library, char const* name) noexcept;
 
@@ -14,8 +12,7 @@ extern "C"
     int32_t __stdcall WINRT_GetErrorInfo(uint32_t reserved, void** info) noexcept;
     int32_t __stdcall WINRT_RoGetActivationFactory(void* classId, winrt::guid const& iid, void** factory) noexcept;
     int32_t __stdcall WINRT_CoInitializeEx(void*, uint32_t type) noexcept;
-    void    __stdcall WINRT_RoUninitialize() noexcept;
-    int32_t __stdcall WINRT_SetRestrictedErrorInfo(void* info) noexcept;
+    void    __stdcall WINRT_CoUninitialize() noexcept;
     int32_t __stdcall WINRT_RoGetAgileReference(uint32_t options, winrt::guid const& iid, void* object, void** reference) noexcept;
     int32_t __stdcall WINRT_CoIncrementMTAUsage(void** cookie) noexcept;
     [[noreturn]] void __stdcall WINRT_RoFailFastWithErrorContext(int32_t error) noexcept;
@@ -101,8 +98,7 @@ WINRT_IMPL_LINK(SetErrorInfo, 8)
 WINRT_IMPL_LINK(GetErrorInfo, 8)
 WINRT_IMPL_LINK(RoGetActivationFactory, 12)
 WINRT_IMPL_LINK(CoInitializeEx, 8)
-WINRT_IMPL_LINK(RoUninitialize, 0)
-WINRT_IMPL_LINK(SetRestrictedErrorInfo, 4)
+WINRT_IMPL_LINK(CoUninitialize, 0)
 WINRT_IMPL_LINK(RoGetAgileReference, 16)
 WINRT_IMPL_LINK(CoIncrementMTAUsage, 4)
 WINRT_IMPL_LINK(RoFailFastWithErrorContext, 4)
