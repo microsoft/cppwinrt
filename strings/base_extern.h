@@ -6,11 +6,11 @@ __declspec(selectany) void(__stdcall* winrt_resume_handler)(void const* token) n
 extern "C"
 {
     void* __stdcall WINRT_LoadLibraryW(wchar_t const* name) noexcept;
+    int32_t __stdcall WINRT_FreeLibrary(void* library) noexcept;
     void* __stdcall WINRT_GetProcAddress(void* library, char const* name) noexcept;
 
     int32_t __stdcall WINRT_SetErrorInfo(uint32_t reserved, void* info) noexcept;
     int32_t __stdcall WINRT_GetErrorInfo(uint32_t reserved, void** info) noexcept;
-    int32_t __stdcall WINRT_RoGetActivationFactory(void* classId, winrt::guid const& iid, void** factory) noexcept;
     int32_t __stdcall WINRT_CoInitializeEx(void*, uint32_t type) noexcept;
     void    __stdcall WINRT_CoUninitialize() noexcept;
     int32_t __stdcall WINRT_RoGetAgileReference(uint32_t options, winrt::guid const& iid, void* object, void** reference) noexcept;
@@ -90,11 +90,11 @@ extern "C"
 #endif
 
 WINRT_IMPL_LINK(LoadLibraryW, 4)
+WINRT_IMPL_LINK(FreeLibrary, 4)
 WINRT_IMPL_LINK(GetProcAddress, 8)
 
 WINRT_IMPL_LINK(SetErrorInfo, 8)
 WINRT_IMPL_LINK(GetErrorInfo, 8)
-WINRT_IMPL_LINK(RoGetActivationFactory, 12)
 WINRT_IMPL_LINK(CoInitializeEx, 8)
 WINRT_IMPL_LINK(CoUninitialize, 0)
 WINRT_IMPL_LINK(RoGetAgileReference, 16)
