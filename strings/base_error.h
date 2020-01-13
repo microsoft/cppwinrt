@@ -352,8 +352,7 @@ WINRT_EXPORT namespace winrt
 
         void originate(hresult const code, void* message) noexcept
         {
-            using handler_t = int32_t(__stdcall*)(int32_t error, void* message, void* exception) noexcept;
-            static handler_t handler;
+            static int32_t(__stdcall* handler)(int32_t error, void* message, void* exception) noexcept;
 
             impl::load_runtime_function("RoOriginateLanguageException", handler, 
                 [](int32_t error, void* message, void*) noexcept
@@ -624,6 +623,14 @@ WINRT_EXPORT namespace winrt
 
     [[noreturn]] inline void terminate() noexcept
     {
-        WINRT_RoFailFastWithErrorContext(to_hresult());
+        static void(__stdcall * handler)(int32_t) noexcept;
+
+        impl::load_runtime_function("RoFailFastWithErrorContext", handler,
+            [](int32_t) noexcept
+            {
+                std::terminate();
+            });
+
+        handler(to_hresult());
     }
 }

@@ -15,8 +15,6 @@ extern "C"
     void    __stdcall WINRT_CoUninitialize() noexcept;
     int32_t __stdcall WINRT_RoGetAgileReference(uint32_t options, winrt::guid const& iid, void* object, void** reference) noexcept;
     int32_t __stdcall WINRT_CoIncrementMTAUsage(void** cookie) noexcept;
-    [[noreturn]] void __stdcall WINRT_RoFailFastWithErrorContext(int32_t error) noexcept;
-    int32_t __stdcall WINRT_RoTransformError(int32_t oldError, int32_t newError, void* message) noexcept;
 
     int32_t  __stdcall WINRT_CoCreateFreeThreadedMarshaler(void* outer, void** marshaler) noexcept;
     int32_t  __stdcall WINRT_CoCreateInstance(winrt::guid const& clsid, void* outer, uint32_t context, winrt::guid const& iid, void** object) noexcept;
@@ -101,8 +99,6 @@ WINRT_IMPL_LINK(CoInitializeEx, 8)
 WINRT_IMPL_LINK(CoUninitialize, 0)
 WINRT_IMPL_LINK(RoGetAgileReference, 16)
 WINRT_IMPL_LINK(CoIncrementMTAUsage, 4)
-WINRT_IMPL_LINK(RoFailFastWithErrorContext, 4)
-WINRT_IMPL_LINK(RoTransformError, 12)
 
 WINRT_IMPL_LINK(CoCreateFreeThreadedMarshaler, 8)
 WINRT_IMPL_LINK(CoCreateInstance, 20)
