@@ -1,7 +1,6 @@
 
 namespace winrt::impl
 {
-    // TODO: get rid of these nontypes...
     using ptp_io = struct tp_io*;
     using ptp_timer = struct tp_timer*;
     using ptp_wait = struct tp_wait*;

@@ -358,7 +358,8 @@ WINRT_EXPORT namespace winrt
             impl::load_runtime_function("RoOriginateLanguageException", handler, 
                 [](int32_t error, void* message, void*) noexcept
                 {
-                    WINRT_VERIFY_(0, WINRT_SetErrorInfo(0, new (std::nothrow) impl::error_info_fallback(error, message)));
+                    com_ptr<impl::IErrorInfo> info(new (std::nothrow) impl::error_info_fallback(error, message), take_ownership_from_abi);
+                    WINRT_VERIFY_(0, WINRT_SetErrorInfo(0, info.get()));
                     return 1;
                 });
 
