@@ -13,7 +13,6 @@ extern "C"
     int32_t __stdcall WINRT_GetErrorInfo(uint32_t reserved, void** info) noexcept;
     int32_t __stdcall WINRT_CoInitializeEx(void*, uint32_t type) noexcept;
     void    __stdcall WINRT_CoUninitialize() noexcept;
-    int32_t __stdcall WINRT_RoGetAgileReference(uint32_t options, winrt::guid const& iid, void* object, void** reference) noexcept;
     int32_t __stdcall WINRT_CoIncrementMTAUsage(void** cookie) noexcept;
 
     int32_t  __stdcall WINRT_CoCreateFreeThreadedMarshaler(void* outer, void** marshaler) noexcept;
@@ -97,7 +96,6 @@ WINRT_IMPL_LINK(SetErrorInfo, 8)
 WINRT_IMPL_LINK(GetErrorInfo, 8)
 WINRT_IMPL_LINK(CoInitializeEx, 8)
 WINRT_IMPL_LINK(CoUninitialize, 0)
-WINRT_IMPL_LINK(RoGetAgileReference, 16)
 WINRT_IMPL_LINK(CoIncrementMTAUsage, 4)
 
 WINRT_IMPL_LINK(CoCreateFreeThreadedMarshaler, 8)
