@@ -31,10 +31,10 @@ TEST_CASE("velocity")
     d.Class4_Method();
 
     // The single argument constructor is always disabled.
-    REQUIRE_THROWS_AS(Class4(1), hresult_no_interface);
+    REQUIRE_THROWS_AS(Class4(1), hresult_class_not_available);
 
     // The Class4_Static1 static is always disabled.
-    REQUIRE_THROWS_AS(Class4::Class4_Static1(), hresult_no_interface);
+    REQUIRE_THROWS_AS(Class4::Class4_Static1(), hresult_class_not_available);
 
     // The two argument constructor is always enabled.
     Class4 e(1, 2);

@@ -8,6 +8,7 @@ namespace winrt::impl
     using srwlock = struct srwlock_*;
     using condition_variable = struct condition_variable_*;
     using bstr = wchar_t*;
+
     using filetime_period = std::ratio_multiply<std::ratio<100>, std::nano>;
     struct IAgileObject;
 

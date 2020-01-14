@@ -55,6 +55,109 @@ namespace winrt::impl
     {
         return ((int32_t)((x) | 0x10000000));
     }
+
+    struct error_info_fallback final : IErrorInfo, IRestrictedErrorInfo
+    {
+        error_info_fallback(int32_t code, void* message) noexcept :
+            m_code(code),
+            m_message(*reinterpret_cast<winrt::hstring*>(&message))
+        {
+            ++get_module_lock();
+        }
+
+        ~error_info_fallback() noexcept
+        {
+            --get_module_lock();
+        }
+
+        int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final
+        {
+            if (is_guid_of<IRestrictedErrorInfo>(id) || is_guid_of<Windows::Foundation::IUnknown>(id) || is_guid_of<IAgileObject>(id))
+            {
+                *object = static_cast<IRestrictedErrorInfo*>(this);
+                AddRef();
+                return 0;
+            }
+
+            if (is_guid_of<IErrorInfo>(id))
+            {
+                *object = static_cast<IErrorInfo*>(this);
+                AddRef();
+                return 0;
+            }
+
+            *object = nullptr;
+            return error_no_interface;
+        }
+
+        uint32_t __stdcall AddRef() noexcept final
+        {
+            return ++m_references;
+        }
+
+        uint32_t __stdcall Release() noexcept final
+        {
+            auto const remaining = --m_references;
+
+            if (remaining == 0)
+            {
+                delete this;
+            }
+
+            return remaining;
+        }
+
+        int32_t __stdcall GetGUID(guid* value) noexcept final
+        {
+            *value = {};
+            return 0;
+        }
+
+        int32_t __stdcall GetSource(bstr* value) noexcept final
+        {
+            *value = nullptr;
+            return 0;
+        }
+
+        int32_t __stdcall GetDescription(bstr* value) noexcept final
+        {
+            *value = WINRT_SysAllocString(m_message.c_str());
+            return *value ? error_ok : error_bad_alloc;
+        }
+
+        int32_t __stdcall GetHelpFile(bstr* value) noexcept final
+        {
+            *value = nullptr;
+            return 0;
+        }
+
+        int32_t __stdcall GetHelpContext(uint32_t* value) noexcept final
+        {
+            *value = 0;
+            return 0;
+        }
+
+        int32_t __stdcall GetErrorDetails(bstr* fallback, int32_t* error, bstr* message, bstr* capability) noexcept final
+        {
+            *fallback = nullptr;
+            *error = m_code;
+            *capability = nullptr;
+            *message = WINRT_SysAllocString(m_message.c_str());
+            return *message ? error_ok : error_bad_alloc;
+        }
+
+        int32_t __stdcall GetReference(bstr* value) noexcept final
+        {
+            *value = nullptr;
+            return 0;
+        }
+
+    private:
+
+        hresult const m_code;
+        hstring const m_message;
+        atomic_ref_count m_references{ 1 };
+    };
 }
 
 WINRT_EXPORT namespace winrt
@@ -178,7 +281,7 @@ WINRT_EXPORT namespace winrt
         {
             if (m_info)
             {
-                WINRT_SetRestrictedErrorInfo(m_info.get());
+                WINRT_SetErrorInfo(0, m_info.try_as<impl::IErrorInfo>().get());
             }
 
             return m_code;
@@ -188,8 +291,20 @@ WINRT_EXPORT namespace winrt
 
         void originate(hresult const code, void* message) noexcept
         {
-            WINRT_VERIFY(WINRT_RoOriginateLanguageException(code, message, nullptr));
-            WINRT_VERIFY_(0, WINRT_GetRestrictedErrorInfo(m_info.put_void()));
+            static int32_t(__stdcall* handler)(int32_t error, void* message, void* exception) noexcept;
+
+            impl::load_runtime_function("RoOriginateLanguageException", handler, 
+                [](int32_t error, void* message, void*) noexcept
+                {
+                    com_ptr<impl::IErrorInfo> info(new (std::nothrow) impl::error_info_fallback(error, message), take_ownership_from_abi);
+                    WINRT_VERIFY_(0, WINRT_SetErrorInfo(0, info.get()));
+                    return 1;
+                });
+
+            WINRT_VERIFY(handler(code, message, nullptr));
+            com_ptr<impl::IErrorInfo> info;
+            WINRT_VERIFY_(0, WINRT_GetErrorInfo(0, info.put_void()));
+            WINRT_VERIFY(info.try_as(m_info));
         }
 
 #ifdef __clang__
@@ -447,6 +562,14 @@ WINRT_EXPORT namespace winrt
 
     [[noreturn]] inline void terminate() noexcept
     {
-        WINRT_RoFailFastWithErrorContext(to_hresult());
+        static void(__stdcall * handler)(int32_t) noexcept;
+
+        impl::load_runtime_function("RoFailFastWithErrorContext", handler,
+            [](int32_t) noexcept
+            {
+                std::terminate();
+            });
+
+        handler(to_hresult());
     }
 }

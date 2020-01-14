@@ -50,6 +50,13 @@ namespace winrt::impl
         virtual int32_t __stdcall DisconnectObject(uint32_t dwReserved) noexcept = 0;
     };
 
+    struct __declspec(novtable) IGlobalInterfaceTable : unknown_abi
+    {
+        virtual int32_t __stdcall RegisterInterfaceInGlobal(void* object, guid const& iid, uint32_t* cookie) noexcept = 0;
+        virtual int32_t __stdcall RevokeInterfaceFromGlobal(uint32_t cookie) noexcept = 0;
+        virtual int32_t __stdcall GetInterfaceFromGlobal(uint32_t cookie, guid const& iid, void** object) noexcept = 0;
+    };
+
     struct __declspec(novtable) IStaticLifetime : inspectable_abi
     {
         virtual int32_t __stdcall unused() noexcept = 0;
@@ -134,7 +141,9 @@ namespace winrt::impl
     template <> inline constexpr guid guid_v<Windows::Foundation::IInspectable>{ 0xAF86E2E0, 0xB12D, 0x4C6A, { 0x9C,0x5A,0xD7,0xAA,0x65,0x10,0x1E,0x90 } };
     template <> inline constexpr guid guid_v<Windows::Foundation::IActivationFactory>{ 0x00000035, 0x0000, 0x0000, { 0xc0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };
     template <> inline constexpr guid guid_v<IAgileObject>{ 0x94EA2B94, 0xE9CC, 0x49E0, { 0xC0,0xFF,0xEE,0x64,0xCA,0x8F,0x5B,0x90 } };
+    template <> inline constexpr guid guid_v<IAgileReference>{ 0xC03F6A43, 0x65A4, 0x9818, { 0x98,0x7E,0xE0,0xB8,0x10,0xD2,0xA6,0xF2 } };
     template <> inline constexpr guid guid_v<IMarshal>{ 0x00000003, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };
+    template <> inline constexpr guid guid_v<IGlobalInterfaceTable>{ 0x00000146, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };
     template <> inline constexpr guid guid_v<IStaticLifetime>{ 0x17b0e613, 0x942a, 0x422d, { 0x90,0x4c,0xf9,0x0d,0xc7,0x1a,0x7d,0xae } };
     template <> inline constexpr guid guid_v<IStaticLifetimeCollection>{ 0x1b0d3570, 0x0877, 0x5ec2, { 0x8a,0x2c,0x3b,0x95,0x39,0x50,0x6a,0xca } };
     template <> inline constexpr guid guid_v<IWeakReference>{ 0x00000037, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };

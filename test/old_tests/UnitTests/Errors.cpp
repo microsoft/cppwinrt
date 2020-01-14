@@ -2,6 +2,8 @@
 #include "catch.hpp"
 #include "winrt/Component.h"
 
+extern "C" BOOL __stdcall RoOriginateLanguageException(HRESULT error, void* message, void* languageException);
+
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Component;
@@ -43,7 +45,7 @@ void test_exception(HRESULT const code, std::wstring_view message)
 
     try
     {
-        WINRT_RoOriginateLanguageException(code, get_abi(hstring(L"Correctly matched error info")), nullptr);
+        RoOriginateLanguageException(code, get_abi(hstring(L"Correctly matched error info")), nullptr);
         throw T(hresult_error::from_abi);
     }
     catch (T const& e)
@@ -54,7 +56,7 @@ void test_exception(HRESULT const code, std::wstring_view message)
 
     try
     {
-        WINRT_RoOriginateLanguageException(E_FAIL, get_abi(hstring(L"Incorrectly matched error info")), nullptr);
+        RoOriginateLanguageException(E_FAIL, get_abi(hstring(L"Incorrectly matched error info")), nullptr);
         throw T(hresult_error::from_abi);
     }
     catch (T const& e)

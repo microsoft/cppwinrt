@@ -1,20 +1,102 @@
 
+namespace winrt::impl
+{
+    struct library_traits
+    {
+        using type = void*;
+
+        static void close(type value) noexcept
+        {
+            WINRT_FreeLibrary(value);
+        }
+
+        static constexpr type invalid() noexcept
+        {
+            return nullptr;
+        }
+    };
+
+    using library_handle = handle_type<library_traits>;
+
+    template <typename Interface>
+    hresult get_runtime_activation_factory(param::hstring const& name, void** result) noexcept
+    {
+        static int32_t(__stdcall * handler)(void* classId, guid const& iid, void** factory) noexcept;
+
+        impl::load_runtime_function("RoGetActivationFactory", handler,
+            [](void*, guid const&, void** factory) noexcept -> int32_t
+            {
+                *factory = nullptr;
+                return error_class_not_available;
+            });
+
+        hresult hr = handler(*(void**)(&name), guid_of<Interface>(), result);
+
+        if (hr == impl::error_not_initialized)
+        {
+            void* cookie;
+            WINRT_CoIncrementMTAUsage(&cookie);
+            hr = handler(*(void**)(&name), guid_of<Interface>(), result);
+        }
+
+        if (hr == 0)
+        {
+            return 0;
+        }
+
+        std::wstring path{ static_cast<hstring const&>(name) };
+        std::size_t count{};
+
+        while (-1 != (count = path.rfind('.')))
+        {
+            path.resize(count);
+            path += L".dll";
+            library_handle library(WINRT_LoadLibraryW(path.c_str()));
+            path.resize(path.size() - 4);
+
+            if (!library)
+            {
+                continue;
+            }
+
+            auto library_call = reinterpret_cast<int32_t(__stdcall*)(void* classId, void** factory)>(WINRT_GetProcAddress(library.get(), "DllGetActivationFactory"));
+
+            if (!library_call)
+            {
+                continue;
+            }
+
+            com_ptr<abi_t<Windows::Foundation::IActivationFactory>> library_factory;
+
+            if (0 != library_call(*(void**)(&name), library_factory.put_void()))
+            {
+                continue;
+            }
+
+            if constexpr (std::is_same_v< Interface, Windows::Foundation::IActivationFactory>)
+            {
+                *result = library_factory.detach();
+                library.detach();
+                return 0;
+            }
+            else if (0 == library_factory.as(guid_of<Interface>(), result))
+            {
+                library.detach();
+                return 0;
+            }
+        }
+
+        return error_class_not_available;
+    }
+}
+
 WINRT_EXPORT namespace winrt
 {
     template <typename Interface = Windows::Foundation::IActivationFactory>
     impl::com_ref<Interface> get_activation_factory(param::hstring const& name)
     {
         void* result{};
-        hresult hr = WINRT_RoGetActivationFactory(*(void**)(&name), guid_of<Interface>(), &result);
-
-        if (hr == impl::error_not_initialized)
-        {
-            void* cookie;
-            WINRT_CoIncrementMTAUsage(&cookie);
-            hr = WINRT_RoGetActivationFactory(*(void**)(&name), guid_of<Interface>(), &result);
-        }
-
-        check_hresult(hr);
+        check_hresult(impl::get_runtime_activation_factory<Interface>(name, &result));
         return { result, take_ownership_from_abi };
     }
 }
@@ -304,11 +386,11 @@ namespace winrt::impl
     }
 
     template <typename Class, typename Interface = Windows::Foundation::IActivationFactory>
-    impl::com_ref<Interface> try_get_activation_factory(hresult_error* exception = nullptr) noexcept
+    com_ref<Interface> try_get_activation_factory(hresult_error* exception = nullptr) noexcept
     {
         param::hstring const name{ name_of<Class>() };
         void* result{};
-        hresult const hr = WINRT_RoGetActivationFactory(get_abi(name), guid_of<Interface>(), &result);
+        hresult const hr = get_runtime_activation_factory<Interface>(name, &result);
 
         if (hr < 0)
         {
@@ -342,13 +424,13 @@ WINRT_EXPORT namespace winrt
 {
     enum class apartment_type : int32_t
     {
-        single_threaded,
-        multi_threaded
+        multi_threaded = 0,
+        single_threaded = 2,
     };
 
     inline void init_apartment(apartment_type const type = apartment_type::multi_threaded)
     {
-        hresult const result = WINRT_RoInitialize(static_cast<uint32_t>(type));
+        hresult const result = WINRT_CoInitializeEx(nullptr, static_cast<uint32_t>(type));
 
         if (result < 0)
         {
@@ -358,7 +440,7 @@ WINRT_EXPORT namespace winrt
 
     inline void uninit_apartment() noexcept
     {
-        WINRT_RoUninitialize();
+        WINRT_CoUninitialize();
     }
 
     template <typename Class, typename Interface = Windows::Foundation::IActivationFactory>

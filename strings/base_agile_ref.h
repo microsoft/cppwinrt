@@ -1,6 +1,160 @@
 
 WINRT_EXPORT namespace winrt
 {
+#if defined (WINRT_NO_MODULE_LOCK)
+
+    // Defining WINRT_NO_MODULE_LOCK is appropriate for apps (executables) that don't implement something like DllCanUnloadNow
+    // and can thus avoid the synchronization overhead imposed by the default module lock.
+
+    constexpr auto get_module_lock() noexcept
+    {
+        struct lock
+        {
+            constexpr uint32_t operator++() noexcept
+            {
+                return 1;
+            }
+
+            constexpr uint32_t operator--() noexcept
+            {
+                return 0;
+            }
+        };
+
+        return lock{};
+    }
+
+#elif defined (WINRT_CUSTOM_MODULE_LOCK)
+
+    // When WINRT_CUSTOM_MODULE_LOCK is defined, you must provide an implementation of winrt::get_module_lock()
+    // that returns an object that implements operator++ and operator--.
+
+#else
+
+    // This is the default implementation for use with DllCanUnloadNow.
+
+    inline impl::atomic_ref_count& get_module_lock() noexcept
+    {
+        static impl::atomic_ref_count s_lock;
+        return s_lock;
+    }
+
+#endif
+}
+
+namespace winrt::impl
+{
+    struct agile_ref_fallback final : IAgileReference
+    {
+        agile_ref_fallback(com_ptr<IGlobalInterfaceTable>&& git, uint32_t cookie) noexcept :
+            m_git(std::move(git)),
+            m_cookie(cookie)
+        {
+            ++get_module_lock();
+        }
+
+        ~agile_ref_fallback() noexcept
+        {
+            m_git->RevokeInterfaceFromGlobal(m_cookie);
+            --get_module_lock();
+        }
+
+        int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final
+        {
+            if (is_guid_of<IAgileReference>(id) || is_guid_of<Windows::Foundation::IUnknown>(id) || is_guid_of<IAgileObject>(id))
+            {
+                *object = static_cast<IAgileReference*>(this);
+                AddRef();
+                return 0;
+            }
+
+            *object = nullptr;
+            return error_no_interface;
+        }
+
+        uint32_t __stdcall AddRef() noexcept final
+        {
+            return ++m_references;
+        }
+
+        uint32_t __stdcall Release() noexcept final
+        {
+            auto const remaining = --m_references;
+
+            if (remaining == 0)
+            {
+                delete this;
+            }
+
+            return remaining;
+        }
+
+        int32_t __stdcall Resolve(guid const& id, void** object) noexcept final
+        {
+            return m_git->GetInterfaceFromGlobal(m_cookie, id, object);
+        }
+
+    private:
+
+        com_ptr<IGlobalInterfaceTable> m_git;
+        uint32_t m_cookie{};
+        atomic_ref_count m_references{ 1 };
+    };
+
+    template <typename F, typename L>
+    void load_runtime_function(char const* name, F& result, L fallback) noexcept
+    {
+        if (result)
+        {
+            return;
+        }
+
+        result = static_cast<F>(WINRT_GetProcAddress(WINRT_LoadLibraryW(L"combase.dll"), name));
+
+        if (result)
+        {
+            return;
+        }
+
+        result = fallback;
+    }
+
+    inline hresult get_agile_reference(winrt::guid const& iid, void* object, void** result) noexcept
+    {
+        static int32_t(__stdcall * handler)(uint32_t options, winrt::guid const& iid, void* object, void** result) noexcept;
+
+        load_runtime_function("RoGetAgileReference", handler,
+            [](uint32_t, winrt::guid const& iid, void* object, void** result) noexcept -> int32_t
+            {
+                *result = nullptr;
+                static constexpr guid git_clsid{ 0x00000323, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };
+
+                com_ptr<IGlobalInterfaceTable> git;
+                hresult hr = WINRT_CoCreateInstance(git_clsid, nullptr, 1 /*CLSCTX_INPROC_SERVER*/, guid_of<IGlobalInterfaceTable>(), git.put_void());
+
+                if (result < 0)
+                {
+                    return hr;
+                }
+
+                uint32_t cookie{};
+                hr = git->RegisterInterfaceInGlobal(object, iid, &cookie);
+
+                if (result < 0)
+                {
+                    return hr;
+                }
+
+                *result = new agile_ref_fallback(std::move(git), cookie);
+                return 0;
+            });
+
+        return handler(0, iid, object, result);
+    }
+}
+
+WINRT_EXPORT namespace winrt
+{
     template <typename T>
     struct agile_ref
     {
@@ -10,7 +164,7 @@ WINRT_EXPORT namespace winrt
         {
             if (object)
             {
-                check_hresult(WINRT_RoGetAgileReference(0, guid_of<T>(), winrt::get_abi(object), m_ref.put_void()));
+                check_hresult(impl::get_agile_reference(guid_of<T>(), winrt::get_abi(object), m_ref.put_void()));
             }
         }
 

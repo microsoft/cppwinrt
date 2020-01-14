@@ -5,29 +5,15 @@ __declspec(selectany) void(__stdcall* winrt_resume_handler)(void const* token) n
 
 extern "C"
 {
-    int32_t __stdcall WINRT_GetRestrictedErrorInfo(void** info) noexcept;
-    int32_t __stdcall WINRT_GetErrorInfo(uint32_t reserved, void** info) noexcept;
-    int32_t __stdcall WINRT_RoGetActivationFactory(void* classId, winrt::guid const& iid, void** factory) noexcept;
-    int32_t __stdcall WINRT_RoInitialize(uint32_t type) noexcept;
-    int32_t __stdcall WINRT_RoOriginateLanguageException(int32_t error, void* message, void* exception) noexcept;
-    void    __stdcall WINRT_RoUninitialize() noexcept;
-    int32_t __stdcall WINRT_SetRestrictedErrorInfo(void* info) noexcept;
-    int32_t __stdcall WINRT_RoGetAgileReference(uint32_t options, winrt::guid const& iid, void* object, void** reference) noexcept;
-    int32_t __stdcall WINRT_CoIncrementMTAUsage(void** cookie) noexcept;
-    [[noreturn]] void __stdcall WINRT_RoFailFastWithErrorContext(int32_t error) noexcept;
-    int32_t __stdcall WINRT_RoTransformError(int32_t oldError, int32_t newError, void* message) noexcept;
+    void* __stdcall WINRT_LoadLibraryW(wchar_t const* name) noexcept;
+    int32_t __stdcall WINRT_FreeLibrary(void* library) noexcept;
+    void* __stdcall WINRT_GetProcAddress(void* library, char const* name) noexcept;
 
-    int32_t __stdcall WINRT_WindowsCreateString(wchar_t const* sourceString, uint32_t length, void** string) noexcept;
-    int32_t __stdcall WINRT_WindowsCreateStringReference(wchar_t const* sourceString, uint32_t length, void* hstringHeader, void** string) noexcept;
-    int32_t __stdcall WINRT_WindowsDuplicateString(void* string, void** newString) noexcept;
-    int32_t __stdcall WINRT_WindowsDeleteString(void* string) noexcept;
-    int32_t __stdcall WINRT_WindowsStringHasEmbeddedNull(void* string, int* hasEmbedNull) noexcept;
-    int32_t __stdcall WINRT_WindowsPreallocateStringBuffer(uint32_t length, wchar_t** charBuffer, void** bufferHandle) noexcept;
-    int32_t __stdcall WINRT_WindowsDeleteStringBuffer(void* bufferHandle) noexcept;
-    int32_t __stdcall WINRT_WindowsPromoteStringBuffer(void* bufferHandle, void** string) noexcept;
-    int32_t __stdcall WINRT_WindowsConcatString(void* string1, void* string2, void** newString) noexcept;
-    wchar_t const* __stdcall WINRT_WindowsGetStringRawBuffer(void* string, uint32_t* length) noexcept;
-    uint32_t __stdcall WINRT_WindowsGetStringLen(void* string) noexcept;
+    int32_t __stdcall WINRT_SetErrorInfo(uint32_t reserved, void* info) noexcept;
+    int32_t __stdcall WINRT_GetErrorInfo(uint32_t reserved, void** info) noexcept;
+    int32_t __stdcall WINRT_CoInitializeEx(void*, uint32_t type) noexcept;
+    void    __stdcall WINRT_CoUninitialize() noexcept;
+    int32_t __stdcall WINRT_CoIncrementMTAUsage(void** cookie) noexcept;
 
     int32_t  __stdcall WINRT_CoCreateFreeThreadedMarshaler(void* outer, void** marshaler) noexcept;
     int32_t  __stdcall WINRT_CoCreateInstance(winrt::guid const& clsid, void* outer, uint32_t context, winrt::guid const& iid, void** object) noexcept;
@@ -36,11 +22,13 @@ extern "C"
     int32_t  __stdcall WINRT_CoGetApartmentType(int32_t* type, int32_t* qualifier) noexcept;
     void*    __stdcall WINRT_CoTaskMemAlloc(std::size_t size) noexcept;
     void     __stdcall WINRT_CoTaskMemFree(void* ptr) noexcept;
+    winrt::impl::bstr __stdcall WINRT_SysAllocString(wchar_t const* value) noexcept;
     void     __stdcall WINRT_SysFreeString(winrt::impl::bstr string) noexcept;
     uint32_t __stdcall WINRT_SysStringLen(winrt::impl::bstr string) noexcept;
     int32_t  __stdcall WINRT_IIDFromString(wchar_t const* string, winrt::guid* iid) noexcept;
     int32_t  __stdcall WINRT_MultiByteToWideChar(uint32_t codepage, uint32_t flags, char const* in_string, int32_t in_size, wchar_t* out_string, int32_t out_size) noexcept;
     int32_t  __stdcall WINRT_WideCharToMultiByte(uint32_t codepage, uint32_t flags, wchar_t const* int_string, int32_t in_size, char* out_string, int32_t out_size, char const* default_char, int32_t* default_used) noexcept;
+    void* __stdcall    WINRT_HeapAlloc(void* heap, uint32_t flags, size_t bytes) noexcept;
     int32_t  __stdcall WINRT_HeapFree(void* heap, uint32_t flags, void* value) noexcept;
     void*    __stdcall WINRT_GetProcessHeap() noexcept;
     uint32_t __stdcall WINRT_FormatMessageW(uint32_t flags, void const* source, uint32_t code, uint32_t language, wchar_t* buffer, uint32_t size, va_list* arguments) noexcept;
@@ -100,29 +88,15 @@ extern "C"
 #define WINRT_IMPL_LINK(function, count) __pragma(comment(linker, "/alternatename:WINRT_" #function "=" #function))
 #endif
 
-WINRT_IMPL_LINK(GetRestrictedErrorInfo, 4)
-WINRT_IMPL_LINK(GetErrorInfo, 8)
-WINRT_IMPL_LINK(RoGetActivationFactory, 12)
-WINRT_IMPL_LINK(RoInitialize, 4)
-WINRT_IMPL_LINK(RoOriginateLanguageException, 12)
-WINRT_IMPL_LINK(RoUninitialize, 0)
-WINRT_IMPL_LINK(SetRestrictedErrorInfo, 4)
-WINRT_IMPL_LINK(RoGetAgileReference, 16)
-WINRT_IMPL_LINK(CoIncrementMTAUsage, 4)
-WINRT_IMPL_LINK(RoFailFastWithErrorContext, 4)
-WINRT_IMPL_LINK(RoTransformError, 12)
+WINRT_IMPL_LINK(LoadLibraryW, 4)
+WINRT_IMPL_LINK(FreeLibrary, 4)
+WINRT_IMPL_LINK(GetProcAddress, 8)
 
-WINRT_IMPL_LINK(WindowsCreateString, 12)
-WINRT_IMPL_LINK(WindowsCreateStringReference, 16)
-WINRT_IMPL_LINK(WindowsDuplicateString, 8)
-WINRT_IMPL_LINK(WindowsDeleteString, 4)
-WINRT_IMPL_LINK(WindowsStringHasEmbeddedNull, 8)
-WINRT_IMPL_LINK(WindowsPreallocateStringBuffer, 12)
-WINRT_IMPL_LINK(WindowsDeleteStringBuffer, 4)
-WINRT_IMPL_LINK(WindowsPromoteStringBuffer, 8)
-WINRT_IMPL_LINK(WindowsConcatString, 12)
-WINRT_IMPL_LINK(WindowsGetStringRawBuffer, 8)
-WINRT_IMPL_LINK(WindowsGetStringLen, 4)
+WINRT_IMPL_LINK(SetErrorInfo, 8)
+WINRT_IMPL_LINK(GetErrorInfo, 8)
+WINRT_IMPL_LINK(CoInitializeEx, 8)
+WINRT_IMPL_LINK(CoUninitialize, 0)
+WINRT_IMPL_LINK(CoIncrementMTAUsage, 4)
 
 WINRT_IMPL_LINK(CoCreateFreeThreadedMarshaler, 8)
 WINRT_IMPL_LINK(CoCreateInstance, 20)
@@ -131,11 +105,13 @@ WINRT_IMPL_LINK(CoGetObjectContext, 8)
 WINRT_IMPL_LINK(CoGetApartmentType, 8)
 WINRT_IMPL_LINK(CoTaskMemAlloc, 4)
 WINRT_IMPL_LINK(CoTaskMemFree, 4)
+WINRT_IMPL_LINK(SysAllocString, 4)
 WINRT_IMPL_LINK(SysFreeString, 4)
 WINRT_IMPL_LINK(SysStringLen, 4)
 WINRT_IMPL_LINK(IIDFromString, 8)
 WINRT_IMPL_LINK(MultiByteToWideChar, 24)
 WINRT_IMPL_LINK(WideCharToMultiByte, 32)
+WINRT_IMPL_LINK(HeapAlloc, 12)
 WINRT_IMPL_LINK(HeapFree, 12)
 WINRT_IMPL_LINK(GetProcessHeap, 0)
 WINRT_IMPL_LINK(FormatMessageW, 28)
