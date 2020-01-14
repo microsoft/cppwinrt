@@ -37,6 +37,7 @@ WINRT_EXPORT namespace winrt::param
     private:
         void create_string_reference(wchar_t const* const data, size_t size) noexcept
         {
+            WINRT_ASSERT(size < std::numeric_limits<uint32_t>::max());
             auto size32 = static_cast<uint32_t>(size);
 
             if (size32 == 0)

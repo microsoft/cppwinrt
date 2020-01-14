@@ -27,6 +27,10 @@ namespace winrt::impl
             {
                 std::atomic_thread_fence(std::memory_order_acquire);
             }
+            else if (remaining < 0)
+            {
+                std::terminate();
+            }
 
             return remaining;
         }
@@ -38,7 +42,7 @@ namespace winrt::impl
 
     private:
 
-        std::atomic<uint32_t> m_count;
+        std::atomic<int32_t> m_count;
     };
 
     constexpr uint32_t hstring_reference_flag{ 1 };
@@ -71,8 +75,14 @@ namespace winrt::impl
     inline shared_hstring_header* precreate_hstring_on_heap(uint32_t length)
     {
         WINRT_ASSERT(length != 0);
+        uint64_t bytes_required = sizeof(shared_hstring_header) + sizeof(wchar_t) * length;
 
-        auto header = static_cast<shared_hstring_header*>(WINRT_HeapAlloc(WINRT_GetProcessHeap(), 0, sizeof(shared_hstring_header) + sizeof(wchar_t) * length));
+        if (bytes_required > std::numeric_limits<uint32_t>::max())
+        {
+            throw std::invalid_argument("length");
+        }
+
+        auto header = static_cast<shared_hstring_header*>(WINRT_HeapAlloc(WINRT_GetProcessHeap(), 0, static_cast<std::size_t>(bytes_required)));
 
         if (!header)
         {
@@ -501,15 +511,10 @@ WINRT_EXPORT namespace winrt
 {
     inline bool embedded_null(hstring const& value) noexcept
     {
-        for (auto&& item : value)
-        {
-            if (item == 0)
+        return std::any_of(value.begin(), value.end(), [](auto item)
             {
-                return true;
-            }
-        }
-
-        return false;
+                return item == 0;
+            });
     }
 
     inline hstring to_hstring(uint8_t value)
