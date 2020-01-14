@@ -75,7 +75,7 @@ namespace winrt::impl
             }
 
             com_ptr<IAgileReference> ref;
-            WINRT_RoGetAgileReference(0, guid_of<T>(), get_abi(delegate), ref.put_void());
+            get_agile_reference(guid_of<T>(), get_abi(delegate), ref.put_void());
 
             if (ref)
             {

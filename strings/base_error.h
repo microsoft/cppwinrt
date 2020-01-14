@@ -1,47 +1,4 @@
 
-WINRT_EXPORT namespace winrt
-{
-#if defined (WINRT_NO_MODULE_LOCK)
-
-    // Defining WINRT_NO_MODULE_LOCK is appropriate for apps (executables) that don't implement something like DllCanUnloadNow
-    // and can thus avoid the synchronization overhead imposed by the default module lock.
-
-    constexpr auto get_module_lock() noexcept
-    {
-        struct lock
-        {
-            constexpr uint32_t operator++() noexcept
-            {
-                return 1;
-            }
-
-            constexpr uint32_t operator--() noexcept
-            {
-                return 0;
-            }
-        };
-
-        return lock{};
-    }
-
-#elif defined (WINRT_CUSTOM_MODULE_LOCK)
-
-    // When WINRT_CUSTOM_MODULE_LOCK is defined, you must provide an implementation of winrt::get_module_lock()
-    // that returns an object that implements operator++ and operator--.
-
-#else
-
-    // This is the default implementation for use with DllCanUnloadNow.
-
-    inline impl::atomic_ref_count& get_module_lock() noexcept
-    {
-        static impl::atomic_ref_count s_lock;
-        return s_lock;
-    }
-
-#endif
-}
-
 namespace winrt::impl
 {
     struct heap_traits
@@ -97,24 +54,6 @@ namespace winrt::impl
     constexpr int32_t hresult_from_nt(uint32_t const x) noexcept
     {
         return ((int32_t)((x) | 0x10000000));
-    }
-
-    template <typename F, typename L>
-    void load_runtime_function(char const* name, F& result, L fallback) noexcept
-    {
-        if (result)
-        {
-            return;
-        }
-
-        result = static_cast<F>(WINRT_GetProcAddress(WINRT_LoadLibraryW(L"combase.dll"), name));
-
-        if (result)
-        {
-            return;
-        }
-
-        result = fallback;
     }
 
     struct error_info_fallback final : IErrorInfo, IRestrictedErrorInfo
