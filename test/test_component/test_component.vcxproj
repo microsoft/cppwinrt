@@ -157,7 +157,6 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -205,7 +204,6 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -267,7 +265,6 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -329,7 +326,6 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -379,7 +375,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -431,7 +426,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -497,7 +491,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -563,7 +556,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

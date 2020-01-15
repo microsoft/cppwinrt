@@ -34,15 +34,8 @@ namespace winrt::impl
 
         if (hr == impl::error_not_initialized)
         {
-            auto usage = static_cast<int32_t(__stdcall*)(void** cookie) noexcept>(WINRT_GetProcAddress(WINRT_LoadLibraryW(L"combase.dll"), "CoIncrementMTAUsage"));
-
-            if (!usage)
-            {
-                return hr;
-            }
-
             void* cookie;
-            usage(&cookie);
+            WINRT_CoIncrementMTAUsage(&cookie);
             hr = handler(*(void**)(&name), guid_of<Interface>(), result);
         }
 

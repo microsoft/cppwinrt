@@ -325,28 +325,6 @@
     </CustomBuildStep>
     <ClCompile>
       <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ShowIncludes>
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <ClCompile>
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <ClCompile>
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <ClCompile>
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <ClCompile>
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
-    <ClCompile>
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
-    <ClCompile>
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
-    <ClCompile>
-      <RuntimeLibrary Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

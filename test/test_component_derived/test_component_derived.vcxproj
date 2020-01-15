@@ -157,7 +157,6 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\test_component_base\Generated Files</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -206,7 +205,6 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\test_component_base\Generated Files</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -269,7 +267,6 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\test_component_base\Generated Files</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -332,7 +329,6 @@
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\test_component_base\Generated Files</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -383,7 +379,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\test_component_base\Generated Files</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -436,7 +431,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\test_component_base\Generated Files</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -503,7 +497,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\test_component_base\Generated Files</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -570,7 +563,6 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files;..\test_component_base\Generated Files</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4100</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
