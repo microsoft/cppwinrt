@@ -8,7 +8,7 @@ namespace winrt::impl
 
     inline auto resume_background(std::experimental::coroutine_handle<> handle)
     {
-        if (!WINRT_TrySubmitThreadpoolCallback(resume_background_callback, handle.address(), nullptr))
+        if (!WINRT_IMPL_TrySubmitThreadpoolCallback(resume_background_callback, handle.address(), nullptr))
         {
             throw_last_error();
         }
@@ -18,19 +18,19 @@ namespace winrt::impl
     {
         int32_t aptType;
         int32_t aptTypeQualifier;
-        return (0 == WINRT_CoGetApartmentType(&aptType, &aptTypeQualifier)) && ((aptType == 0 /*APTTYPE_STA*/) || (aptType == 3 /*APTTYPE_MAINSTA*/));
+        return (0 == WINRT_IMPL_CoGetApartmentType(&aptType, &aptTypeQualifier)) && ((aptType == 0 /*APTTYPE_STA*/) || (aptType == 3 /*APTTYPE_MAINSTA*/));
     }
 
     inline bool requires_apartment_context() noexcept
     {
         int32_t aptType;
         int32_t aptTypeQualifier;
-        return (0 == WINRT_CoGetApartmentType(&aptType, &aptTypeQualifier)) && ((aptType == 0 /*APTTYPE_STA*/) || (aptType == 2 /*APTTYPE_NA*/) || (aptType == 3 /*APTTYPE_MAINSTA*/));
+        return (0 == WINRT_IMPL_CoGetApartmentType(&aptType, &aptTypeQualifier)) && ((aptType == 0 /*APTTYPE_STA*/) || (aptType == 2 /*APTTYPE_NA*/) || (aptType == 3 /*APTTYPE_MAINSTA*/));
     }
 
     inline auto apartment_context()
     {
-        return requires_apartment_context() ? capture<IContextCallback>(WINRT_CoGetObjectContext) : nullptr;
+        return requires_apartment_context() ? capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext) : nullptr;
     }
 
     inline int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
@@ -256,7 +256,7 @@ WINRT_EXPORT namespace winrt
             {
                 m_resume = resume;
 
-                if (!WINRT_TrySubmitThreadpoolCallback(callback, this, nullptr))
+                if (!WINRT_IMPL_TrySubmitThreadpoolCallback(callback, this, nullptr))
                 {
                     throw_last_error();
                 }
@@ -313,9 +313,9 @@ WINRT_EXPORT namespace winrt
 
             void await_suspend(std::experimental::coroutine_handle<> handle)
             {
-                m_timer.attach(check_pointer(WINRT_CreateThreadpoolTimer(callback, handle.address(), nullptr)));
+                m_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, handle.address(), nullptr)));
                 int64_t relative_count = -m_duration.count();
-                WINRT_SetThreadpoolTimer(m_timer.get(), &relative_count, 0, 0);
+                WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &relative_count, 0, 0);
             }
 
             void await_resume() const noexcept
@@ -335,7 +335,7 @@ WINRT_EXPORT namespace winrt
 
                 static void close(type value) noexcept
                 {
-                    WINRT_CloseThreadpoolTimer(value);
+                    WINRT_IMPL_CloseThreadpoolTimer(value);
                 }
 
                 static constexpr type invalid() noexcept
@@ -369,16 +369,16 @@ WINRT_EXPORT namespace winrt
 
             bool await_ready() const noexcept
             {
-                return WINRT_WaitForSingleObject(m_handle, 0) == 0;
+                return WINRT_IMPL_WaitForSingleObject(m_handle, 0) == 0;
             }
 
             void await_suspend(std::experimental::coroutine_handle<> resume)
             {
                 m_resume = resume;
-                m_wait.attach(check_pointer(WINRT_CreateThreadpoolWait(callback, this, nullptr)));
+                m_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
                 int64_t relative_count = -m_timeout.count();
                 int64_t* file_time = relative_count != 0 ? &relative_count : nullptr;
-                WINRT_SetThreadpoolWait(m_wait.get(), m_handle, file_time);
+                WINRT_IMPL_SetThreadpoolWait(m_wait.get(), m_handle, file_time);
             }
 
             bool await_resume() const noexcept
@@ -401,7 +401,7 @@ WINRT_EXPORT namespace winrt
 
                 static void close(type value) noexcept
                 {
-                    WINRT_CloseThreadpoolWait(value);
+                    WINRT_IMPL_CloseThreadpoolWait(value);
                 }
 
                 static constexpr type invalid() noexcept
@@ -423,15 +423,15 @@ WINRT_EXPORT namespace winrt
     struct thread_pool
     {
         thread_pool() :
-            m_pool(check_pointer(WINRT_CreateThreadpool(nullptr)))
+            m_pool(check_pointer(WINRT_IMPL_CreateThreadpool(nullptr)))
         {
             m_environment.Pool = m_pool.get();
         }
 
         void thread_limits(uint32_t const high, uint32_t const low)
         {
-            WINRT_SetThreadpoolThreadMaximum(m_pool.get(), high);
-            check_bool(WINRT_SetThreadpoolThreadMinimum(m_pool.get(), low));
+            WINRT_IMPL_SetThreadpoolThreadMaximum(m_pool.get(), high);
+            check_bool(WINRT_IMPL_SetThreadpoolThreadMinimum(m_pool.get(), low));
         }
 
         bool await_ready() const noexcept
@@ -445,7 +445,7 @@ WINRT_EXPORT namespace winrt
 
         void await_suspend(std::experimental::coroutine_handle<> handle)
         {
-            if (!WINRT_TrySubmitThreadpoolCallback(callback, handle.address(), &m_environment))
+            if (!WINRT_IMPL_TrySubmitThreadpoolCallback(callback, handle.address(), &m_environment))
             {
                 throw_last_error();
             }
@@ -464,7 +464,7 @@ WINRT_EXPORT namespace winrt
 
             static void close(type value) noexcept
             {
-                WINRT_CloseThreadpool(value);
+                WINRT_IMPL_CloseThreadpool(value);
             }
 
             static constexpr type invalid() noexcept

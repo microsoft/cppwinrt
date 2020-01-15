@@ -85,7 +85,7 @@ WINRT_EXPORT namespace winrt
 
         static void close(type value) noexcept
         {
-            WINRT_VERIFY_(1, WINRT_CloseHandle(value));
+            WINRT_VERIFY_(1, WINRT_IMPL_CloseHandle(value));
         }
 
         static constexpr type invalid() noexcept
@@ -102,7 +102,7 @@ WINRT_EXPORT namespace winrt
 
         static void close(type value) noexcept
         {
-            WINRT_VERIFY_(1, WINRT_CloseHandle(value));
+            WINRT_VERIFY_(1, WINRT_IMPL_CloseHandle(value));
         }
 
         static type invalid() noexcept

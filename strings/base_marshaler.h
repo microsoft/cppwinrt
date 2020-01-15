@@ -105,7 +105,7 @@ namespace winrt::impl
             static com_ptr<IMarshal> get_marshaler() noexcept
             {
                 com_ptr<unknown_abi> unknown;
-                WINRT_VERIFY_(0, WINRT_CoCreateFreeThreadedMarshaler(nullptr, unknown.put_void()));
+                WINRT_VERIFY_(0, WINRT_IMPL_CoCreateFreeThreadedMarshaler(nullptr, unknown.put_void()));
                 return unknown ? unknown.try_as<IMarshal>() : nullptr;
             }
 
