@@ -36,9 +36,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{D2961EA1-A8CA-4A62-B760-948403DC8494}</ProjectGuid>
+    <ProjectGuid>{2EF696B9-7F4A-410F-AE5C-5301565C0F08}</ProjectGuid>
     <RootNamespace>unittests</RootNamespace>
-    <ProjectName>test</ProjectName>
+    <ProjectName>test_win7</ProjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\cppwinrt.props" />
@@ -283,15 +283,16 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="generic_types.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="abi_guard.cpp" />
+    <ClCompile Include="agile_ref.cpp" />
+    <ClCompile Include="agility.cpp" />
     <ClCompile Include="async_auto_cancel.cpp" />
     <ClCompile Include="async_cancel_callback.cpp" />
     <ClCompile Include="async_check_cancel.cpp" />
-    <ClCompile Include="box_guid.cpp" />
-    <ClCompile Include="error_info.cpp" />
-    <ClCompile Include="event_deferral.cpp" />
     <ClCompile Include="async_local.cpp" />
     <ClCompile Include="async_no_suspend.cpp" />
     <ClCompile Include="async_progress.cpp" />
@@ -300,28 +301,78 @@
     <ClCompile Include="async_suspend.cpp" />
     <ClCompile Include="async_throw.cpp" />
     <ClCompile Include="async_wait_for.cpp" />
-    <ClCompile Include="await_adapter.cpp" />
+    <ClCompile Include="capture.cpp" />
     <ClCompile Include="cmd_reader.cpp" />
-    <ClCompile Include="coro_system.cpp">
+    <ClCompile Include="coro_foundation.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="coro_ui_core.cpp">
+    <ClCompile Include="coro_threadpool.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="get_activation_factory.cpp" />
-    <ClCompile Include="in_params_abi.cpp" />
+    <ClCompile Include="custom_error.cpp" />
+    <ClCompile Include="delegate.cpp" />
+    <ClCompile Include="delegates.cpp" />
+    <ClCompile Include="disconnected.cpp" />
+    <ClCompile Include="enum.cpp" />
+    <ClCompile Include="fast_iterator.cpp" />
+    <ClCompile Include="final_release.cpp" />
+    <ClCompile Include="generic_types.cpp" />
+    <ClCompile Include="generic_type_names.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="GetMany.cpp" />
+    <ClCompile Include="iid_ppv_args.cpp" />
+    <ClCompile Include="inspectable_interop.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="interop.cpp" />
+    <ClCompile Include="invalid_events.cpp" />
+    <ClCompile Include="in_params.cpp" />
     <ClCompile Include="main.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="out_params_abi.cpp" />
-    <ClCompile Include="out_params_bad.cpp" />
+    <ClCompile Include="module_lock_dll.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="names.cpp" />
+    <ClCompile Include="noexcept.cpp" />
+    <ClCompile Include="notify_awaiter.cpp" />
+    <ClCompile Include="no_make_detection.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="numerics.cpp" />
+    <ClCompile Include="out_params.cpp" />
+    <ClCompile Include="parent_includes.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="return_params_abi.cpp" />
-    <ClCompile Include="single_threaded_observable_vector.cpp" />
-    <ClCompile Include="tearoff.cpp" />
-    <ClCompile Include="variadic_delegate.cpp" />
+    <ClCompile Include="return_params.cpp" />
+    <ClCompile Include="structs.cpp" />
+    <ClCompile Include="thread_pool.cpp" />
+    <ClCompile Include="uniform_in_params.cpp" />
+    <ClCompile Include="velocity.cpp" />
+    <ClCompile Include="when.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
