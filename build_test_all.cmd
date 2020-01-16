@@ -28,4 +28,4 @@ call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platfor
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:test\test_module_lock_none
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:test\old_tests\test_old
 
-call run_tests.cmd %target_platform% %target_configuration% %target_version%
+call run_tests.cmd %target_platform% %target_configuration%
