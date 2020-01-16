@@ -77,7 +77,7 @@ namespace winrt::impl
         WINRT_ASSERT(length != 0);
         uint64_t bytes_required = sizeof(shared_hstring_header) + sizeof(wchar_t) * length;
 
-        if (bytes_required > std::numeric_limits<uint32_t>::max())
+        if (bytes_required > UINT_MAX)
         {
             throw std::invalid_argument("length");
         }
