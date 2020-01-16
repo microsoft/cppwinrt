@@ -21,6 +21,11 @@ namespace winrt::impl
     template <typename Interface>
     hresult get_runtime_activation_factory(param::hstring const& name, void** result) noexcept
     {
+        if (winrt_activation_handler)
+        {
+            return winrt_activation_handler(*(void**)(&name), guid_of<Interface>(), result);
+        }
+
         static int32_t(__stdcall * handler)(void* classId, guid const& iid, void** factory) noexcept;
 
         impl::load_runtime_function("RoGetActivationFactory", handler,
