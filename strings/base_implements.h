@@ -946,7 +946,7 @@ namespace winrt::impl
                 {
                     const com_array<guid>& inner_iids = get_interfaces(root_implements_type::m_inner);
                     *count = local_count + inner_iids.size();
-                    *array = static_cast<guid*>(WINRT_CoTaskMemAlloc(sizeof(guid)*(*count)));
+                    *array = static_cast<guid*>(WINRT_IMPL_CoTaskMemAlloc(sizeof(guid)*(*count)));
                     if (*array == nullptr)
                     {
                         return error_bad_alloc;
@@ -964,7 +964,7 @@ namespace winrt::impl
                 if (local_count > 0)
                 {
                     *count = local_count;
-                    *array = static_cast<guid*>(WINRT_CoTaskMemAlloc(sizeof(guid)*(*count)));
+                    *array = static_cast<guid*>(WINRT_IMPL_CoTaskMemAlloc(sizeof(guid)*(*count)));
                     if (*array == nullptr)
                     {
                         return error_bad_alloc;

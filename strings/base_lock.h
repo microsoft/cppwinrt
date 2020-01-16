@@ -11,32 +11,32 @@ WINRT_EXPORT namespace winrt
 
         void lock() noexcept
         {
-            WINRT_AcquireSRWLockExclusive(&m_lock);
+            WINRT_IMPL_AcquireSRWLockExclusive(&m_lock);
         }
 
         void lock_shared() noexcept
         {
-            WINRT_AcquireSRWLockShared(&m_lock);
+            WINRT_IMPL_AcquireSRWLockShared(&m_lock);
         }
 
         bool try_lock() noexcept
         {
-            return 0 != WINRT_TryAcquireSRWLockExclusive(&m_lock);
+            return 0 != WINRT_IMPL_TryAcquireSRWLockExclusive(&m_lock);
         }
 
         bool try_lock_shared() noexcept
         {
-            return 0 != WINRT_TryAcquireSRWLockShared(&m_lock);
+            return 0 != WINRT_IMPL_TryAcquireSRWLockShared(&m_lock);
         }
 
         void unlock() noexcept
         {
-            WINRT_ReleaseSRWLockExclusive(&m_lock);
+            WINRT_IMPL_ReleaseSRWLockExclusive(&m_lock);
         }
 
         void unlock_shared() noexcept
         {
-            WINRT_ReleaseSRWLockShared(&m_lock);
+            WINRT_IMPL_ReleaseSRWLockShared(&m_lock);
         }
 
     private:
@@ -78,7 +78,7 @@ WINRT_EXPORT namespace winrt
         {
             while (!predicate())
             {
-                WINRT_VERIFY(WINRT_SleepConditionVariableSRW(&m_cv, x.get(), 0xFFFFFFFF /*INFINITE*/, 0));
+                WINRT_VERIFY(WINRT_IMPL_SleepConditionVariableSRW(&m_cv, x.get(), 0xFFFFFFFF /*INFINITE*/, 0));
             }
         }
 
@@ -96,7 +96,7 @@ WINRT_EXPORT namespace winrt
                     return false;
                 }
 
-                if (!WINRT_SleepConditionVariableSRW(&m_cv, x.get(), static_cast<uint32_t>(milliseconds), 0))
+                if (!WINRT_IMPL_SleepConditionVariableSRW(&m_cv, x.get(), static_cast<uint32_t>(milliseconds), 0))
                 {
                     return predicate();
                 }
@@ -107,12 +107,12 @@ WINRT_EXPORT namespace winrt
 
         void notify_one() noexcept
         {
-            WINRT_WakeConditionVariable(&m_cv);
+            WINRT_IMPL_WakeConditionVariable(&m_cv);
         }
 
         void notify_all() noexcept
         {
-            WINRT_WakeAllConditionVariable(&m_cv);
+            WINRT_IMPL_WakeAllConditionVariable(&m_cv);
         }
 
     private:

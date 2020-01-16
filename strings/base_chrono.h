@@ -36,7 +36,7 @@ WINRT_EXPORT namespace winrt
         static time_point now() noexcept
         {
             file_time ft;
-            WINRT_GetSystemTimePreciseAsFileTime(&ft);
+            WINRT_IMPL_GetSystemTimePreciseAsFileTime(&ft);
             return from_file_time(ft);
         }
 

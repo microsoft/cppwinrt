@@ -109,7 +109,7 @@ namespace winrt::impl
             return;
         }
 
-        result = static_cast<F>(WINRT_GetProcAddress(WINRT_LoadLibraryW(L"combase.dll"), name));
+        result = static_cast<F>(WINRT_IMPL_GetProcAddress(WINRT_IMPL_LoadLibraryW(L"combase.dll"), name));
 
         if (result)
         {
@@ -130,7 +130,7 @@ namespace winrt::impl
                 static constexpr guid git_clsid{ 0x00000323, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };
 
                 com_ptr<IGlobalInterfaceTable> git;
-                hresult hr = WINRT_CoCreateInstance(git_clsid, nullptr, 1 /*CLSCTX_INPROC_SERVER*/, guid_of<IGlobalInterfaceTable>(), git.put_void());
+                hresult hr = WINRT_IMPL_CoCreateInstance(git_clsid, nullptr, 1 /*CLSCTX_INPROC_SERVER*/, guid_of<IGlobalInterfaceTable>(), git.put_void());
 
                 if (result < 0)
                 {

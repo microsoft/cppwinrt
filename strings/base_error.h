@@ -7,7 +7,7 @@ namespace winrt::impl
 
         static void close(type value) noexcept
         {
-            WINRT_VERIFY(WINRT_HeapFree(WINRT_GetProcessHeap(), 0, value));
+            WINRT_VERIFY(WINRT_IMPL_HeapFree(WINRT_IMPL_GetProcessHeap(), 0, value));
         }
 
         static constexpr type invalid() noexcept
@@ -22,7 +22,7 @@ namespace winrt::impl
 
         static void close(type value) noexcept
         {
-            WINRT_SysFreeString(value);
+            WINRT_IMPL_SysFreeString(value);
         }
 
         static constexpr type invalid() noexcept
@@ -121,7 +121,7 @@ namespace winrt::impl
 
         int32_t __stdcall GetDescription(bstr* value) noexcept final
         {
-            *value = WINRT_SysAllocString(m_message.c_str());
+            *value = WINRT_IMPL_SysAllocString(m_message.c_str());
             return *value ? error_ok : error_bad_alloc;
         }
 
@@ -142,7 +142,7 @@ namespace winrt::impl
             *fallback = nullptr;
             *error = m_code;
             *capability = nullptr;
-            *message = WINRT_SysAllocString(m_message.c_str());
+            *message = WINRT_IMPL_SysAllocString(m_message.c_str());
             return *message ? error_ok : error_bad_alloc;
         }
 
@@ -197,7 +197,7 @@ WINRT_EXPORT namespace winrt
         hresult_error(hresult const code, take_ownership_from_abi_t) noexcept : m_code(code)
         {
             com_ptr<impl::IErrorInfo> info;
-            WINRT_GetErrorInfo(0, info.put_void());
+            WINRT_IMPL_GetErrorInfo(0, info.put_void());
 
             if ((m_info = info.try_as<impl::IRestrictedErrorInfo>()))
             {
@@ -221,7 +221,7 @@ WINRT_EXPORT namespace winrt
 
                 if (legacy)
                 {
-                    message = impl::trim_hresult_message(legacy.get(), WINRT_SysStringLen(legacy.get()));
+                    message = impl::trim_hresult_message(legacy.get(), WINRT_IMPL_SysStringLen(legacy.get()));
                 }
 
                 originate(code, get_abi(message));
@@ -248,11 +248,11 @@ WINRT_EXPORT namespace winrt
                     {
                         if (message)
                         {
-                            return impl::trim_hresult_message(message.get(), WINRT_SysStringLen(message.get()));
+                            return impl::trim_hresult_message(message.get(), WINRT_IMPL_SysStringLen(message.get()));
                         }
                         else
                         {
-                            return impl::trim_hresult_message(fallback.get(), WINRT_SysStringLen(fallback.get()));
+                            return impl::trim_hresult_message(fallback.get(), WINRT_IMPL_SysStringLen(fallback.get()));
                         }
                     }
                 }
@@ -260,7 +260,7 @@ WINRT_EXPORT namespace winrt
 
             handle_type<impl::heap_traits> message;
 
-            uint32_t const size = WINRT_FormatMessageW(0x00001300, // FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS
+            uint32_t const size = WINRT_IMPL_FormatMessageW(0x00001300, // FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS
                 nullptr,
                 m_code,
                 0x00000400, // MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT)
@@ -281,7 +281,7 @@ WINRT_EXPORT namespace winrt
         {
             if (m_info)
             {
-                WINRT_SetErrorInfo(0, m_info.try_as<impl::IErrorInfo>().get());
+                WINRT_IMPL_SetErrorInfo(0, m_info.try_as<impl::IErrorInfo>().get());
             }
 
             return m_code;
@@ -297,13 +297,13 @@ WINRT_EXPORT namespace winrt
                 [](int32_t error, void* message, void*) noexcept
                 {
                     com_ptr<impl::IErrorInfo> info(new (std::nothrow) impl::error_info_fallback(error, message), take_ownership_from_abi);
-                    WINRT_VERIFY_(0, WINRT_SetErrorInfo(0, info.get()));
+                    WINRT_VERIFY_(0, WINRT_IMPL_SetErrorInfo(0, info.get()));
                     return 1;
                 });
 
             WINRT_VERIFY(handler(code, message, nullptr));
             com_ptr<impl::IErrorInfo> info;
-            WINRT_VERIFY_(0, WINRT_GetErrorInfo(0, info.put_void()));
+            WINRT_VERIFY_(0, WINRT_IMPL_GetErrorInfo(0, info.put_void()));
             WINRT_VERIFY(info.try_as(m_info));
         }
 
@@ -511,7 +511,7 @@ WINRT_EXPORT namespace winrt
 
     [[noreturn]] inline void throw_last_error()
     {
-        throw_hresult(impl::hresult_from_win32(WINRT_GetLastError()));
+        throw_hresult(impl::hresult_from_win32(WINRT_IMPL_GetLastError()));
     }
 
     inline void check_hresult(hresult const result)

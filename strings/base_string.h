@@ -68,7 +68,7 @@ namespace winrt::impl
 
         if (0 == --static_cast<shared_hstring_header*>(handle)->count)
         {
-            WINRT_HeapFree(WINRT_GetProcessHeap(), 0, handle);
+            WINRT_IMPL_HeapFree(WINRT_IMPL_GetProcessHeap(), 0, handle);
         }
     }
 
@@ -82,7 +82,7 @@ namespace winrt::impl
             throw std::invalid_argument("length");
         }
 
-        auto header = static_cast<shared_hstring_header*>(WINRT_HeapAlloc(WINRT_GetProcessHeap(), 0, static_cast<std::size_t>(bytes_required)));
+        auto header = static_cast<shared_hstring_header*>(WINRT_IMPL_HeapAlloc(WINRT_IMPL_GetProcessHeap(), 0, static_cast<std::size_t>(bytes_required)));
 
         if (!header)
         {
@@ -605,7 +605,7 @@ WINRT_EXPORT namespace winrt
     hstring to_hstring(T const& value)
     {
         std::string_view const view(value);
-        int const size = WINRT_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), nullptr, 0);
+        int const size = WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), nullptr, 0);
 
         if (size == 0)
         {
@@ -613,13 +613,13 @@ WINRT_EXPORT namespace winrt
         }
 
         impl::hstring_builder result(size);
-        WINRT_VERIFY_(size, WINRT_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), result.data(), size));
+        WINRT_VERIFY_(size, WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), result.data(), size));
         return result.to_hstring();
     }
 
     inline std::string to_string(std::wstring_view value)
     {
-        int const size = WINRT_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<int32_t>(value.size()), nullptr, 0, nullptr, nullptr);
+        int const size = WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<int32_t>(value.size()), nullptr, 0, nullptr, nullptr);
 
         if (size == 0)
         {
@@ -627,7 +627,7 @@ WINRT_EXPORT namespace winrt
         }
 
         std::string result(size, '?');
-        WINRT_VERIFY_(size, WINRT_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<int32_t>(value.size()), result.data(), size, nullptr, nullptr));
+        WINRT_VERIFY_(size, WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<int32_t>(value.size()), result.data(), size, nullptr, nullptr));
         return result;
     }
 }
