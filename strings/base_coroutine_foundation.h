@@ -41,16 +41,16 @@ namespace winrt::impl
     template <typename Async>
     void wait_for_completed(Async const& async, uint32_t const timeout)
     {
-        void* event = check_pointer(WINRT_CreateEventW(nullptr, true, false, nullptr));
+        void* event = check_pointer(WINRT_IMPL_CreateEventW(nullptr, true, false, nullptr));
 
         // The delegate is a local to ensure that the event outlives the call to WaitForSingleObject.
         async_completed_handler_t<Async> delegate = [event = handle(event)](auto && ...)
         {
-            WINRT_VERIFY(WINRT_SetEvent(event.get()));
+            WINRT_VERIFY(WINRT_IMPL_SetEvent(event.get()));
         };
 
         async.Completed(delegate);
-        WINRT_WaitForSingleObject(event, timeout);
+        WINRT_IMPL_WaitForSingleObject(event, timeout);
     }
 
     template <typename Async>
@@ -664,7 +664,7 @@ WINRT_EXPORT namespace winrt
 
         struct shared_type
         {
-            handle event{ check_pointer(WINRT_CreateEventW(nullptr, true, false, nullptr)) };
+            handle event{ check_pointer(WINRT_IMPL_CreateEventW(nullptr, true, false, nullptr)) };
             T result;
         };
 
@@ -679,7 +679,7 @@ WINRT_EXPORT namespace winrt
                     if (nullptr == _InterlockedCompareExchangePointer(reinterpret_cast<void**>(&shared->result), sender_abi, nullptr))
                     {
                         sender_abi->AddRef();
-                        WINRT_VERIFY(WINRT_SetEvent(shared->event.get()));
+                        WINRT_VERIFY(WINRT_IMPL_SetEvent(shared->event.get()));
                     }
                 });
         };

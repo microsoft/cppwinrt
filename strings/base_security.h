@@ -6,9 +6,9 @@ WINRT_EXPORT namespace winrt
         static access_token process()
         {
             access_token token;
-            check_bool(WINRT_OpenProcessToken(WINRT_GetCurrentProcess(), 0x0002 /*TOKEN_DUPLICATE*/, token.put()));
+            check_bool(WINRT_IMPL_OpenProcessToken(WINRT_IMPL_GetCurrentProcess(), 0x0002 /*TOKEN_DUPLICATE*/, token.put()));
             access_token duplicate;
-            check_bool(WINRT_DuplicateToken(token.get(), 2 /*SecurityImpersonation*/, duplicate.put()));
+            check_bool(WINRT_IMPL_DuplicateToken(token.get(), 2 /*SecurityImpersonation*/, duplicate.put()));
             return duplicate;
         }
 
@@ -16,9 +16,9 @@ WINRT_EXPORT namespace winrt
         {
             access_token token;
 
-            if (!WINRT_OpenThreadToken(WINRT_GetCurrentThread(), 0x0004 /*TOKEN_IMPERSONATE*/, 1, token.put()))
+            if (!WINRT_IMPL_OpenThreadToken(WINRT_IMPL_GetCurrentThread(), 0x0004 /*TOKEN_IMPERSONATE*/, 1, token.put()))
             {
-                uint32_t const error = WINRT_GetLastError();
+                uint32_t const error = WINRT_IMPL_GetLastError();
 
                 if (error != 1008 /*ERROR_NO_TOKEN*/)
                 {
@@ -48,7 +48,7 @@ WINRT_EXPORT namespace winrt
                 com_ptr<impl::IServerSecurity> const& m_server;
             };
 
-            auto server = capture<impl::IServerSecurity>(WINRT_CoGetCallContext);
+            auto server = capture<impl::IServerSecurity>(WINRT_IMPL_CoGetCallContext);
             impersonate_guard impersonate(server);
             return thread();
         }
@@ -60,13 +60,13 @@ WINRT_EXPORT namespace winrt
         access_token impersonate() const
         {
             auto previous = thread();
-            check_bool(WINRT_SetThreadToken(nullptr, get()));
+            check_bool(WINRT_IMPL_SetThreadToken(nullptr, get()));
             return previous;
         }
 
         void revert() const
         {
-            check_bool(WINRT_SetThreadToken(nullptr, get()));
+            check_bool(WINRT_IMPL_SetThreadToken(nullptr, get()));
         }
 
         auto operator()() const

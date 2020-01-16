@@ -39,8 +39,8 @@ TEST_CASE("try_get_activation_factory")
     // Used to test whether the IRestrictedErrorInfo was left on the thread
     auto get_error_info = []
     {
-        com_ptr<impl::IErrorInfo> info;
-        WINRT_GetErrorInfo(0, info.put_void());
+        com_ptr<IErrorInfo> info;
+        GetErrorInfo(0, info.put());
         return info.as<impl::IRestrictedErrorInfo>();
     };
 
