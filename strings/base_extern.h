@@ -76,8 +76,8 @@ extern "C"
     int32_t __stdcall WINRT_IMPL_SetThreadpoolThreadMinimum(winrt::impl::ptp_pool pool, uint32_t value) noexcept;
     void     __stdcall WINRT_IMPL_CloseThreadpool(winrt::impl::ptp_pool pool) noexcept;
 
-    int32_t __stdcall WINRT_IMPL_CanUnloadNow() noexcept;
-    int32_t __stdcall WINRT_IMPL_GetActivationFactory(void* classId, void** factory) noexcept;
+    int32_t __stdcall WINRT_CanUnloadNow() noexcept;
+    int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept;
 }
 
 #ifdef _M_HYBRID
