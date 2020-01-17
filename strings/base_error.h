@@ -560,7 +560,7 @@ WINRT_EXPORT namespace winrt
         return pointer;
     }
 
-    [[noreturn]] inline void terminate() noexcept
+    inline void terminate() noexcept
     {
         static void(__stdcall * handler)(int32_t) noexcept;
 
