@@ -328,6 +328,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="GetMany.cpp" />
+    <ClCompile Include="guid_key.cpp" />
     <ClCompile Include="iid_ppv_args.cpp" />
     <ClCompile Include="inspectable_interop.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
