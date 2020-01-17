@@ -39,7 +39,7 @@ namespace winrt::impl
 
         if (hr == impl::error_not_initialized)
         {
-            auto usage = static_cast<int32_t(__stdcall*)(void** cookie) noexcept>(WINRT_IMPL_GetProcAddress(WINRT_IMPL_LoadLibraryW(L"combase.dll"), "CoIncrementMTAUsage"));
+            auto usage = reinterpret_cast<int32_t(__stdcall*)(void** cookie) noexcept>(WINRT_IMPL_GetProcAddress(WINRT_IMPL_LoadLibraryW(L"combase.dll"), "CoIncrementMTAUsage"));
 
             if (!usage)
             {
@@ -59,7 +59,7 @@ namespace winrt::impl
         std::wstring path{ static_cast<hstring const&>(name) };
         std::size_t count{};
 
-        while (-1 != (count = path.rfind('.')))
+        while (std::wstring::npos != (count = path.rfind('.')))
         {
             path.resize(count);
             path += L".dll";

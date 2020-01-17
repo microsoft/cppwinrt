@@ -109,7 +109,7 @@ namespace winrt::impl
             return;
         }
 
-        result = static_cast<F>(WINRT_IMPL_GetProcAddress(WINRT_IMPL_LoadLibraryW(L"combase.dll"), name));
+        result = reinterpret_cast<F>(WINRT_IMPL_GetProcAddress(WINRT_IMPL_LoadLibraryW(L"combase.dll"), name));
 
         if (result)
         {
@@ -119,20 +119,20 @@ namespace winrt::impl
         result = fallback;
     }
 
-    inline hresult get_agile_reference(winrt::guid const& iid, void* object, void** result) noexcept
+    inline hresult get_agile_reference(winrt::guid const& iid, void* object, void** reference) noexcept
     {
-        static int32_t(__stdcall * handler)(uint32_t options, winrt::guid const& iid, void* object, void** result) noexcept;
+        static int32_t(__stdcall * handler)(uint32_t options, winrt::guid const& iid, void* object, void** reference) noexcept;
 
         load_runtime_function("RoGetAgileReference", handler,
-            [](uint32_t, winrt::guid const& iid, void* object, void** result) noexcept -> int32_t
+            [](uint32_t, winrt::guid const& iid, void* object, void** reference) noexcept -> int32_t
             {
-                *result = nullptr;
+                *reference = nullptr;
                 static constexpr guid git_clsid{ 0x00000323, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };
 
                 com_ptr<IGlobalInterfaceTable> git;
                 hresult hr = WINRT_IMPL_CoCreateInstance(git_clsid, nullptr, 1 /*CLSCTX_INPROC_SERVER*/, guid_of<IGlobalInterfaceTable>(), git.put_void());
 
-                if (result < 0)
+                if (hr < 0)
                 {
                     return hr;
                 }
@@ -140,16 +140,16 @@ namespace winrt::impl
                 uint32_t cookie{};
                 hr = git->RegisterInterfaceInGlobal(object, iid, &cookie);
 
-                if (result < 0)
+                if (hr < 0)
                 {
                     return hr;
                 }
 
-                *result = new agile_ref_fallback(std::move(git), cookie);
+                *reference = new agile_ref_fallback(std::move(git), cookie);
                 return 0;
             });
 
-        return handler(0, iid, object, result);
+        return handler(0, iid, object, reference);
     }
 }
 
