@@ -75,7 +75,7 @@ namespace winrt::impl
     inline shared_hstring_header* precreate_hstring_on_heap(uint32_t length)
     {
         WINRT_ASSERT(length != 0);
-        uint64_t bytes_required = sizeof(shared_hstring_header) + sizeof(wchar_t) * length;
+        uint64_t bytes_required = static_cast<uint64_t>(sizeof(shared_hstring_header)) + static_cast<uint64_t>(sizeof(wchar_t)) * static_cast<uint64_t>(length);
 
         if (bytes_required > UINT_MAX)
         {
