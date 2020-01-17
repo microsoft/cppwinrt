@@ -302,7 +302,7 @@ WINRT_EXPORT namespace winrt
 
             std::destroy(this->begin(), this->end());
 
-            WINRT_CoTaskMemFree(this->m_data);
+            WINRT_IMPL_CoTaskMemFree(this->m_data);
             this->m_data = nullptr;
             this->m_size = 0;
         }
@@ -321,7 +321,7 @@ WINRT_EXPORT namespace winrt
 
             if (0 != size)
             {
-                this->m_data = static_cast<value_type*>(WINRT_CoTaskMemAlloc(size * sizeof(value_type)));
+                this->m_data = static_cast<value_type*>(WINRT_IMPL_CoTaskMemAlloc(size * sizeof(value_type)));
 
                 if (this->m_data == nullptr)
                 {

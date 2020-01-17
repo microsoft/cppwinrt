@@ -541,7 +541,7 @@ namespace cppwinrt
 
         for (auto&& type : classes)
         {
-            result = std::max(result, get_fastabi_size(w, type));
+            result = (std::max)(result, get_fastabi_size(w, type));
         }
 
         return result;
