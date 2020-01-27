@@ -6,7 +6,10 @@
 
     <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.props','$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props','$(MSBuildThisFileDirectory)../'))" />
 
-    <PropertyGroup>        
+    <PropertyGroup>
+        <PlatformDirectoryName Condition="'$(Platform)' == 'Win32'">x86</PlatformDirectoryName>
+        <PlatformDirectoryName Condition="'$(Platform)' != 'Win32'">$(Platform)</PlatformDirectoryName>
+        
         <!-- Consistent output directory for AppContainer and non-AppContainer projects -->
         <!-- Build overrides the roots. -->
         <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
