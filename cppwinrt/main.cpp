@@ -289,16 +289,23 @@ Where <spec> is one or more of:
 
             w.flush_to_console();
             task_group group;
+            writer ixx;
+            write_preamble(ixx);
+            ixx.write("module;\n");
+            ixx.write(strings::base_includes);
+            ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n\n");
 
             for (auto&&[ns, members] : c.namespaces())
             {
+                if (!has_projected_types(members) || !settings.projection_filter.includes(members))
+                {
+                    continue;
+                }
+
+                ixx.write("#include \"winrt/%.h\"\n", ns);
+
                 group.add([&, &ns = ns, &members = members]
                 {
-                    if (!has_projected_types(members) || !settings.projection_filter.includes(members))
-                    {
-                        return;
-                    }
-
                     write_namespace_0_h(ns, members);
                     write_namespace_1_h(ns, members);
                     write_namespace_2_h(ns, members);
@@ -309,6 +316,7 @@ Where <spec> is one or more of:
             if (settings.base)
             {
                 write_base_h();
+                ixx.flush_to_file(settings.output_folder + "winrt/winrt.ixx");
             }
 
             if (settings.component)

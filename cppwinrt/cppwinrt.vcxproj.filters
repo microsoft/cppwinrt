@@ -76,9 +76,6 @@
     <ClInclude Include="..\strings\base_delegate.h">
       <Filter>strings</Filter>
     </ClInclude>
-    <ClInclude Include="..\strings\base_dependencies.h">
-      <Filter>strings</Filter>
-    </ClInclude>
     <ClInclude Include="..\strings\base_error.h">
       <Filter>strings</Filter>
     </ClInclude>
@@ -160,6 +157,9 @@
     <ClInclude Include="cmd_reader.h" />
     <ClInclude Include="task_group.h" />
     <ClInclude Include="text_writer.h" />
+    <ClInclude Include="..\strings\base_includes.h">
+      <Filter>strings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(OutDir)version.rc" />

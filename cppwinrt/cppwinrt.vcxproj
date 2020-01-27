@@ -59,7 +59,6 @@
     <ClInclude Include="..\strings\base_coroutine_ui_core.h" />
     <ClInclude Include="..\strings\base_deferral.h" />
     <ClInclude Include="..\strings\base_delegate.h" />
-    <ClInclude Include="..\strings\base_dependencies.h" />
     <ClInclude Include="..\strings\base_error.h" />
     <ClInclude Include="..\strings\base_events.h" />
     <ClInclude Include="..\strings\base_extern.h" />
@@ -68,6 +67,7 @@
     <ClInclude Include="..\strings\base_handle.h" />
     <ClInclude Include="..\strings\base_identity.h" />
     <ClInclude Include="..\strings\base_implements.h" />
+    <ClInclude Include="..\strings\base_includes.h" />
     <ClInclude Include="..\strings\base_lock.h" />
     <ClInclude Include="..\strings\base_macros.h" />
     <ClInclude Include="..\strings\base_marshaler.h" />
