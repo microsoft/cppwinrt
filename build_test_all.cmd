@@ -10,6 +10,7 @@ if "%target_version%"=="" set target_version=1.2.3.4
 
 call nuget restore cppwinrt.sln
 call nuget restore natvis\cppwinrtvisualizer.sln
+call nuget restore test\nuget\NugetTest.sln
 
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
 
