@@ -257,12 +257,19 @@ WINRT_EXPORT namespace winrt
 
         const_pointer data() const noexcept
         {
-            return begin();
+            return c_str();
         }
 
         const_pointer c_str() const noexcept
         {
-            return begin();
+            if (!empty())
+            {
+                return begin();
+            }
+            else
+            {
+                return L"";
+            }
         }
 
         const_iterator begin() const noexcept
