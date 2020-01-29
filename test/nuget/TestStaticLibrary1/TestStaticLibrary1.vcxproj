@@ -8,7 +8,7 @@
     <ProjectGuid>{2158F418-CA97-4599-8103-EFC133850BAA}</ProjectGuid>
     <Keyword>StaticLibrary</Keyword>
     <ProjectName>TestStaticLibrary1</ProjectName>
-    <RootNamespace>TestApp</RootNamespace>
+    <RootNamespace>TestApp.Library1</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
     <AppContainerApplication>true</AppContainerApplication>

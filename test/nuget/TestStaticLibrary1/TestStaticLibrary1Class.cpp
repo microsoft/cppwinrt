@@ -2,11 +2,12 @@
 #include "TestStaticLibrary1Class.h"
 #include "TestStaticLibrary1Class.g.cpp"
 
-namespace winrt::TestApp::implementation
+using namespace winrt::TestApp::Library4;
+
+namespace winrt::TestApp::Library1::implementation
 {
-    void TestStaticLibrary1Class::Test()
+    void TestStaticLibrary1Class::Test(TestStaticLibrary4Class const& c)
     {
-        TestStaticLibrary4Class c{};
         c.Test();
     }
 }

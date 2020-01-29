@@ -2,7 +2,7 @@
 
 #include "TestStaticLibrary4Class.g.h"
 
-namespace winrt::TestApp::implementation
+namespace winrt::TestApp::Library4::implementation
 {
     struct TestStaticLibrary4Class : TestStaticLibrary4ClassT<TestStaticLibrary4Class>
     {
@@ -12,7 +12,7 @@ namespace winrt::TestApp::implementation
     };
 }
 
-namespace winrt::TestApp::factory_implementation
+namespace winrt::TestApp::Library4::factory_implementation
 {
     struct TestStaticLibrary4Class : TestStaticLibrary4ClassT<TestStaticLibrary4Class, implementation::TestStaticLibrary4Class>
     {

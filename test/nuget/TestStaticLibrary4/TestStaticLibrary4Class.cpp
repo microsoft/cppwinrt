@@ -7,7 +7,7 @@
 using namespace winrt;
 using namespace winrt::Windows::UI::Xaml::Core::Direct;
 
-namespace winrt::TestApp::implementation
+namespace winrt::TestApp::Library4::implementation
 {
     XamlDirect TestStaticLibrary4Class::Test()
     {
