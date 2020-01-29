@@ -148,9 +148,6 @@
     <ClInclude Include="..\strings\base_fast_forward.h">
       <Filter>strings</Filter>
     </ClInclude>
-    <ClInclude Include="..\strings\base_coroutine.h">
-      <Filter>strings</Filter>
-    </ClInclude>
     <ClInclude Include="..\strings\base_deferral.h">
       <Filter>strings</Filter>
     </ClInclude>

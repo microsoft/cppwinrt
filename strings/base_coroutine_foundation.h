@@ -527,7 +527,7 @@ namespace winrt::impl
     };
 }
 
-namespace std::experimental
+WINRT_EXPORT namespace std::experimental
 {
     template <typename... Args>
     struct coroutine_traits<winrt::Windows::Foundation::IAsyncAction, Args...>
