@@ -45,6 +45,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRT_IncludePath>$(GeneratedFilesDir)</CppWinRT_IncludePath>
         <!--TEMP: Override NuGet SDK's erroneous setting in uap.props -->
         <WindowsSDK_MetadataFoundationPath Condition="('$(WindowsSDK_MetadataFoundationPath)'!='') And !Exists($(WindowsSDK_MetadataFoundationPath))">$(WindowsSDK_MetadataPathVersioned)</WindowsSDK_MetadataFoundationPath>
+        <!-- CAExcludePath is used to set an environment variable, so make sure this is defined on a single line. -->
+        <CAExcludePath>$(GeneratedFilesDir);$(CAExcludePath)</CAExcludePath>
 
         <PrepareForBuildDependsOn>
             $(PrepareForBuildDependsOn);
@@ -83,9 +85,6 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CleanDependsOn>
             $(CleanDependsOn);CppWinRTClean
         </CleanDependsOn>
-        <CAExcludePath>
-            $(CAExcludePath);$(GeneratedFilesDir);
-        </CAExcludePath>
 
     </PropertyGroup>
 
