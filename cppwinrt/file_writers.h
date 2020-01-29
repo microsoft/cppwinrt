@@ -8,8 +8,7 @@ namespace cppwinrt
         write_preamble(w);
         write_open_file_guard(w, "BASE");
 
-        w.write(strings::base_dependencies);
-        w.write(strings::base_coroutine);
+        w.write(strings::base_includes);
         w.write(strings::base_macros);
         w.write(strings::base_types);
         w.write(strings::base_extern);
