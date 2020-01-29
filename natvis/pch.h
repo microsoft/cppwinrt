@@ -7,7 +7,7 @@
 #include <vsdebugeng.h>
 #include <vsdebugeng.templates.h>
 #include <Dia2.h>
-#include "base_dependencies.h"
+#include "base_includes.h"
 #include "base_macros.h"
 #include "base_types.h"
 #include "base_extern.h"
