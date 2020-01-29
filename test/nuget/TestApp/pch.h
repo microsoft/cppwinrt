@@ -14,6 +14,8 @@
 #include <winrt/Windows.UI.Xaml.Markup.h>
 #include <winrt/Windows.UI.Xaml.Navigation.h>
 
+#include <winrt/TestApp.Library1.h>
+#include <winrt/TestApp.Library4.h>
 #include <winrt/TestRuntimeComponent1.h>
 #include <winrt/TestRuntimeComponent2.h>
 #include <winrt/TestRuntimeComponentCX.h>
