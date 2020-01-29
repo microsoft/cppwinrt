@@ -8,9 +8,12 @@ if "%target_platform%"=="" set target_platform=x64
 if "%target_configuration%"=="" set target_configuration=Release
 if "%target_version%"=="" set target_version=1.2.3.4
 
-call nuget restore cppwinrt.sln
-call nuget restore natvis\cppwinrtvisualizer.sln
-call nuget restore test\nuget\NugetTest.sln
+if not exist ".\.nuget" mkdir ".\.nuget"
+if not exist ".\.nuget\nuget.exe" powershell -Command "Invoke-WebRequest https://www.nuget.org/nuget.exe -OutFile .\.nuget\nuget.exe"
+
+call .nuget\nuget.exe restore cppwinrt.sln"
+call .nuget\nuget.exe restore natvis\cppwinrtvisualizer.sln
+call .nuget\nuget.exe restore test\nuget\NugetTest.sln
 
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
 
