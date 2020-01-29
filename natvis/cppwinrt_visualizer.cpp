@@ -167,6 +167,7 @@ cppwinrt_visualizer::cppwinrt_visualizer()
 
 cppwinrt_visualizer::~cppwinrt_visualizer()
 {
+    ClearTypeResolver();
     db_files.clear();
     db.reset();
 }
