@@ -7,11 +7,7 @@ using namespace Microsoft::VisualStudio::Debugger;
 using namespace Microsoft::VisualStudio::Debugger::Evaluation;
 using namespace std::literals;
 using namespace winrt;
-using namespace winmd::impl;
 using namespace winmd::reader;
-
-template <typename...T> struct overloaded : T... { using T::operator()...; };
-template <typename...T> overloaded(T...)->overloaded<T...>;
 
 #define IID_IInspectable L"AF86E2E0-B12D-4C6A-9C5A-D7AA65101E90"
 #define IID_IStringable  L"96369F54-8EB6-48F0-ABCE-C1B211E627C3"
@@ -351,56 +347,11 @@ struct property_type
 };
 
 void GetInterfaceData(
-    DkmProcess* process,
     coded_index<TypeDefOrRef> index,
     _Inout_ std::vector<PropertyData>& propertyData,
     _Out_ bool& isStringable
 ){
-    auto resolve_type_index = [](coded_index<TypeDefOrRef> index) -> TypeDef
-    {
-        switch (index.type())
-        {
-        case TypeDefOrRef::TypeDef:
-        {
-            return index.TypeDef();
-        }
-        case TypeDefOrRef::TypeRef:
-        {
-            return find_required(index.TypeRef());
-        }
-        case TypeDefOrRef::TypeSpec:
-        {
-            auto type_signature = index.TypeSpec().Signature();
-            auto signature = type_signature.GenericTypeInst();
-            return find_required(signature.GenericType().TypeRef());
-        }
-        }
-        return {};
-    };
-
-    auto type = resolve_type_index(index);
-    auto attribute = get_attribute(type, "Windows.Foundation.Metadata", "GuidAttribute");
-    if (!attribute)
-    {
-        throw_invalid("'Windows.Foundation.Metadata.GuidAttribute' attribute for type '", type.TypeNamespace(), ".", type.TypeName(), "' not found");
-    }
-    auto args = attribute.Value().FixedArgs();
-    std::string guid(68, '?');
-    int count = sprintf_s(guid.data(), guid.size() + 1,
-        "%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X"
-        , std::get<uint32_t>(std::get<ElemSig>(args[0].value).value)
-        , std::get<uint16_t>(std::get<ElemSig>(args[1].value).value)
-        , std::get<uint16_t>(std::get<ElemSig>(args[2].value).value)
-        , std::get<uint8_t>(std::get<ElemSig>(args[3].value).value)
-        , std::get<uint8_t>(std::get<ElemSig>(args[4].value).value)
-        , std::get<uint8_t>(std::get<ElemSig>(args[5].value).value)
-        , std::get<uint8_t>(std::get<ElemSig>(args[6].value).value)
-        , std::get<uint8_t>(std::get<ElemSig>(args[7].value).value)
-        , std::get<uint8_t>(std::get<ElemSig>(args[8].value).value)
-        , std::get<uint8_t>(std::get<ElemSig>(args[9].value).value)
-        , std::get<uint8_t>(std::get<ElemSig>(args[10].value).value));
-    guid.resize(count);
-    std::wstring propIid(guid.cbegin(), guid.cend());
+    auto [type, propIid] = ResolveTypeInterface(index);
 
     if (propIid == IID_IStringable)
     {
@@ -424,89 +375,85 @@ void GetInterfaceData(
         std::wstring propDisplayType;
 
         auto retType = method.Signature().ReturnType();
-        std::visit(overloaded
+        std::visit(overloaded{
+            [&](ElementType type)
             {
-                [&](ElementType type)
+                if ((type < ElementType::Boolean) || (type > ElementType::String))
                 {
-                    if ((type < ElementType::Boolean) || (type > ElementType::String))
-                    {
-                        return;
-                    }
-                    propCategory = (PropertyCategory)(static_cast<std::underlying_type<ElementType>::type>(type) -
-                        static_cast<std::underlying_type<ElementType>::type>(ElementType::Boolean));
-                },
-                [&](coded_index<TypeDefOrRef> const& index)
+                    return;
+                }
+                propCategory = (PropertyCategory)(static_cast<std::underlying_type<ElementType>::type>(type) -
+                    static_cast<std::underlying_type<ElementType>::type>(ElementType::Boolean));
+            },
+            [&](coded_index<TypeDefOrRef> const& index)
+            {
+                auto type = ResolveType(index);
+                auto typeName = type.TypeName();
+                if (typeName == "GUID"sv)
                 {
-                    auto type = resolve_type_index(index);
-                    auto typeName = type.TypeName();
-                    if (typeName == "GUID"sv)
+                    propCategory = PropertyCategory::Guid;
+                }
+                else
+                {
+                    auto ns = std::string(type.TypeNamespace());
+                    auto name = std::string(type.TypeName());
+
+                    // Map numeric type names
+                    if (ns == "Windows.Foundation.Numerics")
                     {
-                        propCategory = PropertyCategory::Guid;
+                        if (name == "Matrix3x2") { name = "float3x2"; }
+                        else if (name == "Matrix4x4") { name = "float4x4"; }
+                        else if (name == "Plane") { name = "plane"; }
+                        else if (name == "Quaternion") { name = "quaternion"; }
+                        else if (name == "Vector2") { name = "float2"; }
+                        else if (name == "Vector3") { name = "float3"; }
+                        else if (name == "Vector4") { name = "float4"; }
                     }
-                    else
+
+                    // Types come back from winmd files with '.', need to be '::'
+                    // Ex. Windows.Foundation.Uri needs to be Windows::Foundation::Uri
+                    auto fullTypeName = ns + "::" + name;
+                    wchar_t cppTypename[500];
+                    size_t i, j;
+                    for (i = 0, j = 0; i < (fullTypeName.length() + 1); i++, j++)
                     {
-                        auto ns = std::string(type.TypeNamespace());
-                        auto name = std::string(type.TypeName());
-
-                        // Map numeric type names
-                        if (ns == "Windows.Foundation.Numerics")
+                        if (fullTypeName[i] == L'.')
                         {
-                            if (name == "Matrix3x2") { name = "float3x2"; }
-                            else if (name == "Matrix4x4") { name = "float4x4"; }
-                            else if (name == "Plane") { name = "plane"; }
-                            else if (name == "Quaternion") { name = "quaternion"; }
-                            else if (name == "Vector2") { name = "float2"; }
-                            else if (name == "Vector3") { name = "float3"; }
-                            else if (name == "Vector4") { name = "float4"; }
-                        }
-
-                        // Types come back from winmd files with '.', need to be '::'
-                        // Ex. Windows.Foundation.Uri needs to be Windows::Foundation::Uri
-                        auto fullTypeName = ns + "::" + name;
-                        wchar_t cppTypename[500];
-                        size_t i, j;
-                        for (i = 0, j = 0; i < (fullTypeName.length() + 1); i++, j++)
-                        {
-                            if (fullTypeName[i] == L'.')
-                            {
-                                cppTypename[j++] = L':';
-                                cppTypename[j] = L':';
-                            }
-                            else
-                            {
-                                cppTypename[j] = fullTypeName[i];
-                            }
-                        }
-
-                        propDisplayType = std::wstring(L"winrt::") + cppTypename;
-                        if(get_category(type) == category::class_type)
-                        {
-                            propCategory = PropertyCategory::Class;
-                            propAbiType = L"winrt::impl::inspectable_abi*";
+                            cppTypename[j++] = L':';
+                            cppTypename[j] = L':';
                         }
                         else
                         {
-                            propCategory = PropertyCategory::Value;
-                            propAbiType = propDisplayType;
+                            cppTypename[j] = fullTypeName[i];
                         }
                     }
-                },
-                [&](GenericTypeIndex /*var*/)
-                {
-                    // TODO: generic properties
-                    NatvisDiagnostic(process, L"Generics are not yet supported", NatvisDiagnosticLevel::Verbose);
-                },
-                [&](GenericMethodTypeIndex /*var*/)
-                {
-                    throw_invalid("Generic methods not supported.");
-                },
-                [&](GenericTypeInstSig const& /*type*/)
-                {
-                    // TODO: generic properties
-                    NatvisDiagnostic(process, L"Generics are not yet supported", NatvisDiagnosticLevel::Verbose);
+
+                    propDisplayType = std::wstring(L"winrt::") + cppTypename;
+                    if(get_category(type) == category::class_type)
+                    {
+                        propCategory = PropertyCategory::Class;
+                        propAbiType = L"winrt::impl::inspectable_abi*";
+                    }
+                    else
+                    {
+                        propCategory = PropertyCategory::Value;
+                        propAbiType = propDisplayType;
+                    }
                 }
             },
-            retType.Type().Type());
+            [&](GenericTypeIndex /*var*/)
+            {
+                throw_invalid("Generics are not yet supported");
+            },
+            [&](GenericMethodTypeIndex /*var*/)
+            {
+                throw_invalid("Generic methods not supported.");
+            },
+            [&](GenericTypeInstSig const& /*type*/)
+            {
+                throw_invalid("Generics are not yet supported");
+            }
+        }, retType.Type().Type());
 
         auto propName = method.Name().substr(4);
         std::wstring propDisplayName(propName.cbegin(), propName.cend());
@@ -530,6 +477,7 @@ void object_visualizer::GetPropertyData()
 
 void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& type_name)
 {
+    // TODO: add support for direct generic interface implementations (e.g., key_value_pair)
     auto type = FindType(process, type_name);
     if (!type)
     {
@@ -550,7 +498,7 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
         auto impls = type.InterfaceImpl();
         for (auto&& impl : impls)
         {
-            GetInterfaceData(process, impl.Interface(), m_propertyData, m_isStringable);
+            GetInterfaceData(impl.Interface(), m_propertyData, m_isStringable);
         }
     }
     else if (get_category(type) == category::interface_type)
@@ -558,9 +506,9 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
         auto impls = type.InterfaceImpl();
         for (auto&& impl : impls)
         {
-            GetInterfaceData(process, impl.Interface(), m_propertyData, m_isStringable);
+            GetInterfaceData(impl.Interface(), m_propertyData, m_isStringable);
         }
-        GetInterfaceData(process, type.coded_index<TypeDefOrRef>(), m_propertyData, m_isStringable);
+        GetInterfaceData(type.coded_index<TypeDefOrRef>(), m_propertyData, m_isStringable);
     }
 }
 
@@ -629,6 +577,14 @@ HRESULT object_visualizer::GetChildren(
     try
     {
         GetPropertyData();
+    }
+    catch (std::invalid_argument const& e)
+    {
+        std::string_view message(e.what());
+        NatvisDiagnostic(m_pVisualizedExpression.get(),
+            std::wstring(L"Exception in object_visualizer::GetPropertyData: ") +
+                std::wstring(message.begin(), message.end()),
+            NatvisDiagnosticLevel::Error, to_hresult());
     }
     catch (...)
     {

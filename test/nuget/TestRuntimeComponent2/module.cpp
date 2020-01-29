@@ -40,9 +40,7 @@ int32_t __stdcall WINRT_CanUnloadNow() noexcept
 
 int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept try
 {
-    uint32_t length{};
-    wchar_t const* const buffer = WINRT_WindowsGetStringRawBuffer(classId, &length);
-    std::wstring_view const name{ buffer, length };
+    std::wstring_view const name{ *reinterpret_cast<winrt::hstring*>(&classId) };
     *factory = winrt_get_activation_factory(name);
 
     if (*factory)

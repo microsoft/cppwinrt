@@ -308,11 +308,14 @@ Copyright (C) Microsoft Corporation. All rights reserved.
                 <MdMergeOutputFile>$(CppWinRTProjectWinMD)</MdMergeOutputFile>
             </_MdMergeInputs>
             <!-- Static libraries don't mdmerge other static libraries.
-                 Instead they are passed independent inputs for the compoenent projection. -->
+                 Instead they are passed as independent inputs for the component projection. -->
             <_MdMergeInputs Include="@(CppWinRTStaticProjectWinMDReferences)" Condition="'$(ConfigurationType)' != 'StaticLibrary'">
                 <MdMergeOutputFile>$(CppWinRTProjectWinMD)</MdMergeOutputFile>
             </_MdMergeInputs>
             <_MdMergeReferences Remove="@(_MdMergeReferences)" />
+            <!-- Static libraries don't mdmerge other static libraries.
+                 They are however used as references so idl can reference classes from other libs. -->
+            <_MdMergeReferences Include="@(CppWinRTStaticProjectWinMDReferences)" Condition="'$(ConfigurationType)' == 'StaticLibrary'" />
             <_MdMergeReferences Include="@(CppWinRTDirectWinMDReferences)" />
             <_MdMergeReferences Include="@(CppWinRTDynamicProjectWinMDReferences)" />
             <_MdMergeReferences Include="@(CppWinRTPlatformWinMDReferences)" />
