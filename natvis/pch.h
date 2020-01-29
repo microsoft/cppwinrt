@@ -7,7 +7,25 @@
 #include <vsdebugeng.h>
 #include <vsdebugeng.templates.h>
 #include <Dia2.h>
-#include "winrt\base.h"
+#include "base_dependencies.h"
+#include "base_macros.h"
+#include "base_types.h"
+#include "base_extern.h"
+#include "base_meta.h"
+#include "base_identity.h"
+#include "base_handle.h"
+#include "base_lock.h"
+#include "base_abi.h"
+#include "base_windows.h"
+#include "base_com_ptr.h"
+#include "base_string.h"
+#include "base_string_input.h"
+#include "base_array.h"
+#include "base_weak_ref.h"
+#include "base_agile_ref.h"
+#include "base_error.h"
+#include "base_marshaler.h"
+#include "base_implements.h"
 #include <rometadataapi.h>
 #include <rometadata.h>
 #include <filesystem>
@@ -31,8 +49,6 @@ winrt::com_ptr<T> make_com_ptr(T* ptr)
     return result;
 }
 
-winmd::reader::TypeDef FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
-
 enum class NatvisDiagnosticLevel
 {
     Unknown = -1,
@@ -47,3 +63,43 @@ inline HRESULT NatvisDiagnostic(Microsoft::VisualStudio::Debugger::Evaluation::D
 {
     return NatvisDiagnostic(expression->RuntimeInstance()->Process(), messageText, level, errorCode);
 }
+
+template <typename...T> struct overloaded : T... { using T::operator()...; };
+template <typename...T> overloaded(T...)->overloaded<T...>;
+
+[[noreturn]] inline void throw_invalid(std::string const& message)
+{
+    throw std::invalid_argument(message);
+}
+
+template <typename...T>
+[[noreturn]] inline void throw_invalid(std::string message, T const&... args)
+{
+    (message.append(args), ...);
+    throw std::invalid_argument(message);
+}
+
+inline bool starts_with(std::string_view const& value, std::string_view const& match) noexcept
+{
+    return 0 == value.compare(0, match.size(), match);
+}
+
+winmd::reader::TypeDef FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
+
+inline winmd::reader::TypeDef ResolveType(winmd::reader::coded_index<winmd::reader::TypeDefOrRef> index) noexcept
+{
+    switch (index.type())
+    {
+    case winmd::reader::TypeDefOrRef::TypeDef:
+        return index.TypeDef();
+    case winmd::reader::TypeDefOrRef::TypeRef:
+        return winmd::reader::find_required(index.TypeRef());
+    default: //case TypeDefOrRef::TypeSpec:
+        return winmd::reader::find_required(index.TypeSpec().Signature().
+            GenericTypeInst().GenericType().TypeRef());
+    }
+}
+
+std::pair<winmd::reader::TypeDef, std::wstring> ResolveTypeInterface(winmd::reader::coded_index<winmd::reader::TypeDefOrRef> index);
+
+void ClearTypeResolver();

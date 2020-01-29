@@ -270,8 +270,7 @@ namespace winrt::impl
         return (x & y) ^ (x & z) ^ (y & z);
     }
 
-    template <size_t Size>
-    constexpr std::array<uint32_t, 5> process_msg_block(std::array<uint8_t, Size> const& input, size_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
+    constexpr std::array<uint32_t, 5> process_msg_block(uint8_t const* input, size_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
     {
         uint32_t const K[4] = { 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xCA62C1D6 };
         std::array<uint32_t, 80> W = {};
@@ -339,6 +338,12 @@ namespace winrt::impl
         }
 
         return { intermediate_hash[0] + A, intermediate_hash[1] + B, intermediate_hash[2] + C, intermediate_hash[3] + D, intermediate_hash[4] + E };
+    }
+
+    template <size_t Size>
+    constexpr std::array<uint32_t, 5> process_msg_block(std::array<uint8_t, Size> const& input, size_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
+    {
+        return process_msg_block(input.data(), start_pos, intermediate_hash);
     }
 
     constexpr std::array<uint8_t, 8> size_to_bytes(size_t size) noexcept
