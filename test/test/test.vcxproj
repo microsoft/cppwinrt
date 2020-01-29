@@ -363,6 +363,7 @@
     </ClCompile>
     <ClCompile Include="GetMany.cpp" />
     <ClCompile Include="get_activation_factory.cpp" />
+    <ClCompile Include="hstring_empty.cpp" />
     <ClCompile Include="iid_ppv_args.cpp" />
     <ClCompile Include="inspectable_interop.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
