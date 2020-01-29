@@ -5,6 +5,8 @@
 using namespace winrt;
 using namespace Windows::UI::Xaml;
 
+using namespace winrt::TestApp::Library1;
+using namespace winrt::TestApp::Library4;
 using namespace winrt::TestRuntimeComponent1;
 using namespace winrt::TestRuntimeComponent2;
 using namespace winrt::TestRuntimeComponentCX;
@@ -30,11 +32,11 @@ namespace winrt::TestApp::implementation
         TestRuntimeComponentNamespaceUnderscoreClass cUnderscore{};
         cUnderscore.Test();
 
-        TestStaticLibrary1Class cStatic1{};
-        cStatic1.Test();
-
         TestStaticLibrary4Class cStatic4{};
         cStatic4.Test();
+
+        TestStaticLibrary1Class cStatic1{};
+        cStatic1.Test(cStatic4);
 
         TestStaticLibrary5Class cStatic5{};
         cStatic5.Test();

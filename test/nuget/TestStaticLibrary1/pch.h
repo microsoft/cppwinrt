@@ -7,4 +7,4 @@
 
 #define WIN32_LEAN_AND_MEAN
 
-#include "winrt/TestApp.h"
+#include "winrt/TestApp.Library4.h"

@@ -1,10 +1,10 @@
-namespace TestApp
+namespace TestApp.Library1
 {
     [default_interface]
     runtimeclass TestStaticLibrary1Class 
     {
         TestStaticLibrary1Class();
 
-        void Test();
+        void Test(TestApp.Library4.TestStaticLibrary4Class c);
     }
 }
