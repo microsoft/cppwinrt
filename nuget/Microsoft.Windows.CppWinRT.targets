@@ -67,7 +67,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             CppWinRTCopyWinMDToOutputDirectory;
         </AfterMidlTargets>
         <ResolveAssemblyReferencesDependsOn>
-            $(ResolveAssemblyReferencesDependsOn);GetCppWinRTProjectWinMDReferences;CppWinRTRemoveStaticLibraries;
+            $(ResolveAssemblyReferencesDependsOn);GetCppWinRTProjectWinMDReferences;CppWinRTMarkStaticLibrariesPrivate;
         </ResolveAssemblyReferencesDependsOn>
         <!-- Note: Before* targets run before Compute* targets. -->
         <BeforeClCompileTargets>
@@ -204,15 +204,18 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <Message Text="GetResolvedWinMD: @(WinMDFullPath->'%(FullPath)')" Importance="$(CppWinRTVerbosity)"/>
     </Target>
 
-    <!-- Static library reference files are merged into the project that
-         references it. They shouldn't be included as actual project references.
-         Make sure that we've ran the GetCppWinRTProjectWinMDReferences target
-         and then remove them. -->
-    <Target Name="CppWinRTRemoveStaticLibraries"
-            DependsOnTargets="GetCppWinRTProjectWinMDReferences"
+    <!-- Static library reference WinMDs are merged into the project WinMD that
+         references it and might have the same name because they often share namespace. 
+         Therefore they shouldn't be copied to the output folder
+         because they might override files in the output folder with the
+         same name, causing missing types. -->
+    <Target Name="CppWinRTMarkStaticLibrariesPrivate"
+            DependsOnTargets="ResolveProjectReferences"
             Returns="@(_ResolvedProjectReferencePaths)">
         <ItemGroup>
-            <_ResolvedProjectReferencePaths Remove="@(_ResolvedProjectReferencePaths)" Condition="'%(_ResolvedProjectReferencePaths.ProjectType)' == 'StaticLibrary'" />
+            <_ResolvedProjectReferencePaths Condition="'%(_ResolvedProjectReferencePaths.ProjectType)' == 'StaticLibrary'">
+                <Private>false</Private>
+            </_ResolvedProjectReferencePaths>
         </ItemGroup>
     </Target>
 
