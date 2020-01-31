@@ -106,6 +106,7 @@ namespace cppwinrt
 
         std::string type_namespace;
         bool abi_types{};
+        bool delegate_types{};
         bool param_names{};
         bool consume_types{};
         bool async_types{};
@@ -275,6 +276,10 @@ namespace cppwinrt
                     else if ((name == "Point" || name == "Size" || name == "Rect") && ns == "Windows.Foundation")
                     {
                         write("@::%", ns, name);
+                    }
+                    else if (delegate_types)
+                    {
+                        write("struct impl::struct_%_%", get_impl_name(ns), name);
                     }
                     else
                     {
