@@ -965,7 +965,7 @@ namespace cppwinrt
         }
     }
 
-    static void write_consume_return_type(writer& w, method_signature const& signature)
+    static void write_consume_return_type(writer& w, method_signature const& signature, bool delegate_types)
     {
         if (!signature.return_signature())
         {
@@ -981,6 +981,7 @@ namespace cppwinrt
         %* %{};)";
 
             w.abi_types = true;
+            w.delegate_types = delegate_types;
 
             w.write(format,
                 signature.return_param_name(),
@@ -988,6 +989,7 @@ namespace cppwinrt
                 signature.return_param_name());
 
             w.abi_types = false;
+            w.delegate_types = false;
         }
         else if (category == param_category::object_type || category == param_category::string_type)
         {
@@ -1077,7 +1079,7 @@ namespace cppwinrt
             bind<write_comma_generic_types>(generics),
             method_name,
             bind<write_consume_params>(signature),
-            bind<write_consume_return_type>(signature),
+            bind<write_consume_return_type>(signature, false),
             type,
             get_abi_name(method),
             bind<write_abi_args>(signature),
@@ -2447,7 +2449,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                 type_name,
                 bind_list(", ", generics),
                 bind<write_consume_params>(signature),
-                bind<write_consume_return_type>(signature),
+                bind<write_consume_return_type>(signature, true),
                 type_name,
                 bind_list(", ", generics),
                 bind<write_abi_args>(signature),
@@ -2500,7 +2502,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                 type_name,
                 type_name,
                 bind<write_consume_params>(signature),
-                bind<write_consume_return_type>(signature),
+                bind<write_consume_return_type>(signature, true),
                 type_name,
                 bind<write_abi_args>(signature),
                 bind<write_consume_return_statement>(signature));

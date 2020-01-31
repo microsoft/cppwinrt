@@ -11,6 +11,12 @@ namespace Windows.Foundation.Metadata
 
 namespace test_component
 {
+    struct Struct
+    {
+        String First;
+        String Second;
+    };
+
     namespace Delegates
     {
         delegate void AgileDelegate();
@@ -22,6 +28,7 @@ namespace test_component
         delegate String[] ReturnStringArrayDelegate();
         delegate void OutStringArrayDelegate(out String[] value);
         delegate void RefStringArrayDelegate(ref String[] value);
+        delegate test_component.Struct[] StructDelegate();
     }
 
     enum Signed
@@ -37,12 +44,6 @@ namespace test_component
         First = 0,
         Second = 1,
         Third = 2
-    };
-
-    struct Struct
-    {
-        String First;
-        String Second;
     };
 
     runtimeclass Simple
