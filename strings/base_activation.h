@@ -18,6 +18,12 @@ namespace winrt::impl
 
     using library_handle = handle_type<library_traits>;
 
+    inline int32_t __stdcall fallback_RoGetActivationFactory(void*, guid const&, void** factory) noexcept
+    {
+        *factory = nullptr;
+        return error_class_not_available;
+    }
+
     template <typename Interface>
     hresult get_runtime_activation_factory(param::hstring const& name, void** result) noexcept
     {
@@ -27,14 +33,7 @@ namespace winrt::impl
         }
 
         static int32_t(__stdcall * handler)(void* classId, guid const& iid, void** factory) noexcept;
-
-        impl::load_runtime_function("RoGetActivationFactory", handler,
-            [](void*, guid const&, void** factory) noexcept -> int32_t
-            {
-                *factory = nullptr;
-                return error_class_not_available;
-            });
-
+        impl::load_runtime_function("RoGetActivationFactory", handler, fallback_RoGetActivationFactory);
         hresult hr = handler(*(void**)(&name), guid_of<Interface>(), result);
 
         if (hr == impl::error_not_initialized)
