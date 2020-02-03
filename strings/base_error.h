@@ -158,6 +158,11 @@ namespace winrt::impl
         hstring const m_message;
         atomic_ref_count m_references{ 1 };
     };
+
+    [[noreturn]] inline void __stdcall fallback_RoFailFastWithErrorContext(int32_t) noexcept
+    {
+        std::terminate();
+    }
 }
 
 WINRT_EXPORT namespace winrt
@@ -289,19 +294,19 @@ WINRT_EXPORT namespace winrt
 
     private:
 
+        static int32_t __stdcall fallback_RoOriginateLanguageException(int32_t error, void* message, void*) noexcept
+        {
+            com_ptr<impl::IErrorInfo> info(new (std::nothrow) impl::error_info_fallback(error, message), take_ownership_from_abi);
+            WINRT_VERIFY_(0, WINRT_IMPL_SetErrorInfo(0, info.get()));
+            return 1;
+        }
+
         void originate(hresult const code, void* message) noexcept
         {
             static int32_t(__stdcall* handler)(int32_t error, void* message, void* exception) noexcept;
-
-            impl::load_runtime_function("RoOriginateLanguageException", handler, 
-                [](int32_t error, void* message, void*) noexcept
-                {
-                    com_ptr<impl::IErrorInfo> info(new (std::nothrow) impl::error_info_fallback(error, message), take_ownership_from_abi);
-                    WINRT_VERIFY_(0, WINRT_IMPL_SetErrorInfo(0, info.get()));
-                    return 1;
-                });
-
+            impl::load_runtime_function("RoOriginateLanguageException", handler, fallback_RoOriginateLanguageException);
             WINRT_VERIFY(handler(code, message, nullptr));
+
             com_ptr<impl::IErrorInfo> info;
             WINRT_VERIFY_(0, WINRT_IMPL_GetErrorInfo(0, info.put_void()));
             WINRT_VERIFY(info.try_as(m_info));
@@ -563,13 +568,7 @@ WINRT_EXPORT namespace winrt
     inline void terminate() noexcept
     {
         static void(__stdcall * handler)(int32_t) noexcept;
-
-        impl::load_runtime_function("RoFailFastWithErrorContext", handler,
-            [](int32_t) noexcept
-            {
-                std::terminate();
-            });
-
+        impl::load_runtime_function("RoFailFastWithErrorContext", handler, impl::fallback_RoFailFastWithErrorContext);
         handler(to_hresult());
     }
 }
