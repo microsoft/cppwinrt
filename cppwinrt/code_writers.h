@@ -938,6 +938,8 @@ namespace cppwinrt
                 method_name,
                 bind<write_consume_params>(signature));
         }
+
+        w.async_types = false;
     }
 
     static void write_fast_consume_declarations(writer& w, TypeDef const& default_interface)
@@ -1106,6 +1108,8 @@ namespace cppwinrt
                 method_name,
                 bind<write_consume_args>(signature));
         }
+
+        w.async_types = false;
     }
 
     static void write_consume_fast_base_definition(writer& w, MethodDef const& method, TypeDef const& class_type, TypeDef const& base_type)
@@ -1156,6 +1160,8 @@ namespace cppwinrt
                 method_name,
                 bind<write_consume_args>(signature));
         }
+
+        w.async_types = false;
     }
 
     static void write_consume_definitions(writer& w, TypeDef const& type)
@@ -1739,6 +1745,8 @@ namespace cppwinrt
             bind<write_produce_params>(signature),
             bind<write_produce_cleanup>(signature),
             bind<write_produce_upcall>(upcall, signature));
+
+        w.async_types = false;
     }
 
     static void write_fast_produce_methods(writer& w, TypeDef const& default_interface)
@@ -2905,6 +2913,8 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     bind<write_consume_params>(signature));
             }
         }
+
+        w.async_types = false;
     }
 
     static void write_static_definitions(writer& w, MethodDef const& method, TypeDef const& type, TypeDef const& factory)
@@ -2949,6 +2959,8 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                 method_name,
                 bind<write_consume_args>(signature));
         }
+
+        w.async_types = false;
     }
 
     static void write_class_definitions(writer& w, TypeDef const& type)
