@@ -186,9 +186,7 @@ int32_t __stdcall WINRT_CanUnloadNow() noexcept
 
 int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept try
 {
-    uint32_t length{};
-    wchar_t const* const buffer = WINRT_WindowsGetStringRawBuffer(classId, &length);
-    std::wstring_view const name{ buffer, length };
+    std::wstring_view const name{ *reinterpret_cast<winrt::hstring*>(&classId) };
     *factory = %_get_activation_factory(name);
 
     if (*factory)
@@ -609,7 +607,7 @@ catch (...) { return winrt::to_hresult(); }
 
                 auto format = R"(        %_base(%)
         {
-            impl::call_factory<%, %>([&](% const& f) { f.%(%%*this, this->m_inner); });
+            impl::call_factory<%, %>([&](% const& f) { [[maybe_unused]] auto winrt_impl_discarded = f.%(%%*this, this->m_inner); });
         }
 )";
 

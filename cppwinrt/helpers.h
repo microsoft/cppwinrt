@@ -541,7 +541,7 @@ namespace cppwinrt
 
         for (auto&& type : classes)
         {
-            result = std::max(result, get_fastabi_size(w, type));
+            result = (std::max)(result, get_fastabi_size(w, type));
         }
 
         return result;
@@ -855,7 +855,7 @@ namespace cppwinrt
             !members.delegates.empty();
     }
 
-    static bool can_produce(TypeDef const& type)
+    static bool can_produce(TypeDef const& type, cache const& c)
     {
         auto attribute = get_attribute(type, "Windows.Foundation.Metadata", "ExclusiveToAttribute");
 
@@ -864,12 +864,26 @@ namespace cppwinrt
             return true;
         }
 
+        auto interface_name = type_name(type);
+        auto class_name = get_attribute_value<ElemSig::SystemType>(attribute, 0).name;
+        auto class_type = c.find_required(class_name);
+
+        for (auto&& impl : class_type.InterfaceImpl())
+        {
+            if (has_attribute(impl, "Windows.Foundation.Metadata", "OverridableAttribute"))
+            {
+                if (interface_name == type_name(impl.Interface()))
+                {
+                    return true;
+                }
+            }
+        }
+
         if (!settings.component)
         {
             return false;
         }
 
-        auto class_name = get_attribute_value<ElemSig::SystemType>(attribute, 0).name;
         return settings.component_filter.includes(class_name);
     }
 }

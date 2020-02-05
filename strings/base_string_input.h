@@ -16,20 +16,17 @@ WINRT_EXPORT namespace winrt::param
 
         hstring(std::wstring_view const& value) noexcept
         {
-            if (0 != create_string_reference(value.data(), value.size()))
-            {
-                std::terminate();
-            }
+            create_string_reference(value.data(), value.size());
         }
 
         hstring(std::wstring const& value) noexcept
         {
-            WINRT_VERIFY_(0, create_string_reference(value.data(), value.size()));
+            create_string_reference(value.data(), value.size());
         }
 
         hstring(wchar_t const* const value) noexcept
         {
-            WINRT_VERIFY_(0, create_string_reference(value, wcslen(value)));
+            create_string_reference(value, wcslen(value));
         }
 
         operator winrt::hstring const&() const noexcept
@@ -38,35 +35,24 @@ WINRT_EXPORT namespace winrt::param
         }
 
     private:
-        int32_t create_string_reference(wchar_t const* const data, size_t size) noexcept
+        void create_string_reference(wchar_t const* const data, size_t size) noexcept
         {
+            WINRT_ASSERT(size < UINT_MAX);
             auto size32 = static_cast<uint32_t>(size);
+
             if (size32 == 0)
             {
                 m_handle = nullptr;
-                return 0;
             }
             else
             {
-                return WINRT_WindowsCreateStringReference(data, size32, &m_header, &m_handle);
+                impl::create_hstring_on_stack(m_header, data, size32);
+                m_handle = &m_header;
             }
         }
 
-        struct header
-        {
-            union
-            {
-                void* Reserved1;
-#ifdef _WIN64
-                char Reserved2[24];
-#else
-                char Reserved2[20];
-#endif
-            } Reserved;
-        };
-        
         void* m_handle;
-        header m_header;
+        impl::hstring_header m_header;
     };
 
     inline void* get_abi(hstring const& object) noexcept

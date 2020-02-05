@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(ProjectDir)..\..\..\nuget\Microsoft.Windows.CppWinRT.props" />
   <PropertyGroup Label="Globals">
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
@@ -77,7 +78,8 @@
       <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <!--Temporarily disable cppwinrt heap enforcement to work around xaml compiler generated std::shared_ptr use -->
       <AdditionalOptions Condition="'$(CppWinRTHeapEnforcement)'==''">/DWINRT_NO_MAKE_DETECTION %(AdditionalOptions)</AdditionalOptions>
-      <DisableSpecificWarnings></DisableSpecificWarnings>
+      <DisableSpecificWarnings>
+      </DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
@@ -154,11 +156,17 @@
     <ProjectReference Include="..\TestRuntimeComponent2\TestRuntimeComponent2.vcxproj">
       <Project>{4bbb2de7-4596-4da6-a923-e65e838363b5}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\TestRuntimeComponentCSharp\TestRuntimeComponentCSharp.csproj">
+      <Project>{c47f8562-a2b9-4ba3-87ac-b42d015e241d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\TestRuntimeComponentCX\TestRuntimeComponentCX.vcxproj">
       <Project>{adc53200-b456-4386-9851-5bf69dfb8928}</Project>
     </ProjectReference>
     <ProjectReference Include="..\TestRuntimeComponentEmpty\TestRuntimeComponentEmpty.vcxproj">
       <Project>{8456c55f-bf01-4798-b79b-7388681c398f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\TestRuntimeComponentNamespaceUnderscore\TestRuntimeComponentNamespaceUnderscore.vcxproj">
+      <Project>{8717fa32-34a8-457d-b77b-ae005703eb55}</Project>
     </ProjectReference>
     <ProjectReference Include="..\TestStaticLibrary1\TestStaticLibrary1.vcxproj">
       <Project>{2158f418-ca97-4599-8103-efc133850baa}</Project>
@@ -168,4 +176,5 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(ProjectDir)..\..\..\nuget\Microsoft.Windows.CppWinRT.targets" />
 </Project>

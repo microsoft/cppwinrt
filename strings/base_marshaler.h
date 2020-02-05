@@ -1,41 +1,6 @@
 
 namespace winrt::impl
 {
-    struct atomic_ref_count
-    {
-        atomic_ref_count() noexcept = default;
-
-        explicit atomic_ref_count(uint32_t count) noexcept : m_count(count)
-        {
-        }
-
-        uint32_t operator++() noexcept
-        {
-            return m_count.fetch_add(1, std::memory_order_relaxed) + 1;
-        }
-
-        uint32_t operator--() noexcept
-        {
-            auto const remaining = m_count.fetch_sub(1, std::memory_order_release) - 1;
-
-            if (remaining == 0)
-            {
-                std::atomic_thread_fence(std::memory_order_acquire);
-            }
-
-            return remaining;
-        }
-
-        operator uint32_t() const noexcept
-        {
-            return m_count;
-        }
-
-    private:
-
-        std::atomic<uint32_t> m_count;
-    };
-
     inline int32_t make_marshaler(unknown_abi* outer, void** result) noexcept
     {
         struct marshaler final : IMarshal
@@ -140,7 +105,7 @@ namespace winrt::impl
             static com_ptr<IMarshal> get_marshaler() noexcept
             {
                 com_ptr<unknown_abi> unknown;
-                WINRT_VERIFY_(0, WINRT_CoCreateFreeThreadedMarshaler(nullptr, unknown.put_void()));
+                WINRT_VERIFY_(0, WINRT_IMPL_CoCreateFreeThreadedMarshaler(nullptr, unknown.put_void()));
                 return unknown ? unknown.try_as<IMarshal>() : nullptr;
             }
 

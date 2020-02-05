@@ -1,0 +1,10 @@
+namespace TestRuntimeComponentCXLibrary
+{
+    [default_interface]
+    runtimeclass TestStaticLibrary7Class
+    {
+        TestStaticLibrary7Class();
+
+        Windows.UI.Xaml.Core.Direct.XamlDirect Test();
+    }
+}

@@ -335,6 +335,11 @@ namespace winrt::impl
         return { new(raw) event_array<T>(capacity), take_ownership_from_abi };
     }
 
+    inline int32_t __stdcall fallback_RoTransformError(int32_t, int32_t, void*) noexcept
+    {
+        return 1;
+    }
+
     template <typename Delegate, typename... Arg>
     bool invoke(Delegate const& delegate, Arg const&... args) noexcept
     {
@@ -345,7 +350,10 @@ namespace winrt::impl
         catch (...)
         {
             int32_t const code = to_hresult();
-            WINRT_RoTransformError(code, 0, nullptr);
+
+            static int32_t(__stdcall * handler)(int32_t, int32_t, void*) noexcept;
+            impl::load_runtime_function("RoTransformError", handler, fallback_RoTransformError);
+            handler(code, 0, nullptr);
 
             if (code == static_cast<int32_t>(0x80010108) || // RPC_E_DISCONNECTED
                 code == static_cast<int32_t>(0x800706BA) || // HRESULT_FROM_WIN32(RPC_S_SERVER_UNAVAILABLE)

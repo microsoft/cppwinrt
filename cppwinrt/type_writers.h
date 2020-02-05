@@ -35,7 +35,19 @@ namespace cppwinrt
             name_space(type.TypeNamespace())
         {
         }
+
+        explicit type_name(coded_index<TypeDefOrRef> const& type)
+        {
+            auto const& [type_namespace, type_name] = get_type_namespace_and_name(type);
+            name_space = type_namespace;
+            name = type_name;
+        }
     };
+
+    bool operator==(type_name const& left, type_name const& right)
+    {
+        return left.name == right.name && left.name_space == right.name_space;
+    }
 
     bool operator==(type_name const& left, std::string_view const& right)
     {
@@ -94,6 +106,7 @@ namespace cppwinrt
 
         std::string type_namespace;
         bool abi_types{};
+        bool delegate_types{};
         bool param_names{};
         bool consume_types{};
         bool async_types{};
@@ -117,7 +130,7 @@ namespace cppwinrt
             generic_param_guard(generic_param_guard&& other)
                 : owner(other.owner)
             {
-                owner = nullptr;
+                other.owner = nullptr;
             }
 
             generic_param_guard& operator=(generic_param_guard&& other)
@@ -263,6 +276,10 @@ namespace cppwinrt
                     else if ((name == "Point" || name == "Size" || name == "Rect") && ns == "Windows.Foundation")
                     {
                         write("@::%", ns, name);
+                    }
+                    else if (delegate_types)
+                    {
+                        write("struct impl::struct_%_%", get_impl_name(ns), name);
                     }
                     else
                     {

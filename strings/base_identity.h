@@ -270,13 +270,12 @@ namespace winrt::impl
         return (x & y) ^ (x & z) ^ (y & z);
     }
 
-    template <size_t Size>
-    constexpr std::array<uint32_t, 5> process_msg_block(std::array<uint8_t, Size> const& input, uint32_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
+    constexpr std::array<uint32_t, 5> process_msg_block(uint8_t const* input, size_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
     {
         uint32_t const K[4] = { 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xCA62C1D6 };
         std::array<uint32_t, 80> W = {};
 
-        uint32_t t = 0;
+        size_t t = 0;
         uint32_t temp = 0;
 
         for (t = 0; t < 16; t++)
@@ -341,6 +340,12 @@ namespace winrt::impl
         return { intermediate_hash[0] + A, intermediate_hash[1] + B, intermediate_hash[2] + C, intermediate_hash[3] + D, intermediate_hash[4] + E };
     }
 
+    template <size_t Size>
+    constexpr std::array<uint32_t, 5> process_msg_block(std::array<uint8_t, Size> const& input, size_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
+    {
+        return process_msg_block(input.data(), start_pos, intermediate_hash);
+    }
+
     constexpr std::array<uint8_t, 8> size_to_bytes(size_t size) noexcept
     {
         return
@@ -357,13 +362,13 @@ namespace winrt::impl
     }
 
     template <size_t Size, size_t RemainingSize, size_t... Index>
-    constexpr std::array<uint8_t, RemainingSize + 1> make_remaining([[maybe_unused]] std::array<uint8_t, Size> const& input, [[maybe_unused]] uint32_t start_pos, std::index_sequence<Index...>) noexcept
+    constexpr std::array<uint8_t, RemainingSize + 1> make_remaining([[maybe_unused]] std::array<uint8_t, Size> const& input, [[maybe_unused]] size_t start_pos, std::index_sequence<Index...>) noexcept
     {
         return { input[Index + start_pos]..., 0x80 };
     }
 
     template <size_t Size>
-    constexpr auto make_remaining(std::array<uint8_t, Size> const& input, uint32_t start_pos) noexcept
+    constexpr auto make_remaining(std::array<uint8_t, Size> const& input, size_t start_pos) noexcept
     {
         constexpr auto remaining_size = Size % 64;
         return make_remaining<Size, remaining_size>(input, start_pos, std::make_index_sequence<remaining_size>());
@@ -409,7 +414,7 @@ namespace winrt::impl
     constexpr auto calculate_sha1(std::array<uint8_t, Size> const& input) noexcept
     {
         std::array<uint32_t, 5> intermediate_hash{ 0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0 };
-        uint32_t i = 0;
+        size_t i = 0;
 
         while (i + 64 <= Size)
         {
@@ -536,44 +541,44 @@ namespace winrt::impl
     constexpr guid generic_guid_v{};
 
     template <typename T>
-    constexpr auto& basic_signature_v{""};
+    constexpr auto& basic_signature_v = "";
 
-    template <> inline constexpr auto& basic_signature_v<bool>{"b1"};
-    template <> inline constexpr auto& basic_signature_v<int8_t>{"i1"};
-    template <> inline constexpr auto& basic_signature_v<int16_t>{"i2"};
-    template <> inline constexpr auto& basic_signature_v<int32_t>{"i4"};
-    template <> inline constexpr auto& basic_signature_v<int64_t>{"i8"};
-    template <> inline constexpr auto& basic_signature_v<uint8_t>{"u1"};
-    template <> inline constexpr auto& basic_signature_v<uint16_t>{"u2"};
-    template <> inline constexpr auto& basic_signature_v<uint32_t>{"u4"};
-    template <> inline constexpr auto& basic_signature_v<uint64_t>{"u8"};
-    template <> inline constexpr auto& basic_signature_v<float>{"f4"};
-    template <> inline constexpr auto& basic_signature_v<double>{"f8"};
-    template <> inline constexpr auto& basic_signature_v<char16_t>{"c2"};
-    template <> inline constexpr auto& basic_signature_v<guid>{"g16"};
-    template <> inline constexpr auto& basic_signature_v<hstring>{"string"};
-    template <> inline constexpr auto& basic_signature_v<Windows::Foundation::IInspectable>{"cinterface(IInspectable)"};
+    template <> inline constexpr auto& basic_signature_v<bool> = "b1";
+    template <> inline constexpr auto& basic_signature_v<int8_t> = "i1";
+    template <> inline constexpr auto& basic_signature_v<int16_t> = "i2";
+    template <> inline constexpr auto& basic_signature_v<int32_t> = "i4";
+    template <> inline constexpr auto& basic_signature_v<int64_t> = "i8";
+    template <> inline constexpr auto& basic_signature_v<uint8_t> = "u1";
+    template <> inline constexpr auto& basic_signature_v<uint16_t> = "u2";
+    template <> inline constexpr auto& basic_signature_v<uint32_t> = "u4";
+    template <> inline constexpr auto& basic_signature_v<uint64_t> = "u8";
+    template <> inline constexpr auto& basic_signature_v<float> = "f4";
+    template <> inline constexpr auto& basic_signature_v<double> = "f8";
+    template <> inline constexpr auto& basic_signature_v<char16_t> = "c2";
+    template <> inline constexpr auto& basic_signature_v<guid> = "g16";
+    template <> inline constexpr auto& basic_signature_v<hstring> = "string";
+    template <> inline constexpr auto& basic_signature_v<Windows::Foundation::IInspectable> = "cinterface(IInspectable)";
 
-    template <> inline constexpr auto& name_v<bool>{ L"Boolean" };
-    template <> inline constexpr auto& name_v<int8_t>{ L"Int8" };
-    template <> inline constexpr auto& name_v<int16_t>{ L"Int16" };
-    template <> inline constexpr auto& name_v<int32_t>{ L"Int32" };
-    template <> inline constexpr auto& name_v<int64_t>{ L"Int64" };
-    template <> inline constexpr auto& name_v<uint8_t>{ L"UInt8" };
-    template <> inline constexpr auto& name_v<uint16_t>{ L"UInt16" };
-    template <> inline constexpr auto& name_v<uint32_t>{ L"UInt32" };
-    template <> inline constexpr auto& name_v<uint64_t>{ L"UInt64" };
-    template <> inline constexpr auto& name_v<float>{ L"Single" };
-    template <> inline constexpr auto& name_v<double>{ L"Double" };
-    template <> inline constexpr auto& name_v<char16_t>{ L"Char16" };
-    template <> inline constexpr auto& name_v<guid>{ L"Guid" };
-    template <> inline constexpr auto& name_v<hstring>{ L"String" };
-    template <> inline constexpr auto& name_v<hresult>{ L"Windows.Foundation.HResult" };
-    template <> inline constexpr auto& name_v<event_token>{ L"Windows.Foundation.EventRegistrationToken" };
-    template <> inline constexpr auto& name_v<Windows::Foundation::IInspectable>{ L"Object" };
-    template <> inline constexpr auto& name_v<Windows::Foundation::TimeSpan>{ L"Windows.Foundation.TimeSpan" };
-    template <> inline constexpr auto& name_v<Windows::Foundation::DateTime>{ L"Windows.Foundation.DateTime" };
-    template <> inline constexpr auto& name_v<IAgileObject>{ L"IAgileObject" };
+    template <> inline constexpr auto& name_v<bool> = L"Boolean";
+    template <> inline constexpr auto& name_v<int8_t> = L"Int8";
+    template <> inline constexpr auto& name_v<int16_t> = L"Int16";
+    template <> inline constexpr auto& name_v<int32_t> = L"Int32";
+    template <> inline constexpr auto& name_v<int64_t> = L"Int64";
+    template <> inline constexpr auto& name_v<uint8_t> = L"UInt8";
+    template <> inline constexpr auto& name_v<uint16_t> = L"UInt16";
+    template <> inline constexpr auto& name_v<uint32_t> = L"UInt32";
+    template <> inline constexpr auto& name_v<uint64_t> = L"UInt64";
+    template <> inline constexpr auto& name_v<float> = L"Single";
+    template <> inline constexpr auto& name_v<double> = L"Double";
+    template <> inline constexpr auto& name_v<char16_t> = L"Char16";
+    template <> inline constexpr auto& name_v<guid> = L"Guid";
+    template <> inline constexpr auto& name_v<hstring> = L"String";
+    template <> inline constexpr auto& name_v<hresult> = L"Windows.Foundation.HResult";
+    template <> inline constexpr auto& name_v<event_token> = L"Windows.Foundation.EventRegistrationToken";
+    template <> inline constexpr auto& name_v<Windows::Foundation::IInspectable> = L"Object";
+    template <> inline constexpr auto& name_v<Windows::Foundation::TimeSpan> = L"Windows.Foundation.TimeSpan";
+    template <> inline constexpr auto& name_v<Windows::Foundation::DateTime> = L"Windows.Foundation.DateTime";
+    template <> inline constexpr auto& name_v<IAgileObject> = L"IAgileObject";
 
     template <> struct category<bool> { using type = basic_category; };
     template <> struct category<int8_t> { using type = basic_category; };

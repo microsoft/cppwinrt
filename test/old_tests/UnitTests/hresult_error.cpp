@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "catch.hpp"
 
+extern "C" BOOL __stdcall RoOriginateLanguageException(HRESULT error, void* message, void* languageException);
+
 using namespace winrt;
 using namespace Windows::Foundation;
 
@@ -109,7 +111,7 @@ TEST_CASE("hresult,restricted,producing")
 
     try
     {
-        WINRT_RoOriginateLanguageException(E_INVALIDARG, get_abi(hstring(L"Correctly matched error info")), nullptr);
+        RoOriginateLanguageException(E_INVALIDARG, get_abi(hstring(L"Correctly matched error info")), nullptr);
         throw hresult_invalid_argument(hresult_error::from_abi); // no restricted error info at all
     }
     catch (hresult_invalid_argument const & e)
@@ -120,7 +122,7 @@ TEST_CASE("hresult,restricted,producing")
 
     try
     {
-        WINRT_RoOriginateLanguageException(E_FAIL, get_abi(hstring(L"Incorrectly matched error info")), nullptr);
+        RoOriginateLanguageException(E_FAIL, get_abi(hstring(L"Incorrectly matched error info")), nullptr);
         throw hresult_invalid_argument(hresult_error::from_abi); // no restricted error info at all
     }
     catch (hresult_invalid_argument const & e)

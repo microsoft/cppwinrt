@@ -38,13 +38,19 @@ namespace std
     {
         size_t operator()(winrt::hstring const& value) const noexcept
         {
-            uint32_t length = 0;
-            const wchar_t* const buffer = WINRT_WindowsGetStringRawBuffer(get_abi(value), &length);
-            return winrt::impl::hash_data(buffer, length * sizeof(wchar_t));
+            return std::hash<std::wstring_view>{}(value);
         }
     };
 
     template<> struct hash<winrt::Windows::Foundation::IUnknown> : winrt::impl::hash_base {};
     template<> struct hash<winrt::Windows::Foundation::IInspectable> : winrt::impl::hash_base {};
     template<> struct hash<winrt::Windows::Foundation::IActivationFactory> : winrt::impl::hash_base {};
+    
+    template<> struct hash<winrt::guid>
+    {
+        size_t operator()(winrt::guid const& value) const noexcept
+        {
+            return winrt::impl::hash_data(&value, sizeof(value));
+        }
+    };
 }

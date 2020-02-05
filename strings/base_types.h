@@ -8,6 +8,7 @@ namespace winrt::impl
     using srwlock = struct srwlock_*;
     using condition_variable = struct condition_variable_*;
     using bstr = wchar_t*;
+
     using filetime_period = std::ratio_multiply<std::ratio<100>, std::nano>;
     struct IAgileObject;
 
@@ -79,12 +80,17 @@ WINRT_EXPORT namespace winrt
 
     inline bool operator==(guid const& left, guid const& right) noexcept
     {
-        return !memcmp(&left, &right, sizeof(guid));
+        return !memcmp(&left, &right, sizeof(left));
     }
 
     inline bool operator!=(guid const& left, guid const& right) noexcept
     {
         return !(left == right);
+    }
+    
+    inline bool operator<(guid const& left, guid const& right) noexcept
+    {
+        return memcmp(&left, &right, sizeof(left)) < 0;
     }
 }
 

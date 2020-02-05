@@ -6,22 +6,25 @@
 
     <Import Condition="Exists($([MSBuild]::GetPathOfFileAbove('Directory.Build.props','$(MSBuildThisFileDirectory)../')))" Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props','$(MSBuildThisFileDirectory)../'))" />
 
-    <PropertyGroup>        
+    <PropertyGroup>
+        <PlatformDirectoryName Condition="'$(Platform)' == 'Win32'">x86</PlatformDirectoryName>
+        <PlatformDirectoryName Condition="'$(Platform)' != 'Win32'">$(Platform)</PlatformDirectoryName>
+        
         <!-- Consistent output directory for AppContainer and non-AppContainer projects -->
         <!-- Build overrides the roots. -->
         <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
         <OutDirWasSpecified>true</OutDirWasSpecified>
-        <OutDirRoot Condition="'$(OutDirRoot)' == ''" >$(SolutionDir)bin\$(Platform)\$(Configuration)\</OutDirRoot>
-        <OutDir>$(OutDirRoot)$(MSBuildProjectName)\</OutDir>
-        <IntDirRoot Condition="'$(IntDirRoot)' == ''" >$(SolutionDir)obj\$(Platform)\$(Configuration)\</IntDirRoot>
-        <IntDir>$(IntDirRoot)$(MSBuildProjectName)\</IntDir>
+        <OutDirRoot Condition="'$(OutDirRoot)' == ''">$(SolutionDir)bin\</OutDirRoot>
+        <OutDir>$(OutDirRoot)$(Configuration)\$(PlatformDirectoryName)\$(MSBuildProjectName)\</OutDir>
+        <OutputPath>$(OutDir)</OutputPath>
+        <IntDirRoot Condition="'$(IntDirRoot)' == ''" >$(SolutionDir)obj\</IntDirRoot>
+        <IntDir>$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\$(MSBuildProjectName)\</IntDir>
+        <IntermediateOutputPath>$(IntDir)</IntermediateOutputPath>
         <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
         <CppWinRTVerbosity>high</CppWinRTVerbosity>
         <CppWinRTPlatform>$(Platform)</CppWinRTPlatform>
         <CppWinRTPlatform Condition="'$(Platform)'=='Win32' or '$(Platform)'=='ARM' or '$(Platform)'=='ARM64'">x86</CppWinRTPlatform>
         <CppWinRTPath>$(SolutionDir)..\..\_build\$(CppWinRTPlatform)\$(Configuration)\</CppWinRTPath>
     </PropertyGroup>
-
-    <Import Project="$(SolutionDir)..\..\nuget\Microsoft.Windows.CppWinRT.props" />
 
 </Project>

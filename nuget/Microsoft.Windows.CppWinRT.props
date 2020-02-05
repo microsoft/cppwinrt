@@ -7,6 +7,12 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
     <PropertyGroup>
+        <!-- Only do this for MSBuild versions below 16.0
+             as it is since done automatically, see https://github.com/microsoft/msbuild/pull/3605-->
+        <MSBuildAllProjects Condition="'$(MSBuildToolsVersion)'  &lt;= '15'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    </PropertyGroup>
+
+    <PropertyGroup>
         <PreferredToolArchitecture>x64</PreferredToolArchitecture>
         <CanReferenceWinRT>true</CanReferenceWinRT>
         <CppWinRTPackage Condition="'$(CppWinRTEnabled)' != 'true'">true</CppWinRTPackage>
@@ -15,6 +21,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <IsNativeLanguage>true</IsNativeLanguage>
         <!-- This causes VS to add the platform WinMD references for the target SDK -->
         <WinMDAssembly>true</WinMDAssembly>
+        <!--Set a value to prevent SDK's uap.props from setting it and pointing to the wrong headers-->
+        <CppWinRT_IncludePath>PreventSdkUapPropsAssignment</CppWinRT_IncludePath>
     </PropertyGroup>
 
     <ItemDefinitionGroup>

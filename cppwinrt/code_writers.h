@@ -366,14 +366,14 @@ namespace cppwinrt
 
         if (empty(generics))
         {
-            auto format = R"(    template <> inline constexpr auto& name_v<%>{ L"%.%" };
+            auto format = R"(    template <> inline constexpr auto& name_v<%> = L"%.%";
 )";
 
             w.write(format, type, type_name.name_space, type_name.name);
         }
         else
         {
-            auto format = R"(    template <%> inline constexpr auto name_v<%>{ zcombine(L"%.%<"%, L">") };
+            auto format = R"(    template <%> inline constexpr auto name_v<%> = zcombine(L"%.%<"%, L">");
 )";
 
             w.write(format,
@@ -916,8 +916,9 @@ namespace cppwinrt
         auto method_name = get_name(method);
         auto type = method.Parent();
 
-        w.write("        %auto %(%) const%;\n",
+        w.write("        %WINRT_IMPL_AUTO(%) %(%) const%;\n",
             is_get_overload(method) ? "[[nodiscard]] " : "",
+            signature.return_signature(),
             method_name,
             bind<write_consume_params>(signature),
             is_noexcept(method) ? " noexcept" : "");
@@ -937,6 +938,8 @@ namespace cppwinrt
                 method_name,
                 bind<write_consume_params>(signature));
         }
+
+        w.async_types = false;
     }
 
     static void write_fast_consume_declarations(writer& w, TypeDef const& default_interface)
@@ -964,7 +967,7 @@ namespace cppwinrt
         }
     }
 
-    static void write_consume_return_type(writer& w, method_signature const& signature)
+    static void write_consume_return_type(writer& w, method_signature const& signature, bool delegate_types)
     {
         if (!signature.return_signature())
         {
@@ -980,6 +983,7 @@ namespace cppwinrt
         %* %{};)";
 
             w.abi_types = true;
+            w.delegate_types = delegate_types;
 
             w.write(format,
                 signature.return_param_name(),
@@ -987,6 +991,7 @@ namespace cppwinrt
                 signature.return_param_name());
 
             w.abi_types = false;
+            w.delegate_types = false;
         }
         else if (category == param_category::object_type || category == param_category::string_type)
         {
@@ -1000,7 +1005,7 @@ namespace cppwinrt
         }
         else
         {
-            auto format = "\n        % %;";
+            auto format = "\n        % %{};";
             w.write(format, signature.return_signature(), signature.return_param_name());
         }
     }
@@ -1054,7 +1059,7 @@ namespace cppwinrt
 
         if (is_noexcept(method))
         {
-            format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
+            format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
     {%
         WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%
     }
@@ -1062,7 +1067,7 @@ namespace cppwinrt
         }
         else
         {
-            format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
+            format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const
     {%
         check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
     }
@@ -1071,11 +1076,12 @@ namespace cppwinrt
 
         w.write(format,
             bind<write_comma_generic_typenames>(generics),
+            signature.return_signature(),
             type_impl_name,
             bind<write_comma_generic_types>(generics),
             method_name,
             bind<write_consume_params>(signature),
-            bind<write_consume_return_type>(signature),
+            bind<write_consume_return_type>(signature, false),
             type,
             get_abi_name(method),
             bind<write_abi_args>(signature),
@@ -1102,6 +1108,8 @@ namespace cppwinrt
                 method_name,
                 bind<write_consume_args>(signature));
         }
+
+        w.async_types = false;
     }
 
     static void write_consume_fast_base_definition(writer& w, MethodDef const& method, TypeDef const& class_type, TypeDef const& base_type)
@@ -1118,13 +1126,14 @@ namespace cppwinrt
         // return static_cast<% const&>(*this).%(%);
         //
 
-        std::string_view format = R"(    inline auto %::%(%) const%
+        std::string_view format = R"(    inline WINRT_IMPL_AUTO(%) %::%(%) const%
     {
         return [&](% const& winrt_impl_base) { return winrt_impl_base.%(%); }(*this);
     }
 )";
 
         w.write(format,
+            signature.return_signature(),
             class_type.TypeName(),
             method_name,
             bind<write_consume_params>(signature),
@@ -1151,6 +1160,8 @@ namespace cppwinrt
                 method_name,
                 bind<write_consume_args>(signature));
         }
+
+        w.async_types = false;
     }
 
     static void write_consume_definitions(writer& w, TypeDef const& type)
@@ -1734,6 +1745,8 @@ namespace cppwinrt
             bind<write_produce_params>(signature),
             bind<write_produce_cleanup>(signature),
             bind<write_produce_upcall>(upcall, signature));
+
+        w.async_types = false;
     }
 
     static void write_fast_produce_methods(writer& w, TypeDef const& default_interface)
@@ -1780,7 +1793,7 @@ namespace cppwinrt
         }
     }
 
-    static void write_produce(writer& w, TypeDef const& type)
+    static void write_produce(writer& w, TypeDef const& type, cache const& c)
     {
         auto format = R"(    template <typename D%>
     struct produce<D, %> : produce_base<D, %>
@@ -1790,7 +1803,7 @@ namespace cppwinrt
 
         auto generics = type.GenericParam();
         auto guard{ w.push_generic_params(generics) };
-        bool const lean_and_mean = !can_produce(type);
+        bool const lean_and_mean = !can_produce(type, c);
 
         if (lean_and_mean)
         {
@@ -1857,7 +1870,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_interface_override_method(writer& w, MethodDef const& method, std::string_view const& interface_name)
     {
-        auto format = R"(    template <typename D> auto %T<D>::%(%) const
+        auto format = R"(    template <typename D> WINRT_IMPL_AUTO(%) %T<D>::%(%) const
     {
         return shim().template try_as<%>().%(%);
     }
@@ -1867,6 +1880,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         auto method_name = get_name(method);
 
         w.write(format,
+            signature.return_signature(),
             interface_name,
             method_name,
             bind<write_consume_params>(signature),
@@ -2017,7 +2031,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         auto format = R"(        %T(%)
         {
-            % { f.%(%%*this, this->m_inner); });
+            % { [[maybe_unused]] auto winrt_impl_discarded = f.%(%%*this, this->m_inner); });
         }
 )";
 
@@ -2443,7 +2457,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                 type_name,
                 bind_list(", ", generics),
                 bind<write_consume_params>(signature),
-                bind<write_consume_return_type>(signature),
+                bind<write_consume_return_type>(signature, true),
                 type_name,
                 bind_list(", ", generics),
                 bind<write_abi_args>(signature),
@@ -2496,7 +2510,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                 type_name,
                 type_name,
                 bind<write_consume_params>(signature),
-                bind<write_consume_return_type>(signature),
+                bind<write_consume_return_type>(signature, true),
                 type_name,
                 bind<write_abi_args>(signature),
                 bind<write_consume_return_statement>(signature));
@@ -2777,7 +2791,8 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     {
                         method_signature signature{ method };
 
-                        w.write("        %(%);\n",
+                        w.write("        %%(%);\n",
+                            signature.params().size() == 1 ? "explicit " : "",
                             type_name,
                             bind<write_consume_params>(signature));
                     }
@@ -2791,7 +2806,8 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     auto& params = signature.params();
                     params.resize(params.size() - 2);
 
-                    w.write("        %(%);\n",
+                    w.write("        %%(%);\n",
+                        signature.params().size() == 1 ? "explicit " : "",
                         type_name,
                         bind<write_consume_params>(signature));
                 }
@@ -2897,6 +2913,8 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     bind<write_consume_params>(signature));
             }
         }
+
+        w.async_types = false;
     }
 
     static void write_static_definitions(writer& w, MethodDef const& method, TypeDef const& type, TypeDef const& factory)
@@ -2941,6 +2959,8 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                 method_name,
                 bind<write_consume_args>(signature));
         }
+
+        w.async_types = false;
     }
 
     static void write_class_definitions(writer& w, TypeDef const& type)

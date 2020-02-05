@@ -12,10 +12,7 @@ int32_t __stdcall DllGetActivationFactory(void* classId, void** factory) noexcep
 {
     try
     {
-        uint32_t length{};
-        wchar_t const* const buffer = WINRT_WindowsGetStringRawBuffer(classId, &length);
-        std::wstring_view const name{ buffer, length };
-
+        std::wstring_view const name{ *reinterpret_cast<winrt::hstring*>(&classId) };
         *factory = test_get_activation_factory(name);
 
         if (*factory)
