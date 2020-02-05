@@ -33,7 +33,7 @@
 
   <BoolProperty Name="CppWinRTLibs"
                 DisplayName="Umbrella Library"
-                Description="Adds the WindowsApp.lib umbrella library for Windows Runtime imports"
+                Description="Adds import libraries required for Windows Runtime support."
                 Category="General" />
 
   <BoolProperty Name="CppWinRTModernIDL"
