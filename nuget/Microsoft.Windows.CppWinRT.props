@@ -39,7 +39,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             <TypeLibraryName Condition="'%(Midl.TypeLibraryName)'==''"></TypeLibraryName>
         </Midl>
         <Link>
-            <AdditionalDependencies Condition="'$(CppWinRTLibs)' != 'false'">WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+            <AdditionalDependencies Condition="'$(CppWinRTLibs)' != 'false'">ole32.lib;oleaut32.lib;%(AdditionalDependencies)</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
 
