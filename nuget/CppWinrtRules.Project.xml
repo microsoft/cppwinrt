@@ -11,7 +11,7 @@
 
   <StringProperty Name="RootNamespace"
                   DisplayName="Root Namespace"
-                  Description="Specifies the default namespace to be used with new files created in this project."
+                  Description="Specifies the default namespace to be used with new files created in this project"
                   Category="General" />
 
   <EnumProperty Name="CppWinRTVerbosity"
@@ -25,7 +25,7 @@
 
   <EnumProperty Name="CppWinRTProjectLanguage"
                 DisplayName="Project Language"
-                Description="Sets the C++ dialect for the project.  C++/WinRT provides full projection support, C++/CX permits consuming projection headers."
+                Description="Sets the C++ dialect for the project.  C++/WinRT provides full projection support, C++/CX permits consuming projection headers"
                 Category="General">
     <EnumValue Name="C++/WinRT" DisplayName="C++/WinRT" Description="Enables full consuming and producing projection support and Xaml integration" />
     <EnumValue Name="C++/CX" DisplayName="C++/CX" Description="Enables C++/CX code to generate and use consuming projections" />
@@ -33,7 +33,7 @@
 
   <BoolProperty Name="CppWinRTLibs"
                 DisplayName="Umbrella Library"
-                Description="Adds import libraries required for Windows Runtime support."
+                Description="Adds import libraries required for Windows Runtime support"
                 Category="General" />
 
   <BoolProperty Name="CppWinRTModernIDL"
