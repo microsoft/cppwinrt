@@ -100,7 +100,7 @@ namespace winrt::impl
 
         bool IndexOf(Windows::Foundation::IInspectable const& value, uint32_t& index) const
         {
-            if constexpr (!std::is_base_of_v<Windows::Foundation::IInspectable, T>)
+            if constexpr (!std::is_base_of_v<Windows::Foundation::IUnknown, T>)
             {
                 if (value == nullptr)
                 {
