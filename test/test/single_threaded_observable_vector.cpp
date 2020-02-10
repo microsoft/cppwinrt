@@ -217,6 +217,22 @@ TEST_CASE("single_threaded_observable_vector")
         REQUIRE((vector_i.IndexOf(2, index) && index == 1));
         index = 0;
         REQUIRE((vector_o.IndexOf(box_value(2), index) && index == 1));
+
+        REQUIRE(false == vector_o.IndexOf(nullptr, index));
+    }
+    {
+        Uri one(L"http://example.com/1");
+        Uri two(L"http://example.com/2");
+
+        IObservableVector<Uri> vector_i = single_threaded_observable_vector<Uri>({ one, nullptr, two });
+        IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
+
+        uint32_t index{};
+        REQUIRE((vector_i.IndexOf(two, index) && index == 2));
+        index = 0;
+        REQUIRE((vector_o.IndexOf(two, index) && index == 2));
+        index = 0;
+        REQUIRE((vector_o.IndexOf(nullptr, index) && index == 1));
     }
     {
         // GetView forwarding.
