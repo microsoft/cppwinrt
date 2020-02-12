@@ -59,7 +59,7 @@ WINRT_EXPORT namespace winrt
         {
         }
 
-#ifdef __IUnknown_INTERFACE_DEFINED__
+#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
 
         constexpr guid(GUID const& value) noexcept :
             Data1(value.Data1),
@@ -112,7 +112,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
 namespace winrt::impl
 {
-#ifdef __IUnknown_INTERFACE_DEFINED__
+#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
     using hresult_type = long;
     using count_type = unsigned long;
     using guid_type = GUID;
