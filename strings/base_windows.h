@@ -335,7 +335,7 @@ WINRT_EXPORT namespace winrt
         }
     }
 
-#ifdef __IUnknown_INTERFACE_DEFINED__
+#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
 
     inline ::IUnknown* get_unknown(Windows::Foundation::IUnknown const& object) noexcept
     {

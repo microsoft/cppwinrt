@@ -37,7 +37,7 @@ namespace winrt::impl
     template <template <typename> typename Condition, typename T>
     using tuple_if = typename tuple_if_base<Condition, T>::type;
 
-#ifdef __IUnknown_INTERFACE_DEFINED__
+#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
 
     template <typename T>
     struct is_interface : std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, T>, std::conjunction<std::is_base_of<::IUnknown, T>, std::negation<is_implements<T>>>> {};
@@ -469,7 +469,7 @@ namespace winrt::impl
         }
     };
 
-#ifdef __IUnknown_INTERFACE_DEFINED__
+#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
 
     template <typename D, typename I>
     struct producer<D, I, std::enable_if_t<std::is_base_of_v< ::IUnknown, I> && !is_implements_v<I>>> : I
