@@ -565,10 +565,11 @@ WINRT_EXPORT namespace winrt
         return pointer;
     }
 
-    inline void terminate() noexcept
+    [[noreturn]] inline void terminate() noexcept
     {
         static void(__stdcall * handler)(int32_t) noexcept;
         impl::load_runtime_function("RoFailFastWithErrorContext", handler, impl::fallback_RoFailFastWithErrorContext);
         handler(to_hresult());
+        abort();
     }
 }
