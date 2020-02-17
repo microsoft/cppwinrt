@@ -22,7 +22,7 @@
 #include <directxmath.h>
 #endif
 
-#ifndef __clang__
+#if __has_include(<experimental/coroutine>)
 
 #include <experimental/coroutine>
 
