@@ -6,7 +6,8 @@
 *_p.c
 *.c
 test*.xml
-build
+*.nupkg
+_build
 packages
 Debug
 Release
