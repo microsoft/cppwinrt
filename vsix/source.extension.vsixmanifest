@@ -27,6 +27,7 @@
     <Asset Type="Microsoft.VisualStudio.ItemTemplate" Path="ItemTemplates" />
     <Asset Type="Microsoft.VisualStudio.ProjectTemplate" Path="ProjectTemplates" />
     <Asset Type="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" Source="File" Path="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" VsixSubPath="Packages" />
+    <Asset Type="Microsoft.VisualStudio.Assembly" d:Source="Project" d:ProjectName="%CurrentProject%" Path="|%CurrentProject%|" AssemblyName="|%CurrentProject%;AssemblyName|" />
   </Assets>
   <Prerequisites>
     <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[15.0,)" DisplayName="Visual Studio core editor" />
