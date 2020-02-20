@@ -1,26 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using EnvDTE;
+using Microsoft.Build.Evaluation;
 using Microsoft.VisualStudio.TemplateWizard;
+
+using DTEProject = EnvDTE.Project;
+using DTEProjectItem = EnvDTE.ProjectItem;
 
 namespace Microsoft.Windows.CppWinRT
 {
     internal sealed class CppWinRTPackageTemplateWizard : IWizard
     {
-        public void BeforeOpeningFile(ProjectItem projectItem)
+        public void BeforeOpeningFile(DTEProjectItem projectItem)
         {
             // Not needed.
         }
 
-        public void ProjectFinishedGenerating(Project project)
+        public void ProjectFinishedGenerating(DTEProject project)
         {
             // Not needed.
         }
 
-        public void ProjectItemFinishedGenerating(ProjectItem projectItem)
+        public void ProjectItemFinishedGenerating(DTEProjectItem projectItem)
         {
             // Not needed.
         }
@@ -34,8 +35,17 @@ namespace Microsoft.Windows.CppWinRT
         {
             VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
-            Project project = (Project)automationObject;
-            throw new NotImplementedException();
+            DTEProject automationProject = (DTEProject)automationObject;
+            Project project = new Project(automationProject.FullName);
+
+            if (!project.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
+            {
+                Assembly asm = Assembly.Load("NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
+                Type wizardType = asm.GetType("NuGet.VisualStudio.TemplateWizard");
+
+                IWizard nugetWizard = (IWizard)Activator.CreateInstance(wizardType);
+                nugetWizard.RunStarted(automationObject, replacementsDictionary, runKind, customParams);
+            }
         }
 
         public bool ShouldAddProjectItem(string filePath)
