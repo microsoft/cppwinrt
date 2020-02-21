@@ -4,6 +4,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Build.Evaluation;
 using Microsoft.VisualStudio.TemplateWizard;
+using System.Windows.Forms;
 
 using DTEProject = EnvDTE.Project;
 using DTEProjectItem = EnvDTE.ProjectItem;
@@ -14,24 +15,59 @@ namespace Microsoft.Windows.CppWinRT
     {
         private IWizard wizardImpl = null;
 
+        private void ShowExceptionDialog(Exception ex)
+        {
+            string text = $"{ex.GetType().FullName}: {ex.Message}\r\n\r\n{ex.StackTrace}";
+            MessageBox.Show(text, "Caught Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            throw new WizardBackoutException();
+        }
+
         public void BeforeOpeningFile(DTEProjectItem projectItem)
         {
-            wizardImpl?.BeforeOpeningFile(projectItem);
+            try
+            {
+                wizardImpl?.BeforeOpeningFile(projectItem);
+            }
+            catch (Exception ex)
+            {
+                ShowExceptionDialog(ex);
+            }
         }
 
         public void ProjectFinishedGenerating(DTEProject project)
         {
-            wizardImpl?.ProjectFinishedGenerating(project);
+            try
+            {
+                wizardImpl?.ProjectFinishedGenerating(project);
+            }
+            catch (Exception ex)
+            {
+                ShowExceptionDialog(ex);
+            }
         }
 
         public void ProjectItemFinishedGenerating(DTEProjectItem projectItem)
         {
-            wizardImpl?.ProjectItemFinishedGenerating(projectItem);
+            try
+            {
+                wizardImpl?.ProjectItemFinishedGenerating(projectItem);
+            }
+            catch (Exception ex)
+            {
+                ShowExceptionDialog(ex);
+            }
         }
 
         public void RunFinished()
         {
-            wizardImpl?.RunFinished();
+            try
+            {
+                wizardImpl?.RunFinished();
+            }
+            catch (Exception ex)
+            {
+                ShowExceptionDialog(ex);
+            }
         }
 
         public void RunStarted(object automationObject, Dictionary<string, string> replacementsDictionary, WizardRunKind runKind, object[] customParams)
@@ -52,10 +88,10 @@ namespace Microsoft.Windows.CppWinRT
                     addNuGetReference = true;
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // If the property could not be read, use the default value, which is to add the reference.
-                addNuGetReference = true;
+                ShowExceptionDialog(ex);
+                addNuGetReference = true; // technically not reached
             }
 
             if (addNuGetReference)
@@ -70,27 +106,23 @@ namespace Microsoft.Windows.CppWinRT
                 }
                 catch (Exception ex)
                 {
-#if DEBUG
-                    string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "exception.txt");
-                    using (Stream stream = File.Open(path, FileMode.Create))
-                    using (StreamWriter writer = new StreamWriter(stream))
-                    {
-                        writer.WriteLine($"Caught exception: {ex.GetType().FullName}");
-                        writer.WriteLine(ex.Message);
-                        writer.WriteLine();
-                        writer.WriteLine(ex.StackTrace);
-                    }
-#endif
-
-                    throw new WizardCancelledException();
+                    ShowExceptionDialog(ex);
                 }
             }
         }
 
         public bool ShouldAddProjectItem(string filePath)
         {
-            if (wizardImpl != null) return wizardImpl.ShouldAddProjectItem(filePath);
-            else return true;
+            try
+            {
+                if (wizardImpl != null) return wizardImpl.ShouldAddProjectItem(filePath);
+                else return true;
+            }
+            catch (Exception ex)
+            {
+                ShowExceptionDialog(ex);
+                return true; // technically not reached
+            }
         }
     }
 }
