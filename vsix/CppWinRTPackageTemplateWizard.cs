@@ -12,24 +12,26 @@ namespace Microsoft.Windows.CppWinRT
 {
     internal sealed class CppWinRTPackageTemplateWizard : IWizard
     {
+        private IWizard wizardImpl = null;
+
         public void BeforeOpeningFile(DTEProjectItem projectItem)
         {
-            // Not needed.
+            wizardImpl?.BeforeOpeningFile(projectItem);
         }
 
         public void ProjectFinishedGenerating(DTEProject project)
         {
-            // Not needed.
+            wizardImpl?.ProjectFinishedGenerating(project);
         }
 
         public void ProjectItemFinishedGenerating(DTEProjectItem projectItem)
         {
-            // Not needed.
+            wizardImpl?.ProjectItemFinishedGenerating(projectItem);
         }
 
         public void RunFinished()
         {
-            // Not needed.
+            wizardImpl?.RunFinished();
         }
 
         public void RunStarted(object automationObject, Dictionary<string, string> replacementsDictionary, WizardRunKind runKind, object[] customParams)
@@ -63,8 +65,8 @@ namespace Microsoft.Windows.CppWinRT
                     Assembly asm = Assembly.Load("NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
                     Type wizardType = asm.GetType("NuGet.VisualStudio.TemplateWizard");
 
-                    IWizard nugetWizard = (IWizard)Activator.CreateInstance(wizardType);
-                    nugetWizard.RunStarted(automationObject, replacementsDictionary, runKind, customParams);
+                    wizardImpl = (IWizard)Activator.CreateInstance(wizardType);
+                    wizardImpl.RunStarted(automationObject, replacementsDictionary, runKind, customParams);
                 }
                 catch (Exception ex)
                 {
@@ -87,8 +89,8 @@ namespace Microsoft.Windows.CppWinRT
 
         public bool ShouldAddProjectItem(string filePath)
         {
-            // Not needed.
-            return true;
+            if (wizardImpl != null) return wizardImpl.ShouldAddProjectItem(filePath);
+            else return true;
         }
     }
 }
