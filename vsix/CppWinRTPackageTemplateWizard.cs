@@ -22,31 +22,6 @@ namespace Microsoft.Windows.CppWinRT
             throw new WizardBackoutException();
         }
 
-        private void InitializeWizard(DTEProject automationProject)
-        {
-            try
-            {
-                VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
-
-                Project project = new Project(automationProject.FullName);
-                if (project.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
-                {
-                    // Do nothing, the NuGet integration has been explicitly disabled.
-                }
-                else
-                {
-                    Assembly asm = Assembly.Load("NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
-                    Type wizardType = asm.GetType("NuGet.VisualStudio.TemplateWizard");
-
-                    wizardImpl = (IWizard)Activator.CreateInstance(wizardType);
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowExceptionDialog(ex);
-            }
-        }
-
         public void BeforeOpeningFile(DTEProjectItem projectItem)
         {
             try
@@ -63,11 +38,19 @@ namespace Microsoft.Windows.CppWinRT
         {
             try
             {
-                // This is duplicated here to silence a warning.
                 VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
-                InitializeWizard(project);
-                wizardImpl?.ProjectFinishedGenerating(project);
+                Project msbuildProject = new Project(project.FullName);
+                if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Don't forward this call to the NuGet wizard, as it has been explicitly disabled.
+                }
+                else
+                {
+                    wizardImpl?.ProjectFinishedGenerating(project);
+                }
+
+                ProjectCollection.GlobalProjectCollection.UnloadProject(msbuildProject);
             }
             catch (Exception ex)
             {
@@ -77,9 +60,22 @@ namespace Microsoft.Windows.CppWinRT
 
         public void ProjectItemFinishedGenerating(DTEProjectItem projectItem)
         {
+            VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
             try
             {
-                wizardImpl?.ProjectItemFinishedGenerating(projectItem);
+                Project msbuildProject = new Project(projectItem.ContainingProject.FullName);
+                if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Don't forward this call to the NuGet wizard, as it has been explicitly disabled.
+                    // NuGet packages are also installed in ProjectItemFinishedGenerating().
+                }
+                else
+                {
+                    wizardImpl?.ProjectItemFinishedGenerating(projectItem);
+                }
+
+                ProjectCollection.GlobalProjectCollection.UnloadProject(msbuildProject);
             }
             catch (Exception ex)
             {
@@ -101,8 +97,18 @@ namespace Microsoft.Windows.CppWinRT
 
         public void RunStarted(object automationObject, Dictionary<string, string> replacementsDictionary, WizardRunKind runKind, object[] customParams)
         {
-            // Unfortunately, we cannot forward this call to the NuGet template wizard because we can't get the EnvDTE.Project right now.
-            // (I found that the automationObject cannot be cast to that class.)
+            try
+            {
+                Assembly asm = Assembly.Load("NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
+                Type wizardType = asm.GetType("NuGet.VisualStudio.TemplateWizard");
+
+                wizardImpl = (IWizard)Activator.CreateInstance(wizardType);
+                wizardImpl.RunStarted(automationObject, replacementsDictionary, runKind, customParams);
+            }
+            catch (Exception ex)
+            {
+                ShowExceptionDialog(ex);
+            }
         }
 
         public bool ShouldAddProjectItem(string filePath)
