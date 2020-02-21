@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Reflection;
 using Microsoft.Build.Evaluation;
 using Microsoft.VisualStudio.TemplateWizard;
@@ -57,11 +58,30 @@ namespace Microsoft.Windows.CppWinRT
 
             if (addNuGetReference)
             {
-                Assembly asm = Assembly.Load("NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
-                Type wizardType = asm.GetType("NuGet.VisualStudio.TemplateWizard");
+                try
+                {
+                    Assembly asm = Assembly.Load("NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
+                    Type wizardType = asm.GetType("NuGet.VisualStudio.TemplateWizard");
 
-                IWizard nugetWizard = (IWizard)Activator.CreateInstance(wizardType);
-                nugetWizard.RunStarted(automationObject, replacementsDictionary, runKind, customParams);
+                    IWizard nugetWizard = (IWizard)Activator.CreateInstance(wizardType);
+                    nugetWizard.RunStarted(automationObject, replacementsDictionary, runKind, customParams);
+                }
+                catch (Exception ex)
+                {
+#if DEBUG
+                    string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "exception.txt");
+                    using (Stream stream = File.Open(path, FileMode.Create))
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        writer.WriteLine($"Caught exception: {ex.GetType().FullName}");
+                        writer.WriteLine(ex.Message);
+                        writer.WriteLine();
+                        writer.WriteLine(ex.StackTrace);
+                    }
+#endif
+
+                    throw new WizardCancelledException();
+                }
             }
         }
 
