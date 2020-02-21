@@ -146,6 +146,7 @@
     <PackageReference Include="Microsoft.Build" Version="16.4.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="CppWinRTPackageTemplateWizard.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
