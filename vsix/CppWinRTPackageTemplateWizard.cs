@@ -35,10 +35,27 @@ namespace Microsoft.Windows.CppWinRT
         {
             VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
-            DTEProject automationProject = (DTEProject)automationObject;
-            Project project = new Project(automationProject.FullName);
+            bool addNuGetReference;
+            try
+            {
+                DTEProject automationProject = (DTEProject)automationObject;
+                Project project = new Project(automationProject.FullName);
+                if (project.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
+                {
+                    addNuGetReference = false;
+                }
+                else
+                {
+                    addNuGetReference = true;
+                }
+            }
+            catch
+            {
+                // If the property could not be read, use the default value, which is to add the reference.
+                addNuGetReference = true;
+            }
 
-            if (!project.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
+            if (addNuGetReference)
             {
                 Assembly asm = Assembly.Load("NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
                 Type wizardType = asm.GetType("NuGet.VisualStudio.TemplateWizard");
