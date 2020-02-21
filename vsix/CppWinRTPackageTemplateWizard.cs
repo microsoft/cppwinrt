@@ -22,6 +22,31 @@ namespace Microsoft.Windows.CppWinRT
             throw new WizardBackoutException();
         }
 
+        private void InitializeWizard(DTEProject automationProject)
+        {
+            try
+            {
+                VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
+                Project project = new Project(automationProject.FullName);
+                if (project.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Do nothing, the NuGet integration has been explicitly disabled.
+                }
+                else
+                {
+                    Assembly asm = Assembly.Load("NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
+                    Type wizardType = asm.GetType("NuGet.VisualStudio.TemplateWizard");
+
+                    wizardImpl = (IWizard)Activator.CreateInstance(wizardType);
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowExceptionDialog(ex);
+            }
+        }
+
         public void BeforeOpeningFile(DTEProjectItem projectItem)
         {
             try
@@ -38,6 +63,10 @@ namespace Microsoft.Windows.CppWinRT
         {
             try
             {
+                // This is duplicated here to silence a warning.
+                VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
+                InitializeWizard(project);
                 wizardImpl?.ProjectFinishedGenerating(project);
             }
             catch (Exception ex)
@@ -72,43 +101,8 @@ namespace Microsoft.Windows.CppWinRT
 
         public void RunStarted(object automationObject, Dictionary<string, string> replacementsDictionary, WizardRunKind runKind, object[] customParams)
         {
-            VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
-
-            bool addNuGetReference;
-            try
-            {
-                DTEProject automationProject = (DTEProject)automationObject;
-                Project project = new Project(automationProject.FullName);
-                if (project.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
-                {
-                    addNuGetReference = false;
-                }
-                else
-                {
-                    addNuGetReference = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                ShowExceptionDialog(ex);
-                addNuGetReference = true; // technically not reached
-            }
-
-            if (addNuGetReference)
-            {
-                try
-                {
-                    Assembly asm = Assembly.Load("NuGet.VisualStudio.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
-                    Type wizardType = asm.GetType("NuGet.VisualStudio.TemplateWizard");
-
-                    wizardImpl = (IWizard)Activator.CreateInstance(wizardType);
-                    wizardImpl.RunStarted(automationObject, replacementsDictionary, runKind, customParams);
-                }
-                catch (Exception ex)
-                {
-                    ShowExceptionDialog(ex);
-                }
-            }
+            // Unfortunately, we cannot forward this call to the NuGet template wizard because we can't get the EnvDTE.Project right now.
+            // (I found that the automationObject cannot be cast to that class.)
         }
 
         public bool ShouldAddProjectItem(string filePath)
