@@ -1152,9 +1152,9 @@ namespace winrt::@::implementation
 
     static void write_component_cpp(writer& w, TypeDef const& type)
     {
-        auto filename = get_component_filename(type);
-
         {
+            auto filename = get_component_filename(type);
+
             auto format = R"(#include "%.h"
 )";
 
@@ -1163,6 +1163,8 @@ namespace winrt::@::implementation
 
         if (settings.component_opt)
         {
+            auto filename = get_generated_component_filename(type);
+
             auto format = R"(#include "%.g.cpp"
 )";
 
