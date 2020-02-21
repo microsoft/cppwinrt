@@ -11,6 +11,9 @@ C++/WinRT is an entirely standard C++ language projection for Windows Runtime (W
 
 C++/WinRT is part of the [xlang](https://github.com/microsoft/xlang) family of projects that help developers create APIs that can run on multiple platforms and be used with a variety of languages.
 
+## Building C++/WinRT
+
+To build this repository, run the `build_test_all.cmd` script in the root of the repository. This is the only supported way to build this repo; running MSBuild on the top-level solution file (or on the project files directly) will not work correctly.
 
 # Contributing
 
