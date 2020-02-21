@@ -292,7 +292,7 @@ namespace cppwinrt
             return;
         }
 
-        auto format = R"(    template <%> struct %;
+        auto format = R"(    template <%> struct __declspec(empty_bases) %;
 )";
 
         w.write(format,
