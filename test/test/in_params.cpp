@@ -44,6 +44,15 @@ TEST_CASE("in_params")
     REQUIRE(object.InStructArray({ {L"1",L"2"}, {L"3",L"4"} }) == L"1234");
     REQUIRE(object.InEnumArray({ Signed::First, Signed::Second }) == L"FirstSecond");
 
+    // Ensure 0-length arrays are passed as non-null pointers to the ABI,
+    // in order to keep RPC happy.
+    REQUIRE(object.InInt32Array({ }) == L"");
+    REQUIRE(object.InStringArray({ }) == L"");
+    REQUIRE(object.InObjectArray({ }) == L"");
+    REQUIRE(object.InStringableArray({ }) == L"");
+    REQUIRE(object.InStructArray({ }) == L"");
+    REQUIRE(object.InEnumArray({ }) == L"");
+
     // params::hstring optimizations
     REQUIRE(object.InString(L"") == L"");
     REQUIRE(object.InString({}) == L"");

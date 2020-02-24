@@ -207,6 +207,8 @@ namespace winrt::test_component::implementation
 
     hstring Class::InInt32Array(array_view<int32_t const> value)
     {
+        simulate_rpc_behavior(value);
+
         hstring result;
 
         for (auto&& v : value)
@@ -218,6 +220,8 @@ namespace winrt::test_component::implementation
     }
     hstring Class::InStringArray(array_view<hstring const> value)
     {
+        simulate_rpc_behavior(value);
+
         hstring result;
 
         for (auto&& v : value)
@@ -229,6 +233,8 @@ namespace winrt::test_component::implementation
     }
     hstring Class::InObjectArray(array_view<Windows::Foundation::IInspectable const> value)
     {
+        simulate_rpc_behavior(value);
+
         hstring result;
 
         for (auto&& v : value)
@@ -240,6 +246,8 @@ namespace winrt::test_component::implementation
     }
     hstring Class::InStringableArray(array_view<Windows::Foundation::IStringable const> value)
     {
+        simulate_rpc_behavior(value);
+
         hstring result;
 
         for (auto&& v : value)
@@ -251,6 +259,8 @@ namespace winrt::test_component::implementation
     }
     hstring Class::InStructArray(array_view<Struct const> value)
     {
+        simulate_rpc_behavior(value);
+
         hstring result;
 
         for (auto&& v : value)
@@ -262,6 +272,8 @@ namespace winrt::test_component::implementation
     }
     hstring Class::InEnumArray(array_view<Signed const> value)
     {
+        simulate_rpc_behavior(value);
+
         hstring result;
 
         for (auto&& v : value)
@@ -304,68 +316,98 @@ namespace winrt::test_component::implementation
 
     void Class::RefInt32Array(array_view<int32_t> value)
     {
-        int32_t counter{};
+        simulate_rpc_behavior(value);
 
-        std::generate(value.begin(), value.end() - 1, [&]
-            {
-                return ++counter;
-            });
+        if (value.size())
+        {
+            int32_t counter{};
+
+            std::generate(value.begin(), value.end() - 1, [&]
+                {
+                    return ++counter;
+                });
+        }
     }
 
     void Class::RefStringArray(array_view<hstring> value)
     {
-        int32_t counter{};
+        simulate_rpc_behavior(value);
 
-        std::generate(value.begin(), value.end() - 1, [&]
-            {
-                return hstring{ std::to_wstring(++counter) };
-            });
+        if (value.size())
+        {
+            int32_t counter{};
+
+            std::generate(value.begin(), value.end() - 1, [&]
+                {
+                    return hstring{ std::to_wstring(++counter) };
+                });
+        }
     }
 
     void Class::RefObjectArray(array_view<Windows::Foundation::IInspectable> value)
     {
-        int32_t counter{};
+        simulate_rpc_behavior(value);
 
-        std::generate(value.begin(), value.end() - 1, [&]
-            {
-                return make<Value>(++counter);
-            });
+        if (value.size())
+        {
+            int32_t counter{};
+
+            std::generate(value.begin(), value.end() - 1, [&]
+                {
+                    return make<Value>(++counter);
+                });
+        }
     }
 
     void Class::RefStringableArray(array_view<Windows::Foundation::IStringable> value)
     {
-        int32_t counter{};
+        simulate_rpc_behavior(value);
 
-        std::generate(value.begin(), value.end() - 1, [&]
-            {
-                return make<Value>(++counter);
-            });
+        if (value.size())
+        {
+            int32_t counter{};
+
+            std::generate(value.begin(), value.end() - 1, [&]
+                {
+                    return make<Value>(++counter);
+                });
+        }
     }
 
     void Class::RefStructArray(array_view<Struct> value)
     {
-        int32_t counter{};
+        simulate_rpc_behavior(value);
 
-        std::generate(value.begin(), value.end() - 1, [&]
-            {
-                return Struct
+        if (value.size())
+        {
+            int32_t counter{};
+
+            std::generate(value.begin(), value.end() - 1, [&]
                 {
-                    hstring{ std::to_wstring(++counter) },
-                    hstring{ std::to_wstring(++counter) }
-                };
-            });
+                    return Struct
+                    {
+                        hstring{ std::to_wstring(++counter) },
+                        hstring{ std::to_wstring(++counter) }
+                    };
+                });
+        }
     }
 
     void Class::RefEnumArray(array_view<Signed> value)
     {
-        Signed counter{ Signed::First };
+        simulate_rpc_behavior(value);
 
-        std::generate(value.begin(), value.end() - 1, [&]
-            {
-                auto result = counter;
-                counter = static_cast<Signed>(static_cast<int32_t>(counter) + 1);
-                return result;
-            });
+        if (value.size())
+        {
+            Signed counter{ Signed::First };
+
+            std::generate(value.begin(), value.end() - 1, [&]
+                {
+                    auto result = counter;
+                    counter = static_cast<Signed>(static_cast<int32_t>(counter) + 1);
+                    return result;
+                });
+        }
     }
 
     com_array<int32_t> Class::ReturnInt32Array()
