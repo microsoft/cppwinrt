@@ -100,7 +100,15 @@ namespace winrt::impl
 
         bool IndexOf(Windows::Foundation::IInspectable const& value, uint32_t& index) const
         {
-            return IndexOf(unbox_value<T>(value), index);
+            try
+            {
+                return IndexOf(extract_value(value), index);
+            }
+            catch (hresult_no_interface const&)
+            {
+                index = 0;
+                return false;
+            }
         }
 
         using base_type::GetMany;
@@ -146,37 +154,36 @@ namespace winrt::impl
 
         void SetAt(uint32_t const index, Windows::Foundation::IInspectable const& value)
         {
-            SetAt(index, unbox_value<T>(value));
+            SetAt(index, extract_value(value));
         }
 
         using base_type::InsertAt;
 
         void InsertAt(uint32_t const index, Windows::Foundation::IInspectable const& value)
         {
-            InsertAt(index, unbox_value<T>(value));
+            InsertAt(index, extract_value(value));
         }
 
         using base_type::Append;
 
         void Append(Windows::Foundation::IInspectable const& value)
         {
-            Append(unbox_value<T>(value));
+            Append(extract_value(value));
         }
 
         using base_type::ReplaceAll;
 
         void ReplaceAll(array_view<Windows::Foundation::IInspectable const> values)
         {
-            this->increment_version();
-            m_values.clear();
-            m_values.reserve(values.size());
+            Container new_values;
+            new_values.reserve(values.size());
 
-            std::transform(values.begin(), values.end(), std::back_inserter(m_values), [&](auto && value)
+            std::transform(values.begin(), values.end(), std::back_inserter(new_values), [&](auto && value)
                 {
-                    return unbox_value<T>(value);
+                    return extract_value(value);
                 });
 
-            this->call_changed(Windows::Foundation::Collections::CollectionChange::Reset, 0);
+            base_type::ReplaceAll(std::move(new_values));
         }
 
         using base_type::VectorChanged;
@@ -190,6 +197,18 @@ namespace winrt::impl
         }
 
     private:
+
+        static auto extract_value(Windows::Foundation::IInspectable const& value)
+        {
+            if constexpr (!std::is_base_of_v<Windows::Foundation::IInspectable, T>)
+            {
+                if (!value)
+                {
+                    throw hresult_no_interface();
+                }
+            }
+            return unbox_value<T>(value);
+        }
 
         struct iterator :
             impl::collection_version::iterator_type,
