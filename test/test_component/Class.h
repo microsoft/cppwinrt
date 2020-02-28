@@ -115,6 +115,16 @@ namespace winrt::test_component::implementation
 
         bool m_fail{};
         event<Windows::Foundation::TypedEventHandler<test_component::Class, test_component::DeferrableEventArgs>> m_deferrableEvent;
+
+        template<typename T>
+        static void simulate_rpc_behavior(array_view<T> const& value)
+        {
+            // RPC requires array pointers to be non-null.
+            if (value.begin() == nullptr)
+            {
+                throw hresult_error(static_cast<hresult>(0x800706f4)); // HRESULT_FROM_WIN32(RPC_X_NULL_REF_POINTER)
+            }
+        }
     };
 
     struct DeferrableEventArgs : DeferrableEventArgsT<DeferrableEventArgs>, deferrable_event_args<DeferrableEventArgs>

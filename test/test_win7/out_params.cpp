@@ -151,6 +151,16 @@ TEST_CASE("out_params")
         REQUIRE(value[1] == Signed::Second);
         REQUIRE(value[2] == static_cast<Signed>(0));
     }
+    // Ensure 0-length arrays are passed as non-null pointers to the ABI,
+    // in order to keep RPC happy.
+    {
+        REQUIRE_NOTHROW(object.RefInt32Array({}));
+        REQUIRE_NOTHROW(object.RefStringArray({}));
+        REQUIRE_NOTHROW(object.RefObjectArray({}));
+        REQUIRE_NOTHROW(object.RefStringableArray({}));
+        REQUIRE_NOTHROW(object.RefStructArray({}));
+        REQUIRE_NOTHROW(object.RefEnumArray({}));
+    }
 
     object.Fail(true);
 
