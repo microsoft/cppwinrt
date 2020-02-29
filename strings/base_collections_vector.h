@@ -100,7 +100,15 @@ namespace winrt::impl
 
         bool IndexOf(Windows::Foundation::IInspectable const& value, uint32_t& index) const
         {
-            return IndexOf(unbox_value<T>(value), index);
+            try
+            {
+                return IndexOf(unbox_value<T>(value), index);
+            }
+            catch (hresult_no_interface const&)
+            {
+                index = 0;
+                return false;
+            }
         }
 
         using base_type::GetMany;
@@ -167,16 +175,15 @@ namespace winrt::impl
 
         void ReplaceAll(array_view<Windows::Foundation::IInspectable const> values)
         {
-            this->increment_version();
-            m_values.clear();
-            m_values.reserve(values.size());
+            Container new_values;
+            new_values.reserve(values.size());
 
-            std::transform(values.begin(), values.end(), std::back_inserter(m_values), [&](auto && value)
+            std::transform(values.begin(), values.end(), std::back_inserter(new_values), [&](auto && value)
                 {
                     return unbox_value<T>(value);
                 });
 
-            this->call_changed(Windows::Foundation::Collections::CollectionChange::Reset, 0);
+            base_type::ReplaceAll(std::move(new_values));
         }
 
         using base_type::VectorChanged;

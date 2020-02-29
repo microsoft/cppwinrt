@@ -217,6 +217,10 @@ TEST_CASE("single_threaded_observable_vector")
         REQUIRE((vector_i.IndexOf(2, index) && index == 1));
         index = 0;
         REQUIRE((vector_o.IndexOf(box_value(2), index) && index == 1));
+
+        // A vector of integers never contains non-integers.
+        REQUIRE(!vector_o.IndexOf(nullptr, index));
+        REQUIRE(!vector_o.IndexOf(box_value(L"Not-an-integer"), index));
     }
     {
         // GetView forwarding.
@@ -241,6 +245,10 @@ TEST_CASE("single_threaded_observable_vector")
 
         REQUIRE(vector_i.GetAt(0) == 10);
         REQUIRE(vector_i.GetAt(1) == 20);
+
+        // Can't put non-integers in a vector of integers.
+        REQUIRE_THROWS_AS(vector_o.SetAt(0, nullptr), hresult_no_interface);
+        REQUIRE_THROWS_AS(vector_o.SetAt(0, box_value(L"Not-an-integer")), hresult_no_interface);
     }
     {
         // InsertAt forwarding.
@@ -258,6 +266,10 @@ TEST_CASE("single_threaded_observable_vector")
         REQUIRE(vector_i.GetAt(1) == 2);
         REQUIRE(vector_i.GetAt(2) == 3);
         REQUIRE(vector_i.GetAt(3) == 4);
+
+        // Can't put non-integers in a vector of integers.
+        REQUIRE_THROWS_AS(vector_o.InsertAt(0, nullptr), hresult_no_interface);
+        REQUIRE_THROWS_AS(vector_o.InsertAt(0, box_value(L"Not-an-integer")), hresult_no_interface);
     }
     {
         // Append forwarding.
@@ -273,6 +285,10 @@ TEST_CASE("single_threaded_observable_vector")
         REQUIRE(vector_i.Size() == 2);
         REQUIRE(vector_i.GetAt(0) == 1);
         REQUIRE(vector_i.GetAt(1) == 2);
+
+        // Can't put non-integers in a vector of integers.
+        REQUIRE_THROWS_AS(vector_o.Append(nullptr), hresult_no_interface);
+        REQUIRE_THROWS_AS(vector_o.Append(box_value(L"Not-an-integer")), hresult_no_interface);
     }
     {
         // GetMany boxing.
@@ -334,13 +350,13 @@ TEST_CASE("single_threaded_observable_vector")
             bool changed_i{};
             bool changed_o{};
 
-            vector_i.VectorChanged([&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
+            auto token_i = vector_i.VectorChanged(auto_revoke, [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
                 {
                     changed_i = sender.GetAt(0) == 123;
                     REQUIRE(sender == vector_i);
                 });
 
-            vector_o.VectorChanged([&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
+            auto token_o = vector_o.VectorChanged(auto_revoke, [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
                 {
                     changed_o = unbox_value<int>(sender.GetAt(0)) == 123;
                     REQUIRE(sender == vector_o);
@@ -357,6 +373,35 @@ TEST_CASE("single_threaded_observable_vector")
             REQUIRE(vector_i.Size() == 1);
             REQUIRE(vector_i.GetAt(0) == 123);
         }
+        {
+            bool changed_i{};
+            bool changed_o{};
+
+            auto token_i = vector_i.VectorChanged(auto_revoke, [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
+                {
+                    changed_i = true;
+                    REQUIRE(sender == vector_i);
+                });
+
+            auto token_o = vector_o.VectorChanged(auto_revoke, [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
+                {
+                    changed_i = true;
+                    REQUIRE(sender == vector_o);
+                });
+
+            // Verify strong exception guarantee when replacing with non-integers.
+            REQUIRE_THROWS_AS(vector_o.ReplaceAll({ box_value(42), nullptr }), hresult_no_interface);
+            REQUIRE(!changed_i); // unchanged on failure
+            REQUIRE(!changed_o);
+            REQUIRE(vector_i.Size() == 1);
+            REQUIRE(vector_i.GetAt(0) == 123);
+
+            REQUIRE_THROWS_AS(vector_o.ReplaceAll({ box_value(L"Not-an-integer") }), hresult_no_interface);
+            REQUIRE(!changed_i); // unchanged on failure
+            REQUIRE(!changed_o);
+            REQUIRE(vector_i.Size() == 1);
+            REQUIRE(vector_i.GetAt(0) == 123);
+        }
 
         {
             IIterator<int> iterator_i = vector_i.First();
@@ -368,13 +413,13 @@ TEST_CASE("single_threaded_observable_vector")
             bool changed_i{};
             bool changed_o{};
 
-            vector_i.VectorChanged([&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
+            auto token_i = vector_i.VectorChanged(auto_revoke, [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
                 {
                     changed_i = sender.GetAt(0) == 123;
                     REQUIRE(sender == vector_i);
                 });
 
-            vector_o.VectorChanged([&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
+            auto token_o = vector_o.VectorChanged(auto_revoke, [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
                 {
                     changed_o = unbox_value<int>(sender.GetAt(0)) == 123;
                     REQUIRE(sender == vector_o);
@@ -391,5 +436,20 @@ TEST_CASE("single_threaded_observable_vector")
             REQUIRE(vector_i.Size() == 1);
             REQUIRE(vector_i.GetAt(0) == 123);
         }
+    }
+
+    {
+        IObservableVector<IVector<int>> vector_i = single_threaded_observable_vector<IVector<int>>({  });
+        IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
+
+        // Verify that nulls are legal if the underlying type derives from IInspectable.
+        REQUIRE_NOTHROW(vector_o.Append(nullptr));
+        uint32_t index = 99;
+        REQUIRE(vector_o.IndexOf(nullptr, index));
+        REQUIRE(index == 0);
+
+        // Verify that type mismatch should report "not found" rather than
+        // finding the null entry.
+        REQUIRE(!vector_o.IndexOf(box_value(L"not-a-vector"), index));
     }
 }
