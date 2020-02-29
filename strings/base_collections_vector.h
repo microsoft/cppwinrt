@@ -102,7 +102,7 @@ namespace winrt::impl
         {
             try
             {
-                return IndexOf(extract_value(value), index);
+                return IndexOf(unbox_value<T>(value), index);
             }
             catch (hresult_no_interface const&)
             {
@@ -154,21 +154,21 @@ namespace winrt::impl
 
         void SetAt(uint32_t const index, Windows::Foundation::IInspectable const& value)
         {
-            SetAt(index, extract_value(value));
+            SetAt(index, unbox_value<T>(value));
         }
 
         using base_type::InsertAt;
 
         void InsertAt(uint32_t const index, Windows::Foundation::IInspectable const& value)
         {
-            InsertAt(index, extract_value(value));
+            InsertAt(index, unbox_value<T>(value));
         }
 
         using base_type::Append;
 
         void Append(Windows::Foundation::IInspectable const& value)
         {
-            Append(extract_value(value));
+            Append(unbox_value<T>(value));
         }
 
         using base_type::ReplaceAll;
@@ -180,7 +180,7 @@ namespace winrt::impl
 
             std::transform(values.begin(), values.end(), std::back_inserter(new_values), [&](auto && value)
                 {
-                    return extract_value(value);
+                    return unbox_value<T>(value);
                 });
 
             base_type::ReplaceAll(std::move(new_values));
@@ -197,18 +197,6 @@ namespace winrt::impl
         }
 
     private:
-
-        static auto extract_value(Windows::Foundation::IInspectable const& value)
-        {
-            if constexpr (!std::is_base_of_v<Windows::Foundation::IInspectable, T>)
-            {
-                if (!value)
-                {
-                    throw hresult_no_interface();
-                }
-            }
-            return unbox_value<T>(value);
-        }
 
         struct iterator :
             impl::collection_version::iterator_type,

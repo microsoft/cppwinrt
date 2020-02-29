@@ -288,26 +288,33 @@ WINRT_EXPORT namespace winrt
         {
             return value.as<T>();
         }
-        else if constexpr (std::is_enum_v<T>)
-        {
-            if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
-            {
-                return temp.Value();
-            }
-            else
-            {
-                return static_cast<T>(value.as<Windows::Foundation::IReference<std::underlying_type_t<T>>>().Value());
-            }
-        }
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-        else if constexpr (std::is_same_v<T, GUID>)
-        {
-            return value.as<Windows::Foundation::IReference<guid>>().Value();
-        }
-#endif
         else
         {
-            return value.as<Windows::Foundation::IReference<T>>().Value();
+            if (!value)
+            {
+                throw hresult_no_interface();
+            }
+            if constexpr (std::is_enum_v<T>)
+            {
+                if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
+                {
+                    return temp.Value();
+                }
+                else
+                {
+                    return static_cast<T>(value.as<Windows::Foundation::IReference<std::underlying_type_t<T>>>().Value());
+                }
+            }
+#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
+            else if constexpr (std::is_same_v<T, GUID>)
+            {
+                return value.as<Windows::Foundation::IReference<guid>>().Value();
+            }
+#endif
+            else
+            {
+                return value.as<Windows::Foundation::IReference<T>>().Value();
+            }
         }
     }
 
