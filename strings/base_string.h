@@ -233,7 +233,7 @@ WINRT_EXPORT namespace winrt
             }
             else
             {
-                return {};
+                return { L"", 0 };
             }
         }
 
