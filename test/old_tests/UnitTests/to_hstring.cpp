@@ -79,7 +79,6 @@ namespace
         {
             hstring const a = L"This \u260E is a telephone!";
             std::string const b = to_string(a);
-            REQUIRE(b == u8"This \u260E is a telephone!");
             hstring const c = to_hstring(b);
             REQUIRE(a == c);
         }
