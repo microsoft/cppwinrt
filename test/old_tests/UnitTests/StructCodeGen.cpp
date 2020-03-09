@@ -15,13 +15,13 @@ namespace
     {
         HRESULT __stdcall Test1(int a, ABI::Composable::TestStructCodeGen b, DOUBLE* result) override
         {
-            *result = a + b.Value + b.GridUnitType;
+            *result = a + b.Value + static_cast<int>(b.GridUnitType);
             return S_OK;
         }
 
         HRESULT __stdcall Test2(ABI::Composable::TestStructCodeGen b, int a, DOUBLE* result) override
         {
-            *result = a + b.Value + b.GridUnitType;
+            *result = a + b.Value + static_cast<int>(b.GridUnitType);
             return S_OK;
         }
     };

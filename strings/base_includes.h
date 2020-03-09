@@ -5,6 +5,7 @@
 #include <charconv>
 #include <chrono>
 #include <cstddef>
+#include <iterator>
 #include <map>
 #include <memory>
 #include <optional>

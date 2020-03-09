@@ -25,6 +25,11 @@ namespace cppwinrt
         registry_key(registry_key const&) = delete;
         registry_key& operator=(registry_key const&) = delete;
 
+        explicit registry_key(HKEY handle) :
+            handle(handle)
+        {
+        }
+
         ~registry_key() noexcept
         {
             if (handle)
@@ -138,7 +143,7 @@ namespace cppwinrt
             throw std::invalid_argument("Could not find the Windows SDK in the registry");
         }
 
-        return { key };
+        return registry_key{ key };
     }
 
     inline std::filesystem::path get_sdk_path()
