@@ -11,7 +11,7 @@
     <ReleaseNotes>https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/faq</ReleaseNotes>
     <Icon>cppwinrt.ico</Icon>
     <PreviewImage>cppwinrt.png</PreviewImage>
-    <Tags>WinRT, C++, native</Tags>
+    <Tags>WinRT, C++, cppwinrt, native</Tags>
   </Metadata>
   <Installation AllUsers="true">
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0,17.0)" />
