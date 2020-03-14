@@ -376,6 +376,13 @@ WINRT_EXPORT namespace winrt
         hresult_class_not_available(take_ownership_from_abi_t) noexcept : hresult_error(impl::error_class_not_available, take_ownership_from_abi) {}
     };
 
+    struct hresult_class_not_registered : hresult_error
+    {
+        hresult_class_not_registered() noexcept : hresult_error(impl::error_class_not_registered) {}
+        hresult_class_not_registered(param::hstring const& message) noexcept : hresult_error(impl::error_class_not_registered, message) {}
+        hresult_class_not_registered(take_ownership_from_abi_t) noexcept : hresult_error(impl::error_class_not_registered, take_ownership_from_abi) {}
+    };
+
     struct hresult_changed_state : hresult_error
     {
         hresult_changed_state() noexcept : hresult_error(impl::error_changed_state) {}
@@ -451,6 +458,11 @@ WINRT_EXPORT namespace winrt
         if (result == impl::error_class_not_available)
         {
             throw hresult_class_not_available(take_ownership_from_abi);
+        }
+
+        if (result == impl::error_class_not_registered)
+        {
+            throw hresult_class_not_registered(take_ownership_from_abi);
         }
 
         if (result == impl::error_changed_state)
