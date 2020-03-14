@@ -12,7 +12,6 @@ namespace cppwinrt
         bool license{};
         bool brackets{};
         bool verbose{};
-
         bool component{};
         std::string component_folder;
         std::string component_name;
