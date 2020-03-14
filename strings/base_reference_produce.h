@@ -1,4 +1,3 @@
-
 namespace winrt::impl
 {
     template <typename T>
