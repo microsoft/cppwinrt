@@ -93,7 +93,6 @@ extern "C"
 WINRT_IMPL_LINK(LoadLibraryW, 4)
 WINRT_IMPL_LINK(FreeLibrary, 4)
 WINRT_IMPL_LINK(GetProcAddress, 8)
-
 WINRT_IMPL_LINK(SetErrorInfo, 8)
 WINRT_IMPL_LINK(GetErrorInfo, 8)
 WINRT_IMPL_LINK(CoInitializeEx, 8)
