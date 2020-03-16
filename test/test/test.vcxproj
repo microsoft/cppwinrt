@@ -330,6 +330,7 @@
     <ClCompile Include="delegates.cpp" />
     <ClCompile Include="disconnected.cpp" />
     <ClCompile Include="enum.cpp" />
+    <ClCompile Include="hresult_class_not_registered.cpp" />
     <ClCompile Include="error_info.cpp" />
     <ClCompile Include="event_deferral.cpp" />
     <ClCompile Include="async_local.cpp" />
