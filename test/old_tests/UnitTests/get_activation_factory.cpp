@@ -23,15 +23,7 @@ TEST_CASE("get_activation_factory")
     }
 
     // Calling get_activation_factory with an invalid class name
-    try
-    {
-        get_activation_factory(L"Composable.DoesNotExist");
-        REQUIRE(false);
-    }
-    catch (hresult_class_not_available const& e)
-    {
-        REQUIRE(e.message() == L"Composable.DoesNotExist");
-    }
+    REQUIRE_THROWS_AS(get_activation_factory(L"Composable.DoesNotExist"), hresult_class_not_registered);
 }
 
 TEST_CASE("try_get_activation_factory")
@@ -72,6 +64,6 @@ TEST_CASE("try_get_activation_factory")
         auto factory = try_get_activation_factory<Component::IErrors>(e);
         REQUIRE(factory == nullptr);
         REQUIRE(get_error_info() == nullptr);
-        REQUIRE(e.code() == CLASS_E_CLASSNOTAVAILABLE);
+        REQUIRE(e.code() == REGDB_E_CLASSNOTREG);
     }
 }

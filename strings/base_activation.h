@@ -55,6 +55,9 @@ namespace winrt::impl
             return 0;
         }
 
+        com_ptr<IErrorInfo> error_info;
+        WINRT_IMPL_GetErrorInfo(0, error_info.put_void());
+
         std::wstring path{ static_cast<hstring const&>(name) };
         std::size_t count{};
 
@@ -97,7 +100,8 @@ namespace winrt::impl
             }
         }
 
-        return error_class_not_available;
+        WINRT_IMPL_SetErrorInfo(0, error_info.get());
+        return hr;
     }
 }
 
