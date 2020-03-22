@@ -2581,6 +2581,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         std::vector<complex_struct> structs;
 
+        structs.reserve(types.size());
         for (auto&& type : types)
         {
             structs.emplace_back(w, type);
