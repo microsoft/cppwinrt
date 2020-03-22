@@ -289,7 +289,7 @@ catch (...) { return winrt::to_hresult(); }
             bind<write_consume_args>(signature));
     }
 
-    void write_component_static_forwarder(writer& w, MethodDef const& method)
+    inline void write_component_static_forwarder(writer& w, MethodDef const& method)
     {
         auto format = R"(        auto %(%)
         {

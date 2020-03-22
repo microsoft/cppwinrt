@@ -491,7 +491,7 @@ namespace cppwinrt
 
     private:
 
-        inline bool starts_with(std::string_view const& value, std::string_view const& match) noexcept
+        bool starts_with(std::string_view const& value, std::string_view const& match) noexcept
         {
             return 0 == value.compare(0, match.size(), match);
         }
