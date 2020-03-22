@@ -384,7 +384,6 @@ namespace cppwinrt
             info.overridable = overridable || has_attribute(impl, "Windows.Foundation.Metadata", "OverridableAttribute");
             info.base = base;
             info.generic_param_stack = generic_param_stack;
-            writer::generic_param_guard guard;
 
             switch (type.type())
             {
@@ -412,7 +411,7 @@ namespace cppwinrt
 
                     info.generic_param_stack.push_back(std::move(names));
 
-                    guard = w.push_generic_params(type_signature.GenericTypeInst());
+                    writer::generic_param_guard guard = w.push_generic_params(type_signature.GenericTypeInst());
                     auto signature = type_signature.GenericTypeInst();
                     info.type = find_required(signature.GenericType());
 
@@ -498,7 +497,7 @@ namespace cppwinrt
         return result;
     }
 
-    bool has_fastabi_tearoffs(writer& w, TypeDef const& type)
+    inline bool has_fastabi_tearoffs(writer& w, TypeDef const& type)
     {
         for (auto&& [name, info] : get_interfaces(w, type))
         {
@@ -513,7 +512,7 @@ namespace cppwinrt
         return false;
     }
 
-    std::size_t get_fastabi_size(writer& w, TypeDef const& type)
+    inline std::size_t get_fastabi_size(writer& w, TypeDef const& type)
     {
         if (!has_fastabi(type))
         {
@@ -535,7 +534,7 @@ namespace cppwinrt
         return result;
     }
 
-    auto get_fastabi_size(writer& w, std::vector<TypeDef> const& classes)
+    inline auto get_fastabi_size(writer& w, std::vector<TypeDef> const& classes)
     {
         std::size_t result{};
 

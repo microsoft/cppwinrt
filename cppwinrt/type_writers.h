@@ -44,12 +44,12 @@ namespace cppwinrt
         }
     };
 
-    bool operator==(type_name const& left, type_name const& right)
+    inline bool operator==(type_name const& left, type_name const& right)
     {
         return left.name == right.name && left.name_space == right.name_space;
     }
 
-    bool operator==(type_name const& left, std::string_view const& right)
+    inline bool operator==(type_name const& left, std::string_view const& right)
     {
         if (left.name.size() + 1 + left.name_space.size() != right.size())
         {
