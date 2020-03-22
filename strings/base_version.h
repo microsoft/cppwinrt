@@ -3,7 +3,7 @@
 
 // WINRT_version is used by Microsoft to analyze C++/WinRT library adoption and inform future product decisions.
 extern "C"
-__declspec(selectany)
+inline __declspec(selectany)
 char const * const WINRT_version = "C++/WinRT version:" CPPWINRT_VERSION;
 
 #ifdef _M_IX86

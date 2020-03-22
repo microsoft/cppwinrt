@@ -1,8 +1,8 @@
 
-__declspec(selectany) int32_t(__stdcall* winrt_to_hresult_handler)(void* address) noexcept {};
-__declspec(selectany) void(__stdcall* winrt_suspend_handler)(void const* token) noexcept {};
-__declspec(selectany) void(__stdcall* winrt_resume_handler)(void const* token) noexcept {};
-__declspec(selectany) int32_t(__stdcall* winrt_activation_handler)(void* classId, winrt::guid const& iid, void** factory) noexcept {};
+inline __declspec(selectany) int32_t(__stdcall* winrt_to_hresult_handler)(void* address) noexcept {};
+inline __declspec(selectany) void(__stdcall* winrt_suspend_handler)(void const* token) noexcept {};
+inline __declspec(selectany) void(__stdcall* winrt_resume_handler)(void const* token) noexcept {};
+inline __declspec(selectany) int32_t(__stdcall* winrt_activation_handler)(void* classId, winrt::guid const& iid, void** factory) noexcept {};
 
 extern "C"
 {
