@@ -10291,8 +10291,8 @@ namespace Catch {
 
 #if defined(CATCH_PLATFORM_MAC) || defined(CATCH_PLATFORM_IPHONE)
 
-#  include <assert.h>
-#  include <stdbool.h>
+#  include <cassert>
+#  include <cstdbool>
 #  include <sys/types.h>
 #  include <unistd.h>
 #  include <cstddef>
