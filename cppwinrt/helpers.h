@@ -384,7 +384,7 @@ namespace cppwinrt
             info.overridable = overridable || has_attribute(impl, "Windows.Foundation.Metadata", "OverridableAttribute");
             info.base = base;
             info.generic_param_stack = generic_param_stack;
-            writer::generic_param_guard guard;
+            
 
             switch (type.type())
             {
@@ -412,7 +412,7 @@ namespace cppwinrt
 
                     info.generic_param_stack.push_back(std::move(names));
 
-                    guard = w.push_generic_params(type_signature.GenericTypeInst());
+                    writer::generic_param_guard guard = w.push_generic_params(type_signature.GenericTypeInst());
                     auto signature = type_signature.GenericTypeInst();
                     info.type = find_required(signature.GenericType());
 
