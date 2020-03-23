@@ -498,7 +498,7 @@ namespace cppwinrt
         return result;
     }
 
-    staitc bool has_fastabi_tearoffs(writer& w, TypeDef const& type)
+    static bool has_fastabi_tearoffs(writer& w, TypeDef const& type)
     {
         for (auto&& [name, info] : get_interfaces(w, type))
         {
