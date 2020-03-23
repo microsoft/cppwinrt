@@ -498,7 +498,7 @@ namespace cppwinrt
         return result;
     }
 
-    inline bool has_fastabi_tearoffs(writer& w, TypeDef const& type)
+    staitc bool has_fastabi_tearoffs(writer& w, TypeDef const& type)
     {
         for (auto&& [name, info] : get_interfaces(w, type))
         {
@@ -513,7 +513,7 @@ namespace cppwinrt
         return false;
     }
 
-    inline std::size_t get_fastabi_size(writer& w, TypeDef const& type)
+    static std::size_t get_fastabi_size(writer& w, TypeDef const& type)
     {
         if (!has_fastabi(type))
         {
@@ -535,7 +535,7 @@ namespace cppwinrt
         return result;
     }
 
-    inline auto get_fastabi_size(writer& w, std::vector<TypeDef> const& classes)
+    static auto get_fastabi_size(writer& w, std::vector<TypeDef> const& classes)
     {
         std::size_t result{};
 
