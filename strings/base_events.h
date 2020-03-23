@@ -248,6 +248,7 @@ namespace winrt::impl
                 ((*reinterpret_cast<impl::abi_t<I>**>(&object))->*(Method))(m_token);
             }
         }
+
         I m_object;
         event_token m_token{};
     };
