@@ -1247,6 +1247,9 @@ TEST_CASE("array_view,ctad")
     std::array<uint8_t, 3> const car{};
     REQUIRE_DEDUCED_AS(uint8_t const, car);
 
+    std::array<uint8_t const, 3> arc{};
+    REQUIRE_DEDUCED_AS(uint8_t const, arc);
+
     std::vector<uint8_t> const cv{};
     REQUIRE_DEDUCED_AS(uint8_t const, cv);
 
