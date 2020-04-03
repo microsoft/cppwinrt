@@ -216,6 +216,12 @@ WINRT_EXPORT namespace winrt
         }
     };
 
+    template <typename C, size_t N> array_view(C(&value)[N]) -> array_view<C>;
+    template <typename C> array_view(std::vector<C>& value) -> array_view<C>;
+    template <typename C> array_view(std::vector<C> const& value) -> array_view<C const>;
+    template <typename C, size_t N> array_view(std::array<C, N>& value) -> array_view<C>;
+    template <typename C, size_t N> array_view(std::array<C, N> const& value) -> array_view<C const>;
+
     template <typename T>
     struct com_array : array_view<T>
     {

@@ -1223,3 +1223,35 @@ TEST_CASE("array_view,compare,array_view")
     REQUIRE(result.greater_equal);
     REQUIRE(!result.less_equal);
 }
+
+// Verify that class template argument deduction works for array_view.
+TEST_CASE("array_view,ctad")
+{
+#define REQUIRE_DEDUCED_AS(T, ...) \
+    static_assert(std::is_same_v<array_view<T>, decltype(array_view(__VA_ARGS__))>)
+
+    uint8_t a[3]{};
+    REQUIRE_DEDUCED_AS(uint8_t, &a[0], &a[0]);
+    REQUIRE_DEDUCED_AS(uint8_t, a);
+
+    std::array<uint8_t, 3> ar{};
+    REQUIRE_DEDUCED_AS(uint8_t, ar);
+
+    std::vector<uint8_t> v{};
+    REQUIRE_DEDUCED_AS(uint8_t, v);
+
+    uint8_t const ca[3]{};
+    REQUIRE_DEDUCED_AS(uint8_t const, &ca[0], &ca[0]);
+    REQUIRE_DEDUCED_AS(uint8_t const, ca);
+
+    std::array<uint8_t, 3> const car{};
+    REQUIRE_DEDUCED_AS(uint8_t const, car);
+
+    std::array<uint8_t const, 3> arc{};
+    REQUIRE_DEDUCED_AS(uint8_t const, arc);
+
+    std::vector<uint8_t> const cv{};
+    REQUIRE_DEDUCED_AS(uint8_t const, cv);
+
+#undef REQUIRE_DEDUCED_AS
+}
