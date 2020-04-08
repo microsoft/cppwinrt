@@ -7,10 +7,12 @@ namespace winrt::impl
     struct fast_iterator
     {
         using iterator_category = std::input_iterator_tag;
-        using value_type = T;
+        using value_type = decltype(std::declval<T>().GetAt(0));
         using difference_type = ptrdiff_t;
-        using pointer = T * ;
-        using reference = T & ;
+        using pointer = value_type*;
+        using reference = value_type;
+
+        fast_iterator() noexcept : m_collection(nullptr), m_index(0) {}
 
         fast_iterator(T const& collection, uint32_t const index) noexcept :
         m_collection(&collection),
@@ -23,9 +25,60 @@ namespace winrt::impl
             return*this;
         }
 
-        auto operator*() const
+        fast_iterator operator++(int) noexcept
+        {
+            auto previous = *this;
+            ++m_index;
+            return previous;
+        }
+
+        fast_iterator& operator--() noexcept
+        {
+            --m_index;
+            return*this;
+        }
+
+        fast_iterator operator--(int) noexcept
+        {
+            auto previous = *this;
+            --m_index;
+            return previous;
+        }
+
+        fast_iterator& operator+=(difference_type n) noexcept
+        {
+            m_index += static_cast<uint32_t>(n);
+            return*this;
+        }
+
+        fast_iterator operator+(difference_type n) const noexcept
+        {
+            return fast_iterator(*this) += n;
+        }
+
+        fast_iterator& operator-=(difference_type n) noexcept
+        {
+            return *this += -n;
+        }
+
+        fast_iterator operator-(difference_type n) const noexcept
+        {
+            return *this + -n;
+        }
+
+        difference_type operator-(fast_iterator const& other) const noexcept
+        {
+            return static_cast<difference_type>(m_index) - static_cast<difference_type>(other.m_index);
+        }
+
+        reference operator*() const
         {
             return m_collection->GetAt(m_index);
+        }
+
+        reference operator[](difference_type n) const noexcept
+        {
+            return m_collection->GetAt(m_index + static_cast<uint32_t>(n));
         }
 
         bool operator==(fast_iterator const& other) const noexcept
@@ -34,57 +87,36 @@ namespace winrt::impl
             return m_index == other.m_index;
         }
 
+        bool operator<(fast_iterator const& other) const noexcept
+        {
+            WINRT_ASSERT(m_collection == other.m_collection);
+            return m_index < other.m_index;
+        }
+
         bool operator!=(fast_iterator const& other) const noexcept
         {
             return !(*this == other);
+        }
+
+        bool operator>(fast_iterator const& other) const noexcept
+        {
+            return !(*this < other);
+        }
+
+        bool operator<=(fast_iterator const& other) const noexcept
+        {
+            return !(*this > other);
+        }
+
+        bool operator>=(fast_iterator const& other) const noexcept
+        {
+            return !(*this < other);
         }
 
     private:
 
         T const* m_collection{};
         uint32_t m_index{};
-    };
-
-    template <typename T>
-    struct rfast_iterator
-    {
-        using iterator_category = std::input_iterator_tag;
-        using value_type = T;
-        using difference_type = ptrdiff_t;
-        using pointer = T *;
-        using reference = T &;
-
-        rfast_iterator(T const& collection, int64_t const index) noexcept :
-            m_collection(&collection),
-            m_index(index)
-        {}
-
-        rfast_iterator& operator++() noexcept
-        {
-            --m_index;
-            return*this;
-        }
-
-        auto operator*() const
-        {
-            return m_collection->GetAt(static_cast<uint32_t>(m_index));
-        }
-
-        bool operator==(rfast_iterator const& other) const noexcept
-        {
-            WINRT_ASSERT(m_collection == other.m_collection);
-            return m_index == other.m_index;
-        }
-
-        bool operator!=(rfast_iterator const& other) const noexcept
-        {
-            return !(*this == other);
-        }
-
-    private:
-
-        T const* m_collection{};
-        int64_t m_index{};
     };
 
     template <typename T>
@@ -130,15 +162,15 @@ namespace winrt::impl
     }
 
     template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
-    rfast_iterator<T> rbegin(T const& collection) noexcept
+    auto rbegin(T const& collection)
     {
-        return { collection, collection.Size() - 1 };
+        return std::make_reverse_iterator(end(collection));
     }
 
     template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
-    rfast_iterator<T> rend(T const& collection)
+    auto rend(T const& collection)
     {
-        return { collection, -1 };
+        return std::make_reverse_iterator(begin(collection));
     }
 
     template <typename T>
