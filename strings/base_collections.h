@@ -76,7 +76,7 @@ namespace winrt::impl
             return m_collection->GetAt(m_index);
         }
 
-        reference operator[](difference_type n) const noexcept
+        reference operator[](difference_type n) const
         {
             return m_collection->GetAt(m_index + static_cast<uint32_t>(n));
         }
