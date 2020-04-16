@@ -132,6 +132,8 @@ namespace Component
         [eventadd] HRESULT StaticEvent([in] Windows.Foundation.EventHandler<int>* handler, [out][retval] EventRegistrationToken* cookie);
         [eventremove] HRESULT StaticEvent([in] EventRegistrationToken cookie);
         HRESULT RaiseStaticEvent([in] int value);
+
+        HRESULT TestStaticLifetime([out][retval] boolean* result);
     };
 
     [version(1.0), uuid(6ac35d2c-b2cf-4c36-995c-a9c0764636c9), exclusiveto(Events)]

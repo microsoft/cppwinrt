@@ -69,4 +69,24 @@ namespace winrt::Component::factory_implementation
     {
         m_static(nullptr, value);
     }
+
+    bool Events::TestStaticLifetime()
+    {
+        // Capture current reference count.
+        AddRef();
+        auto refcount = Release();
+
+        auto self = make_self<Events>();
+        if (self.get() != this)
+        {
+            return false;
+        }
+        self = nullptr;
+
+        // Refcount should be unchanged.
+        AddRef();
+        auto new_refcount = Release();
+
+        return refcount == new_refcount;
+    }
 }

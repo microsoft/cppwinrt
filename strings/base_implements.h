@@ -1291,8 +1291,18 @@ WINRT_EXPORT namespace winrt
         static_assert(std::is_destructible_v<D>, "C++/WinRT implementation types must have a public destructor");
         static_assert(!std::is_final_v<D>, "C++/WinRT implementation types must not be final");
 #endif
-
-        return { new impl::heap_implements<D>(std::forward<Args>(args)...), take_ownership_from_abi };
+        if constexpr (std::is_same_v<typename impl::implements_default_interface<D>::type, Windows::Foundation::IActivationFactory>)
+        {
+            static_assert(sizeof...(args) == 0);
+            auto temp = impl::make_factory<D>();
+            void* result = get_self<D>(temp);
+            detach_abi(temp);
+            return { result, take_ownership_from_abi };
+        }
+        else
+        {
+            return { new impl::heap_implements<D>(std::forward<Args>(args)...), take_ownership_from_abi };
+        }
     }
 
     template <typename D, typename... I>
