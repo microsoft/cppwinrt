@@ -34,6 +34,7 @@ namespace winrt::Component::factory_implementation
         event_token StaticEvent(Windows::Foundation::EventHandler<int32_t> const& handler);
         void StaticEvent(event_token const& cookie);
         void RaiseStaticEvent(int value);
+        bool TestStaticLifetime();
 
     private:
         event<Windows::Foundation::EventHandler<int32_t>> m_static;

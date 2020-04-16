@@ -57,4 +57,7 @@ TEST_CASE("factory_cache")
     // Make sure 'Events' is unique
 
     REQUIRE(b != get_activation_factory<Component::Events>());
+
+    // Test some stuff that can only be done from within the implementation.
+    REQUIRE(Component::Events::TestStaticLifetime());
 }
