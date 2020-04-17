@@ -66,3 +66,36 @@ WINRT_EXPORT namespace winrt
         return make<impl::observable_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values));
     }
 }
+
+namespace std
+{
+    template<typename K, typename V>
+    struct tuple_size<winrt::Windows::Foundation::Collections::IKeyValuePair<K, V>>
+        : integral_constant<size_t, 2>
+    {
+    };
+
+    template<size_t Idx, typename K, typename V>
+    struct tuple_element<Idx, winrt::Windows::Foundation::Collections::IKeyValuePair<K, V>>
+    {
+        static_assert(Idx < 2, "key-value pair index out of bounds");
+        using type = conditional_t<Idx == 0, K, V>;
+    };
+}
+
+namespace winrt::Windows::Foundation::Collections
+{
+    template<size_t Idx, typename K, typename V>
+    std::tuple_element_t<Idx, IKeyValuePair<K, V>> get(IKeyValuePair<K, V> const& kvp)
+    {
+        static_assert(Idx < 2, "key-value pair index out of bounds");
+        if constexpr (Idx == 0)
+        {
+            return kvp.Key();
+        }
+        else
+        {
+            return kvp.Value();
+        }
+    }
+}

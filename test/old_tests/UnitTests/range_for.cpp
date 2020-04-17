@@ -69,6 +69,21 @@ TEST_CASE("range_for,IIterable,IKeyValuePair")
     for (IKeyValuePair<int32_t, hstring> i : c)
     {
         result[i.Key()] = i.Value();
+
+        // Sneak in a structured binding test.
+        auto const [key, value] = i;
+        REQUIRE(key == i.Key());
+        REQUIRE(value == i.Value());
+    }
+
+    REQUIRE(result == values);
+
+    // Do it again with structured bindings.
+    result.clear();
+
+    for (auto&& [key, value] : c)
+    {
+        result[key] = value;
     }
 
     REQUIRE(result == values);
@@ -92,6 +107,16 @@ TEST_CASE("range_for,IMap")
     }
 
     REQUIRE(result == values);
+
+    // Do it again with structured bindings.
+    result.clear();
+
+    for (auto&& [key, value] : c)
+    {
+        result[key] = value;
+    }
+
+    REQUIRE(result == values);
 }
 
 TEST_CASE("range_for,IMapView")
@@ -109,6 +134,16 @@ TEST_CASE("range_for,IMapView")
     for (IKeyValuePair<int32_t, hstring> i : c)
     {
         result[i.Key()] = i.Value();
+    }
+
+    REQUIRE(result == values);
+
+    // Do it again with structured bindings.
+    result.clear();
+
+    for (auto&& [key, value] : c)
+    {
+        result[key] = value;
     }
 
     REQUIRE(result == values);
