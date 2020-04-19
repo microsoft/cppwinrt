@@ -23,6 +23,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTWriteOnlyWhenDifferent Condition="'$(CppWinRTWriteOnlyWhenDifferent)' != 'true'">false</CppWinRTWriteOnlyWhenDifferent>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))..\..\</CppWinRTPackageDir>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))</CppWinRTPackageDir>
+        <CppWinRTParameters Condition="'$(CppWinRTFastAbi)'=='true'">$(CppWinRTParameters) -fastabi</CppWinRTParameters>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)bin\"</CppWinRTPath>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)"</CppWinRTPath>
         <XamlLanguage Condition="'$(CppWinRTProjectLanguage)' == 'C++/CX'">C++</XamlLanguage>
@@ -92,13 +93,6 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     <PropertyGroup Condition="'$(ConfigurationType)' == 'StaticLibrary'">
         <IncludeCopyWinMDArtifactsOutputGroup>false</IncludeCopyWinMDArtifactsOutputGroup>
     </PropertyGroup>
-
-    <ItemDefinitionGroup>
-        <Midl Condition="'$(CppWinRTModernIDL)' != 'false'">
-            <AdditionalMetadataDirectories Condition="'%(AdditionalMetadataDirectories)' == '' And '$(WindowsSDK_MetadataFoundationPath)' != ''">$(WindowsSDK_MetadataFoundationPath);%(AdditionalMetadataDirectories)</AdditionalMetadataDirectories>
-            <AdditionalMetadataDirectories Condition="'%(AdditionalMetadataDirectories)' == '' And '$(WindowsSDK_MetadataFoundationPath)' == ''">$(WindowsSDK_MetadataPath);%(AdditionalMetadataDirectories)</AdditionalMetadataDirectories>
-        </Midl>
-    </ItemDefinitionGroup>
 
     <Target Name="CppWinRTVerifyKitVersion" Condition="'$(CppWinRTOverrideSDKReferences)' != 'true'">
         <PropertyGroup>
@@ -626,14 +620,21 @@ $(XamlMetaDataProviderPch)
         </PropertyGroup>
     </Target>
 
-    <!-- Fast ABI component support -->
-    <PropertyGroup Condition="'$(CppWinRTFastAbi)'=='true'">
-        <CppWinRTParameters>$(CppWinRTParameters) -fastabi</CppWinRTParameters>
-    </PropertyGroup>
-    <ItemDefinitionGroup Condition="'$(CppWinRTFastAbi)'=='true'">
-        <Link>
-            <AdditionalDependencies>%(AdditionalDependencies);$(CppWinRTPackageDir)build\native\lib\$(Platform)\cppwinrt_fast_forwarder.lib</AdditionalDependencies>
-        </Link>
+    <!--Append any additional item metadata after all default and project settings have been applied-->
+    <ItemDefinitionGroup>
+      <ClCompile>
+        <AdditionalOptions>%(AdditionalOptions) /bigobj /await</AdditionalOptions>
+        <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(GeneratedFilesDir)</AdditionalIncludeDirectories>
+      </ClCompile>
+      <Midl Condition="'$(CppWinRTModernIDL)' != 'false'">
+        <AdditionalMetadataDirectories Condition="'%(AdditionalMetadataDirectories)' == '' And '$(WindowsSDK_MetadataFoundationPath)' != ''">$(WindowsSDK_MetadataFoundationPath);%(AdditionalMetadataDirectories)</AdditionalMetadataDirectories>
+        <AdditionalMetadataDirectories Condition="'%(AdditionalMetadataDirectories)' == '' And '$(WindowsSDK_MetadataFoundationPath)' == ''">$(WindowsSDK_MetadataPath);%(AdditionalMetadataDirectories)</AdditionalMetadataDirectories>
+        <AdditionalOptions>%(AdditionalOptions) /nomidl</AdditionalOptions>
+      </Midl>
+      <Link>
+        <AdditionalDependencies Condition="'$(CppWinRTLibs)' != 'false'">%(AdditionalDependencies);WindowsApp.lib</AdditionalDependencies>
+        <AdditionalDependencies Condition="'$(CppWinRTFastAbi)'=='true'">%(AdditionalDependencies);$(CppWinRTPackageDir)build\native\lib\$(Platform)\cppwinrt_fast_forwarder.lib</AdditionalDependencies>
+      </Link>
     </ItemDefinitionGroup>
-
+  
 </Project>
