@@ -6,14 +6,14 @@ Please visit [Microsoft.Windows.CppWinRT](https://www.nuget.org/packages/Microso
 
 To add build support for C++/WinRT vcxproj projects, add a reference to the Microsoft.Windows.CppWinRT NuGet package.  This customizes your project's build rules to automatically generate C++/WinRT projection headers, enabling you to both consume and produce Windows Runtime classes.
 
-C++/WinRT detects Windows metadata referenced by the project, from:
+C++/WinRT detects Windows metadata required by the project, from:
 * Platform winmd files in the SDK (both MSI and NuGet)
-* NuGet packages containing winmd files
-* Other projects producing winmd files
-* Raw winmd files
+* NuGet package references containing winmd files
+* Other project references producing winmd files
+* Raw winmd file references
 * Interface definition language (IDL) files in the project 
 
-For any winmd file referenced by the project, C++/WinRT creates reference (consuming) projection headers.  Client code can simply #include these headers, which are created in the generated files directory (see below).
+For any winmd file discovered above, C++/WinRT creates reference (consuming) projection headers.  Client code can simply #include these headers, which are created in the generated files directory (see below).
 
 For any IDL file contained in the project, C++/WinRT creates component (producing) projection headers.  In addition, C++/WinRT generates templates and skeleton implementations for each runtime class, under the generated files directory.
 

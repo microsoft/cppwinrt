@@ -29,11 +29,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <ClCompile>
             <CompileAsWinRT Condition="'$(CppWinRTProjectLanguage)' != 'C++/CX' And '%(ClCompile.CompileAsWinRT)' == ''">false</CompileAsWinRT>
             <LanguageStandard Condition="'%(ClCompile.LanguageStandard)' == ''">stdcpp17</LanguageStandard>
-            <AdditionalOptions>/bigobj /await %(AdditionalOptions)</AdditionalOptions>
-            <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(GeneratedFilesDir)</AdditionalIncludeDirectories>
         </ClCompile>
         <Midl Condition="'$(CppWinRTModernIDL)' != 'false'">
-            <AdditionalOptions>%(AdditionalOptions) /nomidl</AdditionalOptions>
             <EnableWindowsRuntime>true</EnableWindowsRuntime>
             <MetadataFileName>$(IntDir)Unmerged\%(Filename).winmd</MetadataFileName>
             <GenerateClientFiles Condition="'%(Midl.GenerateClientFiles)'==''">None</GenerateClientFiles>
@@ -46,9 +43,6 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             <ProxyFileName Condition="'%(Midl.ProxyFileName)'==''">nul</ProxyFileName>
             <TypeLibraryName Condition="'%(Midl.TypeLibraryName)'==''"></TypeLibraryName>
         </Midl>
-        <Link>
-            <AdditionalDependencies Condition="'$(CppWinRTLibs)' != 'false'">WindowsApp.lib;%(AdditionalDependencies)</AdditionalDependencies>
-        </Link>
     </ItemDefinitionGroup>
 
     <ItemGroup>
