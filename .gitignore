@@ -5,6 +5,7 @@
 *_i.c
 *_p.c
 *.c
+*.nupkg
 test*.xml
 build
 packages
