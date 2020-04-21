@@ -522,18 +522,18 @@ namespace winrt::impl
         }
     };
 
-    template <bool Agile>
+    template <bool Agile, bool UseModuleLock>
     struct weak_ref;
 
-    template <bool Agile>
+    template <bool Agile, bool UseModuleLock>
     struct weak_source_producer;
 
-    template <bool Agile>
-    struct weak_source final : IWeakReferenceSource
+    template <bool Agile, bool UseModuleLock>
+    struct weak_source final : IWeakReferenceSource, module_lock_updater<UseModuleLock>
     {
-        weak_ref<Agile>* that() noexcept
+        weak_ref<Agile, UseModuleLock>* that() noexcept
         {
-            return static_cast<weak_ref<Agile>*>(reinterpret_cast<weak_source_producer<Agile>*>(this));
+            return static_cast<weak_ref<Agile, UseModuleLock>*>(reinterpret_cast<weak_source_producer<Agile, UseModuleLock>*>(this));
         }
 
         int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final
@@ -566,15 +566,15 @@ namespace winrt::impl
         }
     };
 
-    template <bool Agile>
+    template <bool Agile, bool UseModuleLock>
     struct weak_source_producer
     {
     protected:
-        weak_source<Agile> m_source;
+        weak_source<Agile, UseModuleLock> m_source;
     };
 
-    template <bool Agile>
-    struct weak_ref final : IWeakReference, weak_source_producer<Agile>
+    template <bool Agile, bool UseModuleLock>
+    struct weak_ref final : IWeakReference, weak_source_producer<Agile, UseModuleLock>
     {
         weak_ref(unknown_abi* object, uint32_t const strong) noexcept :
             m_object(object),
@@ -678,10 +678,10 @@ namespace winrt::impl
         }
 
     private:
-        template <bool T>
+        template <bool T, bool U>
         friend struct weak_source;
 
-        static_assert(sizeof(weak_source_producer<Agile>) == sizeof(weak_source<Agile>));
+        static_assert(sizeof(weak_source_producer<Agile, UseModuleLock>) == sizeof(weak_source<Agile, UseModuleLock>));
 
         unknown_abi* m_object{};
         std::atomic<uint32_t> m_strong{ 1 };
@@ -743,6 +743,7 @@ namespace winrt::impl
     struct __declspec(novtable) root_implements
         : root_implements_composing_outer<std::disjunction_v<std::is_same<composing, I>...>>
         , root_implements_composable_inner<D, std::disjunction_v<std::is_same<composable, I>...>>
+        , module_lock_updater<!std::disjunction_v<std::is_same<no_module_lock, I>...>>
     {
         using IInspectable = Windows::Foundation::IInspectable;
         using root_implements_type = root_implements;
@@ -819,21 +820,12 @@ namespace winrt::impl
 
         root_implements() noexcept
         {
-            if constexpr (use_module_lock::value)
-            {
-                ++get_module_lock();
-            }
         }
 
         virtual ~root_implements() noexcept
         {
             // If a weak reference is created during destruction, this ensures that it is also destroyed.
             subtract_reference();
-
-            if constexpr (use_module_lock::value)
-            {
-                --get_module_lock();
-            }
         }
 
         int32_t __stdcall GetIids(uint32_t* count, guid** array) noexcept
@@ -1060,7 +1052,7 @@ namespace winrt::impl
         using is_inspectable = std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, I>...>;
         using is_weak_ref_source = std::conjunction<is_inspectable, std::negation<is_factory>, std::negation<std::disjunction<std::is_same<no_weak_ref, I>...>>>;
         using use_module_lock = std::negation<std::disjunction<std::is_same<no_module_lock, I>...>>;
-        using weak_ref_t = impl::weak_ref<is_agile::value>;
+        using weak_ref_t = impl::weak_ref<is_agile::value, use_module_lock::value>;
 
         std::atomic<std::conditional_t<is_weak_ref_source::value, uintptr_t, uint32_t>> m_references{ 1 };
 

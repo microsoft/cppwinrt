@@ -2,16 +2,10 @@
 namespace winrt::impl
 {
     template <typename T, typename H>
-    struct implements_delegate : abi_t<T>, H
+    struct implements_delegate : abi_t<T>, H, update_module_lock
     {
         implements_delegate(H&& handler) : H(std::forward<H>(handler))
         {
-            ++get_module_lock();
-        }
-
-        ~implements_delegate() noexcept
-        {
-            --get_module_lock();
         }
 
         int32_t __stdcall QueryInterface(guid const& id, void** result) noexcept final
@@ -98,16 +92,10 @@ namespace winrt::impl
     };
 
     template <typename H, typename R, typename... Args>
-    struct variadic_delegate final : variadic_delegate_abi<R, Args...>, H
+    struct variadic_delegate final : variadic_delegate_abi<R, Args...>, H, update_module_lock
     {
         variadic_delegate(H&& handler) : H(std::forward<H>(handler))
         {
-            ++get_module_lock();
-        }
-
-        ~variadic_delegate() noexcept
-        {
-            --get_module_lock();
         }
 
         R invoke(Args const& ... args) final
