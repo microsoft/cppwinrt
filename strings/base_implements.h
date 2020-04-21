@@ -1222,11 +1222,18 @@ namespace winrt::impl
             check_hresult(lifetime_factory->GetCollection(put_abi(collection)));
             auto const map = collection.as<IStaticLifetimeCollection>();
             param::hstring const name{ name_of<typename D::instance_type>() };
+            void* result{};
+            map->Lookup(get_abi(name), &result);
+
+            if (result)
+            {
+                return { result, take_ownership_from_abi };
+            }
+
             result_type object{ to_abi<result_type>(new heap_implements<D>), take_ownership_from_abi };
 
             static slim_mutex lock;
             slim_lock_guard const guard{ lock };
-            void* result{};
             map->Lookup(get_abi(name), &result);
 
             if (result)

@@ -70,11 +70,16 @@ namespace winrt::Component::factory_implementation
         m_static(nullptr, value);
     }
 
+    std::atomic<int> Events::s_constructorCount;
+
     bool Events::TestStaticLifetime()
     {
         // Capture current reference count.
         AddRef();
         auto refcount = Release();
+
+        // Reset constructor count.
+        s_constructorCount = 0;
 
         auto self = make_self<Events>();
         if (self.get() != this)
@@ -84,9 +89,10 @@ namespace winrt::Component::factory_implementation
         self = nullptr;
 
         // Refcount should be unchanged.
+        // Should not have been constructed spuriously.
         AddRef();
         auto new_refcount = Release();
 
-        return refcount == new_refcount;
+        return refcount == new_refcount && s_constructorCount == 0;
     }
 }
