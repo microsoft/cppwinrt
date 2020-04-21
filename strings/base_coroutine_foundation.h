@@ -76,6 +76,35 @@ namespace winrt::impl
         return async.GetResults();
     }
 
+    struct disconnect_aware_handler
+    {
+        disconnect_aware_handler(std::experimental::coroutine_handle<> handle)
+            : m_handle(handle) { }
+
+        disconnect_aware_handler(disconnect_aware_handler&& other)
+            : m_context(std::move(other.m_context))
+            , m_handle(std::exchange(other.m_handle, {})) { }
+
+        ~disconnect_aware_handler()
+        {
+            if (m_handle) Complete();
+        }
+
+        void operator()(Windows::Foundation::IAsyncInfo const&, Windows::Foundation::AsyncStatus)
+        {
+            Complete();
+        }
+
+    private:
+        std::experimental::coroutine_handle<> m_handle;
+        impl::com_ref<impl::IContextCallback> m_context = apartment_context();
+
+        void Complete()
+        {
+            impl::resume_apartment(m_context, std::exchange(m_handle, {}));
+        }
+    };
+
     template <typename Async>
     struct await_adapter
     {
@@ -88,10 +117,7 @@ namespace winrt::impl
 
         void await_suspend(std::experimental::coroutine_handle<> handle) const
         {
-            async.Completed([handle, context = impl::apartment_context()](auto&& ...)
-            {
-                impl::resume_apartment(context, handle);
-            });
+            async.Completed(disconnect_aware_handler{ handle });
         }
 
         auto await_resume() const
