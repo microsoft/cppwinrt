@@ -44,19 +44,39 @@ WINRT_EXPORT namespace winrt
 
 namespace winrt::impl
 {
-    struct agile_ref_fallback final : IAgileReference
+    template<bool UseModuleLock>
+    struct module_lock_updater;
+
+    template<>
+    struct module_lock_updater<true>
+    {
+        module_lock_updater() noexcept
+        {
+            ++get_module_lock();
+        }
+
+        ~module_lock_updater() noexcept
+        {
+            --get_module_lock();
+        }
+    };
+
+    template<>
+    struct module_lock_updater<false> {};
+
+    using update_module_lock = module_lock_updater<true>;
+
+    struct agile_ref_fallback final : IAgileReference, update_module_lock
     {
         agile_ref_fallback(com_ptr<IGlobalInterfaceTable>&& git, uint32_t cookie) noexcept :
             m_git(std::move(git)),
             m_cookie(cookie)
         {
-            ++get_module_lock();
         }
 
         ~agile_ref_fallback() noexcept
         {
             m_git->RevokeInterfaceFromGlobal(m_cookie);
-            --get_module_lock();
         }
 
         int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final

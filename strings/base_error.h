@@ -56,18 +56,12 @@ namespace winrt::impl
         return ((int32_t)((x) | 0x10000000));
     }
 
-    struct error_info_fallback final : IErrorInfo, IRestrictedErrorInfo
+    struct error_info_fallback final : IErrorInfo, IRestrictedErrorInfo, update_module_lock
     {
         error_info_fallback(int32_t code, void* message) noexcept :
             m_code(code),
             m_message(*reinterpret_cast<winrt::hstring*>(&message))
         {
-            ++get_module_lock();
-        }
-
-        ~error_info_fallback() noexcept
-        {
-            --get_module_lock();
         }
 
         int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final

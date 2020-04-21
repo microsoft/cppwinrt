@@ -41,6 +41,14 @@ namespace
             return L"NoWeakRef";
         }
     };
+
+    struct WeakNoModuleLock : implements<WeakNoModuleLock, IStringable, no_module_lock>
+    {
+        hstring ToString()
+        {
+            return L"WeakNoModuleLock";
+        }
+    };
 }
 
 TEST_CASE("weak,source")
@@ -268,3 +276,35 @@ TEST_CASE("weak,lifetime")
         REQUIRE(!ref.try_as<IAgileObject>());
     }
 }
+
+TEST_CASE("weak,module_lock")
+{
+    uint32_t object_count = get_module_lock();
+
+    IStringable a = make<Weak>();
+
+    // Strong reference counts as an object.
+    REQUIRE(get_module_lock() == object_count + 1);
+
+    weak_ref<IStringable> w = a;
+    a = nullptr;
+
+    // Weak reference should still count as an object.
+    REQUIRE(get_module_lock() == object_count + 1);
+}
+
+TEST_CASE("weak,no_module_lock")
+{
+    uint32_t object_count = get_module_lock();
+
+    IStringable a = make<WeakNoModuleLock>();
+
+    REQUIRE(get_module_lock() == object_count);
+
+    weak_ref<IStringable> w = a;
+    a = nullptr;
+
+    // Weak reference to no-module-lock object is also no-module-lock.
+    REQUIRE(get_module_lock() == object_count);
+}
+
