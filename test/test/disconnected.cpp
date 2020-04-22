@@ -188,7 +188,6 @@ TEST_CASE("disconnected,action")
     auto result = [](IAsyncAction action) -> IAsyncAction
         {
             co_await action;
-            co_return;
         }(action.get());
 
     REQUIRE_THROWS_AS(result.get(), hresult_error);

@@ -97,11 +97,11 @@ namespace winrt::impl
 
     private:
         std::experimental::coroutine_handle<> m_handle;
-        impl::com_ref<impl::IContextCallback> m_context = apartment_context();
+        com_ptr<IContextCallback> m_context = apartment_context();
 
         void Complete()
         {
-            impl::resume_apartment(m_context, std::exchange(m_handle, {}));
+            resume_apartment(m_context, std::exchange(m_handle, {}));
         }
     };
 
