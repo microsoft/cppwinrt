@@ -129,6 +129,15 @@ struct non_agile_abandoned_action : implements<non_agile_abandoned_action, IAsyn
 {
     non_agile_abandoned_action(void* event_handle) : m_awaited(event_handle) {}
 
+    static fire_and_forget final_release(std::unique_ptr<non_agile_abandoned_action> self)
+    {
+        // The C++/WinRT m_handler is agile but not context-aware,
+        // so we need to make sure to release it from the context it
+        // was created from, which for this particular test is the MTA.
+        co_await resume_background();
+        // Now we can destruct.
+    }
+
     void Completed(AsyncActionCompletedHandler const& handler) {
         m_handler = handler;
         // Tell the test to disconnect the IAsyncAction, which simulates the server crash.
@@ -173,6 +182,23 @@ namespace
     }
 }
 
+struct holds_hresult : public Catch::MatcherBase<hresult_error>
+{
+    holds_hresult(hresult value) : expected(value) {}
+
+    hresult expected;
+
+    bool match(hresult_error const& e) const override
+    {
+        return e.code() == expected;
+    }
+
+    virtual std::string describe() const override
+    {
+        return "is code " + std::to_string(expected.value);
+    }
+};
+
 TEST_CASE("disconnected,action")
 {
     auto private_context = create_instance<IContextCallback>(CLSID_ContextSwitcher);
@@ -190,5 +216,5 @@ TEST_CASE("disconnected,action")
             co_await action;
         }(action.get());
 
-    REQUIRE_THROWS_AS(result.get(), hresult_error);
+    REQUIRE_THROWS_MATCHES(result.get(), hresult_error, holds_hresult(RPC_E_DISCONNECTED));
 }
