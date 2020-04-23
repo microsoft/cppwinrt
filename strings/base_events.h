@@ -492,7 +492,7 @@ WINRT_EXPORT namespace winrt
 
         event_token get_token(delegate_type const& delegate) const noexcept
         {
-            return event_token{ reinterpret_cast<int64_t>(get_abi(delegate)) };
+            return event_token{ reinterpret_cast<int64_t>(WINRT_IMPL_EncodePointer(get_abi(delegate))) };
         }
 
         using delegate_array = com_ptr<impl::event_array<delegate_type>>;
