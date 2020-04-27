@@ -1,4 +1,5 @@
 #include "pch.h"
+#include <ctxtcall.h>
 
 using namespace std::literals;
 using namespace winrt;
@@ -33,7 +34,7 @@ namespace
     }
 }
 
-TEST_CASE("disconnected")
+TEST_CASE("disconnected,handler")
 {
     {
         event<EventHandler<int>> source;
@@ -121,4 +122,99 @@ TEST_CASE("disconnected")
 
         WaitForSingleObject(signal.get(), INFINITE);
     }
+}
+
+// Custom action to simulate an out-of-process server that crashes before it can complete.
+struct non_agile_abandoned_action : implements<non_agile_abandoned_action, IAsyncAction, IAsyncInfo, non_agile>
+{
+    non_agile_abandoned_action(void* event_handle) : m_awaited(event_handle) {}
+
+    static fire_and_forget final_release(std::unique_ptr<non_agile_abandoned_action> self)
+    {
+        // The C++/WinRT m_handler is agile but not context-aware,
+        // so we need to make sure to release it from the context it
+        // was created from, which for this particular test is the MTA.
+        co_await resume_background();
+        // Now we can destruct.
+    }
+
+    void Completed(AsyncActionCompletedHandler const& handler) {
+        m_handler = handler;
+        // Tell the test to disconnect the IAsyncAction, which simulates the server crash.
+        SetEvent(m_awaited);
+    }
+    auto Completed() { return m_handler; }
+    void GetResults() {}
+
+    auto Id() { return 0U; }
+    auto Status() { return AsyncStatus::Completed; }
+    auto ErrorCode() { return hresult(0); }
+    void Cancel() {}
+    void Close() {}
+
+    AsyncActionCompletedHandler m_handler;
+    HANDLE m_awaited;
+};
+
+namespace
+{
+    template<typename TLambda>
+    void InvokeInContext(IContextCallback* context, TLambda&& lambda)
+    {
+        ComCallData data;
+        data.pUserDefined = &lambda;
+        check_hresult(context->ContextCallback([](ComCallData* data) -> HRESULT
+            {
+                auto& lambda = *reinterpret_cast<TLambda*>(data->pUserDefined);
+                lambda();
+                return S_OK;
+            }, &data, IID_ICallbackWithNoReentrancyToApplicationSTA, 5, nullptr));
+    }
+
+    fire_and_forget disconnect_on_signal(com_ptr<IContextCallback> context, void* signal)
+    {
+        co_await resume_on_signal(signal);
+        InvokeInContext(context.get(), []()
+            {
+                // This disconnects the IAsyncAction, simulating a server crash.
+                CoDisconnectContext(INFINITE);
+            });
+    }
+}
+
+struct holds_hresult : public Catch::MatcherBase<hresult_error>
+{
+    holds_hresult(hresult value) : expected(value) {}
+
+    hresult expected;
+
+    bool match(hresult_error const& e) const override
+    {
+        return e.code() == expected;
+    }
+
+    virtual std::string describe() const override
+    {
+        return "is code " + std::to_string(expected.value);
+    }
+};
+
+TEST_CASE("disconnected,action")
+{
+    auto private_context = create_instance<IContextCallback>(CLSID_ContextSwitcher);
+    handle signal{ CreateEventW(nullptr, true, false, nullptr) };
+    disconnect_on_signal(private_context, signal.get());
+
+    agile_ref<IAsyncAction> action;
+    InvokeInContext(private_context.get(), [&]()
+        {
+            action = make<non_agile_abandoned_action>(signal.get());
+        });
+
+    auto result = [](IAsyncAction action) -> IAsyncAction
+        {
+            co_await action;
+        }(action.get());
+
+    REQUIRE_THROWS_MATCHES(result.get(), hresult_error, holds_hresult(RPC_E_DISCONNECTED));
 }
