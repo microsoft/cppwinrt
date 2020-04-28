@@ -154,6 +154,18 @@ WINRT_EXPORT namespace winrt
         }
 
         template <typename F, typename...Args>
+        bool try_capture(F function, Args&&...args)
+        {
+            return function(args..., guid_of<T>(), put_void()) >= 0;
+        }
+
+        template <typename O, typename M, typename...Args>
+        bool try_capture(com_ptr<O> const& object, M method, Args&&...args)
+        {
+            return (object.get()->*(method))(args..., guid_of<T>(), put_void()) >= 0;
+        }
+
+        template <typename F, typename...Args>
         void capture(F function, Args&&...args)
         {
             check_hresult(function(args..., guid_of<T>(), put_void()));
@@ -204,6 +216,21 @@ WINRT_EXPORT namespace winrt
         type* m_ptr{};
     };
 
+    template <typename T, typename F, typename...Args>
+    impl::com_ref<T> try_capture(F function, Args&& ...args)
+    {
+        void* result{};
+        function(args..., guid_of<T>(), &result);
+        return { result, take_ownership_from_abi };
+    }
+
+    template <typename T, typename O, typename M, typename...Args>
+    impl::com_ref<T> try_capture(com_ptr<O> const& object, M method, Args&& ...args)
+    {
+        void* result{};
+        (object.get()->*(method))(args..., guid_of<T>(), &result);
+        return { result, take_ownership_from_abi };
+    }
     template <typename T, typename F, typename...Args>
     impl::com_ref<T> capture(F function, Args&& ...args)
     {
