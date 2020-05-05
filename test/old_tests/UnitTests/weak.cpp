@@ -287,9 +287,15 @@ TEST_CASE("weak,comparison")
     weak_ref<IStringable> refNothing = nullptr;
 
     REQUIRE(refA1 == refA2);
+    REQUIRE(!(refA1 != refA2));
     REQUIRE(refA1 != refB);
+    REQUIRE(!(refA1 == refB));
     REQUIRE(refA1 != refNothing);
+    REQUIRE(!(refA1 == refNothing));
     REQUIRE(refA1 != nullptr);
+    REQUIRE(nullptr != refA1);
+    REQUIRE(refNothing == nullptr);
+    REQUIRE(nullptr == refNothing);
 
     // Comparisons are against the weak reference itself,
     // not the thing it refers to.
@@ -299,7 +305,6 @@ TEST_CASE("weak,comparison")
     REQUIRE(refA1 == refA2);
     REQUIRE(refA1 != refB);
     REQUIRE(refA1 != refNothing);
-    REQUIRE(refA1 != nullptr);
 }
 
 TEST_CASE("weak,module_lock")
