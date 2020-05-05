@@ -57,6 +57,8 @@ TEST_CASE("array,SmsBinaryMessage")
     REQUIRE(1 == a[0]);
     REQUIRE(2 == a[1]);
     REQUIRE(3 == a[2]);
+
+    query.Thumbprint(a);
 }
 
 //
@@ -889,7 +891,7 @@ TEST_CASE("array_view,array")
 {
     {
         std::array<int, 3> v = { 1, 2, 3 };
-        array_view<int> a = v;
+        array_view<int> const a = v;
         REQUIRE(a.data() == v.data());
         REQUIRE(a.size() == 3);
     }
@@ -906,6 +908,31 @@ TEST_CASE("array_view,array")
         array_view<int const> a = v;
         REQUIRE(a.data() == v.data());
         REQUIRE(a.size() == 3);
+    }
+}
+
+// Tests array_view construction for various cv-qualified conversions
+TEST_CASE("array_view,cv array_view")
+{
+    int v[3] = { 1, 2, 3 };
+    array_view<int> a = v;
+    {
+        array_view<const int> a2 = a;
+        REQUIRE(a2.data() == a.data());
+        REQUIRE(a2.size() == 3);
+        REQUIRE(a2 == a);
+    }
+    {
+        array_view<volatile int> a2 = a;
+        REQUIRE(a2.data() == a.data());
+        REQUIRE(a2.size() == 3);
+        REQUIRE(a2 == a);
+    }
+    {
+        array_view<const volatile int> a2 = a;
+        REQUIRE(a2.data() == a.data());
+        REQUIRE(a2.size() == 3);
+        REQUIRE(a2 == a);
     }
 }
 

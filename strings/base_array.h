@@ -53,6 +53,12 @@ WINRT_EXPORT namespace winrt
             array_view(value.data(), static_cast<size_type>(value.size()))
         {}
 
+        template <typename OtherType>
+        array_view(array_view<OtherType> const& other,
+            std::enable_if_t<std::is_convertible_v<OtherType(*)[], T(*)[]>, int> = 0) noexcept :
+            array_view(other.data(), other.size())
+        {}
+
         reference operator[](size_type const pos) noexcept
         {
             WINRT_ASSERT(pos < size());
@@ -109,12 +115,7 @@ WINRT_EXPORT namespace winrt
             return m_data[m_size - 1];
         }
 
-        pointer data() noexcept
-        {
-            return m_data;
-        }
-
-        const_pointer data() const noexcept
+        pointer data() const noexcept
         {
             return m_data;
         }
@@ -339,22 +340,34 @@ WINRT_EXPORT namespace winrt
         }
     };
 
-    template <typename T>
-    bool operator==(array_view<T> const& left, array_view<T> const& right) noexcept
+    namespace impl
+    {
+        template <typename T, typename U>
+        inline constexpr bool array_comparable = std::is_same_v<std::remove_cv_t<T>, std::remove_cv_t<U>>;
+    }
+
+    template <typename T, typename U, 
+        std::enable_if_t<impl::array_comparable<T, U>, int> = 0>
+    bool operator==(array_view<T> const& left, array_view<U> const& right) noexcept
     {
         return std::equal(left.begin(), left.end(), right.begin(), right.end());
     }
 
-    template <typename T>
-    bool operator<(array_view<T> const& left, array_view<T> const& right) noexcept
+    template <typename T, typename U,
+        std::enable_if_t<impl::array_comparable<T, U>, int> = 0>
+    bool operator<(array_view<T> const& left, array_view<U> const& right) noexcept
     {
         return std::lexicographical_compare(left.begin(), left.end(), right.begin(), right.end());
     }
 
-    template <typename T> bool operator!=(array_view<T> const& left, array_view<T> const& right) noexcept { return !(left == right); }
-    template <typename T> bool operator>(array_view<T> const& left, array_view<T> const& right) noexcept { return right < left; }
-    template <typename T> bool operator<=(array_view<T> const& left, array_view<T> const& right) noexcept { return !(right < left); }
-    template <typename T> bool operator>=(array_view<T> const& left, array_view<T> const& right) noexcept { return !(left < right); }
+    template <typename T, typename U, std::enable_if_t<impl::array_comparable<T, U>, int> = 0>
+    bool operator!=(array_view<T> const& left, array_view<U> const& right) noexcept { return !(left == right); }
+    template <typename T, typename U,std::enable_if_t<impl::array_comparable<T, U>, int> = 0>
+    bool operator>(array_view<T> const& left, array_view<U> const& right) noexcept { return right < left; }
+    template <typename T, typename U,std::enable_if_t<impl::array_comparable<T, U>, int> = 0>
+    bool operator<=(array_view<T> const& left, array_view<U> const& right) noexcept { return !(right < left); }
+    template <typename T, typename U, std::enable_if_t<impl::array_comparable<T, U>, int> = 0>
+    bool operator>=(array_view<T> const& left, array_view<U> const& right) noexcept { return !(left < right); }
 
     template <typename T>
     auto get_abi(array_view<T> object) noexcept
