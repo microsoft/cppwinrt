@@ -56,6 +56,16 @@ WINRT_EXPORT namespace winrt
             return static_cast<bool>(m_ref);
         }
 
+        bool operator==(weak_ref const& other) const noexcept
+        {
+            return m_ref == other.m_ref;
+        }
+
+        bool operator!=(weak_ref const& other) const noexcept
+        {
+            return !(*this == other);
+        }
+
     private:
 
         com_ptr<impl::IWeakReference> m_ref;
