@@ -658,8 +658,8 @@ namespace winrt::impl
 WINRT_EXPORT namespace winrt
 {
     template <typename T>
-    constexpr auto name_of() noexcept
+    auto name_of() noexcept
     {
-        return impl::to_wstring_view(impl::name_v<T>);
+        return hstring(impl::to_wstring_view(impl::name_v<T>));
     }
 }

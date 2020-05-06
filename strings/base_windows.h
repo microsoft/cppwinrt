@@ -11,8 +11,8 @@ namespace winrt::impl
 
     struct diagnostics_info
     {
-        std::map<std::wstring_view, uint32_t> queries;
-        std::map<std::wstring_view, factory_diagnostics_info> factories;
+        std::map<hstring, uint32_t> queries;
+        std::map<hstring, factory_diagnostics_info> factories;
     };
 
     struct diagnostics_cache
