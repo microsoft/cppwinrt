@@ -467,8 +467,8 @@ namespace winrt::impl
     {
         combine
         (
-            to_array<wchar_t>(guid_of<T>()),
-            std::array<wchar_t, 1>{ L'\0' }
+            to_array<char>(guid_of<T>()),
+            std::array<char, 1>{ '\0' }
         )
     };
 
@@ -485,56 +485,6 @@ namespace winrt::impl
         }
 
         return 3;
-    }
-
-    constexpr size_t to_utf8(wchar_t const value, char* buffer) noexcept
-    {
-        if (value <= 0x7F)
-        {
-            *buffer = static_cast<char>(value);
-            return 1;
-        }
-
-        if (value <= 0x7FF)
-        {
-            *buffer = static_cast<char>(0xC0 | (value >> 6));
-            *(buffer + 1) = 0x80 | (value & 0x3F);
-            return 2;
-        }
-
-        *buffer = 0xE0 | (value >> 12);
-        *(buffer + 1) = 0x80 | ((value >> 6) & 0x3F);
-        *(buffer + 2) = 0x80 | (value & 0x3F);
-        return 3;
-    }
-
-    template <typename T>
-    constexpr size_t to_utf8_size() noexcept
-    {
-        auto input = to_array(name_v<T>);
-        size_t length = 0;
-
-        for (wchar_t const element : input)
-        {
-            length += to_utf8_size(element);
-        }
-
-        return length;
-    }
-
-    template <typename T>
-    constexpr auto to_utf8() noexcept
-    {
-        auto input = to_array(name_v<T>);
-        std::array<char, to_utf8_size<T>()> output{};
-        size_t offset{};
-
-        for (wchar_t const element : input)
-        {
-            offset += to_utf8(element, &output[offset]);
-        }
-
-        return output;
     }
 
     template <typename T>
@@ -559,26 +509,26 @@ namespace winrt::impl
     template <> inline constexpr auto& basic_signature_v<hstring> = "string";
     template <> inline constexpr auto& basic_signature_v<Windows::Foundation::IInspectable> = "cinterface(IInspectable)";
 
-    template <> inline constexpr auto& name_v<bool> = L"Boolean";
-    template <> inline constexpr auto& name_v<int8_t> = L"Int8";
-    template <> inline constexpr auto& name_v<int16_t> = L"Int16";
-    template <> inline constexpr auto& name_v<int32_t> = L"Int32";
-    template <> inline constexpr auto& name_v<int64_t> = L"Int64";
-    template <> inline constexpr auto& name_v<uint8_t> = L"UInt8";
-    template <> inline constexpr auto& name_v<uint16_t> = L"UInt16";
-    template <> inline constexpr auto& name_v<uint32_t> = L"UInt32";
-    template <> inline constexpr auto& name_v<uint64_t> = L"UInt64";
-    template <> inline constexpr auto& name_v<float> = L"Single";
-    template <> inline constexpr auto& name_v<double> = L"Double";
-    template <> inline constexpr auto& name_v<char16_t> = L"Char16";
-    template <> inline constexpr auto& name_v<guid> = L"Guid";
-    template <> inline constexpr auto& name_v<hstring> = L"String";
-    template <> inline constexpr auto& name_v<hresult> = L"Windows.Foundation.HResult";
-    template <> inline constexpr auto& name_v<event_token> = L"Windows.Foundation.EventRegistrationToken";
-    template <> inline constexpr auto& name_v<Windows::Foundation::IInspectable> = L"Object";
-    template <> inline constexpr auto& name_v<Windows::Foundation::TimeSpan> = L"Windows.Foundation.TimeSpan";
-    template <> inline constexpr auto& name_v<Windows::Foundation::DateTime> = L"Windows.Foundation.DateTime";
-    template <> inline constexpr auto& name_v<IAgileObject> = L"IAgileObject";
+    template <> inline constexpr auto& name_v<bool> = "Boolean";
+    template <> inline constexpr auto& name_v<int8_t> = "Int8";
+    template <> inline constexpr auto& name_v<int16_t> = "Int16";
+    template <> inline constexpr auto& name_v<int32_t> = "Int32";
+    template <> inline constexpr auto& name_v<int64_t> = "Int64";
+    template <> inline constexpr auto& name_v<uint8_t> = "UInt8";
+    template <> inline constexpr auto& name_v<uint16_t> = "UInt16";
+    template <> inline constexpr auto& name_v<uint32_t> = "UInt32";
+    template <> inline constexpr auto& name_v<uint64_t> = "UInt64";
+    template <> inline constexpr auto& name_v<float> = "Single";
+    template <> inline constexpr auto& name_v<double> = "Double";
+    template <> inline constexpr auto& name_v<char16_t> = "Char16";
+    template <> inline constexpr auto& name_v<guid> = "Guid";
+    template <> inline constexpr auto& name_v<hstring> = "String";
+    template <> inline constexpr auto& name_v<hresult> = "Windows.Foundation.HResult";
+    template <> inline constexpr auto& name_v<event_token> = "Windows.Foundation.EventRegistrationToken";
+    template <> inline constexpr auto& name_v<Windows::Foundation::IInspectable> = "Object";
+    template <> inline constexpr auto& name_v<Windows::Foundation::TimeSpan> = "Windows.Foundation.TimeSpan";
+    template <> inline constexpr auto& name_v<Windows::Foundation::DateTime> = "Windows.Foundation.DateTime";
+    template <> inline constexpr auto& name_v<IAgileObject> = "IAgileObject";
 
     template <> struct category<bool> { using type = basic_category; };
     template <> struct category<int8_t> { using type = basic_category; };
@@ -609,19 +559,19 @@ namespace winrt::impl
     struct category_signature<enum_category, T>
     {
         using enum_type = std::underlying_type_t<T>;
-        constexpr static auto data{ combine("enum(", to_utf8<T>(), ";", signature<enum_type>::data, ")") };
+        constexpr static auto data{ combine("enum(", name_v<T>, ";", signature<enum_type>::data, ")") };
     };
 
     template <typename... Fields, typename T>
     struct category_signature<struct_category<Fields...>, T>
     {
-        constexpr static auto data{ combine("struct(", to_utf8<T>(), ";", arg_collection<Fields...>::data, ")") };
+        constexpr static auto data{ combine("struct(", name_v<T>, ";", arg_collection<Fields...>::data, ")") };
     };
 
     template <typename T>
     struct category_signature<class_category, T>
     {
-        constexpr static auto data{ combine("rc(", to_utf8<T>(), ";", signature<winrt::default_interface<T>>::data, ")") };
+        constexpr static auto data{ combine("rc(", name_v<T>, ";", signature<winrt::default_interface<T>>::data, ")") };
     };
 
     template <typename... Args, typename T>
@@ -641,25 +591,4 @@ namespace winrt::impl
     {
         constexpr static auto data{ combine("delegate(", to_array<char>(guid_of<T>()), ")") };
     };
-
-    template <size_t Size>
-    constexpr std::wstring_view to_wstring_view(std::array<wchar_t, Size> const& value) noexcept
-    {
-        return { value.data(), Size - 1 };
-    }
-
-    template <size_t Size>
-    constexpr std::wstring_view to_wstring_view(wchar_t const (&value)[Size]) noexcept
-    {
-        return { value, Size - 1 };
-    }
-}
-
-WINRT_EXPORT namespace winrt
-{
-    template <typename T>
-    auto name_of() noexcept
-    {
-        return hstring(impl::to_wstring_view(impl::name_v<T>));
-    }
 }
