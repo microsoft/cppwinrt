@@ -642,15 +642,15 @@ WINRT_EXPORT namespace winrt
 namespace winrt::impl
 {
     template <size_t Size>
-    hstring literal_to_hstring(std::array<char, Size> const& value) noexcept
+    hstring literal_to_hstring(std::array<char_type, Size> const& value) noexcept
     {
-        return to_hstring(std::string_view(value.data(), Size - 1));
+        return to_hstring(std::string_view(reinterpret_cast<char const*>(value.data()), Size - 1));
     }
 
     template <size_t Size>
-    hstring literal_to_hstring(char const (&value)[Size]) noexcept
+    hstring literal_to_hstring(char_type const (&value)[Size]) noexcept
     {
-        return to_hstring(std::string_view(value, Size - 1));
+        return to_hstring(std::string_view(reinterpret_cast<char const*>(value), Size - 1));
     }
 }
 

@@ -19,6 +19,12 @@ WINRT_EXPORT namespace winrt
 
 namespace winrt::impl
 {
+#ifdef __cpp_char8_t
+    using char_type = char8_t;
+#else
+    using char_type = char;
+#endif
+
     template <size_t Size, typename T, size_t... Index>
     constexpr std::array<T, Size> to_array(T const* value, std::index_sequence<Index...> const) noexcept
     {
@@ -32,7 +38,7 @@ namespace winrt::impl
     }
 
     template <size_t Size>
-    constexpr auto to_array(char const(&value)[Size]) noexcept
+    constexpr auto to_array(char_type const(&value)[Size]) noexcept
     {
         return to_array<Size - 1>(value, std::make_index_sequence<Size - 1>());
     }
@@ -427,7 +433,7 @@ namespace winrt::impl
     }
 
     template <size_t Size>
-    constexpr guid generate_guid(std::array<char, Size> const& value) noexcept
+    constexpr guid generate_guid(std::array<char_type, Size> const& value) noexcept
     {
         guid namespace_guid = { 0xd57af411, 0x737b, 0xc042,{ 0xab, 0xae, 0x87, 0x8b, 0x1e, 0x16, 0xad, 0xee } };
 
@@ -441,7 +447,7 @@ namespace winrt::impl
     template <typename TArg, typename... TRest>
     struct arg_collection
     {
-        constexpr static auto data{ combine(to_array(signature<TArg>::data), ";", arg_collection<TRest...>::data) };
+        constexpr static auto data{ combine(to_array(signature<TArg>::data), u8";", arg_collection<TRest...>::data) };
     };
 
     template <typename TArg>
@@ -467,8 +473,8 @@ namespace winrt::impl
     {
         combine
         (
-            to_array<char>(guid_of<T>()),
-            std::array<char, 1>{ '\0' }
+            to_array<char_type>(guid_of<T>()),
+            std::array<char_type, 1>{ '\0' }
         )
     };
 
@@ -491,44 +497,44 @@ namespace winrt::impl
     constexpr guid generic_guid_v{};
 
     template <typename T>
-    constexpr auto& basic_signature_v = "";
+    constexpr auto& basic_signature_v = u8"";
 
-    template <> inline constexpr auto& basic_signature_v<bool> = "b1";
-    template <> inline constexpr auto& basic_signature_v<int8_t> = "i1";
-    template <> inline constexpr auto& basic_signature_v<int16_t> = "i2";
-    template <> inline constexpr auto& basic_signature_v<int32_t> = "i4";
-    template <> inline constexpr auto& basic_signature_v<int64_t> = "i8";
-    template <> inline constexpr auto& basic_signature_v<uint8_t> = "u1";
-    template <> inline constexpr auto& basic_signature_v<uint16_t> = "u2";
-    template <> inline constexpr auto& basic_signature_v<uint32_t> = "u4";
-    template <> inline constexpr auto& basic_signature_v<uint64_t> = "u8";
-    template <> inline constexpr auto& basic_signature_v<float> = "f4";
-    template <> inline constexpr auto& basic_signature_v<double> = "f8";
-    template <> inline constexpr auto& basic_signature_v<char16_t> = "c2";
-    template <> inline constexpr auto& basic_signature_v<guid> = "g16";
-    template <> inline constexpr auto& basic_signature_v<hstring> = "string";
-    template <> inline constexpr auto& basic_signature_v<Windows::Foundation::IInspectable> = "cinterface(IInspectable)";
+    template <> inline constexpr auto& basic_signature_v<bool> = u8"b1";
+    template <> inline constexpr auto& basic_signature_v<int8_t> = u8"i1";
+    template <> inline constexpr auto& basic_signature_v<int16_t> = u8"i2";
+    template <> inline constexpr auto& basic_signature_v<int32_t> = u8"i4";
+    template <> inline constexpr auto& basic_signature_v<int64_t> = u8"i8";
+    template <> inline constexpr auto& basic_signature_v<uint8_t> = u8"u1";
+    template <> inline constexpr auto& basic_signature_v<uint16_t> = u8"u2";
+    template <> inline constexpr auto& basic_signature_v<uint32_t> = u8"u4";
+    template <> inline constexpr auto& basic_signature_v<uint64_t> = u8"u8";
+    template <> inline constexpr auto& basic_signature_v<float> = u8"f4";
+    template <> inline constexpr auto& basic_signature_v<double> = u8"f8";
+    template <> inline constexpr auto& basic_signature_v<char16_t> = u8"c2";
+    template <> inline constexpr auto& basic_signature_v<guid> = u8"g16";
+    template <> inline constexpr auto& basic_signature_v<hstring> = u8"string";
+    template <> inline constexpr auto& basic_signature_v<Windows::Foundation::IInspectable> = u8"cinterface(IInspectable)";
 
-    template <> inline constexpr auto& name_v<bool> = "Boolean";
-    template <> inline constexpr auto& name_v<int8_t> = "Int8";
-    template <> inline constexpr auto& name_v<int16_t> = "Int16";
-    template <> inline constexpr auto& name_v<int32_t> = "Int32";
-    template <> inline constexpr auto& name_v<int64_t> = "Int64";
-    template <> inline constexpr auto& name_v<uint8_t> = "UInt8";
-    template <> inline constexpr auto& name_v<uint16_t> = "UInt16";
-    template <> inline constexpr auto& name_v<uint32_t> = "UInt32";
-    template <> inline constexpr auto& name_v<uint64_t> = "UInt64";
-    template <> inline constexpr auto& name_v<float> = "Single";
-    template <> inline constexpr auto& name_v<double> = "Double";
-    template <> inline constexpr auto& name_v<char16_t> = "Char16";
-    template <> inline constexpr auto& name_v<guid> = "Guid";
-    template <> inline constexpr auto& name_v<hstring> = "String";
-    template <> inline constexpr auto& name_v<hresult> = "Windows.Foundation.HResult";
-    template <> inline constexpr auto& name_v<event_token> = "Windows.Foundation.EventRegistrationToken";
-    template <> inline constexpr auto& name_v<Windows::Foundation::IInspectable> = "Object";
-    template <> inline constexpr auto& name_v<Windows::Foundation::TimeSpan> = "Windows.Foundation.TimeSpan";
-    template <> inline constexpr auto& name_v<Windows::Foundation::DateTime> = "Windows.Foundation.DateTime";
-    template <> inline constexpr auto& name_v<IAgileObject> = "IAgileObject";
+    template <> inline constexpr auto& name_v<bool> = u8"Boolean";
+    template <> inline constexpr auto& name_v<int8_t> = u8"Int8";
+    template <> inline constexpr auto& name_v<int16_t> = u8"Int16";
+    template <> inline constexpr auto& name_v<int32_t> = u8"Int32";
+    template <> inline constexpr auto& name_v<int64_t> = u8"Int64";
+    template <> inline constexpr auto& name_v<uint8_t> = u8"UInt8";
+    template <> inline constexpr auto& name_v<uint16_t> = u8"UInt16";
+    template <> inline constexpr auto& name_v<uint32_t> = u8"UInt32";
+    template <> inline constexpr auto& name_v<uint64_t> = u8"UInt64";
+    template <> inline constexpr auto& name_v<float> = u8"Single";
+    template <> inline constexpr auto& name_v<double> = u8"Double";
+    template <> inline constexpr auto& name_v<char16_t> = u8"Char16";
+    template <> inline constexpr auto& name_v<guid> = u8"Guid";
+    template <> inline constexpr auto& name_v<hstring> = u8"String";
+    template <> inline constexpr auto& name_v<hresult> = u8"Windows.Foundation.HResult";
+    template <> inline constexpr auto& name_v<event_token> = u8"Windows.Foundation.EventRegistrationToken";
+    template <> inline constexpr auto& name_v<Windows::Foundation::IInspectable> = u8"Object";
+    template <> inline constexpr auto& name_v<Windows::Foundation::TimeSpan> = u8"Windows.Foundation.TimeSpan";
+    template <> inline constexpr auto& name_v<Windows::Foundation::DateTime> = u8"Windows.Foundation.DateTime";
+    template <> inline constexpr auto& name_v<IAgileObject> = u8"IAgileObject";
 
     template <> struct category<bool> { using type = basic_category; };
     template <> struct category<int8_t> { using type = basic_category; };
@@ -559,36 +565,36 @@ namespace winrt::impl
     struct category_signature<enum_category, T>
     {
         using enum_type = std::underlying_type_t<T>;
-        constexpr static auto data{ combine("enum(", name_v<T>, ";", signature<enum_type>::data, ")") };
+        constexpr static auto data{ combine(u8"enum(", name_v<T>, u8";", signature<enum_type>::data, u8")") };
     };
 
     template <typename... Fields, typename T>
     struct category_signature<struct_category<Fields...>, T>
     {
-        constexpr static auto data{ combine("struct(", name_v<T>, ";", arg_collection<Fields...>::data, ")") };
+        constexpr static auto data{ combine(u8"struct(", name_v<T>, u8";", arg_collection<Fields...>::data, u8")") };
     };
 
     template <typename T>
     struct category_signature<class_category, T>
     {
-        constexpr static auto data{ combine("rc(", name_v<T>, ";", signature<winrt::default_interface<T>>::data, ")") };
+        constexpr static auto data{ combine(u8"rc(", name_v<T>, u8";", signature<winrt::default_interface<T>>::data, u8")") };
     };
 
     template <typename... Args, typename T>
     struct category_signature<generic_category<Args...>, T>
     {
-        constexpr static auto data{ combine("pinterface(", to_array<char>(generic_guid_v<T>), ";", arg_collection<Args...>::data, ")") };
+        constexpr static auto data{ combine(u8"pinterface(", to_array<char_type>(generic_guid_v<T>), u8";", arg_collection<Args...>::data, u8")") };
     };
 
     template <typename T>
     struct category_signature<interface_category, T>
     {
-        constexpr static auto data{ to_array<char>(guid_of<T>()) };
+        constexpr static auto data{ to_array<char_type>(guid_of<T>()) };
     };
 
     template <typename T>
     struct category_signature<delegate_category, T>
     {
-        constexpr static auto data{ combine("delegate(", to_array<char>(guid_of<T>()), ")") };
+        constexpr static auto data{ combine(u8"delegate(", to_array<char_type>(guid_of<T>()), u8")") };
     };
 }
