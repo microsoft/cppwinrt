@@ -7,7 +7,7 @@ using namespace Windows::Foundation::Numerics;
 using namespace std::literals;
 
 #define REQUIRE_EQUAL_GUID(left, ...) STATIC_REQUIRE(equal(make_guid(left), guid_of<__VA_ARGS__>()));
-#define REQUIRE_EQUAL_NAME(left, ...) STATIC_REQUIRE(left == name_of<__VA_ARGS__>());
+#define REQUIRE_EQUAL_NAME(left, ...) REQUIRE(left == name_of<__VA_ARGS__>());
 
 namespace
 {

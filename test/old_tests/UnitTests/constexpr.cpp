@@ -38,7 +38,7 @@ TEST_CASE("constexpr")
 
     REQUIRE(winrt::name_of<winrt_container>() == midl_container::z_get_rc_name_impl());
 
-    constexpr auto name = winrt::name_of<winrt::guid>();
+    auto name = winrt::name_of<winrt::guid>();
     REQUIRE(name == L"Guid");
 
     check_terminated(winrt::name_of<winrt::IInspectable>());

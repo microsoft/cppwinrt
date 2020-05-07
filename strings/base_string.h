@@ -638,3 +638,27 @@ WINRT_EXPORT namespace winrt
         return result;
     }
 }
+
+namespace winrt::impl
+{
+    template <size_t Size>
+    hstring literal_to_hstring(std::array<char_type, Size> const& value) noexcept
+    {
+        return to_hstring(std::string_view(reinterpret_cast<char const*>(value.data()), Size - 1));
+    }
+
+    template <size_t Size>
+    hstring literal_to_hstring(char_type const (&value)[Size]) noexcept
+    {
+        return to_hstring(std::string_view(reinterpret_cast<char const*>(value), Size - 1));
+    }
+}
+
+WINRT_EXPORT namespace winrt
+{
+    template <typename T>
+    hstring name_of() noexcept
+    {
+        return impl::literal_to_hstring(impl::name_v<T>);
+    }
+}

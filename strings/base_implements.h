@@ -419,7 +419,7 @@ namespace winrt::impl
     {
         static hstring get()
         {
-            return hstring{ name_of<I>() };
+            return name_of<I>();
         }
     };
 
