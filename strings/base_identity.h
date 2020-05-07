@@ -501,7 +501,7 @@ namespace winrt::impl
     template <> inline constexpr auto& basic_signature_v<uint8_t> = "u1";
     template <> inline constexpr auto& basic_signature_v<uint16_t> = "u2";
     template <> inline constexpr auto& basic_signature_v<uint32_t> = "u4";
-    template <> inline constexpr auto& basic_signature_v<uint64_t> = "";
+    template <> inline constexpr auto& basic_signature_v<uint64_t> = "u8";
     template <> inline constexpr auto& basic_signature_v<float> = "f4";
     template <> inline constexpr auto& basic_signature_v<double> = "f8";
     template <> inline constexpr auto& basic_signature_v<char16_t> = "c2";
