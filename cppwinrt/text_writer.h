@@ -145,10 +145,10 @@ namespace cppwinrt
             std::swap(m_second, m_first);
         }
 
-        void flush_to_console() noexcept
+        void flush_to_console(bool to_stdout = true) noexcept
         {
-            printf("%.*s", static_cast<int>(m_first.size()), m_first.data());
-            printf("%.*s", static_cast<int>(m_second.size()), m_second.data());
+            fprintf(to_stdout ? stdout : stderr, "%.*s", static_cast<int>(m_first.size()), m_first.data());
+            fprintf(to_stdout ? stdout : stderr, "%.*s", static_cast<int>(m_second.size()), m_second.data());
             m_first.clear();
             m_second.clear();
         }
