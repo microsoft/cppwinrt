@@ -363,7 +363,7 @@ Where <spec> is one or more of:
         }
         catch (std::exception const& e)
         {
-            w.write(" error: %\n", e.what());
+            w.write("cppwinrt : error %\n", e.what());
             result = 1;
         }
 
