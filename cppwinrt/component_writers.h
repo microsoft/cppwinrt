@@ -106,7 +106,7 @@ namespace cppwinrt
         if (settings.component_opt)
         {
             auto format = R"(
-    if (requal(name, L"%.%"))
+    if (requal(name, "%.%"))
     {
         return winrt_make_%();
     }
@@ -120,7 +120,7 @@ namespace cppwinrt
         else
         {
             auto format = R"(
-    if (requal(name, L"%.%"))
+    if (requal(name, "%.%"))
     {
         return winrt::detach_abi(winrt::make<winrt::@::factory_implementation::%>());
     }
@@ -149,9 +149,11 @@ bool __stdcall %_can_unload_now() noexcept
     return true;
 }
 
-void* __stdcall %_get_activation_factory([[maybe_unused]] std::wstring_view const& name)
+void* __stdcall %_get_activation_factory([[maybe_unused]] std::wstring_view const& wname)
 {
-    auto requal = [](std::wstring_view const& left, std::wstring_view const& right) noexcept
+    auto name = winrt::to_string(wname);
+
+    auto requal = [](std::string_view const& left, std::string_view const& right) noexcept
     {
         return std::equal(left.rbegin(), left.rend(), right.rbegin(), right.rend());
     };
@@ -750,7 +752,7 @@ catch (...) { return winrt::to_hresult(); }
         %
         hstring GetRuntimeClassName() const
         {
-            return L"%.%";
+            return name_of<class_type>();
         }
 %%%%    };
 }
@@ -820,8 +822,6 @@ catch (...) { return winrt::to_hresult(); }
                 type_name,
                 type_name,
                 composable_base_name,
-                type_namespace,
-                type_name,
                 bind<write_component_class_override_constructors>(type),
                 bind<write_component_override_dispatch_base>(type),
                 bind<write_component_base_call>(type),
@@ -839,7 +839,7 @@ catch (...) { return winrt::to_hresult(); }
 
         hstring GetRuntimeClassName() const
         {
-            return L"%.%";
+            return name_of<instance_type>();
         }
 %    };
 }
@@ -849,8 +849,6 @@ catch (...) { return winrt::to_hresult(); }
                 type_namespace,
                 type_name,
                 bind<write_component_factory_interfaces>(factories),
-                type_namespace,
-                type_name,
                 type_namespace,
                 type_name,
                 bind<write_component_forwarders>(factories));
