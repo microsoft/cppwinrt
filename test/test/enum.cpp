@@ -9,8 +9,8 @@ TEST_CASE("enum")
     STATIC_REQUIRE(std::is_same_v<std::underlying_type_t<Signed>, int32_t>);
     STATIC_REQUIRE(std::is_same_v<std::underlying_type_t<Unsigned>, uint32_t>);
 
-    REQUIRE(name_of<Signed>() == L"test_component.Signed"sv);
-    REQUIRE(name_of<Unsigned>() == L"test_component.Unsigned"sv);
+    STATIC_REQUIRE(name_of<Signed>() == L"test_component.Signed"sv);
+    STATIC_REQUIRE(name_of<Unsigned>() == L"test_component.Unsigned"sv);
 
     REQUIRE(((Unsigned::First | Unsigned::Second | Unsigned::Third) & Unsigned::Second) == Unsigned::Second);
 

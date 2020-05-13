@@ -26,9 +26,6 @@ WINRT_EXPORT namespace winrt
     struct hstring;
     struct clock;
 
-    template <typename T>
-    hstring name_of() noexcept;
-
     struct hresult
     {
         int32_t value{};

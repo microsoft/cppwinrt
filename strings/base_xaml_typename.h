@@ -4,7 +4,7 @@ namespace winrt::impl
     template <typename T>
     struct xaml_typename_name
     {
-        static hstring value() noexcept
+        static constexpr std::wstring_view value() noexcept
         {
             return name_of<T>();
         }
@@ -12,41 +12,41 @@ namespace winrt::impl
     template <>
     struct xaml_typename_name<Windows::Foundation::Point>
     {
-        static hstring value() noexcept
+        static constexpr std::wstring_view value() noexcept
         {
-            return L"Point";
+            return L"Point"sv;
         }
     };
     template <>
     struct xaml_typename_name<Windows::Foundation::Size>
     {
-        static hstring value() noexcept
+        static constexpr std::wstring_view value() noexcept
         {
-            return L"Size";
+            return L"Size"sv;
         }
     };
     template <>
     struct xaml_typename_name<Windows::Foundation::Rect>
     {
-        static hstring value() noexcept
+        static constexpr std::wstring_view value() noexcept
         {
-            return L"Rect";
+            return L"Rect"sv;
         }
     };
     template <>
     struct xaml_typename_name<Windows::Foundation::DateTime>
     {
-        static hstring value() noexcept
+        static constexpr std::wstring_view value() noexcept
         {
-            return L"DateTime";
+            return L"DateTime"sv;
         }
     };
     template <>
     struct xaml_typename_name<Windows::Foundation::TimeSpan>
     {
-        static hstring value() noexcept
+        static constexpr std::wstring_view value() noexcept
         {
-            return L"TimeSpan";
+            return L"TimeSpan"sv;
         }
     };
 
@@ -133,7 +133,7 @@ WINRT_EXPORT namespace winrt
     inline Windows::UI::Xaml::Interop::TypeName xaml_typename()
     {
         static_assert(impl::has_category_v<T>, "T must be WinRT type.");
-        static const Windows::UI::Xaml::Interop::TypeName name{ impl::xaml_typename_name<T>::value(), impl::xaml_typename_kind<T>::value };
+        static const Windows::UI::Xaml::Interop::TypeName name{ hstring{ impl::xaml_typename_name<T>::value() }, impl::xaml_typename_kind<T>::value };
         return name;
     }
 }
