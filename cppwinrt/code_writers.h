@@ -353,7 +353,7 @@ namespace cppwinrt
             }
             else
             {
-                w.write(R"(, u8", ")");
+                w.write(R"(, L", ")");
             }
             w.write(", name_v<%>", param.Name());
         }
@@ -366,14 +366,14 @@ namespace cppwinrt
 
         if (empty(generics))
         {
-            auto format = R"(    template <> inline constexpr auto& name_v<%> = u8"%.%";
+            auto format = R"(    template <> inline constexpr auto& name_v<%> = L"%.%";
 )";
 
             w.write(format, type, type_name.name_space, type_name.name);
         }
         else
         {
-            auto format = R"(    template <%> inline constexpr auto name_v<%> = zcombine(u8"%.%<"%, u8">");
+            auto format = R"(    template <%> inline constexpr auto name_v<%> = zcombine(L"%.%<"%, L">");
 )";
 
             w.write(format,

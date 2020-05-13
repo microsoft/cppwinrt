@@ -3,7 +3,7 @@
 #include <string_view>
 
 template <typename CharT>
-bool string_view_equal(std::basic_string_view<CharT> left, std::basic_string_view<CharT> right) noexcept
+inline constexpr bool string_view_equal(std::basic_string_view<CharT> left, std::basic_string_view<CharT> right) noexcept
 {
     if (left.size() != right.size())
     {
