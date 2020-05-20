@@ -1,3 +1,7 @@
 <Project>
   <Import Project="..\build\native\Microsoft.Windows.CppWinRT.targets" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'" />
+
+  <Target Name="_WarnCppWinRT" BeforeTargets="BeforeBuild" Condition="'$(MSBuildProjectExtension)' != '.vcxproj' and '$(CppWinRTNoWarn)' == ''">
+    <Warning Text="The Microsoft.Windows.CppWinRT NuGet SDK is ignored in non-C++ projects. Define the CppWinRTNoWarn property to silence this warning." />
+  </Target>
 </Project>
