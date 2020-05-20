@@ -19,7 +19,7 @@ namespace Microsoft.Windows.CppWinRT
         {
             string text = $"{ex.GetType().FullName}: {ex.Message}\r\n\r\n{ex.StackTrace}";
             MessageBox.Show(text, "Caught Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            throw new WizardBackoutException();
+            throw new WizardCancelledException();
         }
 
         public void BeforeOpeningFile(DTEProjectItem projectItem)
