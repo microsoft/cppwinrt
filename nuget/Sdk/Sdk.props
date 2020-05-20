@@ -1,3 +1,7 @@
 <Project>
+  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.vcxproj'>
+    <CppWinRTDisableAutoNuGetReference>true</CppWinRTDisableAutoNuGetReference>
+  </PropertyGroup>
+
   <Import Project="..\build\native\Microsoft.Windows.CppWinRT.props" Condition="'$(MSBuildProjectExtension)' == '.vcxproj'" />
 </Project>
