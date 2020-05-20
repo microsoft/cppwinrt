@@ -116,13 +116,13 @@ namespace Microsoft.Windows.CppWinRT
             try
             {
                 if (wizardImpl != null) return wizardImpl.ShouldAddProjectItem(filePath);
-                else return true;
             }
             catch (Exception ex)
             {
                 ShowExceptionDialog(ex);
-                throw; // technically not reached
             }
+
+            return true;
         }
     }
 }
