@@ -25,6 +25,8 @@
     <file src="Microsoft.Windows.CppWinRT.props" target="build\native"/>
     <file src="Microsoft.Windows.CppWinRT.targets" target="build\native"/>
     <file src="CppWinrtRules.Project.xml" target="build\native"/>
+    <file src="Sdk\Sdk.props" target="Sdk" />
+    <file src="Sdk\Sdk.targets" target="Sdk" />
     <file src="readme.txt"/>
   </files>
 </package>
