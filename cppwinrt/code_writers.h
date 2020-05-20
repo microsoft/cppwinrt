@@ -413,6 +413,7 @@ namespace cppwinrt
         }
 
         auto generics = type.GenericParam();
+        auto guid = attribute.Value().FixedArgs();
 
         if (empty(generics))
         {
@@ -421,8 +422,8 @@ namespace cppwinrt
 
             w.write(format,
                 type,
-                bind<write_guid_value>(attribute.Value().FixedArgs()),
-                bind<write_guid_comment>(attribute.Value().FixedArgs()));
+                bind<write_guid_value>(guid),
+                bind<write_guid_comment>(guid));
         }
         else
         {
@@ -436,8 +437,8 @@ namespace cppwinrt
                 type,
                 bind<write_generic_typenames>(generics),
                 type,
-                bind<write_guid_value>(attribute.Value().FixedArgs()),
-                bind<write_guid_comment>(attribute.Value().FixedArgs()));
+                bind<write_guid_value>(guid),
+                bind<write_guid_comment>(guid));
         }
     }
 
