@@ -40,8 +40,6 @@ namespace Microsoft.Windows.CppWinRT
 
             try
             {
-                VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
-
                 Project msbuildProject = new Project(project.FullName);
                 if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
                 {
