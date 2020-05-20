@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
 using Microsoft.Build.Evaluation;
 using Microsoft.VisualStudio.TemplateWizard;
-using System.Windows.Forms;
 
 using DTEProject = EnvDTE.Project;
 using DTEProjectItem = EnvDTE.ProjectItem;
@@ -15,7 +15,7 @@ namespace Microsoft.Windows.CppWinRT
     {
         private IWizard wizardImpl = null;
 
-        private void ShowExceptionDialog(Exception ex)
+        private static void ShowExceptionDialog(Exception ex)
         {
             string text = $"{ex.GetType().FullName}: {ex.Message}\r\n\r\n{ex.StackTrace}";
             MessageBox.Show(text, "Caught Exception", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -121,7 +121,7 @@ namespace Microsoft.Windows.CppWinRT
             catch (Exception ex)
             {
                 ShowExceptionDialog(ex);
-                return true; // technically not reached
+                throw; // technically not reached
             }
         }
     }
