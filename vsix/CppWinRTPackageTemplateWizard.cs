@@ -36,10 +36,10 @@ namespace Microsoft.Windows.CppWinRT
 
         public void ProjectFinishedGenerating(DTEProject project)
         {
+            VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
+
             try
             {
-                VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
-
                 Project msbuildProject = new Project(project.FullName);
 
                 // Forward the call to the NuGet wizard, unless it has been explicitly disabled.
