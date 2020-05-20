@@ -40,7 +40,7 @@ namespace Microsoft.Windows.CppWinRT
 
             try
             {
-                Project msbuildProject = new Project(project.FullName);
+                var msbuildProject = new Project(project.FullName);
 
                 // Forward the call to the NuGet wizard, unless it has been explicitly disabled.
                 if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("false", StringComparison.OrdinalIgnoreCase))
@@ -61,7 +61,7 @@ namespace Microsoft.Windows.CppWinRT
 
             try
             {
-                Project msbuildProject = new Project(projectItem.ContainingProject.FullName);
+                var msbuildProject = new Project(projectItem.ContainingProject.FullName);
 
                 // Forward the call to the NuGet wizard, unless it has been explicitly disabled.
                 if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("false", StringComparison.OrdinalIgnoreCase))
