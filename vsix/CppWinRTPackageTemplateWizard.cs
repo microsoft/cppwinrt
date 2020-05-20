@@ -40,13 +40,18 @@ namespace Microsoft.Windows.CppWinRT
 
             try
             {
-                var msbuildProject = new Project(project.FullName);
+                VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
-                // Forward the call to the NuGet wizard, unless it has been explicitly disabled.
-                if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("false", StringComparison.OrdinalIgnoreCase))
+                Project msbuildProject = new Project(project.FullName);
+                if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Don't forward this call to the NuGet wizard, as it has been explicitly disabled.
+                }
+                else
                 {
                     wizardImpl?.ProjectFinishedGenerating(project);
                 }
+
                 ProjectCollection.GlobalProjectCollection.UnloadProject(msbuildProject);
             }
             catch (Exception ex)
@@ -61,10 +66,13 @@ namespace Microsoft.Windows.CppWinRT
 
             try
             {
-                var msbuildProject = new Project(projectItem.ContainingProject.FullName);
-
-                // Forward the call to the NuGet wizard, unless it has been explicitly disabled.
-                if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("false", StringComparison.OrdinalIgnoreCase))
+                Project msbuildProject = new Project(projectItem.ContainingProject.FullName);
+                if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
+                {
+                    // Don't forward this call to the NuGet wizard, as it has been explicitly disabled.
+                    // NuGet packages are also installed in ProjectItemFinishedGenerating().
+                }
+                else
                 {
                     wizardImpl?.ProjectItemFinishedGenerating(projectItem);
                 }
