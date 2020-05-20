@@ -41,15 +41,12 @@ namespace Microsoft.Windows.CppWinRT
                 VisualStudio.Shell.ThreadHelper.ThrowIfNotOnUIThread();
 
                 Project msbuildProject = new Project(project.FullName);
-                if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
-                {
-                    // Don't forward this call to the NuGet wizard, as it has been explicitly disabled.
-                }
-                else
+
+                // Forward the call to the NuGet wizard, unless it has been explicitly disabled.
+                if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("false", StringComparison.OrdinalIgnoreCase))
                 {
                     wizardImpl?.ProjectFinishedGenerating(project);
                 }
-
                 ProjectCollection.GlobalProjectCollection.UnloadProject(msbuildProject);
             }
             catch (Exception ex)
@@ -65,12 +62,9 @@ namespace Microsoft.Windows.CppWinRT
             try
             {
                 Project msbuildProject = new Project(projectItem.ContainingProject.FullName);
-                if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("true", StringComparison.OrdinalIgnoreCase))
-                {
-                    // Don't forward this call to the NuGet wizard, as it has been explicitly disabled.
-                    // NuGet packages are also installed in ProjectItemFinishedGenerating().
-                }
-                else
+
+                // Forward the call to the NuGet wizard, unless it has been explicitly disabled.
+                if (msbuildProject.GetPropertyValue("CppWinRTDisableAutoNuGetReference").Equals("false", StringComparison.OrdinalIgnoreCase))
                 {
                     wizardImpl?.ProjectItemFinishedGenerating(projectItem);
                 }
