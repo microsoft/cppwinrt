@@ -14,6 +14,9 @@
     <license type="file">LICENSE</license>
     <projectUrl>https://github.com/Microsoft/cppwinrt</projectUrl>
     <iconUrl>https://aka.ms/cppwinrt.ico</iconUrl>
+    <packageTypes>
+      <packageType name="MSBuildSdk" />
+    </packageTypes>
   </metadata>
   <files>
     <file src="..\LICENSE"/>
