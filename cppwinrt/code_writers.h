@@ -318,6 +318,24 @@ namespace cppwinrt
             get<uint8_t>(get<ElemSig>(args[10].value).value));
     }
 
+    static void write_guid_comment(writer& w, std::vector<FixedArgSig> const& args)
+    {
+        using std::get;
+
+        w.write_printf("%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X",
+            get<uint32_t>(get<ElemSig>(args[0].value).value),
+            get<uint16_t>(get<ElemSig>(args[1].value).value),
+            get<uint16_t>(get<ElemSig>(args[2].value).value),
+            get<uint8_t>(get<ElemSig>(args[3].value).value),
+            get<uint8_t>(get<ElemSig>(args[4].value).value),
+            get<uint8_t>(get<ElemSig>(args[5].value).value),
+            get<uint8_t>(get<ElemSig>(args[6].value).value),
+            get<uint8_t>(get<ElemSig>(args[7].value).value),
+            get<uint8_t>(get<ElemSig>(args[8].value).value),
+            get<uint8_t>(get<ElemSig>(args[9].value).value),
+            get<uint8_t>(get<ElemSig>(args[10].value).value));
+    }
+
     static void write_category(writer& w, TypeDef const& type, std::string_view const& category)
     {
         auto generics = type.GenericParam();
@@ -395,20 +413,22 @@ namespace cppwinrt
         }
 
         auto generics = type.GenericParam();
+        auto guid = attribute.Value().FixedArgs();
 
         if (empty(generics))
         {
-            auto format = R"(    template <> inline constexpr guid guid_v<%>{ % };
+            auto format = R"(    template <> inline constexpr guid guid_v<%>{ % }; // %
 )";
 
             w.write(format,
                 type,
-                bind<write_guid_value>(attribute.Value().FixedArgs()));
+                bind<write_guid_value>(guid),
+                bind<write_guid_comment>(guid));
         }
         else
         {
             auto format = R"(    template <%> inline constexpr guid guid_v<%>{ pinterface_guid<%>::value };
-    template <%> inline constexpr guid generic_guid_v<%>{ % };
+    template <%> inline constexpr guid generic_guid_v<%>{ % }; // %
 )";
 
             w.write(format,
@@ -417,7 +437,8 @@ namespace cppwinrt
                 type,
                 bind<write_generic_typenames>(generics),
                 type,
-                bind<write_guid_value>(attribute.Value().FixedArgs()));
+                bind<write_guid_value>(guid),
+                bind<write_guid_comment>(guid));
         }
     }
 
