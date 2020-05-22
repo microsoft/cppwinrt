@@ -1,5 +1,5 @@
 <Project>
-  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.vcxproj'>
+  <PropertyGroup Condition="'$(MSBuildProjectExtension)' == '.vcxproj'">
     <CppWinRTDisableAutoNuGetReference>true</CppWinRTDisableAutoNuGetReference>
   </PropertyGroup>
 
