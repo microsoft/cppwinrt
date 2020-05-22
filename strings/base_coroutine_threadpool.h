@@ -39,14 +39,39 @@ namespace winrt::impl
         return 0;
     };
 
+    inline auto resume_context(com_ptr<IContextCallback> const& context, std::experimental::coroutine_handle<> handle)
+    {
+        com_callback_args args{};
+        args.data = handle.address();
+
+        check_hresult(context->ContextCallback(resume_apartment_callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
+    }
+
     inline auto resume_apartment(com_ptr<IContextCallback> const& context, std::experimental::coroutine_handle<> handle)
     {
         if (context)
         {
-            com_callback_args args{};
-            args.data = handle.address();
-
-            check_hresult(context->ContextCallback(resume_apartment_callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
+            if (requires_apartment_context())
+            {
+                struct params
+                {
+                    com_ptr<IContextCallback> context;
+                    std::experimental::coroutine_handle<> handle;
+                };
+                params p{ context, handle };
+                if (!WINRT_IMPL_TrySubmitThreadpoolCallback([](void*, void* context) -> void
+                    {
+                        params p = *reinterpret_cast<params*>(context);
+                        resume_context(p.context, p.handle);
+                    }, &p, nullptr))
+                {
+                    throw_last_error();
+                }
+            }
+            else
+            {
+                resume_context(context, handle);
+            }
         }
         else
         {
