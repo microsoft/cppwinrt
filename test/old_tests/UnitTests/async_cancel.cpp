@@ -58,6 +58,60 @@ namespace
         REQUIRE(!signaled(callback));
         co_await resume_on_signal(end.get());
     }
+
+    // Other projections report cancellation via the Completed handler and Status,
+    // rather than via ErrorCode and GetResults. Verify we interop cancellation properly.
+    template<typename T, typename Async>
+    struct foreign_canceled_async : implements<T, Async, IAsyncInfo>
+    {
+        template<typename Handler>
+        void Completed(Handler&& complete)
+        {
+            complete(*this, AsyncStatus::Canceled);
+        }
+
+        auto Completed() const noexcept
+        {
+            return nullptr;
+        }
+
+        uint32_t Id() const noexcept
+        {
+            return 1;
+        }
+
+        AsyncStatus Status() const noexcept
+        {
+            return AsyncStatus::Canceled;
+        }
+
+        hresult ErrorCode() const noexcept
+        {
+            return impl::error_illegal_method_call;
+        }
+
+        decltype(std::declval<Async>().GetResults()) GetResults() const
+        {
+            throw_hresult(ErrorCode());
+        }
+
+        void Cancel() const noexcept
+        {
+        }
+
+        void Close() const noexcept
+        {
+        }
+    };
+
+    struct foreign_canceled_action : foreign_canceled_async<foreign_canceled_action, IAsyncAction>
+    {
+    };
+
+    template<typename TResult>
+    struct foreign_canceled_operation : foreign_canceled_async<foreign_canceled_operation<TResult>, IAsyncOperation<TResult>>
+    {
+    };
 }
 
 TEST_CASE("async_cancel_no_async")
@@ -98,4 +152,34 @@ TEST_CASE("async_cancel_after_callback")
     SetEvent(end.get());
     wait(callback);
     REQUIRE(async.Status() == AsyncStatus::Canceled);
+}
+
+TEST_CASE("async_cancel_use_status")
+{
+    // Validate that co_await preserves cancellation.
+    handle complete{ CreateEvent(nullptr, true, false, nullptr) };
+    [](void* complete) -> fire_and_forget
+    {
+        REQUIRE_THROWS_AS(co_await make<foreign_canceled_action>(), hresult_canceled);
+        REQUIRE_THROWS_AS(co_await make<foreign_canceled_operation<int32_t>>(), hresult_canceled);
+
+        REQUIRE_THROWS_AS(co_await when_any(make<foreign_canceled_action>(), make<foreign_canceled_action>()), hresult_canceled);
+        REQUIRE_THROWS_AS(co_await when_any(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()), hresult_canceled);
+
+        REQUIRE_THROWS_AS(co_await when_all(make<foreign_canceled_action>(), make<foreign_canceled_action>()), hresult_canceled);
+        REQUIRE_THROWS_AS(co_await when_all(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()), hresult_canceled);
+
+        SetEvent(complete);
+    }(complete.get());
+    WaitForSingleObject(complete.get(), INFINITE);
+
+    // Validate that get() preserves cancellation.
+    REQUIRE_THROWS_AS(make<foreign_canceled_action>().get(), hresult_canceled);
+    REQUIRE_THROWS_AS(make<foreign_canceled_operation<int>>().get(), hresult_canceled);
+
+    REQUIRE_THROWS_AS(when_any(make<foreign_canceled_action>(), make<foreign_canceled_action>()).get(), hresult_canceled);
+    REQUIRE_THROWS_AS(when_any(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()).get(), hresult_canceled);
+
+    REQUIRE_THROWS_AS(when_all(make<foreign_canceled_action>(), make<foreign_canceled_action>()).get(), hresult_canceled);
+    REQUIRE_THROWS_AS(when_all(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()).get(), hresult_canceled);
 }
