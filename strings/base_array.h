@@ -257,27 +257,34 @@ WINRT_EXPORT namespace winrt
             std::uninitialized_fill_n(this->m_data, count, value);
         }
 
-        template <typename InIt> com_array(InIt first, InIt last)
+        template <typename InIt, typename = std::void_t<typename std::iterator_traits<InIt>::difference_type>>
+        com_array(InIt first, InIt last)
         {
             alloc(static_cast<size_type>(std::distance(first, last)));
             std::uninitialized_copy(first, last, this->begin());
         }
 
-        explicit com_array(std::vector<value_type> const& value) :
+        template <typename U>
+        explicit com_array(std::vector<U> const& value) :
             com_array(value.begin(), value.end())
         {}
 
-        template <size_t N>
-        explicit com_array(std::array<value_type, N> const& value) :
+        template <typename U, size_t N>
+        explicit com_array(std::array<U, N> const& value) :
             com_array(value.begin(), value.end())
         {}
 
-        template <size_type N>
-        explicit com_array(value_type const(&value)[N]) :
+        template <typename U, size_t N>
+        explicit com_array(U const(&value)[N]) :
             com_array(value, value + N)
         {}
 
         com_array(std::initializer_list<value_type> value) :
+            com_array(value.begin(), value.end())
+        {}
+
+        template <typename U, typename = std::enable_if_t<std::is_convertible_v<U, T>>>
+        com_array(std::initializer_list<U> value) :
             com_array(value.begin(), value.end())
         {}
 
@@ -339,6 +346,14 @@ WINRT_EXPORT namespace winrt
             }
         }
     };
+
+    template <typename C> com_array(uint32_t, C const&) -> com_array<std::decay_t<C>>;
+    template <typename InIt, typename = std::void_t<typename std::iterator_traits<InIt>::difference_type>>
+    com_array(InIt, InIt) -> com_array<std::decay_t<typename std::iterator_traits<InIt>::value_type>>;
+    template <typename C> com_array(std::vector<C> const&) -> com_array<std::decay_t<C>>;
+    template <size_t N, typename C> com_array(std::array<C, N> const&) -> com_array<std::decay_t<C>>;
+    template <size_t N, typename C> com_array(C const(&)[N]) -> com_array<std::decay_t<C>>;
+    template <typename C> com_array(std::initializer_list<C>) -> com_array<std::decay_t<C>>;
 
     namespace impl
     {
