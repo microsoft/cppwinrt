@@ -469,6 +469,11 @@ namespace winrt::impl
 
         auto final_suspend() noexcept
         {
+            if (winrt_suspend_handler)
+            {
+                winrt_suspend_handler(this);
+            }
+
             return final_suspend_awaiter{ this };
         }
 

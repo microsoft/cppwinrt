@@ -526,6 +526,11 @@ namespace std::experimental
 
             suspend_never final_suspend() const noexcept
             {
+                if (winrt_suspend_handler)
+                {
+                    winrt_suspend_handler(this);
+                }
+
                 return{};
             }
 
