@@ -5,6 +5,12 @@ using namespace concurrency;
 using namespace winrt;
 using namespace Windows::Foundation;
 
+struct CommaStruct
+{
+    // If the comma operator is invoked, we will get a build failure.
+    CommaStruct operator,(CommaStruct) = delete;
+};
+
 task<void> ppl(bool& done)
 {
     co_await resume_background();
@@ -45,6 +51,12 @@ TEST_CASE("when")
         IAsyncAction result = when_any(done(), done());
         result.get();
     }
+
+    // Verify edge case of empty parameter list.
+    when_all().get();
+
+    // Verify edge case of overloaded comma operator (shame on you).
+    when_all(create_task([] { return CommaStruct{}; }), create_task([] { return CommaStruct{}; })).get();
     {
         handle first_event{ check_pointer(CreateEventW(nullptr, true, false, nullptr)) };
         handle second_event{ check_pointer(CreateEventW(nullptr, true, false, nullptr)) };
