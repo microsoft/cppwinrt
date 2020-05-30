@@ -712,7 +712,7 @@ WINRT_EXPORT namespace winrt
     template <typename... T>
     Windows::Foundation::IAsyncAction when_all(T... async)
     {
-        ((co_await async, void()), ...);
+        (void(co_await async), ...);
         co_return;
     }
 
