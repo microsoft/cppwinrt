@@ -1198,6 +1198,14 @@ namespace winrt::impl
     };
 #endif
 
+    inline com_ptr<IStaticLifetimeCollection> get_static_lifetime_map()
+    {
+        auto const lifetime_factory = get_activation_factory<impl::IStaticLifetime>(L"Windows.ApplicationModel.Core.CoreApplication");
+        Windows::Foundation::IUnknown collection;
+        check_hresult(lifetime_factory->GetCollection(put_abi(collection)));
+        return collection.as<IStaticLifetimeCollection>();
+    }
+
     template <typename D>
     auto make_factory() -> typename impl::implements_default_interface<D>::type
     {
@@ -1209,10 +1217,7 @@ namespace winrt::impl
         }
         else
         {
-            auto const lifetime_factory = get_activation_factory<impl::IStaticLifetime>(L"Windows.ApplicationModel.Core.CoreApplication");
-            Windows::Foundation::IUnknown collection;
-            check_hresult(lifetime_factory->GetCollection(put_abi(collection)));
-            auto const map = collection.as<IStaticLifetimeCollection>();
+            auto const map = get_static_lifetime_map();
             param::hstring const name{ name_of<typename D::instance_type>() };
             void* result{};
             map->Lookup(get_abi(name), &result);
@@ -1302,6 +1307,16 @@ WINRT_EXPORT namespace winrt
         {
             return { new impl::heap_implements<D>(std::forward<Args>(args)...), take_ownership_from_abi };
         }
+    }
+
+    template <typename... FactoryClasses>
+    inline void clear_factory_static_lifetime()
+    {
+        auto unregister = [map = impl::get_static_lifetime_map()](param::hstring name)
+        {
+            map->Remove(get_abi(name));
+        };
+        ((unregister(name_of<typename FactoryClasses::instance_type>())), ...);
     }
 
     template <typename D, typename... I>
