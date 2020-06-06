@@ -90,3 +90,20 @@ TEST_CASE("TryLookup")
         REQUIRE(map.TryLookup(123).value() == 456);
     }
 }
+
+TEST_CASE("TryRemove")
+{
+    auto map = single_threaded_map<int, IStringable>(std::map<int, IStringable>{
+            { 123, nullptr },
+            { 124, make<stringable>(L"remove") },
+            { 125, make<stringable>(L"keep") },
+        });
+
+    REQUIRE(map.TryRemove(122) == false);
+    REQUIRE(map.TryRemove(123) == true);
+    REQUIRE(map.TryRemove(124) == true);
+
+    // Should still have one item left.
+    REQUIRE(map.Size() == 1);
+    REQUIRE(map.Lookup(125).ToString() == L"keep");
+}

@@ -93,7 +93,7 @@ TEST_CASE("produce_IMap_int32_t_hstring")
     REQUIRE(m.Size() == 2);
     m.Remove(1); // existing
     REQUIRE(m.Size() == 1);
-    m.Remove(3); // not existing
+    REQUIRE_THROWS_AS(m.Remove(3), hresult_out_of_bounds); // not existing
     REQUIRE(m.Size() == 1);
 
     m.Clear();
@@ -177,7 +177,8 @@ TEST_CASE("produce_IMap_hstring_int32_t")
     REQUIRE(m.Size() == 2);
     m.Remove(L"one"); // existing
     REQUIRE(m.Size() == 1);
-    m.Remove(L"three"); // not existing
+    REQUIRE_THROWS_AS(m.Remove(L"three"), hresult_out_of_bounds); // not existing
+    REQUIRE(!m.TryRemove(L"three")); // not existing
     REQUIRE(m.Size() == 1);
 
     m.Clear();
