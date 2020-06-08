@@ -1,4 +1,3 @@
-
 WINRT_EXPORT namespace winrt
 {
     template <typename D, typename T, typename Version = impl::no_collection_version>
@@ -415,8 +414,14 @@ WINRT_EXPORT namespace winrt
 
         void Remove(K const& key)
         {
+            auto& container = static_cast<D&>(*this).get_container();
+            auto found = container.find(static_cast<D const&>(*this).wrap_value(key));
+            if (found == container.end())
+            {
+                throw hresult_out_of_bounds();
+            }
             this->increment_version();
-            static_cast<D&>(*this).get_container().erase(static_cast<D const&>(*this).wrap_value(key));
+            container.erase(found);
         }
 
         void Clear() noexcept
