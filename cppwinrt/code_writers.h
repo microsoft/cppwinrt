@@ -1305,7 +1305,7 @@ namespace cppwinrt
         else if (type_name == "Windows.Foundation.Collections.IMapView`2")
         {
             w.write(R"(
-        auto TryLookup(param_type<K> const& key) const noexcept
+        auto TryLookup(param_type<K> const& key) const
         {
             if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
             {
@@ -1331,7 +1331,7 @@ namespace cppwinrt
         else if (type_name == "Windows.Foundation.Collections.IMap`2")
         {
             w.write(R"(
-        auto TryLookup(param_type<K> const& key) const noexcept
+        auto TryLookup(param_type<K> const& key) const
         {
             if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
             {
@@ -1353,7 +1353,7 @@ namespace cppwinrt
             }
         }
 
-        auto TryRemove(param_type<K> const& key) const noexcept
+        auto TryRemove(param_type<K> const& key) const
         {
             return 0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Remove(get_abi(key)));
         }

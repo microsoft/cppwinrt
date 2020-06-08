@@ -107,3 +107,24 @@ TEST_CASE("TryRemove")
     REQUIRE(map.Size() == 1);
     REQUIRE(map.Lookup(125).ToString() == L"keep");
 }
+
+TEST_CASE("TryLookup TryRemove error")
+{
+    // Simulate a non-agile map that is being accessed from the wrong thread.
+    // "Try" operations should throw rather than erroneously report "not found".
+    // Because they didn't even try. The operation never got off the ground.
+    struct incorrectly_used_non_agile_map : implements<incorrectly_used_non_agile_map, IMap<int, int>>
+    {
+        int Lookup(int) { throw hresult_wrong_thread(); }
+        int32_t Size() { throw hresult_wrong_thread(); }
+        bool HasKey(int) { throw hresult_wrong_thread(); }
+        IMapView<int, int> GetView() { throw hresult_wrong_thread(); }
+        bool Insert(int, int) { throw hresult_wrong_thread(); }
+        void Remove(int) { throw hresult_wrong_thread(); }
+        void Clear() { throw hresult_wrong_thread(); }
+    };
+    
+    auto map = make<incorrectly_used_non_agile_map>();
+    REQUIRE_THROWS_AS(map.TryLookup(123), hresult_wrong_thread);
+    REQUIRE_THROWS_AS(map.TryRemove(123), hresult_wrong_thread);
+}
