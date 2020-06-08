@@ -214,4 +214,10 @@ TEST_CASE("Boxing")
         REQUIRE(unbox_value_or<UnsignedEnum>(box_value(static_cast<int32_t>(UnsignedEnum::Second)), UnsignedEnum::First) == UnsignedEnum::First);
         REQUIRE(unbox_value_or<UnsignedEnum>(box_value(static_cast<uint16_t>(UnsignedEnum::Second)), UnsignedEnum::First) == UnsignedEnum::First);
     }
+
+    {
+        // Test some cases where the compiler has to choose between multiple overloads.
+        REQUIRE(unbox_value_or<IInspectable>(nullptr, {}) == IInspectable{});
+        REQUIRE(unbox_value_or(nullptr, hstring{}) == hstring{});
+    }
 }

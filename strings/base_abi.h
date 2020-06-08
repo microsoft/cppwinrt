@@ -70,8 +70,8 @@ namespace winrt::impl
         virtual int32_t __stdcall unused2() noexcept = 0;
         virtual int32_t __stdcall unused3() noexcept = 0;
         virtual int32_t __stdcall Insert(void*, void*, bool*) noexcept = 0;
+        virtual int32_t __stdcall Remove(void*) noexcept = 0;
         virtual int32_t __stdcall unused4() noexcept = 0;
-        virtual int32_t __stdcall unused5() noexcept = 0;
     };
 
     struct __declspec(novtable) IWeakReference : unknown_abi

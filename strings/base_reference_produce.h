@@ -318,7 +318,7 @@ WINRT_EXPORT namespace winrt
         }
     }
 
-    template <typename T>
+    template <typename T = hstring, std::enable_if_t<std::is_same_v<T, hstring>, int> = 0>
     hstring unbox_value_or(Windows::Foundation::IInspectable const& value, param::hstring const& default_value)
     {
         if (value)
