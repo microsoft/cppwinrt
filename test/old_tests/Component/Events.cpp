@@ -74,25 +74,51 @@ namespace winrt::Component::factory_implementation
 
     bool Events::TestStaticLifetime()
     {
+        auto GetReferenceCount = [this]()
+        {
+            AddRef();
+            return Release();
+        };
+
         // Capture current reference count.
-        AddRef();
-        auto refcount = Release();
+        auto refcount = GetReferenceCount();
 
         // Reset constructor count.
         s_constructorCount = 0;
 
-        auto self = make_self<Events>();
-        if (self.get() != this)
+        // make_self should return a reference to ourselves
+        // since we are static_lifetime.
+        if (make_self<Events>().get() != this)
         {
             return false;
         }
-        self = nullptr;
 
         // Refcount should be unchanged.
-        // Should not have been constructed spuriously.
-        AddRef();
-        auto new_refcount = Release();
+        if (refcount != GetReferenceCount())
+        {
+            return false;
+        }
 
-        return refcount == new_refcount && s_constructorCount == 0;
+        // Should not have been constructed spuriously.
+        if (s_constructorCount != 0)
+        {
+            return false;
+        }
+
+        // Clear the static lifetime. That should drop the reference count.
+        clear_factory_static_lifetime<Events>();
+        if (refcount == GetReferenceCount())
+        {
+            return false;
+        }
+
+        // Making a new object should put a different instance into
+        // the static lifetime.
+        if (make_self<Events>().get() == this)
+        {
+            return false;
+        }
+
+        return true;
     }
 }
