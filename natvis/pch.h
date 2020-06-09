@@ -20,11 +20,15 @@
 #include "base_com_ptr.h"
 #include "base_string.h"
 #include "base_string_input.h"
+#include "base_string_operators.h"
 #include "base_array.h"
 #include "base_weak_ref.h"
 #include "base_agile_ref.h"
 #include "base_error.h"
 #include "base_marshaler.h"
+#include "base_delegate.h"
+#include "base_events.h"
+#include "base_activation.h"
 #include "base_implements.h"
 #include <rometadataapi.h>
 #include <rometadata.h>
