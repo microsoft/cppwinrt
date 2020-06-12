@@ -35,7 +35,7 @@ namespace winrt::impl
     {
         // Note: A blocking wait on the UI thread for an asynchronous operation can cause a deadlock.
         // See https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/concurrency#block-the-calling-thread
-        WINRT_ASSERT(!is_sta());
+        WINRT_ASSERT(!is_sta_thread());
     }
 
     template <typename T, typename H>
@@ -119,7 +119,7 @@ namespace winrt::impl
 
     private:
         std::experimental::coroutine_handle<> m_handle;
-        com_ptr<IContextCallback> m_context = apartment_context();
+        resume_apartment_context m_context;
 
         void Complete()
         {
