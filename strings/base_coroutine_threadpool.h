@@ -50,7 +50,7 @@ namespace winrt::impl
 
     struct resume_apartment_context
     {
-        com_ptr<IContextCallback> m_context = capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext);
+        com_ptr<IContextCallback> m_context = try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext);
         int32_t m_context_type = get_apartment_type().first;
     };
 
@@ -88,33 +88,21 @@ namespace winrt::impl
 
     inline auto resume_apartment(resume_apartment_context const& context, std::experimental::coroutine_handle<> handle)
     {
-        switch (context.m_context_type)
+        if ((context.m_context == nullptr) || (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
         {
-        case 1: /* APTTYPE_MTA */
-            if (get_apartment_type().first == 1 /* APPTYPE_MTA*/)
-            {
-                handle();
-            }
-            else
-            {
-                resume_background(handle);
-            }
-            break;
-        
-        case 2: /* APTTYPE_NA */
-            if (is_sta_thread())
-            {
-                resume_apartment_on_threadpool(context.m_context, handle);
-            }
-            else
-            {
-                resume_apartment_sync(context.m_context, handle);
-            }
-            break;
-
-        default:
+            handle();
+        }
+        else if (context.m_context_type == 1 /* APTTYPE_MTA */)
+        {
+            resume_background(handle);
+        }
+        else if ((context.m_context_type == 2 /* APTTYPE_NTA */) && is_sta_thread())
+        {
+            resume_apartment_on_threadpool(context.m_context, handle);
+        }
+        else
+        {
             resume_apartment_sync(context.m_context, handle);
-            break;
         }
     }
 
