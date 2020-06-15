@@ -100,10 +100,10 @@ namespace winrt::impl
 
     struct disconnect_aware_handler
     {
-        disconnect_aware_handler(std::experimental::coroutine_handle<> handle)
+        disconnect_aware_handler(std::experimental::coroutine_handle<> handle) noexcept
             : m_handle(handle) { }
 
-        disconnect_aware_handler(disconnect_aware_handler&& other)
+        disconnect_aware_handler(disconnect_aware_handler&& other) noexcept
             : m_context(std::move(other.m_context))
             , m_handle(std::exchange(other.m_handle, {})) { }
 
