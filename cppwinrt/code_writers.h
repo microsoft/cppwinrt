@@ -318,6 +318,24 @@ namespace cppwinrt
             get<uint8_t>(get<ElemSig>(args[10].value).value));
     }
 
+    static void write_guid_comment(writer& w, std::vector<FixedArgSig> const& args)
+    {
+        using std::get;
+
+        w.write_printf("%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X",
+            get<uint32_t>(get<ElemSig>(args[0].value).value),
+            get<uint16_t>(get<ElemSig>(args[1].value).value),
+            get<uint16_t>(get<ElemSig>(args[2].value).value),
+            get<uint8_t>(get<ElemSig>(args[3].value).value),
+            get<uint8_t>(get<ElemSig>(args[4].value).value),
+            get<uint8_t>(get<ElemSig>(args[5].value).value),
+            get<uint8_t>(get<ElemSig>(args[6].value).value),
+            get<uint8_t>(get<ElemSig>(args[7].value).value),
+            get<uint8_t>(get<ElemSig>(args[8].value).value),
+            get<uint8_t>(get<ElemSig>(args[9].value).value),
+            get<uint8_t>(get<ElemSig>(args[10].value).value));
+    }
+
     static void write_category(writer& w, TypeDef const& type, std::string_view const& category)
     {
         auto generics = type.GenericParam();
@@ -395,20 +413,22 @@ namespace cppwinrt
         }
 
         auto generics = type.GenericParam();
+        auto guid = attribute.Value().FixedArgs();
 
         if (empty(generics))
         {
-            auto format = R"(    template <> inline constexpr guid guid_v<%>{ % };
+            auto format = R"(    template <> inline constexpr guid guid_v<%>{ % }; // %
 )";
 
             w.write(format,
                 type,
-                bind<write_guid_value>(attribute.Value().FixedArgs()));
+                bind<write_guid_value>(guid),
+                bind<write_guid_comment>(guid));
         }
         else
         {
             auto format = R"(    template <%> inline constexpr guid guid_v<%>{ pinterface_guid<%>::value };
-    template <%> inline constexpr guid generic_guid_v<%>{ % };
+    template <%> inline constexpr guid generic_guid_v<%>{ % }; // %
 )";
 
             w.write(format,
@@ -417,7 +437,8 @@ namespace cppwinrt
                 type,
                 bind<write_generic_typenames>(generics),
                 type,
-                bind<write_guid_value>(attribute.Value().FixedArgs()));
+                bind<write_guid_value>(guid),
+                bind<write_guid_comment>(guid));
         }
     }
 
@@ -1284,12 +1305,12 @@ namespace cppwinrt
         else if (type_name == "Windows.Foundation.Collections.IMapView`2")
         {
             w.write(R"(
-        auto TryLookup(param_type<K> const& key) const noexcept
+        auto TryLookup(param_type<K> const& key) const
         {
             if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
             {
                 V result{ nullptr };
-                WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMapView<K, V>)->Lookup(get_abi(key), put_abi(result));
+                impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMapView<K, V>)->Lookup(get_abi(key), put_abi(result)));
                 return result;
             }
             else
@@ -1297,7 +1318,7 @@ namespace cppwinrt
                 std::optional<V> result;
                 V value{ empty_value<V>() };
 
-                if (0 == WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMapView<K, V>)->Lookup(get_abi(key), put_abi(value)))
+                if (0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMapView<K, V>)->Lookup(get_abi(key), put_abi(value))))
                 {
                     result = std::move(value);
                 }
@@ -1310,12 +1331,12 @@ namespace cppwinrt
         else if (type_name == "Windows.Foundation.Collections.IMap`2")
         {
             w.write(R"(
-        auto TryLookup(param_type<K> const& key) const noexcept
+        auto TryLookup(param_type<K> const& key) const
         {
             if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
             {
                 V result{ nullptr };
-                WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Lookup(get_abi(key), put_abi(result));
+                impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Lookup(get_abi(key), put_abi(result)));
                 return result;
             }
             else
@@ -1323,13 +1344,18 @@ namespace cppwinrt
                 std::optional<V> result;
                 V value{ empty_value<V>() };
 
-                if (0 == WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Lookup(get_abi(key), put_abi(value)))
+                if (0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Lookup(get_abi(key), put_abi(value))))
                 {
                     result = std::move(value);
                 }
 
                 return result;
             }
+        }
+
+        auto TryRemove(param_type<K> const& key) const
+        {
+            return 0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Remove(get_abi(key)));
         }
 )");
         }
@@ -3146,6 +3172,10 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         else if (namespace_name == "Windows.System")
         {
             w.write(strings::base_coroutine_system);
+        }
+        else if (namespace_name == "Microsoft.System")
+        {
+            w.write(strings::base_coroutine_system_winui);
         }
         else if (namespace_name == "Windows.UI.Core")
         {

@@ -188,6 +188,7 @@ WINRT_EXPORT namespace winrt
         hstring(hstring&&) noexcept = default;
         hstring& operator=(hstring&&) = default;
         hstring(std::nullptr_t) = delete;
+        hstring& operator=(std::nullptr_t) = delete;
 
         hstring(std::initializer_list<wchar_t> value) :
             hstring(value.begin(), static_cast<uint32_t>(value.size()))

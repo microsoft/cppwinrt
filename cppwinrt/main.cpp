@@ -31,6 +31,7 @@ namespace cppwinrt
         { "base", 0, 0, {}, "Generate base.h unconditionally" },
         { "optimize", 0, 0, {}, "Generate component projection with unified construction support" },
         { "help", 0, option::no_max, {}, "Show detailed help with examples" },
+        { "?", 0, option::no_max, {}, {} },
         { "library", 0, 1, "<prefix>", "Specify library prefix (defaults to winrt)" },
         { "filter" }, // One or more prefixes to include in input (same as -include)
         { "license", 0, 0 }, // Generate license comment
@@ -252,7 +253,7 @@ Where <spec> is one or more of:
 
             reader args{ argc, argv, options };
 
-            if (!args || args.exists("help"))
+            if (!args || args.exists("help") || args.exists("?"))
             {
                 throw usage_exception{};
             }
@@ -362,11 +363,11 @@ Where <spec> is one or more of:
         }
         catch (std::exception const& e)
         {
-            w.write(" error: %\n", e.what());
+            w.write("cppwinrt : error %\n", e.what());
             result = 1;
         }
 
-        w.flush_to_console();
+        w.flush_to_console(result == 0);
         return result;
     }
 }

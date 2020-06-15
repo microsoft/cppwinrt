@@ -56,6 +56,7 @@
     <ClInclude Include="..\strings\base_coroutine_system.h" />
     <ClInclude Include="..\strings\base_coroutine_threadpool.h" />
     <ClInclude Include="..\strings\base_coroutine_ui_core.h" />
+    <ClInclude Include="..\strings\base_coroutine_system_winui.h" />
     <ClInclude Include="..\strings\base_deferral.h" />
     <ClInclude Include="..\strings\base_delegate.h" />
     <ClInclude Include="..\strings\base_error.h" />

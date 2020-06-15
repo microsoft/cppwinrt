@@ -277,6 +277,36 @@ TEST_CASE("weak,lifetime")
     }
 }
 
+TEST_CASE("weak,comparison")
+{
+    IStringable objectA = make<Weak>();
+    IStringable objectB = make<Weak>();
+    weak_ref<IStringable> refA1 = objectA;
+    weak_ref<IStringable> refA2 = refA1;
+    weak_ref<IStringable> refB = objectB;
+    weak_ref<IStringable> refNothing = nullptr;
+
+    REQUIRE(refA1 == refA2);
+    REQUIRE(!(refA1 != refA2));
+    REQUIRE(refA1 != refB);
+    REQUIRE(!(refA1 == refB));
+    REQUIRE(refA1 != refNothing);
+    REQUIRE(!(refA1 == refNothing));
+    REQUIRE(refA1 != nullptr);
+    REQUIRE(nullptr != refA1);
+    REQUIRE(refNothing == nullptr);
+    REQUIRE(nullptr == refNothing);
+
+    // Comparisons are against the weak reference itself,
+    // not the thing it refers to.
+    objectA = nullptr;
+    objectB = nullptr;
+
+    REQUIRE(refA1 == refA2);
+    REQUIRE(refA1 != refB);
+    REQUIRE(refA1 != refNothing);
+}
+
 TEST_CASE("weak,module_lock")
 {
     uint32_t object_count = get_module_lock();

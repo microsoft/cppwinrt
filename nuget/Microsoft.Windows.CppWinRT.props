@@ -43,6 +43,20 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             <ProxyFileName Condition="'%(Midl.ProxyFileName)'==''">nul</ProxyFileName>
             <TypeLibraryName Condition="'%(Midl.TypeLibraryName)'==''"></TypeLibraryName>
         </Midl>
+        <ProjectReference Condition="'$(XamlLanguage)' != 'C++'">
+            <!-- By default, for a C++/WinRT project,
+                 don't copy project reference output to the output directory
+                 of the current project unless this is an exe. -->
+            <Private>false</Private>
+            <Private Condition="'$(ConfigurationType)' == 'Application' or '$(OutputType)'=='winexe' or '$(OutputType)'=='exe' or '$(OutputType)'=='appcontainerexe'">true</Private>
+        </ProjectReference>
+        <Reference Condition="'$(XamlLanguage)' != 'C++'">
+            <!-- By default, for a C++/WinRT project,
+                 don't copy reference output to the output directory
+                 of the current project unless this is an exe. -->
+            <Private>false</Private>
+            <Private Condition="'$(ConfigurationType)' == 'Application' or '$(OutputType)'=='winexe' or '$(OutputType)'=='exe' or '$(OutputType)'=='appcontainerexe'">true</Private>
+        </Reference>
     </ItemDefinitionGroup>
 
     <ItemGroup>

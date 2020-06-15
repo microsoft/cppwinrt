@@ -579,3 +579,15 @@ WINRT_EXPORT namespace winrt
         abort();
     }
 }
+
+namespace winrt::impl
+{
+    inline hresult check_hresult_allow_bounds(hresult const result)
+    {
+        if (result != impl::error_out_of_bounds)
+        {
+            check_hresult(result);
+        }
+        return result;
+    }
+}

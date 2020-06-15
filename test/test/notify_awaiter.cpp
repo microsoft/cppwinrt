@@ -112,16 +112,14 @@ namespace
         co_return 0;
     }
 
-    struct notification
+    enum class notification
     {
-        uint32_t suspend{};
-        uint32_t resume{};
+        suspend,
+        resume,
     };
 
-    static std::map<void const*, notification> watcher;
-    static slim_mutex lock;
+    static std::vector<std::pair<void const*, notification>> watcher;
     static handle start_racing{ CreateEventW(nullptr, true, false, nullptr) };
-    constexpr size_t test_coroutines = 20;
     constexpr size_t test_suspension_points = 12;
 
     IAsyncAction Async()
@@ -155,60 +153,34 @@ TEST_CASE("notify_awaiter")
 
     winrt_suspend_handler = [](void const* token) noexcept
     {
-        slim_lock_guard guard(lock);
-        watcher[token].suspend += 1;
+        watcher.push_back({ token, notification::suspend });
     };
 
     winrt_resume_handler = [](void const* token) noexcept
     {
-        slim_lock_guard guard(lock);
-        watcher[token].resume += 1;
+        auto last = watcher.back();
+        REQUIRE(last.first == token);
+        REQUIRE(last.second == notification::suspend);
+        watcher.push_back({ token, notification::resume });
     };
 
-    // Prepare a few coroutines.
-
-    std::vector<IAsyncAction> concurrency;
+    // Prepare a coroutine.
     REQUIRE(watcher.empty());
+    auto async = Async();
 
-    for (size_t i = 0; i != test_coroutines; ++i)
-    {
-        concurrency.push_back(Async());
-    }
-
-    // Give coroutines a moment to get to the starting line.
-
+    // Give coroutine a moment to get to the starting line.
     Sleep(1000);
 
-    // Each coroutine should have suspended once.
-
-    REQUIRE(concurrency.size() == test_coroutines);
-    REQUIRE(watcher.size() == test_coroutines);
-
-    for (auto&& [_, tally] : watcher)
-    {
-        REQUIRE(tally.suspend == 1);
-        REQUIRE(tally.resume == 0);
-    }
+    // Coroutine should have suspended once.
+    REQUIRE(watcher.size() == 1);
+    REQUIRE(watcher.back().second == notification::suspend);
 
     // And the race is on!
-
     SetEvent(start_racing.get());
+    async.get();
 
-    for (auto&& async : concurrency)
-    {
-        async.get();
-    }
-
-    // Each suspension point should have been recorded.
-
-    REQUIRE(watcher.size() == test_coroutines * test_suspension_points);
-
-    for (auto&& [_, tally] : watcher)
-    {
-        // And should be be perfectly balanced.
-        REQUIRE(tally.suspend == 1);
-        REQUIRE(tally.resume == 1);
-    }
+    // Each suspension point should have been recorded plus one for each final_suspend.
+    REQUIRE(watcher.size() == 2 * test_suspension_points + 5);
 
     // Remove watchers.
 
