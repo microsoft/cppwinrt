@@ -488,6 +488,12 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename Interface>
+    auto try_create_instance(guid const& clsid, uint32_t context = 0x1 /*CLSCTX_INPROC_SERVER*/, void* outer = nullptr)
+    {
+        return try_capture<Interface>(WINRT_IMPL_CoCreateInstance, clsid, outer, context);
+    }
+
+    template <typename Interface>
     auto create_instance(guid const& clsid, uint32_t context = 0x1 /*CLSCTX_INPROC_SERVER*/, void* outer = nullptr)
     {
         return capture<Interface>(WINRT_IMPL_CoCreateInstance, clsid, outer, context);
