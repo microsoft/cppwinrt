@@ -1,6 +1,14 @@
 
 namespace winrt::impl
 {
+    inline auto submit_threadpool_callback(void(__stdcall* callback)(void*, void* context), void* context)
+    {
+        if (!WINRT_IMPL_TrySubmitThreadpoolCallback(callback, context, nullptr))
+        {
+            throw_last_error();
+        }
+    }
+
     inline void __stdcall resume_background_callback(void*, void* context) noexcept
     {
         std::experimental::coroutine_handle<>::from_address(context)();
@@ -8,30 +16,43 @@ namespace winrt::impl
 
     inline auto resume_background(std::experimental::coroutine_handle<> handle)
     {
-        if (!WINRT_IMPL_TrySubmitThreadpoolCallback(resume_background_callback, handle.address(), nullptr))
+        submit_threadpool_callback(resume_background_callback, handle.address());
+    }
+
+    inline std::pair<int32_t, int32_t> get_apartment_type() noexcept
+    {
+        int32_t aptType;
+        int32_t aptTypeQualifier;
+        if (0 == WINRT_IMPL_CoGetApartmentType(&aptType, &aptTypeQualifier))
         {
-            throw_last_error();
+            return { aptType, aptTypeQualifier };
+        }
+        else
+        {
+            return { 1 /* APTTYPE_MTA */, 1 /* APTTYPEQUALIFIER_IMPLICIT_MTA */ };
         }
     }
 
-    inline bool is_sta() noexcept
+    inline bool is_sta_thread() noexcept
     {
-        int32_t aptType;
-        int32_t aptTypeQualifier;
-        return (0 == WINRT_IMPL_CoGetApartmentType(&aptType, &aptTypeQualifier)) && ((aptType == 0 /*APTTYPE_STA*/) || (aptType == 3 /*APTTYPE_MAINSTA*/));
+        auto type = get_apartment_type();
+        switch (type.first)
+        {
+        case 0: /* APTTYPE_STA */
+        case 3: /* APTTYPE_MAINSTA */
+            return true;
+        case 2: /* APTTYPE_NA */
+            return type.second == 3 /* APTTYPEQUALIFIER_NA_ON_STA */ ||
+                type.second == 5 /* APTTYPEQUALIFIER_NA_ON_MAINSTA */;
+        }
+        return false;
     }
 
-    inline bool requires_apartment_context() noexcept
+    struct resume_apartment_context
     {
-        int32_t aptType;
-        int32_t aptTypeQualifier;
-        return (0 == WINRT_IMPL_CoGetApartmentType(&aptType, &aptTypeQualifier)) && ((aptType == 0 /*APTTYPE_STA*/) || (aptType == 2 /*APTTYPE_NA*/) || (aptType == 3 /*APTTYPE_MAINSTA*/));
-    }
-
-    inline auto apartment_context()
-    {
-        return requires_apartment_context() ? capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext) : nullptr;
-    }
+        com_ptr<IContextCallback> m_context = try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext);
+        int32_t m_context_type = get_apartment_type().first;
+    };
 
     inline int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
     {
@@ -39,25 +60,49 @@ namespace winrt::impl
         return 0;
     };
 
-    inline auto resume_apartment(com_ptr<IContextCallback> const& context, std::experimental::coroutine_handle<> handle)
+    inline void resume_apartment_sync(com_ptr<IContextCallback> const& context, std::experimental::coroutine_handle<> handle)
     {
-        if (context)
-        {
-            com_callback_args args{};
-            args.data = handle.address();
+        com_callback_args args{};
+        args.data = handle.address();
 
-            check_hresult(context->ContextCallback(resume_apartment_callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
+        check_hresult(context->ContextCallback(resume_apartment_callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
+    }
+
+    inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, std::experimental::coroutine_handle<> handle)
+    {
+        struct threadpool_resume
+        {
+            threadpool_resume(com_ptr<IContextCallback> const& context, std::experimental::coroutine_handle<> handle) :
+                m_context(context), m_handle(handle) { }
+            com_ptr<IContextCallback> m_context;
+            std::experimental::coroutine_handle<> m_handle;
+        };
+        auto state = std::make_unique<threadpool_resume>(context, handle);
+        submit_threadpool_callback([](void*, void* p)
+            {
+                std::unique_ptr<threadpool_resume> state{ static_cast<threadpool_resume*>(p) };
+                resume_apartment_sync(state->m_context, state->m_handle);
+            }, state.get());
+        state.release();
+    }
+
+    inline auto resume_apartment(resume_apartment_context const& context, std::experimental::coroutine_handle<> handle)
+    {
+        if ((context.m_context == nullptr) || (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
+        {
+            handle();
+        }
+        else if (context.m_context_type == 1 /* APTTYPE_MTA */)
+        {
+            resume_background(handle);
+        }
+        else if ((context.m_context_type == 2 /* APTTYPE_NTA */) && is_sta_thread())
+        {
+            resume_apartment_on_threadpool(context.m_context, handle);
         }
         else
         {
-            if (requires_apartment_context())
-            {
-                resume_background(handle);
-            }
-            else
-            {
-                handle();
-            }
+            resume_apartment_sync(context.m_context, handle);
         }
     }
 
@@ -294,7 +339,7 @@ WINRT_EXPORT namespace winrt
             impl::resume_apartment(context, handle);
         }
 
-        com_ptr<impl::IContextCallback> context = impl::apartment_context();
+        impl::resume_apartment_context context;
     };
 
     [[nodiscard]] inline auto resume_after(Windows::Foundation::TimeSpan duration) noexcept
