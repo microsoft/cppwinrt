@@ -9,8 +9,6 @@ C++/WinRT is an entirely standard C++ language projection for Windows Runtime (W
 * Visual Studio extension: http://aka.ms/cppwinrt/vsix
 * Wikipedia: https://en.wikipedia.org/wiki/C++/WinRT
 
-C++/WinRT is part of the [xlang](https://github.com/microsoft/xlang) family of projects that help developers create APIs that can run on multiple platforms and be used with a variety of languages.
-
 # Building C++/WinRT
 
 Don't build C++/WinRT yourself - just download the latest version here: https://aka.ms/cppwinrt/nuget
@@ -36,3 +34,9 @@ provided by the bot. You will only need to do this once across all repos using o
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
 contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+
+# Project Reunion
+
+Project Reunion is a set of libraries, frameworks, components, and tools that you can use to access powerful Windows platform functionality from all kinds of apps on many versions of Windows. Project Reunion combines the power of Win32 native applications alongside modern APIs, so your apps light up everywhere your users are.
+
+Other Project Reunion components include [WinUI](https://github.com/microsoft/microsoft-ui-xaml), WebView2, MSIX, [Rust/WinRT](https://github.com/microsoft/winrt-rs), and [C#/WinRT](https://github.com/microsoft/cswinrt). If you'd like to learn more, contribute to Project Reunion, or have app model questions, visit [Project Reunion on GitHub](https://github.com/microsoft/ProjectReunion).
