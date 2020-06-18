@@ -1277,6 +1277,7 @@ TEST_CASE("array_view,ctad")
 
     uint8_t a[3]{};
     REQUIRE_DEDUCED_AS(uint8_t, &a[0], &a[0]);
+    REQUIRE_DEDUCED_AS(uint8_t, &a[0], 3);
     REQUIRE_DEDUCED_AS(uint8_t, a);
 
     std::array<uint8_t, 3> ar{};
