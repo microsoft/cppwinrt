@@ -127,6 +127,24 @@ TEST_CASE("custom,DataReader")
 }
 
 //
+// This test illustrates an array_view<T> (non-const) bound to a raw buffer
+//
+TEST_CASE("buffer,DataReader")
+{
+    auto reader = CreateDataReader({ 1, 2, 3 }).get();
+
+    std::array<byte, 3> a;
+    byte* ptr = a.data();
+    auto size = a.size();
+    reader.ReadBytes({ ptr, static_cast<uint32_t>(size) });
+
+    REQUIRE(3 == a.size());
+    REQUIRE(1 == a[0]);
+    REQUIRE(2 == a[1]);
+    REQUIRE(3 == a[2]);
+}
+
+//
 // This test illustrates receiving an IVector and calling GetMany to fill an array.
 //
 TEST_CASE("array,EBO")
