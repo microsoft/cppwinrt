@@ -17,6 +17,11 @@ WINRT_EXPORT namespace winrt
 
         array_view() noexcept = default;
 
+        array_view(pointer data, size_type size) noexcept :
+            m_data(data),
+            m_size(size)
+        {}
+
         array_view(pointer first, pointer last) noexcept :
             m_data(first),
             m_size(static_cast<size_type>(last - first))
@@ -191,11 +196,6 @@ WINRT_EXPORT namespace winrt
         }
 
     protected:
-
-        array_view(pointer data, size_type size) noexcept :
-            m_data(data),
-            m_size(size)
-        {}
 
         pointer m_data{ nullptr };
         size_type m_size{ 0 };
