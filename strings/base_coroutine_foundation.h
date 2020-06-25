@@ -118,8 +118,8 @@ namespace winrt::impl
         }
 
     private:
-        std::experimental::coroutine_handle<> m_handle;
         resume_apartment_context m_context;
+        std::experimental::coroutine_handle<> m_handle;
 
         void Complete()
         {
@@ -743,7 +743,7 @@ WINRT_EXPORT namespace winrt
 
         auto [delegate, shared] = impl::make_delegate_with_shared_state<impl::async_completed_handler_t<T>>(shared_type{});
 
-        auto completed = [&](T const& async)
+        auto completed = [delegate = std::move(delegate)](T const& async)
         {
             async.Completed(delegate);
         };
