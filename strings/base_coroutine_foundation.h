@@ -140,6 +140,7 @@ namespace winrt::impl
 
         void await_suspend(std::experimental::coroutine_handle<> handle)
         {
+            auto extend_lifetime = async;
             async.Completed([this, handler = disconnect_aware_handler{ handle }](auto&&, auto operation_status) mutable
             {
                 status = operation_status;
