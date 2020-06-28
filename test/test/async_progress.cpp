@@ -19,8 +19,12 @@ namespace
     IAsyncOperationWithProgress<int, int> Operation(HANDLE event)
     {
         co_await resume_on_signal(event);
-        auto progress = co_await get_progress_token();
-        progress(123);
+
+        // Invoke from a lambda to ensure that operator() is const.
+        [progress = co_await get_progress_token()]()
+        {
+            progress(123);
+        }();
         co_return 1;
     }
 
