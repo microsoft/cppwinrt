@@ -39,6 +39,19 @@ namespace
         co_return 1;
     }
 
+    IAsyncAction ActionForceAutoCancel(HANDLE event)
+    {
+        co_await resume_on_signal(event);
+
+        // Null out the callback to indicate that we want to cancel
+        // any existing cancellation callback and rely on auto-cancel.
+        auto cancel = co_await get_cancellation_token();
+        cancel.callback(nullptr);
+
+        co_await std::experimental::suspend_never();
+        REQUIRE(false);
+    }
+
     template <typename F>
     void Check(F make)
     {
@@ -70,4 +83,5 @@ TEST_CASE("async_auto_cancel")
     Check(ActionWithProgress);
     Check(Operation);
     Check(OperationWithProgress);
+    Check(ActionForceAutoCancel);
 }
