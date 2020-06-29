@@ -272,7 +272,7 @@ namespace winrt::impl
             return m_promise->Status() == Windows::Foundation::AsyncStatus::Canceled;
         }
 
-        void callback(winrt::delegate<>&& cancel) noexcept
+        void callback(winrt::delegate<>&& cancel) const noexcept
         {
             m_promise->cancellation_callback(std::move(cancel));
         }
