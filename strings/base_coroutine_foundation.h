@@ -558,7 +558,10 @@ namespace winrt::impl
                 }
             }
 
-            cancel();
+            if (cancel)
+            {
+                cancel();
+            }
         }
 
 #if defined(_DEBUG) && !defined(WINRT_NO_MAKE_DETECTION)
