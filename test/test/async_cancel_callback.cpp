@@ -11,6 +11,8 @@ namespace
 
     IAsyncAction Action(HANDLE event, bool& canceled)
     {
+        // Put the cancellation token into a lambda just to make
+        // sure it's possible.
         [cancel = co_await get_cancellation_token(), &canceled]
         {
             cancel.callback([&]
