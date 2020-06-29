@@ -305,7 +305,7 @@ namespace winrt::impl
             return *this;
         }
 
-        void operator()(Progress const& result)
+        void operator()(Progress const& result) const
         {
             m_promise->set_progress(result);
         }
