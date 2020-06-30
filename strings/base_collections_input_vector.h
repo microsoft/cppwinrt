@@ -1,14 +1,14 @@
 
 namespace winrt::impl
 {
-    template <typename T, typename Container>
-    struct input_vector :
-        implements<input_vector<T, Container>, wfc::IVector<T>, wfc::IVectorView<T>, wfc::IIterable<T>>,
-        vector_base<input_vector<T, Container>, T>
+    template <typename D, typename T, typename Container>
+    struct input_vector_base :
+        implements<D, wfc::IVector<T>, wfc::IVectorView<T>, wfc::IIterable<T>>,
+        vector_base<D, T>
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        explicit input_vector(Container&& values) : m_values(std::forward<Container>(values))
+        explicit input_vector_base(Container&& values) : m_values(std::forward<Container>(values))
         {
         }
 
@@ -25,6 +25,36 @@ namespace winrt::impl
     private:
 
         Container m_values;
+    };
+
+    template <typename T, typename Container>
+    struct input_vector : input_vector_base<input_vector<T, Container>, T, Container>
+    {
+        using input_vector_base<input_vector<T, Container>, T, Container>::input_vector_base;
+    };
+
+    template <typename T, typename Container>
+    struct multi_threaded_input_vector : input_vector_base<multi_threaded_input_vector<T, Container>, T, Container>
+    {
+        using input_vector_base<multi_threaded_input_vector<T, Container>, T, Container>::input_vector_base;
+
+        template <typename Func>
+        auto perform_exclusive(Func&& fn) const
+        {
+            slim_lock_guard lock(m_mutex);
+            return fn();
+        }
+
+        template <typename Func>
+        auto perform_shared(Func&& fn) const
+        {
+            slim_lock_guard_shared lock(m_mutex);
+            return fn();
+        }
+
+    private:
+
+        mutable slim_mutex m_mutex;
     };
 }
 

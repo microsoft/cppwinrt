@@ -273,6 +273,12 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename T, typename Allocator = std::allocator<T>>
+    Windows::Foundation::Collections::IVector<T> multi_threaded_vector(std::vector<T, Allocator>&& values = {})
+    {
+        return make<impl::multi_threaded_input_vector<T, std::vector<T, Allocator>>>(std::move(values));
+    }
+
+    template <typename T, typename Allocator = std::allocator<T>>
     Windows::Foundation::Collections::IObservableVector<T> single_threaded_observable_vector(std::vector<T, Allocator>&& values = {})
     {
         if constexpr (std::is_same_v<T, Windows::Foundation::IInspectable>)

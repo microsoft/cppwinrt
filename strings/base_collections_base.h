@@ -15,9 +15,25 @@ WINRT_EXPORT namespace winrt
             return value;
         }
 
+        template <typename Func>
+        auto perform_exclusive(Func&& fn) const
+        {
+            return fn();
+        }
+
+        template <typename Func>
+        auto perform_shared(Func&& fn) const
+        {
+            // Support for concurrent "shared" operations is optional
+            return static_cast<D const&>(*this).perform_exclusive(fn);
+        }
+
         auto First()
         {
-            return make<iterator>(static_cast<D*>(this));
+            return static_cast<D&>(*this).perform_shared([&]
+            {
+                return make<iterator>(static_cast<D*>(this));
+            });
         }
 
     protected:
@@ -70,6 +86,7 @@ WINRT_EXPORT namespace winrt
 
             T Current() const
             {
+                // TODO: Locking and validity check?
                 if (m_current == m_end)
                 {
                     throw hresult_out_of_bounds();
@@ -87,11 +104,13 @@ WINRT_EXPORT namespace winrt
 
             bool HasCurrent() const noexcept
             {
+                // TODO: Validity check?
                 return m_current != m_end;
             }
 
             bool MoveNext() noexcept
             {
+                // TODO: Locking and validity check?
                 if (m_current != m_end)
                 {
                     ++m_current;
@@ -102,6 +121,7 @@ WINRT_EXPORT namespace winrt
 
             uint32_t GetMany(array_view<T> values)
             {
+                // TODO: Locking and validity check?
                 return GetMany(values, typename std::iterator_traits<iterator_type>::iterator_category());
             }
 
@@ -142,40 +162,59 @@ WINRT_EXPORT namespace winrt
     {
         T GetAt(uint32_t const index) const
         {
-            if (index >= Size())
+            return static_cast<D const&>(*this).perform_shared([&]
             {
-                throw hresult_out_of_bounds();
-            }
+                if (index >= container_size())
+                {
+                    throw hresult_out_of_bounds();
+                }
 
-            return static_cast<D const&>(*this).unwrap_value(*std::next(static_cast<D const&>(*this).get_container().begin(), index));
+                return static_cast<D const&>(*this).unwrap_value(*std::next(static_cast<D const&>(*this).get_container().begin(), index));
+            });
         }
 
         uint32_t Size() const noexcept
         {
-            return static_cast<uint32_t>(std::distance(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end()));
+            return static_cast<D const&>(*this).perform_shared([&]
+            {
+                return container_size();
+            });
         }
 
         bool IndexOf(T const& value, uint32_t& index) const noexcept
         {
-            auto first = std::find_if(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end(), [&](auto&& match)
+            return static_cast<D const&>(*this).perform_shared([&]
             {
-                return value == static_cast<D const&>(*this).unwrap_value(match);
-            });
+                auto first = std::find_if(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end(), [&](auto&& match)
+                {
+                    return value == static_cast<D const&>(*this).unwrap_value(match);
+                });
 
-            index = static_cast<uint32_t>(first - static_cast<D const&>(*this).get_container().begin());
-            return index < Size();
+                index = static_cast<uint32_t>(first - static_cast<D const&>(*this).get_container().begin());
+                return index < container_size();
+            });
         }
 
         uint32_t GetMany(uint32_t const startIndex, array_view<T> values) const
         {
-            if (startIndex >= Size())
+            return static_cast<D const&>(*this).perform_shared([&]() -> uint32_t
             {
-                return 0;
-            }
+                if (startIndex >= container_size())
+                {
+                    return 0;
+                }
 
-            uint32_t const actual = (std::min)(Size() - startIndex, values.size());
-            this->copy_n(static_cast<D const&>(*this).get_container().begin() + startIndex, actual, values.begin());
-            return actual;
+                uint32_t const actual = (std::min)(container_size() - startIndex, values.size());
+                this->copy_n(static_cast<D const&>(*this).get_container().begin() + startIndex, actual, values.begin());
+                return actual;
+            });
+        }
+
+    private:
+
+        uint32_t container_size() const noexcept
+        {
+            return static_cast<uint32_t>(std::distance(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end()));
         }
     };
 
@@ -189,64 +228,85 @@ WINRT_EXPORT namespace winrt
 
         void SetAt(uint32_t const index, T const& value)
         {
-            if (index >= static_cast<D const&>(*this).get_container().size())
+            static_cast<D&>(*this).perform_exclusive([&]
             {
-                throw hresult_out_of_bounds();
-            }
+                if (index >= static_cast<D const&>(*this).get_container().size())
+                {
+                    throw hresult_out_of_bounds();
+                }
 
-            this->increment_version();
-            static_cast<D&>(*this).get_container()[index] = static_cast<D const&>(*this).wrap_value(value);
+                this->increment_version();
+                static_cast<D&>(*this).get_container()[index] = static_cast<D const&>(*this).wrap_value(value);
+            });
         }
 
         void InsertAt(uint32_t const index, T const& value)
         {
-            if (index > static_cast<D const&>(*this).get_container().size())
+            static_cast<D&>(*this).perform_exclusive([&]
             {
-                throw hresult_out_of_bounds();
-            }
+                if (index > static_cast<D const&>(*this).get_container().size())
+                {
+                    throw hresult_out_of_bounds();
+                }
 
-            this->increment_version();
-            static_cast<D&>(*this).get_container().insert(static_cast<D const&>(*this).get_container().begin() + index, static_cast<D const&>(*this).wrap_value(value));
+                this->increment_version();
+                static_cast<D&>(*this).get_container().insert(static_cast<D const&>(*this).get_container().begin() + index, static_cast<D const&>(*this).wrap_value(value));
+            });
         }
 
         void RemoveAt(uint32_t const index)
         {
-            if (index >= static_cast<D const&>(*this).get_container().size())
+            static_cast<D&>(*this).perform_exclusive([&]
             {
-                throw hresult_out_of_bounds();
-            }
+                if (index >= static_cast<D const&>(*this).get_container().size())
+                {
+                    throw hresult_out_of_bounds();
+                }
 
-            this->increment_version();
-            static_cast<D&>(*this).get_container().erase(static_cast<D const&>(*this).get_container().begin() + index);
+                this->increment_version();
+                static_cast<D&>(*this).get_container().erase(static_cast<D const&>(*this).get_container().begin() + index);
+            });
         }
 
         void Append(T const& value)
         {
-            this->increment_version();
-            static_cast<D&>(*this).get_container().push_back(static_cast<D const&>(*this).wrap_value(value));
+            static_cast<D&>(*this).perform_exclusive([&]
+            {
+                this->increment_version();
+                static_cast<D&>(*this).get_container().push_back(static_cast<D const&>(*this).wrap_value(value));
+            });
         }
 
         void RemoveAtEnd()
         {
-            if (static_cast<D const&>(*this).get_container().empty())
+            static_cast<D&>(*this).perform_exclusive([&]
             {
-                throw hresult_out_of_bounds();
-            }
+                if (static_cast<D const&>(*this).get_container().empty())
+                {
+                    throw hresult_out_of_bounds();
+                }
 
-            this->increment_version();
-            static_cast<D&>(*this).get_container().pop_back();
+                this->increment_version();
+                static_cast<D&>(*this).get_container().pop_back();
+            });
         }
 
         void Clear() noexcept
         {
-            this->increment_version();
-            static_cast<D&>(*this).get_container().clear();
+            static_cast<D&>(*this).perform_exclusive([&]
+            {
+                this->increment_version();
+                static_cast<D&>(*this).get_container().clear();
+            });
         }
 
         void ReplaceAll(array_view<T const> value)
         {
-            this->increment_version();
-            assign(value.begin(), value.end());
+            static_cast<D&>(*this).perform_exclusive([&]
+            {
+                this->increment_version();
+                assign(value.begin(), value.end());
+            });
         }
 
     private:
@@ -370,24 +430,33 @@ WINRT_EXPORT namespace winrt
     {
         V Lookup(K const& key) const
         {
-            auto pair = static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key));
-
-            if (pair == static_cast<D const&>(*this).get_container().end())
+            return static_cast<D const&>(*this).perform_shared([&]
             {
-                throw hresult_out_of_bounds();
-            }
+                auto pair = static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key));
 
-            return static_cast<D const&>(*this).unwrap_value(pair->second);
+                if (pair == static_cast<D const&>(*this).get_container().end())
+                {
+                    throw hresult_out_of_bounds();
+                }
+
+                return static_cast<D const&>(*this).unwrap_value(pair->second);
+            });
         }
 
         uint32_t Size() const noexcept
         {
-            return static_cast<uint32_t>(static_cast<D const&>(*this).get_container().size());
+            return static_cast<D const&>(*this).perform_shared([&]
+            {
+                return static_cast<uint32_t>(static_cast<D const&>(*this).get_container().size());
+            });
         }
 
         bool HasKey(K const& key) const noexcept
         {
-            return static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key)) != static_cast<D const&>(*this).get_container().end();
+            return static_cast<D const&>(*this).perform_shared([&]
+            {
+                return static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key)) != static_cast<D const&>(*this).get_container().end();
+            });
         }
 
         void Split(Windows::Foundation::Collections::IMapView<K, V>& first, Windows::Foundation::Collections::IMapView<K, V>& second) const noexcept
@@ -407,27 +476,36 @@ WINRT_EXPORT namespace winrt
 
         bool Insert(K const& key, V const& value)
         {
-            this->increment_version();
-            auto pair = static_cast<D&>(*this).get_container().insert_or_assign(static_cast<D const&>(*this).wrap_value(key), static_cast<D const&>(*this).wrap_value(value));
-            return !pair.second;
+            return static_cast<D&>(*this).perform_exclusive([&]
+            {
+                this->increment_version();
+                auto pair = static_cast<D&>(*this).get_container().insert_or_assign(static_cast<D const&>(*this).wrap_value(key), static_cast<D const&>(*this).wrap_value(value));
+                return !pair.second;
+            });
         }
 
         void Remove(K const& key)
         {
-            auto& container = static_cast<D&>(*this).get_container();
-            auto found = container.find(static_cast<D const&>(*this).wrap_value(key));
-            if (found == container.end())
+            static_cast<D&>(*this).perform_exclusive([&]
             {
-                throw hresult_out_of_bounds();
-            }
-            this->increment_version();
-            container.erase(found);
+                auto& container = static_cast<D&>(*this).get_container();
+                auto found = container.find(static_cast<D const&>(*this).wrap_value(key));
+                if (found == container.end())
+                {
+                    throw hresult_out_of_bounds();
+                }
+                this->increment_version();
+                container.erase(found);
+            });
         }
 
         void Clear() noexcept
         {
-            this->increment_version();
-            static_cast<D&>(*this).get_container().clear();
+            static_cast<D&>(*this).perform_exclusive([&]
+            {
+                this->increment_version();
+                static_cast<D&>(*this).get_container().clear();
+            });
         }
     };
 
