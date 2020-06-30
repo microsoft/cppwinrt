@@ -1,6 +1,36 @@
 
 namespace winrt::impl
 {
+    template <typename T, typename Container>
+    struct multi_threaded_vector :
+        implements<input_vector<T, Container>, wfc::IVector<T>, wfc::IVectorView<T>, wfc::IIterable<T>>,
+        vector_base<input_vector<T, Container>, T>,
+        multi_threaded_collection_base
+    {
+        static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
+
+        explicit multi_threaded_vector(Container&& values) : m_values(std::forward<Container>(values))
+        {
+        }
+
+        auto& get_container() noexcept
+        {
+            return m_values;
+        }
+
+        auto& get_container() const noexcept
+        {
+            return m_values;
+        }
+
+        using multi_threaded_collection_base::perform_exclusive;
+        using multi_threaded_collection_base::perform_shared;
+
+    private:
+
+        Container m_values;
+    };
+
     template <typename Container>
     struct inspectable_observable_vector :
         observable_vector_base<inspectable_observable_vector<Container>, Windows::Foundation::IInspectable>,
@@ -275,7 +305,7 @@ WINRT_EXPORT namespace winrt
     template <typename T, typename Allocator = std::allocator<T>>
     Windows::Foundation::Collections::IVector<T> multi_threaded_vector(std::vector<T, Allocator>&& values = {})
     {
-        return make<impl::multi_threaded_input_vector<T, std::vector<T, Allocator>>>(std::move(values));
+        return make<impl::multi_threaded_vector<T, std::vector<T, Allocator>>>(std::move(values));
     }
 
     template <typename T, typename Allocator = std::allocator<T>>

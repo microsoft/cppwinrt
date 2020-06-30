@@ -68,7 +68,6 @@ WINRT_EXPORT namespace winrt
             void abi_enter()
             {
                 m_owner->abi_enter();
-                this->check_version(*m_owner);
             }
 
             void abi_exit()
@@ -86,12 +85,56 @@ WINRT_EXPORT namespace winrt
 
             T Current() const
             {
-                // TODO: Locking and validity check?
-                if (m_current == m_end)
+                return m_owner->perform_shared([&]
                 {
-                    throw hresult_out_of_bounds();
-                }
+                    this->check_version(*m_owner);
 
+                    if (m_current == m_end)
+                    {
+                        throw hresult_out_of_bounds();
+                    }
+
+                    return current_value();
+                });
+            }
+
+            bool HasCurrent() const noexcept
+            {
+                return m_owner->perform_shared([&]
+                {
+                    this->check_version(*m_owner);
+                    return m_current != m_end;
+                });
+            }
+
+            bool MoveNext() noexcept
+            {
+                return m_owner->perform_shared([&]
+                {
+                    this->check_version(*m_owner);
+                    if (m_current != m_end)
+                    {
+                        ++m_current;
+                    }
+
+                    return m_current != m_end;
+                });
+            }
+
+            uint32_t GetMany(array_view<T> values)
+            {
+                return m_owner->perform_shared([&]
+                {
+                    this->check_version(*m_owner);
+                    return GetMany(values, typename std::iterator_traits<iterator_type>::iterator_category());
+                });
+            }
+
+        private:
+
+            T current_value() const
+            {
+                WINRT_ASSERT(m_current != m_end);
                 if constexpr (!impl::is_key_value_pair<T>::value)
                 {
                     return m_owner->unwrap_value(*m_current);
@@ -101,31 +144,6 @@ WINRT_EXPORT namespace winrt
                     return make<impl::key_value_pair<T>>(m_owner->unwrap_value(m_current->first), m_owner->unwrap_value(m_current->second));
                 }
             }
-
-            bool HasCurrent() const noexcept
-            {
-                // TODO: Validity check?
-                return m_current != m_end;
-            }
-
-            bool MoveNext() noexcept
-            {
-                // TODO: Locking and validity check?
-                if (m_current != m_end)
-                {
-                    ++m_current;
-                }
-
-                return HasCurrent();
-            }
-
-            uint32_t GetMany(array_view<T> values)
-            {
-                // TODO: Locking and validity check?
-                return GetMany(values, typename std::iterator_traits<iterator_type>::iterator_category());
-            }
-
-        private:
 
             uint32_t GetMany(array_view<T> values, std::random_access_iterator_tag)
             {
@@ -141,7 +159,7 @@ WINRT_EXPORT namespace winrt
 
                 while (output < values.end() && m_current != m_end)
                 {
-                    *output = Current();
+                    *output = current_value();
                     ++output;
                     ++m_current;
                 }
@@ -573,5 +591,26 @@ WINRT_EXPORT namespace winrt
             Windows::Foundation::Collections::CollectionChange const m_change;
             K const m_key;
         };
+    };
+
+    struct multi_threaded_collection_base
+    {
+        template <typename Func>
+        auto perform_exclusive(Func&& fn) const
+        {
+            slim_lock_guard lock(m_mutex);
+            return fn();
+        }
+
+        template <typename Func>
+        auto perform_shared(Func&& fn) const
+        {
+            slim_lock_guard_shared lock(m_mutex);
+            return fn();
+        }
+
+    private:
+
+        mutable slim_mutex m_mutex;
     };
 }
