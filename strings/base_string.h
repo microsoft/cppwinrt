@@ -423,13 +423,13 @@ namespace winrt::impl
         hstring_builder& operator=(hstring_builder const&) = delete;
 
         explicit hstring_builder(uint32_t const size) :
-            m_handle(impl::precreate_hstring_on_heap(size))
+            m_handle(size ? impl::precreate_hstring_on_heap(size) : nullptr)
         {
         }
 
         wchar_t* data() noexcept
         {
-            return const_cast<wchar_t*>(m_handle.get()->ptr);
+            return m_handle ? const_cast<wchar_t*>(m_handle.get()->ptr) : reinterpret_cast<wchar_t*>(this);
         }
 
         hstring to_hstring()
