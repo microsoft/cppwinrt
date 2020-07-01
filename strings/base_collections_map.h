@@ -2,43 +2,17 @@
 namespace winrt::impl
 {
     template <typename K, typename V, typename Container>
-    struct multi_threaded_map :
-        implements<multi_threaded_map<K, V, Container>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
-        map_base<multi_threaded_map<K, V, Container>, K, V>,
-        multi_threaded_collection_base
+    using multi_threaded_map = map_impl<K, V, Container, multi_threaded_collection_base>;
+
+    template <typename K, typename V, typename Container, typename ThreadingBase>
+    struct observable_map_impl :
+        implements<observable_map_impl<K, V, Container, ThreadingBase>, wfc::IObservableMap<K, V>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+        observable_map_base<observable_map_impl<K, V, Container, ThreadingBase>, K, V>,
+        ThreadingBase
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        explicit multi_threaded_map(Container&& values) : m_values(std::forward<Container>(values))
-        {
-        }
-
-        auto& get_container() noexcept
-        {
-            return m_values;
-        }
-
-        auto& get_container() const noexcept
-        {
-            return m_values;
-        }
-
-        using multi_threaded_collection_base::perform_exclusive;
-        using multi_threaded_collection_base::perform_shared;
-
-    private:
-
-        Container m_values;
-    };
-
-    template <typename K, typename V, typename Container>
-    struct observable_map :
-        implements<observable_map<K, V, Container>, wfc::IObservableMap<K, V>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
-        observable_map_base<observable_map<K, V, Container>, K, V>
-    {
-        static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
-
-        explicit observable_map(Container&& values) : m_values(std::forward<Container>(values))
+        explicit observable_map_impl(Container&& values) : m_values(std::forward<Container>(values))
         {
         }
 
@@ -58,34 +32,10 @@ namespace winrt::impl
     };
 
     template <typename K, typename V, typename Container>
-    struct multi_threaded_observable_map :
-        implements<multi_threaded_observable_map<K, V, Container>, wfc::IObservableMap<K, V>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
-        observable_map_base<multi_threaded_observable_map<K, V, Container>, K, V>,
-        multi_threaded_collection_base
-    {
-        static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
+    using observable_map = observable_map_impl<K, V, Container, single_threaded_collection_base>;
 
-        explicit multi_threaded_observable_map(Container&& values) : m_values(std::forward<Container>(values))
-        {
-        }
-
-        auto& get_container() noexcept
-        {
-            return m_values;
-        }
-
-        auto& get_container() const noexcept
-        {
-            return m_values;
-        }
-
-        using multi_threaded_collection_base::perform_exclusive;
-        using multi_threaded_collection_base::perform_shared;
-
-    private:
-
-        Container m_values;
-    };
+    template <typename K, typename V, typename Container>
+    using multi_threaded_observable_map = observable_map_impl<K, V, Container, multi_threaded_collection_base>;
 }
 
 WINRT_EXPORT namespace winrt

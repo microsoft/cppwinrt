@@ -1,14 +1,15 @@
 
 namespace winrt::impl
 {
-    template <typename T, typename Container>
-    struct input_vector :
-        implements<input_vector<T, Container>, wfc::IVector<T>, wfc::IVectorView<T>, wfc::IIterable<T>>,
-        vector_base<input_vector<T, Container>, T>
+    template <typename T, typename Container, typename ThreadingBase>
+    struct vector_impl :
+        implements<vector_impl<T, Container, ThreadingBase>, wfc::IVector<T>, wfc::IVectorView<T>, wfc::IIterable<T>>,
+        vector_base<vector_impl<T, Container, ThreadingBase>, T>,
+        ThreadingBase
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        explicit input_vector(Container&& values) : m_values(std::forward<Container>(values))
+        explicit vector_impl(Container&& values) : m_values(std::forward<Container>(values))
         {
         }
 
@@ -26,6 +27,9 @@ namespace winrt::impl
 
         Container m_values;
     };
+
+    template <typename T, typename Container>
+    using input_vector = vector_impl<T, Container, single_threaded_collection_base>;
 }
 
 WINRT_EXPORT namespace winrt::param

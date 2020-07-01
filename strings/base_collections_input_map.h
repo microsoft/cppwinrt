@@ -1,14 +1,15 @@
 
 namespace winrt::impl
 {
-    template <typename K, typename V, typename Container>
-    struct input_map :
-        implements<input_map<K, V, Container>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
-        map_base<input_map<K, V, Container>, K, V>
+    template <typename K, typename V, typename Container, typename ThreadingBase>
+    struct map_impl :
+        implements<map_impl<K, V, Container, ThreadingBase>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+        map_base<map_impl<K, V, Container, ThreadingBase>, K, V>,
+        ThreadingBase
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        explicit input_map(Container&& values) : m_values(std::forward<Container>(values))
+        explicit map_impl(Container&& values) : m_values(std::forward<Container>(values))
         {
         }
 
@@ -26,6 +27,9 @@ namespace winrt::impl
 
         Container m_values;
     };
+
+    template <typename K, typename V, typename Container>
+    using input_map = map_impl<K, V, Container, single_threaded_collection_base>;
 
     template <typename K, typename V, typename Container>
     auto make_input_map(Container&& values)
