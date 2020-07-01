@@ -40,7 +40,8 @@ namespace winrt::impl
         observable_vector_base<convertible_observable_vector<T, Container, ThreadingBase>, T>,
         implements<convertible_observable_vector<T, Container, ThreadingBase>,
         wfc::IObservableVector<T>, wfc::IVector<T>, wfc::IVectorView<T>, wfc::IIterable<T>,
-        wfc::IObservableVector<Windows::Foundation::IInspectable>, wfc::IVector<Windows::Foundation::IInspectable>, wfc::IVectorView<Windows::Foundation::IInspectable>, wfc::IIterable<Windows::Foundation::IInspectable>>
+        wfc::IObservableVector<Windows::Foundation::IInspectable>, wfc::IVector<Windows::Foundation::IInspectable>, wfc::IVectorView<Windows::Foundation::IInspectable>, wfc::IIterable<Windows::Foundation::IInspectable>>,
+        ThreadingBase
     {
         static_assert(!std::is_same_v<T, Windows::Foundation::IInspectable>);
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
