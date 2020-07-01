@@ -570,4 +570,7 @@ TEST_CASE("hstring, concat")
     REQUIRE(hstring() + s == L"abc");
     REQUIRE(s + L"" == L"abc");
     REQUIRE(L"" + s == L"abc");
+
+    REQUIRE(hstring() + hstring() == L"");
+    REQUIRE(get_abi(hstring() + hstring()) == nullptr);
 }

@@ -11,13 +11,16 @@ namespace
 
     IAsyncAction Action(HANDLE event, bool& canceled)
     {
-        auto cancel = co_await get_cancellation_token();
-
-        cancel.callback([&]
-            {
-                REQUIRE(!canceled);
-                canceled = true;
-            });
+        // Put the cancellation token into a lambda just to make
+        // sure it's possible.
+        [cancel = co_await get_cancellation_token(), &canceled]
+        {
+            cancel.callback([&]
+                {
+                    REQUIRE(!canceled);
+                    canceled = true;
+                });
+        }();
 
         co_await resume_on_signal(event);
         co_await std::experimental::suspend_never();

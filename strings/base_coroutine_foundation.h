@@ -140,6 +140,7 @@ namespace winrt::impl
 
         void await_suspend(std::experimental::coroutine_handle<> handle)
         {
+            auto extend_lifetime = async;
             async.Completed([this, handler = disconnect_aware_handler{ handle }](auto&&, auto operation_status) mutable
             {
                 status = operation_status;
@@ -272,7 +273,7 @@ namespace winrt::impl
             return m_promise->Status() == Windows::Foundation::AsyncStatus::Canceled;
         }
 
-        void callback(winrt::delegate<>&& cancel) noexcept
+        void callback(winrt::delegate<>&& cancel) const noexcept
         {
             m_promise->cancellation_callback(std::move(cancel));
         }
@@ -304,7 +305,7 @@ namespace winrt::impl
             return *this;
         }
 
-        void operator()(Progress const& result)
+        void operator()(Progress const& result) const
         {
             m_promise->set_progress(result);
         }
@@ -558,7 +559,10 @@ namespace winrt::impl
                 }
             }
 
-            cancel();
+            if (cancel)
+            {
+                cancel();
+            }
         }
 
 #if defined(_DEBUG) && !defined(WINRT_NO_MAKE_DETECTION)
