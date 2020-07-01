@@ -4,11 +4,12 @@ namespace winrt::impl
     template <typename T, typename Container>
     using multi_threaded_vector = vector_impl<T, Container, multi_threaded_collection_base>;
 
-    template <typename Container>
+    template <typename Container, typename ThreadingBase = single_threaded_collection_base>
     struct inspectable_observable_vector :
-        observable_vector_base<inspectable_observable_vector<Container>, Windows::Foundation::IInspectable>,
-        implements<inspectable_observable_vector<Container>,
-        wfc::IObservableVector<Windows::Foundation::IInspectable>, wfc::IVector<Windows::Foundation::IInspectable>, wfc::IVectorView<Windows::Foundation::IInspectable>, wfc::IIterable<Windows::Foundation::IInspectable>>
+        observable_vector_base<inspectable_observable_vector<Container, ThreadingBase>, Windows::Foundation::IInspectable>,
+        implements<inspectable_observable_vector<Container, ThreadingBase>,
+        wfc::IObservableVector<Windows::Foundation::IInspectable>, wfc::IVector<Windows::Foundation::IInspectable>, wfc::IVectorView<Windows::Foundation::IInspectable>, wfc::IIterable<Windows::Foundation::IInspectable>>,
+        ThreadingBase
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
@@ -31,18 +32,21 @@ namespace winrt::impl
         Container m_values;
     };
 
-    template <typename T, typename Container>
+    template <typename Container>
+    using multi_threaded_inspectable_observable_vector = inspectable_observable_vector<Container, multi_threaded_collection_base>;
+
+    template <typename T, typename Container, typename ThreadingBase = single_threaded_collection_base>
     struct convertible_observable_vector :
-        observable_vector_base<convertible_observable_vector<T, Container>, T>,
-        implements<convertible_observable_vector<T, Container>,
+        observable_vector_base<convertible_observable_vector<T, Container, ThreadingBase>, T>,
+        implements<convertible_observable_vector<T, Container, ThreadingBase>,
         wfc::IObservableVector<T>, wfc::IVector<T>, wfc::IVectorView<T>, wfc::IIterable<T>,
         wfc::IObservableVector<Windows::Foundation::IInspectable>, wfc::IVector<Windows::Foundation::IInspectable>, wfc::IVectorView<Windows::Foundation::IInspectable>, wfc::IIterable<Windows::Foundation::IInspectable>>
     {
         static_assert(!std::is_same_v<T, Windows::Foundation::IInspectable>);
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        using container_type = convertible_observable_vector<T, Container>;
-        using base_type = observable_vector_base<convertible_observable_vector<T, Container>, T>;
+        using container_type = convertible_observable_vector<T, Container, ThreadingBase>;
+        using base_type = observable_vector_base<convertible_observable_vector<T, Container, ThreadingBase>, T>;
 
         explicit convertible_observable_vector(Container&& values) : m_values(std::forward<Container>(values))
         {
@@ -265,6 +269,9 @@ namespace winrt::impl
 
         Container m_values;
     };
+
+    template <typename T, typename Container>
+    using multi_threaded_convertible_observable_vector = convertible_observable_vector<T, Container, multi_threaded_collection_base>;
 }
 
 WINRT_EXPORT namespace winrt
@@ -291,6 +298,19 @@ WINRT_EXPORT namespace winrt
         else
         {
             return make<impl::convertible_observable_vector<T, std::vector<T, Allocator>>>(std::move(values));
+        }
+    }
+
+    template <typename T, typename Allocator = std::allocator<T>>
+    Windows::Foundation::Collections::IObservableVector<T> multi_threaded_observable_vector(std::vector<T, Allocator>&& values = {})
+    {
+        if constexpr (std::is_same_v<T, Windows::Foundation::IInspectable>)
+        {
+            return make<impl::multi_threaded_inspectable_observable_vector<std::vector<T, Allocator>>>(std::move(values));
+        }
+        else
+        {
+            return make<impl::multi_threaded_convertible_observable_vector<T, std::vector<T, Allocator>>>(std::move(values));
         }
     }
 }
