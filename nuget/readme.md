@@ -94,3 +94,14 @@ Example:
 
 For more complex analysis of build errors, the [MSBuild Binary and Structured Log Viewer](http://msbuildlog.com/) is highly recommended.
 
+## Building, Testing
+
+Be sure to get the latest nuget.exe from [nuget.org](https://www.nuget.org/downloads) and place it in your path.
+
+Build the package by running [build_nuget.cmd](../build_nuget.cmd) from a developer environment command line. For testing pass a version number that is much higher than your currently installed, like:
+
+```
+c:\repos\cppwinrt> .\build_nuget.cmd 5.0.0.0
+```
+
+Add the cppwinrt repo directory as a nuget source location and update your projects' references to point at it, update project references, then rebuild a test/sample project.
