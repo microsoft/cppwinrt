@@ -27,4 +27,18 @@ TEST_CASE("References")
 
     // Tests short circuit when one is empty.
     REQUIRE(a != e);
+
+    // Tests comparison to value.
+    REQUIRE(a == 123);
+    REQUIRE(123 == a);
+
+    REQUIRE(a != 124);
+    REQUIRE(124 != a);
+
+    // Tests short circuit when reference is empty.
+    REQUIRE_FALSE(e == 123);
+    REQUIRE_FALSE(123 == e);
+
+    REQUIRE(e != 123);
+    REQUIRE(123 != e);
 }

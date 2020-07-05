@@ -259,6 +259,40 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
     {
         return !(left == right);
     }
+
+    template <typename T>
+    bool operator==(IReference<T> const& left, T const& right)
+    {
+        if (!left)
+        {
+            return false;
+        }
+
+        return left.Value() == right;
+    }
+
+    template <typename T>
+    bool operator!=(IReference<T> const& left, T const& right)
+    {
+        return !(left == right);
+    }
+
+    template <typename T>
+    bool operator==(T const& left, IReference<T> const& right)
+    {
+        if (!right)
+        {
+            return false;
+        }
+
+        return left == right.Value();
+    }
+
+    template <typename T>
+    bool operator!=(T const& left, IReference<T> const& right)
+    {
+        return !(left == right);
+    }
 }
 
 WINRT_EXPORT namespace winrt
