@@ -166,7 +166,7 @@ namespace winrt::impl
             return free_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.suspend(handle);
         }
 
-        auto await_resume()
+        decltype(auto) await_resume()
         {
             return free_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.resume();
         }
@@ -188,7 +188,7 @@ namespace winrt::impl
             return awaitable.await_suspend(handle);
         }
 
-        auto await_resume()
+        decltype(auto) await_resume()
         {
             return awaitable.await_resume();
         }
@@ -243,7 +243,7 @@ namespace winrt::impl
             return awaitable.await_suspend(handle);
         }
 
-        auto await_resume()
+        decltype(auto) await_resume()
         {
             if (winrt_resume_handler)
             {
