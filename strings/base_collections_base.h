@@ -16,25 +16,6 @@ WINRT_EXPORT namespace winrt
 
         struct single_threaded_collection_base
         {
-#if 0
-            template <typename Func>
-            auto exclusive_op(Func&& fn) const
-            {
-                slim_lock_guard lock(m_mutex);
-                return fn();
-            }
-
-            template <typename Func>
-            auto shared_op(Func&& fn) const
-            {
-                slim_lock_guard_shared lock(m_mutex);
-                return fn();
-            }
-
-        private:
-
-            mutable slim_mutex m_mutex;
-#endif
         };
 
         struct multi_threaded_collection_base
@@ -49,7 +30,7 @@ WINRT_EXPORT namespace winrt
             template <typename Func>
             auto shared_op(Func&& fn) const
             {
-                slim_lock_guard_shared lock(m_mutex);
+                slim_shared_lock_guard lock(m_mutex);
                 return fn();
             }
 
@@ -103,6 +84,7 @@ WINRT_EXPORT namespace winrt
 
         auto First()
         {
+            // NOTE: iterator's constructor requires shared access
             return static_cast<D&>(*this).perform_shared([&]
             {
                 return make<iterator>(static_cast<D*>(this));
@@ -171,7 +153,7 @@ WINRT_EXPORT namespace winrt
                 });
             }
 
-            bool HasCurrent() const noexcept
+            bool HasCurrent() const
             {
                 return m_owner->perform_shared([&]
                 {
@@ -180,9 +162,9 @@ WINRT_EXPORT namespace winrt
                 });
             }
 
-            bool MoveNext() noexcept
+            bool MoveNext()
             {
-                return m_owner->perform_shared([&]
+                return m_owner->perform_exclusive([&]
                 {
                     this->check_version(*m_owner);
                     if (m_current != m_end)
@@ -196,7 +178,7 @@ WINRT_EXPORT namespace winrt
 
             uint32_t GetMany(array_view<T> values)
             {
-                return m_owner->perform_shared([&]
+                return m_owner->perform_exclusive([&]
                 {
                     this->check_version(*m_owner);
                     return GetMany(values, typename std::iterator_traits<iterator_type>::iterator_category());
