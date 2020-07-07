@@ -32,6 +32,9 @@ TEST_CASE("References")
     // Different integer types, but same value
     REQUIRE(c == f);
 
+    // Different integer types, but one is null.
+    REQUIRE(e != f);
+
     // Tests comparison to value.
     REQUIRE(a == 123);
     REQUIRE(123 == a);
