@@ -13,6 +13,7 @@ TEST_CASE("References")
     IReference<int> c{ 123 };
     IReference<int> d{ 321 };
     IReference<int> e{ nullptr };
+    IReference<unsigned long long> f{ 123 };
 
     // The underlying IReference<T> is the same so the comparison
     // uses get_abi under the hood.
@@ -28,6 +29,9 @@ TEST_CASE("References")
     // Tests short circuit when one is empty.
     REQUIRE(a != e);
 
+    // Different integer types, but same value
+    REQUIRE(c == f);
+
     // Tests comparison to value.
     REQUIRE(a == 123);
     REQUIRE(123 == a);
@@ -41,4 +45,24 @@ TEST_CASE("References")
 
     REQUIRE(e != 123);
     REQUIRE(123 != e);
+}
+
+TEST_CASE("String References")
+{
+    // Tests comparison to string literal
+    IReference<hstring> str{ L"foo" };
+    IReference<hstring> nullstr{ nullptr };
+
+    REQUIRE(str == L"foo");
+    REQUIRE(L"foo" == str);
+
+    REQUIRE(str != L"bar");
+    REQUIRE(L"bar" != str);
+
+    // Tests short circuit when reference is empty.
+    REQUIRE_FALSE(nullstr == L"foo");
+    REQUIRE_FALSE(L"foo" == nullstr);
+
+    REQUIRE(nullstr != L"bar");
+    REQUIRE(L"bar" != nullstr);
 }

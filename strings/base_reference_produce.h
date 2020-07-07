@@ -238,8 +238,8 @@ namespace winrt::impl
 
 WINRT_EXPORT namespace winrt::Windows::Foundation
 {
-    template <typename T>
-    bool operator==(IReference<T> const& left, IReference<T> const& right)
+    template <typename T, typename U>
+    bool operator==(IReference<T> const& left, IReference<U> const& right)
     {
         if (get_abi(left) == get_abi(right))
         {
@@ -254,8 +254,8 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
         return left.Value() == right.Value();
     }
 
-    template <typename T>
-    bool operator!=(IReference<T> const& left, IReference<T> const& right)
+    template <typename T, typename U>
+    bool operator!=(IReference<T> const& left, IReference<U> const& right)
     {
         return !(left == right);
     }
@@ -290,6 +290,36 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
     template <typename T>
     bool operator!=(T const& left, IReference<T> const& right)
+    {
+        return !(left == right);
+    }
+
+    inline bool operator==(IReference<hstring> const& left, std::wstring_view const& right)
+    {
+        if (!left)
+        {
+            return false;
+        }
+
+        return std::wstring_view(left.Value()) == right;
+    }
+
+    inline bool operator!=(IReference<hstring> const& left, std::wstring_view const& right)
+    {
+        return !(left == right);
+    }
+
+    inline bool operator==(std::wstring_view const& left, IReference<hstring> const& right)
+    {
+        if (!right)
+        {
+            return false;
+        }
+
+        return left == std::wstring_view(right.Value());
+    }
+
+    inline bool operator!=(std::wstring_view const& left, IReference<hstring> const& right)
     {
         return !(left == right);
     }
