@@ -25,8 +25,9 @@ namespace cppwinrt
     {
         w.write_root_include("base");
         auto format = R"(static_assert(winrt::check_version(CPPWINRT_VERSION, "%"), "Mismatched C++/WinRT headers.");
+#define CPPWINRT_VERSION "%"
 )";
-        w.write(format, CPPWINRT_VERSION_STRING);
+        w.write(format, CPPWINRT_VERSION_STRING, CPPWINRT_VERSION_STRING);
     }
 
     static void write_include_guard(writer& w)
