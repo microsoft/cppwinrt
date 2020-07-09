@@ -248,11 +248,12 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
     <!--Get direct WinMD references (including Nuget packages) for projections, IDL processing, and AppX packaging-->
     <Target Name="GetCppWinRTDirectWinMDReferences"
-            DependsOnTargets="ResolveAssemblyReferences;$(GetCppWinRTDirectWinMDReferencesDependsOn)"
+            DependsOnTargets="ExpandSDKReferences;ResolveAssemblyReferences;$(GetCppWinRTDirectWinMDReferencesDependsOn)"
             Returns="@(CppWinRTDirectWinMDReferences)">
         <ItemGroup>
             <_CppWinRTDirectWinMDReferences Remove="@(_CppWinRTDirectWinMDReferences)" />
             <_CppWinRTDirectWinMDReferences Include="@(ReferencePath)" Condition="'%(ReferencePath.IsSystemReference)' != 'true' and '%(ReferencePath.WinMDFile)' == 'true' and '%(ReferencePath.ReferenceSourceTarget)' == 'ResolveAssemblyReference'" />
+            <_CppWinRTDirectWinMDReferences Include="@(ReferencePath)" Condition="'%(ReferencePath.WinMDFile)' == 'true' and '%(ReferencePath.ReferenceSourceTarget)' == 'ExpandSDKReference'" />
             <CppWinRTDirectWinMDReferences Remove="@(CppWinRTDirectWinMDReferences)"/>
             <CppWinRTDirectWinMDReferences Include="@(_CppWinRTDirectWinMDReferences)">
                 <WinMDPath>%(FullPath)</WinMDPath>

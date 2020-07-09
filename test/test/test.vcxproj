@@ -294,6 +294,7 @@
     <ClCompile Include="async_cancel_callback.cpp" />
     <ClCompile Include="async_check_cancel.cpp" />
     <ClCompile Include="async_completed.cpp" />
+    <ClCompile Include="async_ref_result.cpp" />
     <ClCompile Include="box_guid.cpp" />
     <ClCompile Include="capture.cpp" />
     <ClCompile Include="coro_foundation.cpp">
