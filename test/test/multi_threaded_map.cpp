@@ -7,82 +7,51 @@ using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
-// Vector correctness tests exist elsewhere. These tests are strictly geared toward testing multi threaded functionality
+// Map correctness tests exist elsewhere. These tests are strictly geared toward testing multi threaded functionality
 
-struct signal
-{
-    HANDLE m_handle;
-
-    signal() : m_handle(::CreateEventW(nullptr, true, false, nullptr))
-    {
-        REQUIRE(m_handle != nullptr);
-    }
-
-    ~signal()
-    {
-        if (m_handle)
-        {
-            ::CloseHandle(m_handle);
-        }
-    }
-
-    void set()
-    {
-        WINRT_VERIFY(::SetEvent(m_handle));
-    }
-
-    bool wait(DWORD timeoutMs = INFINITE)
-    {
-        auto result = ::WaitForSingleObject(m_handle, timeoutMs);
-        REQUIRE(((result == WAIT_OBJECT_0) || (result == WAIT_TIMEOUT)));
-        return result == WAIT_OBJECT_0;
-    }
-};
-
-static void test_single_reader_single_writer(IVector<int> const& v)
+static void test_single_reader_single_writer(IMap<int, int> const& map)
 {
     static constexpr int final_size = 10000;
     std::thread t([&]
     {
         for (int i = 0; i < final_size; ++i)
         {
-            v.Append(i);
+            map.Insert(i, i);
         }
     });
 
     while (true)
     {
-        auto beginSize = v.Size();
         int i = 0;
+        auto beginSize = map.Size();
         for (; i < final_size; ++i)
         {
-            if (static_cast<uint32_t>(i) >= v.Size())
+            if (!map.HasKey(i))
             {
                 REQUIRE(static_cast<uint32_t>(i) >= beginSize);
                 break;
             }
 
-            REQUIRE(v.GetAt(i) == i);
+            REQUIRE(map.Lookup(i) == i);
         }
 
         if (i == final_size)
         {
             break;
         }
-        REQUIRE(beginSize != final_size);
     }
 
     t.join();
 }
 
-static void test_iterator_invalidation(IVector<int> const& v)
+static void test_iterator_invalidation(IMap<int, int> const& map)
 {
-    static constexpr uint32_t final_size = 100000;
+    static constexpr int final_size = 10000;
     std::thread t([&]
     {
         for (int i = 0; i < final_size; ++i)
         {
-            v.Append(i);
+            map.Insert(i, i);
             std::this_thread::yield();
         }
     });
@@ -91,14 +60,16 @@ static void test_iterator_invalidation(IVector<int> const& v)
     bool forceExit = false;
     while (!forceExit)
     {
-        forceExit = v.Size() == final_size;
+        forceExit = map.Size() == final_size;
         try
         {
             int expect = 0;
-            for (auto itr = v.First(); itr.HasCurrent(); itr.MoveNext())
+            for (auto itr = map.First(); itr.HasCurrent(); itr.MoveNext())
             {
-                auto val = itr.Current();
-                REQUIRE(val == expect++);
+                auto pair = itr.Current();
+                REQUIRE(pair.Key() == expect);
+                REQUIRE(pair.Value() == expect);
+                ++expect;
             }
 
             if (expect == final_size)
@@ -116,20 +87,19 @@ static void test_iterator_invalidation(IVector<int> const& v)
 
     t.join();
 
-    // Since the insert thread yields after each insertion, this should really be in the thousands
+    // Since the insert thread yields after each insertion, this should be closer to ~700+
     REQUIRE(exceptionCount > 50);
 }
 
-static void test_concurrent_iteration(IVector<int> const& v)
+static void test_concurrent_iteration(IMap<int, int> const& map)
 {
-    // Large enough size that all threads should have enough time to spin up
-    static constexpr uint32_t size = 10000;
+    static constexpr int size = 10000;
     for (int i = 0; i < size; ++i)
     {
-        v.Append(i);
+        map.Insert(i, i);
     }
 
-    auto itr = v.First();
+    auto itr = map.First();
     std::thread threads[2];
     int increments[std::size(threads)] = {};
     for (int i = 0; i < std::size(threads); ++i)
@@ -144,7 +114,7 @@ static void test_concurrent_iteration(IVector<int> const& v)
                     // NOTE: Because there is no atomic "get and increment" function on IIterator, the best we can do is
                     // validate that we're getting valid increasing values, e.g. as opposed to validating that we read
                     // all unique values.
-                    auto val = itr.Current();
+                    auto val = itr.Current().Key();
                     REQUIRE(val > last);
                     REQUIRE(val < size);
                     last = val;
@@ -177,19 +147,20 @@ static void test_concurrent_iteration(IVector<int> const& v)
     REQUIRE(totalIncrements == (size - 1));
 }
 
-static void test_multi_writer(IVector<int> const& v)
+static void test_multi_writer(IMap<int, int> const& map)
 {
     // Large enough that several threads should be executing concurrently
     static constexpr uint32_t size = 10000;
     static constexpr size_t threadCount = 8;
     std::thread threads[threadCount];
-    for (auto& t : threads)
+    for (int i = 0; i < threadCount; ++i)
     {
-        t = std::thread([&v]
+        threads[i] = std::thread([&map, i]
         {
-            for (int i = 0; i < size; ++i)
+            auto off = i * size;
+            for (int j = 0; j < size; ++j)
             {
-                v.Append(i);
+                map.Insert(j + off, j);
             }
         });
     }
@@ -199,18 +170,18 @@ static void test_multi_writer(IVector<int> const& v)
         t.join();
     }
 
-    REQUIRE(v.Size() == (size * threadCount));
+    REQUIRE(map.Size() == (size * threadCount));
 
     // sum(i = 1 -> N){i} = N * (N + 1) / 2
-    auto sum = std::accumulate(begin(v), end(v), 0);
+    auto sum = std::accumulate(begin(map), end(map), 0, [](int curr, auto&& pair) { return curr + pair.Value(); });
     REQUIRE(sum == ((threadCount * (size - 1) * size) / 2));
 }
 
-struct exclusive_vector :
-    vector_base<exclusive_vector, int>,
-    implements<exclusive_vector, IVector<int>, IVectorView<int>, IIterable<int>>
+struct exclusive_map :
+    map_base<exclusive_map, int, int>,
+    implements<exclusive_map, IMap<int, int>, IMapView<int, int>, IIterable<IKeyValuePair<int, int>>>
 {
-    std::vector<int> container;
+    std::map<int, int> container;
     mutable slim_mutex mutex;
 
     auto& get_container() noexcept
@@ -236,62 +207,47 @@ struct exclusive_vector :
 
 static void deadlock_test()
 {
-    auto v = make<exclusive_vector>();
+    auto map = make<exclusive_map>();
 
-    v.Append(42);
-    v.InsertAt(0, 8);
-    REQUIRE(v.Size() == 2);
-    REQUIRE(v.GetAt(0) == 8);
-    uint32_t index;
-    REQUIRE(v.IndexOf(42, index));
-    REQUIRE(index == 1);
-    v.ReplaceAll({ 1, 2, 3 });
-    v.SetAt(1, 4);
-    int vals[5];
-    REQUIRE(v.GetMany(0, vals) == 3);
-    REQUIRE(vals[0] == 1);
-    REQUIRE(vals[1] == 4);
-    REQUIRE(vals[2] == 3);
-    v.RemoveAt(1);
-    REQUIRE(v.GetAt(1) == 3);
-    v.RemoveAtEnd();
-    REQUIRE(v.GetAt(0) == 1);
-    v.Clear();
-    REQUIRE(v.Size() == 0);
+    map.Insert(0, 0);
+    map.Insert(1, 1);
+    REQUIRE(map.Size() == 2);
+    REQUIRE(map.HasKey(0));
+    REQUIRE(!map.HasKey(2));
+    REQUIRE(map.Lookup(0) == 0);
+    map.Remove(0);
+    REQUIRE(map.Size() == 1);
+    map.Clear();
+    REQUIRE(map.Size() == 0);
 
-    v.ReplaceAll({ 1, 2, 3 });
-    auto view = v.GetView();
-    REQUIRE(v.Size() == 3);
-    REQUIRE(v.GetAt(0) == 1);
-    REQUIRE(v.GetMany(0, vals) == 3);
-    REQUIRE(vals[0] == 1);
-    REQUIRE(vals[1] == 2);
-    REQUIRE(vals[2] == 3);
-    REQUIRE(v.IndexOf(2, index));
-    REQUIRE(index == 1);
+    map.Insert(0, 0);
+    map.Insert(1, 1);
+    auto view = map.GetView();
+    REQUIRE(view.Size() == 2);
+    REQUIRE(view.HasKey(0));
+    REQUIRE(view.Lookup(1) == 1);
 
-    auto itr = v.First();
+    auto itr = map.First();
     REQUIRE(itr.HasCurrent());
-    REQUIRE(itr.Current() == 1);
-    REQUIRE(itr.MoveNext());
+    REQUIRE(itr.Current().Key() == 0);
     REQUIRE(itr.MoveNext());
     REQUIRE(!itr.MoveNext());
     REQUIRE(!itr.HasCurrent());
 }
 
-TEST_CASE("multi_threaded_vector")
+TEST_CASE("multi_threaded_map")
 {
-    test_single_reader_single_writer(multi_threaded_vector<int>());
-    test_iterator_invalidation(multi_threaded_vector<int>());
-    test_concurrent_iteration(multi_threaded_vector<int>());
-    test_multi_writer(multi_threaded_vector<int>());
+    test_single_reader_single_writer(multi_threaded_map<int, int>());
+    test_iterator_invalidation(multi_threaded_map<int, int>());
+    test_concurrent_iteration(multi_threaded_map<int, int>());
+    test_multi_writer(multi_threaded_map<int, int>());
     deadlock_test();
 }
 
-TEST_CASE("multi_threaded_observable_vector")
+TEST_CASE("multi_threaded_observable_map")
 {
-    test_single_reader_single_writer(multi_threaded_observable_vector<int>());
-    test_iterator_invalidation(multi_threaded_observable_vector<int>());
-    test_concurrent_iteration(multi_threaded_observable_vector<int>());
-    test_multi_writer(multi_threaded_observable_vector<int>());
+    test_single_reader_single_writer(multi_threaded_observable_map<int, int>());
+    test_iterator_invalidation(multi_threaded_observable_map<int, int>());
+    test_concurrent_iteration(multi_threaded_observable_map<int, int>());
+    test_multi_writer(multi_threaded_observable_map<int, int>());
 }
