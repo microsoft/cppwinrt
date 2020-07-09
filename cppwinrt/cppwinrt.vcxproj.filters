@@ -136,6 +136,9 @@
     <ClInclude Include="..\strings\base_version.h">
       <Filter>strings</Filter>
     </ClInclude>
+    <ClInclude Include="..\strings\base_version_odr.h">
+      <Filter>strings</Filter>
+    </ClInclude>
     <ClInclude Include="..\strings\base_weak_ref.h">
       <Filter>strings</Filter>
     </ClInclude>

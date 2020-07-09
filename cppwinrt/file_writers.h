@@ -6,6 +6,7 @@ namespace cppwinrt
     {
         writer w;
         write_preamble(w);
+        w.write(strings::base_version_odr, CPPWINRT_VERSION_STRING);
         write_open_file_guard(w, "BASE");
 
         w.write(strings::base_includes);
@@ -38,7 +39,7 @@ namespace cppwinrt
         w.write(strings::base_std_hash);
         w.write(strings::base_coroutine_threadpool);
         w.write(strings::base_natvis);
-        w.write(strings::base_version, CPPWINRT_VERSION_STRING);
+        w.write(strings::base_version);
 
         write_endif(w);
         w.flush_to_file(settings.output_folder + "winrt/base.h");

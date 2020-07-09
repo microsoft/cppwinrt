@@ -81,6 +81,7 @@
     <ClInclude Include="..\strings\base_string_operators.h" />
     <ClInclude Include="..\strings\base_types.h" />
     <ClInclude Include="..\strings\base_version.h" />
+    <ClInclude Include="..\strings\base_version_odr.h" />
     <ClInclude Include="..\strings\base_weak_ref.h" />
     <ClInclude Include="..\strings\base_windows.h" />
     <ClInclude Include="..\strings\base_xaml_typename.h" />
