@@ -1,6 +1,11 @@
 
 namespace winrt::impl
 {
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4458) // declaration hides class member (okay because we do not use named members of base class)
+#endif
+
     template <typename T, typename H>
     struct implements_delegate : abi_t<T>, H, update_module_lock
     {
@@ -187,6 +192,10 @@ namespace winrt::impl
             return { static_cast<void*>(new variadic_delegate<H, R, Args...>(std::forward<H>(handler))), take_ownership_from_abi };
         }
     };
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 }
 
 WINRT_EXPORT namespace winrt
