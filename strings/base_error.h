@@ -584,7 +584,7 @@ namespace winrt::impl
 {
     inline hresult check_hresult_allow_bounds(hresult const result)
     {
-        if (result != impl::error_out_of_bounds)
+        if (result != impl::error_out_of_bounds && result != impl::error_fail && result != impl::error_file_not_found)
         {
             check_hresult(result);
         }
