@@ -1327,6 +1327,12 @@ namespace cppwinrt
                 return result;
             }
         }
+
+        template <typename T>
+        auto LookupAs(param_type<K> const& key) const;
+
+        template <typename T>
+        auto TryLookupAs(param_type<K> const& key) const;
 )");
         }
         else if (type_name == "Windows.Foundation.Collections.IMap`2")
@@ -1358,6 +1364,12 @@ namespace cppwinrt
         {
             return 0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Remove(get_abi(key)));
         }
+
+        template <typename T>
+        auto LookupAs(param_type<K> const& key) const;
+
+        template <typename T>
+        auto TryLookupAs(param_type<K> const& key) const;
 )");
         }
         else if (type_name == "Windows.Foundation.IAsyncAction")

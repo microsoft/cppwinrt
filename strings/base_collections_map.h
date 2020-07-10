@@ -26,6 +26,34 @@ namespace winrt::impl
 
         Container m_values;
     };
+
+    template <typename D, typename K, typename V> template <typename T>
+    auto consume_Windows_Foundation_Collections_IMap<D, K, V>::LookupAs(param_type<K> const& key) const
+    {
+        static_assert(std::is_same_v<V, Windows::Foundation::IInspectable>);
+        return unbox_value<T>(static_cast<D const&>(*this).Lookup(key));
+    }
+
+    template <typename D, typename K, typename V> template <typename T>
+    auto consume_Windows_Foundation_Collections_IMap<D, K, V>::TryLookupAs(param_type<K> const& key) const
+    {
+        static_assert(std::is_same_v<V, Windows::Foundation::IInspectable>);
+        return try_unbox_value<T>(static_cast<D const&>(*this).TryLookup(key));
+    }
+
+    template <typename D, typename K, typename V> template <typename T>
+    auto consume_Windows_Foundation_Collections_IMapView<D, K, V>::LookupAs(param_type<K> const& key) const
+    {
+        static_assert(std::is_same_v<V, Windows::Foundation::IInspectable>);
+        return unbox_value<T>(static_cast<D const&>(*this).Lookup(key));
+    }
+
+    template <typename D, typename K, typename V> template <typename T>
+    auto consume_Windows_Foundation_Collections_IMapView<D, K, V>::TryLookupAs(param_type<K> const& key) const
+    {
+        static_assert(std::is_same_v<V, Windows::Foundation::IInspectable>);
+        return try_unbox_value<T>(static_cast<D const&>(*this).TryLookup(key));
+    }
 }
 
 WINRT_EXPORT namespace winrt

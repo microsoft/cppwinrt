@@ -433,6 +433,7 @@
     <ClCompile Include="struct_delegate.cpp" />
     <ClCompile Include="tearoff.cpp" />
     <ClCompile Include="thread_pool.cpp" />
+    <ClCompile Include="lookup_as.cpp" />
     <ClCompile Include="uniform_in_params.cpp" />
     <ClCompile Include="variadic_delegate.cpp" />
     <ClCompile Include="velocity.cpp" />

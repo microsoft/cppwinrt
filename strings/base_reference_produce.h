@@ -378,5 +378,55 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename T>
+    auto try_unbox_value(Windows::Foundation::IInspectable const& value)
+    {
+        if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>)
+        {
+            return value.try_as<T>();
+        }
+        else
+        {
+            if (!value)
+            {
+                return std::optional<T>();
+            }
+
+            if constexpr (std::is_enum_v<T>)
+            {
+                if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
+                {
+                    return std::optional<T>(temp.Value());
+                }
+
+                if (auto temp = value.try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>())
+                {
+                    return std::optional<T>(static_cast<T>(temp.Value()));
+                }
+
+                return std::optional<T>();
+            }
+#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
+            else if constexpr (std::is_same_v<T, GUID>)
+            {
+                if (auto temp = value.try_as<Windows::Foundation::IReference<guid>>())
+                {
+                    return std::optional<T>(temp.Value());
+                }
+
+                return std::optional<T>();
+            }
+#endif
+            else if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
+            {
+                return std::optional<T>(temp.Value());
+            }
+            else
+            {
+                return std::optional<T>();
+            }
+        }
+    }
+
+    template <typename T>
     using optional = Windows::Foundation::IReference<T>;
 }
