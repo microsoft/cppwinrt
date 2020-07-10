@@ -110,21 +110,37 @@ TEST_CASE("TryRemove")
 
 TEST_CASE("TryLookup TryRemove error")
 {
+    // A map that throws a specific error, used to verify various edge cases.
+    struct error_map : implements<error_map, IMap<int, int>>
+    {
+        hresult code;
+        int Lookup(int) { throw_hresult(code); }
+        int32_t Size() { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+        bool HasKey(int) { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+        IMapView<int, int> GetView() { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+        bool Insert(int, int) { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+        void Remove(int) { throw_hresult(code); }
+        void Clear() { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+    };
+    
+    auto self = make_self<error_map>();
+    IMap<int, int> map = *self;
+
     // Simulate a non-agile map that is being accessed from the wrong thread.
     // "Try" operations should throw rather than erroneously report "not found".
     // Because they didn't even try. The operation never got off the ground.
-    struct incorrectly_used_non_agile_map : implements<incorrectly_used_non_agile_map, IMap<int, int>>
-    {
-        int Lookup(int) { throw hresult_wrong_thread(); }
-        int32_t Size() { throw hresult_wrong_thread(); }
-        bool HasKey(int) { throw hresult_wrong_thread(); }
-        IMapView<int, int> GetView() { throw hresult_wrong_thread(); }
-        bool Insert(int, int) { throw hresult_wrong_thread(); }
-        void Remove(int) { throw hresult_wrong_thread(); }
-        void Clear() { throw hresult_wrong_thread(); }
-    };
-    
-    auto map = make<incorrectly_used_non_agile_map>();
+    self->code = RPC_E_WRONG_THREAD;
     REQUIRE_THROWS_AS(map.TryLookup(123), hresult_wrong_thread);
     REQUIRE_THROWS_AS(map.TryRemove(123), hresult_wrong_thread);
+
+    // Some implementations return HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND)
+    // or E_FAIL when the key is not present.
+    self->code = HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND);
+    REQUIRE(!map.TryLookup(123));
+    REQUIRE(!map.TryRemove(123));
+
+    self->code = E_FAIL;
+    REQUIRE(!map.TryLookup(123));
+    REQUIRE(!map.TryRemove(123));
+
 }
