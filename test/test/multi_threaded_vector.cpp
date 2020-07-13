@@ -47,6 +47,7 @@ static void test_single_reader_single_writer(IVector<int> const& v)
         for (int i = 0; i < final_size; ++i)
         {
             v.Append(i);
+            std::this_thread::yield();
         }
     });
 
@@ -71,7 +72,46 @@ static void test_single_reader_single_writer(IVector<int> const& v)
         }
         REQUIRE(beginSize != final_size);
     }
+    t.join();
 
+    v.Clear();
+    t = std::thread([&]
+    {
+        for (int i = 0; i < final_size; ++i)
+        {
+            v.InsertAt(0, i);
+            std::this_thread::yield();
+        }
+    });
+
+    int vals[100];
+    while (v.Size() < final_size)
+    {
+        auto len = v.GetMany(0, vals);
+        for (uint32_t i = 1; i < len; ++i)
+        {
+            REQUIRE(vals[i] == (vals[i - 1] - 1));
+        }
+    }
+    t.join();
+
+    t = std::thread([&]
+    {
+        while (v.Size() != 0)
+        {
+            v.RemoveAt(0);
+            std::this_thread::yield();
+        }
+    });
+
+    while (v.Size() > 0)
+    {
+        auto len = v.GetMany(0, vals);
+        for (uint32_t i = 1; i < len; ++i)
+        {
+            REQUIRE(vals[i] == (vals[i - 1] - 1));
+        }
+    }
     t.join();
 }
 
@@ -175,6 +215,31 @@ static void test_concurrent_iteration(IVector<int> const& v)
 
     auto totalIncrements = std::accumulate(std::begin(increments), std::end(increments), 0);
     REQUIRE(totalIncrements == (size - 1));
+
+    itr = v.First();
+    int totals[std::size(threads)] = {};
+    for (int i = 0; i < std::size(threads); ++i)
+    {
+        threads[i] = std::thread([&itr, &totals, i]()
+        {
+            int vals[10];
+            while (itr.HasCurrent())
+            {
+                // Unlike 'Current', 'GetMany' _is_ atomic in regards to read+increment
+                auto len = itr.GetMany(vals);
+                totals[i] += std::accumulate(vals, vals + len, 0);
+            }
+        });
+    }
+
+    for (auto& t : threads)
+    {
+        t.join();
+    }
+
+    // sum(i = 1 -> N){i} = N * (N + 1) / 2
+    auto total = std::accumulate(std::begin(totals), std::end(totals), 0);
+    REQUIRE(total == (size * (size - 1) / 2));
 }
 
 static void test_multi_writer(IVector<int> const& v)

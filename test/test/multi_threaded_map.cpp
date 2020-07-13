@@ -17,6 +17,7 @@ static void test_single_reader_single_writer(IMap<int, int> const& map)
         for (int i = 0; i < final_size; ++i)
         {
             map.Insert(i, i);
+            std::this_thread::yield();
         }
     });
 
@@ -46,49 +47,52 @@ static void test_single_reader_single_writer(IMap<int, int> const& map)
 
 static void test_iterator_invalidation(IMap<int, int> const& map)
 {
-    static constexpr int final_size = 10000;
+    static constexpr int size = 10;
+    for (int i = 0; i < size; ++i)
+    {
+        map.Insert(i, i);
+    }
+
+    volatile bool done = false;
     std::thread t([&]
     {
-        for (int i = 0; i < final_size; ++i)
+        // Since the underlying storage is std::map, it's actually quite hard to hit UB that has an observable side
+        // effect, making it hard to have a meaningful test. The idea here is to remove and re-insert the "first"
+        // element in a tight loop so that enumeration is likely to hit a concurrent access that's actually meaningful.
+        // Even then, failures really only occur with a single threaded collection when building Debug
+        while (!done)
         {
-            map.Insert(i, i);
-            std::this_thread::yield();
+            map.Remove(0);
+            map.Insert(0, 0);
         }
     });
 
     int exceptionCount = 0;
-    bool forceExit = false;
-    while (!forceExit)
+
+    for (int i = 0; i < 10000; ++i)
     {
-        forceExit = map.Size() == final_size;
         try
         {
-            int expect = 0;
+            int count = 0;
             for (auto itr = map.First(); itr.HasCurrent(); itr.MoveNext())
             {
                 auto pair = itr.Current();
-                REQUIRE(pair.Key() == expect);
-                REQUIRE(pair.Value() == expect);
-                ++expect;
+                REQUIRE(pair.Key() == pair.Value());
+                ++count;
             }
-
-            if (expect == final_size)
-            {
-                break;
-            }
+            REQUIRE(count >= (size - 1));
+            REQUIRE(count <= size);
         }
         catch (hresult_changed_state const&)
         {
             ++exceptionCount;
         }
-
-        REQUIRE(!forceExit);
     }
+    done = true;
 
+    // In reality, this number should be quite large; much larger than the 50 validated here
+    REQUIRE(exceptionCount >= 50);
     t.join();
-
-    // Since the insert thread yields after each insertion, this should be closer to ~700+
-    REQUIRE(exceptionCount > 50);
 }
 
 static void test_concurrent_iteration(IMap<int, int> const& map)
