@@ -110,6 +110,46 @@ static void test_single_reader_single_writer(IVector<T> const& v)
         }
     }
     t.join();
+
+    for (int i = 0; i < std::size(vals); ++i)
+    {
+        v.Append(conditional_box<T>(i));
+    }
+
+    static constexpr int iterations = 1000;
+    t = std::thread([&]
+    {
+        for (int i = 1; i <= iterations; ++i)
+        {
+            for (int j = 0; j < std::size(vals); ++j)
+            {
+                v.SetAt(j, conditional_box<T>(j + i));
+            }
+            std::this_thread::yield();
+        }
+    });
+
+    while (conditional_unbox(v.GetAt(0)) != iterations)
+    {
+        v.GetMany(0, vals);
+        int jumps = 0;
+        for (int i = 1; i < std::size(vals); ++i)
+        {
+            auto prev = conditional_unbox(vals[i - 1]);
+            auto curr = conditional_unbox(vals[i]);
+            if (prev == curr)
+            {
+                ++jumps;
+            }
+            else
+            {
+                REQUIRE(curr == (prev + 1));
+            }
+        }
+        REQUIRE(jumps <= 1);
+    }
+
+    t.join();
 }
 
 template <typename T>
