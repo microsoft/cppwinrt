@@ -183,17 +183,17 @@ WINRT_EXPORT namespace winrt
             return *this;
         }
 
-        explicit hresult_error(hresult const code) noexcept : m_code(code)
+        explicit hresult_error(hresult const code) noexcept : m_code(verify_error(code))
         {
             originate(code, nullptr);
         }
 
-        hresult_error(hresult const code, param::hstring const& message) noexcept : m_code(code)
+        hresult_error(hresult const code, param::hstring const& message) noexcept : m_code(verify_error(code))
         {
             originate(code, get_abi(message));
         }
 
-        hresult_error(hresult const code, take_ownership_from_abi_t) noexcept : m_code(code)
+        hresult_error(hresult const code, take_ownership_from_abi_t) noexcept : m_code(verify_error(code))
         {
             com_ptr<impl::IErrorInfo> info;
             WINRT_IMPL_GetErrorInfo(0, info.put_void());
@@ -305,6 +305,13 @@ WINRT_EXPORT namespace winrt
             WINRT_VERIFY_(0, WINRT_IMPL_GetErrorInfo(0, info.put_void()));
             WINRT_VERIFY(info.try_as(m_info));
         }
+
+        static hresult verify_error(hresult const code) noexcept
+        {
+            WINRT_ASSERT(code < 0);
+            return code;
+        }
+
 
 #ifdef __clang__
 #pragma clang diagnostic push
@@ -584,7 +591,7 @@ namespace winrt::impl
 {
     inline hresult check_hresult_allow_bounds(hresult const result)
     {
-        if (result != impl::error_out_of_bounds)
+        if (result != impl::error_out_of_bounds && result != impl::error_fail && result != impl::error_file_not_found)
         {
             check_hresult(result);
         }
