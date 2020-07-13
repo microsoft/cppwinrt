@@ -9,14 +9,41 @@ using namespace Windows::Foundation::Collections;
 
 // Map correctness tests exist elsewhere. These tests are strictly geared toward testing multi threaded functionality
 
-static void test_single_reader_single_writer(IMap<int, int> const& map)
+template <typename T> // int or IInspectable
+static T conditional_box(int value)
+{
+    if constexpr (std::is_same_v<T, int>)
+    {
+        return value;
+    }
+    else
+    {
+        return box_value(value);
+    }
+}
+
+template <typename T>
+static int conditional_unbox(T const& value)
+{
+    if constexpr (std::is_same_v<T, int>)
+    {
+        return value;
+    }
+    else
+    {
+        return unbox_value<int>(value);
+    }
+}
+
+template <typename T>
+static void test_single_reader_single_writer(IMap<int, T> const& map)
 {
     static constexpr int final_size = 10000;
     std::thread t([&]
     {
         for (int i = 0; i < final_size; ++i)
         {
-            map.Insert(i, i);
+            map.Insert(i, conditional_box<T>(i));
             std::this_thread::yield();
         }
     });
@@ -33,7 +60,7 @@ static void test_single_reader_single_writer(IMap<int, int> const& map)
                 break;
             }
 
-            REQUIRE(map.Lookup(i) == i);
+            REQUIRE(conditional_unbox(map.Lookup(i)) == i);
         }
 
         if (i == final_size)
@@ -45,12 +72,13 @@ static void test_single_reader_single_writer(IMap<int, int> const& map)
     t.join();
 }
 
-static void test_iterator_invalidation(IMap<int, int> const& map)
+template <typename T>
+static void test_iterator_invalidation(IMap<int, T> const& map)
 {
     static constexpr int size = 10;
     for (int i = 0; i < size; ++i)
     {
-        map.Insert(i, i);
+        map.Insert(i, conditional_box<T>(i));
     }
 
     volatile bool done = false;
@@ -63,7 +91,7 @@ static void test_iterator_invalidation(IMap<int, int> const& map)
         while (!done)
         {
             map.Remove(0);
-            map.Insert(0, 0);
+            map.Insert(0, conditional_box<T>(0));
         }
     });
 
@@ -77,7 +105,7 @@ static void test_iterator_invalidation(IMap<int, int> const& map)
             for (auto itr = map.First(); itr.HasCurrent(); itr.MoveNext())
             {
                 auto pair = itr.Current();
-                REQUIRE(pair.Key() == pair.Value());
+                REQUIRE(pair.Key() == conditional_unbox(pair.Value()));
                 ++count;
             }
             REQUIRE(count >= (size - 1));
@@ -95,12 +123,13 @@ static void test_iterator_invalidation(IMap<int, int> const& map)
     t.join();
 }
 
-static void test_concurrent_iteration(IMap<int, int> const& map)
+template <typename T>
+static void test_concurrent_iteration(IMap<int, T> const& map)
 {
     static constexpr int size = 10000;
     for (int i = 0; i < size; ++i)
     {
-        map.Insert(i, i);
+        map.Insert(i, conditional_box<T>(i));
     }
 
     auto itr = map.First();
@@ -151,7 +180,8 @@ static void test_concurrent_iteration(IMap<int, int> const& map)
     REQUIRE(totalIncrements == (size - 1));
 }
 
-static void test_multi_writer(IMap<int, int> const& map)
+template <typename T>
+static void test_multi_writer(IMap<int, T> const& map)
 {
     // Large enough that several threads should be executing concurrently
     static constexpr uint32_t size = 10000;
@@ -164,7 +194,7 @@ static void test_multi_writer(IMap<int, int> const& map)
             auto off = i * size;
             for (int j = 0; j < size; ++j)
             {
-                map.Insert(j + off, j);
+                map.Insert(j + off, conditional_box<T>(j));
             }
         });
     }
@@ -177,7 +207,7 @@ static void test_multi_writer(IMap<int, int> const& map)
     REQUIRE(map.Size() == (size * threadCount));
 
     // sum(i = 1 -> N){i} = N * (N + 1) / 2
-    auto sum = std::accumulate(begin(map), end(map), 0, [](int curr, auto&& pair) { return curr + pair.Value(); });
+    auto sum = std::accumulate(begin(map), end(map), 0, [](int curr, auto&& pair) { return curr + conditional_unbox(pair.Value()); });
     REQUIRE(sum == ((threadCount * (size - 1) * size) / 2));
 }
 
@@ -242,16 +272,31 @@ static void deadlock_test()
 TEST_CASE("multi_threaded_map")
 {
     test_single_reader_single_writer(multi_threaded_map<int, int>());
+    test_single_reader_single_writer(multi_threaded_map<int, IInspectable>());
+
     test_iterator_invalidation(multi_threaded_map<int, int>());
+    test_iterator_invalidation(multi_threaded_map<int, IInspectable>());
+
     test_concurrent_iteration(multi_threaded_map<int, int>());
+    test_concurrent_iteration(multi_threaded_map<int, IInspectable>());
+
     test_multi_writer(multi_threaded_map<int, int>());
+    test_multi_writer(multi_threaded_map<int, IInspectable>());
+
     deadlock_test();
 }
 
 TEST_CASE("multi_threaded_observable_map")
 {
-    test_single_reader_single_writer(multi_threaded_observable_map<int, int>());
-    test_iterator_invalidation(multi_threaded_observable_map<int, int>());
-    test_concurrent_iteration(multi_threaded_observable_map<int, int>());
-    test_multi_writer(multi_threaded_observable_map<int, int>());
+    test_single_reader_single_writer<int>(multi_threaded_observable_map<int, int>());
+    test_single_reader_single_writer<IInspectable>(multi_threaded_observable_map<int, IInspectable>());
+
+    test_iterator_invalidation<int>(multi_threaded_observable_map<int, int>());
+    test_iterator_invalidation<IInspectable>(multi_threaded_observable_map<int, IInspectable>());
+
+    test_concurrent_iteration<int>(multi_threaded_observable_map<int, int>());
+    test_concurrent_iteration<IInspectable>(multi_threaded_observable_map<int, IInspectable>());
+
+    test_multi_writer<int>(multi_threaded_observable_map<int, int>());
+    test_multi_writer<IInspectable>(multi_threaded_observable_map<int, IInspectable>());
 }
