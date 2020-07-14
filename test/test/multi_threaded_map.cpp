@@ -39,6 +39,8 @@ template <typename T>
 static void test_single_reader_single_writer(IMap<int, T> const& map)
 {
     static constexpr int final_size = 10000;
+
+    // Insert / HasKey / Lookup
     std::thread t([&]
     {
         for (int i = 0; i < final_size; ++i)
@@ -76,6 +78,8 @@ template <typename T>
 static void test_iterator_invalidation(IMap<int, T> const& map)
 {
     static constexpr int size = 10;
+
+    // Remove / Insert / First / HasCurrent / MoveNext / Current
     for (int i = 0; i < size; ++i)
     {
         map.Insert(i, conditional_box<T>(i));
@@ -127,57 +131,90 @@ template <typename T>
 static void test_concurrent_iteration(IMap<int, T> const& map)
 {
     static constexpr int size = 10000;
-    for (int i = 0; i < size; ++i)
-    {
-        map.Insert(i, conditional_box<T>(i));
-    }
 
-    auto itr = map.First();
-    std::thread threads[2];
-    int increments[std::size(threads)] = {};
-    for (int i = 0; i < std::size(threads); ++i)
+    // Current / HasCurrent
     {
-        threads[i] = std::thread([&itr, &increments, i]
+        for (int i = 0; i < size; ++i)
         {
-            int last = -1;
-            while (true)
+            map.Insert(i, conditional_box<T>(i));
+        }
+
+        auto itr = map.First();
+        std::thread threads[2];
+        int increments[std::size(threads)] = {};
+        for (int i = 0; i < std::size(threads); ++i)
+        {
+            threads[i] = std::thread([&itr, &increments, i]
             {
-                try
+                int last = -1;
+                while (true)
                 {
-                    // NOTE: Because there is no atomic "get and increment" function on IIterator, the best we can do is
-                    // validate that we're getting valid increasing values, e.g. as opposed to validating that we read
-                    // all unique values.
-                    auto val = itr.Current().Key();
-                    REQUIRE(val > last);
-                    REQUIRE(val < size);
-                    last = val;
-                    if (!itr.MoveNext())
+                    try
                     {
+                        // NOTE: Because there is no atomic "get and increment" function on IIterator, the best we can do is
+                        // validate that we're getting valid increasing values, e.g. as opposed to validating that we read
+                        // all unique values.
+                        auto val = itr.Current().Key();
+                        REQUIRE(val > last);
+                        REQUIRE(val < size);
+                        last = val;
+                        if (!itr.MoveNext())
+                        {
+                            break;
+                        }
+
+                        // MoveNext is the only synchronized operation that has a predictable side effect we can validate
+                        ++increments[i];
+                    }
+                    catch (hresult_error const&)
+                    {
+                        // There's no "get if" function, so concurrent increment past the end is always possible...
+                        REQUIRE(!itr.HasCurrent());
                         break;
                     }
+                }
+            });
+        }
 
-                    // MoveNext is the only synchronized operation that has a predictable side effect we can validate
-                    ++increments[i];
-                }
-                catch (hresult_error const&)
-                {
-                    // There's no "get if" function, so concurrent increment past the end is always possible...
-                    REQUIRE(!itr.HasCurrent());
-                    break;
-                }
-            }
-        });
+        for (auto& t : threads)
+        {
+            t.join();
+        }
+
+        REQUIRE(!itr.HasCurrent());
+
+        auto totalIncrements = std::accumulate(std::begin(increments), std::end(increments), 0);
+        REQUIRE(totalIncrements == (size - 1));
     }
 
-    for (auto& t : threads)
+    // HasCurrent / GetMany
     {
-        t.join();
+        auto itr = map.First();
+        std::thread threads[2];
+        int totals[std::size(threads)] = {};
+        for (int i = 0; i < std::size(threads); ++i)
+        {
+            threads[i] = std::thread([&itr, &totals, i]
+            {
+                IKeyValuePair<int, T> vals[10];
+                while (itr.HasCurrent())
+                {
+                    // Unlike 'Current', 'GetMany' _is_ atomic in regards to read+increment
+                    auto len = itr.GetMany(vals);
+                    totals[i] += std::accumulate(vals, vals + len, 0, [](int curr, auto const& next) { return curr + next.Key(); });
+                }
+            });
+        }
+
+        for (auto& t : threads)
+        {
+            t.join();
+        }
+
+        // sum(i = 1 -> N){i} = N * (N + 1) / 2
+        auto total = std::accumulate(std::begin(totals), std::end(totals), 0);
+        REQUIRE(total == (size * (size - 1) / 2));
     }
-
-    REQUIRE(!itr.HasCurrent());
-
-    auto totalIncrements = std::accumulate(std::begin(increments), std::end(increments), 0);
-    REQUIRE(totalIncrements == (size - 1));
 }
 
 template <typename T>
@@ -186,6 +223,8 @@ static void test_multi_writer(IMap<int, T> const& map)
     // Large enough that several threads should be executing concurrently
     static constexpr uint32_t size = 10000;
     static constexpr size_t threadCount = 8;
+
+    // Insert
     std::thread threads[threadCount];
     for (int i = 0; i < threadCount; ++i)
     {

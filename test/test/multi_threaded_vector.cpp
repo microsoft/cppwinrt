@@ -39,123 +39,184 @@ template <typename T>
 static void test_single_reader_single_writer(IVector<T> const& v)
 {
     static constexpr int final_size = 10000;
-    std::thread t([&]
-    {
-        for (int i = 0; i < final_size; ++i)
-        {
-            v.Append(conditional_box<T>(i));
-            std::this_thread::yield();
-        }
-    });
 
-    while (true)
+    // Append / Size / GetAt / IndexOf
     {
-        auto beginSize = v.Size();
-        int i = 0;
-        for (; i < final_size; ++i)
+        std::thread t([&]
         {
-            if (static_cast<uint32_t>(i) >= v.Size())
+            for (int i = 0; i < final_size; ++i)
             {
-                REQUIRE(static_cast<uint32_t>(i) >= beginSize);
+                v.Append(conditional_box<T>(i));
+                std::this_thread::yield();
+            }
+        });
+
+        while (true)
+        {
+            auto beginSize = v.Size();
+            int i = 0;
+            for (; i < final_size; ++i)
+            {
+                if (static_cast<uint32_t>(i) >= v.Size())
+                {
+                    REQUIRE(static_cast<uint32_t>(i) >= beginSize);
+                    break;
+                }
+
+                REQUIRE(conditional_unbox(v.GetAt(i)) == i);
+
+                if constexpr (std::is_same_v<T, int>)
+                {
+                    uint32_t index;
+                    REQUIRE(v.IndexOf(i, index));
+                    REQUIRE(index == static_cast<uint32_t>(i));
+                }
+            }
+
+            if (i == final_size)
+            {
                 break;
             }
-
-            REQUIRE(conditional_unbox(v.GetAt(i)) == i);
+            REQUIRE(beginSize != final_size);
         }
-
-        if (i == final_size)
-        {
-            break;
-        }
-        REQUIRE(beginSize != final_size);
-    }
-    t.join();
-
-    v.Clear();
-    t = std::thread([&]
-    {
-        for (int i = 0; i < final_size; ++i)
-        {
-            v.InsertAt(0, conditional_box<T>(i));
-            std::this_thread::yield();
-        }
-    });
-
-    T vals[100];
-    while (v.Size() < final_size)
-    {
-        auto len = v.GetMany(0, vals);
-        for (uint32_t i = 1; i < len; ++i)
-        {
-            REQUIRE(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
-        }
-    }
-    t.join();
-
-    t = std::thread([&]
-    {
-        while (v.Size() != 0)
-        {
-            v.RemoveAt(0);
-            std::this_thread::yield();
-        }
-    });
-
-    while (v.Size() > 0)
-    {
-        auto len = v.GetMany(0, vals);
-        for (uint32_t i = 1; i < len; ++i)
-        {
-            REQUIRE(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
-        }
-    }
-    t.join();
-
-    for (int i = 0; i < std::size(vals); ++i)
-    {
-        v.Append(conditional_box<T>(i));
+        t.join();
     }
 
-    static constexpr int iterations = 1000;
-    t = std::thread([&]
+    // InsertAt / Size / GetMany
     {
-        for (int i = 1; i <= iterations; ++i)
+        v.Clear();
+        std::thread t([&]
         {
-            for (int j = 0; j < std::size(vals); ++j)
+            for (int i = 0; i < final_size; ++i)
             {
-                v.SetAt(j, conditional_box<T>(j + i));
+                v.InsertAt(0, conditional_box<T>(i));
+                std::this_thread::yield();
             }
-            std::this_thread::yield();
-        }
-    });
+        });
 
-    while (conditional_unbox(v.GetAt(0)) != iterations)
-    {
-        v.GetMany(0, vals);
-        int jumps = 0;
-        for (int i = 1; i < std::size(vals); ++i)
+        T vals[100];
+        while (v.Size() < final_size)
         {
-            auto prev = conditional_unbox(vals[i - 1]);
-            auto curr = conditional_unbox(vals[i]);
-            if (prev == curr)
+            auto len = v.GetMany(0, vals);
+            for (uint32_t i = 1; i < len; ++i)
             {
-                ++jumps;
-            }
-            else
-            {
-                REQUIRE(curr == (prev + 1));
+                REQUIRE(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
             }
         }
-        REQUIRE(jumps <= 1);
+        t.join();
     }
 
-    t.join();
+    // RemoveAt / Size / GetMany
+    {
+        std::thread t([&]
+        {
+            while (v.Size() != 0)
+            {
+                v.RemoveAt(0);
+                std::this_thread::yield();
+            }
+        });
+
+        T vals[100];
+        while (v.Size() > 0)
+        {
+            auto len = v.GetMany(0, vals);
+            for (uint32_t i = 1; i < len; ++i)
+            {
+                REQUIRE(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
+            }
+        }
+        t.join();
+    }
+
+    // SetAt / GetMany
+    {
+        T vals[100];
+        for (int i = 0; i < std::size(vals); ++i)
+        {
+            v.Append(conditional_box<T>(i));
+        }
+
+        static constexpr int iterations = 1000;
+        std::thread t([&]
+        {
+            for (int i = 1; i <= iterations; ++i)
+            {
+                for (int j = 0; j < std::size(vals); ++j)
+                {
+                    v.SetAt(j, conditional_box<T>(j + i));
+                }
+                std::this_thread::yield();
+            }
+        });
+
+        while (conditional_unbox(v.GetAt(0)) != iterations)
+        {
+            v.GetMany(0, vals);
+            int jumps = 0;
+            for (int i = 1; i < std::size(vals); ++i)
+            {
+                auto prev = conditional_unbox(vals[i - 1]);
+                auto curr = conditional_unbox(vals[i]);
+                if (prev == curr)
+                {
+                    ++jumps;
+                }
+                else
+                {
+                    REQUIRE(curr == (prev + 1));
+                }
+            }
+            REQUIRE(jumps <= 1);
+        }
+
+        t.join();
+    }
+
+    // Append / ReplaceAll / GetMany
+    {
+        static constexpr int size = 10;
+        for (int i = 0; i < size; ++i)
+        {
+            v.Append(conditional_box<T>(i));
+        }
+
+        static constexpr int iterations = 1000;
+        std::thread t([&]
+        {
+            T newVals[size];
+            for (int i = 1; i <= iterations; ++i)
+            {
+                for (int j = 0; j < size; ++j)
+                {
+                    newVals[j] = conditional_box<T>(i + j);
+                }
+                v.ReplaceAll(newVals);
+            }
+        });
+
+        T vals[size];
+        do
+        {
+            auto len = v.GetMany(0, vals);
+            REQUIRE(len == size);
+            for (int i = 1; i < size; ++i)
+            {
+                REQUIRE(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) + 1));
+            }
+        }
+        while (conditional_unbox(vals[0]) != iterations);
+
+        t.join();
+    }
 }
 
 template <typename T>
 static void test_iterator_invalidation(IVector<T> const& v)
 {
     static constexpr uint32_t final_size = 100000;
+
+    // Append / Size / First / HasCurrent / Current / MoveNext
     std::thread t([&]
     {
         for (int i = 0; i < final_size; ++i)
@@ -203,82 +264,90 @@ static void test_concurrent_iteration(IVector<T> const& v)
 {
     // Large enough size that all threads should have enough time to spin up
     static constexpr uint32_t size = 10000;
-    for (int i = 0; i < size; ++i)
-    {
-        v.Append(conditional_box<T>(i));
-    }
 
-    auto itr = v.First();
-    std::thread threads[2];
-    int increments[std::size(threads)] = {};
-    for (int i = 0; i < std::size(threads); ++i)
+    // Append / Current / MoveNext / HasCurrent
     {
-        threads[i] = std::thread([&itr, &increments, i]
+        for (int i = 0; i < size; ++i)
         {
-            int last = -1;
-            while (true)
+            v.Append(conditional_box<T>(i));
+        }
+
+        auto itr = v.First();
+        std::thread threads[2];
+        int increments[std::size(threads)] = {};
+        for (int i = 0; i < std::size(threads); ++i)
+        {
+            threads[i] = std::thread([&itr, &increments, i]
             {
-                try
+                int last = -1;
+                while (true)
                 {
-                    // NOTE: Because there is no atomic "get and increment" function on IIterator, the best we can do is
-                    // validate that we're getting valid increasing values, e.g. as opposed to validating that we read
-                    // all unique values.
-                    auto val = conditional_unbox(itr.Current());
-                    REQUIRE(val > last);
-                    REQUIRE(val < size);
-                    last = val;
-                    if (!itr.MoveNext())
+                    try
                     {
+                        // NOTE: Because there is no atomic "get and increment" function on IIterator, the best we can do is
+                        // validate that we're getting valid increasing values, e.g. as opposed to validating that we read
+                        // all unique values.
+                        auto val = conditional_unbox(itr.Current());
+                        REQUIRE(val > last);
+                        REQUIRE(val < size);
+                        last = val;
+                        if (!itr.MoveNext())
+                        {
+                            break;
+                        }
+
+                        // MoveNext is the only synchronized operation that has a predictable side effect we can validate
+                        ++increments[i];
+                    }
+                    catch (hresult_error const&)
+                    {
+                        // There's no "get if" function, so concurrent increment past the end is always possible...
+                        REQUIRE(!itr.HasCurrent());
                         break;
                     }
-
-                    // MoveNext is the only synchronized operation that has a predictable side effect we can validate
-                    ++increments[i];
                 }
-                catch (hresult_error const&)
-                {
-                    // There's no "get if" function, so concurrent increment past the end is always possible...
-                    REQUIRE(!itr.HasCurrent());
-                    break;
-                }
-            }
-        });
-    }
+            });
+        }
 
-    for (auto& t : threads)
-    {
-        t.join();
-    }
-
-    REQUIRE(!itr.HasCurrent());
-
-    auto totalIncrements = std::accumulate(std::begin(increments), std::end(increments), 0);
-    REQUIRE(totalIncrements == (size - 1));
-
-    itr = v.First();
-    int totals[std::size(threads)] = {};
-    for (int i = 0; i < std::size(threads); ++i)
-    {
-        threads[i] = std::thread([&itr, &totals, i]()
+        for (auto& t : threads)
         {
-            T vals[10];
-            while (itr.HasCurrent())
-            {
-                // Unlike 'Current', 'GetMany' _is_ atomic in regards to read+increment
-                auto len = itr.GetMany(vals);
-                totals[i] += std::accumulate(vals, vals + len, 0, [](int curr, T const& next) { return curr + conditional_unbox(next); });
-            }
-        });
+            t.join();
+        }
+
+        REQUIRE(!itr.HasCurrent());
+
+        auto totalIncrements = std::accumulate(std::begin(increments), std::end(increments), 0);
+        REQUIRE(totalIncrements == (size - 1));
     }
 
-    for (auto& t : threads)
+    // HasCurrent / GetMany
     {
-        t.join();
-    }
+        auto itr = v.First();
+        std::thread threads[2];
+        int totals[std::size(threads)] = {};
+        for (int i = 0; i < std::size(threads); ++i)
+        {
+            threads[i] = std::thread([&itr, &totals, i]()
+            {
+                T vals[10];
+                while (itr.HasCurrent())
+                {
+                    // Unlike 'Current', 'GetMany' _is_ atomic in regards to read+increment
+                    auto len = itr.GetMany(vals);
+                    totals[i] += std::accumulate(vals, vals + len, 0, [](int curr, T const& next) { return curr + conditional_unbox(next); });
+                }
+            });
+        }
 
-    // sum(i = 1 -> N){i} = N * (N + 1) / 2
-    auto total = std::accumulate(std::begin(totals), std::end(totals), 0);
-    REQUIRE(total == (size * (size - 1) / 2));
+        for (auto& t : threads)
+        {
+            t.join();
+        }
+
+        // sum(i = 1 -> N){i} = N * (N + 1) / 2
+        auto total = std::accumulate(std::begin(totals), std::end(totals), 0);
+        REQUIRE(total == (size * (size - 1) / 2));
+    }
 }
 
 template <typename T>
@@ -287,6 +356,7 @@ static void test_multi_writer(IVector<T> const& v)
     // Large enough that several threads should be executing concurrently
     static constexpr uint32_t size = 10000;
     static constexpr size_t threadCount = 8;
+
     std::thread threads[threadCount];
     for (auto& t : threads)
     {
