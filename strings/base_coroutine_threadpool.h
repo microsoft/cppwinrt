@@ -336,7 +336,8 @@ WINRT_EXPORT namespace winrt
 
         void await_suspend(std::experimental::coroutine_handle<> handle) const
         {
-            impl::resume_apartment(context, handle);
+            auto copy = context; // resuming may destruct *this, so use a copy
+            impl::resume_apartment(copy, handle);
         }
 
         impl::resume_apartment_context context;
