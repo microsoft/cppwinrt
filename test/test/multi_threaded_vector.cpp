@@ -9,6 +9,34 @@ using namespace Windows::Foundation::Collections;
 
 // Vector correctness tests exist elsewhere. These tests are strictly geared toward testing multi threaded functionality
 
+struct unique_thread
+{
+    std::thread thread;
+
+    unique_thread() = default;
+
+    template <typename Func, typename... Args>
+    unique_thread(Func&& fn, Args&&... args) : thread(std::forward<Func>(fn), std::forward<Args>(args)...)
+    {
+    }
+
+    ~unique_thread()
+    {
+        if (thread.joinable())
+        {
+            thread.join();
+        }
+    }
+
+    unique_thread(unique_thread&&) = default;
+    unique_thread& operator=(unique_thread&&) = default;
+
+    void join()
+    {
+        thread.join();
+    }
+};
+
 template <typename T> // int or IInspectable
 static T conditional_box(int value)
 {
@@ -42,7 +70,7 @@ static void test_single_reader_single_writer(IVector<T> const& v)
 
     // Append / Size / GetAt / IndexOf
     {
-        std::thread t([&]
+        unique_thread t([&]
         {
             for (int i = 0; i < final_size; ++i)
             {
@@ -79,13 +107,12 @@ static void test_single_reader_single_writer(IVector<T> const& v)
             }
             REQUIRE(beginSize != final_size);
         }
-        t.join();
     }
 
     // InsertAt / Size / GetMany
     {
         v.Clear();
-        std::thread t([&]
+        unique_thread t([&]
         {
             for (int i = 0; i < final_size; ++i)
             {
@@ -103,12 +130,11 @@ static void test_single_reader_single_writer(IVector<T> const& v)
                 REQUIRE(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
             }
         }
-        t.join();
     }
 
     // RemoveAt / Size / GetMany
     {
-        std::thread t([&]
+        unique_thread t([&]
         {
             while (v.Size() != 0)
             {
@@ -126,7 +152,6 @@ static void test_single_reader_single_writer(IVector<T> const& v)
                 REQUIRE(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
             }
         }
-        t.join();
     }
 
     // SetAt / GetMany
@@ -138,7 +163,7 @@ static void test_single_reader_single_writer(IVector<T> const& v)
         }
 
         static constexpr int iterations = 1000;
-        std::thread t([&]
+        unique_thread t([&]
         {
             for (int i = 1; i <= iterations; ++i)
             {
@@ -169,20 +194,19 @@ static void test_single_reader_single_writer(IVector<T> const& v)
             }
             REQUIRE(jumps <= 1);
         }
-
-        t.join();
     }
 
     // Append / ReplaceAll / GetMany
     {
         static constexpr int size = 10;
+        v.Clear();
         for (int i = 0; i < size; ++i)
         {
             v.Append(conditional_box<T>(i));
         }
 
         static constexpr int iterations = 1000;
-        std::thread t([&]
+        unique_thread t([&]
         {
             T newVals[size];
             for (int i = 1; i <= iterations; ++i)
@@ -206,8 +230,6 @@ static void test_single_reader_single_writer(IVector<T> const& v)
             }
         }
         while (conditional_unbox(vals[0]) != iterations);
-
-        t.join();
     }
 }
 
@@ -217,7 +239,7 @@ static void test_iterator_invalidation(IVector<T> const& v)
     static constexpr uint32_t final_size = 100000;
 
     // Append / Size / First / HasCurrent / Current / MoveNext
-    std::thread t([&]
+    unique_thread t([&]
     {
         for (int i = 0; i < final_size; ++i)
         {
@@ -253,8 +275,6 @@ static void test_iterator_invalidation(IVector<T> const& v)
         REQUIRE(!forceExit);
     }
 
-    t.join();
-
     // Since the insert thread yields after each insertion, this should really be in the thousands
     REQUIRE(exceptionCount > 50);
 }
@@ -263,7 +283,7 @@ template <typename T>
 static void test_concurrent_iteration(IVector<T> const& v)
 {
     // Large enough size that all threads should have enough time to spin up
-    static constexpr uint32_t size = 10000;
+    static constexpr uint32_t size = 100000;
 
     // Append / Current / MoveNext / HasCurrent
     {
@@ -273,11 +293,11 @@ static void test_concurrent_iteration(IVector<T> const& v)
         }
 
         auto itr = v.First();
-        std::thread threads[2];
+        unique_thread threads[2];
         int increments[std::size(threads)] = {};
         for (int i = 0; i < std::size(threads); ++i)
         {
-            threads[i] = std::thread([&itr, &increments, i]
+            threads[i] = unique_thread([&itr, &increments, i]
             {
                 int last = -1;
                 while (true)
@@ -323,11 +343,11 @@ static void test_concurrent_iteration(IVector<T> const& v)
     // HasCurrent / GetMany
     {
         auto itr = v.First();
-        std::thread threads[2];
+        unique_thread threads[2];
         int totals[std::size(threads)] = {};
         for (int i = 0; i < std::size(threads); ++i)
         {
-            threads[i] = std::thread([&itr, &totals, i]()
+            threads[i] = unique_thread([&itr, &totals, i]()
             {
                 T vals[10];
                 while (itr.HasCurrent())
@@ -357,10 +377,10 @@ static void test_multi_writer(IVector<T> const& v)
     static constexpr uint32_t size = 10000;
     static constexpr size_t threadCount = 8;
 
-    std::thread threads[threadCount];
+    unique_thread threads[threadCount];
     for (auto& t : threads)
     {
-        t = std::thread([&v]
+        t = unique_thread([&v]
         {
             for (int i = 0; i < size; ++i)
             {
