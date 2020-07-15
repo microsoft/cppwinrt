@@ -1,7 +1,8 @@
 #include "pch.h"
 
 #include <numeric>
-#include <thread>
+
+#include "multi_threaded_common.h"
 
 using namespace winrt;
 using namespace Windows::Foundation;
@@ -9,39 +10,13 @@ using namespace Windows::Foundation::Collections;
 
 // Map correctness tests exist elsewhere. These tests are strictly geared toward testing multi threaded functionality
 
-template <typename T> // int or IInspectable
-static T conditional_box(int value)
-{
-    if constexpr (std::is_same_v<T, int>)
-    {
-        return value;
-    }
-    else
-    {
-        return box_value(value);
-    }
-}
-
-template <typename T>
-static int conditional_unbox(T const& value)
-{
-    if constexpr (std::is_same_v<T, int>)
-    {
-        return value;
-    }
-    else
-    {
-        return unbox_value<int>(value);
-    }
-}
-
 template <typename T>
 static void test_single_reader_single_writer(IMap<int, T> const& map)
 {
     static constexpr int final_size = 10000;
 
     // Insert / HasKey / Lookup
-    std::thread t([&]
+    unique_thread t([&]
     {
         for (int i = 0; i < final_size; ++i)
         {
@@ -70,8 +45,6 @@ static void test_single_reader_single_writer(IMap<int, T> const& map)
             break;
         }
     }
-
-    t.join();
 }
 
 template <typename T>
@@ -86,7 +59,7 @@ static void test_iterator_invalidation(IMap<int, T> const& map)
     }
 
     volatile bool done = false;
-    std::thread t([&]
+    unique_thread t([&]
     {
         // Since the underlying storage is std::map, it's actually quite hard to hit UB that has an observable side
         // effect, making it hard to have a meaningful test. The idea here is to remove and re-insert the "first"
@@ -124,7 +97,6 @@ static void test_iterator_invalidation(IMap<int, T> const& map)
 
     // In reality, this number should be quite large; much larger than the 50 validated here
     REQUIRE(exceptionCount >= 50);
-    t.join();
 }
 
 template <typename T>
@@ -140,11 +112,11 @@ static void test_concurrent_iteration(IMap<int, T> const& map)
         }
 
         auto itr = map.First();
-        std::thread threads[2];
+        unique_thread threads[2];
         int increments[std::size(threads)] = {};
         for (int i = 0; i < std::size(threads); ++i)
         {
-            threads[i] = std::thread([&itr, &increments, i]
+            threads[i] = unique_thread([&itr, &increments, i]
             {
                 int last = -1;
                 while (true)
@@ -190,11 +162,11 @@ static void test_concurrent_iteration(IMap<int, T> const& map)
     // HasCurrent / GetMany
     {
         auto itr = map.First();
-        std::thread threads[2];
+        unique_thread threads[2];
         int totals[std::size(threads)] = {};
         for (int i = 0; i < std::size(threads); ++i)
         {
-            threads[i] = std::thread([&itr, &totals, i]
+            threads[i] = unique_thread([&itr, &totals, i]
             {
                 IKeyValuePair<int, T> vals[10];
                 while (itr.HasCurrent())
@@ -225,10 +197,10 @@ static void test_multi_writer(IMap<int, T> const& map)
     static constexpr size_t threadCount = 8;
 
     // Insert
-    std::thread threads[threadCount];
+    unique_thread threads[threadCount];
     for (int i = 0; i < threadCount; ++i)
     {
-        threads[i] = std::thread([&map, i]
+        threads[i] = unique_thread([&map, i]
         {
             auto off = i * size;
             for (int j = 0; j < size; ++j)

@@ -1,67 +1,14 @@
 #include "pch.h"
 
 #include <numeric>
-#include <thread>
+
+#include "multi_threaded_common.h"
 
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
 // Vector correctness tests exist elsewhere. These tests are strictly geared toward testing multi threaded functionality
-
-struct unique_thread
-{
-    std::thread thread;
-
-    unique_thread() = default;
-
-    template <typename Func, typename... Args>
-    unique_thread(Func&& fn, Args&&... args) : thread(std::forward<Func>(fn), std::forward<Args>(args)...)
-    {
-    }
-
-    ~unique_thread()
-    {
-        if (thread.joinable())
-        {
-            thread.join();
-        }
-    }
-
-    unique_thread(unique_thread&&) = default;
-    unique_thread& operator=(unique_thread&&) = default;
-
-    void join()
-    {
-        thread.join();
-    }
-};
-
-template <typename T> // int or IInspectable
-static T conditional_box(int value)
-{
-    if constexpr (std::is_same_v<T, int>)
-    {
-        return value;
-    }
-    else
-    {
-        return box_value(value);
-    }
-}
-
-template <typename T>
-static int conditional_unbox(T const& value)
-{
-    if constexpr (std::is_same_v<T, int>)
-    {
-        return value;
-    }
-    else
-    {
-        return unbox_value<int>(value);
-    }
-}
 
 template <typename T>
 static void test_single_reader_single_writer(IVector<T> const& v)
