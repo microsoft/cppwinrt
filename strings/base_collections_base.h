@@ -1,32 +1,31 @@
 namespace winrt::impl
 {
-    template <typename D, typename = void>
-    struct has_exclusive_op : std::false_type {};
-
-    template <typename D>
-    struct has_exclusive_op<D, std::void_t<decltype(std::declval<D*>()->exclusive_op(std::true_type{}))>> : std::true_type {};
-
-    template <typename D, typename = void>
-    struct has_shared_op : std::false_type {};
-
-    template <typename D>
-    struct has_shared_op<D, std::void_t<decltype(std::declval<D*>()->shared_op(std::true_type{}))>> : std::true_type {};
-
     struct single_threaded_collection_base
     {
+        template <typename Func>
+        auto perform_exclusive(Func&& fn) const
+        {
+            return fn();
+        }
+
+        template <typename Func>
+        auto perform_shared(Func&& fn) const
+        {
+            return fn();
+        }
     };
 
     struct multi_threaded_collection_base
     {
         template <typename Func>
-        auto exclusive_op(Func&& fn) const
+        auto perform_exclusive(Func&& fn) const
         {
             slim_lock_guard lock(m_mutex);
             return fn();
         }
 
         template <typename Func>
-        auto shared_op(Func&& fn) const
+        auto perform_shared(Func&& fn) const
         {
             slim_shared_lock_guard lock(m_mutex);
             return fn();
@@ -58,28 +57,14 @@ WINRT_EXPORT namespace winrt
         template <typename Func>
         auto perform_exclusive(Func&& fn) const
         {
-            if constexpr (impl::has_exclusive_op<D>::value)
-            {
-                return static_cast<D const&>(*this).exclusive_op(fn);
-            }
-            else
-            {
-                return fn();
-            }
+            return fn();
         }
 
         template <typename Func>
         auto perform_shared(Func&& fn) const
         {
-            if constexpr (impl::has_shared_op<D>::value)
-            {
-                return static_cast<D const&>(*this).shared_op(fn);
-            }
-            else
-            {
-                // Support for concurrent "shared" operations is optional
-                return perform_exclusive(fn);
-            }
+            // Support for concurrent "shared" operations is optional
+            return perform_exclusive(fn);
         }
 
         auto First()

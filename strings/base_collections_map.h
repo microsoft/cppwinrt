@@ -26,6 +26,9 @@ namespace winrt::impl
             return m_values;
         }
 
+        using ThreadingBase::perform_shared;
+        using ThreadingBase::perform_exclusive;
+
     private:
 
         Container m_values;
