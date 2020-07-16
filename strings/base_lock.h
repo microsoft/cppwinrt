@@ -58,6 +58,8 @@ WINRT_EXPORT namespace winrt
             m_mutex.lock();
         }
 
+        slim_lock_guard(slim_lock_guard const&) = delete;
+
         ~slim_lock_guard() noexcept
         {
             m_mutex.unlock();
@@ -74,6 +76,8 @@ WINRT_EXPORT namespace winrt
         {
             m_mutex.lock_shared();
         }
+
+        slim_shared_lock_guard(slim_shared_lock_guard const&) = delete;
 
         ~slim_shared_lock_guard() noexcept
         {
