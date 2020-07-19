@@ -7,213 +7,164 @@ using namespace Windows::Foundation;
 using namespace Component;
 using namespace std::chrono;
 
+namespace
+{
+    template<typename T>
+    constexpr T empty()
+    {
+        if constexpr (std::is_convertible_v<T, Windows::Foundation::IUnknown>)
+        {
+            return T{ nullptr };
+        }
+        else
+        {
+            return T{};
+        }
+    }
+
+    // Try to unbox the object as a T.
+    // Expect it to succeed with v1.
+    // Unboxing nullptr or a non-T to T should fail.
+    // v2 is an alternate value to use with unbox_value_or.
+    template<typename T, typename Source, typename V1, typename V2>
+    void TestUnboxImpl(Source const& object, V1 const& v1, V2 const& v2)
+    {
+        Source nothing;
+        Errors wrong_type;
+
+        // Test unbox_value and unbox_value_or if available.
+        if constexpr (std::is_same_v<Source, IInspectable>)
+        {
+            REQUIRE(unbox_value<T>(object) == v1);
+            REQUIRE(unbox_value_or<T>(object, v2) == v1);
+            REQUIRE(unbox_value_or<T>(nothing, v2) == v2);
+            REQUIRE(unbox_value_or<T>(wrong_type, v2) == v2);
+        }
+
+        REQUIRE(object.as<T>() == v1);
+        REQUIRE(object.try_as<T>() == v1);
+        REQUIRE(nothing.try_as<T>() == std::nullopt);
+        REQUIRE(wrong_type.try_as<T>() == std::nullopt);
+
+        T result{ v2 };
+        object.as<T>(result);
+        REQUIRE(result == v1);
+
+        result = v1;
+        REQUIRE(v1 != empty<T>()); // Test must pass a v1 that is not equal to the empty value.
+
+        REQUIRE(!nothing.try_as<T>(result));
+        REQUIRE(result == empty<T>()); // try_as explicitly empties the result on failure
+
+        result = v1;
+        REQUIRE(!wrong_type.try_as<T>(result));
+        REQUIRE(result == empty<T>()); // try_as explicitly empties the result on failure
+    }
+
+    // Box the source, then try to unbox it as a T. Should succeed with v1.
+    // Unboxing nullptr or a non-T as T should fail;
+    // v2 is an alternate value to use with unbox_value_or.
+    template<typename T, typename Source = T, typename V1 = T, typename V2 = T>
+    void TestUnbox(Source&& source, V1 const& v1, V2 const& v2)
+    {
+        // Do it once with an IInspectable.
+        IInspectable object = box_value(std::forward<Source>(source));
+        TestUnboxImpl<T>(object, v1, v2);
+
+        // Do it again with a com_ptr.
+        com_ptr<IInspectable> comptr{ detach_abi(object), take_ownership_from_abi };
+        TestUnboxImpl<T>(comptr, v1, v2);
+    }
+
+    // Box v1 and try to unbox it as a T. Should succeed with v1 again.
+    // Unboxing nullptr as T should fail; v2 is an alternate value to use with unbox_value_or.
+    template<typename T, typename V1 = T, typename V2 = T>
+    void TestUnbox(V1 const& v1, V2 const& v2)
+    {
+        TestUnbox<T>(v1, v1, v2);
+    }
+
+    // Special version for integers so we don't have to static_cast<> all over the place.
+    template<typename T, typename V1 = T, typename V2 = T>
+    void TestUnboxIntegerType(V1 v1, V2 v2)
+    {
+        TestUnbox<T>(static_cast<T>(v1), static_cast<T>(v2));
+    }
+
+    // Box the source, then try to unbox it as T. Should fail.
+    // v is an alternate value to use with unbox_value_or.
+    template<typename T, typename Source = T, typename V = T>
+    void TestFailedUnbox(Source&& source, V const& v)
+    {
+        IInspectable object = box_value(std::forward<Source>(source));
+
+        REQUIRE_THROWS_AS(unbox_value<T>(object), hresult_no_interface);
+        REQUIRE(unbox_value_or<T>(object, v) == v);
+
+        REQUIRE_THROWS_AS(object.as<T>(), hresult_no_interface);
+        REQUIRE(object.try_as<T>() == std::nullopt);
+    }
+}
 TEST_CASE("Boxing")
 {
     {
-        IInspectable object = box_value(SimpleStructure{ 123, {}, {}, {} });
-        REQUIRE(unbox_value<SimpleStructure>(object) == SimpleStructure{ 123, {}, {}, {} });
-        REQUIRE(unbox_value_or<SimpleStructure>(object, { 321, {}, {}, {} }) == SimpleStructure{ 123, {}, {}, {} });
-        REQUIRE(unbox_value_or<SimpleStructure>(nullptr, { 321, {}, {}, {} }) == SimpleStructure{ 321, {}, {}, {} });
-
         // Covers all failure paths for non-IInspectable types.
+        IInspectable object = box_value(SimpleStructure{ 123, {}, {}, {} });
         REQUIRE_THROWS_AS(unbox_value<int>(object), hresult_no_interface);
+        REQUIRE_THROWS_AS(object.as<int>(), hresult_no_interface);
         REQUIRE(unbox_value_or<int>(object, 321) == 321);
-    }
-    {
-        IInspectable object = box_value(IReference<int>{ 123 });
-        REQUIRE(unbox_value<IReference<int>>(object) == IReference<int>{ 123 });
-        REQUIRE(unbox_value_or<IReference<int>>(object, { 321 }) == IReference<int>{ 123 });
-        REQUIRE(unbox_value_or<IReference<int>>(nullptr, { 321 }) == IReference<int>{ 321 });
+        REQUIRE(object.try_as<int>() == std::nullopt);
 
+    }
+
+    {
         // Covers all failure paths for IInspectable types.
+        IInspectable object = box_value(IReference<int>{ 123 });
         REQUIRE_THROWS_AS(unbox_value<IReference<double>>(object), hresult_no_interface);
-        REQUIRE(unbox_value_or<IReference<int>>(IReference<double>{ 123.0 }, { 321 }) == IReference<int>{ 321 });
+        REQUIRE_THROWS_AS(object.as<IReference<double>>(), hresult_no_interface);
+        object = IReference<double>{ 123.0 };
+        REQUIRE(unbox_value_or<IReference<int>>(object, { 321 }) == IReference<int>{ 321 });
+        REQUIRE(object.try_as<IReference<int>>() == nullptr);
     }
-    {
-        IInspectable object = box_value(L"value");
-        REQUIRE(unbox_value<hstring>(object) == L"value");
-        REQUIRE(unbox_value_or<hstring>(object, L"DEFAULT") == L"value");
-        REQUIRE(unbox_value_or<hstring>(nullptr, L"DEFAULT") == L"DEFAULT");
-    }
-    {
-        IInspectable object = box_value(hstring(L"value"));
-        REQUIRE(unbox_value<hstring>(object) == L"value");
-        REQUIRE(unbox_value_or<hstring>(object, hstring(L"DEFAULT")) == L"value");
-        REQUIRE(unbox_value_or<hstring>(nullptr, hstring(L"DEFAULT")) == L"DEFAULT");
-    }
-    {
-        IInspectable object = box_value(std::wstring(L"value"));
-        REQUIRE(unbox_value<hstring>(object) == L"value");
-        REQUIRE(unbox_value_or<hstring>(object, std::wstring(L"DEFAULT")) == L"value");
-        REQUIRE(unbox_value_or<hstring>(nullptr, std::wstring(L"DEFAULT")) == L"DEFAULT");
-    }
-    {
-        IInspectable object = box_value(std::wstring_view(L"value"));
-        REQUIRE(unbox_value<hstring>(object) == L"value");
-        REQUIRE(unbox_value_or<hstring>(object, std::wstring_view(L"DEFAULT")) == L"value");
-        REQUIRE(unbox_value_or<hstring>(nullptr, std::wstring_view(L"DEFAULT")) == L"DEFAULT");
-    }
-    {
-        IInspectable object = box_value(123.0F);
-        REQUIRE(unbox_value<float>(object) == 123.0F);
-        REQUIRE(unbox_value_or<float>(object, 321.0F) == 123.0F);
-        REQUIRE(unbox_value_or<float>(nullptr, 321.0F) == 321.0F);
-    }
-    {
-        IInspectable object = box_value(123.0);
-        REQUIRE(unbox_value<double>(object) == 123.0);
-        REQUIRE(unbox_value_or<double>(object, 321.0) == 123.0);
-        REQUIRE(unbox_value_or<double>(nullptr, 321.0) == 321.0);
-    }
-    {
-        uint8_t value = 123;
-        uint8_t default_value = 32;
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<uint8_t>(object) == value);
-        REQUIRE(unbox_value_or<uint8_t>(object, default_value) == value);
-        REQUIRE(unbox_value_or<uint8_t>(nullptr, default_value) == default_value);
-    }
-    {
-        int8_t value = 123;
-        int8_t default_value = 32;
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<int8_t>(object) == value);
-        REQUIRE(unbox_value_or<int8_t>(object, default_value) == value);
-        REQUIRE(unbox_value_or<int8_t>(nullptr, default_value) == default_value);
-    }
-    {
-        uint16_t value = 123;
-        uint16_t default_value = 321;
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<uint16_t>(object) == value);
-        REQUIRE(unbox_value_or<uint16_t>(object, default_value) == value);
-        REQUIRE(unbox_value_or<uint16_t>(nullptr, default_value) == default_value);
-    }
-    {
-        int16_t value = 123;
-        int16_t default_value = 321;
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<int16_t>(object) == value);
-        REQUIRE(unbox_value_or<int16_t>(object, default_value) == value);
-        REQUIRE(unbox_value_or<int16_t>(nullptr, default_value) == default_value);
-    }
-    {
-        uint32_t value = 123;
-        uint32_t default_value = 321;
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<uint32_t>(object) == value);
-        REQUIRE(unbox_value_or<uint32_t>(object, default_value) == value);
-        REQUIRE(unbox_value_or<uint32_t>(nullptr, default_value) == default_value);
-    }
-    {
-        int32_t value = 123;
-        int32_t default_value = 321;
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<int32_t>(object) == value);
-        REQUIRE(unbox_value_or<int32_t>(object, default_value) == value);
-        REQUIRE(unbox_value_or<int32_t>(nullptr, default_value) == default_value);
-    }
-    {
-        uint64_t value = 123;
-        uint64_t default_value = 321;
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<uint64_t>(object) == value);
-        REQUIRE(unbox_value_or<uint64_t>(object, default_value) == value);
-        REQUIRE(unbox_value_or<uint64_t>(nullptr, default_value) == default_value);
-    }
-    {
-        int64_t value = 123;
-        int64_t default_value = 321;
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<int64_t>(object) == value);
-        REQUIRE(unbox_value_or<int64_t>(object, default_value) == value);
-        REQUIRE(unbox_value_or<int64_t>(nullptr, default_value) == default_value);
-    }
-    {
-        bool value = true;
-        bool default_value = false;
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<bool>(object) == value);
-        REQUIRE(unbox_value_or<bool>(object, default_value) == value);
-        REQUIRE(unbox_value_or<bool>(nullptr, default_value) == default_value);
-    }
-    {
-        char16_t value = L'Y';
-        char16_t default_value = L'N';
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<char16_t>(object) == value);
-        REQUIRE(unbox_value_or<char16_t>(object, default_value) == value);
-        REQUIRE(unbox_value_or<char16_t>(nullptr, default_value) == default_value);
-    }
-    {
-        guid value = { 0x9b7a5590, 0x9262, 0x4c24, { 0xa6, 0x34, 0x18, 0xc7, 0xf9, 0x1e, 0x46, 0x05 } };
-        guid default_value = { 0x8f081f19, 0xfa9d, 0x43ed, { 0x95, 0x52, 0xa3, 0x02, 0x75, 0x53, 0xa1, 0x4f } };
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<guid>(object) == value);
-        REQUIRE(unbox_value_or<guid>(object, default_value) == value);
-        REQUIRE(unbox_value_or<guid>(nullptr, default_value) == default_value);
-    }
-    {
-        Point value = { 1,2 };
-        Point default_value = { 2,1 };
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<Point>(object) == value);
-        REQUIRE(unbox_value_or<Point>(object, default_value) == value);
-        REQUIRE(unbox_value_or<Point>(nullptr, default_value) == default_value);
-    }
-    {
-        Size value = { 1,2 };
-        Size default_value = { 2,1 };
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<Size>(object) == value);
-        REQUIRE(unbox_value_or<Size>(object, default_value) == value);
-        REQUIRE(unbox_value_or<Size>(nullptr, default_value) == default_value);
-    }
-    {
-        Rect value = { 1,2,3,4 };
-        Rect default_value = { 4,3,2,1 };
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<Rect>(object) == value);
-        REQUIRE(unbox_value_or<Rect>(object, default_value) == value);
-        REQUIRE(unbox_value_or<Rect>(nullptr, default_value) == default_value);
-    }
-    {
-        DateTime value = clock::now() + 10s;
-        DateTime default_value = clock::now() - 10s;
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<DateTime>(object) == value);
-        REQUIRE(unbox_value_or<DateTime>(object, default_value) == value);
-        REQUIRE(unbox_value_or<DateTime>(nullptr, default_value) == default_value);
-    }
-    {
-        TimeSpan value = clock::now() + 10s - clock::now();
-        TimeSpan default_value = clock::now() - 10s - clock::now();
-        IInspectable object = box_value(value);
-        REQUIRE(unbox_value<TimeSpan>(object) == value);
-        REQUIRE(unbox_value_or<TimeSpan>(object, default_value) == value);
-        REQUIRE(unbox_value_or<TimeSpan>(nullptr, default_value) == default_value);
-    }
-    {
-        REQUIRE(unbox_value<SignedEnum>(box_value(SignedEnum::Negative)) == SignedEnum::Negative);
-        REQUIRE(unbox_value<SignedEnum>(box_value(static_cast<int32_t>(SignedEnum::Negative))) == SignedEnum::Negative);
-        REQUIRE_THROWS_AS(unbox_value<SignedEnum>(box_value(static_cast<uint32_t>(SignedEnum::Negative))), hresult_no_interface);
-        REQUIRE_THROWS_AS(unbox_value<SignedEnum>(box_value(static_cast<int16_t>(SignedEnum::Negative))), hresult_no_interface);
 
-        REQUIRE(unbox_value<UnsignedEnum>(box_value(UnsignedEnum::Second)) == UnsignedEnum::Second);
-        REQUIRE(unbox_value<UnsignedEnum>(box_value(static_cast<uint32_t>(UnsignedEnum::Second))) == UnsignedEnum::Second);
-        REQUIRE_THROWS_AS(unbox_value<UnsignedEnum>(box_value(static_cast<int32_t>(UnsignedEnum::Second))), hresult_no_interface);
-        REQUIRE_THROWS_AS(unbox_value<UnsignedEnum>(box_value(static_cast<int16_t>(UnsignedEnum::Second))), hresult_no_interface);
+    TestUnbox<SimpleStructure>({ 123, {}, {}, {} }, { 123, {}, {}, {} });
+    TestUnbox<hstring>(L"value", L"value", L"DEFAULT");
+    TestUnbox<hstring>(hstring(L"value"), L"value", L"DEFAULT");
+    TestUnbox<hstring>(std::wstring(L"value"), L"value", L"DEFAULT");
+    TestUnbox<hstring>(std::wstring_view(L"value"), L"value", L"DEFAULT");
+    TestUnbox<float>(123.0F, 321.0F);
+    TestUnbox<double>(123.0, 321.0);
+    TestUnboxIntegerType<uint8_t>(123U, 32U);
+    TestUnboxIntegerType<int8_t>(123, 32);
+    TestUnboxIntegerType<uint16_t>(123U, 321U);
+    TestUnboxIntegerType<int16_t>(123, 321);
+    TestUnboxIntegerType<uint32_t>(123U, 321U);
+    TestUnboxIntegerType<int32_t>(123, 321);
+    TestUnboxIntegerType<uint64_t>(123U, 321U);
+    TestUnboxIntegerType<int64_t>(123, 321);
+    TestUnbox<bool>(true, false);
+    TestUnboxIntegerType<char16_t>(L'Y', L'N');
+    TestUnbox<guid>(
+        { 0x9b7a5590, 0x9262, 0x4c24, { 0xa6, 0x34, 0x18, 0xc7, 0xf9, 0x1e, 0x46, 0x05 } },
+        { 0x8f081f19, 0xfa9d, 0x43ed, { 0x95, 0x52, 0xa3, 0x02, 0x75, 0x53, 0xa1, 0x4f } });
+    TestUnbox<Point>({ 1, 2 }, { 2, 1 });
+    TestUnbox<Size>({ 1, 2 }, { 2, 1 });
+    TestUnbox<Rect>({ 1, 2, 3, 4 }, { 4, 3, 2, 1 });
+    TestUnbox<DateTime>(clock::now() + 10s, clock::now() - 10s);
+    TestUnbox<TimeSpan>(clock::now() + 10s - clock::now(), clock::now() - 10s - clock::now());
+    TestUnbox<SignedEnum>(SignedEnum::Negative, SignedEnum::Positive);
+    TestUnbox<UnsignedEnum>(UnsignedEnum::First, UnsignedEnum::Second);
 
-        REQUIRE(unbox_value_or<SignedEnum>(box_value(SignedEnum::Negative), SignedEnum::Positive) == SignedEnum::Negative);
-        REQUIRE(unbox_value_or<SignedEnum>(box_value(static_cast<int32_t>(SignedEnum::Negative)), SignedEnum::Positive) == SignedEnum::Negative);
-        REQUIRE(unbox_value_or<SignedEnum>(box_value(static_cast<uint32_t>(SignedEnum::Negative)), SignedEnum::Positive) == SignedEnum::Positive);
-        REQUIRE(unbox_value_or<SignedEnum>(box_value(static_cast<int16_t>(SignedEnum::Negative)), SignedEnum::Positive) == SignedEnum::Positive);
+    // Validate unboxing a enum from the underlying type.
+    TestUnbox<SignedEnum>(static_cast<int32_t>(SignedEnum::Negative), SignedEnum::Negative, SignedEnum::Positive);
+    TestUnbox<UnsignedEnum>(static_cast<uint32_t>(UnsignedEnum::First), UnsignedEnum::First, UnsignedEnum::Second);
 
-        REQUIRE(unbox_value_or<UnsignedEnum>(box_value(UnsignedEnum::Second), UnsignedEnum::First) == UnsignedEnum::Second);
-        REQUIRE(unbox_value_or<UnsignedEnum>(box_value(static_cast<uint32_t>(UnsignedEnum::Second)), UnsignedEnum::First) == UnsignedEnum::Second);
-        REQUIRE(unbox_value_or<UnsignedEnum>(box_value(static_cast<int32_t>(UnsignedEnum::Second)), UnsignedEnum::First) == UnsignedEnum::First);
-        REQUIRE(unbox_value_or<UnsignedEnum>(box_value(static_cast<uint16_t>(UnsignedEnum::Second)), UnsignedEnum::First) == UnsignedEnum::First);
-    }
+    // Validate you can't unbox an enum from something other than the underlying type.
+    TestFailedUnbox<SignedEnum>(static_cast<uint32_t>(SignedEnum::Negative), SignedEnum::Positive);
+    TestFailedUnbox<SignedEnum>(static_cast<int16_t>(SignedEnum::Negative), SignedEnum::Positive);
+    TestFailedUnbox<UnsignedEnum>(static_cast<int32_t>(UnsignedEnum::First), UnsignedEnum::Second);
+    TestFailedUnbox<UnsignedEnum>(static_cast<int16_t>(UnsignedEnum::First), UnsignedEnum::Second);
+    TestFailedUnbox<UnsignedEnum>(static_cast<uint16_t>(UnsignedEnum::First), UnsignedEnum::Second);
 
     {
         // Test some cases where the compiler has to choose between multiple overloads.

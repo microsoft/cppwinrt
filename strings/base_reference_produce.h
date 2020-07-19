@@ -261,6 +261,95 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
     }
 }
 
+namespace winrt::impl
+{
+    template <typename T, typename From>
+    T unbox_value_type(From&& value)
+    {
+        static_assert(!is_com_interface_v<T>);
+
+        if (!value)
+        {
+            throw hresult_no_interface();
+        }
+        if constexpr (std::is_enum_v<T>)
+        {
+            if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
+            {
+                return temp.Value();
+            }
+            else
+            {
+                return static_cast<T>(value.as<Windows::Foundation::IReference<std::underlying_type_t<T>>>().Value());
+            }
+        }
+#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
+        else if constexpr (std::is_same_v<T, GUID>)
+        {
+            return value.as<Windows::Foundation::IReference<guid>>().Value();
+        }
+#endif
+        else
+        {
+            return value.as<Windows::Foundation::IReference<T>>().Value();
+        }
+    }
+
+    template <typename T, typename Ret = T, typename From, typename U>
+    Ret unbox_value_type_or(From&& value, U&& default_value)
+    {
+        if constexpr (std::is_enum_v<T>)
+        {
+            if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
+            {
+                return temp.Value();
+            }
+
+            if (auto temp = value.try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>())
+            {
+                return static_cast<T>(temp.Value());
+            }
+        }
+#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
+        else if constexpr (std::is_same_v<T, GUID>)
+        {
+            if (auto temp = value.try_as<Windows::Foundation::IReference<guid>>())
+            {
+                return temp.Value();
+            }
+        }
+#endif
+        else
+        {
+            if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
+            {
+                return temp.Value();
+            }
+        }
+        return default_value;
+    }
+
+    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int>>
+    auto as(From* ptr)
+    {
+        if constexpr (impl::is_com_interface_v<From>)
+        {
+            return unbox_value_type<To>(reinterpret_cast<Windows::Foundation::IUnknown const&>(ptr));
+        }
+        else
+        {
+            return unbox_value_type<To>(reinterpret_cast<com_ptr<From> const&>(ptr));
+        }
+    }
+
+    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int>>
+    auto try_as(From* ptr) noexcept
+    {
+        using type = std::conditional_t<impl::is_com_interface_v<From>, Windows::Foundation::IUnknown, com_ptr<From>>;
+        return unbox_value_type_or<To, std::optional<To>>(reinterpret_cast<type const&>(ptr), std::nullopt);
+    }
+}
+
 WINRT_EXPORT namespace winrt
 {
     inline Windows::Foundation::IInspectable box_value(param::hstring const& value)
@@ -290,31 +379,7 @@ WINRT_EXPORT namespace winrt
         }
         else
         {
-            if (!value)
-            {
-                throw hresult_no_interface();
-            }
-            if constexpr (std::is_enum_v<T>)
-            {
-                if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
-                {
-                    return temp.Value();
-                }
-                else
-                {
-                    return static_cast<T>(value.as<Windows::Foundation::IReference<std::underlying_type_t<T>>>().Value());
-                }
-            }
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-            else if constexpr (std::is_same_v<T, GUID>)
-            {
-                return value.as<Windows::Foundation::IReference<guid>>().Value();
-            }
-#endif
-            else
-            {
-                return value.as<Windows::Foundation::IReference<T>>().Value();
-            }
+            return impl::unbox_value_type<T>(value);
         }
     }
 
@@ -344,36 +409,11 @@ WINRT_EXPORT namespace winrt
                     return temp;
                 }
             }
-            else if constexpr (std::is_enum_v<T>)
-            {
-                if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
-                {
-                    return temp.Value();
-                }
-
-                if (auto temp = value.try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>())
-                {
-                    return static_cast<T>(temp.Value());
-                }
-            }
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-            else if constexpr (std::is_same_v<T, GUID>)
-            {
-                if (auto temp = value.try_as<Windows::Foundation::IReference<guid>>())
-                {
-                    return temp.Value();
-                }
-            }
-#endif
             else
             {
-                if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
-                {
-                    return temp.Value();
-                }
+                return impl::unbox_value_type_or<T>(value, default_value);
             }
         }
-
         return default_value;
     }
 
