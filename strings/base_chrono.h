@@ -42,12 +42,12 @@ WINRT_EXPORT namespace winrt
 
         static time_t to_time_t(time_point const& time) noexcept
         {
-            return std::chrono::duration_cast<time_t_duration>(time - time_t_epoch).count();
+            return std::chrono::system_clock::to_time_t(to_sys(time));
         }
 
         static time_point from_time_t(time_t time) noexcept
         {
-            return time_t_epoch + time_t_duration{ time };
+            return from_sys(std::chrono::system_clock::from_time_t(time));
         }
 
         static file_time to_file_time(time_point const& time) noexcept
@@ -70,10 +70,25 @@ WINRT_EXPORT namespace winrt
             return from_file_time(time);
         }
 
+        template <typename Duration>
+        static std::chrono::time_point<std::chrono::system_clock, std::common_type_t<Duration, std::chrono::seconds>>
+            to_sys(std::chrono::time_point<clock, Duration> const& tp)
+        {
+            return epoch + tp.time_since_epoch();
+        }
+
+        template <typename Duration>
+        static std::chrono::time_point<clock, std::common_type_t<Duration, std::chrono::seconds>>
+            from_sys(std::chrono::time_point<std::chrono::system_clock, Duration> const& tp)
+        {
+            using result_t = std::chrono::time_point<clock, std::common_type_t<Duration, std::chrono::seconds>>;
+            return result_t{ tp - epoch };
+        }
+
     private:
 
-        // Define 00:00:00, Jan 1 1970 UTC in FILETIME units.
-        static constexpr time_point time_t_epoch{ duration{ 0x019DB1DED53E8000 } };
-        using time_t_duration = std::chrono::duration<time_t>;
+        // system_clock epoch is 00:00:00, Jan 1 1970.
+        // This is 11644473600 seconds after Windows FILETIME epoch of 00:00:00, Jan 1 1601.
+        static constexpr std::chrono::time_point<std::chrono::system_clock, std::chrono::seconds> epoch{ std::chrono::seconds{ -11644473600 } };
     };
 }
