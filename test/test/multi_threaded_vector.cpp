@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include <numeric>
+#include <shared_mutex>
 
 #include "multi_threaded_common.h"
 
@@ -348,12 +349,13 @@ static void test_multi_writer(IVector<T> const& v)
     REQUIRE(sum == ((threadCount * (size - 1) * size) / 2));
 }
 
+template <typename T>
 struct exclusive_vector :
-    vector_base<exclusive_vector, int>,
-    implements<exclusive_vector, IVector<int>, IVectorView<int>, IIterable<int>>
+    vector_base<exclusive_vector<T>, T>,
+    implements<exclusive_vector<T>, IVector<T>, IVectorView<T>, IIterable<T>>
 {
-    std::vector<int> container;
-    mutable slim_mutex mutex;
+    std::vector<T> container;
+    mutable std::shared_mutex mutex;
 
     auto& get_container() noexcept
     {
@@ -369,52 +371,87 @@ struct exclusive_vector :
     // implementation. Using a vector that only performs exclusive operations is the simplest way to validate that
     // the implementation does not attempt to recursively acquire the mutex.
     template <typename Func>
-    auto exclusive_op(Func&& fn) const
+    auto perform_exclusive(Func&& fn) const
     {
-        slim_lock_guard guard(mutex);
+        // Exceptions are better than deadlocks...
+        REQUIRE(mutex.try_lock());
+        std::lock_guard guard(mutex, std::adopt_lock);
         return fn();
+    }
+};
+
+struct vector_deadlock_object : implements<vector_deadlock_object, IReference<int>>
+{
+    int m_value;
+    exclusive_vector<IReference<int>>* m_vector;
+
+    vector_deadlock_object(int value, exclusive_vector<IReference<int>>* vector) :
+        m_value(value),
+        m_vector(vector)
+    {
+    }
+
+    ~vector_deadlock_object()
+    {
+        // NOTE: This will crash on failure, but that's better than actually deadlocking
+        REQUIRE(m_vector->mutex.try_lock());
+        m_vector->mutex.unlock();
+    }
+
+    int Value() const noexcept
+    {
+        return m_value;
     }
 };
 
 static void deadlock_test()
 {
-    auto v = make<exclusive_vector>();
+    auto v = make_self<exclusive_vector<IReference<int>>>();
 
-    v.Append(42);
-    v.InsertAt(0, 8);
-    REQUIRE(v.Size() == 2);
-    REQUIRE(v.GetAt(0) == 8);
+    v->Append(make<vector_deadlock_object>(42, v.get()));
+    v->InsertAt(0, make<vector_deadlock_object>(8, v.get()));
+    REQUIRE(v->Size() == 2);
+    REQUIRE(v->GetAt(0).Value() == 8);
     uint32_t index;
-    REQUIRE(v.IndexOf(42, index));
-    REQUIRE(index == 1);
-    v.ReplaceAll({ 1, 2, 3 });
-    v.SetAt(1, 4);
-    int vals[5];
-    REQUIRE(v.GetMany(0, vals) == 3);
-    REQUIRE(vals[0] == 1);
-    REQUIRE(vals[1] == 4);
-    REQUIRE(vals[2] == 3);
-    v.RemoveAt(1);
-    REQUIRE(v.GetAt(1) == 3);
-    v.RemoveAtEnd();
-    REQUIRE(v.GetAt(0) == 1);
-    v.Clear();
-    REQUIRE(v.Size() == 0);
-
-    v.ReplaceAll({ 1, 2, 3 });
-    auto view = v.GetView();
-    REQUIRE(v.Size() == 3);
-    REQUIRE(v.GetAt(0) == 1);
-    REQUIRE(v.GetMany(0, vals) == 3);
-    REQUIRE(vals[0] == 1);
-    REQUIRE(vals[1] == 2);
-    REQUIRE(vals[2] == 3);
-    REQUIRE(v.IndexOf(2, index));
+    REQUIRE(v->IndexOf(42, index));
     REQUIRE(index == 1);
 
-    auto itr = v.First();
+    v->ReplaceAll({ make<vector_deadlock_object>(1, v.get()), make<vector_deadlock_object>(2, v.get()), make<vector_deadlock_object>(3, v.get()) });
+    v->SetAt(1, make<vector_deadlock_object>(4, v.get()));
+    {
+        IReference<int> vals[5];
+        REQUIRE(v->GetMany(0, vals) == 3);
+        REQUIRE(vals[0].Value() == 1);
+        REQUIRE(vals[1].Value() == 4);
+        REQUIRE(vals[2].Value() == 3);
+    }
+
+    v->RemoveAt(1);
+    REQUIRE(v->GetAt(1).Value() == 3);
+    v->RemoveAtEnd();
+    REQUIRE(v->GetAt(0).Value() == 1);
+    v->Clear();
+    REQUIRE(v->Size() == 0);
+
+    v->ReplaceAll({ make<vector_deadlock_object>(1, v.get()), make<vector_deadlock_object>(2, v.get()), make<vector_deadlock_object>(3, v.get()) });
+    auto view = v->GetView();
+    REQUIRE(view.Size() == 3);
+    REQUIRE(view.GetAt(0).Value() == 1);
+
+    {
+        IReference<int> vals[5];
+        REQUIRE(view.GetMany(0, vals) == 3);
+        REQUIRE(vals[0].Value() == 1);
+        REQUIRE(vals[1].Value() == 2);
+        REQUIRE(vals[2].Value() == 3);
+    }
+
+    REQUIRE(view.IndexOf(2, index));
+    REQUIRE(index == 1);
+
+    auto itr = v->First();
     REQUIRE(itr.HasCurrent());
-    REQUIRE(itr.Current() == 1);
+    REQUIRE(itr.Current().Value() == 1);
     REQUIRE(itr.MoveNext());
     REQUIRE(itr.MoveNext());
     REQUIRE(!itr.MoveNext());

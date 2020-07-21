@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include <numeric>
+#include <shared_mutex>
 
 #include "multi_threaded_common.h"
 
@@ -222,12 +223,13 @@ static void test_multi_writer(IMap<int, T> const& map)
     REQUIRE(sum == ((threadCount * (size - 1) * size) / 2));
 }
 
+template <typename K, typename V>
 struct exclusive_map :
-    map_base<exclusive_map, int, int>,
-    implements<exclusive_map, IMap<int, int>, IMapView<int, int>, IIterable<IKeyValuePair<int, int>>>
+    map_base<exclusive_map<K, V>, K, V>,
+    implements<exclusive_map<K, V>, IMap<K, V>, IMapView<K, V>, IIterable<IKeyValuePair<K, V>>>
 {
-    std::map<int, int> container;
-    mutable slim_mutex mutex;
+    std::map<K, V> container;
+    mutable std::shared_mutex mutex;
 
     auto& get_container() noexcept
     {
@@ -243,36 +245,62 @@ struct exclusive_map :
     // implementation. Using a vector that only performs exclusive operations is the simplest way to validate that
     // the implementation does not attempt to recursively acquire the mutex.
     template <typename Func>
-    auto exclusive_op(Func&& fn) const
+    auto perform_exclusive(Func&& fn) const
     {
-        slim_lock_guard guard(mutex);
+        // Exceptions are better than deadlocks...
+        REQUIRE(mutex.try_lock());
+        std::lock_guard guard(mutex, std::adopt_lock);
         return fn();
+    }
+};
+
+struct map_deadlock_object : implements<map_deadlock_object, IReference<int>>
+{
+    int m_value;
+    exclusive_map<int, IReference<int>>* m_vector;
+
+    map_deadlock_object(int value, exclusive_map<int, IReference<int>>* vector) :
+        m_value(value),
+        m_vector(vector)
+    {
+    }
+
+    ~map_deadlock_object()
+    {
+        // NOTE: This will crash on failure, but that's better than actually deadlocking
+        REQUIRE(m_vector->mutex.try_lock());
+        m_vector->mutex.unlock();
+    }
+
+    int Value() const noexcept
+    {
+        return m_value;
     }
 };
 
 static void deadlock_test()
 {
-    auto map = make<exclusive_map>();
+    auto map = make_self<exclusive_map<int, IReference<int>>>();
 
-    map.Insert(0, 0);
-    map.Insert(1, 1);
-    REQUIRE(map.Size() == 2);
-    REQUIRE(map.HasKey(0));
-    REQUIRE(!map.HasKey(2));
-    REQUIRE(map.Lookup(0) == 0);
-    map.Remove(0);
-    REQUIRE(map.Size() == 1);
-    map.Clear();
-    REQUIRE(map.Size() == 0);
+    map->Insert(0, make<map_deadlock_object>(0, map.get()));
+    map->Insert(1, make<map_deadlock_object>(1, map.get()));
+    REQUIRE(map->Size() == 2);
+    REQUIRE(map->HasKey(0));
+    REQUIRE(!map->HasKey(2));
+    REQUIRE(map->Lookup(0).Value() == 0);
+    map->Remove(0);
+    REQUIRE(map->Size() == 1);
+    map->Clear();
+    REQUIRE(map->Size() == 0);
 
-    map.Insert(0, 0);
-    map.Insert(1, 1);
-    auto view = map.GetView();
+    map->Insert(0, make<map_deadlock_object>(0, map.get()));
+    map->Insert(1, make<map_deadlock_object>(1, map.get()));
+    auto view = map->GetView();
     REQUIRE(view.Size() == 2);
     REQUIRE(view.HasKey(0));
-    REQUIRE(view.Lookup(1) == 1);
+    REQUIRE(view.Lookup(1).Value() == 1);
 
-    auto itr = map.First();
+    auto itr = map->First();
     REQUIRE(itr.HasCurrent());
     REQUIRE(itr.Current().Key() == 0);
     REQUIRE(itr.MoveNext());

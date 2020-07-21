@@ -35,6 +35,48 @@ namespace winrt::impl
 
         mutable slim_mutex m_mutex;
     };
+
+    template <typename D>
+    using container_type_t = std::decay_t<decltype(std::declval<D>().get_container())>;
+
+    template <typename D, typename = void>
+    struct removed_values
+    {
+        void assign(container_type_t<D>& value)
+        {
+            // Trivially destructible; okay to run destructors under lock and clearing allows potential re-use of buffers
+            value.clear();
+        }
+    };
+
+    template <typename D>
+    struct removed_values<D, std::enable_if_t<!std::is_trivially_destructible_v<typename container_type_t<D>::value_type>>>
+    {
+        container_type_t<D> m_value;
+
+        void assign(container_type_t<D>& value)
+        {
+            m_value.swap(value);
+        }
+    };
+
+    template <typename T, typename = void>
+    struct removed_value
+    {
+        // Trivially destructible; okay to run destructor under lock
+        void assign(T&) {}
+    };
+
+    template <typename T>
+    struct removed_value<T, std::enable_if_t<std::is_move_constructible_v<T> && !std::is_trivially_destructible_v<T>>>
+    {
+        std::optional<T> m_value;
+
+        void assign(T& value)
+        {
+            m_value.emplace(std::move(value));
+        }
+    };
 }
 
 WINRT_EXPORT namespace winrt
@@ -64,7 +106,7 @@ WINRT_EXPORT namespace winrt
         auto perform_shared(Func&& fn) const
         {
             // Support for concurrent "shared" operations is optional
-            return perform_exclusive(fn);
+            return static_cast<D const&>(*this).perform_exclusive(fn);
         }
 
         auto First()
@@ -286,6 +328,7 @@ WINRT_EXPORT namespace winrt
 
         void SetAt(uint32_t const index, T const& value)
         {
+            impl::removed_value<typename impl::container_type_t<D>::value_type> oldValue;
             static_cast<D&>(*this).perform_exclusive([&]
             {
                 if (index >= static_cast<D const&>(*this).get_container().size())
@@ -294,7 +337,9 @@ WINRT_EXPORT namespace winrt
                 }
 
                 this->increment_version();
-                static_cast<D&>(*this).get_container()[index] = static_cast<D const&>(*this).wrap_value(value);
+                auto& pos = static_cast<D&>(*this).get_container()[index];
+                oldValue.assign(pos);
+                pos = static_cast<D const&>(*this).wrap_value(value);
             });
         }
 
@@ -314,6 +359,7 @@ WINRT_EXPORT namespace winrt
 
         void RemoveAt(uint32_t const index)
         {
+            impl::removed_value<typename impl::container_type_t<D>::value_type> removedValue;
             static_cast<D&>(*this).perform_exclusive([&]
             {
                 if (index >= static_cast<D const&>(*this).get_container().size())
@@ -322,7 +368,9 @@ WINRT_EXPORT namespace winrt
                 }
 
                 this->increment_version();
-                static_cast<D&>(*this).get_container().erase(static_cast<D const&>(*this).get_container().begin() + index);
+                auto itr = static_cast<D&>(*this).get_container().begin() + index;
+                removedValue.assign(*itr);
+                static_cast<D&>(*this).get_container().erase(itr);
             });
         }
 
@@ -337,6 +385,7 @@ WINRT_EXPORT namespace winrt
 
         void RemoveAtEnd()
         {
+            impl::removed_value<typename impl::container_type_t<D>::value_type> removedValue;
             static_cast<D&>(*this).perform_exclusive([&]
             {
                 if (static_cast<D const&>(*this).get_container().empty())
@@ -345,24 +394,28 @@ WINRT_EXPORT namespace winrt
                 }
 
                 this->increment_version();
+                removedValue.assign(static_cast<D&>(*this).get_container().back());
                 static_cast<D&>(*this).get_container().pop_back();
             });
         }
 
         void Clear() noexcept
         {
+            impl::removed_values<D> oldContainer;
             static_cast<D&>(*this).perform_exclusive([&]
             {
                 this->increment_version();
-                static_cast<D&>(*this).get_container().clear();
+                oldContainer.assign(static_cast<D&>(*this).get_container());
             });
         }
 
         void ReplaceAll(array_view<T const> value)
         {
+            impl::removed_values<D> oldContainer;
             static_cast<D&>(*this).perform_exclusive([&]
             {
                 this->increment_version();
+                oldContainer.assign(static_cast<D&>(*this).get_container());
                 assign(value.begin(), value.end());
             });
         }
@@ -372,16 +425,14 @@ WINRT_EXPORT namespace winrt
         template <typename InputIt>
         void assign(InputIt first, InputIt last)
         {
-            using container_type = std::remove_reference_t<decltype(static_cast<D&>(*this).get_container())>;
-
-            if constexpr (std::is_same_v<T, typename container_type::value_type>)
+            if constexpr (std::is_same_v<T, typename impl::container_type_t<D>::value_type>)
             {
                 static_cast<D&>(*this).get_container().assign(first, last);
             }
             else
             {
                 auto& container = static_cast<D&>(*this).get_container();
-                container.clear();
+                WINRT_ASSERT(container.empty());
                 container.reserve(std::distance(first, last));
 
                 std::transform(first, last, std::back_inserter(container), [&](auto&& value)
@@ -534,16 +585,24 @@ WINRT_EXPORT namespace winrt
 
         bool Insert(K const& key, V const& value)
         {
+            impl::removed_value<typename impl::container_type_t<D>::mapped_type> oldValue;
             return static_cast<D&>(*this).perform_exclusive([&]
             {
                 this->increment_version();
-                auto pair = static_cast<D&>(*this).get_container().insert_or_assign(static_cast<D const&>(*this).wrap_value(key), static_cast<D const&>(*this).wrap_value(value));
-                return !pair.second;
+                auto [itr, added] = static_cast<D&>(*this).get_container().emplace(static_cast<D const&>(*this).wrap_value(key), static_cast<D const&>(*this).wrap_value(value));
+                if (!added)
+                {
+                    oldValue.assign(itr->second);
+                    itr->second = static_cast<D const&>(*this).wrap_value(value);
+                }
+
+                return !added;
             });
         }
 
         void Remove(K const& key)
         {
+            typename impl::container_type_t<D>::node_type removedNode;
             static_cast<D&>(*this).perform_exclusive([&]
             {
                 auto& container = static_cast<D&>(*this).get_container();
@@ -553,16 +612,17 @@ WINRT_EXPORT namespace winrt
                     throw hresult_out_of_bounds();
                 }
                 this->increment_version();
-                container.erase(found);
+                removedNode = container.extract(found);
             });
         }
 
         void Clear() noexcept
         {
+            impl::removed_values<D> oldContainer;
             static_cast<D&>(*this).perform_exclusive([&]
             {
                 this->increment_version();
-                static_cast<D&>(*this).get_container().clear();
+                oldContainer.assign(static_cast<D&>(*this).get_container());
             });
         }
     };
