@@ -226,15 +226,6 @@ namespace winrt::impl
     template <typename T>
     using wrapped_type_t = typename wrapped_type<T>::type;
 
-    template <template <typename...> typename Trait, typename Enabler, typename... Args>
-    struct is_detected : std::false_type {};
-
-    template <template <typename...> typename Trait, typename... Args>
-    struct is_detected<Trait, std::void_t<Trait<Args...>>, Args...> : std::true_type {};
-
-    template <template <typename...> typename Trait, typename... Args>
-    inline constexpr bool is_detected_v = std::is_same_v<typename is_detected<Trait, void, Args...>::type, std::true_type>;
-
     template <typename ... Types>
     struct typelist {};
 
