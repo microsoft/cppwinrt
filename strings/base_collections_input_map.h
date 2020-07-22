@@ -23,8 +23,8 @@ namespace winrt::impl
             return m_values;
         }
 
-        using ThreadingBase::perform_shared;
-        using ThreadingBase::perform_exclusive;
+        using ThreadingBase::acquire_shared;
+        using ThreadingBase::acquire_exclusive;
 
     private:
 

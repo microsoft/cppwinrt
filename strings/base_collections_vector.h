@@ -27,8 +27,8 @@ namespace winrt::impl
             return m_values;
         }
 
-        using ThreadingBase::perform_shared;
-        using ThreadingBase::perform_exclusive;
+        using ThreadingBase::acquire_shared;
+        using ThreadingBase::acquire_exclusive;
 
     private:
 
@@ -66,8 +66,8 @@ namespace winrt::impl
             return m_values;
         }
 
-        using ThreadingBase::perform_shared;
-        using ThreadingBase::perform_exclusive;
+        using ThreadingBase::acquire_shared;
+        using ThreadingBase::acquire_exclusive;
 
         auto First()
         {
@@ -82,10 +82,8 @@ namespace winrt::impl
 
                 operator wfc::IIterator<Windows::Foundation::IInspectable>()
                 {
-                    return container->perform_shared([&]
-                    {
-                        return make<iterator>(container);
-                    });
+                    auto guard = container->acquire_shared();
+                    return make<iterator>(container);
                 }
             };
 
@@ -132,22 +130,20 @@ namespace winrt::impl
 
         uint32_t GetMany(uint32_t const startIndex, array_view<Windows::Foundation::IInspectable> values) const
         {
-            return this->perform_shared([&]() -> uint32_t
+            auto guard = this->acquire_shared();
+            if (startIndex >= m_values.size())
             {
-                if (startIndex >= m_values.size())
+                return 0;
+            }
+
+            uint32_t const actual = (std::min)(static_cast<uint32_t>(m_values.size() - startIndex), values.size());
+
+            std::transform(m_values.begin() + startIndex, m_values.begin() + startIndex + actual, values.begin(), [&](auto && value)
                 {
-                    return 0;
-                }
+                    return box_value(value);
+                });
 
-                uint32_t const actual = (std::min)(static_cast<uint32_t>(m_values.size() - startIndex), values.size());
-
-                std::transform(m_values.begin() + startIndex, m_values.begin() + startIndex + actual, values.begin(), [&](auto && value)
-                    {
-                        return box_value(value);
-                    });
-
-                return actual;
-            });
+            return actual;
         }
 
         auto GetView() const noexcept
@@ -232,56 +228,48 @@ namespace winrt::impl
 
             Windows::Foundation::IInspectable Current() const
             {
-                return m_owner->perform_shared([&]
+                auto guard = m_owner->acquire_shared();
+                check_version(*m_owner);
+                if (m_current == m_end)
                 {
-                    check_version(*m_owner);
-                    if (m_current == m_end)
-                    {
-                        throw hresult_out_of_bounds();
-                    }
+                    throw hresult_out_of_bounds();
+                }
 
-                    return box_value(*m_current);
-                });
+                return box_value(*m_current);
             }
 
             bool HasCurrent() const
             {
-                return m_owner->perform_shared([&]
-                {
-                    check_version(*m_owner);
-                    return m_current != m_end;
-                });
+                auto guard = m_owner->acquire_shared();
+                check_version(*m_owner);
+                return m_current != m_end;
             }
 
             bool MoveNext()
             {
-                return m_owner->perform_exclusive([&]
+                auto guard = m_owner->acquire_exclusive();
+                check_version(*m_owner);
+                if (m_current != m_end)
                 {
-                    check_version(*m_owner);
-                    if (m_current != m_end)
-                    {
-                        ++m_current;
-                    }
+                    ++m_current;
+                }
 
-                    return m_current != m_end;
-                });
+                return m_current != m_end;
             }
 
             uint32_t GetMany(array_view<Windows::Foundation::IInspectable> values)
             {
-                return m_owner->perform_exclusive([&]
-                {
-                    check_version(*m_owner);
-                    uint32_t const actual = (std::min)(static_cast<uint32_t>(std::distance(m_current, m_end)), values.size());
+                auto guard = m_owner->acquire_exclusive();
+                check_version(*m_owner);
+                uint32_t const actual = (std::min)(static_cast<uint32_t>(std::distance(m_current, m_end)), values.size());
 
-                    std::transform(m_current, m_current + actual, values.begin(), [&](auto && value)
-                        {
-                            return box_value(value);
-                        });
+                std::transform(m_current, m_current + actual, values.begin(), [&](auto && value)
+                    {
+                        return box_value(value);
+                    });
 
-                    std::advance(m_current, actual);
-                    return actual;
-                });
+                std::advance(m_current, actual);
+                return actual;
             }
 
         private:
