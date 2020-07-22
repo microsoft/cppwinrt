@@ -221,6 +221,13 @@ static void test_multi_writer(IMap<int, T> const& map)
     // sum(i = 1 -> N){i} = N * (N + 1) / 2
     auto sum = std::accumulate(begin(map), end(map), 0, [](int curr, auto&& pair) { return curr + conditional_unbox(pair.Value()); });
     REQUIRE(sum == ((threadCount * (size - 1) * size) / 2));
+
+    // Since we know that the underlying collection type is std::map, the keys should be ordered
+    int expect = 0;
+    for (auto&& pair : map)
+    {
+        REQUIRE(pair.Key() == expect++);
+    }
 }
 
 template <typename K, typename V>
