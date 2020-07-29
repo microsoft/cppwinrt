@@ -385,10 +385,10 @@ namespace $(RootNamespace)
         </PropertyGroup>
         <WriteLinesToFile Condition="!$(CppWinRTWriteOnlyWhenDifferent)"
             File="$(XamlMetaDataProviderIdl)" Lines="$(XamlMetaDataProviderIdlLines)"
-            ContinueOnError="true" Overwrite="true" />
+            Overwrite="true" />
         <WriteLinesToFile Condition="$(CppWinRTWriteOnlyWhenDifferent)"
             File="$(XamlMetaDataProviderIdl)" Lines="$(XamlMetaDataProviderIdlLines)"
-            ContinueOnError="true" Overwrite="true"
+            Overwrite="true"
             WriteOnlyWhenDifferent="true" />
     </Target>
 
@@ -407,10 +407,10 @@ $(XamlMetaDataProviderPch)
         </PropertyGroup>
         <WriteLinesToFile Condition="!$(CppWinRTWriteOnlyWhenDifferent)"
             File="$(XamlMetaDataProviderCpp)" Lines="$(XamlMetaDataProviderCppLines)"
-            ContinueOnError="true" Overwrite="true" />
+            Overwrite="true" />
         <WriteLinesToFile Condition="$(CppWinRTWriteOnlyWhenDifferent)"
             File="$(XamlMetaDataProviderCpp)" Lines="$(XamlMetaDataProviderCppLines)"
-            ContinueOnError="true" Overwrite="true"
+            Overwrite="true"
             WriteOnlyWhenDifferent="true" />
     </Target>
 
@@ -438,7 +438,7 @@ $(XamlMetaDataProviderPch)
         <!-- Always write the midlrt.rsp file when the target runs, because the file is used as the output of this target. -->
         <WriteLinesToFile
             File="$(CppWinRTMidlResponseFile)" Lines="$(_MidlrtParameters)"
-            ContinueOnError="true" Overwrite="true" />
+            Overwrite="true" />
         <Message Text="CppWinRTMidlReferences: @(_MidlReferences->'%(WinMDPath)')" Importance="$(CppWinRTVerbosity)"/>
     </Target>
 
@@ -470,10 +470,10 @@ $(XamlMetaDataProviderPch)
 
         <WriteLinesToFile Condition="!$(CppWinRTWriteOnlyWhenDifferent)"
             File="$(IntermediateOutputPath)$(MSBuildProjectFile).MdMergeInputs.cache" Lines="$(MdMergeDependencyHash)"
-            ContinueOnError="true" Overwrite="true" />
+            Overwrite="true" />
         <WriteLinesToFile Condition="$(CppWinRTWriteOnlyWhenDifferent)"
             File="$(IntermediateOutputPath)$(MSBuildProjectFile).MdMergeInputs.cache" Lines="$(MdMergeDependencyHash)"
-            ContinueOnError="true" Overwrite="true"
+            Overwrite="true"
             WriteOnlyWhenDifferent="true" />
 
         <ItemGroup>
@@ -508,7 +508,7 @@ $(XamlMetaDataProviderPch)
         <!-- Always write the mdmerge.rsp file when the target runs, because the file is used as the output of this target. -->
         <WriteLinesToFile
             File="$(CppWinRTMdMergeResponseFile)" Lines="$(_MdMergeParameters)"
-            ContinueOnError="true" Overwrite="true" />
+            Overwrite="true" />
 
         <MakeDir Directories="$(CppWinRTUnmergedDir);$(CppWinRTMergedDir)" />
         <Message Text="$(_MdMergeCommand)" Importance="$(CppWinRTVerbosity)" Condition="'@(CppWinRTMdMergeInputs)' != ''" />
@@ -559,7 +559,15 @@ $(XamlMetaDataProviderPch)
             <Output TaskParameter="HashResult" PropertyName="CppWinRTPlatformProjectionDependencyHash" />
         </Hash>
 
-        <WriteLinesToFile Lines="$(CppWinRTPlatformProjectionDependencyHash)" File="$(IntDir)$(MSBuildProjectFile).cppwinrt_plat.cache" Overwrite="True" WriteOnlyWhenDifferent="True" />
+        <WriteLinesToFile Condition="!$(CppWinRTWriteOnlyWhenDifferent)"
+            File="$(IntDir)$(MSBuildProjectFile).cppwinrt_plat.cache" 
+            Lines="$(CppWinRTPlatformProjectionDependencyHash)"
+            Overwrite="true" />
+        <WriteLinesToFile Condition="$(CppWinRTWriteOnlyWhenDifferent)"
+            File="$(IntDir)$(MSBuildProjectFile).cppwinrt_plat.cache" 
+            Lines="$(CppWinRTPlatformProjectionDependencyHash)"
+            Overwrite="true"
+            WriteOnlyWhenDifferent="true" />
 
         <ItemGroup>
             <FileWrites Include="$(IntDir)$(MSBuildProjectFile).cppwinrt_plat.cache" />
@@ -593,7 +601,7 @@ $(XamlMetaDataProviderPch)
         <!-- Always write the cppwinrt_plat.rsp file when the target runs, because the file is used as the output of this target. -->
         <WriteLinesToFile
             File="$(CppWinRTPlatformProjectionResponseFile)" Lines="$(_CppwinrtParameters)"
-            ContinueOnError="true" Overwrite="true" />
+            Overwrite="true" />
 
         <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)" Condition="'@(_CppwinrtInputs)' != ''" />
         <Exec Command="$(CppWinRTCommand)" Condition="'@(_CppwinrtInputs)' != ''" />
@@ -626,7 +634,15 @@ $(XamlMetaDataProviderPch)
             <Output TaskParameter="HashResult" PropertyName="CppWinRTReferenceProjectionDependencyHash" />
         </Hash>
 
-        <WriteLinesToFile Lines="$(CppWinRTReferenceProjectionDependencyHash)" File="$(IntDir)$(MSBuildProjectFile).cppwinrt_ref.cache" Overwrite="True" WriteOnlyWhenDifferent="True" />
+        <WriteLinesToFile Condition="!$(CppWinRTWriteOnlyWhenDifferent)"
+            File="$(IntDir)$(MSBuildProjectFile).cppwinrt_ref.cache"
+            Lines="$(CppWinRTReferenceProjectionDependencyHash)"
+            Overwrite="true" />
+        <WriteLinesToFile Condition="$(CppWinRTWriteOnlyWhenDifferent)"
+            File="$(IntDir)$(MSBuildProjectFile).cppwinrt_ref.cache"
+            Lines="$(CppWinRTReferenceProjectionDependencyHash)"
+            Overwrite="true"
+            WriteOnlyWhenDifferent="true" />
 
         <ItemGroup>
             <FileWrites Include="$(IntDir)$(MSBuildProjectFile).cppwinrt_ref.cache" />
@@ -664,7 +680,7 @@ $(XamlMetaDataProviderPch)
         <!-- Always write the cppwinrt_ref.rsp file when the target runs, because the file is used as the output of this target. -->
         <WriteLinesToFile 
             File="$(CppWinRTReferenceProjectionResponseFile)" Lines="$(_CppwinrtParameters)"
-            ContinueOnError="true" Overwrite="true" />
+            Overwrite="true" />
 
         <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)" Condition="'@(_CppwinrtRefInputs)' != ''" />
         <Exec Command="$(CppWinRTCommand)" Condition="'@(_CppwinrtRefInputs)' != ''" />
@@ -699,8 +715,16 @@ $(XamlMetaDataProviderPch)
             <Output TaskParameter="HashResult" PropertyName="CppWinRTComponentProjectionDependencyHash" />
         </Hash>
 
-        <WriteLinesToFile Lines="$(CppWinRTComponentProjectionDependencyHash)" File="$(IntDir)$(MSBuildProjectFile).cppwinrt_comp.cache" Overwrite="True" WriteOnlyWhenDifferent="True" />
-
+        <WriteLinesToFile Condition="!$(CppWinRTWriteOnlyWhenDifferent)"
+            File="$(IntDir)$(MSBuildProjectFile).cppwinrt_comp.cache"
+            Lines="$(CppWinRTComponentProjectionDependencyHash)"
+            Overwrite="true" />
+        <WriteLinesToFile Condition="$(CppWinRTWriteOnlyWhenDifferent)"
+            File="$(IntDir)$(MSBuildProjectFile).cppwinrt_comp.cache"
+            Lines="$(CppWinRTComponentProjectionDependencyHash)"
+            Overwrite="true"
+            WriteOnlyWhenDifferent="true" />
+        
         <ItemGroup>
             <FileWrites Include="$(IntDir)$(MSBuildProjectFile).cppwinrt_comp.cache" />
         </ItemGroup>
@@ -761,7 +785,7 @@ $(XamlMetaDataProviderPch)
         <!-- Always write the cppwinrt_comp.rsp file when the target runs, because the file is used as the output of this target. -->
         <WriteLinesToFile
             File="$(CppWinRTComponentProjectionResponseFile)" Lines="$(_CppwinrtParameters)"
-            ContinueOnError="true" Overwrite="true" />
+            Overwrite="true" />
         
         <Message Text="$(CppWinRTCommand)" Importance="$(CppWinRTVerbosity)" Condition="'@(_CppwinrtCompInputs)' != ''"/>
         <Exec Command="$(CppWinRTCommand)" Condition="'@(_CppwinrtCompInputs)' != ''"/>
