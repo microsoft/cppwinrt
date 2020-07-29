@@ -405,6 +405,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="multi_threaded_map.cpp" />
+    <ClCompile Include="multi_threaded_vector.cpp" />
     <ClCompile Include="names.cpp" />
     <ClCompile Include="noexcept.cpp" />
     <ClCompile Include="notify_awaiter.cpp" />
