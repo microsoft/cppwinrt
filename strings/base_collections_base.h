@@ -60,7 +60,8 @@ namespace winrt::impl
     struct removed_value
     {
         // Trivially destructible; okay to run destructor under lock
-        void assign(T&) {}
+        template <typename U>
+        void assign(U&&) {}
     };
 
     template <typename T>
@@ -68,7 +69,8 @@ namespace winrt::impl
     {
         std::optional<T> m_value;
 
-        void assign(T& value)
+        template <typename U>
+        void assign(U&& value)
         {
             m_value.emplace(std::move(value));
         }
@@ -313,7 +315,7 @@ WINRT_EXPORT namespace winrt
             }
 
             this->increment_version();
-            auto& pos = static_cast<D&>(*this).get_container()[index];
+            auto&& pos = static_cast<D&>(*this).get_container()[index];
             oldValue.assign(pos);
             pos = static_cast<D const&>(*this).wrap_value(value);
         }
