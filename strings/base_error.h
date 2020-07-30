@@ -46,6 +46,21 @@ namespace winrt::impl
         return { message, size };
     }
 
+    inline hstring message_from_hresult(hresult code) noexcept
+    {
+        handle_type<impl::heap_traits> message;
+
+        uint32_t const size = WINRT_IMPL_FormatMessageW(0x00001300, // FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS
+            nullptr,
+            code,
+            0x00000400, // MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT)
+            reinterpret_cast<wchar_t*>(message.put()),
+            0,
+            nullptr);
+
+        return trim_hresult_message(message.get(), size);
+    }
+
     constexpr int32_t hresult_from_win32(uint32_t const x) noexcept
     {
         return (int32_t)(x) <= 0 ? (int32_t)(x) : (int32_t)(((x) & 0x0000FFFF) | (7 << 16) | 0x80000000);
@@ -60,7 +75,7 @@ namespace winrt::impl
     {
         error_info_fallback(int32_t code, void* message) noexcept :
             m_code(code),
-            m_message(*reinterpret_cast<winrt::hstring*>(&message))
+            m_message(message ? *reinterpret_cast<winrt::hstring*>(&message) : message_from_hresult(code))
         {
         }
 
@@ -257,17 +272,7 @@ WINRT_EXPORT namespace winrt
                 }
             }
 
-            handle_type<impl::heap_traits> message;
-
-            uint32_t const size = WINRT_IMPL_FormatMessageW(0x00001300, // FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS
-                nullptr,
-                m_code,
-                0x00000400, // MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT)
-                reinterpret_cast<wchar_t*>(message.put()),
-                0,
-                nullptr);
-
-            return impl::trim_hresult_message(message.get(), size);
+            return impl::message_from_hresult(m_code);
         }
 
         template <typename To>
