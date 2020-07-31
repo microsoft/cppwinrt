@@ -200,7 +200,7 @@ namespace cppwinrt
 
     static bool has_fastabi(TypeDef const& type)
     {
-        return settings.fastabi && has_attribute(type, "Windows.Foundation.Metadata", "FastAbiAttribute");
+        return settings.fastabi&& has_attribute(type, "Windows.Foundation.Metadata", "FastAbiAttribute");
     }
 
     static bool is_always_disabled(TypeDef const& type)
