@@ -10,6 +10,16 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
 // Vector correctness tests exist elsewhere. These tests are strictly geared toward testing multi threaded functionality
+//
+// Be careful with use of REQUIRE.
+//
+// 1. REQUIRE is not concurrency-safe. Don't call it from two threads simultaneously.
+// 2. The number of calls to REQUIRE should be the consistent in the face of nondeterminism.
+//    This makes the "(x assertions in y test cases)" consistent.
+//
+// If you need to check something from a background thread, or where the number
+// of iterations can vary from run to run, use winrt::check_bool, which still
+// fails the test but doesn't run afoul of REQUIRE's limitations.
 
 template <typename T>
 static void test_single_reader_single_writer(IVector<T> const& v)
@@ -35,17 +45,17 @@ static void test_single_reader_single_writer(IVector<T> const& v)
             {
                 if (static_cast<uint32_t>(i) >= v.Size())
                 {
-                    REQUIRE(static_cast<uint32_t>(i) >= beginSize);
+                    check_bool(static_cast<uint32_t>(i) >= beginSize);
                     break;
                 }
 
-                REQUIRE(conditional_unbox(v.GetAt(i)) == i);
+                check_bool(conditional_unbox(v.GetAt(i)) == i);
 
                 if constexpr (std::is_same_v<T, int>)
                 {
                     uint32_t index;
-                    REQUIRE(v.IndexOf(i, index));
-                    REQUIRE(index == static_cast<uint32_t>(i));
+                    check_bool(v.IndexOf(i, index));
+                    check_bool(index == static_cast<uint32_t>(i));
                 }
             }
 
@@ -53,7 +63,7 @@ static void test_single_reader_single_writer(IVector<T> const& v)
             {
                 break;
             }
-            REQUIRE(beginSize != final_size);
+            check_bool(beginSize != final_size);
         }
     }
 
@@ -75,7 +85,7 @@ static void test_single_reader_single_writer(IVector<T> const& v)
             auto len = v.GetMany(0, vals);
             for (uint32_t i = 1; i < len; ++i)
             {
-                REQUIRE(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
+                check_bool(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
             }
         }
     }
@@ -97,7 +107,7 @@ static void test_single_reader_single_writer(IVector<T> const& v)
             auto len = v.GetMany(0, vals);
             for (uint32_t i = 1; i < len; ++i)
             {
-                REQUIRE(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
+                check_bool(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
             }
         }
     }
@@ -137,10 +147,10 @@ static void test_single_reader_single_writer(IVector<T> const& v)
                 }
                 else
                 {
-                    REQUIRE(curr == (prev + 1));
+                    check_bool(curr == (prev + 1));
                 }
             }
-            REQUIRE(jumps <= 1);
+            check_bool(jumps <= 1);
         }
     }
 
@@ -171,10 +181,10 @@ static void test_single_reader_single_writer(IVector<T> const& v)
         do
         {
             auto len = v.GetMany(0, vals);
-            REQUIRE(len == size);
+            check_bool(len == size);
             for (int i = 1; i < size; ++i)
             {
-                REQUIRE(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) + 1));
+                check_bool(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) + 1));
             }
         }
         while (conditional_unbox(vals[0]) != iterations);
@@ -207,7 +217,7 @@ static void test_iterator_invalidation(IVector<T> const& v)
             for (auto itr = v.First(); itr.HasCurrent(); itr.MoveNext())
             {
                 auto val = conditional_unbox(itr.Current());
-                REQUIRE(val == expect++);
+                check_bool(val == expect++);
             }
 
             if (expect == final_size)
@@ -220,7 +230,7 @@ static void test_iterator_invalidation(IVector<T> const& v)
             ++exceptionCount;
         }
 
-        REQUIRE(!forceExit);
+        check_bool(!forceExit);
     }
 
     // Since the insert thread yields after each insertion, this should really be in the thousands
@@ -256,8 +266,8 @@ static void test_concurrent_iteration(IVector<T> const& v)
                         // validate that we're getting valid increasing values, e.g. as opposed to validating that we read
                         // all unique values.
                         auto val = conditional_unbox(itr.Current());
-                        REQUIRE(val > last);
-                        REQUIRE(val < size);
+                        check_bool(val > last);
+                        check_bool(val < size);
                         last = val;
                         if (!itr.MoveNext())
                         {
@@ -270,7 +280,7 @@ static void test_concurrent_iteration(IVector<T> const& v)
                     catch (hresult_error const&)
                     {
                         // There's no "get if" function, so concurrent increment past the end is always possible...
-                        REQUIRE(!itr.HasCurrent());
+                        check_bool(!itr.HasCurrent());
                         break;
                     }
                 }
