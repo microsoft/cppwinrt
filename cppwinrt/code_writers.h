@@ -2,6 +2,22 @@
 
 namespace cppwinrt
 {
+    struct finish_with
+    {
+        writer& w;
+        void (*finisher)(writer&);
+
+        finish_with(writer& w, void (*finisher)(writer&)) : w(w), finisher(finisher) {}
+        finish_with(finish_with const&)= delete;
+        void operator=(finish_with const&) = delete;
+
+        ~finish_with() { finisher(w); }
+    };
+
+    static void write_nothing(writer&)
+    {
+    }
+
     static void write_preamble(writer& w)
     {
         if (settings.license)
@@ -38,6 +54,19 @@ namespace cppwinrt
         w.write(format);
     }
 
+    static void write_endif(writer& w)
+    {
+        auto format = R"(#endif
+)";
+
+        w.write(format);
+    }
+
+    static void write_close_file_guard(writer& w)
+    {
+        write_endif(w);
+    }
+
     static void write_open_file_guard(writer& w, std::string_view const& file_name, char impl = 0)
     {
         std::string mangled_name;
@@ -60,20 +89,28 @@ namespace cppwinrt
         w.write(format, mangled_name, mangled_name);
     }
 
-    static void write_lean_and_mean(writer& w)
+    template<typename... Args>
+    [[nodiscard]] static finish_with wrap_open_file_guard(writer& w, Args&&... args)
     {
-        auto format = R"(#ifndef WINRT_LEAN_AND_MEAN
-)";
-
-        w.write(format);
+        write_open_file_guard(w, std::forward<Args>(args)...);
+        return { w, write_close_file_guard };
     }
 
-    static void write_endif(writer& w)
+    [[nodiscard]] static finish_with wrap_lean_and_mean(writer& w, bool is_lean_and_mean = true)
     {
-        auto format = R"(#endif
+        if (is_lean_and_mean)
+        {
+            auto format = R"(#ifndef WINRT_LEAN_AND_MEAN
 )";
 
-        w.write(format);
+            w.write(format);
+
+            return { w, write_endif };
+        }
+        else
+        {
+            return { w, write_nothing };
+        }
     }
 
     static void write_parent_depends(writer& w, cache const& c, std::string_view const& type_namespace)
@@ -109,37 +146,43 @@ namespace cppwinrt
         }
     }
 
-    static void write_impl_namespace(writer& w)
-    {
-        auto format = R"(namespace winrt::impl
-{
-)";
-
-        w.write(format);
-    }
-
-    static void write_std_namespace(writer& w)
-    {
-        w.write(R"(namespace std
-{
-)");
-    }
-
-    static void write_type_namespace(writer& w, std::string_view const& ns)
-    {
-        auto format = R"(WINRT_EXPORT namespace winrt::@
-{
-)";
-
-        w.write(format, ns);
-    }
-
     static void write_close_namespace(writer& w)
     {
         auto format = R"(}
 )";
 
         w.write(format);
+    }
+
+    [[nodiscard]] static finish_with wrap_impl_namespace(writer& w)
+    {
+        auto format = R"(namespace winrt::impl
+{
+)";
+
+        w.write(format);
+
+        return { w, write_close_namespace };
+    }
+
+    [[nodiscard]] static finish_with wrap_std_namespace(writer& w)
+    {
+        w.write(R"(namespace std
+{
+)");
+
+        return { w, write_close_namespace };
+    }
+
+    [[nodiscard]] static finish_with wrap_type_namespace(writer& w, std::string_view const& ns)
+    {
+        auto format = R"(WINRT_EXPORT namespace winrt::@
+{
+)";
+
+        w.write(format, ns);
+
+        return { w, write_close_namespace };
     }
 
     static void write_enum_field(writer& w, Field const& field)
@@ -495,7 +538,7 @@ namespace cppwinrt
 
     static void write_abi_params(writer& w, method_signature const& method_signature)
     {
-        w.abi_types = true;
+        auto abi_guard = w.push_abi_types(true);
         separator s{ w };
 
         for (auto&& [param, param_signature] : method_signature.params())
@@ -705,7 +748,6 @@ namespace cppwinrt
     {
         auto generics = type.GenericParam();
         auto guard{ w.push_generic_params(generics) };
-        w.abi_types = false;
 
         if (empty(generics))
         {
@@ -734,6 +776,7 @@ namespace cppwinrt
         auto format = R"(            virtual int32_t __stdcall %(%) noexcept = 0;
 )";
 
+        auto abi_guard = w.push_abi_types(true);
         for (auto&& method : type.MethodList())
         {
             try
@@ -772,7 +815,6 @@ namespace cppwinrt
         auto guard{ w.push_generic_params(generics) };
         auto method = get_delegate_method(type);
         method_signature signature{ method };
-        w.abi_types = false;
 
         w.write(format,
             bind<write_generic_typenames>(generics),
@@ -787,7 +829,7 @@ namespace cppwinrt
 
     static void write_struct_abi(writer& w, TypeDef const& type)
     {
-        w.abi_types = true;
+        auto abi_guard = w.push_abi_types(true);
 
         auto format = R"(    struct struct_%
     {
@@ -934,7 +976,7 @@ namespace cppwinrt
     static void write_consume_declaration(writer& w, MethodDef const& method)
     {
         method_signature signature{ method };
-        w.async_types = signature.is_async();
+        auto async_types_guard = w.push_async_types(signature.is_async());
         auto method_name = get_name(method);
         auto type = method.Parent();
 
@@ -960,8 +1002,6 @@ namespace cppwinrt
                 method_name,
                 bind<write_consume_params>(signature));
         }
-
-        w.async_types = false;
     }
 
     static void write_fast_consume_declarations(writer& w, TypeDef const& default_interface)
@@ -1004,16 +1044,13 @@ namespace cppwinrt
         uint32_t %_impl_size{};
         %* %{};)";
 
-            w.abi_types = true;
-            w.delegate_types = delegate_types;
+            auto abi_guard = w.push_abi_types(true);
+            auto delegate_guard = w.push_delegate_types(delegate_types);
 
             w.write(format,
                 signature.return_param_name(),
                 signature.return_signature(),
                 signature.return_param_name());
-
-            w.abi_types = false;
-            w.delegate_types = false;
         }
         else if (category == param_category::object_type || category == param_category::string_type)
         {
@@ -1075,7 +1112,7 @@ namespace cppwinrt
     {
         auto method_name = get_name(method);
         method_signature signature{ method };
-        w.async_types = signature.is_async();
+        auto async_types_guard = w.push_async_types(signature.is_async());
 
         std::string_view format;
 
@@ -1130,15 +1167,13 @@ namespace cppwinrt
                 method_name,
                 bind<write_consume_args>(signature));
         }
-
-        w.async_types = false;
     }
 
     static void write_consume_fast_base_definition(writer& w, MethodDef const& method, TypeDef const& class_type, TypeDef const& base_type)
     {
         auto method_name = get_name(method);
         method_signature signature{ method };
-        w.async_types = signature.is_async();
+        auto async_types_guard = w.push_async_types(signature.is_async());
 
         //
         // Note: this use of a lambda is a workaround for a Visual C++ compiler bug:
@@ -1182,8 +1217,6 @@ namespace cppwinrt
                 method_name,
                 bind<write_consume_args>(signature));
         }
-
-        w.async_types = false;
     }
 
     static void write_consume_definitions(writer& w, TypeDef const& type)
@@ -1417,7 +1450,6 @@ namespace cppwinrt
 
     static void write_consume(writer& w, TypeDef const& type)
     {
-        w.abi_types = false;
         auto generics = type.GenericParam();
         auto guard{ w.push_generic_params(generics) };
         auto type_name = type.TypeName();
@@ -1479,7 +1511,6 @@ namespace cppwinrt
 
     static void write_produce_params(writer& w, method_signature const& signature)
     {
-        w.param_names = true;
         write_abi_params(w, signature);
     }
 
@@ -1487,7 +1518,6 @@ namespace cppwinrt
     static void write_produce_cleanup_param(writer& w, T const& param_signature, std::string_view const& param_name, bool out)
     {
         TypeSig const& signature = param_signature.Type();
-        w.abi_types = false;
         bool clear{};
         bool optional{};
         bool zero{};
@@ -1616,7 +1646,6 @@ namespace cppwinrt
 
     static void write_produce_args(writer& w, method_signature const& method_signature)
     {
-        w.abi_types = false;
         separator s{ w };
 
         for (auto&& [param, param_signature] : method_signature.params())
@@ -1695,8 +1724,6 @@ namespace cppwinrt
 
     static void write_produce_upcall(writer& w, std::string_view const& upcall, method_signature const& method_signature)
     {
-        w.abi_types = false;
-
         if (method_signature.return_signature())
         {
             auto name = method_signature.return_param_name();
@@ -1763,7 +1790,7 @@ namespace cppwinrt
         }
 
         method_signature signature{ method };
-        w.async_types = signature.is_async();
+        auto async_types_guard = w.push_async_types(signature.is_async());
         std::string upcall = "this->shim().";
         upcall += get_name(method);
 
@@ -1772,8 +1799,6 @@ namespace cppwinrt
             bind<write_produce_params>(signature),
             bind<write_produce_cleanup>(signature),
             bind<write_produce_upcall>(upcall, signature));
-
-        w.async_types = false;
     }
 
     static void write_fast_produce_methods(writer& w, TypeDef const& default_interface)
@@ -1832,10 +1857,7 @@ namespace cppwinrt
         auto guard{ w.push_generic_params(generics) };
         bool const lean_and_mean = !can_produce(type, c);
 
-        if (lean_and_mean)
-        {
-            write_lean_and_mean(w);
-        }
+        auto wrap = wrap_lean_and_mean(w, lean_and_mean);
 
         w.write(format,
             bind<write_comma_generic_typenames>(generics),
@@ -1843,11 +1865,6 @@ namespace cppwinrt
             type,
             bind_each<write_produce_method>(type.MethodList()),
             bind<write_fast_produce_methods>(type));
-
-        if (lean_and_mean)
-        {
-            write_endif(w);
-        }
     }
 
     static void write_dispatch_overridable_method(writer& w, MethodDef const& method)
@@ -2400,7 +2417,6 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
     };
 )";
 
-        w.param_names = true;
         auto generics = type.GenericParam();
         auto guard{ w.push_generic_params(generics) };
         method_signature signature{ get_delegate_method(type) };
@@ -2802,7 +2818,6 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_constructor_declarations(writer& w, TypeDef const& type, std::map<std::string, factory_info> const& factories)
     {
-        w.async_types = false;
         auto type_name = type.TypeName();
 
         for (auto&& [factory_name, factory] : factories)
@@ -2845,8 +2860,6 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_constructor_definition(writer& w, MethodDef const& method, TypeDef const& type, TypeDef const& factory)
     {
-        w.async_types = false;
-
         auto type_name = type.TypeName();
         method_signature signature{ method };
 
@@ -2907,7 +2920,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         {
             method_signature signature{ method };
             auto method_name = get_name(method);
-            w.async_types = signature.is_async();
+            auto async_types_guard = w.push_async_types(signature.is_async());
 
             if (settings.component_opt && settings.component_filter.includes(type))
             {
@@ -2941,8 +2954,6 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     bind<write_consume_params>(signature));
             }
         }
-
-        w.async_types = false;
     }
 
     static void write_static_definitions(writer& w, MethodDef const& method, TypeDef const& type, TypeDef const& factory)
@@ -2950,7 +2961,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         auto type_name = type.TypeName();
         method_signature signature{ method };
         auto method_name = get_name(method);
-        w.async_types = signature.is_async();
+        auto async_types_guard = w.push_async_types(signature.is_async());
 
         {
             auto format = R"(    inline auto %::%(%)
@@ -2987,8 +2998,6 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                 method_name,
                 bind<write_consume_args>(signature));
         }
-
-        w.async_types = false;
     }
 
     static void write_class_definitions(writer& w, TypeDef const& type)

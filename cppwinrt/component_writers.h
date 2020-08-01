@@ -393,7 +393,7 @@ catch (...) { return winrt::to_hresult(); }
             return;
         }
 
-        write_type_namespace(w, type_namespace);
+        auto wrap_type = wrap_type_namespace(w, type_namespace);
 
         for (auto&&[factory_name, factory] : get_factories(w, type))
         {
@@ -538,8 +538,6 @@ catch (...) { return winrt::to_hresult(); }
                 }
             }
         }
-
-        write_close_namespace(w);
     }
 
     static void write_component_override_dispatch_base(writer& w, TypeDef const& type)
