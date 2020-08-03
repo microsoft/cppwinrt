@@ -10,6 +10,16 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
 // Map correctness tests exist elsewhere. These tests are strictly geared toward testing multi threaded functionality
+//
+// Be careful with use of REQUIRE.
+//
+// 1. REQUIRE is not concurrency-safe. Don't call it from two threads simultaneously.
+// 2. The number of calls to REQUIRE should be the consistent in the face of nondeterminism.
+//    This makes the "(x assertions in y test cases)" consistent.
+//
+// If you need to check something from a background thread, or where the number
+// of iterations can vary from run to run, use winrt::check_bool, which still
+// fails the test but doesn't run afoul of REQUIRE's limitations.
 
 template <typename T>
 static void test_single_reader_single_writer(IMap<int, T> const& map)
@@ -34,11 +44,11 @@ static void test_single_reader_single_writer(IMap<int, T> const& map)
         {
             if (!map.HasKey(i))
             {
-                REQUIRE(static_cast<uint32_t>(i) >= beginSize);
+                check_bool(static_cast<uint32_t>(i) >= beginSize);
                 break;
             }
 
-            REQUIRE(conditional_unbox(map.Lookup(i)) == i);
+            check_bool(conditional_unbox(map.Lookup(i)) == i);
         }
 
         if (i == final_size)
@@ -83,11 +93,11 @@ static void test_iterator_invalidation(IMap<int, T> const& map)
             for (auto itr = map.First(); itr.HasCurrent(); itr.MoveNext())
             {
                 auto pair = itr.Current();
-                REQUIRE(pair.Key() == conditional_unbox(pair.Value()));
+                check_bool(pair.Key() == conditional_unbox(pair.Value()));
                 ++count;
             }
-            REQUIRE(count >= (size - 1));
-            REQUIRE(count <= size);
+            check_bool(count >= (size - 1));
+            check_bool(count <= size);
         }
         catch (hresult_changed_state const&)
         {
@@ -128,8 +138,8 @@ static void test_concurrent_iteration(IMap<int, T> const& map)
                         // validate that we're getting valid increasing values, e.g. as opposed to validating that we read
                         // all unique values.
                         auto val = itr.Current().Key();
-                        REQUIRE(val > last);
-                        REQUIRE(val < size);
+                        check_bool(val > last);
+                        check_bool(val < size);
                         last = val;
                         if (!itr.MoveNext())
                         {
@@ -142,7 +152,7 @@ static void test_concurrent_iteration(IMap<int, T> const& map)
                     catch (hresult_error const&)
                     {
                         // There's no "get if" function, so concurrent increment past the end is always possible...
-                        REQUIRE(!itr.HasCurrent());
+                        check_bool(!itr.HasCurrent());
                         break;
                     }
                 }
