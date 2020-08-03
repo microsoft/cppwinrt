@@ -21,6 +21,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTUseHardlinksIfPossible Condition="'$(CppWinRTUseHardlinksIfPossible)' == ''">false</CppWinRTUseHardlinksIfPossible>
         <CppWinRTWriteOnlyWhenDifferent Condition="('$(CppWinRTWriteOnlyWhenDifferent)' == '') And (('$(MSBuildToolsVersion)' == 'Current') Or ('$(MSBuildToolsVersion)' &gt;= '15'))">true</CppWinRTWriteOnlyWhenDifferent>
         <CppWinRTWriteOnlyWhenDifferent Condition="'$(CppWinRTWriteOnlyWhenDifferent)' != 'true'">false</CppWinRTWriteOnlyWhenDifferent>
+        <CppWinRTHasHashTask Condition="('$(CppWinRTHasHashTask)' == '') And (('$(MSBuildToolsVersion)' == 'Current') Or ('$(MSBuildToolsVersion)' &gt;= '15'))">true</CppWinRTHasHashTask>
+        <CppWinRTHasHashTask Condition="'$(CppWinRTHasHashTask)' != 'true'">false</CppWinRTHasHashTask>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))..\..\</CppWinRTPackageDir>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))</CppWinRTPackageDir>
         <CppWinRTParameters Condition="'$(CppWinRTFastAbi)'=='true'">$(CppWinRTParameters) -fastabi</CppWinRTParameters>
@@ -451,9 +453,10 @@ $(XamlMetaDataProviderPch)
     executions. This handles cases where items are added or removed and can't 
     otherwise be detected with timestamp comparisons. The file contains a hash of 
     MdMerge inputs that are known to contribute to incremental build inconsistencies.
+    NOTE: this is not used when building with older MSBuild versions.
     ============================================================
     -->
-    <Target Name="_CppWinRTGenerateMergeProjectWinMDDependencyCache" DependsOnTargets="Midl;GetCppWinRTMdMergeInputs">
+    <Target Name="_CppWinRTGenerateMergeProjectWinMDDependencyCache" Condition="'$(CppWinRTHasHashTask)' == 'true'" DependsOnTargets="Midl;GetCppWinRTMdMergeInputs">
         <ItemGroup>
             <CustomAdditionalMdMergeInputs Include="$(IntermediateOutputPath)$(MSBuildProjectFile).MdMergeInputs.cache" />
             <MdMergeCache Include="@(CppWinRTMdMergeInputs)" />
@@ -544,9 +547,10 @@ $(XamlMetaDataProviderPch)
     executions. This handles cases where items are added or removed and can't 
     otherwise be detected with timestamp comparisons. The file contains a hash of 
     the platform winmd inputs that are known to contribute to incremental build inconsistencies.
+    NOTE: this is not used when building with older MSBuild versions.
     ============================================================
     -->
-    <Target Name="_CppWinRTMakePlatformProjectionDependencyCache" DependsOnTargets="CppWinRTResolveReferences;GetCppWinRTPlatformWinMDInputs">
+    <Target Name="_CppWinRTMakePlatformProjectionDependencyCache"  Condition="'$(CppWinRTHasHashTask)' == 'true'" DependsOnTargets="CppWinRTResolveReferences;GetCppWinRTPlatformWinMDInputs">
         <ItemGroup>
             <CustomAdditionalPlatformWinMDInputs Include="$(IntDir)$(MSBuildProjectFile).cppwinrt_plat.cache" />
             <CppWinRTPlatformProjectionCache Include="@(CppWinRTPlatformWinMDInputs)" />
@@ -617,9 +621,10 @@ $(XamlMetaDataProviderPch)
     executions. This handles cases where items are added or removed and can't 
     otherwise be detected with timestamp comparisons. The file contains a hash of 
     the reference winmd inputs that are known to contribute to incremental build inconsistencies.
+    NOTE: this is not used when building with older MSBuild versions.
     ============================================================
     -->
-    <Target Name="_CppWinRTMakeReferenceProjectionDependencyCache" DependsOnTargets="CppWinRTResolveReferences">
+    <Target Name="_CppWinRTMakeReferenceProjectionDependencyCache"  Condition="'$(CppWinRTHasHashTask)' == 'true'" DependsOnTargets="CppWinRTResolveReferences">
         <ItemGroup>
             <CustomAdditionalReferenceWinMDInputs Include="$(IntDir)$(MSBuildProjectFile).cppwinrt_ref.cache" />
             <CppWinRTReferenceProjectionCache Include="@(CppWinRTDirectWinMDReferences)" />
@@ -696,9 +701,10 @@ $(XamlMetaDataProviderPch)
     executions. This handles cases where items are added or removed and can't 
     otherwise be detected with timestamp comparisons. The file contains a hash of 
     the reference winmd inputs that are known to contribute to incremental build inconsistencies.
+    NOTE: this is not used when building with older MSBuild versions.
     ============================================================
     -->
-    <Target Name="_CppWinRTMakeComponentProjectionDependencyCache" DependsOnTargets="CppWinRTResolveReferences">
+    <Target Name="_CppWinRTMakeComponentProjectionDependencyCache" Condition="'$(CppWinRTHasHashTask)' == 'true'" DependsOnTargets="CppWinRTResolveReferences">
         <ItemGroup>
             <CustomAdditionalComponentWinMDInputs Include="$(IntDir)$(MSBuildProjectFile).cppwinrt_comp.cache" />
             <CppWinRTComponentProjectionCache Include="@(CppWinRTMdMergeInputs)" />
