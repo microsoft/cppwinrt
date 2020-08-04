@@ -12,6 +12,7 @@
 #include <stdexcept>
 #include <string_view>
 #include <string>
+#include <thread>
 #include <tuple>
 #include <type_traits>
 #include <unordered_map>

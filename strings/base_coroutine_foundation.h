@@ -128,10 +128,20 @@ namespace winrt::impl
     };
 
     template <typename Async>
-    struct await_adapter
+    struct await_adapter : enable_await_cancellation
     {
+        await_adapter(Async const& async) : async(async) { }
+
         Async const& async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
+
+        void enable_cancellation(cancellable_promise* promise)
+        {
+            promise->set_canceller([](void* parameter)
+            {
+                cancel_asynchronously(reinterpret_cast<await_adapter*>(parameter)->async);
+            }, this);
+        }
 
         bool await_ready() const noexcept
         {
@@ -152,6 +162,19 @@ namespace winrt::impl
         {
             check_status_canceled(status);
             return async.GetResults();
+        }
+
+    private:
+        static fire_and_forget cancel_asynchronously(Async async)
+        {
+            co_await winrt::resume_background();
+            try
+            {
+                async.Cancel();
+            }
+            catch (hresult_error const&)
+            {
+            }
         }
     };
 
@@ -276,6 +299,11 @@ namespace winrt::impl
         void callback(winrt::delegate<>&& cancel) const noexcept
         {
             m_promise->cancellation_callback(std::move(cancel));
+        }
+
+        bool enable_propagation(bool value = true) const noexcept
+        {
+            return m_promise->enable_cancellation_propagation(value);
         }
 
     private:
@@ -414,6 +442,8 @@ namespace winrt::impl
             {
                 cancel();
             }
+
+            m_cancellable.cancel();
         }
 
         void Close() const noexcept
@@ -536,7 +566,7 @@ namespace winrt::impl
                 throw winrt::hresult_canceled();
             }
 
-            return notify_awaiter<Expression>{ static_cast<Expression&&>(expression) };
+            return notify_awaiter<Expression>{ static_cast<Expression&&>(expression), m_propagate_cancellation ? &m_cancellable : nullptr };
         }
 
         cancellation_token<Derived> await_transform(get_cancellation_token_t) noexcept
@@ -567,6 +597,11 @@ namespace winrt::impl
             }
         }
 
+        bool enable_cancellation_propagation(bool value) noexcept
+        {
+            return std::exchange(m_propagate_cancellation, value);
+        }
+
 #if defined(_DEBUG) && !defined(WINRT_NO_MAKE_DETECTION)
         void use_make_function_to_create_this_object() final
         {
@@ -587,8 +622,10 @@ namespace winrt::impl
         slim_mutex m_lock;
         async_completed_handler_t<AsyncInterface> m_completed;
         winrt::delegate<> m_cancel;
+        cancellable_promise m_cancellable;
         std::atomic<AsyncStatus> m_status;
         bool m_completed_assigned{ false };
+        bool m_propagate_cancellation{ false };
     };
 }
 
