@@ -375,6 +375,9 @@ namespace winrt::impl
 
         AsyncStatus Status() noexcept
         {
+            // It's okay to race against another thread that is changing the
+            // status. In the case where the promise was published from another
+            // thread, we need acquire in order to preserve causality.
             return m_status.load(std::memory_order_acquire);
         }
 
