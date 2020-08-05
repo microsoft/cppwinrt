@@ -23,7 +23,7 @@ WINRT_EXPORT namespace winrt
             }
         }
 
-        impl::com_ref<T> get() const noexcept
+        [[nodiscard]] impl::com_ref<T> get() const noexcept
         {
             if (!m_ref)
             {
