@@ -375,7 +375,7 @@ namespace winrt::impl
 
         AsyncStatus Status() noexcept
         {
-            return m_status.load(std::memory_order_relaxed);
+            return m_status.load(std::memory_order_acquire);
         }
 
         hresult ErrorCode() noexcept
