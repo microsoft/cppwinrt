@@ -1,505 +1,468 @@
 #include "pch.h"
 
-#include <numeric>
-#include <shared_mutex>
-
 #include "multi_threaded_common.h"
 
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace concurrent_collections;
 
-// Vector correctness tests exist elsewhere. These tests are strictly geared toward testing multi threaded functionality
-//
-// Be careful with use of REQUIRE.
-//
-// 1. REQUIRE is not concurrency-safe. Don't call it from two threads simultaneously.
-// 2. The number of calls to REQUIRE should be the consistent in the face of nondeterminism.
-//    This makes the "(x assertions in y test cases)" consistent.
-//
-// If you need to check something from a background thread, or where the number
-// of iterations can vary from run to run, use winrt::check_bool, which still
-// fails the test but doesn't run afoul of REQUIRE's limitations.
+// Vector correctness tests exist elsewhere. These tests are strictly geared toward testing multi threaded functionality.
 
-template <typename T>
-static void test_single_reader_single_writer(IVector<T> const& v)
+namespace
 {
-    static constexpr int final_size = 10000;
+    // We use a customized container that mimics std::vector and which
+    // validates that C++ concurrency rules are observed.
+    // C++ rules for library types are that concurrent use of const methods is allowed,
+    // but no method call may be concurrent with a non-const method. (Const methods may
+    // be "shared", but non-const methods are "exclusive".)
+    //
+    // NOTE! As the C++/WinRT implementation changes, you may need to add additional members
+    // to our fake vector and vector iterator classes.
+    //
+    // The regular single_threaded_vector and multi_threaded_vector functions requires std::vector,
+    // so we bypass that method and go directly to input_vector, which takes an arbitrary container
+    // that acts vector-like.
 
-    // Append / Size / GetAt / IndexOf
+    enum class VectorKind
     {
-        unique_thread t([&]
+        IVector,
+        IObservableVector,
+        IObservableVectorAsInspectable,
+    };
+
+    // Change the next line to "#if 0" to use a single-threaded vector and confirm that every test fails.
+    // The scenarios use "CHECK" instead of "REQUIRE" so that they continue running even on failure.
+    // That way, you can just step through the entire test and confirm that something bad happens
+    // at each scenario.
+#if 1
+    template<typename T, typename Container>
+    using custom_threaded_vector = winrt::impl::multi_threaded_vector<T, Container>;
+
+    template<typename Container>
+    using custom_inspectable_observable_vector = winrt::impl::multi_threaded_inspectable_observable_vector<Container>;
+
+    template<typename T, typename Container>
+    using custom_convertible_observable_vector = winrt::impl::multi_threaded_convertible_observable_vector<T, Container>;
+
+#else
+    template<typename T, typename Container>
+    using custom_threaded_vector = winrt::impl::input_vector<T, Container>;
+
+    template<typename Container>
+    using custom_inspectable_observable_vector = winrt::impl::inspectable_observable_vector<Container>;
+
+    template<typename T, typename Container>
+    using custom_convertible_observable_vector = winrt::impl::convertible_observable_vector<T, Container>;
+#endif
+
+    template<VectorKind kind, typename Container>
+    auto make_threaded_vector(Container&& values)
+    {
+        using T = typename Container::value_type;
+        if constexpr (kind == VectorKind::IVector)
         {
-            for (int i = 0; i < final_size; ++i)
+            return static_cast<IVector<T>>(winrt::make<custom_threaded_vector<T, Container>>(std::move(values)));
+        }
+        else
+        {
+            IObservableVector<T> vector;
+            if constexpr (std::is_same_v<T, Windows::Foundation::IInspectable>)
             {
-                v.Append(conditional_box<T>(i));
-                std::this_thread::yield();
+                vector = make<custom_inspectable_observable_vector<Container>>(std::move(values));
+            }
+            else
+            {
+                vector = make<custom_convertible_observable_vector<T, Container>>(std::move(values));
+            }
+            if constexpr (kind == VectorKind::IObservableVector)
+            {
+                return vector;
+            }
+            else
+            {
+                return vector.as<IObservableVector<IInspectable>>();
+            }
+        }
+    }
+
+#pragma region vector wrapper
+    // Add more wrapper methods as necessary.
+    template<typename T, typename Allocator = std::allocator<T>>
+    struct concurrency_checked_vector : private std::vector<T, Allocator>, concurrency_guard
+    {
+        using inner = typename concurrency_checked_vector::vector;
+        using value_type = typename inner::value_type;
+        using allocator_type = typename inner::allocator_type;
+        using size_type = typename inner::size_type;
+        using difference_type = typename inner::difference_type;
+        using reference = typename inner::reference;
+        using const_reference = typename inner::const_reference;
+        using iterator = concurrency_checked_random_access_iterator<concurrency_checked_vector, typename inner::iterator>;
+        using const_iterator = concurrency_checked_random_access_iterator<concurrency_checked_vector, typename inner::const_iterator, typename inner::iterator>;
+        using reverse_iterator = std::reverse_iterator<iterator>;
+        using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+
+        static_assert(!std::is_same_v<T, bool>, "Has never been tested with bool.");
+
+        concurrency_checked_vector() = default;
+        concurrency_checked_vector(concurrency_checked_vector&& other) = default;
+
+        iterator begin()
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            return { this, inner::begin() };
+        }
+
+        const_iterator begin() const
+        {
+            auto guard = concurrency_guard::lock_const();
+            return { this, inner::begin() };
+        }
+
+        iterator end()
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            return { this, inner::end() };
+        }
+
+        const_iterator end() const
+        {
+            auto guard = concurrency_guard::lock_const();
+            return { this, inner::end() };
+        }
+
+        bool empty() const
+        {
+            auto guard = concurrency_guard::lock_const();
+            return inner::empty();
+        }
+
+        reference back()
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            return inner::back();
+        }
+
+        const_reference back() const
+        {
+            auto guard = concurrency_guard::lock_const();
+            return inner::back();
+        }
+
+        void pop_back()
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            inner::pop_back();
+        }
+
+        void push_back(T const& value)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            concurrency_guard::call_hook(collection_action::push_back);
+            inner::push_back(value);
+        }
+
+        void push_back(T&& value)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            concurrency_guard::call_hook(collection_action::push_back);
+            inner::push_back(std::move(value));
+        }
+
+        size_type size() const
+        {
+            auto guard = concurrency_guard::lock_const();
+            return inner::size();
+        }
+
+        iterator erase(const_iterator pos)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            concurrency_guard::call_hook(collection_action::erase);
+            return { this, inner::erase(pos) };
+        }
+
+        iterator insert(const_iterator pos, T const& value)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            concurrency_guard::call_hook(collection_action::insert);
+            return { this, inner::insert(pos, value) };
+        }
+
+        iterator insert(const_iterator pos, T&& value)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            concurrency_guard::call_hook(collection_action::insert);
+            return { this, inner::insert(pos, std::move(value)) };
+        }
+
+        reference operator[](size_type pos)
+        {
+            return at(pos);
+        }
+
+        reference at(size_type pos)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            concurrency_guard::call_hook(collection_action::at);
+            return inner::at(pos);
+        }
+
+        void clear()
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            return inner::clear();
+        }
+
+        template<typename InputIt>
+        void assign(InputIt first, InputIt last)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            return inner::assign(first, last);
+        }
+
+        void reserve(size_type capacity) {
+            auto guard = concurrency_guard::lock_nonconst();
+            return inner::reserve(capacity);
+        }
+
+        void swap(concurrency_checked_vector& other)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            inner::swap(other);
+        }
+
+        template<typename Iterator>
+        decltype(auto) dereference_iterator(Iterator const& it) const
+        {
+            auto guard = concurrency_guard::lock_const();
+            concurrency_guard::call_hook(collection_action::at);
+            return *it;
+        }
+
+        operator array_view<T>()
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            return { inner::data(), static_cast<uint32_t>(inner::size()) };
+        }
+
+        operator array_view<T const>() const
+        {
+            auto guard = concurrency_guard::lock_const();
+            return { inner::data(), static_cast<uint32_t>(inner::size()) };
+        }
+    };
+#pragma endregion
+
+    template<typename T, VectorKind kind>
+    void test_vector_concurrency()
+    {
+        auto raw = concurrency_checked_vector<T>();
+        auto hook = raw.hook;
+
+        // Convert the raw_vector into the desired Windows Runtime vector interface.
+        auto v = make_threaded_vector<kind>(std::move(raw));
+
+        auto race = [&](collection_action action, auto&& background, auto&& foreground)
+        {
+            // Vector initial contents are { 1, 2, 3 }.
+            v.ReplaceAll({ conditional_box<T>(1), conditional_box<T>(2), conditional_box<T>(3) });
+            hook->race(action, background, foreground);
+        };
+
+        // Verify that Append does not run concurrently with GetAt().
+        race(collection_action::push_back, [&]
+        {
+            v.Append(conditional_box<T>(42));
+        }, [&]
+        {
+            CHECK(conditional_unbox<T>(v.GetAt(3)) == 42);
+        });
+
+        // Verify that Append does not run concurrently with Size().
+        race(collection_action::push_back, [&]
+        {
+            v.Append(conditional_box<T>(42));
+        }, [&]
+        {
+            CHECK(v.Size() == 4);
+        });
+
+        // Verify that Append does not run concurrently with IndexOf().
+        race(collection_action::push_back, [&]
+        {
+            v.Append(conditional_box<T>(42));
+        }, [&]
+        {
+            uint32_t index;
+            bool found = v.IndexOf(conditional_box<T>(3), index);
+            if constexpr (std::is_same_v<T, int>)
+            {
+                CHECK(found);
+                CHECK(index == 2);
+            }
+            else
+            {
+                // Boxed integers do not compare equal even if the values are the same.
+                CHECK(!found);
             }
         });
 
-        while (true)
+        // Verify that Append does not run concurrently with another Append().
+        race(collection_action::push_back, [&]
         {
-            auto beginSize = v.Size();
-            int i = 0;
-            for (; i < final_size; ++i)
-            {
-                if (static_cast<uint32_t>(i) >= v.Size())
-                {
-                    check_bool(static_cast<uint32_t>(i) >= beginSize);
-                    break;
-                }
-
-                check_bool(conditional_unbox(v.GetAt(i)) == i);
-
-                if constexpr (std::is_same_v<T, int>)
-                {
-                    uint32_t index;
-                    check_bool(v.IndexOf(i, index));
-                    check_bool(index == static_cast<uint32_t>(i));
-                }
-            }
-
-            if (i == final_size)
-            {
-                break;
-            }
-            check_bool(beginSize != final_size);
-        }
-    }
-
-    // InsertAt / Size / GetMany
-    {
-        v.Clear();
-        unique_thread t([&]
+            v.Append(conditional_box<T>(42));
+        }, [&]
         {
-            for (int i = 0; i < final_size; ++i)
-            {
-                v.InsertAt(0, conditional_box<T>(i));
-                std::this_thread::yield();
-            }
+            v.Append(conditional_box<T>(43));
         });
 
-        T vals[100];
-        while (v.Size() < final_size)
+        // Verify that Append does not run concurrently with ReplaceAll().
+        race(collection_action::push_back, [&]
         {
-            auto len = v.GetMany(0, vals);
-            for (uint32_t i = 1; i < len; ++i)
-            {
-                check_bool(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
-            }
-        }
-    }
-
-    // RemoveAt / Size / GetMany
-    {
-        unique_thread t([&]
+            v.Append(conditional_box<T>(42));
+        }, [&]
         {
-            while (v.Size() != 0)
-            {
-                v.RemoveAt(0);
-                std::this_thread::yield();
-            }
+            v.ReplaceAll({ conditional_box<T>(1), conditional_box<T>(2) });
         });
 
-        T vals[100];
-        while (v.Size() > 0)
+        // Verify that Append does not run concurrently with GetMany().
+        race(collection_action::push_back, [&]
         {
-            auto len = v.GetMany(0, vals);
-            for (uint32_t i = 1; i < len; ++i)
-            {
-                check_bool(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) - 1));
-            }
-        }
-    }
-
-    // SetAt / GetMany
-    {
-        T vals[100];
-        for (int i = 0; i < std::size(vals); ++i)
+            v.Append(conditional_box<T>(42));
+        }, [&]
         {
-            v.Append(conditional_box<T>(i));
-        }
-
-        static constexpr int iterations = 1000;
-        unique_thread t([&]
-        {
-            for (int i = 1; i <= iterations; ++i)
-            {
-                for (int j = 0; j < std::size(vals); ++j)
-                {
-                    v.SetAt(j, conditional_box<T>(j + i));
-                }
-                std::this_thread::yield();
-            }
+            T values[10];
+            CHECK(v.GetMany(0, values) == 4);
+            CHECK(conditional_unbox<T>(values[0]) == 1);
+            CHECK(conditional_unbox<T>(values[1]) == 2);
+            CHECK(conditional_unbox<T>(values[2]) == 3);
+            CHECK(conditional_unbox<T>(values[3]) == 42);
         });
 
-        while (conditional_unbox(v.GetAt(0)) != iterations)
+        // Verify that InsertAt does not run concurrently with GetAt().
+        race(collection_action::insert, [&]
         {
-            v.GetMany(0, vals);
-            int jumps = 0;
-            for (int i = 1; i < std::size(vals); ++i)
-            {
-                auto prev = conditional_unbox(vals[i - 1]);
-                auto curr = conditional_unbox(vals[i]);
-                if (prev == curr)
-                {
-                    ++jumps;
-                }
-                else
-                {
-                    check_bool(curr == (prev + 1));
-                }
-            }
-            check_bool(jumps <= 1);
-        }
-    }
-
-    // Append / ReplaceAll / GetMany
-    {
-        static constexpr int size = 10;
-        v.Clear();
-        for (int i = 0; i < size; ++i)
+            v.InsertAt(1, conditional_box<T>(42));
+        }, [&]
         {
-            v.Append(conditional_box<T>(i));
-        }
-
-        static constexpr int iterations = 1000;
-        unique_thread t([&]
-        {
-            T newVals[size];
-            for (int i = 1; i <= iterations; ++i)
-            {
-                for (int j = 0; j < size; ++j)
-                {
-                    newVals[j] = conditional_box<T>(i + j);
-                }
-                v.ReplaceAll(newVals);
-            }
+            CHECK(conditional_unbox<T>(v.GetAt(1)) == 42);
         });
 
-        T vals[size];
-        do
+        // Verify that InsertAt does not run concurrently with Size().
+        race(collection_action::insert, [&]
         {
-            auto len = v.GetMany(0, vals);
-            check_bool(len == size);
-            for (int i = 1; i < size; ++i)
+            v.InsertAt(1, conditional_box<T>(42));
+        }, [&]
+        {
+            CHECK(v.Size() == 4);
+        });
+
+        // Verify that InsertAt does not run concurrently with GetMany().
+        race(collection_action::insert, [&]
+        {
+            v.InsertAt(1, conditional_box<T>(42));
+        }, [&]
+        {
+            T values[10];
+            CHECK(v.GetMany(0, values) == 4);
+            CHECK(conditional_unbox<T>(values[0]) == 1);
+            CHECK(conditional_unbox<T>(values[1]) == 42);
+            CHECK(conditional_unbox<T>(values[2]) == 2);
+            CHECK(conditional_unbox<T>(values[3]) == 3);
+        });
+
+        // Verify that RemoveAt does not run concurrently with GetAt().
+        race(collection_action::erase, [&]
+        {
+            v.RemoveAt(1);
+        }, [&]
+        {
+            CHECK(conditional_unbox<T>(v.GetAt(1)) == 3);
+        });
+
+        // Verify that RemoveAt does not run concurrently with Size().
+        race(collection_action::erase, [&]
+        {
+            v.RemoveAt(1);
+        }, [&]
+        {
+            CHECK(v.Size() == 2);
+        });
+
+        // Verify that SetAt does not run concurrently with GetAt().
+        race(collection_action::at, [&]
+        {
+            v.SetAt(1, conditional_box<T>(42));
+        }, [&]
+        {
+            CHECK(conditional_unbox<T>(v.GetAt(1)) == 42);
+        });
+
+        // Iterator invalidation tests are a little different because we perform
+        // the mutation from the foreground thread after the read operation
+        // has begun on the background thread.
+        {
+            // Verify that iterator invalidation doesn't race against
+            // iterator use.
+            decltype(v.First()) it;
+            T t;
+            race(collection_action::at, [&]
             {
-                check_bool(conditional_unbox(vals[i]) == (conditional_unbox(vals[i - 1]) + 1));
-            }
-        }
-        while (conditional_unbox(vals[0]) != iterations);
-    }
-}
-
-template <typename T>
-static void test_iterator_invalidation(IVector<T> const& v)
-{
-    static constexpr uint32_t final_size = 100000;
-
-    // Append / Size / First / HasCurrent / Current / MoveNext
-    unique_thread t([&]
-    {
-        for (int i = 0; i < final_size; ++i)
-        {
-            v.Append(conditional_box<T>(i));
-            std::this_thread::yield();
-        }
-    });
-
-    int exceptionCount = 0;
-    bool forceExit = false;
-    while (!forceExit)
-    {
-        forceExit = v.Size() == final_size;
-        try
-        {
-            int expect = 0;
-            for (auto itr = v.First(); itr.HasCurrent(); itr.MoveNext())
+                it = v.First();
+                t = it.Current();
+            }, [&]
             {
-                auto val = conditional_unbox(itr.Current());
-                check_bool(val == expect++);
-            }
-
-            if (expect == final_size)
-            {
-                break;
-            }
-        }
-        catch (hresult_changed_state const&)
-        {
-            ++exceptionCount;
-        }
-
-        check_bool(!forceExit);
-    }
-
-    // Since the insert thread yields after each insertion, this should really be in the thousands
-    REQUIRE(exceptionCount > 50);
-}
-
-template <typename T>
-static void test_concurrent_iteration(IVector<T> const& v)
-{
-    // Large enough size that all threads should have enough time to spin up
-    static constexpr uint32_t size = 100000;
-
-    // Append / Current / MoveNext / HasCurrent
-    {
-        for (int i = 0; i < size; ++i)
-        {
-            v.Append(conditional_box<T>(i));
-        }
-
-        auto itr = v.First();
-        unique_thread threads[2];
-        int increments[std::size(threads)] = {};
-        for (int i = 0; i < std::size(threads); ++i)
-        {
-            threads[i] = unique_thread([&itr, &increments, i]
-            {
-                int last = -1;
-                while (true)
-                {
-                    try
-                    {
-                        // NOTE: Because there is no atomic "get and increment" function on IIterator, the best we can do is
-                        // validate that we're getting valid increasing values, e.g. as opposed to validating that we read
-                        // all unique values.
-                        auto val = conditional_unbox(itr.Current());
-                        check_bool(val > last);
-                        check_bool(val < size);
-                        last = val;
-                        if (!itr.MoveNext())
-                        {
-                            break;
-                        }
-
-                        // MoveNext is the only synchronized operation that has a predictable side effect we can validate
-                        ++increments[i];
-                    }
-                    catch (hresult_error const&)
-                    {
-                        // There's no "get if" function, so concurrent increment past the end is always possible...
-                        check_bool(!itr.HasCurrent());
-                        break;
-                    }
-                }
+                v.InsertAt(0, conditional_box<T>(42));
             });
+            CHECK(conditional_unbox<T>(t) == 1);
         }
 
-        for (auto& t : threads)
         {
-            t.join();
-        }
-
-        REQUIRE(!itr.HasCurrent());
-
-        auto totalIncrements = std::accumulate(std::begin(increments), std::end(increments), 0);
-        REQUIRE(totalIncrements == (size - 1));
-    }
-
-    // HasCurrent / GetMany
-    {
-        auto itr = v.First();
-        unique_thread threads[2];
-        int totals[std::size(threads)] = {};
-        for (int i = 0; i < std::size(threads); ++i)
-        {
-            threads[i] = unique_thread([&itr, &totals, i]()
+            // Verify that concurrent iteration works via GetMany(), which is atomic.
+            // (Current + MoveNext is non-atomic and can result in two threads
+            // both grabbing the same Current and then moving two steps forward.)
+            decltype(v.First()) it;
+            T t1[1];
+            T t2[1];
+            race(collection_action::at, [&]
             {
-                T vals[10];
-                while (itr.HasCurrent())
-                {
-                    // Unlike 'Current', 'GetMany' _is_ atomic in regards to read+increment
-                    auto len = itr.GetMany(vals);
-                    totals[i] += std::accumulate(vals, vals + len, 0, [](int curr, T const& next) { return curr + conditional_unbox(next); });
-                }
+                it = v.First();
+                CHECK(it.GetMany(t1) == 1);
+            }, [&]
+            {
+                CHECK(it.GetMany(t2) == 1);
             });
+            CHECK(conditional_unbox<T>(t1[0]) != conditional_unbox<T>(t2[0]));
         }
+    }
 
-        for (auto& t : threads)
+    void deadlock_test()
+    {
+        auto v = make_threaded_vector<VectorKind::IVector>(concurrency_checked_vector<IInspectable>());
+        v.Append(make<deadlock_object<IVector<IInspectable>>>(v));
+        auto task = [](auto v)-> IAsyncAction
         {
-            t.join();
-        }
-
-        // sum(i = 1 -> N){i} = N * (N + 1) / 2
-        auto total = std::accumulate(std::begin(totals), std::end(totals), 0);
-        REQUIRE(total == (size * (size - 1) / 2));
+            co_await resume_background();
+            v.RemoveAtEnd();
+        }(v);
+        auto status = task.wait_for(std::chrono::milliseconds(DEADLOCK_TIMEOUT));
+        REQUIRE(status == AsyncStatus::Completed);
     }
-}
-
-template <typename T>
-static void test_multi_writer(IVector<T> const& v)
-{
-    // Large enough that several threads should be executing concurrently
-    static constexpr uint32_t size = 10000;
-    static constexpr size_t threadCount = 8;
-
-    unique_thread threads[threadCount];
-    for (auto& t : threads)
-    {
-        t = unique_thread([&v]
-        {
-            for (int i = 0; i < size; ++i)
-            {
-                v.Append(conditional_box<T>(i));
-            }
-        });
-    }
-
-    for (auto& t : threads)
-    {
-        t.join();
-    }
-
-    REQUIRE(v.Size() == (size * threadCount));
-
-    // sum(i = 1 -> N){i} = N * (N + 1) / 2
-    auto sum = std::accumulate(begin(v), end(v), 0, [](int curr, T const& next) { return curr + conditional_unbox(next); });
-    REQUIRE(sum == ((threadCount * (size - 1) * size) / 2));
-}
-
-template <typename T>
-struct exclusive_vector :
-    vector_base<exclusive_vector<T>, T>,
-    implements<exclusive_vector<T>, IVector<T>, IVectorView<T>, IIterable<T>>
-{
-    std::vector<T> container;
-    mutable std::shared_mutex mutex;
-
-    auto& get_container() noexcept
-    {
-        return container;
-    }
-
-    auto& get_container() const noexcept
-    {
-        return container;
-    }
-
-    // It is not safe to recursively acquire an SRWLOCK, even in shared mode, however this is unchecked by the SRWLOCK
-    // implementation. Using a vector that only performs exclusive operations is the simplest way to validate that
-    // the implementation does not attempt to recursively acquire the mutex.
-    template <typename Func>
-    auto perform_exclusive(Func&& fn) const
-    {
-        // Exceptions are better than deadlocks...
-        REQUIRE(mutex.try_lock());
-        std::lock_guard guard(mutex, std::adopt_lock);
-        return fn();
-    }
-};
-
-struct vector_deadlock_object : implements<vector_deadlock_object, IReference<int>>
-{
-    int m_value;
-    exclusive_vector<IReference<int>>* m_vector;
-
-    vector_deadlock_object(int value, exclusive_vector<IReference<int>>* vector) :
-        m_value(value),
-        m_vector(vector)
-    {
-    }
-
-    ~vector_deadlock_object()
-    {
-        // NOTE: This will crash on failure, but that's better than actually deadlocking
-        REQUIRE(m_vector->mutex.try_lock());
-        m_vector->mutex.unlock();
-    }
-
-    int Value() const noexcept
-    {
-        return m_value;
-    }
-};
-
-static void deadlock_test()
-{
-    auto v = make_self<exclusive_vector<IReference<int>>>();
-
-    v->Append(make<vector_deadlock_object>(42, v.get()));
-    v->InsertAt(0, make<vector_deadlock_object>(8, v.get()));
-    REQUIRE(v->Size() == 2);
-    REQUIRE(v->GetAt(0).Value() == 8);
-    uint32_t index;
-    REQUIRE(v->IndexOf(42, index));
-    REQUIRE(index == 1);
-
-    v->ReplaceAll({ make<vector_deadlock_object>(1, v.get()), make<vector_deadlock_object>(2, v.get()), make<vector_deadlock_object>(3, v.get()) });
-    v->SetAt(1, make<vector_deadlock_object>(4, v.get()));
-    {
-        IReference<int> vals[5];
-        REQUIRE(v->GetMany(0, vals) == 3);
-        REQUIRE(vals[0].Value() == 1);
-        REQUIRE(vals[1].Value() == 4);
-        REQUIRE(vals[2].Value() == 3);
-    }
-
-    v->RemoveAt(1);
-    REQUIRE(v->GetAt(1).Value() == 3);
-    v->RemoveAtEnd();
-    REQUIRE(v->GetAt(0).Value() == 1);
-    v->Clear();
-    REQUIRE(v->Size() == 0);
-
-    v->ReplaceAll({ make<vector_deadlock_object>(1, v.get()), make<vector_deadlock_object>(2, v.get()), make<vector_deadlock_object>(3, v.get()) });
-    auto view = v->GetView();
-    REQUIRE(view.Size() == 3);
-    REQUIRE(view.GetAt(0).Value() == 1);
-
-    {
-        IReference<int> vals[5];
-        REQUIRE(view.GetMany(0, vals) == 3);
-        REQUIRE(vals[0].Value() == 1);
-        REQUIRE(vals[1].Value() == 2);
-        REQUIRE(vals[2].Value() == 3);
-    }
-
-    REQUIRE(view.IndexOf(2, index));
-    REQUIRE(index == 1);
-
-    auto itr = v->First();
-    REQUIRE(itr.HasCurrent());
-    REQUIRE(itr.Current().Value() == 1);
-    REQUIRE(itr.MoveNext());
-    REQUIRE(itr.MoveNext());
-    REQUIRE(!itr.MoveNext());
-    REQUIRE(!itr.HasCurrent());
 }
 
 TEST_CASE("multi_threaded_vector")
 {
-    test_single_reader_single_writer(multi_threaded_vector<int>());
-    test_single_reader_single_writer(multi_threaded_vector<IInspectable>());
-
-    test_iterator_invalidation(multi_threaded_vector<int>());
-    test_iterator_invalidation(multi_threaded_vector<IInspectable>());
-
-    test_concurrent_iteration(multi_threaded_vector<int>());
-    test_concurrent_iteration(multi_threaded_vector<IInspectable>());
-
-    test_multi_writer(multi_threaded_vector<int>());
-    test_multi_writer(multi_threaded_vector<IInspectable>());
+    test_vector_concurrency<int, VectorKind::IVector>();
+    test_vector_concurrency<IInspectable, VectorKind::IVector>();
 
     deadlock_test();
 }
 
 TEST_CASE("multi_threaded_observable_vector")
 {
-    test_single_reader_single_writer<int>(multi_threaded_observable_vector<int>());
-    test_single_reader_single_writer<IInspectable>(multi_threaded_observable_vector<IInspectable>());
-    test_single_reader_single_writer(multi_threaded_observable_vector<int>().as<IVector<IInspectable>>());
-
-    test_iterator_invalidation<int>(multi_threaded_observable_vector<int>());
-    test_iterator_invalidation<IInspectable>(multi_threaded_observable_vector<IInspectable>());
-    test_iterator_invalidation(multi_threaded_observable_vector<int>().as<IVector<IInspectable>>());
-
-    test_concurrent_iteration<int>(multi_threaded_observable_vector<int>());
-    test_concurrent_iteration<IInspectable>(multi_threaded_observable_vector<IInspectable>());
-    test_concurrent_iteration(multi_threaded_observable_vector<int>().as<IVector<IInspectable>>());
-
-    test_multi_writer<int>(multi_threaded_observable_vector<int>());
-    test_multi_writer<IInspectable>(multi_threaded_observable_vector<IInspectable>());
-    test_multi_writer(multi_threaded_observable_vector<int>().as<IVector<IInspectable>>());
+    test_vector_concurrency<int, VectorKind::IObservableVector>();
+    test_vector_concurrency<IInspectable, VectorKind::IObservableVector>();
+    test_vector_concurrency<IInspectable, VectorKind::IObservableVectorAsInspectable>();
 }
