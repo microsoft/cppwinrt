@@ -8,347 +8,330 @@
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+using namespace concurrent_collections;
 
 // Map correctness tests exist elsewhere. These tests are strictly geared toward testing multi threaded functionality
-//
-// Be careful with use of REQUIRE.
-//
-// 1. REQUIRE is not concurrency-safe. Don't call it from two threads simultaneously.
-// 2. The number of calls to REQUIRE should be the consistent in the face of nondeterminism.
-//    This makes the "(x assertions in y test cases)" consistent.
-//
-// If you need to check something from a background thread, or where the number
-// of iterations can vary from run to run, use winrt::check_bool, which still
-// fails the test but doesn't run afoul of REQUIRE's limitations.
 
-template <typename T>
-static void test_single_reader_single_writer(IMap<int, T> const& map)
+namespace
 {
-    static constexpr int final_size = 10000;
+    // We use a customized container that mimics std::map and which
+    // validates that C++ concurrency rules are observed.
+    // C++ rules for library types are that concurrent use of const methods is allowed,
+    // but no method call may be concurrent with a non-const method. (Const methods may
+    // be "shared", but non-const methods are "exclusive".)
+    //
+    // NOTE! As the C++/WinRT implementation changes, you may need to add additional members
+    // to our mock.
+    //
+    // The regular single_threaded_map and multi_threaded_map functions require std::map
+    // or std::unordered_map, so we bypass them and go directly to the underlying classes,
+    // which take any container that acts map-like.
 
-    // Insert / HasKey / Lookup
-    unique_thread t([&]
+    enum class MapKind
     {
-        for (int i = 0; i < final_size; ++i)
-        {
-            map.Insert(i, conditional_box<T>(i));
-            std::this_thread::yield();
-        }
-    });
+        IMap,
+        IObservableMap,
+    };
 
-    while (true)
+    // Change the next line to "#if 0" to use a single-threaded map and confirm that every test fails.
+    // The scenarios use "CHECK" instead of "REQUIRE" so that they continue running even on failure.
+    // That way, you can just step through the entire test in single-threaded mode and confirm that
+    // something bad happens at each scenario.
+#if 1
+    template<typename K, typename V, typename Container>
+    using custom_threaded_map = winrt::impl::multi_threaded_map<K, V, Container>;
+
+    template<typename K, typename V, typename Container>
+    using custom_observable_map = winrt::impl::multi_threaded_observable_map<K, V, Container>;
+#else
+    template<typename K, typename V, typename Container>
+    using custom_threaded_map = winrt::impl::input_map<K, V, Container>;
+
+    template<typename K, typename V, typename Container>
+    using custom_observable_map = winrt::impl::observable_map<K, V, Container>;
+#endif
+
+    template<MapKind kind, typename Container>
+    auto make_threaded_map(Container&& values)
     {
-        int i = 0;
-        auto beginSize = map.Size();
-        for (; i < final_size; ++i)
-        {
-            if (!map.HasKey(i))
-            {
-                check_bool(static_cast<uint32_t>(i) >= beginSize);
-                break;
-            }
+        using K = typename Container::key_type;
+        using V = typename Container::mapped_type;
 
-            check_bool(conditional_unbox(map.Lookup(i)) == i);
+        if constexpr (kind == MapKind::IMap)
+        {
+            return static_cast<IMap<K, V>>(winrt::make<custom_threaded_map<K, V, Container>>(std::move(values)));
         }
-
-        if (i == final_size)
+        else
         {
-            break;
+            return static_cast<IObservableVector<K, V>>(winrt::make<custom_observable_map<K, V, Container>>(std::move(values)));
         }
     }
-}
 
-template <typename T>
-static void test_iterator_invalidation(IMap<int, T> const& map)
-{
-    static constexpr int size = 10;
-
-    // Remove / Insert / First / HasCurrent / MoveNext / Current
-    for (int i = 0; i < size; ++i)
+#pragma region map wrapper
+    // Add more wrapper methods as necessary.
+    // (Turns out we don't use many features of std::map and std::unordered_map.)
+    template<typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<const K, V>>>
+    struct concurrency_checked_map : private std::map<K, V, Compare, Allocator>, concurrency_guard
     {
-        map.Insert(i, conditional_box<T>(i));
-    }
+        using inner = typename concurrency_checked_map::map;
+        using key_type = typename inner::key_type;
+        using mapped_type = typename inner::mapped_type;
+        using value_type = typename inner::value_type;
+        using size_type = typename inner::size_type;
+        using difference_type = typename inner::difference_type;
+        using allocator_type = typename inner::allocator_type;
+        using reference = typename inner::reference;
+        using const_reference = typename inner::const_reference;
+        using pointer = typename inner::pointer;
+        using const_pointer = typename inner::const_pointer;
+        using iterator = concurrency_checked_random_access_iterator<concurrency_checked_map, typename inner::iterator>;
+        using const_iterator = concurrency_checked_random_access_iterator<concurrency_checked_map, typename inner::const_iterator, typename inner::iterator>;
+        using reverse_iterator = std::reverse_iterator<iterator>;
+        using const_reverse_iterator = std::reverse_iterator<const_iterator>;
+        using node_type = typename inner::node_type;
 
-    volatile bool done = false;
-    unique_thread t([&]
+        mapped_type& operator[](const key_type& key)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            concurrency_guard::call_hook(collection_action::at);
+            return { this, inner::begin() };
+        }
+
+        iterator begin()
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            return { this, inner::begin() };
+        }
+
+        const_iterator begin() const
+        {
+            auto guard = concurrency_guard::lock_const();
+            return { this, inner::begin() };
+        }
+
+        iterator end()
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            return { this, inner::end() };
+        }
+
+        const_iterator end() const
+        {
+            auto guard = concurrency_guard::lock_const();
+            return { this, inner::end() };
+        }
+
+        size_type size() const
+        {
+            auto guard = concurrency_guard::lock_const();
+            return inner::size();
+        }
+
+        void clear()
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            return inner::clear();
+        }
+
+        void swap(concurrency_checked_map& other)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            inner::swap(other);
+        }
+
+        template<typename... Args>
+        std::pair<iterator, bool> emplace(Args&&... args)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            concurrency_guard::call_hook(collection_action::insert);
+            auto [it, inserted] = inner::emplace(std::forward<Args>(args)...);
+            return { { this, it }, inserted };
+        }
+
+        node_type extract(const_iterator pos)
+        {
+            auto guard = concurrency_guard::lock_nonconst();
+            concurrency_guard::call_hook(collection_action::erase);
+            return inner::extract(pos);
+        }
+
+        const_iterator find(const K& key) const
+        {
+            auto guard = concurrency_guard::lock_const();
+            concurrency_guard::call_hook(collection_action::lookup);
+            return { this, inner::find(key) };
+        }
+    };
+#pragma endregion
+
+    template<typename T, MapKind kind>
+    void test_map_concurrency()
     {
-        // Since the underlying storage is std::map, it's actually quite hard to hit UB that has an observable side
-        // effect, making it hard to have a meaningful test. The idea here is to remove and re-insert the "first"
-        // element in a tight loop so that enumeration is likely to hit a concurrent access that's actually meaningful.
-        // Even then, failures really only occur with a single threaded collection when building Debug
-        while (!done)
+        auto raw = concurrency_checked_map<int, T>();
+        auto hook = raw.hook;
+
+        // Convert the raw_map into the desired Windows Runtime map interface.
+        auto m = make_threaded_map<MapKind::IMap>(std::move(raw));
+
+        auto race = [&](collection_action action, auto&& background, auto&& foreground)
         {
-            map.Remove(0);
-            map.Insert(0, conditional_box<T>(0));
-        }
-    });
+            // Map initial contents are [1] = 1, [2] = 2.
+            m.Clear();
+            m.Insert(1, conditional_box<T>(1));
+            m.Insert(2, conditional_box<T>(2));
 
-    int exceptionCount = 0;
+            hook->race(action, background, foreground);
+        };
 
-    for (int i = 0; i < 10000; ++i)
-    {
-        try
+        // Verify that Insert does not run concurrently with HasKey().
+        race(collection_action::insert, [&]
         {
-            int count = 0;
-            for (auto itr = map.First(); itr.HasCurrent(); itr.MoveNext())
-            {
-                auto pair = itr.Current();
-                check_bool(pair.Key() == conditional_unbox(pair.Value()));
-                ++count;
-            }
-            check_bool(count >= (size - 1));
-            check_bool(count <= size);
-        }
-        catch (hresult_changed_state const&)
+            m.Insert(42, conditional_box<T>(42));
+        }, [&]
         {
-            ++exceptionCount;
-        }
-    }
-    done = true;
-
-    // In reality, this number should be quite large; much larger than the 50 validated here
-    REQUIRE(exceptionCount >= 50);
-}
-
-template <typename T>
-static void test_concurrent_iteration(IMap<int, T> const& map)
-{
-    static constexpr int size = 10000;
-
-    // Current / HasCurrent
-    {
-        for (int i = 0; i < size; ++i)
-        {
-            map.Insert(i, conditional_box<T>(i));
-        }
-
-        auto itr = map.First();
-        unique_thread threads[2];
-        int increments[std::size(threads)] = {};
-        for (int i = 0; i < std::size(threads); ++i)
-        {
-            threads[i] = unique_thread([&itr, &increments, i]
-            {
-                int last = -1;
-                while (true)
-                {
-                    try
-                    {
-                        // NOTE: Because there is no atomic "get and increment" function on IIterator, the best we can do is
-                        // validate that we're getting valid increasing values, e.g. as opposed to validating that we read
-                        // all unique values.
-                        auto val = itr.Current().Key();
-                        check_bool(val > last);
-                        check_bool(val < size);
-                        last = val;
-                        if (!itr.MoveNext())
-                        {
-                            break;
-                        }
-
-                        // MoveNext is the only synchronized operation that has a predictable side effect we can validate
-                        ++increments[i];
-                    }
-                    catch (hresult_error const&)
-                    {
-                        // There's no "get if" function, so concurrent increment past the end is always possible...
-                        check_bool(!itr.HasCurrent());
-                        break;
-                    }
-                }
-            });
-        }
-
-        for (auto& t : threads)
-        {
-            t.join();
-        }
-
-        REQUIRE(!itr.HasCurrent());
-
-        auto totalIncrements = std::accumulate(std::begin(increments), std::end(increments), 0);
-        REQUIRE(totalIncrements == (size - 1));
-    }
-
-    // HasCurrent / GetMany
-    {
-        auto itr = map.First();
-        unique_thread threads[2];
-        int totals[std::size(threads)] = {};
-        for (int i = 0; i < std::size(threads); ++i)
-        {
-            threads[i] = unique_thread([&itr, &totals, i]
-            {
-                IKeyValuePair<int, T> vals[10];
-                while (itr.HasCurrent())
-                {
-                    // Unlike 'Current', 'GetMany' _is_ atomic in regards to read+increment
-                    auto len = itr.GetMany(vals);
-                    totals[i] += std::accumulate(vals, vals + len, 0, [](int curr, auto const& next) { return curr + next.Key(); });
-                }
-            });
-        }
-
-        for (auto& t : threads)
-        {
-            t.join();
-        }
-
-        // sum(i = 1 -> N){i} = N * (N + 1) / 2
-        auto total = std::accumulate(std::begin(totals), std::end(totals), 0);
-        REQUIRE(total == (size * (size - 1) / 2));
-    }
-}
-
-template <typename T>
-static void test_multi_writer(IMap<int, T> const& map)
-{
-    // Large enough that several threads should be executing concurrently
-    static constexpr uint32_t size = 10000;
-    static constexpr size_t threadCount = 8;
-
-    // Insert
-    unique_thread threads[threadCount];
-    for (int i = 0; i < threadCount; ++i)
-    {
-        threads[i] = unique_thread([&map, i]
-        {
-            auto off = i * size;
-            for (int j = 0; j < size; ++j)
-            {
-                map.Insert(j + off, conditional_box<T>(j));
-            }
+            CHECK(m.HasKey(2));
         });
+
+        // Verify that Insert does not run concurrently with Lookup().
+        race(collection_action::insert, [&]
+        {
+            m.Insert(42, conditional_box<T>(42));
+        }, [&]
+        {
+            CHECK(conditional_unbox<T>(m.Lookup(2)));
+        });
+
+        // Verify that Insert does not run concurrently with another Insert().
+        race(collection_action::insert, [&]
+        {
+            m.Insert(43, conditional_box<T>(43));
+        }, [&]
+        {
+            m.Insert(43, conditional_box<T>(43));
+        });
+
+        // Iterator invalidation tests are a little different because we perform
+        // the mutation from the foreground thread after the read operation
+        // has begun on the background thread.
+        //
+        // Verify that iterator invalidation doesn't race against
+        // iterator use.
+        {
+            // Current vs Remove
+            IKeyValuePair<int, T> kvp;
+            race(collection_action::at, [&]
+            {
+                try
+                {
+                    kvp = m.First().Current();
+                }
+                catch (hresult_error const&)
+                {
+                }
+            }, [&]
+            {
+                m.Remove(1);
+            });
+            CHECK((kvp && conditional_unbox<T>(kvp.Value()) == 1));
+        }
+        {
+            // MoveNext vs Remove
+            bool moved = false;
+            race(collection_action::at, [&]
+            {
+                try
+                {
+                    moved = m.First().MoveNext();
+                }
+                catch (hresult_error const&)
+                {
+                }
+            }, [&]
+            {
+                m.Remove(1);
+            });
+            CHECK(moved);
+        }
+        {
+            // Current vs Insert
+            IKeyValuePair<int, T> kvp;
+            race(collection_action::at, [&]
+            {
+                try
+                {
+                    kvp = m.First().Current();
+                }
+                catch (hresult_error const&)
+                {
+                }
+            }, [&]
+            {
+                m.Insert(42, conditional_box<T>(42));
+            });
+            CHECK((kvp && conditional_unbox<T>(kvp.Value()) == 1));
+        }
+        {
+            // MoveNext vs Insert
+            bool moved = false;
+            race(collection_action::at, [&]
+            {
+                try
+                {
+                    moved = m.First().MoveNext();
+                }
+                catch (hresult_error const&)
+                {
+                }
+            }, [&]
+            {
+                m.Insert(42, conditional_box<T>(42));
+            });
+            CHECK(moved);
+        }
+
+        {
+            // Verify that concurrent iteration works via GetMany(), which is atomic.
+            // (Current + MoveNext is non-atomic and can result in two threads
+            // both grabbing the same Current and then moving two steps forward.)
+            decltype(m.First()) it;
+            IKeyValuePair<int, T> kvp1[1];
+            IKeyValuePair<int, T> kvp2[1];
+            race(collection_action::at, [&]
+            {
+                it = m.First();
+                CHECK(it.GetMany(kvp1) == 1);
+            }, [&]
+            {
+                CHECK(it.GetMany(kvp2) == 1);
+            });
+            CHECK(kvp1[0].Key() != kvp2[0].Key());
+        }
     }
 
-    for (auto& t : threads)
+    void deadlock_test()
     {
-        t.join();
+        auto m = make_threaded_map<MapKind::IMap>(concurrency_checked_map<int, IInspectable>());
+        m.Insert(0, make<deadlock_object<IMap<int, IInspectable>>>(m));
+        auto task = [](auto m)-> IAsyncAction
+        {
+            co_await resume_background();
+            m.Remove(0);
+        }(m);
+        auto status = task.wait_for(std::chrono::milliseconds(DEADLOCK_TIMEOUT));
+        REQUIRE(status == AsyncStatus::Completed);
     }
-
-    REQUIRE(map.Size() == (size * threadCount));
-
-    // Since we know that the underlying collection type is std::map, the keys should be ordered
-    int expect = 0;
-    for (auto&& pair : map)
-    {
-        REQUIRE(pair.Key() == expect++);
-    }
-}
-
-template <typename K, typename V>
-struct exclusive_map :
-    map_base<exclusive_map<K, V>, K, V>,
-    implements<exclusive_map<K, V>, IMap<K, V>, IMapView<K, V>, IIterable<IKeyValuePair<K, V>>>
-{
-    std::map<K, V> container;
-    mutable std::shared_mutex mutex;
-
-    auto& get_container() noexcept
-    {
-        return container;
-    }
-
-    auto& get_container() const noexcept
-    {
-        return container;
-    }
-
-    // It is not safe to recursively acquire an SRWLOCK, even in shared mode, however this is unchecked by the SRWLOCK
-    // implementation. Using a vector that only performs exclusive operations is the simplest way to validate that
-    // the implementation does not attempt to recursively acquire the mutex.
-    template <typename Func>
-    auto perform_exclusive(Func&& fn) const
-    {
-        // Exceptions are better than deadlocks...
-        REQUIRE(mutex.try_lock());
-        std::lock_guard guard(mutex, std::adopt_lock);
-        return fn();
-    }
-};
-
-struct map_deadlock_object : implements<map_deadlock_object, IReference<int>>
-{
-    int m_value;
-    exclusive_map<int, IReference<int>>* m_vector;
-
-    map_deadlock_object(int value, exclusive_map<int, IReference<int>>* vector) :
-        m_value(value),
-        m_vector(vector)
-    {
-    }
-
-    ~map_deadlock_object()
-    {
-        // NOTE: This will crash on failure, but that's better than actually deadlocking
-        REQUIRE(m_vector->mutex.try_lock());
-        m_vector->mutex.unlock();
-    }
-
-    int Value() const noexcept
-    {
-        return m_value;
-    }
-};
-
-static void deadlock_test()
-{
-    auto map = make_self<exclusive_map<int, IReference<int>>>();
-
-    map->Insert(0, make<map_deadlock_object>(0, map.get()));
-    map->Insert(1, make<map_deadlock_object>(1, map.get()));
-    REQUIRE(map->Size() == 2);
-    REQUIRE(map->HasKey(0));
-    REQUIRE(!map->HasKey(2));
-    REQUIRE(map->Lookup(0).Value() == 0);
-    map->Remove(0);
-    REQUIRE(map->Size() == 1);
-    map->Clear();
-    REQUIRE(map->Size() == 0);
-
-    map->Insert(0, make<map_deadlock_object>(0, map.get()));
-    map->Insert(1, make<map_deadlock_object>(1, map.get()));
-    auto view = map->GetView();
-    REQUIRE(view.Size() == 2);
-    REQUIRE(view.HasKey(0));
-    REQUIRE(view.Lookup(1).Value() == 1);
-
-    auto itr = map->First();
-    REQUIRE(itr.HasCurrent());
-    REQUIRE(itr.Current().Key() == 0);
-    REQUIRE(itr.MoveNext());
-    REQUIRE(!itr.MoveNext());
-    REQUIRE(!itr.HasCurrent());
 }
 
 TEST_CASE("multi_threaded_map")
 {
-    test_single_reader_single_writer(multi_threaded_map<int, int>());
-    test_single_reader_single_writer(multi_threaded_map<int, IInspectable>());
-
-    test_iterator_invalidation(multi_threaded_map<int, int>());
-    test_iterator_invalidation(multi_threaded_map<int, IInspectable>());
-
-    test_concurrent_iteration(multi_threaded_map<int, int>());
-    test_concurrent_iteration(multi_threaded_map<int, IInspectable>());
-
-    test_multi_writer(multi_threaded_map<int, int>());
-    test_multi_writer(multi_threaded_map<int, IInspectable>());
-
+    test_map_concurrency<int, MapKind::IMap>();
+    test_map_concurrency<IInspectable, MapKind::IMap>();
     deadlock_test();
 }
 
 TEST_CASE("multi_threaded_observable_map")
 {
-    test_single_reader_single_writer<int>(multi_threaded_observable_map<int, int>());
-    test_single_reader_single_writer<IInspectable>(multi_threaded_observable_map<int, IInspectable>());
 
-    test_iterator_invalidation<int>(multi_threaded_observable_map<int, int>());
-    test_iterator_invalidation<IInspectable>(multi_threaded_observable_map<int, IInspectable>());
-
-    test_concurrent_iteration<int>(multi_threaded_observable_map<int, int>());
-    test_concurrent_iteration<IInspectable>(multi_threaded_observable_map<int, IInspectable>());
-
-    test_multi_writer<int>(multi_threaded_observable_map<int, int>());
-    test_multi_writer<IInspectable>(multi_threaded_observable_map<int, IInspectable>());
+    test_map_concurrency<int, MapKind::IObservableMap>();
+    test_map_concurrency<IInspectable, MapKind::IObservableMap>();
 }
