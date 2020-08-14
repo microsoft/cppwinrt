@@ -6,9 +6,9 @@
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Storage::Streams;
+using namespace Windows::Data::Json;
 using namespace Windows::Devices::Sms;
 using namespace Windows::Security::Cryptography::Certificates;
-using namespace Windows::Web::Syndication;
 
 //
 // First some array tests using the projection (real-world examples).
@@ -33,14 +33,11 @@ static IAsyncOperation<IDataReader> CreateDataReader(std::initializer_list<byte>
 }
 
 //
-// This is a helper to create a syndication feed (collection) for testing arrays.
+// This is a helper to create a JSON array (collection) for testing arrays.
 //
-static IAsyncOperation<SyndicationFeed> GetSyndicationFeed()
+static JsonArray CreateJsonArray()
 {
-    Uri uri(L"https://moderncpp.com/feed/");
-    SyndicationClient client;
-
-    co_return co_await client.RetrieveFeedAsync(uri);
+    return JsonArray::Parse(LR"(["a","b","c","d","e"])");
 }
 
 //
@@ -154,23 +151,23 @@ TEST_CASE("array,EBO")
     //
     SECTION("collection")
     {
-        SyndicationFeed feed = GetSyndicationFeed().get();
+        JsonArray array = CreateJsonArray();
 
         std::vector<hstring> expected;
 
-        for (auto item : feed.Items())
+        for (auto item : array)
         {
-            expected.emplace_back(item.Title().Text());
+            expected.emplace_back(item.GetString());
         }
 
-        std::vector<SyndicationItem> items(expected.size());
-        REQUIRE(expected.size() == feed.Items().GetMany(0, items));
+        std::vector<IJsonValue> items(expected.size());
+        REQUIRE(expected.size() == array.GetMany(0, items));
 
         std::vector<hstring> actual;
 
         for (auto && item : items)
         {
-            actual.emplace_back(item.Title().Text());
+            actual.emplace_back(item.GetString());
         }
 
         REQUIRE(expected == actual);
@@ -181,23 +178,23 @@ TEST_CASE("array,EBO")
     //
     SECTION("iterator")
     {
-        SyndicationFeed feed = GetSyndicationFeed().get();
+        JsonArray array = CreateJsonArray();
 
         std::vector<hstring> expected;
 
-        for (auto item : feed.Items())
+        for (auto item : array)
         {
-            expected.emplace_back(item.Title().Text());
+            expected.emplace_back(item.GetString());
         }
 
-        std::vector<SyndicationItem> items(expected.size());
-        REQUIRE(expected.size() == feed.Items().First().GetMany(items));
+        std::vector<IJsonValue> items(expected.size());
+        REQUIRE(expected.size() == array.First().GetMany(items));
 
         std::vector<hstring> actual;
 
         for (auto && item : items)
         {
-            actual.emplace_back(item.Title().Text());
+            actual.emplace_back(item.GetString());
         }
 
         REQUIRE(expected == actual);
