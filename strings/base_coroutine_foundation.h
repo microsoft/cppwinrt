@@ -243,6 +243,13 @@ WINRT_EXPORT namespace winrt
     {
         return{};
     }
+
+    struct get_error_token_t {};
+
+    inline get_error_token_t get_error_token() noexcept
+    {
+        return{};
+    }
 }
 
 namespace winrt::impl
@@ -312,6 +319,36 @@ namespace winrt::impl
 
     private:
 
+        Promise* m_promise;
+    };
+
+    template <typename Promise>
+    struct error_token
+    {
+        error_token(Promise* promise) noexcept : m_promise(promise)
+        {
+        }
+
+        bool await_ready() const noexcept
+        {
+            return true;
+        }
+
+        void await_suspend(std::experimental::coroutine_handle<>) const noexcept
+        {
+        }
+
+        error_token<Promise> await_resume() const noexcept
+        {
+            return *this;
+        }
+
+        bool set_noexcept(bool is_noexcept = true) const noexcept
+        {
+            return m_promise->set_noexcept(is_noexcept);
+        }
+
+    private:
         Promise* m_promise;
     };
 
@@ -512,6 +549,12 @@ namespace winrt::impl
         {
             slim_lock_guard const guard(m_lock);
             WINRT_ASSERT(m_status.load(std::memory_order_relaxed) == AsyncStatus::Started || m_status.load(std::memory_order_relaxed) == AsyncStatus::Canceled);
+
+            if (m_is_noexcept)
+            {
+                winrt::terminate();
+            }
+
             m_exception = std::current_exception();
 
             try
@@ -549,6 +592,11 @@ namespace winrt::impl
             return{ static_cast<Derived*>(this) };
         }
 
+        error_token<Derived> await_transform(get_error_token_t) noexcept
+        {
+            return{ static_cast<Derived*>(this) };
+        }
+
         void cancellation_callback(winrt::delegate<>&& cancel) noexcept
         {
             {
@@ -565,6 +613,11 @@ namespace winrt::impl
             {
                 cancel();
             }
+        }
+
+        bool set_noexcept(bool is_noexcept) noexcept
+        {
+            return std::exchange(m_is_noexcept, is_noexcept);
         }
 
 #if defined(_DEBUG) && !defined(WINRT_NO_MAKE_DETECTION)
@@ -589,6 +642,7 @@ namespace winrt::impl
         winrt::delegate<> m_cancel;
         std::atomic<AsyncStatus> m_status;
         bool m_completed_assigned{ false };
+        bool m_is_noexcept{ false };
     };
 }
 

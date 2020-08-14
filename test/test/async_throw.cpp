@@ -36,6 +36,40 @@ namespace
         co_return 1;
     }
 
+    IAsyncAction NoexceptAction()
+    {
+        auto error = co_await get_error_token();
+        error.set_noexcept(); // we now terminate on unhandled exception
+
+        throw hresult_invalid_argument(L"Fatal");
+    }
+
+#pragma warning(push)
+#pragma warning(4611:disable) // interaction between setjmp and C++ object destruction is non-portable
+    IAsyncAction TestNoexceptAction()
+    {
+        static jmp_buf dont_terminate;
+
+        if (!setjmp(dont_terminate))
+        {
+            // Install a to_hresult hook to prevent us from reaching abort().
+            // setjmp/longjmp is horrible and bypasses destructors,
+            // but it's the only way we can wrest control back from C++/WinRT
+            // before it calls abort().
+            winrt_to_hresult_handler = [](void*) noexcept -> int32_t
+            {
+                longjmp(dont_terminate, 1);
+                // unreachable
+            };
+
+            co_await NoexceptAction();
+            REQUIRE(false);
+        }
+
+        winrt_to_hresult_handler = nullptr;
+    }
+#pragma warning(pop)
+
     template <typename F>
     void Check(F make)
     {
@@ -83,4 +117,5 @@ TEST_CASE("async_throw")
     Check(ActionWithProgress);
     Check(Operation);
     Check(OperationWithProgress);
+    TestNoexceptAction().get();
 }
