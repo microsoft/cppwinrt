@@ -36,40 +36,6 @@ namespace
         co_return 1;
     }
 
-    IAsyncAction NoexceptAction()
-    {
-        auto error = co_await get_error_token();
-        error.set_noexcept(); // we now terminate on unhandled exception
-
-        throw hresult_invalid_argument(L"Fatal");
-    }
-
-#pragma warning(push)
-#pragma warning(4611:disable) // interaction between setjmp and C++ object destruction is non-portable
-    IAsyncAction TestNoexceptAction()
-    {
-        static jmp_buf dont_terminate;
-
-        if (!setjmp(dont_terminate))
-        {
-            // Install a to_hresult hook to prevent us from reaching abort().
-            // setjmp/longjmp is horrible and bypasses destructors,
-            // but it's the only way we can wrest control back from C++/WinRT
-            // before it calls abort().
-            winrt_to_hresult_handler = [](void*) noexcept -> int32_t
-            {
-                longjmp(dont_terminate, 1);
-                // unreachable
-            };
-
-            co_await NoexceptAction();
-            REQUIRE(false);
-        }
-
-        winrt_to_hresult_handler = nullptr;
-    }
-#pragma warning(pop)
-
     template <typename F>
     void Check(F make)
     {
@@ -109,6 +75,64 @@ namespace
             REQUIRE(e.message() == L"Async");
         }
     }
+
+#pragma warning(push)
+#pragma warning(4611:disable) // interaction between setjmp and C++ object destruction is non-portable
+    IAsyncAction TestNoexceptAction()
+    {
+        static jmp_buf dont_terminate;
+
+        // Install a to_hresult hook to prevent us from reaching abort().
+        // setjmp/longjmp is horrible and bypasses destructors,
+        // but it's the only way we can wrest control back from C++/WinRT
+        // before it calls abort().
+        auto previous_handler = std::exchange(winrt_to_hresult_handler, [](void*) noexcept -> int32_t
+        {
+            longjmp(dont_terminate, 1);
+            // unreachable
+        });
+
+        if (!setjmp(dont_terminate))
+        {
+            auto NoexceptAction = []() -> IAsyncAction
+            {
+                auto policy = co_await get_coroutine_policy();
+                policy.terminate_on_unhandled_exception();
+
+                throw hresult_invalid_argument(L"Fatal");
+            };
+
+            co_await NoexceptAction();
+            REQUIRE(false);
+        }
+
+        winrt_to_hresult_handler = previous_handler;
+    }
+#pragma warning(pop)
+
+    IAsyncAction TestNoexceptCancel()
+    {
+        auto NoexceptCancel = []() -> IAsyncAction
+        {
+            auto policy = co_await get_coroutine_policy();
+            policy.terminate_on_unhandled_exception();
+
+            while (true)
+            {
+                co_await resume_after(10ms);
+            }            
+        };
+
+        auto action = NoexceptCancel();
+        action.Cancel(); // should not terminate
+        try
+        {
+            co_await action;
+        }
+        catch (hresult_canceled const&)
+        {
+        }
+    }
 }
 
 TEST_CASE("async_throw")
@@ -118,4 +142,5 @@ TEST_CASE("async_throw")
     Check(Operation);
     Check(OperationWithProgress);
     TestNoexceptAction().get();
+    TestNoexceptCancel().get();
 }

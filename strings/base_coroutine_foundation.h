@@ -244,9 +244,9 @@ WINRT_EXPORT namespace winrt
         return{};
     }
 
-    struct get_error_token_t {};
+    struct get_coroutine_policy_t {};
 
-    inline get_error_token_t get_error_token() noexcept
+    inline get_coroutine_policy_t get_coroutine_policy() noexcept
     {
         return{};
     }
@@ -323,9 +323,9 @@ namespace winrt::impl
     };
 
     template <typename Promise>
-    struct error_token
+    struct coroutine_policy
     {
-        error_token(Promise* promise) noexcept : m_promise(promise)
+        coroutine_policy(Promise* promise) noexcept : m_promise(promise)
         {
         }
 
@@ -338,14 +338,14 @@ namespace winrt::impl
         {
         }
 
-        error_token<Promise> await_resume() const noexcept
+        coroutine_policy await_resume() const noexcept
         {
             return *this;
         }
 
-        bool set_noexcept(bool is_noexcept = true) const noexcept
+        bool terminate_on_unhandled_exception(bool terminate = true) const noexcept
         {
-            return m_promise->set_noexcept(is_noexcept);
+            return m_promise->terminate_on_unhandled_exception(terminate);
         }
 
     private:
@@ -550,11 +550,6 @@ namespace winrt::impl
             slim_lock_guard const guard(m_lock);
             WINRT_ASSERT(m_status.load(std::memory_order_relaxed) == AsyncStatus::Started || m_status.load(std::memory_order_relaxed) == AsyncStatus::Canceled);
 
-            if (m_is_noexcept)
-            {
-                winrt::terminate();
-            }
-
             m_exception = std::current_exception();
 
             try
@@ -567,6 +562,11 @@ namespace winrt::impl
             }
             catch (...)
             {
+                if (m_terminate_on_unhandled_exception)
+                {
+                    winrt::terminate();
+                }
+
                 m_status.store(AsyncStatus::Error, std::memory_order_relaxed);
             }
         }
@@ -592,7 +592,7 @@ namespace winrt::impl
             return{ static_cast<Derived*>(this) };
         }
 
-        error_token<Derived> await_transform(get_error_token_t) noexcept
+        coroutine_policy<Derived> await_transform(get_coroutine_policy_t) noexcept
         {
             return{ static_cast<Derived*>(this) };
         }
@@ -615,9 +615,9 @@ namespace winrt::impl
             }
         }
 
-        bool set_noexcept(bool is_noexcept) noexcept
+        bool terminate_on_unhandled_exception(bool terminate) noexcept
         {
-            return std::exchange(m_is_noexcept, is_noexcept);
+            return std::exchange(m_terminate_on_unhandled_exception, terminate);
         }
 
 #if defined(_DEBUG) && !defined(WINRT_NO_MAKE_DETECTION)
@@ -642,7 +642,7 @@ namespace winrt::impl
         winrt::delegate<> m_cancel;
         std::atomic<AsyncStatus> m_status;
         bool m_completed_assigned{ false };
-        bool m_is_noexcept{ false };
+        bool m_terminate_on_unhandled_exception{ false };
     };
 }
 
