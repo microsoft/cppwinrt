@@ -347,6 +347,7 @@ struct property_type
 };
 
 void GetInterfaceData(
+    Microsoft::VisualStudio::Debugger::DkmProcess* process,
     coded_index<TypeDefOrRef> index,
     _Inout_ std::vector<PropertyData>& propertyData,
     _Out_ bool& isStringable
@@ -370,7 +371,7 @@ void GetInterfaceData(
             continue;
         }
 
-        PropertyCategory propCategory;
+        std::optional<PropertyCategory> propCategory;
         std::wstring propAbiType;
         std::wstring propDisplayType;
 
@@ -378,12 +379,17 @@ void GetInterfaceData(
         std::visit(overloaded{
             [&](ElementType type)
             {
-                if ((type < ElementType::Boolean) || (type > ElementType::String))
+                if ((ElementType::Boolean <= type) && (type <= ElementType::String))
                 {
-                    return;
+                    propCategory = (PropertyCategory)(static_cast<std::underlying_type<ElementType>::type>(type) -
+                        static_cast<std::underlying_type<ElementType>::type>(ElementType::Boolean));
                 }
-                propCategory = (PropertyCategory)(static_cast<std::underlying_type<ElementType>::type>(type) -
-                    static_cast<std::underlying_type<ElementType>::type>(ElementType::Boolean));
+                else if (type == ElementType::Object)
+                {
+                    //propDisplayType = L"winrt::Windows::Foundation::IInspectable";
+                    //propCategory = PropertyCategory::Class;
+                    //propAbiType = L"winrt::impl::inspectable_abi*";
+                }
             },
             [&](coded_index<TypeDefOrRef> const& index)
             {
@@ -443,21 +449,24 @@ void GetInterfaceData(
             },
             [&](GenericTypeIndex /*var*/)
             {
-                throw_invalid("Generics are not yet supported");
+                    NatvisDiagnostic(process, L"Generics not yet supported", NatvisDiagnosticLevel::Warning);
             },
             [&](GenericMethodTypeIndex /*var*/)
             {
-                throw_invalid("Generic methods not supported.");
+                    NatvisDiagnostic(process, L"Generics not yet supported", NatvisDiagnosticLevel::Warning);
             },
             [&](GenericTypeInstSig const& /*type*/)
             {
-                throw_invalid("Generics are not yet supported");
+                    NatvisDiagnostic(process, L"Generics not yet supported", NatvisDiagnosticLevel::Warning);
             }
         }, retType.Type().Type());
 
-        auto propName = method.Name().substr(4);
-        std::wstring propDisplayName(propName.cbegin(), propName.cend());
-        propertyData.push_back({ propIid, propIndex, propCategory, propAbiType, propDisplayType, propDisplayName });
+        if (propCategory)
+        {
+            auto propName = method.Name().substr(4);
+            std::wstring propDisplayName(propName.cbegin(), propName.cend());
+            propertyData.push_back({ propIid, propIndex, *propCategory, propAbiType, propDisplayType, propDisplayName });
+        }
     }
 }
 
@@ -498,7 +507,7 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
         auto impls = type.InterfaceImpl();
         for (auto&& impl : impls)
         {
-            GetInterfaceData(impl.Interface(), m_propertyData, m_isStringable);
+            GetInterfaceData(process, impl.Interface(), m_propertyData, m_isStringable);
         }
     }
     else if (get_category(type) == category::interface_type)
@@ -506,9 +515,9 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
         auto impls = type.InterfaceImpl();
         for (auto&& impl : impls)
         {
-            GetInterfaceData(impl.Interface(), m_propertyData, m_isStringable);
+            GetInterfaceData(process, impl.Interface(), m_propertyData, m_isStringable);
         }
-        GetInterfaceData(type.coded_index<TypeDefOrRef>(), m_propertyData, m_isStringable);
+        GetInterfaceData(process, type.coded_index<TypeDefOrRef>(), m_propertyData, m_isStringable);
     }
 }
 
