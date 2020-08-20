@@ -583,22 +583,25 @@ HRESULT object_visualizer::GetChildren(
 )
 {
     // Ignore metadata errors to ensure that Raw Data is always available
-    try
+    if (m_propertyData.empty())
     {
-        GetPropertyData();
-    }
-    catch (std::invalid_argument const& e)
-    {
-        std::string_view message(e.what());
-        NatvisDiagnostic(m_pVisualizedExpression.get(),
-            std::wstring(L"Exception in object_visualizer::GetPropertyData: ") +
+        try
+        {
+            GetPropertyData();
+        }
+        catch (std::invalid_argument const& e)
+        {
+            std::string_view message(e.what());
+            NatvisDiagnostic(m_pVisualizedExpression.get(),
+                std::wstring(L"Exception in object_visualizer::GetPropertyData: ") +
                 std::wstring(message.begin(), message.end()),
-            NatvisDiagnosticLevel::Error, to_hresult());
-    }
-    catch (...)
-    {
-        NatvisDiagnostic(m_pVisualizedExpression.get(),
-            L"Exception in object_visualizer::GetPropertyData", NatvisDiagnosticLevel::Error, to_hresult());
+                NatvisDiagnosticLevel::Error, to_hresult());
+        }
+        catch (...)
+        {
+            NatvisDiagnostic(m_pVisualizedExpression.get(),
+                L"Exception in object_visualizer::GetPropertyData", NatvisDiagnosticLevel::Error, to_hresult());
+        }
     }
 
     com_ptr<DkmEvaluationResultEnumContext> pEnumContext;
