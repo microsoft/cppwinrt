@@ -107,115 +107,41 @@ namespace winrt::impl
     }
 
     template <typename T>
-    class has_awaitable_member
+    class awaiter_finder
     {
-        template <typename U, typename = decltype(std::declval<U>().await_ready())> static constexpr bool get_value(int) { return true; }
-        template <typename> static constexpr bool get_value(...) { return false; }
+        template <typename U, typename = decltype(std::declval<U>().await_ready())> static constexpr bool find_awaitable_member(int) { return true; }
+        template <typename> static constexpr bool find_awaitable_member(...) { return false; }
+
+        template <typename U, typename = decltype(std::declval<U>().operator co_await())> static constexpr bool find_co_await_member(int) { return true; }
+        template <typename> static constexpr bool find_co_await_member(...) { return false; }
+
+        template <typename U, typename = decltype(operator co_await(std::declval<U>()))> static constexpr bool find_co_await_free(int) { return true; }
+        template <typename> static constexpr bool find_co_await_free(...) { return false; }
 
     public:
 
-        static constexpr bool value = get_value<T>(0);
+        static constexpr bool has_awaitable_member = find_awaitable_member<T>(0);
+        static constexpr bool has_co_await_member = find_co_await_member<T&&>(0);
+        static constexpr bool has_co_await_free = find_co_await_free<T&&>(0);
     };
 
     template <typename T>
-    class has_awaitable_free
+    decltype(auto) get_awaiter(T&& value) noexcept
     {
-        template <typename U, typename = decltype(await_ready(std::declval<U>()))> static constexpr bool get_value(int) { return true; }
-        template <typename> static constexpr bool get_value(...) { return false; }
-
-    public:
-
-        static constexpr bool value = get_value<T>(0);
-    };
-
-    template <typename T>
-    struct free_await_adapter_impl
-    {
-        T&& awaitable;
-
-        bool ready()
+        if constexpr (awaiter_finder<T>::has_co_await_member)
         {
-            return await_ready(awaitable);
+            static_assert(!awaiter_finder<T>::has_co_await_free, "Ambiguous operator co_await (as both member and free function).");
+            return static_cast<T&&>(value).operator co_await();
         }
-
-        template <typename U>
-        auto suspend(std::experimental::coroutine_handle<U> handle)
+        else if constexpr (awaiter_finder<T>::has_co_await_free)
         {
-            return await_suspend(awaitable, handle);
+            return operator co_await(static_cast<T&&>(value));
         }
-
-        auto resume()
+        else
         {
-            return await_resume(awaitable);
+            static_assert(awaiter_finder<T>::has_awaitable_member, "Not an awaitable type");
+            return static_cast<T&&>(value);
         }
-    };
-
-    template <typename T>
-    struct free_await_adapter
-    {
-        T&& awaitable;
-
-        bool await_ready()
-        {
-            return free_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.ready();
-        }
-
-        template <typename U>
-        auto await_suspend(std::experimental::coroutine_handle<U> handle)
-        {
-            return free_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.suspend(handle);
-        }
-
-        decltype(auto) await_resume()
-        {
-            return free_await_adapter_impl<T>{ static_cast<T&&>(awaitable) }.resume();
-        }
-    };
-
-    template <typename T>
-    struct member_await_adapter
-    {
-        T&& awaitable;
-
-        bool await_ready()
-        {
-            return awaitable.await_ready();
-        }
-
-        template <typename U>
-        auto await_suspend(std::experimental::coroutine_handle<U> handle)
-        {
-            return awaitable.await_suspend(handle);
-        }
-
-        decltype(auto) await_resume()
-        {
-            return awaitable.await_resume();
-        }
-    };
-
-    template <typename T>
-    auto get_awaiter(T&& value) noexcept -> decltype(static_cast<T&&>(value).operator co_await())
-    {
-        return static_cast<T&&>(value).operator co_await();
-    }
-
-    template <typename T>
-    auto get_awaiter(T&& value) noexcept -> decltype(operator co_await(static_cast<T&&>(value)))
-    {
-        return operator co_await(static_cast<T&&>(value));
-    }
-
-    template <typename T, std::enable_if_t<has_awaitable_member<T>::value, int> = 0>
-    auto get_awaiter(T&& value) noexcept
-    {
-        return member_await_adapter<T>{ static_cast<T&&>(value) };
-    }
-
-    template <typename T, std::enable_if_t<has_awaitable_free<T>::value, int> = 0>
-    auto get_awaiter(T&& value) noexcept
-    {
-        return free_await_adapter<T>{ static_cast<T&&>(value) };
     }
 
     template <typename T>

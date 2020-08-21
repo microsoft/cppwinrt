@@ -110,3 +110,33 @@ TEST_CASE("test_single_threaded_vector")
     test_vector(single_threaded_vector<int>());
     test_vector(single_threaded_observable_vector<int>());
 }
+
+TEST_CASE("single_threaded_vector of bool")
+{
+    auto values = single_threaded_vector<bool>();
+    values.Append(true);
+    values.ReplaceAll({ false, true, false, true });
+    values.InsertAt(1, false);
+    values.SetAt(2, false);
+    REQUIRE(values.Size() == 5);
+    REQUIRE(!values.GetAt(0));
+    uint32_t index;
+    REQUIRE((values.IndexOf(true, index) && (index == 4)));
+
+    auto itr = values.First();
+    REQUIRE(itr.HasCurrent());
+    REQUIRE(!itr.Current());
+    REQUIRE(itr.MoveNext());
+    REQUIRE(itr.MoveNext());
+    bool temp[5];
+    REQUIRE(itr.GetMany(temp) == 3);
+    REQUIRE((!temp[0] && !temp[1] && temp[2]));
+
+    values.RemoveAt(0);
+    values.RemoveAtEnd();
+    REQUIRE(values.Size() == 3);
+    REQUIRE(values.GetMany(0, temp) == 3);
+    REQUIRE((!temp[0] && !temp[1] && !temp[2]));
+    values.Clear();
+    REQUIRE(values.Size() == 0);
+}

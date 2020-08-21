@@ -107,6 +107,56 @@ TEST_CASE("com_ptr, Windows::Foundation::IUnknown")
 }
 
 //
+// Test using com_ptr for things that aren't COM pointers.
+// com_ptr is duck-typed, so anything that has the required
+// methods will work.
+//
+TEST_CASE("com_ptr,duck typing")
+{
+    // Absolute minimum requirement is that it supports Release
+    // as a method. Does not need to be a virtual method.
+    // Does not have to actually release anything.
+    struct CanRelease
+    {
+        bool releaseCalled = false;
+        void Release() { releaseCalled = true; }
+    } canRelease;
+    com_ptr<CanRelease>{ &canRelease, take_ownership_from_abi };
+    REQUIRE(canRelease.releaseCalled);
+
+    // To be copyable, it also needs AddRef as a method.
+    // Again, doesn't need to be virtual or actually do anything.
+    struct CanAddRef : CanRelease
+    {
+        bool addrefCalled = false;
+        void AddRef() { addrefCalled = true; }
+    } canAddRef;
+    com_ptr<CanAddRef> addrefTest{ &canAddRef, take_ownership_from_abi };
+    auto copy = addrefTest;
+    REQUIRE(canAddRef.addrefCalled);
+
+    // To support as(), try_as(), it also needs QueryInterface
+    // as a method. Doesn't need to be virtual, but does need
+    // to follow QI semantics.
+    struct CanQI : CanAddRef
+    {
+        bool qiCalled = false;
+        int32_t QueryInterface(guid const&, void** result)
+        {
+            qiCalled = true;
+            *result = nullptr;
+            return E_NOINTERFACE;
+        }
+    } canQI;
+    com_ptr<CanQI> qiTest{ &canQI, take_ownership_from_abi };
+    REQUIRE_THROWS_AS(qiTest.as<int>(), hresult_no_interface);
+    REQUIRE(canQI.qiCalled);
+    canQI.qiCalled = false;
+    REQUIRE(qiTest.try_as<IAsyncInfo>() == nullptr);
+    REQUIRE(canQI.qiCalled);
+}
+
+//
 // Test the convertible constructor and convertible assignment.
 //
 TEST_CASE("convertible")

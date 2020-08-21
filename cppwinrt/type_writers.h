@@ -143,6 +143,27 @@ namespace cppwinrt
             writer* owner;
         };
 
+        template<typename T>
+        struct member_value_guard
+        {
+            writer* const owner;
+            T writer::* const member;
+            T const previous;
+            explicit member_value_guard(writer* arg, T writer::* ptr, T value) :
+                owner(arg), member(ptr), previous(std::exchange(owner->*member, value))
+            {
+            }
+
+            ~member_value_guard()
+            {
+                owner->*member = previous;
+            }
+
+            member_value_guard(member_value_guard const&) = delete;
+            member_value_guard& operator=(member_value_guard const&) = delete;
+
+        };
+
         void add_depends(TypeDef const& type)
         {
             auto ns = type.TypeNamespace();
@@ -182,6 +203,21 @@ namespace cppwinrt
 
             generic_param_stack.push_back(std::move(names));
             return generic_param_guard{ this };
+        }
+
+        [[nodiscard]] auto push_abi_types(bool value)
+        {
+            return member_value_guard(this, &writer::abi_types, value);
+        }
+
+        [[nodiscard]] auto push_async_types(bool value)
+        {
+            return member_value_guard(this, &writer::async_types, value);
+        }
+
+        [[nodiscard]] auto push_delegate_types(bool value)
+        {
+            return member_value_guard(this, &writer::delegate_types, value);
         }
 
         void write_value(int32_t value)

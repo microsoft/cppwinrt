@@ -5,93 +5,91 @@ using namespace Windows::Foundation;
 
 namespace
 {
-    struct free_awaitable
-    {
-    };
-    bool await_ready(free_awaitable)
-    {
-        return true;
-    }
-    void await_suspend(free_awaitable, std::experimental::coroutine_handle<>)
-    {
-    }
-    void await_resume(free_awaitable)
-    {
+    using std::experimental::suspend_never;
 
-    }
-
-    struct member_awaitable
+    // Never suspends.
+    // Allows copying, but asserts if you try.
+    struct suspend_never_but_assert_if_copied : suspend_never
     {
-        bool await_ready()
+        suspend_never_but_assert_if_copied() = default;
+        suspend_never_but_assert_if_copied(suspend_never_but_assert_if_copied const&)
         {
-            return true;
-        }
-        void await_suspend(std::experimental::coroutine_handle<>)
-        {
-        }
-        void await_resume()
-        {
-
+            REQUIRE(false);
         }
     };
 
-    struct free_operator_awaitable
+    // The bad_awaiter asserts if it ever gets used.
+    // Use it for ambiguous alternatives we don't want to pick.
+    struct bad_awaiter : suspend_never
+    {
+        void await_resume() const noexcept
+        {
+            REQUIRE(false);
+        }
+    };
+
+    // If the only awaitable is the member awaitable, then use it.
+    struct member_awaitable : suspend_never_but_assert_if_copied
+    {
+    };
+
+    // Should pick the free operator co_await over the member awaitable.
+    struct free_operator_awaitable : bad_awaiter
     {
     };
     auto operator co_await(free_operator_awaitable)
     {
-        struct awaitable
-        {
-            bool await_ready()
-            {
-                return true;
-            }
-            void await_suspend(std::experimental::coroutine_handle<>)
-            {
-            }
-            void await_resume()
-            {
-            }
-        };
-        return awaitable{};
+        return suspend_never_but_assert_if_copied{};
     }
 
-    struct member_operator_awaitable
+    // Should pick the member operator co_await over the member awaitable.
+    struct member_operator_awaitable : bad_awaiter
     {
         auto operator co_await()
         {
-            struct awaitable
-            {
-                bool await_ready()
-                {
-                    return true;
-                }
-                void await_suspend(std::experimental::coroutine_handle<>)
-                {
-                }
-                void await_resume()
-                {
-                }
-            };
-            return awaitable{};
+            return suspend_never_but_assert_if_copied{};
         }
     };
 
-    struct no_copy_awaitable
+    // Verify that we can await non-copyable objects.
+    struct no_copy_awaitable : suspend_never
     {
         no_copy_awaitable() = default;
         no_copy_awaitable(no_copy_awaitable const&) = delete;
+    };
 
-        bool await_ready()
+    // operator co_await takes precedence over member awaitable.
+    struct ambiguous_awaitable1 : bad_awaiter
+    {
+        auto operator co_await()
         {
-            return true;
+            return suspend_never_but_assert_if_copied{};
         }
-        void await_suspend(std::experimental::coroutine_handle<>)
-        {
-        }
-        void await_resume()
-        {
+    };
 
+    // This awaitable supports both member co_await
+    // and free co_await, and the free co_await is a
+    // better match if invoked on an lvalue. We don't try
+    // to support this case. We just declare it as ambiguous.
+    struct ambiguous_awaitable2 : bad_awaiter
+    {
+        auto operator co_await() const
+        {
+            return bad_awaiter{};
+        }
+    };
+    suspend_never_but_assert_if_copied operator co_await(ambiguous_awaitable2&)
+    {
+        return {};
+    }
+
+    // We invoke this on an lvalue, so the member co_await is unavailable.
+    // Verify that the unavailable co_await is ignored.
+    struct ambiguous_awaitable3 : suspend_never_but_assert_if_copied
+    {
+        auto operator co_await()&&
+        {
+            return bad_awaiter{};
         }
     };
 
@@ -120,18 +118,21 @@ namespace
 
     static std::vector<std::pair<void const*, notification>> watcher;
     static handle start_racing{ CreateEventW(nullptr, true, false, nullptr) };
-    constexpr size_t test_suspension_points = 12;
+    constexpr size_t test_suspension_points = 13;
 
     IAsyncAction Async()
     {
         co_await resume_on_signal(start_racing.get());
         co_await resume_background();
         co_await resume_background();
-        co_await free_awaitable{};
         co_await member_awaitable{};
         co_await free_operator_awaitable{};
         co_await member_operator_awaitable{};
         co_await no_copy_awaitable{};
+        co_await ambiguous_awaitable1{};
+        // co_await ambiguous_awaitable2{}; // does not compile
+        ambiguous_awaitable3 awaitable3;
+        co_await awaitable3;
         co_await AsyncAction();
         co_await AsyncActionWithProgress();
         co_await AsyncOperation();

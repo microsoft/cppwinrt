@@ -1,3 +1,82 @@
+namespace winrt::impl
+{
+    struct nop_lock_guard {};
+
+    struct single_threaded_collection_base
+    {
+        [[nodiscard]] auto acquire_exclusive() const
+        {
+            return nop_lock_guard{};
+        }
+
+        [[nodiscard]] auto acquire_shared() const
+        {
+            return nop_lock_guard();
+        }
+    };
+
+    struct multi_threaded_collection_base
+    {
+        [[nodiscard]] auto acquire_exclusive() const
+        {
+            return slim_lock_guard{m_mutex};
+        }
+
+        [[nodiscard]] auto acquire_shared() const
+        {
+            return slim_shared_lock_guard{m_mutex};
+        }
+
+    private:
+
+        mutable slim_mutex m_mutex;
+    };
+
+    template <typename D>
+    using container_type_t = std::decay_t<decltype(std::declval<D>().get_container())>;
+
+    template <typename D, typename = void>
+    struct removed_values
+    {
+        void assign(container_type_t<D>& value)
+        {
+            // Trivially destructible; okay to run destructors under lock and clearing allows potential re-use of buffers
+            value.clear();
+        }
+    };
+
+    template <typename D>
+    struct removed_values<D, std::enable_if_t<!std::is_trivially_destructible_v<typename container_type_t<D>::value_type>>>
+    {
+        container_type_t<D> m_value;
+
+        void assign(container_type_t<D>& value)
+        {
+            m_value.swap(value);
+        }
+    };
+
+    template <typename T, typename = void>
+    struct removed_value
+    {
+        // Trivially destructible; okay to run destructor under lock
+        template <typename U>
+        void assign(U&&) {}
+    };
+
+    template <typename T>
+    struct removed_value<T, std::enable_if_t<std::is_move_constructible_v<T> && !std::is_trivially_destructible_v<T>>>
+    {
+        std::optional<T> m_value;
+
+        template <typename U>
+        void assign(U&& value)
+        {
+            m_value.emplace(std::move(value));
+        }
+    };
+}
+
 WINRT_EXPORT namespace winrt
 {
     template <typename D, typename T, typename Version = impl::no_collection_version>
@@ -15,8 +94,21 @@ WINRT_EXPORT namespace winrt
             return value;
         }
 
+        auto acquire_exclusive() const
+        {
+            return impl::nop_lock_guard{};
+        }
+
+        auto acquire_shared() const
+        {
+            // Support for concurrent "shared" operations is optional
+            return static_cast<D const&>(*this).acquire_exclusive();
+        }
+
         auto First()
         {
+            // NOTE: iterator's constructor requires shared access
+            auto guard = static_cast<D&>(*this).acquire_shared();
             return make<iterator>(static_cast<D*>(this));
         }
 
@@ -52,7 +144,6 @@ WINRT_EXPORT namespace winrt
             void abi_enter()
             {
                 m_owner->abi_enter();
-                this->check_version(*m_owner);
             }
 
             void abi_exit()
@@ -70,11 +161,48 @@ WINRT_EXPORT namespace winrt
 
             T Current() const
             {
+                auto guard = m_owner->acquire_shared();
+                this->check_version(*m_owner);
+
                 if (m_current == m_end)
                 {
                     throw hresult_out_of_bounds();
                 }
 
+                return current_value_withlock();
+            }
+
+            bool HasCurrent() const
+            {
+                auto guard = m_owner->acquire_shared();
+                this->check_version(*m_owner);
+                return m_current != m_end;
+            }
+
+            bool MoveNext()
+            {
+                auto guard = m_owner->acquire_exclusive();
+                this->check_version(*m_owner);
+                if (m_current != m_end)
+                {
+                    ++m_current;
+                }
+
+                return m_current != m_end;
+            }
+
+            uint32_t GetMany(array_view<T> values)
+            {
+                auto guard = m_owner->acquire_exclusive();
+                this->check_version(*m_owner);
+                return GetMany(values, typename std::iterator_traits<iterator_type>::iterator_category());
+            }
+
+        private:
+
+            T current_value_withlock() const
+            {
+                WINRT_ASSERT(m_current != m_end);
                 if constexpr (!impl::is_key_value_pair<T>::value)
                 {
                     return m_owner->unwrap_value(*m_current);
@@ -84,28 +212,6 @@ WINRT_EXPORT namespace winrt
                     return make<impl::key_value_pair<T>>(m_owner->unwrap_value(m_current->first), m_owner->unwrap_value(m_current->second));
                 }
             }
-
-            bool HasCurrent() const noexcept
-            {
-                return m_current != m_end;
-            }
-
-            bool MoveNext() noexcept
-            {
-                if (m_current != m_end)
-                {
-                    ++m_current;
-                }
-
-                return HasCurrent();
-            }
-
-            uint32_t GetMany(array_view<T> values)
-            {
-                return GetMany(values, typename std::iterator_traits<iterator_type>::iterator_category());
-            }
-
-        private:
 
             uint32_t GetMany(array_view<T> values, std::random_access_iterator_tag)
             {
@@ -121,7 +227,7 @@ WINRT_EXPORT namespace winrt
 
                 while (output < values.end() && m_current != m_end)
                 {
-                    *output = Current();
+                    *output = current_value_withlock();
                     ++output;
                     ++m_current;
                 }
@@ -142,7 +248,8 @@ WINRT_EXPORT namespace winrt
     {
         T GetAt(uint32_t const index) const
         {
-            if (index >= Size())
+            auto guard = static_cast<D const&>(*this).acquire_shared();
+            if (index >= container_size())
             {
                 throw hresult_out_of_bounds();
             }
@@ -152,30 +259,40 @@ WINRT_EXPORT namespace winrt
 
         uint32_t Size() const noexcept
         {
-            return static_cast<uint32_t>(std::distance(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end()));
+            auto guard = static_cast<D const&>(*this).acquire_shared();
+            return container_size();
         }
 
         bool IndexOf(T const& value, uint32_t& index) const noexcept
         {
+            auto guard = static_cast<D const&>(*this).acquire_shared();
             auto first = std::find_if(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end(), [&](auto&& match)
             {
                 return value == static_cast<D const&>(*this).unwrap_value(match);
             });
 
             index = static_cast<uint32_t>(first - static_cast<D const&>(*this).get_container().begin());
-            return index < Size();
+            return index < container_size();
         }
 
         uint32_t GetMany(uint32_t const startIndex, array_view<T> values) const
         {
-            if (startIndex >= Size())
+            auto guard = static_cast<D const&>(*this).acquire_shared();
+            if (startIndex >= container_size())
             {
                 return 0;
             }
 
-            uint32_t const actual = (std::min)(Size() - startIndex, values.size());
+            uint32_t const actual = (std::min)(container_size() - startIndex, values.size());
             this->copy_n(static_cast<D const&>(*this).get_container().begin() + startIndex, actual, values.begin());
             return actual;
+        }
+
+    private:
+
+        uint32_t container_size() const noexcept
+        {
+            return static_cast<uint32_t>(std::distance(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end()));
         }
     };
 
@@ -189,17 +306,23 @@ WINRT_EXPORT namespace winrt
 
         void SetAt(uint32_t const index, T const& value)
         {
+            impl::removed_value<typename impl::container_type_t<D>::value_type> oldValue;
+
+            auto guard = static_cast<D&>(*this).acquire_exclusive();
             if (index >= static_cast<D const&>(*this).get_container().size())
             {
                 throw hresult_out_of_bounds();
             }
 
             this->increment_version();
-            static_cast<D&>(*this).get_container()[index] = static_cast<D const&>(*this).wrap_value(value);
+            auto&& pos = static_cast<D&>(*this).get_container()[index];
+            oldValue.assign(pos);
+            pos = static_cast<D const&>(*this).wrap_value(value);
         }
 
         void InsertAt(uint32_t const index, T const& value)
         {
+            auto guard = static_cast<D&>(*this).acquire_exclusive();
             if (index > static_cast<D const&>(*this).get_container().size())
             {
                 throw hresult_out_of_bounds();
@@ -211,41 +334,58 @@ WINRT_EXPORT namespace winrt
 
         void RemoveAt(uint32_t const index)
         {
+            impl::removed_value<typename impl::container_type_t<D>::value_type> removedValue;
+
+            auto guard = static_cast<D&>(*this).acquire_exclusive();
             if (index >= static_cast<D const&>(*this).get_container().size())
             {
                 throw hresult_out_of_bounds();
             }
 
             this->increment_version();
-            static_cast<D&>(*this).get_container().erase(static_cast<D const&>(*this).get_container().begin() + index);
+            auto itr = static_cast<D&>(*this).get_container().begin() + index;
+            removedValue.assign(*itr);
+            static_cast<D&>(*this).get_container().erase(itr);
         }
 
         void Append(T const& value)
         {
+            auto guard = static_cast<D&>(*this).acquire_exclusive();
             this->increment_version();
             static_cast<D&>(*this).get_container().push_back(static_cast<D const&>(*this).wrap_value(value));
         }
 
         void RemoveAtEnd()
         {
+            impl::removed_value<typename impl::container_type_t<D>::value_type> removedValue;
+
+            auto guard = static_cast<D&>(*this).acquire_exclusive();
             if (static_cast<D const&>(*this).get_container().empty())
             {
                 throw hresult_out_of_bounds();
             }
 
             this->increment_version();
+            removedValue.assign(static_cast<D&>(*this).get_container().back());
             static_cast<D&>(*this).get_container().pop_back();
         }
 
         void Clear() noexcept
         {
+            impl::removed_values<D> oldContainer;
+
+            auto guard = static_cast<D&>(*this).acquire_exclusive();
             this->increment_version();
-            static_cast<D&>(*this).get_container().clear();
+            oldContainer.assign(static_cast<D&>(*this).get_container());
         }
 
         void ReplaceAll(array_view<T const> value)
         {
+            impl::removed_values<D> oldContainer;
+
+            auto guard = static_cast<D&>(*this).acquire_exclusive();
             this->increment_version();
+            oldContainer.assign(static_cast<D&>(*this).get_container());
             assign(value.begin(), value.end());
         }
 
@@ -254,16 +394,14 @@ WINRT_EXPORT namespace winrt
         template <typename InputIt>
         void assign(InputIt first, InputIt last)
         {
-            using container_type = std::remove_reference_t<decltype(static_cast<D&>(*this).get_container())>;
-
-            if constexpr (std::is_same_v<T, typename container_type::value_type>)
+            if constexpr (std::is_same_v<T, typename impl::container_type_t<D>::value_type>)
             {
                 static_cast<D&>(*this).get_container().assign(first, last);
             }
             else
             {
                 auto& container = static_cast<D&>(*this).get_container();
-                container.clear();
+                WINRT_ASSERT(container.empty());
                 container.reserve(std::distance(first, last));
 
                 std::transform(first, last, std::back_inserter(container), [&](auto&& value)
@@ -370,6 +508,7 @@ WINRT_EXPORT namespace winrt
     {
         V Lookup(K const& key) const
         {
+            auto guard = static_cast<D const&>(*this).acquire_shared();
             auto pair = static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key));
 
             if (pair == static_cast<D const&>(*this).get_container().end())
@@ -382,11 +521,13 @@ WINRT_EXPORT namespace winrt
 
         uint32_t Size() const noexcept
         {
+            auto guard = static_cast<D const&>(*this).acquire_shared();
             return static_cast<uint32_t>(static_cast<D const&>(*this).get_container().size());
         }
 
         bool HasKey(K const& key) const noexcept
         {
+            auto guard = static_cast<D const&>(*this).acquire_shared();
             return static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key)) != static_cast<D const&>(*this).get_container().end();
         }
 
@@ -407,13 +548,25 @@ WINRT_EXPORT namespace winrt
 
         bool Insert(K const& key, V const& value)
         {
+            impl::removed_value<typename impl::container_type_t<D>::mapped_type> oldValue;
+
+            auto guard = static_cast<D&>(*this).acquire_exclusive();
             this->increment_version();
-            auto pair = static_cast<D&>(*this).get_container().insert_or_assign(static_cast<D const&>(*this).wrap_value(key), static_cast<D const&>(*this).wrap_value(value));
-            return !pair.second;
+            auto [itr, added] = static_cast<D&>(*this).get_container().emplace(static_cast<D const&>(*this).wrap_value(key), static_cast<D const&>(*this).wrap_value(value));
+            if (!added)
+            {
+                oldValue.assign(itr->second);
+                itr->second = static_cast<D const&>(*this).wrap_value(value);
+            }
+
+            return !added;
         }
 
         void Remove(K const& key)
         {
+            typename impl::container_type_t<D>::node_type removedNode;
+
+            auto guard = static_cast<D&>(*this).acquire_exclusive();
             auto& container = static_cast<D&>(*this).get_container();
             auto found = container.find(static_cast<D const&>(*this).wrap_value(key));
             if (found == container.end())
@@ -421,13 +574,16 @@ WINRT_EXPORT namespace winrt
                 throw hresult_out_of_bounds();
             }
             this->increment_version();
-            container.erase(found);
+            removedNode = container.extract(found);
         }
 
         void Clear() noexcept
         {
+            impl::removed_values<D> oldContainer;
+
+            auto guard = static_cast<D&>(*this).acquire_exclusive();
             this->increment_version();
-            static_cast<D&>(*this).get_container().clear();
+            oldContainer.assign(static_cast<D&>(*this).get_container());
         }
     };
 

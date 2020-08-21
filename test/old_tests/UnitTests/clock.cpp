@@ -95,3 +95,43 @@ TEST_CASE("clock, FILETIME")
     const auto diff = abs(clock::now() - clock::from_file_time(now_ft));
     REQUIRE(diff < milliseconds{ 100 });
 }
+
+TEST_CASE("clock, system_clock")
+{
+    DateTime const now_dt = clock::now();
+    auto const now_sys = system_clock::now();
+
+    // Round trip DateTime to std::chrono::system_clock::time_point and back
+    REQUIRE(clock::from_sys(clock::to_sys(now_dt)) == now_dt);
+
+    // Round trip other direction
+    REQUIRE(clock::to_sys(clock::from_sys(now_sys)) == now_sys);
+
+    // Round trip with custom resolution
+    {
+        auto const now_dt_sec = time_point_cast<seconds>(now_dt);
+        REQUIRE(clock::from_sys(clock::to_sys(now_dt_sec)) == now_dt_sec);
+    }
+    {
+        auto const now_dt_mins = time_point_cast<minutes>(now_dt);
+        REQUIRE(clock::from_sys(clock::to_sys(now_dt_mins)) == now_dt_mins);
+    }
+    {
+        auto const now_sys_sec = time_point_cast<seconds>(now_sys);
+        REQUIRE(clock::to_sys(clock::from_sys(now_sys_sec)) == now_sys_sec);
+    }
+    {
+        auto const now_sys_mins = time_point_cast<seconds>(now_sys);
+        REQUIRE(clock::to_sys(clock::from_sys(now_sys_mins)) == now_sys_mins);
+    }
+
+    // Verify that the epoch calculations are correct.
+    {
+        auto const diff = now_dt - clock::from_sys(now_sys);
+        REQUIRE(abs(diff) < milliseconds{ 100 });
+    }
+    {
+        auto const diff = now_sys - clock::to_sys(now_dt);
+        REQUIRE(abs(diff) < milliseconds{ 100 });
+    }
+}

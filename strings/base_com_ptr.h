@@ -133,8 +133,17 @@ WINRT_EXPORT namespace winrt
         template <typename To>
         bool try_as(To& to) const noexcept
         {
-            to = try_as<impl::wrapped_type_t<To>>();
-            return static_cast<bool>(to);
+            if constexpr (impl::is_com_interface_v<To> || !std::is_same_v<To, impl::wrapped_type_t<To>>)
+            {
+                to = try_as<impl::wrapped_type_t<To>>();
+                return static_cast<bool>(to);
+            }
+            else
+            {
+                auto result = try_as<To>();
+                to = result.has_value() ? result.value() : impl::empty_value<To>();
+                return result.has_value();
+            }
         }
 
         hresult as(guid const& id, void** result) const noexcept
