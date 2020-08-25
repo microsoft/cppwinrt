@@ -111,6 +111,8 @@ namespace winrt::test_component::implementation
         event_token DeferrableEvent(Windows::Foundation::TypedEventHandler<test_component::Class, test_component::DeferrableEventArgs> const& handler);
         void DeferrableEvent(event_token const& token);
         Windows::Foundation::IAsyncOperation<int> RaiseDeferrableEventAsync();
+
+        static bool TestNoMakeDetection();
     private:
 
         bool m_fail{};

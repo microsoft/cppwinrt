@@ -148,6 +148,8 @@ namespace test_component
 
         event Windows.Foundation.TypedEventHandler<Class, DeferrableEventArgs> DeferrableEvent;
         Windows.Foundation.IAsyncOperation<Int32> RaiseDeferrableEventAsync();
+
+        static Boolean TestNoMakeDetection();
     }
 
     namespace Structs
