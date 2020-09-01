@@ -1,3 +1,10 @@
+#if defined(_MSC_VER)
+#if defined(_DEBUG) && !defined(WINRT_NO_MAKE_DETECTION)
+#pragma detect_mismatch("C++/WinRT WINRT_NO_MAKE_DETECTION", "make detection enabled (DEBUG and !WINRT_NO_MAKE_DETECTION)")
+#else
+#pragma detect_mismatch("C++/WinRT WINRT_NO_MAKE_DETECTION", "make detection disabled (!DEBUG or WINRT_NO_MAKE_DETECTION)")
+#endif
+#endif
 
 namespace winrt::impl
 {

@@ -358,9 +358,7 @@
     </ClCompile>
     <ClCompile Include="names.cpp" />
     <ClCompile Include="noexcept.cpp" />
-    <ClCompile Include="no_make_detection.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="no_make_detection.cpp" />
     <ClCompile Include="numerics.cpp" />
     <ClCompile Include="out_params.cpp" />
     <ClCompile Include="parent_includes.cpp" />
