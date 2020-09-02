@@ -237,6 +237,17 @@ namespace concurrent_collections
     {
         return it += offset;
     }
+
+    // Dummy definition to keep compiler happy. Instantiated by the
+    // constructor whose purpose is to offer an implicit conversion from
+    // non-const iterator to const iterator. When applied to a const
+    // iterator, it offers implicit construction from this garbage type
+    // to const iterator (triggering its instantiation), but then the constructor
+    // is deleted by SFINAE, so the type is never actually created at runtime.
+    template<typename Container>
+    struct concurrency_checked_random_access_iterator<Container, void, void>
+    {
+    };
 #pragma endregion
 
     struct concurrency_guard
