@@ -82,9 +82,12 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <BeforeClCompileTargets>
             $(BeforeClCompileTargets);CppWinRTAddXamlMetaDataProviderCpp;CppWinRTMakeProjections;
         </BeforeClCompileTargets>
+
+        <!-- Ensure ComputeCompileInputsTargets runs at the end so that FixupCLCompileOptions is the last to run -->
         <ComputeCompileInputsTargets>
-            $(ComputeCompileInputsTargets);CppWinRTComputeXamlGeneratedCompileInputs;CppWinRTHeapEnforcementOptOut;
+            CppWinRTComputeXamlGeneratedCompileInputs;CppWinRTHeapEnforcementOptOut;$(ComputeCompileInputsTargets);
         </ComputeCompileInputsTargets>
+
         <MarkupCompilePass1DependsOn>
             $(MarkupCompilePass1DependsOn);CppWinRTAddXamlReferences
         </MarkupCompilePass1DependsOn>
@@ -94,7 +97,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CleanDependsOn>
             $(CleanDependsOn);CppWinRTClean
         </CleanDependsOn>
-        
+
     </PropertyGroup>
 
     <!-- For a static library we don't want the winmd/lib/pdb to be packaged -->
