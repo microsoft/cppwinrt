@@ -85,7 +85,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
         <!-- Ensure ComputeCompileInputsTargets runs at the end so that FixupCLCompileOptions is the last to run -->
         <ComputeCompileInputsTargets>
-            CppWinRTComputeXamlGeneratedCompileInputs;CppWinRTHeapEnforcementOptOut;$(ComputeCompileInputsTargets);
+            CppWinRTComputeXamlGeneratedCompileInputs;$(ComputeCompileInputsTargets);CppWinRTHeapEnforcementOptOut;
         </ComputeCompileInputsTargets>
 
         <MarkupCompilePass1DependsOn>
