@@ -127,7 +127,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <Delete Files="@(_FilesToDelete)"/>
     </Target>
 
-    <Target Name="CppWinRTHeapEnforcementOptOut" Condition="'@(ClCompile)' != ''" BeforeTargets="FixupCLCompileOptions">
+    <Target Name="CppWinRTHeapEnforcementOptOut" Condition="'@(ClCompile)' != ''">
         <ItemGroup Condition="'$(CppWinRTHeapEnforcement)'=='' and ('@(Page)' != '' Or '@(ApplicationDefinition)' != '')">
             <ClCompile>
                 <AdditionalOptions>%(ClCompile.AdditionalOptions) /DWINRT_NO_MAKE_DETECTION</AdditionalOptions>
@@ -359,8 +359,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     <!-- Note that Condition is evaluated before DependsOnTargets are run -->
     <Target Name="CppWinRTComputeXamlGeneratedCompileInputs"
             DependsOnTargets="$(CppWinRTComputeXamlGeneratedCompileInputsDependsOn)"
-            Condition="'@(Page)@(ApplicationDefinition)' != '' and '$(XamlLanguage)' == 'CppWinRT' and '$(CppWinRTAddXamlMetaDataProviderIdl)' == 'true'"
-            BeforeTargets="FixupCLCompileOptions">
+            Condition="'@(Page)@(ApplicationDefinition)' != '' and '$(XamlLanguage)' == 'CppWinRT' and '$(CppWinRTAddXamlMetaDataProviderIdl)' == 'true'">
         <ItemGroup>
             <ClCompile Remove="$(XamlMetaDataProviderCpp)" />
             <ClCompile Include="$(XamlMetaDataProviderCpp)" Condition="'$(CppWinRTOptimized)'=='true'">
