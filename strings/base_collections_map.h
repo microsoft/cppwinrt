@@ -44,6 +44,18 @@ namespace winrt::impl
 WINRT_EXPORT namespace winrt
 {
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
+    Windows::Foundation::Collections::IMap<K, V> map_view()
+    {
+        return make<impl::input_map_view<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{});
+    }
+
+    template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
+    Windows::Foundation::Collections::IMap<K, V> map_view(std::map<K, V, Compare, Allocator>&& values)
+    {
+        return make<impl::input_map_view<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values));
+    }
+
+    template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
     Windows::Foundation::Collections::IMap<K, V> single_threaded_map()
     {
         return make<impl::input_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{});
