@@ -82,9 +82,12 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <BeforeClCompileTargets>
             $(BeforeClCompileTargets);CppWinRTAddXamlMetaDataProviderCpp;CppWinRTMakeProjections;
         </BeforeClCompileTargets>
+
+        <!-- Ensure ComputeCompileInputsTargets runs at the end so that FixupCLCompileOptions is the last to run -->
         <ComputeCompileInputsTargets>
-            $(ComputeCompileInputsTargets);CppWinRTComputeXamlGeneratedCompileInputs;CppWinRTHeapEnforcementOptOut;
+            CppWinRTComputeXamlGeneratedCompileInputs;$(ComputeCompileInputsTargets);CppWinRTHeapEnforcementOptOut;
         </ComputeCompileInputsTargets>
+
         <MarkupCompilePass1DependsOn>
             $(MarkupCompilePass1DependsOn);CppWinRTAddXamlReferences
         </MarkupCompilePass1DependsOn>
