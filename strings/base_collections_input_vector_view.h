@@ -2,13 +2,13 @@
 namespace winrt::impl
 {
     template <typename T, typename Container>
-    struct input_vector_view :
-        implements<input_vector_view<T, Container>, non_agile, no_weak_ref, wfc::IVectorView<T>, wfc::IIterable<T>>,
-        vector_view_base<input_vector_view<T, Container>, T>
+    struct vector_view_impl :
+        implements<vector_view_impl<T, Container>, wfc::IVectorView<T>, wfc::IIterable<T>>,
+        vector_view_base<vector_view_impl<T, Container>, T>
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        explicit input_vector_view(Container&& values) : m_values(std::forward<Container>(values))
+        explicit vector_view_impl(Container&& values) : m_values(std::forward<Container>(values))
         {
         }
 
@@ -21,6 +21,9 @@ namespace winrt::impl
 
         Container const m_values;
     };
+
+    template <typename T, typename Container>
+    using input_vector_view = vector_view_impl<T, Container>;
 
     template <typename T, typename InputIt>
     struct scoped_input_vector_view :
