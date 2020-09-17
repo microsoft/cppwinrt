@@ -76,4 +76,9 @@
                 Description="Enables or disables the generation of Windows Metadata"
                 Category="General" />
 
+  <BoolProperty Name="CppWinRTEnableDefaultPrivateFalse"
+                DisplayName="Enable Copy Local Defaults"
+                Description="Enables or disables the default for copying binaries to the output folder"
+                Category="General" />
+
 </Rule>

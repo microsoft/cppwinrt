@@ -205,10 +205,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="$(NugetPackagesDirectory)Microsoft.VSSDK.Debugger.VSDebugEng.*\inc\VSDebugEng.h" />
-    <ClInclude Include="$(NugetPackagesDirectory)Microsoft.VSSDK.Debugger.VSDebugEng.*\inc\vsdebugeng.templates.h" />
     <ClInclude Include="object_visualizer.h" />
     <ClInclude Include="cppwinrt_visualizer.h" />
+    <ClInclude Include="packages\Microsoft.VSSDK.Debugger.VSDebugEng.16.0.2012201-preview\inc\VSDebugEng.h" />
+    <ClInclude Include="packages\Microsoft.VSSDK.Debugger.VSDebugEng.16.0.2012201-preview\inc\vsdebugeng.templates.h" />
     <ClInclude Include="property_visualizer.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
@@ -238,9 +238,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="$(NugetPackagesDirectory)Microsoft.VSSDK.Debugger.VSDConfigTool.*\content\vsdconfig.xsd">
+    <None Include="packages\Microsoft.VSSDK.Debugger.VSDConfigTool.16.0.2012201-preview\content\vsdconfig.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
