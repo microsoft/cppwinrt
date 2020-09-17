@@ -382,7 +382,7 @@ WINRT_EXPORT namespace winrt
                 m_handle = handle;
                 m_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr)));
                 int64_t relative_count = -m_duration.count();
-                WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &relative_count, 0, 0, nullptr);
+                WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &relative_count, 0, 0);
 
                 state expected = state::idle;
                 if (!m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
@@ -403,10 +403,10 @@ WINRT_EXPORT namespace winrt
 
             void fire_immediately() noexcept
             {
-                if (WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), nullptr, 0, 0, nullptr))
+                if (WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), nullptr, 0, 0))
                 {
                     int64_t now = 0;
-                    WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &now, 0, 0, nullptr);
+                    WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &now, 0, 0);
                 }
             }
 
