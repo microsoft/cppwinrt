@@ -124,7 +124,81 @@ namespace winrt::impl
         static constexpr bool has_co_await_member = find_co_await_member<T&&>(0);
         static constexpr bool has_co_await_free = find_co_await_free<T&&>(0);
     };
+}
 
+WINRT_EXPORT namespace winrt
+{
+    struct cancellable_promise
+    {
+        using canceller_t = void(*)(void*);
+
+        void set_canceller(canceller_t canceller, void* context)
+        {
+            m_context = context;
+            m_canceller.store(canceller, std::memory_order_release);
+        }
+
+        void revoke_canceller()
+        {
+            while (m_canceller.exchange(nullptr, std::memory_order_acquire) == cancelling_ptr)
+            {
+                std::this_thread::yield();
+            }
+        }
+
+        void cancel()
+        {
+            auto canceller = m_canceller.exchange(cancelling_ptr, std::memory_order_acquire);
+            struct unique_cancellation_lock
+            {
+                cancellable_promise* promise;
+                ~unique_cancellation_lock()
+                {
+                    promise->m_canceller.store(nullptr, std::memory_order_release);
+                }
+            } lock{ this };
+
+            if ((canceller != nullptr) && (canceller != cancelling_ptr))
+            {
+                canceller(m_context);
+            }
+        }
+
+    private:
+        static inline auto const cancelling_ptr = reinterpret_cast<canceller_t>(1);
+
+        std::atomic<canceller_t> m_canceller{ nullptr };
+        void* m_context{ nullptr };
+    };
+
+    struct enable_await_cancellation
+    {
+        enable_await_cancellation() noexcept = default;
+        enable_await_cancellation(enable_await_cancellation const&) = delete;
+
+        ~enable_await_cancellation()
+        {
+            if (m_promise)
+            {
+                m_promise->revoke_canceller();
+            }
+        }
+
+        void operator=(enable_await_cancellation const&) = delete;
+
+        void set_cancellable_promise(cancellable_promise* promise) noexcept
+        {
+            m_promise = promise;
+        }
+
+    private:
+
+        cancellable_promise* m_promise = nullptr;
+    };
+}
+
+namespace winrt::impl
+{
     template <typename T>
     decltype(auto) get_awaiter(T&& value) noexcept
     {
@@ -149,8 +223,16 @@ namespace winrt::impl
     {
         decltype(get_awaiter(std::declval<T&&>())) awaitable;
 
-        notify_awaiter(T&& awaitable) : awaitable(get_awaiter(static_cast<T&&>(awaitable)))
+        notify_awaiter(T&& awaitable_arg, cancellable_promise* promise = nullptr) : awaitable(get_awaiter(static_cast<T&&>(awaitable_arg)))
         {
+            if constexpr (std::is_convertible_v<std::remove_reference_t<decltype(awaitable)>&, enable_await_cancellation&>)
+            {
+                if (promise)
+                {
+                    static_cast<enable_await_cancellation&>(awaitable).set_cancellable_promise(promise);
+                    awaitable.enable_cancellation(promise);
+                }
+            }
         }
 
         bool await_ready()
@@ -271,11 +353,23 @@ WINRT_EXPORT namespace winrt
 
     [[nodiscard]] inline auto resume_after(Windows::Foundation::TimeSpan duration) noexcept
     {
-        struct awaitable
+        struct awaitable : enable_await_cancellation
         {
             explicit awaitable(Windows::Foundation::TimeSpan duration) noexcept :
                 m_duration(duration)
             {
+            }
+
+            void enable_cancellation(cancellable_promise* promise)
+            {
+                promise->set_canceller([](void* context)
+                {
+                    auto that = static_cast<awaitable*>(context);
+                    if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
+                    {
+                        that->fire_immediately();
+                    }
+                }, this);
             }
 
             bool await_ready() const noexcept
@@ -285,20 +379,41 @@ WINRT_EXPORT namespace winrt
 
             void await_suspend(std::experimental::coroutine_handle<> handle)
             {
-                m_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, handle.address(), nullptr)));
+                m_handle = handle;
+                m_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr)));
                 int64_t relative_count = -m_duration.count();
-                WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &relative_count, 0, 0);
+                WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &relative_count, 0, 0);
+
+                state expected = state::idle;
+                if (!m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
+                {
+                    fire_immediately();
+                }
             }
 
-            void await_resume() const noexcept
+            void await_resume()
             {
+                if (m_state.exchange(state::idle, std::memory_order_relaxed) == state::canceled)
+                {
+                    throw hresult_canceled();
+                }
             }
 
         private:
 
+            void fire_immediately() noexcept
+            {
+                if (WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), nullptr, 0, 0))
+                {
+                    int64_t now = 0;
+                    WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &now, 0, 0);
+                }
+            }
+
             static void __stdcall callback(void*, void* context, void*) noexcept
             {
-                std::experimental::coroutine_handle<>::from_address(context)();
+                auto that = reinterpret_cast<awaitable*>(context);
+                that->m_handle();
             }
 
             struct timer_traits
@@ -316,8 +431,12 @@ WINRT_EXPORT namespace winrt
                 }
             };
 
+            enum class state { idle, pending, canceled };
+
             handle_type<timer_traits> m_timer;
             Windows::Foundation::TimeSpan m_duration;
+            std::experimental::coroutine_handle<> m_handle;
+            std::atomic<state> m_state{ state::idle };
         };
 
         return awaitable{ duration };
@@ -332,12 +451,24 @@ WINRT_EXPORT namespace winrt
 
     [[nodiscard]] inline auto resume_on_signal(void* handle, Windows::Foundation::TimeSpan timeout = {}) noexcept
     {
-        struct awaitable
+        struct awaitable : enable_await_cancellation
         {
             awaitable(void* handle, Windows::Foundation::TimeSpan timeout) noexcept :
                 m_timeout(timeout),
                 m_handle(handle)
             {}
+
+            void enable_cancellation(cancellable_promise* promise)
+            {
+                promise->set_canceller([](void* context)
+                {
+                    auto that = static_cast<awaitable*>(context);
+                    if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
+                    {
+                        that->fire_immediately();
+                    }
+                }, this);
+            }
 
             bool await_ready() const noexcept
             {
@@ -350,15 +481,34 @@ WINRT_EXPORT namespace winrt
                 m_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
                 int64_t relative_count = -m_timeout.count();
                 int64_t* file_time = relative_count != 0 ? &relative_count : nullptr;
-                WINRT_IMPL_SetThreadpoolWait(m_wait.get(), m_handle, file_time);
+                WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), m_handle, file_time, nullptr);
+
+                state expected = state::idle;
+                if (!m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
+                {
+                    fire_immediately();
+                }
             }
 
-            bool await_resume() const noexcept
+            bool await_resume()
             {
+                if (m_state.exchange(state::idle, std::memory_order_relaxed) == state::canceled)
+                {
+                    throw hresult_canceled();
+                }
                 return m_result == 0;
             }
 
         private:
+
+            void fire_immediately() noexcept
+            {
+                if (WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), nullptr, nullptr, nullptr))
+                {
+                    int64_t now = 0;
+                    WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), WINRT_IMPL_GetCurrentProcess(), &now, nullptr);
+                }
+            }
 
             static void __stdcall callback(void*, void* context, void*, uint32_t result) noexcept
             {
@@ -382,11 +532,14 @@ WINRT_EXPORT namespace winrt
                 }
             };
 
+            enum class state { idle, pending, canceled };
+
             handle_type<wait_traits> m_wait;
             Windows::Foundation::TimeSpan m_timeout;
             void* m_handle;
             uint32_t m_result{};
             std::experimental::coroutine_handle<> m_resume{ nullptr };
+            std::atomic<state> m_state{ state::idle };
         };
 
         return awaitable{ handle, timeout };
