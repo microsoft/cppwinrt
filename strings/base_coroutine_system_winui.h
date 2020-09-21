@@ -23,7 +23,7 @@ WINRT_EXPORT namespace winrt
                 return m_queued;
             }
 
-            bool await_suspend(std::experimental::coroutine_handle<> handle)
+            bool await_suspend(impl::coroutine_handle<> handle)
             {
                 return m_dispatcher.TryEnqueue(m_priority, [handle, this]
                     {
