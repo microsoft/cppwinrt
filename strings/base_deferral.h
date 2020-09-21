@@ -22,7 +22,7 @@ WINRT_EXPORT namespace winrt
 
         [[nodiscard]] Windows::Foundation::IAsyncAction wait_for_deferrals()
         {
-            struct awaitable : std::experimental::suspend_always
+            struct awaitable : impl::suspend_always
             {
                 bool await_suspend(coroutine_handle handle)
                 {
@@ -37,7 +37,7 @@ WINRT_EXPORT namespace winrt
 
     private:
 
-        using coroutine_handle = std::experimental::coroutine_handle<>;
+        using coroutine_handle = impl::coroutine_handle<>;
 
         void one_deferral_completed()
         {

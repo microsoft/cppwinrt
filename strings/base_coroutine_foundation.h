@@ -100,7 +100,7 @@ namespace winrt::impl
 
     struct disconnect_aware_handler
     {
-        disconnect_aware_handler(std::experimental::coroutine_handle<> handle) noexcept
+        disconnect_aware_handler(coroutine_handle<> handle) noexcept
             : m_handle(handle) { }
 
         disconnect_aware_handler(disconnect_aware_handler&& other) noexcept
@@ -119,7 +119,7 @@ namespace winrt::impl
 
     private:
         resume_apartment_context m_context;
-        std::experimental::coroutine_handle<> m_handle;
+        coroutine_handle<> m_handle;
 
         void Complete()
         {
@@ -148,7 +148,7 @@ namespace winrt::impl
             return false;
         }
 
-        void await_suspend(std::experimental::coroutine_handle<> handle)
+        void await_suspend(coroutine_handle<> handle)
         {
             auto extend_lifetime = async;
             async.Completed([this, handler = disconnect_aware_handler{ handle }](auto&&, auto operation_status) mutable
@@ -282,7 +282,7 @@ namespace winrt::impl
             return true;
         }
 
-        void await_suspend(std::experimental::coroutine_handle<>) const noexcept
+        void await_suspend(coroutine_handle<>) const noexcept
         {
         }
 
@@ -324,7 +324,7 @@ namespace winrt::impl
             return true;
         }
 
-        void await_suspend(std::experimental::coroutine_handle<>) const noexcept
+        void await_suspend(coroutine_handle<>) const noexcept
         {
         }
 
@@ -355,7 +355,7 @@ namespace winrt::impl
             if (remaining == 0)
             {
                 std::atomic_thread_fence(std::memory_order_acquire);
-                std::experimental::coroutine_handle<Derived>::from_promise(*static_cast<Derived*>(this)).destroy();
+                coroutine_handle<Derived>::from_promise(*static_cast<Derived*>(this)).destroy();
             }
 
             return remaining;
@@ -496,7 +496,7 @@ namespace winrt::impl
             }
         }
 
-        std::experimental::suspend_never initial_suspend() const noexcept
+        suspend_never initial_suspend() const noexcept
         {
             return{};
         }
@@ -514,7 +514,7 @@ namespace winrt::impl
             {
             }
 
-            bool await_suspend(std::experimental::coroutine_handle<>) const noexcept
+            bool await_suspend(coroutine_handle<>) const noexcept
             {
                 promise->set_completed();
                 uint32_t const remaining = promise->subtract_reference();
@@ -629,7 +629,11 @@ namespace winrt::impl
     };
 }
 
-WINRT_EXPORT namespace std::experimental
+#ifdef __cpp_lib_coroutine
+namespace std
+#else
+namespace std::experimental
+#endif
 {
     template <typename... Args>
     struct coroutine_traits<winrt::Windows::Foundation::IAsyncAction, Args...>

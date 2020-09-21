@@ -22,7 +22,7 @@ WINRT_EXPORT namespace winrt
             {
             }
 
-            void await_suspend(std::experimental::coroutine_handle<> handle) const
+            void await_suspend(impl::coroutine_handle<> handle) const
             {
                 m_dispatcher.RunAsync(m_priority, [handle]
                     {

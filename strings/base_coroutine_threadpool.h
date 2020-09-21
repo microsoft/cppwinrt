@@ -11,10 +11,10 @@ namespace winrt::impl
 
     inline void __stdcall resume_background_callback(void*, void* context) noexcept
     {
-        std::experimental::coroutine_handle<>::from_address(context)();
+        coroutine_handle<>::from_address(context)();
     };
 
-    inline auto resume_background(std::experimental::coroutine_handle<> handle)
+    inline auto resume_background(coroutine_handle<> handle)
     {
         submit_threadpool_callback(resume_background_callback, handle.address());
     }
@@ -56,11 +56,11 @@ namespace winrt::impl
 
     inline int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
     {
-        std::experimental::coroutine_handle<>::from_address(args->data)();
+        coroutine_handle<>::from_address(args->data)();
         return 0;
     };
 
-    inline void resume_apartment_sync(com_ptr<IContextCallback> const& context, std::experimental::coroutine_handle<> handle)
+    inline void resume_apartment_sync(com_ptr<IContextCallback> const& context, coroutine_handle<> handle)
     {
         com_callback_args args{};
         args.data = handle.address();
@@ -68,14 +68,14 @@ namespace winrt::impl
         check_hresult(context->ContextCallback(resume_apartment_callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
     }
 
-    inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, std::experimental::coroutine_handle<> handle)
+    inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, coroutine_handle<> handle)
     {
         struct threadpool_resume
         {
-            threadpool_resume(com_ptr<IContextCallback> const& context, std::experimental::coroutine_handle<> handle) :
+            threadpool_resume(com_ptr<IContextCallback> const& context, coroutine_handle<> handle) :
                 m_context(context), m_handle(handle) { }
             com_ptr<IContextCallback> m_context;
-            std::experimental::coroutine_handle<> m_handle;
+            coroutine_handle<> m_handle;
         };
         auto state = std::make_unique<threadpool_resume>(context, handle);
         submit_threadpool_callback([](void*, void* p)
@@ -86,7 +86,7 @@ namespace winrt::impl
         state.release();
     }
 
-    inline auto resume_apartment(resume_apartment_context const& context, std::experimental::coroutine_handle<> handle)
+    inline auto resume_apartment(resume_apartment_context const& context, coroutine_handle<> handle)
     {
         if ((context.m_context == nullptr) || (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
         {
@@ -246,7 +246,7 @@ namespace winrt::impl
         }
 
         template <typename U>
-        auto await_suspend(std::experimental::coroutine_handle<U> handle)
+        auto await_suspend(coroutine_handle<U> handle)
         {
             return awaitable.await_suspend(handle);
         }
@@ -278,7 +278,7 @@ WINRT_EXPORT namespace winrt
             {
             }
 
-            void await_suspend(std::experimental::coroutine_handle<> handle) const
+            void await_suspend(impl::coroutine_handle<> handle) const
             {
                 impl::resume_background(handle);
             }
@@ -305,7 +305,7 @@ WINRT_EXPORT namespace winrt
             {
             }
 
-            void await_suspend(std::experimental::coroutine_handle<> resume)
+            void await_suspend(impl::coroutine_handle<> resume)
             {
                 m_resume = resume;
 
@@ -325,7 +325,7 @@ WINRT_EXPORT namespace winrt
             }
 
             T const& m_context;
-            std::experimental::coroutine_handle<> m_resume{ nullptr };
+            impl::coroutine_handle<> m_resume{ nullptr };
         };
 
         return awaitable{ context };
@@ -342,7 +342,7 @@ WINRT_EXPORT namespace winrt
         {
         }
 
-        void await_suspend(std::experimental::coroutine_handle<> handle) const
+        void await_suspend(impl::coroutine_handle<> handle) const
         {
             auto copy = context; // resuming may destruct *this, so use a copy
             impl::resume_apartment(copy, handle);
@@ -377,7 +377,7 @@ WINRT_EXPORT namespace winrt
                 return m_duration.count() <= 0;
             }
 
-            void await_suspend(std::experimental::coroutine_handle<> handle)
+            void await_suspend(impl::coroutine_handle<> handle)
             {
                 m_handle = handle;
                 m_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr)));
@@ -435,7 +435,7 @@ WINRT_EXPORT namespace winrt
 
             handle_type<timer_traits> m_timer;
             Windows::Foundation::TimeSpan m_duration;
-            std::experimental::coroutine_handle<> m_handle;
+            impl::coroutine_handle<> m_handle;
             std::atomic<state> m_state{ state::idle };
         };
 
@@ -475,7 +475,7 @@ WINRT_EXPORT namespace winrt
                 return WINRT_IMPL_WaitForSingleObject(m_handle, 0) == 0;
             }
 
-            void await_suspend(std::experimental::coroutine_handle<> resume)
+            void await_suspend(impl::coroutine_handle<> resume)
             {
                 m_resume = resume;
                 m_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
@@ -538,7 +538,7 @@ WINRT_EXPORT namespace winrt
             Windows::Foundation::TimeSpan m_timeout;
             void* m_handle;
             uint32_t m_result{};
-            std::experimental::coroutine_handle<> m_resume{ nullptr };
+            impl::coroutine_handle<> m_resume{ nullptr };
             std::atomic<state> m_state{ state::idle };
         };
 
@@ -568,7 +568,7 @@ WINRT_EXPORT namespace winrt
         {
         }
 
-        void await_suspend(std::experimental::coroutine_handle<> handle)
+        void await_suspend(impl::coroutine_handle<> handle)
         {
             if (!WINRT_IMPL_TrySubmitThreadpoolCallback(callback, handle.address(), &m_environment))
             {
@@ -580,7 +580,7 @@ WINRT_EXPORT namespace winrt
 
         static void __stdcall callback(void*, void* context) noexcept
         {
-            std::experimental::coroutine_handle<>::from_address(context)();
+            impl::coroutine_handle<>::from_address(context)();
         }
 
         struct pool_traits
@@ -628,7 +628,11 @@ WINRT_EXPORT namespace winrt
     struct fire_and_forget {};
 }
 
+#ifdef __cpp_lib_coroutine
+namespace std
+#else
 namespace std::experimental
+#endif
 {
     template <typename... Args>
     struct coroutine_traits<winrt::fire_and_forget, Args...>
