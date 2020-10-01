@@ -828,7 +828,7 @@ $(XamlMetaDataProviderPch)
     <!--Append any additional item metadata after all default and project settings have been applied-->
     <ItemDefinitionGroup>
       <ClCompile>
-        <AdditionalOptions>%(AdditionalOptions) /bigobj /await</AdditionalOptions>
+        <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
         <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(GeneratedFilesDir)</AdditionalIncludeDirectories>
       </ClCompile>
       <Midl Condition="'$(CppWinRTModernIDL)' != 'false'">
