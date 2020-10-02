@@ -174,7 +174,7 @@ WINRT_EXPORT namespace winrt
     struct enable_await_cancellation
     {
         enable_await_cancellation() noexcept = default;
-        enable_await_cancellation(enable_await_cancellation const&) = delete;
+        enable_await_cancellation(enable_await_cancellation const&) = default;
 
         ~enable_await_cancellation()
         {
@@ -223,7 +223,7 @@ namespace winrt::impl
     {
         decltype(get_awaiter(std::declval<T&&>())) awaitable;
 
-        notify_awaiter(T&& awaitable_arg, cancellable_promise* promise = nullptr) : awaitable(get_awaiter(static_cast<T&&>(awaitable_arg)))
+        notify_awaiter(T&& awaitable_arg, [[maybe_unused]] cancellable_promise* promise = nullptr) : awaitable(get_awaiter(static_cast<T&&>(awaitable_arg)))
         {
             if constexpr (std::is_convertible_v<std::remove_reference_t<decltype(awaitable)>&, enable_await_cancellation&>)
             {
