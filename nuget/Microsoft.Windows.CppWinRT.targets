@@ -829,6 +829,7 @@ $(XamlMetaDataProviderPch)
     <ItemDefinitionGroup>
       <ClCompile>
         <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
+        <AdditionalOptions Condition="'%(ClCompile.LanguageStandard)' == 'stdcpp17'">%(AdditionalOptions) /await</AdditionalOptions>
         <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(GeneratedFilesDir)</AdditionalIncludeDirectories>
       </ClCompile>
       <Midl Condition="'$(CppWinRTModernIDL)' != 'false'">
