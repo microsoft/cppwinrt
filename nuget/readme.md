@@ -36,7 +36,7 @@ It sets the following project properties and item metadata:
 | XamlLanguage | CppWinRT | Directs the Xaml compiler to generate C++/WinRT code |
 | ClCompile.CompileAsWinRT | *false | Enables ISO C++ compilation (disables C++/CX) |
 | ClCompile.LanguageStandard | *stdcpp17 | Enables C++17 language features |
-| ClCompile.AdditionalOptions | /bigobj /await | Enables support for large object files and coroutines |
+| ClCompile.AdditionalOptions | /bigobj | Enables support for large object files |
 | ClCompile.AdditionalIncludeDirectories | GeneratedFilesDir | Adds $(GeneratedFilesDir) to the C++ include dirs |
 | Link.AdditionalDependencies | WindowsApp.lib | Umbrella library for Windows Runtime imports |
 | Midl.AdditionalOptions | /reference ... | Enables faster compilation with winmd references (versus idl imports) |
