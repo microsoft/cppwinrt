@@ -98,6 +98,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             $(CleanDependsOn);CppWinRTClean
         </CleanDependsOn>
 
+        <HashIgnoreCaseSupported Condition="'$(MSBuildToolsVersion)' &gt;= '16'">true</HashIgnoreCaseSupported>
+        <HashIgnoreCaseSupported Condition="'$(HashIgnoreCaseSupported)' != 'true'">false</HashIgnoreCaseSupported>
+
     </PropertyGroup>
 
     <!-- For a static library we don't want the winmd/lib/pdb to be packaged -->
@@ -469,8 +472,14 @@ $(XamlMetaDataProviderPch)
         </ItemGroup>
 
         <Hash
+          Condition="'$(HashIgnoreCaseSupported)'"
           ItemsToHash="@(MdMergeCache)"
           IgnoreCase="$([MSBuild]::ValueOrDefault(`$(MdMergeCacheIgnoreCase)`, `true`))">
+            <Output TaskParameter="HashResult" PropertyName="MdMergeDependencyHash" />
+        </Hash>
+        <Hash
+          Condition="'!$(HashIgnoreCaseSupported)'"
+          ItemsToHash="@(MdMergeCache)">
             <Output TaskParameter="HashResult" PropertyName="MdMergeDependencyHash" />
         </Hash>
 
@@ -561,8 +570,14 @@ $(XamlMetaDataProviderPch)
         </ItemGroup>
 
         <Hash
+          Condition="'$(HashIgnoreCaseSupported)'"
           ItemsToHash="@(CppWinRTPlatformProjectionCache)"
           IgnoreCase="$([MSBuild]::ValueOrDefault(`$(CppWinRTPlatformProjectionCacheIgnoreCase)`, `true`))">
+            <Output TaskParameter="HashResult" PropertyName="CppWinRTPlatformProjectionDependencyHash" />
+        </Hash>
+        <Hash
+          Condition="!'$(HashIgnoreCaseSupported)'"
+          ItemsToHash="@(CppWinRTPlatformProjectionCache)">
             <Output TaskParameter="HashResult" PropertyName="CppWinRTPlatformProjectionDependencyHash" />
         </Hash>
 
@@ -637,8 +652,14 @@ $(XamlMetaDataProviderPch)
         </ItemGroup>
 
         <Hash
+          Condition="'$(HashIgnoreCaseSupported)'"
           ItemsToHash="@(CppWinRTReferenceProjectionCache)"
           IgnoreCase="$([MSBuild]::ValueOrDefault(`$(CppWinRTReferenceProjectionCacheIgnoreCase)`, `true`))">
+            <Output TaskParameter="HashResult" PropertyName="CppWinRTReferenceProjectionDependencyHash" />
+        </Hash>
+        <Hash
+          Condition="!'$(HashIgnoreCaseSupported)'"
+          ItemsToHash="@(CppWinRTReferenceProjectionCache)">
             <Output TaskParameter="HashResult" PropertyName="CppWinRTReferenceProjectionDependencyHash" />
         </Hash>
 
@@ -719,8 +740,14 @@ $(XamlMetaDataProviderPch)
         </ItemGroup>
 
         <Hash
+          Condition="'$(HashIgnoreCaseSupported)'"
           ItemsToHash="@(CppWinRTComponentProjectionCache)"
           IgnoreCase="$([MSBuild]::ValueOrDefault(`$(CppWinRTComponentProjectionCacheIgnoreCase)`, `true`))">
+            <Output TaskParameter="HashResult" PropertyName="CppWinRTComponentProjectionDependencyHash" />
+        </Hash>
+        <Hash
+          Condition="!'$(HashIgnoreCaseSupported)'"
+          ItemsToHash="@(CppWinRTComponentProjectionCache)">
             <Output TaskParameter="HashResult" PropertyName="CppWinRTComponentProjectionDependencyHash" />
         </Hash>
 
