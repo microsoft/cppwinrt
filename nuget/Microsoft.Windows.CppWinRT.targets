@@ -21,7 +21,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTUseHardlinksIfPossible Condition="'$(CppWinRTUseHardlinksIfPossible)' == ''">false</CppWinRTUseHardlinksIfPossible>
         <CppWinRTWriteOnlyWhenDifferent Condition="('$(CppWinRTWriteOnlyWhenDifferent)' == '') And (('$(MSBuildToolsVersion)' == 'Current') Or ('$(MSBuildToolsVersion)' &gt;= '15'))">true</CppWinRTWriteOnlyWhenDifferent>
         <CppWinRTWriteOnlyWhenDifferent Condition="'$(CppWinRTWriteOnlyWhenDifferent)' != 'true'">false</CppWinRTWriteOnlyWhenDifferent>
-        <CppWinRTHasHashTask Condition="('$(CppWinRTHasHashTask)' == '') And (('$(MSBuildToolsVersion)' == 'Current') Or ('$(MSBuildToolsVersion)' &gt;= '15'))">true</CppWinRTHasHashTask>
+        <CppWinRTHasHashTask Condition="('$(CppWinRTHasHashTask)' == '') And (('$(MSBuildToolsVersion)' == 'Current'))">true</CppWinRTHasHashTask>
         <CppWinRTHasHashTask Condition="'$(CppWinRTHasHashTask)' != 'true'">false</CppWinRTHasHashTask>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))..\..\</CppWinRTPackageDir>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))</CppWinRTPackageDir>
