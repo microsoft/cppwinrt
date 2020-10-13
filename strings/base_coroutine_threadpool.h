@@ -442,7 +442,7 @@ WINRT_EXPORT namespace winrt
         return awaitable{ duration };
     }
 
-#ifdef __cpp_coroutines
+#ifdef WINRT_IMPL_COROUTINES
     inline auto operator co_await(Windows::Foundation::TimeSpan duration)
     {
         return resume_after(duration);

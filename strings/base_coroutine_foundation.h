@@ -223,7 +223,7 @@ namespace winrt::impl
     }
 }
 
-#ifdef __cpp_coroutines
+#ifdef WINRT_IMPL_COROUTINES
 WINRT_EXPORT namespace winrt::Windows::Foundation
 {
     inline impl::await_adapter<IAsyncAction> operator co_await(IAsyncAction const& async)

@@ -1,7 +1,7 @@
 
 WINRT_EXPORT namespace winrt
 {
-#ifdef __cpp_coroutines
+#ifdef WINRT_IMPL_COROUTINES
     template<typename D>
     struct deferrable_event_args
     {
