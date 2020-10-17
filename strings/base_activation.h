@@ -400,10 +400,10 @@ namespace winrt::impl
         return factory.call(static_cast<CastType>(callback));
     }
 
-    template <typename Class, typename Interface = Windows::Foundation::IActivationFactory>
-    com_ref<Interface> try_get_activation_factory(hresult_error* exception = nullptr) noexcept
+    template <typename Interface = Windows::Foundation::IActivationFactory>
+    com_ref<Interface> try_get_activation_factory(std::wstring_view className, hresult_error* exception = nullptr) noexcept
     {
-        param::hstring const name{ name_of<Class>() };
+        param::hstring const name{ className };
         void* result{};
         hresult const hr = get_runtime_activation_factory<Interface>(name, &result);
 
@@ -473,13 +473,25 @@ WINRT_EXPORT namespace winrt
     template <typename Class, typename Interface = Windows::Foundation::IActivationFactory>
     auto try_get_activation_factory() noexcept
     {
-        return impl::try_get_activation_factory<Class, Interface>();
+        return impl::try_get_activation_factory<Interface>(winrt::name_of<Class>());
     }
 
     template <typename Class, typename Interface = Windows::Foundation::IActivationFactory>
     auto try_get_activation_factory(hresult_error& exception) noexcept
     {
-        return impl::try_get_activation_factory<Class, Interface>(&exception);
+        return impl::try_get_activation_factory<Interface>(winrt::name_of<Class>(), &exception);
+    }
+
+    template <typename Interface = Windows::Foundation::IActivationFactory>
+    auto try_get_activation_factory(std::wstring_view name) noexcept
+    {
+        return impl::try_get_activation_factory<Interface>(name);
+    }
+
+    template <typename Interface = Windows::Foundation::IActivationFactory>
+    auto try_get_activation_factory(std::wstring_view name, hresult_error& exception) noexcept
+    {
+        return impl::try_get_activation_factory<Interface>(name, &exception);
     }
 
     inline void clear_factory_cache() noexcept
