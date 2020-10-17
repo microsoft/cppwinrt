@@ -92,7 +92,15 @@ Where <spec> is one or more of:
 
         path output_folder = args.value("output");
         create_directories(output_folder / "winrt/impl");
-        settings.output_folder = canonical(output_folder).string();
+        try
+        {
+            settings.output_folder = canonical(output_folder).string();
+        }
+        catch(std::filesystem::filesystem_error const&)
+        {
+            // If canonical fails try using the provided path directly
+            settings.output_folder = output_folder.string();
+        }
         settings.output_folder += '\\';
 
         for (auto && include : args.values("include"))
@@ -144,7 +152,15 @@ Where <spec> is one or more of:
             if (!component.empty())
             {
                 create_directories(component);
-                settings.component_folder = canonical(component).string();
+                try
+                {
+                    settings.component_folder = canonical(component).string();
+                }
+                catch (std::filesystem::filesystem_error const&)
+                {
+                    // If canonical fails try using the provided path directly
+                    settings.component_folder = component;
+                }
                 settings.component_folder += '\\';
             }
         }
