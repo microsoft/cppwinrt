@@ -92,11 +92,10 @@ Where <spec> is one or more of:
 
         path output_folder = args.value("output");
         create_directories(output_folder / "winrt/impl");
-        try
-        {
-            settings.output_folder = canonical(output_folder).string();
-        }
-        catch(std::filesystem::filesystem_error const&)
+
+        std::error_code ec;
+        settings.output_folder = canonical(output_folder, ec).string();
+        if (ec)
         {
             // If canonical fails try using the provided path directly
             settings.output_folder = output_folder.string();

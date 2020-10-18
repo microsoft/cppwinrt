@@ -414,11 +414,13 @@ namespace cppwinrt
             {
                 if (std::filesystem::is_directory(path))
                 {
-                    try
+                    std::error_code ec;
+                    auto canPath = std::filesystem::canonical(path, ec);
+                    if (!ec)
                     {
-                        add_directory(std::filesystem::canonical(path));
+                        add_directory(canPath);
                     }
-                    catch (std::filesystem::filesystem_error const&)
+                    else
                     {
                         // If canonical fails try using the provided path directly
                         add_directory(path);
@@ -428,11 +430,13 @@ namespace cppwinrt
 
                 if (std::filesystem::is_regular_file(path))
                 {
-                    try
+                    std::error_code ec;
+                    auto canPath = std::filesystem::canonical(path, ec);
+                    if (!ec)
                     {
-                        files.insert(std::filesystem::canonical(path).string());
+                        files.insert(canPath.string());
                     }
-                    catch (std::filesystem::filesystem_error const&)
+                    else
                     {
                         // If canonical fails try using the provided path directly
                         files.insert(path);
