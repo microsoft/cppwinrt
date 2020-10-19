@@ -226,11 +226,11 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
     <!--Define platform projection WinMD inputs-->
     <Target Name="GetCppWinRTPlatformWinMDInputs"
-            DependsOnTargets="ResolveAssemblyReferences"
+            DependsOnTargets="ResolveAssemblyReferences;GetCppWinRTPlatformWinMDReferences"
             Returns="@(CppWinRTPlatformWinMDInputs)">
         <ItemGroup>
             <_CppWinRTPlatformWinMDInputs Remove="@(_CppWinRTPlatformWinMDInputs)" />
-            <_CppWinRTPlatformWinMDInputs Include="$(WindowsSDK_MetadataPathVersioned)\**\*.winmd" />
+            <_CppWinRTPlatformWinMDInputs Include="@(CppWinRTPlatformWinMDReferences)" />
             <CppWinRTPlatformWinMDInputs Include="@(_CppWinRTPlatformWinMDInputs)">
                 <WinMDPath>%(FullPath)</WinMDPath>
             </CppWinRTPlatformWinMDInputs>
@@ -245,10 +245,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <ItemGroup>
             <_CppWinRTPlatformWinMDReferences Remove="@(_CppWinRTPlatformWinMDReferences)" />
             <_CppWinRTPlatformWinMDReferences Include="@(ReferencePath)" Condition="'%(ReferencePath.IsSystemReference)' == 'true' and '%(ReferencePath.WinMDFile)' == 'true' and '%(ReferencePath.ReferenceSourceTarget)' == 'ResolveAssemblyReference'" />
-            <_CppWinRTPlatformWinMDReferences Condition="'$(CppWinRTOverrideSDKReferences)' != 'true'" Include="$(WindowsSDK_MetadataPathVersioned)\**\Windows.Foundation.FoundationContract.winmd" />
-            <_CppWinRTPlatformWinMDReferences Condition="'$(CppWinRTOverrideSDKReferences)' != 'true'" Include="$(WindowsSDK_MetadataPathVersioned)\**\Windows.Foundation.UniversalApiContract.winmd" />
-            <_CppWinRTPlatformWinMDReferences Condition="'$(CppWinRTOverrideSDKReferences)' != 'true'" Include="$(WindowsSDK_MetadataPathVersioned)\**\Windows.Networking.Connectivity.WwanContract.winmd" />
-            <_CppWinRTPlatformWinMDReferences Include="$(CppWinRTSDKReferences)" />
+            <!-- Also include the winmds from the ImplicitlyExpandTargetPlatform target if it is enabled. -->
+            <_CppWinRTPlatformWinMDReferences Include="@(ReferencePath)" Condition="'%(ReferencePath.IsSystemReference)' == 'true' and '%(ReferencePath.WinMDFile)' == 'true' and '%(ReferencePath.ResolvedFrom)' == 'ImplicitlyExpandTargetPlatform'" />
+             <_CppWinRTPlatformWinMDReferences Include="$(CppWinRTSDKReferences)" />
             <CppWinRTPlatformWinMDReferences Remove="@(CppWinRTPlatformWinMDReferences)"/>
             <CppWinRTPlatformWinMDReferences Include="@(_CppWinRTPlatformWinMDReferences->'%(FullPath)'->Distinct())">
                 <WinMDPath>%(FullPath)</WinMDPath>
