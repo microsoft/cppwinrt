@@ -400,10 +400,9 @@ namespace winrt::impl
         return factory.call(static_cast<CastType>(callback));
     }
 
-    template <typename Class, typename Interface = Windows::Foundation::IActivationFactory>
-    com_ref<Interface> try_get_activation_factory(hresult_error* exception = nullptr) noexcept
+    template <typename Interface = Windows::Foundation::IActivationFactory>
+    com_ref<Interface> try_get_activation_factory(param::hstring const& name, hresult_error* exception = nullptr) noexcept
     {
-        param::hstring const name{ name_of<Class>() };
         void* result{};
         hresult const hr = get_runtime_activation_factory<Interface>(name, &result);
 
@@ -463,7 +462,7 @@ WINRT_EXPORT namespace winrt
     {
         // Normally, the callback avoids having to return a ref-counted object and the resulting AddRef/Release bump.
         // In this case we do want a unique reference, so we use the lambda to return one and thus produce an
-        // AddRef'd object that is returned to the caller. 
+        // AddRef'd object that is returned to the caller.
         return impl::call_factory<Class, Interface>([](auto&& factory)
         {
             return factory;
@@ -473,13 +472,25 @@ WINRT_EXPORT namespace winrt
     template <typename Class, typename Interface = Windows::Foundation::IActivationFactory>
     auto try_get_activation_factory() noexcept
     {
-        return impl::try_get_activation_factory<Class, Interface>();
+        return impl::try_get_activation_factory<Interface>(name_of<Class>());
     }
 
     template <typename Class, typename Interface = Windows::Foundation::IActivationFactory>
     auto try_get_activation_factory(hresult_error& exception) noexcept
     {
-        return impl::try_get_activation_factory<Class, Interface>(&exception);
+        return impl::try_get_activation_factory<Interface>(name_of<Class>(), &exception);
+    }
+
+    template <typename Interface = Windows::Foundation::IActivationFactory>
+    auto try_get_activation_factory(param::hstring const& name) noexcept
+    {
+        return impl::try_get_activation_factory<Interface>(name);
+    }
+
+    template <typename Interface = Windows::Foundation::IActivationFactory>
+    auto try_get_activation_factory(param::hstring const& name, hresult_error& exception) noexcept
+    {
+        return impl::try_get_activation_factory<Interface>(name, &exception);
     }
 
     inline void clear_factory_cache() noexcept
