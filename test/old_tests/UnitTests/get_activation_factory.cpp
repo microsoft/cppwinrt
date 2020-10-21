@@ -88,7 +88,7 @@ TEST_CASE("try_get_activation_factory_with_names")
     // Try successfully with error info
     {
         hresult_error e;
-        auto factory = try_get_activation_factory(winrt::name_of<Component::Errors>());
+        auto factory = try_get_activation_factory(winrt::name_of<Component::Errors>(), e);
         REQUIRE(factory != nullptr);
         REQUIRE(get_error_info() == nullptr);
     }
