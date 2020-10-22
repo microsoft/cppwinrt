@@ -171,10 +171,10 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <CustomBuildStep>
-      <Command>$(OutputPath)cppwinrt.exe -in $(OutputPath)Composable.winmd -comp $(ProjectDir) -out "$(ProjectDir)Generated Files" -ref sdk -verbose -pch precomp.hpp -name Composable</Command>
+      <Command>$(OutDir)cppwinrt.exe -in $(OutDir)Composable.winmd -comp $(ProjectDir) -out "$(ProjectDir)Generated Files" -ref sdk -verbose -pch precomp.hpp -name Composable</Command>
       <Message>C++/WinRT compiler</Message>
       <Outputs>Generated Files\module.g.cpp</Outputs>
-      <Inputs>$(OutputDir)Composable.winmd</Inputs>
+      <Inputs>$(OutDir)Composable.winmd</Inputs>
     </CustomBuildStep>
     <ClCompile />
     <ClCompile />
@@ -184,7 +184,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutDir);Generated Files</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -218,7 +218,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutDir);Generated Files</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -254,7 +254,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutDir);Generated Files</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -290,7 +290,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutDir);Generated Files</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
@@ -323,7 +323,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutDir);Generated Files</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
@@ -358,7 +358,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutDir);Generated Files</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
@@ -393,7 +393,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutDir);Generated Files</AdditionalIncludeDirectories>
       <MinimalRebuild>false</MinimalRebuild>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -427,7 +427,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <CompileAsWinRT>false</CompileAsWinRT>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(OutDir);Generated Files</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <PreprocessorDefinitions>NOMINMAX;_WINDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
@@ -461,8 +461,6 @@
     <ClInclude Include="Base.h" />
     <ClInclude Include="Derived.h" />
     <ClInclude Include="precomp.hpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="Base.cpp" />
     <ClCompile Include="Derived.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
