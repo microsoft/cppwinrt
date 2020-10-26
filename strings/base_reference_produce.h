@@ -274,24 +274,24 @@ namespace winrt::impl
         }
         if constexpr (std::is_enum_v<T>)
         {
-            if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
+            if (auto temp = value.template try_as<Windows::Foundation::IReference<T>>())
             {
                 return temp.Value();
             }
             else
             {
-                return static_cast<T>(value.as<Windows::Foundation::IReference<std::underlying_type_t<T>>>().Value());
+                return static_cast<T>(value.template as<Windows::Foundation::IReference<std::underlying_type_t<T>>>().Value());
             }
         }
 #ifdef WINRT_IMPL_IUNKNOWN_DEFINED
         else if constexpr (std::is_same_v<T, GUID>)
         {
-            return value.as<Windows::Foundation::IReference<guid>>().Value();
+            return value.template as<Windows::Foundation::IReference<guid>>().Value();
         }
 #endif
         else
         {
-            return value.as<Windows::Foundation::IReference<T>>().Value();
+            return value.template as<Windows::Foundation::IReference<T>>().Value();
         }
     }
 
@@ -300,12 +300,12 @@ namespace winrt::impl
     {
         if constexpr (std::is_enum_v<T>)
         {
-            if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
+            if (auto temp = value.template try_as<Windows::Foundation::IReference<T>>())
             {
                 return temp.Value();
             }
 
-            if (auto temp = value.try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>())
+            if (auto temp = value.template try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>())
             {
                 return static_cast<T>(temp.Value());
             }
@@ -313,7 +313,7 @@ namespace winrt::impl
 #ifdef WINRT_IMPL_IUNKNOWN_DEFINED
         else if constexpr (std::is_same_v<T, GUID>)
         {
-            if (auto temp = value.try_as<Windows::Foundation::IReference<guid>>())
+            if (auto temp = value.template try_as<Windows::Foundation::IReference<guid>>())
             {
                 return temp.Value();
             }
@@ -321,7 +321,7 @@ namespace winrt::impl
 #endif
         else
         {
-            if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
+            if (auto temp = value.template try_as<Windows::Foundation::IReference<T>>())
             {
                 return temp.Value();
             }
