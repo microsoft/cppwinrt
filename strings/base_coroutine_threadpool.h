@@ -109,14 +109,15 @@ namespace winrt::impl
     template <typename T>
     class awaiter_finder
     {
-        template <typename U, typename = decltype(std::declval<U>().await_ready())> static constexpr bool find_awaitable_member(int) { return true; }
         template <typename> static constexpr bool find_awaitable_member(...) { return false; }
-
-        template <typename U, typename = decltype(std::declval<U>().operator co_await())> static constexpr bool find_co_await_member(int) { return true; }
         template <typename> static constexpr bool find_co_await_member(...) { return false; }
-
-        template <typename U, typename = decltype(operator co_await(std::declval<U>()))> static constexpr bool find_co_await_free(int) { return true; }
         template <typename> static constexpr bool find_co_await_free(...) { return false; }
+
+#ifdef WINRT_IMPL_COROUTINES
+        template <typename U, typename = decltype(std::declval<U>().await_ready())> static constexpr bool find_awaitable_member(int) { return true; }
+        template <typename U, typename = decltype(std::declval<U>().operator co_await())> static constexpr bool find_co_await_member(int) { return true; }
+        template <typename U, typename = decltype(operator co_await(std::declval<U>()))> static constexpr bool find_co_await_free(int) { return true; }
+#endif
 
     public:
 
@@ -202,6 +203,7 @@ namespace winrt::impl
     template <typename T>
     decltype(auto) get_awaiter(T&& value) noexcept
     {
+#ifdef WINRT_IMPL_COROUTINES
         if constexpr (awaiter_finder<T>::has_co_await_member)
         {
             static_assert(!awaiter_finder<T>::has_co_await_free, "Ambiguous operator co_await (as both member and free function).");
@@ -216,6 +218,9 @@ namespace winrt::impl
             static_assert(awaiter_finder<T>::has_awaitable_member, "Not an awaitable type");
             return static_cast<T&&>(value);
         }
+#else
+        return static_cast<T&&>(value);
+#endif
     }
 
     template <typename T>
