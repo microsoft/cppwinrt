@@ -124,6 +124,51 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         </ItemGroup>
     </Target>
 
+    <!--
+      The CppWinRTImplicitlyExpandTargetPlatform target will find the 
+      appropriate platform in the requested SDK, gather the 
+      list of references for that platform, and add them to the
+      ReferencePath item which is the ItemGroup which contains
+      resolved paths to pass to e.g. the compiler. 
+      Xaml targets do this for UWP but for desktop,
+      apps can't opt-in to WinRT doing it for them.
+    -->
+    <Target Name="CppWinRTImplicitlyExpandTargetPlatform"
+       Condition="'$(CppWinRTImplicitlyExpandTargetPlatform)' == 'true'">
+
+        <ItemGroup>
+            <_TargetPlatformWinMDs Condition="'$(TargetPlatformSdkRootOverride)' != ''" Include="$(TargetPlatformSdkRootOverride)\References\$(XeWin10TargetVersion)\**\*.winmd">
+                <WinMDFile>true</WinMDFile>
+                <CopyLocal>false</CopyLocal>
+                <ReferenceGrouping>$(TargetPlatformMoniker)</ReferenceGrouping>
+                <ReferenceGroupingDisplayName>$(TargetPlatformDisplayName)</ReferenceGroupingDisplayName>
+                <ResolvedFrom>CppWinRTImplicitlyExpandTargetPlatform</ResolvedFrom>
+                <IsSystemReference>True</IsSystemReference>
+            </_TargetPlatformWinMDs>
+            <_TargetPlatformWinMDs Condition="'$(TargetPlatformSdkRootOverride)' == ''" Include="$(WindowsSDK_MetadataPathVersioned)\**\*.winmd">
+                <WinMDFile>true</WinMDFile>
+                <CopyLocal>false</CopyLocal>
+                <ReferenceGrouping>$(TargetPlatformMoniker)</ReferenceGrouping>
+                <ReferenceGroupingDisplayName>$(TargetPlatformDisplayName)</ReferenceGroupingDisplayName>
+                <ResolvedFrom>CppWinRTImplicitlyExpandTargetPlatform</ResolvedFrom>
+                <IsSystemReference>True</IsSystemReference>
+            </_TargetPlatformWinMDs>
+        </ItemGroup>
+
+        <Warning Condition="'@(_TargetPlatformWinMDs)' == ''"
+          Text="Could not find target platform winmds for the SDK specified by [$(SDKIdentifier), $(SDKVersion), $(TargetPlatformIdentifier), $(TargetPlatformMinVersion), $(TargetPlatformVersion)]"/>
+
+        <Message Importance="Low" Text="Including @(_TargetPlatformWinMDs)" />
+
+        <ItemGroup>
+            <ReferencePath Include="@(_TargetPlatformWinMDs)" />
+            <_ResolveAssemblyReferenceResolvedFiles Include="@(_TargetPlatformWinMDs)" />
+
+            <!-- Clear out 'temporary' variable -->
+            <_TargetPlatformWinMDs Remove="@(_TargetPlatformWinMDs)" />
+        </ItemGroup>
+    </Target>
+
     <!-- Target used only to evaluate CppWinRTGenerateWindowsMetadata if it doesn't already have a value -->
     <Target Name="CppWinRTComputeGenerateWindowsMetadata"
             DependsOnTargets="CppWinRTComputeXamlGeneratedMidlInputs;GetCppWinRTProjectWinMDReferences;$(CppWinRTComputeGenerateWindowsMetadataDependsOn)">
