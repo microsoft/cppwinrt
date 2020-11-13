@@ -11,7 +11,6 @@ if not exist ".\.nuget" mkdir ".\.nuget"
 if not exist ".\.nuget\nuget.exe" powershell -Command "Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile .\.nuget\nuget.exe"
 
 call .nuget\nuget.exe restore cppwinrt.sln"
-call .nuget\nuget.exe restore natvis\cppwinrtvisualizer.sln
 call .nuget\nuget.exe restore test\nuget\NugetTest.sln
 
 rem Build fast forwarder libs or all arches
@@ -23,12 +22,8 @@ call msbuild /m /p:Configuration=%target_configuration%,Platform=arm64,CppWinRTB
 rem Build cppwinrt.exe for x86 only
 call msbuild /m /p:Configuration=%target_configuration%,Platform=x86,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:cppwinrt
 
-rem Build cppwinrt visualizer dll for x86 and x64
-call msbuild /p:Configuration=%target_configuration%,Platform=x64,CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
-call msbuild /p:Configuration=%target_configuration%,Platform=x86,CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
-
 rem Build nuget 
 .nuget\nuget.exe pack nuget\Microsoft.Windows.CppWinRT.nuspec -NonInteractive -OutputDirectory %this_dir%_build -Properties Configuration=%target_configuration%;cppwinrt_exe=%this_dir%_build\x86\%target_configuration%\cppwinrt.exe;cppwinrt_fast_fwd_x86=%this_dir%_build\x86\%target_configuration%\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=%this_dir%_build\x64\%target_configuration%\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=%this_dir%_build\arm\%target_configuration%\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=%this_dir%_build\arm64\%target_configuration%\cppwinrt_fast_forwarder.lib  -version %target_version% -Verbosity Detailed
 
 rem Build vsix
-call msbuild /p:Configuration=%target_configuration%,Platform=x86,CppWinRTVersion=%target_version%,NatvisDirx86=%this_dir%natvis\x86\%target_configuration%,NatvisDirx64=%this_dir%natvis\x64\%target_configuration%,NupkgDir=%this_dir%_build vsix\vsix.sln
+call msbuild /p:Configuration=%target_configuration%,Platform=x86,CppWinRTVersion=%target_version%,NupkgDir=%this_dir%_build vsix\vsix.sln

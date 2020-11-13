@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?> 
-<SignConfigXML> 
-  <job configuration="Release" dest="__OUTPATHROOT__" jobname="CppWinRT Tools" approvers=""> 
-    <file src="__INPATHROOT__\x86\cppwinrt\cppwinrt.exe" signType="400" dest="__OUTPATHROOT__\x86\cppwinrt.exe" /> 
-    <file src="__INPATHROOT__\x86\cppwinrtvisualizer.dll" signType="400" dest="__OUTPATHROOT__\x86\cppwinrtvisualizer.dll" /> 
-    <file src="__INPATHROOT__\x64\cppwinrtvisualizer.dll" signType="400" dest="__OUTPATHROOT__\x64\cppwinrtvisualizer.dll" /> 
-  </job> 
-</SignConfigXML> 
