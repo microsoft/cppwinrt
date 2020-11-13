@@ -108,22 +108,6 @@
       <Link>Packages\Microsoft.Windows.CppWinRT.$(CppWinRTVersion).nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="..\natvis\cppwinrt.natvis">
-      <Link>%(Filename)%(Extension)</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="$(NatvisDirx86)\cppwinrtvisualizer.vsdconfig">
-      <Link>%(Filename)%(Extension)</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="$(NatvisDirx86)\cppwinrtvisualizer.dll">
-      <Link>x86\%(Filename)%(Extension)</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="$(NatvisDirx64)\cppwinrtvisualizer.dll">
-      <Link>x64\%(Filename)%(Extension)</Link>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -155,8 +139,6 @@
   <Target Name="GetCppWinRTVersion" Outputs="$(CppWinRTVersion)" />
   <Target Name="PrepareBuild" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(CppWinRTVersion)' == ''" Text="The project must be supplied with a CppWinRTVersion property value" />
-    <Error Condition="'$(NatvisDirx86)' == ''" Text="The project must be supplied with a NatvisDirx86 property value" />
-    <Error Condition="'$(NatvisDirx64)' == ''" Text="The project must be supplied with a NatvisDirx64 property value" />
     <Error Condition="'$(NupkgDir)' == ''" Text="The project must be supplied with a NupkgDir property value" />
     <Copy SourceFiles="..\LICENSE" DestinationFolder="$(MSBuildProjectDirectory)" />
     <ItemGroup>
