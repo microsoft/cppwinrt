@@ -154,7 +154,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
        Condition="'$(CppWinRTImplicitlyExpandTargetPlatform)' == 'true'">
 
         <ItemGroup>
-            <_TargetPlatformWinMDs Condition="'$(TargetPlatformWinMDLocation)' != ''" Include="$(TargetPlatformWinMDLocation)\**\*.winmd">
+            <_TargetPlatformWinMDs Condition="'$(TargetPlatformSdkRootOverride)' != ''" Include="$(TargetPlatformSdkRootOverride)\References\$(XeWin10TargetVersion)\**\*.winmd">
                 <WinMDFile>true</WinMDFile>
                 <CopyLocal>false</CopyLocal>
                 <ReferenceGrouping>$(TargetPlatformMoniker)</ReferenceGrouping>
@@ -162,15 +162,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
                 <ResolvedFrom>CppWinRTImplicitlyExpandTargetPlatform</ResolvedFrom>
                 <IsSystemReference>True</IsSystemReference>
             </_TargetPlatformWinMDs>
-            <_TargetPlatformWinMDs Condition="'$(TargetPlatformSdkRootOverride)' != '' AND '$(TargetPlatformWinMDLocation)' == ''" Include="$(TargetPlatformSdkRootOverride)\References\$(XeWin10TargetVersion)\**\*.winmd">
-                <WinMDFile>true</WinMDFile>
-                <CopyLocal>false</CopyLocal>
-                <ReferenceGrouping>$(TargetPlatformMoniker)</ReferenceGrouping>
-                <ReferenceGroupingDisplayName>$(TargetPlatformDisplayName)</ReferenceGroupingDisplayName>
-                <ResolvedFrom>CppWinRTImplicitlyExpandTargetPlatform</ResolvedFrom>
-                <IsSystemReference>True</IsSystemReference>
-            </_TargetPlatformWinMDs>
-            <_TargetPlatformWinMDs Condition="'$(TargetPlatformSdkRootOverride)' == '' AND '$(TargetPlatformWinMDLocation)' == ''" Include="$(WindowsSDK_MetadataPathVersioned)\**\*.winmd">
+            <_TargetPlatformWinMDs Condition="'$(TargetPlatformSdkRootOverride)' == ''" Include="$(WindowsSDK_MetadataPathVersioned)\**\*.winmd">
                 <WinMDFile>true</WinMDFile>
                 <CopyLocal>false</CopyLocal>
                 <ReferenceGrouping>$(TargetPlatformMoniker)</ReferenceGrouping>
