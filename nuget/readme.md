@@ -36,7 +36,7 @@ It sets the following project properties and item metadata:
 | XamlLanguage | CppWinRT | Directs the Xaml compiler to generate C++/WinRT code |
 | ClCompile.CompileAsWinRT | *false | Enables ISO C++ compilation (disables C++/CX) |
 | ClCompile.LanguageStandard | *stdcpp17 | Enables C++17 language features |
-| ClCompile.AdditionalOptions | /bigobj /await | Enables support for large object files and coroutines |
+| ClCompile.AdditionalOptions | /bigobj | Enables support for large object files |
 | ClCompile.AdditionalIncludeDirectories | GeneratedFilesDir | Adds $(GeneratedFilesDir) to the C++ include dirs |
 | Link.AdditionalDependencies | WindowsApp.lib | Umbrella library for Windows Runtime imports |
 | Midl.AdditionalOptions | /reference ... | Enables faster compilation with winmd references (versus idl imports) |
@@ -68,6 +68,7 @@ C++/WinRT behavior can be customized with these project properties:
 | CppWinRTProjectLanguage | C++/CX \| *C++/WinRT | Selects the C++ dialect for the project.  C++/WinRT provides full projection support, C++/CX permits consuming projection headers. |
 | CppWinRTOptimized | true \| *false | Enables component projection [optimization features](https://kennykerr.ca/2019/06/07/cppwinrt-optimizing-components/) |
 | CppWinRTGenerateWindowsMetadata | true \| *false | Indicates whether this project produces Windows Metadata |
+| CppWinRTEnableDefaultPrivateFalse | true \| *false | Indicates whether this project uses C++/WinRT optimized default for copying binaries to the output directory |
 \*Default value
 
 To customize common C++/WinRT project properties: 
@@ -94,3 +95,14 @@ Example:
 
 For more complex analysis of build errors, the [MSBuild Binary and Structured Log Viewer](http://msbuildlog.com/) is highly recommended.
 
+## Building, Testing
+
+Be sure to get the latest nuget.exe from [nuget.org](https://www.nuget.org/downloads) and place it in your path.
+
+Build the package by running [build_nuget.cmd](../build_nuget.cmd) from a developer environment command line. For testing pass a version number that is much higher than your currently installed, like:
+
+```
+c:\repos\cppwinrt> .\build_nuget.cmd 5.0.0.0
+```
+
+Add the cppwinrt repo directory as a nuget source location and update your projects' references to point at it, update project references, then rebuild a test/sample project.

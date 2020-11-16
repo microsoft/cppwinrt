@@ -23,6 +23,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <WinMDAssembly>true</WinMDAssembly>
         <!--Set a value to prevent SDK's uap.props from setting it and pointing to the wrong headers-->
         <CppWinRT_IncludePath>PreventSdkUapPropsAssignment</CppWinRT_IncludePath>
+        <CppWinRTEnableDefaultPrivateFalse Condition="'$(CppWinRTEnableDefaultPrivateFalse)' == ''"></CppWinRTEnableDefaultPrivateFalse>
     </PropertyGroup>
 
     <ItemDefinitionGroup>
@@ -43,6 +44,18 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             <ProxyFileName Condition="'%(Midl.ProxyFileName)'==''">nul</ProxyFileName>
             <TypeLibraryName Condition="'%(Midl.TypeLibraryName)'==''"></TypeLibraryName>
         </Midl>
+        <ProjectReference Condition="'$(XamlLanguage)' != 'C++' and '$(CppWinRTEnableDefaultPrivateFalse)' == 'true'">
+            <!-- By default, for a C++/WinRT project,
+                 don't copy project reference output to the output directory
+                 of the current project for projects that are not an exe. -->
+            <Private Condition="'$(ConfigurationType)' != 'Application' and '$(OutputType)'!='winexe' and '$(OutputType)'!='exe' and '$(OutputType)'!='appcontainerexe'">false</Private>
+        </ProjectReference>
+        <Reference Condition="'$(XamlLanguage)' != 'C++' and '$(CppWinRTEnableDefaultPrivateFalse)' == 'true'">
+            <!-- By default, for a C++/WinRT project,
+                 don't copy reference output to the output directory
+                 of the current project for projects that are not an exe. -->
+            <Private Condition="'$(ConfigurationType)' != 'Application' and '$(OutputType)'!='winexe' and '$(OutputType)'!='exe' and '$(OutputType)'!='appcontainerexe'">false</Private>
+        </Reference>
     </ItemDefinitionGroup>
 
     <ItemGroup>
