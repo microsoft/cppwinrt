@@ -208,7 +208,7 @@ namespace cppwinrt
     {
       std::string ret{};
       if (!doc_string.empty()) {
-        ret = "/// <summary>" + std::string(doc_string) + "</summary>\r\n";
+        ret = "    /// <summary>" + std::string(doc_string) + "</summary>\r\n";
       }
       return ret;
     }
@@ -1032,7 +1032,10 @@ namespace cppwinrt
         auto method_name = get_name(method);
         auto type = method.Parent();
 
-        w.write("        %WINRT_IMPL_AUTO(%) %(%) const%;\n",
+        auto implFormat = "        %WINRT_IMPL_AUTO(%) %(%) const%;\n";
+        auto implFormatWithDoc = getDocXml(method) + implFormat;
+
+        w.write(implFormatWithDoc,
             is_get_overload(method) ? "[[nodiscard]] " : "",
             signature.return_signature(),
             method_name,
