@@ -7,10 +7,57 @@ namespace Windows.Foundation.Metadata
     attribute NoExceptionAttribute
     {
     }
+
+    [attributeusage(target_runtimeclass, target_interface, target_struct, target_enum, target_delegate, target_field, target_property, target_method, target_event)]
+    [attributename("help_string")]
+    attribute HelpStringAttribute {
+      String Content;
+    }
+
+  //[attributeusage(target_property, target_method)]
+  //[attributename("doc_default")] attribute DocDefaultAttribute {
+  //  String Content;
+  //}
 }
 
 namespace test_component
 {
+    [help_string("this is an interface")]
+    interface InterfaceWithDoc
+    {
+      [help_string("this is a function with docs")]
+      void f();
+
+      [help_string("this is a property")]
+      Int32 InterfacePropertyWithDoc;
+    };
+
+    [help_string("this is an enum")]
+    enum EnumWithDoc
+    {
+      Dog,
+      Cat,
+      [help_string("this is a gecko")] // xmldoc in enum values aren't properly displayed by VS yet
+      Gecko
+    };
+
+    [help_string("this is a struct")]
+    struct StructWithDoc
+    {
+      [help_string("this is the value")]
+      Int32 val;
+    };
+
+    [help_string("this is a class")]
+    runtimeclass ClassWithDoc
+    {
+      [help_string("this is a property")]
+      Int32 SomeValue;
+
+      [help_string("this is a method")]
+      void g();
+    }
+
     struct Struct
     {
         String First;

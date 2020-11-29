@@ -1,5 +1,23 @@
 #pragma once
 
+namespace winmd::reader {
+  template <typename T>
+  CustomAttribute get_attribute(T const& row, std::string_view const& type_name)
+  {
+    for (auto&& attribute : row.CustomAttribute())
+    {
+      auto pair = attribute.TypeNamespaceAndName();
+
+      if (pair.second == type_name)
+      {
+        return attribute;
+      }
+    }
+
+    return {};
+  }
+}
+
 namespace cppwinrt
 {
     struct finish_with
@@ -185,6 +203,38 @@ namespace cppwinrt
         return { w, write_close_namespace };
     }
 
+
+    static std::string getDocXml(std::string_view doc_string)
+    {
+      std::string ret{};
+      if (!doc_string.empty()) {
+        ret = "/// <summary>" + std::string(doc_string) + "</summary>\r\n";
+      }
+      return ret;
+    }
+
+    template<typename T>
+    static std::string getDocXml(T const& type)
+    {
+      if (auto const& attr = get_attribute(type, "HelpStringAttribute"))
+      {
+        auto sig = attr.Value();
+        auto fixed = sig.FixedArgs();
+        if (fixed.size() == 1) {
+          return getDocXml(std::get<std::string_view>(std::get<ElemSig>(fixed[0].value).value));
+        }
+        else {
+          auto named = sig.NamedArgs();
+          auto content = std::find_if(named.begin(), named.end(), [](NamedArgSig const& namedsig) { return namedsig.name == "Content"; });
+          if (content != named.end()) {
+            auto value = content->value;
+            return getDocXml(std::get<std::string_view>(std::get<ElemSig>(value.value).value));
+          }
+        }
+      }
+      return {};
+    }
+
     static void write_enum_field(writer& w, Field const& field)
     {
         auto format = R"(        % = %,
@@ -192,7 +242,8 @@ namespace cppwinrt
 
         if (auto constant = field.Constant())
         {
-            w.write(format, field.Name(), *constant);
+            auto formatWithDoc = getDocXml(field) + format;
+            w.write(formatWithDoc, field.Name(), *constant);
         }
     }
 
@@ -202,9 +253,10 @@ namespace cppwinrt
     {
 %    };
 )";
+        auto formatWithDoc = getDocXml(type) + format;
 
         auto fields = type.FieldList();
-        w.write(format, type.TypeName(), fields.first.Signature().Type(), bind_each<write_enum_field>(fields));
+        w.write(formatWithDoc, type.TypeName(), fields.first.Signature().Type(), bind_each<write_enum_field>(fields));
     }
 
     static void write_enum_operators(writer& w, TypeDef const& type)
@@ -1114,7 +1166,7 @@ namespace cppwinrt
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
 
-        std::string_view format;
+        const char* format{ nullptr };
 
         if (is_noexcept(method))
         {
@@ -1133,7 +1185,10 @@ namespace cppwinrt
 )";
         }
 
-        w.write(format,
+        auto formatWithDoc = getDocXml(method) + format;
+
+
+        w.write(formatWithDoc,
             bind<write_comma_generic_typenames>(generics),
             signature.return_signature(),
             type_impl_name,
@@ -1765,7 +1820,7 @@ namespace cppwinrt
 
     static void write_produce_method(writer& w, MethodDef const& method)
     {
-        std::string_view format;
+      const char* format{ nullptr };
 
         if (is_noexcept(method))
         {
@@ -1794,7 +1849,8 @@ namespace cppwinrt
         std::string upcall = "this->shim().";
         upcall += get_name(method);
 
-        w.write(format,
+        auto formatWithDoc = getDocXml(method) + format;
+        w.write(formatWithDoc,
             get_abi_name(method),
             bind<write_produce_params>(signature),
             bind<write_produce_cleanup>(signature),
@@ -2305,6 +2361,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         }
     }
 
+
     static void write_interface(writer& w, TypeDef const& type)
     {
         auto type_name = type.TypeName();
@@ -2321,8 +2378,9 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         %(void* ptr, take_ownership_from_abi_t) noexcept : Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
 %%    };
 )";
+            auto formatWithDoc = getDocXml(type) + format;
 
-            w.write(format,
+            w.write(formatWithDoc,
                 type_name,
                 type_name,
                 bind<write_interface_requires>(type),
@@ -2560,18 +2618,20 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         }
     }
 
-    static void write_struct_field(writer& w, std::pair<std::string_view, std::string> const& field)
+    static void write_struct_field(writer& w, std::tuple<std::string_view, std::string, std::string> const& field)
     {
+      auto docxml = std::get<2>(field);
+      w.write(docxml);
         w.write("        @ %;\n",
-            field.second,
-            field.first);
+            std::get<1>(field),
+            std::get<0>(field));
     }
 
-    static void write_struct_equality(writer& w, std::vector<std::pair<std::string_view, std::string>> const& fields)
+    static void write_struct_equality(writer& w, std::vector<std::tuple<std::string_view, std::string, std::string>> const& fields)
     {
         for (size_t i = 0; i != fields.size(); ++i)
         {
-            w.write(" left.% == right.%", fields[i].first, fields[i].first);
+            w.write(" left.% == right.%", std::get<0>(fields[i]), std::get<0>(fields[i]));
 
             if (i + 1 != fields.size())
             {
@@ -2608,7 +2668,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             {
                 for (auto&& field : type.FieldList())
                 {
-                    fields.emplace_back(field.Name(), w.write_temp("%", field.Signature().Type()));
+                    fields.emplace_back(field.Name(), w.write_temp("%", field.Signature().Type()), getDocXml(field));
                 }
             }
 
@@ -2618,7 +2678,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             };
 
             TypeDef type;
-            std::vector<std::pair<std::string_view, std::string>> fields;
+            std::vector<std::tuple<std::string_view, std::string, std::string>> fields;
             bool is_noexcept{ false };
         };
 
@@ -2634,7 +2694,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         {
             for (auto&& field : left.fields)
             {
-                if (w.write_temp("%", right.type) == field.second)
+                if (w.write_temp("%", right.type) == std::get<1>(field))
                 {
                     return true;
                 }
@@ -2669,7 +2729,9 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             auto name = type.type.TypeName();
             std::string_view is_noexcept = type.is_noexcept ? " noexcept" : "";
 
-            w.write(format,
+            auto formatWithDoc = getDocXml(type.type) + format;
+
+            w.write(formatWithDoc,
                 name,
                 bind_each<write_struct_field>(type.fields),
                 name,
@@ -2682,12 +2744,12 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
             for (auto&& field : type.fields)
             {
-                if (field.second.find(':') == std::string::npos)
+                if (std::get<1>(field).find(':') == std::string::npos)
                 {
                     continue;
                 }
 
-                if (!starts_with(field.second, cpp_namespace))
+                if (!starts_with(std::get<1>(field), cpp_namespace))
                 {
                     promote = true;
                 }
@@ -3070,7 +3132,9 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 %%%    };
 )";
 
-        w.write(format,
+        auto formatWithDoc = getDocXml(type) + format;
+
+        w.write(formatWithDoc,
             type_name,
             base_type,
             bind<write_class_base>(type),
@@ -3095,7 +3159,9 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 %%%    };
 )";
 
-        w.write(format,
+        auto formatWithDoc = getDocXml(type) + format;
+
+        w.write(formatWithDoc,
             type_name,
             base_type,
             bind<write_fast_class_requires>(type),

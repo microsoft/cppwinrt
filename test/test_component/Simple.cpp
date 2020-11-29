@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "Simple.h"
 #include "Simple.g.cpp"
-
+#include "winrt/test_component.h"
 namespace winrt::test_component::implementation
 {
     void Simple::Method()
@@ -23,5 +23,19 @@ namespace winrt::test_component::implementation
     Windows::Foundation::IInspectable Simple::Object(Windows::Foundation::DateTime const&)
     {
         throw hresult_not_implemented();
+    }
+
+    void DocStringTest() {
+      winrt::test_component::InterfaceWithDoc id;
+      id.f();
+      auto ip = id.InterfacePropertyWithDoc();
+
+      auto cat = winrt::test_component::EnumWithDoc::Cat;
+
+      winrt::test_component::StructWithDoc sd{};
+      auto x = sd.val;
+      
+      winrt::test_component::ClassWithDoc cd{nullptr};
+      cd.g();
     }
 }
