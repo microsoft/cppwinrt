@@ -30,7 +30,7 @@ namespace winrt::test_component::implementation
       id.f();
       auto ip = id.InterfacePropertyWithDoc();
 
-      auto cat = winrt::test_component::EnumWithDoc::Cat;
+      auto cat = winrt::test_component::EnumWithDoc::Gecko;
 
       winrt::test_component::StructWithDoc sd{};
       auto x = sd.val;
