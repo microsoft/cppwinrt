@@ -204,31 +204,35 @@ namespace cppwinrt
     }
 
 
-    static std::string getDocXml(std::string_view doc_string)
+    static std::string get_doc_xml(std::string_view doc_string)
     {
       std::string ret{};
-      if (!doc_string.empty()) {
+      if (!doc_string.empty())
+      {
         ret = "    /// <summary>" + std::string(doc_string) + "</summary>\r\n";
       }
       return ret;
     }
 
     template<typename T>
-    static std::string getDocXml(T const& type)
+    static std::string get_doc_xml(T const& type)
     {
       if (auto const& attr = get_attribute(type, "HelpStringAttribute"))
       {
         auto sig = attr.Value();
         auto fixed = sig.FixedArgs();
-        if (fixed.size() == 1) {
-          return getDocXml(std::get<std::string_view>(std::get<ElemSig>(fixed[0].value).value));
+        if (fixed.size() == 1)
+        {
+          return get_doc_xml(std::get<std::string_view>(std::get<ElemSig>(fixed[0].value).value));
         }
-        else {
+        else
+        {
           auto named = sig.NamedArgs();
           auto content = std::find_if(named.begin(), named.end(), [](NamedArgSig const& namedsig) { return namedsig.name == "Content"; });
-          if (content != named.end()) {
+          if (content != named.end())
+          {
             auto value = content->value;
-            return getDocXml(std::get<std::string_view>(std::get<ElemSig>(value.value).value));
+            return get_doc_xml(std::get<std::string_view>(std::get<ElemSig>(value.value).value));
           }
         }
       }
@@ -242,7 +246,7 @@ namespace cppwinrt
 
         if (auto constant = field.Constant())
         {
-            auto formatWithDoc = getDocXml(field) + format;
+            auto formatWithDoc = get_doc_xml(field) + format;
             w.write(formatWithDoc, field.Name(), *constant);
         }
     }
@@ -253,7 +257,7 @@ namespace cppwinrt
     {
 %    };
 )";
-        auto formatWithDoc = getDocXml(type) + format;
+        auto formatWithDoc = get_doc_xml(type) + format;
 
         auto fields = type.FieldList();
         w.write(formatWithDoc, type.TypeName(), fields.first.Signature().Type(), bind_each<write_enum_field>(fields));
@@ -1033,7 +1037,7 @@ namespace cppwinrt
         auto type = method.Parent();
 
         auto implFormat = "        %WINRT_IMPL_AUTO(%) %(%) const%;\n";
-        auto implFormatWithDoc = getDocXml(method) + implFormat;
+        auto implFormatWithDoc = get_doc_xml(method) + implFormat;
 
         w.write(implFormatWithDoc,
             is_get_overload(method) ? "[[nodiscard]] " : "",
@@ -1188,7 +1192,7 @@ namespace cppwinrt
 )";
         }
 
-        auto formatWithDoc = getDocXml(method) + format;
+        auto formatWithDoc = get_doc_xml(method) + format;
 
 
         w.write(formatWithDoc,
@@ -1852,7 +1856,7 @@ namespace cppwinrt
         std::string upcall = "this->shim().";
         upcall += get_name(method);
 
-        auto formatWithDoc = getDocXml(method) + format;
+        auto formatWithDoc = get_doc_xml(method) + format;
         w.write(formatWithDoc,
             get_abi_name(method),
             bind<write_produce_params>(signature),
@@ -2381,7 +2385,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         %(void* ptr, take_ownership_from_abi_t) noexcept : Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
 %%    };
 )";
-            auto formatWithDoc = getDocXml(type) + format;
+            auto formatWithDoc = get_doc_xml(type) + format;
 
             w.write(formatWithDoc,
                 type_name,
@@ -2671,7 +2675,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             {
                 for (auto&& field : type.FieldList())
                 {
-                    fields.emplace_back(field.Name(), w.write_temp("%", field.Signature().Type()), getDocXml(field));
+                    fields.emplace_back(field.Name(), w.write_temp("%", field.Signature().Type()), get_doc_xml(field));
                 }
             }
 
@@ -2732,7 +2736,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             auto name = type.type.TypeName();
             std::string_view is_noexcept = type.is_noexcept ? " noexcept" : "";
 
-            auto formatWithDoc = getDocXml(type.type) + format;
+            auto formatWithDoc = get_doc_xml(type.type) + format;
 
             w.write(formatWithDoc,
                 name,
@@ -3135,7 +3139,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 %%%    };
 )";
 
-        auto formatWithDoc = getDocXml(type) + format;
+        auto formatWithDoc = get_doc_xml(type) + format;
 
         w.write(formatWithDoc,
             type_name,
@@ -3162,7 +3166,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 %%%    };
 )";
 
-        auto formatWithDoc = getDocXml(type) + format;
+        auto formatWithDoc = get_doc_xml(type) + format;
 
         w.write(formatWithDoc,
             type_name,
