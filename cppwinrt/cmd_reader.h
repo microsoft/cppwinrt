@@ -137,7 +137,9 @@ namespace cppwinrt
             HKEY_LOCAL_MACHINE,
             L"SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots",
             0,
-            KEY_READ,
+            // https://task.ms/29349404 - The SDK sometimes stores the 64 bit location into KitsRoot10 which is wrong,
+            // this breaks 64-bit cppwinrt.exe, so work around this by forcing to use the WoW64 hive.
+            KEY_READ | KEY_WOW64_32KEY, 
             &key))
         {
             throw std::invalid_argument("Could not find the Windows SDK in the registry");
