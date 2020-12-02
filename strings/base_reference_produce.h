@@ -266,8 +266,6 @@ namespace winrt::impl
     template <typename T, typename From>
     T unbox_value_type(From&& value)
     {
-        static_assert(!is_com_interface_v<T>);
-
         if (!value)
         {
             throw hresult_no_interface();
