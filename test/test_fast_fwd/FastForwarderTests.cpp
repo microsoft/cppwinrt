@@ -202,7 +202,7 @@ namespace winrt::FastForwarderTest
 
 TEST_CASE("MockUri")
 {
-    Uri uri{ L"http://aka.ms/xlang" };
+    Uri uri{ L"http://aka.ms/cppwinrt" };
 
     auto str = make_fast_forwarder<IStringable>(uri, 1);
     REQUIRE_STR_EQUAL(uri.DisplayUri(), str.ToString());
