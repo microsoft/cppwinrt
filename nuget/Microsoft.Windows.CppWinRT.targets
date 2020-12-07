@@ -28,8 +28,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTParameters Condition="'$(CppWinRTFastAbi)'=='true'">$(CppWinRTParameters) -fastabi</CppWinRTParameters>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)bin\"</CppWinRTPath>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)"</CppWinRTPath>
-        <!-- By default enable C++/WinRT to include target platform winmds if we didn't overide sdk references and we are not a windows store app -->
-        <CppWinRTImplicitlyExpandTargetPlatform Condition="'$(CppWinRTImplicitlyExpandTargetPlatform)' == '' and '$(CppWinRTOverrideSDKReferences)' != 'true' and '$(WindowsStoreApp)' != 'true'">true</CppWinRTImplicitlyExpandTargetPlatform>
+        <!-- By default enable C++/WinRT to include target platform winmds if we didn't overide sdk references and the C++ Project system isn't already adding them -->
+        <!-- _PrepareForReferenceResolution adds the references if TargetPlatformIdentifier is UAP -->
+        <CppWinRTImplicitlyExpandTargetPlatform Condition="'$(CppWinRTImplicitlyExpandTargetPlatform)' == '' and '$(CppWinRTOverrideSDKReferences)' != 'true' and '$(TargetPlatformIdentifier)' != 'UAP'">true</CppWinRTImplicitlyExpandTargetPlatform>
         <XamlLanguage Condition="'$(CppWinRTProjectLanguage)' == 'C++/CX'">C++</XamlLanguage>
         <XamlNamespace Condition="'$(XamlNamespace)' == ''">Windows.UI.Xaml</XamlNamespace>
         <XamlMetaDataProviderIdl Condition="'$(XamlMetaDataProviderIdl)'== ''">$(GeneratedFilesDir)XamlMetaDataProvider.idl</XamlMetaDataProviderIdl>
