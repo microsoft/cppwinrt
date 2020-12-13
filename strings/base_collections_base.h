@@ -301,7 +301,7 @@ WINRT_EXPORT namespace winrt
     {
         Windows::Foundation::Collections::IVectorView<T> GetView() const noexcept
         {
-            return static_cast<D const&>(*this);
+            return make<vector_view_wrapper>(static_cast<D const&>(*this)); //Return a new wrapping object to ensure correct GetRuntimeClassName for .Net Native
         }
 
         void SetAt(uint32_t const index, T const& value)
@@ -410,6 +410,39 @@ WINRT_EXPORT namespace winrt
                 });
             }
         }
+
+        struct vector_view_wrapper : implements<vector_view_wrapper, Windows::Foundation::Collections::IVectorView<T>, Windows::Foundation::Collections::IIterable<T>>
+        {
+            vector_view_wrapper(Windows::Foundation::Collections::IVectorView<T> const& vectorView) : m_vectorView{ vectorView } {};
+
+            Windows::Foundation::Collections::IIterator<T> First() const {
+                return m_vectorView.First();
+            }
+
+            T GetAt(uint32_t const index) const
+            {
+                return m_vectorView.GetAt(index);
+            }
+
+            uint32_t Size() const noexcept
+            {
+                return m_vectorView.Size();
+            }
+
+            bool IndexOf(T const& value, uint32_t& index) const noexcept
+            {
+                return m_vectorView.IndexOf(value, index);
+            }
+
+            uint32_t GetMany(uint32_t const startIndex, array_view<T> values) const
+            {
+                return m_vectorView.GetMany(startIndex, values);
+            }
+
+        private:
+
+            Windows::Foundation::Collections::IVectorView<T> m_vectorView;
+        };
     };
 
     template <typename D, typename T>
@@ -543,7 +576,7 @@ WINRT_EXPORT namespace winrt
     {
         Windows::Foundation::Collections::IMapView<K, V> GetView() const
         {
-            return static_cast<D const&>(*this);
+            return make<map_view_wrapper>(static_cast<D const&>(*this)); //Return a new wrapping object to ensure correct GetRuntimeClassName for .Net Native
         }
 
         bool Insert(K const& key, V const& value)
@@ -585,6 +618,41 @@ WINRT_EXPORT namespace winrt
             this->increment_version();
             oldContainer.assign(static_cast<D&>(*this).get_container());
         }
+
+    private:
+
+        struct map_view_wrapper : implements<map_view_wrapper, Windows::Foundation::Collections::IMapView<K, V>, Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<K, V>>>
+        {
+            map_view_wrapper(Windows::Foundation::Collections::IMapView<K, V> const& mapView) : m_mapView{ mapView } {};
+
+            Windows::Foundation::Collections::IIterator<Windows::Foundation::Collections::IKeyValuePair<K, V>> First() const {
+                return m_mapView.First();
+            }
+
+            V Lookup(K const& key) const
+            {
+                return m_mapView.Lookup(key);
+            }
+
+            uint32_t Size() const noexcept
+            {
+                return m_mapView.Size();
+            }
+
+            bool HasKey(K const& key) const noexcept
+            {
+                return m_mapView.HasKey(key);
+            }
+
+            void Split(Windows::Foundation::Collections::IMapView<K, V>& first, Windows::Foundation::Collections::IMapView<K, V>& second) const noexcept
+            {
+                m_mapView.Split(first, second);
+            }
+
+        private:
+
+            Windows::Foundation::Collections::IMapView<K, V> m_mapView;
+        };
     };
 
     template <typename D, typename K, typename V>
