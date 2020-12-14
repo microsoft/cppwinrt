@@ -3,7 +3,7 @@ namespace winrt::impl
 {
     template <typename K, typename V, typename Container, typename ThreadingBase>
     struct map_impl :
-        implements<map_impl<K, V, Container, ThreadingBase>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+        implements<map_impl<K, V, Container, ThreadingBase>, wfc::IMap<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
         map_base<map_impl<K, V, Container, ThreadingBase>, K, V>,
         ThreadingBase
     {

@@ -792,24 +792,6 @@ namespace winrt::impl
             return NonDelegatingRelease();
         }
 
-        struct abi_guard
-        {
-            abi_guard(D& derived) :
-                m_derived(derived)
-            {
-                m_derived.abi_enter();
-            }
-
-            ~abi_guard()
-            {
-                m_derived.abi_exit();
-            }
-
-        private:
-
-            D& m_derived;
-        };
-
         void abi_enter() const noexcept {}
         void abi_exit() const noexcept {}
 
@@ -1258,6 +1240,17 @@ namespace winrt::impl
     {
         return detach_abi(std::forward<T>(object));
     }
+
+    template <typename T>
+    class has_abi_guard
+    {
+        template <typename U, typename = typename U::abi_guard> static constexpr bool get_value(int) { return true; }
+        template <typename U> static constexpr bool get_value(...) { return false; }
+
+    public:
+
+        static constexpr bool value = get_value<T>(0);
+    };
 }
 
 WINRT_EXPORT namespace winrt
@@ -1270,6 +1263,8 @@ WINRT_EXPORT namespace winrt
         static_assert(std::is_destructible_v<D>, "C++/WinRT implementation types must have a public destructor");
         static_assert(!std::is_final_v<D>, "C++/WinRT implementation types must not be final");
 #endif
+
+        static_assert(!impl::has_abi_guard<D>::value, "C++/WinRT abi_guard no longer supported: use abi_enter/abi_exit methods instead");
 
         using I = typename impl::implements_default_interface<D>::type;
 
@@ -1302,6 +1297,9 @@ WINRT_EXPORT namespace winrt
         static_assert(std::is_destructible_v<D>, "C++/WinRT implementation types must have a public destructor");
         static_assert(!std::is_final_v<D>, "C++/WinRT implementation types must not be final");
 #endif
+
+        static_assert(!impl::has_abi_guard<D>::value, "C++/WinRT abi_guard no longer supported: use abi_enter/abi_exit methods instead");
+
         if constexpr (std::is_same_v<typename impl::implements_default_interface<D>::type, Windows::Foundation::IActivationFactory>)
         {
             static_assert(sizeof...(args) == 0);

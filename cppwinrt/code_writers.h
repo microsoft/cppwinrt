@@ -1771,7 +1771,7 @@ namespace cppwinrt
         {
             format = R"(        int32_t __stdcall %(%) noexcept final
         {
-%            typename D::abi_guard guard(this->shim());
+%            abi_guard<D> guard(this->shim());
             %
             return 0;
         }
@@ -1781,7 +1781,7 @@ namespace cppwinrt
         {
             format = R"(        int32_t __stdcall %(%) noexcept final try
         {
-%            typename D::abi_guard guard(this->shim());
+%            abi_guard<D> guard(this->shim());
             %
             return 0;
         }

@@ -31,7 +31,7 @@ TEST_CASE("produce_IVector_int32_t")
     REQUIRE(v.Size() == 3);
 
     IVectorView<int32_t> view = v.GetView();
-    REQUIRE(view.as<IVector<int32_t>>() == v);
+    REQUIRE(view.Size() == v.Size());
 
     uint32_t index = 0;
     REQUIRE(v.IndexOf(2, index));
@@ -219,7 +219,7 @@ TEST_CASE("produce_IVector_hstring")
     REQUIRE(v.Size() == 3);
 
     IVectorView<hstring> view = v.GetView();
-    REQUIRE(view.as<IVector<hstring>>() == v);
+    REQUIRE(view.Size() == v.Size());
 
     uint32_t index = 0;
     REQUIRE(v.IndexOf(L"2", index));
@@ -412,7 +412,7 @@ TEST_CASE("produce_IVector_HttpProgress")
     REQUIRE(v.Size() == 3);
 
     IVectorView<HttpProgress> view = v.GetView();
-    REQUIRE(view.as<IVector<HttpProgress>>() == v);
+    REQUIRE(view.Size() == v.Size());
 
     uint32_t index = 0;
     REQUIRE(v.IndexOf(make_HttpProgress(2), index));
@@ -568,7 +568,7 @@ TEST_CASE("produce_IVector_JsonValue")
     REQUIRE(v.Size() == 3);
 
     IVectorView<JsonValue> view = v.GetView();
-    REQUIRE(view.as<IVector<JsonValue>>() == v);
+    REQUIRE(view.Size() == v.Size());
 
     v.InsertAt(0, JsonValue::CreateNumberValue(0));
     v.InsertAt(v.Size(), JsonValue::CreateNumberValue(4));

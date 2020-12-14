@@ -431,6 +431,7 @@
     <ClCompile Include="uniform_in_params.cpp" />
     <ClCompile Include="variadic_delegate.cpp" />
     <ClCompile Include="velocity.cpp" />
+    <ClCompile Include="view.cpp" />
     <ClCompile Include="when.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

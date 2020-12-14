@@ -3,7 +3,7 @@ namespace winrt::impl
 {
     template <typename T, typename Container, typename ThreadingBase>
     struct vector_impl :
-        implements<vector_impl<T, Container, ThreadingBase>, wfc::IVector<T>, wfc::IVectorView<T>, wfc::IIterable<T>>,
+        implements<vector_impl<T, Container, ThreadingBase>, wfc::IVector<T>, wfc::IIterable<T>>,
         vector_base<vector_impl<T, Container, ThreadingBase>, T>,
         ThreadingBase
     {

@@ -299,9 +299,9 @@ WINRT_EXPORT namespace winrt
     template <typename D, typename T>
     struct vector_base : vector_view_base<D, T, impl::collection_version>
     {
-        Windows::Foundation::Collections::IVectorView<T> GetView() const noexcept
+        Windows::Foundation::Collections::IVectorView<T> GetView()
         {
-            return static_cast<D const&>(*this);
+            return make<view>(static_cast<D&>(*this).get_strong());
         }
 
         void SetAt(uint32_t const index, T const& value)
@@ -390,6 +390,41 @@ WINRT_EXPORT namespace winrt
         }
 
     private:
+
+        struct view :
+            implements<view, Windows::Foundation::Collections::IVectorView<T>, Windows::Foundation::Collections::IIterable<T>>,
+            vector_view_base<view, T, impl::collection_version>
+        {
+            view(com_ptr<D>&& base) :
+                m_base(base)
+            {
+            }
+
+            auto& get_container() const noexcept
+            {
+                return m_base->get_container();
+            }
+
+            template <typename U>
+            auto unwrap_value(U&& value) const noexcept
+            {
+                return m_base->unwrap_value(value);
+            }
+
+            void abi_enter()
+            {
+                m_base->abi_enter();
+            }
+
+            void abi_exit()
+            {
+                m_base->abi_exit();
+            }
+
+        private:
+
+            com_ptr<D> m_base;
+        };
 
         template <typename InputIt>
         void assign(InputIt first, InputIt last)
@@ -541,9 +576,9 @@ WINRT_EXPORT namespace winrt
     template <typename D, typename K, typename V>
     struct map_base : map_view_base<D, K, V, impl::collection_version>
     {
-        Windows::Foundation::Collections::IMapView<K, V> GetView() const
+        Windows::Foundation::Collections::IMapView<K, V> GetView()
         {
-            return static_cast<D const&>(*this);
+            return make<view>(static_cast<D&>(*this).get_strong());
         }
 
         bool Insert(K const& key, V const& value)
@@ -585,6 +620,49 @@ WINRT_EXPORT namespace winrt
             this->increment_version();
             oldContainer.assign(static_cast<D&>(*this).get_container());
         }
+
+    private:
+
+        struct view :
+            implements<view, Windows::Foundation::Collections::IMapView<K, V>, Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<K, V>>>,
+            map_view_base<view, K, V, impl::collection_version>
+        {
+            view(com_ptr<D>&& base) :
+                m_base(base)
+            {
+            }
+
+            auto& get_container() const noexcept
+            {
+                return m_base->get_container();
+            }
+
+            template <typename U>
+            auto wrap_value(U&& value) const noexcept
+            {
+                return m_base->wrap_value(value);
+            }
+
+            template <typename U>
+            auto unwrap_value(U&& value) const noexcept
+            {
+                return m_base->unwrap_value(value);
+            }
+
+            void abi_enter()
+            {
+                m_base->abi_enter();
+            }
+
+            void abi_exit()
+            {
+                m_base->abi_exit();
+            }
+
+        private:
+
+            com_ptr<D> m_base;
+        };
     };
 
     template <typename D, typename K, typename V>

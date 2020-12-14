@@ -6,7 +6,7 @@ namespace winrt::impl
 
     template <typename K, typename V, typename Container, typename ThreadingBase>
     struct observable_map_impl :
-        implements<observable_map_impl<K, V, Container, ThreadingBase>, wfc::IObservableMap<K, V>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+        implements<observable_map_impl<K, V, Container, ThreadingBase>, wfc::IObservableMap<K, V>, wfc::IMap<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
         observable_map_base<observable_map_impl<K, V, Container, ThreadingBase>, K, V>,
         ThreadingBase
     {

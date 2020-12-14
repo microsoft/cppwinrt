@@ -1,6 +1,25 @@
 
 namespace winrt::impl
 {
+    template <typename D>
+    struct abi_guard
+    {
+        abi_guard(D& derived) :
+            m_derived(derived)
+        {
+            m_derived.abi_enter();
+        }
+
+        ~abi_guard()
+        {
+            m_derived.abi_exit();
+        }
+
+    private:
+
+        D& m_derived;
+    };
+
     struct library_traits
     {
         using type = void*;
@@ -426,7 +445,7 @@ namespace winrt::impl
         int32_t __stdcall ActivateInstance(void** instance) noexcept final try
         {
             *instance = nullptr;
-            typename D::abi_guard guard(this->shim());
+            abi_guard<D> guard(this->shim());
             *instance = detach_abi(this->shim().ActivateInstance());
             return 0;
         }

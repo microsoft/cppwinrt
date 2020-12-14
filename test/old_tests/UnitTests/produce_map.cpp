@@ -87,8 +87,7 @@ TEST_CASE("produce_IMap_int32_t_hstring")
     REQUIRE(!m.HasKey(3));
 
     IMapView<int32_t, hstring> view = m.GetView();
-    const bool same = view.as<IMap<int32_t, hstring>>() == m;
-    REQUIRE(same);
+    REQUIRE(view.Size() == m.Size());
 
     REQUIRE(m.Size() == 2);
     m.Remove(1); // existing
@@ -171,8 +170,7 @@ TEST_CASE("produce_IMap_hstring_int32_t")
     REQUIRE(!m.HasKey(L"three"));
 
     IMapView<hstring, int32_t> view = m.GetView();
-    const bool same = view.as<IMap<hstring, int32_t>>() == m;
-    REQUIRE(same);
+    REQUIRE(view.Size() == m.Size());
 
     REQUIRE(m.Size() == 2);
     m.Remove(L"one"); // existing
