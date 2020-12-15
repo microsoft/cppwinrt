@@ -211,9 +211,14 @@ static HRESULT ObjectToString(
     _In_ DkmVisualizedExpression* pExpression,
     _In_ DkmPointerValueHome* pObject,
     bool isAbiObject,
-    _Out_ com_ptr<DkmString>& pValue
+    _Out_ com_ptr<DkmString>& pValue,
+    bool* unavailable = nullptr
 )
 {
+    if (unavailable) 
+    {
+        *unavailable = false;
+    }
     if (SUCCEEDED(EvaluatePropertyString({ IID_IStringable, 0, PropertyCategory::String }, pExpression, pObject, isAbiObject, pValue)))
     {
         if (pValue && pValue->Length() > 0)
@@ -232,6 +237,10 @@ static HRESULT ObjectToString(
 
     // VirtualQuery validation failed (as determined by no runtime class name) or an
     // exception escaped WINRT_abi_val (e.g, bad pointer, which we try to avoid via VirtualQuery)
+    if (unavailable)
+    {
+        *unavailable = true;
+    }
     return DkmString::Create(L"<Object uninitialized or information unavailable>", pValue.put());
 }
 
@@ -534,18 +543,55 @@ HRESULT object_visualizer::CreateEvaluationResult(_In_ DkmVisualizedExpression* 
     return S_OK;
 }
 
+#ifdef COMPONENT_DEPLOYMENT
+static std::set<UINT64> g_refresh_cache;
+bool requires_refresh(UINT64 address, DkmEvaluationFlags_t evalFlags)
+{
+    auto refreshed = g_refresh_cache.find(address) != g_refresh_cache.end();
+    return !refreshed && ((evalFlags & DkmEvaluationFlags::EnableExtendedSideEffects) != DkmEvaluationFlags::EnableExtendedSideEffects);
+}
+void cache_refresh(UINT64 address)
+{
+    g_refresh_cache.insert(address);
+}
+#else
+bool requires_refresh(UINT64, DkmEvaluationFlags_t)
+{
+    return false;
+}
+void cache_refresh(UINT64)
+{
+}
+#endif
+
 HRESULT object_visualizer::CreateEvaluationResult(_Deref_out_ DkmEvaluationResult** ppResultObject)
 {
     com_ptr<DkmRootVisualizedExpression> pRootVisualizedExpression = m_pVisualizedExpression.as<DkmRootVisualizedExpression>();
 
     auto valueHome = make_com_ptr(m_pVisualizedExpression->ValueHome());
     com_ptr<DkmPointerValueHome> pPointerValueHome = valueHome.as<DkmPointerValueHome>();
-
+    auto address = pPointerValueHome->Address();
+    
     com_ptr<DkmString> pValue;
-    IF_FAIL_RET(ObjectToString(m_pVisualizedExpression.get(), pPointerValueHome.get(), m_isAbiObject, pValue));
+    DkmEvaluationResultFlags_t evalResultFlags = DkmEvaluationResultFlags::ReadOnly;
+    if (requires_refresh(address, m_pVisualizedExpression->InspectionContext()->EvaluationFlags()))
+    {
+        IF_FAIL_RET(DkmString::Create(L"<Refresh to view properties>", pValue.put()));
+        evalResultFlags |= DkmEvaluationResultFlags::EnableExtendedSideEffectsUponRefresh | DkmEvaluationResultFlags::CanEvaluateNow;
+    }
+    else
+    {
+        cache_refresh(address);
+        bool unavailable;
+        IF_FAIL_RET(ObjectToString(m_pVisualizedExpression.get(), pPointerValueHome.get(), m_isAbiObject, pValue, &unavailable));
+        if (!unavailable)
+        {
+            evalResultFlags |= DkmEvaluationResultFlags::Expandable;
+        }
+    }
 
     com_ptr<DkmDataAddress> pAddress;
-    IF_FAIL_RET(DkmDataAddress::Create(m_pVisualizedExpression->StackFrame()->RuntimeInstance(), pPointerValueHome->Address(), nullptr, pAddress.put()));
+    IF_FAIL_RET(DkmDataAddress::Create(m_pVisualizedExpression->StackFrame()->RuntimeInstance(), address, nullptr, pAddress.put()));
 
     com_ptr<DkmSuccessEvaluationResult> pSuccessEvaluationResult;
     IF_FAIL_RET(DkmSuccessEvaluationResult::Create(
@@ -553,7 +599,7 @@ HRESULT object_visualizer::CreateEvaluationResult(_Deref_out_ DkmEvaluationResul
         m_pVisualizedExpression->StackFrame(),
         pRootVisualizedExpression->Name(),
         pRootVisualizedExpression->FullName(),
-        DkmEvaluationResultFlags::Expandable | DkmEvaluationResultFlags::ReadOnly,
+        evalResultFlags,
         pValue.get(),
         pValue.get(),
         pRootVisualizedExpression->Type(),
