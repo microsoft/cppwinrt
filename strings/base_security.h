@@ -55,7 +55,7 @@ WINRT_EXPORT namespace winrt
 
         access_token() = default;
         access_token(access_token&& other) = default;
-        access_token& operator=(access_token&& other) = default;
+        access_token& operator=(access_token&& other) & = default;
 
         access_token impersonate() const
         {
