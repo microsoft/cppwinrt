@@ -2319,6 +2319,10 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
     {
         %(std::nullptr_t = nullptr) noexcept {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
+        %(% const&) noexcept = default;
+        %(%&&) noexcept = default;
+        %& operator=(% const&) & noexcept = default;
+        %& operator=(%&&) & noexcept = default;
 %%    };
 )";
 
@@ -2328,6 +2332,14 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                 bind<write_interface_requires>(type),
                 type_name,
                 type_name,
+                type_name, // %(T const&)
+                type_name, // T(% const&)
+                type_name, // %(T&&)
+                type_name, // T(%&&)
+                type_name, // %& operator=(T const&)
+                type_name, // T& operator=(% const&)
+                type_name, // %& operator=(T&&)
+                type_name, // T& operator=(%&&)
                 bind<write_interface_usings>(type),
                 bind<write_interface_extensions>(type));
         }
@@ -2342,6 +2354,10 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
     {%
         %(std::nullptr_t = nullptr) noexcept {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
+        %(% const&) noexcept = default;
+        %(%&&) noexcept = default;
+        %& operator=(% const&) & noexcept = default;
+        %& operator=(%&&) & noexcept = default;
 %%    };
 )";
 
@@ -2353,6 +2369,14 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                 bind<write_generic_asserts>(generics),
                 type_name,
                 type_name,
+                type_name, // %(T const&)
+                type_name, // T(% const&)
+                type_name, // %(T&&)
+                type_name, // T(%&&)
+                type_name, // %& operator=(T const&)
+                type_name, // T& operator=(% const&)
+                type_name, // %& operator=(T&&)
+                type_name, // T& operator=(%&&)
                 bind<write_interface_usings>(type),
                 bind<write_interface_extensions>(type));
         }
@@ -2378,6 +2402,10 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
     {%
         %(std::nullptr_t = nullptr) noexcept {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : Windows::Foundation::IUnknown(ptr, take_ownership_from_abi) {}
+        %(% const&) noexcept = default;
+        %(%&&) noexcept = default;
+        %& operator=(% const&) & noexcept = default;
+        %& operator=(%&&) & noexcept = default;
         template <typename L> %(L lambda);
         template <typename F> %(F* function);
         template <typename O, typename M> %(O* object, M method);
@@ -2390,10 +2418,18 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         method_signature signature{ get_delegate_method(type) };
 
         w.write(format,
-            type_name,
+            type_name, // struct %
             bind<write_generic_asserts>(generics),
             type_name,
             type_name,
+            type_name, // %(T const&)
+            type_name, // T(% const&)
+            type_name, // %(T&&)
+            type_name, // T(%&&)
+            type_name, // %& operator=(T const&)
+            type_name, // T& operator=(% const&)
+            type_name, // %& operator=(T&&)
+            type_name, // T& operator=(%&&)
             type_name,
             type_name,
             type_name,
@@ -3067,7 +3103,11 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
     {
         %(std::nullptr_t) noexcept {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : %(ptr, take_ownership_from_abi) {}
-%%%    };
+%        %(% const&) noexcept = default;
+        %(%&&) noexcept = default;
+        %& operator=(% const&) & noexcept = default;
+        %& operator=(%&&) & noexcept = default;
+%%    };
 )";
 
         w.write(format,
@@ -3079,6 +3119,14 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             type_name,
             base_type,
             bind<write_constructor_declarations>(type, factories),
+            type_name, // %(T const&)
+            type_name, // T(% const&)
+            type_name, // %(T%&)
+            type_name, // T(%&&)
+            type_name, // %& operator=(T const&)
+            type_name, // T& operator=(% const&)
+            type_name, // %& operator=(T&&)
+            type_name, // T& operator=(%&&)
             bind<write_class_usings>(type),
             bind_each<write_static_declaration>(factories, type));
     }
@@ -3092,7 +3140,11 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
     {
         %(std::nullptr_t) noexcept {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : %(ptr, take_ownership_from_abi) {}
-%%%    };
+%        %(% const&) noexcept = default;
+        %(%&&) noexcept = default;
+        %& operator=(% const&) & noexcept = default;
+        %& operator=(%&&) & noexcept = default;
+%%    };
 )";
 
         w.write(format,
@@ -3103,6 +3155,14 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             type_name,
             base_type,
             bind<write_constructor_declarations>(type, factories),
+            type_name, // %(T const&)
+            type_name, // T(% const&)
+            type_name, // %(T%&)
+            type_name, // T(%&&)
+            type_name, // %& operator=(T const&)
+            type_name, // T& operator=(% const&)
+            type_name, // %& operator=(T&&)
+            type_name, // T& operator=(%&&)
             bind<write_fast_class_base_declarations>(type),
             bind_each<write_static_declaration>(factories, type));
     }

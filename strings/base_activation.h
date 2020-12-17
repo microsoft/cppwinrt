@@ -516,6 +516,10 @@ WINRT_EXPORT namespace winrt
         {
             IActivationFactory(std::nullptr_t = nullptr) noexcept {}
             IActivationFactory(void* ptr, take_ownership_from_abi_t) noexcept : IInspectable(ptr, take_ownership_from_abi) {}
+            IActivationFactory(IActivationFactory const&) noexcept = default;
+            IActivationFactory(IActivationFactory&&) noexcept = default;
+            IActivationFactory& operator=(IActivationFactory const&) & noexcept = default;
+            IActivationFactory& operator=(IActivationFactory&&) & noexcept = default;
 
             template <typename T>
             T ActivateInstance() const
