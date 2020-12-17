@@ -247,7 +247,10 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
         <!-- Add C++/WinRT primary WinMD to the WinMDFullPath if CppWinRTGenerateWindowsMetadata is true -->
         <ItemGroup>
-            <WinMDFullPath Include="$(CppWinRTProjectWinMD)"  Condition="'$(CppWinRTGenerateWindowsMetadata)' == 'true'">
+            <!-- Create ItemGroup to evaluate FullPath -->
+            <_CppWinRTProjectWinMDItems Include="$(CppWinRTProjectWinMD)" />
+
+            <WinMDFullPath Include="@(_CppWinRTProjectWinMDItems->FullPath()->Distinct()->ClearMetadata())" Condition="'$(CppWinRTGenerateWindowsMetadata)' == 'true'">
                 <TargetPath>$([System.IO.Path]::GetFileName('$(CppWinRTProjectWinMD)'))</TargetPath>
                 <Primary>true</Primary>
                 <Implementation Condition="'$(TargetExt)' == '.dll'">$(WinMDImplementationPath)$(TargetName)$(TargetExt)</Implementation>
@@ -256,6 +259,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
                 <ProjectName>$(MSBuildProjectName)</ProjectName>
                 <ProjectType>$(ConfigurationType)</ProjectType>
             </WinMDFullPath>
+
+            <_CppWinRTProjectWinMDItems Remove="$(CppWinRTProjectWinMD)" />
         </ItemGroup>
 
         <Message Text="GetResolvedWinMD: @(WinMDFullPath->'%(FullPath)')" Importance="$(CppWinRTVerbosity)"/>
