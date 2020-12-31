@@ -197,14 +197,41 @@ namespace winrt::impl
         );
     }
 
-    constexpr uint32_t to_guid(uint8_t a, uint8_t b, uint8_t c, uint8_t d) noexcept
+    template <typename T>
+    constexpr uint8_t hex_to_uint(T const c) noexcept
     {
-        return (static_cast<uint32_t>(d) << 24) | (static_cast<uint32_t>(c) << 16) | (static_cast<uint32_t>(b) << 8) | static_cast<uint32_t>(a);
+        if (c >= static_cast<T>('0') && c <= static_cast<T>('9'))
+        {
+            return static_cast<uint8_t>(c - static_cast<T>('0'));
+        }
+        else if (c >= static_cast<T>('A') && c <= static_cast<T>('F'))
+        {
+            return static_cast<uint8_t>(10 + c - static_cast<T>('A'));
+        }
+        else if (c >= static_cast<T>('a') && c <= static_cast<T>('f'))
+        {
+            return static_cast<uint8_t>(10 + c - static_cast<T>('a'));
+        }
+        else 
+        {
+            std::terminate();
+        }
+    }
+
+    template <typename T>
+    constexpr uint8_t hex_to_uint8(T const a, T const b) noexcept
+    {
+        return (hex_to_uint(a) << 4) | hex_to_uint(b);
     }
 
     constexpr uint16_t to_guid(uint8_t a, uint8_t b) noexcept
     {
-        return (static_cast<uint32_t>(b) << 8) | static_cast<uint32_t>(a);
+        return (static_cast<uint16_t>(a) << 8) | static_cast<uint16_t>(b);
+    }
+
+    constexpr uint32_t to_guid(uint8_t a, uint8_t b, uint8_t c, uint8_t d) noexcept
+    {
+        return (static_cast<uint32_t>(to_guid(a, b)) << 16) | static_cast<uint32_t>(to_guid(c, d));
     }
 
     template <size_t Size>
@@ -219,22 +246,44 @@ namespace winrt::impl
         };
     }
 
-    constexpr uint32_t endian_swap(uint32_t value) noexcept
+    template <typename TStringView>
+    constexpr guid to_guid(TStringView const value) noexcept
     {
-        return (value & 0xFF000000) >> 24 | (value & 0x00FF0000) >> 8 | (value & 0x0000FF00) << 8 | (value & 0x000000FF) << 24;
-    }
+        if (value.size() != 36 || value[8] != '-' || value[13] != '-' || value[18] != '-' || value[23] != '-')
+        {
+            std::terminate();
+        }
 
-    constexpr uint16_t endian_swap(uint16_t value) noexcept
-    {
-        return (value & 0xFF00) >> 8 | (value & 0x00FF) << 8;
-    }
-
-    constexpr guid endian_swap(guid value) noexcept
-    {
-        value.Data1 = endian_swap(value.Data1);
-        value.Data2 = endian_swap(value.Data2);
-        value.Data3 = endian_swap(value.Data3);
-        return value;
+        return
+        {
+            to_guid
+            (
+                hex_to_uint8(value[0], value[1]),
+                hex_to_uint8(value[2], value[3]),
+                hex_to_uint8(value[4], value[5]),
+                hex_to_uint8(value[6], value[7])
+            ),
+            to_guid
+            (
+                hex_to_uint8(value[9], value[10]),
+                hex_to_uint8(value[11], value[12])
+            ),
+            to_guid
+            (
+                hex_to_uint8(value[14], value[15]),
+                hex_to_uint8(value[16], value[17])
+            ),
+            {
+                hex_to_uint8(value[19], value[20]),
+                hex_to_uint8(value[21], value[22]),
+                hex_to_uint8(value[24], value[25]),
+                hex_to_uint8(value[26], value[27]),
+                hex_to_uint8(value[28], value[29]),
+                hex_to_uint8(value[30], value[31]),
+                hex_to_uint8(value[32], value[33]),
+                hex_to_uint8(value[34], value[35]),
+            }
+        };
     }
 
     constexpr guid set_named_guid_fields(guid value) noexcept
@@ -433,9 +482,8 @@ namespace winrt::impl
 
         auto buffer = combine(to_array(namespace_guid), char_to_byte_array(value, std::make_index_sequence<Size>()));
         auto hash = calculate_sha1(buffer);
-        auto big_endian_guid = to_guid(hash);
-        auto little_endian_guid = endian_swap(big_endian_guid);
-        return set_named_guid_fields(little_endian_guid);
+        auto result = to_guid(hash);
+        return set_named_guid_fields(result);
     }
 
     template <typename TArg, typename... TRest>
@@ -661,5 +709,28 @@ WINRT_EXPORT namespace winrt
     constexpr auto name_of() noexcept
     {
         return impl::to_wstring_view(impl::name_v<T>);
+    }
+
+    constexpr auto make_guid(std::string_view const value) noexcept
+    {
+        return impl::to_guid(value);
+    }
+
+    constexpr auto make_guid(std::wstring_view const value) noexcept
+    {
+        return impl::to_guid(value);
+    }
+
+    inline namespace literals
+    {
+        constexpr auto operator""_guid(const char* str, std::size_t length) noexcept
+        {
+            return make_guid(std::string_view{str, length});
+        }
+
+        constexpr auto operator""_guid(const wchar_t* str, std::size_t length) noexcept
+        {
+            return make_guid(std::wstring_view{str, length});
+        }
     }
 }
