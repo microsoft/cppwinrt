@@ -6,7 +6,7 @@ using namespace Windows::Foundation::Collections;
 using namespace Windows::Foundation::Numerics;
 using namespace std::literals;
 
-#define REQUIRE_EQUAL_GUID(left, ...) STATIC_REQUIRE(equal(make_guid(left), guid_of<__VA_ARGS__>()));
+#define REQUIRE_EQUAL_GUID(left, ...) STATIC_REQUIRE(equal(guid(left), guid_of<__VA_ARGS__>()));
 #define REQUIRE_EQUAL_NAME(left, ...) STATIC_REQUIRE(left == name_of<__VA_ARGS__>());
 
 namespace
@@ -32,9 +32,6 @@ namespace
         using B = IKeyValuePair<hstring, IAsyncOperationWithProgress<A, float>>;
 
         REQUIRE_EQUAL_GUID("96369F54-8EB6-48F0-ABCE-C1B211E627C3"sv, IStringable);
-
-        // Guid string literals
-        STATIC_REQUIRE(equal(L"96369F54-8EB6-48F0-ABCE-C1B211E627C3"_guid, guid_of<IStringable>()));
 
         //
         // Generated Windows.Foundation GUIDs

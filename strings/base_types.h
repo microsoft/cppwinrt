@@ -18,6 +18,44 @@ namespace winrt::impl
         uint32_t reserved2;
         void* data;
     };
+
+    template <typename T>
+    constexpr uint8_t hex_to_uint(T const c) noexcept
+    {
+        if (c >= '0' && c <= '9')
+        {
+            return static_cast<uint8_t>(c - '0');
+        }
+        else if (c >= 'A' && c <= 'F')
+        {
+            return static_cast<uint8_t>(10 + c - 'A');
+        }
+        else if (c >= 'a' && c <= 'f')
+        {
+            return static_cast<uint8_t>(10 + c - 'a');
+        }
+        else 
+        {
+            std::terminate();
+        }
+    }
+
+    template <typename T>
+    constexpr uint8_t hex_to_uint8(T const a, T const b) noexcept
+    {
+        return (hex_to_uint(a) << 4) | hex_to_uint(b);
+    }
+
+    constexpr uint16_t uint8_to_uint16(uint8_t a, uint8_t b) noexcept
+    {
+        return (static_cast<uint16_t>(a) << 8) | static_cast<uint16_t>(b);
+    }
+
+    constexpr uint32_t uint8_to_uint32(uint8_t a, uint8_t b, uint8_t c, uint8_t d) noexcept
+    {
+        return (static_cast<uint32_t>(uint8_to_uint16(a, b)) << 16) |
+                static_cast<uint32_t>(uint8_to_uint16(c, d));
+    }
 }
 
 WINRT_EXPORT namespace winrt
@@ -76,6 +114,58 @@ WINRT_EXPORT namespace winrt
         }
 
 #endif
+
+        constexpr explicit guid(std::string_view const value) noexcept :
+            guid(parse(value))
+        {
+        }
+
+        constexpr explicit guid(std::wstring_view const value) noexcept :
+            guid(parse(value))
+        {
+        }
+
+    private:
+
+        template <typename TStringView>
+        static constexpr guid parse(TStringView const value) noexcept
+        {
+            if (value.size() != 36 || value[8] != '-' || value[13] != '-' || value[18] != '-' || value[23] != '-')
+            {
+                std::terminate();
+            }
+
+            return
+            {
+                impl::uint8_to_uint32
+                (
+                    impl::hex_to_uint8(value[0], value[1]),
+                    impl::hex_to_uint8(value[2], value[3]),
+                    impl::hex_to_uint8(value[4], value[5]),
+                    impl::hex_to_uint8(value[6], value[7])
+                ),
+                impl::uint8_to_uint16
+                (
+                    impl::hex_to_uint8(value[9], value[10]),
+                    impl::hex_to_uint8(value[11], value[12])
+                ),
+                impl::uint8_to_uint16
+                (
+                    impl::hex_to_uint8(value[14], value[15]),
+                    impl::hex_to_uint8(value[16], value[17])
+                ),
+                {
+                    impl::hex_to_uint8(value[19], value[20]),
+                    impl::hex_to_uint8(value[21], value[22]),
+                    impl::hex_to_uint8(value[24], value[25]),
+                    impl::hex_to_uint8(value[26], value[27]),
+                    impl::hex_to_uint8(value[28], value[29]),
+                    impl::hex_to_uint8(value[30], value[31]),
+                    impl::hex_to_uint8(value[32], value[33]),
+                    impl::hex_to_uint8(value[34], value[35]),
+                }
+            };
+        }
     };
 
     inline bool operator==(guid const& left, guid const& right) noexcept
