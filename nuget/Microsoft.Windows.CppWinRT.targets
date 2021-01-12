@@ -31,6 +31,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <!-- By default enable C++/WinRT to include target platform winmds if we didn't overide sdk references and the C++ Project system isn't already adding them -->
         <!-- _PrepareForReferenceResolution adds the references if TargetPlatformIdentifier is UAP -->
         <CppWinRTImplicitlyExpandTargetPlatform Condition="'$(CppWinRTImplicitlyExpandTargetPlatform)' == '' and '$(CppWinRTOverrideSDKReferences)' != 'true' and '$(TargetPlatformIdentifier)' != 'UAP'">true</CppWinRTImplicitlyExpandTargetPlatform>
+        <!-- Experimental design-time projection generation, disabled by default -->
+        <CppWinRTDesignTimeProjectionGeneration Condition="'$(CppWinRTDesignTimeProjectionGeneration)' == ''">false</CppWinRTDesignTimeProjectionGeneration>
         <XamlLanguage Condition="'$(CppWinRTProjectLanguage)' == 'C++/CX'">C++</XamlLanguage>
         <XamlNamespace Condition="'$(XamlNamespace)' == ''">Windows.UI.Xaml</XamlNamespace>
         <XamlMetaDataProviderIdl Condition="'$(XamlMetaDataProviderIdl)'== ''">$(GeneratedFilesDir)XamlMetaDataProvider.idl</XamlMetaDataProviderIdl>
@@ -863,6 +865,8 @@ $(XamlMetaDataProviderPch)
 
     <Target Name="CppWinRTMakeProjections" DependsOnTargets="CppWinRTResolveReferences;CppWinRTMakePlatformProjection;CppWinRTMakeReferenceProjection;CppWinRTMakeComponentProjection;$(CppWinRTMakeProjectionsDependsOn)" />
 
+    <Target Name="CppWinRTMakeProjectionsDesignTime" DependsOnTargets="CppWinRTResolveReferences;CppWinRTMakePlatformProjection;CppWinRTMakeReferenceProjection;CppWinRTMakeComponentProjection;$(CppWinRTMakeProjectionsDesignTimeDependsOn)" />
+
     <!--Add references to all merged project WinMD files for Xaml Compiler-->
     <Target Name="CppWinRTAddXamlReferences"
             Condition="'@(Page)@(ApplicationDefinition)' != '' and '$(XamlLanguage)' == 'CppWinRT'"
@@ -894,6 +898,7 @@ $(XamlMetaDataProviderPch)
             <AdditionalMetadataDirectories Condition="'%(AdditionalMetadataDirectories)' == '' And '$(WindowsSDK_MetadataFoundationPath)' != ''">$(WindowsSDK_MetadataFoundationPath);%(AdditionalMetadataDirectories)</AdditionalMetadataDirectories>
             <AdditionalMetadataDirectories Condition="'%(AdditionalMetadataDirectories)' == '' And '$(WindowsSDK_MetadataFoundationPath)' == ''">$(WindowsSDK_MetadataPath);%(AdditionalMetadataDirectories)</AdditionalMetadataDirectories>
             <AdditionalOptions>%(AdditionalOptions) /nomidl</AdditionalOptions>
+            <GeneratorTarget Condition="'$(CppWinRTDesignTimeProjectionGeneration)' == 'true'">CppWinRTMakeProjectionsDesignTime</GeneratorTarget>
         </Midl>
         <Link>
             <AdditionalDependencies Condition="'$(CppWinRTLibs)' != 'false'">%(AdditionalDependencies);WindowsApp.lib</AdditionalDependencies>
