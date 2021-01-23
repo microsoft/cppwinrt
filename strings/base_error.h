@@ -426,6 +426,11 @@ WINRT_EXPORT namespace winrt
 
     [[noreturn]] inline __declspec(noinline) void throw_hresult(hresult const result)
     {
+        if (winrt_throw_hresult_handler)
+        {
+            winrt_throw_hresult_handler(0, nullptr, nullptr, _ReturnAddress(), result);
+        }
+
         if (result == impl::error_bad_alloc)
         {
             throw std::bad_alloc();
