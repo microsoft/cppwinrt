@@ -1,4 +1,13 @@
 
+#if defined(_MSC_VER)
+#include <intrin.h>
+#define WINRT_IMPL_RETURNADDRESS() _ReturnAddress()
+#elif defined(__GNUC__)
+#define WINRT_IMPL_RETURNADDRESS() __builtin_extract_return_addr(__builtin_return_address(0))
+#else
+#define WINRT_IMPL_RETURNADDRESS() nullptr
+#endif
+
 namespace winrt::impl
 {
     struct heap_traits
@@ -428,7 +437,7 @@ WINRT_EXPORT namespace winrt
     {
         if (winrt_throw_hresult_handler)
         {
-            winrt_throw_hresult_handler(0, nullptr, nullptr, _ReturnAddress(), result);
+            winrt_throw_hresult_handler(0, nullptr, nullptr, WINRT_IMPL_RETURNADDRESS(), result);
         }
 
         if (result == impl::error_bad_alloc)
@@ -508,7 +517,7 @@ WINRT_EXPORT namespace winrt
     {
         if (winrt_to_hresult_handler)
         {
-            return winrt_to_hresult_handler(_ReturnAddress());
+            return winrt_to_hresult_handler(WINRT_IMPL_RETURNADDRESS());
         }
 
         try
@@ -608,3 +617,5 @@ namespace winrt::impl
         return result;
     }
 }
+
+#undef WINRT_IMPL_RETURNADDRESS
