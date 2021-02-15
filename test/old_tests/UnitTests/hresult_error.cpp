@@ -556,3 +556,23 @@ TEST_CASE("hresult, std abi support")
     }
 }
 
+TEST_CASE("hresult, to_message")
+{
+    try
+    {
+        throw std::out_of_range("oh no, out of range");
+    }
+    catch (...)
+    {
+        REQUIRE(to_message() == L"oh no, out of range");
+    }
+
+    try
+    {
+        throw hresult_error(E_HANDLE, L"oh no, invalid handle");
+    }
+    catch (...)
+    {
+        REQUIRE(to_message() == L"oh no, invalid handle");
+    }
+}

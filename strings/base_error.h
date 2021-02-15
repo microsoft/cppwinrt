@@ -546,6 +546,31 @@ WINRT_EXPORT namespace winrt
         }
     }
 
+    inline __declspec(noinline) hstring to_message() noexcept
+    {
+        if (winrt_to_message_handler)
+        {
+            return winrt_to_message_handler(WINRT_IMPL_RETURNADDRESS());
+        }
+
+        try
+        {
+            throw;
+        }
+        catch (hresult_error const& e)
+        {
+            return e.message();
+        }
+        catch (std::exception const& ex)
+        {
+            return winrt::to_hstring(ex.what());
+        }
+        catch (...)
+        {
+            std::terminate();
+        }
+    }
+
     [[noreturn]] inline void throw_last_error()
     {
         throw_hresult(impl::hresult_from_win32(WINRT_IMPL_GetLastError()));
