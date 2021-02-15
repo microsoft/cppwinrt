@@ -546,7 +546,7 @@ WINRT_EXPORT namespace winrt
         }
     }
 
-    inline __declspec(noinline) hstring to_message() noexcept
+    inline __declspec(noinline) hstring to_message()
     {
         if (winrt_to_message_handler)
         {
