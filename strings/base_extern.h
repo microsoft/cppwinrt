@@ -1,5 +1,6 @@
 
 __declspec(selectany) int32_t(__stdcall* winrt_to_hresult_handler)(void* address) noexcept {};
+__declspec(selectany) winrt::hstring(__stdcall* winrt_to_message_handler)(void* address) {};
 __declspec(selectany) void(__stdcall* winrt_throw_hresult_handler)(uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept {};
 __declspec(selectany) void(__stdcall* winrt_suspend_handler)(void const* token) noexcept {};
 __declspec(selectany) void(__stdcall* winrt_resume_handler)(void const* token) noexcept {};

@@ -37,6 +37,24 @@ namespace
         return 0;
     }
 
+    // Global handler to translate custom exception to message
+    hstring __stdcall message_handler(void* address)
+    {
+        REQUIRE(address);
+
+        try
+        {
+            throw;
+        }
+        catch (CustomError)
+        {
+            return L"a custom error";
+        }
+
+        REQUIRE(false);
+        return {};
+    }
+
     static bool s_loggerCalled = false;
 
     void __stdcall logger(uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept
@@ -76,4 +94,23 @@ TEST_CASE("custom_error_logger")
     // Remove global handler
     winrt_throw_hresult_handler = nullptr;
     s_loggerCalled = false;
+}
+
+TEST_CASE("custom_error_message")
+{
+    // Set up global handler
+    REQUIRE(!winrt_to_message_handler);
+    winrt_to_message_handler = message_handler;
+
+    try
+    {
+        throw CustomError();
+    }
+    catch (...)
+    {
+        REQUIRE(to_message() == L"a custom error");
+    }
+
+    // Remove global handler
+    winrt_to_message_handler = nullptr;
 }
