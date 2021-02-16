@@ -563,7 +563,7 @@ WINRT_EXPORT namespace winrt
         }
         catch (std::exception const& ex)
         {
-            return winrt::to_hstring(ex.what());
+            return to_hstring(ex.what());
         }
         catch (...)
         {
