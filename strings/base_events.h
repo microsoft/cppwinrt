@@ -365,18 +365,15 @@ namespace winrt::impl
 
         return true;
     }
-}
 
-WINRT_EXPORT namespace winrt
-{
     template <typename Delegate>
-    struct event
+    struct event_base
     {
         using delegate_type = Delegate;
 
-        event() = default;
-        event(event<Delegate> const&) = delete;
-        event<Delegate>& operator =(event<Delegate> const&) = delete;
+        event_base() = default;
+        event_base(event_base<Delegate> const&) = delete;
+        event_base<Delegate>& operator =(event_base<Delegate> const&) = delete;
 
         explicit operator bool() const noexcept
         {
@@ -392,14 +389,14 @@ WINRT_EXPORT namespace winrt
 
             {
                 slim_lock_guard const change_guard(m_change);
-                delegate_array new_targets = impl::make_event_array<delegate_type>((!m_targets) ? 1 : m_targets->size() + 1);
+                delegate_array new_targets = make_event_array<delegate_type>((!m_targets) ? 1 : m_targets->size() + 1);
 
                 if (m_targets)
                 {
                     std::copy_n(m_targets->begin(), m_targets->size(), new_targets->begin());
                 }
 
-                new_targets->back() = impl::make_agile_delegate(delegate);
+                new_targets->back() = make_agile_delegate(delegate);
                 token = get_token(new_targets->back());
 
                 slim_lock_guard const swap_guard(m_swap);
@@ -435,7 +432,7 @@ WINRT_EXPORT namespace winrt
                 }
                 else
                 {
-                    new_targets = impl::make_event_array<delegate_type>(available_slots);
+                    new_targets = make_event_array<delegate_type>(available_slots);
                     auto new_iterator = new_targets->begin();
 
                     for (delegate_type const& element : *m_targets)
@@ -466,39 +463,53 @@ WINRT_EXPORT namespace winrt
             }
         }
 
-        template<typename...Arg>
-        void operator()(Arg const&... args)
+    protected:
+
+        auto make_temp_targets()
         {
-            delegate_array temp_targets;
-
-            {
-                slim_lock_guard const swap_guard(m_swap);
-                temp_targets = m_targets;
-            }
-
-            if (temp_targets)
-            {
-                for (delegate_type const& element : *temp_targets)
-                {
-                    if (!impl::invoke(element, args...))
-                    {
-                        remove(get_token(element));
-                    }
-                }
-            }
+            slim_lock_guard const swap_guard(m_swap);
+            return m_targets;
         }
-
-    private:
 
         event_token get_token(delegate_type const& delegate) const noexcept
         {
             return event_token{ reinterpret_cast<int64_t>(WINRT_IMPL_EncodePointer(get_abi(delegate))) };
         }
 
-        using delegate_array = com_ptr<impl::event_array<delegate_type>>;
+    private:
+
+        using delegate_array = com_ptr<event_array<delegate_type>>;
 
         delegate_array m_targets;
         slim_mutex m_swap;
         slim_mutex m_change;
+    };
+}
+
+WINRT_EXPORT namespace winrt
+{
+    template <typename Delegate>
+    struct event : impl::event_base<Delegate>
+    {
+        event() = default;
+
+        template<typename...Arg>
+        void operator()(Arg const&... args)
+        {
+            auto temp_targets = this->make_temp_targets();
+
+            if (!temp_targets)
+            {
+                return;
+            }
+
+            for (auto&& element : *temp_targets)
+            {
+                if (!impl::invoke(element, args...))
+                {
+                    this->remove(this->get_token(element));
+                }
+            }
+        }
     };
 }

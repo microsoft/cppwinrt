@@ -801,4 +801,43 @@ WINRT_EXPORT namespace winrt
         impl::check_status_canceled(shared->status);
         co_return shared->result.GetResults();
     }
+
+    template <typename Delegate>
+    struct async_event : impl::event_base<Delegate>
+    {
+        async_event() = default;
+
+        template<typename...Arg>
+        Windows::Foundation::IAsyncAction operator()(Arg const... args)
+        {
+            auto targets = this->make_temp_targets();
+
+            if (!targets)
+            {
+                co_return;
+            }
+
+            std::vector<Windows::Foundation::IAsyncAction> workers;
+            workers.reserve(targets->size());
+
+            for (auto&& element : *targets)
+            {
+                workers.push_back(invoke(element, args...));
+            }
+
+            for (auto&& element : workers)
+            {
+                co_await element;
+            }
+        }
+
+    private:
+
+        template <typename... Args>
+        Windows::Foundation::IAsyncAction invoke(Delegate const& element, Args const&... args)
+        {
+            co_await resume_background();
+            impl::invoke(element, args...);
+        }
+    };
 }
