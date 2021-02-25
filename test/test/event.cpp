@@ -55,7 +55,7 @@ TEST_CASE("event")
 
     event.remove(token);
 
-    // A single event is raied with a number of handlers.
+    // A single event is raised with a number of handlers.
     std::atomic<int> counter;
 
     for (int i = 0; i != 10; ++i)
