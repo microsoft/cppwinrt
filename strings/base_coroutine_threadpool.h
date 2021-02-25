@@ -62,7 +62,7 @@ namespace winrt::impl
             m_context_type = std::exchange(other.m_context_type, -1);
             return *this;
         }
-        bool valid() const
+        bool valid() const noexcept
         {
             return m_context_type >= 0;
         }
@@ -359,8 +359,8 @@ WINRT_EXPORT namespace winrt
         apartment_context() = default;
         apartment_context(std::nullptr_t) : context(nullptr) { }
 
-        operator bool() const { return context.valid(); }
-        bool operator!() const { return !context.valid(); }
+        operator bool() const noexcept { return context.valid(); }
+        bool operator!() const noexcept { return !context.valid(); }
 
         bool await_ready() const noexcept
         {
