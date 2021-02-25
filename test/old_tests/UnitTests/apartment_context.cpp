@@ -11,6 +11,37 @@ namespace
     IAsyncAction Async()
     {
         apartment_context context;
+        REQUIRE(context);
+
+        // Verify basic operations.
+
+        // copyable - verify source is still good after copy
+        apartment_context context2(context);
+        REQUIRE(context);
+
+        // movable - verify source is empty after move
+        apartment_context context3(std::move(context));
+        REQUIRE(!context);
+
+        // copy-assignable - verify source is still good
+        context = context2;
+        REQUIRE(context2);
+
+        // move-assignable - verify source is empty after move
+        context = std::move(context3);
+        REQUIRE(!context3);
+
+        // emptyable
+        context2 = nullptr;
+        REQUIRE(!context2);
+
+        // Self-copy-assignment
+        context = context;
+        REQUIRE(context);
+
+        // Self-move-assignment
+        context = std::move(context);
+        REQUIRE(context);
 
         co_await context;
     }
@@ -30,11 +61,12 @@ namespace
 
     auto get_winrt_apartment_context_for_com_context(com_ptr<::IContextCallback> const& com_context)
     {
-        std::optional<decltype(apartment_context())> context;
+        apartment_context context{ nullptr };
+        REQUIRE(!context); // constructed empty
         InvokeInContext(com_context.get(), [&] {
             context = apartment_context();
             });
-        return context.value();
+        return context;
     }
 
     bool is_nta_on_mta()
