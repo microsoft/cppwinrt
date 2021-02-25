@@ -96,7 +96,7 @@ namespace winrt::impl
         {
             resume_background(handle);
         }
-        else if ((context.m_context_type == 2 /* APTTYPE_NTA */) && is_sta_thread())
+        else if (is_sta_thread())
         {
             resume_apartment_on_threadpool(context.m_context, handle);
         }
