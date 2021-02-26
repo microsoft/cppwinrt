@@ -50,6 +50,23 @@ namespace winrt::impl
 
     struct resume_apartment_context
     {
+        resume_apartment_context() = default;
+        resume_apartment_context(std::nullptr_t) : m_context(nullptr), m_context_type(-1) {}
+        resume_apartment_context(resume_apartment_context const&) = default;
+        resume_apartment_context(resume_apartment_context&& other) noexcept :
+            m_context(std::move(other.m_context)), m_context_type(std::exchange(other.m_context_type, -1)) {}
+        resume_apartment_context& operator=(resume_apartment_context const&) = default;
+        resume_apartment_context& operator=(resume_apartment_context&& other) noexcept
+        {
+            m_context = std::move(other.m_context);
+            m_context_type = std::exchange(other.m_context_type, -1);
+            return *this;
+        }
+        bool valid() const noexcept
+        {
+            return m_context_type >= 0;
+        }
+
         com_ptr<IContextCallback> m_context = try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext);
         int32_t m_context_type = get_apartment_type().first;
     };
@@ -88,6 +105,7 @@ namespace winrt::impl
 
     inline auto resume_apartment(resume_apartment_context const& context, coroutine_handle<> handle)
     {
+        WINRT_ASSERT(context.valid());
         if ((context.m_context == nullptr) || (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
         {
             handle();
@@ -338,6 +356,12 @@ WINRT_EXPORT namespace winrt
 
     struct apartment_context
     {
+        apartment_context() = default;
+        apartment_context(std::nullptr_t) : context(nullptr) { }
+
+        operator bool() const noexcept { return context.valid(); }
+        bool operator!() const noexcept { return !context.valid(); }
+
         bool await_ready() const noexcept
         {
             return false;
