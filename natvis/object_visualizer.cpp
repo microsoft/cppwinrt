@@ -361,7 +361,11 @@ void GetInterfaceData(
     _Inout_ std::vector<PropertyData>& propertyData,
     _Out_ bool& isStringable
 ){
-    auto [type, propIid] = ResolveTypeInterface(index);
+    auto [type, propIid] = ResolveTypeInterface(process, index);
+    if (!type)
+    {
+        return;
+    }
 
     if (propIid == IID_IStringable)
     {
@@ -402,7 +406,12 @@ void GetInterfaceData(
             },
             [&](coded_index<TypeDefOrRef> const& index)
             {
-                auto type = ResolveType(index);
+                auto type = ResolveType(process, index);
+                if (!type)
+                {
+                    return;
+                }
+
                 auto typeName = type.TypeName();
                 if (typeName == "GUID"sv)
                 {

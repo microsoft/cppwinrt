@@ -3,6 +3,7 @@
 using namespace winrt;
 using namespace winmd::reader;
 using namespace std::literals;
+using namespace Microsoft::VisualStudio::Debugger;
 
 static std::map<coded_index<TypeDefOrRef>, std::pair<TypeDef, std::wstring>> _cache;
 
@@ -277,14 +278,19 @@ static guid generate_guid(coded_index<TypeDefOrRef> const& type)
     return set_named_guid_fields(endian_swap(to_guid(calculate_sha1(buffer))));
 }
 
-std::pair<TypeDef, std::wstring> ResolveTypeInterface(coded_index<TypeDefOrRef> index)
+std::pair<TypeDef, std::wstring> ResolveTypeInterface(DkmProcess* process, coded_index<TypeDefOrRef> index)
 {
     if (auto found = _cache.find(index); found != _cache.end())
     {
         return found->second;
     }
 
-    TypeDef type = ResolveType(index);
+    TypeDef type = ResolveType(process, index);
+    if (!type)
+    {
+        return {};
+    }
+
     auto guid = index.type() == TypeDefOrRef::TypeSpec ?
         format_guid(generate_guid(index)) : format_guid(get_guid(type));
 
