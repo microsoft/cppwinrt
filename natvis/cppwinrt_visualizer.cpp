@@ -101,6 +101,7 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
         {
             MetadataDiagnostic(process, L"Loaded ", winmd_path);
             db_files.push_back(winmd_path.string());
+            db->add_database(winmd_path.string());
         }
         auto pos = probe_file.rfind('.');
         if (pos == std::string::npos)
@@ -109,7 +110,6 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
         }
         probe_file = probe_file.substr(0, pos);
     } while (true);
-    db.reset(new cache(db_files));
 }
 
 TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
