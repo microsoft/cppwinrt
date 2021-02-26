@@ -1,4 +1,13 @@
 
+#if defined(_MSC_VER)
+#include <intrin.h>
+#define WINRT_IMPL_RETURNADDRESS() _ReturnAddress()
+#elif defined(__GNUC__)
+#define WINRT_IMPL_RETURNADDRESS() __builtin_extract_return_addr(__builtin_return_address(0))
+#else
+#define WINRT_IMPL_RETURNADDRESS() nullptr
+#endif
+
 namespace winrt::impl
 {
     struct heap_traits
@@ -426,6 +435,11 @@ WINRT_EXPORT namespace winrt
 
     [[noreturn]] inline __declspec(noinline) void throw_hresult(hresult const result)
     {
+        if (winrt_throw_hresult_handler)
+        {
+            winrt_throw_hresult_handler(0, nullptr, nullptr, WINRT_IMPL_RETURNADDRESS(), result);
+        }
+
         if (result == impl::error_bad_alloc)
         {
             throw std::bad_alloc();
@@ -503,7 +517,7 @@ WINRT_EXPORT namespace winrt
     {
         if (winrt_to_hresult_handler)
         {
-            return winrt_to_hresult_handler(_ReturnAddress());
+            return winrt_to_hresult_handler(WINRT_IMPL_RETURNADDRESS());
         }
 
         try
@@ -529,6 +543,31 @@ WINRT_EXPORT namespace winrt
         catch (std::exception const& e)
         {
             return hresult_error(impl::error_fail, to_hstring(e.what())).to_abi();
+        }
+    }
+
+    inline __declspec(noinline) hstring to_message()
+    {
+        if (winrt_to_message_handler)
+        {
+            return winrt_to_message_handler(WINRT_IMPL_RETURNADDRESS());
+        }
+
+        try
+        {
+            throw;
+        }
+        catch (hresult_error const& e)
+        {
+            return e.message();
+        }
+        catch (std::exception const& ex)
+        {
+            return to_hstring(ex.what());
+        }
+        catch (...)
+        {
+            std::terminate();
         }
     }
 
@@ -603,3 +642,5 @@ namespace winrt::impl
         return result;
     }
 }
+
+#undef WINRT_IMPL_RETURNADDRESS
