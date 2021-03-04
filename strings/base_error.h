@@ -567,7 +567,7 @@ WINRT_EXPORT namespace winrt
         }
         catch (...)
         {
-            std::terminate();
+            abort();
         }
     }
 
