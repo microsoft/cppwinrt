@@ -179,7 +179,7 @@ namespace winrt::impl
 
     [[noreturn]] inline void __stdcall fallback_RoFailFastWithErrorContext(int32_t) noexcept
     {
-        std::terminate();
+        abort();
     }
 }
 
