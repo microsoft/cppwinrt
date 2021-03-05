@@ -382,13 +382,12 @@ namespace winrt::impl
 
                 m_completed_assigned = true;
 
-                if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Started)
+                status = m_status.load(std::memory_order_relaxed);
+                if (status == AsyncStatus::Started)
                 {
                     m_completed = make_agile_delegate(handler);
                     return;
                 }
-
-                status = m_status.load(std::memory_order_relaxed);
             }
 
             if (handler)
@@ -421,7 +420,7 @@ namespace winrt::impl
             try
             {
                 slim_lock_guard const guard(m_lock);
-                rethrow_if_failed();
+                rethrow_if_failed(m_status.load(std::memory_order_relaxed));
                 return 0;
             }
             catch (...)
@@ -461,25 +460,28 @@ namespace winrt::impl
         {
             slim_lock_guard const guard(m_lock);
 
+            auto status = m_status.load(std::memory_order_relaxed);
+
             if constexpr (std::is_same_v<TProgress, void>)
             {
-                if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Completed)
+                if (status == AsyncStatus::Completed)
                 {
                     return static_cast<Derived*>(this)->get_return_value();
                 }
+                rethrow_if_failed(status);
+                WINRT_ASSERT(status == AsyncStatus::Started);
+                throw hresult_illegal_method_call();
             }
             else
             {
-                if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Completed ||
-                    m_status.load(std::memory_order_relaxed) == AsyncStatus::Started)
+                if (status == AsyncStatus::Completed || status == AsyncStatus::Started)
                 {
                     return static_cast<Derived*>(this)->copy_return_value();
                 }
+                WINRT_ASSERT(status == AsyncStatus::Error || status == AsyncStatus::Canceled);
+                std::rethrow_exception(m_exception);
             }
 
-            rethrow_if_failed();
-            WINRT_ASSERT(m_status.load(std::memory_order_relaxed) == AsyncStatus::Started);
-            throw hresult_illegal_method_call();
         }
 
         AsyncInterface get_return_object() const noexcept
@@ -503,13 +505,14 @@ namespace winrt::impl
             {
                 slim_lock_guard const guard(m_lock);
 
-                if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Started)
+                status = m_status.load(std::memory_order_relaxed);
+                if (status == AsyncStatus::Started)
                 {
-                    m_status.store(AsyncStatus::Completed, std::memory_order_relaxed);
+                    status = AsyncStatus::Completed;
+                    m_status.store(status, std::memory_order_relaxed);
                 }
 
                 handler = std::move(this->m_completed);
-                status = this->m_status.load(std::memory_order_relaxed);
             }
 
             if (handler)
@@ -632,9 +635,9 @@ namespace winrt::impl
 
     protected:
 
-        void rethrow_if_failed() const
+        void rethrow_if_failed(AsyncStatus status) const
         {
-            if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Error || m_status.load(std::memory_order_relaxed) == AsyncStatus::Canceled)
+            if (status == AsyncStatus::Error || status == AsyncStatus::Canceled)
             {
                 std::rethrow_exception(m_exception);
             }
