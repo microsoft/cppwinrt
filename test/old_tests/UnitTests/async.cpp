@@ -832,7 +832,8 @@ TEST_CASE("async, Cancel_IAsyncActionWithProgress")
     handle event { CreateEvent(nullptr, false, false, nullptr)};
     IAsyncActionWithProgress<double> async = Cancel_IAsyncActionWithProgress(event.get());
     REQUIRE(async.Status() == AsyncStatus::Started);
-    REQUIRE_THROWS_AS(async.GetResults(), hresult_illegal_method_call);
+    // It is legal to read results of an incomplete WithProgress.
+    REQUIRE_NOTHROW(async.GetResults());
 
     async.Cancel();
     SetEvent(event.get()); // signal async to run
@@ -862,7 +863,8 @@ TEST_CASE("async, Cancel_IAsyncActionWithProgress, 2")
     handle event { CreateEvent(nullptr, false, false, nullptr)};
     IAsyncActionWithProgress<double> async = Cancel_IAsyncActionWithProgress(event.get());
     REQUIRE(async.Status() == AsyncStatus::Started);
-    REQUIRE_THROWS_AS(async.GetResults(), hresult_illegal_method_call);
+    // It is legal to read results of an incomplete WithProgress.
+    REQUIRE_NOTHROW(async.GetResults());
 
     bool completed = false;
     bool objectMatches = false;
@@ -952,7 +954,8 @@ TEST_CASE("async, Cancel_IAsyncOperationWithProgress")
     handle event { CreateEvent(nullptr, false, false, nullptr)};
     IAsyncOperationWithProgress<uint64_t, uint64_t> async = Cancel_IAsyncOperationWithProgress(event.get());
     REQUIRE(async.Status() == AsyncStatus::Started);
-    REQUIRE_THROWS_AS(async.GetResults(), hresult_illegal_method_call);
+    // It is legal to read results of an incomplete WithProgress.
+    REQUIRE_NOTHROW(async.GetResults());
 
     async.Cancel();
     SetEvent(event.get()); // signal async to run
@@ -982,7 +985,8 @@ TEST_CASE("async, Cancel_IAsyncOperationWithProgress, 2")
     handle event { CreateEvent(nullptr, false, false, nullptr)};
     IAsyncOperationWithProgress<uint64_t, uint64_t> async = Cancel_IAsyncOperationWithProgress(event.get());
     REQUIRE(async.Status() == AsyncStatus::Started);
-    REQUIRE_THROWS_AS(async.GetResults(), hresult_illegal_method_call);
+    // It is legal to read results of an incomplete WithProgress.
+    REQUIRE_NOTHROW(async.GetResults());
 
     bool completed = false;
     bool objectMatches = false;
