@@ -1426,11 +1426,11 @@ namespace cppwinrt
         if (type_name == "Windows.Foundation.Collections.IIterator`1")
         {
             w.write(R"(
+        using iterator_concept = std::input_iterator_tag;
         using iterator_category = std::input_iterator_tag;
         using value_type = T;
         using difference_type = ptrdiff_t;
-        using pointer = T*;
-        using reference = T&;
+        using reference = T;
 )");
         }
         else if (type_name == "Windows.Foundation.IReference`1")
