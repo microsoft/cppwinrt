@@ -6,6 +6,7 @@ namespace winrt::impl
     template <typename T>
     struct fast_iterator
     {
+        using iterator_concept = std::random_access_iterator_tag;
         using iterator_category = std::input_iterator_tag;
         using value_type = decltype(std::declval<T>().GetAt(0));
         using difference_type = ptrdiff_t;
@@ -111,6 +112,16 @@ namespace winrt::impl
         bool operator>=(fast_iterator const& other) const noexcept
         {
             return !(*this < other);
+        }
+
+        friend fast_iterator operator+(difference_type n, fast_iterator it) noexcept
+        {
+            return it + n;
+        }
+
+        friend fast_iterator operator-(difference_type n, fast_iterator it) noexcept
+        {
+            return it - n;
         }
 
     private:
