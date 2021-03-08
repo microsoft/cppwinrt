@@ -1283,12 +1283,17 @@ namespace cppwinrt
                 static_cast<D&>(*this) = nullptr;
             }
 
-            return *this;
+            return static_cast<D&>(*this);
         }
 
         auto operator*() const
         {
             return Current();
+        }
+
+        void operator++(int)
+        {
+            ++(*this);
         }
 )");
         }
@@ -1313,12 +1318,17 @@ namespace cppwinrt
                 static_cast<D&>(*this) = nullptr;
             }
 
-            return *this;
+            return static_cast<D&>(*this);
         }
 
         T operator*() const
         {
             return Current();
+        }
+
+        void operator++(int)
+        {
+            ++(*this);
         }
 )");
         }
