@@ -10,7 +10,7 @@ namespace winrt::impl
         using difference_type = ptrdiff_t;
         using reference = value_type;
 
-        fast_iterator() noexcept : m_collection(nullptr), m_index(0) {}
+        fast_iterator() noexcept = default;
 
         fast_iterator(T const& collection, uint32_t const index) noexcept :
             m_collection(&collection),
@@ -66,6 +66,7 @@ namespace winrt::impl
 
         difference_type operator-(fast_iterator const& other) const noexcept
         {
+            WINRT_ASSERT(m_collection == other.m_collection);
             return static_cast<difference_type>(m_index) - static_cast<difference_type>(other.m_index);
         }
 
@@ -91,14 +92,15 @@ namespace winrt::impl
             return m_index < other.m_index;
         }
 
+        bool operator>(fast_iterator const& other) const noexcept
+        {
+            WINRT_ASSERT(m_collection == other.m_collection);
+            return m_index > other.m_index;
+        }
+
         bool operator!=(fast_iterator const& other) const noexcept
         {
             return !(*this == other);
-        }
-
-        bool operator>(fast_iterator const& other) const noexcept
-        {
-            return !(*this < other);
         }
 
         bool operator<=(fast_iterator const& other) const noexcept
@@ -123,8 +125,8 @@ namespace winrt::impl
 
     private:
 
-        T const* m_collection{};
-        uint32_t m_index{};
+        T const* m_collection = nullptr;
+        uint32_t m_index = 0;
     };
 
     template <typename T>
