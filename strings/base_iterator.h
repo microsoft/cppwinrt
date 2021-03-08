@@ -13,14 +13,14 @@ namespace winrt::impl
         fast_iterator() noexcept : m_collection(nullptr), m_index(0) {}
 
         fast_iterator(T const& collection, uint32_t const index) noexcept :
-        m_collection(&collection),
+            m_collection(&collection),
             m_index(index)
         {}
 
         fast_iterator& operator++() noexcept
         {
             ++m_index;
-            return*this;
+            return *this;
         }
 
         fast_iterator operator++(int) noexcept
@@ -33,7 +33,7 @@ namespace winrt::impl
         fast_iterator& operator--() noexcept
         {
             --m_index;
-            return*this;
+            return *this;
         }
 
         fast_iterator operator--(int) noexcept
@@ -46,7 +46,7 @@ namespace winrt::impl
         fast_iterator& operator+=(difference_type n) noexcept
         {
             m_index += static_cast<uint32_t>(n);
-            return*this;
+            return *this;
         }
 
         fast_iterator operator+(difference_type n) const noexcept
