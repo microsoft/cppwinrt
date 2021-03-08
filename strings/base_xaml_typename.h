@@ -125,6 +125,17 @@ namespace winrt::impl
     {
         static constexpr Windows::UI::Xaml::Interop::TypeKind value = Windows::UI::Xaml::Interop::TypeKind::Primitive;
     };
+
+    template <typename D>
+    auto consume_Windows_UI_Xaml_Interop_IBindableIterable<D>::begin() const
+    {
+        return impl::begin(static_cast<D const&>(*this));
+    }
+    template <typename D>
+    auto consume_Windows_UI_Xaml_Interop_IBindableIterable<D>::end() const
+    {
+        return impl::end(static_cast<D const&>(*this));
+    }
 }
 
 WINRT_EXPORT namespace winrt

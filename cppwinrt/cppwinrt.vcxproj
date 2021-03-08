@@ -68,6 +68,7 @@
     <ClInclude Include="..\strings\base_identity.h" />
     <ClInclude Include="..\strings\base_implements.h" />
     <ClInclude Include="..\strings\base_includes.h" />
+    <ClInclude Include="..\strings\base_iterator.h" />
     <ClInclude Include="..\strings\base_lock.h" />
     <ClInclude Include="..\strings\base_macros.h" />
     <ClInclude Include="..\strings\base_marshaler.h" />

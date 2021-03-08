@@ -1417,6 +1417,20 @@ namespace cppwinrt
         auto wait_for(Windows::Foundation::TimeSpan const& timeout) const;
 )");
         }
+        else if (type_name == "Windows.Foundation.Collections.IIterable`1")
+        {
+            w.write(R"(
+        auto begin() const;
+        auto end() const;
+)");
+        }
+        else if (type_name == "Windows.UI.Xaml.Interop.IBindableIterable")
+        {
+            w.write(R"(
+        auto begin() const;
+        auto end() const;
+)");
+        }
     }
 
     static void write_interface_extensions(writer& w, TypeDef const& type)
@@ -1431,6 +1445,16 @@ namespace cppwinrt
         using value_type = T;
         using difference_type = ptrdiff_t;
         using reference = T;
+)");
+        }
+        else if (type_name == "Windows.UI.Xaml.Interop.IBindableIterator")
+        {
+            w.write(R"(
+        using iterator_concept = std::input_iterator_tag;
+        using iterator_category = std::input_iterator_tag;
+        using value_type = IInspectable;
+        using difference_type = ptrdiff_t;
+        using reference = IInspectable;
 )");
         }
         else if (type_name == "Windows.Foundation.IReference`1")
