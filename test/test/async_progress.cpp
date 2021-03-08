@@ -16,16 +16,17 @@ namespace
         progress(123);
     }
 
-    IAsyncOperationWithProgress<int, int> Operation(HANDLE event)
+    IAsyncOperationWithProgress<hstring, int> Operation(HANDLE event)
     {
         co_await resume_on_signal(event);
 
         // Invoke from a lambda to ensure that operator() is const.
         [progress = co_await get_progress_token()]()
         {
+            progress.set_result(L"working");
             progress(123);
         }();
-        co_return 1;
+        co_return L"done";
     }
 
     template <typename F>
@@ -35,12 +36,21 @@ namespace
         handle start{ CreateEvent(nullptr, true, false, nullptr) };
 
         auto async = make(start.get());
+        using TResult = decltype(async.GetResults());
+
         bool progress = false;
 
         async.Progress([&](auto&& sender, int value)
             {
                 progress = true;
                 REQUIRE(async == sender);
+                REQUIRE(async.Status() == AsyncStatus::Started);
+                if constexpr (std::is_same_v<TResult, hstring>)
+                {
+                    REQUIRE(async.GetResults() == L"working");
+                    // Confirm that reading does not destroy partial results.
+                    REQUIRE(async.GetResults() == L"working");
+                }
                 REQUIRE(value == 123);
             });
 
@@ -50,6 +60,19 @@ namespace
         REQUIRE(progress);
         REQUIRE(async.Status() == AsyncStatus::Completed);
         REQUIRE(async.ErrorCode() == S_OK);
+
+        // Confirm that you can read results from a completed WithProgress multiple times.
+        // (We must allow this to avoid race conditions where a progress callback
+        // does async work and then tries to read an intermediate result, only to
+        // discover that the operation has already completed.)
+        if constexpr (std::is_same_v<TResult, hstring>)
+        {
+            REQUIRE(async.GetResults() == L"done");
+        }
+        else
+        {
+            REQUIRE_NOTHROW(async.GetResults());
+        }
     }
 
     template <typename F>

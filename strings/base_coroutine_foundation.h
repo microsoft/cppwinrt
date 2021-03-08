@@ -338,6 +338,13 @@ namespace winrt::impl
             m_promise->set_progress(result);
         }
 
+        template<typename T>
+        void set_result(T&& value) const
+        {
+            static_assert(!std::is_same_v<Progress, void>, "Setting preliminary results requires IAsync...WithProgress");
+            m_promise->return_value(std::forward<T>(value));
+        }
+
     private:
 
         Promise* m_promise;
@@ -375,13 +382,12 @@ namespace winrt::impl
 
                 m_completed_assigned = true;
 
-                if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Started)
+                status = m_status.load(std::memory_order_relaxed);
+                if (status == AsyncStatus::Started)
                 {
                     m_completed = make_agile_delegate(handler);
                     return;
                 }
-
-                status = m_status.load(std::memory_order_relaxed);
             }
 
             if (handler)
@@ -414,7 +420,7 @@ namespace winrt::impl
             try
             {
                 slim_lock_guard const guard(m_lock);
-                rethrow_if_failed();
+                rethrow_if_failed(m_status.load(std::memory_order_relaxed));
                 return 0;
             }
             catch (...)
@@ -454,14 +460,28 @@ namespace winrt::impl
         {
             slim_lock_guard const guard(m_lock);
 
-            if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Completed)
+            auto status = m_status.load(std::memory_order_relaxed);
+
+            if constexpr (std::is_same_v<TProgress, void>)
             {
-                return static_cast<Derived*>(this)->get_return_value();
+                if (status == AsyncStatus::Completed)
+                {
+                    return static_cast<Derived*>(this)->get_return_value();
+                }
+                rethrow_if_failed(status);
+                WINRT_ASSERT(status == AsyncStatus::Started);
+                throw hresult_illegal_method_call();
+            }
+            else
+            {
+                if (status == AsyncStatus::Completed || status == AsyncStatus::Started)
+                {
+                    return static_cast<Derived*>(this)->copy_return_value();
+                }
+                WINRT_ASSERT(status == AsyncStatus::Error || status == AsyncStatus::Canceled);
+                std::rethrow_exception(m_exception);
             }
 
-            rethrow_if_failed();
-            WINRT_ASSERT(m_status.load(std::memory_order_relaxed) == AsyncStatus::Started);
-            throw hresult_illegal_method_call();
         }
 
         AsyncInterface get_return_object() const noexcept
@@ -473,6 +493,10 @@ namespace winrt::impl
         {
         }
 
+        void copy_return_value() const noexcept
+        {
+        }
+
         void set_completed() noexcept
         {
             async_completed_handler_t<AsyncInterface> handler;
@@ -481,13 +505,14 @@ namespace winrt::impl
             {
                 slim_lock_guard const guard(m_lock);
 
-                if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Started)
+                status = m_status.load(std::memory_order_relaxed);
+                if (status == AsyncStatus::Started)
                 {
-                    m_status.store(AsyncStatus::Completed, std::memory_order_relaxed);
+                    status = AsyncStatus::Completed;
+                    m_status.store(status, std::memory_order_relaxed);
                 }
 
                 handler = std::move(this->m_completed);
-                status = this->m_status.load(std::memory_order_relaxed);
             }
 
             if (handler)
@@ -610,9 +635,9 @@ namespace winrt::impl
 
     protected:
 
-        void rethrow_if_failed() const
+        void rethrow_if_failed(AsyncStatus status) const
         {
-            if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Error || m_status.load(std::memory_order_relaxed) == AsyncStatus::Canceled)
+            if (status == AsyncStatus::Error || status == AsyncStatus::Canceled)
             {
                 std::rethrow_exception(m_exception);
             }
@@ -691,6 +716,11 @@ namespace std::experimental
                 return std::move(m_result);
             }
 
+            TResult copy_return_value() noexcept
+            {
+                return m_result;
+            }
+
             void return_value(TResult&& value) noexcept
             {
                 m_result = std::move(value);
@@ -730,13 +760,20 @@ namespace std::experimental
                 return std::move(m_result);
             }
 
+            TResult copy_return_value() noexcept
+            {
+                return m_result;
+            }
+
             void return_value(TResult&& value) noexcept
             {
+                winrt::slim_lock_guard const guard(this->m_lock);
                 m_result = std::move(value);
             }
 
             void return_value(TResult const& value) noexcept
             {
+                winrt::slim_lock_guard const guard(this->m_lock);
                 m_result = value;
             }
 
