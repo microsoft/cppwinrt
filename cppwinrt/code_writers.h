@@ -1452,9 +1452,9 @@ namespace cppwinrt
             w.write(R"(
         using iterator_concept = std::input_iterator_tag;
         using iterator_category = std::input_iterator_tag;
-        using value_type = IInspectable;
+        using value_type = Windows::Foundation::IInspectable;
         using difference_type = ptrdiff_t;
-        using reference = IInspectable;
+        using reference = Windows::Foundation::IInspectable;
 )");
         }
         else if (type_name == "Windows.Foundation.IReference`1")
