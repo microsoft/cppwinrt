@@ -108,7 +108,7 @@ namespace winrt::impl
     template <typename Interface>
     hresult get_runtime_activation_factory(param::hstring const& name, void** result) noexcept
     {
-        return get_runtime_activation_factory_impl<std::is_same_v< Interface, Windows::Foundation::IActivationFactory>>(name, guid_of<Interface>(), result);
+        return get_runtime_activation_factory_impl<std::is_same_v<Interface, Windows::Foundation::IActivationFactory>>(name, guid_of<Interface>(), result);
     }
 }
 
