@@ -24,17 +24,18 @@ namespace winrt::impl
         return error_class_not_available;
     }
 
-    template <typename Interface>
-    hresult get_runtime_activation_factory(param::hstring const& name, void** result) noexcept
+
+    template <bool isSameInterfaceAsIActivationFactory>
+    __declspec(noinline) hresult get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
     {
         if (winrt_activation_handler)
         {
-            return winrt_activation_handler(*(void**)(&name), guid_of<Interface>(), result);
+            return winrt_activation_handler(*(void**)(&name), guid, result);
         }
 
-        static int32_t(__stdcall * handler)(void* classId, guid const& iid, void** factory) noexcept;
+        static int32_t(__stdcall * handler)(void* classId, winrt::guid const& iid, void** factory) noexcept;
         impl::load_runtime_function("RoGetActivationFactory", handler, fallback_RoGetActivationFactory);
-        hresult hr = handler(*(void**)(&name), guid_of<Interface>(), result);
+        hresult hr = handler(*(void**)(&name), guid, result);
 
         if (hr == impl::error_not_initialized)
         {
@@ -47,7 +48,7 @@ namespace winrt::impl
 
             void* cookie;
             usage(&cookie);
-            hr = handler(*(void**)(&name), guid_of<Interface>(), result);
+            hr = handler(*(void**)(&name), guid, result);
         }
 
         if (hr == 0)
@@ -87,13 +88,13 @@ namespace winrt::impl
                 continue;
             }
 
-            if constexpr (std::is_same_v< Interface, Windows::Foundation::IActivationFactory>)
+            if constexpr (isSameInterfaceAsIActivationFactory)
             {
                 *result = library_factory.detach();
                 library.detach();
                 return 0;
             }
-            else if (0 == library_factory.as(guid_of<Interface>(), result))
+            else if (0 == library_factory.as(guid, result))
             {
                 library.detach();
                 return 0;
@@ -102,6 +103,12 @@ namespace winrt::impl
 
         WINRT_IMPL_SetErrorInfo(0, error_info.get());
         return hr;
+    }
+
+    template <typename Interface>
+    hresult get_runtime_activation_factory(param::hstring const& name, void** result) noexcept
+    {
+        return get_runtime_activation_factory_impl<std::is_same_v< Interface, Windows::Foundation::IActivationFactory>>(name, guid_of<Interface>(), result);
     }
 }
 
