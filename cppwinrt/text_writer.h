@@ -159,12 +159,14 @@ namespace cppwinrt
             {
                 std::ofstream file;
                 file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
-                try {
+                try
+                {
                   file.open(filename, std::ios::out | std::ios::binary);
                   file.write(m_first.data(), m_first.size());
                   file.write(m_second.data(), m_second.size());
                 }
-                catch (std::ofstream::failure const& e) {
+                catch (std::ofstream::failure const& e)
+                {
                   throw std::filesystem::filesystem_error(e.what(), filename, std::io_errc::stream);
                 }
             }
