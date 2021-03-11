@@ -8,7 +8,6 @@
 #include "component_writers.h"
 #include "file_writers.h"
 #include "type_writers.h"
-#include <winternl.h>
 
 namespace cppwinrt
 {
@@ -375,7 +374,5 @@ Where <spec> is one or more of:
 
 int main(int const argc, char** argv)
 {
-    // Dynamically enable long path support
-    ((unsigned char*)(NtCurrentTeb()->ProcessEnvironmentBlock))[3] |= 0x80;
     return cppwinrt::run(argc, argv);
 }
