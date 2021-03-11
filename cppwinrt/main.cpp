@@ -260,7 +260,7 @@ Where <spec> is one or more of:
             }
 
             process_args(args);
-            cache c{ get_files_to_cache() };
+            cache c{ get_files_to_cache(), [](TypeDef const& type) { return type.Flags().WindowsRuntime(); } };
             remove_foundation_types(c);
             build_filters(c);
             settings.base = settings.base || (!settings.component && settings.projection_filter.empty());
