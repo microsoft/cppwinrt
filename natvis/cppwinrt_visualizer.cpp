@@ -105,8 +105,7 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
 
             if (std::find(db_files.begin(), db_files.end(), path_string) == db_files.end())
             {
-                // TODO: filter database also
-                db->add_database(path_string);
+                db->add_database(path_string, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); });
                 db_files.push_back(path_string);
             }
         }
