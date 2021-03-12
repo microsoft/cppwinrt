@@ -95,8 +95,7 @@ namespace winrt::impl
 
     inline void __stdcall fallback_submit_threadpool_callback(void*, void* p) noexcept
     {
-        std::unique_ptr<threadpool_resume> state{ static_cast<threadpool_resume*>(
-            p) };
+        std::unique_ptr<threadpool_resume> state{ static_cast<threadpool_resume*>(p) };
         resume_apartment_sync(state->m_context, state->m_handle);
     }
 
