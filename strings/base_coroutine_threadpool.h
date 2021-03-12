@@ -93,8 +93,7 @@ namespace winrt::impl
         coroutine_handle<> m_handle;
     };
 
-    inline void __stdcall fallback_submit_threadpool_callback(void*,
-                                                            void* p) noexcept
+    inline void __stdcall fallback_submit_threadpool_callback(void*, void* p) noexcept
     {
         std::unique_ptr<threadpool_resume> state{ static_cast<threadpool_resume*>(
             p) };
