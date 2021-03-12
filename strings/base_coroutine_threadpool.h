@@ -85,21 +85,24 @@ namespace winrt::impl
         check_hresult(context->ContextCallback(resume_apartment_callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr));
     }
 
+    struct threadpool_resume
+    {
+        threadpool_resume(com_ptr<IContextCallback> const& context, coroutine_handle<> handle) :
+            m_context(context), m_handle(handle) { }
+        com_ptr<IContextCallback> m_context;
+        coroutine_handle<> m_handle;
+    };
+
+    inline void __stdcall fallback_submit_threadpool_callback(void*, void* p) noexcept
+    {
+        std::unique_ptr<threadpool_resume> state{ static_cast<threadpool_resume*>(p) };
+        resume_apartment_sync(state->m_context, state->m_handle);
+    }
+
     inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, coroutine_handle<> handle)
     {
-        struct threadpool_resume
-        {
-            threadpool_resume(com_ptr<IContextCallback> const& context, coroutine_handle<> handle) :
-                m_context(context), m_handle(handle) { }
-            com_ptr<IContextCallback> m_context;
-            coroutine_handle<> m_handle;
-        };
         auto state = std::make_unique<threadpool_resume>(context, handle);
-        submit_threadpool_callback([](void*, void* p)
-            {
-                std::unique_ptr<threadpool_resume> state{ static_cast<threadpool_resume*>(p) };
-                resume_apartment_sync(state->m_context, state->m_handle);
-            }, state.get());
+        submit_threadpool_callback(fallback_submit_threadpool_callback, state.get());
         state.release();
     }
 
