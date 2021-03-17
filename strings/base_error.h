@@ -433,7 +433,7 @@ WINRT_EXPORT namespace winrt
         hresult_canceled(take_ownership_from_abi_t) noexcept : hresult_error(impl::error_canceled, take_ownership_from_abi) {}
     };
 
-    [[noreturn]] inline __declspec(noinline) void throw_hresult(hresult const result)
+    [[noreturn]] inline WINRT_IMPL_NOINLINE void throw_hresult(hresult const result)
     {
         if (winrt_throw_hresult_handler)
         {
@@ -513,7 +513,7 @@ WINRT_EXPORT namespace winrt
         throw hresult_error(result, take_ownership_from_abi);
     }
 
-    inline __declspec(noinline) hresult to_hresult() noexcept
+    inline WINRT_IMPL_NOINLINE hresult to_hresult() noexcept
     {
         if (winrt_to_hresult_handler)
         {
@@ -546,7 +546,7 @@ WINRT_EXPORT namespace winrt
         }
     }
 
-    inline __declspec(noinline) hstring to_message()
+    inline WINRT_IMPL_NOINLINE hstring to_message()
     {
         if (winrt_to_message_handler)
         {
