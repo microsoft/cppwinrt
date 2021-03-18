@@ -45,6 +45,14 @@
 #undef _WINDOWS_NUMERICS_END_NAMESPACE_
 #endif
 
+#if defined(_MSC_VER)
+#define WINRT_IMPL_NOINLINE __declspec(noinline)
+#elif defined(__GNUC__)
+#define WINRT_IMPL_NOINLINE __attribute__((noinline))
+#else
+#define WINRT_IMPL_NOINLINE
+#endif
+
 #ifdef __IUnknown_INTERFACE_DEFINED__
 #define WINRT_IMPL_IUNKNOWN_DEFINED
 #endif
