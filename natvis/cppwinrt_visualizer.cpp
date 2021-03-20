@@ -105,7 +105,7 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
 
             if (std::find(db_files.begin(), db_files.end(), path_string) == db_files.end())
             {
-                db->add_database(path_string);
+                db->add_database(path_string, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); });
                 db_files.push_back(path_string);
             }
         }
@@ -165,7 +165,7 @@ cppwinrt_visualizer::cppwinrt_visualizer()
                 db_files.push_back(file.path().string());
             }
         }
-        db.reset(new cache(db_files));
+        db.reset(new cache(db_files, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); }));
     }
     catch (...)
     {
