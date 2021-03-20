@@ -13,6 +13,12 @@ namespace winrt::impl
         return function(args..., guid_of<T>(), result);
     }
 
+    template <typename T, typename Interface, typename M, typename...Args, std::enable_if_t<std::is_member_function_pointer_v<M>, int> = 0>
+    int32_t capture_to(void** result, Interface* object, M method, Args&& ...args)
+    {
+        return (object->*method)(args..., guid_of<T>(), result);
+    }
+
     template <typename T, typename O, typename M, typename...Args>
     int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&& ...args);
 }
