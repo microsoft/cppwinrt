@@ -1454,6 +1454,7 @@ namespace cppwinrt
         using iterator_category = std::input_iterator_tag;
         using value_type = T;
         using difference_type = ptrdiff_t;
+        using pointer = void;
         using reference = T;
 )");
         }
@@ -1464,6 +1465,7 @@ namespace cppwinrt
         using iterator_category = std::input_iterator_tag;
         using value_type = Windows::Foundation::IInspectable;
         using difference_type = ptrdiff_t;
+        using pointer = void;
         using reference = Windows::Foundation::IInspectable;
 )");
         }

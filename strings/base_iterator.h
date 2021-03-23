@@ -8,6 +8,7 @@ namespace winrt::impl
         using iterator_category = std::input_iterator_tag;
         using value_type = decltype(std::declval<T>().GetAt(0));
         using difference_type = ptrdiff_t;
+        using pointer = void;
         using reference = value_type;
 
         fast_iterator() noexcept = default;
