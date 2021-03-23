@@ -34,7 +34,7 @@ namespace winrt::impl
         }
 
         static int32_t(__stdcall * handler)(void* classId, winrt::guid const& iid, void** factory) noexcept;
-        impl::load_runtime_function("RoGetActivationFactory", handler, fallback_RoGetActivationFactory);
+        impl::load_runtime_function(L"combase.dll", "RoGetActivationFactory", handler, fallback_RoGetActivationFactory);
         hresult hr = handler(*(void**)(&name), guid, result);
 
         if (hr == impl::error_not_initialized)
