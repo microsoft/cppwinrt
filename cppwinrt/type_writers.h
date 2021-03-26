@@ -343,11 +343,11 @@ namespace cppwinrt
                     else if (name == "Vector3") { name = "float3"; }
                     else if (name == "Vector4") { name = "float4"; }
 
-                    write("@::%", ns, name);
+                    write("winrt::@::%", ns, name);
                 }
                 else
                 {
-                    write("@::%", ns, name);
+                    write("winrt::@::%", ns, name);
                 }
             }
         }

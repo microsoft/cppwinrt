@@ -286,5 +286,11 @@ namespace test_component
             static void StaticMethod();
             void Method(Windows.Foundation.Uri param);
         }
+
+        struct Struct
+        {
+            Windows.Foundation.Rect rect;
+            Windows.Foundation.Numerics.Matrix3x2 matrix;
+        };
     }
 }
