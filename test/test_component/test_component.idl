@@ -280,11 +280,18 @@ namespace test_component
 
     namespace Windows
     {
+        struct Struct
+        {
+            Windows.Foundation.Rect rect;
+            Windows.Foundation.Numerics.Matrix3x2 matrix;
+            Windows.Foundation.IReference<Windows.Foundation.Rect> ref_rect;
+        };
+
         runtimeclass Class
         {
             Class();
-            static void StaticMethod();
-            void Method();
+            static void StaticMethod(Struct param);
+            void Method(Windows.Foundation.Uri param);
         }
     }
 }

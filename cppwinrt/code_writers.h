@@ -2111,7 +2111,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         D& shim() noexcept { return *static_cast<D*>(this); }
         D const& shim() const noexcept { return *static_cast<const D*>(this); }
     public:
-        using % = winrt::%;
+        using % = %;
 %    };
 )";
 
@@ -3207,7 +3207,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
     {
         auto generics = type.GenericParam();
 
-        w.write("    template<%> struct hash<winrt::%> : winrt::impl::hash_base {};\n",
+        w.write("    template<%> struct hash<%> : winrt::impl::hash_base {};\n",
             bind<write_generic_typenames>(generics),
             type);
     }
