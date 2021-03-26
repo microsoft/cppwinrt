@@ -504,7 +504,7 @@ namespace cppwinrt
                         }
                         else
                         {
-                            write("Windows::Foundation::IInspectable");
+                            write("winrt::Windows::Foundation::IInspectable");
                         }
                     }
                     else
