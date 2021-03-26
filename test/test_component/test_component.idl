@@ -277,4 +277,14 @@ namespace test_component
             }
         }
     }
+
+    namespace Windows
+    {
+        runtimeclass Class
+        {
+            Class();
+            static void StaticMethod();
+            void Method();
+        }
+    }
 }
