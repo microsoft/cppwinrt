@@ -8,7 +8,7 @@ namespace winrt::test_component::Windows::implementation
     {
         throw hresult_not_implemented();
     }
-    void Class::Method()
+    void Class::Method(winrt::Windows::Foundation::Uri const&)
     {
         throw hresult_not_implemented();
     }

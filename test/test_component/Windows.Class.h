@@ -8,7 +8,7 @@ namespace winrt::test_component::Windows::implementation
         Class() = default;
 
         static void StaticMethod();
-        void Method();
+        void Method(winrt::Windows::Foundation::Uri const& param);
     };
 }
 namespace winrt::test_component::Windows::factory_implementation
