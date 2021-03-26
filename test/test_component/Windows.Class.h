@@ -7,7 +7,7 @@ namespace winrt::test_component::Windows::implementation
     {
         Class() = default;
 
-        static void StaticMethod();
+        static void StaticMethod(winrt::test_component::Windows::Struct const& param);
         void Method(winrt::Windows::Foundation::Uri const& param);
     };
 }

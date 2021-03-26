@@ -4,7 +4,7 @@
 
 namespace winrt::test_component::Windows::implementation
 {
-    void Class::StaticMethod()
+    void Class::StaticMethod(winrt::test_component::Windows::Struct const&)
     {
         throw hresult_not_implemented();
     }
