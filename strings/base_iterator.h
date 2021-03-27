@@ -142,7 +142,7 @@ namespace winrt::impl
     };
 
     template <typename T, std::enable_if_t<!has_GetAt<T>::value, int> = 0>
-    auto begin(T const& collection) -> decltype(collection.First())
+    auto get_begin_iterator(T const& collection) -> decltype(collection.First())
     {
         auto result = collection.First();
 
@@ -155,19 +155,19 @@ namespace winrt::impl
     }
 
     template <typename T, std::enable_if_t<!has_GetAt<T>::value, int> = 0>
-    auto end([[maybe_unused]] T const& collection) noexcept -> decltype(collection.First())
+    auto get_end_iterator([[maybe_unused]] T const& collection) noexcept -> decltype(collection.First())
     {
         return {};
     }
 
     template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
-    fast_iterator<T> begin(T const& collection) noexcept
+    fast_iterator<T> get_begin_iterator(T const& collection) noexcept
     {
         return { collection, 0 };
     }
 
     template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
-    fast_iterator<T> end(T const& collection)
+    fast_iterator<T> get_end_iterator(T const& collection)
     {
         return { collection, collection.Size() };
     }
@@ -175,12 +175,15 @@ namespace winrt::impl
     template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
     auto rbegin(T const& collection)
     {
-        return std::make_reverse_iterator(end(collection));
+        return std::make_reverse_iterator(get_end_iterator(collection));
     }
 
     template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
     auto rend(T const& collection)
     {
-        return std::make_reverse_iterator(begin(collection));
+        return std::make_reverse_iterator(get_begin_iterator(collection));
     }
+
+    using std::begin;
+    using std::end;
 }

@@ -51,4 +51,12 @@ TEST_CASE("fast_iterator")
         REQUIRE(end(v) - begin(v) == v.Size());
         REQUIRE((begin(v) + 3)[-1] == 4);
     }
+    {
+        // ensure that importing std::begin and std::end does not break existing code
+        using std::begin;
+        using std::end;
+
+        auto v = winrt::single_threaded_vector<int>({ 9, 5, 4, 1, 1, 3 });
+        REQUIRE(std::is_heap(begin(v), end(v)));
+    }
 }

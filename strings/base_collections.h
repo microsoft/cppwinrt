@@ -6,12 +6,12 @@ namespace winrt::impl
     template <typename D, typename T>
     auto consume_Windows_Foundation_Collections_IIterable<D, T>::begin() const
     {
-        return impl::begin(static_cast<D const&>(*this));
+        return get_begin_iterator(static_cast<D const&>(*this));
     }
     template <typename D, typename T>
     auto consume_Windows_Foundation_Collections_IIterable<D, T>::end() const
     {
-        return impl::end(static_cast<D const&>(*this));
+        return get_end_iterator(static_cast<D const&>(*this));
     }
 
     template <typename T>
