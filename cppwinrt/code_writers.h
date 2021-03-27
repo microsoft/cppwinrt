@@ -1655,7 +1655,7 @@ namespace cppwinrt
         else if (optional)
         {
             auto format = R"(            if (%) *% = nullptr;
-            Windows::Foundation::IInspectable winrt_impl_%;
+            winrt::Windows::Foundation::IInspectable winrt_impl_%;
 )";
 
             w.write(format, param_name, param_name, param_name);
@@ -1997,7 +1997,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         if (!found)
         {
-            w.write(", Windows::Foundation::IInspectable");
+            w.write(", winrt::Windows::Foundation::IInspectable");
         }
     }
 
@@ -2147,7 +2147,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         D& shim() noexcept { return *static_cast<D*>(this); }
         D const& shim() const noexcept { return *static_cast<const D*>(this); }
     public:
-        using % = winrt::%;
+        using % = %;
 %    };
 )";
 
@@ -2350,11 +2350,11 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         if (empty(generics))
         {
             auto format = R"(    struct __declspec(empty_bases) % :
-        Windows::Foundation::IInspectable,
+        winrt::Windows::Foundation::IInspectable,
         impl::consume_t<%>%
     {
         %(std::nullptr_t = nullptr) noexcept {}
-        %(void* ptr, take_ownership_from_abi_t) noexcept : Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
+        %(void* ptr, take_ownership_from_abi_t) noexcept : winrt::Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
         %(% const&) noexcept = default;
         %(%&&) noexcept = default;
         %& operator=(% const&) & noexcept = default;
@@ -2385,11 +2385,11 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
             auto format = R"(    template <%>
     struct __declspec(empty_bases) % :
-        Windows::Foundation::IInspectable,
+        winrt::Windows::Foundation::IInspectable,
         impl::consume_t<%>%
     {%
         %(std::nullptr_t = nullptr) noexcept {}
-        %(void* ptr, take_ownership_from_abi_t) noexcept : Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
+        %(void* ptr, take_ownership_from_abi_t) noexcept : winrt::Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
         %(% const&) noexcept = default;
         %(%&&) noexcept = default;
         %& operator=(% const&) & noexcept = default;
@@ -2961,7 +2961,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         auto format = R"(    inline %::%(%)
     {
-        Windows::Foundation::IInspectable %, %;
+        winrt::Windows::Foundation::IInspectable %, %;
         *this = % { return f.%(%%%, %); });
     }
 )";
@@ -3092,7 +3092,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     if (has_fastabi(type))
                     {
                         format = R"(    inline %::%() :
-        %(impl::call_factory_cast<%(*)(Windows::Foundation::IActivationFactory const&), %>([](Windows::Foundation::IActivationFactory const& f) { return impl::fast_activate<%>(f); }))
+        %(impl::call_factory_cast<%(*)(winrt::Windows::Foundation::IActivationFactory const&), %>([](winrt::Windows::Foundation::IActivationFactory const& f) { return impl::fast_activate<%>(f); }))
     {
     }
 )";
@@ -3100,7 +3100,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     else
                     {
                         format = R"(    inline %::%() :
-        %(impl::call_factory_cast<%(*)(Windows::Foundation::IActivationFactory const&), %>([](Windows::Foundation::IActivationFactory const& f) { return f.template ActivateInstance<%>(); }))
+        %(impl::call_factory_cast<%(*)(winrt::Windows::Foundation::IActivationFactory const&), %>([](winrt::Windows::Foundation::IActivationFactory const& f) { return f.template ActivateInstance<%>(); }))
     {
     }
 )";
@@ -3243,7 +3243,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
     {
         auto generics = type.GenericParam();
 
-        w.write("    template<%> struct hash<winrt::%> : winrt::impl::hash_base {};\n",
+        w.write("    template<%> struct hash<%> : winrt::impl::hash_base {};\n",
             bind<write_generic_typenames>(generics),
             type);
     }

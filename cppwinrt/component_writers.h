@@ -347,7 +347,7 @@ catch (...) { return winrt::to_hresult(); }
 
         if (!default_constructor)
         {
-            w.write(R"(        [[noreturn]] Windows::Foundation::IInspectable ActivateInstance() const
+            w.write(R"(        [[noreturn]] winrt::Windows::Foundation::IInspectable ActivateInstance() const
         {
             throw hresult_not_implemented();
         }
@@ -831,7 +831,7 @@ catch (...) { return winrt::to_hresult(); }
             auto format = R"(namespace winrt::@::factory_implementation
 {
     template <typename D, typename T, typename... I>
-    struct __declspec(empty_bases) %T : implements<D, Windows::Foundation::IActivationFactory%, I...>
+    struct __declspec(empty_bases) %T : implements<D, winrt::Windows::Foundation::IActivationFactory%, I...>
     {
         using instance_type = @::%;
 
