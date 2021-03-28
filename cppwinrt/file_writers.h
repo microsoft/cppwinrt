@@ -126,6 +126,7 @@ namespace cppwinrt
             auto wrap_type = wrap_type_namespace(w, ns);
             w.write_each<write_interface>(members.interfaces);
         }
+        write_namespace_special_1(w, ns);
 
         write_close_file_guard(w);
         w.swap();

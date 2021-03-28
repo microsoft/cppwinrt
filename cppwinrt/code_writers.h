@@ -3256,4 +3256,12 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             w.write(strings::base_xaml_typename);
         }
     }
+
+    static void write_namespace_special_1(writer& w, std::string_view const& namespace_name)
+    {
+        if (namespace_name == "Windows.Foundation")
+        {
+            w.write(strings::base_reference_produce_1);
+        }
+    }
 }
