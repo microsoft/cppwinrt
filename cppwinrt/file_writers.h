@@ -38,6 +38,7 @@ namespace cppwinrt
             w.write(strings::base_chrono);
             w.write(strings::base_security);
             w.write(strings::base_std_hash);
+            w.write(strings::base_iterator);
             w.write(strings::base_coroutine_threadpool);
             w.write(strings::base_natvis);
             w.write(strings::base_version);

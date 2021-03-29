@@ -1283,12 +1283,17 @@ namespace cppwinrt
                 static_cast<D&>(*this) = nullptr;
             }
 
-            return *this;
+            return static_cast<D&>(*this);
         }
 
         auto operator*() const
         {
             return Current();
+        }
+
+        void operator++(int)
+        {
+            ++(*this);
         }
 )");
         }
@@ -1313,12 +1318,17 @@ namespace cppwinrt
                 static_cast<D&>(*this) = nullptr;
             }
 
-            return *this;
+            return static_cast<D&>(*this);
         }
 
         T operator*() const
         {
             return Current();
+        }
+
+        void operator++(int)
+        {
+            ++(*this);
         }
 )");
         }
@@ -1417,6 +1427,20 @@ namespace cppwinrt
         auto wait_for(Windows::Foundation::TimeSpan const& timeout) const;
 )");
         }
+        else if (type_name == "Windows.Foundation.Collections.IIterable`1")
+        {
+            w.write(R"(
+        auto begin() const;
+        auto end() const;
+)");
+        }
+        else if (type_name == "Windows.UI.Xaml.Interop.IBindableIterable")
+        {
+            w.write(R"(
+        auto begin() const;
+        auto end() const;
+)");
+        }
     }
 
     static void write_interface_extensions(writer& w, TypeDef const& type)
@@ -1426,11 +1450,23 @@ namespace cppwinrt
         if (type_name == "Windows.Foundation.Collections.IIterator`1")
         {
             w.write(R"(
+        using iterator_concept = std::input_iterator_tag;
         using iterator_category = std::input_iterator_tag;
         using value_type = T;
         using difference_type = ptrdiff_t;
-        using pointer = T*;
-        using reference = T&;
+        using pointer = void;
+        using reference = T;
+)");
+        }
+        else if (type_name == "Windows.UI.Xaml.Interop.IBindableIterator")
+        {
+            w.write(R"(
+        using iterator_concept = std::input_iterator_tag;
+        using iterator_category = std::input_iterator_tag;
+        using value_type = Windows::Foundation::IInspectable;
+        using difference_type = ptrdiff_t;
+        using pointer = void;
+        using reference = Windows::Foundation::IInspectable;
 )");
         }
         else if (type_name == "Windows.Foundation.IReference`1")
