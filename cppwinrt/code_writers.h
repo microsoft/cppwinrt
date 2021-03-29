@@ -3248,19 +3248,12 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             type);
     }
 
-    static void write_namespace_special(writer& w, std::string_view const& namespace_name, cache const& c)
+    static void write_namespace_special(writer& w, std::string_view const& namespace_name)
     {
         if (namespace_name == "Windows.Foundation")
         {
-            if (c.find("Windows.Foundation.PropertyValue"))
-            {
-                w.write(strings::base_reference_produce);
-            }
-            if (c.find("Windows.Foundation.Deferral"))
-            {
-                w.write(strings::base_deferral);
-            }
-
+            w.write(strings::base_reference_produce);
+            w.write(strings::base_deferral);
             w.write(strings::base_coroutine_foundation);
         }
         else if (namespace_name == "Windows.Foundation.Collections")
@@ -3290,6 +3283,14 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         else if (namespace_name == "Windows.UI.Xaml.Interop")
         {
             w.write(strings::base_xaml_typename);
+        }
+    }
+
+    static void write_namespace_special_1(writer& w, std::string_view const& namespace_name)
+    {
+        if (namespace_name == "Windows.Foundation")
+        {
+            w.write(strings::base_reference_produce_1);
         }
     }
 }
