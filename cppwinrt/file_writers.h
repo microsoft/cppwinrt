@@ -202,7 +202,7 @@ namespace cppwinrt
             w.write_each<write_std_hash>(members.classes);
         }
 
-        write_namespace_special(w, ns, c);
+        write_namespace_special(w, ns);
 
         write_close_file_guard(w);
         w.swap();
