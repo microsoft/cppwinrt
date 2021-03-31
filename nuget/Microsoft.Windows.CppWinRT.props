@@ -23,7 +23,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <WinMDAssembly>true</WinMDAssembly>
         <!--Set a value to prevent SDK's uap.props from setting it and pointing to the wrong headers-->
         <CppWinRT_IncludePath>PreventSdkUapPropsAssignment</CppWinRT_IncludePath>
-        <CppWinRTEnableDefaultCopyLocalFalse Condition="'$(CppWinRTEnableDefaultCopyLocalFalse)' == ''"></CppWinRTEnableDefaultCopyLocalFalse>
+        <CppWinRTEnableDefaultCopyLocalFalse Condition="'$(CppWinRTEnableDefaultCopyLocalFalse)' == ''">true</CppWinRTEnableDefaultCopyLocalFalse>
     </PropertyGroup>
 
     <ItemDefinitionGroup>
