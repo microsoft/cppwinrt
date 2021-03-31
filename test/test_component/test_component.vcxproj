@@ -620,6 +620,7 @@
     <ClCompile Include="Velocity.Class1.cpp" />
     <ClCompile Include="Velocity.Class2.cpp" />
     <ClCompile Include="Velocity.Class4.cpp" />
+    <ClCompile Include="Windows.Class.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
@@ -628,6 +629,7 @@
     <ClInclude Include="Velocity.Class1.h" />
     <ClInclude Include="Velocity.Class2.h" />
     <ClInclude Include="Velocity.Class4.h" />
+    <ClInclude Include="Windows.Class.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="exports.def" />
