@@ -29,7 +29,7 @@ namespace winrt::impl
             }
             else if (remaining < 0)
             {
-                std::terminate();
+                abort();
             }
 
             return remaining;
@@ -116,7 +116,7 @@ namespace winrt::impl
 
         if (value[length] != 0)
         {
-            std::terminate();
+            abort();
         }
 
         header.flags = hstring_reference_flag;

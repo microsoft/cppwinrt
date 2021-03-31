@@ -36,7 +36,7 @@ namespace winrt::impl
         }
         else 
         {
-            std::terminate();
+            abort();
         }
     }
 
@@ -82,6 +82,50 @@ WINRT_EXPORT namespace winrt
 
     struct guid
     {
+    private:
+
+        template <typename TStringView>
+        static constexpr guid parse(TStringView const value) noexcept
+        {
+            if (value.size() != 36 || value[8] != '-' || value[13] != '-' || value[18] != '-' || value[23] != '-')
+            {
+                abort();
+            }
+
+            return
+            {
+                impl::uint8_to_uint32
+                (
+                    impl::hex_to_uint8(value[0], value[1]),
+                    impl::hex_to_uint8(value[2], value[3]),
+                    impl::hex_to_uint8(value[4], value[5]),
+                    impl::hex_to_uint8(value[6], value[7])
+                ),
+                impl::uint8_to_uint16
+                (
+                    impl::hex_to_uint8(value[9], value[10]),
+                    impl::hex_to_uint8(value[11], value[12])
+                ),
+                impl::uint8_to_uint16
+                (
+                    impl::hex_to_uint8(value[14], value[15]),
+                    impl::hex_to_uint8(value[16], value[17])
+                ),
+                {
+                    impl::hex_to_uint8(value[19], value[20]),
+                    impl::hex_to_uint8(value[21], value[22]),
+                    impl::hex_to_uint8(value[24], value[25]),
+                    impl::hex_to_uint8(value[26], value[27]),
+                    impl::hex_to_uint8(value[28], value[29]),
+                    impl::hex_to_uint8(value[30], value[31]),
+                    impl::hex_to_uint8(value[32], value[33]),
+                    impl::hex_to_uint8(value[34], value[35]),
+                }
+            };
+        }
+
+    public:
+
         uint32_t Data1;
         uint16_t Data2;
         uint16_t Data3;
@@ -123,48 +167,6 @@ WINRT_EXPORT namespace winrt
         constexpr explicit guid(std::wstring_view const value) noexcept :
             guid(parse(value))
         {
-        }
-
-    private:
-
-        template <typename TStringView>
-        static constexpr guid parse(TStringView const value) noexcept
-        {
-            if (value.size() != 36 || value[8] != '-' || value[13] != '-' || value[18] != '-' || value[23] != '-')
-            {
-                std::terminate();
-            }
-
-            return
-            {
-                impl::uint8_to_uint32
-                (
-                    impl::hex_to_uint8(value[0], value[1]),
-                    impl::hex_to_uint8(value[2], value[3]),
-                    impl::hex_to_uint8(value[4], value[5]),
-                    impl::hex_to_uint8(value[6], value[7])
-                ),
-                impl::uint8_to_uint16
-                (
-                    impl::hex_to_uint8(value[9], value[10]),
-                    impl::hex_to_uint8(value[11], value[12])
-                ),
-                impl::uint8_to_uint16
-                (
-                    impl::hex_to_uint8(value[14], value[15]),
-                    impl::hex_to_uint8(value[16], value[17])
-                ),
-                {
-                    impl::hex_to_uint8(value[19], value[20]),
-                    impl::hex_to_uint8(value[21], value[22]),
-                    impl::hex_to_uint8(value[24], value[25]),
-                    impl::hex_to_uint8(value[26], value[27]),
-                    impl::hex_to_uint8(value[28], value[29]),
-                    impl::hex_to_uint8(value[30], value[31]),
-                    impl::hex_to_uint8(value[32], value[33]),
-                    impl::hex_to_uint8(value[34], value[35]),
-                }
-            };
         }
     };
 

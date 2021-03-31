@@ -157,9 +157,18 @@ namespace cppwinrt
         {
             if (!file_equal(filename))
             {
-                std::ofstream file{ filename, std::ios::out | std::ios::binary };
-                file.write(m_first.data(), m_first.size());
-                file.write(m_second.data(), m_second.size());
+                std::ofstream file;
+                file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
+                try
+                {
+                  file.open(filename, std::ios::out | std::ios::binary);
+                  file.write(m_first.data(), m_first.size());
+                  file.write(m_second.data(), m_second.size());
+                }
+                catch (std::ofstream::failure const& e)
+                {
+                  throw std::filesystem::filesystem_error(e.what(), filename, std::io_errc::stream);
+                }
             }
             m_first.clear();
             m_second.clear();

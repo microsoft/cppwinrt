@@ -122,14 +122,14 @@ namespace winrt::impl
     };
 
     template <typename F, typename L>
-    void load_runtime_function(char const* name, F& result, L fallback) noexcept
+    void load_runtime_function(wchar_t const* library, char const* name, F& result, L fallback) noexcept
     {
         if (result)
         {
             return;
         }
 
-        result = reinterpret_cast<F>(WINRT_IMPL_GetProcAddress(WINRT_IMPL_LoadLibraryW(L"combase.dll"), name));
+        result = reinterpret_cast<F>(WINRT_IMPL_GetProcAddress(WINRT_IMPL_LoadLibraryW(library), name));
 
         if (result)
         {
@@ -167,7 +167,7 @@ namespace winrt::impl
     inline hresult get_agile_reference(winrt::guid const& iid, void* object, void** reference) noexcept
     {
         static int32_t(__stdcall * handler)(uint32_t options, winrt::guid const& iid, void* object, void** reference) noexcept;
-        load_runtime_function("RoGetAgileReference", handler, fallback_RoGetAgileReference);
+        load_runtime_function(L"combase.dll", "RoGetAgileReference", handler, fallback_RoGetAgileReference);
         return handler(0, iid, object, reference);
     }
 }

@@ -115,6 +115,9 @@
     <ClInclude Include="..\strings\base_reference_produce.h">
       <Filter>strings</Filter>
     </ClInclude>
+    <ClInclude Include="..\strings\base_reference_produce_1.h">
+      <Filter>strings</Filter>
+    </ClInclude>
     <ClInclude Include="..\strings\base_security.h">
       <Filter>strings</Filter>
     </ClInclude>
@@ -163,6 +166,9 @@
     <ClInclude Include="..\strings\base_coroutine_system_winui.h">
       <Filter>strings</Filter>
     </ClInclude>
+    <ClInclude Include="..\strings\base_iterator.h">
+      <Filter>strings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(OutDir)version.rc" />
@@ -174,5 +180,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="app.manifest" />
   </ItemGroup>
 </Project>

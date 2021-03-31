@@ -38,6 +38,7 @@ namespace cppwinrt
             w.write(strings::base_chrono);
             w.write(strings::base_security);
             w.write(strings::base_std_hash);
+            w.write(strings::base_iterator);
             w.write(strings::base_coroutine_threadpool);
             w.write(strings::base_natvis);
             w.write(strings::base_version);
@@ -126,6 +127,7 @@ namespace cppwinrt
             auto wrap_type = wrap_type_namespace(w, ns);
             w.write_each<write_interface>(members.interfaces);
         }
+        write_namespace_special_1(w, ns);
 
         write_close_file_guard(w);
         w.swap();
@@ -200,7 +202,7 @@ namespace cppwinrt
             w.write_each<write_std_hash>(members.classes);
         }
 
-        write_namespace_special(w, ns, c);
+        write_namespace_special(w, ns);
 
         write_close_file_guard(w);
         w.swap();

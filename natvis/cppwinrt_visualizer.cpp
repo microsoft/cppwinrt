@@ -100,7 +100,14 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
         if (FindMetadata(process, winmd_path))
         {
             MetadataDiagnostic(process, L"Loaded ", winmd_path);
-            db_files.push_back(winmd_path.string());
+
+            auto const path_string = winmd_path.string();
+
+            if (std::find(db_files.begin(), db_files.end(), path_string) == db_files.end())
+            {
+                db->add_database(path_string, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); });
+                db_files.push_back(path_string);
+            }
         }
         auto pos = probe_file.rfind('.');
         if (pos == std::string::npos)
@@ -109,7 +116,6 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
         }
         probe_file = probe_file.substr(0, pos);
     } while (true);
-    db.reset(new cache(db_files));
 }
 
 TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
@@ -125,6 +131,19 @@ TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
             NatvisDiagnostic(process,
                 std::wstring(L"Could not find metadata for ") + std::wstring(typeName.begin(), typeName.end()), NatvisDiagnosticLevel::Error);
         }
+    }
+    return type;
+}
+
+TypeDef FindType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
+{
+    auto type = db->find(typeNamespace, typeName);
+    if (!type)
+    {
+        std::string fullName(typeNamespace);
+        fullName.append(".");
+        fullName.append(typeName);
+        FindType(process, fullName);
     }
     return type;
 }
@@ -146,7 +165,7 @@ cppwinrt_visualizer::cppwinrt_visualizer()
                 db_files.push_back(file.path().string());
             }
         }
-        db.reset(new cache(db_files));
+        db.reset(new cache(db_files, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); }));
     }
     catch (...)
     {
