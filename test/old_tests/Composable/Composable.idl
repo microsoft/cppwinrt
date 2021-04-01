@@ -1,5 +1,14 @@
 import "Windows.Foundation.idl";
 
+namespace Windows.Foundation.Metadata
+{
+    [attributeusage(target_method, target_property)]
+    [attributename("noexcept2")]
+    attribute NoExceptionAttribute
+    {
+    }
+}
+
 namespace Composable
 {
     runtimeclass Base;
@@ -11,6 +20,7 @@ namespace Composable
         HRESULT VirtualMethod([out, retval] HSTRING* value);
         HRESULT CallOverridableMethod([out, retval] HSTRING* value);
         HRESULT CallOverridableVirtualMethod([out, retval] HSTRING* value);
+        [noexcept2] HRESULT CallOverridableNoexceptMethod([out, retval] int* value);
 
         [propget] HRESULT Name([out, retval] HSTRING* value);
     };
@@ -27,6 +37,7 @@ namespace Composable
     {
         HRESULT OverridableMethod([out, retval] HSTRING* value);
         HRESULT OverridableVirtualMethod([out, retval] HSTRING* value);
+        [noexcept2] HRESULT OverridableNoexceptMethod([out, retval] int* value);
     };
     
     [version(1.0), uuid(5f3996e1-3cf7-4716-9a3d-11eb5d32caff), exclusiveto(Derived)]
