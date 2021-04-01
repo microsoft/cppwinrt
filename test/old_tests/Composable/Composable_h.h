@@ -1,6 +1,6 @@
 /* Header file automatically generated from Composable.idl */
 /*
- * File built with Microsoft(R) MIDLRT Compiler Engine Version 10.00.0229 
+ * File built with Microsoft(R) MIDLRT Compiler Engine Version 10.00.0226 
  */
 
 #pragma warning( disable: 4049 )  /* more than 64k source lines */
@@ -54,11 +54,11 @@
 #endif // defined(WINDOWS_APPLICATIONMODEL_CALLS_CALLSPHONECONTRACT_VERSION)
 
 #if !defined(WINDOWS_FOUNDATION_FOUNDATIONCONTRACT_VERSION)
-#define WINDOWS_FOUNDATION_FOUNDATIONCONTRACT_VERSION 0x40000
+#define WINDOWS_FOUNDATION_FOUNDATIONCONTRACT_VERSION 0x30000
 #endif // defined(WINDOWS_FOUNDATION_FOUNDATIONCONTRACT_VERSION)
 
 #if !defined(WINDOWS_FOUNDATION_UNIVERSALAPICONTRACT_VERSION)
-#define WINDOWS_FOUNDATION_UNIVERSALAPICONTRACT_VERSION 0xa0000
+#define WINDOWS_FOUNDATION_UNIVERSALAPICONTRACT_VERSION 0x80000
 #endif // defined(WINDOWS_FOUNDATION_UNIVERSALAPICONTRACT_VERSION)
 
 #if !defined(WINDOWS_NETWORKING_SOCKETS_CONTROLCHANNELTRIGGERCONTRACT_VERSION)
@@ -90,8 +90,7 @@
 namespace ABI {
     namespace Composable {
         interface IBase;
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 #define __x_ABI_CComposable_CIBase ABI::Composable::IBase
 
 #endif // ____x_ABI_CComposable_CIBase_FWD_DEFINED__
@@ -101,8 +100,7 @@ namespace ABI {
 namespace ABI {
     namespace Composable {
         interface IBaseFactory;
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 #define __x_ABI_CComposable_CIBaseFactory ABI::Composable::IBaseFactory
 
 #endif // ____x_ABI_CComposable_CIBaseFactory_FWD_DEFINED__
@@ -112,8 +110,7 @@ namespace ABI {
 namespace ABI {
     namespace Composable {
         interface IBaseOverrides;
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 #define __x_ABI_CComposable_CIBaseOverrides ABI::Composable::IBaseOverrides
 
 #endif // ____x_ABI_CComposable_CIBaseOverrides_FWD_DEFINED__
@@ -123,8 +120,7 @@ namespace ABI {
 namespace ABI {
     namespace Composable {
         interface IDerived;
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 #define __x_ABI_CComposable_CIDerived ABI::Composable::IDerived
 
 #endif // ____x_ABI_CComposable_CIDerived_FWD_DEFINED__
@@ -134,8 +130,7 @@ namespace ABI {
 namespace ABI {
     namespace Composable {
         interface IDerivedFactory;
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 #define __x_ABI_CComposable_CIDerivedFactory ABI::Composable::IDerivedFactory
 
 #endif // ____x_ABI_CComposable_CIDerivedFactory_FWD_DEFINED__
@@ -145,27 +140,22 @@ namespace ABI {
 namespace ABI {
     namespace Composable {
         interface ITestStructCodeGen;
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 #define __x_ABI_CComposable_CITestStructCodeGen ABI::Composable::ITestStructCodeGen
 
 #endif // ____x_ABI_CComposable_CITestStructCodeGen_FWD_DEFINED__
 
 
-
-
 namespace ABI {
     namespace Composable {
         class Base;
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 
 namespace ABI {
     namespace Composable {
         class Derived;
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 
 
@@ -196,9 +186,6 @@ namespace ABI {
             virtual HRESULT STDMETHODCALLTYPE CallOverridableVirtualMethod(
                 /* [retval, out] */HSTRING * value
                 ) = 0;
-            /* [Windows.Foundation.Metadata.NoExceptionAttribute] */virtual HRESULT STDMETHODCALLTYPE CallOverridableNoexceptMethod(
-                /* [retval, out] */int * value
-                ) = 0;
             /* [propget] */virtual HRESULT STDMETHODCALLTYPE get_Name(
                 /* [retval, out] */HSTRING * value
                 ) = 0;
@@ -207,8 +194,7 @@ namespace ABI {
 
         extern MIDL_CONST_ID IID & IID_IBase=_uuidof(IBase);
         
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 EXTERN_C const IID IID___x_ABI_CComposable_CIBase;
 #endif /* !defined(____x_ABI_CComposable_CIBase_INTERFACE_DEFINED__) */
@@ -248,8 +234,7 @@ namespace ABI {
 
         extern MIDL_CONST_ID IID & IID_IBaseFactory=_uuidof(IBaseFactory);
         
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 EXTERN_C const IID IID___x_ABI_CComposable_CIBaseFactory;
 #endif /* !defined(____x_ABI_CComposable_CIBaseFactory_INTERFACE_DEFINED__) */
@@ -279,16 +264,12 @@ namespace ABI {
             virtual HRESULT STDMETHODCALLTYPE OverridableVirtualMethod(
                 /* [retval, out] */HSTRING * value
                 ) = 0;
-            /* [Windows.Foundation.Metadata.NoExceptionAttribute] */virtual HRESULT STDMETHODCALLTYPE OverridableNoexceptMethod(
-                /* [retval, out] */int * value
-                ) = 0;
             
         };
 
         extern MIDL_CONST_ID IID & IID_IBaseOverrides=_uuidof(IBaseOverrides);
         
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 EXTERN_C const IID IID___x_ABI_CComposable_CIBaseOverrides;
 #endif /* !defined(____x_ABI_CComposable_CIBaseOverrides_INTERFACE_DEFINED__) */
@@ -317,8 +298,7 @@ namespace ABI {
 
         extern MIDL_CONST_ID IID & IID_IDerived=_uuidof(IDerived);
         
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 EXTERN_C const IID IID___x_ABI_CComposable_CIDerived;
 #endif /* !defined(____x_ABI_CComposable_CIDerived_INTERFACE_DEFINED__) */
@@ -358,8 +338,7 @@ namespace ABI {
 
         extern MIDL_CONST_ID IID & IID_IDerivedFactory=_uuidof(IDerivedFactory);
         
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 EXTERN_C const IID IID___x_ABI_CComposable_CIDerivedFactory;
 #endif /* !defined(____x_ABI_CComposable_CIDerivedFactory_INTERFACE_DEFINED__) */
@@ -408,16 +387,14 @@ namespace ABI {
         
         typedef enum TestStructCodeGenType : int TestStructCodeGenType;
         
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 namespace ABI {
     namespace Composable {
         
         typedef struct TestStructCodeGen TestStructCodeGen;
         
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 
 /*
@@ -436,8 +413,7 @@ namespace ABI {
             TestStructCodeGenType_Star = 2,
         };
         
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 
 /*
@@ -455,8 +431,7 @@ namespace ABI {
             ABI::Composable::TestStructCodeGenType GridUnitType;
         };
         
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 
 /*
@@ -489,8 +464,7 @@ namespace ABI {
 
         extern MIDL_CONST_ID IID & IID_ITestStructCodeGen=_uuidof(ITestStructCodeGen);
         
-    } /* Composable */
-} /* ABI */
+    } /* Composable */} /* ABI */
 
 EXTERN_C const IID IID___x_ABI_CComposable_CITestStructCodeGen;
 #endif /* !defined(____x_ABI_CComposable_CITestStructCodeGen_INTERFACE_DEFINED__) */
@@ -533,8 +507,6 @@ typedef interface __x_ABI_CComposable_CIDerivedFactory __x_ABI_CComposable_CIDer
 typedef interface __x_ABI_CComposable_CITestStructCodeGen __x_ABI_CComposable_CITestStructCodeGen;
 
 #endif // ____x_ABI_CComposable_CITestStructCodeGen_FWD_DEFINED__
-
-
 
 
 
@@ -596,10 +568,6 @@ HRESULT ( STDMETHODCALLTYPE *VirtualMethod )(
         __x_ABI_CComposable_CIBase * This,
         /* [retval, out] */HSTRING * value
         );
-    /* [Windows.Foundation.Metadata.NoExceptionAttribute] */HRESULT ( STDMETHODCALLTYPE *CallOverridableNoexceptMethod )(
-        __x_ABI_CComposable_CIBase * This,
-        /* [retval, out] */int * value
-        );
     /* [propget] */HRESULT ( STDMETHODCALLTYPE *get_Name )(
         __x_ABI_CComposable_CIBase * This,
         /* [retval, out] */HSTRING * value
@@ -640,9 +608,6 @@ interface __x_ABI_CComposable_CIBase
 
 #define __x_ABI_CComposable_CIBase_CallOverridableVirtualMethod(This,value) \
     ( (This)->lpVtbl->CallOverridableVirtualMethod(This,value) )
-
-#define __x_ABI_CComposable_CIBase_CallOverridableNoexceptMethod(This,value) \
-    ( (This)->lpVtbl->CallOverridableNoexceptMethod(This,value) )
 
 #define __x_ABI_CComposable_CIBase_get_Name(This,value) \
     ( (This)->lpVtbl->get_Name(This,value) )
@@ -808,10 +773,6 @@ HRESULT ( STDMETHODCALLTYPE *OverridableMethod )(
         __x_ABI_CComposable_CIBaseOverrides * This,
         /* [retval, out] */HSTRING * value
         );
-    /* [Windows.Foundation.Metadata.NoExceptionAttribute] */HRESULT ( STDMETHODCALLTYPE *OverridableNoexceptMethod )(
-        __x_ABI_CComposable_CIBaseOverrides * This,
-        /* [retval, out] */int * value
-        );
     END_INTERFACE
     
 } __x_ABI_CComposable_CIBaseOverridesVtbl;
@@ -845,9 +806,6 @@ interface __x_ABI_CComposable_CIBaseOverrides
 
 #define __x_ABI_CComposable_CIBaseOverrides_OverridableVirtualMethod(This,value) \
     ( (This)->lpVtbl->OverridableVirtualMethod(This,value) )
-
-#define __x_ABI_CComposable_CIBaseOverrides_OverridableNoexceptMethod(This,value) \
-    ( (This)->lpVtbl->OverridableNoexceptMethod(This,value) )
 
 
 #endif /* COBJMACROS */
