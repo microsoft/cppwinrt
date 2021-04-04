@@ -7,7 +7,7 @@ classes directly from standard C++, using platform projection headers
 generated from Windows SDK metadata files.
 
 Steps to generate and consume SDK platform projection:
-1. Build project initally to generate platform projection headers into
+1. Build project initially to generate platform projection headers into
     your Generated Files folder.
 2. Include a projection namespace header in your pch.h, such as 
     <winrt/Windows.Foundation.h>.

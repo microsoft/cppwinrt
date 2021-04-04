@@ -6,7 +6,7 @@ using namespace test_component::Velocity;
 
 TEST_CASE("velocity")
 {
-    // This interface is always disabled but shows up in the type sytem
+    // This interface is always disabled but shows up in the type system
     // if it is present in the winmd.
     IInterface1 a;
     REQUIRE(a == nullptr);
