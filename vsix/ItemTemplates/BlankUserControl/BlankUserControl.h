@@ -6,7 +6,7 @@
 #include "winrt/Windows.UI.Xaml.Controls.Primitives.h"
 #include "$safeitemname$.g.h"
 
-namespace winrt::$rootnamespace$::implementation
+namespace winrt::$cpprootnamespace$::implementation
 {
     struct $safeitemname$ : $safeitemname$T<$safeitemname$>
     {
@@ -19,7 +19,7 @@ namespace winrt::$rootnamespace$::implementation
     };
 }
 
-namespace winrt::$rootnamespace$::factory_implementation
+namespace winrt::$cpprootnamespace$::factory_implementation
 {
     struct $safeitemname$ : $safeitemname$T<$safeitemname$, implementation::$safeitemname$>
     {

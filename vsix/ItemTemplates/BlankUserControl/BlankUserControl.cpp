@@ -7,7 +7,7 @@
 using namespace winrt;
 using namespace Windows::UI::Xaml;
 
-namespace winrt::$rootnamespace$::implementation
+namespace winrt::$cpprootnamespace$::implementation
 {
     $safeitemname$::$safeitemname$()
     {

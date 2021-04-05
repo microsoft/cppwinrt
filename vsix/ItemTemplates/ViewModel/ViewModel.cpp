@@ -4,7 +4,7 @@
 #include "$safeitemname$.g.cpp"
 #endif
 
-namespace winrt::$rootnamespace$::implementation
+namespace winrt::$cpprootnamespace$::implementation
 {
     int32_t $safeitemname$::MyProperty()
     {
