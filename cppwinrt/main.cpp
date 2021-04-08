@@ -90,7 +90,7 @@ Where <spec> is one or more of:
         settings.license = args.exists("license");
         settings.brackets = args.exists("brackets");
 
-        path output_folder = args.value("output");
+        path output_folder = args.value("output", ".");
         create_directories(output_folder / "winrt/impl");
         settings.output_folder = canonical(output_folder).string();
         settings.output_folder += '\\';
