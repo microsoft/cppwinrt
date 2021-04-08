@@ -1905,7 +1905,7 @@ namespace cppwinrt
 
     static void write_dispatch_overridable_method(writer& w, MethodDef const& method)
     {
-        auto format = R"(    auto %(%)
+        auto format = R"(    auto %(%)%
     {
         if (auto overridable = this->shim_overridable())
         {
@@ -1921,6 +1921,7 @@ namespace cppwinrt
         w.write(format,
             get_name(method),
             bind<write_implementation_params>(signature),
+            is_noexcept(method) ? " noexcept" : "",
             get_name(method),
             bind<write_consume_args>(signature),
             get_name(method),
@@ -1950,7 +1951,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_interface_override_method(writer& w, MethodDef const& method, std::string_view const& interface_name)
     {
-        auto format = R"(    template <typename D> WINRT_IMPL_AUTO(%) %T<D>::%(%) const
+        auto format = R"(    template <typename D> WINRT_IMPL_AUTO(%) %T<D>::%(%) const%
     {
         return shim().template try_as<%>().%(%);
     }
@@ -1964,6 +1965,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             interface_name,
             method_name,
             bind<write_consume_params>(signature),
+            is_noexcept(method) ? " noexcept" : "",
             interface_name,
             method_name,
             bind<write_consume_args>(signature));

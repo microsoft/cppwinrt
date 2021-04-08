@@ -2,7 +2,7 @@
   <TemplateData>
     <DefaultName>ViewModel</DefaultName>
     <Name>View Model (C++/WinRT)</Name>
-    <Description>An empty interface defintion suitable for XAML data binding, for a C++/WinRT Universal Windows Platform (UWP) app</Description>
+    <Description>An empty interface definition suitable for XAML data binding, for a C++/WinRT Universal Windows Platform (UWP) app</Description>
     <ProjectType>VC</ProjectType>
     <SortOrder>10</SortOrder>
     <TemplateID>microsoft.Windows.CppWinRT.ViewModel</TemplateID>
