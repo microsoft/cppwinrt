@@ -4,6 +4,5 @@ namespace $rootnamespace$
     runtimeclass $safeitemname$ : Windows.UI.Xaml.Controls.UserControl
     {
         $safeitemname$();
-        Int32 MyProperty;
     }
 }

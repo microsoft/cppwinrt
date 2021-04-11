@@ -4,15 +4,18 @@
 #include "$safeitemname$.g.cpp"
 #endif
 
+using namespace winrt;
+using namespace Windows::UI::Xaml::Data;
+
 namespace winrt::$rootnamespace$::implementation
 {
-    int32_t $safeitemname$::MyProperty()
-    {
-        throw hresult_not_implemented();
-    }
+	event_token $safeitemname$::PropertyChanged(PropertyChangedEventHandler const& handler)
+	{
+		return m_PropertyChanged.add(handler);
+	}
 
-    void $safeitemname$::MyProperty(int32_t /*value*/)
-    {
-        throw hresult_not_implemented();
-    }
+	void $safeitemname$::PropertyChanged(event_token token) noexcept
+	{
+		m_PropertyChanged.remove(token);
+	}
 }

@@ -1,5 +1,4 @@
 ﻿#pragma once
-
 #include <windows.h>
 #ifdef GetCurrentTime
 #undef GetCurrentTime

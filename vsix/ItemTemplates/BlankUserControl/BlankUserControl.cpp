@@ -13,19 +13,4 @@ namespace winrt::$rootnamespace$::implementation
     {
         InitializeComponent();
     }
-
-    int32_t $safeitemname$::MyProperty()
-    {
-        throw hresult_not_implemented();
-    }
-
-    void $safeitemname$::MyProperty(int32_t /* value */)
-    {
-        throw hresult_not_implemented();
-    }
-
-    void $safeitemname$::ClickHandler(IInspectable const&, RoutedEventArgs const&)
-    {
-        Button().Content(box_value(L"Clicked"));
-    }
 }

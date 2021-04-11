@@ -2,9 +2,8 @@ namespace $rootnamespace$
 {
     [bindable]
     [default_interface]
-    runtimeclass $safeitemname$ 
+    runtimeclass $safeitemname$ : Windows.UI.Xaml.Data.INotifyPropertyChanged
     {
         $safeitemname$();
-        Int32 MyProperty;
     }
 }

@@ -1,5 +1,5 @@
 ﻿#pragma once
-
+#include "winrt/Windows.UI.Xaml.Data.h"
 #include "$safeitemname$.g.h"
 
 namespace winrt::$rootnamespace$::implementation
@@ -7,9 +7,10 @@ namespace winrt::$rootnamespace$::implementation
     struct $safeitemname$ : $safeitemname$T<$safeitemname$>
     {
         $safeitemname$() = default;
-
-        int32_t MyProperty();
-        void MyProperty(int32_t value);
+        event_token PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
+        void PropertyChanged(event_token token) noexcept;
+    private:
+        event<Windows::UI::Xaml::Data::PropertyChangedEventHandler> m_PropertyChanged;
     };
 }
 

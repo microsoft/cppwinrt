@@ -1,7 +1,6 @@
 #include "pch.h"
 
 using namespace winrt;
-
 using namespace Windows;
 using namespace Windows::ApplicationModel::Core;
 using namespace Windows::Foundation::Numerics;
