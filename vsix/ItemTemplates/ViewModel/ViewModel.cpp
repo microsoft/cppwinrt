@@ -9,13 +9,13 @@ using namespace Windows::UI::Xaml::Data;
 
 namespace winrt::$rootnamespace$::implementation
 {
-	event_token $safeitemname$::PropertyChanged(PropertyChangedEventHandler const& handler)
-	{
-		return m_PropertyChanged.add(handler);
-	}
+    event_token $safeitemname$::PropertyChanged(PropertyChangedEventHandler const& handler)
+    {
+        return m_PropertyChanged.add(handler);
+    }
 
-	void $safeitemname$::PropertyChanged(event_token token) noexcept
-	{
-		m_PropertyChanged.remove(token);
-	}
+    void $safeitemname$::PropertyChanged(event_token token) noexcept
+    {
+        m_PropertyChanged.remove(token);
+    }
 }
