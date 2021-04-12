@@ -13,12 +13,12 @@ namespace winrt::$safeprojectname$::implementation
         InitializeComponent();
     }
 
-    int MainPage::MyProperty()
+    int32_t MainPage::MyProperty()
     {
         throw hresult_not_implemented();
     }
 
-    void MainPage::MyProperty(int value)
+    void MainPage::MyProperty([[maybe_unused]] int32_t value)
     {
         throw hresult_not_implemented();
     }
