@@ -7,6 +7,7 @@ namespace winrt::$rootnamespace$::implementation
     struct $safeitemname$ : $safeitemname$T<$safeitemname$>
     {
         $safeitemname$() = default;
+
         event_token PropertyChanged(Windows::UI::Xaml::Data::PropertyChangedEventHandler const& handler);
         void PropertyChanged(event_token token) noexcept;
     private:
