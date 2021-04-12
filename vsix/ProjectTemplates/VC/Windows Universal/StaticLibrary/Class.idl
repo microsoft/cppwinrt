@@ -4,5 +4,6 @@ namespace $safeprojectname$
     runtimeclass Class
     {
         Class();
+        Int32 MyProperty;
     }
 }

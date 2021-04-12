@@ -6,6 +6,8 @@ namespace winrt::$safeprojectname$::implementation
     struct Class : ClassT<Class>
     {
         Class() = default;
+        int MyProperty();
+        void MyProperty(int value);
     };
 }
 
