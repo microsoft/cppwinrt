@@ -28,7 +28,4 @@
     <Asset Type="Microsoft.VisualStudio.ProjectTemplate" Path="ProjectTemplates" />
     <Asset Type="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" Source="File" Path="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" VsixSubPath="Packages" />
   </Assets>
-  <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.ComponentGroup.UWP.VC" Version="[15.0,)" DisplayName="C++ Universal Windows Platform tools" />
-  </Prerequisites>
 </PackageManifest>
