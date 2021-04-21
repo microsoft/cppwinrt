@@ -28,4 +28,6 @@
     <Asset Type="Microsoft.VisualStudio.ProjectTemplate" Path="ProjectTemplates" />
     <Asset Type="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" Source="File" Path="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" VsixSubPath="Packages" />
   </Assets>
+  <Prerequisites>
+  </Prerequisites>
 </PackageManifest>
