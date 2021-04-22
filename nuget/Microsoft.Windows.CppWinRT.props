@@ -29,8 +29,14 @@ Copyright (C) Microsoft Corporation. All rights reserved.
     <ItemDefinitionGroup>
         <ClCompile>
             <CompileAsWinRT Condition="'$(CppWinRTProjectLanguage)' != 'C++/CX' And '%(ClCompile.CompileAsWinRT)' == ''">false</CompileAsWinRT>
+            <CompileAsWinRT Condition="'$(CppWinRTProjectLanguage)' == 'C++/CX' And '%(ClCompile.CompileAsWinRT)' == ''">true</CompileAsWinRT>
+            <WinRTNoStdLib Condition="'$(CppWinRTProjectLanguage)' == 'C++/CX' And '%(ClCompile.WinRTNoStdLib)' == ''">true</WinRTNoStdLib>
             <LanguageStandard Condition="'%(ClCompile.LanguageStandard)' == ''">stdcpp17</LanguageStandard>
         </ClCompile>
+        <Link>
+            <GenerateWindowsMetadata Condition="'$(CppWinRTProjectLanguage)' != 'C++/CX' and '%(Link.GenerateWindowsMetadata)' == ''">false</GenerateWindowsMetadata>
+            <GenerateWindowsMetadata Condition="'$(CppWinRTProjectLanguage)' == 'C++/CX' and '%(Link.GenerateWindowsMetadata)' == ''">true</GenerateWindowsMetadata>
+        </Link>
         <Midl Condition="'$(CppWinRTModernIDL)' != 'false'">
             <EnableWindowsRuntime>true</EnableWindowsRuntime>
             <MetadataFileName>$(IntDir)Unmerged\%(Filename).winmd</MetadataFileName>

@@ -6,5 +6,7 @@ namespace winrt::ConsoleApplication1::implementation
 {
     void ConsoleApplication1Class::Test()
     {
+        TestDllUsingCXClass c1{};
+        c1.Test();
     }
 }

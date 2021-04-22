@@ -14,6 +14,12 @@
         <!-- Build overrides the roots. -->
         <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
         <OutDirWasSpecified>true</OutDirWasSpecified>
+        
+        <!-- Set default for SolutionDir -->
+        <SolutionDir Condition="'$(SolutionDir)' == ''">$(MSBuildThisFileDirectory)</SolutionDir>
+        <!-- Ensure any SolutionDir has a trailing slash, so it can be concatenated -->
+        <SolutionDir Condition="'$(SolutionDir)' != '' and !HasTrailingSlash('$(SolutionDir)')">$(SolutionDir)\</SolutionDir>
+        
         <OutDirRoot Condition="'$(OutDirRoot)' == ''">$(SolutionDir)bin\</OutDirRoot>
         <OutDir>$(OutDirRoot)$(Configuration)\$(PlatformDirectoryName)\$(MSBuildProjectName)\</OutDir>
         <OutputPath>$(OutDir)</OutputPath>

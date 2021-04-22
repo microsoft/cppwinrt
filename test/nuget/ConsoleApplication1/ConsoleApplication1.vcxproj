@@ -124,6 +124,11 @@
       <SubType>Designer</SubType>
     </Midl>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TestDllUsingCX\TestDllUsingCX.vcxproj">
+      <Project>{200adc53-4386-b456-9851-5bf689289dfb}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(ProjectDir)..\..\..\nuget\Microsoft.Windows.CppWinRT.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
