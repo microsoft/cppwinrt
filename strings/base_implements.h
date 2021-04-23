@@ -430,6 +430,15 @@ namespace winrt::impl
         }
     };
 
+    template <>
+    struct runtime_class_name<Windows::Foundation::IInspectable>
+    {
+        static hstring get()
+        {
+            return {};
+        }
+    };
+
     template <typename D, typename I, typename Enable>
     struct producer
     {
