@@ -35,6 +35,7 @@ TEST_CASE("constexpr")
     REQUIRE(winrt::guid_of<winrt::IInspectable>() == winrt::guid(__uuidof(::IInspectable)));
     REQUIRE(winrt::guid_of<winrt_container>() == winrt::guid(__uuidof(midl_container)));
     REQUIRE(winrt::name_of<winrt::IInspectable>() == L"Object"sv);
+    REQUIRE(winrt::name_of<winrt::IAsyncOperation<winrt::IInspectable>>() == L"Windows.Foundation.IAsyncOperation`1<Object>"sv);
 
     REQUIRE(winrt::name_of<winrt_container>() == midl_container::z_get_rc_name_impl());
 
