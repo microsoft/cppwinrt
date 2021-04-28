@@ -29,5 +29,6 @@
     <Asset Type="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" Source="File" Path="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" VsixSubPath="Packages" />
   </Assets>
   <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CppWinRT" Version="[16.10,)" DisplayName="CppWinRT" />
   </Prerequisites>
 </PackageManifest>
