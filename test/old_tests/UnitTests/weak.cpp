@@ -150,7 +150,7 @@ TEST_CASE("weak,QI")
     {
         IActivationFactory object = make<Factory>();
         REQUIRE(object.try_as<Windows::Foundation::IInspectable>());
-        REQUIRE(!object.try_as<winrt::impl::IWeakReferenceSource>());
+        REQUIRE(object.try_as<winrt::impl::IWeakReferenceSource>());
     }
 
     SECTION("no_weak_ref")

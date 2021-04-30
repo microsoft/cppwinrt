@@ -352,7 +352,7 @@ namespace winrt::impl
             int32_t const code = to_hresult();
 
             static int32_t(__stdcall * handler)(int32_t, int32_t, void*) noexcept;
-            impl::load_runtime_function("RoTransformError", handler, fallback_RoTransformError);
+            impl::load_runtime_function(L"combase.dll", "RoTransformError", handler, fallback_RoTransformError);
             handler(code, 0, nullptr);
 
             if (code == static_cast<int32_t>(0x80010108) || // RPC_E_DISCONNECTED

@@ -430,6 +430,15 @@ namespace winrt::impl
         }
     };
 
+    template <>
+    struct runtime_class_name<Windows::Foundation::IInspectable>
+    {
+        static hstring get()
+        {
+            return {};
+        }
+    };
+
     template <typename D, typename I, typename Enable>
     struct producer
     {
@@ -1041,8 +1050,6 @@ namespace winrt::impl
             return Windows::Foundation::TrustLevel::BaseTrust;
         }
 
-        using is_factory = std::disjunction<std::is_same<Windows::Foundation::IActivationFactory, I>...>;
-
     private:
 
         class has_final_release
@@ -1057,7 +1064,7 @@ namespace winrt::impl
 
         using is_agile = std::negation<std::disjunction<std::is_same<non_agile, I>...>>;
         using is_inspectable = std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, I>...>;
-        using is_weak_ref_source = std::conjunction<is_inspectable, std::negation<is_factory>, std::negation<std::disjunction<std::is_same<no_weak_ref, I>...>>>;
+        using is_weak_ref_source = std::conjunction<is_inspectable, std::negation<std::disjunction<std::is_same<no_weak_ref, I>...>>>;
         using use_module_lock = std::negation<std::disjunction<std::is_same<no_module_lock, I>...>>;
         using weak_ref_t = impl::weak_ref<is_agile::value, use_module_lock::value>;
 
@@ -1333,7 +1340,6 @@ WINRT_EXPORT namespace winrt
 
         using base_type = typename impl::base_implements<D, I...>::type;
         using root_implements_type = typename base_type::root_implements_type;
-        using is_factory = typename root_implements_type::is_factory;
 
         using base_type::base_type;
 

@@ -296,6 +296,7 @@
     <ClCompile Include="async_completed.cpp" />
     <ClCompile Include="async_propagate_cancel.cpp" />
     <ClCompile Include="async_ref_result.cpp" />
+    <ClCompile Include="box_array.cpp" />
     <ClCompile Include="box_delegate.cpp" />
     <ClCompile Include="box_guid.cpp" />
     <ClCompile Include="capture.cpp" />

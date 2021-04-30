@@ -26,7 +26,7 @@ namespace winrt::impl
 
 
     template <bool isSameInterfaceAsIActivationFactory>
-    __declspec(noinline) hresult get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
+    WINRT_IMPL_NOINLINE hresult get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
     {
         if (winrt_activation_handler)
         {
@@ -34,7 +34,7 @@ namespace winrt::impl
         }
 
         static int32_t(__stdcall * handler)(void* classId, winrt::guid const& iid, void** factory) noexcept;
-        impl::load_runtime_function("RoGetActivationFactory", handler, fallback_RoGetActivationFactory);
+        impl::load_runtime_function(L"combase.dll", "RoGetActivationFactory", handler, fallback_RoGetActivationFactory);
         hresult hr = handler(*(void**)(&name), guid, result);
 
         if (hr == impl::error_not_initialized)
@@ -339,7 +339,7 @@ namespace winrt::impl
     struct factory_cache_entry : factory_cache_entry_base
     {
         template <typename F>
-        __declspec(noinline) auto call(F&& callback)
+        WINRT_IMPL_NOINLINE auto call(F&& callback)
         {
 #ifdef WINRT_DIAGNOSTICS
             get_diagnostics_info().add_factory<Class>();

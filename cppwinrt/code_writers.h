@@ -1283,12 +1283,17 @@ namespace cppwinrt
                 static_cast<D&>(*this) = nullptr;
             }
 
-            return *this;
+            return static_cast<D&>(*this);
         }
 
         auto operator*() const
         {
             return Current();
+        }
+
+        void operator++(int)
+        {
+            ++(*this);
         }
 )");
         }
@@ -1313,12 +1318,17 @@ namespace cppwinrt
                 static_cast<D&>(*this) = nullptr;
             }
 
-            return *this;
+            return static_cast<D&>(*this);
         }
 
         T operator*() const
         {
             return Current();
+        }
+
+        void operator++(int)
+        {
+            ++(*this);
         }
 )");
         }
@@ -1417,6 +1427,20 @@ namespace cppwinrt
         auto wait_for(Windows::Foundation::TimeSpan const& timeout) const;
 )");
         }
+        else if (type_name == "Windows.Foundation.Collections.IIterable`1")
+        {
+            w.write(R"(
+        auto begin() const;
+        auto end() const;
+)");
+        }
+        else if (type_name == "Windows.UI.Xaml.Interop.IBindableIterable")
+        {
+            w.write(R"(
+        auto begin() const;
+        auto end() const;
+)");
+        }
     }
 
     static void write_interface_extensions(writer& w, TypeDef const& type)
@@ -1426,11 +1450,23 @@ namespace cppwinrt
         if (type_name == "Windows.Foundation.Collections.IIterator`1")
         {
             w.write(R"(
+        using iterator_concept = std::input_iterator_tag;
         using iterator_category = std::input_iterator_tag;
         using value_type = T;
         using difference_type = ptrdiff_t;
-        using pointer = T*;
-        using reference = T&;
+        using pointer = void;
+        using reference = T;
+)");
+        }
+        else if (type_name == "Windows.UI.Xaml.Interop.IBindableIterator")
+        {
+            w.write(R"(
+        using iterator_concept = std::input_iterator_tag;
+        using iterator_category = std::input_iterator_tag;
+        using value_type = Windows::Foundation::IInspectable;
+        using difference_type = ptrdiff_t;
+        using pointer = void;
+        using reference = Windows::Foundation::IInspectable;
 )");
         }
         else if (type_name == "Windows.Foundation.IReference`1")
@@ -1619,7 +1655,7 @@ namespace cppwinrt
         else if (optional)
         {
             auto format = R"(            if (%) *% = nullptr;
-            Windows::Foundation::IInspectable winrt_impl_%;
+            winrt::Windows::Foundation::IInspectable winrt_impl_%;
 )";
 
             w.write(format, param_name, param_name, param_name);
@@ -1869,7 +1905,7 @@ namespace cppwinrt
 
     static void write_dispatch_overridable_method(writer& w, MethodDef const& method)
     {
-        auto format = R"(    auto %(%)
+        auto format = R"(    auto %(%)%
     {
         if (auto overridable = this->shim_overridable())
         {
@@ -1885,6 +1921,7 @@ namespace cppwinrt
         w.write(format,
             get_name(method),
             bind<write_implementation_params>(signature),
+            is_noexcept(method) ? " noexcept" : "",
             get_name(method),
             bind<write_consume_args>(signature),
             get_name(method),
@@ -1914,7 +1951,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_interface_override_method(writer& w, MethodDef const& method, std::string_view const& interface_name)
     {
-        auto format = R"(    template <typename D> WINRT_IMPL_AUTO(%) %T<D>::%(%) const
+        auto format = R"(    template <typename D> WINRT_IMPL_AUTO(%) %T<D>::%(%) const%
     {
         return shim().template try_as<%>().%(%);
     }
@@ -1928,6 +1965,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             interface_name,
             method_name,
             bind<write_consume_params>(signature),
+            is_noexcept(method) ? " noexcept" : "",
             interface_name,
             method_name,
             bind<write_consume_args>(signature));
@@ -1961,7 +1999,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         if (!found)
         {
-            w.write(", Windows::Foundation::IInspectable");
+            w.write(", winrt::Windows::Foundation::IInspectable");
         }
     }
 
@@ -2111,7 +2149,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         D& shim() noexcept { return *static_cast<D*>(this); }
         D const& shim() const noexcept { return *static_cast<const D*>(this); }
     public:
-        using % = winrt::%;
+        using % = %;
 %    };
 )";
 
@@ -2314,11 +2352,11 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         if (empty(generics))
         {
             auto format = R"(    struct __declspec(empty_bases) % :
-        Windows::Foundation::IInspectable,
+        winrt::Windows::Foundation::IInspectable,
         impl::consume_t<%>%
     {
         %(std::nullptr_t = nullptr) noexcept {}
-        %(void* ptr, take_ownership_from_abi_t) noexcept : Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
+        %(void* ptr, take_ownership_from_abi_t) noexcept : winrt::Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
         %(% const&) noexcept = default;
         %(%&&) noexcept = default;
         %& operator=(% const&) & noexcept = default;
@@ -2349,11 +2387,11 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
             auto format = R"(    template <%>
     struct __declspec(empty_bases) % :
-        Windows::Foundation::IInspectable,
+        winrt::Windows::Foundation::IInspectable,
         impl::consume_t<%>%
     {%
         %(std::nullptr_t = nullptr) noexcept {}
-        %(void* ptr, take_ownership_from_abi_t) noexcept : Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
+        %(void* ptr, take_ownership_from_abi_t) noexcept : winrt::Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
         %(% const&) noexcept = default;
         %(%&&) noexcept = default;
         %& operator=(% const&) & noexcept = default;
@@ -2925,7 +2963,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         auto format = R"(    inline %::%(%)
     {
-        Windows::Foundation::IInspectable %, %;
+        winrt::Windows::Foundation::IInspectable %, %;
         *this = % { return f.%(%%%, %); });
     }
 )";
@@ -3056,7 +3094,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     if (has_fastabi(type))
                     {
                         format = R"(    inline %::%() :
-        %(impl::call_factory_cast<%(*)(Windows::Foundation::IActivationFactory const&), %>([](Windows::Foundation::IActivationFactory const& f) { return impl::fast_activate<%>(f); }))
+        %(impl::call_factory_cast<%(*)(winrt::Windows::Foundation::IActivationFactory const&), %>([](winrt::Windows::Foundation::IActivationFactory const& f) { return impl::fast_activate<%>(f); }))
     {
     }
 )";
@@ -3064,7 +3102,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     else
                     {
                         format = R"(    inline %::%() :
-        %(impl::call_factory_cast<%(*)(Windows::Foundation::IActivationFactory const&), %>([](Windows::Foundation::IActivationFactory const& f) { return f.template ActivateInstance<%>(); }))
+        %(impl::call_factory_cast<%(*)(winrt::Windows::Foundation::IActivationFactory const&), %>([](winrt::Windows::Foundation::IActivationFactory const& f) { return f.template ActivateInstance<%>(); }))
     {
     }
 )";
@@ -3207,24 +3245,17 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
     {
         auto generics = type.GenericParam();
 
-        w.write("    template<%> struct hash<winrt::%> : winrt::impl::hash_base {};\n",
+        w.write("    template<%> struct hash<%> : winrt::impl::hash_base {};\n",
             bind<write_generic_typenames>(generics),
             type);
     }
 
-    static void write_namespace_special(writer& w, std::string_view const& namespace_name, cache const& c)
+    static void write_namespace_special(writer& w, std::string_view const& namespace_name)
     {
         if (namespace_name == "Windows.Foundation")
         {
-            if (c.find("Windows.Foundation.PropertyValue"))
-            {
-                w.write(strings::base_reference_produce);
-            }
-            if (c.find("Windows.Foundation.Deferral"))
-            {
-                w.write(strings::base_deferral);
-            }
-
+            w.write(strings::base_reference_produce);
+            w.write(strings::base_deferral);
             w.write(strings::base_coroutine_foundation);
         }
         else if (namespace_name == "Windows.Foundation.Collections")
@@ -3254,6 +3285,14 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         else if (namespace_name == "Windows.UI.Xaml.Interop")
         {
             w.write(strings::base_xaml_typename);
+        }
+    }
+
+    static void write_namespace_special_1(writer& w, std::string_view const& namespace_name)
+    {
+        if (namespace_name == "Windows.Foundation")
+        {
+            w.write(strings::base_reference_produce_1);
         }
     }
 }

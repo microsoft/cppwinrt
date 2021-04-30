@@ -124,12 +124,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <ItemGroup>
             <_FilesToDelete Remove="@(_FilesToDelete)"/>
             <_FilesToDelete Include="$(GeneratedFilesDir)**"/>
-            <_FilesToDelete Include="$(OutDir)*.winmd"/>
-            <_FilesToDelete Include="$(IntDir)*.winmd"/>
-            <_FilesToDelete Include="$(IntDir)*.idl"/>
-            <_FilesToDelete Include="$(IntDir)*.rsp"/>
             <_FilesToDelete Include="$(CppWinRTMergedDir)**"/>
             <_FilesToDelete Include="$(CppWinRTUnmergedDir)**"/>
+            <_FilesToDelete Include="$(CppWinRTProjectWinMD)"/>
         </ItemGroup>
         <Delete Files="@(_FilesToDelete)"/>
     </Target>
@@ -600,6 +597,10 @@ $(XamlMetaDataProviderPch)
             SkipUnchangedFiles="$(CppWinRTSkipUnchangedFiles)"
             SourceFiles="@(_MdMergedOutput)"
             DestinationFiles="@(_MdMergedOutput->'$(OutDir)%(Filename)%(Extension)')" />
+
+        <ItemGroup>
+            <FileWrites Include="$(CppWinRTProjectWinMD)"/>
+        </ItemGroup>
     </Target>
 
     <!--

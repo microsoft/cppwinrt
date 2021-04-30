@@ -414,7 +414,7 @@ WINRT_EXPORT namespace winrt
                 m_handle = handle;
                 m_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr)));
                 int64_t relative_count = -m_duration.count();
-                WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &relative_count, 0, 0);
+                WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &relative_count, 0, 0);
 
                 state expected = state::idle;
                 if (!m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
@@ -433,12 +433,20 @@ WINRT_EXPORT namespace winrt
 
         private:
 
+            static int32_t __stdcall fallback_SetThreadpoolTimerEx(winrt::impl::ptp_timer, void*, uint32_t, uint32_t) noexcept
+            {
+                return 0; // pretend timer has already triggered and a callback is on its way
+            }
+
             void fire_immediately() noexcept
             {
-                if (WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), nullptr, 0, 0))
+                static int32_t(__stdcall* handler)(winrt::impl::ptp_timer, void*, uint32_t, uint32_t) noexcept;
+                impl::load_runtime_function(L"kernel32.dll", "SetThreadpoolTimerEx", handler, fallback_SetThreadpoolTimerEx);
+
+                if (handler(m_timer.get(), nullptr, 0, 0))
                 {
                     int64_t now = 0;
-                    WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &now, 0, 0);
+                    WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &now, 0, 0);
                 }
             }
 
@@ -513,7 +521,7 @@ WINRT_EXPORT namespace winrt
                 m_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
                 int64_t relative_count = -m_timeout.count();
                 int64_t* file_time = relative_count != 0 ? &relative_count : nullptr;
-                WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), m_handle, file_time, nullptr);
+                WINRT_IMPL_SetThreadpoolWait(m_wait.get(), m_handle, file_time);
 
                 state expected = state::idle;
                 if (!m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
@@ -532,13 +540,20 @@ WINRT_EXPORT namespace winrt
             }
 
         private:
+            static int32_t __stdcall fallback_SetThreadpoolWaitEx(winrt::impl::ptp_wait, void*, void*, void*) noexcept
+            {
+                return 0; // pretend wait has already triggered and a callback is on its way
+            }
 
             void fire_immediately() noexcept
             {
-                if (WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), nullptr, nullptr, nullptr))
+                static int32_t(__stdcall* handler)(winrt::impl::ptp_wait, void*, void*, void*) noexcept;
+                impl::load_runtime_function(L"kernel32.dll", "SetThreadpoolWaitEx", handler, fallback_SetThreadpoolWaitEx);
+
+                if (handler(m_wait.get(), nullptr, nullptr, nullptr))
                 {
                     int64_t now = 0;
-                    WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), WINRT_IMPL_GetCurrentProcess(), &now, nullptr);
+                    WINRT_IMPL_SetThreadpoolWait(m_wait.get(), WINRT_IMPL_GetCurrentProcess(), &now);
                 }
             }
 
