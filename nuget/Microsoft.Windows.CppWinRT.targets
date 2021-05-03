@@ -250,7 +250,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             <WinMDFullPath Include="@(_CppWinRTProjectWinMDItems->FullPath()->Distinct()->ClearMetadata())" Condition="'$(CppWinRTGenerateWindowsMetadata)' == 'true'">
                 <TargetPath>$([System.IO.Path]::GetFileName('$(CppWinRTProjectWinMD)'))</TargetPath>
                 <Primary>true</Primary>
-                <Implementation Condition="'$(TargetExt)' == '.dll'">$(WinMDImplementationPath)$(TargetName)$(TargetExt)</Implementation>
+                <Implementation Condition="'$(TargetExt)' == '.dll' or '$(TargetExt)' == '.exe'">$(WinMDImplementationPath)$(TargetName)$(TargetExt)</Implementation>
                 <FileType>winmd</FileType>
                 <WinMDFile>true</WinMDFile>
                 <ProjectName>$(MSBuildProjectName)</ProjectName>
