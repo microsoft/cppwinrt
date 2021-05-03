@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<PackageManifest Version="2.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
+  <Metadata>
+    <Identity Id="Microsoft.Windows.CppWinRT" Version="|%CurrentProject%;GetCppWinRTVersion|" Language="en-US" Publisher="Microsoft" />
+    <PackageId>Microsoft.Windows.CppWinRT</PackageId>
+    <DisplayName>C++/WinRT</DisplayName>
+    <Description xml:space="preserve">Tools for authoring and consuming Windows Runtime classes in standard C++.</Description>
+    <MoreInfo>https://go.microsoft.com/fwlink/?linkid=869449</MoreInfo>
+    <License>LICENSE</License>
+    <GettingStartedGuide>https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/intro-to-using-cpp-with-winrt</GettingStartedGuide>
+    <ReleaseNotes>https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/faq</ReleaseNotes>
+    <Icon>cppwinrt.ico</Icon>
+    <PreviewImage>cppwinrt.png</PreviewImage>
+    <Tags>WinRT, C++, cppwinrt, native</Tags>
+  </Metadata>
+  <Installation AllUsers="true">
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0,17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[15.0,17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[15.0,17.0)" />
+  </Installation>
+  <Dependencies>
+    <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
+  </Dependencies>
+  <Assets>
+    <Asset Type="NativeVisualizer" Path="cppwinrt.natvis" />
+    <Asset Type="DebuggerEngineExtension" Path="CppWinrtVisualizer.vsdconfig" />
+    <Asset Type="Microsoft.VisualStudio.ItemTemplate" Path="ItemTemplates" />
+    <Asset Type="Microsoft.VisualStudio.ProjectTemplate" Path="ProjectTemplates" />
+    <Asset Type="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" Source="File" Path="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" VsixSubPath="Packages" />
+  </Assets>
+  <Prerequisites>
+    <Prerequisite Id="Microsoft.VisualStudio.Component.CppWinRT" Version="[16.10,)" DisplayName="CppWinRT" />
+  </Prerequisites>
+</PackageManifest>
