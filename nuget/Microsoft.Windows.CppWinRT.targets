@@ -561,7 +561,7 @@ $(XamlMetaDataProviderPch)
         </PropertyGroup>
         <PropertyGroup>
             <!-- mdmerge.exe wants the folders to not have a trailing \ -->
-            <_MdMergeParameters Condition="'$(CppWinRTMergeNoValidate)'==''">-v</_MdMergeParameters>
+            <_MdMergeParameters Condition="'$(CppWinRTMergeNoValidate)'!='true'">-v</_MdMergeParameters>
             <_MdMergeParameters>$(_MdMergeParameters) @(CppWinRTMdMergeMetadataDirectories->'-metadata_dir &quot;%(RelativeDir).&quot;', '&#x0d;&#x0a;')</_MdMergeParameters>
             <_MdMergeParameters>$(_MdMergeParameters) @(CppWinRTMdMergeInputs->'-i &quot;%(Identity)&quot;', '&#x0d;&#x0a;')</_MdMergeParameters>
             <_MdMergeParameters>$(_MdMergeParameters) -o &quot;$(CppWinRTMergedDir.TrimEnd('\'))&quot; -partial $(_MdMergeDepth)</_MdMergeParameters>
