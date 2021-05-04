@@ -61,6 +61,7 @@ C++/WinRT behavior can be customized with these project properties:
 | CppWinRTVerbosity | low \| *normal \| high | Sets the [importance](https://docs.microsoft.com/en-us/visualstudio/msbuild/message-task?view=vs-2017) of C++/WinRT build messages (see below) |
 | CppWinRTNamespaceMergeDepth | *1 | Sets the depth of namespace merging (Xaml apps require 1) |
 | CppWinRTRootNamespaceAutoMerge | true \| *false | Sets the namespace merge depth to be the length of the root namespace |
+| CppWinRTMergeNoValidate | true \| *false | Disables mdmerge validation |
 | CppWinRTUsePrefixes | *true \| false | Uses a dotted prefix namespace convention (versus a nested folder convention) |
 | CppWinRTPath | ...\cppwinrt.exe | NuGet package-relative path to cppwinrt.exe, for custom build rule invocation |
 | CppWinRTParameters | "" | Custom cppwinrt.exe command-line parameters (be sure to append to existing) |
