@@ -69,6 +69,8 @@ namespace cppwinrt
 
     static void write_open_file_guard(writer& w, std::string_view const& file_name, char impl = 0)
     {
+        write_include_guard(w);
+            
         std::string mangled_name;
 
         for (auto&& c : file_name)
