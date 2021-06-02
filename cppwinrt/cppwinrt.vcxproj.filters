@@ -109,6 +109,9 @@
     <ClInclude Include="..\strings\base_meta.h">
       <Filter>strings</Filter>
     </ClInclude>
+    <ClInclude Include="..\strings\base_module.h">
+      <Filter>strings</Filter>
+    </ClInclude>
     <ClInclude Include="..\strings\base_natvis.h">
       <Filter>strings</Filter>
     </ClInclude>

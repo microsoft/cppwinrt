@@ -73,6 +73,7 @@
     <ClInclude Include="..\strings\base_macros.h" />
     <ClInclude Include="..\strings\base_marshaler.h" />
     <ClInclude Include="..\strings\base_meta.h" />
+    <ClInclude Include="..\strings\base_module.h" />
     <ClInclude Include="..\strings\base_natvis.h" />
     <ClInclude Include="..\strings\base_reference_produce.h" />
     <ClInclude Include="..\strings\base_reference_produce_1.h" />

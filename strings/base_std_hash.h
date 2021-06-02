@@ -32,7 +32,7 @@ namespace winrt::impl
     };
 }
 
-namespace std
+WINRT_EXPORT namespace std
 {
     template<> struct hash<winrt::hstring>
     {

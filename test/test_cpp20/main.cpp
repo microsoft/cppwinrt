@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
-#include "winrt/base.h"
+
+import winrt;
 
 using namespace winrt;
 

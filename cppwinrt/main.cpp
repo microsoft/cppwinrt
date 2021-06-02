@@ -294,7 +294,7 @@ Where <spec> is one or more of:
             write_preamble(ixx);
             ixx.write("module;\n");
             ixx.write(strings::base_includes);
-            ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n\n");
+            ixx.write(strings::base_module);
 
             for (auto&&[ns, members] : c.namespaces())
             {

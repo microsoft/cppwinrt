@@ -1,6 +1,20 @@
 
 namespace winrt::impl
 {
+#ifdef __cpp_lib_coroutine
+    template <typename T = void>
+    using coroutine_handle = std::coroutine_handle<T>;
+
+    using suspend_always = std::suspend_always;
+    using suspend_never = std::suspend_never;
+#else
+    template <typename T = void>
+    using coroutine_handle = std::experimental::coroutine_handle<T>;
+
+    using suspend_always = std::experimental::suspend_always;
+    using suspend_never = std::experimental::suspend_never;
+#endif
+
     inline auto submit_threadpool_callback(void(__stdcall* callback)(void*, void* context), void* context)
     {
         if (!WINRT_IMPL_TrySubmitThreadpoolCallback(callback, context, nullptr))
@@ -676,9 +690,9 @@ WINRT_EXPORT namespace winrt
 }
 
 #ifdef __cpp_lib_coroutine
-namespace std
+WINRT_EXPORT namespace std
 #else
-namespace std::experimental
+WINRT_EXPORT namespace std::experimental
 #endif
 {
     template <typename... Args>
