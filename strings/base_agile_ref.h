@@ -209,8 +209,10 @@ WINRT_EXPORT namespace winrt
         com_ptr<impl::IAgileReference> m_ref;
     };
 
+    template<typename T> agile_ref(T const&)->agile_ref<impl::wrapped_type_t<T>>;
+
     template <typename T>
-    agile_ref<T> make_agile(T const& object)
+    agile_ref<impl::wrapped_type_t<T>> make_agile(T const& object)
     {
         return object;
     }
