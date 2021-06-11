@@ -327,38 +327,38 @@ WINRT_EXPORT namespace winrt
             return rend();
         }
         
-        inline bool starts_with(const wchar_t value) const noexcept
+#if __cpp_lib_starts_ends_with
+        bool starts_with(wchar_t const value) const noexcept
         {
-            return empty() ? false : data()[0] == value;
+            return operator std::wstring_view().starts_with(value);
         }
 
-        inline bool ends_with(const wchar_t value) const noexcept
-        {
-            return empty() ? false : data()[size() - 1] == value;
-        }
-
-#if _HAS_CXX20
-        inline bool starts_with(const std::wstring_view another) const noexcept
+        bool starts_with(std::wstring_view const another) const noexcept
         {
             return operator std::wstring_view().starts_with(another);
         }
 
-        inline bool starts_with(const wchar_t* const pointer) const noexcept
+        bool starts_with(const wchar_t* const pointer) const noexcept
         {
             return operator std::wstring_view().starts_with(pointer);
         }
 
-        inline bool ends_with(const std::wstring_view another) const noexcept
+        bool ends_with(wchar_t const value) const noexcept
+        {
+            return operator std::wstring_view().ends_with(value);
+        }
+
+        bool ends_with(std::wstring_view const another) const noexcept
         {
             return operator std::wstring_view().ends_with(another);
         }
 
-        inline bool starts_with(const wchar_t* const pointer) const noexcept
+        bool ends_with(const wchar_t* const pointer) const noexcept
         {
             return operator std::wstring_view().ends_with(pointer);
         }
 #endif
-
+        
         bool empty() const noexcept
         {
             return !m_handle;
