@@ -1437,7 +1437,7 @@ WINRT_EXPORT namespace winrt
 
         hstring GetRuntimeClassName() const override
         {
-            static_assert(std::is_base_of_v<implements_type, D>, "First template parameter to implements<> or ClassT<> must be derived class name, e.g. struct X : implements<X, ...>");
+            static_assert(std::is_base_of_v<implements_type, D>, "Class must derive from implements<> or ClassT<> where the first template parameter is the derived class name, e.g. struct D : implements<D, ...>");
             return impl::runtime_class_name<typename impl::implements_default_interface<D>::type>::get();
         }
 
