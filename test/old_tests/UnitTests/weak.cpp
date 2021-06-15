@@ -98,6 +98,12 @@ TEST_CASE("weak,source")
         IStringable b = w.get();
         REQUIRE(b.ToString() == L"Weak");
     }
+
+    // Verify that deduction guides work.
+    static_assert(std::is_same_v<weak_ref<IStringable>, decltype(weak_ref(IStringable()))>);
+    static_assert(std::is_same_v<weak_ref<Uri>, decltype(weak_ref(std::declval<Uri>()))>);
+    static_assert(std::is_same_v<weak_ref<::IPersist>, decltype(weak_ref(com_ptr<::IPersist>()))>);
+    static_assert(std::is_same_v<weak_ref<::IPersist>, decltype(make_weak(com_ptr<::IPersist>()))>);
 }
 
 TEST_CASE("weak,nullptr")
