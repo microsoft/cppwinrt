@@ -17,14 +17,22 @@ namespace cppwinrt
             }
         }
 
+        void synchronous(bool synchronous) noexcept
+        {
+            m_synchronous = synchronous;
+        }
+
         template <typename T>
         void add(T&& callback)
         {
-#if defined(_DEBUG)
-            callback();
-#else
-            m_tasks.push_back(std::async(std::forward<T>(callback)));
-#endif
+            if (m_synchronous)
+            {
+                callback();
+            }
+            else
+            {
+                m_tasks.push_back(std::async(std::forward<T>(callback)));
+            }
         }
 
         void get()
@@ -45,5 +53,6 @@ namespace cppwinrt
     private:
 
         std::vector<std::future<void>> m_tasks;
+        bool m_synchronous{};
     };
 }
