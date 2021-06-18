@@ -38,6 +38,7 @@ namespace cppwinrt
         { "brackets", 0, 0 }, // Use angle brackets for #includes (defaults to quotes)
         { "fastabi", 0, 0 }, // Enable support for the Fast ABI
         { "ignore_velocity", 0, 0 }, // Ignore feature staging metadata and always include implementations
+        { "synchronous", 0, 0 }, // Instructs cppwinrt to run on a single thread to avoid file system issues in batch builds
     };
 
     static void print_usage(writer& w)
@@ -290,6 +291,7 @@ Where <spec> is one or more of:
 
             w.flush_to_console();
             task_group group;
+            group.synchronous(args.exists("synchronous"));
             writer ixx;
             write_preamble(ixx);
             ixx.write("module;\n");
