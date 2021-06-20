@@ -61,6 +61,8 @@ WINRT_EXPORT namespace winrt
         com_ptr<impl::IWeakReference> m_ref;
     };
 
+    template<typename T> weak_ref(T const&)->weak_ref<impl::wrapped_type_t<T>>;
+
     template<typename T>
     struct impl::abi<weak_ref<T>> : impl::abi<com_ptr<impl::IWeakReference>>
     {
