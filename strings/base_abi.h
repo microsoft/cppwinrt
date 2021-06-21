@@ -127,6 +127,11 @@ namespace winrt::impl
         virtual int32_t __stdcall Buffer(uint8_t** value) noexcept = 0;
     };
 
+    struct __declspec(novtable) IMemoryBufferByteAccess : unknown_abi
+    {
+        virtual int32_t __stdcall GetBuffer(uint8_t** value, uint32_t* capacity) noexcept = 0;
+    };
+
     template <> struct abi<Windows::Foundation::TimeSpan>
     {
         using type = int64_t;
@@ -155,4 +160,5 @@ namespace winrt::impl
     template <> inline constexpr guid guid_v<IContextCallback>{ 0x000001da, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };
     template <> inline constexpr guid guid_v<IServerSecurity>{ 0x0000013E, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };
     template <> inline constexpr guid guid_v<IBufferByteAccess>{ 0x905a0fef, 0xbc53, 0x11df, { 0x8c,0x49,0x00,0x1e,0x4f,0xc6,0x86,0xda } };
+    template <> inline constexpr guid guid_v<IMemoryBufferByteAccess>{ 0x5b0d3235, 0x4dba, 0x4d44, { 0x86,0x5e,0x8f,0x1d,0x0e,0x4f,0xd0,0x4d } };
 }
