@@ -1310,6 +1310,18 @@ namespace cppwinrt
         }
 )");
         }
+        else if (type_name == "Windows.Foundation.IMemoryBufferReference")
+        {
+            w.write(R"(
+        auto data() const
+        {
+            uint8_t* data{};
+            uint32_t capacity{};
+            check_hresult(static_cast<D const&>(*this).template as<IMemoryBufferByteAccess>()->GetBuffer(&data, &capacity));
+            return data;
+        }
+)");
+        }
         else if (type_name == "Windows.Foundation.Collections.IIterator`1")
         {
             w.write(R"(
