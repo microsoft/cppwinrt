@@ -7,7 +7,7 @@ TEST_CASE("hstring")
 	REQUIRE(!text.starts_with(L"C++/CX"));
 	REQUIRE(!textView.starts_with(L"C++/CX"));
 	REQUIRE(text.starts_with(L"C++/WinRT") == textView.starts_with(L"C++/WinRT"));
-	REQUIRE(text.ends_with("rocks!"));
+	REQUIRE(text.ends_with(L"rocks!"));
 	REQUIRE(textView.ends_with(L"rocks!"));
-	REQUIRE(text.ends_with("rocks!") == textView.ends_with(L"rocks"));
+	REQUIRE(text.ends_with(L"rocks!") == textView.ends_with(L"rocks!"));
 }
