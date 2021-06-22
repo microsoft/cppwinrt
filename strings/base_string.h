@@ -326,7 +326,39 @@ WINRT_EXPORT namespace winrt
         {
             return rend();
         }
+        
+#if __cpp_lib_starts_ends_with
+        bool starts_with(wchar_t const value) const noexcept
+        {
+            return operator std::wstring_view().starts_with(value);
+        }
 
+        bool starts_with(std::wstring_view const another) const noexcept
+        {
+            return operator std::wstring_view().starts_with(another);
+        }
+
+        bool starts_with(const wchar_t* const pointer) const noexcept
+        {
+            return operator std::wstring_view().starts_with(pointer);
+        }
+
+        bool ends_with(wchar_t const value) const noexcept
+        {
+            return operator std::wstring_view().ends_with(value);
+        }
+
+        bool ends_with(std::wstring_view const another) const noexcept
+        {
+            return operator std::wstring_view().ends_with(another);
+        }
+
+        bool ends_with(const wchar_t* const pointer) const noexcept
+        {
+            return operator std::wstring_view().ends_with(pointer);
+        }
+#endif
+        
         bool empty() const noexcept
         {
             return !m_handle;
