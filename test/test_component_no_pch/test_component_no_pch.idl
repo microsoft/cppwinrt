@@ -33,4 +33,11 @@ namespace test_component_no_pch
             Int32 Second;
         };
     }
+
+    // This structure verifies that the structure can at least be declared
+    // (but perhaps not meaningfully consumed) without having first included Windows.Foundation.h.
+    struct StructWithReference
+    {
+        Windows.Foundation.IReference<Int32> OptionalValue;
+    };
 }
