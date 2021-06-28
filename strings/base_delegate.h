@@ -162,11 +162,11 @@ namespace winrt::impl
         {}
 
         template <typename F> delegate_base(F* handler) :
-            delegate_base([=](auto&& ... args) { handler(args...); })
+            delegate_base([=](auto&& ... args) { return handler(args...); })
         {}
 
         template <typename O, typename M> delegate_base(O* object, M method) :
-            delegate_base([=](auto&& ... args) { ((*object).*(method))(args...); })
+            delegate_base([=](auto&& ... args) { return ((*object).*(method))(args...); })
         {}
 
         template <typename O, typename M> delegate_base(com_ptr<O>&& object, M method) :
