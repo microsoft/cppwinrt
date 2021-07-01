@@ -576,12 +576,13 @@ WINRT_EXPORT namespace winrt
         throw_hresult(impl::hresult_from_win32(WINRT_IMPL_GetLastError()));
     }
 
-    inline void check_hresult(hresult const result)
+    inline hresult check_hresult(hresult const result)
     {
         if (result < 0)
         {
             throw_hresult(result);
         }
+        return result;
     }
 
     template<typename T>

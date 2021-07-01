@@ -1,7 +1,7 @@
 
 WINRT_EXPORT namespace winrt
 {
-    void check_hresult(hresult const result);
+    hresult check_hresult(hresult const result);
     hresult to_hresult() noexcept;
 
     template <typename D, typename I>

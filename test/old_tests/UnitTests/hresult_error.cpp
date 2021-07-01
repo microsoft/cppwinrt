@@ -10,7 +10,7 @@ TEST_CASE("hresult,S_OK")
 {
     // This won't throw
 
-    check_hresult(S_OK);
+    REQUIRE(check_hresult(S_OK) == S_OK);
 }
 
 TEST_CASE("hresult,S_FALSE")
@@ -18,7 +18,7 @@ TEST_CASE("hresult,S_FALSE")
     // This won't throw (unless you define WINRT_STRICT_HRESULT)
 
 #ifndef WINRT_STRICT_HRESULT
-    check_hresult(S_FALSE);
+    REQUIRE(check_hresult(S_FALSE) == S_FALSE);
 #else
     try
     {
