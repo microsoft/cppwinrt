@@ -169,6 +169,9 @@
     <ClInclude Include="..\strings\base_iterator.h">
       <Filter>strings</Filter>
     </ClInclude>
+    <ClInclude Include="..\strings\base_coroutine_dispatching_winui.h">
+      <Filter>strings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="$(OutDir)version.rc" />
