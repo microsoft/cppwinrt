@@ -16,7 +16,7 @@ WINRT_EXPORT namespace winrt
         {
         }
 
-        handle_type& operator=(handle_type&& other) & noexcept
+        handle_type& operator=(handle_type&& other) noexcept
         {
             if (this != &other)
             {
