@@ -295,7 +295,7 @@ WINRT_EXPORT namespace winrt
             other.m_size = 0;
         }
 
-        com_array& operator=(com_array&& other) & noexcept
+        com_array& operator=(com_array&& other) noexcept
         {
             clear();
             this->m_data = other.m_data;
