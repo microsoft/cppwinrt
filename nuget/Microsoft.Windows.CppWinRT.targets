@@ -75,7 +75,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             $(AfterMidlTargets);
             GetCppWinRTMdMergeInputs;
             CppWinRTMergeProjectWinMDInputs;
-            GetResolvedWinMD;
+            CppWinRTGetResolvedWinMD;
             CppWinRTCopyWinMDToOutputDirectory;
         </AfterMidlTargets>
         <ResolveReferencesDependsOn>
@@ -104,6 +104,12 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CleanDependsOn>
             $(CleanDependsOn);CppWinRTClean
         </CleanDependsOn>
+        <GetTargetPathDependsOn>
+            $(GetTargetPathDependsOn);CppWinRTGetResolvedWinMD
+        </GetTargetPathDependsOn>
+        <GetPackagingOutputsDependsOn>
+            $(GetPackagingOutputsDependsOn);CppWinRTGetResolvedWinMD
+        </GetPackagingOutputsDependsOn>
 
     </PropertyGroup>
 
@@ -202,7 +208,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
     </Target>
 
-    <Target Name="ComputeGetResolvedWinMD"
+    <Target Name="CppWinRTComputeGetResolvedWinMD"
             Condition="'$(CppWinRTGenerateWindowsMetadata)' == ''">
         <!-- If CppWinRTGenerateWindowsMetadata is not defined, compute it.-->
         <!-- We use Calltarget, so we don't run anything including DependsOnTargets
@@ -214,33 +220,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
          so it is aware of the C++/WinRT generated WinMD.
          Since not every project that consumes C++/WinRT uses it to generate a WinMD,
          we need to keep the CX logic as well. -->
-    <Target Name="GetResolvedWinMD"
-            DependsOnTargets="ComputeGetResolvedWinMD"
+    <Target Name="CppWinRTGetResolvedWinMD"
+            DependsOnTargets="CppWinRTComputeGetResolvedWinMD"
             Returns="@(WinMDFullPath)">
-
-        <!-- Copied from the CX GetResolvedWinMD target in Microsoft.CppBuild.targets -->
-        <ItemGroup>
-            <!-- To evaluate the GenerateWindowsMetadata value we need @(Link) to contains at least one element-->
-            <Link Include="tmp" Condition="'@(Link)'==''">
-                <DeleteSoon>true</DeleteSoon>
-            </Link>
-
-            <!-- Condition is modified to only do this if CppWinRTGenerateWindowsMetadata is not true. -->
-            <WinMDFullPath Condition="'%(Link.GenerateWindowsMetadata)' == 'true' AND '$(CppWinRTGenerateWindowsMetadata)' != 'true'"
-                           Include="@(Link->Metadata('WindowsMetadataFile')->FullPath()->Distinct()->ClearMetadata())">
-                <TargetPath>$([System.IO.Path]::GetFileName('%(Link.WindowsMetadataFile)'))</TargetPath>
-                <Primary>true</Primary>
-            </WinMDFullPath>
-
-            <WinMDFullPath>
-                <Implementation>$(WinMDImplementationPath)$(TargetName)$(TargetExt)</Implementation>
-                <FileType>winmd</FileType>
-                <WinMDFile>true</WinMDFile>
-                <ProjectType>$(ConfigurationType)</ProjectType>
-            </WinMDFullPath>
-
-            <Link Remove="@(Link)" Condition="'%(Link.DeleteSoon)' == 'true'" />
-        </ItemGroup>
 
         <!-- Add C++/WinRT primary WinMD to the WinMDFullPath if CppWinRTGenerateWindowsMetadata is true -->
         <ItemGroup>
