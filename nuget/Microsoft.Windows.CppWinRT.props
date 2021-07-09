@@ -17,7 +17,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CanReferenceWinRT>true</CanReferenceWinRT>
         <CppWinRTPackage Condition="'$(CppWinRTEnabled)' != 'true'">true</CppWinRTPackage>
         <CppWinRTPackage Condition="'$(CppWinRTPackage)' != 'true'">false</CppWinRTPackage>
-        <XamlLanguage>CppWinRT</XamlLanguage>
+        <XamlLanguage Condition="'$(XamlLanguage)' == ''">CppWinRT</XamlLanguage>
         <IsNativeLanguage>true</IsNativeLanguage>
         <!-- This causes VS to add the platform WinMD references for the target SDK -->
         <WinMDAssembly>true</WinMDAssembly>
