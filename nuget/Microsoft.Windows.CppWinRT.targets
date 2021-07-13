@@ -222,6 +222,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
          we need to keep the CX logic as well. -->
     <Target Name="CppWinRTGetResolvedWinMD"
             DependsOnTargets="CppWinRTComputeGetResolvedWinMD"
+            BeforeTargets="WinMDArtifactsProjectOutputGroup;CopyWinMDArtifactsOutputGroup;PrimaryWinMDOutputGroup"
             Returns="@(WinMDFullPath)">
 
         <!-- Add C++/WinRT primary WinMD to the WinMDFullPath if CppWinRTGenerateWindowsMetadata is true -->
