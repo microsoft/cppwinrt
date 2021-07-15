@@ -885,4 +885,19 @@ $(XamlMetaDataProviderPch)
         </Link>
     </ItemDefinitionGroup>
 
+    <!-- Generated files output group population -->
+    <PropertyGroup>
+        <GeneratedFilesOutputGroupDependsOn>CppWinRTGeneratedFilesOutputGroup;$(GeneratedFilesOutputGroupDependsOn)</GeneratedFilesOutputGroupDependsOn>
+    </PropertyGroup>
+
+    <Target Name="CppWinRTGeneratedFilesOutputGroup"
+            DependsOnTargets="$(CppWinRTGeneratedFilesOutputGroupDependsOn)"
+            Condition="'$(CppWinRTEnablePlatformProjection)' == 'true' or '$(CppWinRTEnableReferenceProjection)' == 'true' or '$(CppWinRTEnableComponentProjection)' == 'true'">
+        <ItemGroup>
+            <GeneratedFilesOutputGroup Include="$(GeneratedFilesDir)winrt\**\*.h" />
+            <GeneratedFilesOutputGroup Include="$(GeneratedFilesDir)*.g.h" />
+            <GeneratedFilesOutputGroup Include="$(GeneratedFilesDir)*.g.cpp" />
+        </ItemGroup>
+    </Target>
+
 </Project>
