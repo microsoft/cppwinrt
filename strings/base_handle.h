@@ -52,7 +52,7 @@ WINRT_EXPORT namespace winrt
 
         type* put() noexcept
         {
-            WINRT_ASSERT(m_value == T::invalid());
+            close();
             return &m_value;
         }
 

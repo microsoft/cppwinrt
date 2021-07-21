@@ -111,7 +111,7 @@ WINRT_EXPORT namespace winrt
 
         type** put() noexcept
         {
-            WINRT_ASSERT(m_ptr == nullptr);
+            release_ref();
             return &m_ptr;
         }
 
