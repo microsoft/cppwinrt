@@ -20,7 +20,7 @@ namespace winrt::impl
     };
 
     template <typename T>
-    constexpr uint8_t hex_to_uint(T const c) noexcept
+    constexpr uint8_t hex_to_uint(T const c)
     {
         if (c >= '0' && c <= '9')
         {
@@ -36,22 +36,22 @@ namespace winrt::impl
         }
         else 
         {
-            abort();
+            throw std::invalid_argument("Character is not a hexadecimal digit");
         }
     }
 
     template <typename T>
-    constexpr uint8_t hex_to_uint8(T const a, T const b) noexcept
+    constexpr uint8_t hex_to_uint8(T const a, T const b)
     {
         return (hex_to_uint(a) << 4) | hex_to_uint(b);
     }
 
-    constexpr uint16_t uint8_to_uint16(uint8_t a, uint8_t b) noexcept
+    constexpr uint16_t uint8_to_uint16(uint8_t a, uint8_t b)
     {
         return (static_cast<uint16_t>(a) << 8) | static_cast<uint16_t>(b);
     }
 
-    constexpr uint32_t uint8_to_uint32(uint8_t a, uint8_t b, uint8_t c, uint8_t d) noexcept
+    constexpr uint32_t uint8_to_uint32(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
     {
         return (static_cast<uint32_t>(uint8_to_uint16(a, b)) << 16) |
                 static_cast<uint32_t>(uint8_to_uint16(c, d));
@@ -85,7 +85,7 @@ WINRT_EXPORT namespace winrt
     private:
 
         template <typename TStringView>
-        static constexpr guid parse(TStringView const value) noexcept
+        static constexpr guid parse(TStringView const value)
         {
             if (value.size() != 36 || value[8] != '-' || value[13] != '-' || value[18] != '-' || value[23] != '-')
             {
@@ -170,16 +170,27 @@ WINRT_EXPORT namespace winrt
         }
     };
 
-    inline bool operator==(guid const& left, guid const& right) noexcept
+    constexpr bool operator==(guid const& left, guid const& right) noexcept
     {
-        return !memcmp(&left, &right, sizeof(left));
+        return
+            (left.Data1 == right.Data1) &&
+            (left.Data2 == right.Data2) &&
+            (left.Data3 == right.Data3) &&
+            (left.Data4[0] == right.Data4[0]) &&
+            (left.Data4[1] == right.Data4[1]) &&
+            (left.Data4[2] == right.Data4[2]) &&
+            (left.Data4[3] == right.Data4[3]) &&
+            (left.Data4[4] == right.Data4[4]) &&
+            (left.Data4[5] == right.Data4[5]) &&
+            (left.Data4[6] == right.Data4[6]) &&
+            (left.Data4[7] == right.Data4[7]);
     }
 
-    inline bool operator!=(guid const& left, guid const& right) noexcept
+    constexpr bool operator!=(guid const& left, guid const& right) noexcept
     {
         return !(left == right);
     }
-    
+
     inline bool operator<(guid const& left, guid const& right) noexcept
     {
         return memcmp(&left, &right, sizeof(left)) < 0;
