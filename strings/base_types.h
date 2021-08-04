@@ -20,7 +20,7 @@ namespace winrt::impl
     };
 
     template <typename T>
-    constexpr uint8_t hex_to_uint(T const c) noexcept
+    constexpr uint8_t hex_to_uint(T const c)
     {
         if (c >= '0' && c <= '9')
         {
@@ -36,22 +36,22 @@ namespace winrt::impl
         }
         else 
         {
-            abort();
+            throw std::invalid_argument("Character is not a hexadecimal digit");
         }
     }
 
     template <typename T>
-    constexpr uint8_t hex_to_uint8(T const a, T const b) noexcept
+    constexpr uint8_t hex_to_uint8(T const a, T const b)
     {
         return (hex_to_uint(a) << 4) | hex_to_uint(b);
     }
 
-    constexpr uint16_t uint8_to_uint16(uint8_t a, uint8_t b) noexcept
+    constexpr uint16_t uint8_to_uint16(uint8_t a, uint8_t b)
     {
         return (static_cast<uint16_t>(a) << 8) | static_cast<uint16_t>(b);
     }
 
-    constexpr uint32_t uint8_to_uint32(uint8_t a, uint8_t b, uint8_t c, uint8_t d) noexcept
+    constexpr uint32_t uint8_to_uint32(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
     {
         return (static_cast<uint32_t>(uint8_to_uint16(a, b)) << 16) |
                 static_cast<uint32_t>(uint8_to_uint16(c, d));
@@ -85,11 +85,11 @@ WINRT_EXPORT namespace winrt
     private:
 
         template <typename TStringView>
-        static constexpr guid parse(TStringView const value) noexcept
+        static constexpr guid parse(TStringView const value)
         {
             if (value.size() != 36 || value[8] != '-' || value[13] != '-' || value[18] != '-' || value[23] != '-')
             {
-                abort();
+                throw std::invalid_argument("value is not a valid GUID string");
             }
 
             return
@@ -179,7 +179,7 @@ WINRT_EXPORT namespace winrt
     {
         return !(left == right);
     }
-    
+
     inline bool operator<(guid const& left, guid const& right) noexcept
     {
         return memcmp(&left, &right, sizeof(left)) < 0;
