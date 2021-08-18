@@ -127,6 +127,7 @@ namespace winrt::impl
         }
     };
 
+#ifdef WINRT_IMPL_COROUTINES
     template <typename Async>
     struct await_adapter : enable_await_cancellation
     {
@@ -165,15 +166,9 @@ namespace winrt::impl
         }
 
     private:
-        static void cancel_asynchronously(Async async)
+        static fire_and_forget cancel_asynchronously(Async async)
         {
-            submit_threadpool_callback(cancel_callback, get_abi(async));
-            detach_abi(async);
-        }
-
-        static void __stdcall cancel_callback(void*, void* context) noexcept
-        {
-            Async async(context, take_ownership_from_abi);
+            co_await winrt::resume_background();
             try
             {
                 async.Cancel();
@@ -183,6 +178,7 @@ namespace winrt::impl
             }
         }
     };
+#endif
 
     template <typename D>
     auto consume_Windows_Foundation_IAsyncAction<D>::get() const
