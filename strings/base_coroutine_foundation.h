@@ -165,11 +165,15 @@ namespace winrt::impl
         }
 
     private:
-        static fire_and_forget cancel_asynchronously(Async async)
+        static void cancel_asynchronously(Async async)
         {
-#ifdef WINRT_IMPL_COROUTINES
-            co_await winrt::resume_background();
-#endif
+            submit_threadpool_callback(cancel_callback, get_abi(async));
+            detach_abi(async);
+        }
+
+        static void __stdcall cancel_callback(void*, void* context) noexcept
+        {
+            Async async(context, take_ownership_from_abi);
             try
             {
                 async.Cancel();
