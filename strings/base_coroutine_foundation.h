@@ -167,7 +167,9 @@ namespace winrt::impl
     private:
         static fire_and_forget cancel_asynchronously(Async async)
         {
+#ifdef WINRT_IMPL_COROUTINES
             co_await winrt::resume_background();
+#endif
             try
             {
                 async.Cancel();
@@ -793,6 +795,7 @@ namespace std::experimental
 
 WINRT_EXPORT namespace winrt
 {
+#ifdef WINRT_IMPL_COROUTINES
     template <typename... T>
     Windows::Foundation::IAsyncAction when_all(T... async)
     {
@@ -838,4 +841,5 @@ WINRT_EXPORT namespace winrt
         impl::check_status_canceled(shared->status);
         co_return shared->result.GetResults();
     }
+#endif
 }
