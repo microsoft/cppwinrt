@@ -41,7 +41,7 @@ namespace cppwinrt::strings {
         strings_h.write(R"(extern char const %[%];
 )",
             name.string(),
-            static_cast<uint64_t>(view.size()));
+            static_cast<uint64_t>(view.size() + 1));
 
         strings_cpp.write(R"(extern char const %[] = R"xyz()xyz"
 )",

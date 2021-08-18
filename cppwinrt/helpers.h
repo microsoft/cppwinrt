@@ -1,5 +1,12 @@
 #pragma once
 
+#ifndef HIWORD
+#define HIWORD(VALUE) (uint16_t)(VALUE >> 16)
+#endif
+#ifndef LOWORD
+#define LOWORD(VALUE) (uint16_t)(VALUE & 0xFFFF)
+#endif
+
 namespace cppwinrt
 {
     static auto get_start_time()

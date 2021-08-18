@@ -4,6 +4,7 @@
 #include <array>
 #include <limits>
 #include <cstdint>
+#include <climits>
 #include <string>
 #include <string_view>
 #include <map>
@@ -12,9 +13,16 @@
 #include <filesystem>
 #include <fstream>
 #include <regex>
+#ifdef _WIN32
 #include <Windows.h>
 #include <shlwapi.h>
 #include <XmlLite.h>
+#else
+using HRESULT = uint32_t;
+using HKEY = void*;
+using DWORD = uint32_t;
+using BYTE = uint8_t;
+#endif
 
 namespace cppwinrt
 {
@@ -32,10 +40,12 @@ namespace cppwinrt
 
         ~registry_key() noexcept
         {
+#ifdef _WIN32
             if (handle)
             {
                 RegCloseKey(handle);
             }
+#endif
         }
     };
 
@@ -77,6 +87,7 @@ namespace cppwinrt
         std::filesystem::path const& xml_path,
         std::filesystem::path const& sdk_path)
     {
+#ifdef _WIN32
         com_ptr<IStream> stream;
 
         check_xml(SHCreateStreamOnFileW(
@@ -127,12 +138,14 @@ namespace cppwinrt
             path += L".winmd";
             files.insert(path.string());
         }
+#endif
     }
 
     inline registry_key open_sdk()
     {
         HKEY key;
 
+#ifdef _WIN32
         if (0 != RegOpenKeyExW(
             HKEY_LOCAL_MACHINE,
             L"SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots",
@@ -144,6 +157,7 @@ namespace cppwinrt
         {
             throw std::invalid_argument("Could not find the Windows SDK in the registry");
         }
+#endif
 
         return registry_key{ key };
     }
@@ -154,6 +168,7 @@ namespace cppwinrt
 
         DWORD path_size = 0;
 
+#ifdef _WIN32
         if (0 != RegQueryValueExW(
             key.handle,
             L"KitsRoot10",
@@ -164,9 +179,11 @@ namespace cppwinrt
         {
             throw std::invalid_argument("Could not find the Windows SDK path in the registry");
         }
+#endif
 
         std::wstring root((path_size / sizeof(wchar_t)) - 1, L'?');
 
+#ifdef _WIN32
         RegQueryValueExW(
             key.handle,
             L"KitsRoot10",
@@ -174,6 +191,7 @@ namespace cppwinrt
             nullptr,
             reinterpret_cast<BYTE*>(root.data()),
             &path_size);
+#endif
 
         return root;
     }
@@ -185,7 +203,9 @@ namespace cppwinrt
 
         while (true)
         {
+#ifdef _WIN32
             actual_size = GetModuleFileNameA(nullptr, path.data(), 1 + static_cast<uint32_t>(path.size()));
+#endif
 
             if (actual_size < 1 + path.size())
             {
@@ -224,6 +244,7 @@ namespace cppwinrt
         std::array<unsigned long, 4> version_parts{};
         std::string result;
 
+#ifdef _WIN32
         while (0 == RegEnumKeyA(key.handle, index++, subkey.data(), static_cast<uint32_t>(subkey.size())))
         {
             if (!std::regex_match(subkey.data(), match, rx))
@@ -270,6 +291,7 @@ namespace cppwinrt
                 ++next_part;
             }
         }
+#endif
 
         if (result.empty())
         {
@@ -430,7 +452,7 @@ namespace cppwinrt
                     std::array<char, 260> local{};
 #ifdef _WIN64
                     ExpandEnvironmentStringsA("%windir%\\System32\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
-#else
+#elif defined _WIN32
                     ExpandEnvironmentStringsA("%windir%\\SysNative\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
 #endif
                     add_directory(local.data());

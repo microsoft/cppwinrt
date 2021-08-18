@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <vector>
 
 namespace cppwinrt
 {
@@ -127,7 +128,11 @@ namespace cppwinrt
         void write_printf(char const* format, Args const&... args)
         {
             char buffer[128];
+#ifdef _WIN32
             size_t const size = sprintf_s(buffer, format, args...);
+#else
+            size_t const size = sprintf(buffer, format, args...);
+#endif
             write(std::string_view{ buffer, size });
         }
 
