@@ -1,4 +1,10 @@
 
+#define memcpy_s(a, b, c, d) memcpy(a, c, d)
+#define swprintf_s(a, c, ...) swprintf(a, sizeof a/sizeof *a, c, __VA_ARGS__)
+#define _InterlockedIncrement(a) __sync_add_and_fetch(a, 1)
+#define _InterlockedDecrement(a) __sync_fetch_and_sub(a, 1)
+#define _InterlockedCompareExchange64(a, b, c) __sync_val_compare_and_swap(a, b, c)
+
 #ifdef _DEBUG
 
 #define WINRT_ASSERT _ASSERTE

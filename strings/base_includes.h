@@ -19,6 +19,10 @@
 #include <utility>
 #include <vector>
 
+#include <cstring>
+#include <cstdio>
+#include <cwchar>
+
 #if __has_include(<WindowsNumerics.impl.h>)
 #define WINRT_IMPL_NUMERICS
 #include <directxmath.h>
@@ -37,6 +41,19 @@ namespace winrt::impl
     using suspend_never = std::suspend_never;
 }
 
+#ifdef __LINUX_CPPWINRT_CLANG_GCC_COROUTINES__
+
+namespace std::experimental
+{
+    template <typename T = void>
+    using coroutine_handle = ::std::coroutine_handle<T>;
+
+    using suspend_always = ::std::suspend_always;
+    using suspend_never = ::std::suspend_never;
+}
+
+#endif
+
 #else
 
 #include <experimental/coroutine>
@@ -51,3 +68,5 @@ namespace winrt::impl
 }
 
 #endif
+
+using nullptr_t = std::nullptr_t;

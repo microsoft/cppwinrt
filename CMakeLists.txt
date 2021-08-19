@@ -27,9 +27,11 @@ target_precompile_headers(prebuild PRIVATE
     prebuild/pch.h
 )
 
+file(GLOB STRING_FILES LIST_DIRECTORIES false strings/*.h)
+
 add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/strings.cpp
-    DEPENDS prebuild
+    DEPENDS prebuild ${STRING_FILES}
     COMMAND prebuild ../strings ${CMAKE_CURRENT_BINARY_DIR}
     VERBATIM
 )
