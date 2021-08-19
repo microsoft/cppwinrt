@@ -539,7 +539,11 @@ namespace cppwinrt
         template<typename O, typename L>
         void extract_option(std::string_view arg, O const& options, L& last)
         {
+#ifdef _WIN32
             if (arg[0] == '-' || arg[0] == '/')
+#else
+            if (arg[0] == '-')
+#endif
             {
                 arg.remove_prefix(1);
                 last = find(options, arg);

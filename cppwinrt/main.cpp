@@ -94,7 +94,7 @@ Where <spec> is one or more of:
         path output_folder = args.value("output", ".");
         create_directories(output_folder / "winrt/impl");
         settings.output_folder = canonical(output_folder).string();
-        settings.output_folder += '\\';
+        settings.output_folder += std::filesystem::path::preferred_separator;
 
         for (auto && include : args.values("include"))
         {
@@ -146,7 +146,7 @@ Where <spec> is one or more of:
             {
                 create_directories(component);
                 settings.component_folder = canonical(component).string();
-                settings.component_folder += '\\';
+                settings.component_folder += std::filesystem::path::preferred_separator;
             }
         }
     }
