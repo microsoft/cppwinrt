@@ -37,6 +37,8 @@ struct TestSplashScreen : implements<TestSplashScreen, ISplashScreen>
     void Dismissed(event_token cookie)
     {
         m_dismissed.remove(cookie);
+
+        throw hresult_error(0x80010108); // this exception should always be ignored.
     }
 };
 
@@ -61,6 +63,8 @@ struct TestClipboardStatics : implements<TestClipboardStatics, IClipboardStatics
     void ContentChanged(event_token token)
     {
         m_contentChanged.remove(token);
+        
+        throw hresult_error(0x80010108); // this exception should always be ignored.
     }
 };
 
