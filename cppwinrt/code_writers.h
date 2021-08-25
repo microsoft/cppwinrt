@@ -1120,11 +1120,23 @@ namespace cppwinrt
 
         if (is_noexcept(method))
         {
-            format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
+            if (is_remove_overload(method))
+            {
+                // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
+                format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
+    {%
+        WINRT_IMPL_SHIM(%)->%(%);%
+    }
+)";
+            }
+            else
+            {
+                format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
     {%
         WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%
     }
 )";
+            }
         }
         else
         {
