@@ -159,12 +159,12 @@ WINRT_EXPORT namespace winrt
 
 #endif
 
-        constexpr explicit guid(std::string_view const value) noexcept :
+        constexpr explicit guid(std::string_view const value) :
             guid(parse(value))
         {
         }
 
-        constexpr explicit guid(std::wstring_view const value) noexcept :
+        constexpr explicit guid(std::wstring_view const value) :
             guid(parse(value))
         {
         }
