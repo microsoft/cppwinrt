@@ -1,9 +1,45 @@
 
+#if defined(__GNUC__) && !defined(_MSC_VER)
+#define WINRT_NOT_ON_WINDOWS
+
+#ifdef __i386__
+#define _M_IX86 __i386__
+#endif
+#ifdef __amd64__
+#define _M_X64 __amd64__
+#endif
+#ifdef __arm__
+#define _M_ARM __arm__
+#endif
+#ifdef __aarch64__
+#define _M_ARM64 __aarch64__
+#endif
+
+#if defined(_M_X64) || defined(_M_ARM64)
+#define _WIN64
+#endif
+
+#define __declspec(...) __attribute__((__VA_ARGS__))
+#define __pragma _Pragma
+
 #define memcpy_s(a, b, c, d) memcpy(a, c, d)
 #define swprintf_s(a, c, ...) swprintf(a, sizeof a/sizeof *a, c, __VA_ARGS__)
+
 #define _InterlockedIncrement(a) __sync_add_and_fetch(a, 1)
 #define _InterlockedDecrement(a) __sync_fetch_and_sub(a, 1)
-#define _InterlockedCompareExchange64(a, b, c) __sync_val_compare_and_swap(a, b, c)
+#define _InterlockedCompareExchange64(a, b, c) __sync_val_compare_and_swap(a, c, b)
+
+#define _InterlockedIncrement64(a) __sync_add_and_fetch(a, 1)
+#define _InterlockedDecrement64(a) __sync_fetch_and_sub(a, 1)
+#define _InterlockedCompareExchange128(a, b1, b2, c) __sync_val_compare_and_swap((__int128_t*)a, *(__int128_t*)c, (__int128_t)b1 << 64 | b2)
+
+#define _InterlockedCompareExchangePointer(a, b, c) __sync_val_compare_and_swap(a, c, b)
+
+#define _ReadWriteBarrier() asm volatile ("" : : : "memory")
+
+#pragma GCC diagnostic ignored "-Wattributes"
+
+#endif
 
 #ifdef _DEBUG
 

@@ -18,10 +18,14 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <version>
 
 #include <cstring>
 #include <cstdio>
 #include <cwchar>
+#include <climits>
+#include <cstdint>
+#include <wctype.h>
 
 #if __has_include(<WindowsNumerics.impl.h>)
 #define WINRT_IMPL_NUMERICS

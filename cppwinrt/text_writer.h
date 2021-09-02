@@ -10,17 +10,27 @@
 
 namespace cppwinrt
 {
-    inline std::string file_to_string(std::string const& filename)
+    inline std::string file_to_string(std::string const &filename)
     {
-        std::ifstream file(filename, std::ios::binary);
-        return static_cast<std::stringstream const&>(std::stringstream() << file.rdbuf()).str();
+        // From https://insanecoding.blogspot.com/2011/11/how-to-read-in-file-in-c.html
+        std::ifstream in(filename, std::ios::in | std::ios::binary);
+        std::string contents;
+        if (in)
+        {
+            in.seekg(0, std::ios::end);
+            contents.resize(in.tellg());
+            in.seekg(0, std::ios::beg);
+            in.read(&contents[0], contents.size());
+            in.close();
+        }
+        return contents;
     }
 
     template <typename T>
     struct writer_base
     {
-        writer_base(writer_base const&) = delete;
-        writer_base& operator=(writer_base const&) = delete;
+        writer_base(writer_base const &) = delete;
+        writer_base &operator=(writer_base const &) = delete;
 
         writer_base()
         {
@@ -28,7 +38,7 @@ namespace cppwinrt
         }
 
         template <typename... Args>
-        void write(std::string_view const& value, Args const&... args)
+        void write(std::string_view const &value, Args const &...args)
         {
 #if defined(_DEBUG)
             auto expected = count_placeholders(value);
@@ -39,7 +49,7 @@ namespace cppwinrt
         }
 
         template <typename... Args>
-        std::string write_temp(std::string_view const& value, Args const&... args)
+        std::string write_temp(std::string_view const &value, Args const &...args)
         {
 #if defined(_DEBUG)
             bool restore_debug_trace = debug_trace;
@@ -50,7 +60,7 @@ namespace cppwinrt
             assert(count_placeholders(value) == sizeof...(Args));
             write_segment(value, args...);
 
-            std::string result{ m_first.data() + size, m_first.size() - size };
+            std::string result{m_first.data() + size, m_first.size() - size};
             m_first.resize(size);
 
 #if defined(_DEBUG)
@@ -59,7 +69,7 @@ namespace cppwinrt
             return result;
         }
 
-        void write_impl(std::string_view const& value)
+        void write_impl(std::string_view const &value)
         {
             m_first.insert(m_first.end(), value.begin(), value.end());
 
@@ -83,25 +93,25 @@ namespace cppwinrt
 #endif
         }
 
-        void write(std::string_view const& value)
+        void write(std::string_view const &value)
         {
-            static_cast<T*>(this)->write_impl(value);
+            static_cast<T *>(this)->write_impl(value);
         }
 
         void write(char const value)
         {
-            static_cast<T*>(this)->write_impl(value);
+            static_cast<T *>(this)->write_impl(value);
         }
 
-        void write_code(std::string_view const& value)
+        void write_code(std::string_view const &value)
         {
             write(value);
         }
 
-        template <typename F, typename = std::enable_if_t<std::is_invocable_v<F, T&>>>
-        void write(F const& f)
+        template <typename F, typename = std::enable_if_t<std::is_invocable_v<F, T &>>>
+        void write(F const &f)
         {
-            f(*static_cast<T*>(this));
+            f(*static_cast<T *>(this));
         }
 
         void write(int32_t const value)
@@ -125,7 +135,7 @@ namespace cppwinrt
         }
 
         template <typename... Args>
-        void write_printf(char const* format, Args const&... args)
+        void write_printf(char const *format, Args const &...args)
         {
             char buffer[128];
 #ifdef _WIN32
@@ -133,15 +143,15 @@ namespace cppwinrt
 #else
             size_t const size = sprintf(buffer, format, args...);
 #endif
-            write(std::string_view{ buffer, size });
+            write(std::string_view{buffer, size});
         }
 
         template <auto F, typename List, typename... Args>
-        void write_each(List const& list, Args const&... args)
+        void write_each(List const &list, Args const &...args)
         {
-            for (auto&& item : list)
+            for (auto &&item : list)
             {
-                F(*static_cast<T*>(this), item, args...);
+                F(*static_cast<T *>(this), item, args...);
             }
         }
 
@@ -158,7 +168,7 @@ namespace cppwinrt
             m_second.clear();
         }
 
-        void flush_to_file(std::string const& filename)
+        void flush_to_file(std::string const &filename)
         {
             if (!file_equal(filename))
             {
@@ -166,20 +176,20 @@ namespace cppwinrt
                 file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
                 try
                 {
-                  file.open(filename, std::ios::out | std::ios::binary);
-                  file.write(m_first.data(), m_first.size());
-                  file.write(m_second.data(), m_second.size());
+                    file.open(filename, std::ios::out | std::ios::binary);
+                    file.write(m_first.data(), m_first.size());
+                    file.write(m_second.data(), m_second.size());
                 }
-                catch (std::ofstream::failure const& e)
+                catch (std::ofstream::failure const &e)
                 {
-                  throw std::filesystem::filesystem_error(e.what(), filename, std::io_errc::stream);
+                    throw std::filesystem::filesystem_error(e.what(), filename, std::io_errc::stream);
                 }
             }
             m_first.clear();
             m_second.clear();
         }
 
-        void flush_to_file(std::filesystem::path const& filename)
+        void flush_to_file(std::filesystem::path const &filename)
         {
             flush_to_file(filename.string());
         }
@@ -200,7 +210,7 @@ namespace cppwinrt
             return m_first.empty() ? char{} : m_first.back();
         }
 
-        bool file_equal(std::string const& filename) const
+        bool file_equal(std::string const &filename) const
         {
             if (!std::filesystem::exists(filename))
             {
@@ -227,8 +237,7 @@ namespace cppwinrt
 #endif
 
     private:
-
-        static constexpr uint32_t count_placeholders(std::string_view const& format) noexcept
+        static constexpr uint32_t count_placeholders(std::string_view const &format) noexcept
         {
             uint32_t count{};
             bool escape{};
@@ -254,7 +263,7 @@ namespace cppwinrt
             return count;
         }
 
-        void write_segment(std::string_view const& value)
+        void write_segment(std::string_view const &value)
         {
             auto offset = value.find_first_of("^");
             if (offset == std::string_view::npos)
@@ -272,7 +281,7 @@ namespace cppwinrt
         }
 
         template <typename First, typename... Rest>
-        void write_segment(std::string_view const& value, First const& first, Rest const&... rest)
+        void write_segment(std::string_view const &value, First const &first, Rest const &...rest)
         {
             auto offset = value.find_first_of("^%@");
             assert(offset != std::string_view::npos);
@@ -289,13 +298,13 @@ namespace cppwinrt
             {
                 if (value[offset] == '%')
                 {
-                    static_cast<T*>(this)->write(first);
+                    static_cast<T *>(this)->write(first);
                 }
                 else
                 {
                     if constexpr (std::is_convertible_v<First, std::string_view>)
                     {
-                        static_cast<T*>(this)->write_code(first);
+                        static_cast<T *>(this)->write_code(first);
                     }
                     else
                     {
@@ -311,13 +320,12 @@ namespace cppwinrt
         std::vector<char> m_first;
     };
 
-
     template <typename T>
     struct indented_writer_base : writer_base<T>
     {
         struct indent_guard
         {
-            indent_guard(indented_writer_base<T>& w, int32_t offset = 1) noexcept : m_writer(w), m_offset(offset)
+            indent_guard(indented_writer_base<T> &w, int32_t offset = 1) noexcept : m_writer(w), m_offset(offset)
             {
                 m_writer.m_indent += m_offset;
             }
@@ -328,10 +336,9 @@ namespace cppwinrt
             }
 
         private:
-            indented_writer_base<T>& m_writer;
+            indented_writer_base<T> &m_writer;
             int32_t m_offset{};
         };
-
 
         void write_indent()
         {
@@ -341,9 +348,9 @@ namespace cppwinrt
             }
         }
 
-        void write_impl(std::string_view const& value)
+        void write_impl(std::string_view const &value)
         {
-            std::string_view::size_type current_pos{ 0 };
+            std::string_view::size_type current_pos{0};
             auto on_new_line = writer_base<T>::back() == '\n';
 
             while (true)
@@ -391,7 +398,7 @@ namespace cppwinrt
         }
 
         template <typename... Args>
-        std::string write_temp(std::string_view const& value, Args const& ... args)
+        std::string write_temp(std::string_view const &value, Args const &...args)
         {
             auto restore_indent = m_indent;
             m_indent = 0;
@@ -406,31 +413,30 @@ namespace cppwinrt
         int32_t m_indent{};
     };
 
-
     template <auto F, typename... Args>
-    auto bind(Args&&... args)
+    auto bind(Args &&...args)
     {
-        return [&](auto& writer)
+        return [&](auto &writer)
         {
             F(writer, args...);
         };
     }
 
     template <typename F, typename... Args>
-    auto bind(F fwrite, Args const&... args)
+    auto bind(F fwrite, Args const &...args)
     {
-        return [&, fwrite](auto& writer)
+        return [&, fwrite](auto &writer)
         {
             fwrite(writer, args...);
         };
     }
 
     template <auto F, typename List, typename... Args>
-    auto bind_each(List const& list, Args const&... args)
+    auto bind_each(List const &list, Args const &...args)
     {
-        return [&](auto& writer)
+        return [&](auto &writer)
         {
-            for (auto&& item : list)
+            for (auto &&item : list)
             {
                 F(writer, item, args...);
             }
@@ -438,11 +444,11 @@ namespace cppwinrt
     }
 
     template <typename List, typename... Args>
-    auto bind_each(List const& list, Args const&... args)
+    auto bind_each(List const &list, Args const &...args)
     {
-        return [&](auto& writer)
+        return [&](auto &writer)
         {
-            for (auto&& item : list)
+            for (auto &&item : list)
             {
                 writer.write(item, args...);
             }
@@ -450,11 +456,11 @@ namespace cppwinrt
     }
 
     template <typename F, typename List, typename... Args>
-    auto bind_each(F fwrite, List const& list, Args const&... args)
+    auto bind_each(F fwrite, List const &list, Args const &...args)
     {
-        return [&, fwrite](auto& writer)
+        return [&, fwrite](auto &writer)
         {
-            for (auto&& item : list)
+            for (auto &&item : list)
             {
                 fwrite(writer, item, args...);
             }
@@ -462,13 +468,13 @@ namespace cppwinrt
     }
 
     template <auto F, typename T, typename... Args>
-    auto bind_list(std::string_view const& delimiter, T const& list, Args const&... args)
+    auto bind_list(std::string_view const &delimiter, T const &list, Args const &...args)
     {
-        return [&](auto& writer)
+        return [&](auto &writer)
         {
-            bool first{ true };
+            bool first{true};
 
-            for (auto&& item : list)
+            for (auto &&item : list)
             {
                 if (first)
                 {
@@ -485,13 +491,13 @@ namespace cppwinrt
     }
 
     template <typename T>
-    auto bind_list(std::string_view const& delimiter, T const& list)
+    auto bind_list(std::string_view const &delimiter, T const &list)
     {
-        return [&](auto& writer)
+        return [&](auto &writer)
         {
-            bool first{ true };
+            bool first{true};
 
-            for (auto&& item : list)
+            for (auto &&item : list)
             {
                 if (first)
                 {

@@ -83,7 +83,9 @@ extern "C"
     int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept;
 }
 
-#ifdef _M_HYBRID
+#if defined(WINRT_NOT_ON_WINDOWS)
+#define WINRT_IMPL_LINK(...)
+#elif defined(_M_HYBRID)
 #define WINRT_IMPL_LINK(function, count) __pragma(comment(linker, "/alternatename:#WINRT_IMPL_" #function "@" #count "=#" #function "@" #count))
 #elif _M_ARM64EC
 #define WINRT_IMPL_LINK(function, count) __pragma(comment(linker, "/alternatename:#WINRT_IMPL_" #function "=#" #function))

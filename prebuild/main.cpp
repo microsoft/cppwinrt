@@ -1,4 +1,5 @@
 #include "pch.h"
+#include <cstring>
 
 struct writer : cppwinrt::writer_base<writer>
 {
@@ -41,11 +42,11 @@ namespace cppwinrt::strings {
         strings_h.write(R"(extern char const %[%];
 )",
             name.string(),
-            static_cast<uint64_t>(view.size() + 1));
+            strlen(view.data()) + 1);
 
-        strings_cpp.write(R"(extern char const %[] = R"xyz()xyz"
-)",
-            name.string());
+        strings_cpp.write(R"(extern char const %[%] = )",
+            name.string(),
+            strlen(view.data()) + 1);
 
         std::string_view remainder = view;
 
