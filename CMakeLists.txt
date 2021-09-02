@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.20)
 project(CPPWINRT CXX)
 
 include(ExternalProject)
@@ -32,7 +32,7 @@ file(GLOB STRING_FILES LIST_DIRECTORIES false strings/*.h)
 add_custom_command(
     OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/strings.cpp
     DEPENDS prebuild ${STRING_FILES}
-    COMMAND prebuild ../strings ${CMAKE_CURRENT_BINARY_DIR}
+    COMMAND prebuild ${CMAKE_CURRENT_SOURCE_DIR}/strings ${CMAKE_CURRENT_BINARY_DIR}
     VERBATIM
 )
 
