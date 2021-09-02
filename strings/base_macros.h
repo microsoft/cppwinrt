@@ -21,6 +21,7 @@
 
 #define __declspec(...) __attribute__((__VA_ARGS__))
 #define __pragma _Pragma
+#define selectany weak
 
 #define memcpy_s(a, b, c, d) memcpy(a, c, d)
 #define swprintf_s(a, c, ...) swprintf(a, sizeof a/sizeof *a, c, __VA_ARGS__)
