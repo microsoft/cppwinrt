@@ -115,15 +115,26 @@ namespace winrt::impl
 
         bool IndexOf(Windows::Foundation::IInspectable const& value, uint32_t& index) const
         {
-            try
+            if constexpr (is_com_interface_v<T>)
             {
-                return IndexOf(unbox_value<T>(value), index);
+                if (!value)
+                {
+                    return base_type::IndexOf(nullptr, index);
+                }
+                else if (auto as = value.try_as<T>())
+                {
+                    return base_type::IndexOf(as, index);
+                }
             }
-            catch (hresult_no_interface const&)
+            else
             {
-                index = 0;
-                return false;
+                if (auto as = value.try_as<T>())
+                {
+                    return base_type::IndexOf(as.value(), index);
+                }
             }
+
+            return false;
         }
 
         using base_type::GetMany;
