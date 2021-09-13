@@ -125,19 +125,16 @@ namespace winrt::impl
                 {
                     return base_type::IndexOf(as, index);
                 }
-                else
-                {
-                    return false;
-                }
-            }
-            else if (auto as = value.try_as<T>())
-            {
-                return base_type::IndexOf(as.value(), index);
             }
             else
             {
-                return false;
+                if (auto as = value.try_as<T>())
+                {
+                    return base_type::IndexOf(as.value(), index);
+                }
             }
+
+            return false;
         }
 
         using base_type::GetMany;
