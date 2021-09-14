@@ -417,6 +417,7 @@
     <ClCompile Include="notify_awaiter.cpp" />
     <ClCompile Include="no_make_detection.cpp" />
     <ClCompile Include="numerics.cpp" />
+    <ClCompile Include="observable_index_of.cpp" />
     <ClCompile Include="out_params.cpp" />
     <ClCompile Include="out_params_abi.cpp" />
     <ClCompile Include="out_params_bad.cpp" />

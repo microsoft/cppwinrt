@@ -127,6 +127,7 @@ namespace winrt::impl
         }
     };
 
+#ifdef WINRT_IMPL_COROUTINES
     template <typename Async>
     struct await_adapter : enable_await_cancellation
     {
@@ -177,6 +178,7 @@ namespace winrt::impl
             }
         }
     };
+#endif
 
     template <typename D>
     auto consume_Windows_Foundation_IAsyncAction<D>::get() const
@@ -793,6 +795,7 @@ namespace std::experimental
 
 WINRT_EXPORT namespace winrt
 {
+#ifdef WINRT_IMPL_COROUTINES
     template <typename... T>
     Windows::Foundation::IAsyncAction when_all(T... async)
     {
@@ -838,4 +841,5 @@ WINRT_EXPORT namespace winrt
         impl::check_status_canceled(shared->status);
         co_return shared->result.GetResults();
     }
+#endif
 }

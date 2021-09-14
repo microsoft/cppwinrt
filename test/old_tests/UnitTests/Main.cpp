@@ -8,7 +8,7 @@ int main(int argc, char * argv[])
     using namespace winrt;
 
     init_apartment();
-    std::set_terminate([]{ ExitProcess(1); });
+    std::set_terminate([]{ reportFatal("Abnormal termination"); ExitProcess(1); });
     int const result = Catch::Session().run(argc, argv);
 
     // Completely unnecessary in an app, but useful for testing clear_factory_cache behavior.

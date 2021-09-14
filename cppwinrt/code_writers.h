@@ -1120,11 +1120,23 @@ namespace cppwinrt
 
         if (is_noexcept(method))
         {
-            format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
+            if (is_remove_overload(method))
+            {
+                // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
+                format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
+    {%
+        WINRT_IMPL_SHIM(%)->%(%);%
+    }
+)";
+            }
+            else
+            {
+                format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
     {%
         WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%
     }
 )";
+            }
         }
         else
         {
@@ -2426,10 +2438,10 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             w.write(format, bind<write_generic_typenames>(generics));
         }
 
-        auto format = R"(    struct % : Windows::Foundation::IUnknown
+        auto format = R"(    struct % : winrt::Windows::Foundation::IUnknown
     {%
         %(std::nullptr_t = nullptr) noexcept {}
-        %(void* ptr, take_ownership_from_abi_t) noexcept : Windows::Foundation::IUnknown(ptr, take_ownership_from_abi) {}
+        %(void* ptr, take_ownership_from_abi_t) noexcept : winrt::Windows::Foundation::IUnknown(ptr, take_ownership_from_abi) {}
         template <typename L> %(L lambda);
         template <typename F> %(F* function);
         template <typename O, typename M> %(O* object, M method);
