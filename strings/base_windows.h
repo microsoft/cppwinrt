@@ -81,13 +81,11 @@ namespace winrt::impl
         return { result, take_ownership_from_abi };
     }
 
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
+    template<typename T>
+    struct is_classic_com_interface : std::conjunction<std::is_base_of<::IUnknown, T>, std::negation<is_implements<T>>> {};
+
     template <typename T>
-    struct is_com_interface : std::disjunction<std::is_base_of<Windows::Foundation::IUnknown, T>, std::is_base_of<unknown_abi, T>, is_implements<T>, std::is_base_of<::IUnknown, T>> {};
-#else
-    template <typename T>
-    struct is_com_interface : std::disjunction<std::is_base_of<Windows::Foundation::IUnknown, T>, std::is_base_of<unknown_abi, T>, is_implements<T>> {};
-#endif
+    struct is_com_interface : std::disjunction<std::is_base_of<Windows::Foundation::IUnknown, T>, std::is_base_of<unknown_abi, T>, is_implements<T>, is_classic_com_interface<T>> {};
 
     template <typename T>
     inline constexpr bool is_com_interface_v = is_com_interface<T>::value;
@@ -363,14 +361,10 @@ WINRT_EXPORT namespace winrt
         }
     }
 
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-
     inline ::IUnknown* get_unknown(Windows::Foundation::IUnknown const& object) noexcept
     {
         return static_cast<::IUnknown*>(get_abi(object));
     }
-
-#endif
 }
 
 WINRT_EXPORT namespace winrt::Windows::Foundation

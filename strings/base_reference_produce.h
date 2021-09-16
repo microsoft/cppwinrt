@@ -212,14 +212,12 @@ namespace winrt::impl
         using itf = Windows::Foundation::IReference<guid>;
     };
 
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
     template <>
     struct reference_traits<GUID>
     {
-        static auto make(GUID const& value) { return Windows::Foundation::PropertyValue::CreateGuid(value); }
+        static auto make(GUID const& value) { return Windows::Foundation::PropertyValue::CreateGuid(reinterpret_cast<guid const&>(value)); }
         using itf = Windows::Foundation::IReference<guid>;
     };
-#endif
 
     template <>
     struct reference_traits<Windows::Foundation::DateTime>
@@ -354,14 +352,12 @@ namespace winrt::impl
         using itf = Windows::Foundation::IReferenceArray<guid>;
     };
 
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
     template <>
     struct reference_traits<com_array<GUID>>
     {
         static auto make(array_view<GUID const> const& value) { return Windows::Foundation::PropertyValue::CreateGuidArray(reinterpret_cast<array_view<guid const> const&>(value)); }
         using itf = Windows::Foundation::IReferenceArray<guid>;
     };
-#endif
 
     template <>
     struct reference_traits<com_array<Windows::Foundation::DateTime>>
@@ -444,14 +440,12 @@ namespace winrt::impl
                 return static_cast<T>(value.template as<Windows::Foundation::IReference<std::underlying_type_t<T>>>().Value());
             }
         }
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
         else if constexpr (std::is_same_v<T, com_array<GUID>>)
         {
             T result;
             reinterpret_cast<com_array<guid>&>(result) = value.template as<typename impl::reference_traits<T>::itf>().Value();
             return result;
         }
-#endif
         else
         {
             return value.template as<typename impl::reference_traits<T>::itf>().Value();
@@ -473,7 +467,6 @@ namespace winrt::impl
                 return static_cast<T>(temp.Value());
             }
         }
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
         else if constexpr (std::is_same_v<T, com_array<GUID>>)
         {
             if (auto temp = value.template try_as<typename impl::reference_traits<T>::itf>())
@@ -483,7 +476,6 @@ namespace winrt::impl
                 return result;
             }
         }
-#endif
         else
         {
             if (auto temp = value.template try_as<typename impl::reference_traits<T>::itf>())

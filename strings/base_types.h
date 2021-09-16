@@ -141,23 +141,13 @@ WINRT_EXPORT namespace winrt
         {
         }
 
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-
-        constexpr guid(GUID const& value) noexcept :
-            Data1(value.Data1),
-            Data2(value.Data2),
-            Data3(value.Data3),
-            Data4{ value.Data4[0], value.Data4[1], value.Data4[2], value.Data4[3], value.Data4[4], value.Data4[5], value.Data4[6], value.Data4[7] }
-        {
-
-        }
+        template<bool dummy = true>
+        constexpr guid(GUID const& value) noexcept : guid(convert<dummy>(value)) { }
 
         operator GUID const&() const noexcept
         {
             return reinterpret_cast<GUID const&>(*this);
         }
-
-#endif
 
         constexpr explicit guid(std::string_view const value) :
             guid(parse(value))
@@ -167,6 +157,15 @@ WINRT_EXPORT namespace winrt
         constexpr explicit guid(std::wstring_view const value) :
             guid(parse(value))
         {
+        }
+
+    private:
+        template<bool, typename T>
+        constexpr static guid convert(T const& value) noexcept
+        {
+            return { value.Data1, value.Data2, value.Data3,
+                { value.Data4[0], value.Data4[1], value.Data4[2], value.Data4[3], value.Data4[4], value.Data4[5], value.Data4[6], value.Data4[7] }
+            };
         }
     };
 
