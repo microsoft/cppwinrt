@@ -24,6 +24,10 @@
 #include <directxmath.h>
 #endif
 
+#ifdef __cpp_lib_format
+#include <format>
+#endif
+
 #ifdef __cpp_lib_coroutine
 
 #include <coroutine>

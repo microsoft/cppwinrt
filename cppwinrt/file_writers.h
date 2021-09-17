@@ -200,6 +200,10 @@ namespace cppwinrt
             auto wrap_lean = wrap_lean_and_mean(w);
             w.write_each<write_std_hash>(members.interfaces);
             w.write_each<write_std_hash>(members.classes);
+
+            auto wrap_format = wrap_ifdef(w, "__cpp_lib_format");
+            w.write_each<write_std_formatter>(members.interfaces);
+            w.write_each<write_std_formatter>(members.classes);
         }
 
         write_namespace_special(w, ns);

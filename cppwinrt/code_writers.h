@@ -115,6 +115,16 @@ namespace cppwinrt
         }
     }
 
+    [[nodiscard]] static finish_with wrap_ifdef(writer& w, std::string_view macro)
+    {
+        auto format = R"(#ifdef %
+)";
+
+        w.write(format, macro);
+
+        return { w, write_endif };
+    }
+
     static void write_parent_depends(writer& w, cache const& c, std::string_view const& type_namespace)
     {
         auto pos = type_namespace.rfind('.');
@@ -3216,6 +3226,18 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             type);
     }
 
+    static void write_std_formatter(writer& w, TypeDef const& type)
+    {
+        if (implements_interface(type, "Windows.Foundation.IStringable"))
+        {
+            auto generics = type.GenericParam();
+
+            w.write("    template<%> struct formatter<%, wchar_t> : formatter<winrt::Windows::Foundation::IStringable, wchar_t> {};\n",
+                bind<write_generic_typenames>(generics),
+                type);
+        }
+    }
+
     static void write_namespace_special(writer& w, std::string_view const& namespace_name)
     {
         if (namespace_name == "Windows.Foundation")
@@ -3259,6 +3281,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         if (namespace_name == "Windows.Foundation")
         {
             w.write(strings::base_reference_produce_1);
+            w.write(strings::base_stringable_format);
         }
     }
 }

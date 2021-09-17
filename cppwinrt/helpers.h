@@ -498,6 +498,27 @@ namespace cppwinrt
         return result;
     }
 
+    static bool implements_interface(TypeDef const& type, std::string_view const& name)
+    {
+        for (auto&& impl : type.InterfaceImpl())
+        {
+            const auto iface = impl.Interface();
+            if (iface.type() != TypeDefOrRef::TypeSpec && type_name(iface) == name)
+            {
+                return true;
+            }
+        }
+
+        if (auto base = get_base_class(type))
+        {
+            return implements_interface(base, name);
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     bool has_fastabi_tearoffs(writer& w, TypeDef const& type)
     {
         for (auto&& [name, info] : get_interfaces(w, type))

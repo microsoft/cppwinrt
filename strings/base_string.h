@@ -327,7 +327,7 @@ WINRT_EXPORT namespace winrt
             return rend();
         }
         
-#if __cpp_lib_starts_ends_with
+#ifdef __cpp_lib_starts_ends_with
         bool starts_with(wchar_t const value) const noexcept
         {
             return operator std::wstring_view().starts_with(value);
@@ -436,6 +436,11 @@ WINRT_EXPORT namespace winrt
         return impl::create_hstring_on_heap(value, static_cast<uint32_t>(wcslen(value)));
     }
 }
+
+#ifdef __cpp_lib_format
+template<>
+struct std::formatter<winrt::hstring, wchar_t> : std::formatter<std::wstring_view, wchar_t> {};
+#endif
 
 namespace winrt::impl
 {
