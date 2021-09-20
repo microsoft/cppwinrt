@@ -149,7 +149,7 @@ WINRT_EXPORT namespace winrt
             return reinterpret_cast<GUID const&>(*this);
         }
 
-        constexpr explicit guid(std::string_view const value) :
+        constexpr explicit guid(std::string_view const value) noexcept :
             guid(parse(value))
         {
         }
