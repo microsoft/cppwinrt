@@ -55,4 +55,8 @@
 
 #ifdef __IUnknown_INTERFACE_DEFINED__
 #define WINRT_IMPL_IUNKNOWN_DEFINED
+#else
+// Forward declare so we can talk about it.
+struct IUnknown;
+typedef struct _GUID GUID;
 #endif
