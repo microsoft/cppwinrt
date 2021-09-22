@@ -44,17 +44,8 @@ namespace winrt::impl
     template <template <typename> typename Condition, typename T>
     using tuple_if = typename tuple_if_base<Condition, T>::type;
 
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-
     template <typename T>
-    struct is_interface : std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, T>, std::conjunction<std::is_base_of<::IUnknown, T>, std::negation<is_implements<T>>>> {};
-
-#else
-
-    template <typename T>
-    struct is_interface : std::is_base_of<Windows::Foundation::IInspectable, T> {};
-
-#endif
+    struct is_interface : std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, T>, is_classic_com_interface<T>> {};
 
     template <typename T>
     struct is_marker : std::disjunction<std::is_base_of<marker, T>, std::is_void<T>> {};
@@ -485,19 +476,18 @@ namespace winrt::impl
         }
     };
 
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-
     template <typename D, typename I>
-    struct producer<D, I, std::enable_if_t<std::is_base_of_v< ::IUnknown, I> && !is_implements_v<I>>> : I
+    struct producer<D, I, std::enable_if_t<is_classic_com_interface<I>::value>> : I
     {
-    };
-
-    template <typename D, typename I>
-    struct producer_convert<D, I, std::enable_if_t<std::is_base_of_v< ::IUnknown, I> && !is_implements_v<I>>> : producer<D, I>
-    {
-    };
-
+#ifndef WINRT_IMPL_IUNKNOWN_DEFINED
+        static_assert(std::is_void_v<I> /* dependent_false */, "To implement classic COM interfaces, you must #include <unknwn.h> before including C++/WinRT headers.");
 #endif
+    };
+
+    template <typename D, typename I>
+    struct producer_convert<D, I, std::enable_if_t<is_classic_com_interface<I>::value>> : producer<D, I>
+    {
+    };
 
     struct INonDelegatingInspectable : Windows::Foundation::IUnknown
     {
