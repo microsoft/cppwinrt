@@ -106,7 +106,7 @@ namespace
     {
         bool pass = false;
 
-        apartment_context original;
+        const apartment_context original;
 
         // Create an STA thread and switch to it.
         auto controller1 = DispatcherQueueController::CreateOnDedicatedThread();

@@ -100,7 +100,7 @@ namespace winrt::impl
 
     struct disconnect_aware_handler
     {
-        disconnect_aware_handler(coroutine_handle<> handle, resumption_failure* failure) noexcept
+        disconnect_aware_handler(coroutine_handle<> handle, int32_t* failure) noexcept
             : m_handle(handle), m_failure(failure) { }
 
         disconnect_aware_handler(disconnect_aware_handler&& other) noexcept
@@ -121,7 +121,7 @@ namespace winrt::impl
     private:
         resume_apartment_context m_context;
         coroutine_handle<> m_handle;
-        resumption_failure* m_failure;
+        int32_t* m_failure = 0;
 
         void Complete()
         {
@@ -137,7 +137,7 @@ namespace winrt::impl
 
         Async const& async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
-        resumption_failure failure;
+        int32_t failure;
 
         void enable_cancellation(cancellable_promise* promise)
         {
@@ -164,7 +164,7 @@ namespace winrt::impl
 
         auto await_resume() const
         {
-            failure.check();
+            check_hresult(failure);
             check_status_canceled(status);
             return async.GetResults();
         }

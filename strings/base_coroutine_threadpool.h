@@ -77,20 +77,7 @@ namespace winrt::impl
         return 0;
     };
 
-    struct resumption_failure
-    {
-        resumption_failure() = default;
-        resumption_failure(resumption_failure const&) noexcept {}
-        resumption_failure& operator=(resumption_failure const&) noexcept { return *this; }
-
-        // Call only on failure, never on success.
-        void report_failed(int32_t result) noexcept { failure.store(result, std::memory_order_relaxed); }
-        void check() const { check_hresult(failure.load(std::memory_order_relaxed)); }
-
-        std::atomic<int32_t> failure;
-    };
-
-    inline void resume_apartment_sync(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, resumption_failure* failure)
+    inline void resume_apartment_sync(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure)
     {
         com_callback_args args{};
         args.data = handle.address();
@@ -99,18 +86,18 @@ namespace winrt::impl
         if (result < 0)
         {
             // Resume the coroutine on the wrong apartment, but tell it why.
-            failure->report_failed(result);
+            *failure = result;
             handle();
         }
     }
 
     struct threadpool_resume
     {
-        threadpool_resume(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, resumption_failure* failure) :
+        threadpool_resume(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure) :
             m_context(context), m_handle(handle), m_failure(failure) { }
         com_ptr<IContextCallback> m_context;
         coroutine_handle<> m_handle;
-        resumption_failure* m_failure;
+        int32_t* m_failure;
     };
 
     inline void __stdcall fallback_submit_threadpool_callback(void*, void* p) noexcept
@@ -119,14 +106,14 @@ namespace winrt::impl
         resume_apartment_sync(state->m_context, state->m_handle, state->m_failure);
     }
 
-    inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, resumption_failure* failure)
+    inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure)
     {
         auto state = std::make_unique<threadpool_resume>(context, handle, failure);
         submit_threadpool_callback(fallback_submit_threadpool_callback, state.get());
         state.release();
     }
 
-    inline auto resume_apartment(resume_apartment_context const& context, coroutine_handle<> handle, resumption_failure* failure)
+    inline auto resume_apartment(resume_apartment_context const& context, coroutine_handle<> handle, int32_t* failure)
     {
         WINRT_ASSERT(context.valid());
         if ((context.m_context == nullptr) || (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
@@ -385,6 +372,17 @@ WINRT_EXPORT namespace winrt
         operator bool() const noexcept { return context.valid(); }
         bool operator!() const noexcept { return !context.valid(); }
 
+        impl::resume_apartment_context context;
+    };
+}
+
+namespace winrt::impl
+{
+    struct apartment_awaiter
+    {
+        apartment_context context; // make a copy because resuming may destruct the original
+        int32_t failure = 0;
+
         bool await_ready() const noexcept
         {
             return false;
@@ -392,18 +390,24 @@ WINRT_EXPORT namespace winrt
 
         void await_resume() const
         {
-            failure.check();
+            check_hresult(failure);
         }
 
         void await_suspend(impl::coroutine_handle<> handle)
         {
-            auto copy = context; // resuming may destruct *this, so use a copy
-            impl::resume_apartment(copy, handle, &failure);
+            impl::resume_apartment(context.context, handle, &failure);
         }
-
-        impl::resume_apartment_context context;
-        impl::resumption_failure failure; // assumes that once a context fails, it always fails
     };
+}
+
+WINRT_EXPORT namespace winrt
+{
+#ifdef WINRT_IMPL_COROUTINES
+    inline impl::apartment_awaiter operator co_await(apartment_context const& context)
+    {
+        return{ context };
+    }
+#endif
 
     [[nodiscard]] inline auto resume_after(Windows::Foundation::TimeSpan duration) noexcept
     {
