@@ -100,12 +100,13 @@ namespace winrt::impl
 
     struct disconnect_aware_handler
     {
-        disconnect_aware_handler(coroutine_handle<> handle) noexcept
-            : m_handle(handle) { }
+        disconnect_aware_handler(coroutine_handle<> handle, resumption_failure* failure) noexcept
+            : m_handle(handle), m_failure(failure) { }
 
         disconnect_aware_handler(disconnect_aware_handler&& other) noexcept
             : m_context(std::move(other.m_context))
-            , m_handle(std::exchange(other.m_handle, {})) { }
+            , m_handle(std::exchange(other.m_handle, {}))
+            , m_failure(other.m_failure) { }
 
         ~disconnect_aware_handler()
         {
@@ -120,10 +121,11 @@ namespace winrt::impl
     private:
         resume_apartment_context m_context;
         coroutine_handle<> m_handle;
+        resumption_failure* m_failure;
 
         void Complete()
         {
-            resume_apartment(m_context, std::exchange(m_handle, {}));
+            resume_apartment(m_context, std::exchange(m_handle, {}), m_failure);
         }
     };
 
@@ -135,6 +137,7 @@ namespace winrt::impl
 
         Async const& async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
+        resumption_failure failure;
 
         void enable_cancellation(cancellable_promise* promise)
         {
@@ -152,7 +155,7 @@ namespace winrt::impl
         void await_suspend(coroutine_handle<> handle)
         {
             auto extend_lifetime = async;
-            async.Completed([this, handler = disconnect_aware_handler{ handle }](auto&&, auto operation_status) mutable
+            async.Completed([this, handler = disconnect_aware_handler{ handle, &failure }](auto&&, auto operation_status) mutable
             {
                 status = operation_status;
                 handler();
@@ -161,6 +164,7 @@ namespace winrt::impl
 
         auto await_resume() const
         {
+            failure.check();
             check_status_canceled(status);
             return async.GetResults();
         }
