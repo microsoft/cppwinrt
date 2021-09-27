@@ -121,7 +121,7 @@ namespace winrt::impl
     private:
         resume_apartment_context m_context;
         coroutine_handle<> m_handle;
-        int32_t* m_failure = 0;
+        int32_t* m_failure;
 
         void Complete()
         {
@@ -137,7 +137,7 @@ namespace winrt::impl
 
         Async const& async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
-        int32_t failure;
+        int32_t failure = 0;
 
         void enable_cancellation(cancellable_promise* promise)
         {
