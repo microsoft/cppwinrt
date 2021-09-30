@@ -58,6 +58,9 @@ TEST_CASE("module_lock_none")
 
     auto can_unload = reinterpret_cast<HRESULT(__stdcall*)()>(GetProcAddress(LoadLibraryA("test_component_base.dll"), "DllCanUnloadNow"));
     REQUIRE(can_unload() == S_FALSE);
+
+    auto cannot_unload = reinterpret_cast<HRESULT(__stdcall*)()>(GetProcAddress(LoadLibraryA("test_component_derived.dll"), "DllCanUnloadNow"));
+    REQUIRE(cannot_unload() == S_OK);
 }
 
 int main(int const argc, char** argv)
