@@ -233,19 +233,23 @@ namespace winrt::impl
 
         explicit factory_count_guard(size_t& count) noexcept : m_count(count)
         {
+#ifndef WINRT_NO_MODULE_LOCK
 #ifdef _WIN64
             _InterlockedIncrement64((int64_t*)&m_count);
 #else
             _InterlockedIncrement((long*)&m_count);
 #endif
+#endif
         }
 
         ~factory_count_guard() noexcept
         {
+#ifndef WINRT_NO_MODULE_LOCK
 #ifdef _WIN64
             _InterlockedDecrement64((int64_t*)&m_count);
 #else
             _InterlockedDecrement((long*)&m_count);
+#endif
 #endif
         }
 
@@ -362,7 +366,9 @@ namespace winrt::impl
                 if (nullptr == _InterlockedCompareExchangePointer(reinterpret_cast<void**>(&m_value.object), *reinterpret_cast<void**>(&object), nullptr))
                 {
                     *reinterpret_cast<void**>(&object) = nullptr;
+#ifndef WINRT_NO_MODULE_LOCK
                     get_factory_cache().add(this);
+#endif
                 }
 
                 return callback(*reinterpret_cast<com_ref<Interface> const*>(&m_value.object));
