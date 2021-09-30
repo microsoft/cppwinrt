@@ -64,6 +64,12 @@ namespace test_component
         void IncrementCounter();
     }
 
+    runtimeclass Optional
+    {
+        Optional();
+        Windows.Foundation.IReference<Int32> Property;
+    }
+
     runtimeclass Class
     {
         Class();
