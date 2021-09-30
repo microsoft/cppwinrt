@@ -77,6 +77,19 @@ namespace
         return (type == APTTYPE_NA) && (qualifier == APTTYPEQUALIFIER_NA_ON_MTA || qualifier == APTTYPEQUALIFIER_NA_ON_IMPLICIT_MTA);
     }
 
+    bool is_mta()
+    {
+        APTTYPE type;
+        APTTYPEQUALIFIER qualifier;
+        check_hresult(CoGetApartmentType(&type, &qualifier));
+        return type == APTTYPE_MTA;
+    }
+
+    bool is_invalid_context_error(HRESULT hr)
+    {
+        return (hr == RPC_E_SERVER_DIED_DNE) || (hr == RPC_E_DISCONNECTED);
+    }
+
     IAsyncAction TestNeutralApartmentContext()
     {
         auto controller = DispatcherQueueController::CreateOnDedicatedThread();
@@ -93,7 +106,7 @@ namespace
     {
         bool pass = false;
 
-        apartment_context original;
+        const apartment_context original;
 
         // Create an STA thread and switch to it.
         auto controller1 = DispatcherQueueController::CreateOnDedicatedThread();
@@ -144,10 +157,89 @@ namespace
 
         co_await controller1.ShutdownQueueAsync();
         co_await controller2.ShutdownQueueAsync();
-    }
-
 }
 
+IAsyncAction TestDisconnectedApartmentContext()
+{
+    // Create an STA thread and switch to it.
+    auto controller1 = DispatcherQueueController::CreateOnDedicatedThread();
+    co_await resume_foreground(controller1.DispatcherQueue());
+
+    // Create another STA thread.
+    auto controller2 = DispatcherQueueController::CreateOnDedicatedThread();
+
+    // Test returning to a destroyed context after IAsyncXxx completion on STA.
+    HRESULT error = S_OK;
+    try
+    {
+        co_await[](auto controller1, auto controller2) -> IAsyncAction
+        {
+            co_await resume_foreground(controller2.DispatcherQueue());
+            co_await controller1.ShutdownQueueAsync();
+        }(controller1, controller2);
+    }
+    catch (...)
+    {
+        error = winrt::to_hresult();
+        REQUIRE(is_mta());
+    }
+    REQUIRE(is_invalid_context_error(error));
+
+    // Re-create the STA thread for the next test.
+    controller1 = DispatcherQueueController::CreateOnDedicatedThread();
+    co_await resume_foreground(controller1.DispatcherQueue());
+
+    // Save the COM context for the first STA thread.
+    apartment_context context1;
+
+    // Test returning to a destroyed context after IAsyncXxx completion on MTA.
+    error = S_OK;
+    try
+    {
+        co_await[](auto controller1) -> IAsyncAction
+        {
+            co_await resume_background(); // doesn't work
+            co_await controller1.ShutdownQueueAsync();
+        }(controller1);
+    }
+    catch (...)
+    {
+        error = winrt::to_hresult();
+        REQUIRE(is_mta());
+    }
+    REQUIRE(is_invalid_context_error(error));
+
+    // Test switching to a destroyed context from an STA.
+    co_await resume_foreground(controller2.DispatcherQueue());
+
+    error = S_OK;
+    try {
+        co_await context1;
+    }
+    catch (...)
+    {
+        error = winrt::to_hresult();
+        REQUIRE(is_mta());
+    }
+    REQUIRE(is_invalid_context_error(error));
+
+    // Test switching to a destroyed context from an MTA.
+    error = S_OK;
+    try {
+        co_await context1;
+    }
+    catch (...)
+    {
+        error = winrt::to_hresult();
+        REQUIRE(is_mta());
+    }
+    REQUIRE(is_invalid_context_error(error));
+
+    // Clean up.
+    co_await controller2.ShutdownQueueAsync();
+}
+
+}
 TEST_CASE("apartment_context coverage")
 {
     Async().get();
@@ -161,4 +253,9 @@ TEST_CASE("apartment_context nta")
 TEST_CASE("apartment_context sta")
 {
     TestStaToStaApartmentContext().get();
+}
+
+TEST_CASE("apartment_context disconnected")
+{
+    TestDisconnectedApartmentContext().get();
 }
