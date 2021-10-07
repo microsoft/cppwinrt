@@ -49,6 +49,25 @@ namespace
             return L"WeakNoModuleLock";
         }
     };
+
+    struct WeakWithSelfReference : implements<WeakWithSelfReference, IStringable>
+    {
+        winrt::weak_ref<WeakWithSelfReference> weak_self = get_weak();
+
+        hstring ToString()
+        {
+            // Verify that the weak reference works as long as the object is alive.
+            REQUIRE(weak_self.get().get() == this);
+
+            return L"WeakWithSelfReference";
+        }
+
+        ~WeakWithSelfReference()
+        {
+            // Verify that the weak reference cannot be resolved once destruction begins.
+            REQUIRE(weak_self.get() == nullptr);
+        }
+    };
 }
 
 TEST_CASE("weak,source")
@@ -313,6 +332,49 @@ TEST_CASE("weak,comparison")
     REQUIRE(refA1 != refNothing);
 }
 
+TEST_CASE("weak,assignment")
+{
+    IStringable object = make<Weak>();
+    weak_ref<IStringable> ref1 = object;
+
+    // Move constructor
+    weak_ref<IStringable> ref2 = std::move(ref1);
+    REQUIRE(ref1 == nullptr);
+
+    // Copy constructor
+    weak_ref<IStringable> ref3 = ref2;
+    REQUIRE(ref2 == ref3);
+
+    // Copy assignment
+    ref1 = ref2;
+    REQUIRE(ref1 == ref2);
+    REQUIRE(ref1 == ref3);
+
+    // Move assignment
+    ref1 = std::move(ref2);
+    REQUIRE(ref2 == nullptr);
+    REQUIRE(ref1 == ref3);
+
+    // Copy assignment from const
+    ref2 = static_cast<weak_ref<IStringable> const&>(ref1);
+    REQUIRE(ref1 == ref2);
+
+    // Move assignment from const
+    ref1 = static_cast<weak_ref<IStringable> const&&>(ref2);
+    REQUIRE(ref1 == ref2);
+
+    // Constructed from com_ref<T> braced constructor
+    weak_ref<IStringable> yikes{ { nullptr, take_ownership_from_abi } };
+
+    // Not constructible from L"" (because Uri constructor is explicit)
+    static_assert(!std::is_constructible_v<weak_ref<Uri>, const wchar_t*>);
+
+    // Constructible from com_ptr<Derived> because com_ptr<Derived> is
+    // implicitly convertible to com_ptr<Base>.
+    struct Derived : WeakWithSelfReference {};
+    weak_ref<WeakWithSelfReference> decay{ winrt::com_ptr<Derived>{nullptr} };
+}
+
 TEST_CASE("weak,module_lock")
 {
     uint32_t object_count = get_module_lock();
@@ -344,3 +406,10 @@ TEST_CASE("weak,no_module_lock")
     REQUIRE(get_module_lock() == object_count);
 }
 
+TEST_CASE("weak,self")
+{
+    // The REQUIRE statements are in the WeakWithSelfReference class itself.
+    IStringable a = make<WeakWithSelfReference>();
+    a.ToString();
+    a = nullptr;
+}
