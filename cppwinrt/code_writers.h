@@ -1507,13 +1507,25 @@ namespace cppwinrt
         }
         else if (type_name == "Windows.Foundation.IReference`1")
         {
-            w.write(R"(        IReference(T const& value) : IReference<T>(impl::reference_traits<T>::make(value))
+            w.write(R"(        IReference(T const& value) : IReference(impl::reference_traits<T>::make(value))
         {
         }
-
+        IReference(std::optional<T> const& value) : IReference(value ? IReference(value.value()) : nullptr)
+        {
+        }
+        operator std::optional<T>() const
+        {
+            if (*this)
+            {
+                return this->Value();
+            }
+            else
+            {
+                return std::nullopt;
+            }
+        }
     private:
-
-        IReference<T>(IInspectable const& value) : IReference<T>(value.as<IReference<T>>())
+        IReference(IInspectable const& value) : IReference(value.as<IReference>())
         {
         }
 )");

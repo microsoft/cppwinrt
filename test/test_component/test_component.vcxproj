@@ -612,6 +612,7 @@
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
     <ClCompile Include="module.cpp" />
+    <ClCompile Include="Optional.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
@@ -624,6 +625,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Class.h" />
+    <ClInclude Include="Optional.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Simple.h" />
     <ClInclude Include="Velocity.Class1.h" />

@@ -1,9 +1,11 @@
 #include "pch.h"
 #include <ctxtcall.h>
+#include <winrt/Windows.System.h>
 
 using namespace std::literals;
 using namespace winrt;
 using namespace Windows::Foundation;
+using namespace Windows::System;
 
 namespace
 {
@@ -31,6 +33,14 @@ namespace
         auto progress = co_await get_progress_token();
         progress(123);
         co_return 123;
+    }
+
+    bool is_mta()
+    {
+        APTTYPE type;
+        APTTYPEQUALIFIER qualifier;
+        check_hresult(CoGetApartmentType(&type, &qualifier));
+        return type == APTTYPE_MTA;
     }
 }
 
@@ -127,7 +137,7 @@ TEST_CASE("disconnected,handler")
 // Custom action to simulate an out-of-process server that crashes before it can complete.
 struct non_agile_abandoned_action : implements<non_agile_abandoned_action, IAsyncAction, IAsyncInfo, non_agile>
 {
-    non_agile_abandoned_action(void* event_handle) : m_awaited(event_handle) {}
+    non_agile_abandoned_action(delegate<> disconnect) : m_disconnect(disconnect) {}
 
     static fire_and_forget final_release(std::unique_ptr<non_agile_abandoned_action> self)
     {
@@ -140,8 +150,7 @@ struct non_agile_abandoned_action : implements<non_agile_abandoned_action, IAsyn
 
     void Completed(AsyncActionCompletedHandler const& handler) {
         m_handler = handler;
-        // Tell the test to disconnect the IAsyncAction, which simulates the server crash.
-        SetEvent(m_awaited);
+        m_disconnect();
     }
     auto Completed() { return m_handler; }
     void GetResults() {}
@@ -153,7 +162,7 @@ struct non_agile_abandoned_action : implements<non_agile_abandoned_action, IAsyn
     void Close() {}
 
     AsyncActionCompletedHandler m_handler;
-    HANDLE m_awaited;
+    delegate<> m_disconnect;
 };
 
 namespace
@@ -208,7 +217,7 @@ TEST_CASE("disconnected,action")
     agile_ref<IAsyncAction> action;
     InvokeInContext(private_context.get(), [&]()
         {
-            action = make<non_agile_abandoned_action>(signal.get());
+            action = make<non_agile_abandoned_action>([&]{ SetEvent(signal.get()); });
         });
 
     auto result = [](IAsyncAction action) -> IAsyncAction
@@ -217,4 +226,51 @@ TEST_CASE("disconnected,action")
         }(action.get());
 
     REQUIRE_THROWS_MATCHES(result.get(), hresult_error, holds_hresult(RPC_E_DISCONNECTED));
+}
+
+TEST_CASE("disconnected,double")
+{
+    // The double-disconnect case, where the IAsyncAction disconnects,
+    // and tries to return to the original context, but it too has disconnected!
+    auto test = []() -> IAsyncAction
+    {
+        auto private_context = create_instance<IContextCallback>(CLSID_ContextSwitcher);
+        handle signal{ CreateEventW(nullptr, true, false, nullptr) };
+        disconnect_on_signal(private_context, signal.get());
+
+        // Create an STA thread that we will destroy while awaiting.
+        auto controller = DispatcherQueueController::CreateOnDedicatedThread();
+
+        agile_ref<IAsyncAction> action;
+        InvokeInContext(private_context.get(), [&]()
+            {
+                action = make<non_agile_abandoned_action>([&]() -> fire_and_forget
+                    {
+                        // Get off the DispatcherQueue thread.
+                        co_await resume_background();
+                        // Destroy the DispatcherQueue, so the co_await has nowhere to return to.
+                        co_await controller.ShutdownQueueAsync();
+                        // Now set the event to force the action to disconnect.
+                        SetEvent(signal.get());
+                    });
+            });
+
+        // Go to our STA thread.
+        co_await resume_foreground(controller.DispatcherQueue());
+
+        HRESULT hr = S_OK;
+        try
+        {
+            co_await action.get();
+        }
+        catch (...)
+        {
+            hr = to_hresult();
+            REQUIRE(is_mta());
+        }
+        REQUIRE(FAILED(hr));
+
+    }();
+
+    test.get();
 }
