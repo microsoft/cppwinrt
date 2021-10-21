@@ -98,34 +98,45 @@ namespace winrt::impl
         return async.GetResults();
     }
 
+    template<typename Awaiter>
     struct disconnect_aware_handler
     {
-        disconnect_aware_handler(coroutine_handle<> handle, int32_t* failure) noexcept
-            : m_handle(handle), m_failure(failure) { }
+        disconnect_aware_handler(Awaiter* awaiter, coroutine_handle<> handle) noexcept
+            : m_awaiter(awaiter), m_handle(handle) { }
 
         disconnect_aware_handler(disconnect_aware_handler&& other) noexcept
             : m_context(std::move(other.m_context))
-            , m_handle(std::exchange(other.m_handle, {}))
-            , m_failure(other.m_failure) { }
+            , m_awaiter(std::exchange(other.m_awaiter, {}))
+            , m_handle(std::exchange(other.m_handle, {})) { }
 
         ~disconnect_aware_handler()
         {
             if (m_handle) Complete();
         }
 
-        void operator()()
+        template<typename Async>
+        void operator()(Async&&, Windows::Foundation::AsyncStatus status)
         {
+            m_awaiter->status = status;
             Complete();
         }
 
     private:
         resume_apartment_context m_context;
+        Awaiter* m_awaiter;
         coroutine_handle<> m_handle;
-        int32_t* m_failure;
 
         void Complete()
         {
-            resume_apartment(m_context, std::exchange(m_handle, {}), m_failure);
+            if (m_awaiter->suspending.exchange(false, std::memory_order_release))
+            {
+                m_handle = nullptr; // resumption deferred to await_suspend
+            }
+            else
+            {
+                resume_apartment(m_context, std::exchange(m_handle, {}), &m_awaiter->failure);
+            }
+
         }
     };
 
@@ -138,6 +149,7 @@ namespace winrt::impl
         Async const& async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
         int32_t failure = 0;
+        std::atomic<bool> suspending{ true };
 
         void enable_cancellation(cancellable_promise* promise)
         {
@@ -152,14 +164,18 @@ namespace winrt::impl
             return false;
         }
 
-        void await_suspend(coroutine_handle<> handle)
+        auto await_suspend(coroutine_handle<> handle)
         {
             auto extend_lifetime = async;
-            async.Completed([this, handler = disconnect_aware_handler{ handle, &failure }](auto&&, auto operation_status) mutable
+            async.Completed(disconnect_aware_handler(this, handle));
+#ifdef _RESUMABLE_FUNCTIONS_SUPPORTED
+            if (!suspending.exchange(false, std::memory_order_acquire))
             {
-                status = operation_status;
-                handler();
-            });
+                handle.resume();
+            }
+#else
+            return suspending.exchange(false, std::memory_order_acquire);
+#endif
         }
 
         auto await_resume() const
