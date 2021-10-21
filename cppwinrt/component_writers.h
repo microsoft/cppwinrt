@@ -994,7 +994,8 @@ namespace winrt::@::implementation
 // To add a copy of this file to your project:
 //   1. Copy this file from the 'Generated Files' directory into the
 //      directory where you store your other source files (e.g. the project root).
-//   2. Add the copied file to your project via Project -> Add Existing Item.
+//   2. Add the copied file to your project. In Visual Studio, you
+//      can use Project -> Add Existing Item.
 //   3. Delete this comment and the 'static_assert' (below) from the copied file
 //      (do not modify the original file in the 'Generated Files' directory).
 //
