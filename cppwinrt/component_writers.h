@@ -996,8 +996,8 @@ namespace winrt::@::implementation
 //      directory where you store your other source files (e.g. the project root).
 //   2. Add the copied file to your project. In Visual Studio, you
 //      can use Project -> Add Existing Item.
-//   3. Delete this comment and the 'static_assert' (below) from the copied file
-//      (do not modify the original file in the 'Generated Files' directory).
+//   3. Delete this comment and the 'static_assert' (below) from the copied file.
+//      (Do not modify this file.)
 //
 // To update an existing file in your project:
 //   1. Copy the relevant changes from this file and merge them into the copy 
