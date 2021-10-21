@@ -1,5 +1,5 @@
 
-#ifdef _DEBUG
+#if defined(_DEBUG) && !defined(WINRT_NATVIS)
 #define WINRT_NATVIS
 #endif
 
