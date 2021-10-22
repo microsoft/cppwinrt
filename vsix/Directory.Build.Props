@@ -3,6 +3,7 @@
 
     <!-- Useful folder paths -->
     <PropertyGroup>
+        <RepoRoot>$(MSBuildThisFileDirectory)..\</RepoRoot>
         <VSIXRootDir>$(MSBuildThisFileDirectory)</VSIXRootDir>
     </PropertyGroup>
 

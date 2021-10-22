@@ -48,7 +48,7 @@
     <IsProductComponent Condition="'$(Deployment)' == 'Component'">true</IsProductComponent>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="$(VSIXRootDir)LICENSE">
+    <Content Include="$(RepoRoot)LICENSE">
       <Link>%(Filename)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
