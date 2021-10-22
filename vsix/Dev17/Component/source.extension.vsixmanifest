@@ -6,11 +6,11 @@
     <DisplayName>C++/WinRT templates and visualizer for VS2022</DisplayName>
     <Description xml:space="preserve">Project and Item templates and the debug visualizer for C++/WinRT in Visual Studio 2022.</Description>
     <MoreInfo>https://go.microsoft.com/fwlink/?linkid=869449</MoreInfo>
-    <License>..\LICENSE</License>
+    <License>LICENSE</License>
     <GettingStartedGuide>https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/intro-to-using-cpp-with-winrt</GettingStartedGuide>
     <ReleaseNotes>https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/faq</ReleaseNotes>
-    <Icon>..\cppwinrt.ico</Icon>
-    <PreviewImage>..\cppwinrt.png</PreviewImage>
+    <Icon>cppwinrt.ico</Icon>
+    <PreviewImage>cppwinrt.png</PreviewImage>
     <Tags>WinRT, C++, cppwinrt, native</Tags>
   </Metadata>
   <Installation AllUsers="true">

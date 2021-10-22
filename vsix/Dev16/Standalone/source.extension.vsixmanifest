@@ -6,23 +6,17 @@
     <DisplayName>C++/WinRT templates and visualizer for VS2019</DisplayName>
     <Description xml:space="preserve">Project and Item templates and the debug visualizer for C++/WinRT in Visual Studio 2019.</Description>
     <MoreInfo>https://go.microsoft.com/fwlink/?linkid=869449</MoreInfo>
-    <License>..\LICENSE</License>
+    <License>LICENSE</License>
     <GettingStartedGuide>https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/intro-to-using-cpp-with-winrt</GettingStartedGuide>
     <ReleaseNotes>https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/faq</ReleaseNotes>
-    <Icon>..\cppwinrt.ico</Icon>
-    <PreviewImage>..\cppwinrt.png</PreviewImage>
+    <Icon>cppwinrt.ico</Icon>
+    <PreviewImage>cppwinrt.png</PreviewImage>
     <Tags>WinRT, C++, cppwinrt, native</Tags>
   </Metadata>
   <Installation AllUsers="true">
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)">
-      <ProductArchitecture>x86</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[16.0, 17.0)">
-      <ProductArchitecture>x86</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[16.0, 17.0)">
-      <ProductArchitecture>x86</ProductArchitecture>
-    </InstallationTarget>
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0,17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[16.0,17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[16.0,17.0)" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
