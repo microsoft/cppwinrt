@@ -3,8 +3,8 @@
   <Metadata>
     <Identity Id="Microsoft.Windows.CppWinRT" Version="|%CurrentProject%;GetCppWinRTVersion|" Language="en-US" Publisher="Microsoft" />
     <PackageId>Microsoft.Windows.CppWinRT</PackageId>
-    <DisplayName>C++/WinRT</DisplayName>
-    <Description xml:space="preserve">Tools for authoring and consuming Windows Runtime classes in standard C++.</Description>
+    <DisplayName>C++/WinRT templates and visualizer for VS2019</DisplayName>
+    <Description xml:space="preserve">Project and Item templates and the debug visualizer for C++/WinRT in Visual Studio 2019.</Description>
     <MoreInfo>https://go.microsoft.com/fwlink/?linkid=869449</MoreInfo>
     <License>LICENSE</License>
     <GettingStartedGuide>https://docs.microsoft.com/windows/uwp/cpp-and-winrt-apis/intro-to-using-cpp-with-winrt</GettingStartedGuide>
@@ -14,24 +14,9 @@
     <Tags>WinRT, C++, cppwinrt, native</Tags>
   </Metadata>
   <Installation AllUsers="true">
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0, 17.0)">
-      <ProductArchitecture>x86</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
-      <ProductArchitecture>amd64</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[16.0, 17.0)">
-      <ProductArchitecture>x86</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[17.0, 18.0)">
-      <ProductArchitecture>amd64</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[16.0, 17.0)">
-      <ProductArchitecture>x86</ProductArchitecture>
-    </InstallationTarget>
-    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[17.0, 18.0)">
-      <ProductArchitecture>amd64</ProductArchitecture>
-    </InstallationTarget>    
+    <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[16.0,17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Enterprise" Version="[16.0,17.0)" />
+    <InstallationTarget Id="Microsoft.VisualStudio.Pro" Version="[16.0,17.0)" />
   </Installation>
   <Dependencies>
     <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />
@@ -44,7 +29,6 @@
     <Asset Type="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" Source="File" Path="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" VsixSubPath="Packages" />
   </Assets>
   <Prerequisites>
-    <Prerequisite Id="Microsoft.VisualStudio.Component.CoreEditor" Version="[16.0,)" DisplayName="Visual Studio core editor" />
-    <Prerequisite Id="Microsoft.VisualStudio.ComponentGroup.UWP.VC" Version="[16.0,)" DisplayName="C++ Universal Windows Platform tools" />
+    <Prerequisite Id="Microsoft.VisualStudio.Component.VC.CoreBuildTools" Version="[16.0,18.0)" DisplayName="CppWinRT" />
   </Prerequisites>
 </PackageManifest>
