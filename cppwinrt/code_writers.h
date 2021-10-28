@@ -2722,7 +2722,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             std::string right_as_ref = std::string("winrt::Windows::Foundation::IReference<") + right_type + ">";
             for (auto&& field : left.fields)
             {
-                if ( right_type == field.second || right_as_ref == field.second)
+                if (right_type == field.second || right_as_ref == field.second)
                 {
                     return true;
                 }
