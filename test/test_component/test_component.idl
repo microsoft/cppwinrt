@@ -189,6 +189,26 @@ namespace test_component
                 Int32 OuterValue;
             };
         }
+
+        // structs can contain nullable types (IReference<>) as well as strings. These are the only non-POD types
+        // Alphabetical sorting of names below is important to validate sort order in generated code. Metadata will
+        // sort to alphabetical order. cppwinrt needs to re-establish dependencies in the IReference types to produce
+        // correct output.
+        struct NullableC
+        {
+            Single a1;
+            Windows.Foundation.IReference<Single> a2;
+        };
+
+        struct NullableB
+        {
+            Windows.Foundation.IReference<NullableC> a1;
+        };
+
+        struct NullableA
+        {
+            Windows.Foundation.IReference<NullableB> a1;
+        };
     }
 
     namespace Parent
