@@ -2718,9 +2718,11 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         auto depends = [](writer& w, complex_struct const& left, complex_struct const& right)
         {
+            auto right_type = w.write_temp("%", right.type);
+            std::string right_as_ref = std::string("winrt::Windows::Foundation::IReference<") + right_type + ">";
             for (auto&& field : left.fields)
             {
-                if (w.write_temp("%", right.type) == field.second)
+                if ( right_type == field.second || right_as_ref == field.second)
                 {
                     return true;
                 }
