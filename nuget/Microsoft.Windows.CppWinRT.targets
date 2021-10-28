@@ -190,24 +190,21 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         </ItemGroup>
     </Target>
 
-    <Target Name="CppWinRTGetBuildingMidl"
-            DependsOnTargets="CppWinRTComputeXamlGeneratedMidlInputs"
-            Returns="@(_BuildingMidl)">
-        <ItemGroup>
-            <_BuildingMidl Include="@(Midl)" Condition="'%(Midl.ExcludedFromBuild)' != 'true'" />
-        </ItemGroup>
-    </Target>
-
     <!-- Target used only to evaluate CppWinRTGenerateWindowsMetadata if it doesn't already have a value -->
     <Target Name="CppWinRTComputeGenerateWindowsMetadata"
-            DependsOnTargets="CppWinRTGetBuildingMidl;GetCppWinRTProjectWinMDReferences;$(CppWinRTComputeGenerateWindowsMetadataDependsOn)">
+            DependsOnTargets="GetCppWinRTProjectWinMDReferences;CppWinRTComputeXamlGeneratedMidlInputs;$(CppWinRTComputeGenerateWindowsMetadataDependsOn)">
+
+        <ItemGroup>
+            <_IncludedIdlForComputeGenerateWindowsMetadata Remove="@(_IncludedIdlForComputeGenerateWindowsMetadata)" />
+            <_IncludedIdlForComputeGenerateWindowsMetadata Include="@(Midl)" Condition="'%(Midl.ExcludedFromBuild)' != 'true'" />
+        </ItemGroup>
 
         <PropertyGroup>
             <!-- For static libraries, only idl causes a winmd to be generated. 
                  For exe/dll, static libraries that produce a WinMD will be merged, 
                  so they also cause a WinMD to be generated-->
-            <CppWinRTGenerateWindowsMetadata Condition="'$(ConfigurationType)' != 'StaticLibrary' AND '@(CppWinRTStaticProjectWinMDReferences)@(_BuildingMidl)'!= ''">true</CppWinRTGenerateWindowsMetadata>
-            <CppWinRTGenerateWindowsMetadata Condition="'$(ConfigurationType)' == 'StaticLibrary' AND '@(_BuildingMidl)'!= ''">true</CppWinRTGenerateWindowsMetadata>
+            <CppWinRTGenerateWindowsMetadata Condition="'$(ConfigurationType)' != 'StaticLibrary' AND '@(CppWinRTStaticProjectWinMDReferences)@(_IncludedIdlForComputeGenerateWindowsMetadata)'!= ''">true</CppWinRTGenerateWindowsMetadata>
+            <CppWinRTGenerateWindowsMetadata Condition="'$(ConfigurationType)' == 'StaticLibrary' AND '@(_IncludedIdlForComputeGenerateWindowsMetadata)'!= ''">true</CppWinRTGenerateWindowsMetadata>
 
             <!-- At this point we checked all cases where we do generate a WinMD.
                  The remaining option is no WinMD. -->
@@ -353,12 +350,12 @@ Copyright (C) Microsoft Corporation. All rights reserved.
 
     <!-- Calculates the input files and metadata directories to be passed to MdMerge -->
     <Target Name="GetCppWinRTMdMergeInputs"
-            DependsOnTargets="CppWinRTGetBuildingMidl;CppWinRTResolveReferences"
+            DependsOnTargets="CppWinRTResolveReferences"
             Returns="@(CppWinRTMdMergeMetadataDirectories);@(CppWinRTMdMergeInputs)">
         <ItemGroup>
             <_MdMergeInputs Remove="@(_MdMergeInputs)"/>
-            <_MdMergeInputs Include="@(_BuildingMidl)">
-                <WinMDPath>%(_BuildingMidl.OutputDirectory)%(_BuildingMidl.MetadataFileName)</WinMDPath>
+            <_MdMergeInputs Include="@(Midl)" Condition="'%(Midl.ExcludedFromBuild)' != 'true'">
+                <WinMDPath>%(Midl.OutputDirectory)%(Midl.MetadataFileName)</WinMDPath>
                 <MdMergeOutputFile>$(CppWinRTProjectWinMD)</MdMergeOutputFile>
             </_MdMergeInputs>
             <!-- Static libraries don't mdmerge other static libraries.
