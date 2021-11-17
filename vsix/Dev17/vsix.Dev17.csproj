@@ -49,51 +49,6 @@
       <Link>%(Filename)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="$(VSIXRootDir)Microsoft.Cpp.CppWinRT.props">
-      <VSIXSubPath>Microsoft\VC\v160</VSIXSubPath>
-      <InstallRoot>MSBuild</InstallRoot>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="$(VSIXRootDir)Platforms\ARM\ImportAfter\Microsoft.Cpp.CppWinRT.props">
-      <VSIXSubPath>Microsoft\VC\v160\Platforms\ARM\ImportBefore</VSIXSubPath>
-      <InstallRoot>MSBuild</InstallRoot>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="$(VSIXRootDir)Platforms\ARM64\ImportAfter\Microsoft.Cpp.CppWinRT.props">
-      <VSIXSubPath>Microsoft\VC\v160\Platforms\ARM64\ImportBefore</VSIXSubPath>
-      <InstallRoot>MSBuild</InstallRoot>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="$(VSIXRootDir)Platforms\Win32\ImportAfter\Microsoft.Cpp.CppWinRT.props">
-      <VSIXSubPath>Microsoft\VC\v160\Platforms\Win32\ImportBefore</VSIXSubPath>
-      <InstallRoot>MSBuild</InstallRoot>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="$(VSIXRootDir)Platforms\x64\ImportAfter\Microsoft.Cpp.CppWinRT.props">
-      <VSIXSubPath>Microsoft\VC\v160\Platforms\x64\ImportBefore</VSIXSubPath>
-      <InstallRoot>MSBuild</InstallRoot>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="$(VSIXRootDir)Application Type\Windows Store\10.0\Platforms\ARM\ImportAfter\Microsoft.Cpp.CppWinRT.props">
-      <VSIXSubPath>Application Type\Windows Store\10.0\Platforms\ARM\ImportAfter</VSIXSubPath>
-      <InstallRoot>MSBuild</InstallRoot>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="$(VSIXRootDir)Application Type\Windows Store\10.0\Platforms\ARM64\ImportAfter\Microsoft.Cpp.CppWinRT.props">
-      <VSIXSubPath>Application Type\Windows Store\10.0\Platforms\ARM64\ImportAfter</VSIXSubPath>
-      <InstallRoot>MSBuild</InstallRoot>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="$(VSIXRootDir)Application Type\Windows Store\10.0\Platforms\Win32\ImportAfter\Microsoft.Cpp.CppWinRT.props">
-      <VSIXSubPath>Application Type\Windows Store\10.0\Platforms\Win32\ImportAfter</VSIXSubPath>
-      <InstallRoot>MSBuild</InstallRoot>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
-    <Content Include="$(VSIXRootDir)Application Type\Windows Store\10.0\Platforms\x64\ImportAfter\Microsoft.Cpp.CppWinRT.props">
-      <VSIXSubPath>Application Type\Windows Store\10.0\Platforms\x64\ImportAfter</VSIXSubPath>
-      <InstallRoot>MSBuild</InstallRoot>
-      <IncludeInVSIX>true</IncludeInVSIX>
-    </Content>
     <Content Include="$(NupkgDir)\Microsoft.Windows.CppWinRT.$(CppWinRTVersion).nupkg">
       <Link>Packages\Microsoft.Windows.CppWinRT.$(CppWinRTVersion).nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
