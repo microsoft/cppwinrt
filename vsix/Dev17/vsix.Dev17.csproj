@@ -26,6 +26,7 @@
     <IsProductComponent Condition="'$(Deployment)' == 'Component'">true</IsProductComponent>
     <!-- This MUST match VSPackage.PackageGuidString -->
     <PackageGuidString>{680FA95B-2E0E-4526-8531-F7450D7FE317}</PackageGuidString>
+    <VsixManifestSource>$(Deployment)\source.extension.vsixmanifest</VsixManifestSource>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -110,32 +111,4 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="..\Extension.targets" />
-  <Target Name="GetCppWinRTVersion" Outputs="$(CppWinRTVersion)" />
-  <Target Name="PrepareBuild" BeforeTargets="PrepareForBuild">
-    <Error Condition="'$(CppWinRTVersion)' == ''" Text="The project must be supplied with a CppWinRTVersion property value" />
-    <Error Condition="'$(NatvisDirx86)' == ''" Text="The project must be supplied with a NatvisDirx86 property value" />
-    <Error Condition="'$(NatvisDirx64)' == ''" Text="The project must be supplied with a NatvisDirx64 property value" />
-    <Error Condition="'$(NupkgDir)' == ''" Text="The project must be supplied with a NupkgDir property value" />
-    <ItemGroup>
-      <VSTemplateFiles Include="$(VSIXRootDir)*Templates\*\**\*.vstemplate" />
-      <OtherTemplateFiles Include="$(VSIXRootDir)*Templates\*\**\*" />
-      <OtherTemplateFiles Remove="@(OtherTemplateFiles)" Condition="'%(Extension)' == '.vstemplate'" />
-      <Templates Include="@(VSTemplateFiles)">
-        <StagingFolder>$(MSBuildProjectDirectory)\$(OutDir)%(RecursiveDir)</StagingFolder>
-      </Templates>
-      <StagedTemplates Include="@(Templates->'%(StagingFolder)%(Filename).vstemplate')" />
-    </ItemGroup>
-    <Copy SourceFiles="@(Templates)" DestinationFolder="%(StagingFolder)" />
-    <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:WizardData/ns:packages/ns:package/@version" Value="$(CppWinRTVersion)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
-    <ItemGroup>
-      <TemplateItems Include="@(OtherTemplateFiles);@(Templates->'%(StagingFolder)%(Filename).vstemplate');@(Templates->'..\cppwinrt.ico');@(Templates->'..\cppwinrt.png')">
-        <IncludeInVSIX>true</IncludeInVSIX>
-        <IsAssembly>false</IsAssembly>
-        <VSIXSubPath>%(RecursiveDir)</VSIXSubPath>
-      </TemplateItems>
-    </ItemGroup>
-    <ItemGroup>
-      <Content Include="@(TemplateItems)" />
-    </ItemGroup>
-  </Target>
 </Project>
