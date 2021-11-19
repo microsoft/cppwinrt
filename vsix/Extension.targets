@@ -32,6 +32,7 @@
     <!-- Update the Package GUID in the Name and Description metadata -->
     <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:TemplateData/ns:Name/@Package" Value="$(PackageGuidString)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
     <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:TemplateData/ns:Description/@Package" Value="$(PackageGuidString)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
+    
     <ItemGroup>
       <TemplateItems Include="@(OtherTemplateFiles);@(Templates->'%(StagingFolder)%(Filename).vstemplate');@(Templates->'..\cppwinrt.ico');@(Templates->'..\cppwinrt.png')">
         <IncludeInVSIX>true</IncludeInVSIX>
