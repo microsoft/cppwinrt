@@ -90,8 +90,73 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(VSIXRootDir)VSPackage.resx">
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.resx">
       <Link>Resources\VSPackage.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.cs-CZ.resx">
+      <Link>Resources\VSPackage.cs-CZ.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.de-DE.resx">
+      <Link>Resources\VSPackage.de-DE.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.es-ES.resx">
+      <Link>Resources\VSPackage.es-ES.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.fr-FR.resx">
+      <Link>Resources\VSPackage.fr-FR.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.it-IT.resx">
+      <Link>Resources\VSPackage.it-IT.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.ja-JP.resx">
+      <Link>Resources\VSPackage.ja-JP.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.ko-KR.resx">
+      <Link>Resources\VSPackage.ko-KR.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.pl-PL.resx">
+      <Link>Resources\VSPackage.pl-PL.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.pt-BR.resx">
+      <Link>Resources\VSPackage.pt-BR.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.ru-RU.resx">
+      <Link>Resources\VSPackage.ru-RU.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.tr-TR.resx">
+      <Link>Resources\VSPackage.tr-TR.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.zh-CN.resx">
+      <Link>Resources\VSPackage.zh-CN.resx</Link>
+      <Generator>
+      </Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.zh-TW.resx">
+      <Link>Resources\VSPackage.zh-TW.resx</Link>
       <Generator>
       </Generator>
     </EmbeddedResource>
