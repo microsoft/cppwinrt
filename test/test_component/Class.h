@@ -124,6 +124,11 @@ namespace winrt::test_component::implementation
             co_return;
         }
 
+        static fire_and_forget StaticMethodWithAsyncReturn()
+        {
+            co_return;
+        }
+
     private:
 
         bool m_fail{};
