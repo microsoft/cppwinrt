@@ -498,7 +498,7 @@ catch (...) { return winrt::to_hresult(); }
                     {
                         auto format = R"(    % %::%(%)
     {
-        return @::implementation::%::%(%);
+        %@::implementation::%::%(%);
     }
 )";
 
@@ -508,6 +508,7 @@ catch (...) { return winrt::to_hresult(); }
                             type_name,
                             method_name,
                             bind<write_consume_params>(signature),
+                            is_put_overload(method) ? "" : "return ",
                             type_namespace,
                             type_name,
                             method_name,
