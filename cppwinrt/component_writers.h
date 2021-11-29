@@ -498,16 +498,18 @@ catch (...) { return winrt::to_hresult(); }
                     {
                         auto format = R"(    % %::%(%)
     {
-        return @::implementation::%::%(%);
+        %@::implementation::%::%(%);
     }
 )";
 
+                        bool ignore_return = is_put_overload(method) || !signature.return_signature();
 
                         w.write(format,
                             signature.return_signature(),
                             type_name,
                             method_name,
                             bind<write_consume_params>(signature),
+                            ignore_return ? "" : "return ",
                             type_namespace,
                             type_name,
                             method_name,

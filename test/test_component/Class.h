@@ -113,6 +113,22 @@ namespace winrt::test_component::implementation
         Windows::Foundation::IAsyncOperation<int> RaiseDeferrableEventAsync();
 
         static bool TestNoMakeDetection();
+
+        static int32_t StaticPropertyWithAsyncSetter()
+        {
+            return 0;
+        }
+
+        static fire_and_forget StaticPropertyWithAsyncSetter(int32_t)
+        {
+            co_return;
+        }
+
+        static fire_and_forget StaticMethodWithAsyncReturn()
+        {
+            co_return;
+        }
+
     private:
 
         bool m_fail{};
