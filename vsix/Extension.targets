@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <Target Name="GetCppWinRTVersion" Outputs="$(CppWinRTVersion)" />
+  <Target Name="PrepareBuild" BeforeTargets="PrepareForBuild">
+    <Error Condition="'$(CppWinRTVersion)' == ''" Text="The project must be supplied with a CppWinRTVersion property value" />
+    <Error Condition="'$(NatvisDirx86)' == ''" Text="The project must be supplied with a NatvisDirx86 property value" />
+    <Error Condition="'$(NatvisDirx64)' == ''" Text="The project must be supplied with a NatvisDirx64 property value" />
+    <Error Condition="'$(NupkgDir)' == ''" Text="The project must be supplied with a NupkgDir property value" />
+    <ItemGroup>
+      <VSTemplateFiles Include="$(VSIXRootDir)*Templates\*\**\*.vstemplate" />
+      <OtherTemplateFiles Include="$(VSIXRootDir)*Templates\*\**\*" />
+      <OtherTemplateFiles Remove="@(OtherTemplateFiles)" Condition="'%(Extension)' == '.vstemplate'" />
+      <Templates Include="@(VSTemplateFiles)">
+        <StagingFolder>$(MSBuildProjectDirectory)\$(OutDir)%(RecursiveDir)</StagingFolder>
+      </Templates>
+      <StagedTemplates Include="@(Templates->'%(StagingFolder)%(Filename).vstemplate')" />
+    </ItemGroup>
+    <Copy SourceFiles="@(Templates)" DestinationFolder="%(StagingFolder)" />
+
+    <!-- Get Vsix ID and write it back to package repository ID -->
+    <XmlPeek
+      XmlInputPath="$(VsixManifestSource)"
+      Query="/ns:PackageManifest/ns:Metadata/ns:Identity/@Id"
+      Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vsx-schema/2011' /&gt;">
+      <Output TaskParameter="Result" PropertyName="NugetRepositoryId" />
+    </XmlPeek>
+    <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:WizardData/ns:packages/@repositoryId" Value="$(NugetRepositoryId)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
+
+    <!-- Update Packages section with actual NuGet package version to restore -->
+    <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:WizardData/ns:packages/ns:package/@version" Value="$(CppWinRTVersion)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
+    
+    <!-- Update the Package GUID in the Name and Description metadata -->
+    <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:TemplateData/ns:Name/@Package" Value="$(PackageGuidString)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
+    <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:TemplateData/ns:Description/@Package" Value="$(PackageGuidString)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
+    
+    <ItemGroup>
+      <TemplateItems Include="@(OtherTemplateFiles);@(Templates->'%(StagingFolder)%(Filename).vstemplate');@(Templates->'..\cppwinrt.ico');@(Templates->'..\cppwinrt.png')">
+        <IncludeInVSIX>true</IncludeInVSIX>
+        <IsAssembly>false</IsAssembly>
+        <VSIXSubPath>%(RecursiveDir)</VSIXSubPath>
+      </TemplateItems>
+    </ItemGroup>
+    <ItemGroup>
+      <Content Include="@(TemplateItems)" />
+    </ItemGroup>
+  </Target>
+</Project>

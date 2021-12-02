@@ -1,7 +1,7 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
-    <Name>Windows Console Application (C++/WinRT)</Name>
-    <Description>A project for creating a C++/WinRT Windows console application</Description>
+    <Name ID="1001" Package="FIXME-PACKAGEGUID" />
+    <Description ID="1002" Package="FIXME-PACKAGEGUID" />
     <ProjectType>VC</ProjectType>
     <SortOrder>4000</SortOrder>
     <TemplateID>microsoft.Windows.CppWinRT.ConsoleApplication</TemplateID>
