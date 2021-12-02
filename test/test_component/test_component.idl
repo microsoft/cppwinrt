@@ -156,6 +156,8 @@ namespace test_component
         Windows.Foundation.IAsyncOperation<Int32> RaiseDeferrableEventAsync();
 
         static Boolean TestNoMakeDetection();
+        static Int32 StaticPropertyWithAsyncSetter;
+        static void StaticMethodWithAsyncReturn();
     }
 
     namespace Structs
