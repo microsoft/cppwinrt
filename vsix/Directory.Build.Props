@@ -20,6 +20,7 @@
     <VsixBuild>true</VsixBuild>
     <RuntimeIdentifiers>win</RuntimeIdentifiers>
     <UseCodebase>true</UseCodebase>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
 </Project>
