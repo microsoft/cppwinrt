@@ -336,6 +336,8 @@
     <ClCompile Include="delegates.cpp" />
     <ClCompile Include="disconnected.cpp" />
     <ClCompile Include="enum.cpp" />
+    <ClCompile Include="event_clear.cpp" />
+    <ClCompile Include="event_copy.cpp" />
     <ClCompile Include="guid.cpp" />
     <ClCompile Include="hresult_class_not_registered.cpp" />
     <ClCompile Include="error_info.cpp" />

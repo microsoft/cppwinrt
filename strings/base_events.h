@@ -375,8 +375,37 @@ WINRT_EXPORT namespace winrt
         using delegate_type = Delegate;
 
         event() = default;
-        event(event<Delegate> const&) = delete;
-        event<Delegate>& operator =(event<Delegate> const&) = delete;
+
+        event(event<Delegate> const& value)
+        {
+            slim_lock_guard const swap_guard(value.m_swap);
+            m_targets = value.m_targets;
+        }
+
+        event<Delegate>& operator =(event<Delegate> const& value)
+        {
+            if (this == &value)
+            {
+                return;
+            }
+
+            delegate_array new_targets;
+
+            {
+                slim_lock_guard const swap_guard(value.m_swap);
+                new_targets = value.m_targets;
+            }
+
+            // Extends life of old targets array to release delegates outside of lock.
+            delegate_array temp_targets;
+
+            {
+                slim_lock_guard const change_guard(m_change);
+
+                slim_lock_guard const swap_guard(m_swap);
+                temp_targets = std::exchange(m_targets, std::move(new_targets));
+            }
+        }
 
         explicit operator bool() const noexcept
         {
@@ -466,6 +495,24 @@ WINRT_EXPORT namespace winrt
             }
         }
 
+        void clear()
+        {
+            // Extends life of old targets array to release delegates outside of lock.
+            delegate_array temp_targets;
+
+            {
+                slim_lock_guard const change_guard(m_change);
+
+                if (!m_targets)
+                {
+                    return;
+                }
+
+                slim_lock_guard const swap_guard(m_swap);
+                temp_targets = std::exchange(m_targets, nullptr);
+            }
+        }
+
         template<typename...Arg>
         void operator()(Arg const&... args)
         {
@@ -498,7 +545,7 @@ WINRT_EXPORT namespace winrt
         using delegate_array = com_ptr<impl::event_array<delegate_type>>;
 
         delegate_array m_targets;
-        slim_mutex m_swap;
+        mutable slim_mutex m_swap;
         slim_mutex m_change;
     };
 }
