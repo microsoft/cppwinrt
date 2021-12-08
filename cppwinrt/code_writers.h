@@ -3259,6 +3259,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             w.write(strings::base_reference_produce);
             w.write(strings::base_deferral);
             w.write(strings::base_coroutine_foundation);
+            w.write(strings::base_stringable_format);
         }
         else if (namespace_name == "Windows.Foundation.Collections")
         {
@@ -3295,7 +3296,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         if (namespace_name == "Windows.Foundation")
         {
             w.write(strings::base_reference_produce_1);
-            w.write(strings::base_stringable_format);
+            w.write(strings::base_stringable_format_1);
         }
     }
 }
