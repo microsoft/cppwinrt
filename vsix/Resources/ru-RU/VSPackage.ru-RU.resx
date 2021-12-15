@@ -128,4 +128,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="1001" xml:space="preserve">
+    <value>Консольное приложение Windows (C++/WinRT)</value>
+  </data>
+  <data name="1002" xml:space="preserve">
+    <value>Проект по созданию консольного приложения C++/WinRT для Windows.</value>
+  </data>
+  <data name="1003" xml:space="preserve">
+    <value>Классические приложения Windows (C++/WinRT)</value>
+  </data>
+  <data name="1004" xml:space="preserve">
+    <value>Проект по созданию настольного приложения Для Windows C++/WinRT.</value>
+  </data>
+  <data name="1005" xml:space="preserve">
+    <value>Пустое приложение (C++/WinRT)</value>
+  </data>
+  <data name="1006" xml:space="preserve">
+    <value>Проект для одной страницы приложения C++/WinRT универсальная платформа Windows (UWP) без предопределенного макета.</value>
+  </data>
+  <data name="1007" xml:space="preserve">
+    <value>Основное приложение (C++/WinRT)</value>
+  </data>
+  <data name="1008" xml:space="preserve">
+    <value>Проект для приложения C++/WinRT универсальная платформа Windows (UWP), напрямую реализующий CoreApplication.</value>
+  </data>
+  <data name="1009" xml:space="preserve">
+    <value>Статическая библиотека (C++/WinRT)</value>
+  </data>
+  <data name="1010" xml:space="preserve">
+    <value>Проект для статической библиотеки C++/WinRT, которую может использовать универсальная платформа Windows приложения.</value>
+  </data>
+  <data name="1011" xml:space="preserve">
+    <value>среда выполнения Windows (C++/WinRT)</value>
+  </data>
+  <data name="1012" xml:space="preserve">
+    <value>Проект для компонента C++/WinRT среда выполнения Windows, который может использоваться приложением универсальная платформа Windows.</value>
+  </data>
+  <data name="1013" xml:space="preserve">
+    <value>Пустая страница (C++/WinRT)</value>
+  </data>
+  <data name="1014" xml:space="preserve">
+    <value>Одна страница без предопределенного макета для приложения C++/WinRT универсальная платформа Windows (UWP).</value>
+  </data>
+  <data name="1015" xml:space="preserve">
+    <value>Пустой пользовательский элемент управления (C++/WinRT)</value>
+  </data>
+  <data name="1016" xml:space="preserve">
+    <value>Пустой пользовательский элемент управления без предопределенного макета для приложения C++/WinRT универсальная платформа Windows (UWP).</value>
+  </data>
+  <data name="1017" xml:space="preserve">
+    <value>Просмотреть модель (C++/WinRT)</value>
+  </data>
+  <data name="1018" xml:space="preserve">
+    <value>Пустое определение интерфейса, подходящее для привязки данных XAML для приложения C++/WinRT универсальная платформа Windows (UWP).</value>
+  </data>
 </root>
