@@ -128,4 +128,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="1001" xml:space="preserve">
+    <value>Aplicativo de Console do Windows (C++/WinRT)</value>
+  </data>
+  <data name="1002" xml:space="preserve">
+    <value>Um projeto para criar um aplicativo de console do Windows C++/WinRT.</value>
+  </data>
+  <data name="1003" xml:space="preserve">
+    <value>Aplicativo do Windows Desktop (C++/WinRT)</value>
+  </data>
+  <data name="1004" xml:space="preserve">
+    <value>Um projeto para criar um aplicativo de área de trabalho do Windows C++/WinRT.</value>
+  </data>
+  <data name="1005" xml:space="preserve">
+    <value>Aplicativo em Branco (C++/WinRT)</value>
+  </data>
+  <data name="1006" xml:space="preserve">
+    <value>Um projeto para um aplicativo de página única C++/WinRT Plataforma Universal do Windows (UWP) sem layout predefinido.</value>
+  </data>
+  <data name="1007" xml:space="preserve">
+    <value>Aplicativo Principal (C++/WinRT)</value>
+  </data>
+  <data name="1008" xml:space="preserve">
+    <value>Um projeto para um aplicativo C++/WinRT Plataforma Universal do Windows (UWP) implementando coreApplication diretamente.</value>
+  </data>
+  <data name="1009" xml:space="preserve">
+    <value>Biblioteca Estática (C++/WinRT)</value>
+  </data>
+  <data name="1010" xml:space="preserve">
+    <value>Um projeto para uma Biblioteca Estática C++/WinRT que pode ser usada por um Plataforma Universal do Windows aplicativo.</value>
+  </data>
+  <data name="1011" xml:space="preserve">
+    <value>Windows Runtime Componente (C++/WinRT)</value>
+  </data>
+  <data name="1012" xml:space="preserve">
+    <value>Um projeto para um componente de Windows Runtime C++/WinRT que pode ser usado por um Plataforma Universal do Windows aplicativo.</value>
+  </data>
+  <data name="1013" xml:space="preserve">
+    <value>Página em Branco (C++/WinRT)</value>
+  </data>
+  <data name="1014" xml:space="preserve">
+    <value>Uma única página sem layout predefinido para um aplicativo C++/WinRT Plataforma Universal do Windows (UWP).</value>
+  </data>
+  <data name="1015" xml:space="preserve">
+    <value>Controle de Usuário em Branco (C++/WinRT)</value>
+  </data>
+  <data name="1016" xml:space="preserve">
+    <value>Um controle de usuário em branco sem layout predefinido para um aplicativo C++/WinRT Plataforma Universal do Windows (UWP).</value>
+  </data>
+  <data name="1017" xml:space="preserve">
+    <value>Exibir Modelo (C++/WinRT)</value>
+  </data>
+  <data name="1018" xml:space="preserve">
+    <value>Uma definição de interface vazia adequada para associação de dados XAML, para um aplicativo C++/WinRT Plataforma Universal do Windows (UWP).</value>
+  </data>
 </root>
