@@ -173,6 +173,7 @@
       <AdditionalDependencies>advapi32.lib;shell32.lib;windowsapp.lib;$(VsDebugEng_Lib);%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\cppwinrtvisualizer.def</ModuleDefinitionFile>
       <DelayLoadDLLs>vsdebugeng.dll</DelayLoadDLLs>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -202,6 +203,7 @@
       <AdditionalDependencies>advapi32.lib;shell32.lib;windowsapp.lib;$(VsDebugEng_Lib);%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\cppwinrtvisualizer.def</ModuleDefinitionFile>
       <DelayLoadDLLs>vsdebugeng.dll</DelayLoadDLLs>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Deployment)'=='Component'">

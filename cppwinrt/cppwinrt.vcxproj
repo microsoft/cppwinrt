@@ -288,6 +288,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>
@@ -309,6 +310,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>
@@ -330,6 +332,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>
@@ -351,6 +354,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>
