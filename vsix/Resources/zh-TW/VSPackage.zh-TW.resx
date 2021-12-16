@@ -129,57 +129,57 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="1001" xml:space="preserve">
-    <value>Windows 主控台應用程式(C++/WinRT)</value>
+    <value>Windows 主控台應用程式 (C++/WinRT)</value>
   </data>
   <data name="1002" xml:space="preserve">
     <value>用於建立 C++/WinRT Windows 主控台應用程式的專案。</value>
   </data>
   <data name="1003" xml:space="preserve">
-    <value>Windows 桌面應用程式(C++/WinRT)</value>
+    <value>傳統型 Windows 應用程式 (C++/WinRT)</value>
   </data>
   <data name="1004" xml:space="preserve">
     <value>用於建立 C++/WinRT Windows 傳統型應用程式的專案。</value>
   </data>
   <data name="1005" xml:space="preserve">
-    <value>空白應用程式(C++/WinRT)</value>
+    <value>空白應用程式 (C++/WinRT)</value>
   </data>
   <data name="1006" xml:space="preserve">
-    <value>單頁 C++/WinRT 通用 Windows 平臺 (UWP)應用程式的專案，沒有預先定義的版面配置。</value>
+    <value>沒有預先定義配置的單頁 C++/WinRT 通用 Windows 平台 (UWP)應用程式之專案。</value>
   </data>
   <data name="1007" xml:space="preserve">
-    <value>核心應用程式(C++/WinRT)</value>
+    <value>核心應用程式 (C++/WinRT)</value>
   </data>
   <data name="1008" xml:space="preserve">
-    <value>C++/WinRT 通用 Windows 平臺 (UWP)應用程式的專案，會直接實作 CoreApplication。</value>
+    <value>直接實作 CoreApplication 的 C++/WinRT 通用 Windows 平台 (UWP) 應用程式之專案。</value>
   </data>
   <data name="1009" xml:space="preserve">
-    <value>靜態程式庫(C++/WinRT)</value>
+    <value>靜態程式庫 (C++/WinRT)</value>
   </data>
   <data name="1010" xml:space="preserve">
-    <value>C++/WinRT 靜態程式庫的專案，可供通用 Windows 平臺應用程式使用。</value>
+    <value>可供通用 Windows 平台應用程式使用的 C++/WinRT 靜態程式庫之專案。</value>
   </data>
   <data name="1011" xml:space="preserve">
-    <value>Windows 執行階段元件(C++/WinRT)</value>
+    <value>Windows 執行階段元件 (C++/WinRT)</value>
   </data>
   <data name="1012" xml:space="preserve">
-    <value>C++/WinRT Windows 執行階段元件的專案，可供通用 Windows 平臺應用程式使用。</value>
+    <value>可供通用 Windows 平台應用程式使用的 C++/WinRT Windows 執行階段元件之專案。</value>
   </data>
   <data name="1013" xml:space="preserve">
-    <value>空白頁(C++/WinRT)</value>
+    <value>空白頁 (C++/WinRT)</value>
   </data>
   <data name="1014" xml:space="preserve">
-    <value>C++/WinRT 通用 Windows 平臺 (UWP)應用程式的單一頁面，沒有預先定義的版面配置。</value>
+    <value>沒有預先定義配置的 C++/WinRT 通用 Windows 平台 (UWP)應用程式之單一頁面。</value>
   </data>
   <data name="1015" xml:space="preserve">
-    <value>空白使用者控制項(C++/WinRT)</value>
+    <value>空白使用者控制項 (C++/WinRT)</value>
   </data>
   <data name="1016" xml:space="preserve">
-    <value>C++/WinRT 通用 Windows 平臺 (UWP)應用程式的空白使用者控制項，沒有預先定義的配置。</value>
+    <value>沒有預先定義配置的 C++/WinRT 通用 Windows 平台 (UWP)應用程式之空白使用者控制項。</value>
   </data>
   <data name="1017" xml:space="preserve">
     <value>檢視模型 (C++/WinRT)</value>
   </data>
   <data name="1018" xml:space="preserve">
-    <value>適用于 C++/WinRT 通用 Windows 平臺 (UWP) 應用程式之 XAML 資料系結的空白介面定義。</value>
+    <value>適用於 C++/WinRT 通用 Windows 平台 (UWP) 應用程式之 XAML 資料繫結的空白介面定義。</value>
   </data>
 </root>

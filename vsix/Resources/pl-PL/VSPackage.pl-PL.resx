@@ -144,37 +144,37 @@
     <value>Pusta aplikacja (C++/WinRT)</value>
   </data>
   <data name="1006" xml:space="preserve">
-    <value>Projekt jednostronicowej aplikacji C++/WinRT platforma uniwersalna systemu Windows (UWP) bez wstępnie zdefiniowanego układu.</value>
+    <value>Projekt jednostronicowej aplikacji platformy uniwersalnej systemu Windows (UWP) C++/WinRT bez wstępnie zdefiniowanego układu.</value>
   </data>
   <data name="1007" xml:space="preserve">
     <value>Podstawowa aplikacja (C++/WinRT)</value>
   </data>
   <data name="1008" xml:space="preserve">
-    <value>Projekt aplikacji języka C++/WinRT platforma uniwersalna systemu Windows (UWP) bezpośrednio implementującej funkcję CoreApplication.</value>
+    <value>Projekt aplikacji platformy uniwersalnej systemu Windows (UWP) C++/WinRT bezpośrednio implementującej funkcję CoreApplication.</value>
   </data>
   <data name="1009" xml:space="preserve">
     <value>Biblioteka statyczna (C++/WinRT)</value>
   </data>
   <data name="1010" xml:space="preserve">
-    <value>Projekt biblioteki statycznej C++/WinRT, który może być używany przez aplikację platforma uniwersalna systemu Windows.</value>
+    <value>Projekt biblioteki statycznej C++/WinRT, który może być używany przez aplikację platformy uniwersalnej systemu Windows.</value>
   </data>
   <data name="1011" xml:space="preserve">
-    <value>Składnik środowisko wykonawcze systemu Windows (C++/WinRT)</value>
+    <value>Składnik środowiska wykonawczego systemu Windows (C++/WinRT)</value>
   </data>
   <data name="1012" xml:space="preserve">
-    <value>Projekt składnika środowisko wykonawcze systemu Windows C++/WinRT, który może być używany przez aplikację platforma uniwersalna systemu Windows.</value>
+    <value>Projekt składnika środowiska wykonawczego systemu Windows C++/WinRT, który może być używany przez aplikację platformy uniwersalnej systemu Windows.</value>
   </data>
   <data name="1013" xml:space="preserve">
     <value>Pusta strona (C++/WinRT)</value>
   </data>
   <data name="1014" xml:space="preserve">
-    <value>Pojedyncza strona bez wstępnie zdefiniowanego układu dla aplikacji platforma uniwersalna systemu Windows C++/WinRT (UWP).</value>
+    <value>Pojedyncza strona bez wstępnie zdefiniowanego układu dla aplikacji platformy uniwersalnej systemu Windows (UWP) C++/WinRT.</value>
   </data>
   <data name="1015" xml:space="preserve">
     <value>Pusta kontrolka użytkownika (C++/WinRT)</value>
   </data>
   <data name="1016" xml:space="preserve">
-    <value>Pusta kontrolka użytkownika bez wstępnie zdefiniowanego układu dla aplikacji platforma uniwersalna systemu Windows C++/WinRT (UWP).</value>
+    <value>Pusta kontrolka użytkownika bez wstępnie zdefiniowanego układu dla aplikacji platformy uniwersalnej systemu Windows (UWP) C++/WinRT.</value>
   </data>
   <data name="1017" xml:space="preserve">
     <value>Wyświetl model (C++/WinRT)</value>

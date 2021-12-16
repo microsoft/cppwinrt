@@ -135,7 +135,7 @@
     <value>Ein Projekt zum Erstellen einer C++-/WinRT-Windows-Konsolenanwendung.</value>
   </data>
   <data name="1003" xml:space="preserve">
-    <value>Windows Desktop Application (C++/WinRT)</value>
+    <value>Windows-Desktopanwendung (C++/WinRT)</value>
   </data>
   <data name="1004" xml:space="preserve">
     <value>Ein Projekt zum Erstellen einer C++-/WinRT-Windows-Desktopanwendung.</value>
@@ -144,10 +144,10 @@
     <value>Leere App (C++/WinRT)</value>
   </data>
   <data name="1006" xml:space="preserve">
-    <value>Ein Projekt für eine C++/WinRT-Universelle Windows-Plattform-App (Single Page C++/WinRT Universelle Windows-Plattform) ohne vordefiniertes Layout.</value>
+    <value>Ein Projekt für eine einseitige C++/WinRT-Universelle Windows-Plattform-App (UWP) ohne vordefiniertes Layout.</value>
   </data>
   <data name="1007" xml:space="preserve">
-    <value>Core App (C++/WinRT)</value>
+    <value>Core-App (C++/WinRT)</value>
   </data>
   <data name="1008" xml:space="preserve">
     <value>Ein Projekt für eine C++-/WinRT-Universelle Windows-Plattform-App (UWP), die CoreApplication direkt implementiert.</value>
@@ -156,13 +156,13 @@
     <value>Statische Bibliothek (C++/WinRT)</value>
   </data>
   <data name="1010" xml:space="preserve">
-    <value>Ein Projekt für eine statische C++-/WinRT-Bibliothek, die von einer Universelle Windows-Plattform App verwendet werden kann.</value>
+    <value>Ein Projekt für eine statische C++/WinRT-Bibliothek, die von einer Universellen Windows-Plattform-App verwendet werden kann.</value>
   </data>
   <data name="1011" xml:space="preserve">
-    <value>Windows-Runtime Komponente (C++/WinRT)</value>
+    <value>Komponente für Windows-Runtime (C++/WinRT)</value>
   </data>
   <data name="1012" xml:space="preserve">
-    <value>Ein Projekt für eine C++-/WinRT-Windows-Runtime-Komponente, die von einer Universelle Windows-Plattform App verwendet werden kann.</value>
+    <value>Ein Projekt für eine C++/WinRT-Komponente für Windows-Runtime, die von einer Universellen Windows-Plattform-App verwendet werden kann.</value>
   </data>
   <data name="1013" xml:space="preserve">
     <value>Leere Seite (C++/WinRT)</value>
@@ -180,6 +180,6 @@
     <value>Modell anzeigen (C++/WinRT)</value>
   </data>
   <data name="1018" xml:space="preserve">
-    <value>Eine leere Schnittstellendefinition, die für XAML-Datenbindungen, für eine C++-/WinRT-Universelle Windows-Plattform-App (UWP) geeignet ist.</value>
+    <value>Eine leere Schnittstellendefinition, die für die XAML-Datenbindung für eine C++/WinRT-Universelle Windows-Plattform-App (UWP) geeignet ist.</value>
   </data>
 </root>
