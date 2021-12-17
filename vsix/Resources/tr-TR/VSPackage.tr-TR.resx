@@ -156,7 +156,7 @@
     <value>Statik Kitaplık (C++/WinRT)</value>
   </data>
   <data name="1010" xml:space="preserve">
-    <value>Bir C++/WinRT Statik Kitaplığı için, bir uygulama tarafından kullanılabilecek Evrensel Windows Platformu proje.</value>
+    <value>Evrensel Windows Platformu uygulaması tarafından kullanılabilen bir C++/WinRT Statik Kitaplığı projesi.</value>
   </data>
   <data name="1011" xml:space="preserve">
     <value>Windows Çalışma Zamanı Bileşeni (C++/WinRT)</value>

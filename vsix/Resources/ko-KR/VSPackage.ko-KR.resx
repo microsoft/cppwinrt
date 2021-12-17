@@ -129,13 +129,13 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="1001" xml:space="preserve">
-    <value>Windows 콘솔 응용 프로그램(C++/WinRT)</value>
+    <value>Windows 콘솔 애플리케이션(C++/WinRT)</value>
   </data>
   <data name="1002" xml:space="preserve">
     <value>C++/WinRT Windows 콘솔 응용 프로그램을 만드는 프로젝트입니다.</value>
   </data>
   <data name="1003" xml:space="preserve">
-    <value>Windows 데스크톱 응용 프로그램(C++/WinRT)</value>
+    <value>Windows 데스크톱 애플리케이션(C++/WinRT)</value>
   </data>
   <data name="1004" xml:space="preserve">
     <value>C++/WinRT Windows 데스크톱 응용 프로그램을 만드는 프로젝트입니다.</value>
@@ -144,10 +144,10 @@
     <value>빈 앱(C++/WinRT)</value>
   </data>
   <data name="1006" xml:space="preserve">
-    <value>미리 정의된 레이아웃이 없는 단일 페이지 C++/WinRT 유니버설 Windows 플랫폼(UWP) 앱용 프로젝트입니다.</value>
+    <value>미리 정의된 레이아웃이 없는 단일 페이지 C++/WinRT UWP(유니버설 Windows 플랫폼) 앱에 대한 프로젝트입니다.</value>
   </data>
   <data name="1007" xml:space="preserve">
-    <value>핵심 앱(C++/WinRT)</value>
+    <value>코어 앱(C++/WinRT)</value>
   </data>
   <data name="1008" xml:space="preserve">
     <value>CoreApplication을 직접 구현하는 C++/WinRT 유니버설 Windows 플랫폼(UWP) 앱용 프로젝트입니다.</value>
@@ -156,7 +156,7 @@
     <value>정적 라이브러리(C++/WinRT)</value>
   </data>
   <data name="1010" xml:space="preserve">
-    <value>유니버설 Windows 플랫폼 앱에서 사용할 수 있는 C++/WinRT 정적 라이브러리용 프로젝트입니다.</value>
+    <value>유니버설 Windows 플랫폼 앱에서 사용할 수 있는 C++/WinRT 정적 라이브러리에 대한 프로젝트입니다.</value>
   </data>
   <data name="1011" xml:space="preserve">
     <value>Windows 런타임 구성 요소(C++/WinRT)</value>
@@ -171,10 +171,10 @@
     <value>C++/WinRT 유니버설 Windows 플랫폼(UWP) 앱에 대해 미리 정의된 레이아웃이 없는 단일 페이지입니다.</value>
   </data>
   <data name="1015" xml:space="preserve">
-    <value>빈 사용자 정의 컨트롤(C++/WinRT)</value>
+    <value>빈 사용자 컨트롤(C++/WinRT)</value>
   </data>
   <data name="1016" xml:space="preserve">
-    <value>C++/WinRT 유니버설 Windows 플랫폼(UWP) 앱에 대해 미리 정의된 레이아웃이 없는 빈 사용자 정의 컨트롤입니다.</value>
+    <value>C++/WinRT 유니버설 Windows 플랫폼(UWP) 앱에 대해 미리 정의된 레이아웃이 없는 빈 사용자 컨트롤입니다.</value>
   </data>
   <data name="1017" xml:space="preserve">
     <value>모델 보기(C++/WinRT)</value>

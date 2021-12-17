@@ -129,40 +129,40 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="1001" xml:space="preserve">
-    <value>Konzolová aplikace systému Windows (C++/WinRT)</value>
+    <value>Konzolová aplikace pro Windows (C++/WinRT)</value>
   </data>
   <data name="1002" xml:space="preserve">
-    <value>Projekt pro vytvoření konzolové aplikace C++/WinRT systému Windows</value>
+    <value>Projekt pro vytvoření konzolové aplikace pro Windows v C++/WinRT.</value>
   </data>
   <data name="1003" xml:space="preserve">
     <value>Desktopová aplikace pro Windows (C++/WinRT)</value>
   </data>
   <data name="1004" xml:space="preserve">
-    <value>Projekt pro vytvoření desktopové aplikace C++/WinRT pro Windows</value>
+    <value>Projekt pro vytvoření desktopové aplikace pro Windows v C++/WinRT.</value>
   </data>
   <data name="1005" xml:space="preserve">
     <value>Prázdná aplikace (C++/WinRT)</value>
   </data>
   <data name="1006" xml:space="preserve">
-    <value>Projekt pro jednostránkovou aplikaci C++/WinRT Univerzální platforma Windows (UPW) bez předdefinovaného rozložení</value>
+    <value>Projekt pro jednostránkovou aplikaci Univerzální platformy Windows (UPW) v C++/WinRT bez předdefinovaného rozložení.</value>
   </data>
   <data name="1007" xml:space="preserve">
-    <value>Základní aplikace (C++/WinRT)</value>
+    <value>Aplikace Core (C++/WinRT)</value>
   </data>
   <data name="1008" xml:space="preserve">
-    <value>Projekt pro aplikaci C++/WinRT Univerzální platforma Windows (UPW) přímo implementující CoreApplication</value>
+    <value>Projekt pro aplikaci Univerzální platformy Windows (UPW) C++/WinRT přímo implementuje CoreApplication.</value>
   </data>
   <data name="1009" xml:space="preserve">
     <value>Statická knihovna (C++/WinRT)</value>
   </data>
   <data name="1010" xml:space="preserve">
-    <value>Projekt pro statickou knihovnu C++/WinRT, kterou může používat aplikace Univerzální platforma Windows</value>
+    <value>Projekt pro statickou knihovnu C++/WinRT, který může používat aplikace Univerzální platformy Windows.</value>
   </data>
   <data name="1011" xml:space="preserve">
-    <value>prostředí Windows Runtime komponenta (C++/WinRT)</value>
+    <value>Součást prostředí Windows Runtime (C++/WinRT)</value>
   </data>
   <data name="1012" xml:space="preserve">
-    <value>Projekt pro komponentu prostředí Windows Runtime C++/WinRT, kterou může používat aplikace Univerzální platforma Windows</value>
+    <value>Projekt pro součást prostředí Windows Runtime C++/WinRT, kterou může používat aplikace Univerzální platformy Windows.</value>
   </data>
   <data name="1013" xml:space="preserve">
     <value>Prázdná stránka (C++/WinRT)</value>
@@ -174,12 +174,12 @@
     <value>Prázdný uživatelský ovládací prvek (C++/WinRT)</value>
   </data>
   <data name="1016" xml:space="preserve">
-    <value>Prázdný uživatelský ovládací prvek bez předdefinovaného rozložení pro aplikaci C++/WinRT Univerzální platforma Windows (UPW)</value>
+    <value>Prázdný uživatelský ovládací prvek bez předdefinovaného rozložení pro aplikaci Univerzální platformy Windows (UPW) v C++/WinRT.</value>
   </data>
   <data name="1017" xml:space="preserve">
     <value>Zobrazit model (C++/WinRT)</value>
   </data>
   <data name="1018" xml:space="preserve">
-    <value>Prázdná definice rozhraní vhodná pro datovou vazbu XAML pro aplikaci C++/WinRT Univerzální platforma Windows (UPW).</value>
+    <value>Prázdná definice rozhraní vhodná pro datovou vazbu XAML pro aplikaci Univerzální platformy Windows (UPW) C++/WinRT.</value>
   </data>
 </root>

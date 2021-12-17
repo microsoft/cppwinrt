@@ -150,16 +150,16 @@
     <value>Aplicación principal (C++/WinRT)</value>
   </data>
   <data name="1008" xml:space="preserve">
-    <value>Proyecto para una aplicación de C++/WinRT Plataforma universal de Windows (UWP) que implementa CoreApplication directamente.</value>
+    <value>Un proyecto para una aplicación C++/WinRT de la Plataforma universal de Windows (UWP) que implementa directamente CoreApplication.</value>
   </data>
   <data name="1009" xml:space="preserve">
     <value>Biblioteca estática (C++/WinRT)</value>
   </data>
   <data name="1010" xml:space="preserve">
-    <value>Proyecto para una biblioteca estática de C++/WinRT que puede usar una aplicación Plataforma universal de Windows.</value>
+    <value>Un proyecto para una biblioteca estática C++/WinRT que puede ser utilizada por una aplicación de la Plataforma universal de Windows.</value>
   </data>
   <data name="1011" xml:space="preserve">
-    <value>componente Windows Runtime (C++/WinRT)</value>
+    <value>Componente de Windows Runtime (C++/WinRT)</value>
   </data>
   <data name="1012" xml:space="preserve">
     <value>Proyecto para un componente de Windows Runtime de C++/WinRT que puede usar una aplicación Plataforma universal de Windows.</value>
@@ -168,18 +168,18 @@
     <value>Página en blanco (C++/WinRT)</value>
   </data>
   <data name="1014" xml:space="preserve">
-    <value>Una sola página sin diseño predefinido para una aplicación Plataforma universal de Windows Plataforma universal de Windows (UWP) de C++/WinRT.</value>
+    <value>Una sola página sin un diseño predefinido para aplicaciones C++/WinRT de la Plataforma universal de Windows (UWP).</value>
   </data>
   <data name="1015" xml:space="preserve">
     <value>Control de usuario en blanco (C++/WinRT)</value>
   </data>
   <data name="1016" xml:space="preserve">
-    <value>Control de usuario en blanco sin diseño predefinido para una aplicación Plataforma universal de Windows Plataforma universal de Windows (UWP) de C++/WinRT.</value>
+    <value>Un control de usuario en blanco sin un diseño predefinido para aplicaciones C++/WinRT de la Plataforma universal de Windows (UWP).</value>
   </data>
   <data name="1017" xml:space="preserve">
     <value>Ver modelo (C++/WinRT)</value>
   </data>
   <data name="1018" xml:space="preserve">
-    <value>Definición de interfaz vacía adecuada para el enlace de datos XAML para una aplicación Plataforma universal de Windows Plataforma universal de Windows (UWP) de C++/WinRT.</value>
+    <value>Definición de interfaz vacía adecuada para el enlace de datos XAML, ara aplicaciones C++/WinRT de la Plataforma universal de Windows (UWP).</value>
   </data>
 </root>

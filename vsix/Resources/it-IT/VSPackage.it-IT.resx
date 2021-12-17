@@ -147,19 +147,19 @@
     <value>Progetto per un'app C++/WinRT piattaforma UWP (Universal Windows Platform) a pagina singola senza layout predefinito.</value>
   </data>
   <data name="1007" xml:space="preserve">
-    <value>App principale (C++/WinRT)</value>
+    <value>App core (C++/WinRT)</value>
   </data>
   <data name="1008" xml:space="preserve">
-    <value>Progetto per un'app C++/WinRT piattaforma UWP (Universal Windows Platform) (UWP) che implementa direttamente CoreApplication.</value>
+    <value>Progetto per un'app C++/WinRT della piattaforma UWP (Universal Windows Platform) (UWP) che implementa direttamente CoreApplication.</value>
   </data>
   <data name="1009" xml:space="preserve">
     <value>Libreria statica (C++/WinRT)</value>
   </data>
   <data name="1010" xml:space="preserve">
-    <value>Progetto per una libreria statica C++/WinRT utilizzabile da un'app piattaforma UWP (Universal Windows Platform).</value>
+    <value>Progetto per una libreria statica C++/WinRT utilizzabile da un'app della piattaforma UWP (Universal Windows Platform).</value>
   </data>
   <data name="1011" xml:space="preserve">
-    <value>componente Windows Runtime (C++/WinRT)</value>
+    <value>Componente Windows Runtime (C++/WinRT)</value>
   </data>
   <data name="1012" xml:space="preserve">
     <value>Progetto per un componente di Windows Runtime C++/WinRT che può essere usato da un'app piattaforma UWP (Universal Windows Platform).</value>
@@ -180,6 +180,6 @@
     <value>Visualizza modello (C++/WinRT)</value>
   </data>
   <data name="1018" xml:space="preserve">
-    <value>Definizione di interfaccia vuota adatta per data binding XAML per un'app C++/WinRT piattaforma UWP (Universal Windows Platform) (UWP).</value>
+    <value>Definizione di interfaccia vuota adatta al data binding XAML, a un'app C++/WinRT della piattaforma UWP (Universal Windows Platform).</value>
   </data>
 </root>
