@@ -79,9 +79,10 @@
     <ClInclude Include="..\strings\base_security.h" />
     <ClInclude Include="..\strings\base_std_hash.h" />
     <ClInclude Include="..\strings\base_string.h" />
+    <ClInclude Include="..\strings\base_stringable_format.h" />
     <ClInclude Include="..\strings\base_string_input.h" />
     <ClInclude Include="..\strings\base_string_operators.h" />
-    <ClInclude Include="..\strings\base_stringable_format.h" />
+    <ClInclude Include="..\strings\base_stringable_format_1.h" />
     <ClInclude Include="..\strings\base_types.h" />
     <ClInclude Include="..\strings\base_version.h" />
     <ClInclude Include="..\strings\base_version_odr.h" />
@@ -287,6 +288,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>
@@ -308,6 +310,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>
@@ -329,6 +332,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>
@@ -350,6 +354,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
       <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>

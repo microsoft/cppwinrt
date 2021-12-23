@@ -128,4 +128,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="1001" xml:space="preserve">
+    <value>Windows コンソール アプリケーション (C++/WinRT)</value>
+  </data>
+  <data name="1002" xml:space="preserve">
+    <value>C++/WinRT Windows コンソール アプリケーションを作成するためのプロジェクト。</value>
+  </data>
+  <data name="1003" xml:space="preserve">
+    <value>Windows デスクトップ アプリケーション (C++/WinRT)</value>
+  </data>
+  <data name="1004" xml:space="preserve">
+    <value>C++/WinRT Windows デスクトップ アプリケーションを作成するためのプロジェクト。</value>
+  </data>
+  <data name="1005" xml:space="preserve">
+    <value>空のアプリ (C++/WinRT)</value>
+  </data>
+  <data name="1006" xml:space="preserve">
+    <value>定義済みレイアウトのない単一ページの C++/WinRT ユニバーサル Windows プラットフォーム (UWP) アプリ用のプロジェクト。</value>
+  </data>
+  <data name="1007" xml:space="preserve">
+    <value>コア アプリ (C++/WinRT)</value>
+  </data>
+  <data name="1008" xml:space="preserve">
+    <value>CoreApplication を直接実装する C++/WinRT ユニバーサル Windows プラットフォーム (UWP) アプリ用のプロジェクト。</value>
+  </data>
+  <data name="1009" xml:space="preserve">
+    <value>スタティック ライブラリ (C++/WinRT)</value>
+  </data>
+  <data name="1010" xml:space="preserve">
+    <value>ユニバーサル Windows プラットフォーム アプリで使用できる C++/WinRT スタティック ライブラリのプロジェクト。</value>
+  </data>
+  <data name="1011" xml:space="preserve">
+    <value>Windows ランタイム コンポーネント (C++/WinRT)</value>
+  </data>
+  <data name="1012" xml:space="preserve">
+    <value>ユニバーサル Windows プラットフォーム アプリで使用できる C++/WinRT Windows ランタイム コンポーネントのプロジェクト。</value>
+  </data>
+  <data name="1013" xml:space="preserve">
+    <value>空白のページ (C++/WinRT)</value>
+  </data>
+  <data name="1014" xml:space="preserve">
+    <value>C++/WinRT ユニバーサル Windows プラットフォーム (UWP) アプリ用の、定義済みレイアウトのない単一のページ。</value>
+  </data>
+  <data name="1015" xml:space="preserve">
+    <value>空のユーザー コントロール (C++/WinRT)</value>
+  </data>
+  <data name="1016" xml:space="preserve">
+    <value>C++/WinRT ユニバーサル Windows プラットフォーム (UWP) アプリ用の、定義済みレイアウトのない空のユーザー コントロール。</value>
+  </data>
+  <data name="1017" xml:space="preserve">
+    <value>ビュー モデル (C++/WinRT)</value>
+  </data>
+  <data name="1018" xml:space="preserve">
+    <value>C++/WinRT ユニバーサル Windows プラットフォーム (UWP) アプリ用の XAML データ バインドに適した空のインターフェイス定義。</value>
+  </data>
 </root>

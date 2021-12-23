@@ -128,4 +128,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="1001" xml:space="preserve">
+    <value>Windows 控制台应用程序(C++/WinRT)</value>
+  </data>
+  <data name="1002" xml:space="preserve">
+    <value>用于创建 C++/WinRT Windows 控制台应用程序的项目。</value>
+  </data>
+  <data name="1003" xml:space="preserve">
+    <value>Windows 桌面应用程序(C++/WinRT)</value>
+  </data>
+  <data name="1004" xml:space="preserve">
+    <value>用于创建 C++/WinRT Windows 桌面应用程序的项目。</value>
+  </data>
+  <data name="1005" xml:space="preserve">
+    <value>空白应用(C++/WinRT)</value>
+  </data>
+  <data name="1006" xml:space="preserve">
+    <value>用于没有预定义布局的单页面 C++/WinRT 通用 Windows 平台(UWP)应用的项目。</value>
+  </data>
+  <data name="1007" xml:space="preserve">
+    <value>核心应用(C++/WinRT)</value>
+  </data>
+  <data name="1008" xml:space="preserve">
+    <value>用于直接实现 CoreApplication 的 C++/WinRT 通用 Windows 平台(UWP)应用的项目。</value>
+  </data>
+  <data name="1009" xml:space="preserve">
+    <value>静态库(C++/WinRT)</value>
+  </data>
+  <data name="1010" xml:space="preserve">
+    <value>用于可由通用 Windows 平台应用使用的 C++/WinRT 静态库的项目。</value>
+  </data>
+  <data name="1011" xml:space="preserve">
+    <value>Windows 运行时组件(C++/WinRT)</value>
+  </data>
+  <data name="1012" xml:space="preserve">
+    <value>可用于通用 Windows 平台应用的 C++/WinRT Windows 运行时组件的项目。</value>
+  </data>
+  <data name="1013" xml:space="preserve">
+    <value>空白页面(C++/WinRT)</value>
+  </data>
+  <data name="1014" xml:space="preserve">
+    <value>对于 C++/WinRT 通用 Windows 平台 (UWP)应用，单个页面没有预定义的布局。</value>
+  </data>
+  <data name="1015" xml:space="preserve">
+    <value>空白用户控件(C++/WinRT)</value>
+  </data>
+  <data name="1016" xml:space="preserve">
+    <value>对于 C++/WinRT 通用 Windows 平台 (UWP)应用，没有预定义布局的空白用户控件。</value>
+  </data>
+  <data name="1017" xml:space="preserve">
+    <value>查看模型(C++/WinRT)</value>
+  </data>
+  <data name="1018" xml:space="preserve">
+    <value>适用于 C++/WinRT 通用 Windows 平台(UWP)应用的 XAML 数据绑定的空接口定义。</value>
+  </data>
 </root>
