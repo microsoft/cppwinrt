@@ -268,7 +268,9 @@ Where <spec> is one or more of:
 
             if (settings.verbose)
             {
-                w.write(" tool:  %\n", canonical(path(argv[0]).replace_extension("exe")).string());
+                char* path = nullptr;
+                _get_pgmptr(&path);
+                w.write(" tool:  %\n", path);
                 w.write(" ver:   %\n", CPPWINRT_VERSION_STRING);
 
                 for (auto&& file : settings.input)
