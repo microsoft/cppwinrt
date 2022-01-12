@@ -25,7 +25,7 @@ namespace cppwinrt
         { "verbose", 0, 0, {}, "Show detailed progress information" },
         { "overwrite", 0, 0, {}, "Overwrite generated component files" },
         { "prefix", 0, 0, {}, "Use dotted namespace convention for component files (defaults to folders)" },
-        { "pch", 0, 1, "<name>", "Specify name of precompiled header file (defaults to pch.h)" },
+        { "pch", 0, 1, "<name>", "Specify name of precompiled header file (defaults to pch.h; use '.' to disable)" },
         { "include", 0, option::no_max, "<prefix>", "One or more prefixes to include in input" },
         { "exclude", 0, option::no_max, "<prefix>", "One or more prefixes to exclude from input" },
         { "base", 0, 0, {}, "Generate base.h unconditionally" },
