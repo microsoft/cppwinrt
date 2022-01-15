@@ -180,6 +180,6 @@
     <value>Modelo de Exibição (C++/WinRT)</value>
   </data>
   <data name="1018" xml:space="preserve">
-    <value>Uma definição de interface vazia adequada para associação de dados XAML, para um aplicativo C++/WinRT Plataforma Universal do Windows (UWP).</value>
+    <value>Uma definição de interface vazia adequada para vinculação de dados XAML, para um aplicativo C++/WinRT Plataforma Universal do Windows (UWP).</value>
   </data>
 </root>

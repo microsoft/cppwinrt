@@ -132,13 +132,13 @@
     <value>Applicazione console Windows (C++/WinRT)</value>
   </data>
   <data name="1002" xml:space="preserve">
-    <value>Progetto per la creazione di un'applicazione console windows C++/WinRT.</value>
+    <value>Progetto per la creazione di un'applicazione console Windows C++/WinRT.</value>
   </data>
   <data name="1003" xml:space="preserve">
     <value>Applicazione desktop di Windows (C++/WinRT)</value>
   </data>
   <data name="1004" xml:space="preserve">
-    <value>Progetto per la creazione di un'applicazione desktop windows C++/WinRT.</value>
+    <value>Progetto per la creazione di un'applicazione desktop Windows C++/WinRT.</value>
   </data>
   <data name="1005" xml:space="preserve">
     <value>App vuota (C++/WinRT)</value>
