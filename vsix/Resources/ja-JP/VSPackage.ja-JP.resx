@@ -180,6 +180,6 @@
     <value>ビュー モデル (C++/WinRT)</value>
   </data>
   <data name="1018" xml:space="preserve">
-    <value>C++/WinRT ユニバーサル Windows プラットフォーム (UWP) アプリ用の XAML データ バインディングに適した空のインターフェイス定義。</value>
+    <value>C++/WinRT ユニバーサル Windows プラットフォーム (UWP) アプリ用の XAML データ バインドに適した空のインターフェイス定義。</value>
   </data>
 </root>
