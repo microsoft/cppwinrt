@@ -162,7 +162,7 @@
     <value>Windows Çalışma Zamanı Bileşeni (C++/WinRT)</value>
   </data>
   <data name="1012" xml:space="preserve">
-    <value>Bir C++/WinRT Windows Çalışma Zamanı uygulama tarafından kullanılabilecek bir Evrensel Windows Platformu.</value>
+    <value>Bir Evrensel Windows Platformu uygulaması tarafından kullanılabilen bir C++/WinRT Windows Çalışma Zamanı bileşeni projesi.</value>
   </data>
   <data name="1013" xml:space="preserve">
     <value>Boş Sayfa (C++/WinRT)</value>
@@ -171,10 +171,10 @@
     <value>C++/WinRT (UWP) uygulaması için önceden tanımlanmış düzeni olmayan Evrensel Windows Platformu sayfa.</value>
   </data>
   <data name="1015" xml:space="preserve">
-    <value>Boş Kullanıcı Denetimi (C++/WinRT)</value>
+    <value>Boş Kullanıcı Kontrolü (C++/WinRT)</value>
   </data>
   <data name="1016" xml:space="preserve">
-    <value>C++/WinRT (UWP) uygulaması için önceden tanımlanmış düzeni olmayan Evrensel Windows Platformu kullanıcı denetimi.</value>
+    <value>C++/WinRT (UWP) uygulaması için önceden tanımlanmış düzeni olmayan Evrensel Windows Platformu kullanıcı kontrolü.</value>
   </data>
   <data name="1017" xml:space="preserve">
     <value>Modeli Görüntüle (C++/WinRT)</value>
