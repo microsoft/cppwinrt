@@ -21,7 +21,7 @@
   </Type>
   <!--Primitive type visualizers-->
   <Type Name="winrt::Windows::UI::Color">
-    <DisplayString># {A,nvoXb} {R,nvoXb} {G,nvoXb} {B,nvoXb}</DisplayString>
+    <DisplayString>#{A,nvoXb}{R,nvoXb}{G,nvoXb}{B,nvoXb}</DisplayString>
   </Type>
   <Type Name="winrt::array_view&lt;*&gt;">
     <DisplayString>{{size = {m_size}, {m_data,[m_size]}}}</DisplayString>
