@@ -14,7 +14,7 @@ namespace winrt::impl
         fast_iterator() noexcept = default;
 
         fast_iterator(T const& collection, uint32_t const index) noexcept :
-            m_collection(&collection),
+            m_collection(collection),
             m_index(index)
         {}
 
@@ -73,12 +73,12 @@ namespace winrt::impl
 
         reference operator*() const
         {
-            return m_collection->GetAt(m_index);
+            return m_collection.GetAt(m_index);
         }
 
         reference operator[](difference_type n) const
         {
-            return m_collection->GetAt(m_index + static_cast<uint32_t>(n));
+            return m_collection.GetAt(m_index + static_cast<uint32_t>(n));
         }
 
         bool operator==(fast_iterator const& other) const noexcept
@@ -126,7 +126,7 @@ namespace winrt::impl
 
     private:
 
-        T const* m_collection = nullptr;
+        T m_collection = nullptr;
         uint32_t m_index = 0;
     };
 

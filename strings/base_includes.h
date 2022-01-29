@@ -28,6 +28,10 @@
 #include <format>
 #endif
 
+#ifdef __cpp_lib_ranges
+#include <ranges>
+#endif
+
 #ifdef __cpp_lib_coroutine
 
 #include <coroutine>

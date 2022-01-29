@@ -45,4 +45,20 @@ TEST_CASE("ranges")
 
         REQUIRE((result == std::vector{ 2, 4, 6 }));
     }
+
+    // borrowable ranges. without enabling them, *result would fail to compile.
+    {
+        // borrowable ranges, fast_iterator
+        auto result = std::ranges::max_element(winrt::single_threaded_vector<int>({ 1, 2, 4, 3, 6, 5 }));
+        REQUIRE((*result == 6));
+    }
+    {
+        // borrowable ranges, IIterator
+        auto result = std::ranges::find_if(winrt::single_threaded_map<int, int>(std::map<int, int>{ { 1, 2 }, { 2, 3 }, { 3, 4 } }),
+            [](auto const& kvp) { return kvp.Key() == 2 && kvp.Value() == 3; });
+
+        auto kvp = *result;
+
+        REQUIRE((kvp.Key() == 2 && kvp.Value() == 3));
+    }
 }

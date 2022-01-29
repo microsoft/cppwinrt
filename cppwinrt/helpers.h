@@ -502,8 +502,13 @@ namespace cppwinrt
     {
         for (auto&& impl : type.InterfaceImpl())
         {
-            const auto iface = impl.Interface();
-            if (iface.type() != TypeDefOrRef::TypeSpec && type_name(iface) == name)
+            auto iface = impl.Interface();
+            if (iface.type() == TypeDefOrRef::TypeSpec)
+            {
+                iface = iface.TypeSpec().Signature().GenericTypeInst().GenericType();
+            }
+
+            if (type_name(iface) == name)
             {
                 return true;
             }

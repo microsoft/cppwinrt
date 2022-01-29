@@ -158,8 +158,15 @@ namespace cppwinrt
         }
     }
 
+    template<std::size_t indents = 0>
     static void write_close_namespace(writer& w)
     {
+        for (std::size_t i = 0; i < indents; ++i)
+        {
+            auto format = R"(    )";
+            w.write(format);
+        }
+
         auto format = R"(}
 )";
 
@@ -184,6 +191,15 @@ namespace cppwinrt
 )");
 
         return { w, write_close_namespace };
+    }
+
+    [[nodiscard]] static finish_with wrap_ranges_namespace(writer& w)
+    {
+        w.write(R"(    namespace ranges
+    {
+)");
+
+        return { w, write_close_namespace<1> };
     }
 
     [[nodiscard]] static finish_with wrap_type_namespace(writer& w, std::string_view const& ns)
@@ -3247,6 +3263,19 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             auto generics = type.GenericParam();
 
             w.write("    template<%> struct formatter<%, wchar_t> : formatter<winrt::Windows::Foundation::IStringable, wchar_t> {};\n",
+                bind<write_generic_typenames>(generics),
+                type);
+        }
+    }
+
+    static void write_std_enable_borrowed_range(writer& w, TypeDef const& type)
+    {
+        std::string_view iiterable = "Windows.Foundation.Collections.IIterable`1";
+        if (type_name(type) == iiterable || implements_interface(type, iiterable))
+        {
+            auto generics = type.GenericParam();
+
+            w.write("        template<%> inline constexpr bool enable_borrowed_range<%> = true;\n",
                 bind<write_generic_typenames>(generics),
                 type);
         }
