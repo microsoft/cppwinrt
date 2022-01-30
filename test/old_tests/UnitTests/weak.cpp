@@ -466,9 +466,9 @@ TEST_CASE("weak,create_weak_in_destructor")
     REQUIRE(magic.get() == nullptr);
 }
 
+#ifdef WINRT_IMPL_COROUTINES
 TEST_CASE("weak,coroutine")
 {
-#ifdef WINRT_IMPL_COROUTINES
     // Run a coroutine to completion. Confirm that weak references fail to resolve.
     auto weak = winrt::weak_ref(Action());
     REQUIRE(weak.get() == nullptr);
@@ -482,7 +482,11 @@ TEST_CASE("weak,coroutine")
     resume();
     REQUIRE(weak.get() == nullptr);
 
-#else
-    WARN("Test skipped, no coroutine support");
-#endif
+    // Verify that weak reference resolves as long as strong reference exists.
+    auto action = Action();
+    weak = winrt::weak_ref(action);
+    REQUIRE(weak.get() == action);
+    action = nullptr;
+    REQUIRE(weak.get() == nullptr);
 }
+#endif
