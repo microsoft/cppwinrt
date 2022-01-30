@@ -119,11 +119,6 @@ namespace winrt::impl
             return it + n;
         }
 
-        friend fast_iterator operator-(difference_type n, fast_iterator it) noexcept
-        {
-            return it - n;
-        }
-
     private:
 
         T m_collection = nullptr;

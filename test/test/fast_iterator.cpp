@@ -45,7 +45,7 @@ TEST_CASE("fast_iterator")
         REQUIRE(vbegin[2] == 4);
         REQUIRE(vbegin + 2 > vbegin);
         REQUIRE(2 + vbegin > vbegin);
-        REQUIRE(2 - (vbegin + 4) > vbegin);
+        REQUIRE(vbegin + 4 - 2 > vbegin);
         REQUIRE(vbegin < vbegin + 2);
         REQUIRE(vbegin + 2 - 2 == vbegin);
         REQUIRE(end(v) - begin(v) == v.Size());
