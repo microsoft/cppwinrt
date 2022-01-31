@@ -208,12 +208,12 @@ namespace cppwinrt
                 w.write_each<write_std_formatter>(members.interfaces);
                 w.write_each<write_std_formatter>(members.classes);   
             }
-            {
-                auto wrap_ranges = wrap_ifdef(w, "__cpp_lib_ranges");
-                auto wrap_ranges_ns = wrap_ranges_namespace(w);
-                w.write_each<write_std_enable_borrowed_range>(members.interfaces);
-                w.write_each<write_std_enable_borrowed_range>(members.classes);   
-            }
+        }
+        {
+            auto wrap_ranges_ifdef = wrap_ifdef(w, "__cpp_lib_ranges");
+            auto wrap_ranges_ns = wrap_std_ranges_namespace(w);
+            w.write_each<write_enable_borrowed_range>(members.interfaces);
+            w.write_each<write_enable_borrowed_range>(members.classes);   
         }
 
         write_namespace_special(w, ns);
