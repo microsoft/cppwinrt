@@ -831,7 +831,7 @@ namespace winrt::impl
         virtual ~root_implements() noexcept
         {
             // If a weak reference is created during destruction, this ensures that it is also destroyed.
-            subtract_reference();
+            subtract_final_reference();
         }
 
         int32_t __stdcall GetIids(uint32_t* count, guid** array) noexcept
@@ -897,10 +897,6 @@ namespace winrt::impl
 
             if (target == 0)
             {
-                // If a weak reference was previously created, the m_references value will not be stable value (won't be zero).
-                // This ensures destruction has a stable value during destruction.
-                m_references = 1;
-
                 if constexpr (has_final_release::value)
                 {
                     D::final_release(std::unique_ptr<D>(static_cast<D*>(this)));
@@ -992,7 +988,7 @@ namespace winrt::impl
         }
         catch (...) { return to_hresult(); }
 
-        uint32_t subtract_reference() noexcept
+        uint32_t subtract_final_reference() noexcept
         {
             if constexpr (is_weak_ref_source::value)
             {
@@ -1017,6 +1013,19 @@ namespace winrt::impl
             {
                 return m_references.fetch_sub(1, std::memory_order_release) - 1;
             }
+        }
+
+        uint32_t subtract_reference() noexcept
+        {
+            uint32_t result = subtract_final_reference();
+
+            if (result == 0)
+            {
+                // Ensure destruction happens with a stable reference count that isn't a weak reference.
+                m_references.store(1, std::memory_order_relaxed);
+            }
+
+            return result;
         }
 
         template <typename T>
