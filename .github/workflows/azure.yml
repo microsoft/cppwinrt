@@ -1,8 +1,6 @@
 # 'Allow scripts to access the OAuth token' was selected in pipeline.  Add the following YAML to any steps requiring access:
 #       env:
 #           MY_ACCESS_TOKEN: $(System.AccessToken)
-# Variable 'MajorVersion' was defined in the Variables tab
-# Variable 'MinorVersion' was defined in the Variables tab
 # Cron Schedules have been converted using UTC Time Zone and may need to be updated for your location
 # Multi-job configuration must be converted to matrix strategy: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml#multi-job-configuration
 # Multi-job configuration must be converted to matrix strategy: https://docs.microsoft.com/en-us/azure/devops/pipelines/process/phases?view=azure-devops&tabs=yaml#multi-job-configuration
@@ -17,7 +15,7 @@ schedules:
   branches:
     include:
     - refs/heads/master
-name: $(MajorVersion).$(MinorVersion).$(date:yyMMdd)$(rev:.r)
+name: 2.0.$(date:yyMMdd)$(rev:.r)
 resources:
   repositories:
   - repository: self
@@ -226,8 +224,8 @@ jobs:
       pushPkgName: CppWinRT.Compiler
       target: $(OSBuildToolsRoot)\cppwinrt
       provData: false
-      majorVer: $(MajorVersion)
-      minorVer: $(MinorVersion)
+      majorVer: 2
+      minorVer: 0
       patchVer: $(PatchVersion)
       prereleaseVer: $(Build.SourceBranchName).$(BuildPlatform).$(BuildConfiguration).$(Build.BuildNumber).$(Build.SourceVersion)
       symBaselineOutput: $(Build.SourcesDirectory)\x86\cppwinrt
@@ -264,8 +262,8 @@ jobs:
       pushPkgName: CppWinRT.MSBuild
       target: $(OSBuildToolsRoot)\cppwinrt
       provData: false
-      majorVer: $(MajorVersion)
-      minorVer: $(MinorVersion)
+      majorVer: 2
+      minorVer: 0
       patchVer: $(PatchVersion)
       prereleaseVer: $(Build.SourceBranchName).$(Build.BuildNumber).$(Build.SourceVersion)
   - task: CopyFiles@2
