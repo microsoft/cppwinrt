@@ -1123,9 +1123,16 @@ namespace winrt::impl
             return query_interface_tearoff(id, object);
         }
 
+        static constexpr bool assert_weak_ref_support() noexcept
+        {
+            static_assert(is_inspectable::value, "Weak references are not supported because object does not implement IInspectable.");
+            static_assert(!std::disjunction<std::is_same<no_weak_ref, I>...>::value, "Weak references are not supported because no_weak_ref was specified.");
+            return is_weak_ref_source::value;
+        }
+
         impl::IWeakReferenceSource* make_weak_ref() noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
+            static_assert(assert_weak_ref_support(), "Weak references are not supported by this class.");
             uintptr_t count_or_pointer = m_references.load(std::memory_order_relaxed);
 
             if (is_weak_ref(count_or_pointer))
@@ -1163,19 +1170,19 @@ namespace winrt::impl
 
         static bool is_weak_ref(intptr_t const value) noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
+            static_assert(assert_weak_ref_support(), "Weak references are not supported by this class.");
             return value < 0;
         }
 
         static weak_ref_t* decode_weak_ref(uintptr_t const value) noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
+            static_assert(assert_weak_ref_support(), "Weak references are not supported by this class.");
             return reinterpret_cast<weak_ref_t*>(value << 1);
         }
 
         static uintptr_t encode_weak_ref(weak_ref_t* value) noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
+            static_assert(assert_weak_ref_support(), "Weak references are not supported by this class.");
             constexpr uintptr_t pointer_flag = static_cast<uintptr_t>(1) << ((sizeof(uintptr_t) * 8) - 1);
             WINRT_ASSERT((reinterpret_cast<uintptr_t>(value) & 1) == 0);
             return (reinterpret_cast<uintptr_t>(value) >> 1) | pointer_flag;
