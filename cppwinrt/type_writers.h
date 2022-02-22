@@ -291,7 +291,7 @@ namespace cppwinrt
             {
                 auto category = get_category(type);
 
-                // Unfortunately someone added Rational without informing language projections, so it didn’t get
+                // Unfortunately someone added Rational without informing language projections, so it didn't get
                 // the same special treatment as other numerics, and now it needs its own special handling.
                 if (ns == "Windows.Foundation.Numerics" && name != "Rational")
                 {
