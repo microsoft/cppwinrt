@@ -289,8 +289,6 @@ namespace cppwinrt
                 return;
             }
 
-            // These renames are regrettable but must remain for compat.
-
             if (name == "EventRegistrationToken" && ns == "Windows.Foundation")
             {
                 write("winrt::event_token");
