@@ -22,7 +22,7 @@ namespace
         }
     };
 
-    struct NoWeak : implements<NoWeak, ::IUnknown>
+    struct WeakClassicCom : implements<WeakClassicCom, ::IUnknown>
     {
     };
 
@@ -161,6 +161,26 @@ TEST_CASE("weak,source")
         REQUIRE(b.ToString() == L"Weak");
     }
 
+    SECTION("classic-com")
+    {
+        com_ptr<::IUnknown> a = make<WeakClassicCom>();
+
+        weak_ref<::IUnknown> w = a;
+        com_ptr<::IUnknown> b = w.get();
+        REQUIRE(b == a);
+
+        // still one outstanding reference
+        b = nullptr;
+        b = w.get();
+        REQUIRE(b != nullptr);
+
+        // no outstanding references
+        a = nullptr;
+        b = nullptr;
+        b = w.get();
+        REQUIRE(b == nullptr);
+    }
+
     // Verify that deduction guides work.
     static_assert(std::is_same_v<weak_ref<IStringable>, decltype(weak_ref(IStringable()))>);
     static_assert(std::is_same_v<weak_ref<Uri>, decltype(weak_ref(std::declval<Uri>()))>);
@@ -206,12 +226,24 @@ TEST_CASE("weak,QI")
         REQUIRE(ref.as<::IUnknown>() != object.as<::IUnknown>());
     }
 
-    SECTION("no-weak")
+    SECTION("weak-classic-com")
     {
-        com_ptr<::IUnknown> object = make<NoWeak>();
+        com_ptr<::IUnknown> object = make<WeakClassicCom>();
         REQUIRE(!object.try_as<Windows::Foundation::IInspectable>());
-        REQUIRE(!object.try_as<winrt::impl::IWeakReferenceSource>());
+        REQUIRE(object.try_as<winrt::impl::IWeakReferenceSource>());
         REQUIRE(!object.try_as<winrt::impl::IWeakReference>());
+
+        com_ptr<winrt::impl::IWeakReferenceSource> source = object.as<winrt::impl::IWeakReferenceSource>();
+        REQUIRE(!source.try_as<winrt::impl::IWeakReference>());
+        REQUIRE(source.try_as<winrt::impl::IWeakReferenceSource>());
+        REQUIRE(object.as<::IUnknown>() == source.as<::IUnknown>());
+
+        com_ptr<winrt::impl::IWeakReference> ref;
+        REQUIRE(S_OK == source->GetWeakReference(ref.put()));
+        REQUIRE(!ref.try_as<winrt::impl::IWeakReferenceSource>());
+        REQUIRE(!ref.try_as<Windows::Foundation::IInspectable>());
+        REQUIRE(ref.as<winrt::impl::IWeakReference>() == ref);
+        REQUIRE(ref.as<::IUnknown>() != object.as<::IUnknown>());
     }
 
     SECTION("factory")
