@@ -277,7 +277,7 @@ namespace cppwinrt
                 return;
             }
 
-            // TODO: get rid of all these renames once parity with cppwinrt.exe has been reached...
+            // These renames are regrettable but must remain for compat.
 
             if (name == "EventRegistrationToken" && ns == "Windows.Foundation")
             {
@@ -291,7 +291,9 @@ namespace cppwinrt
             {
                 auto category = get_category(type);
 
-                if (ns == "Windows.Foundation.Numerics")
+                // Unfortunately someone added Rational without informing language projections, so it didn’t get
+                // the same special treatment as other numerics, and now it needs its own special handling.
+                if (ns == "Windows.Foundation.Numerics" && name != "Rational")
                 {
                     if (name == "Matrix3x2") { name = "float3x2"; }
                     else if (name == "Matrix4x4") { name = "float4x4"; }
