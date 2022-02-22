@@ -428,6 +428,7 @@
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="rational.cpp" />
     <ClCompile Include="return_params.cpp" />
     <ClCompile Include="return_params_abi.cpp" />
     <ClCompile Include="single_threaded_observable_vector.cpp" />
