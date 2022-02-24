@@ -23,7 +23,6 @@ TEST_CASE("guid")
     REQUIRE(winrt::guid({ "{00112233-4455-6677-8899-aabbccddeeff}" + 1, 36 }) == expected);
     REQUIRE(winrt::guid("{00112233-4455-6677-8899-aabbccddeeff}") == expected);
     REQUIRE(winrt::guid("(00112233-4455-6677-8899-aabbccddeeff)") == expected);
-    REQUIRE(winrt::guid(" 00112233-4455-6677-8899-aabbccddeeff ") == expected);
 
     REQUIRE_THROWS_AS(winrt::guid(""), std::invalid_argument);
     REQUIRE_THROWS_AS(winrt::guid("not a guid"), std::invalid_argument);
