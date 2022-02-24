@@ -85,8 +85,11 @@ WINRT_EXPORT namespace winrt
     private:
 
         template <typename TStringView>
-        static constexpr guid parse(TStringView const value)
+        static constexpr guid parse(TStringView value)
         {
+            value.remove_prefix(std::min(value.find_first_not_of(" {("), v.size()));
+            value.remove_suffix(std::min(value.find_last_not_of(" })"), v.size()));
+
             if (value.size() != 36 || value[8] != '-' || value[13] != '-' || value[18] != '-' || value[23] != '-')
             {
                 throw std::invalid_argument("value is not a valid GUID string");
