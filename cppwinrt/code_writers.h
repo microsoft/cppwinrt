@@ -1150,11 +1150,34 @@ namespace cppwinrt
         }
         else
         {
-            format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const
+            if (settings.fluent && method.SpecialName() && method.Name()._Starts_with("put_"))
+            {
+                format = R"(    template <typename D%> WINRT_IMPL_AUTO(D const&) consume_%<D%>::%(%) const
+    {%
+        check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
+        return static_cast<D const&>(*this);
+    }
+)";
+                return w.write(format,
+                    bind<write_comma_generic_typenames>(generics),
+                    type_impl_name,
+                    bind<write_comma_generic_types>(generics),
+                    method_name,
+                    bind<write_consume_params>(signature),
+                    bind<write_consume_return_type>(signature, false),
+                    type,
+                    get_abi_name(method),
+                    bind<write_abi_args>(signature),
+                    bind<write_consume_return_statement>(signature));
+            }
+            else
+            {
+                format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const
     {%
         check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
     }
 )";
+            }
         }
 
         w.write(format,
