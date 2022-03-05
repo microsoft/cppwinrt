@@ -39,6 +39,7 @@ namespace cppwinrt
         { "fastabi", 0, 0 }, // Enable support for the Fast ABI
         { "ignore_velocity", 0, 0 }, // Ignore feature staging metadata and always include implementations
         { "synchronous", 0, 0 }, // Instructs cppwinrt to run on a single thread to avoid file system issues in batch builds
+        { "fluent", 0, 0, {}, "Produce fluent-style (chainable) property setters" },
     };
 
     static void print_usage(writer& w)
@@ -90,6 +91,8 @@ Where <spec> is one or more of:
 
         settings.license = args.exists("license");
         settings.brackets = args.exists("brackets");
+
+        settings.fluent = args.exists("fluent");
 
         path output_folder = args.value("output", ".");
         create_directories(output_folder / "winrt/impl");
