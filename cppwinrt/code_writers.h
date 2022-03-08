@@ -992,12 +992,24 @@ namespace cppwinrt
         auto method_name = get_name(method);
         auto type = method.Parent();
 
-        w.write("        %WINRT_IMPL_AUTO(%) %(%) const%;\n",
-            is_get_overload(method) ? "[[nodiscard]] " : "",
-            signature.return_signature(),
-            method_name,
-            bind<write_consume_params>(signature),
-            is_noexcept(method) ? " noexcept" : "");
+        if (settings.fluent && is_put_overload(method))
+        {
+            w.write("        D const& %(%) const%;\n",
+                method_name,
+                bind<write_consume_params>(signature),
+                is_noexcept(method) ? " noexcept" : "");
+        }
+        else
+        {
+            w.write("        %WINRT_IMPL_AUTO(%) %(%) const%;\n",
+                is_get_overload(method) ? "[[nodiscard]] " : "",
+                signature.return_signature(),
+                method_name,
+                bind<write_consume_params>(signature),
+                is_noexcept(method) ? " noexcept" : "");
+
+        }
+
 
         if (is_add_overload(method))
         {
@@ -1150,9 +1162,9 @@ namespace cppwinrt
         }
         else
         {
-            if (settings.fluent && method.SpecialName() && method.Name()._Starts_with("put_"))
+            if (settings.fluent && is_put_overload(method))
             {
-                format = R"(    template <typename D%> WINRT_IMPL_AUTO(D const&) consume_%<D%>::%(%) const
+                format = R"(    template <typename D%> D const& consume_%<D%>::%(%) const
     {%
         check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
         return static_cast<D const&>(*this);
@@ -2022,24 +2034,44 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_interface_override_method(writer& w, MethodDef const& method, std::string_view const& interface_name)
     {
-        auto format = R"(    template <typename D> WINRT_IMPL_AUTO(%) %T<D>::%(%) const%
+
+        method_signature signature{ method };
+        auto method_name = get_name(method);
+
+        if (settings.fluent && is_put_overload(method))
+        {
+            auto format = R"(    template <typename D> D const& %T<D>::%(%) const%
+    {
+        return shim().template try_as<%>().%(%);
+    }
+)";
+            w.write(format,
+                interface_name,
+                method_name,
+                bind<write_consume_params>(signature),
+                is_noexcept(method) ? " noexcept" : "",
+                interface_name,
+                method_name,
+                bind<write_consume_args>(signature));
+        }
+        else
+        {
+            auto format = R"(    template <typename D> WINRT_IMPL_AUTO(%) %T<D>::%(%) const%
     {
         return shim().template try_as<%>().%(%);
     }
 )";
 
-        method_signature signature{ method };
-        auto method_name = get_name(method);
-
-        w.write(format,
-            signature.return_signature(),
-            interface_name,
-            method_name,
-            bind<write_consume_params>(signature),
-            is_noexcept(method) ? " noexcept" : "",
-            interface_name,
-            method_name,
-            bind<write_consume_args>(signature));
+            w.write(format,
+                signature.return_signature(),
+                interface_name,
+                method_name,
+                bind<write_consume_params>(signature),
+                is_noexcept(method) ? " noexcept" : "",
+                interface_name,
+                method_name,
+                bind<write_consume_args>(signature));
+        }
     }
 
     static void write_interface_override_methods(writer& w, TypeDef const& class_type)
