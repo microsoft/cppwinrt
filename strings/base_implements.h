@@ -831,7 +831,7 @@ namespace winrt::impl
         virtual ~root_implements() noexcept
         {
             // If a weak reference is created during destruction, this ensures that it is also destroyed.
-            subtract_reference();
+            subtract_final_reference();
         }
 
         int32_t __stdcall GetIids(uint32_t* count, guid** array) noexcept
@@ -897,10 +897,6 @@ namespace winrt::impl
 
             if (target == 0)
             {
-                // If a weak reference was previously created, the m_references value will not be stable value (won't be zero).
-                // This ensures destruction has a stable value during destruction.
-                m_references = 1;
-
                 if constexpr (has_final_release::value)
                 {
                     D::final_release(std::unique_ptr<D>(static_cast<D*>(this)));
@@ -992,7 +988,7 @@ namespace winrt::impl
         }
         catch (...) { return to_hresult(); }
 
-        uint32_t subtract_reference() noexcept
+        uint32_t subtract_final_reference() noexcept
         {
             if constexpr (is_weak_ref_source::value)
             {
@@ -1017,6 +1013,19 @@ namespace winrt::impl
             {
                 return m_references.fetch_sub(1, std::memory_order_release) - 1;
             }
+        }
+
+        uint32_t subtract_reference() noexcept
+        {
+            uint32_t result = subtract_final_reference();
+
+            if (result == 0)
+            {
+                // Ensure destruction happens with a stable reference count that isn't a weak reference.
+                m_references.store(1, std::memory_order_relaxed);
+            }
+
+            return result;
         }
 
         template <typename T>
@@ -1054,7 +1063,7 @@ namespace winrt::impl
 
         using is_agile = std::negation<std::disjunction<std::is_same<non_agile, I>...>>;
         using is_inspectable = std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, I>...>;
-        using is_weak_ref_source = std::conjunction<is_inspectable, std::negation<std::disjunction<std::is_same<no_weak_ref, I>...>>>;
+        using is_weak_ref_source = std::negation<std::disjunction<std::is_same<no_weak_ref, I>...>>;
         using use_module_lock = std::negation<std::disjunction<std::is_same<no_module_lock, I>...>>;
         using weak_ref_t = impl::weak_ref<is_agile::value, use_module_lock::value>;
 
@@ -1116,57 +1125,64 @@ namespace winrt::impl
 
         impl::IWeakReferenceSource* make_weak_ref() noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
-            uintptr_t count_or_pointer = m_references.load(std::memory_order_relaxed);
-
-            if (is_weak_ref(count_or_pointer))
+            if constexpr (is_weak_ref_source::value)
             {
-                return decode_weak_ref(count_or_pointer)->get_source();
-            }
-
-            com_ptr<weak_ref_t> weak_ref;
-            *weak_ref.put() = new (std::nothrow) weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer));
-
-            if (!weak_ref)
-            {
-                return nullptr;
-            }
-
-            uintptr_t const encoding = encode_weak_ref(weak_ref.get());
-
-            for (;;)
-            {
-                if (m_references.compare_exchange_weak(count_or_pointer, encoding, std::memory_order_acq_rel, std::memory_order_relaxed))
-                {
-                    impl::IWeakReferenceSource* result = weak_ref->get_source();
-                    detach_abi(weak_ref);
-                    return result;
-                }
+                uintptr_t count_or_pointer = m_references.load(std::memory_order_relaxed);
 
                 if (is_weak_ref(count_or_pointer))
                 {
                     return decode_weak_ref(count_or_pointer)->get_source();
                 }
 
-                weak_ref->set_strong(static_cast<uint32_t>(count_or_pointer));
+                com_ptr<weak_ref_t> weak_ref;
+                *weak_ref.put() = new (std::nothrow) weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer));
+
+                if (!weak_ref)
+                {
+                    return nullptr;
+                }
+
+                uintptr_t const encoding = encode_weak_ref(weak_ref.get());
+
+                for (;;)
+                {
+                    if (m_references.compare_exchange_weak(count_or_pointer, encoding, std::memory_order_acq_rel, std::memory_order_relaxed))
+                    {
+                        impl::IWeakReferenceSource* result = weak_ref->get_source();
+                        detach_abi(weak_ref);
+                        return result;
+                    }
+
+                    if (is_weak_ref(count_or_pointer))
+                    {
+                        return decode_weak_ref(count_or_pointer)->get_source();
+                    }
+
+                    weak_ref->set_strong(static_cast<uint32_t>(count_or_pointer));
+                }
+            }
+            else
+            {
+                static_assert(is_weak_ref_source::value, "Weak references are not supported because no_weak_ref was specified.");
+                return nullptr;
             }
         }
 
         static bool is_weak_ref(intptr_t const value) noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
+            static_assert(is_weak_ref_source::value, "Weak references are not supported because no_weak_ref was specified.");
             return value < 0;
         }
 
         static weak_ref_t* decode_weak_ref(uintptr_t const value) noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
+            static_assert(is_weak_ref_source::value, "Weak references are not supported because no_weak_ref was specified.");
             return reinterpret_cast<weak_ref_t*>(value << 1);
         }
 
         static uintptr_t encode_weak_ref(weak_ref_t* value) noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
+            static_assert(is_weak_ref_source::value, "Weak references are not supported because no_weak_ref was specified.");
             constexpr uintptr_t pointer_flag = static_cast<uintptr_t>(1) << ((sizeof(uintptr_t) * 8) - 1);
             WINRT_ASSERT((reinterpret_cast<uintptr_t>(value) & 1) == 0);
             return (reinterpret_cast<uintptr_t>(value) >> 1) | pointer_flag;

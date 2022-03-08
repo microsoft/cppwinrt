@@ -1,7 +1,7 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
-    <Name>Static Library (C++/WinRT)</Name>
-    <Description>A project for a C++/WinRT Static Library that can be used by a Universal Windows Platform app</Description>
+    <Name ID="1009" Package="FIXME-PACKAGEGUID" />
+    <Description ID="1010" Package="FIXME-PACKAGEGUID" />
     <ProjectType>VC</ProjectType>
     <SortOrder>3000</SortOrder>
     <TemplateID>microsoft.Windows.CppWinRT.StaticLibrary</TemplateID>

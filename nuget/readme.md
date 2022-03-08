@@ -70,6 +70,7 @@ C++/WinRT behavior can be customized with these project properties:
 | CppWinRTOptimized | true \| *false | Enables component projection [optimization features](https://kennykerr.ca/2019/06/07/cppwinrt-optimizing-components/) |
 | CppWinRTGenerateWindowsMetadata | true \| *false | Indicates whether this project produces Windows Metadata |
 | CppWinRTEnableDefaultPrivateFalse | true \| *false | Indicates whether this project uses C++/WinRT optimized default for copying binaries to the output directory |
+| CppWinRTFluent | true \| *false | Indicates whether to produce fluent-style (chainable) property setters |
 \*Default value
 
 To customize common C++/WinRT project properties: 

@@ -21,6 +21,8 @@ TEST_CASE("guid")
 
     REQUIRE(winrt::guid("00112233-4455-6677-8899-aabbccddeeff") == expected);
     REQUIRE(winrt::guid({ "{00112233-4455-6677-8899-aabbccddeeff}" + 1, 36 }) == expected);
+    REQUIRE(winrt::guid("{00112233-4455-6677-8899-aabbccddeeff}") == expected);
+    REQUIRE(winrt::guid("(00112233-4455-6677-8899-aabbccddeeff)") == expected);
 
     REQUIRE_THROWS_AS(winrt::guid(""), std::invalid_argument);
     REQUIRE_THROWS_AS(winrt::guid("not a guid"), std::invalid_argument);
@@ -28,7 +30,6 @@ TEST_CASE("guid")
     REQUIRE_THROWS_AS(winrt::guid("too long string that's also not a guid"), std::invalid_argument);
     REQUIRE_THROWS_AS(winrt::guid("00112233-4455-6677-8899-aabbccddeeff with extra"), std::invalid_argument);
     REQUIRE_THROWS_AS(winrt::guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"), std::invalid_argument);
-    REQUIRE_THROWS_AS(winrt::guid("{00112233-4455-6677-8899-aabbccddeeff}"), std::invalid_argument);
 
     // Verify that you can constexpr-construct a guid from a GUID.
     constexpr winrt::guid from_abi_guid = GUID{ 0x00112233, 0x4455, 0x6677, { 0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff } };

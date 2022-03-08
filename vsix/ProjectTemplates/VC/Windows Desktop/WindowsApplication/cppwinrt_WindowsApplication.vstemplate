@@ -1,7 +1,7 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
-    <Name>Windows Desktop Application (C++/WinRT)</Name>
-    <Description>A project for creating a C++/WinRT Windows desktop application</Description>
+    <Name ID="1003" Package="FIXME-PACKAGEGUID" />
+    <Description ID="1004" Package="FIXME-PACKAGEGUID" />
     <ProjectType>VC</ProjectType>
     <SortOrder>4000</SortOrder>
     <TemplateID>microsoft.Windows.CppWinRT.WindowsApplication</TemplateID>
