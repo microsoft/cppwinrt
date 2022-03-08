@@ -31,7 +31,7 @@ namespace cppwinrt
         bool fastabi{};
         std::map<winmd::reader::TypeDef, winmd::reader::TypeDef> fastabi_cache;
 
-        bool fluent{};
+        bool fluent{true};
     };
 
     extern settings_type settings;

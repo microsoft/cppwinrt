@@ -86,9 +86,9 @@
                 Description="Enables the /await compiler option (disable this if you want to pass this yourself)"
                 Category="General" />
 
-  <BoolProperty Name="CppWinRTFluent"
-                DisplayName="Produce fluent-style property setters"
-                Description="Produces fluent-style (chainable, aka &quot;builder pattern&quot;) property setters"
+  <BoolProperty Name="CppWinRTNoFluent"
+                DisplayName="Produce non-chainable property setters"
+                Description="By default, cppwinrt will produces fluent-style (chainable, aka &quot;builder pattern&quot;) property setters. This option opts out of this behavior and causes cppwinrt to make property setters return void instead."
                 Category="General" />
 
 </Rule>

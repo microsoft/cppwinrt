@@ -1,0 +1,21 @@
+import "Windows.Foundation.idl";
+
+namespace test_component_fluent
+{
+    interface Interface1
+    {
+        Double DoubleProperty;
+    }
+
+    unsealed runtimeclass HierarchyA : Interface1
+    {
+        HierarchyA();
+        Int32 PropertyA;
+    }
+
+    unsealed runtimeclass HierarchyB : HierarchyA
+    {
+        HierarchyB();
+        Int32 PropertyB;
+    }
+}
