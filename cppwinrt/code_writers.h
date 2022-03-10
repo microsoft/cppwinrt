@@ -992,9 +992,8 @@ namespace cppwinrt
         auto method_name = get_name(method);
         auto type = method.Parent();
 
-        w.write("        %WINRT_IMPL_AUTO(%) %(%) const%;\n",
+        w.write("        %auto %(%) const%;\n",
             is_get_overload(method) ? "[[nodiscard]] " : "",
-            signature.return_signature(),
             method_name,
             bind<write_consume_params>(signature),
             is_noexcept(method) ? " noexcept" : "");
@@ -1133,7 +1132,7 @@ namespace cppwinrt
             if (is_remove_overload(method))
             {
                 // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
-                format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
+                format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
         WINRT_IMPL_SHIM(%)->%(%);%
     }
@@ -1141,7 +1140,7 @@ namespace cppwinrt
             }
             else
             {
-                format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
+                format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
         WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%
     }
@@ -1150,7 +1149,7 @@ namespace cppwinrt
         }
         else
         {
-            format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const
+            format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
     {%
         check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
     }
@@ -1159,7 +1158,6 @@ namespace cppwinrt
 
         w.write(format,
             bind<write_comma_generic_typenames>(generics),
-            signature.return_signature(),
             type_impl_name,
             bind<write_comma_generic_types>(generics),
             method_name,
@@ -1207,14 +1205,13 @@ namespace cppwinrt
         // return static_cast<% const&>(*this).%(%);
         //
 
-        std::string_view format = R"(    inline WINRT_IMPL_AUTO(%) %::%(%) const%
+        std::string_view format = R"(    inline auto %::%(%) const%
     {
         return [&](% const& winrt_impl_base) { return winrt_impl_base.%(%); }(*this);
     }
 )";
 
         w.write(format,
-            signature.return_signature(),
             class_type.TypeName(),
             method_name,
             bind<write_consume_params>(signature),
@@ -1999,7 +1996,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_interface_override_method(writer& w, MethodDef const& method, std::string_view const& interface_name)
     {
-        auto format = R"(    template <typename D> WINRT_IMPL_AUTO(%) %T<D>::%(%) const%
+        auto format = R"(    template <typename D> auto %T<D>::%(%) const%
     {
         return shim().template try_as<%>().%(%);
     }
@@ -2009,7 +2006,6 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         auto method_name = get_name(method);
 
         w.write(format,
-            signature.return_signature(),
             interface_name,
             method_name,
             bind<write_consume_params>(signature),
