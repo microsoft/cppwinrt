@@ -21,10 +21,10 @@ namespace winrt::test_component_derived::Nested::implementation
         test_component_base::HierarchyA a = *this;
         assert(a);
 
-        Nested::IHierarchyD id = *this;
+        Nested::IHierarchyD id = d;
         assert(id);
 
-        Nested::IHierarchyC ic = *this;
+        Nested::IHierarchyC ic = c;
         assert(ic);
 
         test_component_base::IHierarchyB ib = *this;

@@ -1125,6 +1125,8 @@ namespace cppwinrt
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
 
+        auto put_return = is_put_overload(method) ? "\n        return static_cast<D const&>(*this);" : "";
+
         std::string_view format;
 
         if (is_noexcept(method))
@@ -1134,7 +1136,7 @@ namespace cppwinrt
                 // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        WINRT_IMPL_SHIM(%)->%(%);%
+        WINRT_IMPL_SHIM(%)->%(%);%%
     }
 )";
             }
@@ -1142,7 +1144,7 @@ namespace cppwinrt
             {
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%
+        WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%%
     }
 )";
             }
@@ -1151,7 +1153,7 @@ namespace cppwinrt
         {
             format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
     {%
-        check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
+        check_hresult(WINRT_IMPL_SHIM(%)->%(%));%%
     }
 )";
         }
@@ -1166,7 +1168,8 @@ namespace cppwinrt
             type,
             get_abi_name(method),
             bind<write_abi_args>(signature),
-            bind<write_consume_return_statement>(signature));
+            bind<write_consume_return_statement>(signature),
+            put_return);
 
         if (is_add_overload(method))
         {
@@ -2339,25 +2342,13 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
     static void write_class_usings(writer& w, TypeDef const& type)
     {
         auto type_name = type.TypeName();
-        auto default_interface = get_default_interface(type);
-        auto default_interface_name = w.write_temp("%", default_interface);
         std::map<std::string_view, std::set<std::string>> method_usage;
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
-            if (info.defaulted && !info.base)
+            for (auto&& method : info.type.MethodList())
             {
-                for (auto&& method : info.type.MethodList())
-                {
-                    method_usage[get_name(method)].insert(default_interface_name);
-                }
-            }
-            else
-            {
-                for (auto&& method : info.type.MethodList())
-                {
-                    method_usage[get_name(method)].insert(interface_name);
-                }
+                method_usage[get_name(method)].insert(interface_name);
             }
         }
 
@@ -2370,19 +2361,10 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
             for (auto&& interface_name : interfaces)
             {
-                if (default_interface_name == interface_name)
-                {
-                    w.write("        using %::%;\n",
-                        interface_name,
-                        method_name);
-                }
-                else
-                {
-                    w.write("        using impl::consume_t<%, %>::%;\n",
-                        type_name,
-                        interface_name,
-                        method_name);
-                }
+                w.write("        using impl::consume_t<%, %>::%;\n",
+                    type_name,
+                    interface_name,
+                    method_name);
             }
         }
     }
@@ -2787,7 +2769,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
-            if (!info.defaulted || info.base)
+            if (!info.is_default || info.base)
             {
                 if (first)
                 {
@@ -3147,21 +3129,23 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         auto type_name = type.TypeName();
         auto factories = get_factories(w, type);
 
-        auto format = R"(    struct __declspec(empty_bases) % : %%%
+        auto format = R"(    struct __declspec(empty_bases) % :
+        winrt::Windows::Foundation::IInspectable,
+        impl::class_default<%, %>%%
     {
         %(std::nullptr_t) noexcept {}
-        %(void* ptr, take_ownership_from_abi_t) noexcept : %(ptr, take_ownership_from_abi) {}
+        %(void* ptr, take_ownership_from_abi_t) noexcept : winrt::Windows::Foundation::IInspectable(ptr, take_ownership_from_abi) {}
 %%%    };
 )";
 
         w.write(format,
+            type_name,
             type_name,
             base_type,
             bind<write_class_base>(type),
             bind<write_class_requires>(type),
             type_name,
             type_name,
-            base_type,
             bind<write_constructor_declarations>(type, factories),
             bind<write_class_usings>(type),
             bind_each<write_static_declaration>(factories, type));

@@ -171,6 +171,15 @@ namespace winrt::impl
     struct __declspec(empty_bases) base : base_one<D, I>...
     {};
 
+    template <typename D, typename I>
+    struct class_default : consume_t<D, I>
+    {
+        operator I const& () const noexcept
+        {
+            return reinterpret_cast<I const&>(*this);
+        }
+    };
+
     template <typename T>
     T empty_value() noexcept
     {

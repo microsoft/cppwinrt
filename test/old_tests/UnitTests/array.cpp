@@ -24,11 +24,11 @@ static IAsyncOperation<IDataReader> CreateDataReader(std::initializer_list<byte>
     writer.WriteByte(1);
     writer.WriteByte(2);
     writer.WriteByte(3);
-    co_await writer.StoreAsync();
+    co_await static_cast<IAsyncOperation<uint32_t>>(writer.StoreAsync());
 
     stream.Seek(0);
     DataReader reader(stream);
-    co_await reader.LoadAsync(3);
+    co_await static_cast<IAsyncOperation<uint32_t>>(reader.LoadAsync(3));
     co_return reader;
 }
 
