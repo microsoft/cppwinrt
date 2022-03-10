@@ -1124,6 +1124,20 @@ namespace cppwinrt
         auto method_name = get_name(method);
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
+        std::string put_return;
+
+        if (is_put_overload(method))
+        {
+            if (auto attribute = get_attribute(type, "Windows.Foundation.Metadata", "ExclusiveToAttribute"))
+            {
+                auto class_name = get_attribute_value<ElemSig::SystemType>(attribute, 0).name;
+                put_return = w.write_temp("\n        return reinterpret_cast<winrt::@ const&>(*this);", class_name);
+            }
+            else
+            {
+                put_return = "\n        return static_cast<D const&>(*this);";
+            }
+        }
 
         std::string_view format;
 
@@ -1134,7 +1148,7 @@ namespace cppwinrt
                 // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        WINRT_IMPL_SHIM(%)->%(%);%
+        WINRT_IMPL_SHIM(%)->%(%);%%
     }
 )";
             }
@@ -1142,7 +1156,7 @@ namespace cppwinrt
             {
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%
+        WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%%
     }
 )";
             }
@@ -1151,7 +1165,7 @@ namespace cppwinrt
         {
             format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
     {%
-        check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
+        check_hresult(WINRT_IMPL_SHIM(%)->%(%));%%
     }
 )";
         }
@@ -1166,7 +1180,8 @@ namespace cppwinrt
             type,
             get_abi_name(method),
             bind<write_abi_args>(signature),
-            bind<write_consume_return_statement>(signature));
+            bind<write_consume_return_statement>(signature),
+            put_return);
 
         if (is_add_overload(method))
         {
