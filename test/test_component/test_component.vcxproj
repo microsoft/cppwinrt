@@ -609,6 +609,8 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ChainedProperties.Base.cpp" />
+    <ClCompile Include="ChainedProperties.Derived.cpp" />
     <ClCompile Include="Class.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
     <ClCompile Include="module.cpp" />
@@ -624,6 +626,8 @@
     <ClCompile Include="Windows.Class.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ChainedProperties.Base.h" />
+    <ClInclude Include="ChainedProperties.Derived.h" />
     <ClInclude Include="Class.h" />
     <ClInclude Include="Optional.h" />
     <ClInclude Include="pch.h" />

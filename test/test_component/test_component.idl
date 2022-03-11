@@ -327,4 +327,29 @@ namespace test_component
 
         delegate void Delegate();
     }
+
+    namespace ChainedProperties
+    {
+        [version(1)]
+        unsealed runtimeclass Base
+        {
+            Base();
+
+            Int32 First;
+
+            [version(2)]
+            Int32 Second;
+        }
+
+        [version(1)]
+        unsealed runtimeclass Derived : Base
+        {
+            Derived();
+
+            Int32 Third;
+
+            [version(2)]
+            Int32 Fourth;
+        }
+    }
 }
