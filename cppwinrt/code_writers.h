@@ -1197,17 +1197,9 @@ namespace cppwinrt
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
 
-        //
-        // Note: this use of a lambda is a workaround for a Visual C++ compiler bug:
-        // https://developercommunity.visualstudio.com/content/problem/554130/incorrect-code-gen-when-invoking-a-conversion-oper.html
-        // Once fixed, revert the function body back to this:
-        //
-        // return static_cast<% const&>(*this).%(%);
-        //
-
         std::string_view format = R"(    inline auto %::%(%) const%
     {
-        return [&](% const& winrt_impl_base) { return winrt_impl_base.%(%); }(*this);
+        return static_cast<% const&>(*this).%(%);
     }
 )";
 
