@@ -2,19 +2,12 @@
 
   <!-- Set common MSBuild properties and item metadata for CppWinRT tool and tests -->
 
-  <PropertyGroup Condition="'$(VisualStudioVersion)' == '15.0'">
-    <PlatformToolset>v141</PlatformToolset>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(VisualStudioVersion)' == '16.0'">
-    <PlatformToolset>v142</PlatformToolset>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(VisualStudioVersion)' == '17.0'">
+  <PropertyGroup>
     <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '16.0'">v142</PlatformToolset>
+    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
 
   <!--
@@ -37,8 +30,6 @@
     <CLToolExe>clang-cl.exe</CLToolExe>
     <CLToolPath>C:\Program Files\LLVM\bin</CLToolPath>
   </PropertyGroup>
-
-  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
 
   <PropertyGroup>
     <CppWinRTBuildVersion Condition="'$(CppWinRTBuildVersion)'==''">2.3.4.5</CppWinRTBuildVersion>

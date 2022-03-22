@@ -39,9 +39,8 @@
     <ProjectGuid>{A91B8BF3-28E4-4D9E-8DBA-64B70E4F0270}</ProjectGuid>
     <RootNamespace>Component</RootNamespace>
     <ProjectName>test_component</ProjectName>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\cppwinrt.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>

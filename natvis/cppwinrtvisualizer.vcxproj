@@ -27,14 +27,6 @@
     <TargetName>cppwinrtvisualizer</TargetName>
     <NugetPackagesDirectory>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)packages\))</NugetPackagesDirectory>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(VisualStudioVersion)' &gt;= '16.0'">
-    <PlatformToolset>v142</PlatformToolset>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(VisualStudioVersion)' &lt; '16.0'">
-    <PlatformToolset>v141</PlatformToolset>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>

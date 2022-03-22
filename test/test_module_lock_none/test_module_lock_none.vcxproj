@@ -39,9 +39,8 @@
     <ProjectGuid>{D48A96C2-8512-4CC3-B6E4-7CFF07ED8ED3}</ProjectGuid>
     <RootNamespace>unittests</RootNamespace>
     <ProjectName>test_module_lock_none</ProjectName>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\cppwinrt.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
