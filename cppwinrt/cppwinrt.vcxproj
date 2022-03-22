@@ -122,9 +122,8 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{D613FB39-5035-4043-91E2-BAB323908AF4}</ProjectGuid>
     <RootNamespace>cppwinrt</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\cppwinrt.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
