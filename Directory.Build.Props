@@ -33,12 +33,11 @@
 
   <PropertyGroup>
     <CppWinRTBuildVersion Condition="'$(CppWinRTBuildVersion)'==''">2.3.4.5</CppWinRTBuildVersion>
-    <CmakePlatform>$(Platform)</CmakePlatform>
-    <CmakePlatform Condition="'$(Platform)'=='Win32'">x86</CmakePlatform>
-    <CmakeOutDir Condition="'$(CmakeOutDir)'==''">$(SolutionDir)_build\$(CmakePlatform)\$(Configuration)</CmakeOutDir>
-    <CppWinRTDir>$(CmakeOutDir)\</CppWinRTDir>
+    <CppWinRTPlatform>$(Platform)</CppWinRTPlatform>
+    <CppWinRTPlatform Condition="'$(Platform)'=='Win32'">x86</CppWinRTPlatform>
+    <OutDir>$(SolutionDir)_build\$(CppWinRTPlatform)\$(Configuration)\</OutDir>
+    <CppWinRTDir>$(OutDir)</CppWinRTDir>
     <CppWinRTDir Condition="'$(Platform)'=='ARM' or '$(Platform)'=='ARM64'">$(SolutionDir)_build\x86\$(Configuration)\</CppWinRTDir>
-    <OutDir>$(CmakeOutDir)\</OutDir>
   </PropertyGroup>
 
   <ItemDefinitionGroup>

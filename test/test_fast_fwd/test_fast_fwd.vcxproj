@@ -59,7 +59,6 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
-    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
