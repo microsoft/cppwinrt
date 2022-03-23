@@ -3,9 +3,9 @@
   <!-- Set common MSBuild properties and item metadata for CppWinRT tool and tests -->
 
   <PropertyGroup>
-    <PlatformToolset>v143</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '16.0'">v142</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(PlatformToolset)'==''">v143</PlatformToolset>
+    <PlatformToolset Condition="'$(PlatformToolset)'=='' and '$(VisualStudioVersion)' == '16.0'">v142</PlatformToolset>
+    <PlatformToolset Condition="'$(PlatformToolset)'=='' and '$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
