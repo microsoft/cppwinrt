@@ -3,9 +3,9 @@
   <!-- Set common MSBuild properties and item metadata for CppWinRT tool and tests -->
 
   <PropertyGroup>
-    <PlatformToolset>v143</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '16.0'">v142</PlatformToolset>
-    <PlatformToolset Condition="'$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(PlatformToolset)'=='' and '$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
+    <PlatformToolset Condition="'$(PlatformToolset)'=='' and '$(VisualStudioVersion)' == '16.0'">v142</PlatformToolset>
+    <PlatformToolset Condition="'$(PlatformToolset)'==''">v143</PlatformToolset>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
@@ -33,12 +33,11 @@
 
   <PropertyGroup>
     <CppWinRTBuildVersion Condition="'$(CppWinRTBuildVersion)'==''">2.3.4.5</CppWinRTBuildVersion>
-    <CmakePlatform>$(Platform)</CmakePlatform>
-    <CmakePlatform Condition="'$(Platform)'=='Win32'">x86</CmakePlatform>
-    <CmakeOutDir Condition="'$(CmakeOutDir)'==''">$(SolutionDir)_build\$(CmakePlatform)\$(Configuration)</CmakeOutDir>
-    <CppWinRTDir>$(CmakeOutDir)\</CppWinRTDir>
+    <CppWinRTPlatform>$(Platform)</CppWinRTPlatform>
+    <CppWinRTPlatform Condition="'$(Platform)'=='Win32'">x86</CppWinRTPlatform>
+    <OutDir>$(SolutionDir)_build\$(CppWinRTPlatform)\$(Configuration)\</OutDir>
+    <CppWinRTDir>$(OutDir)</CppWinRTDir>
     <CppWinRTDir Condition="'$(Platform)'=='ARM' or '$(Platform)'=='ARM64'">$(SolutionDir)_build\x86\$(Configuration)\</CppWinRTDir>
-    <OutDir>$(CmakeOutDir)\</OutDir>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
@@ -63,5 +62,11 @@
       <PreprocessorDefinitions>CPPWINRT_VERSION_STRING="$(CppWinRTBuildVersion)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
   </ItemDefinitionGroup>
+
+  <!-- Each release of Visual Studio produces larger intermediate files.
+       To prevent build agents from running out of disk space, clean as we go. -->
+  <Target Name="CleanIntermediateFiles" AfterTargets="Build" Condition="'$(clean_intermediate_files)'=='true'">
+    <RemoveDir Directories="$(IntDir)" />
+  </Target>
 
 </Project>
