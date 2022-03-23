@@ -1,5 +1,4 @@
 #include "pch.h"
-#include <algorithm>
 #include <variant>
 #include "object_visualizer.h"
 #include "property_visualizer.h"
@@ -685,7 +684,7 @@ HRESULT object_visualizer::GetItems(
     IF_FAIL_RET(DkmAllocArray(std::min(m_propertyData.size(), size_t(Count)), &resultValues));
 
     auto pParent = pVisualizedExpression;
-    auto childCount = std::min(m_propertyData.size(), size_t(Count + StartIndex));
+    auto childCount = std::min(m_propertyData.size() - StartIndex, (size_t)Count);
     for(auto i = 0; i < childCount; ++i)
     {
         auto& prop = m_propertyData[i + (size_t)StartIndex];
