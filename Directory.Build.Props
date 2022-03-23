@@ -64,4 +64,10 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
 
+  <!-- Each release of Visual Studio produces larger intermediate files.
+       To prevent build agents from running out of disk space, clean as we go. -->
+  <Target Name="CleanIntermediateFiles" AfterTargets="Build" Condition="'$(clean_intermediate_files)'=='true'">
+    <RemoveDir Directories="$(IntDir)" />
+  </Target>
+
 </Project>
