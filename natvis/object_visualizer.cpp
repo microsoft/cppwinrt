@@ -631,11 +631,10 @@ HRESULT object_visualizer::CreateEvaluationResult(_Deref_out_ DkmEvaluationResul
 }
 
 HRESULT object_visualizer::GetChildren(
-    _In_ UINT32 /*InitialRequestSize*/,
+    _In_ UINT32 InitialRequestSize,
     _In_ DkmInspectionContext* pInspectionContext,
     _Out_ DkmArray<DkmChildVisualizedExpression*>* pInitialChildren,
-    _Deref_out_ DkmEvaluationResultEnumContext** ppEnumContext
-)
+    _Deref_out_ DkmEvaluationResultEnumContext** ppEnumContext)
 {
     // Ignore metadata errors to ensure that Raw Data is always available
     if (m_propertyData.empty())
@@ -667,32 +666,34 @@ HRESULT object_visualizer::GetChildren(
         this,
         pEnumContext.put()));
 
-    DkmAllocArray(0, pInitialChildren);
+    IF_FAIL_RET(GetItems(m_pVisualizedExpression.get(), pEnumContext.get(), 0, InitialRequestSize, pInitialChildren));
+
     *ppEnumContext = pEnumContext.detach();
 
     return S_OK;
 }
 
 HRESULT object_visualizer::GetItems(
-    _In_ DkmVisualizedExpression* /*pVisualizedExpression*/,
+    _In_ DkmVisualizedExpression* pVisualizedExpression,
     _In_ DkmEvaluationResultEnumContext* /*pEnumContext*/,
     _In_ UINT32 StartIndex,
     _In_ UINT32 Count,
-    _Out_ DkmArray<DkmChildVisualizedExpression*>* pItems
-)
+    _Out_ DkmArray<DkmChildVisualizedExpression*>* pItems)
 {
-    std::list<com_ptr<DkmChildVisualizedExpression>> childItems;
+    CAutoDkmArray<DkmChildVisualizedExpression*> resultValues;
+    IF_FAIL_RET(DkmAllocArray(std::min(m_propertyData.size(), size_t(Count)), &resultValues));
 
-    auto pParent = m_pVisualizedExpression.get();
-    for( auto childIndex = StartIndex; childIndex < StartIndex + Count; ++childIndex)
+    auto pParent = pVisualizedExpression;
+    auto childCount = std::min(m_propertyData.size() - StartIndex, (size_t)Count);
+    for(auto i = 0; i < childCount; ++i)
     {
-        auto& prop = m_propertyData[childIndex];
+        auto& prop = m_propertyData[i + (size_t)StartIndex];
         com_ptr<DkmChildVisualizedExpression> pPropertyVisualized;
-        if(FAILED(CreateChildVisualizedExpression(prop, pParent, m_isAbiObject, pPropertyVisualized.put())))
+        if (FAILED(CreateChildVisualizedExpression(prop, pParent, m_isAbiObject, pPropertyVisualized.put())))
         {
             com_ptr<DkmString> pErrorMessage;
             IF_FAIL_RET(DkmString::Create(L"<Property evaluation failed>", pErrorMessage.put()));
-            
+
             com_ptr<DkmString> pDisplayName;
             IF_FAIL_RET(DkmString::Create(prop.displayName.c_str(), pDisplayName.put()));
 
@@ -701,9 +702,9 @@ HRESULT object_visualizer::GetItems(
                 pParent->InspectionContext(),
                 pParent->StackFrame(),
                 pDisplayName.get(),
-                nullptr, 
+                nullptr,
                 pErrorMessage.get(),
-                DkmEvaluationResultFlags::ExceptionThrown, 
+                DkmEvaluationResultFlags::ExceptionThrown,
                 DkmDataItem::Null(),
                 pVisualizedResult.put()
             ));
@@ -721,22 +722,9 @@ HRESULT object_visualizer::GetItems(
                 pPropertyVisualized.put()
             ));
         }
-        childItems.push_back(pPropertyVisualized);
-    }
-
-    CAutoDkmArray<DkmChildVisualizedExpression*> resultValues;
-    IF_FAIL_RET(DkmAllocArray(childItems.size(), &resultValues));
-
-    UINT32 j = 0;
-    auto pos = childItems.begin();
-    while (pos != childItems.end())
-    {
-        com_ptr<DkmChildVisualizedExpression> pCurr = *pos;
-        resultValues.Members[j++] = pCurr.detach();
-        pos++;
+        resultValues.Members[i] = pPropertyVisualized.detach();
     }
 
     *pItems = resultValues.Detach();
-
     return S_OK;
 }
