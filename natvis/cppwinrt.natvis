@@ -14,6 +14,11 @@
     <CustomVisualizer Condition="this != 0" VisualizerId="2ec1a02f-997c-4693-840e-88ffa1e21b56"/>
     <DisplayString Condition="this == 0">null</DisplayString>
   </Type>
+  <!-- Visualize C++/WinRT object implementations -->
+  <Type Name="winrt::impl::producer&lt;*&gt;">
+    <CustomVisualizer Condition="this != 0" VisualizerId="2ec1a02f-997c-4693-840e-88ffa1e21b56"/>
+    <DisplayString Condition="this == 0">null</DisplayString>
+  </Type>
   <!--Visualize all raw IInspectable pointers-->
   <Type Name="IInspectable">
     <CustomVisualizer Condition="this != 0" VisualizerId="2ec1a02f-997c-4693-840e-88ffa1e21b56"/>
