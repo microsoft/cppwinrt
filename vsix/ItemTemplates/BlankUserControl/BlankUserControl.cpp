@@ -11,7 +11,12 @@ namespace winrt::$rootnamespace$::implementation
 {
     $safeitemname$::$safeitemname$()
     {
-        InitializeComponent();
+        // Xaml properties should be accessed after InitializeComponent
+    }
+
+    void $safeitemname$::InitializeComponent()
+    {
+        $safeitemname$T::InitializeComponent();
     }
 
     int32_t $safeitemname$::MyProperty()

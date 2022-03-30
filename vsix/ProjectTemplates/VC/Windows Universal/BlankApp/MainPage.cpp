@@ -9,7 +9,12 @@ namespace winrt::$safeprojectname$::implementation
 {
     MainPage::MainPage()
     {
-        InitializeComponent();
+        // Xaml properties should be accessed after InitializeComponent
+    }
+
+    void MainPage::InitializeComponent()
+    {
+        MainPageT::InitializeComponent();
     }
 
     int32_t MainPage::MyProperty()

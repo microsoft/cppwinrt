@@ -860,7 +860,17 @@ catch (...) { return winrt::to_hresult(); }
         {
             auto format = R"(
 #if defined(WINRT_FORCE_INCLUDE_%_XAML_G_H) || __has_include("%.xaml.g.h")
+
 #include "%.xaml.g.h"
+namespace winrt::@::implementation
+{
+    template <typename D, typename... Args>
+    auto initialize_instance(%T<D, Args...>& instance)
+    {
+        static_cast<D&>(instance).InitializeComponent();
+    }
+}
+
 #else
 
 namespace winrt::@::implementation
@@ -881,6 +891,8 @@ namespace winrt::@::implementation
                 upper,
                 include_path,
                 include_path,
+                type_namespace,
+                type_name,
                 type_namespace,
                 type_name,
                 type_name);
