@@ -9,16 +9,6 @@ using namespace Windows::UI::Xaml;
 
 namespace winrt::$rootnamespace$::implementation
 {
-    $safeitemname$::$safeitemname$()
-    {
-        // Xaml properties should be accessed after InitializeComponent
-    }
-
-    void $safeitemname$::InitializeComponent()
-    {
-        $safeitemname$T::InitializeComponent();
-    }
-
     int32_t $safeitemname$::MyProperty()
     {
         throw hresult_not_implemented();

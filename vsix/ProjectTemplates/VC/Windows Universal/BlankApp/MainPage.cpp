@@ -7,16 +7,6 @@ using namespace Windows::UI::Xaml;
 
 namespace winrt::$safeprojectname$::implementation
 {
-    MainPage::MainPage()
-    {
-        // Xaml properties should be accessed after InitializeComponent
-    }
-
-    void MainPage::InitializeComponent()
-    {
-        MainPageT::InitializeComponent();
-    }
-
     int32_t MainPage::MyProperty()
     {
         throw hresult_not_implemented();

@@ -16,7 +16,6 @@ using namespace $safeprojectname$::implementation;
 /// <summary>
 /// Creates the singleton application object.  This is the first line of authored code
 /// executed, and as such is the logical equivalent of main() or WinMain().
-/// Xaml properties should be accessed after InitializeComponent.
 /// </summary>
 App::App()
 {
@@ -32,14 +31,6 @@ App::App()
         }
     });
 #endif
-}
-
-/// <summary>
-/// Initializes the singleton application object, registering it with the Xaml runtime.
-/// </summary>
-void App::InitializeComponent()
-{
-    AppT::InitializeComponent();
 }
 
 /// <summary>

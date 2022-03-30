@@ -26,7 +26,7 @@ namespace
         {
         }
 
-        void initialize_instance()
+        void InitializeComponent()
         {
             m_initialize_called = true;
             throw some_exception();
@@ -70,12 +70,6 @@ namespace
         }
     };
 
-    template <typename D>
-    auto initialize_instance(FreeInitializeT<D>& instance)
-    {
-        static_cast<D&>(instance).InitializeComponent();
-    }
-
     struct ThrowingDerived : FreeInitializeT<ThrowingDerived>
     {
         ThrowingDerived(bool& initialize_called) : FreeInitializeT(initialize_called)
@@ -97,7 +91,7 @@ namespace
     };
 }
 
-TEST_CASE("initialize_instance")
+TEST_CASE("initialize")
 {
     // Ensure that failure to initialize is failure to instantiate, with no side effects
     {

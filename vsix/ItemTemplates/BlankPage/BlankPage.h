@@ -6,8 +6,7 @@ namespace winrt::$rootnamespace$::implementation
 {
     struct $safeitemname$ : $safeitemname$T<$safeitemname$>
     {
-        $safeitemname$();
-        void InitializeComponent();
+        $safeitemname$() {}
 
         int32_t MyProperty();
         void MyProperty(int32_t value);

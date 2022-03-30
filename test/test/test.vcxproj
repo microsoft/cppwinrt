@@ -369,7 +369,7 @@
     </ClCompile>
     <ClCompile Include="hstring_empty.cpp" />
     <ClCompile Include="iid_ppv_args.cpp" />
-    <ClCompile Include="initialize_instance.cpp" />
+    <ClCompile Include="initialize.cpp" />
     <ClCompile Include="inspectable_interop.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
