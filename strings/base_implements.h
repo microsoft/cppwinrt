@@ -1240,7 +1240,7 @@ namespace winrt::impl
             }
             catch (...)
             {
-                delete instance;
+                instance->Release();
                 throw;
             }
         }
