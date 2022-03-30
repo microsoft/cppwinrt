@@ -14,40 +14,16 @@ namespace
         }
     };
 
-    struct MemberInitialize : implements<MemberInitialize, IStringable>
-    {
-        bool& m_initialize_called;
-
-        MemberInitialize(bool& initialize_called) : m_initialize_called(initialize_called)
-        {
-        }
-
-        ~MemberInitialize()
-        {
-        }
-
-        void InitializeComponent()
-        {
-            m_initialize_called = true;
-            throw some_exception();
-        }
-
-        hstring ToString()
-        {
-            return {};
-        }
-    };
-
     template<typename D>
-    struct FreeInitializeT : implements<D, IStringable>
+    struct InitializeT : implements<D, IStringable>
     {
         bool& m_initialize_called;
 
-        FreeInitializeT(bool& initialize_called) : m_initialize_called(initialize_called)
+        InitializeT(bool& initialize_called) : m_initialize_called(initialize_called)
         {
         }
 
-        ~FreeInitializeT()
+        ~InitializeT()
         {
         }
 
@@ -63,24 +39,24 @@ namespace
         }
     };
 
-    struct FreeInitialize : FreeInitializeT<FreeInitialize>
+    struct Initialize : InitializeT<Initialize>
     {
-        FreeInitialize(bool& initialize_called) : FreeInitializeT(initialize_called)
+        Initialize(bool& initialize_called) : InitializeT(initialize_called)
         {
         }
     };
 
-    struct ThrowingDerived : FreeInitializeT<ThrowingDerived>
+    struct ThrowingDerived : InitializeT<ThrowingDerived>
     {
-        ThrowingDerived(bool& initialize_called) : FreeInitializeT(initialize_called)
+        ThrowingDerived(bool& initialize_called) : InitializeT(initialize_called)
         {
             throw some_exception();
         }
     };
 
-    struct OverriddenInitialize : FreeInitializeT<OverriddenInitialize>
+    struct OverriddenInitialize : InitializeT<OverriddenInitialize>
     {
-        OverriddenInitialize(bool& initialize_called) : FreeInitializeT(initialize_called)
+        OverriddenInitialize(bool& initialize_called) : InitializeT(initialize_called)
         {
         }
 
@@ -99,23 +75,7 @@ TEST_CASE("initialize")
         bool exception_caught{};
         try
         {
-            make<MemberInitialize>(initialize_called);
-        }
-        catch (some_exception const&)
-        {
-            exception_caught = true;
-        }
-        REQUIRE(initialize_called);
-        REQUIRE(exception_caught);
-    }
-
-    // Same as above, but with free initialization function (Xaml scenario)
-    {
-        bool initialize_called{};
-        bool exception_caught{};
-        try
-        {
-            make<FreeInitialize>(initialize_called);
+            make<Initialize>(initialize_called);
         }
         catch (some_exception const&)
         {
