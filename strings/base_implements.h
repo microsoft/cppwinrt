@@ -1229,22 +1229,16 @@ namespace winrt::impl
     };
 
     template<typename T, typename... Args>
-    auto create_and_initialize(Args&&... args)
+    T* create_and_initialize(Args&&... args)
     {
-        auto instance = new heap_implements<T>(std::forward<Args>(args)...);
+        com_ptr<T> instance{ new heap_implements<T>(std::forward<Args>(args)...), take_ownership_from_abi };
+
         if constexpr (has_initializer<T>::value)
         {
-            try
-            {
-                instance->InitializeComponent();
-            }
-            catch (...)
-            {
-                instance->Release();
-                throw;
-            }
+            instance->InitializeComponent();
         }
-        return instance;
+
+        return instance.detach();
     }
 
     inline com_ptr<IStaticLifetimeCollection> get_static_lifetime_map()
