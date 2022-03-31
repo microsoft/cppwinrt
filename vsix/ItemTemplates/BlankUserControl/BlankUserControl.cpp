@@ -9,11 +9,6 @@ using namespace Windows::UI::Xaml;
 
 namespace winrt::$rootnamespace$::implementation
 {
-    $safeitemname$::$safeitemname$()
-    {
-        InitializeComponent();
-    }
-
     int32_t $safeitemname$::MyProperty()
     {
         throw hresult_not_implemented();

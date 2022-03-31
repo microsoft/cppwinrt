@@ -860,7 +860,9 @@ catch (...) { return winrt::to_hresult(); }
         {
             auto format = R"(
 #if defined(WINRT_FORCE_INCLUDE_%_XAML_G_H) || __has_include("%.xaml.g.h")
+
 #include "%.xaml.g.h"
+
 #else
 
 namespace winrt::@::implementation
