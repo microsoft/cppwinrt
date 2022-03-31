@@ -1228,10 +1228,10 @@ namespace winrt::impl
         static constexpr bool value = get_value<T>(0);
     };
 
-
-    template <typename T>
-    auto initialize(T* instance)
+    template<typename T, typename... Args>
+    auto create_and_initialize(Args&&... args)
     {
+        auto instance = new heap_implements<T>(std::forward<Args>(args)...);
         if constexpr (has_initializer<T>::value)
         {
             try
@@ -1262,7 +1262,7 @@ namespace winrt::impl
 
         if constexpr (!has_static_lifetime_v<D>)
         {
-            return { to_abi<result_type>(initialize(new heap_implements<D>)), take_ownership_from_abi };
+            return { to_abi<result_type>(create_and_initialize<D>()), take_ownership_from_abi };
         }
         else
         {
@@ -1276,7 +1276,7 @@ namespace winrt::impl
                 return { result, take_ownership_from_abi };
             }
 
-            result_type object{ to_abi<result_type>(initialize(new heap_implements<D>)), take_ownership_from_abi };
+            result_type object{ to_abi<result_type>(create_and_initialize<D>()), take_ownership_from_abi };
 
             static slim_mutex lock;
             slim_lock_guard const guard{ lock };
@@ -1322,17 +1322,17 @@ WINRT_EXPORT namespace winrt
         }
         else if constexpr (impl::has_composable<D>::value)
         {
-            impl::com_ref<I> result{ to_abi<I>(impl::initialize(new impl::heap_implements<D>(std::forward<Args>(args)...))), take_ownership_from_abi };
+            impl::com_ref<I> result{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
             return result.template as<typename D::composable>();
         }
         else if constexpr (impl::has_class_type<D>::value)
         {
             static_assert(std::is_same_v<I, default_interface<typename D::class_type>>);
-            return typename D::class_type{ to_abi<I>(impl::initialize(new impl::heap_implements<D>(std::forward<Args>(args)...))), take_ownership_from_abi };
+            return typename D::class_type{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
         }
         else
         {
-            return impl::com_ref<I>{ to_abi<I>(impl::initialize(new impl::heap_implements<D>(std::forward<Args>(args)...))), take_ownership_from_abi };
+            return impl::com_ref<I>{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
         }
     }
 
@@ -1354,7 +1354,7 @@ WINRT_EXPORT namespace winrt
         }
         else
         {
-            return { impl::initialize(new impl::heap_implements<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
+            return { impl::create_and_initialize<D>(std::forward<Args>(args)...), take_ownership_from_abi };
         }
     }
 
