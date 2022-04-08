@@ -42,6 +42,52 @@ namespace test_component_fast
         }
     }
 
+    [contractversion(5)]
+    apicontract FirstContract{};
+
+    [contractversion(5)]
+    apicontract SecondContract{};
+
+    [contractversion(5)]
+    apicontract ThirdContract{};
+
+    [contractversion(5)]
+    apicontract FourthContract{};
+
+    [fastabi2(ThirdContract, 3)]
+    [from_contract(FirstContract, range(1, 5), SecondContract)]
+    [from_contract(SecondContract, range(1, 5), ThirdContract)]
+    [from_contract(ThirdContract, range(1, 5))]
+    [contract(FourthContract, 1)]
+    runtimeclass Nomadic
+    {
+        Nomadic();
+
+        [interface_name("INomadicFourth")]
+        [contract(FourthContract, 1)]
+        {
+            String FourthMethod();
+        }
+
+        [interface_name("INomadicThird")]
+        [contract(ThirdContract, 2)]
+        {
+            String ThirdMethod();
+        }
+
+        [interface_name("INomadicSecond")]
+        [contract(SecondContract, 3)]
+        {
+            String SecondMethod();
+        }
+
+        [interface_name("INomadicFirst")]
+        [contract(FirstContract, 4)]
+        {
+            String FirstMethod();
+        }
+    }
+
     namespace Composition
     {
         [contractversion(4)]

@@ -80,7 +80,7 @@ namespace cppwinrt
             // by the caller and callee. The exception to this rule is property setters where the callee may simply store a
             // reference to the collection. The collection thus becomes async in the sense that it is expected to remain
             // valid beyond the duration of the call.
-            
+
             if (is_put_overload(m_method))
             {
                 return true;
@@ -148,10 +148,54 @@ namespace cppwinrt
         return static_cast<bool>(get_attribute(row, type_namespace, type_name));
     }
 
+    namespace impl
+    {
+        template <typename T, typename... Types>
+        struct variant_index;
+
+        template <typename T, typename First, typename... Types>
+        struct variant_index<T, First, Types...>
+        {
+            static constexpr bool found = std::is_same_v<T, First>;
+            static constexpr std::size_t value = std::conditional_t<found,
+                std::integral_constant<std::size_t, 0>,
+                variant_index<T, Types...>>::value + (found ? 0 : 1);
+        };
+    }
+
+    template <typename Variant, typename T>
+    struct variant_index;
+
+    template <typename... Types, typename T>
+    struct variant_index<std::variant<Types...>, T> : impl::variant_index<T, Types...>
+    {
+    };
+
+    template <typename Variant, typename T>
+    constexpr std::size_t variant_index_v = variant_index<Variant, T>::value;
+
+    template <typename T>
+    auto get_integer_attribute(FixedArgSig const& signature)
+    {
+        auto variant = std::get<ElemSig>(signature.value).value;
+        switch (variant.index())
+        {
+        case variant_index_v<decltype(variant), std::make_unsigned_t<T>>: return static_cast<T>(std::get<std::make_unsigned_t<T>>(variant));
+        case variant_index_v<decltype(variant), std::make_signed_t<T>>: return static_cast<T>(std::get<std::make_signed_t<T>>(variant));
+        default: return std::get<T>(variant); // Likely throws, but that's intentional
+        }
+    }
+
+    template <typename T>
+    auto get_attribute_value(FixedArgSig const& signature)
+    {
+        return std::get<T>(std::get<ElemSig>(signature.value).value);
+    }
+
     template <typename T>
     auto get_attribute_value(CustomAttribute const& attribute, uint32_t const arg)
     {
-        return std::get<T>(std::get<ElemSig>(attribute.Value().FixedArgs()[arg].value).value);
+        return get_attribute_value<T>(attribute.Value().FixedArgs()[arg]);
     }
 
     static auto get_abi_name(MethodDef const& method)
@@ -283,33 +327,200 @@ namespace cppwinrt
         return bases;
     }
 
-    static std::pair<uint16_t, uint16_t> get_version(TypeDef const& type)
+    struct contract_version
     {
-        uint32_t version{};
+        std::string_view name;
+        uint32_t version;
+    };
 
+    struct previous_contract
+    {
+        std::string_view contract_from;
+        std::string_view contract_to;
+        uint32_t version_low;
+        uint32_t version_high;
+    };
+
+    struct contract_history
+    {
+        contract_version current_contract;
+
+        // Sorted such that the first entry is the first contract the type was introduced in
+        std::vector<previous_contract> previous_contracts;
+    };
+
+    static contract_version decode_contract_version_attribute(CustomAttribute const& attribute)
+    {
+        // ContractVersionAttribute has three constructors, but only two we care about here:
+        //      .ctor(string contract, uint32 version)
+        //      .ctor(System.Type contract, uint32 version)
+        auto signature = attribute.Value();
+        auto& args = signature.FixedArgs();
+        assert(args.size() == 2);
+
+        contract_version result{};
+        result.version = get_integer_attribute<uint32_t>(args[1]);
+        call(std::get<ElemSig>(args[0].value).value,
+            [&](ElemSig::SystemType t)
+            {
+                result.name = t.name;
+            },
+            [&](std::string_view name)
+            {
+                result.name = name;
+            },
+            [](auto&&)
+            {
+                assert(false);
+            });
+
+        return result;
+    }
+
+    static previous_contract decode_previous_contract_attribute(CustomAttribute const& attribute)
+    {
+        // PreviousContractVersionAttribute has two constructors:
+        //      .ctor(string fromContract, uint32 versionLow, uint32 versionHigh)
+        //      .ctor(string fromContract, uint32 versionLow, uint32 versionHigh, string contractTo)
+        auto signature = attribute.Value();
+        auto& args = signature.FixedArgs();
+        assert(args.size() >= 3);
+
+        previous_contract result{};
+        result.contract_from = get_attribute_value<std::string_view>(args[0]);
+        result.version_low = get_integer_attribute<uint32_t>(args[1]);
+        result.version_high = get_integer_attribute<uint32_t>(args[2]);
+        if (args.size() == 4)
+        {
+            result.contract_to = get_attribute_value<std::string_view>(args[3]);
+        }
+
+        return result;
+    }
+
+    static contract_version get_initial_contract_version(TypeDef const& type)
+    {
+        // Most types don't have previous contracts, so optimize for that scenario to avoid unnecessary allocations
+        contract_version current_contract{};
+
+        // The initial contract, assuming the type has moved contracts, is the only contract name that doesn't appear as
+        // a "to contract" argument to a PreviousContractVersionAttribute. Note that this assumes that a type does not
+        // "return" to a prior contract, however this is a restriction enforced by midlrt
+        std::vector<contract_version> previous_contracts;
+        std::vector<std::string_view> to_contracts;
         for (auto&& attribute : type.CustomAttribute())
         {
-            auto name = attribute.TypeNamespaceAndName();
-
-            if (name.first != "Windows.Foundation.Metadata")
+            auto [ns, name] = attribute.TypeNamespaceAndName();
+            if (ns != "Windows.Foundation.Metadata")
             {
                 continue;
             }
 
-            if (name.second == "ContractVersionAttribute")
+            if (name == "ContractVersionAttribute")
             {
-                version = get_attribute_value<uint32_t>(attribute, 1);
-                break;
+                assert(current_contract.name.empty());
+                current_contract = decode_contract_version_attribute(attribute);
             }
-
-            if (name.second == "VersionAttribute")
+            else if (name == "PreviousContractVersionAttribute")
             {
-                version = get_attribute_value<uint32_t>(attribute, 0);
-                break;
+                auto prev = decode_previous_contract_attribute(attribute);
+
+                // If this contract was the target of an earlier contract change, we know this isn't the initial one
+                if (std::find(to_contracts.begin(), to_contracts.end(), prev.contract_from) == to_contracts.end())
+                {
+                    previous_contracts.push_back(contract_version{ prev.contract_from, prev.version_low });
+                }
+
+                if (!prev.contract_to.empty())
+                {
+                    auto itr = std::find_if(previous_contracts.begin(), previous_contracts.end(), [&](auto const& ver)
+                    {
+                        return ver.name == prev.contract_to;
+                    });
+                    if (itr != previous_contracts.end())
+                    {
+                        *itr = previous_contracts.back();
+                        previous_contracts.pop_back();
+                    }
+
+                    to_contracts.push_back(prev.contract_to);
+                }
+            }
+            else if (name == "VersionAttribute")
+            {
+                // Prefer contract versioning, if present. Otherwise, use an empty contract name to indicate that this
+                // is not a contract version
+                if (current_contract.name.empty())
+                {
+                    current_contract.version = get_attribute_value<uint32_t>(attribute, 0);
+                }
             }
         }
 
-        return { HIWORD(version), LOWORD(version) };
+        if (!previous_contracts.empty())
+        {
+            assert(previous_contracts.size() == 1);
+            return previous_contracts[0];
+        }
+
+        return current_contract;
+    }
+
+    static contract_history get_contract_history(TypeDef const& type)
+    {
+        contract_history result{};
+        for (auto&& attribute : type.CustomAttribute())
+        {
+            auto [ns, name] = attribute.TypeNamespaceAndName();
+            if (ns != "Windows.Foundation.Metadata")
+            {
+                continue;
+            }
+
+            if (name == "ContractVersionAttribute")
+            {
+                assert(result.current_contract.name.empty());
+                result.current_contract = decode_contract_version_attribute(attribute);
+            }
+            else if (name == "PreviousContractVersionAttribute")
+            {
+                result.previous_contracts.push_back(decode_previous_contract_attribute(attribute));
+            }
+            // We could report the version that the type was introduced if the type is not contract versioned, however
+            // that information is not useful to us anywhere, so just skip it
+        }
+
+        if (result.previous_contracts.empty())
+        {
+            return result;
+        }
+        assert(!result.current_contract.name.empty());
+
+        // There's no guarantee that the contract history will be sorted in metadata (in fact it's unlikely to be)
+        for (auto& prev : result.previous_contracts)
+        {
+            if (prev.contract_to.empty() || (prev.contract_to == result.current_contract.name))
+            {
+                // No 'to' contract indicates that this was the last contract before the current one
+                prev.contract_to = result.current_contract.name;
+                std::swap(prev, result.previous_contracts.back());
+                break;
+            }
+        }
+        assert(result.previous_contracts.back().contract_to == result.current_contract.name);
+
+        for (size_t size = result.previous_contracts.size() - 1; size; --size)
+        {
+            auto& last = result.previous_contracts[size];
+            auto itr = std::find_if(result.previous_contracts.begin(), result.previous_contracts.begin() + size, [&](auto const& prev)
+            {
+                return prev.contract_to == last.contract_from;
+            });
+            assert(itr != result.previous_contracts.end());
+            std::swap(*itr, result.previous_contracts[size - 1]);
+        }
+
+        return result;
     }
 
     struct interface_info
@@ -321,7 +532,11 @@ namespace cppwinrt
         bool base{};
         bool exclusive{};
         bool fastabi{};
-        std::pair<uint16_t, uint16_t> version{};
+        // A pair of (relativeContract, version) where 'relativeContract' is the contract the interface was introduced
+        // in relative to the contract history of the class. E.g. if a class goes from contract 'A' to 'B' to 'C',
+        // 'relativeContract' would be '0' for an interface introduced in contract 'A', '1' for an interface introduced
+        // in contract 'B', etc. This is only set/valid for 'fastabi' interfaces
+        std::pair<uint32_t, uint32_t> relative_version{};
         std::vector<std::vector<std::string>> generic_param_stack{};
     };
 
@@ -421,7 +636,6 @@ namespace cppwinrt
             }
 
             info.exclusive = has_attribute(info.type, "Windows.Foundation.Metadata", "ExclusiveToAttribute");
-            info.version = get_version(info.type);
             get_interfaces_impl(w, result, info.defaulted, info.overridable, base, info.generic_param_stack, info.type.InterfaceImpl());
             insert_or_assign(result, name, std::move(info));
         }
@@ -443,10 +657,32 @@ namespace cppwinrt
             return result;
         }
 
-        auto count = std::count_if(result.begin(), result.end(), [](auto&& pair)
+        auto history = get_contract_history(type);
+        size_t count = 0;
+        for (auto& pair : result)
         {
-            return pair.second.exclusive && !pair.second.base && !pair.second.overridable;
-        });
+            if (pair.second.exclusive && !pair.second.base && !pair.second.overridable)
+            {
+                ++count;
+
+                auto introduced = get_initial_contract_version(pair.second.type);
+                pair.second.relative_version.second = introduced.version;
+
+                auto itr = std::find_if(history.previous_contracts.begin(), history.previous_contracts.end(), [&](previous_contract const& prev)
+                {
+                    return prev.contract_from == introduced.name;
+                });
+                if (itr != history.previous_contracts.end())
+                {
+                    pair.second.relative_version.first = static_cast<uint32_t>(itr - history.previous_contracts.begin());
+                }
+                else
+                {
+                    assert(history.current_contract.name == introduced.name);
+                    pair.second.relative_version.first = static_cast<uint32_t>(history.previous_contracts.size());
+                }
+            }
+        }
 
         std::partial_sort(result.begin(), result.begin() + count, result.end(), [](auto&& left_pair, auto&& right_pair)
         {
@@ -482,9 +718,9 @@ namespace cppwinrt
                 return left_enabled;
             }
 
-            if (left.version != right.version)
+            if (left.relative_version != right.relative_version)
             {
-                return left.version < right.version;
+                return left.relative_version < right.relative_version;
             }
 
             return left_pair.first < right_pair.first;
