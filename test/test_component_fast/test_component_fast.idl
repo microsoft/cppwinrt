@@ -42,47 +42,75 @@ namespace test_component_fast
         }
     }
 
-    [contractversion(5)]
+    [contractversion(10)]
     apicontract FirstContract{};
 
-    [contractversion(5)]
+    [contractversion(10)]
     apicontract SecondContract{};
 
-    [contractversion(5)]
+    [contractversion(10)]
     apicontract ThirdContract{};
 
-    [contractversion(5)]
+    [contractversion(10)]
     apicontract FourthContract{};
 
     [fastabi2(ThirdContract, 3)]
-    [from_contract(FirstContract, range(1, 5), SecondContract)]
-    [from_contract(SecondContract, range(1, 5), ThirdContract)]
-    [from_contract(ThirdContract, range(1, 5))]
+    [from_contract(FirstContract, range(1, 10), SecondContract)]
+    [from_contract(SecondContract, range(1, 10), ThirdContract)]
+    [from_contract(ThirdContract, range(1, 10))]
     [contract(FourthContract, 1)]
     runtimeclass Nomadic
     {
         Nomadic();
 
+        /* NOTE: There seems to be a bug in midlrt where 'INomadicSeventh' and 'INomadicEighth' are both versioned to
+                 1.0 (when the class was added to the contract) in metadata. The interface impl list has the correct
+                 contract versions, however this trips us up since we only look at the version of the interface
+        [interface_name("INomadicEighth")]
+        [contract(FourthContract, 2.1)]
+        {
+            String EighthMethod();
+        }
+        */
+
+        [interface_name("INomadicSeventh")]
+        [contract(FourthContract, 1.2)]
+        {
+            String SeventhMethod();
+        }
+
+        [interface_name("INomadicSixth")]
+        [contract(ThirdContract, 4.3)]
+        {
+            String SixthMethod();
+        }
+
+        [interface_name("INomadicFifth")]
+        [contract(ThirdContract, 3.4)]
+        {
+            String FifthMethod();
+        }
+
         [interface_name("INomadicFourth")]
-        [contract(FourthContract, 1)]
+        [contract(SecondContract, 6.5)]
         {
             String FourthMethod();
         }
 
         [interface_name("INomadicThird")]
-        [contract(ThirdContract, 2)]
+        [contract(SecondContract, 5.6)]
         {
             String ThirdMethod();
         }
 
         [interface_name("INomadicSecond")]
-        [contract(SecondContract, 3)]
+        [contract(FirstContract, 8.7)]
         {
             String SecondMethod();
         }
 
         [interface_name("INomadicFirst")]
-        [contract(FirstContract, 4)]
+        [contract(FirstContract, 7.8)]
         {
             String FirstMethod();
         }

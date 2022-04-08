@@ -11,6 +11,9 @@ namespace winrt::test_component_fast::implementation
         hstring SecondMethod();
         hstring ThirdMethod();
         hstring FourthMethod();
+        hstring FifthMethod();
+        hstring SixthMethod();
+        hstring SeventhMethod();
     };
 }
 namespace winrt::test_component_fast::factory_implementation

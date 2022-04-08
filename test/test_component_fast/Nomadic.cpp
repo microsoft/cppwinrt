@@ -20,4 +20,16 @@ namespace winrt::test_component_fast::implementation
     {
         return L"FourthMethod";
     }
+    hstring Nomadic::FifthMethod()
+    {
+        return L"FifthMethod";
+    }
+    hstring Nomadic::SixthMethod()
+    {
+        return L"SixthMethod";
+    }
+    hstring Nomadic::SeventhMethod()
+    {
+        return L"SeventhMethod";
+    }
 }
