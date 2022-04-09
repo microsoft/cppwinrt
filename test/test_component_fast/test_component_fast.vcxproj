@@ -617,6 +617,7 @@
     <ClCompile Include="Composition.Compositor.cpp" />
     <ClCompile Include="Composition.SpriteVisual.cpp" />
     <ClCompile Include="Composition.Visual.cpp" />
+    <ClCompile Include="Nomadic.cpp" />
     <ClCompile Include="Simple.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
     <ClCompile Include="pch.cpp">
@@ -628,6 +629,7 @@
     <ClInclude Include="Composition.Compositor.h" />
     <ClInclude Include="Composition.SpriteVisual.h" />
     <ClInclude Include="Composition.Visual.h" />
+    <ClInclude Include="Nomadic.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Simple.h" />
   </ItemGroup>
