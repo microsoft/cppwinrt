@@ -1001,7 +1001,7 @@ namespace cppwinrt
         if (is_add_overload(method))
         {
             auto format = R"(        using %_revoker = impl::event_revoker<%, &impl::abi_t<%>::remove_%>;
-        [[nodiscard]] %_revoker %(auto_revoke_t, %) const;
+        [[nodiscard]] WINRT_IMPL_AUTO(%_revoker) %(auto_revoke_t, %) const;
 )";
 
             w.write(format,
@@ -1170,7 +1170,7 @@ namespace cppwinrt
 
         if (is_add_overload(method))
         {
-            format = R"(    template <typename D%> typename consume_%<D%>::%_revoker consume_%<D%>::%(auto_revoke_t, %) const
+            format = R"(    template <typename D%> WINRT_IMPL_AUTO(typename consume_%<D%>::%_revoker) consume_%<D%>::%(auto_revoke_t, %) const
     {
         return impl::make_event_revoker<D, %_revoker>(this, %(%));
     }
@@ -1214,7 +1214,7 @@ namespace cppwinrt
 
         if (is_add_overload(method))
         {
-            format = R"(    inline %::%_revoker %::%(auto_revoke_t, %) const
+            format = R"(    inline WINRT_IMPL_AUTO(%::%_revoker) %::%(auto_revoke_t, %) const
     {
         return impl::make_event_revoker<D, %_revoker>(this, %(%));
     }
@@ -3017,7 +3017,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             if (is_add_overload(method))
             {
                 auto format = R"(        using %_revoker = impl::factory_event_revoker<%, &impl::abi_t<%>::remove_%>;
-        [[nodiscard]] static %_revoker %(auto_revoke_t, %);
+        [[nodiscard]] static WINRT_IMPL_AUTO(%_revoker) %(auto_revoke_t, %);
 )";
 
                 w.write(format,
@@ -3056,10 +3056,10 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         if (is_add_overload(method))
         {
-            auto format = R"(    inline %::%_revoker %::%(auto_revoke_t, %)
+            auto format = R"(    inline WINRT_IMPL_AUTO(%::%_revoker) %::%(auto_revoke_t, %)
     {
         auto f = get_activation_factory<%, %>();
-        return { f, f.%(%) };
+        return %::%_revoker{ f, f.%(%) };
     }
 )";
 
@@ -3071,6 +3071,8 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                 bind<write_consume_params>(signature),
                 type_name,
                 factory,
+                type_name,
+                method_name,
                 method_name,
                 bind<write_consume_args>(signature));
         }
