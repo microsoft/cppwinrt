@@ -518,7 +518,7 @@ catch (...) { return winrt::to_hresult(); }
 
                     if (is_add_overload(method))
                     {
-                        auto format = R"(    WINRT_IMPL_AUTO(%::%_revoker) %::%(auto_revoke_t, %)
+                        auto format = R"(    auto %::%(auto_revoke_t, %)
     {
         auto f = make<winrt::@::factory_implementation::%>().as<%>();
         return %::%_revoker{ f, f.%(%) };
@@ -526,8 +526,6 @@ catch (...) { return winrt::to_hresult(); }
 )";
 
                         w.write(format,
-                            type_name,
-                            method_name,
                             type_name,
                             method_name,
                             bind<write_consume_params>(signature),
