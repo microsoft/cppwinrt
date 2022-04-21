@@ -518,22 +518,22 @@ catch (...) { return winrt::to_hresult(); }
 
                     if (is_add_overload(method))
                     {
-                        auto format = R"(    %::%_revoker %::%(auto_revoke_t, %)
+                        auto format = R"(    auto %::%(auto_revoke_t, %)
     {
         auto f = make<winrt::@::factory_implementation::%>().as<%>();
-        return { f, f.%(%) };
+        return %::%_revoker{ f, f.%(%) };
     }
 )";
 
                         w.write(format,
                             type_name,
                             method_name,
-                            type_name,
-                            method_name,
                             bind<write_consume_params>(signature),
                             type_namespace,
                             type_name,
                             factory_name,
+                            type_name,
+                            method_name,
                             method_name,
                             bind<write_consume_args>(signature));
                     }
