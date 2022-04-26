@@ -59,33 +59,31 @@ WINRT_EXPORT namespace winrt
 
         com_ptr& operator=(com_ptr const& other) noexcept
         {
-            copy_ref(other.m_ptr);
+            com_ptr cpy(other);
+            swap(*this, cpy);
             return*this;
         }
 
         com_ptr& operator=(com_ptr&& other) noexcept
         {
-            if (this != &other)
-            {
-                release_ref();
-                m_ptr = std::exchange(other.m_ptr, {});
-            }
-
+            com_ptr cpy(std::move(other));
+            swap(*this, cpy);
             return*this;
         }
 
         template <typename U>
         com_ptr& operator=(com_ptr<U> const& other) noexcept
         {
-            copy_ref(other.m_ptr);
+            com_ptr cpy(other);
+            swap(*this, cpy);
             return*this;
         }
 
         template <typename U>
         com_ptr& operator=(com_ptr<U>&& other) noexcept
         {
-            release_ref();
-            m_ptr = std::exchange(other.m_ptr, {});
+            com_ptr cpy(std::move(other));
+            swap(*this, cpy);
             return*this;
         }
 
@@ -177,7 +175,10 @@ WINRT_EXPORT namespace winrt
 
         void copy_from(type* other) noexcept
         {
-            copy_ref(other);
+            if (other)
+                const_cast<std::remove_const_t<type>*>(other)->AddRef();
+            com_ptr cpy(other, take_ownership_from_abi);
+            swap(*this, cpy);
         }
 
         void copy_to(type** other) const noexcept
@@ -199,16 +200,6 @@ WINRT_EXPORT namespace winrt
         }
 
     private:
-
-        void copy_ref(type* other) noexcept
-        {
-            if (m_ptr != other)
-            {
-                release_ref();
-                m_ptr = other;
-                add_ref();
-            }
-        }
 
         void add_ref() const noexcept
         {
