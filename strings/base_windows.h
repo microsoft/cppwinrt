@@ -161,24 +161,15 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
         IUnknown& operator=(IUnknown const& other) noexcept
         {
-            if (this != &other)
-            {
-                release_ref();
-                m_ptr = other.m_ptr;
-                add_ref();
-            }
-
-            return*this;
+			IUnknown cpy(other);
+			swap(*this, cpy);
+			return*this;
         }
 
         IUnknown& operator=(IUnknown&& other) noexcept
         {
-            if (this != &other)
-            {
-                release_ref();
-                m_ptr = std::exchange(other.m_ptr, {});
-            }
-
+            IUnknown cpy(std::move(other));
+            swap(*this, cpy);
             return*this;
         }
 
