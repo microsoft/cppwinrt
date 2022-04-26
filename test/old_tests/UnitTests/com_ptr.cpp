@@ -385,3 +385,54 @@ TEST_CASE("com_ptr, compare")
     REQUIRE(!(nullptr != c));
     REQUIRE(!(c != nullptr));
 }
+
+TEST_CASE("com_ptr, nested types")
+{
+    struct Nested : implements<Nested, Windows::Foundation::IInspectable>
+    {
+        bool * m_destroyed = nullptr;
+        com_ptr<Nested> m_child;
+
+        Nested(bool * destroyed = nullptr) :
+            m_destroyed(destroyed)
+        {
+            if (m_destroyed)
+            {
+                *m_destroyed = false;
+            }
+        }
+        ~Nested()
+        {
+            if (m_destroyed)
+            {
+                *m_destroyed = true;
+            }
+        }
+    };
+    bool rootDestroyed = true;
+    com_ptr<Nested> root = make_self<Nested>(&rootDestroyed);
+    bool childDestroyed = true;
+    root->m_child = make_self<Nested>(&childDestroyed);
+    bool childChildDestroyed = true;
+    root->m_child->m_child = make_self<Nested>(&childChildDestroyed);
+
+    // assign child to root should only destroy root not its children
+    root = root->m_child;
+
+    REQUIRE(root);
+    REQUIRE(root->m_child);
+    REQUIRE(rootDestroyed);
+    REQUIRE(!childDestroyed);
+    REQUIRE(!childChildDestroyed);
+
+    // keep m_child to see if it is falsely destroyed by copy_from
+    root.copy_from(root->m_child.get());
+
+    REQUIRE(root);
+    REQUIRE(childDestroyed);
+    REQUIRE(!childChildDestroyed);
+    
+    root = nullptr;
+    
+    REQUIRE(childChildDestroyed);
+}
