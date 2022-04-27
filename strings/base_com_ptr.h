@@ -176,7 +176,9 @@ WINRT_EXPORT namespace winrt
         void copy_from(type* other) noexcept
         {
             if (other)
+			{
                 const_cast<std::remove_const_t<type>*>(other)->AddRef();
+			}
             com_ptr cpy(other, take_ownership_from_abi);
             swap(*this, cpy);
         }

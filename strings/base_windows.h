@@ -161,9 +161,9 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
         IUnknown& operator=(IUnknown const& other) noexcept
         {
-			IUnknown cpy(other);
-			swap(*this, cpy);
-			return*this;
+            IUnknown cpy(other);
+            swap(*this, cpy);
+            return*this;
         }
 
         IUnknown& operator=(IUnknown&& other) noexcept
