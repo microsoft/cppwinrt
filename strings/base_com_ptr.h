@@ -66,8 +66,11 @@ WINRT_EXPORT namespace winrt
 
         com_ptr& operator=(com_ptr&& other) noexcept
         {
-            com_ptr cpy(std::move(other));
-            swap(*this, cpy);
+            if (this != &other)
+            {
+                com_ptr cpy(std::move(other));
+                swap(*this, cpy);
+            }
             return*this;
         }
 

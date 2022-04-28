@@ -168,8 +168,11 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
         IUnknown& operator=(IUnknown&& other) noexcept
         {
-            IUnknown cpy(std::move(other));
-            swap(*this, cpy);
+            if (this != &other)
+            {
+                IUnknown cpy(std::move(other));
+                swap(*this, cpy);
+            }
             return*this;
         }
 
