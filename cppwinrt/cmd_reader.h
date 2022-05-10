@@ -474,7 +474,11 @@ namespace cppwinrt
                         xml_path = item.path() / sdk_version;
                         xml_path /= L"SDKManifest.xml";
 
-                        add_files_from_xml(files, sdk_version, xml_path, sdk_path);
+                        // Not all Extension SDKs include an SDKManifest.xml file; ignore those which do not (e.g. WindowsIoT).
+                        if (std::filesystem::is_regular_file(xml_path))
+                        {
+                            add_files_from_xml(files, sdk_version, xml_path, sdk_path);
+                        }
                     }
 
                     continue;
