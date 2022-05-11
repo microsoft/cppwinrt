@@ -71,17 +71,31 @@ namespace cppwinrt
         }
     }
 
+    enum class xml_requirement
+    {
+        required = 0,
+        optional
+    };
+
     inline void add_files_from_xml(
         std::set<std::string>& files,
         std::string const& sdk_version,
         std::filesystem::path const& xml_path,
-        std::filesystem::path const& sdk_path)
+        std::filesystem::path const& sdk_path,
+        xml_requirement xml_path_requirement)
     {
         com_ptr<IStream> stream;
 
-        check_xml(SHCreateStreamOnFileW(
+        auto streamResult = SHCreateStreamOnFileW(
             xml_path.c_str(),
-            STGM_READ, &stream.ptr));
+            STGM_READ, &stream.ptr);
+        if (xml_path_requirement == xml_requirement::optional &&
+            (streamResult == HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND) ||
+             streamResult == HRESULT_FROM_WIN32(ERROR_PATH_NOT_FOUND)))
+        {
+            return;
+        }
+        check_xml(streamResult);
 
         com_ptr<IXmlReader> reader;
 
@@ -462,7 +476,7 @@ namespace cppwinrt
                     xml_path /= sdk_version;
                     xml_path /= L"Platform.xml";
 
-                    add_files_from_xml(files, sdk_version, xml_path, sdk_path);
+                    add_files_from_xml(files, sdk_version, xml_path, sdk_path, xml_requirement::required);
 
                     if (path.back() != '+')
                     {
@@ -475,10 +489,7 @@ namespace cppwinrt
                         xml_path /= L"SDKManifest.xml";
 
                         // Not all Extension SDKs include an SDKManifest.xml file; ignore those which do not (e.g. WindowsIoT).
-                        if (std::filesystem::is_regular_file(xml_path))
-                        {
-                            add_files_from_xml(files, sdk_version, xml_path, sdk_path);
-                        }
+                        add_files_from_xml(files, sdk_version, xml_path, sdk_path, xml_requirement::optional);
                     }
 
                     continue;
