@@ -253,24 +253,24 @@ namespace winrt::impl
     template <>
     struct interface_list<>
     {
-        template <typename T, typename Predicate>
-        static constexpr void* find(const T*, const Predicate&) noexcept
+        template <typename Traits>
+        static constexpr auto find(const Traits& traits) noexcept
         {
-            return nullptr;
+            return traits.not_found();
         }
     };
 
     template <typename First, typename ... Rest>
     struct interface_list<First, Rest...>
     {
-        template <typename T, typename Predicate>
-        static constexpr void* find(const T* obj, const Predicate& pred) noexcept
+        template <typename Traits>
+        static constexpr auto find(const Traits& traits) noexcept
         {
-            if (pred.template test<First>())
+            if (traits.template test<First>())
             {
-                return to_abi<First>(obj);
+                return traits.template found<First>();
             }
-            return interface_list<Rest...>::find(obj, pred);
+            return interface_list<Rest...>::find(traits);
         }
         using first_interface = First;
     };
@@ -362,8 +362,10 @@ namespace winrt::impl
         using type = typename implements_default_interface<T>::type;
     };
 
-    struct iid_finder
+    template<typename T>
+    struct find_iid_traits
     {
+        const T* _obj;
         const guid& m_guid;
 
         template <typename I>
@@ -371,20 +373,72 @@ namespace winrt::impl
         {
             return is_guid_of<typename default_interface<I>::type>(m_guid);
         }
+
+        template <typename I>
+        constexpr void* found() const noexcept
+        {
+            return to_abi<I>(_obj);
+        }
+
+        static constexpr void* not_found() noexcept
+        {
+            return nullptr;
+        }
     };
 
     template <typename T>
     auto find_iid(const T* obj, const guid& iid) noexcept
     {
-        return static_cast<unknown_abi*>(implemented_interfaces<T>::find(obj, iid_finder{ iid }));
+        return static_cast<unknown_abi*>(implemented_interfaces<T>::find(find_iid_traits<T>{ obj, iid }));
     }
 
-    struct inspectable_finder
+    template <typename I>
+    struct has_interface_traits
     {
+        template <typename T>
+        constexpr bool test() const noexcept
+        {
+            return std::is_same_v<T, I>;
+        }
+
+        template <typename>
+        static constexpr bool found() noexcept
+        {
+            return true;
+        }
+
+        static constexpr bool not_found() noexcept
+        {
+            return false;
+        }
+    };
+
+    template <typename T, typename I>
+    constexpr bool has_interface() noexcept
+    {
+        return impl::implemented_interfaces<T>::find(has_interface_traits<I>{});
+    }
+
+    template<typename T>
+    struct find_inspectable_traits
+    {
+        const T* _obj;
+
         template <typename I>
         static constexpr bool test() noexcept
         {
             return std::is_base_of_v<inspectable_abi, abi_t<I>>;
+        }
+
+        template <typename I>
+        constexpr void* found() const noexcept
+        {
+            return to_abi<I>(_obj);
+        }
+
+        static constexpr void* not_found() noexcept
+        {
+            return nullptr;
         }
     };
 
@@ -399,7 +453,7 @@ namespace winrt::impl
         }
         else
         {
-            return static_cast<inspectable_abi*>(implemented_interfaces<T>::find(obj, inspectable_finder{}));
+            return static_cast<inspectable_abi*>(implemented_interfaces<T>::find(find_inspectable_traits<T>{ obj }));
         }
     }
 

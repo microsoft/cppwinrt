@@ -797,6 +797,7 @@ catch (...) { return winrt::to_hresult(); }
                 }
                 else
                 {
+                    composable_base_name = w.write_temp("using composable_base = B;");
                     base_type_parameter = ", typename B";
                     base_type_argument = ", B";
                     no_module_lock = "no_module_lock, ";
@@ -868,7 +869,7 @@ catch (...) { return winrt::to_hresult(); }
 namespace winrt::@::implementation
 {
     template <typename D, typename... I>
-    using %T = %_base<D, I...>;
+    using %T = %_base<D, impl::marker, I...>;
 }
 
 #endif

@@ -64,9 +64,6 @@
     <ClInclude Include="..\strings\base_coroutine_foundation.h">
       <Filter>strings</Filter>
     </ClInclude>
-    <ClInclude Include="..\strings\base_coroutine_system.h">
-      <Filter>strings</Filter>
-    </ClInclude>
     <ClInclude Include="..\strings\base_coroutine_threadpool.h">
       <Filter>strings</Filter>
     </ClInclude>
@@ -163,9 +160,6 @@
     <ClInclude Include="..\strings\base_includes.h">
       <Filter>strings</Filter>
     </ClInclude>
-    <ClInclude Include="..\strings\base_coroutine_system_winui.h">
-      <Filter>strings</Filter>
-    </ClInclude>
     <ClInclude Include="..\strings\base_iterator.h">
       <Filter>strings</Filter>
     </ClInclude>
@@ -173,6 +167,15 @@
       <Filter>strings</Filter>
     </ClInclude>
     <ClInclude Include="..\strings\base_stringable_format.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_xaml_component_connector.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_coroutine_system.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_coroutine_system_winui.h">
       <Filter>strings</Filter>
     </ClInclude>
   </ItemGroup>
