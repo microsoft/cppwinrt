@@ -869,7 +869,7 @@ catch (...) { return winrt::to_hresult(); }
 namespace winrt::@::implementation
 {
     template <typename D, typename... I>
-    using %T = %_base<D, impl::marker, I...>;
+    using %T = %_base<D, I...>;
 }
 
 #endif
