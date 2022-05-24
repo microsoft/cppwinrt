@@ -365,8 +365,8 @@ namespace winrt::impl
     template<typename T>
     struct find_iid_traits
     {
-        const T* m_object;
-        const guid& m_guid;
+        T const* m_object;
+        guid const& m_guid;
 
         template <typename I>
         constexpr bool test() const noexcept
@@ -387,7 +387,7 @@ namespace winrt::impl
     };
 
     template <typename T>
-    auto find_iid(const T* obj, const guid& iid) noexcept
+    auto find_iid(T const* obj, guid const& iid) noexcept
     {
         return static_cast<unknown_abi*>(implemented_interfaces<T>::find(find_iid_traits<T>{ obj, iid }));
     }
@@ -422,7 +422,7 @@ namespace winrt::impl
     template<typename T>
     struct find_inspectable_traits
     {
-        const T* m_object;
+        T const* m_object;
 
         template <typename I>
         static constexpr bool test() noexcept
@@ -443,7 +443,7 @@ namespace winrt::impl
     };
 
     template <typename T>
-    inspectable_abi* find_inspectable(const T* obj) noexcept
+    inspectable_abi* find_inspectable(T const* obj) noexcept
     {
         using default_interface = typename implements_default_interface<T>::type;
 
@@ -556,7 +556,7 @@ namespace winrt::impl
     template <typename D>
     struct produce<D, INonDelegatingInspectable> : produce_base<D, INonDelegatingInspectable>
     {
-        int32_t __stdcall QueryInterface(const guid& id, void** object) noexcept final
+        int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final
         {
             return this->shim().NonDelegatingQueryInterface(id, object);
         }
@@ -964,7 +964,7 @@ namespace winrt::impl
             return target;
         }
 
-        int32_t __stdcall NonDelegatingQueryInterface(const guid& id, void** object) noexcept
+        int32_t __stdcall NonDelegatingQueryInterface(guid const& id, void** object) noexcept
         {
             if (is_guid_of<Windows::Foundation::IInspectable>(id) || is_guid_of<Windows::Foundation::IUnknown>(id))
             {
@@ -986,13 +986,13 @@ namespace winrt::impl
 
         int32_t __stdcall NonDelegatingGetIids(uint32_t* count, guid** array) noexcept
         {
-            const auto& local_iids = static_cast<D*>(this)->get_local_iids();
-            const uint32_t& local_count = local_iids.first;
+            auto const& local_iids = static_cast<D*>(this)->get_local_iids();
+            uint32_t const& local_count = local_iids.first;
             if constexpr (root_implements_type::is_composing)
             {
                 if (local_count > 0)
                 {
-                    const com_array<guid>& inner_iids = get_interfaces(root_implements_type::m_inner);
+                    com_array<guid> const& inner_iids = get_interfaces(root_implements_type::m_inner);
                     *count = local_count + inner_iids.size();
                     *array = static_cast<guid*>(WINRT_IMPL_CoTaskMemAlloc(sizeof(guid)*(*count)));
                     if (*array == nullptr)
@@ -1243,7 +1243,7 @@ namespace winrt::impl
         }
 
         virtual unknown_abi* get_unknown() const noexcept = 0;
-        virtual std::pair<uint32_t, const guid*> get_local_iids() const noexcept = 0;
+        virtual std::pair<uint32_t, guid const*> get_local_iids() const noexcept = 0;
         virtual hstring GetRuntimeClassName() const = 0;
         virtual void* find_interface(guid const&) const noexcept = 0;
         virtual inspectable_abi* find_inspectable() const noexcept = 0;
@@ -1504,7 +1504,7 @@ WINRT_EXPORT namespace winrt
             return impl::find_inspectable(static_cast<const D*>(this));
         }
 
-        std::pair<uint32_t, const guid*> get_local_iids() const noexcept override
+        std::pair<uint32_t, guid const*> get_local_iids() const noexcept override
         {
             using interfaces = impl::uncloaked_interfaces<D>;
             using local_iids = impl::uncloaked_iids<interfaces>;
