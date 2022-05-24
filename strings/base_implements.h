@@ -253,24 +253,24 @@ namespace winrt::impl
     template <>
     struct interface_list<>
     {
-        template <typename T, typename Predicate>
-        static constexpr void* find(const T*, const Predicate&) noexcept
+        template <typename Traits>
+        static constexpr auto find(Traits const& traits) noexcept
         {
-            return nullptr;
+            return traits.not_found();
         }
     };
 
     template <typename First, typename ... Rest>
     struct interface_list<First, Rest...>
     {
-        template <typename T, typename Predicate>
-        static constexpr void* find(const T* obj, const Predicate& pred) noexcept
+        template <typename Traits>
+        static constexpr auto find(Traits const& traits) noexcept
         {
-            if (pred.template test<First>())
+            if (traits.template test<First>())
             {
-                return to_abi<First>(obj);
+                return traits.template found<First>();
             }
-            return interface_list<Rest...>::find(obj, pred);
+            return interface_list<Rest...>::find(traits);
         }
         using first_interface = First;
     };
@@ -362,34 +362,88 @@ namespace winrt::impl
         using type = typename implements_default_interface<T>::type;
     };
 
-    struct iid_finder
+    template<typename T>
+    struct find_iid_traits
     {
-        const guid& m_guid;
+        T const* m_object;
+        guid const& m_guid;
 
         template <typename I>
         constexpr bool test() const noexcept
         {
             return is_guid_of<typename default_interface<I>::type>(m_guid);
         }
+
+        template <typename I>
+        constexpr void* found() const noexcept
+        {
+            return to_abi<I>(m_object);
+        }
+
+        static constexpr void* not_found() noexcept
+        {
+            return nullptr;
+        }
     };
 
     template <typename T>
-    auto find_iid(const T* obj, const guid& iid) noexcept
+    auto find_iid(T const* obj, guid const& iid) noexcept
     {
-        return static_cast<unknown_abi*>(implemented_interfaces<T>::find(obj, iid_finder{ iid }));
+        return static_cast<unknown_abi*>(implemented_interfaces<T>::find(find_iid_traits<T>{ obj, iid }));
     }
 
-    struct inspectable_finder
+    template <typename I>
+    struct has_interface_traits
     {
+        template <typename T>
+        constexpr bool test() const noexcept
+        {
+            return std::is_same_v<T, I>;
+        }
+
+        template <typename>
+        static constexpr bool found() noexcept
+        {
+            return true;
+        }
+
+        static constexpr bool not_found() noexcept
+        {
+            return false;
+        }
+    };
+
+    template <typename T, typename I>
+    constexpr bool has_interface() noexcept
+    {
+        return impl::implemented_interfaces<T>::find(has_interface_traits<I>{});
+    }
+
+    template<typename T>
+    struct find_inspectable_traits
+    {
+        T const* m_object;
+
         template <typename I>
         static constexpr bool test() noexcept
         {
             return std::is_base_of_v<inspectable_abi, abi_t<I>>;
         }
+
+        template <typename I>
+        constexpr void* found() const noexcept
+        {
+            return to_abi<I>(m_object);
+        }
+
+        static constexpr void* not_found() noexcept
+        {
+            return nullptr;
+        }
     };
 
     template <typename T>
-    inspectable_abi* find_inspectable(const T* obj) noexcept
+    inspectable_abi* find_inspectable(T const* obj) noexcept
     {
         using default_interface = typename implements_default_interface<T>::type;
 
@@ -399,7 +453,7 @@ namespace winrt::impl
         }
         else
         {
-            return static_cast<inspectable_abi*>(implemented_interfaces<T>::find(obj, inspectable_finder{}));
+            return static_cast<inspectable_abi*>(implemented_interfaces<T>::find(find_inspectable_traits<T>{ obj }));
         }
     }
 
@@ -502,7 +556,7 @@ namespace winrt::impl
     template <typename D>
     struct produce<D, INonDelegatingInspectable> : produce_base<D, INonDelegatingInspectable>
     {
-        int32_t __stdcall QueryInterface(const guid& id, void** object) noexcept final
+        int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final
         {
             return this->shim().NonDelegatingQueryInterface(id, object);
         }
@@ -910,7 +964,7 @@ namespace winrt::impl
             return target;
         }
 
-        int32_t __stdcall NonDelegatingQueryInterface(const guid& id, void** object) noexcept
+        int32_t __stdcall NonDelegatingQueryInterface(guid const& id, void** object) noexcept
         {
             if (is_guid_of<Windows::Foundation::IInspectable>(id) || is_guid_of<Windows::Foundation::IUnknown>(id))
             {
@@ -932,13 +986,13 @@ namespace winrt::impl
 
         int32_t __stdcall NonDelegatingGetIids(uint32_t* count, guid** array) noexcept
         {
-            const auto& local_iids = static_cast<D*>(this)->get_local_iids();
-            const uint32_t& local_count = local_iids.first;
+            auto const& local_iids = static_cast<D*>(this)->get_local_iids();
+            uint32_t const& local_count = local_iids.first;
             if constexpr (root_implements_type::is_composing)
             {
                 if (local_count > 0)
                 {
-                    const com_array<guid>& inner_iids = get_interfaces(root_implements_type::m_inner);
+                    com_array<guid> const& inner_iids = get_interfaces(root_implements_type::m_inner);
                     *count = local_count + inner_iids.size();
                     *array = static_cast<guid*>(WINRT_IMPL_CoTaskMemAlloc(sizeof(guid)*(*count)));
                     if (*array == nullptr)
@@ -1189,7 +1243,7 @@ namespace winrt::impl
         }
 
         virtual unknown_abi* get_unknown() const noexcept = 0;
-        virtual std::pair<uint32_t, const guid*> get_local_iids() const noexcept = 0;
+        virtual std::pair<uint32_t, guid const*> get_local_iids() const noexcept = 0;
         virtual hstring GetRuntimeClassName() const = 0;
         virtual void* find_interface(guid const&) const noexcept = 0;
         virtual inspectable_abi* find_inspectable() const noexcept = 0;
@@ -1450,7 +1504,7 @@ WINRT_EXPORT namespace winrt
             return impl::find_inspectable(static_cast<const D*>(this));
         }
 
-        std::pair<uint32_t, const guid*> get_local_iids() const noexcept override
+        std::pair<uint32_t, guid const*> get_local_iids() const noexcept override
         {
             using interfaces = impl::uncloaked_interfaces<D>;
             using local_iids = impl::uncloaked_iids<interfaces>;

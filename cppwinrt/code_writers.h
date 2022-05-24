@@ -3270,6 +3270,14 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         {
             w.write(strings::base_xaml_typename);
         }
+        else if (namespace_name == "Windows.UI.Xaml.Markup")
+        {
+            w.write(strings::base_xaml_component_connector, "Windows");
+        }
+        else if (namespace_name == "Microsoft.UI.Xaml.Markup")
+        {
+            w.write(strings::base_xaml_component_connector, "Microsoft");
+        }
     }
 
     static void write_namespace_special_1(writer& w, std::string_view const& namespace_name)
