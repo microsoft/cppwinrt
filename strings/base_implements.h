@@ -254,7 +254,7 @@ namespace winrt::impl
     struct interface_list<>
     {
         template <typename Traits>
-        static constexpr auto find(const Traits& traits) noexcept
+        static constexpr auto find(Traits const& traits) noexcept
         {
             return traits.not_found();
         }
@@ -264,7 +264,7 @@ namespace winrt::impl
     struct interface_list<First, Rest...>
     {
         template <typename Traits>
-        static constexpr auto find(const Traits& traits) noexcept
+        static constexpr auto find(Traits const& traits) noexcept
         {
             if (traits.template test<First>())
             {
