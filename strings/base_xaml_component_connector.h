@@ -8,20 +8,20 @@ WINRT_EXPORT namespace winrt::%::UI::Xaml::Markup
 
         void InitializeComponent()
         {
-            if constexpr (has_connectable_base)
+            if constexpr (m_has_connectable_base)
             {
-                _dispatch_base = true;
+                m_dispatch_base = true;
                 composable_base::InitializeComponent();
-                _dispatch_base = false;
+                m_dispatch_base = false;
             }
             D::InitializeComponent();
         }
 
         void Connect(int32_t connectionId, Windows::Foundation::IInspectable const& target)
         {
-            if constexpr (has_connectable_base)
+            if constexpr (m_has_connectable_base)
             {
-                if (_dispatch_base)
+                if (m_dispatch_base)
                 {
                     composable_base::Connect(connectionId, target);
                     return;
@@ -32,9 +32,9 @@ WINRT_EXPORT namespace winrt::%::UI::Xaml::Markup
 
         auto GetBindingConnector(int32_t connectionId, Windows::Foundation::IInspectable const& target)
         {
-            if constexpr (has_connectable_base)
+            if constexpr (m_has_connectable_base)
             {
-                if (_dispatch_base)
+                if (m_dispatch_base)
                 {
                     return composable_base::GetBindingConnector(connectionId, target);
                 }
@@ -43,11 +43,11 @@ WINRT_EXPORT namespace winrt::%::UI::Xaml::Markup
         }
 
     private:
-        static constexpr bool has_connectable_base{
+        static constexpr bool m_has_connectable_base{
             impl::has_initializer<composable_base>::value &&
             impl::has_interface<D, IComponentConnector>() &&
             impl::has_interface<D, IComponentConnector2>() };
 
-        bool _dispatch_base{};
+        bool m_dispatch_base{};
     };
 }
