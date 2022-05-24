@@ -365,7 +365,7 @@ namespace winrt::impl
     template<typename T>
     struct find_iid_traits
     {
-        const T* _obj;
+        const T* m_object;
         const guid& m_guid;
 
         template <typename I>
@@ -377,7 +377,7 @@ namespace winrt::impl
         template <typename I>
         constexpr void* found() const noexcept
         {
-            return to_abi<I>(_obj);
+            return to_abi<I>(m_object);
         }
 
         static constexpr void* not_found() noexcept
@@ -422,7 +422,7 @@ namespace winrt::impl
     template<typename T>
     struct find_inspectable_traits
     {
-        const T* _obj;
+        const T* m_object;
 
         template <typename I>
         static constexpr bool test() noexcept
@@ -433,7 +433,7 @@ namespace winrt::impl
         template <typename I>
         constexpr void* found() const noexcept
         {
-            return to_abi<I>(_obj);
+            return to_abi<I>(m_object);
         }
 
         static constexpr void* not_found() noexcept
