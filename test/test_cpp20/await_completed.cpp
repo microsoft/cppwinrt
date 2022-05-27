@@ -1,4 +1,6 @@
+#include <coroutine>
 #include <intrin.h>
+
 #include "catch.hpp"
 
 import winrt;

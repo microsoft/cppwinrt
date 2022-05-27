@@ -116,7 +116,7 @@ WINRT_EXPORT namespace winrt
     }
 }
 
-WINRT_EXPORT namespace std
+namespace std
 {
     template<typename K, typename V>
     struct tuple_size<winrt::Windows::Foundation::Collections::IKeyValuePair<K, V>>

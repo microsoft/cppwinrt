@@ -64,9 +64,7 @@ namespace winrt::impl
 
     struct resume_apartment_context
     {
-        resume_apartment_context() :
-            m_context(try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)),
-            m_context_type(get_apartment_type().first) {}
+        resume_apartment_context() = default;
         resume_apartment_context(std::nullptr_t) : m_context(nullptr), m_context_type(-1) {}
         resume_apartment_context(resume_apartment_context const&) = default;
         resume_apartment_context(resume_apartment_context&& other) noexcept :
@@ -83,8 +81,8 @@ namespace winrt::impl
             return m_context_type >= 0;
         }
 
-        com_ptr<IContextCallback> m_context;
-        int32_t m_context_type;
+        com_ptr<IContextCallback> m_context = try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext);
+        int32_t m_context_type = get_apartment_type().first;
     };
 
     inline int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
@@ -718,9 +716,9 @@ WINRT_EXPORT namespace winrt
 }
 
 #ifdef __cpp_lib_coroutine
-WINRT_EXPORT namespace std
+namespace std
 #else
-WINRT_EXPORT namespace std::experimental
+namespace std::experimental
 #endif
 {
     template <typename... Args>

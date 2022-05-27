@@ -1,4 +1,5 @@
 #include <chrono>
+#include <coroutine>
 #include <Windows.h>
 
 #include "catch.hpp"

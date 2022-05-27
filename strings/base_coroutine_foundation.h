@@ -677,9 +677,9 @@ namespace winrt::impl
 }
 
 #ifdef __cpp_lib_coroutine
-WINRT_EXPORT namespace std
+namespace std
 #else
-WINRT_EXPORT namespace std::experimental
+namespace std::experimental
 #endif
 {
     template <typename... Args>

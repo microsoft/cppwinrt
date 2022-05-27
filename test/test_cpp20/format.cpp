@@ -1,6 +1,5 @@
-#include "winrt/Windows.Data.Json.h"
-#include "winrt/Windows.Foundation.h"
 #include <format>
+
 #include "catch.hpp"
 
 import winrt;
