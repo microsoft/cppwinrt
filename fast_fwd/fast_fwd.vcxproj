@@ -39,9 +39,8 @@
     <ProjectGuid>{A63B3AD1-AB7B-461E-9FFF-2447F5BCD459}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>fastfwd</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\cppwinrt.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -120,12 +119,11 @@
       <FileType>Document</FileType>
       <IncludePaths>src</IncludePaths>
       <UseSafeExceptionHandlers Condition="'$(Platform)'=='Win32'">true</UseSafeExceptionHandlers>
-      <UseSafeExceptionHandlers Condition="'$(Platform)'=='ARM'">true</UseSafeExceptionHandlers>
-      <UseSafeExceptionHandlers Condition="'$(Platform)'=='ARM64'">true</UseSafeExceptionHandlers>
     </MASM>
   </ItemGroup>
   <ItemGroup Condition="$(Platform_Arm)">
     <MARMASM Include="$(IntDir)thunks.pp">
+      <PreprocessWithCl Condition="'$(VisualStudioVersion)' &gt;= '17.0'">false</PreprocessWithCl>
       <FileType>Document</FileType>
       <IncludePaths>src</IncludePaths>
     </MARMASM>

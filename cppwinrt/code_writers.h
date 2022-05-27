@@ -992,9 +992,8 @@ namespace cppwinrt
         auto method_name = get_name(method);
         auto type = method.Parent();
 
-        w.write("        %WINRT_IMPL_AUTO(%) %(%) const%;\n",
+        w.write("        %auto %(%) const%;\n",
             is_get_overload(method) ? "[[nodiscard]] " : "",
-            signature.return_signature(),
             method_name,
             bind<write_consume_params>(signature),
             is_noexcept(method) ? " noexcept" : "");
@@ -1002,14 +1001,13 @@ namespace cppwinrt
         if (is_add_overload(method))
         {
             auto format = R"(        using %_revoker = impl::event_revoker<%, &impl::abi_t<%>::remove_%>;
-        [[nodiscard]] %_revoker %(auto_revoke_t, %) const;
+        [[nodiscard]] auto %(auto_revoke_t, %) const;
 )";
 
             w.write(format,
                 method_name,
                 type,
                 type,
-                method_name,
                 method_name,
                 method_name,
                 bind<write_consume_params>(signature));
@@ -1133,7 +1131,7 @@ namespace cppwinrt
             if (is_remove_overload(method))
             {
                 // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
-                format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
+                format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
         WINRT_IMPL_SHIM(%)->%(%);%
     }
@@ -1141,7 +1139,7 @@ namespace cppwinrt
             }
             else
             {
-                format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const noexcept
+                format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
         WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%
     }
@@ -1150,7 +1148,7 @@ namespace cppwinrt
         }
         else
         {
-            format = R"(    template <typename D%> WINRT_IMPL_AUTO(%) consume_%<D%>::%(%) const
+            format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
     {%
         check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
     }
@@ -1159,7 +1157,6 @@ namespace cppwinrt
 
         w.write(format,
             bind<write_comma_generic_typenames>(generics),
-            signature.return_signature(),
             type_impl_name,
             bind<write_comma_generic_types>(generics),
             method_name,
@@ -1172,7 +1169,7 @@ namespace cppwinrt
 
         if (is_add_overload(method))
         {
-            format = R"(    template <typename D%> typename consume_%<D%>::%_revoker consume_%<D%>::%(auto_revoke_t, %) const
+            format = R"(    template <typename D%> auto consume_%<D%>::%(auto_revoke_t, %) const
     {
         return impl::make_event_revoker<D, %_revoker>(this, %(%));
     }
@@ -1180,9 +1177,6 @@ namespace cppwinrt
 
             w.write(format,
                 bind<write_comma_generic_typenames>(generics),
-                type_impl_name,
-                bind<write_comma_generic_types>(generics),
-                method_name,
                 type_impl_name,
                 bind<write_comma_generic_types>(generics),
                 method_name,
@@ -1199,22 +1193,13 @@ namespace cppwinrt
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
 
-        //
-        // Note: this use of a lambda is a workaround for a Visual C++ compiler bug:
-        // https://developercommunity.visualstudio.com/content/problem/554130/incorrect-code-gen-when-invoking-a-conversion-oper.html
-        // Once fixed, revert the function body back to this:
-        //
-        // return static_cast<% const&>(*this).%(%);
-        //
-
-        std::string_view format = R"(    inline WINRT_IMPL_AUTO(%) %::%(%) const%
+        std::string_view format = R"(    inline auto %::%(%) const%
     {
-        return [&](% const& winrt_impl_base) { return winrt_impl_base.%(%); }(*this);
+        return static_cast<% const&>(*this).%(%);
     }
 )";
 
         w.write(format,
-            signature.return_signature(),
             class_type.TypeName(),
             method_name,
             bind<write_consume_params>(signature),
@@ -1225,15 +1210,13 @@ namespace cppwinrt
 
         if (is_add_overload(method))
         {
-            format = R"(    inline %::%_revoker %::%(auto_revoke_t, %) const
+            format = R"(    inline auto %::%(auto_revoke_t, %) const
     {
         return impl::make_event_revoker<D, %_revoker>(this, %(%));
     }
 )";
 
             w.write(format,
-                class_type.TypeName(),
-                method_name,
                 class_type.TypeName(),
                 method_name,
                 bind<write_consume_params>(signature),
@@ -1999,7 +1982,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_interface_override_method(writer& w, MethodDef const& method, std::string_view const& interface_name)
     {
-        auto format = R"(    template <typename D> WINRT_IMPL_AUTO(%) %T<D>::%(%) const%
+        auto format = R"(    template <typename D> auto %T<D>::%(%) const%
     {
         return shim().template try_as<%>().%(%);
     }
@@ -2009,7 +1992,6 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         auto method_name = get_name(method);
 
         w.write(format,
-            signature.return_signature(),
             interface_name,
             method_name,
             bind<write_consume_params>(signature),
@@ -3029,14 +3011,13 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             if (is_add_overload(method))
             {
                 auto format = R"(        using %_revoker = impl::factory_event_revoker<%, &impl::abi_t<%>::remove_%>;
-        [[nodiscard]] static %_revoker %(auto_revoke_t, %);
+        [[nodiscard]] static auto %(auto_revoke_t, %);
 )";
 
                 w.write(format,
                     method_name,
                     factory.second.type,
                     factory.second.type,
-                    method_name,
                     method_name,
                     method_name,
                     bind<write_consume_params>(signature));
@@ -3068,21 +3049,21 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         if (is_add_overload(method))
         {
-            auto format = R"(    inline %::%_revoker %::%(auto_revoke_t, %)
+            auto format = R"(    inline auto %::%(auto_revoke_t, %)
     {
         auto f = get_activation_factory<%, %>();
-        return { f, f.%(%) };
+        return %::%_revoker{ f, f.%(%) };
     }
 )";
 
             w.write(format,
                 type_name,
                 method_name,
-                type_name,
-                method_name,
                 bind<write_consume_params>(signature),
                 type_name,
                 factory,
+                type_name,
+                method_name,
                 method_name,
                 bind<write_consume_args>(signature));
         }
@@ -3288,6 +3269,14 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         else if (namespace_name == "Windows.UI.Xaml.Interop")
         {
             w.write(strings::base_xaml_typename);
+        }
+        else if (namespace_name == "Windows.UI.Xaml.Markup")
+        {
+            w.write(strings::base_xaml_component_connector, "Windows");
+        }
+        else if (namespace_name == "Microsoft.UI.Xaml.Markup")
+        {
+            w.write(strings::base_xaml_component_connector, "Microsoft");
         }
     }
 

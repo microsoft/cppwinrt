@@ -42,4 +42,4 @@ using async_return_type = decltype(std::declval<T>().GetResults());
 template<typename T>
 using async_progress_type = typename async_traits<std::decay_t<T>>::progress_type;
 template<typename T>
-inline constexpr bool has_async_progress = !std::is_same_v<void, async_traits<std::decay_t<T>>::progress_type>;
+inline constexpr bool has_async_progress = !std::is_same_v<void, typename async_traits<std::decay_t<T>>::progress_type>;

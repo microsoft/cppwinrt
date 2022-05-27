@@ -3,6 +3,7 @@
 set target_platform=%1
 set target_configuration=%2
 set target_version=%3
+set clean_intermediate_files=%4
 
 if "%target_platform%"=="" set target_platform=x64
 if "%target_configuration%"=="" set target_configuration=Release

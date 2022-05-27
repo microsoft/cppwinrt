@@ -518,22 +518,22 @@ catch (...) { return winrt::to_hresult(); }
 
                     if (is_add_overload(method))
                     {
-                        auto format = R"(    %::%_revoker %::%(auto_revoke_t, %)
+                        auto format = R"(    auto %::%(auto_revoke_t, %)
     {
         auto f = make<winrt::@::factory_implementation::%>().as<%>();
-        return { f, f.%(%) };
+        return %::%_revoker{ f, f.%(%) };
     }
 )";
 
                         w.write(format,
                             type_name,
                             method_name,
-                            type_name,
-                            method_name,
                             bind<write_consume_params>(signature),
                             type_namespace,
                             type_name,
                             factory_name,
+                            type_name,
+                            method_name,
                             method_name,
                             bind<write_consume_args>(signature));
                     }
@@ -797,6 +797,7 @@ catch (...) { return winrt::to_hresult(); }
                 }
                 else
                 {
+                    composable_base_name = w.write_temp("using composable_base = B;");
                     base_type_parameter = ", typename B";
                     base_type_argument = ", B";
                     no_module_lock = "no_module_lock, ";
@@ -860,7 +861,9 @@ catch (...) { return winrt::to_hresult(); }
         {
             auto format = R"(
 #if defined(WINRT_FORCE_INCLUDE_%_XAML_G_H) || __has_include("%.xaml.g.h")
+
 #include "%.xaml.g.h"
+
 #else
 
 namespace winrt::@::implementation

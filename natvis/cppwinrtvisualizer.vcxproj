@@ -27,14 +27,6 @@
     <TargetName>cppwinrtvisualizer</TargetName>
     <NugetPackagesDirectory>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)packages\))</NugetPackagesDirectory>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(VisualStudioVersion)' &gt;= '16.0'">
-    <PlatformToolset>v142</PlatformToolset>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(VisualStudioVersion)' &lt; '16.0'">
-    <PlatformToolset>v141</PlatformToolset>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -75,25 +67,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+  <PropertyGroup Condition="'$(Configuration)'=='Debug'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>x86\$(Configuration)\$(Deployment)\</OutDir>
-    <IntDir>x86\$(Configuration)\$(Deployment)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <OutDir>x64\$(Configuration)\$(Deployment)\</OutDir>
-    <IntDir>x64\$(Configuration)\$(Deployment)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+  <PropertyGroup Condition="'$(Configuration)'=='Release'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>x86\$(Configuration)\$(Deployment)\</OutDir>
-    <IntDir>x86\$(Configuration)\$(Deployment)\</IntDir>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <OutDir>x64\$(Configuration)\$(Deployment)\</OutDir>
-    <IntDir>x64\$(Configuration)\$(Deployment)\</IntDir>
+  <PropertyGroup>
+    <OutDir>$(CppWinRTPlatform)\$(Configuration)\$(Deployment)\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -173,6 +154,7 @@
       <AdditionalDependencies>advapi32.lib;shell32.lib;windowsapp.lib;$(VsDebugEng_Lib);%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\cppwinrtvisualizer.def</ModuleDefinitionFile>
       <DelayLoadDLLs>vsdebugeng.dll</DelayLoadDLLs>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -202,6 +184,7 @@
       <AdditionalDependencies>advapi32.lib;shell32.lib;windowsapp.lib;$(VsDebugEng_Lib);%(AdditionalDependencies)</AdditionalDependencies>
       <ModuleDefinitionFile>.\cppwinrtvisualizer.def</ModuleDefinitionFile>
       <DelayLoadDLLs>vsdebugeng.dll</DelayLoadDLLs>
+      <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Deployment)'=='Component'">

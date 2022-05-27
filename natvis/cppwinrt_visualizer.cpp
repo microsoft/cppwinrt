@@ -207,21 +207,26 @@ HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
         IF_FAIL_RET(pTypeSymbol->get_name(&bstrTypeName));
 
         // Visualize top-level C++/WinRT objects containing ABI pointers
-        bool isAbiObject;
+        ObjectType objectType;
         if (wcscmp(bstrTypeName, L"winrt::Windows::Foundation::IInspectable") == 0)
         {
-            isAbiObject = false;
+            objectType = ObjectType::Projection;
         }
         // Visualize nested object properties via raw ABI pointers
         else if ((wcscmp(bstrTypeName, L"winrt::impl::IInspectable") == 0) ||
                  (wcscmp(bstrTypeName, L"winrt::impl::inspectable_abi") == 0))
         {
-            isAbiObject = true;
+            objectType = ObjectType::Abi;
+        }
+        // Visualize C++/WinRT object implementations
+        else if (wcsncmp(bstrTypeName, L"winrt::impl::producer<", wcslen(L"winrt::impl::producer<")) == 0)
+        {
+            objectType = ObjectType::Abi;
         }
         // Visualize all raw IInspectable pointers
         else if (wcscmp(bstrTypeName, L"IInspectable") == 0)
         {
-            isAbiObject = true;
+            objectType = ObjectType::Abi;
         }
         else
         {
@@ -231,7 +236,7 @@ HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
             return S_OK;
         }
 
-        IF_FAIL_RET(object_visualizer::CreateEvaluationResult(pVisualizedExpression, isAbiObject, ppResultObject));
+        IF_FAIL_RET(object_visualizer::CreateEvaluationResult(pVisualizedExpression, objectType, ppResultObject));
 
         return S_OK;
     }

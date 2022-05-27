@@ -77,6 +77,49 @@ To customize common C++/WinRT project properties:
 * expand the Common Properties item
 * select the C++/WinRT property page
 
+## InitializeComponent
+
+In older versions of C++/WinRT, Xaml objects called InitializeComponent from constructors. This can lead to memory corruption if InitializeComponent throws an exception.
+
+```cpp
+void MainPage::MainPage()
+{
+    // This pattern should no longer be used
+    InitializeComponent();
+}
+```
+
+C++/WinRT now calls InitializeComponent automatically and safely, after object construction. Explicit calls to InitializeComponent from constructors in existing code should now be removed. Multiple calls to InitializeComponent are idempotent.
+
+If a Xaml object needs to access a Xaml property during initialization, it should override InitializeComponent:
+
+```cpp
+void MainPage::InitializeComponent()
+{
+    // Call base InitializeComponent() to register with the Xaml runtime
+    MainPageT::InitializeComponent();
+    // Can now access Xaml properties
+    MyButton().Content(box_value(L"Click"));
+}
+```
+
+A non-Xaml object can also participate in two-phase construction by defining an InitializeComponent method.
+
+```cpp
+void MyComponent::InitializeComponent()
+{
+    // Execute initialization logic that may throw 
+}
+```
+
+***[Windows|Microsoft]::UI::Xaml::Markup::ComponentConnectorT***
+
+A consequence of calling InitializeComponent outside construction is that Xaml runtime callbacks to IComponentConnector::Connect and IComponentConnector2::GetBindingConnector are now dispatched to the most derived implementations. Previously, these calls were dispatched directly to the class under construction, as the vtable had yet to be initialized. For objects with markup that derive from composable base classes with markup, this is a breaking change. Derived classes must now implement IComponentConnector::Connect and IComponentConnector2::GetBindingConnector by explicitly calling into the base class. The ComponentConnectorT template provides a correct implemenation for these interfaces:
+
+```cpp
+    struct DerivedPage : winrt::Windows::UI::Xaml::Markup::ComponentConnectorT<DerivedPageT<DerivedPage>>
+```
+
 ## Troubleshooting
 
 The msbuild verbosity level maps to msbuild message importance as follows:

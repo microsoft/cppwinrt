@@ -22,7 +22,7 @@ namespace
         }
     };
 
-    struct NoWeak : implements<NoWeak, ::IUnknown>
+    struct WeakClassicCom : implements<WeakClassicCom, ::IUnknown>
     {
     };
 
@@ -68,6 +68,49 @@ namespace
             REQUIRE(weak_self.get() == nullptr);
         }
     };
+
+    struct WeakCreateWeakInDestructor : implements<WeakCreateWeakInDestructor, IStringable>
+    {
+        winrt::weak_ref<WeakCreateWeakInDestructor>& weak_self;
+
+        WeakCreateWeakInDestructor(winrt::weak_ref<WeakCreateWeakInDestructor>& magic) : weak_self(magic) {}
+
+        ~WeakCreateWeakInDestructor()
+        {
+            // Creates a weak reference to itself in the destructor.
+            weak_self = get_weak();
+        }
+
+        hstring ToString()
+        {
+            return L"WeakCreateWeakInDestructor";
+        }
+    };
+
+#ifdef WINRT_IMPL_COROUTINES
+    // Returns an IAsyncAction that has already completed.
+    winrt::Windows::Foundation::IAsyncAction Action()
+    {
+        co_return;
+    }
+
+    // Returns an IAsyncAction that has not completed.
+    // Call the resume() handle to complete it.
+    winrt::Windows::Foundation::IAsyncAction SuspendAction(impl::coroutine_handle<>& resume)
+    {
+        struct awaiter
+        {
+            impl::coroutine_handle<>& resume;
+            bool await_ready() { return false; }
+            void await_suspend(impl::coroutine_handle<> handle) { resume = handle; }
+            void await_resume() {}
+        };
+
+        co_await awaiter{ resume };
+        co_return;
+    }
+
+#endif
 }
 
 TEST_CASE("weak,source")
@@ -118,6 +161,26 @@ TEST_CASE("weak,source")
         REQUIRE(b.ToString() == L"Weak");
     }
 
+    SECTION("classic-com")
+    {
+        com_ptr<::IUnknown> a = make<WeakClassicCom>();
+
+        weak_ref<::IUnknown> w = a;
+        com_ptr<::IUnknown> b = w.get();
+        REQUIRE(b == a);
+
+        // still one outstanding reference
+        b = nullptr;
+        b = w.get();
+        REQUIRE(b != nullptr);
+
+        // no outstanding references
+        a = nullptr;
+        b = nullptr;
+        b = w.get();
+        REQUIRE(b == nullptr);
+    }
+
     // Verify that deduction guides work.
     static_assert(std::is_same_v<weak_ref<IStringable>, decltype(weak_ref(IStringable()))>);
     static_assert(std::is_same_v<weak_ref<Uri>, decltype(weak_ref(std::declval<Uri>()))>);
@@ -163,12 +226,24 @@ TEST_CASE("weak,QI")
         REQUIRE(ref.as<::IUnknown>() != object.as<::IUnknown>());
     }
 
-    SECTION("no-weak")
+    SECTION("weak-classic-com")
     {
-        com_ptr<::IUnknown> object = make<NoWeak>();
+        com_ptr<::IUnknown> object = make<WeakClassicCom>();
         REQUIRE(!object.try_as<Windows::Foundation::IInspectable>());
-        REQUIRE(!object.try_as<winrt::impl::IWeakReferenceSource>());
+        REQUIRE(object.try_as<winrt::impl::IWeakReferenceSource>());
         REQUIRE(!object.try_as<winrt::impl::IWeakReference>());
+
+        com_ptr<winrt::impl::IWeakReferenceSource> source = object.as<winrt::impl::IWeakReferenceSource>();
+        REQUIRE(!source.try_as<winrt::impl::IWeakReference>());
+        REQUIRE(source.try_as<winrt::impl::IWeakReferenceSource>());
+        REQUIRE(object.as<::IUnknown>() == source.as<::IUnknown>());
+
+        com_ptr<winrt::impl::IWeakReference> ref;
+        REQUIRE(S_OK == source->GetWeakReference(ref.put()));
+        REQUIRE(!ref.try_as<winrt::impl::IWeakReferenceSource>());
+        REQUIRE(!ref.try_as<Windows::Foundation::IInspectable>());
+        REQUIRE(ref.as<winrt::impl::IWeakReference>() == ref);
+        REQUIRE(ref.as<::IUnknown>() != object.as<::IUnknown>());
     }
 
     SECTION("factory")
@@ -413,3 +488,37 @@ TEST_CASE("weak,self")
     a.ToString();
     a = nullptr;
 }
+
+TEST_CASE("weak,create_weak_in_destructor")
+{
+    weak_ref<WeakCreateWeakInDestructor> magic;
+    IStringable a = make<WeakCreateWeakInDestructor>(magic);
+    a.ToString();
+    a = nullptr;
+    REQUIRE(magic.get() == nullptr);
+}
+
+#ifdef WINRT_IMPL_COROUTINES
+TEST_CASE("weak,coroutine")
+{
+    // Run a coroutine to completion. Confirm that weak references fail to resolve.
+    auto weak = winrt::weak_ref(Action());
+    REQUIRE(weak.get() == nullptr);
+
+    // Start a coroutine but don't complete it yet.
+    // Confirm that weak references resolve.
+    impl::coroutine_handle<> resume;
+    weak = winrt::weak_ref(SuspendAction(resume));
+    REQUIRE(weak.get() != nullptr);
+    // Now complete the coroutine. Confirm that weak references no longer resolve.
+    resume();
+    REQUIRE(weak.get() == nullptr);
+
+    // Verify that weak reference resolves as long as strong reference exists.
+    auto action = Action();
+    weak = winrt::weak_ref(action);
+    REQUIRE(weak.get() == action);
+    action = nullptr;
+    REQUIRE(weak.get() == nullptr);
+}
+#endif

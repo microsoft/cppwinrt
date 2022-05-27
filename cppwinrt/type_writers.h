@@ -92,6 +92,18 @@ namespace cppwinrt
         return result;
     }
 
+    static bool transform_special_numeric_type(std::string_view& name)
+    {
+        if (name == "Matrix3x2") { name = "float3x2"; return true; }
+        else if (name == "Matrix4x4") { name = "float4x4"; return true; }
+        else if (name == "Plane") { name = "plane"; return true; }
+        else if (name == "Quaternion") { name = "quaternion"; return true; }
+        else if (name == "Vector2") { name = "float2"; return true; }
+        else if (name == "Vector3") { name = "float3"; return true; }
+        else if (name == "Vector4") { name = "float4"; return true; }
+        return false;
+    }
+
     struct writer : writer_base<writer>
     {
         using writer_base<writer>::write;
@@ -277,8 +289,6 @@ namespace cppwinrt
                 return;
             }
 
-            // TODO: get rid of all these renames once parity with cppwinrt.exe has been reached...
-
             if (name == "EventRegistrationToken" && ns == "Windows.Foundation")
             {
                 write("winrt::event_token");
@@ -291,16 +301,8 @@ namespace cppwinrt
             {
                 auto category = get_category(type);
 
-                if (ns == "Windows.Foundation.Numerics")
+                if (ns == "Windows.Foundation.Numerics" && transform_special_numeric_type(name))
                 {
-                    if (name == "Matrix3x2") { name = "float3x2"; }
-                    else if (name == "Matrix4x4") { name = "float4x4"; }
-                    else if (name == "Plane") { name = "plane"; }
-                    else if (name == "Quaternion") { name = "quaternion"; }
-                    else if (name == "Vector2") { name = "float2"; }
-                    else if (name == "Vector3") { name = "float3"; }
-                    else if (name == "Vector4") { name = "float4"; }
-
                     write("winrt::@::%", ns, name);
                 }
                 else if (category == category::struct_type)

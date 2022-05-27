@@ -56,6 +56,9 @@ namespace test_component
         Windows.Foundation.IAsyncAction Action(Windows.Foundation.DateTime value);
         Object Object(Windows.Foundation.DateTime value);
         static event Windows.Foundation.EventHandler<Object> StaticEvent;
+
+        Windows.Foundation.Numerics.Vector2 ReturnVector2();
+        Windows.Foundation.Numerics.Rational ReturnRational();
     }
 
     runtimeclass DeferrableEventArgs
