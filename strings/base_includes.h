@@ -33,3 +33,7 @@
 #else
 #include <experimental/coroutine>
 #endif
+
+#if defined(_MSC_VER)
+#include <intrin.h>
+#endif
