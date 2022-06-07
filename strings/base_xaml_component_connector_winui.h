@@ -1,5 +1,5 @@
 
-WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Markup
+WINRT_EXPORT namespace winrt::Microsoft::UI::Xaml::Markup
 {
     template <typename D>
     struct ComponentConnectorT : D
@@ -45,8 +45,7 @@ WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Markup
     private:
         static constexpr bool m_has_connectable_base{
             impl::has_initializer<composable_base>::value &&
-            impl::has_interface<D, IComponentConnector>() &&
-            impl::has_interface<D, IComponentConnector2>() };
+            impl::has_interface<D, IComponentConnector>() };
 
         bool m_dispatch_base{};
     };
