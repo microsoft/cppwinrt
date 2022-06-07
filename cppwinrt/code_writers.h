@@ -3272,11 +3272,11 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         }
         else if (namespace_name == "Windows.UI.Xaml.Markup")
         {
-            w.write(strings::base_xaml_component_connector, "Windows");
+            w.write(strings::base_xaml_component_connector);
         }
         else if (namespace_name == "Microsoft.UI.Xaml.Markup")
         {
-            w.write(strings::base_xaml_component_connector, "Microsoft");
+            w.write(strings::base_xaml_component_connector_winui);
         }
     }
 
