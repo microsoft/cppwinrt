@@ -89,6 +89,7 @@
     <ClInclude Include="..\strings\base_weak_ref.h" />
     <ClInclude Include="..\strings\base_windows.h" />
     <ClInclude Include="..\strings\base_xaml_component_connector.h" />
+    <ClInclude Include="..\strings\base_xaml_component_connector_winui.h" />
     <ClInclude Include="..\strings\base_xaml_typename.h" />
     <ClInclude Include="cmd_reader.h" />
     <ClInclude Include="code_writers.h" />
