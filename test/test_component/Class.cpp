@@ -516,3 +516,10 @@ namespace winrt::test_component::implementation
         return pass;
     }
 }
+
+namespace
+{
+    void ValidateStaticEventAutoRevoke() {
+        auto x = winrt::test_component::Simple::StaticEvent(winrt::auto_revoke, [](auto&&, auto&&) {});
+    }
+}
