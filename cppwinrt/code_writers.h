@@ -2986,13 +2986,15 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             return;
         }
 
+        auto is_opt_type = settings.component_opt && settings.component_filter.includes(type);
+
         for (auto&& method : factory.second.type.MethodList())
         {
             method_signature signature{ method };
             auto method_name = get_name(method);
             auto async_types_guard = w.push_async_types(signature.is_async());
 
-            if (settings.component_opt && settings.component_filter.includes(type))
+            if (is_opt_type)
             {
                 w.write("        %static % %(%);\n",
                     is_get_overload(method) ? "[[nodiscard]] " : "",
@@ -3010,17 +3012,33 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
             if (is_add_overload(method))
             {
-                auto format = R"(        using %_revoker = impl::factory_event_revoker<%, &impl::abi_t<%>::remove_%>;
-        [[nodiscard]] static auto %(auto_revoke_t, %);
+                {
+                    auto format = R"(        using %_revoker = impl::factory_event_revoker<%, &impl::abi_t<%>::remove_%>;
 )";
+                    w.write(format,
+                        method_name,
+                        factory.second.type,
+                        factory.second.type,
+                        method_name);
+                }
 
-                w.write(format,
-                    method_name,
-                    factory.second.type,
-                    factory.second.type,
-                    method_name,
-                    method_name,
-                    bind<write_consume_params>(signature));
+                if (is_opt_type)
+                {
+                    auto format = R"(        [[nodiscard]] static %_revoker %(auto_revoke_t, %);
+)";
+                    w.write(format,
+                        method_name,
+                        method_name,
+                        bind<write_consume_params>(signature));
+                }
+                else
+                {
+                    auto format = R"(        [[nodiscard]] static auto %(auto_revoke_t, %);
+)";
+                    w.write(format,
+                        method_name,
+                        bind<write_consume_params>(signature));
+                }
             }
         }
     }
