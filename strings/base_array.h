@@ -420,7 +420,10 @@ WINRT_EXPORT namespace winrt
     template <typename T>
     auto detach_abi(com_array<T>& object) noexcept
     {
-        std::pair<uint32_t, impl::arg_out<T>> result(object.size(), *reinterpret_cast<impl::arg_out<T>*>(&object));
+        std::pair<uint32_t, impl::arg_out<T>> result;
+        memset(&result, 0, sizeof(result));
+        result.first = object.size();
+        result.second = *reinterpret_cast<impl::arg_out<T>*>(&object);
         memset(&object, 0, sizeof(com_array<T>));
         return result;
     }
