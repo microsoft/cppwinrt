@@ -132,7 +132,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             <_FilesToDelete Include="$(GeneratedFilesDir)**"/>
             <_FilesToDelete Include="$(CppWinRTMergedDir)**"/>
             <_FilesToDelete Include="$(CppWinRTUnmergedDir)**"/>
-            <_FilesToDelete Include="$(CppWinRTProjectWinMD)"/>
+            <_FilesToDelete Include="$(CppWinRTProjectWinMD)" Condition="'$(CppWinRTGenerateWindowsMetadata)' == 'true'"/>
         </ItemGroup>
         <Delete Files="@(_FilesToDelete)"/>
     </Target>
