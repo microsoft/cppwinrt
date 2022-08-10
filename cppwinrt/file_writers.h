@@ -77,6 +77,7 @@ namespace cppwinrt
             w.write_each<write_forward>(members.classes);
             w.write_each<write_forward>(members.structs);
             w.write_each<write_forward>(members.delegates);
+            w.write_each<write_forward>(members.contracts);
         }
         {
             auto wrap_impl = wrap_impl_namespace(w);
@@ -89,11 +90,13 @@ namespace cppwinrt
             // Class names are always required for activation.
             // Class, enum, and struct names are required for producing GUIDs for generic types.
             // Interface and delegates names are required for Xaml compatibility.
+            // Contract names are used by IsApiContractPresent.
             w.write_each<write_name>(members.classes);
             w.write_each<write_name>(members.enums);
             w.write_each<write_name>(members.structs);
             w.write_each<write_name>(members.interfaces);
             w.write_each<write_name>(members.delegates);
+            w.write_each<write_name>(members.contracts);
 
             w.write_each<write_guid>(members.interfaces);
             w.write_each<write_guid>(members.delegates);
