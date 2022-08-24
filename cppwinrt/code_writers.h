@@ -147,6 +147,28 @@ namespace cppwinrt
         }
     }
 
+    static void write_parent_imports(writer& w, cache const& c, std::string_view const& type_namespace)
+    {
+        auto pos = type_namespace.rfind('.');
+
+        if (pos == std::string::npos)
+        {
+            return;
+        }
+
+        auto parent = type_namespace.substr(0, pos);
+        auto found = c.namespaces().find(parent);
+
+        if (found != c.namespaces().end() && has_projected_types(found->second))
+        {
+            w.write_import(parent);
+        }
+        else
+        {
+            write_parent_imports(w, c, parent);
+        }
+    }
+
     static void write_pch(writer& w)
     {
         auto format = R"(#include "%"
@@ -315,11 +337,22 @@ namespace cppwinrt
             return;
         }
 
-        if (type_name == "Windows.Foundation.DateTime" ||
-            type_name == "Windows.Foundation.TimeSpan")
+        if (type_name.name_space == "Windows.Foundation")
         {
-            // Don't forward declare these since they're not structs.
-            return;
+            if (type_name.name == "DateTime" ||
+                type_name.name == "TimeSpan")
+            {
+                // Don't forward declare these since they're not structs.
+                return;
+            }
+
+            if (type_name.name == "Point" ||
+                type_name.name == "Rect" ||
+                type_name.name == "Size")
+            {
+                // Don't forward declare these since they're already defined in base.h.
+                return;
+            }
         }
 
         if (type_name.name_space == "Windows.Foundation.Numerics")
@@ -992,8 +1025,9 @@ namespace cppwinrt
         auto method_name = get_name(method);
         auto type = method.Parent();
 
-        w.write("        %auto %(%) const%;\n",
+        w.write("        %% %(%) const%;\n",
             is_get_overload(method) ? "[[nodiscard]] " : "",
+            signature.return_signature(),
             method_name,
             bind<write_consume_params>(signature),
             is_noexcept(method) ? " noexcept" : "");
@@ -1131,7 +1165,7 @@ namespace cppwinrt
             if (is_remove_overload(method))
             {
                 // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
-                format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
+                format = R"(    template <typename D%> % consume_%<D%>::%(%) const noexcept
     {%
         WINRT_IMPL_SHIM(%)->%(%);%
     }
@@ -1139,7 +1173,7 @@ namespace cppwinrt
             }
             else
             {
-                format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
+                format = R"(    template <typename D%> % consume_%<D%>::%(%) const noexcept
     {%
         WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%
     }
@@ -1148,7 +1182,7 @@ namespace cppwinrt
         }
         else
         {
-            format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
+            format = R"(    template <typename D%> % consume_%<D%>::%(%) const
     {%
         check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
     }
@@ -1157,6 +1191,7 @@ namespace cppwinrt
 
         w.write(format,
             bind<write_comma_generic_typenames>(generics),
+            signature.return_signature(),
             type_impl_name,
             bind<write_comma_generic_types>(generics),
             method_name,
@@ -1193,13 +1228,14 @@ namespace cppwinrt
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
 
-        std::string_view format = R"(    inline auto %::%(%) const%
+        std::string_view format = R"(    inline % %::%(%) const%
     {
         return static_cast<% const&>(*this).%(%);
     }
 )";
 
         w.write(format,
+            signature.return_signature(),
             class_type.TypeName(),
             method_name,
             bind<write_consume_params>(signature),
@@ -1982,7 +2018,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_interface_override_method(writer& w, MethodDef const& method, std::string_view const& interface_name)
     {
-        auto format = R"(    template <typename D> auto %T<D>::%(%) const%
+        auto format = R"(    template <typename D> % %T<D>::%(%) const%
     {
         return shim().template try_as<%>().%(%);
     }
@@ -1992,6 +2028,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         auto method_name = get_name(method);
 
         w.write(format,
+            signature.return_signature(),
             interface_name,
             method_name,
             bind<write_consume_params>(signature),
@@ -2648,7 +2685,13 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         }
     }
 
-    static bool write_structs(writer& w, std::vector<TypeDef> const& types)
+    struct write_structs_result
+    {
+        bool promote = false;
+        bool has_reference_field = false;
+    };
+
+    static write_structs_result write_structs(writer& w, std::vector<TypeDef> const& types)
     {
         auto format = R"(    struct %
     {
@@ -2665,7 +2708,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         if (types.empty())
         {
-            return false;
+            return {};
         }
 
         struct complex_struct
@@ -2731,7 +2774,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             }
         }
 
-        bool promote = false;
+        write_structs_result result;
         auto cpp_namespace = w.write_temp("@", w.type_namespace);
 
         for (auto&& type : structs)
@@ -2757,14 +2800,19 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
                     continue;
                 }
 
-                if (!starts_with(field.second, cpp_namespace))
+                if (!result.promote && !starts_with(field.second, cpp_namespace))
                 {
-                    promote = true;
+                    result.promote = true;
+                }
+
+                if (!result.has_reference_field && starts_with(field.second, "winrt::Windows::Foundation::IReference<"))
+                {
+                    result.has_reference_field = true;
                 }
             }
         }
 
-        return promote;
+        return result;
     }
 
     static void write_class_requires(writer& w, TypeDef const& type)
@@ -3240,7 +3288,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             w.write(strings::base_reference_produce);
             w.write(strings::base_deferral);
             w.write(strings::base_coroutine_foundation);
-            w.write(strings::base_stringable_format);
+            //TODO: figure out why compiler ICEs w.write(strings::base_stringable_format);
         }
         else if (namespace_name == "Windows.Foundation.Collections")
         {
@@ -3285,7 +3333,30 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         if (namespace_name == "Windows.Foundation")
         {
             w.write(strings::base_reference_produce_1);
-            w.write(strings::base_stringable_format_1);
+            //TODO: figure out why compiler ICEs w.write(strings::base_stringable_format_1);
+        }
+    }
+
+    static void write_namespace_special_includes(writer& w, std::string_view const& namespace_name)
+    {
+        if (namespace_name == "Windows.Foundation")
+        {
+            w.write("#include <chrono>\n");
+            w.write("#include <coroutine>\n");
+            w.write("#include <optional>\n");
+        }
+        else if (namespace_name == "Windows.Foundation.Collections")
+        {
+            w.write("#include <algorithm>\n");
+            w.write("#include <iterator>\n");
+            w.write("#include <map>\n");
+            w.write("#include <optional>\n");
+            w.write("#include <unordered_map>\n");
+            w.write("#include <utility>\n");
+        }
+        else if (namespace_name == "Windows.UI.Xaml.Interop")
+        {
+            w.write("#include <string_view>\n");
         }
     }
 }

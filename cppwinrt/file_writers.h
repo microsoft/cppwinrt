@@ -46,6 +46,17 @@ namespace cppwinrt
         w.flush_to_file(settings.output_folder + "winrt/base.h");
     }
 
+    static void write_base_ixx()
+    {
+        writer ixx;
+        write_preamble(ixx);
+        ixx.write("module;\n");
+        ixx.write(strings::base_includes);
+        ixx.write(strings::base_module);
+        ixx.write_root_include("base");
+        ixx.flush_to_file(settings.output_folder + "winrt/ixx/base.ixx");
+    }
+
     static void write_fast_forward_h(std::vector<TypeDef> const& classes)
     {
         writer w;
@@ -63,6 +74,78 @@ namespace cppwinrt
 
         }
         w.flush_to_file(settings.output_folder + "winrt/fast_forward.h");
+    }
+
+    static void write_namespace_ixx(cache const& c, writer const& header_writer, std::string_view const& ns, char import_impl, char impl = 0, bool import_foundation = false)
+    {
+        writer w;
+        w.type_namespace = ns;
+        write_preamble(w);
+        w.write("module;\n");
+        if (impl == '2')
+        {
+            // for comparison of DateTime and TimeSpan,
+            // since those are aliases to std::chrono types
+            // TODO: only include when required? <chrono> is quite heavy
+            w.write("#include <chrono>\n");
+        }
+        w.write("#include <cstdint>\n");
+        if (!impl)
+        {
+            // for std::hash specializations
+            // TODO: guard behind WINRT_LEAN_AND_MEAN
+            w.write("#include <functional>\n");
+        }
+        // TODO: pass impl here so that we can only define the includes required for each specific impl
+        write_namespace_special_includes(w, ns);
+        if (impl)
+        {
+            w.write("export module winrt:%.%;\n", ns, module_friendly_impl(impl));
+        }
+        else
+        {
+            w.write("export module winrt:%;\n", ns);
+        }
+
+        w.write_import("base");
+        if (!impl)
+        {
+            write_parent_imports(w, c, ns);
+        }
+
+        for (auto&& depends : header_writer.depends)
+        {
+            w.write_import(depends.first, import_impl);
+        }
+
+        if (import_foundation)
+        {
+            // if we are writing structs that use IReference<T>, we need the
+            // full Windows.Foundation module to get the comparison operator
+            // fully defined (the forward declaration in Windows.Foundation.one
+            // does not suffice, due to it being a template).
+            w.write_import("Windows.Foundation");
+            // TODO: this needed once compiler bug fixed? operator is forward declared in w.f.1
+        }
+
+        if (impl != '0')
+        {
+            w.write("export import :%.%;\n", ns, module_friendly_impl(impl ? impl - 1 : '2'));
+        }
+
+        w.write("#define WINRT_EXPORT export\n");
+        if (impl != '0')
+        {
+            w.write("#define WINRT_IMPL_MODULES\n");
+        }
+        if (!impl)
+        {
+            w.write(strings::base_macros);
+        }
+
+        w.write_depends(ns, impl);
+
+        w.save_module(impl);
     }
 
     static void write_namespace_0_h(std::string_view const& ns, cache::namespace_members const& members)
@@ -116,6 +199,8 @@ namespace cppwinrt
         }
 
         w.save_header('0');
+
+        write_namespace_ixx({}, {}, ns, 0, '0');
     }
 
     static void write_namespace_1_h(std::string_view const& ns, cache::namespace_members const& members)
@@ -134,13 +219,17 @@ namespace cppwinrt
         write_preamble(w);
         write_open_file_guard(w, ns, '1');
 
+        w.write("#ifndef WINRT_IMPL_MODULES\n");
         for (auto&& depends : w.depends)
         {
             w.write_depends(depends.first, '0');
         }
 
         w.write_depends(w.type_namespace, '0');
+        w.write("#endif\n");
         w.save_header('1');
+
+        write_namespace_ixx({}, w, ns, '0', '1');
     }
 
     static void write_namespace_2_h(std::string_view const& ns, cache::namespace_members const& members)
@@ -148,11 +237,11 @@ namespace cppwinrt
         writer w;
         w.type_namespace = ns;
 
-        bool promote;
+        write_structs_result structs_info;
         {
             auto wrap_type = wrap_type_namespace(w, ns);
             w.write_each<write_delegate>(members.delegates);
-            promote = write_structs(w, members.structs);
+            structs_info = write_structs(w, members.structs);
             w.write_each<write_class>(members.classes);
             w.write_each<write_interface_override>(members.classes);
         }
@@ -162,15 +251,19 @@ namespace cppwinrt
         write_preamble(w);
         write_open_file_guard(w, ns, '2');
 
-        char const impl = promote ? '2' : '1';
+        char const impl = structs_info.promote ? '2' : '1';
 
+        w.write("#ifndef WINRT_IMPL_MODULES\n");
         for (auto&& depends : w.depends)
         {
             w.write_depends(depends.first, impl);
         }
 
         w.write_depends(w.type_namespace, '1');
+        w.write("#endif\n");
         w.save_header('2');
+
+        write_namespace_ixx({}, w, ns, impl, '2', structs_info.has_reference_field);
     }
 
     static void write_namespace_h(cache const& c, std::string_view const& ns, cache::namespace_members const& members)
@@ -203,11 +296,11 @@ namespace cppwinrt
                 w.write_each<write_std_hash>(members.interfaces);
                 w.write_each<write_std_hash>(members.classes);
             }
-            {
+            /*TODO: figure out why compiler ICEs {
                 auto wrap_format = wrap_ifdef(w, "__cpp_lib_format");
                 w.write_each<write_std_formatter>(members.interfaces);
                 w.write_each<write_std_formatter>(members.classes);   
-            }
+            }*/
         }
 
         write_namespace_special(w, ns);
@@ -216,6 +309,7 @@ namespace cppwinrt
         w.swap();
         write_preamble(w);
         write_open_file_guard(w, ns);
+        w.write("#ifndef WINRT_IMPL_MODULES\n");
         write_version_assert(w);
         write_parent_depends(w, c, ns);
 
@@ -225,7 +319,10 @@ namespace cppwinrt
         }
 
         w.write_depends(w.type_namespace, '2');
+        w.write("#endif\n");
         w.save_header();
+
+        write_namespace_ixx(c, w, ns, '2');
     }
 
     static void write_module_g_cpp(std::vector<TypeDef> const& classes)

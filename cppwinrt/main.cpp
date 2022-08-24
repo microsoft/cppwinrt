@@ -93,6 +93,7 @@ Where <spec> is one or more of:
 
         path output_folder = args.value("output", ".");
         create_directories(output_folder / "winrt/impl");
+        create_directories(output_folder / "winrt/ixx");
         settings.output_folder = canonical(output_folder).string();
         settings.output_folder += '\\';
 
@@ -296,9 +297,8 @@ Where <spec> is one or more of:
             group.synchronous(args.exists("synchronous"));
             writer ixx;
             write_preamble(ixx);
-            ixx.write("module;\n");
-            ixx.write(strings::base_includes);
-            ixx.write(strings::base_module);
+            ixx.write("export module winrt;\n");
+            ixx.write("export import :base;\n");
 
             for (auto&&[ns, members] : c.namespaces())
             {
@@ -307,7 +307,8 @@ Where <spec> is one or more of:
                     continue;
                 }
 
-                ixx.write("#include \"winrt/%.h\"\n", ns);
+                ixx.write("import :%.two;\n", ns);
+                ixx.write("export import :%;\n", ns);
 
                 group.add([&, &ns = ns, &members = members]
                 {
@@ -318,10 +319,12 @@ Where <spec> is one or more of:
                 });
             }
 
+            ixx.flush_to_file(settings.output_folder + "winrt/ixx/winrt.ixx");
+
             if (settings.base)
             {
                 write_base_h();
-                ixx.flush_to_file(settings.output_folder + "winrt/winrt.ixx");
+                write_base_ixx();
             }
 
             if (settings.component)

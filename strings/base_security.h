@@ -69,7 +69,7 @@ WINRT_EXPORT namespace winrt
             check_bool(WINRT_IMPL_SetThreadToken(nullptr, get()));
         }
 
-        auto operator()() const
+        /*TODO: figure out why compiler ICEs auto operator()() const
         {
             struct guard
             {
@@ -94,6 +94,6 @@ WINRT_EXPORT namespace winrt
             };
 
             return guard(impersonate());
-        }
+        }*/
     };
 }

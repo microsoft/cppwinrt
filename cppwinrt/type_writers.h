@@ -104,6 +104,22 @@ namespace cppwinrt
         return false;
     }
 
+    std::string_view module_friendly_impl(char impl)
+    {
+        if (impl == '2')
+        {
+            return "two";
+        }
+        else if (impl == '1')
+        {
+            return "one";
+        }
+        else
+        {
+            return "zero";
+        }
+    }
+
     struct writer : writer_base<writer>
     {
         using writer_base<writer>::write;
@@ -576,6 +592,18 @@ namespace cppwinrt
             }
         }
 
+        void write_import(std::string_view const& ns, char impl = 0)
+        {
+            if (impl)
+            {
+                write("import :%.%;\n", ns, module_friendly_impl(impl));
+            }
+            else
+            {
+                write("import :%;\n", ns);
+            }
+        }
+
         void save_header(char impl = 0)
         {
             auto filename{ settings.output_folder + "winrt/" };
@@ -594,6 +622,22 @@ namespace cppwinrt
             }
 
             filename += ".h";
+            flush_to_file(filename);
+        }
+
+        void save_module(char impl = 0)
+        {
+            auto filename{ settings.output_folder + "winrt/ixx/" };
+
+            filename += type_namespace;
+
+            if (impl)
+            {
+                filename += '.';
+                filename += module_friendly_impl(impl);
+            }
+
+            filename += ".ixx";
             flush_to_file(filename);
         }
     };

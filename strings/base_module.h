@@ -4,7 +4,6 @@
 // Users will have to include headers declaring these interfaces
 // to make use of it.
 #include <Unknwn.h>
-#undef GetCurrentTime // Get rid of this evil macro
 
-export module winrt;
+export module winrt:base;
 #define WINRT_EXPORT export
