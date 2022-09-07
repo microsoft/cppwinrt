@@ -119,12 +119,12 @@ namespace winrt::impl
 
     template <typename T>
 #if defined(__clang__)
-#if __has_declspec_attribute(uuid)
+#if __has_declspec_attribute(uuid) && defined(WINRT_IMPL_IUNKNOWN_DEFINED)
     inline const guid guid_v{ __uuidof(T) };
 #else
     inline constexpr guid guid_v{};
 #endif
-#elif defined(_MSC_VER)
+#elif defined(_MSC_VER) && defined(WINRT_IMPL_IUNKNOWN_DEFINED)
     inline constexpr guid guid_v{ __uuidof(T) };
 #else
     inline constexpr guid guid_v{};
