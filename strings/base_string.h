@@ -16,7 +16,7 @@ namespace winrt::impl
 
         uint32_t operator++() noexcept
         {
-            return m_count.fetch_add(1, std::memory_order_relaxed) + 1;
+            return static_cast<uint32_t>(m_count.fetch_add(1, std::memory_order_relaxed) + 1);
         }
 
         uint32_t operator--() noexcept
@@ -32,12 +32,12 @@ namespace winrt::impl
                 abort();
             }
 
-            return remaining;
+            return static_cast<uint32_t>(remaining);
         }
 
         operator uint32_t() const noexcept
         {
-            return m_count;
+            return static_cast<uint32_t>(m_count);
         }
 
     private:
