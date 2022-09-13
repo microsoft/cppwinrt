@@ -315,6 +315,16 @@ WINRT_EXPORT namespace winrt
             impl::load_runtime_function(L"combase.dll", "RoOriginateLanguageException", handler, fallback_RoOriginateLanguageException);
             WINRT_VERIFY(handler(code, message, nullptr));
 
+            if (winrt_throw_hresult_handler)
+            {
+#ifdef __cpp_lib_source_location
+                std::source_location sourceInformation = std::source_location::current();
+                winrt_throw_hresult_handler(sourceInformation.line(), sourceInformation.file_name(), sourceInformation.function_name(), WINRT_IMPL_RETURNADDRESS(), code);
+#else
+                winrt_throw_hresult_handler(0, nullptr, nullptr, WINRT_IMPL_RETURNADDRESS(), code);
+#endif
+            }
+
             com_ptr<impl::IErrorInfo> info;
             WINRT_VERIFY_(0, WINRT_IMPL_GetErrorInfo(0, info.put_void()));
             WINRT_VERIFY(info.try_as(m_info));
@@ -442,7 +452,6 @@ WINRT_EXPORT namespace winrt
         if (winrt_throw_hresult_handler)
         {
 #ifdef __cpp_lib_source_location
-            // line, filename, func
             winrt_throw_hresult_handler(sourceInformation.line(), sourceInformation.file_name(), sourceInformation.function_name(), WINRT_IMPL_RETURNADDRESS(), result);
 #else
             winrt_throw_hresult_handler(0, nullptr, nullptr, WINRT_IMPL_RETURNADDRESS(), result);

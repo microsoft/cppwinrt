@@ -514,21 +514,33 @@ WINRT_EXPORT namespace winrt
     inline hstring get_class_name(Windows::Foundation::IInspectable const& object)
     {
         void* value{};
+#ifdef __cpp_lib_source_location
+        check_hresult((*(impl::inspectable_abi**)&object)->GetRuntimeClassName(&value), std::source_location::current());
+#else
         check_hresult((*(impl::inspectable_abi**)&object)->GetRuntimeClassName(&value));
+#endif
         return { value, take_ownership_from_abi };
     }
 
     inline com_array<guid> get_interfaces(Windows::Foundation::IInspectable const& object)
     {
         com_array<guid> value;
+#ifdef __cpp_lib_source_location
+        check_hresult((*(impl::inspectable_abi**)&object)->GetIids(impl::put_size_abi(value), put_abi(value)), std::source_location::current());
+#else
         check_hresult((*(impl::inspectable_abi**)&object)->GetIids(impl::put_size_abi(value), put_abi(value)));
+#endif
         return value;
     }
 
     inline Windows::Foundation::TrustLevel get_trust_level(Windows::Foundation::IInspectable const& object)
     {
         Windows::Foundation::TrustLevel value{};
+#ifdef __cpp_lib_source_location
+        check_hresult((*(impl::inspectable_abi**)&object)->GetTrustLevel(&value), std::source_location::current());
+#else
         check_hresult((*(impl::inspectable_abi**)&object)->GetTrustLevel(&value));
+#endif
         return value;
     }
 }
