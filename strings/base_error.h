@@ -433,11 +433,20 @@ WINRT_EXPORT namespace winrt
         hresult_canceled(take_ownership_from_abi_t) noexcept : hresult_error(impl::error_canceled, take_ownership_from_abi) {}
     };
 
+#ifdef __cpp_lib_source_location
+    [[noreturn]] inline WINRT_IMPL_NOINLINE void throw_hresult(hresult const result, std::source_location sourceInformation = std::source_location::current())
+#else
     [[noreturn]] inline WINRT_IMPL_NOINLINE void throw_hresult(hresult const result)
+#endif
     {
         if (winrt_throw_hresult_handler)
         {
+#ifdef __cpp_lib_source_location
+            // line, filename, func
+            winrt_throw_hresult_handler(sourceInformation.line(), sourceInformation.file_name(), sourceInformation.function_name(), WINRT_IMPL_RETURNADDRESS(), result);
+#else
             winrt_throw_hresult_handler(0, nullptr, nullptr, WINRT_IMPL_RETURNADDRESS(), result);
+#endif
         }
 
         if (result == impl::error_bad_alloc)
@@ -571,6 +580,39 @@ WINRT_EXPORT namespace winrt
         }
     }
 
+#ifdef __cpp_lib_source_location
+    [[noreturn]] inline void throw_last_error(std::source_location sourceInformation = std::source_location::current())
+    {
+        throw_hresult(impl::hresult_from_win32(WINRT_IMPL_GetLastError()), sourceInformation);
+    }
+
+    inline hresult check_hresult(hresult const result, std::source_location sourceInformation = std::source_location::current())
+    {
+        if (result < 0)
+        {
+            throw_hresult(result, sourceInformation);
+        }
+        return result;
+    }
+
+    template<typename T>
+    void check_nt(T result, std::source_location sourceInformation = std::source_location::current())
+    {
+        if (result != 0)
+        {
+            throw_hresult(impl::hresult_from_nt(result), sourceInformation);
+        }
+    }
+
+    template<typename T>
+    void check_win32(T result, std::source_location sourceInformation = std::source_location::current())
+    {
+        if (result != 0)
+        {
+            throw_hresult(impl::hresult_from_win32(result), sourceInformation);
+        }
+    }
+#else
     [[noreturn]] inline void throw_last_error()
     {
         throw_hresult(impl::hresult_from_win32(WINRT_IMPL_GetLastError()));
@@ -602,6 +644,7 @@ WINRT_EXPORT namespace winrt
             throw_hresult(impl::hresult_from_win32(result));
         }
     }
+#endif
 
     template<typename T>
     void check_bool(T result)
