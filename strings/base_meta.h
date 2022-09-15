@@ -1,11 +1,7 @@
 
 WINRT_EXPORT namespace winrt
 {
-#ifdef __cpp_lib_source_location
-    hresult check_hresult(hresult const result, std::source_location sourceInformation);
-#else
-    hresult check_hresult(hresult const result);
-#endif
+    hresult check_hresult(hresult const result WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT);
     hresult to_hresult() noexcept;
 
     template <typename D, typename I>

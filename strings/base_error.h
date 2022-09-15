@@ -315,6 +315,9 @@ WINRT_EXPORT namespace winrt
             impl::load_runtime_function(L"combase.dll", "RoOriginateLanguageException", handler, fallback_RoOriginateLanguageException);
             WINRT_VERIFY(handler(code, message, nullptr));
 
+            // This is an extension point that can be filled in by other libraries (such as WIL) to get call outs when errors are
+            // originated.  This is intended for logging purposes.  When possible include the std::source_information so that accurate
+            // information is available on the caller who generated the error.
             if (winrt_throw_hresult_handler)
             {
 #ifdef __cpp_lib_source_location
@@ -444,7 +447,6 @@ WINRT_EXPORT namespace winrt
 
     [[noreturn]] inline WINRT_IMPL_NOINLINE void throw_hresult(hresult const result WINRT_IMPL_SOURCE_LOCATION_ARGS)
     {
-        // TODO - pragma detect mismatch on this
         if (winrt_throw_hresult_handler)
         {
 #ifdef __cpp_lib_source_location

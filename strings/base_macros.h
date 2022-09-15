@@ -60,6 +60,7 @@ typedef struct _GUID GUID;
 // result any public-facing method that can result in an error needs a default-constructed source_location argument.  Because
 // this type does not exist in C++17 we need to use a macro to optionally add parameters and forwarding wherever appropriate.
 #ifdef __cpp_lib_source_location
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , std::source_location sourceInformation
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS , std::source_location sourceInformation = std::source_location::current()
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM std::source_location sourceInformation = std::source_location::current()
 
@@ -68,6 +69,7 @@ typedef struct _GUID GUID;
 
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "true")
 #else
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM
 

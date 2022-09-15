@@ -32,6 +32,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <!--<CppWinRTBuildVersion Condition="'$(CppWinRTBuildVersion)'==''">210122.210122.210122.210122</CppWinRTBuildVersion>-->
     <CppWinRTBuildVersion Condition="'$(CppWinRTBuildVersion)'==''">2.3.4.5</CppWinRTBuildVersion>
     <CppWinRTPlatform>$(Platform)</CppWinRTPlatform>
     <CppWinRTPlatform Condition="'$(Platform)'=='Win32'">x86</CppWinRTPlatform>
@@ -46,6 +47,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard Condition="'$(CppWinRTLanguageStandard)'==''">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(CppWinRTLanguageStandard)'=='stdcpp20'">stdcpp20</LanguageStandard>
       <LanguageStandard Condition="'$(CppWinRTLanguageStandard)'=='latest'">stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
