@@ -463,70 +463,70 @@ WINRT_EXPORT namespace winrt
 
         if (result == impl::error_access_denied)
         {
-            throw hresult_access_denied(take_ownership_from_abi);
+            throw hresult_access_denied(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_wrong_thread)
         {
-            throw hresult_wrong_thread(take_ownership_from_abi);
+            throw hresult_wrong_thread(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_not_implemented)
         {
-            throw hresult_not_implemented(take_ownership_from_abi);
+            throw hresult_not_implemented(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_invalid_argument)
         {
-            throw hresult_invalid_argument(take_ownership_from_abi);
+            throw hresult_invalid_argument(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_out_of_bounds)
         {
-            throw hresult_out_of_bounds(take_ownership_from_abi);
+            throw hresult_out_of_bounds(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_no_interface)
         {
-            throw hresult_no_interface(take_ownership_from_abi);
+            throw hresult_no_interface(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_class_not_available)
         {
-            throw hresult_class_not_available(take_ownership_from_abi);
+            throw hresult_class_not_available(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_class_not_registered)
         {
-            throw hresult_class_not_registered(take_ownership_from_abi);
+            throw hresult_class_not_registered(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_changed_state)
         {
-            throw hresult_changed_state(take_ownership_from_abi);
+            throw hresult_changed_state(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_illegal_method_call)
         {
-            throw hresult_illegal_method_call(take_ownership_from_abi);
+            throw hresult_illegal_method_call(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_illegal_state_change)
         {
-            throw hresult_illegal_state_change(take_ownership_from_abi);
+            throw hresult_illegal_state_change(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_illegal_delegate_assignment)
         {
-            throw hresult_illegal_delegate_assignment(take_ownership_from_abi);
+            throw hresult_illegal_delegate_assignment(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
         if (result == impl::error_canceled)
         {
-            throw hresult_canceled(take_ownership_from_abi);
+            throw hresult_canceled(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
-        throw hresult_error(result, take_ownership_from_abi);
+        throw hresult_error(result, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
     }
 
     inline WINRT_IMPL_NOINLINE hresult to_hresult() noexcept
