@@ -32,7 +32,6 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <!--<CppWinRTBuildVersion Condition="'$(CppWinRTBuildVersion)'==''">210122.210122.210122.210122</CppWinRTBuildVersion>-->
     <CppWinRTBuildVersion Condition="'$(CppWinRTBuildVersion)'==''">2.3.4.5</CppWinRTBuildVersion>
     <CppWinRTPlatform>$(Platform)</CppWinRTPlatform>
     <CppWinRTPlatform Condition="'$(Platform)'=='Win32'">x86</CppWinRTPlatform>
