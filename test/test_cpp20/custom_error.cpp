@@ -26,7 +26,6 @@ namespace
         REQUIRE(!functionNameSv.empty());
         REQUIRE(functionNameSv == "FailOnLine15");
 
-        lineNumber; fileName; functionName;
         REQUIRE(returnAddress);
         REQUIRE(result == 0x80000018); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
         s_loggerCalled = true;
