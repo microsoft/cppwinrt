@@ -39,7 +39,7 @@
     <ProjectGuid>{5FF6CD6C-515A-4D55-97B6-62AD9BCB77EA}</ProjectGuid>
     <RootNamespace>unittests</RootNamespace>
     <ProjectName>test_cpp20</ProjectName>
-    <CppWinRTLanguageStandard>latest</CppWinRTLanguageStandard>
+    <CppWinRTLanguageStandard>20</CppWinRTLanguageStandard>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
