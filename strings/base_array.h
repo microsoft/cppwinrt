@@ -511,24 +511,24 @@ WINRT_EXPORT namespace winrt
         return impl::com_array_proxy<T>(__valueSize, value);
     }
 
-    inline hstring get_class_name(Windows::Foundation::IInspectable const& object WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    inline hstring get_class_name(Windows::Foundation::IInspectable const& object)
     {
         void* value{};
-        check_hresult((*(impl::inspectable_abi**)&object)->GetRuntimeClassName(&value) WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+        check_hresult((*(impl::inspectable_abi**)&object)->GetRuntimeClassName(&value));
         return { value, take_ownership_from_abi };
     }
 
-    inline com_array<guid> get_interfaces(Windows::Foundation::IInspectable const& object WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    inline com_array<guid> get_interfaces(Windows::Foundation::IInspectable const& object)
     {
         com_array<guid> value;
-        check_hresult((*(impl::inspectable_abi**)&object)->GetIids(impl::put_size_abi(value), put_abi(value)) WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+        check_hresult((*(impl::inspectable_abi**)&object)->GetIids(impl::put_size_abi(value), put_abi(value)));
         return value;
     }
 
-    inline Windows::Foundation::TrustLevel get_trust_level(Windows::Foundation::IInspectable const& object WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    inline Windows::Foundation::TrustLevel get_trust_level(Windows::Foundation::IInspectable const& object)
     {
         Windows::Foundation::TrustLevel value{};
-        check_hresult((*(impl::inspectable_abi**)&object)->GetTrustLevel(&value) WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+        check_hresult((*(impl::inspectable_abi**)&object)->GetTrustLevel(&value));
         return value;
     }
 }

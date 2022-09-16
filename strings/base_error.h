@@ -592,7 +592,7 @@ WINRT_EXPORT namespace winrt
         throw_hresult(impl::hresult_from_win32(WINRT_IMPL_GetLastError()) WINRT_IMPL_SOURCE_LOCATION_FORWARD);
     }
 
-    inline hresult check_hresult(hresult const result WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    inline hresult check_hresult(hresult const result WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT)
     {
         if (result < 0)
         {
