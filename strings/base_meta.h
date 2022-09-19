@@ -1,7 +1,7 @@
 
 WINRT_EXPORT namespace winrt
 {
-    hresult check_hresult(hresult const result);
+    hresult check_hresult(hresult const result WINRT_IMPL_SOURCE_LOCATION_ARGS);
     hresult to_hresult() noexcept;
 
     template <typename D, typename I>

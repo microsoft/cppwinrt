@@ -28,6 +28,10 @@
 #include <format>
 #endif
 
+#ifdef __cpp_lib_source_location
+#include <source_location>
+#endif
+
 #ifdef __cpp_lib_coroutine
 
 #include <coroutine>

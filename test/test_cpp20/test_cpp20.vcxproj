@@ -281,6 +281,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="await_completed.cpp" />
+    <ClCompile Include="custom_error.cpp" />
     <ClCompile Include="format.cpp" />
     <ClCompile Include="hstring.cpp" />
     <ClCompile Include="main.cpp">

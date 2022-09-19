@@ -11,4 +11,6 @@
 #include <winstring.h>
 #include "catch.hpp"
 
+#include <string_view>
+
 using namespace std::literals;

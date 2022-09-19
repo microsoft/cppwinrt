@@ -54,3 +54,27 @@
 struct IUnknown;
 typedef struct _GUID GUID;
 #endif
+
+// std::source_location is a C++20 feature, which is above the C++17 feature floor for cppwinrt.  The source location needs
+// to be the calling code, not cppwinrt itself, so that it is useful to developers building on top of this library.  As a
+// result any public-facing method that can result in an error needs a default-constructed source_location argument.  Because
+// this type does not exist in C++17 we need to use a macro to optionally add parameters and forwarding wherever appropriate.
+#ifdef __cpp_lib_source_location
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , std::source_location const& sourceInformation
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS , std::source_location const& sourceInformation = std::source_location::current()
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM std::source_location const& sourceInformation = std::source_location::current()
+
+#define WINRT_IMPL_SOURCE_LOCATION_FORWARD , sourceInformation
+#define WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM sourceInformation
+
+#pragma detect_mismatch("WINRT_SOURCE_LOCATION", "true")
+#else
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM
+
+#define WINRT_IMPL_SOURCE_LOCATION_FORWARD
+#define WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM
+
+#pragma detect_mismatch("WINRT_SOURCE_LOCATION", "false")
+#endif

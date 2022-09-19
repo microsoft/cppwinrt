@@ -59,7 +59,11 @@ namespace
 
     void __stdcall logger(uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept
     {
-        lineNumber; fileName; functionName;
+        // In C++17 these fields cannot be filled in so they are expected to be empty.
+        REQUIRE(lineNumber == 0);
+        REQUIRE(fileName == nullptr);
+        REQUIRE(functionName == nullptr);
+
         REQUIRE(returnAddress);
         REQUIRE(result == 0x80000018); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
         s_loggerCalled = true;
