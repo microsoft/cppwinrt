@@ -25,7 +25,7 @@ call msbuild /m /p:Configuration=%target_configuration%,Platform=arm64,CppWinRTB
 rem Build cppwinrt.exe for x86 only
 call msbuild /m /p:Configuration=%target_configuration%,Platform=x86,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:cppwinrt
 
-rem Build cppwinrt visualizer dll for x86, x64, and arm46
+rem Build cppwinrt visualizer dll for x86, x64, and arm64
 call msbuild /p:Configuration=%target_configuration%,Platform=x64,Deployment=%target_deployment%,CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
 call msbuild /p:Configuration=%target_configuration%,Platform=x86,Deployment=%target_deployment%,CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
 call msbuild /p:Configuration=%target_configuration%,Platform=arm64,Deployment=%target_deployment%,CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
