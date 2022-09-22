@@ -64,6 +64,10 @@
       <Link>x64\%(Filename)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <Content Include="$(NatvisDirarm64)\cppwinrtvisualizer.dll">
+      <Link>arm64\%(Filename)%(Extension)</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="$(Deployment)\source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
