@@ -127,7 +127,7 @@ namespace winrt::impl
         static_assert(std::is_void_v<T> /* dependent_false */, "To use classic COM interfaces, you must #include <unknwn.h> before including C++/WinRT headers.");
 #endif
 #elif defined(_MSC_VER)
-        static constexpr guid value{ __uuidof(T) }; 
+        static constexpr guid value{ __uuidof(T) };
 #else
         static_assert(std::is_void_v<T> /* dependent_false */, "Classic COM interfaces are not supported on this compiler");
 #endif
