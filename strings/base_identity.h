@@ -458,12 +458,8 @@ namespace winrt::impl
     };
 
     template <typename T>
-#ifdef __clang__
-    inline static const auto name_v
-#else
 #pragma warning(suppress: 4307)
     inline constexpr auto name_v
-#endif
     {
         combine
         (

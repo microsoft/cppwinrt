@@ -25,8 +25,7 @@
   -->
 
   <PropertyGroup Condition="'$(Clang)'=='1'">
-    <CLToolExe>clang-cl.exe</CLToolExe>
-    <CLToolPath>C:\Program Files\LLVM\bin</CLToolPath>
+    <PlatformToolset>ClangCL</PlatformToolset>
   </PropertyGroup>
 
   <PropertyGroup>

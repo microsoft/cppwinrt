@@ -118,17 +118,23 @@ namespace winrt::impl
     };
 
     template <typename T>
+    struct classic_com_guid
+    {
 #if defined(__clang__)
 #if __has_declspec_attribute(uuid) && defined(WINRT_IMPL_IUNKNOWN_DEFINED)
-    inline const guid guid_v{ __uuidof(T) };
+        static constexpr guid value{ __uuidof(T) };
 #else
-    inline constexpr guid guid_v{};
+        static_assert(std::is_void_v<T> /* dependent_false */, "To use classic COM interfaces, you must #include <unknwn.h> before including C++/WinRT headers.");
 #endif
-#elif defined(_MSC_VER) && defined(WINRT_IMPL_IUNKNOWN_DEFINED)
-    inline constexpr guid guid_v{ __uuidof(T) };
+#elif defined(_MSC_VER)
+        static constexpr guid value{ __uuidof(T) }; 
 #else
-    inline constexpr guid guid_v{};
+        static_assert(std::is_void_v<T> /* dependent_false */, "Classic COM interfaces are not supported on this compiler");
 #endif
+    };
+
+    template <typename T>
+    inline constexpr guid guid_v = classic_com_guid<T>::value;
 
     template <typename T>
     constexpr auto to_underlying_type(T const value) noexcept
