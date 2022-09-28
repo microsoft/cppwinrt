@@ -117,24 +117,23 @@ namespace winrt::impl
         static constexpr auto data{ category_signature<category_t<T>, T>::data };
     };
 
+#if defined(__clang__)
     template <typename T>
     struct classic_com_guid
     {
-#if defined(__clang__)
 #if __has_declspec_attribute(uuid) && defined(WINRT_IMPL_IUNKNOWN_DEFINED)
         static constexpr guid value{ __uuidof(T) };
 #else
         static_assert(std::is_void_v<T> /* dependent_false */, "To use classic COM interfaces, you must compile with -fms-extensions and include <unknwn.h> before including C++/WinRT headers.");
 #endif
-#elif defined(_MSC_VER)
-        static constexpr guid value{ __uuidof(T) };
-#else
-        static_assert(std::is_void_v<T> /* dependent_false */, "Classic COM interfaces are not supported on this compiler");
-#endif
     };
 
     template <typename T>
     inline constexpr guid guid_v = classic_com_guid<T>::value;
+#else
+    template <typename T>
+    inline constexpr guid guid_v{ __uuidof(T) };
+#endif
 
     template <typename T>
     constexpr auto to_underlying_type(T const value) noexcept
