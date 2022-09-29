@@ -130,9 +130,12 @@ namespace winrt::impl
 
     template <typename T>
     inline constexpr guid guid_v = classic_com_guid<T>::value;
-#else
+#elif defined(_MSC_VER) && defined(WINRT_IMPL_IUNKNOWN_DEFINED)
     template <typename T>
     inline constexpr guid guid_v{ __uuidof(T) };
+#else
+    template <typename T>
+    inline constexpr guid guid_v{};
 #endif
 
     template <typename T>
