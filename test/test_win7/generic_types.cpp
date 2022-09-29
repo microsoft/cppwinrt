@@ -8,9 +8,5 @@ TEST_CASE("generic_types")
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.Uri", Uri);
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.PropertyType", PropertyType);
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.Point", Point);
-
-    // Clang 9 doesn't think this is a constant expression.
-#ifndef __clang__
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.IStringable", IStringable);
-#endif
 }

@@ -25,8 +25,11 @@
   -->
 
   <PropertyGroup Condition="'$(Clang)'=='1'">
-    <CLToolExe>clang-cl.exe</CLToolExe>
-    <CLToolPath>C:\Program Files\LLVM\bin</CLToolPath>
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <!-- The experimental coroutines aren't supported under Clang -->
+    <CppWinRTLanguageStandard>20</CppWinRTLanguageStandard>
+    <!-- Disable vcpkg autolink because it's not compatible with lld-link -->
+    <VcpkgAutoLink>false</VcpkgAutoLink>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -51,7 +54,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/bigobj</AdditionalOptions>
       <AdditionalOptions Condition="'$(CppWinRTLanguageStandard)'==''">/await %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalOptions Condition="'$(Clang)'=='1'">-Wno-unused-command-line-argument -fno-delayed-template-parsing -Xclang -fcoroutines-ts -mcx16</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Clang)'=='1'">-Wno-unused-command-line-argument -fno-delayed-template-parsing -mcx16</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>onecore.lib</AdditionalDependencies>
