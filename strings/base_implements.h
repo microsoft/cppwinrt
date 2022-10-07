@@ -692,7 +692,7 @@ namespace winrt::impl
         {
             uint32_t target = m_strong.load(std::memory_order_relaxed);
 
-            while (true)
+            for (;;)
             {
                 if (target == 0)
                 {
@@ -924,7 +924,7 @@ namespace winrt::impl
             {
                 uintptr_t count_or_pointer = m_references.load(std::memory_order_relaxed);
 
-                while (true)
+                for (;;)
                 {
                     if (is_weak_ref(count_or_pointer))
                     {
@@ -1048,7 +1048,7 @@ namespace winrt::impl
             {
                 uintptr_t count_or_pointer = m_references.load(std::memory_order_relaxed);
 
-                while (true)
+                for (;;)
                 {
                     if (is_weak_ref(count_or_pointer))
                     {

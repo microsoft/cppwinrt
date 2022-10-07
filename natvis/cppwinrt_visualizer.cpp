@@ -93,7 +93,7 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
 {
     auto winmd_path = path{ processPath };
     auto probe_file = std::string{ typeName };
-    do
+    for (;;)
     {
         winmd_path.replace_filename(probe_file + ".winmd");
         MetadataDiagnostic(process, L"Looking for ", winmd_path);
@@ -115,7 +115,7 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
             break;
         }
         probe_file = probe_file.substr(0, pos);
-    } while (true);
+    } 
 }
 
 TypeDef FindType(DkmProcess* process, std::string_view const& typeName)

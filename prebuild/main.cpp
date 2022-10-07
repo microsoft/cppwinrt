@@ -49,7 +49,7 @@ namespace cppwinrt::strings {
 
         std::string_view remainder = view;
 
-        while (remainder.size())
+        while (!remainder.empty())
         {
             auto const size = std::min(size_t{ 16'000 }, remainder.size());
             auto const chunk = remainder.substr(0, size);

@@ -127,7 +127,7 @@ namespace cppwinrt
     struct separator
     {
         writer& w;
-        bool first{ true };
+        bool first = true;
 
         void operator()()
         {

@@ -341,7 +341,7 @@ namespace cppwinrt
             std::string_view::size_type current_pos{ 0 };
             auto on_new_line = writer_base<T>::back() == '\n';
 
-            while (true)
+            for (;;)
             {
                 const auto pos = value.find('\n', current_pos);
 
@@ -461,7 +461,7 @@ namespace cppwinrt
     {
         return [&](auto& writer)
         {
-            bool first{ true };
+            bool first = true;
 
             for (auto&& item : list)
             {
@@ -484,7 +484,7 @@ namespace cppwinrt
     {
         return [&](auto& writer)
         {
-            bool first{ true };
+            bool first = true;
 
             for (auto&& item : list)
             {

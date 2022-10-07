@@ -195,11 +195,10 @@ namespace cppwinrt
     inline std::string get_module_path()
     {
         std::string path(100, '?');
-        DWORD actual_size{};
 
-        while (true)
+        for (;;)
         {
-            actual_size = GetModuleFileNameA(nullptr, path.data(), 1 + static_cast<uint32_t>(path.size()));
+            DWORD actual_size = GetModuleFileNameA(nullptr, path.data(), 1 + static_cast<uint32_t>(path.size()));
 
             if (actual_size < 1 + path.size())
             {
@@ -234,7 +233,7 @@ namespace cppwinrt
 
         auto key = open_sdk();
         uint32_t index{};
-        std::array<char, 100> subkey;
+        std::array<char, 100> subkey{};
         std::array<unsigned long, 4> version_parts{};
         std::string result;
 

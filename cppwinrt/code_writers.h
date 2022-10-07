@@ -417,7 +417,7 @@ namespace cppwinrt
 
     static void write_generic_names(writer& w, std::pair<GenericParam, GenericParam> const& params)
     {
-        bool first{ true };
+        bool first = true;
 
         for (auto&& param : params)
         {
@@ -2011,7 +2011,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
                 w.write_each<write_interface_override_method>(info.type.MethodList(), name);
             }
-        };
+        }
     }
 
     static void write_class_override_implements(writer& w, get_interfaces_t const& interfaces)
@@ -2035,21 +2035,18 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_class_override_requires(writer& w, get_interfaces_t const& interfaces)
     {
-        bool found{};
-
         for (auto&& [name, info] : interfaces)
         {
             if (!info.overridable)
             {
                 w.write(", %", name);
-                found = true;
             }
         }
     }
 
     static void write_class_override_defaults(writer& w, get_interfaces_t const& interfaces)
     {
-        bool first{ true };
+        bool first = true;
 
         for (auto&& [name, info] : interfaces)
         {
@@ -2769,7 +2766,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_class_requires(writer& w, TypeDef const& type)
     {
-        bool first{ true };
+        bool first = true;
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
@@ -2793,7 +2790,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_fast_class_requires(writer& w, TypeDef const& type)
     {
-        bool first{ true };
+        bool first = true;
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
@@ -2817,7 +2814,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
     static void write_class_base(writer& w, TypeDef const& type)
     {
-        bool first{ true };
+        bool first = true;
 
         for (auto&& base : get_bases(type))
         {

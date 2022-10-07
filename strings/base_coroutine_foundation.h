@@ -149,7 +149,7 @@ namespace winrt::impl
         Async const& async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
         int32_t failure = 0;
-        std::atomic<bool> suspending{ true };
+        std::atomic<bool> suspending = true;
 
         void enable_cancellation(cancellable_promise* promise)
         {
