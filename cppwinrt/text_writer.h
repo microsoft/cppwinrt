@@ -341,7 +341,7 @@ namespace cppwinrt
             std::string_view::size_type current_pos{ 0 };
             auto on_new_line = writer_base<T>::back() == '\n';
 
-            for (;;)
+            while (true)
             {
                 const auto pos = value.find('\n', current_pos);
 

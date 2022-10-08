@@ -692,7 +692,7 @@ namespace winrt::impl
         {
             uint32_t target = m_strong.load(std::memory_order_relaxed);
 
-            for (;;)
+            while (true)
             {
                 if (target == 0)
                 {
@@ -924,7 +924,7 @@ namespace winrt::impl
             {
                 uintptr_t count_or_pointer = m_references.load(std::memory_order_relaxed);
 
-                for (;;)
+                while (true)
                 {
                     if (is_weak_ref(count_or_pointer))
                     {
@@ -1048,7 +1048,7 @@ namespace winrt::impl
             {
                 uintptr_t count_or_pointer = m_references.load(std::memory_order_relaxed);
 
-                for (;;)
+                while (true)
                 {
                     if (is_weak_ref(count_or_pointer))
                     {
@@ -1198,7 +1198,7 @@ namespace winrt::impl
 
                 uintptr_t const encoding = encode_weak_ref(weak_ref.get());
 
-                for (;;)
+                while (true)
                 {
                     if (m_references.compare_exchange_weak(count_or_pointer, encoding, std::memory_order_acq_rel, std::memory_order_relaxed))
                     {

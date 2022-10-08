@@ -93,7 +93,7 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
 {
     auto winmd_path = path{ processPath };
     auto probe_file = std::string{ typeName };
-    for (;;)
+    while (true)
     {
         winmd_path.replace_filename(probe_file + ".winmd");
         MetadataDiagnostic(process, L"Looking for ", winmd_path);
