@@ -233,7 +233,7 @@ namespace cppwinrt
 
         auto key = open_sdk();
         uint32_t index{};
-        std::array<char, 100> subkey{};
+        std::array<char, 100> subkey;
         std::array<unsigned long, 4> version_parts{};
         std::string result;
 
