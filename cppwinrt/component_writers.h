@@ -643,8 +643,8 @@ catch (...) { return winrt::to_hresult(); }
         {
             if (!info.base && info.is_default)
             {
-                auto [fst, snd] = info.type.MethodList();
-                offset += snd - fst;
+                auto [first, second] = info.type.MethodList();
+                offset += second - first;
                 break;
             }
         }
