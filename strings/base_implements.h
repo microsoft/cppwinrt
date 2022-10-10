@@ -1198,7 +1198,7 @@ namespace winrt::impl
 
                 uintptr_t const encoding = encode_weak_ref(weak_ref.get());
 
-                for (;;)
+                while (true)
                 {
                     if (m_references.compare_exchange_weak(count_or_pointer, encoding, std::memory_order_acq_rel, std::memory_order_relaxed))
                     {

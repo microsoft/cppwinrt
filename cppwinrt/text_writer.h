@@ -461,7 +461,7 @@ namespace cppwinrt
     {
         return [&](auto& writer)
         {
-            bool first{ true };
+            bool first = true;
 
             for (auto&& item : list)
             {
@@ -484,7 +484,7 @@ namespace cppwinrt
     {
         return [&](auto& writer)
         {
-            bool first{ true };
+            bool first = true;
 
             for (auto&& item : list)
             {

@@ -88,7 +88,7 @@ WINRT_EXPORT namespace winrt::param
     private:
 
         interface_type m_interface;
-        bool m_owned{ true };
+        bool m_owned = true;
     };
 
     template <typename T>

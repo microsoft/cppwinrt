@@ -195,11 +195,10 @@ namespace cppwinrt
     inline std::string get_module_path()
     {
         std::string path(100, '?');
-        DWORD actual_size{};
 
         while (true)
         {
-            actual_size = GetModuleFileNameA(nullptr, path.data(), 1 + static_cast<uint32_t>(path.size()));
+            DWORD actual_size = GetModuleFileNameA(nullptr, path.data(), 1 + static_cast<uint32_t>(path.size()));
 
             if (actual_size < 1 + path.size())
             {
@@ -603,7 +602,7 @@ namespace cppwinrt
             first_arg = true;
             *argument_count = 0;
 
-            for (;;)
+            while (true)
             {
                 if (*p)
                 {
@@ -621,7 +620,7 @@ namespace cppwinrt
                 if (*p == '\0')
                     break;
 
-                for (;;)
+                while (true)
                 {
                     copy_character = true;
 

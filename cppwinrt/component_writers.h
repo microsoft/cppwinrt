@@ -27,7 +27,7 @@ namespace cppwinrt
             }
         }
 
-        bool first{ true };
+        bool first = true;
 
         for (auto&& name : interfaces)
         {
@@ -45,7 +45,7 @@ namespace cppwinrt
 
     static void write_component_class_base(writer& w, TypeDef const& type)
     {
-        bool first{ true };
+        bool first = true;
 
         for (auto&& base : get_bases(type))
         {
@@ -289,7 +289,7 @@ catch (...) { return winrt::to_hresult(); }
             bind<write_consume_args>(signature));
     }
 
-    void write_component_static_forwarder(writer& w, MethodDef const& method)
+    static void write_component_static_forwarder(writer& w, MethodDef const& method)
     {
         auto format = R"(        auto %(%)
         {
@@ -643,8 +643,8 @@ catch (...) { return winrt::to_hresult(); }
         {
             if (!info.base && info.is_default)
             {
-                auto methods = info.type.MethodList();
-                offset += methods.second - methods.first;
+                auto [first, second] = info.type.MethodList();
+                offset += second - first;
                 break;
             }
         }
