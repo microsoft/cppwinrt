@@ -17,6 +17,9 @@ find_package(Threads)
 add_executable(prebuild
     prebuild/main.cpp
 )
+target_compile_features(prebuild PRIVATE
+    cxx_std_17
+)
 target_compile_definitions(prebuild PRIVATE
     "CPPWINRT_VERSION_STRING=\"0.0.0.0\""
 )
