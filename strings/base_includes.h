@@ -1,4 +1,5 @@
 
+#include <intrin.h>
 #include <algorithm>
 #include <array>
 #include <atomic>

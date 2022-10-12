@@ -1,6 +1,5 @@
 
 #if defined(_MSC_VER)
-#include <intrin.h>
 #define WINRT_IMPL_RETURNADDRESS() _ReturnAddress()
 #elif defined(__GNUC__)
 #define WINRT_IMPL_RETURNADDRESS() __builtin_extract_return_addr(__builtin_return_address(0))
