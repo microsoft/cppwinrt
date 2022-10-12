@@ -151,7 +151,7 @@ namespace winrt::impl
     };
 
     template <typename R, typename... Args>
-    struct __declspec(empty_bases) delegate_base : Windows::Foundation::IUnknown
+    struct WINRT_IMPL_EMPTY_BASES delegate_base : Windows::Foundation::IUnknown
     {
         delegate_base(std::nullptr_t = nullptr) noexcept {}
         delegate_base(void* ptr, take_ownership_from_abi_t) noexcept : IUnknown(ptr, take_ownership_from_abi) {}
@@ -201,13 +201,13 @@ namespace winrt::impl
 WINRT_EXPORT namespace winrt
 {
     template <typename... Args>
-    struct __declspec(empty_bases) delegate : impl::delegate_base<void, Args...>
+    struct WINRT_IMPL_EMPTY_BASES delegate : impl::delegate_base<void, Args...>
     {
         using impl::delegate_base<void, Args...>::delegate_base;
     };
 
     template <typename R, typename... Args>
-    struct __declspec(empty_bases) delegate<R(Args...)> : impl::delegate_base<R, Args...>
+    struct WINRT_IMPL_EMPTY_BASES delegate<R(Args...)> : impl::delegate_base<R, Args...>
     {
         using impl::delegate_base<R, Args...>::delegate_base;
     };

@@ -27,7 +27,7 @@ namespace winrt::impl
     };
 
     template <typename T, typename D, typename I>
-    class __declspec(empty_bases) produce_dispatch_to_overridable_base
+    class WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable_base
     {
     protected:
         D& shim() noexcept

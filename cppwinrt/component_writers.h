@@ -743,7 +743,7 @@ catch (...) { return winrt::to_hresult(); }
             auto format = R"(namespace winrt::@::implementation
 {
     template <typename D%, typename... I>
-    struct __declspec(empty_bases) %_base : implements<D, @::%%%, %I...>%%%
+    struct WINRT_IMPL_EMPTY_BASES %_base : implements<D, @::%%%, %I...>%%%
     {
         using base_type = %_base;
         using class_type = @::%;
@@ -836,7 +836,7 @@ catch (...) { return winrt::to_hresult(); }
             auto format = R"(namespace winrt::@::factory_implementation
 {
     template <typename D, typename T, typename... I>
-    struct __declspec(empty_bases) %T : implements<D, winrt::Windows::Foundation::IActivationFactory%, I...>
+    struct WINRT_IMPL_EMPTY_BASES %T : implements<D, winrt::Windows::Foundation::IActivationFactory%, I...>
     {
         using instance_type = @::%;
 
