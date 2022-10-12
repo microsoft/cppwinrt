@@ -765,7 +765,7 @@ namespace cppwinrt
         {
             auto format = R"(    template <> struct abi<%>
     {
-        struct __declspec(novtable) type : inspectable_abi
+        struct WINRT_IMPL_NOVTABLE type : inspectable_abi
         {
 )";
 
@@ -775,7 +775,7 @@ namespace cppwinrt
         {
             auto format = R"(    template <%> struct abi<%>
     {
-        struct __declspec(novtable) type : inspectable_abi
+        struct WINRT_IMPL_NOVTABLE type : inspectable_abi
         {
 )";
 
@@ -816,7 +816,7 @@ namespace cppwinrt
     {
         auto format = R"(    template <%> struct abi<%>
     {
-        struct __declspec(novtable) type : unknown_abi
+        struct WINRT_IMPL_NOVTABLE type : unknown_abi
         {
             virtual int32_t __stdcall Invoke(%) noexcept = 0;
         };

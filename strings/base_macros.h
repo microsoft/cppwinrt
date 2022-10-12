@@ -53,6 +53,12 @@
 #define WINRT_IMPL_EMPTY_BASES
 #endif
 
+#if defined(_MSC_VER)
+#define WINRT_IMPL_NOVTABLE __declspec(novtable)
+#else
+#define WINRT_IMPL_NOVTABLE
+#endif
+
 #ifdef __IUnknown_INTERFACE_DEFINED__
 #define WINRT_IMPL_IUNKNOWN_DEFINED
 #else
