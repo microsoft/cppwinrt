@@ -4,6 +4,12 @@
 #define WINRT_IMPL_STRING_1(expression) #expression
 #define WINRT_IMPL_STRING(expression) WINRT_IMPL_STRING_1(expression)
 
+#if defined(_MSC_VER)
+#define WINRT_IMPL_FF_NOVTABLE __declspec(novtable)
+#else
+#define WINRT_IMPL_FF_NOVTABLE
+#endif
+
 #if !defined(WINRT_FAST_ABI_SIZE)
 #define WINRT_FAST_ABI_SIZE %
 #endif
@@ -30,7 +36,7 @@ namespace winrt::impl
             }
         };
 
-        struct __declspec(novtable) inspectable
+        struct WINRT_IMPL_FF_NOVTABLE inspectable
         {
             virtual int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept = 0;
             virtual uint32_t __stdcall AddRef() noexcept = 0;
@@ -130,3 +136,4 @@ namespace winrt
 
 #undef WINRT_IMPL_STRING
 #undef WINRT_IMPL_STRING_1
+#undef WINRT_IMPL_FF_NOVTABLE

@@ -749,7 +749,7 @@ namespace winrt::impl
     };
 
     template <bool>
-    struct __declspec(empty_bases) root_implements_composing_outer
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer
     {
     protected:
         static constexpr bool is_composing = false;
@@ -757,7 +757,7 @@ namespace winrt::impl
     };
 
     template <>
-    struct __declspec(empty_bases) root_implements_composing_outer<true>
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer<true>
     {
         template <typename Qi>
         auto try_as() const noexcept
@@ -775,7 +775,7 @@ namespace winrt::impl
     };
 
     template <typename D, bool>
-    struct __declspec(empty_bases) root_implements_composable_inner
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composable_inner
     {
     protected:
         static constexpr inspectable_abi* outer() noexcept { return nullptr; }
@@ -785,7 +785,7 @@ namespace winrt::impl
     };
 
     template <typename D>
-    struct __declspec(empty_bases) root_implements_composable_inner<D, true> : producer<D, INonDelegatingInspectable>
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composable_inner<D, true> : producer<D, INonDelegatingInspectable>
     {
     protected:
         inspectable_abi* outer() noexcept { return m_outer; }
@@ -800,7 +800,7 @@ namespace winrt::impl
     };
 
     template <typename D, typename... I>
-    struct __declspec(novtable) root_implements
+    struct WINRT_IMPL_NOVTABLE root_implements
         : root_implements_composing_outer<std::disjunction_v<std::is_same<composing, I>...>>
         , root_implements_composable_inner<D, std::disjunction_v<std::is_same<composable, I>...>>
         , module_lock_updater<!std::disjunction_v<std::is_same<no_module_lock, I>...>>

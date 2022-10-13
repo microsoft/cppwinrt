@@ -83,6 +83,7 @@ extern "C"
     int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept;
 }
 
+#if defined(_MSC_VER)
 #ifdef _M_HYBRID
 #define WINRT_IMPL_LINK(function, count) __pragma(comment(linker, "/alternatename:#WINRT_IMPL_" #function "@" #count "=#" #function "@" #count))
 #elif _M_ARM64EC
@@ -91,6 +92,13 @@ extern "C"
 #define WINRT_IMPL_LINK(function, count) __pragma(comment(linker, "/alternatename:_WINRT_IMPL_" #function "@" #count "=_" #function "@" #count))
 #else
 #define WINRT_IMPL_LINK(function, count) __pragma(comment(linker, "/alternatename:WINRT_IMPL_" #function "=" #function))
+#endif
+#elif defined(__GNUC__)
+#if defined(__i386__)
+#define WINRT_IMPL_LINK(function, count) __asm__(".weak _WINRT_IMPL_" #function "@" #count "\n.set _WINRT_IMPL_" #function "@" #count ", _" #function "@" #count);
+#else
+#define WINRT_IMPL_LINK(function, count) __asm__(".weak WINRT_IMPL_" #function "\n.set WINRT_IMPL_" #function ", " #function);
+#endif
 #endif
 
 WINRT_IMPL_LINK(LoadLibraryW, 4)

@@ -348,7 +348,7 @@ namespace cppwinrt
             return;
         }
 
-        auto format = R"(    template <%> struct __declspec(empty_bases) %;
+        auto format = R"(    template <%> struct WINRT_IMPL_EMPTY_BASES %;
 )";
 
         w.write(format,
@@ -765,7 +765,7 @@ namespace cppwinrt
         {
             auto format = R"(    template <> struct abi<%>
     {
-        struct __declspec(novtable) type : inspectable_abi
+        struct WINRT_IMPL_NOVTABLE type : inspectable_abi
         {
 )";
 
@@ -775,7 +775,7 @@ namespace cppwinrt
         {
             auto format = R"(    template <%> struct abi<%>
     {
-        struct __declspec(novtable) type : inspectable_abi
+        struct WINRT_IMPL_NOVTABLE type : inspectable_abi
         {
 )";
 
@@ -816,7 +816,7 @@ namespace cppwinrt
     {
         auto format = R"(    template <%> struct abi<%>
     {
-        struct __declspec(novtable) type : unknown_abi
+        struct WINRT_IMPL_NOVTABLE type : unknown_abi
         {
             virtual int32_t __stdcall Invoke(%) noexcept = 0;
         };
@@ -1962,7 +1962,7 @@ namespace cppwinrt
     static void write_dispatch_overridable(writer& w, TypeDef const& class_type)
     {
         auto format = R"(template <typename T, typename D>
-struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
+struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
     : produce_dispatch_to_overridable_base<T, D, %>
 {
 %};
@@ -2378,7 +2378,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
 
         if (empty(generics))
         {
-            auto format = R"(    struct __declspec(empty_bases) % :
+            auto format = R"(    struct WINRT_IMPL_EMPTY_BASES % :
         winrt::Windows::Foundation::IInspectable,
         impl::consume_t<%>%
     {
@@ -2401,7 +2401,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
             type_name = remove_tick(type_name);
 
             auto format = R"(    template <%>
-    struct __declspec(empty_bases) % :
+    struct WINRT_IMPL_EMPTY_BASES % :
         winrt::Windows::Foundation::IInspectable,
         impl::consume_t<%>%
     {%
@@ -3147,7 +3147,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         auto type_name = type.TypeName();
         auto factories = get_factories(w, type);
 
-        auto format = R"(    struct __declspec(empty_bases) % : %%%
+        auto format = R"(    struct WINRT_IMPL_EMPTY_BASES % : %%%
     {
         %(std::nullptr_t) noexcept {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : %(ptr, take_ownership_from_abi) {}
@@ -3172,7 +3172,7 @@ struct __declspec(empty_bases) produce_dispatch_to_overridable<T, D, %>
         auto type_name = type.TypeName();
         auto factories = get_factories(w, type);
 
-        auto format = R"(    struct __declspec(empty_bases) % : %%
+        auto format = R"(    struct WINRT_IMPL_EMPTY_BASES % : %%
     {
         %(std::nullptr_t) noexcept {}
         %(void* ptr, take_ownership_from_abi_t) noexcept : %(ptr, take_ownership_from_abi) {}
