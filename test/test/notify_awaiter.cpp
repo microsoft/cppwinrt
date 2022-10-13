@@ -5,7 +5,11 @@ using namespace Windows::Foundation;
 
 namespace
 {
+#ifdef __cpp_lib_coroutine
+    using std::suspend_never;
+#else
     using std::experimental::suspend_never;
+#endif
 
     // Never suspends.
     // Allows copying, but asserts if you try.
