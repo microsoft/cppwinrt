@@ -9,8 +9,11 @@ jobs:
   test-cppwinrt:
     strategy:
       matrix:
-        arch: [x86, x64]
+        arch: [x86, x64, arm64]
         config: [Debug, Release]
+        exclude:
+          - arch: arm64
+            config: Debug
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -23,12 +26,14 @@ jobs:
           cmd /c "${VSDevCmd}" "&" build_test_all.cmd ${{ matrix.arch }} ${{ matrix.config }}
 
       - name: Upload test log
+        if: matrix.arch != 'arm64'
         uses: actions/upload-artifact@v3
         with:
           name: test-output-${{ matrix.arch }}-${{ matrix.config }}
           path: "*_results.txt"
 
       - name: Check test failure
+        if: matrix.arch != 'arm64'
         run: |
           if (Test-Path "test_failures.txt") {
             Get-Content "test_failures.txt" | ForEach-Object {
