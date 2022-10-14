@@ -1,0 +1,26 @@
+name: MSVC Tests
+on:
+  push:
+
+jobs:
+  test-cppwinrt:
+    strategy:
+      matrix:
+        arch: [x86, x64]
+        config: [Debug, Release]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Test all
+        run: |
+          $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
+          if (!$VSDevCmd) { return 1 }
+          echo "Using VSDevCmd: ${VSDevCmd}"
+          cmd /c "${VSDevCmd}" "&" build_test_all.cmd ${{ matrix.arch }} ${{ matrix.config }}
+
+      - name: Upload test log
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-output-${{ matrix.arch }}-${{ matrix.config }}
+          path: ${{ matrix.arch }}_results.txt
