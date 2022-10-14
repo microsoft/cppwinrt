@@ -23,4 +23,17 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: test-output-${{ matrix.arch }}-${{ matrix.config }}
-          path: ${{ matrix.arch }}_results.txt
+          path: "*_results.txt"
+
+      - name: Check test failure
+        run: |
+          if (Test-Path "test_failures.txt") {
+            Get-Content "test_failures.txt" | ForEach-Object {
+              Write-Error "error: Test '$_' failed!"
+            }
+            return 1
+          }
+          if (!(Test-Path "*_results.txt")) {
+            Write-Error "error: No test output found!"
+            return 1
+          }

@@ -21,5 +21,11 @@ goto :eof
 :run_test
 if not "%target_version%"=="" set args=-o %1-%target_version%.xml -r junit
 rem Buffer output and redirect to stdout/stderr depending whether the test executable exits successfully. Pipeline will fail if there's any output to stderr.
-_build\%target_platform%\%target_configuration%\%1.exe %args% > %1_results.txt && type %1_results.txt || type %1_results.txt >&2
+_build\%target_platform%\%target_configuration%\%1.exe %args% > %1_results.txt
+if %ERRORLEVEL% EQU 0 (
+    type %1_results.txt
+) else (
+    type %1_results.txt >&2
+    echo %1 >> test_failures.txt
+)
 goto :eof
