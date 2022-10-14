@@ -37,3 +37,26 @@ jobs:
             Write-Error "error: No test output found!"
             return 1
           }
+
+  build-nuget:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Package
+        run: |
+          $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
+          if (!$VSDevCmd) { return 1 }
+          echo "Using VSDevCmd: ${VSDevCmd}"
+          cmd /c "${VSDevCmd}" "&" nuget.exe restore cppwinrt.sln
+          cmd /c "${VSDevCmd}" "&" build_nuget.cmd
+          if (!(Test-Path "*.nupkg")) {
+            Write-Error "error: Output nuget package not found!"
+            return 1
+          }
+
+      - name: Upload nuget package artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: package
+          path: "*.nupkg"
