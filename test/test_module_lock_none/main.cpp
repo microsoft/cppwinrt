@@ -65,5 +65,6 @@ TEST_CASE("module_lock_none")
 
 int main(int const argc, char** argv)
 {
+    std::set_terminate([] { reportFatal("Abnormal termination"); ExitProcess(1); });
     return Catch::Session().run(argc, argv);
 }

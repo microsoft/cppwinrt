@@ -7,6 +7,7 @@ using namespace winrt;
 int main(int const argc, char** argv)
 {
     init_apartment();
+    std::set_terminate([] { reportFatal("Abnormal termination"); ExitProcess(1); });
     return Catch::Session().run(argc, argv);
 }
 
