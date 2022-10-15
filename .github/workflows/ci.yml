@@ -1,4 +1,4 @@
-name: MSVC Tests
+name: CI Tests
 on:
   push:
   pull_request:
@@ -6,7 +6,8 @@ on:
       - master
 
 jobs:
-  test-cppwinrt:
+  test-msvc-cppwinrt:
+    name: 'MSVC: Tests'
     strategy:
       matrix:
         arch: [x86, x64, arm64]
@@ -47,6 +48,7 @@ jobs:
           }
 
   build-nuget:
+    name: Build nuget package with MSVC
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
