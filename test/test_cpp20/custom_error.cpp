@@ -15,19 +15,23 @@ namespace
         REQUIRE_THROWS_AS(check_hresult(0x80000018), hresult_illegal_delegate_assignment);
     }
 
+    static struct {
+        uint32_t lineNumber;
+        char const* fileName;
+        char const* functionName;
+        void* returnAddress;
+        winrt::hresult result;
+    } s_loggerArgs{};
+
     void __stdcall logger(uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept
     {
-        // In C++20 these fields should be filled in by std::source_location
-        REQUIRE(lineNumber == 15);
-        const auto fileNameSv = std::string_view(fileName);
-        REQUIRE(!fileNameSv.empty());
-        REQUIRE(fileNameSv.find("custom_error.cpp") != std::string::npos);
-        const auto functionNameSv = std::string_view(functionName);
-        REQUIRE(!functionNameSv.empty());
-        REQUIRE(functionNameSv == "FailOnLine15");
-
-        REQUIRE(returnAddress);
-        REQUIRE(result == 0x80000018); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
+        s_loggerArgs = {
+            .lineNumber = lineNumber,
+            .fileName = fileName,
+            .functionName = functionName,
+            .returnAddress = returnAddress,
+            .result = result,
+        };
         s_loggerCalled = true;
     }
 }
@@ -41,6 +45,17 @@ TEST_CASE("custom_error_logger")
 
     FailOnLine15();
     REQUIRE(s_loggerCalled);
+    // In C++20 these fields should be filled in by std::source_location
+    REQUIRE(s_loggerArgs.lineNumber == 15);
+    const auto fileNameSv = std::string_view(s_loggerArgs.fileName);
+    REQUIRE(!fileNameSv.empty());
+    REQUIRE(fileNameSv.find("custom_error.cpp") != std::string::npos);
+    const auto functionNameSv = std::string_view(s_loggerArgs.functionName);
+    REQUIRE(!functionNameSv.empty());
+    REQUIRE(functionNameSv == "FailOnLine15");
+
+    REQUIRE(s_loggerArgs.returnAddress);
+    REQUIRE(s_loggerArgs.result == 0x80000018); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
 
     // Remove global handler
     winrt_throw_hresult_handler = nullptr;
