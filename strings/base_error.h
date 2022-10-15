@@ -619,12 +619,14 @@ WINRT_EXPORT namespace winrt
     }
 
     template<typename T>
-    void check_bool(T result WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    T check_bool(T result WINRT_IMPL_SOURCE_LOCATION_ARGS)
     {
         if (!result)
         {
             winrt::throw_last_error(WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM);
         }
+        
+        return result;
     }
 
     template<typename T>
