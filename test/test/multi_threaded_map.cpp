@@ -63,7 +63,7 @@ namespace
         }
         else
         {
-            return static_cast<IObservableVector<K, V>>(winrt::make<custom_observable_map<K, V, Container>>(std::move(values)));
+            return static_cast<IObservableMap<K, V>>(winrt::make<custom_observable_map<K, V, Container>>(std::move(values)));
         }
     }
 
@@ -171,7 +171,7 @@ namespace
         auto hook = raw.hook;
 
         // Convert the raw_map into the desired Windows Runtime map interface.
-        auto m = make_threaded_map<MapKind::IMap>(std::move(raw));
+        auto m = make_threaded_map<kind>(std::move(raw));
 
         auto race = [&](collection_action action, auto&& background, auto&& foreground)
         {
