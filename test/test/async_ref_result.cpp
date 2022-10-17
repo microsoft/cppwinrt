@@ -5,6 +5,12 @@ using namespace Windows::Foundation;
 
 namespace
 {
+#ifdef __cpp_lib_coroutine
+    using std::suspend_never;
+#else
+    using std::experimental::suspend_never;
+#endif
+
     //
     // Checks that references returned by awaitables
     // are not accidentally decayed.
@@ -12,14 +18,14 @@ namespace
     // This test "runs" at compile time via static_assert.
 
     template <typename T>
-    struct awaitable : std::experimental::suspend_never
+    struct awaitable : suspend_never
     {
         std::decay_t<T> value;
         T await_resume() { return static_cast<T>(value); }
     };
 
     template <typename T>
-    struct awaitable_member_awaiter : std::experimental::suspend_never
+    struct awaitable_member_awaiter : suspend_never
     {
         decltype(auto) get_awaiter() { return *this; }
         std::decay_t<T> value;
@@ -27,7 +33,7 @@ namespace
     };
 
     template <typename T>
-    struct awaitable_free_awaiter : std::experimental::suspend_never
+    struct awaitable_free_awaiter : suspend_never
     {
         std::decay_t<T> value;
         T await_resume() { return static_cast<T>(value); }

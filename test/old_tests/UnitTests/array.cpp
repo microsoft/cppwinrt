@@ -344,7 +344,7 @@ TEST_CASE("array,at,throw")
         try
         {
             a.at(3);
-            FAIL(L"Previous line should throw");
+            FAIL("Previous line should throw");
         }
         catch (std::out_of_range const & e)
         {
@@ -357,7 +357,7 @@ TEST_CASE("array,at,throw")
         try
         {
             test_array_ref_at_throw({ 1, 2, 3 });
-            FAIL(L"Previous line should throw");
+            FAIL("Previous line should throw");
         }
         catch (std::out_of_range const & e)
         {
@@ -372,7 +372,7 @@ TEST_CASE("array,at,throw")
         try
         {
             a.at(5);
-            FAIL(L"Previous line should throw");
+            FAIL("Previous line should throw");
         }
         catch (std::out_of_range const & e)
         {

@@ -1,4 +1,4 @@
-name: MSVC Tests
+name: CI Tests
 on:
   push:
   pull_request:
@@ -6,7 +6,8 @@ on:
       - master
 
 jobs:
-  test-cppwinrt:
+  test-msvc-cppwinrt:
+    name: 'MSVC: Tests'
     strategy:
       matrix:
         arch: [x86, x64, arm64]
@@ -21,7 +22,7 @@ jobs:
       - name: Test all
         run: |
           $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
-          if (!$VSDevCmd) { return 1 }
+          if (!$VSDevCmd) { exit 1 }
           echo "Using VSDevCmd: ${VSDevCmd}"
           cmd /c "${VSDevCmd}" "&" build_test_all.cmd ${{ matrix.arch }} ${{ matrix.config }}
 
@@ -37,16 +38,17 @@ jobs:
         run: |
           if (Test-Path "test_failures.txt") {
             Get-Content "test_failures.txt" | ForEach-Object {
-              Write-Error "error: Test '$_' failed!"
+              echo "::error::Test '$_' failed!"
             }
-            return 1
+            exit 1
           }
           if (!(Test-Path "*_results.txt")) {
-            Write-Error "error: No test output found!"
-            return 1
+            echo "::error::No test output found!"
+            exit 1
           }
 
   build-nuget:
+    name: Build nuget package with MSVC
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -54,13 +56,13 @@ jobs:
       - name: Package
         run: |
           $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
-          if (!$VSDevCmd) { return 1 }
+          if (!$VSDevCmd) { exit 1 }
           echo "Using VSDevCmd: ${VSDevCmd}"
           cmd /c "${VSDevCmd}" "&" nuget.exe restore cppwinrt.sln
           cmd /c "${VSDevCmd}" "&" build_nuget.cmd
           if (!(Test-Path "*.nupkg")) {
-            Write-Error "error: Output nuget package not found!"
-            return 1
+            echo "::error::Output nuget package not found!"
+            exit 1
           }
 
       - name: Upload nuget package artifact

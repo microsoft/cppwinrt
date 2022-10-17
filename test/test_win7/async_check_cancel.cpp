@@ -5,6 +5,12 @@ using namespace Windows::Foundation;
 
 namespace
 {
+#ifdef __cpp_lib_coroutine
+    using std::suspend_never;
+#else
+    using std::experimental::suspend_never;
+#endif
+
     //
     // Checks that manual cancellation checks work.
     //
@@ -20,7 +26,7 @@ namespace
             canceled = true;
         }
 
-        co_await std::experimental::suspend_never();
+        co_await suspend_never();
         REQUIRE(false);
     }
 
@@ -35,7 +41,7 @@ namespace
             canceled = true;
         }
 
-        co_await std::experimental::suspend_never();
+        co_await suspend_never();
         REQUIRE(false);
     }
 
@@ -50,7 +56,7 @@ namespace
             canceled = true;
         }
 
-        co_await std::experimental::suspend_never();
+        co_await suspend_never();
         REQUIRE(false);
         co_return 1;
     }
@@ -66,7 +72,7 @@ namespace
             canceled = true;
         }
 
-        co_await std::experimental::suspend_never();
+        co_await suspend_never();
         REQUIRE(false);
         co_return 1;
     }
