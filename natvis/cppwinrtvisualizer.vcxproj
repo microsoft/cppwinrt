@@ -309,15 +309,15 @@
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="packages\Microsoft.VSSDK.Debugger.VSDConfigTool.16.0.2012201-preview\build\Microsoft.VSSDK.Debugger.VSDConfigTool.targets" Condition="Exists('packages\Microsoft.VSSDK.Debugger.VSDConfigTool.16.0.2012201-preview\build\Microsoft.VSSDK.Debugger.VSDConfigTool.targets')" />
-    <Import Project="packages\Microsoft.VSSDK.Debugger.VSDebugEng.16.0.2012201-preview\Microsoft.VSSDK.Debugger.VSDebugEng.targets" Condition="Exists('packages\Microsoft.VSSDK.Debugger.VSDebugEng.16.0.2012201-preview\Microsoft.VSSDK.Debugger.VSDebugEng.targets')" />
+    <Import Project="packages\Microsoft.VSSDK.Debugger.VSDConfigTool.17.0.2012801\build\Microsoft.VSSDK.Debugger.VSDConfigTool.targets" Condition="Exists('packages\Microsoft.VSSDK.Debugger.VSDConfigTool.17.0.2012801\build\Microsoft.VSSDK.Debugger.VSDConfigTool.targets')" />
+    <Import Project="packages\Microsoft.VSSDK.Debugger.VSDebugEng.17.0.2012801\build\native\Microsoft.VSSDK.Debugger.VSDebugEng.targets" Condition="Exists('packages\Microsoft.VSSDK.Debugger.VSDebugEng.17.0.2012801\build\native\Microsoft.VSSDK.Debugger.VSDebugEng.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('packages\Microsoft.VSSDK.Debugger.VSDConfigTool.16.0.2012201-preview\build\Microsoft.VSSDK.Debugger.VSDConfigTool.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VSSDK.Debugger.VSDConfigTool.16.0.2012201-preview\build\Microsoft.VSSDK.Debugger.VSDConfigTool.targets'))" />
-    <Error Condition="!Exists('packages\Microsoft.VSSDK.Debugger.VSDebugEng.16.0.2012201-preview\Microsoft.VSSDK.Debugger.VSDebugEng.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VSSDK.Debugger.VSDebugEng.16.0.2012201-preview\Microsoft.VSSDK.Debugger.VSDebugEng.targets'))" />
     <Error Condition="!Exists('packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props'))" />
+    <Error Condition="!Exists('packages\Microsoft.VSSDK.Debugger.VSDConfigTool.17.0.2012801\build\Microsoft.VSSDK.Debugger.VSDConfigTool.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VSSDK.Debugger.VSDConfigTool.17.0.2012801\build\Microsoft.VSSDK.Debugger.VSDConfigTool.targets'))" />
+    <Error Condition="!Exists('packages\Microsoft.VSSDK.Debugger.VSDebugEng.17.0.2012801\build\native\Microsoft.VSSDK.Debugger.VSDebugEng.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VSSDK.Debugger.VSDebugEng.17.0.2012801\build\native\Microsoft.VSSDK.Debugger.VSDebugEng.targets'))" />
   </Target>
 </Project>
