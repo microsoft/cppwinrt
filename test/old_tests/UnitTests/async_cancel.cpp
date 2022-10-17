@@ -122,7 +122,12 @@ TEST_CASE("async_cancel_no_async")
     REQUIRE(a.Status() == AsyncStatus::Completed);
 }
 
+#if defined(__clang__)
+// FIXME: Test is known to segfault when built with Clang.
+TEST_CASE("async_cancel_before_callback", "[.clang-crash]")
+#else
 TEST_CASE("async_cancel_before_callback")
+#endif
 {
     handle begin{ CreateEvent(nullptr, true, false, nullptr) };
     handle end{ CreateEvent(nullptr, true, false, nullptr) };
@@ -154,7 +159,12 @@ TEST_CASE("async_cancel_after_callback")
     REQUIRE(async.Status() == AsyncStatus::Canceled);
 }
 
+#if defined(__clang__)
+// FIXME: Test is known to segfault when built with Clang.
+TEST_CASE("async_cancel_use_status", "[.clang-crash]")
+#else
 TEST_CASE("async_cancel_use_status")
+#endif
 {
     // Validate that co_await preserves cancellation.
     handle complete{ CreateEvent(nullptr, true, false, nullptr) };

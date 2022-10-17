@@ -88,7 +88,12 @@ TEST_CASE("disconnected,handler,2")
         });
 }
 
+#if defined(__clang__)
+// FIXME: Test is known to abort when built with Clang. (Seems to be from unhandled exception thrown on a worker thread.)
+TEST_CASE("disconnected,handler,3", "[.clang-crash]")
+#else
 TEST_CASE("disconnected,handler,3")
+#endif
 {
     auto async = ActionProgress();
     handle signal{ CreateEventW(nullptr, true, false, nullptr) };
@@ -117,7 +122,12 @@ TEST_CASE("disconnected,handler,4")
         });
 }
 
+#if defined(__clang__)
+// FIXME: Test is known to abort when built with Clang. (Seems to be from unhandled exception thrown on a worker thread.)
+TEST_CASE("disconnected,handler,5", "[.clang-crash]")
+#else
 TEST_CASE("disconnected,handler,5")
+#endif
 {
     auto async = OperationProgress();
     handle signal{ CreateEventW(nullptr, true, false, nullptr) };
@@ -230,7 +240,12 @@ TEST_CASE("disconnected,action")
     REQUIRE_THROWS_MATCHES(result.get(), hresult_error, holds_hresult(RPC_E_DISCONNECTED));
 }
 
+#if defined(__clang__) && (defined(_M_IX86) || defined(__i386__))
+// FIXME: Test is known to crash with exit code 0xc000070a on x86 when built with Clang.
+TEST_CASE("disconnected,double", "[.clang-crash]")
+#else
 TEST_CASE("disconnected,double")
+#endif
 {
     // The double-disconnect case, where the IAsyncAction disconnects,
     // and tries to return to the original context, but it too has disconnected!

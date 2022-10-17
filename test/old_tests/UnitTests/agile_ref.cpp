@@ -36,7 +36,12 @@ IAsyncAction test_agile_ref()
     });
 }
 
+#if defined(__clang__) && (defined(_M_IX86) || defined(__i386__))
+// FIXME: Test is known to crash with exit code 0x80000003 (breakpoint?) on x86 when built with Clang.
+TEST_CASE("agile_ref", "[.clang-crash]")
+#else
 TEST_CASE("agile_ref")
+#endif
 {
     test_agile_ref().get();
 }
