@@ -25,4 +25,11 @@ TEST_CASE("format")
         winrt::Windows::Data::Json::JsonArray jsonArray;
         REQUIRE(std::format(L"The contents of the array are: {}", jsonArray) == L"The contents of the array are: []");
     }
+
+#if __cpp_lib_format >= 202207L
+    {
+        std::wstring str = L"World";
+        REQUIRE(winrt::format(L"Hello {}", str) == L"Hello World");
+    }
+#endif
 }
