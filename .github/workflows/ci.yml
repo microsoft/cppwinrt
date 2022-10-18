@@ -77,6 +77,7 @@ jobs:
       matrix:
         arch: [x86, x64]
         config: [Debug, Release]
+        test_exe: [test, test_cpp20, test_win7, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -124,39 +125,26 @@ jobs:
           $target_platform = "${{ matrix.arch }}"
           & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose
 
-      - name: Build tests
+      - name: Build test '${{ matrix.test_exe }}'
         run: |
-          $test_projs = "test", "test_cpp20", "test_win7", "test_fast", "test_slow", "test_module_lock_custom", "test_module_lock_none", "old_tests\test_old"
-          foreach ($test_proj in $test_projs) {
-            cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" cppwinrt.sln /t:test\$test_proj
-            # exit code is ignored so all tests will be built
+          $test_proj = "${{ matrix.test_exe }}"
+          if ($test_proj -eq "test_old") {
+            $test_proj = "old_tests\test_old"
           }
-          exit 0
 
-      - name: Run tests
+          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" cppwinrt.sln /t:test\$test_proj
+
+      - name: Run test '${{ matrix.test_exe }}'
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
-          $test_exes = "test", "test_cpp20", "test_win7", "test_fast", "test_slow", "test_old", "test_module_lock_custom", "test_module_lock_none"
-          $has_failed_tests = 0
-          foreach ($test_exe in $test_exes) {
-            $test_path = "_build\$target_platform\$target_configuration\$test_exe.exe"
-            if (!(Test-Path $test_path)) {
-              echo "::error::Test $test_exe is missing."
-              $has_failed_tests = 1
-              continue
-            }
-            echo "::group::Run '$test_exe'"
-            & $test_path
-            echo "::endgroup::"
-            if ($LastExitCode -ne 0) {
-              echo "::error::Test '$test_exe' failed!"
-              $has_failed_tests = 1
-            }
-          }
-          if ($has_failed_tests -ne 0) {
+          $test_exe = "${{ matrix.test_exe }}"
+          $test_path = "_build\$target_platform\$target_configuration\$test_exe.exe"
+          if (!(Test-Path $test_path)) {
+            echo "::error::Test $test_exe is missing."
             exit 1
           }
+          & $test_path
 
   build-msvc-natvis:
     name: 'Build natvis'
