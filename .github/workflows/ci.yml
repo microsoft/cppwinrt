@@ -41,7 +41,6 @@ jobs:
       - name: Restore nuget packages
         run: |
           cmd /c "$env:VSDevCmd" "&" nuget restore cppwinrt.sln
-          cmd /c "$env:VSDevCmd" "&" nuget restore test\nuget\NugetTest.sln
 
       - name: Build fast_fwd
         run: |
@@ -70,11 +69,6 @@ jobs:
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
           & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose
-      
-      - name: Run nuget test
-        if: matrix.arch != 'arm64'
-        run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" test\nuget\NugetTest.sln
 
   test-msvc-cppwinrt-test:
     name: 'MSVC: Tests'
@@ -201,6 +195,56 @@ jobs:
       - name: Build natvis
         run: |
           cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" /p:Deployment=${{ matrix.Deployment }} natvis\cppwinrtvisualizer.sln
+
+  build-msvc-nuget-test:
+    name: 'Build nuget test'
+    needs: test-msvc-cppwinrt-build
+    strategy:
+      matrix:
+        arch: [x86, x64]
+        config: [Release]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Fetch cppwinrt executables
+        uses: actions/download-artifact@v3
+        with:
+          name: msvc-build-${{ matrix.arch }}-${{ matrix.config }}-bin
+          path: _build/${{ matrix.arch }}/${{ matrix.config }}/
+
+      - name: Download nuget
+        run: |
+          mkdir ".\.nuget"
+          Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile ".\.nuget\nuget.exe"
+
+      - name: Find VsDevCmd.bat
+        run: |
+          $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
+          if (!$VSDevCmd) { exit 1 }
+          echo "Using VSDevCmd: ${VSDevCmd}"
+          Add-Content $env:GITHUB_ENV "VSDevCmd=$VSDevCmd"
+
+      - name: Prepare build flags
+        run: |
+          $target_configuration = "${{ matrix.config }}"
+          $target_platform = "${{ matrix.arch }}"
+          $target_version = "1.2.3.4"
+          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
+
+      - name: Restore nuget packages
+        run: |
+          cmd /c "$env:VSDevCmd" "&" nuget restore test\nuget\NugetTest.sln
+
+      - name: Run cppwinrt to build projection
+        run: |
+          $target_configuration = "${{ matrix.config }}"
+          $target_platform = "${{ matrix.arch }}"
+          & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose
+      
+      - name: Run nuget test
+        run: |
+          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" test\nuget\NugetTest.sln
 
   build-nuget:
     name: Build nuget package with MSVC
