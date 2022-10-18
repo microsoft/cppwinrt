@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  test-msvc-cppwinrt:
-    name: 'MSVC: Tests'
+  test-msvc-cppwinrt-build:
+    name: 'MSVC: Build'
     strategy:
       matrix:
         arch: [x86, x64, arm64]
@@ -76,8 +76,61 @@ jobs:
         run: |
           cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" test\nuget\NugetTest.sln
 
+  test-msvc-cppwinrt-test:
+    name: 'MSVC: Tests'
+    needs: test-msvc-cppwinrt-build
+    strategy:
+      matrix:
+        arch: [x86, x64]
+        config: [Debug, Release]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Fetch cppwinrt executables
+        uses: actions/download-artifact@v3
+        with:
+          name: msvc-build-${{ matrix.arch }}-${{ matrix.config }}-bin
+          path: _build/${{ matrix.arch }}/${{ matrix.config }}/
+
+      - name: Download nuget
+        run: |
+          mkdir ".\.nuget"
+          Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile ".\.nuget\nuget.exe"
+
+      - name: Find VsDevCmd.bat
+        run: |
+          $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
+          if (!$VSDevCmd) { exit 1 }
+          echo "Using VSDevCmd: ${VSDevCmd}"
+          Add-Content $env:GITHUB_ENV "VSDevCmd=$VSDevCmd"
+
+      - name: Prepare build flags
+        run: |
+          $target_configuration = "${{ matrix.config }}"
+          $target_platform = "${{ matrix.arch }}"
+          $target_version = "1.2.3.4"
+          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
+
+      - name: Restore nuget packages
+        run: |
+          cmd /c "$env:VSDevCmd" "&" nuget restore cppwinrt.sln
+
+      - name: Remove cppwinrt dependency from all test projects
+        run: |
+          # HACK: We already have a built exe, so we want to avoid rebuilding cppwinrt
+          mv cppwinrt.sln cppwinrt.sln.orig
+          Get-Content cppwinrt.sln.orig |
+            Where-Object { -not $_.Contains("{D613FB39-5035-4043-91E2-BAB323908AF4} = {D613FB39-5035-4043-91E2-BAB323908AF4}") } |
+            Set-Content cppwinrt.sln
+
+      - name: Run cppwinrt to build projection
+        run: |
+          $target_configuration = "${{ matrix.config }}"
+          $target_platform = "${{ matrix.arch }}"
+          & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose
+
       - name: Build tests
-        if: matrix.arch != 'arm64'
         run: |
           $test_projs = "test", "test_cpp20", "test_win7", "test_fast", "test_slow", "test_module_lock_custom", "test_module_lock_none", "old_tests\test_old"
           foreach ($test_proj in $test_projs) {
@@ -87,7 +140,6 @@ jobs:
           exit 0
 
       - name: Run tests
-        if: matrix.arch != 'arm64'
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
