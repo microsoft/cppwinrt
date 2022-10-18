@@ -74,6 +74,7 @@ jobs:
     name: 'MSVC: Tests'
     needs: test-msvc-cppwinrt-build
     strategy:
+      fail-fast: false
       matrix:
         arch: [x86, x64]
         config: [Debug, Release]
