@@ -41,20 +41,11 @@ jobs:
       - name: Restore nuget packages
         run: |
           cmd /c "$env:VSDevCmd" "&" nuget restore cppwinrt.sln
-          cmd /c "$env:VSDevCmd" "&" nuget restore natvis\cppwinrtvisualizer.sln
           cmd /c "$env:VSDevCmd" "&" nuget restore test\nuget\NugetTest.sln
 
       - name: Build fast_fwd
         run: |
           cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" cppwinrt.sln /t:fast_fwd
-
-      - name: Build natvis (Component)
-        run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" /p:Deployment=Component natvis\cppwinrtvisualizer.sln
-
-      - name: Build natvis (Standalone)
-        run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" /p:Deployment=Standalone natvis\cppwinrtvisualizer.sln
 
       - name: Build cppwinrt
         if: matrix.arch != 'arm64'
@@ -120,6 +111,44 @@ jobs:
           if ($has_failed_tests -ne 0) {
             exit 1
           }
+
+  build-msvc-natvis:
+    name: 'Build natvis'
+    strategy:
+      matrix:
+        arch: [x86, x64, arm64]
+        config: [Release]
+        Deployment: [Component, Standalone]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download nuget
+        run: |
+          mkdir ".\.nuget"
+          Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile ".\.nuget\nuget.exe"
+
+      - name: Find VsDevCmd.bat
+        run: |
+          $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
+          if (!$VSDevCmd) { exit 1 }
+          echo "Using VSDevCmd: ${VSDevCmd}"
+          Add-Content $env:GITHUB_ENV "VSDevCmd=$VSDevCmd"
+
+      - name: Prepare build flags
+        run: |
+          $target_configuration = "${{ matrix.config }}"
+          $target_platform = "${{ matrix.arch }}"
+          $target_version = "1.2.3.4"
+          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
+
+      - name: Restore nuget packages
+        run: |
+          cmd /c "$env:VSDevCmd" "&" nuget restore natvis\cppwinrtvisualizer.sln
+
+      - name: Build natvis
+        run: |
+          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" /p:Deployment=${{ matrix.Deployment }} natvis\cppwinrtvisualizer.sln
 
   build-nuget:
     name: Build nuget package with MSVC
