@@ -7,17 +7,39 @@ on:
 
 jobs:
   test-msvc-cppwinrt-build:
-    name: 'MSVC: Build'
+    name: '${{ matrix.compiler }}: Build (${{ matrix.arch }}, ${{ matrix.config }})'
     strategy:
       matrix:
+        compiler: [MSVC, clang-cl]
         arch: [x86, x64, arm64]
         config: [Debug, Release]
         exclude:
           - arch: arm64
             config: Debug
+          - compiler: clang-cl
+            arch: arm64
+          - compiler: clang-cl
+            config: Release
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install LLVM 15
+        if: matrix.compiler == 'clang-cl'
+        run: |
+          Invoke-WebRequest "https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.2/LLVM-15.0.2-win64.exe" -OutFile LLVM-installer.exe
+          .\LLVM-installer.exe /S "/D=$pwd\LLVM" | Out-Null
+          rm LLVM-installer.exe
+          if (!(Test-Path "$pwd\LLVM\bin\clang-cl.exe")) { exit 1 }
+          Add-Content $env:GITHUB_PATH "$pwd\LLVM\bin"
+
+      - name: Set up LLVM build tools for msbuild
+        if: matrix.compiler == 'clang-cl'
+        # Not using the LLVM tools that comes with MSVC.
+        run: |
+          Invoke-WebRequest "https://github.com/zufuliu/llvm-utils/releases/download/v22.09/LLVM_VS2017.zip" -OutFile LLVM_VS2017.zip
+          7z x -y "LLVM_VS2017.zip" | Out-Null
+          cmd /c "LLVM_VS2017\install.bat" 1
 
       - name: Download nuget
         run: |
@@ -36,7 +58,11 @@ jobs:
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
           $target_version = "1.2.3.4"
-          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
+          $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
+          if ("${{ matrix.compiler }}" -eq "clang-cl") {
+            $props += ",Clang=1,PlatformToolset=LLVM_v143,LLVMInstallDir=$pwd\LLVM"
+          }
+          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:$props"
 
       - name: Restore nuget packages
         run: |
@@ -44,12 +70,12 @@ jobs:
 
       - name: Build fast_fwd
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" cppwinrt.sln /t:fast_fwd
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.sln /t:fast_fwd
 
       - name: Build cppwinrt
         if: matrix.arch != 'arm64'
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" cppwinrt.sln /t:cppwinrt
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.sln /t:cppwinrt
 
       - name: Upload built executables
         if: matrix.arch != 'arm64'
@@ -71,17 +97,38 @@ jobs:
           & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose
 
   test-msvc-cppwinrt-test:
-    name: 'MSVC: Tests'
+    name: '${{ matrix.compiler }}: Test [${{ matrix.test_exe }}] (${{ matrix.arch }}, ${{ matrix.config }})'
     needs: test-msvc-cppwinrt-build
     strategy:
       fail-fast: false
       matrix:
+        compiler: [MSVC, clang-cl]
         arch: [x86, x64]
         config: [Debug, Release]
         test_exe: [test, test_cpp20, test_win7, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
+        exclude:
+          - compiler: clang-cl
+            config: Release
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install LLVM 15
+        if: matrix.compiler == 'clang-cl'
+        run: |
+          Invoke-WebRequest "https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.2/LLVM-15.0.2-win64.exe" -OutFile LLVM-installer.exe
+          .\LLVM-installer.exe /S "/D=$pwd\LLVM" | Out-Null
+          rm LLVM-installer.exe
+          if (!(Test-Path "$pwd\LLVM\bin\clang-cl.exe")) { exit 1 }
+          Add-Content $env:GITHUB_PATH "$pwd\LLVM\bin"
+
+      - name: Set up LLVM build tools for msbuild
+        if: matrix.compiler == 'clang-cl'
+        run: |
+          # Not using the LLVM tools that comes with MSVC.
+          Invoke-WebRequest "https://github.com/zufuliu/llvm-utils/releases/download/v22.09/LLVM_VS2017.zip" -OutFile LLVM_VS2017.zip
+          7z x -y "LLVM_VS2017.zip" | Out-Null
+          cmd /c "LLVM_VS2017\install.bat" 1
 
       - name: Fetch cppwinrt executables
         uses: actions/download-artifact@v3
@@ -106,7 +153,11 @@ jobs:
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
           $target_version = "1.2.3.4"
-          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
+          $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
+          if ("${{ matrix.compiler }}" -eq "clang-cl") {
+            $props += ",Clang=1,PlatformToolset=LLVM_v143,LLVMInstallDir=$pwd\LLVM"
+          }
+          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:$props"
 
       - name: Restore nuget packages
         run: |
@@ -144,7 +195,39 @@ jobs:
             $test_proj = "old_tests\test_old"
           }
 
-          cmd /c "$env:VSDevCmd" "&" msbuild /m /p:TestsUseAnsiColor=1 "$env:msbuild_config_props" cppwinrt.sln /t:test\$test_proj
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor /p:TestsUseAnsiColor=1 "$env:msbuild_config_props" cppwinrt.sln /t:test\$test_proj
+
+      - name: Run tests in '${{ matrix.test_exe }}' one by one
+        if: matrix.compiler == 'clang-cl'
+        run: |
+          $target_configuration = "${{ matrix.config }}"
+          $target_platform = "${{ matrix.arch }}"
+          $test_exe = "${{ matrix.test_exe }}"
+          $test_path = "_build\$target_platform\$target_configuration\$test_exe.exe"
+          if (!(Test-Path $test_path)) {
+            echo "::error::Test $test_exe is missing."
+            exit 1
+          }
+          $test_names = @( & $test_path --list-test-names-only )
+          $failed_tests = 0
+          foreach ($test_name in $test_names) {
+            echo "::group::Running test $test_name"
+            $escaped = $test_name.Replace("\", "\\").Replace(",", "\,").Replace("[", "\[")
+            & $test_path --use-colour yes --warn NoTests "$escaped"
+            echo "::endgroup::"
+            if ($LastExitCode -ne 0) {
+              $failed_tests += 1
+              # Add a newline in case test exited abnormally without newline
+              echo ""
+              echo "::error::Test $test_exe/'$test_name' failed with exit code $LastExitCode!"
+            }
+          }
+          if ($failed_tests -eq 0) {
+            echo "All tests in $test_exe passed."
+          } else {
+            echo "$failed_tests failed in $test_exe."
+            exit 1
+          }
 
       - name: Run test '${{ matrix.test_exe }}'
         run: |
@@ -194,7 +277,7 @@ jobs:
 
       - name: Build natvis
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" /p:Deployment=${{ matrix.Deployment }} natvis\cppwinrtvisualizer.sln
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" /p:Deployment=${{ matrix.Deployment }} natvis\cppwinrtvisualizer.sln
 
   build-msvc-nuget-test:
     name: 'Build nuget test'
@@ -244,7 +327,7 @@ jobs:
       
       - name: Run nuget test
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" test\nuget\NugetTest.sln
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" test\nuget\NugetTest.sln
           if ($LastExitCode -ne 0) {
             echo "::warning::nuget test failed"
           }

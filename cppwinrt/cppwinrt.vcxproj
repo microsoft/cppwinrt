@@ -259,9 +259,6 @@
       <Command>
       </Command>
     </PostBuildEvent>
-    <Manifest>
-      <AdditionalManifestFiles>app.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
-    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>

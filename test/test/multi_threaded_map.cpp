@@ -5,6 +5,9 @@
 
 #include "multi_threaded_common.h"
 
+// FIXME: Fail to compile with Clang due to "error : no type named 'type' in 'std::enable_if<false>'"
+#if !defined(__clang__)
+
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -335,3 +338,4 @@ TEST_CASE("multi_threaded_observable_map")
     test_map_concurrency<int, MapKind::IObservableMap>();
     test_map_concurrency<IInspectable, MapKind::IObservableMap>();
 }
+#endif

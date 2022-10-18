@@ -13,7 +13,10 @@ namespace
     {
         co_await resume_foreground(queue);
 
+// FIXME: Fail to compile with Clang due to co_await overload resolution
+#if !defined(__clang__)
         co_await queue;
+#endif
     }
 }
 
