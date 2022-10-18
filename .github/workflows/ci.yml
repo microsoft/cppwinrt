@@ -197,6 +197,38 @@ jobs:
 
           cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor /p:TestsUseAnsiColor=1 "$env:msbuild_config_props" cppwinrt.sln /t:test\$test_proj
 
+      - name: Run tests in '${{ matrix.test_exe }}' one by one
+        if: matrix.compiler == 'clang-cl'
+        run: |
+          $target_configuration = "${{ matrix.config }}"
+          $target_platform = "${{ matrix.arch }}"
+          $test_exe = "${{ matrix.test_exe }}"
+          $test_path = "_build\$target_platform\$target_configuration\$test_exe.exe"
+          if (!(Test-Path $test_path)) {
+            echo "::error::Test $test_exe is missing."
+            exit 1
+          }
+          $test_names = @( & $test_path --list-test-names-only )
+          $failed_tests = 0
+          foreach ($test_name in $test_names) {
+            echo "::group::Running test $test_name"
+            $escaped = $test_name.Replace("\", "\\").Replace(",", "\,").Replace("[", "\[")
+            & $test_path --use-colour yes --warn NoTests "$escaped"
+            echo "::endgroup::"
+            if ($LastExitCode -ne 0) {
+              $failed_tests += 1
+              # Add a newline in case test exited abnormally without newline
+              echo ""
+              echo "::error::Test $test_exe/'$test_name' failed with exit code $LastExitCode!"
+            }
+          }
+          if ($failed_tests -eq 0) {
+            echo "All tests in $test_exe passed."
+          } else {
+            echo "$failed_tests failed in $test_exe."
+            exit 1
+          }
+
       - name: Run test '${{ matrix.test_exe }}'
         run: |
           $target_configuration = "${{ matrix.config }}"
