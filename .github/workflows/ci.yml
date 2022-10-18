@@ -120,6 +120,17 @@ jobs:
             Where-Object { -not $_.Contains("{D613FB39-5035-4043-91E2-BAB323908AF4} = {D613FB39-5035-4043-91E2-BAB323908AF4}") } |
             Set-Content cppwinrt.sln
 
+      - name: Patch catch.hpp to make it build with ANSI colour
+        run: |
+          # HACK: Remove <unistd.h> include and the isatty call in catch.hpp to make ANSI colour build work
+          mv test/catch.hpp test/catch.hpp.orig
+          Get-Content test/catch.hpp.orig |
+            Where-Object { -not $_.Contains("#include <unistd.h>") } |
+            ForEach-Object {
+              $_.Replace("isatty(STDOUT_FILENO)", "false")
+            } |
+            Set-Content test/catch.hpp
+
       - name: Run cppwinrt to build projection
         run: |
           $target_configuration = "${{ matrix.config }}"
@@ -133,7 +144,7 @@ jobs:
             $test_proj = "old_tests\test_old"
           }
 
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" cppwinrt.sln /t:test\$test_proj
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /p:TestsUseAnsiColor=1 "$env:msbuild_config_props" cppwinrt.sln /t:test\$test_proj
 
       - name: Run test '${{ matrix.test_exe }}'
         run: |
@@ -145,7 +156,7 @@ jobs:
             echo "::error::Test $test_exe is missing."
             exit 1
           }
-          & $test_path
+          & $test_path --use-colour yes
 
   build-msvc-natvis:
     name: 'Build natvis'

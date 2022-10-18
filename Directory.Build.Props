@@ -51,6 +51,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>CPPWINRT_VERSION_STRING="$(CppWinRTBuildVersion)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(TestsUseAnsiColor)'=='1'">CATCH_CONFIG_COLOUR_ANSI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/bigobj</AdditionalOptions>
       <AdditionalOptions Condition="'$(CppWinRTLanguageStandard)'==''">/await %(AdditionalOptions)</AdditionalOptions>
