@@ -70,12 +70,12 @@ jobs:
 
       - name: Build fast_fwd
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" cppwinrt.sln /t:fast_fwd
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.sln /t:fast_fwd
 
       - name: Build cppwinrt
         if: matrix.arch != 'arm64'
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" cppwinrt.sln /t:cppwinrt
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.sln /t:cppwinrt
 
       - name: Upload built executables
         if: matrix.arch != 'arm64'
@@ -195,7 +195,7 @@ jobs:
             $test_proj = "old_tests\test_old"
           }
 
-          cmd /c "$env:VSDevCmd" "&" msbuild /m /p:TestsUseAnsiColor=1 "$env:msbuild_config_props" cppwinrt.sln /t:test\$test_proj
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor /p:TestsUseAnsiColor=1 "$env:msbuild_config_props" cppwinrt.sln /t:test\$test_proj
 
       - name: Run test '${{ matrix.test_exe }}'
         run: |
@@ -245,7 +245,7 @@ jobs:
 
       - name: Build natvis
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" /p:Deployment=${{ matrix.Deployment }} natvis\cppwinrtvisualizer.sln
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" /p:Deployment=${{ matrix.Deployment }} natvis\cppwinrtvisualizer.sln
 
   build-msvc-nuget-test:
     name: 'Build nuget test'
@@ -295,7 +295,7 @@ jobs:
       
       - name: Run nuget test
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m "$env:msbuild_config_props" test\nuget\NugetTest.sln
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" test\nuget\NugetTest.sln
           if ($LastExitCode -ne 0) {
             echo "::warning::nuget test failed"
           }
