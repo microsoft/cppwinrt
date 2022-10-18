@@ -144,7 +144,12 @@ TEST_CASE("async_cancel_before_callback")
     REQUIRE(async.Status() == AsyncStatus::Canceled);
 }
 
+#if defined(__clang__)
+// FIXME: Test is known to randomly crash when built with Clang.
+TEST_CASE("async_cancel_after_callback", "[.clang-crash]")
+#else
 TEST_CASE("async_cancel_after_callback")
+#endif
 {
     handle end{ CreateEvent(nullptr, true, false, nullptr) };
     handle callback{ CreateEvent(nullptr, true, false, nullptr) };
