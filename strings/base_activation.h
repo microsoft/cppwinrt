@@ -145,7 +145,11 @@ namespace winrt::impl
         _ReadWriteBarrier();
         return result;
 #elif defined _M_ARM || defined _M_ARM64
+#if defined(__GNUC__)
+        int32_t const result = *target;
+#else
         int32_t const result = __iso_volatile_load32(reinterpret_cast<int32_t const volatile*>(target));
+#endif
         WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER
         return result;
 #else
@@ -161,7 +165,11 @@ namespace winrt::impl
         _ReadWriteBarrier();
         return result;
 #elif defined _M_ARM64
+#if defined(__GNUC__)
+        int32_t const result = *target;
+#else
         int64_t const result = __iso_volatile_load64(target);
+#endif
         WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER
         return result;
 #else
