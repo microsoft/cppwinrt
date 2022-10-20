@@ -236,7 +236,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>
+      <Command>$(CppWinRTDir)prebuild.exe ..\strings $(OutputPath)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -319,7 +319,7 @@
       <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>
+      <Command>$(CppWinRTDir)prebuild.exe ..\strings $(OutputPath)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
