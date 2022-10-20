@@ -84,7 +84,60 @@ set(CPPWINRT_RESOURCES
 
 add_executable(cppwinrt ${CPPWINRT_SRCS} ${CPPWINRT_RESOURCES} ${CPPWINRT_HEADERS})
 target_include_directories(cppwinrt PRIVATE ${PROJECT_BINARY_DIR})
-target_link_libraries(cppwinrt shlwapi xmllite)
+target_link_libraries(cppwinrt shlwapi)
+
+
+# HACK: Handle the xmllite import lib.
+# mingw-w64 before commit 5ac1a2c is missing the import lib for xmllite. This
+# checks whether the current build environment provides libxmllite.a, and
+# generates the import lib if needed.
+
+set(XMLLITE_LIBRARY xmllite)
+if(MINGW)
+    function(TestLinkXmlLite OUTPUT_VARNAME)
+        include(CheckCXXSourceCompiles)
+        set(CMAKE_REQUIRED_LIBRARIES xmllite)
+        check_cxx_source_compiles("
+#include <xmllite.h>
+int main() {
+    CreateXmlReader(__uuidof(IXmlReader), nullptr, nullptr);
+}
+        " ${OUTPUT_VARNAME})
+    endfunction()
+
+    function(TestIsI386 OUTPUT_VARNAME)
+        include(CheckCXXSourceCompiles)
+        check_cxx_source_compiles("
+#if !defined(__i386__) && !defined(_M_IX86)
+#  error Not i386
+#endif
+int main() {}
+        " ${OUTPUT_VARNAME})
+    endfunction()
+
+    TestLinkXmlLite(HAS_LIBXMLLITE)
+    if(NOT HAS_LIBXMLLITE)
+        TestIsI386(TARGET_IS_I386)
+        if(TARGET_IS_I386)
+            set(XMLLITE_DEF_FILE xmllite_i386)
+        else()
+            set(XMLLITE_DEF_FILE xmllite)
+        endif()
+        add_custom_command(
+            OUTPUT
+                "${PROJECT_BINARY_DIR}/libxmllite.a"
+            COMMAND dlltool -k -d "${PROJECT_SOURCE_DIR}/mingw-support/${XMLLITE_DEF_FILE}.def" -l "${PROJECT_BINARY_DIR}/libxmllite.a"
+            DEPENDS "${PROJECT_SOURCE_DIR}/mingw-support/${XMLLITE_DEF_FILE}.def"
+            VERBATIM
+        )
+        add_custom_target(gen-libxmllite
+            DEPENDS "${PROJECT_BINARY_DIR}/libxmllite.a"
+        )
+        set(XMLLITE_LIBRARY "${PROJECT_BINARY_DIR}/libxmllite.a")
+        add_dependencies(cppwinrt gen-libxmllite)
+    endif()
+endif()
+target_link_libraries(cppwinrt "${XMLLITE_LIBRARY}")
 
 
 # === winmd: External header-only library for reading winmd files ===
