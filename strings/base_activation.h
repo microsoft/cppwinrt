@@ -128,7 +128,9 @@ WINRT_EXPORT namespace winrt
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-#if defined _M_ARM
+#if defined(__GNUC__) && (defined(__arm__) || defined(__aarch64__))
+#define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER __asm__ __volatile__ ("dmb ish");
+#elif defined _M_ARM
 #define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER (__dmb(_ARM_BARRIER_ISH));
 #elif defined _M_ARM64
 #define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER (__dmb(_ARM64_BARRIER_ISH));
