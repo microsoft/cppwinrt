@@ -281,7 +281,12 @@ namespace winrt::impl
             object_and_count current_value{ pointer_value, 0 };
 
 #if defined _WIN64
-            if (1 == _InterlockedCompareExchange128((int64_t*)this, 0, 0, (int64_t*)&current_value))
+#if defined(__GNUC__)
+            bool exchanged = __sync_bool_compare_and_swap((__int128*)this, *(__int128*)&current_value, (__int128)0);
+#else
+            bool exchanged = 1 == _InterlockedCompareExchange128((int64_t*)this, 0, 0, (int64_t*)&current_value);
+#endif
+            if (exchanged)
             {
                 pointer_value->Release();
             }
