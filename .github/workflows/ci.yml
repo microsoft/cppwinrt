@@ -261,6 +261,18 @@ jobs:
           }
           & $test_path --use-colour yes
 
+      - name: Upload arm64 test executables
+        if: matrix.arch == 'arm64'
+        uses: actions/upload-artifact@v3
+        with:
+          name: msvc-tests-${{ matrix.arch }}-${{ matrix.config }}-bin
+          path: |
+            _build/${{ matrix.arch }}/${{ matrix.config }}/*.exe
+            _build/${{ matrix.arch }}/${{ matrix.config }}/*.dll
+            _build/${{ matrix.arch }}/${{ matrix.config }}/*.winmd
+            _build/${{ matrix.arch }}/${{ matrix.config }}/*.lib
+            _build/${{ matrix.arch }}/${{ matrix.config }}/*.pdb
+
   build-msvc-natvis:
     name: 'Build natvis'
     strategy:
