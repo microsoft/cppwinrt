@@ -130,7 +130,7 @@ namespace winrt::impl
     };
 
     template <typename T>
-#if defined(_MSC_VER) || ((WINRT_IMPL_HAS_DECLSPEC_UUID || defined(__MINGW32__)) && defined(WINRT_IMPL_IUNKNOWN_DEFINED))
+#if (defined(_MSC_VER) && !defined(__clang__)) || ((WINRT_IMPL_HAS_DECLSPEC_UUID || defined(__MINGW32__)) && defined(WINRT_IMPL_IUNKNOWN_DEFINED))
     inline constexpr guid guid_v{ __uuidof(T) };
 #else
     inline constexpr guid guid_v = classic_com_guid_error<T>::value;
