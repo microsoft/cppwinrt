@@ -47,9 +47,6 @@ list(APPEND BROKEN_TESTS
     # broken due to lack of winrt::Windows::Foundation::Numerics::float4
     numerics
 
-    # blocked by classic_com_guid_error
-    get_activation_factory
-
     # Uses MS extension std::exception(const char* const &, int)
     initialize
     # Uses MS extension std::exception(const char* const &)
