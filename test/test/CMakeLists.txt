@@ -35,9 +35,6 @@ list(APPEND BROKEN_TESTS
 )
 
 list(APPEND BROKEN_TESTS
-    # error: implicit instantiation of undefined template 'winrt::impl::produce<(anonymous namespace)::custom_factory, winrt::Windows::Foundation::IUriRuntimeClassFactory>'
-    custom_activation
-
     # missing CLSID_ContextSwitcher, IID_ICallbackWithNoReentrancyToApplicationSTA and __uuidof(IContextCallback)
     disconnected
 

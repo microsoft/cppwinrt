@@ -7,6 +7,20 @@ include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
 include_directories("${PROJECT_SOURCE_DIR}/cppwinrt")
 include_directories("${CMAKE_CURRENT_BINARY_DIR}/cppwinrt")
 
+function(TestIsX64 OUTPUT_VARNAME)
+    include(CheckCXXSourceCompiles)
+    check_cxx_source_compiles("
+#if !defined(__x86_64__) && !defined(_M_X64)
+#  error Not x86_64
+#endif
+int main() {}
+    " ${OUTPUT_VARNAME})
+endfunction()
+TestIsX64(TARGET_IS_X64)
+if(TARGET_IS_X64)
+    add_compile_options(-mcx16)
+endif()
+
 
 add_custom_command(
     OUTPUT
