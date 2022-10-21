@@ -166,7 +166,7 @@ namespace winrt::impl
         return result;
 #elif defined _M_ARM64
 #if defined(__GNUC__)
-        int32_t const result = *target;
+        int64_t const result = *target;
 #else
         int64_t const result = __iso_volatile_load64(target);
 #endif
