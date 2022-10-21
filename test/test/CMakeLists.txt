@@ -46,11 +46,6 @@ list(APPEND BROKEN_TESTS
 
     # depends on pplawait.h
     when
-
-    # uses WindowsCreateString from combase, which is missing import lib
-    out_params_bad
-    # uses WindowsDuplicateString from combase, which is missing import lib
-    tearoff
 )
 
 # Exclude broken tests
@@ -60,6 +55,7 @@ endforeach()
 
 add_executable(test-vanilla main.cpp ${TEST_SRCS})
 set_target_properties(test-vanilla PROPERTIES OUTPUT_NAME "test")
+target_link_libraries(test-vanilla runtimeobject)
 
 target_precompile_headers(test-vanilla PRIVATE pch.h)
 set_source_files_properties(
