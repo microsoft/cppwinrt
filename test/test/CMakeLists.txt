@@ -44,11 +44,6 @@ list(APPEND BROKEN_TESTS
     # broken due to lack of winrt::Windows::Foundation::Numerics::float4
     numerics
 
-    # Uses MS extension std::exception(const char* const &, int)
-    initialize
-    # Uses MS extension std::exception(const char* const &)
-    variadic_delegate
-
     # depends on pplawait.h
     when
 
