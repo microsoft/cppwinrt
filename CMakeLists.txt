@@ -74,7 +74,14 @@ add_custom_command(
     DEPENDS "${PROJECT_SOURCE_DIR}/cppwinrt/app.manifest"
     VERBATIM
 )
-file(WRITE ${PROJECT_BINARY_DIR}/app.manifest.rc "1 24 \"app.manifest\"\n")
+# Do the configure_file dance so that app.manifest.rc don't get modified every
+# single time the project is reconfigured and trigger a rebuild.
+file(WRITE "${PROJECT_BINARY_DIR}/app.manifest.rc.in" "1 24 \"app.manifest\"\n")
+configure_file(
+    "${PROJECT_BINARY_DIR}/app.manifest.rc.in"
+    "${PROJECT_BINARY_DIR}/app.manifest.rc"
+    COPYONLY
+)
 
 set(CPPWINRT_RESOURCES
     "${PROJECT_BINARY_DIR}/app.manifest"
