@@ -64,10 +64,6 @@ list(APPEND BROKEN_TESTS
     # Uses MS extension std::exception(const char* const &)
     variadic_delegate
 
-    # depends on MSVC lambda call convention conversion on x86
-    # https://devblogs.microsoft.com/oldnewthing/20150220-00/?p=44623
-    notify_awaiter
-
     # depends on pplawait.h
     when
 
