@@ -35,9 +35,6 @@ list(APPEND BROKEN_TESTS
 )
 
 list(APPEND BROKEN_TESTS
-    # error: use 'template' keyword to treat 'try_as' as a dependent template name
-    box_array
-
     # error: implicit instantiation of undefined template 'winrt::impl::produce<(anonymous namespace)::custom_factory, winrt::Windows::Foundation::IUriRuntimeClassFactory>'
     custom_activation
 
