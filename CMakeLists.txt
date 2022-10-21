@@ -154,3 +154,7 @@ add_dependencies(cppwinrt winmd)
 ExternalProject_Get_Property(winmd SOURCE_DIR)
 set(winmd_SOURCE_DIR "${SOURCE_DIR}")
 target_include_directories(cppwinrt PRIVATE "${winmd_SOURCE_DIR}")
+
+
+include(CTest)
+add_subdirectory(test)
