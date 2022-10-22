@@ -128,7 +128,9 @@ WINRT_EXPORT namespace winrt
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-#if defined _M_ARM
+#if defined(__GNUC__) && (defined(__arm__) || defined(__aarch64__))
+#define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER __asm__ __volatile__ ("dmb ish");
+#elif defined _M_ARM
 #define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER (__dmb(_ARM_BARRIER_ISH));
 #elif defined _M_ARM64
 #define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER (__dmb(_ARM64_BARRIER_ISH));
@@ -143,7 +145,11 @@ namespace winrt::impl
         _ReadWriteBarrier();
         return result;
 #elif defined _M_ARM || defined _M_ARM64
+#if defined(__GNUC__)
+        int32_t const result = *target;
+#else
         int32_t const result = __iso_volatile_load32(reinterpret_cast<int32_t const volatile*>(target));
+#endif
         WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER
         return result;
 #else
@@ -159,7 +165,11 @@ namespace winrt::impl
         _ReadWriteBarrier();
         return result;
 #elif defined _M_ARM64
+#if defined(__GNUC__)
+        int64_t const result = *target;
+#else
         int64_t const result = __iso_volatile_load64(target);
+#endif
         WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER
         return result;
 #else
@@ -281,7 +291,12 @@ namespace winrt::impl
             object_and_count current_value{ pointer_value, 0 };
 
 #if defined _WIN64
-            if (1 == _InterlockedCompareExchange128((int64_t*)this, 0, 0, (int64_t*)&current_value))
+#if defined(__GNUC__)
+            bool exchanged = __sync_bool_compare_and_swap((__int128*)this, *(__int128*)&current_value, (__int128)0);
+#else
+            bool exchanged = 1 == _InterlockedCompareExchange128((int64_t*)this, 0, 0, (int64_t*)&current_value);
+#endif
+            if (exchanged)
             {
                 pointer_value->Release();
             }

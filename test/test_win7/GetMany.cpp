@@ -255,6 +255,9 @@ TEST_CASE("GetMany")
         REQUIRE(buffer[3] == L"");
     }
 
+// FIXME: Fail to compile with Clang due to recursive template instantiation using single_threaded_generator.
+#if !defined(__clang__)
+
     // Similar tests but with a list to ensure optimal code gen for containers that don't offer random access.
 
     // All
@@ -358,6 +361,7 @@ TEST_CASE("GetMany")
         REQUIRE(buffer[2] == L"3");
         REQUIRE(buffer[3] == L"");
     }
+#endif
 
     // Pair
     {

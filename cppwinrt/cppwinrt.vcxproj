@@ -236,7 +236,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>
+      <Command>$(CppWinRTDir)prebuild.exe ..\strings $(OutputPath)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -259,9 +259,6 @@
       <Command>
       </Command>
     </PostBuildEvent>
-    <Manifest>
-      <AdditionalManifestFiles>app.manifest;%(AdditionalManifestFiles)</AdditionalManifestFiles>
-    </Manifest>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -322,7 +319,7 @@
       <AdditionalOptions>/DEBUGTYPE:CV,FIXUP %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)prebuild.exe ..\strings $(OutputPath)</Command>
+      <Command>$(CppWinRTDir)prebuild.exe ..\strings $(OutputPath)</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
