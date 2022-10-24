@@ -200,7 +200,7 @@ TEST_CASE("Errors")
     SetLastError(ERROR_CANCELLED);
     REQUIRE_THROWS_AS(check_bool(static_cast<BOOL>(false)), hresult_canceled);
 
-    REQUIRE_NOTHROW(check_bool(true) == true);
+    REQUIRE(check_bool(true) == true);
 
     // Support for Win32 errors.
     check_win32(ERROR_SUCCESS);
