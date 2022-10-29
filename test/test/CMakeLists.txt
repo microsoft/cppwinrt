@@ -38,12 +38,6 @@ list(APPEND BROKEN_TESTS
     # missing CLSID_ContextSwitcher, IID_ICallbackWithNoReentrancyToApplicationSTA and __uuidof(IContextCallback)
     disconnected
 
-    # broken due to lack of winrt::Windows::Foundation::Numerics::float2
-    generic_type_names
-    generic_types
-    # broken due to lack of winrt::Windows::Foundation::Numerics::float4
-    numerics
-
     # depends on pplawait.h
     when
 )

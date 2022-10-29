@@ -120,6 +120,7 @@ TEST_CASE("generic_type_names")
         IReference<Rect>);
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.IReference`1<Windows.Foundation.Size>",
         IReference<Size>);
+#if __has_include(<windowsnumerics.impl.h>)
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.IReference`1<Windows.Foundation.Numerics.Vector2>",
         IReference<float2>);
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.IReference`1<Windows.Foundation.Numerics.Vector3>",
@@ -134,6 +135,7 @@ TEST_CASE("generic_type_names")
         IReference<quaternion>);
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.IReference`1<Windows.Foundation.Numerics.Plane>",
         IReference<plane>);
+#endif
 
     // Enums, structs, IInspectable, classes, and delegates
 
