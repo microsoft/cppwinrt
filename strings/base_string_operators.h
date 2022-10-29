@@ -160,4 +160,10 @@ WINRT_EXPORT namespace winrt
     {
         return impl::concat_hstring(left, right);
     }
+
+    inline std::wostream& operator<<(std::wostream& stream, hstring const& string)
+    {
+        stream << static_cast<std::wstring_view>(string);
+        return stream;
+    }
 }
