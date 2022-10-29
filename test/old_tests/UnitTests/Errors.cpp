@@ -93,7 +93,7 @@ TEST_CASE("Errors")
     try
     {
         init_apartment(apartment_type::single_threaded);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const & e)
     {
@@ -104,7 +104,7 @@ TEST_CASE("Errors")
     try
     {
         Uri uri(L"BAD");
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_invalid_argument const & e) // catching specific exception type
     {
@@ -115,7 +115,7 @@ TEST_CASE("Errors")
     try
     {
         Uri uri(L"BAD");
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const& e)
     {
@@ -128,7 +128,7 @@ TEST_CASE("Errors")
     {
         Errors errors;
         errors.Propagate();
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_invalid_argument const & e) // catching specific exception type
     {
@@ -140,7 +140,7 @@ TEST_CASE("Errors")
     {
         Errors errors;
         errors.Fail(L"Failure message");
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_not_implemented const& e)
     {
@@ -158,7 +158,7 @@ TEST_CASE("Errors")
     {
         Errors errors;
         errors.std_out_of_range();
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_out_of_bounds const& e)
     {
@@ -169,7 +169,7 @@ TEST_CASE("Errors")
     {
         Errors errors;
         errors.std_invalid_argument();
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_invalid_argument const& e)
     {
@@ -180,7 +180,7 @@ TEST_CASE("Errors")
     {
         Errors errors;
         errors.std_exception();
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const& e)
     {
@@ -200,6 +200,8 @@ TEST_CASE("Errors")
     SetLastError(ERROR_CANCELLED);
     REQUIRE_THROWS_AS(check_bool(static_cast<BOOL>(false)), hresult_canceled);
 
+    REQUIRE(check_bool(true) == true);
+
     // Support for Win32 errors.
     check_win32(ERROR_SUCCESS);
     REQUIRE_THROWS_AS(check_win32(ERROR_CANCELLED), hresult_canceled);
@@ -207,7 +209,7 @@ TEST_CASE("Errors")
     try
     {
         check_win32(ERROR_NO_NETWORK);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const& e)
     {
@@ -220,7 +222,7 @@ TEST_CASE("Errors")
     try
     {
         check_nt(STATUS_STACK_OVERFLOW);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const& e)
     {

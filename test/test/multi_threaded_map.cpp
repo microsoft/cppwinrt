@@ -5,6 +5,9 @@
 
 #include "multi_threaded_common.h"
 
+// FIXME: Fail to compile with Clang due to "error : no type named 'type' in 'std::enable_if<false>'"
+#if !defined(__clang__)
+
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -63,7 +66,7 @@ namespace
         }
         else
         {
-            return static_cast<IObservableVector<K, V>>(winrt::make<custom_observable_map<K, V, Container>>(std::move(values)));
+            return static_cast<IObservableMap<K, V>>(winrt::make<custom_observable_map<K, V, Container>>(std::move(values)));
         }
     }
 
@@ -171,7 +174,7 @@ namespace
         auto hook = raw.hook;
 
         // Convert the raw_map into the desired Windows Runtime map interface.
-        auto m = make_threaded_map<MapKind::IMap>(std::move(raw));
+        auto m = make_threaded_map<kind>(std::move(raw));
 
         auto race = [&](collection_action action, auto&& background, auto&& foreground)
         {
@@ -335,3 +338,4 @@ TEST_CASE("multi_threaded_observable_map")
     test_map_concurrency<int, MapKind::IObservableMap>();
     test_map_concurrency<IInspectable, MapKind::IObservableMap>();
 }
+#endif

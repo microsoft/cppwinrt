@@ -23,7 +23,7 @@ TEST_CASE("hresult,S_FALSE")
     try
     {
         check_hresult(S_FALSE);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const & e)
     {
@@ -40,7 +40,7 @@ TEST_CASE("hresult,init_apartment")
     try
     {
         init_apartment(apartment_type::single_threaded);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const & e)
     {
@@ -55,7 +55,7 @@ TEST_CASE("hresult,restricted,consuming")
     try
     {
         Uri uri(L"BAD");
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_invalid_argument const & e) // catching specific exception type
     {
@@ -66,7 +66,7 @@ TEST_CASE("hresult,restricted,consuming")
     try
     {
         Uri uri(L"BAD");
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const & e) // catching generic exception type
     {
@@ -501,7 +501,7 @@ TEST_CASE("hresult, std abi support")
         };
 
         handler(nullptr, 0);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const& e)
     {
@@ -517,7 +517,7 @@ TEST_CASE("hresult, std abi support")
         };
 
         handler(nullptr, 0);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (std::bad_alloc const&)
     {
@@ -531,7 +531,7 @@ TEST_CASE("hresult, std abi support")
         };
 
         handler(nullptr, 0);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_out_of_bounds const& e)
     {
@@ -547,7 +547,7 @@ TEST_CASE("hresult, std abi support")
         };
 
         handler(nullptr, 0);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_invalid_argument const& e)
     {

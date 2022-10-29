@@ -59,6 +59,14 @@
 #define WINRT_IMPL_NOVTABLE
 #endif
 
+#if defined(__clang__)
+#define WINRT_IMPL_HAS_DECLSPEC_UUID __has_declspec_attribute(uuid)
+#elif defined(_MSC_VER)
+#define WINRT_IMPL_HAS_DECLSPEC_UUID 1
+#else
+#define WINRT_IMPL_HAS_DECLSPEC_UUID 0
+#endif
+
 #ifdef __IUnknown_INTERFACE_DEFINED__
 #define WINRT_IMPL_IUNKNOWN_DEFINED
 #else

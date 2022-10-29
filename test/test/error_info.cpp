@@ -35,7 +35,7 @@ TEST_CASE("error_info")
     try
     {
         check_hresult(winrt_error_info());
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_invalid_argument const& e)
     {
@@ -45,7 +45,7 @@ TEST_CASE("error_info")
     try
     {
         check_hresult(com_error_info());
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_invalid_argument const& e)
     {
@@ -55,7 +55,7 @@ TEST_CASE("error_info")
     try
     {
         check_hresult(no_error_info());
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_invalid_argument const& e)
     {
@@ -66,7 +66,7 @@ TEST_CASE("error_info")
     {
         // This API reports using WinRT error info.
         Windows::Foundation::Uri(L"bad");
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_invalid_argument const& e)
     {
@@ -78,7 +78,7 @@ TEST_CASE("error_info")
         // This API reports using COM error info.
         Windows::Data::Xml::Dom::XmlDocument doc;
         doc.LoadXml(L"bad");
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const& e)
     {
