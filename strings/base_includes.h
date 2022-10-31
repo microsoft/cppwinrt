@@ -10,7 +10,6 @@
 #include <map>
 #include <memory>
 #include <optional>
-#include <ostream>
 #include <stdexcept>
 #include <string_view>
 #include <string>
@@ -24,6 +23,10 @@
 #if __has_include(<WindowsNumerics.impl.h>)
 #define WINRT_IMPL_NUMERICS
 #include <directxmath.h>
+#endif
+
+#ifndef WINRT_LEAN_AND_MEAN
+#include <ostream>
 #endif
 
 #ifdef __cpp_lib_format

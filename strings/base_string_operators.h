@@ -161,9 +161,11 @@ WINRT_EXPORT namespace winrt
         return impl::concat_hstring(left, right);
     }
 
+#ifndef WINRT_LEAN_AND_MEAN
     inline std::wostream& operator<<(std::wostream& stream, hstring const& string)
     {
         stream << static_cast<std::wstring_view>(string);
         return stream;
     }
+#endif
 }
