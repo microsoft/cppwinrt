@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "catch.hpp"
+#include <sstream>
 
 struct stringable : winrt::implements<stringable, winrt::Windows::Foundation::IStringable>
 {
