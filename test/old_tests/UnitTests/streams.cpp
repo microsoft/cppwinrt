@@ -1,4 +1,4 @@
-#include "pch.h"
+ #include "pch.h"
 #include "catch.hpp"
 #include <sstream>
 
@@ -30,7 +30,7 @@ TEST_CASE("streams")
     {
         std::wstringstream ss;
         winrt::Windows::Foundation::IStringable obj = winrt::make<stringable>();
-        ss << obj.ToString();
+        ss << obj;
         REQUIRE(ss.str() == obj.ToString());
     }
 }
