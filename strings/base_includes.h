@@ -25,6 +25,10 @@
 #include <directxmath.h>
 #endif
 
+#ifndef WINRT_LEAN_AND_MEAN
+#include <ostream>
+#endif
+
 #ifdef __cpp_lib_format
 #include <format>
 #endif
