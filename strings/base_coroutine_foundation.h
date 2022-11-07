@@ -414,7 +414,7 @@ namespace winrt::impl
 
             if (handler)
             {
-                invoke(handler, *this, status);
+                winrt::impl::invoke(handler, *this, status);
             }
         }
 
@@ -539,7 +539,7 @@ namespace winrt::impl
 
             if (handler)
             {
-                invoke(handler, *this, status);
+                winrt::impl::invoke(handler, *this, status);
             }
         }
 
