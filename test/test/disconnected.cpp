@@ -78,12 +78,7 @@ TEST_CASE("disconnected,handler,1")
     source(nullptr, 123);
 }
 
-#if defined(__clang__)
-// FIXME: Test is known to fail with unhandled exception when built with Clang.
-TEST_CASE("disconnected,handler,2", "[!shouldfail]")
-#else
 TEST_CASE("disconnected,handler,2")
-#endif
 {
     auto async = Action();
 
@@ -112,12 +107,7 @@ TEST_CASE("disconnected,handler,3")
     WaitForSingleObject(signal.get(), INFINITE);
 }
 
-#if defined(__clang__)
-// FIXME: Test is known to fail with unhandled exception when built with Clang.
-TEST_CASE("disconnected,handler,4", "[!shouldfail]")
-#else
 TEST_CASE("disconnected,handler,4")
-#endif
 {
     auto async = Operation();
 
