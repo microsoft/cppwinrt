@@ -94,6 +94,8 @@ TEST_CASE("disconnected,3")
         });
 
     WaitForSingleObject(signal.get(), INFINITE);
+    // Give some time for to_hresult() to complete.
+    Sleep(500);
 }
 
 TEST_CASE("disconnected,4")
@@ -123,4 +125,6 @@ TEST_CASE("disconnected,5")
         });
 
     WaitForSingleObject(signal.get(), INFINITE);
+    // Give some time for to_hresult() to complete.
+    Sleep(500);
 }
