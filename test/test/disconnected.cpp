@@ -105,6 +105,8 @@ TEST_CASE("disconnected,handler,3")
         });
 
     WaitForSingleObject(signal.get(), INFINITE);
+    // Give some time for to_hresult() to complete.
+    Sleep(500);
 }
 
 TEST_CASE("disconnected,handler,4")
@@ -134,6 +136,8 @@ TEST_CASE("disconnected,handler,5")
         });
 
     WaitForSingleObject(signal.get(), INFINITE);
+    // Give some time for to_hresult() to complete.
+    Sleep(500);
 }
 
 // Custom action to simulate an out-of-process server that crashes before it can complete.
