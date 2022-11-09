@@ -37,3 +37,4 @@ add_custom_target(build-cppwinrt-projection
 
 
 add_subdirectory(test)
+add_subdirectory(test_win7)

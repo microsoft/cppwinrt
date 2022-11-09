@@ -114,6 +114,7 @@ TEST_CASE("generic_type_names")
         IReference<TimeSpan>);
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.IReference`1<Windows.Foundation.DateTime>",
         IReference<DateTime>);
+#if __has_include(<windowsnumerics.impl.h>)
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.IReference`1<Windows.Foundation.Point>",
         IReference<Point>);
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.IReference`1<Windows.Foundation.Rect>",
@@ -134,6 +135,7 @@ TEST_CASE("generic_type_names")
         IReference<quaternion>);
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.IReference`1<Windows.Foundation.Numerics.Plane>",
         IReference<plane>);
+#endif
 
     // Enums, structs, IInspectable, classes, and delegates
 
