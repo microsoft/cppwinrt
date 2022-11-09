@@ -35,9 +35,6 @@ list(APPEND BROKEN_TESTS
 )
 
 list(APPEND BROKEN_TESTS
-    # missing CLSID_ContextSwitcher, IID_ICallbackWithNoReentrancyToApplicationSTA and __uuidof(IContextCallback)
-    disconnected
-
     # depends on pplawait.h
     when
 )
