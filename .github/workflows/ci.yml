@@ -273,6 +273,53 @@ jobs:
             _build/${{ matrix.arch }}/${{ matrix.config }}/*.lib
             _build/${{ matrix.arch }}/${{ matrix.config }}/*.pdb
 
+  test-llvm-mingw-cppwinrt:
+    name: 'llvm-mingw: Build and test'
+    strategy:
+      matrix:
+        arch: [i686, x86_64]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install llvm-mingw toolchain
+        run: |
+          $llvm_mingw_version = "20220906"
+          Invoke-WebRequest "https://github.com/mstorsjo/llvm-mingw/releases/download/${llvm_mingw_version}/llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}.zip" -OutFile llvm-mingw.zip
+          7z x llvm-mingw.zip
+          rm llvm-mingw.zip
+          if (!(Test-Path "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\bin\clang++.exe")) { return 1 }
+          Add-Content $env:GITHUB_PATH "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\bin"
+
+      - name: Build cppwinrt
+        run: |
+          mkdir build
+          cd build
+          cmake ../ -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug
+          cmake --build . --target cppwinrt
+
+      - name: Upload cppwinrt.exe
+        uses: actions/upload-artifact@v3
+        with:
+          name: llvm-mingw-build-${{ matrix.arch }}-bin
+          path: build/cppwinrt.exe
+
+      - name: Build tests
+        run: |
+          cd build
+          cmake --build . --target test-vanilla test_win7
+
+      - name: Upload test binaries
+        uses: actions/upload-artifact@v3
+        with:
+          name: llvm-mingw-tests-${{ matrix.arch }}-bin
+          path: build/test/*.exe
+
+      - name: Run tests
+        run: |
+          cd build
+          ctest --verbose
+
   build-msvc-natvis:
     name: 'Build natvis'
     strategy:

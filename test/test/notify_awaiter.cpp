@@ -144,6 +144,14 @@ namespace
     }
 }
 
+// GNUC does not support MSVC extension lambda call convention conversion
+// https://devblogs.microsoft.com/oldnewthing/20150220-00/?p=44623
+#if defined(__GNUC__)
+#define LAMBDA_STDCALL __attribute__((stdcall))
+#else
+#define LAMBDA_STDCALL
+#endif
+
 TEST_CASE("notify_awaiter")
 {
     // Everything works fine when nobody is watching.
@@ -156,12 +164,12 @@ TEST_CASE("notify_awaiter")
 
     // Hook up some watchers.
 
-    winrt_suspend_handler = [](void const* token) noexcept
+    winrt_suspend_handler = [](void const* token) LAMBDA_STDCALL noexcept
     {
         watcher.push_back({ token, notification::suspend });
     };
 
-    winrt_resume_handler = [](void const* token) noexcept
+    winrt_resume_handler = [](void const* token) LAMBDA_STDCALL noexcept
     {
         auto last = watcher.back();
         REQUIRE(last.first == token);

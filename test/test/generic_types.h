@@ -3,7 +3,9 @@
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
+#if __has_include(<windowsnumerics.impl.h>)
 using namespace Windows::Foundation::Numerics;
+#endif
 using namespace std::literals;
 
 #define REQUIRE_EQUAL_GUID(left, ...) STATIC_REQUIRE(equal(guid(left), guid_of<__VA_ARGS__>()));
@@ -92,6 +94,7 @@ namespace
         REQUIRE_EQUAL_GUID("84F14C22-A00A-5272-8D3D-82112E66DF00", IReference<Point>);
         REQUIRE_EQUAL_GUID("80423F11-054F-5EAC-AFD3-63B6CE15E77B", IReference<Rect>);
         REQUIRE_EQUAL_GUID("61723086-8e53-5276-9f36-2a4bb93e2b75", IReference<Size>);
+#if __has_include(<windowsnumerics.impl.h>)
         REQUIRE_EQUAL_GUID("48F6A69E-8465-57AE-9400-9764087F65AD", IReference<float2>);
         REQUIRE_EQUAL_GUID("1EE770FF-C954-59CA-A754-6199A9BE282C", IReference<float3>);
         REQUIRE_EQUAL_GUID("A5E843C9-ED20-5339-8F8D-9FE404CF3654", IReference<float4>);
@@ -99,6 +102,7 @@ namespace
         REQUIRE_EQUAL_GUID("DACBFFDC-68EF-5FD0-B657-782D0AC9807E", IReference<float4x4>);
         REQUIRE_EQUAL_GUID("B27004BB-C014-5DCE-9A21-799C5A3C1461", IReference<quaternion>);
         REQUIRE_EQUAL_GUID("46D542A1-52F7-58E7-ACFC-9A6D364DA022", IReference<plane>);
+#endif
 
         // Enums, structs, IInspectable, classes, and delegates
 

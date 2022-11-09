@@ -1,5 +1,9 @@
 #include <crtdbg.h>
 #define CATCH_CONFIG_RUNNER
+
+// Force reportFatal to be available on mingw-w64
+#define CATCH_CONFIG_WINDOWS_SEH
+
 #include "catch.hpp"
 #include "winrt/base.h"
 

@@ -171,6 +171,12 @@ struct non_agile_abandoned_action : implements<non_agile_abandoned_action, IAsyn
     delegate<> m_disconnect;
 };
 
+// Not yet buildable on mingw-w64.
+// Missing CLSID_ContextSwitcher, IID_ICallbackWithNoReentrancyToApplicationSTA
+// and __uuidof(IContextCallback). Also, the lambda needs to have __stdcall
+// specified on it but there is a Clang crash bug blocking this:
+// https://github.com/llvm/llvm-project/issues/58366
+#if !defined(__MINGW32__)
 namespace
 {
     template<typename TLambda>
@@ -285,3 +291,4 @@ TEST_CASE("disconnected,double")
 
     test.get();
 }
+#endif
