@@ -169,6 +169,9 @@
     <ClInclude Include="..\strings\base_stringable_format.h">
       <Filter>strings</Filter>
     </ClInclude>
+     <ClInclude Include="..\strings\base_stringable_streams.h">
+      <Filter>strings</Filter>
+    </ClInclude>
     <ClInclude Include="..\strings\base_xaml_component_connector.h">
       <Filter>strings</Filter>
     </ClInclude>

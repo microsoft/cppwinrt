@@ -118,6 +118,7 @@
     <ClCompile Include="Reference.cpp" />
     <ClCompile Include="Release.cpp" />
     <ClCompile Include="smart_pointers.cpp" />
+    <ClCompile Include="streams.cpp" />
     <ClCompile Include="struct.cpp" />
     <ClCompile Include="StructCodeGen.cpp" />
     <ClCompile Include="Structures.cpp" />

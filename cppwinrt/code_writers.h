@@ -3256,6 +3256,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             w.write(strings::base_deferral);
             w.write(strings::base_coroutine_foundation);
             w.write(strings::base_stringable_format);
+            w.write(strings::base_stringable_streams);
         }
         else if (namespace_name == "Windows.Foundation.Collections")
         {

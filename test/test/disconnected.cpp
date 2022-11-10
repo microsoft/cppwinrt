@@ -78,12 +78,7 @@ TEST_CASE("disconnected,handler,1")
     source(nullptr, 123);
 }
 
-#if defined(__clang__)
-// FIXME: Test is known to fail with unhandled exception when built with Clang.
-TEST_CASE("disconnected,handler,2", "[!shouldfail]")
-#else
 TEST_CASE("disconnected,handler,2")
-#endif
 {
     auto async = Action();
 
@@ -93,12 +88,7 @@ TEST_CASE("disconnected,handler,2")
         });
 }
 
-#if defined(__clang__)
-// FIXME: Test is known to abort when built with Clang. (Seems to be from unhandled exception thrown on a worker thread.)
-TEST_CASE("disconnected,handler,3", "[.clang-crash]")
-#else
 TEST_CASE("disconnected,handler,3")
-#endif
 {
     auto async = ActionProgress();
     handle signal{ CreateEventW(nullptr, true, false, nullptr) };
@@ -115,14 +105,11 @@ TEST_CASE("disconnected,handler,3")
         });
 
     WaitForSingleObject(signal.get(), INFINITE);
+    // Give some time for to_hresult() to complete.
+    Sleep(500);
 }
 
-#if defined(__clang__)
-// FIXME: Test is known to fail with unhandled exception when built with Clang.
-TEST_CASE("disconnected,handler,4", "[!shouldfail]")
-#else
 TEST_CASE("disconnected,handler,4")
-#endif
 {
     auto async = Operation();
 
@@ -132,12 +119,7 @@ TEST_CASE("disconnected,handler,4")
         });
 }
 
-#if defined(__clang__)
-// FIXME: Test is known to abort when built with Clang. (Seems to be from unhandled exception thrown on a worker thread.)
-TEST_CASE("disconnected,handler,5", "[.clang-crash]")
-#else
 TEST_CASE("disconnected,handler,5")
-#endif
 {
     auto async = OperationProgress();
     handle signal{ CreateEventW(nullptr, true, false, nullptr) };
@@ -154,6 +136,8 @@ TEST_CASE("disconnected,handler,5")
         });
 
     WaitForSingleObject(signal.get(), INFINITE);
+    // Give some time for to_hresult() to complete.
+    Sleep(500);
 }
 
 // Custom action to simulate an out-of-process server that crashes before it can complete.
@@ -187,6 +171,12 @@ struct non_agile_abandoned_action : implements<non_agile_abandoned_action, IAsyn
     delegate<> m_disconnect;
 };
 
+// Not yet buildable on mingw-w64.
+// Missing CLSID_ContextSwitcher, IID_ICallbackWithNoReentrancyToApplicationSTA
+// and __uuidof(IContextCallback). Also, the lambda needs to have __stdcall
+// specified on it but there is a Clang crash bug blocking this:
+// https://github.com/llvm/llvm-project/issues/58366
+#if !defined(__MINGW32__)
 namespace
 {
     template<typename TLambda>
@@ -301,3 +291,4 @@ TEST_CASE("disconnected,double")
 
     test.get();
 }
+#endif

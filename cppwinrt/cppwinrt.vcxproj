@@ -80,6 +80,7 @@
     <ClInclude Include="..\strings\base_std_hash.h" />
     <ClInclude Include="..\strings\base_string.h" />
     <ClInclude Include="..\strings\base_stringable_format.h" />
+    <ClInclude Include="..\strings\base_stringable_streams.h" />
     <ClInclude Include="..\strings\base_string_input.h" />
     <ClInclude Include="..\strings\base_string_operators.h" />
     <ClInclude Include="..\strings\base_stringable_format_1.h" />
