@@ -133,26 +133,6 @@ namespace winrt::impl
             resume_apartment_sync(context.m_context, handle, failure);
         }
     }
-
-    template <typename T>
-    class awaiter_finder
-    {
-        template <typename> static constexpr bool find_awaitable_member(...) { return false; }
-        template <typename> static constexpr bool find_co_await_member(...) { return false; }
-        template <typename> static constexpr bool find_co_await_free(...) { return false; }
-
-#ifdef WINRT_IMPL_COROUTINES
-        template <typename U, typename = decltype(std::declval<U>().await_ready())> static constexpr bool find_awaitable_member(int) { return true; }
-        template <typename U, typename = decltype(std::declval<U>().operator co_await())> static constexpr bool find_co_await_member(int) { return true; }
-        template <typename U, typename = decltype(operator co_await(std::declval<U>()))> static constexpr bool find_co_await_free(int) { return true; }
-#endif
-
-    public:
-
-        static constexpr bool has_awaitable_member = find_awaitable_member<T>(0);
-        static constexpr bool has_co_await_member = find_co_await_member<T&&>(0);
-        static constexpr bool has_co_await_free = find_co_await_free<T&&>(0);
-    };
 }
 
 WINRT_EXPORT namespace winrt
@@ -223,76 +203,6 @@ WINRT_EXPORT namespace winrt
     private:
 
         cancellable_promise* m_promise = nullptr;
-    };
-}
-
-namespace winrt::impl
-{
-    template <typename T>
-    decltype(auto) get_awaiter(T&& value) noexcept
-    {
-#ifdef WINRT_IMPL_COROUTINES
-        if constexpr (awaiter_finder<T>::has_co_await_member)
-        {
-            static_assert(!awaiter_finder<T>::has_co_await_free, "Ambiguous operator co_await (as both member and free function).");
-            return static_cast<T&&>(value).operator co_await();
-        }
-        else if constexpr (awaiter_finder<T>::has_co_await_free)
-        {
-            return operator co_await(static_cast<T&&>(value));
-        }
-        else
-        {
-            static_assert(awaiter_finder<T>::has_awaitable_member, "Not an awaitable type");
-            return static_cast<T&&>(value);
-        }
-#else
-        return static_cast<T&&>(value);
-#endif
-    }
-
-    template <typename T>
-    struct notify_awaiter
-    {
-        decltype(get_awaiter(std::declval<T&&>())) awaitable;
-
-        notify_awaiter(T&& awaitable_arg, [[maybe_unused]] cancellable_promise* promise = nullptr) : awaitable(get_awaiter(static_cast<T&&>(awaitable_arg)))
-        {
-            if constexpr (std::is_convertible_v<std::remove_reference_t<decltype(awaitable)>&, enable_await_cancellation&>)
-            {
-                if (promise)
-                {
-                    static_cast<enable_await_cancellation&>(awaitable).set_cancellable_promise(promise);
-                    awaitable.enable_cancellation(promise);
-                }
-            }
-        }
-
-        bool await_ready()
-        {
-            if (winrt_suspend_handler)
-            {
-                winrt_suspend_handler(this);
-            }
-
-            return awaitable.await_ready();
-        }
-
-        template <typename U>
-        auto await_suspend(coroutine_handle<U> handle)
-        {
-            return awaitable.await_suspend(handle);
-        }
-
-        decltype(auto) await_resume()
-        {
-            if (winrt_resume_handler)
-            {
-                winrt_resume_handler(this);
-            }
-
-            return awaitable.await_resume();
-        }
     };
 }
 
@@ -728,23 +638,12 @@ namespace std::experimental
 
             suspend_never final_suspend() const noexcept
             {
-                if (winrt_suspend_handler)
-                {
-                    winrt_suspend_handler(this);
-                }
-
                 return{};
             }
 
             void unhandled_exception() const noexcept
             {
                 winrt::terminate();
-            }
-
-            template <typename Expression>
-            auto await_transform(Expression&& expression)
-            {
-                return winrt::impl::notify_awaiter<Expression>{ static_cast<Expression&&>(expression) };
             }
         };
     };

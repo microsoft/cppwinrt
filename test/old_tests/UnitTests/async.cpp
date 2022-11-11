@@ -22,7 +22,7 @@ namespace
 
     IAsyncAction NoSuspend_IAsyncAction()
     {
-        co_await resume_after(0s);
+        co_await 0s;
 
         auto cancel = co_await get_cancellation_token();
 
@@ -34,7 +34,7 @@ namespace
 
     IAsyncActionWithProgress<double> NoSuspend_IAsyncActionWithProgress()
     {
-        co_await resume_after(0s);
+        co_await 0s;
 
         auto cancel = co_await get_cancellation_token();
 
@@ -46,7 +46,7 @@ namespace
 
     IAsyncOperation<uint32_t> NoSuspend_IAsyncOperation()
     {
-        co_await resume_after(0s);
+        co_await 0s;
 
         auto cancel = co_await get_cancellation_token();
 
@@ -60,7 +60,7 @@ namespace
 
     IAsyncOperationWithProgress<uint64_t, uint64_t> NoSuspend_IAsyncOperationWithProgress()
     {
-        co_await resume_after(0s);
+        co_await 0s;
 
         auto cancel = co_await get_cancellation_token();
 
