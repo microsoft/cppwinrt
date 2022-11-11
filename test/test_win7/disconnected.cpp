@@ -13,7 +13,7 @@ namespace
 
     IAsyncActionWithProgress<int> ActionProgress()
     {
-        co_await resume_after(500ms);
+        co_await 500ms;
         auto progress = co_await get_progress_token();
         progress(123);
         co_return;
@@ -26,7 +26,7 @@ namespace
 
     IAsyncOperationWithProgress<int, int> OperationProgress()
     {
-        co_await resume_after(500ms);
+        co_await 500ms;
         auto progress = co_await get_progress_token();
         progress(123);
         co_return 123;
