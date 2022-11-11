@@ -608,6 +608,15 @@ namespace winrt::impl
                 throw winrt::hresult_canceled();
             }
 
+            if constexpr (std::is_convertible_v<std::remove_reference_t<decltype(expression)>&, enable_await_cancellation&>)
+            {
+                if (m_propagate_cancellation)
+                {
+                    static_cast<enable_await_cancellation&>(expression).set_cancellable_promise(&m_cancellable);
+                    expression.enable_cancellation(&m_cancellable);
+                }
+            }
+
             return std::forward<Expression>(expression);
         }
 
