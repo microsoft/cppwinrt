@@ -280,7 +280,6 @@
     <ClCompile Include="async_check_cancel.cpp" />
     <ClCompile Include="async_completed.cpp" />
     <ClCompile Include="async_propagate_cancel.cpp" />
-    <ClCompile Include="async_ref_result.cpp" />
     <ClCompile Include="await_completed.cpp" />
     <ClCompile Include="box_array.cpp" />
     <ClCompile Include="box_delegate.cpp" />
@@ -402,7 +401,6 @@
     <ClCompile Include="multi_threaded_vector.cpp" />
     <ClCompile Include="names.cpp" />
     <ClCompile Include="noexcept.cpp" />
-    <ClCompile Include="notify_awaiter.cpp" />
     <ClCompile Include="no_make_detection.cpp" />
     <ClCompile Include="numerics.cpp" />
     <ClCompile Include="observable_index_of.cpp" />

@@ -577,11 +577,6 @@ namespace winrt::impl
 
         auto final_suspend() noexcept
         {
-            if (winrt_suspend_handler)
-            {
-                winrt_suspend_handler(this);
-            }
-
             return final_suspend_awaiter{ this };
         }
 
@@ -606,14 +601,23 @@ namespace winrt::impl
         }
 
         template <typename Expression>
-        auto await_transform(Expression&& expression)
+        Expression&& await_transform(Expression&& expression)
         {
             if (Status() == AsyncStatus::Canceled)
             {
                 throw winrt::hresult_canceled();
             }
 
-            return notify_awaiter<Expression>{ static_cast<Expression&&>(expression), m_propagate_cancellation ? &m_cancellable : nullptr };
+            if constexpr (std::is_convertible_v<std::remove_reference_t<decltype(expression)>&, enable_await_cancellation&>)
+            {
+                if (m_propagate_cancellation)
+                {
+                    static_cast<enable_await_cancellation&>(expression).set_cancellable_promise(&m_cancellable);
+                    expression.enable_cancellation(&m_cancellable);
+                }
+            }
+
+            return std::forward<Expression>(expression);
         }
 
         cancellation_token<Derived> await_transform(get_cancellation_token_t) noexcept
