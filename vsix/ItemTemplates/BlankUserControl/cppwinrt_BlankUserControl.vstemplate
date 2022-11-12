@@ -4,8 +4,12 @@
     <Name ID="1015" Package="FIXME-PACKAGEGUID" />
     <Description ID="1016" Package="FIXME-PACKAGEGUID" />
     <ProjectType>VC</ProjectType>
-    <SortOrder>10</SortOrder>
+    <SortOrder>41</SortOrder>
     <TemplateID>microsoft.Windows.CppWinRT.BlankUserControl</TemplateID>
+    <TemplateGroupID>WinRT-Native-UAP</TemplateGroupID>
+    <AppliesTo>VisualC + WindowsXaml</AppliesTo>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
+    <ShowByDefault>false</ShowByDefault>
     <Icon>cppwinrt.ico</Icon>
     <PreviewImage>cppwinrt.png</PreviewImage>
   </TemplateData>
