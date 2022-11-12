@@ -550,10 +550,38 @@ namespace winrt::impl
         auto end = std::copy(std::begin(temp), result.ptr, buffer);
         return hstring{ std::wstring_view{ buffer, static_cast<std::size_t>(end - buffer)} };
     }
+
+#if __cpp_lib_format >= 202207L
+    template <typename... Args>
+    inline hstring base_format(Args&&... args)
+    {
+        auto const size = std::formatted_size(args...);
+        WINRT_ASSERT(size < UINT_MAX);
+        auto const size32 = static_cast<uint32_t>(size);
+
+        hstring_builder builder(size32);
+        WINRT_VERIFY_(size32, std::format_to_n(builder.data(), size32, args...).size);
+        return builder.to_hstring();
+    }
+#endif
 }
 
 WINRT_EXPORT namespace winrt
 {
+#if __cpp_lib_format >= 202207L
+    template <typename... Args>
+    inline hstring format(std::wformat_string<Args...> const fmt, Args&&... args)
+    {
+        return impl::base_format(fmt, args...);
+    }
+
+    template <typename... Args>
+    inline hstring format(std::locale const& loc, std::wformat_string<Args...> const fmt, Args&&... args)
+    {
+        return impl::base_format(loc, fmt, args...);
+    }
+#endif
+
     inline bool embedded_null(hstring const& value) noexcept
     {
         return std::any_of(value.begin(), value.end(), [](auto item)
