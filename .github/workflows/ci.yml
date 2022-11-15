@@ -307,7 +307,7 @@ jobs:
       - name: Build tests
         run: |
           cd build
-          cmake --build . --target test-vanilla test_win7
+          cmake --build . --target test-vanilla test_cpp20 test_win7
 
       - name: Upload test binaries
         uses: actions/upload-artifact@v3
