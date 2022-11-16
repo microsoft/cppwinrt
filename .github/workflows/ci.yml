@@ -295,7 +295,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake ../ -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug
+          cmake ../ -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug -DDOWNLOAD_WINDOWSNUMERICS=TRUE
           cmake --build . -j2 --target cppwinrt
 
       - name: Upload cppwinrt.exe
