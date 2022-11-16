@@ -46,6 +46,11 @@ namespace
         co_await context;
     }
 
+// Not yet buildable on mingw-w64. The lambda needs to have __stdcall
+// specified on it but there is a Clang crash bug blocking this:
+// https://github.com/llvm/llvm-project/issues/58366
+#if !defined(__MINGW32__)
+
     template<typename TLambda>
     void InvokeInContext(IContextCallback* context, TLambda&& lambda)
     {
@@ -69,6 +74,8 @@ namespace
         return context;
     }
 
+#endif
+
     bool is_nta_on_mta()
     {
         APTTYPE type;
@@ -90,6 +97,10 @@ namespace
         return (hr == RPC_E_SERVER_DIED_DNE) || (hr == RPC_E_DISCONNECTED);
     }
 
+// Not yet buildable on mingw-w64.
+// Missing __uuidof(IContextCallback).
+#if !defined(__MINGW32__)
+
     IAsyncAction TestNeutralApartmentContext()
     {
         auto controller = DispatcherQueueController::CreateOnDedicatedThread();
@@ -101,6 +112,8 @@ namespace
 
         REQUIRE(is_nta_on_mta());
     }
+
+#endif
 
     IAsyncAction TestStaToStaApartmentContext()
     {
@@ -245,10 +258,16 @@ TEST_CASE("apartment_context coverage")
     Async().get();
 }
 
+// Not yet buildable on mingw-w64.
+// Missing __uuidof(IContextCallback).
+#if !defined(__MINGW32__)
+
 TEST_CASE("apartment_context nta")
 {
     TestNeutralApartmentContext().get();
 }
+
+#endif
 
 TEST_CASE("apartment_context sta")
 {

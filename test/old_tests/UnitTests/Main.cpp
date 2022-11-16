@@ -2,6 +2,10 @@
 #include "pch.h"
 
 #define CATCH_CONFIG_RUNNER
+
+// Force reportFatal to be available on mingw-w64
+#define CATCH_CONFIG_WINDOWS_SEH
+
 #include "catch.hpp"
 
 int main(int argc, char * argv[])

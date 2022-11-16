@@ -39,3 +39,4 @@ add_custom_target(build-cppwinrt-projection
 add_subdirectory(test)
 add_subdirectory(test_cpp20)
 add_subdirectory(test_win7)
+add_subdirectory(old_tests)
