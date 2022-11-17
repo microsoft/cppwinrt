@@ -12,9 +12,9 @@
 #include <filesystem>
 #include <fstream>
 #include <regex>
-#include <Windows.h>
+#include <windows.h>
 #include <shlwapi.h>
-#include <XmlLite.h>
+#include <xmllite.h>
 
 namespace cppwinrt
 {
