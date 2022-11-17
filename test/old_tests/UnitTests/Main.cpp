@@ -18,6 +18,7 @@ int main(int argc, char * argv[])
     _CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
     _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);
     _CrtSetReportFile(_CRT_ERROR, _CRTDBG_FILE_STDERR);
+    SetThreadUILanguage(MAKELANGID(LANG_ENGLISH, SUBLANG_ENGLISH_US));
     int const result = Catch::Session().run(argc, argv);
 
     // Completely unnecessary in an app, but useful for testing clear_factory_cache behavior.
