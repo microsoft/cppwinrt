@@ -274,7 +274,7 @@ TEST_CASE("apartment_context sta")
     TestStaToStaApartmentContext().get();
 }
 
-#if defined(__clang__) && (defined(_M_IX86) || defined(__i386__))
+#if defined(__clang__) && defined(_MSC_VER) && (defined(_M_IX86) || defined(__i386__))
 // FIXME: Test is known to segfault on x86 when built with Clang.
 TEST_CASE("apartment_context disconnected", "[.clang-crash]")
 #else

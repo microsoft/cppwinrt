@@ -122,7 +122,7 @@ TEST_CASE("async_cancel_no_async")
     REQUIRE(a.Status() == AsyncStatus::Completed);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async_cancel_before_callback", "[.clang-crash]")
 #else
@@ -144,7 +144,7 @@ TEST_CASE("async_cancel_before_callback")
     REQUIRE(async.Status() == AsyncStatus::Canceled);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to randomly crash when built with Clang.
 TEST_CASE("async_cancel_after_callback", "[.clang-crash]")
 #else
@@ -164,7 +164,7 @@ TEST_CASE("async_cancel_after_callback")
     REQUIRE(async.Status() == AsyncStatus::Canceled);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async_cancel_use_status", "[.clang-crash]")
 #else

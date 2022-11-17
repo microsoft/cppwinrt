@@ -397,7 +397,7 @@ namespace
 #endif
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Throw_IAsyncAction", "[.clang-crash]")
 #else
@@ -442,7 +442,7 @@ TEST_CASE("async, Throw_IAsyncAction")
     }
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Throw_IAsyncAction, 2", "[.clang-crash]")
 #else
@@ -488,7 +488,7 @@ TEST_CASE("async, Throw_IAsyncAction, 2")
     }
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Throw_IAsyncActionWithProgress", "[.clang-crash]")
 #else
@@ -533,7 +533,7 @@ TEST_CASE("async, Throw_IAsyncActionWithProgress")
     }
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Throw_IAsyncActionWithProgress, 2", "[.clang-crash]")
 #else
@@ -579,7 +579,7 @@ TEST_CASE("async, Throw_IAsyncActionWithProgress, 2")
     }
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Throw_IAsyncOperation", "[.clang-crash]")
 #else
@@ -624,7 +624,7 @@ TEST_CASE("async, Throw_IAsyncOperation")
     }
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Throw_IAsyncOperation, 2", "[.clang-crash]")
 #else
@@ -670,7 +670,7 @@ TEST_CASE("async, Throw_IAsyncOperation, 2")
     }
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Throw_IAsyncOperationWithProgress", "[.clang-crash]")
 #else
@@ -715,7 +715,7 @@ TEST_CASE("async, Throw_IAsyncOperationWithProgress")
     }
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Throw_IAsyncOperationWithProgress, 2", "[.clang-crash]")
 #else
@@ -813,7 +813,7 @@ namespace
     }
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Cancel_IAsyncAction", "[.clang-crash]")
 #else
@@ -848,7 +848,7 @@ TEST_CASE("async, Cancel_IAsyncAction")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Cancel_IAsyncAction, 2", "[.clang-crash]")
 #else
@@ -883,7 +883,7 @@ TEST_CASE("async, Cancel_IAsyncAction, 2")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Cancel_IAsyncActionWithProgress", "[.clang-crash]")
 #else
@@ -919,7 +919,7 @@ TEST_CASE("async, Cancel_IAsyncActionWithProgress")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Cancel_IAsyncActionWithProgress, 2", "[.clang-crash]")
 #else
@@ -955,7 +955,7 @@ TEST_CASE("async, Cancel_IAsyncActionWithProgress, 2")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Cancel_IAsyncOperation", "[.clang-crash]")
 #else
@@ -990,7 +990,7 @@ TEST_CASE("async, Cancel_IAsyncOperation")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Cancel_IAsyncOperation, 2", "[.clang-crash]")
 #else
@@ -1025,7 +1025,7 @@ TEST_CASE("async, Cancel_IAsyncOperation, 2")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Cancel_IAsyncOperationWithProgress", "[.clang-crash]")
 #else
@@ -1061,7 +1061,7 @@ TEST_CASE("async, Cancel_IAsyncOperationWithProgress")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, Cancel_IAsyncOperationWithProgress, 2", "[.clang-crash]")
 #else
@@ -1149,7 +1149,7 @@ namespace
     }
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, AutoCancel_IAsyncAction", "[.clang-crash]")
 #else
@@ -1182,7 +1182,7 @@ TEST_CASE("async, AutoCancel_IAsyncAction")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, AutoCancel_IAsyncAction, 2", "[.clang-crash]")
 #else
@@ -1215,7 +1215,7 @@ TEST_CASE("async, AutoCancel_IAsyncAction, 2")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("", "[.clang-crash]")
 #else
@@ -1248,7 +1248,7 @@ TEST_CASE("async, AutoCancel_IAsyncActionWithProgress")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, AutoCancel_IAsyncActionWithProgress, 2", "[.clang-crash]")
 #else
@@ -1281,7 +1281,7 @@ TEST_CASE("async, AutoCancel_IAsyncActionWithProgress, 2")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, AutoCancel_IAsyncOperation", "[.clang-crash]")
 #else
@@ -1314,7 +1314,7 @@ TEST_CASE("async, AutoCancel_IAsyncOperation")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, AutoCancel_IAsyncOperation, 2", "[.clang-crash]")
 #else
@@ -1347,7 +1347,7 @@ TEST_CASE("async, AutoCancel_IAsyncOperation, 2")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, AutoCancel_IAsyncOperationWithProgress", "[.clang-crash]")
 #else
@@ -1380,7 +1380,7 @@ TEST_CASE("async, AutoCancel_IAsyncOperationWithProgress")
     REQUIRE(statusMatches);
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, AutoCancel_IAsyncOperationWithProgress, 2", "[.clang-crash]")
 #else
@@ -1443,7 +1443,7 @@ TEST_CASE("async, get, suspend with success")
     REQUIRE(456 == d.get());
 }
 
-#if defined(__clang__)
+#if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async, get, failure", "[.clang-crash]")
 #else
