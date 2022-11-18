@@ -33,7 +33,7 @@
 #define _WINDOWS_NUMERICS_NAMESPACE_ winrt::Windows::Foundation::Numerics
 #define _WINDOWS_NUMERICS_BEGIN_NAMESPACE_ WINRT_EXPORT namespace winrt::Windows::Foundation::Numerics
 #define _WINDOWS_NUMERICS_END_NAMESPACE_
-#include <WindowsNumerics.impl.h>
+#include <windowsnumerics.impl.h>
 #undef _WINDOWS_NUMERICS_NAMESPACE_
 #undef _WINDOWS_NUMERICS_BEGIN_NAMESPACE_
 #undef _WINDOWS_NUMERICS_END_NAMESPACE_

@@ -295,8 +295,8 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake ../ -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug
-          cmake --build . --target cppwinrt
+          cmake ../ -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug -DDOWNLOAD_WINDOWSNUMERICS=TRUE
+          cmake --build . -j2 --target cppwinrt
 
       - name: Upload cppwinrt.exe
         uses: actions/upload-artifact@v3
@@ -307,7 +307,7 @@ jobs:
       - name: Build tests
         run: |
           cd build
-          cmake --build . --target test-vanilla test_win7
+          cmake --build . -j2 --target test-vanilla test_cpp20 test_win7 test_old
 
       - name: Upload test binaries
         uses: actions/upload-artifact@v3

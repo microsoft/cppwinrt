@@ -4,6 +4,8 @@
 #define WINRT_NATVIS
 #define _SILENCE_CXX17_UNCAUGHT_EXCEPTION_DEPRECATION_WARNING
 
+#include "mingw_com_support.h"
+
 // Light up ::IUnknown interop by including this first
 #include <unknwn.h>
 #undef GetCurrentTime

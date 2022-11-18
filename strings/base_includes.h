@@ -20,7 +20,7 @@
 #include <utility>
 #include <vector>
 
-#if __has_include(<WindowsNumerics.impl.h>)
+#if __has_include(<windowsnumerics.impl.h>)
 #define WINRT_IMPL_NUMERICS
 #include <directxmath.h>
 #endif

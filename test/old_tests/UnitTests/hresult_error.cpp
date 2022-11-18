@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "catch.hpp"
 
+// Missing in mingw-w64
+#ifndef E_BOUNDS
+#define E_BOUNDS (0x8000000B)
+#endif
+
 extern "C" BOOL __stdcall RoOriginateLanguageException(HRESULT error, void* message, void* languageException);
 
 using namespace winrt;
@@ -497,7 +502,7 @@ TEST_CASE("hresult, std abi support")
     {
         EventHandler<int> handler = [](auto&& ...)
         {
-            throw std::exception("std__exception");
+            throw std::runtime_error("std__exception");
         };
 
         handler(nullptr, 0);

@@ -941,13 +941,20 @@ TEST_CASE("array_view,cv array_view")
         array_view<volatile int> a2 = a;
         REQUIRE(a2.data() == a.data());
         REQUIRE(a2.size() == 3);
+        // For libc++ as of LLVM 15, std::equal is unable to compare between
+        // volatile and non-volatile elements of ranges.
+        // https://github.com/llvm/llvm-project/issues/59021
+#if !defined(_LIBCPP_VERSION) || _LIBCPP_VERSION >= 160000
         REQUIRE(a2 == a);
+#endif
     }
     {
         array_view<const volatile int> a2 = a;
         REQUIRE(a2.data() == a.data());
         REQUIRE(a2.size() == 3);
+#if !defined(_LIBCPP_VERSION) || _LIBCPP_VERSION >= 160000
         REQUIRE(a2 == a);
+#endif
     }
 }
 
