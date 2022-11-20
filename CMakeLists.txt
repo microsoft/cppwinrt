@@ -169,4 +169,6 @@ target_include_directories(cppwinrt PRIVATE "${winmd_SOURCE_DIR}")
 
 
 include(CTest)
-add_subdirectory(test)
+if(BUILD_TESTING)
+    add_subdirectory(test)
+endif()
