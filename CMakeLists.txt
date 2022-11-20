@@ -98,6 +98,8 @@ target_compile_definitions(cppwinrt PRIVATE CPPWINRT_VERSION_STRING="${CPPWINRT_
 target_include_directories(cppwinrt PRIVATE ${PROJECT_BINARY_DIR})
 target_link_libraries(cppwinrt shlwapi)
 
+install(TARGETS cppwinrt)
+
 
 # HACK: Handle the xmllite import lib.
 # mingw-w64 before commit 5ac1a2c is missing the import lib for xmllite. This
