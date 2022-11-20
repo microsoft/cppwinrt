@@ -11,6 +11,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CPPWINRT_BUILD_VERSION "2.3.4.5" CACHE STRING "The version string used for cppwinrt.")
+if(CPPWINRT_BUILD_VERSION STREQUAL "2.3.4.5" OR CPPWINRT_BUILD_VERSION STREQUAL "0.0.0.0")
+    message(WARNING "CPPWINRT_BUILD_VERSION has been set to a dummy version string. Do not use in production!")
+endif()
+message(STATUS "Using version string: ${CPPWINRT_BUILD_VERSION}")
 add_compile_definitions(CPPWINRT_VERSION_STRING="${CPPWINRT_BUILD_VERSION}")
 
 # WinMD uses CreateFile2 which requires Windows 8.
