@@ -15,7 +15,6 @@ if(CPPWINRT_BUILD_VERSION STREQUAL "2.3.4.5" OR CPPWINRT_BUILD_VERSION STREQUAL 
     message(WARNING "CPPWINRT_BUILD_VERSION has been set to a dummy version string. Do not use in production!")
 endif()
 message(STATUS "Using version string: ${CPPWINRT_BUILD_VERSION}")
-add_compile_definitions(CPPWINRT_VERSION_STRING="${CPPWINRT_BUILD_VERSION}")
 
 # WinMD uses CreateFile2 which requires Windows 8.
 add_compile_definitions(_WIN32_WINNT=0x0602)
@@ -28,6 +27,7 @@ set(PREBUILD_SRCS
     prebuild/pch.h
 )
 add_executable(prebuild ${PREBUILD_SRCS})
+target_compile_definitions(prebuild PRIVATE CPPWINRT_VERSION_STRING="${CPPWINRT_BUILD_VERSION}")
 target_include_directories(prebuild PRIVATE cppwinrt/)
 
 
@@ -94,6 +94,7 @@ set(CPPWINRT_RESOURCES
 )
 
 add_executable(cppwinrt ${CPPWINRT_SRCS} ${CPPWINRT_RESOURCES} ${CPPWINRT_HEADERS})
+target_compile_definitions(cppwinrt PRIVATE CPPWINRT_VERSION_STRING="${CPPWINRT_BUILD_VERSION}")
 target_include_directories(cppwinrt PRIVATE ${PROJECT_BINARY_DIR})
 target_link_libraries(cppwinrt shlwapi)
 
