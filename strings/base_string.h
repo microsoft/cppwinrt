@@ -555,12 +555,12 @@ namespace winrt::impl
     template <typename... Args>
     inline hstring base_format(Args&&... args)
     {
-        auto const size = std::formatted_size(args...);
+        auto const size = std::formatted_size(std::forward<Args>(args)...);
         WINRT_ASSERT(size < UINT_MAX);
         auto const size32 = static_cast<uint32_t>(size);
 
         hstring_builder builder(size32);
-        WINRT_VERIFY_(size32, std::format_to_n(builder.data(), size32, args...).size);
+        WINRT_VERIFY_(size32, std::format_to_n(builder.data(), size32, std::forward<Args>(args)...).size);
         return builder.to_hstring();
     }
 #endif
@@ -572,13 +572,13 @@ WINRT_EXPORT namespace winrt
     template <typename... Args>
     inline hstring format(std::wformat_string<Args...> const fmt, Args&&... args)
     {
-        return impl::base_format(fmt, args...);
+        return impl::base_format(fmt, std::forward<Args>(args)...);
     }
 
     template <typename... Args>
     inline hstring format(std::locale const& loc, std::wformat_string<Args...> const fmt, Args&&... args)
     {
-        return impl::base_format(loc, fmt, args...);
+        return impl::base_format(loc, fmt, std::forward<Args>(args)...);
     }
 #endif
 
