@@ -2,9 +2,6 @@
 
 #include "multi_threaded_common.h"
 
-// FIXME: Fail to compile with Clang due to "error : no type named 'type' in 'std::enable_if<false>'"
-#if !defined(__clang__)
-
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -84,7 +81,7 @@ namespace
             }
             else
             {
-                return vector.as<IObservableVector<IInspectable>>();
+                return vector.template as<IObservableVector<IInspectable>>();
             }
         }
     }
@@ -469,4 +466,3 @@ TEST_CASE("multi_threaded_observable_vector")
     test_vector_concurrency<IInspectable, VectorKind::IObservableVector>();
     test_vector_concurrency<IInspectable, VectorKind::IObservableVectorAsInspectable>();
 }
-#endif
