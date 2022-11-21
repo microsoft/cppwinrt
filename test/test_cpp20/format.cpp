@@ -31,5 +31,9 @@ TEST_CASE("format")
         std::wstring str = L"World";
         REQUIRE(winrt::format(L"Hello {}", str) == L"Hello World");
     }
+
+    {
+        REQUIRE(winrt::format(L"C++/WinRT #{:d}", 1) == L"C++/WinRT #1");
+    }
 #endif
 }
