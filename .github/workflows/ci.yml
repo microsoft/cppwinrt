@@ -278,6 +278,7 @@ jobs:
     strategy:
       matrix:
         arch: [i686, x86_64]
+        config: [Debug, Release]
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -290,12 +291,21 @@ jobs:
           rm llvm-mingw.zip
           if (!(Test-Path "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\bin\clang++.exe")) { return 1 }
           Add-Content $env:GITHUB_PATH "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\bin"
+          # for the ASAN runtime DLL:
+          Add-Content $env:GITHUB_PATH "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\${{ matrix.arch }}-w64-mingw32\bin"
 
       - name: Build cppwinrt
         run: |
           mkdir build
           cd build
-          cmake ../ -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug -DDOWNLOAD_WINDOWSNUMERICS=TRUE
+          if ("${{ matrix.config }}" -eq "Debug") {
+            $sanitizers = "TRUE"
+          } else {
+            $sanitizers = "FALSE"
+          }
+          cmake ../ -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=${{ matrix.config }} `
+            -DDOWNLOAD_WINDOWSNUMERICS=TRUE `
+            -DENABLE_TEST_SANITIZERS=$sanitizers
           cmake --build . -j2 --target cppwinrt
 
       - name: Upload cppwinrt.exe
@@ -318,6 +328,7 @@ jobs:
       - name: Run tests
         run: |
           cd build
+          $env:UBSAN_OPTIONS = "print_stacktrace=1"
           ctest --verbose
 
   build-msvc-natvis:

@@ -65,6 +65,13 @@ add_custom_target(build-cppwinrt-projection
 )
 
 
+set(ENABLE_TEST_SANITIZERS FALSE CACHE BOOL "Enable ASan and UBSan for the tests.")
+if(ENABLE_TEST_SANITIZERS)
+    # Disable the 'vptr' check because it seems to produce false-positives when using COM classes.
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=undefined,address -fno-sanitize=vptr")
+endif()
+
+
 add_subdirectory(test)
 add_subdirectory(test_cpp20)
 add_subdirectory(test_win7)
