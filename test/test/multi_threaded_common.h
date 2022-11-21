@@ -152,7 +152,6 @@ namespace concurrent_collections
         concurrency_checked_random_access_iterator(container const* c, iterator it) : owner(c), iterator(it) {}
 
         // Implicit conversion from non-const iterator to const iterator.
-        template<typename = std::enable_if_t<!std::is_same_v<ConvertibleFrom, void>>>
         concurrency_checked_random_access_iterator(concurrency_checked_random_access_iterator<container, ConvertibleFrom> other) : owner(other.owner), iterator(other.inner()) { }
 
         concurrency_checked_random_access_iterator(concurrency_checked_random_access_iterator const&) = default;

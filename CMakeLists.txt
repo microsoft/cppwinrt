@@ -3,7 +3,7 @@
 #
 # It most probably doesn't work with MSVC.
 
-cmake_minimum_required(VERSION 3.12)
+cmake_minimum_required(VERSION 3.16)
 
 project(cppwinrt LANGUAGES CXX)
 
@@ -11,7 +11,10 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CPPWINRT_BUILD_VERSION "2.3.4.5" CACHE STRING "The version string used for cppwinrt.")
-add_compile_definitions(CPPWINRT_VERSION_STRING="${CPPWINRT_BUILD_VERSION}")
+if(CPPWINRT_BUILD_VERSION STREQUAL "2.3.4.5" OR CPPWINRT_BUILD_VERSION STREQUAL "0.0.0.0")
+    message(WARNING "CPPWINRT_BUILD_VERSION has been set to a dummy version string. Do not use in production!")
+endif()
+message(STATUS "Using version string: ${CPPWINRT_BUILD_VERSION}")
 
 # WinMD uses CreateFile2 which requires Windows 8.
 add_compile_definitions(_WIN32_WINNT=0x0602)
@@ -24,6 +27,7 @@ set(PREBUILD_SRCS
     prebuild/pch.h
 )
 add_executable(prebuild ${PREBUILD_SRCS})
+target_compile_definitions(prebuild PRIVATE CPPWINRT_VERSION_STRING="${CPPWINRT_BUILD_VERSION}")
 target_include_directories(prebuild PRIVATE cppwinrt/)
 
 
@@ -90,8 +94,11 @@ set(CPPWINRT_RESOURCES
 )
 
 add_executable(cppwinrt ${CPPWINRT_SRCS} ${CPPWINRT_RESOURCES} ${CPPWINRT_HEADERS})
+target_compile_definitions(cppwinrt PRIVATE CPPWINRT_VERSION_STRING="${CPPWINRT_BUILD_VERSION}")
 target_include_directories(cppwinrt PRIVATE ${PROJECT_BINARY_DIR})
 target_link_libraries(cppwinrt shlwapi)
+
+install(TARGETS cppwinrt)
 
 
 # HACK: Handle the xmllite import lib.
@@ -164,4 +171,6 @@ target_include_directories(cppwinrt PRIVATE "${winmd_SOURCE_DIR}")
 
 
 include(CTest)
-add_subdirectory(test)
+if(BUILD_TESTING)
+    add_subdirectory(test)
+endif()
