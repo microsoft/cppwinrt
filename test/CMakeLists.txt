@@ -30,7 +30,7 @@ function(TestHasWindowsnumerics OUTPUT_VARNAME)
     include(CheckCXXSourceCompiles)
     check_cxx_source_compiles("
 #define _WINDOWS_NUMERICS_NAMESPACE_ winrt::Windows::Foundation::Numerics
-#define _WINDOWS_NUMERICS_BEGIN_NAMESPACE_ WINRT_EXPORT namespace winrt::Windows::Foundation::Numerics
+#define _WINDOWS_NUMERICS_BEGIN_NAMESPACE_ namespace winrt::Windows::Foundation::Numerics
 #define _WINDOWS_NUMERICS_END_NAMESPACE_
 #include <windowsnumerics.impl.h>
 int main() {}
