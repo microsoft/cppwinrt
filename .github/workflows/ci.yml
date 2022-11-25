@@ -344,6 +344,8 @@ jobs:
         run: |
           arch=${{ matrix.arch }}
           sudo apt-get install g++-mingw-w64-${arch/_/-}
+          sudo update-alternatives --set "${{ matrix.arch }}-w64-mingw32-gcc" "/usr/bin/${{ matrix.arch }}-w64-mingw32-gcc-posix"
+          sudo update-alternatives --set "${{ matrix.arch }}-w64-mingw32-g++" "/usr/bin/${{ matrix.arch }}-w64-mingw32-g++-posix"
 
       - name: Cross-build cppwinrt
         run: |
