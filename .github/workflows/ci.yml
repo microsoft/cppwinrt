@@ -349,7 +349,11 @@ jobs:
 
       - name: Cross-build cppwinrt
         run: |
-          cmake -S . -B build/cross_x64/ --toolchain cross-mingw-toolchain.cmake -DCMAKE_SYSTEM_PROCESSOR=${{ matrix.arch }} -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=$PWD/install/
+          cmake -S . -B build/cross_x64/ --toolchain cross-mingw-toolchain.cmake \
+            -DCMAKE_SYSTEM_PROCESSOR=${{ matrix.arch }} \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_CXX_FLAGS="-static" \
+            -DCMAKE_INSTALL_PREFIX=$PWD/install/
           cmake --build build/cross_x64/ --target install -j2
 
       - name: Upload cppwinrt.exe
