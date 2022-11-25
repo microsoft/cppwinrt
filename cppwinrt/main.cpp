@@ -268,17 +268,17 @@ Where <spec> is one or more of:
 
             if (settings.verbose)
             {
-				{
-					char* path = argv[0];
-					char path_buf[32768];
-					DWORD path_size = GetModuleFileNameA(nullptr, path_buf, sizeof(path_buf));
-					if (path_size)
-					{
+                {
+                    char* path = argv[0];
+                    char path_buf[32768];
+                    DWORD path_size = GetModuleFileNameA(nullptr, path_buf, sizeof(path_buf));
+                    if (path_size)
+                    {
                         path_buf[sizeof(path_buf) - 1] = 0;
                         path = path_buf;
-					}
-					w.write(" tool:  %\n", path);
-				}
+                    }
+                    w.write(" tool:  %\n", path);
+                }
                 w.write(" ver:   %\n", CPPWINRT_VERSION_STRING);
 
                 for (auto&& file : settings.input)
