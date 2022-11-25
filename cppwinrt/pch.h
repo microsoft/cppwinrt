@@ -1,5 +1,6 @@
 #pragma once
 
+#include <future>
 #include <utility>
 #include "cmd_reader.h"
 #include <winmd_reader.h>
