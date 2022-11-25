@@ -1,16 +1,22 @@
 # This is a cmake-toolchain(5) file that can be used to cross-build
 # cppwinrt.exe fron Linux or other operating systems using a mingw-w64 cross
-# toolchain. This has only been tested using llvm-mingw, but in theory should
-# work with a gcc-based toolchain.
+# toolchain. This should work with both GCC-based and llvm-mingw toolchains.
 #
-# Example usage:
+# Example usage with external toolchain:
 #
 #   $ cmake -S . -B build/cross_x64/ \
 #       --toolchain cross-mingw-toolchain.cmake \
 #       -DMINGW_BIN_PATH=/opt/llvm-mingw/bin \
 #       -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 #       -DCMAKE_INSTALL_PREFIX=$PWD/install/
-#   $ cmake --build build/cross_x64/ --target install
+#
+# Example usage with toolchain installed system-wide:
+#
+#   $ cmake -S . -B build/cross_i686/ \
+#       --toolchain cross-mingw-toolchain.cmake \
+#       -DCMAKE_SYSTEM_PROCESSOR=i686 \
+#       -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+#       -DCMAKE_INSTALL_PREFIX=$PWD/install/
 
 
 set(CMAKE_SYSTEM_NAME Windows)
