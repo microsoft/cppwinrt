@@ -23,8 +23,14 @@ add_compile_definitions(_WIN32_WINNT=0x0602)
 # === prebuild: Generator tool for strings.cpp, strings.h, version.rc ===
 
 if(CMAKE_CROSSCOMPILING)
-    # TODO
-    message(FATAL_ERROR "Not implemented")
+    include(ExternalProject)
+    ExternalProject_Add(cppwinrt-prebuild
+        SOURCE_DIR "${PROJECT_SOURCE_DIR}/prebuild"
+        CMAKE_ARGS -DCMAKE_INSTALL_PREFIX=<INSTALL_DIR> "-DCPPWINRT_BUILD_VERSION=${CPPWINRT_BUILD_VERSION}"
+    )
+    ExternalProject_Get_Property(cppwinrt-prebuild INSTALL_DIR)
+    set(PREBUILD_TOOL "${INSTALL_DIR}/bin/cppwinrt-prebuild")
+    unset(INSTALL_DIR)
 else()
     add_subdirectory(prebuild)
     set(PREBUILD_TOOL cppwinrt-prebuild)
@@ -137,10 +143,11 @@ int main() {}
         else()
             set(XMLLITE_DEF_FILE xmllite)
         endif()
+        include(CMakeFindBinUtils)
         add_custom_command(
             OUTPUT
                 "${PROJECT_BINARY_DIR}/libxmllite.a"
-            COMMAND dlltool -k -d "${PROJECT_SOURCE_DIR}/mingw-support/${XMLLITE_DEF_FILE}.def" -l "${PROJECT_BINARY_DIR}/libxmllite.a"
+            COMMAND "${CMAKE_DLLTOOL}" -k -d "${PROJECT_SOURCE_DIR}/mingw-support/${XMLLITE_DEF_FILE}.def" -l "${PROJECT_BINARY_DIR}/libxmllite.a"
             DEPENDS "${PROJECT_SOURCE_DIR}/mingw-support/${XMLLITE_DEF_FILE}.def"
             VERBATIM
         )
@@ -170,7 +177,9 @@ set(winmd_SOURCE_DIR "${SOURCE_DIR}")
 target_include_directories(cppwinrt PRIVATE "${winmd_SOURCE_DIR}")
 
 
-include(CTest)
-if(BUILD_TESTING)
-    add_subdirectory(test)
+if(NOT CMAKE_CROSSCOMPILING)
+    include(CTest)
+    if(BUILD_TESTING)
+        add_subdirectory(test)
+    endif()
 endif()
