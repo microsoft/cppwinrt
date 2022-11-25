@@ -268,9 +268,30 @@ Where <spec> is one or more of:
 
             if (settings.verbose)
             {
-                char* path = nullptr;
-                _get_pgmptr(&path);
-                w.write(" tool:  %\n", path);
+				{
+					char* path = argv[0];
+					char path_buf[MAX_PATH];
+					std::vector<char> long_path;
+					DWORD path_size = GetModuleFileNameA(nullptr, path_buf, sizeof(path_buf));
+					if (path_size)
+					{
+						if (path_size < sizeof(path_buf))
+						{
+							path = path_buf;
+						}
+						else
+						{
+							long_path.resize(32768);
+							path_size = GetModuleFileNameA(nullptr, long_path.data(), long_path.size());
+							if (path_size)
+							{
+								long_path.back() = 0;
+								path = long_path.data();
+							}
+						}
+					}
+					w.write(" tool:  %\n", path);
+				}
                 w.write(" ver:   %\n", CPPWINRT_VERSION_STRING);
 
                 for (auto&& file : settings.input)
