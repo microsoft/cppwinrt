@@ -270,6 +270,7 @@ Where <spec> is one or more of:
             {
                 {
                     char* path = argv[0];
+#if defined(_WIN32) || defined(_WIN64)
                     char path_buf[32768];
                     DWORD path_size = GetModuleFileNameA(nullptr, path_buf, sizeof(path_buf));
                     if (path_size)
@@ -277,6 +278,7 @@ Where <spec> is one or more of:
                         path_buf[sizeof(path_buf) - 1] = 0;
                         path = path_buf;
                     }
+#endif
                     w.write(" tool:  %\n", path);
                 }
                 w.write(" ver:   %\n", CPPWINRT_VERSION_STRING);
