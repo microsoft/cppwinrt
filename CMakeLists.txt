@@ -177,8 +177,8 @@ endif()
 
 include(ExternalProject)
 ExternalProject_Add(winmd
-    URL https://github.com/microsoft/winmd/releases/download/1.0.210629.2/Microsoft.Windows.WinMD.1.0.210629.2.nupkg
-    URL_HASH SHA256=4c5f29d948f5b3d724d229664c8f8e4823250d3c9f23ad8067b732fc7076d8c7
+    GIT_REPOSITORY https://github.com/microsoft/winmd.git
+    GIT_TAG 0f1eae3bfa63fa2ba3c2912cbfe72a01db94cc5a
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -186,7 +186,7 @@ ExternalProject_Add(winmd
 add_dependencies(cppwinrt winmd)
 ExternalProject_Get_Property(winmd SOURCE_DIR)
 set(winmd_SOURCE_DIR "${SOURCE_DIR}")
-target_include_directories(cppwinrt PRIVATE "${winmd_SOURCE_DIR}")
+target_include_directories(cppwinrt PRIVATE "${winmd_SOURCE_DIR}/src")
 
 
 if(WIN32 AND NOT CMAKE_CROSSCOMPILING)
