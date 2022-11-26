@@ -70,10 +70,14 @@ Options:
 Where <spec> is one or more of:
 
   path                Path to winmd file or recursively scanned folder
-  local               Local ^%WinDir^%\System32\WinMetadata folder
+)"
+#if defined(_WIN32) || defined(_WIN64)
+R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
   sdk[+]              Current version of Windows SDK [with extensions]
   10.0.12345.0[+]     Specific version of Windows SDK [with extensions]
-)";
+)"
+#endif
+        ;
         w.write(format, CPPWINRT_VERSION_STRING, bind_each(printOption, options));
     }
 
