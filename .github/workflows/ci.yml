@@ -380,6 +380,23 @@ jobs:
         run: |
           .\cppwinrt.exe -in local -out .\ -verbose
 
+  build-linux-native-cppwinrt:
+    name: 'linux/gcc: Build'
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build cppwinrt
+        run: |
+          cmake -S . -B build/native/ \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_INSTALL_PREFIX=$PWD/install/
+          cmake --build build/native/ --target install -j2
+
+      - name: Test run (cppwinrt -?)
+        run: |
+          install/bin/cppwinrt -?
+
   build-msvc-natvis:
     name: 'Build natvis'
     strategy:
