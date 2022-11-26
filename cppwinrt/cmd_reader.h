@@ -3,6 +3,7 @@
 #include <cassert>
 #include <array>
 #include <limits>
+#include <climits>
 #include <cstdint>
 #include <string>
 #include <string_view>
