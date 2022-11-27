@@ -1051,11 +1051,11 @@ namespace cppwinrt
         return result;
     }
 
-    static std::string get_generated_component_filename(TypeDef const& type)
+    static std::string get_generated_component_filename(TypeDef const& type, bool componentPrefix = settings.component_prefix)
     {
         auto result = get_component_filename(type);
 
-        if (!settings.component_prefix)
+        if (!componentPrefix)
         {
             std::replace(result.begin(), result.end(), '.', '/');
         }

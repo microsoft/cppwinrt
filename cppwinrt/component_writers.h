@@ -880,7 +880,8 @@ namespace winrt::@::implementation
             std::string upper(type_name);
             std::transform(upper.begin(), upper.end(), upper.begin(), [](char c) {return static_cast<char>(::toupper(c)); });
 
-            auto include_path = get_generated_component_filename(type);
+            // XAML generated header file is always under a subfolder. See https://github.com/microsoft/microsoft-ui-xaml/issues/7652.
+            auto include_path = get_generated_component_filename(type, false);
 
             w.write(format,
                 upper,
