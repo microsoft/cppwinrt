@@ -1,4 +1,6 @@
 #include "pch.h"
+
+#ifdef __cpp_lib_format
 #include <format>
 
 struct stringable : winrt::implements<stringable, winrt::Windows::Foundation::IStringable>
@@ -37,3 +39,4 @@ TEST_CASE("format")
     }
 #endif
 }
+#endif
