@@ -331,6 +331,55 @@ jobs:
           $env:UBSAN_OPTIONS = "print_stacktrace=1"
           ctest --verbose
 
+  build-linux-cross-cppwinrt:
+    name: 'cross: Cross-build from Linux'
+    strategy:
+      matrix:
+        arch: [i686, x86_64]
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install cross compiler
+        run: |
+          arch=${{ matrix.arch }}
+          sudo apt-get install g++-mingw-w64-${arch/_/-}
+          sudo update-alternatives --set "${{ matrix.arch }}-w64-mingw32-gcc" "/usr/bin/${{ matrix.arch }}-w64-mingw32-gcc-posix"
+          sudo update-alternatives --set "${{ matrix.arch }}-w64-mingw32-g++" "/usr/bin/${{ matrix.arch }}-w64-mingw32-g++-posix"
+
+      - name: Cross-build cppwinrt
+        run: |
+          cmake -S . -B build/cross_x64/ --toolchain cross-mingw-toolchain.cmake \
+            -DCMAKE_SYSTEM_PROCESSOR=${{ matrix.arch }} \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_CXX_FLAGS="-static" \
+            -DCMAKE_INSTALL_PREFIX=$PWD/install/
+          cmake --build build/cross_x64/ --target install -j2
+
+      - name: Upload cppwinrt.exe
+        uses: actions/upload-artifact@v3
+        with:
+          name: cross-build-${{ matrix.arch }}-bin
+          path: install/bin/cppwinrt.exe
+
+  test-linux-cross-cppwinrt:
+    name: 'cross: Test run on Windows'
+    needs: build-linux-cross-cppwinrt
+    strategy:
+      matrix:
+        arch: [i686, x86_64]
+    runs-on: windows-latest
+    steps:
+      - name: Fetch cppwinrt executable
+        uses: actions/download-artifact@v3
+        with:
+          name: cross-build-${{ matrix.arch }}-bin
+          path: ./
+
+      - name: Run cppwinrt to build projection
+        run: |
+          .\cppwinrt.exe -in local -out .\ -verbose
+
   build-msvc-natvis:
     name: 'Build natvis'
     strategy:
