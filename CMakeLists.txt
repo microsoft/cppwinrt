@@ -1,6 +1,9 @@
 # This CMake build file is intended for use with the llvm-mingw toolchain:
 # https://github.com/mstorsjo/llvm-mingw
 #
+# It also works for building natively on Linux, or cross-building from Linux
+# for running on Windows with a mingw-w64 toolchain.
+#
 # It most probably doesn't work with MSVC.
 
 cmake_minimum_required(VERSION 3.16)
