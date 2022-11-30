@@ -397,6 +397,11 @@ jobs:
         run: |
           install/bin/cppwinrt -?
 
+      - name: Test run (build projection using Windows.winmd)
+        run: |
+          curl -o Windows.winmd -L https://github.com/microsoft/windows-rs/raw/master/crates/libs/metadata/default/Windows.winmd
+          install/bin/cppwinrt -in Windows.winmd -out /tmp/cppwinrt -verbose
+
   build-msvc-natvis:
     name: 'Build natvis'
     strategy:
