@@ -1,8 +1,8 @@
 #include "pch.h"
 #include <string_view>
-#include "winrt\fast_forward.h"
-#include "winrt\Windows.Foundation.h"
-#include "winrt\FastForwarderTest.h"
+#include "winrt/fast_forward.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/FastForwarderTest.h"
 #include "Class.g.h"
 
 using namespace std::literals;

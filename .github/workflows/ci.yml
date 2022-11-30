@@ -406,7 +406,7 @@ jobs:
           ctest --verbose
 
   build-linux-native-cppwinrt:
-    name: 'linux/gcc: Build'
+    name: 'linux: GCC native build + llvm-mingw cross-build tests'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
@@ -426,6 +426,62 @@ jobs:
         run: |
           curl -o Windows.winmd -L https://github.com/microsoft/windows-rs/raw/master/crates/libs/metadata/default/Windows.winmd
           install/bin/cppwinrt -in Windows.winmd -out /tmp/cppwinrt -verbose
+
+      - name: Install llvm-mingw toolchain
+        run: |
+          cd /opt
+          curl -L https://github.com/mstorsjo/llvm-mingw/releases/download/20220906/llvm-mingw-20220906-ucrt-ubuntu-18.04-x86_64.tar.xz | tar xJ
+          ls -l
+          echo "$PWD/llvm-mingw-20220906-ucrt-ubuntu-18.04-x86_64/bin" >> $GITHUB_PATH
+
+      - name: Cross-build tests using projection
+        run: |
+          cmake -S test -B build/cross-tests --toolchain "$PWD/cross-mingw-toolchain.cmake" \
+            -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_CXX_FLAGS="-static" \
+            -DCPPWINRT_PROJECTION_INCLUDE_DIR=/tmp/cppwinrt \
+            -DDOWNLOAD_WINDOWSNUMERICS=TRUE
+          cmake --build build/cross-tests -j2
+
+      - name: Upload built tests
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-native-cppwinrt-cross-build-tests-x86_64-bin
+          path: build/cross-tests/*.exe
+
+  test-linux-native-cppwinrt-cross-tests:
+    name: 'linux: Run llvm-mingw cross-build tests'
+    needs: build-linux-native-cppwinrt
+    strategy:
+      matrix:
+        arch: [x86_64]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Fetch test executables
+        uses: actions/download-artifact@v3
+        with:
+          name: linux-native-cppwinrt-cross-build-tests-${{ matrix.arch }}-bin
+          path: ./
+
+      - name: Run tests
+        run: |
+          $test_exes = ls *.exe -Name
+          $has_failed_tests = 0
+          foreach ($test_exe in $test_exes) {
+            echo "::group::Run '$test_exe'"
+            & .\$test_exe
+            echo "::endgroup::"
+            if ($LastExitCode -ne 0) {
+              echo "::error::Test '$test_exe' failed!"
+              $has_failed_tests = 1
+            }
+          }
+          if ($has_failed_tests -ne 0) {
+            exit 1
+          }
 
   build-msvc-natvis:
     name: 'Build natvis'
