@@ -370,15 +370,40 @@ jobs:
         arch: [i686, x86_64]
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Fetch cppwinrt executable
         uses: actions/download-artifact@v3
         with:
           name: cross-build-${{ matrix.arch }}-bin
-          path: ./
+          path: ./.test
 
       - name: Run cppwinrt to build projection
         run: |
-          .\cppwinrt.exe -in local -out .\ -verbose
+          .\.test\cppwinrt.exe -in local -out .\.test\out -verbose
+
+      - name: Install llvm-mingw toolchain
+        run: |
+          $llvm_mingw_version = "20220906"
+          Invoke-WebRequest "https://github.com/mstorsjo/llvm-mingw/releases/download/${llvm_mingw_version}/llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}.zip" -OutFile llvm-mingw.zip
+          7z x llvm-mingw.zip
+          rm llvm-mingw.zip
+          if (!(Test-Path "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\bin\clang++.exe")) { return 1 }
+          Add-Content $env:GITHUB_PATH "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\bin"
+
+      - name: Build cppwinrt tests
+        run: |
+          mkdir build
+          cd build
+          cmake ../test -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug `
+            -DCPPWINRT_PROJECTION_INCLUDE_DIR="../.test/out" `
+            -DDOWNLOAD_WINDOWSNUMERICS=TRUE
+          cmake --build . -j2
+
+      - name: Run tests
+        run: |
+          cd build
+          ctest --verbose
 
   build-linux-native-cppwinrt:
     name: 'linux/gcc: Build'

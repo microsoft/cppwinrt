@@ -1,11 +1,23 @@
+cmake_minimum_required(VERSION 3.16)
+
+if(NOT DEFINED PROJECT_NAME)
+    project(cppwinrt-tests)
+    set(STANDALONE_TESTING 1)
+    include(CTest)
+    if(NOT BUILD_TESTING)
+        message(NOTICE "BUILD_TESTING is OFF, nothing to do.")
+        return()
+    endif()
+endif()
+
 # The tests use newer C++ features.
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}")
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}")
-include_directories("${PROJECT_SOURCE_DIR}/cppwinrt")
-include_directories("${CMAKE_CURRENT_BINARY_DIR}/cppwinrt")
+include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../cppwinrt")
 
 function(TestIsX64 OUTPUT_VARNAME)
     include(CheckCXXSourceCompiles)
@@ -51,18 +63,28 @@ if(NOT HAS_WINDOWSNUMERICS AND DOWNLOAD_WINDOWSNUMERICS)
 endif()
 
 
-add_custom_command(
-    OUTPUT
-        "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt/winrt/base.h"
-    COMMAND "${PROJECT_BINARY_DIR}/cppwinrt" -input local -output "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt" -verbose
-    DEPENDS
-        cppwinrt
-    VERBATIM
-)
-add_custom_target(build-cppwinrt-projection
-    DEPENDS
-        "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt/winrt/base.h"
-)
+if(STANDALONE_TESTING)
+    add_custom_target(build-cppwinrt-projection)
+    set(CPPWINRT_PROJECTION_INCLUDE_DIR "" CACHE PATH "Include path for the C++/WinRT projection headers")
+    if(NOT CPPWINRT_PROJECTION_INCLUDE_DIR)
+        message(FATAL_ERROR "CPPWINRT_PROJECTION_INCLUDE_DIR is not specified.")
+    endif()
+else()
+    set(CPPWINRT_PROJECTION_INCLUDE_DIR "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt")
+    add_custom_command(
+        OUTPUT
+            "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt/winrt/base.h"
+        COMMAND cppwinrt -input local -output "${CPPWINRT_PROJECTION_INCLUDE_DIR}" -verbose
+        DEPENDS
+            cppwinrt
+        VERBATIM
+    )
+    add_custom_target(build-cppwinrt-projection
+        DEPENDS
+            "${CMAKE_CURRENT_BINARY_DIR}/cppwinrt/winrt/base.h"
+    )
+endif()
+include_directories("${CPPWINRT_PROJECTION_INCLUDE_DIR}")
 
 
 set(ENABLE_TEST_SANITIZERS FALSE CACHE BOOL "Enable ASan and UBSan for the tests.")
