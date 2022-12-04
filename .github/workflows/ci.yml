@@ -24,22 +24,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install LLVM 15
+      - id: setup-llvm
+        name: Set up LLVM (MSVC)
+        uses: ./.github/actions/setup-llvm-msvc
         if: matrix.compiler == 'clang-cl'
-        run: |
-          Invoke-WebRequest "https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.2/LLVM-15.0.2-win64.exe" -OutFile LLVM-installer.exe
-          .\LLVM-installer.exe /S "/D=$pwd\LLVM" | Out-Null
-          rm LLVM-installer.exe
-          if (!(Test-Path "$pwd\LLVM\bin\clang-cl.exe")) { exit 1 }
-          Add-Content $env:GITHUB_PATH "$pwd\LLVM\bin"
-
-      - name: Set up LLVM build tools for msbuild
-        if: matrix.compiler == 'clang-cl'
-        # Not using the LLVM tools that comes with MSVC.
-        run: |
-          Invoke-WebRequest "https://github.com/zufuliu/llvm-utils/releases/download/v22.09/LLVM_VS2017.zip" -OutFile LLVM_VS2017.zip
-          7z x -y "LLVM_VS2017.zip" | Out-Null
-          cmd /c "LLVM_VS2017\install.bat" 1
 
       - name: Download nuget
         run: |
@@ -60,7 +48,7 @@ jobs:
           $target_version = "1.2.3.4"
           $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
           if ("${{ matrix.compiler }}" -eq "clang-cl") {
-            $props += ",Clang=1,PlatformToolset=LLVM_v143,LLVMInstallDir=$pwd\LLVM"
+            $props += ",Clang=1,PlatformToolset=LLVM_v143,LLVMInstallDir=${{ steps.setup-llvm.outputs.llvm-path }}"
           }
           Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:$props"
 
@@ -120,22 +108,10 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install LLVM 15
+      - id: setup-llvm
+        name: Set up LLVM (MSVC)
+        uses: ./.github/actions/setup-llvm-msvc
         if: matrix.compiler == 'clang-cl'
-        run: |
-          Invoke-WebRequest "https://github.com/llvm/llvm-project/releases/download/llvmorg-15.0.2/LLVM-15.0.2-win64.exe" -OutFile LLVM-installer.exe
-          .\LLVM-installer.exe /S "/D=$pwd\LLVM" | Out-Null
-          rm LLVM-installer.exe
-          if (!(Test-Path "$pwd\LLVM\bin\clang-cl.exe")) { exit 1 }
-          Add-Content $env:GITHUB_PATH "$pwd\LLVM\bin"
-
-      - name: Set up LLVM build tools for msbuild
-        if: matrix.compiler == 'clang-cl'
-        run: |
-          # Not using the LLVM tools that comes with MSVC.
-          Invoke-WebRequest "https://github.com/zufuliu/llvm-utils/releases/download/v22.09/LLVM_VS2017.zip" -OutFile LLVM_VS2017.zip
-          7z x -y "LLVM_VS2017.zip" | Out-Null
-          cmd /c "LLVM_VS2017\install.bat" 1
 
       - name: Fetch cppwinrt executables
         if: matrix.arch != 'arm64'
@@ -170,7 +146,7 @@ jobs:
           $target_version = "1.2.3.4"
           $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
           if ("${{ matrix.compiler }}" -eq "clang-cl") {
-            $props += ",Clang=1,PlatformToolset=LLVM_v143,LLVMInstallDir=$pwd\LLVM"
+            $props += ",Clang=1,PlatformToolset=LLVM_v143,LLVMInstallDir=${{ steps.setup-llvm.outputs.llvm-path }}"
           }
           Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:$props"
 
