@@ -1,0 +1,46 @@
+name: 'Set up llvm-mingw toolchain'
+description: 'Set up llvm-mingw toolchain'
+inputs:
+  llvm-mingw-version:
+    description: 'llvm-mingw version'
+    required: true
+    default: '20220906'
+  host-arch:
+    description: 'llvm-mingw toolchain host architecture (e.g. i686, x86_64)'
+    required: true
+    default: 'x86_64'
+outputs:
+  llvm-path:
+    description: "The path in which llvm-mingw is installed to"
+    value: ${{ steps.setup-llvm.outputs.llvm-path }}
+runs:
+  using: "composite"
+  steps:
+    - name: Cache llvm-mingw
+      id: cache-llvm
+      uses: actions/cache@v3
+      with:
+        path: .llvm-mingw
+        key: llvm-mingw-${{ runner.os }}-${{ inputs.llvm-mingw-version }}-${{ inputs.host-arch }}
+
+    - name: Install llvm-mingw ${{ inputs.llvm-mingw-version }} (${{ inputs.host-arch }})
+      if: steps.cache-llvm.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        $llvm_mingw_version = "${{ inputs.llvm-mingw-version }}"
+        $llvm_arch = "${{ inputs.host-arch }}"
+        Invoke-WebRequest "https://github.com/mstorsjo/llvm-mingw/releases/download/${llvm_mingw_version}/llvm-mingw-${llvm_mingw_version}-ucrt-${llvm_arch}.zip" -OutFile llvm-mingw.zip
+        7z x llvm-mingw.zip -o"$pwd\.llvm-mingw"
+        rm llvm-mingw.zip
+
+    - name: Set up llvm-mingw
+      id: setup-llvm
+      shell: pwsh
+      run: |
+        $llvm_mingw_version = "${{ inputs.llvm-mingw-version }}"
+        $llvm_arch = "${{ inputs.host-arch }}"
+        if (!(Test-Path "$pwd\.llvm-mingw\llvm-mingw-${llvm_mingw_version}-ucrt-${llvm_arch}\bin\clang++.exe")) { return 1 }
+        Add-Content $env:GITHUB_OUTPUT "llvm-path=$pwd\.llvm-mingw\llvm-mingw-${llvm_mingw_version}-ucrt-${llvm_arch}"
+        Add-Content $env:GITHUB_PATH "$pwd\.llvm-mingw\llvm-mingw-${llvm_mingw_version}-ucrt-${llvm_arch}\bin"
+        # for the ASAN runtime DLL:
+        Add-Content $env:GITHUB_PATH "$pwd\.llvm-mingw\llvm-mingw-${llvm_mingw_version}-ucrt-${llvm_arch}\${llvm_arch}-w64-mingw32\bin"

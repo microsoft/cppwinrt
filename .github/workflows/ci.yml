@@ -259,16 +259,9 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install llvm-mingw toolchain
-        run: |
-          $llvm_mingw_version = "20220906"
-          Invoke-WebRequest "https://github.com/mstorsjo/llvm-mingw/releases/download/${llvm_mingw_version}/llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}.zip" -OutFile llvm-mingw.zip
-          7z x llvm-mingw.zip
-          rm llvm-mingw.zip
-          if (!(Test-Path "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\bin\clang++.exe")) { return 1 }
-          Add-Content $env:GITHUB_PATH "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\bin"
-          # for the ASAN runtime DLL:
-          Add-Content $env:GITHUB_PATH "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\${{ matrix.arch }}-w64-mingw32\bin"
+      - id: setup-llvm
+        name: Set up llvm-mingw
+        uses: ./.github/actions/setup-llvm-mingw
 
       - name: Build cppwinrt
         run: |
