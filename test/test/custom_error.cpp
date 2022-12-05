@@ -102,10 +102,21 @@ TEST_CASE("custom_error_logger")
     // Validate that handler translated exception
     REQUIRE_THROWS_AS(check_hresult(0x80000018), hresult_illegal_delegate_assignment);
     REQUIRE(s_loggerCalled);
+#ifndef __cpp_lib_source_location
     // In C++17 these fields cannot be filled in so they are expected to be empty.
     REQUIRE(s_loggerArgs.lineNumber == 0);
     REQUIRE(s_loggerArgs.fileName == nullptr);
     REQUIRE(s_loggerArgs.functionName == nullptr);
+#else
+    // GCC can only compile these tests in C++20 so these fields will be filled in.
+    REQUIRE(s_loggerArgs.lineNumber == 103);
+    const auto fileNameSv = std::string_view(s_loggerArgs.fileName);
+    REQUIRE(!fileNameSv.empty());
+    REQUIRE(fileNameSv.find("custom_error.cpp") != std::string::npos);
+    const auto functionNameSv = std::string_view(s_loggerArgs.functionName);
+    REQUIRE(!functionNameSv.empty());
+    // Don't check the function name here. It is tested in `test_cpp20/custom_error.cpp`.
+#endif
 
     REQUIRE(s_loggerArgs.returnAddress);
     REQUIRE(s_loggerArgs.result == 0x80000018); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
