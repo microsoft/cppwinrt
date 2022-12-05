@@ -93,9 +93,15 @@ extern "C"
 #endif
 #elif defined(__GNUC__)
 #if defined(__i386__)
-#define WINRT_IMPL_LINK(function, count) __asm__(".weak _WINRT_IMPL_" #function "@" #count "\n.set _WINRT_IMPL_" #function "@" #count ", _" #function "@" #count);
+#define WINRT_IMPL_LINK(function, count) __asm__( \
+    ".globl _" #function "@" #count "\n\t" \
+    ".weak _WINRT_IMPL_" #function "@" #count "\n\t" \
+    ".set _WINRT_IMPL_" #function "@" #count ", _" #function "@" #count);
 #else
-#define WINRT_IMPL_LINK(function, count) __asm__(".weak WINRT_IMPL_" #function "\n.set WINRT_IMPL_" #function ", " #function);
+#define WINRT_IMPL_LINK(function, count) __asm__( \
+    ".globl " #function "\n\t" \
+    ".weak WINRT_IMPL_" #function "\n\t" \
+    ".set WINRT_IMPL_" #function ", " #function);
 #endif
 #endif
 
