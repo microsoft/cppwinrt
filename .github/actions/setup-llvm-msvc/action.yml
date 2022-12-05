@@ -1,0 +1,48 @@
+name: 'Set up LLVM for MSVC'
+description: 'Set up upstream LLVM for targeting MSVC ABI'
+inputs:
+  llvm-version:
+    description: 'LLVM version'
+    required: true
+    default: '15.0.5'
+outputs:
+  llvm-path:
+    description: "The path in which LLVM is installed to"
+    value: ${{ steps.setup-llvm.outputs.llvm-path }}
+runs:
+  using: "composite"
+  steps:
+    - name: Cache LLVM and tools
+      id: cache-llvm
+      uses: actions/cache@v3
+      with:
+        path: |
+          .LLVM
+          .llvm-utils
+        key: llvm-msvc-${{ runner.os }}-${{ inputs.llvm-version }}
+
+    - name: Install LLVM ${{ inputs.llvm-version }}
+      if: steps.cache-llvm.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        Invoke-WebRequest "https://github.com/llvm/llvm-project/releases/download/llvmorg-${{ inputs.llvm-version }}/LLVM-${{ inputs.llvm-version }}-win64.exe" -OutFile LLVM-installer.exe
+        .\LLVM-installer.exe /S "/D=$pwd\.LLVM" | Out-Null
+        rm LLVM-installer.exe
+
+    # Not using the LLVM tools that comes with MSVC.
+    - name: Download LLVM build tools for msbuild
+      if: steps.cache-llvm.outputs.cache-hit != 'true'
+      shell: pwsh
+      run: |
+        Invoke-WebRequest "https://github.com/zufuliu/llvm-utils/releases/download/v22.09/LLVM_VS2017.zip" -OutFile LLVM_VS2017.zip
+        7z x -y "LLVM_VS2017.zip" -o"$pwd\.llvm-utils\"
+        rm LLVM_VS2017.zip
+
+    - name: Set up LLVM build tools for msbuild
+      id: setup-llvm
+      shell: pwsh
+      run: |
+        if (!(Test-Path "$pwd\.LLVM\bin\clang-cl.exe")) { exit 1 }
+        Add-Content $env:GITHUB_PATH "$pwd\.LLVM\bin"
+        Add-Content $env:GITHUB_OUTPUT "llvm-path=$pwd\.LLVM"
+        cmd /c ".llvm-utils\LLVM_VS2017\install.bat" 1
