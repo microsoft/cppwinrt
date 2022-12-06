@@ -262,6 +262,8 @@ jobs:
       - id: setup-llvm
         name: Set up llvm-mingw
         uses: ./.github/actions/setup-llvm-mingw
+        with:
+          host-arch: ${{ matrix.arch }}
 
       - name: Build cppwinrt
         run: |
@@ -354,6 +356,8 @@ jobs:
       - id: setup-llvm
         name: Set up llvm-mingw
         uses: ./.github/actions/setup-llvm-mingw
+        with:
+          host-arch: ${{ matrix.arch }}
 
       - name: Build cppwinrt tests
         run: |
