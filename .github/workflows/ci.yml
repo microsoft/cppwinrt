@@ -351,14 +351,9 @@ jobs:
         run: |
           .\.test\cppwinrt.exe -in local -out .\.test\out -verbose
 
-      - name: Install llvm-mingw toolchain
-        run: |
-          $llvm_mingw_version = "20220906"
-          Invoke-WebRequest "https://github.com/mstorsjo/llvm-mingw/releases/download/${llvm_mingw_version}/llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}.zip" -OutFile llvm-mingw.zip
-          7z x llvm-mingw.zip
-          rm llvm-mingw.zip
-          if (!(Test-Path "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\bin\clang++.exe")) { return 1 }
-          Add-Content $env:GITHUB_PATH "$pwd\llvm-mingw-${llvm_mingw_version}-ucrt-${{ matrix.arch }}\bin"
+      - id: setup-llvm
+        name: Set up llvm-mingw
+        uses: ./.github/actions/setup-llvm-mingw
 
       - name: Build cppwinrt tests
         run: |
@@ -396,12 +391,9 @@ jobs:
           curl -o Windows.winmd -L https://github.com/microsoft/windows-rs/raw/master/crates/libs/metadata/default/Windows.winmd
           install/bin/cppwinrt -in Windows.winmd -out /tmp/cppwinrt -verbose
 
-      - name: Install llvm-mingw toolchain
-        run: |
-          cd /opt
-          curl -L https://github.com/mstorsjo/llvm-mingw/releases/download/20220906/llvm-mingw-20220906-ucrt-ubuntu-18.04-x86_64.tar.xz | tar xJ
-          ls -l
-          echo "$PWD/llvm-mingw-20220906-ucrt-ubuntu-18.04-x86_64/bin" >> $GITHUB_PATH
+      - id: setup-llvm
+        name: Set up llvm-mingw
+        uses: ./.github/actions/setup-llvm-mingw
 
       - name: Cross-build tests using projection
         run: |

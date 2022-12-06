@@ -12,19 +12,20 @@ inputs:
 outputs:
   llvm-path:
     description: "The path in which llvm-mingw is installed to"
-    value: ${{ steps.setup-llvm.outputs.llvm-path }}
+    value: ${{ ((runner.os == 'Windows') && steps.setup-llvm.outputs.llvm-path) || steps.setup-llvm-linux.outputs.llvm-path }}
 runs:
   using: "composite"
   steps:
-    - name: Cache llvm-mingw
+    - name: Cache llvm-mingw (Windows)
       id: cache-llvm
+      if: runner.os == 'Windows'
       uses: actions/cache@v3
       with:
         path: .llvm-mingw
         key: llvm-mingw-${{ runner.os }}-${{ inputs.llvm-mingw-version }}-${{ inputs.host-arch }}
 
-    - name: Install llvm-mingw ${{ inputs.llvm-mingw-version }} (${{ inputs.host-arch }})
-      if: steps.cache-llvm.outputs.cache-hit != 'true'
+    - name: Install llvm-mingw ${{ inputs.llvm-mingw-version }} (Windows ${{ inputs.host-arch }})
+      if: runner.os == 'Windows' && steps.cache-llvm.outputs.cache-hit != 'true'
       shell: pwsh
       run: |
         $llvm_mingw_version = "${{ inputs.llvm-mingw-version }}"
@@ -33,8 +34,9 @@ runs:
         7z x llvm-mingw.zip -o"$pwd\.llvm-mingw"
         rm llvm-mingw.zip
 
-    - name: Set up llvm-mingw
+    - name: Set up llvm-mingw (Windows)
       id: setup-llvm
+      if: runner.os == 'Windows'
       shell: pwsh
       run: |
         $llvm_mingw_version = "${{ inputs.llvm-mingw-version }}"
@@ -44,3 +46,34 @@ runs:
         Add-Content $env:GITHUB_PATH "$pwd\.llvm-mingw\llvm-mingw-${llvm_mingw_version}-ucrt-${llvm_arch}\bin"
         # for the ASAN runtime DLL:
         Add-Content $env:GITHUB_PATH "$pwd\.llvm-mingw\llvm-mingw-${llvm_mingw_version}-ucrt-${llvm_arch}\${llvm_arch}-w64-mingw32\bin"
+
+    - name: Cache llvm-mingw (Linux)
+      id: cache-llvm-linux
+      if: runner.os == 'Linux'
+      uses: actions/cache@v3
+      with:
+        path: /opt/llvm-mingw
+        key: llvm-mingw-${{ runner.os }}-${{ inputs.llvm-mingw-version }}-${{ inputs.host-arch }}
+
+    - name: Install llvm-mingw ${{ inputs.llvm-mingw-version }} (Linux ${{ inputs.host-arch }})
+      if: runner.os == 'Linux' && steps.cache-llvm-linux.outputs.cache-hit != 'true'
+      shell: bash
+      run: |
+        llvm_mingw_version="${{ inputs.llvm-mingw-version }}"
+        llvm_arch="${{ inputs.host-arch }}"
+        mkdir -p /opt/llvm-mingw
+        cd /opt/llvm-mingw
+        curl -L https://github.com/mstorsjo/llvm-mingw/releases/download/20220906/llvm-mingw-${llvm_mingw_version}-ucrt-ubuntu-18.04-${llvm_arch}.tar.xz | tar xJ --strip-components=1
+
+    - name: Set up llvm-mingw (Linux)
+      id: setup-llvm-linux
+      if: runner.os == 'Linux'
+      shell: bash
+      run: |
+        cd /opt/llvm-mingw
+        if [ ! -x bin/clang++ ]; then
+          echo "$PWD/bin/clang++ not found or not executable!"
+          exit 1
+        fi
+        echo "llvm-path=$PWD/llvm-mingw" >> $GITHUB_OUTPUT
+        echo "$PWD/bin" >> $GITHUB_PATH
