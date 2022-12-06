@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "winrt\Windows.Foundation.h"
+#include "winrt/Windows.Foundation.h"
 #include "catch.hpp"
 #include <unordered_set>
 #include <set>

@@ -70,10 +70,14 @@ Options:
 Where <spec> is one or more of:
 
   path                Path to winmd file or recursively scanned folder
-  local               Local ^%WinDir^%\System32\WinMetadata folder
+)"
+#if defined(_WIN32) || defined(_WIN64)
+R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
   sdk[+]              Current version of Windows SDK [with extensions]
   10.0.12345.0[+]     Specific version of Windows SDK [with extensions]
-)";
+)"
+#endif
+        ;
         w.write(format, CPPWINRT_VERSION_STRING, bind_each(printOption, options));
     }
 
@@ -94,7 +98,7 @@ Where <spec> is one or more of:
         path output_folder = args.value("output", ".");
         create_directories(output_folder / "winrt/impl");
         settings.output_folder = canonical(output_folder).string();
-        settings.output_folder += '\\';
+        settings.output_folder += std::filesystem::path::preferred_separator;
 
         for (auto && include : args.values("include"))
         {
@@ -146,7 +150,7 @@ Where <spec> is one or more of:
             {
                 create_directories(component);
                 settings.component_folder = canonical(component).string();
-                settings.component_folder += '\\';
+                settings.component_folder += std::filesystem::path::preferred_separator;
             }
         }
     }
@@ -270,6 +274,7 @@ Where <spec> is one or more of:
             {
                 {
                     char* path = argv[0];
+#if defined(_WIN32) || defined(_WIN64)
                     char path_buf[32768];
                     DWORD path_size = GetModuleFileNameA(nullptr, path_buf, sizeof(path_buf));
                     if (path_size)
@@ -277,6 +282,7 @@ Where <spec> is one or more of:
                         path_buf[sizeof(path_buf) - 1] = 0;
                         path = path_buf;
                     }
+#endif
                     w.write(" tool:  %\n", path);
                 }
                 w.write(" ver:   %\n", CPPWINRT_VERSION_STRING);

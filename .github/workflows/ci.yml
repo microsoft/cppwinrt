@@ -252,6 +252,7 @@ jobs:
   test-llvm-mingw-cppwinrt:
     name: 'llvm-mingw: Build and test'
     strategy:
+      fail-fast: false
       matrix:
         arch: [i686, x86_64]
         config: [Debug, Release]
@@ -262,6 +263,8 @@ jobs:
       - id: setup-llvm
         name: Set up llvm-mingw
         uses: ./.github/actions/setup-llvm-mingw
+        with:
+          host-arch: ${{ matrix.arch }}
 
       - name: Build cppwinrt
         run: |
@@ -335,19 +338,117 @@ jobs:
     name: 'cross: Test run on Windows'
     needs: build-linux-cross-cppwinrt
     strategy:
+      fail-fast: false
       matrix:
         arch: [i686, x86_64]
     runs-on: windows-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Fetch cppwinrt executable
         uses: actions/download-artifact@v3
         with:
           name: cross-build-${{ matrix.arch }}-bin
-          path: ./
+          path: ./.test
 
       - name: Run cppwinrt to build projection
         run: |
-          .\cppwinrt.exe -in local -out .\ -verbose
+          .\.test\cppwinrt.exe -in local -out .\.test\out -verbose
+
+      - id: setup-llvm
+        name: Set up llvm-mingw
+        uses: ./.github/actions/setup-llvm-mingw
+        with:
+          host-arch: ${{ matrix.arch }}
+
+      - name: Build cppwinrt tests
+        run: |
+          mkdir build
+          cd build
+          cmake ../test -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug `
+            -DCPPWINRT_PROJECTION_INCLUDE_DIR="../.test/out" `
+            -DDOWNLOAD_WINDOWSNUMERICS=TRUE
+          cmake --build . -j2
+
+      - name: Run tests
+        run: |
+          cd build
+          ctest --verbose
+
+  build-linux-native-cppwinrt:
+    name: 'linux: GCC native build + llvm-mingw cross-build tests'
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build cppwinrt
+        run: |
+          cmake -S . -B build/native/ \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_INSTALL_PREFIX=$PWD/install/
+          cmake --build build/native/ --target install -j2
+
+      - name: Test run (cppwinrt -?)
+        run: |
+          install/bin/cppwinrt -?
+
+      - name: Test run (build projection using Windows.winmd)
+        run: |
+          curl -o Windows.winmd -L https://github.com/microsoft/windows-rs/raw/master/crates/libs/metadata/default/Windows.winmd
+          install/bin/cppwinrt -in Windows.winmd -out /tmp/cppwinrt -verbose
+
+      - id: setup-llvm
+        name: Set up llvm-mingw
+        uses: ./.github/actions/setup-llvm-mingw
+
+      - name: Cross-build tests using projection
+        run: |
+          cmake -S test -B build/cross-tests --toolchain "$PWD/cross-mingw-toolchain.cmake" \
+            -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_CXX_FLAGS="-static" \
+            -DCPPWINRT_PROJECTION_INCLUDE_DIR=/tmp/cppwinrt \
+            -DDOWNLOAD_WINDOWSNUMERICS=TRUE
+          cmake --build build/cross-tests -j2
+
+      - name: Upload built tests
+        uses: actions/upload-artifact@v3
+        with:
+          name: linux-native-cppwinrt-cross-build-tests-x86_64-bin
+          path: build/cross-tests/*.exe
+
+  test-linux-native-cppwinrt-cross-tests:
+    name: 'linux: Run llvm-mingw cross-build tests'
+    needs: build-linux-native-cppwinrt
+    strategy:
+      matrix:
+        arch: [x86_64]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Fetch test executables
+        uses: actions/download-artifact@v3
+        with:
+          name: linux-native-cppwinrt-cross-build-tests-${{ matrix.arch }}-bin
+          path: ./
+
+      - name: Run tests
+        run: |
+          $test_exes = ls *.exe -Name
+          $has_failed_tests = 0
+          foreach ($test_exe in $test_exes) {
+            echo "::group::Run '$test_exe'"
+            & .\$test_exe
+            echo "::endgroup::"
+            if ($LastExitCode -ne 0) {
+              echo "::error::Test '$test_exe' failed!"
+              $has_failed_tests = 1
+            }
+          }
+          if ($has_failed_tests -ne 0) {
+            exit 1
+          }
 
   build-msvc-natvis:
     name: 'Build natvis'

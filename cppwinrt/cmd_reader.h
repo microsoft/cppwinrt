@@ -3,6 +3,7 @@
 #include <cassert>
 #include <array>
 #include <limits>
+#include <climits>
 #include <cstdint>
 #include <string>
 #include <string_view>
@@ -12,12 +13,16 @@
 #include <filesystem>
 #include <fstream>
 #include <regex>
+
+#if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
 #include <shlwapi.h>
 #include <xmllite.h>
+#endif
 
 namespace cppwinrt
 {
+#if defined(_WIN32) || defined(_WIN64)
     struct registry_key
     {
         HKEY handle{};
@@ -291,6 +296,7 @@ namespace cppwinrt
 
         return result;
     }
+#endif /* defined(_WIN32) || defined(_WIN64) */
 
     [[noreturn]] inline void throw_invalid(std::string const& message)
     {
@@ -440,6 +446,7 @@ namespace cppwinrt
                 }
                 if (path == "local")
                 {
+#if defined(_WIN32) || defined(_WIN64)
                     std::array<char, 260> local{};
 #ifdef _WIN64
                     ExpandEnvironmentStringsA("%windir%\\System32\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
@@ -447,6 +454,9 @@ namespace cppwinrt
                     ExpandEnvironmentStringsA("%windir%\\SysNative\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
 #endif
                     add_directory(local.data());
+#else /* defined(_WIN32) || defined(_WIN64) */
+                    throw_invalid("Spec '", path, "' not supported outside of Windows");
+#endif /* defined(_WIN32) || defined(_WIN64) */
                     continue;
                 }
 
@@ -454,7 +464,11 @@ namespace cppwinrt
 
                 if (path == "sdk" || path == "sdk+")
                 {
+#if defined(_WIN32) || defined(_WIN64)
                     sdk_version = get_sdk_version();
+#else /* defined(_WIN32) || defined(_WIN64) */
+                    throw_invalid("Spec '", path, "' not supported outside of Windows");
+#endif /* defined(_WIN32) || defined(_WIN64) */
                 }
                 else
                 {
@@ -469,6 +483,7 @@ namespace cppwinrt
 
                 if (!sdk_version.empty())
                 {
+#if defined(_WIN32) || defined(_WIN64)
                     auto sdk_path = get_sdk_path();
                     auto xml_path = sdk_path;
                     xml_path /= L"Platforms\\UAP";
@@ -490,6 +505,9 @@ namespace cppwinrt
                         // Not all Extension SDKs include an SDKManifest.xml file; ignore those which do not (e.g. WindowsIoT).
                         add_files_from_xml(files, sdk_version, xml_path, sdk_path, xml_requirement::optional);
                     }
+#else /* defined(_WIN32) || defined(_WIN64) */
+                    throw_invalid("Spec '", path, "' not supported outside of Windows");
+#endif /* defined(_WIN32) || defined(_WIN64) */
 
                     continue;
                 }
@@ -531,7 +549,11 @@ namespace cppwinrt
         template<typename O, typename L>
         void extract_option(std::string_view arg, O const& options, L& last)
         {
-            if (arg[0] == '-' || arg[0] == '/')
+            if (arg[0] == '-'
+#if defined(_WIN32) || defined(_WIN64)
+                || arg[0] == '/'
+#endif
+            )
             {
                 arg.remove_prefix(1);
                 last = find(options, arg);

@@ -1,6 +1,9 @@
 # This CMake build file is intended for use with the llvm-mingw toolchain:
 # https://github.com/mstorsjo/llvm-mingw
 #
+# It also works for building natively on Linux, or cross-building from Linux
+# for running on Windows with a mingw-w64 toolchain.
+#
 # It most probably doesn't work with MSVC.
 
 cmake_minimum_required(VERSION 3.16)
@@ -16,8 +19,10 @@ if(CPPWINRT_BUILD_VERSION STREQUAL "2.3.4.5" OR CPPWINRT_BUILD_VERSION STREQUAL 
 endif()
 message(STATUS "Using version string: ${CPPWINRT_BUILD_VERSION}")
 
-# WinMD uses CreateFile2 which requires Windows 8.
-add_compile_definitions(_WIN32_WINNT=0x0602)
+if(WIN32)
+    # WinMD uses CreateFile2 which requires Windows 8.
+    add_compile_definitions(_WIN32_WINNT=0x0602)
+endif()
 
 
 # === prebuild: Generator tool for strings.cpp, strings.h, version.rc ===
@@ -77,32 +82,37 @@ set(CPPWINRT_HEADERS
     cppwinrt/type_writers.h
 )
 
-add_custom_command(
-    OUTPUT
-        "${PROJECT_BINARY_DIR}/app.manifest"
-    COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/cppwinrt/app.manifest" "${PROJECT_BINARY_DIR}/app.manifest"
-    DEPENDS "${PROJECT_SOURCE_DIR}/cppwinrt/app.manifest"
-    VERBATIM
-)
-# Do the configure_file dance so that app.manifest.rc don't get modified every
-# single time the project is reconfigured and trigger a rebuild.
-file(WRITE "${PROJECT_BINARY_DIR}/app.manifest.rc.in" "1 24 \"app.manifest\"\n")
-configure_file(
-    "${PROJECT_BINARY_DIR}/app.manifest.rc.in"
-    "${PROJECT_BINARY_DIR}/app.manifest.rc"
-    COPYONLY
-)
+if(WIN32)
+    add_custom_command(
+        OUTPUT
+            "${PROJECT_BINARY_DIR}/app.manifest"
+        COMMAND ${CMAKE_COMMAND} -E copy "${PROJECT_SOURCE_DIR}/cppwinrt/app.manifest" "${PROJECT_BINARY_DIR}/app.manifest"
+        DEPENDS "${PROJECT_SOURCE_DIR}/cppwinrt/app.manifest"
+        VERBATIM
+    )
+    # Do the configure_file dance so that app.manifest.rc don't get modified every
+    # single time the project is reconfigured and trigger a rebuild.
+    file(WRITE "${PROJECT_BINARY_DIR}/app.manifest.rc.in" "1 24 \"app.manifest\"\n")
+    configure_file(
+        "${PROJECT_BINARY_DIR}/app.manifest.rc.in"
+        "${PROJECT_BINARY_DIR}/app.manifest.rc"
+        COPYONLY
+    )
 
-set(CPPWINRT_RESOURCES
-    "${PROJECT_BINARY_DIR}/app.manifest"
-    "${PROJECT_BINARY_DIR}/app.manifest.rc"
-    "${PROJECT_BINARY_DIR}/version.rc"
-)
+    set(CPPWINRT_RESOURCES
+        "${PROJECT_BINARY_DIR}/app.manifest"
+        "${PROJECT_BINARY_DIR}/app.manifest.rc"
+        "${PROJECT_BINARY_DIR}/version.rc"
+    )
+endif()
 
 add_executable(cppwinrt ${CPPWINRT_SRCS} ${CPPWINRT_RESOURCES} ${CPPWINRT_HEADERS})
 target_compile_definitions(cppwinrt PRIVATE CPPWINRT_VERSION_STRING="${CPPWINRT_BUILD_VERSION}")
 target_include_directories(cppwinrt PRIVATE ${PROJECT_BINARY_DIR})
-target_link_libraries(cppwinrt shlwapi)
+
+if(WIN32)
+    target_link_libraries(cppwinrt shlwapi)
+endif()
 
 install(TARGETS cppwinrt)
 
@@ -158,15 +168,17 @@ int main() {}
         add_dependencies(cppwinrt gen-libxmllite)
     endif()
 endif()
-target_link_libraries(cppwinrt "${XMLLITE_LIBRARY}")
+if(WIN32)
+    target_link_libraries(cppwinrt "${XMLLITE_LIBRARY}")
+endif()
 
 
 # === winmd: External header-only library for reading winmd files ===
 
 include(ExternalProject)
 ExternalProject_Add(winmd
-    URL https://github.com/microsoft/winmd/releases/download/1.0.210629.2/Microsoft.Windows.WinMD.1.0.210629.2.nupkg
-    URL_HASH SHA256=4c5f29d948f5b3d724d229664c8f8e4823250d3c9f23ad8067b732fc7076d8c7
+    GIT_REPOSITORY https://github.com/microsoft/winmd.git
+    GIT_TAG 0f1eae3bfa63fa2ba3c2912cbfe72a01db94cc5a
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
@@ -174,10 +186,10 @@ ExternalProject_Add(winmd
 add_dependencies(cppwinrt winmd)
 ExternalProject_Get_Property(winmd SOURCE_DIR)
 set(winmd_SOURCE_DIR "${SOURCE_DIR}")
-target_include_directories(cppwinrt PRIVATE "${winmd_SOURCE_DIR}")
+target_include_directories(cppwinrt PRIVATE "${winmd_SOURCE_DIR}/src")
 
 
-if(NOT CMAKE_CROSSCOMPILING)
+if(WIN32 AND NOT CMAKE_CROSSCOMPILING)
     include(CTest)
     if(BUILD_TESTING)
         add_subdirectory(test)
