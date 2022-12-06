@@ -252,6 +252,7 @@ jobs:
   test-llvm-mingw-cppwinrt:
     name: 'llvm-mingw: Build and test'
     strategy:
+      fail-fast: false
       matrix:
         arch: [i686, x86_64]
         config: [Debug, Release]
@@ -337,6 +338,7 @@ jobs:
     name: 'cross: Test run on Windows'
     needs: build-linux-cross-cppwinrt
     strategy:
+      fail-fast: false
       matrix:
         arch: [i686, x86_64]
     runs-on: windows-latest
