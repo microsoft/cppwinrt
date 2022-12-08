@@ -303,6 +303,51 @@ jobs:
           $env:UBSAN_OPTIONS = "print_stacktrace=1"
           ctest --verbose
 
+  test-msys2-gcc-cppwinrt:
+    name: 'gcc/msys2: Build and test (${{ matrix.sys }}, ${{ matrix.config }})'
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { sys: mingw32, arch: i686, config: Debug }
+          - { sys: mingw32, arch: i686, config: Release }
+          - { sys: mingw64, arch: x86_64, config: Release }
+          - { sys: ucrt64, arch: x86_64, config: Release }
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+    steps:
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: ${{matrix.sys}}
+          pacboy: >-
+            crt:p
+            gcc:p
+            binutils:p
+            cmake:p
+            ninja:p
+
+      - uses: actions/checkout@v3
+
+      - name: Build cppwinrt
+        run: |
+          mkdir build
+          cd build
+          cmake ../ -GNinja -DCMAKE_BUILD_TYPE=${{ matrix.config }} \
+            -DDOWNLOAD_WINDOWSNUMERICS=TRUE
+          cmake --build . --target cppwinrt
+
+      - name: Build tests
+        run: |
+          cd build
+          cmake --build . --target test-vanilla test_cpp20 test_win7 test_old
+
+      - name: Run tests
+        run: |
+          cd build
+          ctest --verbose
+
   build-linux-cross-cppwinrt:
     name: 'cross: Cross-build from Linux'
     strategy:
