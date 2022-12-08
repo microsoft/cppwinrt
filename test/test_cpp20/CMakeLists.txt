@@ -42,5 +42,5 @@ add_dependencies(test_cpp20 build-cppwinrt-projection)
 
 add_test(
     NAME test_cpp20
-    COMMAND "$<TARGET_FILE:test_cpp20>"
+    COMMAND "$<TARGET_FILE:test_cpp20>" ${TEST_COLOR_ARG}
 )

@@ -94,6 +94,13 @@ if(ENABLE_TEST_SANITIZERS)
 endif()
 
 
+set(USE_ANSI_COLOR FALSE CACHE BOOL "Enable ANSI colour output for Catch2 test runner.")
+if(USE_ANSI_COLOR)
+    add_compile_definitions(CATCH_CONFIG_COLOUR_ANSI)
+    set(TEST_COLOR_ARG "--use-colour yes")
+endif()
+
+
 add_subdirectory(test)
 add_subdirectory(test_cpp20)
 add_subdirectory(test_win7)

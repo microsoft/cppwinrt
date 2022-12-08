@@ -54,5 +54,5 @@ add_dependencies(test_win7 build-cppwinrt-projection)
 
 add_test(
     NAME test_win7
-    COMMAND "$<TARGET_FILE:test_win7>"
+    COMMAND "$<TARGET_FILE:test_win7>" ${TEST_COLOR_ARG}
 )

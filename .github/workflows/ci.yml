@@ -277,6 +277,7 @@ jobs:
           }
           cmake ../ -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=${{ matrix.config }} `
             -DDOWNLOAD_WINDOWSNUMERICS=TRUE `
+            -DUSE_ANSI_COLOR=TRUE `
             -DENABLE_TEST_SANITIZERS=$sanitizers
           cmake --build . -j2 --target cppwinrt
 
@@ -335,7 +336,8 @@ jobs:
           mkdir build
           cd build
           cmake ../ -GNinja -DCMAKE_BUILD_TYPE=${{ matrix.config }} \
-            -DDOWNLOAD_WINDOWSNUMERICS=TRUE
+            -DDOWNLOAD_WINDOWSNUMERICS=TRUE \
+            -DUSE_ANSI_COLOR=TRUE
           cmake --build . --target cppwinrt
 
       - name: Build tests
@@ -412,7 +414,8 @@ jobs:
           cd build
           cmake ../test -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=Debug `
             -DCPPWINRT_PROJECTION_INCLUDE_DIR="../.test/out" `
-            -DDOWNLOAD_WINDOWSNUMERICS=TRUE
+            -DDOWNLOAD_WINDOWSNUMERICS=TRUE `
+            -DUSE_ANSI_COLOR=TRUE
           cmake --build . -j2
 
       - name: Run tests
@@ -453,7 +456,8 @@ jobs:
             -DCMAKE_BUILD_TYPE=Debug \
             -DCMAKE_CXX_FLAGS="-static" \
             -DCPPWINRT_PROJECTION_INCLUDE_DIR=/tmp/cppwinrt \
-            -DDOWNLOAD_WINDOWSNUMERICS=TRUE
+            -DDOWNLOAD_WINDOWSNUMERICS=TRUE \
+            -DUSE_ANSI_COLOR=TRUE
           cmake --build build/cross-tests -j2
 
       - name: Upload built tests
@@ -484,7 +488,7 @@ jobs:
           $has_failed_tests = 0
           foreach ($test_exe in $test_exes) {
             echo "::group::Run '$test_exe'"
-            & .\$test_exe
+            & .\$test_exe --use-colour yes
             echo "::endgroup::"
             if ($LastExitCode -ne 0) {
               echo "::error::Test '$test_exe' failed!"
