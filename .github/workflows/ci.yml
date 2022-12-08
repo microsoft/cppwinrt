@@ -257,6 +257,9 @@ jobs:
         arch: [i686, x86_64]
         config: [Debug, Release]
     runs-on: windows-latest
+    env:
+      CMAKE_COLOR_DIAGNOSTICS: 1
+      CLICOLOR_FORCE: 1
     steps:
       - uses: actions/checkout@v3
 
@@ -278,6 +281,7 @@ jobs:
           cmake ../ -G"MinGW Makefiles" -DCMAKE_BUILD_TYPE=${{ matrix.config }} `
             -DDOWNLOAD_WINDOWSNUMERICS=TRUE `
             -DUSE_ANSI_COLOR=TRUE `
+            -DCMAKE_CXX_FLAGS="-fansi-escape-codes" `
             -DENABLE_TEST_SANITIZERS=$sanitizers
           cmake --build . -j2 --target cppwinrt
 
@@ -315,6 +319,9 @@ jobs:
           - { sys: mingw64, arch: x86_64, config: Release }
           - { sys: ucrt64, arch: x86_64, config: Release }
     runs-on: windows-latest
+    env:
+      CMAKE_COLOR_DIAGNOSTICS: 1
+      CLICOLOR_FORCE: 1
     defaults:
       run:
         shell: msys2 {0}
@@ -356,6 +363,9 @@ jobs:
       matrix:
         arch: [i686, x86_64]
     runs-on: ubuntu-22.04
+    env:
+      CMAKE_COLOR_DIAGNOSTICS: 1
+      CLICOLOR_FORCE: 1
     steps:
       - uses: actions/checkout@v3
 
@@ -426,6 +436,9 @@ jobs:
   build-linux-native-cppwinrt:
     name: 'linux: GCC native build + llvm-mingw cross-build tests'
     runs-on: ubuntu-22.04
+    env:
+      CMAKE_COLOR_DIAGNOSTICS: 1
+      CLICOLOR_FORCE: 1
     steps:
       - uses: actions/checkout@v3
 
