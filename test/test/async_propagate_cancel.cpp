@@ -132,7 +132,8 @@ namespace
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async_propagate_cancel", "[.clang-crash]")
 #else
-TEST_CASE("async_propagate_cancel")
+// FIXME: mayfail because of https://github.com/microsoft/cppwinrt/issues/1243
+TEST_CASE("async_propagate_cancel", "[!mayfail]")
 #endif
 {
     Check(Action);
