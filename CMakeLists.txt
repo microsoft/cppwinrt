@@ -182,6 +182,7 @@ ExternalProject_Add(winmd
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
     INSTALL_COMMAND ""
+    UPDATE_COMMAND ""
 )
 add_dependencies(cppwinrt winmd)
 ExternalProject_Get_Property(winmd SOURCE_DIR)
