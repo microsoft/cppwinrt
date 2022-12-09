@@ -1566,10 +1566,12 @@ namespace
         co_await resume_on_signal(signal); // should not suspend because already signaled
         REQUIRE(caller == GetCurrentThreadId()); // still on calling thread
 
-        REQUIRE(false == co_await resume_on_signal(signal, 1us)); // should suspend but timeout
+        bool suspend_but_timeout_result = co_await resume_on_signal(signal, 1us);
+        REQUIRE(false == suspend_but_timeout_result); // should suspend but timeout
         REQUIRE(caller != GetCurrentThreadId()); // now on background thread
 
-        REQUIRE(true == co_await resume_on_signal(signal, 1s)); // should eventually succeed
+        bool suspend_and_succeed_result = co_await resume_on_signal(signal, 1s);
+        REQUIRE(true == suspend_and_succeed_result); // should eventually succeed
     }
 }
 
