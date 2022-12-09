@@ -316,6 +316,7 @@ jobs:
         include:
           - { sys: mingw32, arch: i686, config: Debug }
           - { sys: mingw32, arch: i686, config: Release }
+          - { sys: mingw64, arch: x86_64, config: Debug }
           - { sys: mingw64, arch: x86_64, config: Release }
           - { sys: ucrt64, arch: x86_64, config: Release }
     runs-on: windows-latest
@@ -351,7 +352,7 @@ jobs:
       - name: Build tests
         run: |
           cd build
-          cmake --build . --target test-vanilla test_cpp20 test_win7 test_old
+          cmake --build . -j2 --target test-vanilla test_cpp20 test_win7 test_old
 
       - name: Run tests
         run: |
