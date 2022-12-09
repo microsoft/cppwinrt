@@ -63,6 +63,12 @@ set_source_files_properties(
     PROPERTIES SKIP_PRECOMPILE_HEADERS true
 )
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    # GCC seems to miscompile out_params_bad.cpp if -fdevirtualize is enabled.
+    # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108040
+    set_source_files_properties(out_params_bad.cpp PROPERTIES COMPILE_OPTIONS "-fno-devirtualize")
+endif()
+
 add_dependencies(test-vanilla build-cppwinrt-projection)
 
 add_test(
