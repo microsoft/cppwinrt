@@ -47,11 +47,13 @@ endforeach()
 add_executable(test_old Main.cpp ${TEST_SRCS})
 target_link_libraries(test_old runtimeobject synchronization)
 
-target_precompile_headers(test_old PRIVATE pch.h)
-set_source_files_properties(
-    conditional_implements_pure.cpp
-    PROPERTIES SKIP_PRECOMPILE_HEADERS true
-)
+if(NOT SKIP_LARGE_PCH)
+    target_precompile_headers(test_old PRIVATE pch.h)
+    set_source_files_properties(
+        conditional_implements_pure.cpp
+        PROPERTIES SKIP_PRECOMPILE_HEADERS true
+    )
+endif()
 
 add_dependencies(test_old build-cppwinrt-projection)
 

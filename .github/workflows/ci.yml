@@ -344,9 +344,13 @@ jobs:
         run: |
           mkdir build
           cd build
+          if [[ "${{ matrix.arch }}" = "i686" ]]; then
+            skip_large_pch_arg="-DSKIP_LARGE_PCH=TRUE"
+          fi
           cmake ../ -GNinja -DCMAKE_BUILD_TYPE=${{ matrix.config }} \
             -DDOWNLOAD_WINDOWSNUMERICS=TRUE \
-            -DUSE_ANSI_COLOR=TRUE
+            -DUSE_ANSI_COLOR=TRUE \
+            $skip_large_pch_arg
           cmake --build . --target cppwinrt
 
       - name: Build tests
