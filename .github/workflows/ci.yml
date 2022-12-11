@@ -443,12 +443,14 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cross_toolchain: [gcc, llvm-mingw]
+        # TODO: Enable gcc build once Arch Linux gets more recent mingw-w64 headers (ver. 11 perhaps?)
+        # cross_toolchain: [gcc, llvm-mingw]
+        cross_toolchain: [llvm-mingw]
         cross_arch: [i686, x86_64]
-        include:
-          - cross_toolchain: gcc
-            container:
-              image: archlinux:base-devel
+        # include:
+        #   - cross_toolchain: gcc
+        #     container:
+        #       image: archlinux:base-devel
     runs-on: ubuntu-22.04
     container: ${{ matrix.container }}
     defaults:
@@ -515,7 +517,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        cross_toolchain: [gcc, llvm-mingw]
+        # TODO: Enable gcc build test when it is buildable
+        # cross_toolchain: [gcc, llvm-mingw]
+        cross_toolchain: [llvm-mingw]
         cross_arch: [i686, x86_64]
     runs-on: windows-latest
     steps:
