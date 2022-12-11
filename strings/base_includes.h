@@ -27,7 +27,9 @@
 
 #if __has_include(<windowsnumerics.impl.h>)
 #define WINRT_IMPL_NUMERICS
+#if __has_include(<directxmath.h>)
 #include <directxmath.h>
+#endif
 #endif
 
 #ifndef WINRT_LEAN_AND_MEAN
