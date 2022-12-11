@@ -439,13 +439,32 @@ jobs:
           ctest --verbose
 
   build-linux-native-cppwinrt:
-    name: 'linux: GCC native build + llvm-mingw cross-build tests'
+    name: 'linux: GCC native build + mingw-w64 cross-build tests'
+    strategy:
+      fail-fast: false
+      matrix:
+        cross_toolchain: [gcc, llvm-mingw]
+        cross_arch: [i686, x86_64]
+        include:
+          - cross_toolchain: gcc
+            container:
+              image: archlinux:base-devel
     runs-on: ubuntu-22.04
+    container: ${{ matrix.container }}
+    defaults:
+      run:
+        shell: bash
     env:
       CMAKE_COLOR_DIAGNOSTICS: 1
       CLICOLOR_FORCE: 1
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install build tools
+        if: matrix.cross_toolchain == 'gcc'
+        run: |
+          pacman --noconfirm -Suuy
+          pacman --needed --noconfirm -S cmake ninja git
 
       - name: Build cppwinrt
         run: |
@@ -465,12 +484,18 @@ jobs:
 
       - id: setup-llvm
         name: Set up llvm-mingw
+        if: matrix.cross_toolchain == 'llvm-mingw'
         uses: ./.github/actions/setup-llvm-mingw
+
+      - name: Install GCC cross compiler
+        if: matrix.cross_toolchain == 'gcc'
+        run: |
+          pacman --needed --noconfirm -S mingw-w64-gcc
 
       - name: Cross-build tests using projection
         run: |
           cmake -S test -B build/cross-tests --toolchain "$PWD/cross-mingw-toolchain.cmake" \
-            -DCMAKE_SYSTEM_PROCESSOR=x86_64 \
+            -DCMAKE_SYSTEM_PROCESSOR=${{ matrix.cross_arch }} \
             -DCMAKE_BUILD_TYPE=Debug \
             -DCMAKE_CXX_FLAGS="-static" \
             -DCPPWINRT_PROJECTION_INCLUDE_DIR=/tmp/cppwinrt \
@@ -481,15 +506,17 @@ jobs:
       - name: Upload built tests
         uses: actions/upload-artifact@v3
         with:
-          name: linux-native-cppwinrt-cross-build-tests-x86_64-bin
+          name: linux-native-cppwinrt-cross-build-tests-${{ matrix.cross_toolchain }}-${{ matrix.cross_arch }}-bin
           path: build/cross-tests/*.exe
 
   test-linux-native-cppwinrt-cross-tests:
     name: 'linux: Run llvm-mingw cross-build tests'
     needs: build-linux-native-cppwinrt
     strategy:
+      fail-fast: false
       matrix:
-        arch: [x86_64]
+        cross_toolchain: [gcc, llvm-mingw]
+        cross_arch: [i686, x86_64]
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
@@ -497,7 +524,7 @@ jobs:
       - name: Fetch test executables
         uses: actions/download-artifact@v3
         with:
-          name: linux-native-cppwinrt-cross-build-tests-${{ matrix.arch }}-bin
+          name: linux-native-cppwinrt-cross-build-tests-${{ matrix.cross_toolchain }}-${{ matrix.cross_arch }}-bin
           path: ./
 
       - name: Run tests
