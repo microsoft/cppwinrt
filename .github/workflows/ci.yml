@@ -314,7 +314,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { sys: mingw32, arch: i686, config: Debug }
           - { sys: mingw32, arch: i686, config: Release }
           - { sys: mingw64, arch: x86_64, config: Debug }
           - { sys: mingw64, arch: x86_64, config: Release }
