@@ -109,7 +109,7 @@ TEST_CASE("custom_error_logger")
     REQUIRE(s_loggerArgs.functionName == nullptr);
 #else
     // GCC/Clang can only compile these tests in C++20 mode. If source_location
-    // is available these fields will be filled in. Don't do any cheks here
+    // is available these fields will be filled in. Don't do any checks here
     // because these are already tested in `test_cpp20/custom_error.cpp`.
 #endif
 
