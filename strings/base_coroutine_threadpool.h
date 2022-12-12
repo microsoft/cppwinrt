@@ -556,35 +556,18 @@ WINRT_EXPORT namespace winrt
         return awaitable{ handle, timeout };
     }
 
-    // HACK: GCC does not compile co_await on thread_pool because it wants
-    // a copy constructor. Since m_pool is not copyable, in order to provide
-    // a workaround we have to wrap it in a shared_ptr. Apply this workaround
-    // only for GCC so we don't affect other compilers.
-    // This might be related to upstream bug:
-    // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103963
     struct thread_pool
     {
         thread_pool() :
-#if defined(__GNUC__) && !defined(__clang__)
-            m_pool(std::make_shared<handle_type<pool_traits>>(
-                check_pointer(WINRT_IMPL_CreateThreadpool(nullptr))))
-#else
             m_pool(check_pointer(WINRT_IMPL_CreateThreadpool(nullptr)))
-#endif
         {
-            m_environment.Pool = get_pool();
+            m_environment.Pool = m_pool.get();
         }
-
-#if defined(__GNUC__) && !defined(__clang__)
-        // HACK: See above
-        thread_pool(thread_pool const&) = default;
-        thread_pool &operator=(thread_pool const&) = delete;
-#endif
 
         void thread_limits(uint32_t const high, uint32_t const low)
         {
-            WINRT_IMPL_SetThreadpoolThreadMaximum(get_pool(), high);
-            check_bool(WINRT_IMPL_SetThreadpoolThreadMinimum(get_pool(), low));
+            WINRT_IMPL_SetThreadpoolThreadMaximum(m_pool.get(), high);
+            check_bool(WINRT_IMPL_SetThreadpoolThreadMinimum(m_pool.get(), low));
         }
 
         bool await_ready() const noexcept
@@ -649,21 +632,7 @@ WINRT_EXPORT namespace winrt
             uint32_t Size{ sizeof(environment) };
         };
 
-        pool_traits::type get_pool() const
-        {
-#if defined(__GNUC__) && !defined(__clang__)
-            return m_pool->get();
-#else
-            return m_pool.get();
-#endif
-        }
-
-#if defined(__GNUC__) && !defined(__clang__)
-        // HACK: See above
-        std::shared_ptr<handle_type<pool_traits>> m_pool;
-#else
         handle_type<pool_traits> m_pool;
-#endif
         environment m_environment;
     };
 
