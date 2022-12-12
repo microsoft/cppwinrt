@@ -108,14 +108,9 @@ TEST_CASE("custom_error_logger")
     REQUIRE(s_loggerArgs.fileName == nullptr);
     REQUIRE(s_loggerArgs.functionName == nullptr);
 #else
-    // GCC can only compile these tests in C++20 so these fields will be filled in.
-    REQUIRE(s_loggerArgs.lineNumber == 103);
-    const auto fileNameSv = std::string_view(s_loggerArgs.fileName);
-    REQUIRE(!fileNameSv.empty());
-    REQUIRE(fileNameSv.find("custom_error.cpp") != std::string::npos);
-    const auto functionNameSv = std::string_view(s_loggerArgs.functionName);
-    REQUIRE(!functionNameSv.empty());
-    // Don't check the function name here. It is tested in `test_cpp20/custom_error.cpp`.
+    // GCC/Clang can only compile these tests in C++20 mode. If source_location
+    // is available these fields will be filled in. Don't do any cheks here
+    // because these are already tested in `test_cpp20/custom_error.cpp`.
 #endif
 
     REQUIRE(s_loggerArgs.returnAddress);
