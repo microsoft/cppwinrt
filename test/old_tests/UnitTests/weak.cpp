@@ -50,8 +50,8 @@ namespace
         }
     };
 
-// FIXME: Fail to compile with Clang due to incomplete type.
-#if !defined(__clang__)
+// FIXME: Fail to compile with Clang and GCC due to incomplete type.
+#if !defined(__clang__) && !defined(__GNUC__)
     struct WeakWithSelfReference : implements<WeakWithSelfReference, IStringable>
     {
         winrt::weak_ref<WeakWithSelfReference> weak_self = get_weak();
@@ -447,8 +447,8 @@ TEST_CASE("weak,assignment")
     // Not constructible from L"" (because Uri constructor is explicit)
     static_assert(!std::is_constructible_v<weak_ref<Uri>, const wchar_t*>);
 
-// FIXME: WeakWithSelfReference fails to compile with Clang.
-#if !defined(__clang__)
+// FIXME: WeakWithSelfReference fails to compile with Clang and GCC.
+#if !defined(__clang__) && !defined(__GNUC__)
     // Constructible from com_ptr<Derived> because com_ptr<Derived> is
     // implicitly convertible to com_ptr<Base>.
     struct Derived : WeakWithSelfReference {};
@@ -487,8 +487,8 @@ TEST_CASE("weak,no_module_lock")
     REQUIRE(get_module_lock() == object_count);
 }
 
-// FIXME: WeakWithSelfReference fails to compile with Clang.
-#if !defined(__clang__)
+// FIXME: WeakWithSelfReference fails to compile with Clang and GCC.
+#if !defined(__clang__) && !defined(__GNUC__)
 TEST_CASE("weak,self")
 {
     // The REQUIRE statements are in the WeakWithSelfReference class itself.

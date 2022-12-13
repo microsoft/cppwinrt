@@ -328,6 +328,19 @@ WINRT_EXPORT namespace winrt
             {
             }
 
+#if defined(__GNUC__) && !defined(__clang__)
+            // HACK: GCC seems to require a move when calling operator co_await
+            // on the return value of resume_after.
+            // This might be related to upstream bug:
+            // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99575
+            awaitable(awaitable &&other) noexcept :
+                m_timer{std::move(other.m_timer)},
+                m_duration{std::move(other.m_duration)},
+                m_handle{std::move(other.m_handle)},
+                m_state{other.m_state.load()}
+            {}
+#endif
+
             void enable_cancellation(cancellable_promise* promise)
             {
                 promise->set_canceller([](void* context)
@@ -433,6 +446,21 @@ WINRT_EXPORT namespace winrt
                 m_timeout(timeout),
                 m_handle(handle)
             {}
+
+#if defined(__GNUC__) && !defined(__clang__)
+            // HACK: GCC seems to require a move when calling operator co_await
+            // on the return value of resume_on_signal.
+            // This might be related to upstream bug:
+            // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99575
+            awaitable(awaitable &&other) noexcept :
+                m_wait{std::move(other.m_wait)},
+                m_timeout{std::move(other.m_timeout)},
+                m_handle{std::move(other.m_handle)},
+                m_result{std::move(other.m_result)},
+                m_resume{std::move(other.m_resume)},
+                m_state{other.m_state.load()}
+            {}
+#endif
 
             void enable_cancellation(cancellable_promise* promise)
             {

@@ -42,12 +42,12 @@ WINRT_EXPORT namespace winrt
 
         static time_t to_time_t(time_point const& time) noexcept
         {
-            return static_cast<time_t>(std::chrono::system_clock::to_time_t(to_sys(std::chrono::time_point_cast<std::chrono::system_clock::duration>(time))));
+            return static_cast<time_t>(std::chrono::system_clock::to_time_t(std::chrono::time_point_cast<std::chrono::system_clock::duration>(to_sys(time))));
         }
 
         static time_point from_time_t(time_t time) noexcept
         {
-            return std::chrono::time_point_cast<duration>(from_sys(std::chrono::system_clock::from_time_t(time)));
+            return from_sys(std::chrono::time_point_cast<duration>(std::chrono::system_clock::from_time_t(time)));
         }
 
         static file_time to_file_time(time_point const& time) noexcept
