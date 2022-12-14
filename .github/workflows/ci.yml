@@ -548,6 +548,34 @@ jobs:
             exit 1
           }
 
+  build-macos-native-cppwinrt:
+    name: 'macOS: GCC native build'
+    runs-on: macos-latest
+    defaults:
+      run:
+        shell: bash
+    env:
+      CMAKE_COLOR_DIAGNOSTICS: 1
+      CLICOLOR_FORCE: 1
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build cppwinrt
+        run: |
+          cmake -S . -B build/native/ \
+            -DCMAKE_BUILD_TYPE=RelWithDebInfo \
+            -DCMAKE_INSTALL_PREFIX=$PWD/install/
+          cmake --build build/native/ --target install -j2
+
+      - name: Test run (cppwinrt -?)
+        run: |
+          install/bin/cppwinrt -?
+
+      - name: Test run (build projection using Windows.winmd)
+        run: |
+          curl -o Windows.winmd -L https://github.com/microsoft/windows-rs/raw/master/crates/libs/metadata/default/Windows.winmd
+          install/bin/cppwinrt -in Windows.winmd -out build/out -verbose
+
   build-msvc-natvis:
     name: 'Build natvis'
     strategy:
