@@ -39,6 +39,16 @@ list(APPEND BROKEN_TESTS
     when
 )
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    # FIXME: GCC does not compile co_await on thread_pool because it wants
+    # a copy constructor. Disabling this test for now.
+    # This might be related to upstream bug:
+    # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103963
+    list(APPEND BROKEN_TESTS
+        thread_pool
+    )
+endif()
+
 # Exclude broken tests
 foreach(TEST_SRCS_EXCLUDE_ITEM IN LISTS BROKEN_TESTS)
     list(FILTER TEST_SRCS EXCLUDE REGEX "/${TEST_SRCS_EXCLUDE_ITEM}\\.cpp")
@@ -63,9 +73,20 @@ set_source_files_properties(
     PROPERTIES SKIP_PRECOMPILE_HEADERS true
 )
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    # GCC seems to miscompile out_params_bad.cpp if -fdevirtualize is enabled.
+    # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=108040
+    set_source_files_properties(out_params_bad.cpp PROPERTIES COMPILE_OPTIONS "-fno-devirtualize")
+
+    if(CMAKE_BUILD_TYPE STREQUAL "Release")
+        # GCC miscompiles multi_threaded_vector.cpp with -O3
+        set_source_files_properties(multi_threaded_vector.cpp PROPERTIES COMPILE_OPTIONS "-O2")
+    endif()
+endif()
+
 add_dependencies(test-vanilla build-cppwinrt-projection)
 
 add_test(
     NAME test
-    COMMAND "$<TARGET_FILE:test-vanilla>"
+    COMMAND "$<TARGET_FILE:test-vanilla>" ${TEST_COLOR_ARG}
 )

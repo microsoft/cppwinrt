@@ -1,7 +1,10 @@
 set(CMAKE_CXX_STANDARD 20)
-# std::format, std::ranges::is_heap, std::views::reverse, std::ranges::max
-# are experimental in libc++ as of Clang 15.
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexperimental-library")
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    # std::format, std::ranges::is_heap, std::views::reverse, std::ranges::max
+    # are experimental in libc++ as of Clang 15.
+    # FIXME: Should probably use compile test instead?
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fexperimental-library")
+endif()
 
 if(ENABLE_TEST_SANITIZERS)
     # As of LLVM 15, custom_error.cpp doesn't build with ASAN due to:
@@ -39,5 +42,5 @@ add_dependencies(test_cpp20 build-cppwinrt-projection)
 
 add_test(
     NAME test_cpp20
-    COMMAND "$<TARGET_FILE:test_cpp20>"
+    COMMAND "$<TARGET_FILE:test_cpp20>" ${TEST_COLOR_ARG}
 )

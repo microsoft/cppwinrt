@@ -32,6 +32,16 @@ list(APPEND BROKEN_TESTS
     when
 )
 
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    # FIXME: GCC does not compile co_await on thread_pool because it wants
+    # a copy constructor. Disabling this test for now.
+    # This might be related to upstream bug:
+    # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=103963
+    list(APPEND BROKEN_TESTS
+        thread_pool
+    )
+endif()
+
 # Exclude broken tests
 foreach(TEST_SRCS_EXCLUDE_ITEM IN LISTS BROKEN_TESTS)
     list(FILTER TEST_SRCS EXCLUDE REGEX "/${TEST_SRCS_EXCLUDE_ITEM}\\.cpp")
@@ -54,5 +64,5 @@ add_dependencies(test_win7 build-cppwinrt-projection)
 
 add_test(
     NAME test_win7
-    COMMAND "$<TARGET_FILE:test_win7>"
+    COMMAND "$<TARGET_FILE:test_win7>" ${TEST_COLOR_ARG}
 )

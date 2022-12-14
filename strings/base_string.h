@@ -488,11 +488,23 @@ namespace winrt::impl
 
         T const& object;
 
+#if !defined(__GNUC__) || defined(__clang__)
         template <typename R>
         operator R const& () const noexcept
         {
             return reinterpret_cast<R const&>(object);
         }
+#else
+        // HACK: GCC does not handle template deduction of const T& conversion
+        // function according to CWG issue 976. To make this compile on GCC,
+        // we have to intentionally drop the const qualifier.
+        // Ref: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61663
+        template <typename R>
+        operator R& () const noexcept
+        {
+            return const_cast<R&>(reinterpret_cast<R const&>(object));
+        }
+#endif
     };
 
     template <typename T>

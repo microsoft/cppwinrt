@@ -59,7 +59,11 @@ TEST_CASE("custom_error_logger")
     REQUIRE(fileNameSv.find("custom_error.cpp") != std::string::npos);
     const auto functionNameSv = std::string_view(s_loggerArgs.functionName);
     REQUIRE(!functionNameSv.empty());
+#if defined(__GNUC__) && !defined(__clang__)
+    REQUIRE(functionNameSv == "void {anonymous}::FailOnLine15()");
+#else
     REQUIRE(functionNameSv == "FailOnLine15");
+#endif
 
     REQUIRE(s_loggerArgs.returnAddress);
     REQUIRE(s_loggerArgs.result == 0x80000018); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
