@@ -346,7 +346,7 @@ namespace winrt::impl
         // on the return value of resume_after.
         // This might be related to upstream bug:
         // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99575
-        awaitable(awaitable &&other) noexcept :
+        timespan_awaiter(timespan_awaiter &&other) noexcept :
             m_timer{std::move(other.m_timer)},
             m_duration{std::move(other.m_duration)},
             m_handle{std::move(other.m_handle)},
@@ -460,7 +460,7 @@ namespace winrt::impl
         // on the return value of resume_on_signal.
         // This might be related to upstream bug:
         // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99575
-        awaitable(awaitable &&other) noexcept :
+        signal_awaiter(signal_awaiter &&other) noexcept :
             m_wait{std::move(other.m_wait)},
             m_timeout{std::move(other.m_timeout)},
             m_handle{std::move(other.m_handle)},
