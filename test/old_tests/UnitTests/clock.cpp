@@ -76,8 +76,8 @@ TEST_CASE("clock, time_t")
     REQUIRE(clock::to_time_t(clock::from_time_t(now_tt)) == now_tt);
 
     // Conversions are verified to be consistent. Now, verify that we're correctly converting epochs
-    const auto diff = abs(clock::now() - clock::from_time_t(time(nullptr)));
-    REQUIRE(diff < seconds{ 1 });
+    const auto diff = duration_cast<milliseconds>(abs(clock::now() - clock::from_time_t(time(nullptr)))).count();
+    REQUIRE(diff < 1000);
 }
 
 TEST_CASE("clock, FILETIME")
