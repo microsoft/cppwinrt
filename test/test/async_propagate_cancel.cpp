@@ -104,7 +104,7 @@ namespace
     }
 
     template <typename F>
-    void Check(F make)
+    void CheckWithWait(F make, bool wait)
     {
         handle completed{ CreateEvent(nullptr, true, false, nullptr) };
         auto async = make();
@@ -117,6 +117,12 @@ namespace
                 SetEvent(completed.get());
             });
 
+        if (wait)
+        {
+            // ensure we hit the co_await that's cancellable before trying to cancel.
+            Sleep(1000);
+        }
+
         async.Cancel();
 
         // Wait indefinitely if a debugger is present, to make it easier to debug this test.
@@ -126,14 +132,20 @@ namespace
         REQUIRE(async.ErrorCode() == HRESULT_FROM_WIN32(ERROR_CANCELLED));
         REQUIRE_THROWS_AS(async.GetResults(), hresult_canceled);
     }
+
+    template <typename F>
+    void Check(F make)
+    {
+        CheckWithWait(make, false);
+        CheckWithWait(make, true);
+    }
 }
 
 #if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.
 TEST_CASE("async_propagate_cancel", "[.clang-crash]")
 #else
-// FIXME: mayfail because of https://github.com/microsoft/cppwinrt/issues/1243
-TEST_CASE("async_propagate_cancel", "[!mayfail]")
+TEST_CASE("async_propagate_cancel")
 #endif
 {
     Check(Action);
