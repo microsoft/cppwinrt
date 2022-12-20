@@ -27,14 +27,19 @@ namespace
     }
 #endif
 
-    // Simple awaiter that (inefficiently) resumes from inside
+    // Simple awaiter that (inefficiently) resumes from inside a function nested in
     // await_suspend, for the purpose of measuring how much stack it consumes.
     // This is the best we can do with MSVC prerelease coroutines prior to 16.11.
+    // This simulates the behavior of await_adapter.
     struct resume_sync_from_await_suspend
     {
         bool await_ready() { return false; }
-        void await_suspend(winrt::impl::coroutine_handle<> h) { h(); }
+        template <typename T>
+        void await_suspend(winrt::impl::coroutine_handle<T> h) { resume_inner(h); }
         void await_resume() { }
+
+    private:
+        void resume_inner(winrt::impl::coroutine_handle<> h) { h(); }
     };
 
     IAsyncAction SyncCompletion()

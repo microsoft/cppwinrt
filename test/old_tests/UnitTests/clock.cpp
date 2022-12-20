@@ -66,33 +66,34 @@ TEST_CASE("clock, units")
 
 TEST_CASE("clock, time_t")
 {
+    const DateTime now_dt = clock::now();
+    const time_t now_tt = time(nullptr);
+
     // Round trip from DateTime to time_t and back.
     // confirm that nothing happens other than truncating the fractional seconds
-    const DateTime now_dt = clock::now();
     REQUIRE(clock::from_time_t(clock::to_time_t(now_dt)) == time_point_cast<seconds>(now_dt));
 
     // Same thing in reverse
-    const time_t now_tt = time(nullptr);
     REQUIRE(clock::to_time_t(clock::from_time_t(now_tt)) == now_tt);
 
     // Conversions are verified to be consistent. Now, verify that we're correctly converting epochs
-    const auto diff = duration_cast<milliseconds>(abs(clock::now() - clock::from_time_t(time(nullptr)))).count();
+    const auto diff = duration_cast<milliseconds>(abs(now_dt - clock::from_time_t(now_tt))).count();
     REQUIRE(diff < 1000);
 }
 
 TEST_CASE("clock, FILETIME")
 {
-    // Round trip conversions
     const DateTime now_dt = clock::now();
-    REQUIRE(clock::from_file_time(clock::to_file_time(now_dt)) == now_dt);
-
     FILETIME now_ft;
     ::GetSystemTimePreciseAsFileTime(&now_ft);
+
+    // Round trip conversions
+    REQUIRE(clock::from_file_time(clock::to_file_time(now_dt)) == now_dt);
+
     REQUIRE(clock::to_file_time(clock::from_file_time(now_ft)) == now_ft);
 
     // Verify epoch
-    ::GetSystemTimePreciseAsFileTime(&now_ft);
-    const auto diff = abs(clock::now() - clock::from_file_time(now_ft));
+    const auto diff = abs(now_dt - clock::from_file_time(now_ft));
     REQUIRE(diff < milliseconds{ 100 });
 }
 
