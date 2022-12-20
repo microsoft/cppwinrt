@@ -42,7 +42,8 @@ namespace winrt::impl
     std::pair<T, H*> make_delegate_with_shared_state(H&& handler)
     {
         auto d = make_delegate<T, H>(std::forward<H>(handler));
-        return { std::move(d), reinterpret_cast<delegate<T, H>*>(get_abi(d)) };
+        auto abi = reinterpret_cast<delegate<T, H>*>(get_abi(d));
+        return { std::move(d), abi };
     }
 
     template <typename Async>
