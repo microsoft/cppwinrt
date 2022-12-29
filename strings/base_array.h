@@ -345,6 +345,26 @@ WINRT_EXPORT namespace winrt
                 this->m_size = size;
             }
         }
+
+        std::pair<uint32_t, impl::arg_out<T>> detach_abi() noexcept
+        {
+#ifdef _MSC_VER
+            // https://github.com/microsoft/cppwinrt/pull/1165
+            std::pair<uint32_t, impl::arg_out<T>> result;
+            memset(&result, 0, sizeof(result));
+            result.first = this->size();
+            result.second = *reinterpret_cast<impl::arg_out<T>*>(this);
+            memset(this, 0, sizeof(com_array<T>));
+#else
+            std::pair<uint32_t, impl::arg_out<T>> result(this->size(), *reinterpret_cast<impl::arg_out<T>*>(this));
+            this->m_data = nullptr;
+            this->m_size = 0;
+#endif
+            return result;
+        }
+
+        template <typename U>
+        friend std::pair<uint32_t, impl::arg_out<U>> detach_abi(com_array<U>& object) noexcept;
     };
 
     template <typename C> com_array(uint32_t, C const&) -> com_array<std::decay_t<C>>;
@@ -418,14 +438,9 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename T>
-    auto detach_abi(com_array<T>& object) noexcept
+    std::pair<uint32_t, impl::arg_out<T>> detach_abi(com_array<T>& object) noexcept
     {
-        std::pair<uint32_t, impl::arg_out<T>> result;
-        memset(&result, 0, sizeof(result));
-        result.first = object.size();
-        result.second = *reinterpret_cast<impl::arg_out<T>*>(&object);
-        memset(&object, 0, sizeof(com_array<T>));
-        return result;
+        return object.detach_abi();
     }
 
     template <typename T>
