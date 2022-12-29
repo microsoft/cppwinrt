@@ -340,7 +340,9 @@ namespace winrt::impl
     template <typename ... T>
     struct uncloaked_iids<interface_list<T...>>
     {
+#ifdef _MSC_VER
 #pragma warning(suppress: 4307)
+#endif
         static constexpr std::array<guid, sizeof...(T)> value{ winrt::guid_of<T>() ... };
     };
 

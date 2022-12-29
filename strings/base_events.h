@@ -331,7 +331,9 @@ namespace winrt::impl
     com_ptr<event_array<T>> make_event_array(uint32_t const capacity)
     {
         void* raw = ::operator new(sizeof(event_array<T>) + (sizeof(T)* capacity));
+#ifdef _MSC_VER
 #pragma warning(suppress: 6386)
+#endif
         return { new(raw) event_array<T>(capacity), take_ownership_from_abi };
     }
 
