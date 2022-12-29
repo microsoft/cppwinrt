@@ -482,7 +482,9 @@ TEST_CASE("hresult, exception")
     }
 }
 
+#ifdef _MSC_VER
 #pragma warning(disable: 4702)  // unreachable code
+#endif
 TEST_CASE("hresult, throw_last_error")
 {
     SetLastError(ERROR_CANCELLED);
