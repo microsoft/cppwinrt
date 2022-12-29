@@ -76,6 +76,8 @@ namespace
 
 #endif
 
+// Exclude on mingw-w64 to suppress `-Wunused-function`
+#if !defined(__MINGW32__)
     bool is_nta_on_mta()
     {
         APTTYPE type;
@@ -83,6 +85,7 @@ namespace
         check_hresult(CoGetApartmentType(&type, &qualifier));
         return (type == APTTYPE_NA) && (qualifier == APTTYPEQUALIFIER_NA_ON_MTA || qualifier == APTTYPEQUALIFIER_NA_ON_IMPLICIT_MTA);
     }
+#endif
 
     bool is_mta()
     {

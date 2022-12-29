@@ -16,11 +16,13 @@ TEST_CASE("event_clear")
         {
             counter += 1;
         });
+    (void)a;
 
     auto b = event.add([&](auto && ...)
         {
             counter += 10;
         });
+    (void)b;
 
     REQUIRE(counter == 0);
     event(0, 0);
