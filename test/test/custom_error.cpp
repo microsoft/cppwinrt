@@ -114,7 +114,7 @@ TEST_CASE("custom_error_logger")
 #endif
 
     REQUIRE(s_loggerArgs.returnAddress);
-    REQUIRE(s_loggerArgs.result == 0x80000018); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
+    REQUIRE(s_loggerArgs.result == static_cast<int32_t>(0x80000018)); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
 
     // Remove global handler
     winrt_throw_hresult_handler = nullptr;
