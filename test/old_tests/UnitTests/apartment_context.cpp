@@ -35,6 +35,11 @@ namespace
         context2 = nullptr;
         REQUIRE(!context2);
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wself-assign-overloaded"
+#pragma clang diagnostic ignored "-Wself-move"
+#endif
         // Self-copy-assignment
         context = context;
         REQUIRE(context);
@@ -42,6 +47,9 @@ namespace
         // Self-move-assignment
         context = std::move(context);
         REQUIRE(context);
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
         co_await context;
     }
