@@ -33,15 +33,22 @@ namespace
             throw hresult_not_implemented();
         }
 
-        hstring GetRuntimeClassName()
+        hstring GetRuntimeClassName() const
         {
             return L"Sample";
         }
 
-        Windows::Foundation::TrustLevel GetTrustLevel()
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Woverloaded-virtual"
+#endif
+        Windows::Foundation::TrustLevel GetTrustLevel() const noexcept
         {
             return Windows::Foundation::TrustLevel::PartialTrust;
         }
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 
         int32_t __stdcall JustSayNo() noexcept final
         {
