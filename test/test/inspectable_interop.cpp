@@ -14,7 +14,14 @@ namespace
 }
 
 #ifdef __CRT_UUID_DECL
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
 __CRT_UUID_DECL(IBadInterop, 0xed0dd761, 0xc31e, 0x4803, 0x8c, 0xf9, 0x22, 0xa2, 0xcb, 0x20, 0xec, 0x47)
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 #endif
 
 namespace
