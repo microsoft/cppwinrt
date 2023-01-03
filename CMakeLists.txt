@@ -175,19 +175,29 @@ endif()
 
 # === winmd: External header-only library for reading winmd files ===
 
-include(ExternalProject)
-ExternalProject_Add(winmd
-    GIT_REPOSITORY https://github.com/microsoft/winmd.git
-    GIT_TAG 0f1eae3bfa63fa2ba3c2912cbfe72a01db94cc5a
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    INSTALL_COMMAND ""
-    UPDATE_COMMAND ""
-)
-add_dependencies(cppwinrt winmd)
-ExternalProject_Get_Property(winmd SOURCE_DIR)
-set(winmd_SOURCE_DIR "${SOURCE_DIR}")
-target_include_directories(cppwinrt PRIVATE "${winmd_SOURCE_DIR}/src")
+set(EXTERNAL_WINMD_INCLUDE_DIR "" CACHE PATH "Path to the include dir of an\
+ external copy of the winmd library headers. Leave empty (default) to have\
+ it downloaded as ExternalProject during build.")
+
+if(EXTERNAL_WINMD_INCLUDE_DIR STREQUAL "")
+    message(STATUS "The winmd library will be downloaded using ExternalProject.")
+    include(ExternalProject)
+    ExternalProject_Add(winmd
+        GIT_REPOSITORY https://github.com/microsoft/winmd.git
+        GIT_TAG 0f1eae3bfa63fa2ba3c2912cbfe72a01db94cc5a
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
+        INSTALL_COMMAND ""
+        UPDATE_COMMAND ""
+    )
+    add_dependencies(cppwinrt winmd)
+    ExternalProject_Get_Property(winmd SOURCE_DIR)
+    set(winmd_INCLUDE_DIR "${SOURCE_DIR}/src")
+else()
+message(STATUS "Using winmd library headers at ${EXTERNAL_WINMD_INCLUDE_DIR}")
+    set(winmd_INCLUDE_DIR "${EXTERNAL_WINMD_INCLUDE_DIR}")
+endif()
+target_include_directories(cppwinrt PRIVATE "${winmd_INCLUDE_DIR}")
 
 
 if(WIN32 AND NOT CMAKE_CROSSCOMPILING)
