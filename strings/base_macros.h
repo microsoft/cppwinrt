@@ -90,6 +90,8 @@ typedef struct _GUID GUID;
 #define WINRT_IMPL_SOURCE_LOCATION_FORWARD , sourceInformation
 #define WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM sourceInformation
 
+#define WINRT_SOURCE_LOCATION_ACTIVE
+
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "true")
 #else
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT
