@@ -294,7 +294,7 @@ jobs:
       - name: Build tests
         run: |
           cd build
-          cmake --build . -j2 --target test-vanilla test_cpp20 test_win7 test_old
+          cmake --build . -j2 --target test-vanilla test_cpp20 test_cpp20_no_sourcelocation test_win7 test_old
 
       - name: Upload test binaries
         uses: actions/upload-artifact@v3
@@ -355,7 +355,7 @@ jobs:
       - name: Build tests
         run: |
           cd build
-          cmake --build . -j2 --target test-vanilla test_cpp20 test_win7 test_old
+          cmake --build . -j2 --target test-vanilla test_cpp20 test_cpp20_no_sourcelocation test_win7 test_old
 
       - name: Run tests
         run: |
