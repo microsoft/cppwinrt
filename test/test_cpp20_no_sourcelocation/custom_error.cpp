@@ -52,18 +52,12 @@ TEST_CASE("custom_error_logger")
 
     FailOnLine15();
     REQUIRE(s_loggerCalled);
-    // In C++20 these fields should be filled in by std::source_location
-    REQUIRE(s_loggerArgs.lineNumber == 15);
-    const auto fileNameSv = std::string_view(s_loggerArgs.fileName);
-    REQUIRE(!fileNameSv.empty());
-    REQUIRE(fileNameSv.find("custom_error.cpp") != std::string::npos);
-    const auto functionNameSv = std::string_view(s_loggerArgs.functionName);
-    REQUIRE(!functionNameSv.empty());
-#if defined(__GNUC__) && !defined(__clang__)
-    REQUIRE(functionNameSv == "void {anonymous}::FailOnLine15()");
-#else
-    REQUIRE(functionNameSv == "FailOnLine15");
-#endif
+    // In C++20 these fields should be filled in by std::source_location.  However, this binary has
+    // specified WINRT_NO_SOURCE_LOCATION so that support should be removed.  As a result these should
+    // return the same (empty) values as C++17.
+    REQUIRE(s_loggerArgs.lineNumber == 0);
+    REQUIRE(s_loggerArgs.fileName == nullptr);
+    REQUIRE(s_loggerArgs.functionName == nullptr);
 
     REQUIRE(s_loggerArgs.returnAddress);
     REQUIRE(s_loggerArgs.result == 0x80000018); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
