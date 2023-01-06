@@ -642,6 +642,7 @@ WINRT_EXPORT namespace winrt
         return impl::hstring_convert(value);
     }
 
+#if !defined(_LIBCPP_VERSION) || _LIBCPP_VERSION >= 14000
     inline hstring to_hstring(float value)
     {
         return impl::hstring_convert(value);
@@ -651,6 +652,7 @@ WINRT_EXPORT namespace winrt
     {
         return impl::hstring_convert(value);
     }
+#endif
 
     inline hstring to_hstring(char16_t value)
     {
