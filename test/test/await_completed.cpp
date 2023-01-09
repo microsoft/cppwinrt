@@ -62,6 +62,7 @@ namespace
         // is the ABI breaking change with MSVC standard-conforming coroutines.)
         REQUIRE(consumed <= sync_usage);
 #else
+        (void)sync_usage;
         // MSVC standard-conforming coroutines (as well as gcc and clang coroutines)
         // support "bool await_suspend" just fine.
         REQUIRE(consumed == 0);

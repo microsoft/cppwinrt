@@ -20,7 +20,7 @@ TEST_CASE("guid")
     STATIC_REQUIRE_GUID_EQUAL(winrt::guid("00112233-4455-6677-8899-aabbccddeeff"), expected);
 
     REQUIRE(winrt::guid("00112233-4455-6677-8899-aabbccddeeff") == expected);
-    REQUIRE(winrt::guid({ "{00112233-4455-6677-8899-aabbccddeeff}" + 1, 36 }) == expected);
+    REQUIRE(winrt::guid({ &"{00112233-4455-6677-8899-aabbccddeeff}"[1], 36 }) == expected);
     REQUIRE(winrt::guid("{00112233-4455-6677-8899-aabbccddeeff}") == expected);
     REQUIRE(winrt::guid("(00112233-4455-6677-8899-aabbccddeeff)") == expected);
 

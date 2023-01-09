@@ -14,7 +14,14 @@ namespace
 }
 
 #ifdef __CRT_UUID_DECL
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
 __CRT_UUID_DECL(IBadInterop, 0xed0dd761, 0xc31e, 0x4803, 0x8c, 0xf9, 0x22, 0xa2, 0xcb, 0x20, 0xec, 0x47)
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 #endif
 
 namespace
@@ -26,15 +33,22 @@ namespace
             throw hresult_not_implemented();
         }
 
-        hstring GetRuntimeClassName()
+        hstring GetRuntimeClassName() const
         {
             return L"Sample";
         }
 
-        Windows::Foundation::TrustLevel GetTrustLevel()
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Woverloaded-virtual"
+#endif
+        Windows::Foundation::TrustLevel GetTrustLevel() const noexcept
         {
             return Windows::Foundation::TrustLevel::PartialTrust;
         }
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 
         int32_t __stdcall JustSayNo() noexcept final
         {

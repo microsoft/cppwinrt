@@ -340,7 +340,9 @@ namespace winrt::impl
     template <typename ... T>
     struct uncloaked_iids<interface_list<T...>>
     {
+#ifdef _MSC_VER
 #pragma warning(suppress: 4307)
+#endif
         static constexpr std::array<guid, sizeof...(T)> value{ winrt::guid_of<T>() ... };
     };
 
@@ -1462,6 +1464,10 @@ WINRT_EXPORT namespace winrt
             return result;
         }
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winconsistent-missing-override"
+#endif
         impl::hresult_type __stdcall QueryInterface(impl::guid_type const& id, void** object) noexcept
         {
             return root_implements_type::QueryInterface(reinterpret_cast<guid const&>(id), object);
@@ -1493,6 +1499,9 @@ WINRT_EXPORT namespace winrt
         {
             return root_implements_type::abi_GetTrustLevel(reinterpret_cast<Windows::Foundation::TrustLevel*>(value));
         }
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
         void* find_interface(guid const& id) const noexcept override
         {

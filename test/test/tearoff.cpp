@@ -181,7 +181,7 @@ namespace
             Closed = true;
         }
 
-        winrt::hstring GetRuntimeClassName()
+        winrt::hstring GetRuntimeClassName() const
         {
             return L"RuntimeClassName";
         }

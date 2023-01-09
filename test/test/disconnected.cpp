@@ -35,6 +35,8 @@ namespace
         co_return 123;
     }
 
+// Exclude on mingw-w64 to suppress `-Wunused-function`
+#if !defined(__MINGW32__)
     bool is_mta()
     {
         APTTYPE type;
@@ -42,6 +44,7 @@ namespace
         check_hresult(CoGetApartmentType(&type, &qualifier));
         return type == APTTYPE_MTA;
     }
+#endif
 }
 
 TEST_CASE("disconnected,handler,1")
