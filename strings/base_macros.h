@@ -81,13 +81,18 @@ typedef struct _GUID GUID;
 // to be the calling code, not cppwinrt itself, so that it is useful to developers building on top of this library.  As a
 // result any public-facing method that can result in an error needs a default-constructed source_location argument.  Because
 // this type does not exist in C++17 we need to use a macro to optionally add parameters and forwarding wherever appropriate.
-#ifdef __cpp_lib_source_location
+//
+// Some projects may decide to disable std::source_location support to prevent source code information from ending up in their
+// release binaries, or to reduce binary size.  Defining WINRT_NO_SOURCE_LOCATION will prevent this feature from activating.
+#if defined(__cpp_lib_source_location) && !defined(WINRT_NO_SOURCE_LOCATION)
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , std::source_location const& sourceInformation
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS , std::source_location const& sourceInformation = std::source_location::current()
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM std::source_location const& sourceInformation = std::source_location::current()
 
 #define WINRT_IMPL_SOURCE_LOCATION_FORWARD , sourceInformation
 #define WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM sourceInformation
+
+#define WINRT_SOURCE_LOCATION_ACTIVE
 
 #ifdef _MSC_VER
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "true")

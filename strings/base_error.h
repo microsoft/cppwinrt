@@ -319,7 +319,7 @@ WINRT_EXPORT namespace winrt
             // information is available on the caller who generated the error.
             if (winrt_throw_hresult_handler)
             {
-#ifdef __cpp_lib_source_location
+#ifdef WINRT_SOURCE_LOCATION_ACTIVE
                 winrt_throw_hresult_handler(sourceInformation.line(), sourceInformation.file_name(), sourceInformation.function_name(), WINRT_IMPL_RETURNADDRESS(), code);
 #else
                 winrt_throw_hresult_handler(0, nullptr, nullptr, WINRT_IMPL_RETURNADDRESS(), code);
@@ -448,7 +448,7 @@ WINRT_EXPORT namespace winrt
     {
         if (winrt_throw_hresult_handler)
         {
-#ifdef __cpp_lib_source_location
+#ifdef WINRT_SOURCE_LOCATION_ACTIVE
             winrt_throw_hresult_handler(sourceInformation.line(), sourceInformation.file_name(), sourceInformation.function_name(), WINRT_IMPL_RETURNADDRESS(), result);
 #else
             winrt_throw_hresult_handler(0, nullptr, nullptr, WINRT_IMPL_RETURNADDRESS(), result);
