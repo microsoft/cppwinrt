@@ -36,14 +36,7 @@ namespace
     }
 }
 
-#if defined(__clang__)
-// FIXME: Blocked on __cpp_consteval, see:
-// * https://github.com/microsoft/cppwinrt/pull/1203#issuecomment-1279764927
-// * https://github.com/llvm/llvm-project/issues/57094
-TEST_CASE("custom_error_logger", "[!shouldfail]")
-#else
 TEST_CASE("custom_error_logger")
-#endif
 {
     // Set up global handler
     REQUIRE(!s_loggerCalled);
