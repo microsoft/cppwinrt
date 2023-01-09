@@ -15,11 +15,13 @@
 
 #define WINRT_IMPL_SHIM(...) (*(abi_t<__VA_ARGS__>**)&static_cast<__VA_ARGS__ const&>(static_cast<D const&>(*this)))
 
+#ifdef _MSC_VER
 // Note: this is a workaround for a false-positive warning produced by the Visual C++ 15.9 compiler.
 #pragma warning(disable : 5046)
 
 // Note: this is a workaround for a false-positive warning produced by the Visual C++ 16.3 compiler.
 #pragma warning(disable : 4268)
+#endif
 
 #if defined(__cpp_lib_coroutine) || defined(__cpp_coroutines) || defined(_RESUMABLE_FUNCTIONS_SUPPORTED)
 #define WINRT_IMPL_COROUTINES
@@ -92,7 +94,9 @@ typedef struct _GUID GUID;
 
 #define WINRT_SOURCE_LOCATION_ACTIVE
 
+#ifdef _MSC_VER
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "true")
+#endif
 #else
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS
@@ -101,5 +105,7 @@ typedef struct _GUID GUID;
 #define WINRT_IMPL_SOURCE_LOCATION_FORWARD
 #define WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM
 
+#ifdef _MSC_VER
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "false")
+#endif
 #endif

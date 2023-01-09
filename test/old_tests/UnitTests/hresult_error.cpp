@@ -3,7 +3,7 @@
 
 // Missing in mingw-w64
 #ifndef E_BOUNDS
-#define E_BOUNDS (0x8000000B)
+#define E_BOUNDS ((HRESULT)0x8000000B)
 #endif
 
 extern "C" BOOL __stdcall RoOriginateLanguageException(HRESULT error, void* message, void* languageException);
@@ -482,7 +482,9 @@ TEST_CASE("hresult, exception")
     }
 }
 
+#ifdef _MSC_VER
 #pragma warning(disable: 4702)  // unreachable code
+#endif
 TEST_CASE("hresult, throw_last_error")
 {
     SetLastError(ERROR_CANCELLED);

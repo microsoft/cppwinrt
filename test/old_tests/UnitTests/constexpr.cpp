@@ -2,7 +2,9 @@
 #include "catch.hpp"
 #include "string_view_compare.h"
 
+#ifdef _MSC_VER
 #pragma warning(disable:4471) // a forward declaration of an unscoped enumeration must have an underlying type
+#endif
 #include <Windows.Applicationmodel.Activation.h>
 
 using namespace std::string_view_literals;

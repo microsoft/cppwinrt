@@ -34,7 +34,7 @@ namespace cppwinrt
         { "?", 0, option::no_max, {}, {} },
         { "library", 0, 1, "<prefix>", "Specify library prefix (defaults to winrt)" },
         { "filter" }, // One or more prefixes to include in input (same as -include)
-        { "license", 0, 0 }, // Generate license comment
+        { "license", 0, 1, "[<path>]", "Generate license comment from template file" },
         { "brackets", 0, 0 }, // Use angle brackets for #includes (defaults to quotes)
         { "fastabi", 0, 0 }, // Enable support for the Fast ABI
         { "ignore_velocity", 0, 0 }, // Ignore feature staging metadata and always include implementations
@@ -113,6 +113,40 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
         for (auto && exclude : args.values("exclude"))
         {
             settings.exclude.insert(exclude);
+        }
+
+        if (settings.license)
+        {
+            std::string license_arg = args.value("license");
+            if (license_arg.empty())
+            {
+                settings.license_template = R"(// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
+)";
+            }
+            else
+            {
+                std::filesystem::path template_path{ license_arg };
+                std::ifstream template_file(absolute(template_path));
+                if (template_file.fail())
+                {
+                    throw_invalid("Cannot read license template file '", absolute(template_path).string() + "'");
+                }
+                std::string line_buf;
+                while (getline(template_file, line_buf))
+                {
+                    if (line_buf.empty())
+                    {
+                        settings.license_template += "//\n";
+                    }
+                    else
+                    {
+                        settings.license_template += "// ";
+                        settings.license_template += line_buf;
+                        settings.license_template += "\n";
+                    }
+                }
+            }
         }
 
         if (settings.component)
