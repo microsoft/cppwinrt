@@ -24,10 +24,8 @@ namespace cppwinrt
         {
             w.write(R"(// C++/WinRT v%
 
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
-)", CPPWINRT_VERSION_STRING);
+%
+)", CPPWINRT_VERSION_STRING, settings.license_template);
         }
         else
         {
