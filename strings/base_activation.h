@@ -196,8 +196,10 @@ namespace winrt::impl
 
 #ifdef _WIN64
     inline constexpr uint32_t memory_allocation_alignment{ 16 };
+#ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable:4324) // structure was padded due to alignment specifier
+#endif
     struct alignas(16) slist_entry
     {
         slist_entry* next;
@@ -217,7 +219,9 @@ namespace winrt::impl
             uint64_t reserved4 : 60;
         } reserved2;
     };
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 #else
     inline constexpr uint32_t memory_allocation_alignment{ 8 };
     struct slist_entry

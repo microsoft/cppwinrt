@@ -66,7 +66,9 @@ void test_exception(HRESULT const code, std::wstring_view message)
     }
 }
 
+#ifdef _MSC_VER
 #pragma warning(disable: 4702)  // unreachable code
+#endif
 TEST_CASE("Errors")
 {
     // These won't throw.
