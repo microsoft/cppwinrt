@@ -132,7 +132,7 @@ jobs:
 - job: BuildInternal
   displayName: Build Internal Packages (VPacks)
   dependsOn: BuildBinaries
-  condition: and(succeeded(), ne(variables['SkipInternalPackages'], 'true'), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual')))
+  condition: and(succeeded(), ne(variables['SkipInternalPackages'], 'true'), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
   pool:
     name: Azure Pipelines
     vmImage: 'windows-2022'
