@@ -149,6 +149,11 @@ jobs:
       disableMsbuildVersion: true
       disableBuildTools: true
 
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core runtime 2.1.x (required for ESRP signing)'
+    inputs:
+      version: 2.1.x
+
   - task: DownloadPipelineArtifact@1
     displayName: Download x86 Artifacts
     inputs:
@@ -310,6 +315,11 @@ jobs:
     clean: true
     persistCredentials: True
 
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core runtime 2.1.x (required for ESRP signing)'
+    inputs:
+      version: 2.1.x
+      
   - task: NuGetToolInstaller@1
     displayName: Use NuGet 6.0.2
     continueOnError: True
