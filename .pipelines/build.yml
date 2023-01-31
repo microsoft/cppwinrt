@@ -129,7 +129,6 @@ jobs:
     inputs:
       SymbolsFolder: $(Build.ArtifactStagingDirectory)
       SearchPattern: '**/*.pdb'
-      IndexSources: false
       SymbolServerType: TeamServices
       SymbolsProduct: CppWinRT
 
@@ -152,11 +151,6 @@ jobs:
       disableWorkspace: true
       disableMsbuildVersion: true
       disableBuildTools: true
-
-  - task: UseDotNet@2
-    displayName: 'Use .NET Core runtime 2.1.x (required for ESRP signing)'
-    inputs:
-      version: 2.1.x
 
   - task: DownloadPipelineArtifact@1
     displayName: Download x86 Artifacts
@@ -201,7 +195,7 @@ jobs:
         dir $(Build.SourcesDirectory)\x86\cppwinrt
         xcopy $(Build.SourcesDirectory)\x86\cppwinrt\*.* $(Build.SourcesDirectory)\x86\tempsign /icefzy
 
-  - task: EsrpCodeSigning@1
+  - task: EsrpCodeSigning@2
     displayName: Sign Compiler vPack for internal use
     inputs:
       ConnectedServiceName: bf601a97-455d-4977-b248-07b90c96eed9
@@ -319,11 +313,6 @@ jobs:
     clean: true
     persistCredentials: True
 
-  - task: UseDotNet@2
-    displayName: 'Use .NET Core runtime 2.1.x (required for ESRP signing)'
-    inputs:
-      version: 2.1.x
-      
   - task: NuGetToolInstaller@1
     displayName: Use NuGet 6.0.2
     continueOnError: True
@@ -357,7 +346,7 @@ jobs:
       artifactName: $(BuildConfiguration)_arm64
       downloadPath: $(Build.SourcesDirectory)\arm64
 
-  - task: EsrpCodeSigning@1
+  - task: EsrpCodeSigning@2
     displayName: ESRP CodeSigning NatVis
     inputs:
       ConnectedServiceName: 81cc6790-027c-4ef3-928d-65e8b96a691a
@@ -437,7 +426,7 @@ jobs:
   - task: ComponentGovernanceComponentDetection@0
     displayName: Component Detection
 
-  - task: EsrpCodeSigning@1
+  - task: EsrpCodeSigning@2
     displayName: ESRP CodeSigning Nuget Package
     inputs:
       ConnectedServiceName: 81cc6790-027c-4ef3-928d-65e8b96a691a
@@ -485,7 +474,7 @@ jobs:
       destinationFolder: $(Agent.TempDirectory)\Microsoft.Windows.CppWinRT.Dev17.vsix
       overwriteExistingFiles: true
 
-  - task: EsrpCodeSigning@1
+  - task: EsrpCodeSigning@2
     displayName: ESRP CodeSign VSIX contents
     inputs:
       ConnectedServiceName: 81cc6790-027c-4ef3-928d-65e8b96a691a
@@ -539,7 +528,7 @@ jobs:
       platform: x86
       configuration: Release
 
-  - task: EsrpCodeSigning@1
+  - task: EsrpCodeSigning@2
     displayName: ESRP CodeSigning VSIX
     inputs:
       ConnectedServiceName: 81cc6790-027c-4ef3-928d-65e8b96a691a
@@ -651,7 +640,6 @@ jobs:
     inputs:
       SymbolsFolder: $(Build.ArtifactStagingDirectory)
       SearchPattern: '**/Microsoft.Windows.CppWinRT.Dev17.pdb'
-      IndexSources: false
       SymbolServerType: TeamServices
       SymbolsProduct: CppWinRT
 ...
