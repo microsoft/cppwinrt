@@ -14,6 +14,10 @@ schedules:
     include:
     - refs/heads/master
 name: $(MajorVersion).$(MinorVersion).$(date:yyMMdd)$(rev:.r)
+
+variables:
+  manualRelease: $[and(eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))]
+
 jobs:
 - job: BuildBinaries
   pool:
@@ -31,9 +35,6 @@ jobs:
         buildPlatform: 'arm'
       arm64:
         buildPlatform: 'arm64'
-
-  variables:
-    stageVisualizer: $[and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))]
 
   steps:
   - checkout: self
@@ -72,7 +73,7 @@ jobs:
 
   - task: CopyFiles@2
     displayName: Stage cppwinrt.*
-    condition: and(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
+    condition: and(eq(variables['BuildPlatform'], 'x86'), eq(variables.manualRelease, 'true'))
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\_build\$(BuildPlatform)\$(BuildConfiguration)
       Contents: |
@@ -82,7 +83,7 @@ jobs:
 
   - task: CopyFiles@2
     displayName: Stage Component cppwinrtvisualizer.*
-    condition: eq(variables.stageVisualizer, 'true')
+    condition: $[and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables.manualRelease, 'true'))]
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Component
       Contents: |
@@ -93,7 +94,7 @@ jobs:
 
   - task: CopyFiles@2
     displayName: Stage Standalone cppwinrtvisualizer.*
-    condition: eq(variables.stageVisualizer, 'true')
+    condition: $[and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables.manualRelease, 'true'))]
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Standalone
       Contents: |
@@ -104,7 +105,7 @@ jobs:
 
   - task: CopyFiles@2
     displayName: Stage cppwinrt_fast_forwarder.lib
-    condition: and(eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
+    condition: eq(variables.manualRelease, 'true')
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\_build\$(BuildPlatform)\$(BuildConfiguration)
       Contents: cppwinrt_fast_forwarder.lib
@@ -112,20 +113,20 @@ jobs:
 
   - task: ManifestGeneratorTask@0
     displayName: 'Manifest Generator '
-    condition: and(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
+    condition: and(eq(variables['BuildPlatform'], 'x86'), eq(variables.manualRelease, 'true'))
     inputs:
       BuildDropPath: $(Build.ArtifactStagingDirectory)\cppwinrt
 
   - task: PublishPipelineArtifact@0
     displayName: Publish Artifacts
-    condition: and(eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
+    condition: eq(variables.manualRelease, 'true')
     inputs:
       artifactName: $(BuildConfiguration)_$(BuildPlatform)
       targetPath: $(Build.ArtifactStagingDirectory)
 
   - task: PublishSymbols@2
     displayName: Publish symbols
-    condition: and(eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
+    condition: eq(variables.manualRelease, 'true')
     inputs:
       SymbolsFolder: $(Build.ArtifactStagingDirectory)
       SearchPattern: '**/*.pdb'
@@ -135,7 +136,7 @@ jobs:
 - job: BuildInternal
   displayName: Build Internal Packages (VPacks)
   dependsOn: BuildBinaries
-  condition: and(succeeded(), ne(variables['SkipInternalPackages'], 'true'), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
+  condition: and(succeeded(), ne(variables['SkipInternalPackages'], 'true'), eq(variables.manualRelease, 'true'))
   pool:
     name: Azure Pipelines
     vmImage: 'windows-2022'
@@ -304,7 +305,7 @@ jobs:
   displayName: Build External Packages (NuGet, VSIX)
   cancelTimeoutInMinutes: 1
   dependsOn: BuildBinaries
-  condition: and(succeeded(), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
+  condition: and(succeeded(), eq(variables.manualRelease, 'true'))
   pool:
     name: Azure Pipelines
     vmImage: 'windows-2022'
