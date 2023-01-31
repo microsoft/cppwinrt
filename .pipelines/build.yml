@@ -301,7 +301,7 @@ jobs:
   displayName: Build External Packages (NuGet, VSIX)
   cancelTimeoutInMinutes: 1
   dependsOn: BuildBinaries
-  condition: and(succeeded(), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual')))
+  condition: and(succeeded(), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
   pool:
     name: Azure Pipelines
     vmImage: 'windows-2022'
