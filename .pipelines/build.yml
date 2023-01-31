@@ -31,6 +31,10 @@ jobs:
         buildPlatform: 'arm'
       arm64:
         buildPlatform: 'arm64'
+
+  variables:
+    stageVisualizer: $[and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))]
+
   steps:
   - checkout: self
     clean: true
@@ -41,8 +45,8 @@ jobs:
     continueOnError: True
     inputs:
       versionSpec: 6.0.2
-  - task: NuGetCommand@2
 
+  - task: NuGetCommand@2
     displayName: NuGet restore
 
   - task: CmdLine@2
@@ -78,9 +82,9 @@ jobs:
 
   - task: CopyFiles@2
     displayName: Stage Component cppwinrtvisualizer.*
-    condition: and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
+    condition: eq(variables.stageVisualizer, 'true')
     inputs:
-      SourceFolder: '$(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Component '
+      SourceFolder: $(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Component
       Contents: |
         cppwinrtvisualizer.dll
         cppwinrtvisualizer.pdb
@@ -89,7 +93,7 @@ jobs:
 
   - task: CopyFiles@2
     displayName: Stage Standalone cppwinrtvisualizer.*
-    condition: and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
+    condition: eq(variables.stageVisualizer, 'true')
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Standalone
       Contents: |
