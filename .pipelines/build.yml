@@ -48,7 +48,7 @@ jobs:
   - task: CmdLine@2
     displayName: Build Tools
     inputs:
-      script: >-
+      script: |
         if "%VSCMD_VER%"=="" (
             pushd c:
             call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" >nul 2>&1
@@ -71,7 +71,7 @@ jobs:
     condition: and(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\_build\$(BuildPlatform)\$(BuildConfiguration)
-      Contents: >-
+      Contents: |
         cppwinrt.exe
         cppwinrt.pdb
       TargetFolder: $(Build.ArtifactStagingDirectory)\cppwinrt
@@ -81,7 +81,7 @@ jobs:
     condition: and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
     inputs:
       SourceFolder: '$(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Component '
-      Contents: >
+      Contents: |
         cppwinrtvisualizer.dll
         cppwinrtvisualizer.pdb
         cppwinrtvisualizer.vsdconfig
@@ -92,7 +92,7 @@ jobs:
     condition: and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Standalone
-      Contents: >
+      Contents: |
         cppwinrtvisualizer.dll
         cppwinrtvisualizer.pdb
         cppwinrtvisualizer.vsdconfig
@@ -139,7 +139,6 @@ jobs:
   steps:
   - checkout: self
     clean: true
-    fetchTags: false
     persistCredentials: True
 
   - task: PkgESSetupBuild@12
@@ -183,18 +182,14 @@ jobs:
   - task: CmdLine@2
     displayName: Copy compiler contents for internal signing
     inputs:
-      script: >
+      script: |
         md $(Build.SourcesDirectory)\x86\tempsign
-
         echo Build Sources Directory:
         dir $(Build.SourcesDirectory)
-
         echo x86
         dir $(Build.SourcesDirectory)\x86
-
         echo cppwinrt
         dir $(Build.SourcesDirectory)\x86\cppwinrt
-
         xcopy $(Build.SourcesDirectory)\x86\cppwinrt\*.* $(Build.SourcesDirectory)\x86\tempsign /icefzy
 
   - task: EsrpCodeSigning@1
@@ -203,7 +198,7 @@ jobs:
       ConnectedServiceName: bf601a97-455d-4977-b248-07b90c96eed9
       FolderPath: $(Build.SourcesDirectory)\x86\tempsign
       signConfigType: inlineSignParams
-      inlineOperation: >-
+      inlineOperation: |
         [
             {
                 "KeyCode" : "CP-458204",
@@ -246,7 +241,7 @@ jobs:
   - task: CmdLine@2
     displayName: Delete internal compiler copy
     inputs:
-      script: >+
+      script: |
         rd $(Build.SourcesDirectory)\x86\tempsign /q /s
 
   - task: CopyFiles@2
@@ -289,11 +284,9 @@ jobs:
     displayName: Stage OSBuildTools.Manifest Update
     enabled: False
     inputs:
-      script: >-
+      script: |
         copy $(Build.SourcesDirectory)\src\package\cppwinrt\vpack\GitCheckin.json
-
         copy $(Build.SourcesDirectory)\vpack\*.man OSBuildTools.Manifest.Update
-
         type OSBuildTools.Manifest.Update
       workingDirectory: $(Build.ArtifactStagingDirectory)
       failOnStderr: true
@@ -315,7 +308,6 @@ jobs:
   steps:
   - checkout: self
     clean: true
-    fetchTags: false
     persistCredentials: True
 
   - task: NuGetToolInstaller@1
@@ -356,7 +348,7 @@ jobs:
     inputs:
       ConnectedServiceName: 81cc6790-027c-4ef3-928d-65e8b96a691a
       FolderPath: $(Build.SourcesDirectory)
-      Pattern: >-
+      Pattern: |
         x86\cppwinrt\cppwinrt.exe
         x86\Component\cppwinrtvisualizer.dll
         x64\Component\cppwinrtvisualizer.dll
@@ -365,7 +357,7 @@ jobs:
         x64\Standalone\cppwinrtvisualizer.dll
       UseMinimatch: true
       signConfigType: inlineSignParams
-      inlineOperation: >-
+      inlineOperation: |
         [
           {
             "keyCode": "CP-230012",
@@ -400,7 +392,7 @@ jobs:
   - task: CmdLine@2
     displayName: Stage Signed Binaries
     inputs:
-      script: >-
+      script: |
         echo F|xcopy /S /Q /Y /F x86\cppwinrt\cppwinrt.exe $(Build.ArtifactStagingDirectory)\x86\cppwinrt.exe
         echo F|xcopy /S /Q /Y /F  x86\Component\cppwinrtvisualizer.dll $(Build.ArtifactStagingDirectory)\x86\Component\cppwinrtvisualizer.dll
         echo F|xcopy /S /Q /Y /F  x64\Component\cppwinrtvisualizer.dll $(Build.ArtifactStagingDirectory)\x64\Component\cppwinrtvisualizer.dll
@@ -414,9 +406,8 @@ jobs:
   - task: CmdLine@2
     displayName: Stage cppwinrtvisualizer.vsdconfig
     inputs:
-      script: >-
+      script: |
         copy $(Build.SourcesDirectory)\x86\Component\cppwinrtvisualizer.vsdconfig x86\Component\cppwinrtvisualizer.vsdconfig
-
         copy $(Build.SourcesDirectory)\x86\Standalone\cppwinrtvisualizer.vsdconfig x86\Standalone\cppwinrtvisualizer.vsdconfig
       workingDirectory: $(Build.ArtifactStagingDirectory)
       failOnStderr: true
@@ -440,7 +431,7 @@ jobs:
       Pattern: Microsoft.Windows.CppWinRT.*.nupkg
       UseMinimatch: true
       signConfigType: inlineSignParams
-      inlineOperation: >-
+      inlineOperation: |
         [
           {
             "KeyCode" : "CP-401405",
@@ -488,7 +479,7 @@ jobs:
       Pattern: '**/Microsoft.Windows.CppWinRT.*.dll'
       UseMinimatch: true
       signConfigType: inlineSignParams
-      inlineOperation: >-
+      inlineOperation: |
         [
           {
             "keyCode": "CP-230012",
@@ -539,14 +530,14 @@ jobs:
     inputs:
       ConnectedServiceName: 81cc6790-027c-4ef3-928d-65e8b96a691a
       FolderPath: $(Build.SourcesDirectory)\vsix\
-      Pattern: >-
+      Pattern: |
         Dev16\bin\Release\Component\Microsoft.Windows.CppWinRT.vsix
         Dev16\bin\Release\Standalone\Microsoft.Windows.CppWinRT.vsix
         Dev17\bin\Release\Component\Microsoft.Windows.CppWinRT.Dev17.vsix
         Dev17\bin\Release\Standalone\Microsoft.Windows.CppWinRT.Dev17.vsix
       UseMinimatch: true
       signConfigType: inlineSignParams
-      inlineOperation: >
+      inlineOperation: |
         [
                 {
                     "KeyCode" : "CP-233016",
@@ -569,7 +560,7 @@ jobs:
   - task: CmdLine@2
     displayName: Stage Component VSIX (Dev17)
     inputs:
-      script: >-
+      script: |
         echo F|xcopy /S /Q /Y /F Microsoft.Windows.CppWinRT.Dev17.vsix $(Build.ArtifactStagingDirectory)\Component\Dev17\Microsoft.Windows.CppWinRT.Dev17.vsix
         echo F|xcopy /S /Q /Y /F Microsoft.Windows.CppWinRT.Dev17.json $(Build.ArtifactStagingDirectory)\Component\Dev17\Microsoft.Windows.CppWinRT.Dev17.json
         echo F|xcopy /S /Q /Y /F Microsoft.Windows.CppWinRT.Dev17.pdb $(Build.ArtifactStagingDirectory)\Component\Dev17\Microsoft.Windows.CppWinRT.Dev17.pdb
@@ -580,7 +571,7 @@ jobs:
     displayName: Stage Component VSIX Manifest (Dev17)
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\vsix
-      Contents: >-
+      Contents: |
         extension.manifest.json
         overview.md
       TargetFolder: $(Build.ArtifactStagingDirectory)\Component\Dev17
@@ -597,7 +588,7 @@ jobs:
     displayName: Stage Standalone VSIX Manifest (Dev16)
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\vsix
-      Contents: >-
+      Contents: |
         extension.manifest.json
         overview.md
       TargetFolder: $(Build.ArtifactStagingDirectory)\Standalone\Dev16
@@ -614,7 +605,7 @@ jobs:
     displayName: Stage Standalone VSIX Manifest (Dev17)
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\vsix
-      Contents: >-
+      Contents: |
         extension.manifest.json
         overview.md
       TargetFolder: $(Build.ArtifactStagingDirectory)\Standalone\Dev17
