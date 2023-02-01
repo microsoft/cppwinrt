@@ -83,7 +83,7 @@ jobs:
 
   - task: CopyFiles@2
     displayName: Stage Component cppwinrtvisualizer.*
-    condition: $[and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables.manualRelease, 'true'))]
+    condition: and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables.manualRelease, 'true'))
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Component
       Contents: |
@@ -94,7 +94,7 @@ jobs:
 
   - task: CopyFiles@2
     displayName: Stage Standalone cppwinrtvisualizer.*
-    condition: $[and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables.manualRelease, 'true'))]
+    condition: and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables.manualRelease, 'true'))
     inputs:
       SourceFolder: $(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Standalone
       Contents: |
