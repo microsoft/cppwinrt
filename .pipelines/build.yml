@@ -1,0 +1,646 @@
+# 'Allow scripts to access the OAuth token' was selected in pipeline.  Add the following YAML to any steps requiring access:
+#       env:
+#           MY_ACCESS_TOKEN: $(System.AccessToken)
+# Variable 'MajorVersion' was defined in the Variables tab
+# Variable 'MinorVersion' was defined in the Variables tab
+trigger:
+  branches:
+    include:
+    - refs/heads/master
+  batch: True
+schedules:
+- cron: 0 18 * * *
+  branches:
+    include:
+    - refs/heads/master
+name: $(MajorVersion).$(MinorVersion).$(date:yyMMdd)$(rev:.r)
+
+variables:
+  manualRelease: $[and(eq(variables['BuildConfiguration'], 'release'), in(variables['Build.Reason'], 'Manual'))]
+
+jobs:
+- job: BuildBinaries
+  pool:
+    name: Azure Pipelines
+    vmImage: 'windows-2022'
+    demands:
+    - msbuild
+  strategy:
+    matrix:
+      x86:
+        buildPlatform: 'x86'
+      x64:
+        buildPlatform: 'x64'
+      arm:
+        buildPlatform: 'arm'
+      arm64:
+        buildPlatform: 'arm64'
+
+  steps:
+  - checkout: self
+    clean: true
+    persistCredentials: True
+
+  - task: NuGetToolInstaller@1
+    displayName: Use NuGet 6.0.2
+    continueOnError: True
+    inputs:
+      versionSpec: 6.0.2
+
+  - task: NuGetCommand@2
+    displayName: NuGet restore
+
+  - task: CmdLine@2
+    displayName: Build Tools
+    inputs:
+      script: |
+        if "%VSCMD_VER%"=="" (
+            pushd c:
+            call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat" >nul 2>&1
+            popd
+        )
+
+        build_test_all.cmd $(BuildPlatform) $(BuildConfiguration) $(Build.BuildNumber) true
+      failOnStderr: true
+
+  - task: ComponentGovernanceComponentDetection@0
+    displayName: Component Detection
+    condition: eq(variables['BuildPlatform'], 'x64')
+
+  - task: PublishTestResults@2
+    displayName: Publish Test Results
+    enabled: False
+
+  - task: CopyFiles@2
+    displayName: Stage cppwinrt.*
+    condition: and(eq(variables['BuildPlatform'], 'x86'), eq(variables.manualRelease, 'true'))
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\_build\$(BuildPlatform)\$(BuildConfiguration)
+      Contents: |
+        cppwinrt.exe
+        cppwinrt.pdb
+      TargetFolder: $(Build.ArtifactStagingDirectory)\cppwinrt
+
+  - task: CopyFiles@2
+    displayName: Stage Component cppwinrtvisualizer.*
+    condition: $[and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables.manualRelease, 'true'))]
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Component
+      Contents: |
+        cppwinrtvisualizer.dll
+        cppwinrtvisualizer.pdb
+        cppwinrtvisualizer.vsdconfig
+      TargetFolder: $(Build.ArtifactStagingDirectory)\Component
+
+  - task: CopyFiles@2
+    displayName: Stage Standalone cppwinrtvisualizer.*
+    condition: $[and(or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64')), eq(variables.manualRelease, 'true'))]
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Standalone
+      Contents: |
+        cppwinrtvisualizer.dll
+        cppwinrtvisualizer.pdb
+        cppwinrtvisualizer.vsdconfig
+      TargetFolder: $(Build.ArtifactStagingDirectory)\Standalone
+
+  - task: CopyFiles@2
+    displayName: Stage cppwinrt_fast_forwarder.lib
+    condition: eq(variables.manualRelease, 'true')
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\_build\$(BuildPlatform)\$(BuildConfiguration)
+      Contents: cppwinrt_fast_forwarder.lib
+      TargetFolder: $(Build.ArtifactStagingDirectory)
+
+  - task: ManifestGeneratorTask@0
+    displayName: 'Manifest Generator '
+    condition: and(eq(variables['BuildPlatform'], 'x86'), eq(variables.manualRelease, 'true'))
+    inputs:
+      BuildDropPath: $(Build.ArtifactStagingDirectory)\cppwinrt
+
+  - task: PublishPipelineArtifact@0
+    displayName: Publish Artifacts
+    condition: eq(variables.manualRelease, 'true')
+    inputs:
+      artifactName: $(BuildConfiguration)_$(BuildPlatform)
+      targetPath: $(Build.ArtifactStagingDirectory)
+
+  - task: PublishSymbols@2
+    displayName: Publish symbols
+    condition: eq(variables.manualRelease, 'true')
+    inputs:
+      SymbolsFolder: $(Build.ArtifactStagingDirectory)
+      SearchPattern: '**/*.pdb'
+      SymbolServerType: TeamServices
+      SymbolsProduct: CppWinRT
+
+- job: BuildInternal
+  displayName: Build Internal Packages (VPacks)
+  dependsOn: BuildBinaries
+  condition: and(succeeded(), ne(variables['SkipInternalPackages'], 'true'), eq(variables.manualRelease, 'true'))
+  pool:
+    name: Azure Pipelines
+    vmImage: 'windows-2022'
+  steps:
+  - checkout: self
+    clean: true
+    persistCredentials: True
+
+  - task: PkgESSetupBuild@12
+    displayName: Package ES - Setup Build
+    inputs:
+      branchVersionExcludeBranch: master
+      disableWorkspace: true
+      disableMsbuildVersion: true
+      disableBuildTools: true
+
+  - task: DownloadPipelineArtifact@1
+    displayName: Download x86 Artifacts
+    inputs:
+      artifactName: $(BuildConfiguration)_x86
+      downloadPath: $(Build.SourcesDirectory)\x86
+
+  - task: DownloadPipelineArtifact@1
+    displayName: Download x64 Artifacts
+    inputs:
+      artifactName: $(BuildConfiguration)_x64
+      downloadPath: $(Build.SourcesDirectory)\x64
+
+  - task: DownloadPipelineArtifact@1
+    displayName: Download arm Artifacts
+    inputs:
+      artifactName: $(BuildConfiguration)_arm
+      downloadPath: $(Build.SourcesDirectory)\arm
+
+  - task: DownloadPipelineArtifact@1
+    displayName: Download arm64 Artifacts
+    inputs:
+      artifactName: $(BuildConfiguration)_arm64
+      downloadPath: $(Build.SourcesDirectory)\arm64
+
+  - task: CmdLine@2
+    displayName: Parse PatchVersion
+    inputs:
+      script: 'for /f "tokens=3,4 delims=." %%i in ("$(Build.BuildNumber)") do @echo ##vso[task.setvariable variable=PatchVersion;]%%i%%j '
+      failOnStderr: true
+
+  - task: CmdLine@2
+    displayName: Copy compiler contents for internal signing
+    inputs:
+      script: |
+        md $(Build.SourcesDirectory)\x86\tempsign
+        echo Build Sources Directory:
+        dir $(Build.SourcesDirectory)
+        echo x86
+        dir $(Build.SourcesDirectory)\x86
+        echo cppwinrt
+        dir $(Build.SourcesDirectory)\x86\cppwinrt
+        xcopy $(Build.SourcesDirectory)\x86\cppwinrt\*.* $(Build.SourcesDirectory)\x86\tempsign /icefzy
+
+  - task: EsrpCodeSigning@2
+    displayName: Sign Compiler vPack for internal use
+    inputs:
+      ConnectedServiceName: bf601a97-455d-4977-b248-07b90c96eed9
+      FolderPath: $(Build.SourcesDirectory)\x86\tempsign
+      signConfigType: inlineSignParams
+      inlineOperation: |
+        [
+            {
+                "KeyCode" : "CP-458204",
+                "OperationCode" : "SigntoolSign",
+                "Parameters" : {
+                "OpusName" : "Windows Build Tools Internal",
+                "OpusInfo" : "http://www.microsoft.com",
+                "FileDigest" : "/fd \"SHA256\"",
+                "PageHash" : "/NPH",
+                "TimeStamp" : "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+            },
+                "ToolName" : "sign",
+                "ToolVersion" : "1.0"
+            },
+            {
+                "KeyCode" : "CP-458204",
+                "OperationCode" : "SigntoolVerify",
+                "Parameters" : {},
+                "ToolName" : "sign",
+                "ToolVersion" : "1.0"
+            }
+        ]
+
+  - task: PkgESVPack@12
+    displayName: 'Publish Compiler VPack '
+    inputs:
+      serviceType: drop
+      versionAs: parts
+      sourceDirectory: $(Build.SourcesDirectory)\x86\tempsign
+      description: C++/WinRT Compiler
+      pushPkgName: CppWinRT.Compiler
+      target: $(OSBuildToolsRoot)\cppwinrt
+      provData: false
+      majorVer: $(MajorVersion)
+      minorVer: $(MinorVersion)
+      patchVer: $(PatchVersion)
+      prereleaseVer: $(Build.SourceBranchName).x86.$(BuildConfiguration).$(Build.BuildNumber).$(Build.SourceVersion)
+      signSbom: false
+
+  - task: CmdLine@2
+    displayName: Delete internal compiler copy
+    inputs:
+      script: |
+        rd $(Build.SourcesDirectory)\x86\tempsign /q /s
+
+  - task: CopyFiles@2
+    displayName: Stage CppWinRT.Compiler.man
+    inputs:
+      SourceFolder: $(XES_VPACKMANIFESTDIRECTORY)
+      Contents: $(XES_VPACKMANIFESTNAME)
+      TargetFolder: $(Build.ArtifactStagingDirectory)
+
+  - task: CmdLine@2
+    displayName: Stage MSBuild vpack
+    inputs:
+      script: "set TargetDir=$(Build.SourcesDirectory)\\msbuild\nrd /s /q %TargetDir% >nul 2>&1\nmd %TargetDir%\ncd %TargetDir%\n\ncopy $(Build.SourcesDirectory)\\vsix\\Microsoft.Cpp.CppWinRT.props\ncopy $(Build.SourcesDirectory)\\nuget\\Microsoft.Windows.CppWinRT.props Microsoft.Cpp.CppWinRTEnabled.props \ncopy $(Build.SourcesDirectory)\\nuget\\Microsoft.Windows.CppWinRT.targets Microsoft.Cpp.CppWinRTEnabled.targets\ncopy $(Build.SourcesDirectory)\\nuget\\CppWinrtRules.Project.xml CppWinrtRules.Project.xml\necho d | xcopy $(Build.SourcesDirectory)\\x86\\cppwinrt_fast_forwarder.lib build\\native\\lib\\i386\necho d | xcopy $(Build.SourcesDirectory)\\x86\\cppwinrt_fast_forwarder.lib build\\native\\lib\\Win32\necho d | xcopy $(Build.SourcesDirectory)\\x64\\cppwinrt_fast_forwarder.lib  build\\native\\lib\\amd64\necho d | xcopy $(Build.SourcesDirectory)\\x64\\cppwinrt_fast_forwarder.lib  build\\native\\lib\\x64\necho d | xcopy $(Build.SourcesDirectory)\\arm\\cppwinrt_fast_forwarder.lib  build\\native\\lib\\arm\necho d | xcopy $(Build.SourcesDirectory)\\arm64\\cppwinrt_fast_forwarder.lib  build\\native\\lib\\arm64\n"
+      failOnStderr: true
+
+  - task: PkgESVPack@12
+    displayName: Publish MSBuild VPack
+    inputs:
+      serviceType: drop
+      versionAs: parts
+      sourceDirectory: $(Build.SourcesDirectory)\msbuild
+      description: C++/WinRT MSBuild
+      pushPkgName: CppWinRT.MSBuild
+      target: $(OSBuildToolsRoot)\cppwinrt
+      provData: false
+      majorVer: $(MajorVersion)
+      minorVer: $(MinorVersion)
+      patchVer: $(PatchVersion)
+      prereleaseVer: $(Build.SourceBranchName).$(Build.BuildNumber).$(Build.SourceVersion)
+      signSbom: false
+
+  - task: CopyFiles@2
+    displayName: Stage CppWinRT.MSBuild.man
+    inputs:
+      SourceFolder: $(XES_VPACKMANIFESTDIRECTORY)
+      Contents: $(XES_VPACKMANIFESTNAME)
+      TargetFolder: $(Build.ArtifactStagingDirectory)
+
+  - task: CmdLine@2
+    displayName: Stage OSBuildTools.Manifest Update
+    enabled: False
+    inputs:
+      script: |
+        copy $(Build.SourcesDirectory)\src\package\cppwinrt\vpack\GitCheckin.json
+        copy $(Build.SourcesDirectory)\vpack\*.man OSBuildTools.Manifest.Update
+        type OSBuildTools.Manifest.Update
+      workingDirectory: $(Build.ArtifactStagingDirectory)
+      failOnStderr: true
+
+  - task: PublishPipelineArtifact@0
+    displayName: Publish Update Manifests
+    inputs:
+      artifactName: VPack
+      targetPath: $(Build.ArtifactStagingDirectory)
+
+- job: BuildExternal
+  displayName: Build External Packages (NuGet, VSIX)
+  cancelTimeoutInMinutes: 1
+  dependsOn: BuildBinaries
+  condition: and(succeeded(), eq(variables.manualRelease, 'true'))
+  pool:
+    name: Azure Pipelines
+    vmImage: 'windows-2022'
+  steps:
+  - checkout: self
+    clean: true
+    persistCredentials: True
+
+  - task: NuGetToolInstaller@1
+    displayName: Use NuGet 6.0.2
+    continueOnError: True
+    inputs:
+      versionSpec: 6.0.2
+
+  - task: NuGetCommand@2
+    displayName: NuGet restore
+
+  - task: DownloadPipelineArtifact@1
+    displayName: Download x86 Artifacts
+    inputs:
+      artifactName: $(BuildConfiguration)_x86
+      downloadPath: $(Build.SourcesDirectory)\x86
+
+  - task: DownloadPipelineArtifact@1
+    displayName: Download x64 Artifacts
+    inputs:
+      artifactName: $(BuildConfiguration)_x64
+      downloadPath: $(Build.SourcesDirectory)\x64
+
+  - task: DownloadPipelineArtifact@1
+    displayName: Download arm Artifacts
+    inputs:
+      artifactName: $(BuildConfiguration)_arm
+      downloadPath: $(Build.SourcesDirectory)\arm
+
+  - task: DownloadPipelineArtifact@1
+    displayName: Download arm64 Artifacts
+    inputs:
+      artifactName: $(BuildConfiguration)_arm64
+      downloadPath: $(Build.SourcesDirectory)\arm64
+
+  - task: EsrpCodeSigning@2
+    displayName: ESRP CodeSigning NatVis
+    inputs:
+      ConnectedServiceName: 81cc6790-027c-4ef3-928d-65e8b96a691a
+      FolderPath: $(Build.SourcesDirectory)
+      Pattern: |
+        x86\cppwinrt\cppwinrt.exe
+        x86\Component\cppwinrtvisualizer.dll
+        x64\Component\cppwinrtvisualizer.dll
+        arm64\Component\cppwinrtvisualizer.dll
+        x86\Standalone\cppwinrtvisualizer.dll
+        x64\Standalone\cppwinrtvisualizer.dll
+      UseMinimatch: true
+      signConfigType: inlineSignParams
+      inlineOperation: |
+        [
+          {
+            "keyCode": "CP-230012",
+            "operationSetCode": "SigntoolSign",
+            "parameters": [
+              {
+                "parameterName": "OpusName",
+                "parameterValue": "Microsoft"
+              },
+              {
+                "parameterName": "OpusInfo",
+                "parameterValue": "http://www.microsoft.com"
+              },
+              {
+                "parameterName": "PageHash",
+                "parameterValue": "/NPH"
+              },
+              {
+                "parameterName": "FileDigest",
+                "parameterValue": "/fd sha256"
+              },
+              {
+                "parameterName": "TimeStamp",
+                "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+              }
+            ],
+            "toolName": "signtool.exe",
+            "toolVersion": "6.2.9304.0"
+          }
+        ]
+
+  - task: CmdLine@2
+    displayName: Stage Signed Binaries
+    inputs:
+      script: |
+        echo F|xcopy /S /Q /Y /F x86\cppwinrt\cppwinrt.exe $(Build.ArtifactStagingDirectory)\x86\cppwinrt.exe
+        echo F|xcopy /S /Q /Y /F  x86\Component\cppwinrtvisualizer.dll $(Build.ArtifactStagingDirectory)\x86\Component\cppwinrtvisualizer.dll
+        echo F|xcopy /S /Q /Y /F  x64\Component\cppwinrtvisualizer.dll $(Build.ArtifactStagingDirectory)\x64\Component\cppwinrtvisualizer.dll
+        echo F|xcopy /S /Q /Y /F  arm64\Component\cppwinrtvisualizer.dll $(Build.ArtifactStagingDirectory)\arm64\Component\cppwinrtvisualizer.dll
+        echo F|xcopy /S /Q /Y /F  x86\Standalone\cppwinrtvisualizer.dll $(Build.ArtifactStagingDirectory)\x86\Standalone\cppwinrtvisualizer.dll
+        echo F|xcopy /S /Q /Y /F  x64\Standalone\cppwinrtvisualizer.dll $(Build.ArtifactStagingDirectory)\x64\Standalone\cppwinrtvisualizer.dll
+        echo F|xcopy /S /Q /Y /F  arm64\Standalone\cppwinrtvisualizer.dll $(Build.ArtifactStagingDirectory)\arm64\Standalone\cppwinrtvisualizer.dll
+      workingDirectory: $(Build.SourcesDirectory)
+      failOnStderr: true
+
+  - task: CmdLine@2
+    displayName: Stage cppwinrtvisualizer.vsdconfig
+    inputs:
+      script: |
+        copy $(Build.SourcesDirectory)\x86\Component\cppwinrtvisualizer.vsdconfig x86\Component\cppwinrtvisualizer.vsdconfig
+        copy $(Build.SourcesDirectory)\x86\Standalone\cppwinrtvisualizer.vsdconfig x86\Standalone\cppwinrtvisualizer.vsdconfig
+      workingDirectory: $(Build.ArtifactStagingDirectory)
+      failOnStderr: true
+      
+  - task: NuGetCommand@2
+    displayName: Build NuGet
+    inputs:
+      command: pack
+      searchPatternPack: nuget/Microsoft.Windows.CppWinRT.nuspec
+      versioningScheme: byBuildNumber
+      buildProperties: 'cppwinrt_exe=$(Build.ArtifactStagingDirectory)\x86\cppwinrt.exe;cppwinrt_fast_fwd_x86=$(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=$(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=$(Build.SourcesDirectory)\arm\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=$(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib '
+
+  - task: ComponentGovernanceComponentDetection@0
+    displayName: Component Detection
+
+  - task: EsrpCodeSigning@2
+    displayName: ESRP CodeSigning Nuget Package
+    inputs:
+      ConnectedServiceName: 81cc6790-027c-4ef3-928d-65e8b96a691a
+      FolderPath: $(Build.ArtifactStagingDirectory)
+      Pattern: Microsoft.Windows.CppWinRT.*.nupkg
+      UseMinimatch: true
+      signConfigType: inlineSignParams
+      inlineOperation: |
+        [
+          {
+            "KeyCode" : "CP-401405",
+            "OperationCode" : "NuGetSign",
+            "Parameters" : {},
+            "ToolName" : "sign",
+            "ToolVersion" : "1.0"
+          },
+          {
+              "KeyCode" : "CP-401405",
+              "OperationCode" : "NuGetVerify",
+              "Parameters" : {},
+              "ToolName" : "sign",
+              "ToolVersion" : "1.0"
+          }
+        ]
+
+  - task: PkgESNuGetPublisher@0
+    displayName: Publish NuGet Package
+    inputs:
+      searchPattern: $(System.ArtifactsDirectory)\Microsoft.Windows.CppWinRT.$(Build.BuildNumber).nupkg
+      nuGetFeedType: internal
+      feedName: https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json
+
+  - task: VSBuild@1
+    displayName: Build Component VSIXes
+    inputs:
+      solution: vsix/vsix.sln
+      msbuildArgs: /p:Deployment=Component,CppWinRTVersion=$(Build.BuildNumber),NatvisDirx86=$(Build.ArtifactStagingDirectory)\x86\Component\,NatvisDirx64=$(Build.ArtifactStagingDirectory)\x64\Component\,NatvisDirarm64=$(Build.ArtifactStagingDirectory)\arm64\Component\,NupkgDir=$(Build.ArtifactStagingDirectory) /restore
+      platform: Any CPU
+      configuration: Release
+
+  - task: ExtractFiles@1
+    displayName: Extract Component VSIX files for signing
+    inputs:
+      archiveFilePatterns: $(Build.SourcesDirectory)\vsix\Dev17\bin\Release\Component\Microsoft.Windows.CppWinRT.Dev17.vsix
+      destinationFolder: $(Agent.TempDirectory)\Microsoft.Windows.CppWinRT.Dev17.vsix
+      overwriteExistingFiles: true
+
+  - task: EsrpCodeSigning@2
+    displayName: ESRP CodeSign VSIX contents
+    inputs:
+      ConnectedServiceName: 81cc6790-027c-4ef3-928d-65e8b96a691a
+      FolderPath: $(Agent.TempDirectory)\Microsoft.Windows.CppWinRT.Dev17.vsix
+      Pattern: '**/Microsoft.Windows.CppWinRT.*.dll'
+      UseMinimatch: true
+      signConfigType: inlineSignParams
+      inlineOperation: |
+        [
+          {
+            "keyCode": "CP-230012",
+            "operationSetCode": "SigntoolSign",
+            "parameters": [
+              {
+                "parameterName": "OpusName",
+                "parameterValue": "Microsoft"
+              },
+              {
+                "parameterName": "OpusInfo",
+                "parameterValue": "http://www.microsoft.com"
+              },
+              {
+                "parameterName": "PageHash",
+                "parameterValue": "/NPH"
+              },
+              {
+                "parameterName": "FileDigest",
+                "parameterValue": "/fd sha256"
+              },
+              {
+                "parameterName": "TimeStamp",
+                "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+              }
+            ],
+            "toolName": "signtool.exe",
+            "toolVersion": "6.2.9304.0"
+          }
+        ]
+  - task: ArchiveFiles@2
+    displayName: Repack signed VSIX contents
+    inputs:
+      rootFolderOrFile: $(Agent.TempDirectory)\Microsoft.Windows.CppWinRT.Dev17.vsix
+      includeRootFolder: false
+      archiveFile: $(Build.SourcesDirectory)\vsix\Dev17\bin\Release\Component\Microsoft.Windows.CppWinRT.Dev17.vsix
+
+  - task: VSBuild@1
+    displayName: Build Standalone VSIXes
+    inputs:
+      solution: vsix/vsix.sln
+      msbuildArgs: /p:Deployment=Standalone,CppWinRTVersion=$(Build.BuildNumber),NatvisDirx86=$(Build.ArtifactStagingDirectory)\x86\Standalone\,NatvisDirx64=$(Build.ArtifactStagingDirectory)\x64\Standalone\,NatvisDirarm64=$(Build.ArtifactStagingDirectory)\arm64\Standalone\,NupkgDir=$(Build.ArtifactStagingDirectory) /restore
+      platform: x86
+      configuration: Release
+
+  - task: EsrpCodeSigning@2
+    displayName: ESRP CodeSigning VSIX
+    inputs:
+      ConnectedServiceName: 81cc6790-027c-4ef3-928d-65e8b96a691a
+      FolderPath: $(Build.SourcesDirectory)\vsix\
+      Pattern: |
+        Dev16\bin\Release\Component\Microsoft.Windows.CppWinRT.vsix
+        Dev16\bin\Release\Standalone\Microsoft.Windows.CppWinRT.vsix
+        Dev17\bin\Release\Component\Microsoft.Windows.CppWinRT.Dev17.vsix
+        Dev17\bin\Release\Standalone\Microsoft.Windows.CppWinRT.Dev17.vsix
+      UseMinimatch: true
+      signConfigType: inlineSignParams
+      inlineOperation: |
+        [
+                {
+                    "KeyCode" : "CP-233016",
+                    "OperationCode" : "OpcSign",
+                    "Parameters" : {
+                        "FileDigest" : "/fd SHA256"
+                    },
+                    "ToolName" : "sign",
+                    "ToolVersion" : "1.0"
+                },
+                {
+                    "KeyCode" : "CP-233016",
+                    "OperationCode" : "OpcVerify",
+                    "Parameters" : {},
+                    "ToolName" : "sign",
+                    "ToolVersion" : "1.0"
+                }
+        ]
+
+  - task: CmdLine@2
+    displayName: Stage Component VSIX (Dev17)
+    inputs:
+      script: |
+        echo F|xcopy /S /Q /Y /F Microsoft.Windows.CppWinRT.Dev17.vsix $(Build.ArtifactStagingDirectory)\Component\Dev17\Microsoft.Windows.CppWinRT.Dev17.vsix
+        echo F|xcopy /S /Q /Y /F Microsoft.Windows.CppWinRT.Dev17.json $(Build.ArtifactStagingDirectory)\Component\Dev17\Microsoft.Windows.CppWinRT.Dev17.json
+        echo F|xcopy /S /Q /Y /F Microsoft.Windows.CppWinRT.Dev17.pdb $(Build.ArtifactStagingDirectory)\Component\Dev17\Microsoft.Windows.CppWinRT.Dev17.pdb
+      workingDirectory: $(Build.SourcesDirectory)\vsix\Dev17\bin\Release\Component
+      failOnStderr: true
+
+  - task: CopyFiles@2
+    displayName: Stage Component VSIX Manifest (Dev17)
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\vsix
+      Contents: |
+        extension.manifest.json
+        overview.md
+      TargetFolder: $(Build.ArtifactStagingDirectory)\Component\Dev17
+      OverWrite: true
+
+  - task: CmdLine@2
+    displayName: Stage Standalone VSIX (Dev16)
+    inputs:
+      script: echo F|xcopy /S /Q /Y /F Microsoft.Windows.CppWinRT.vsix $(Build.ArtifactStagingDirectory)\Standalone\Dev16\Microsoft.Windows.CppWinRT.vsix
+      workingDirectory: $(Build.SourcesDirectory)\vsix\Dev16\bin\$(BuildConfiguration)\Standalone
+      failOnStderr: true
+
+  - task: CopyFiles@2
+    displayName: Stage Standalone VSIX Manifest (Dev16)
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\vsix
+      Contents: |
+        extension.manifest.json
+        overview.md
+      TargetFolder: $(Build.ArtifactStagingDirectory)\Standalone\Dev16
+      OverWrite: true
+
+  - task: CmdLine@2
+    displayName: Stage Standalone VSIX (Dev17)
+    inputs:
+      script: echo F|xcopy /S /Q /Y /F Microsoft.Windows.CppWinRT.Dev17.vsix $(Build.ArtifactStagingDirectory)\Standalone\Dev17\Microsoft.Windows.CppWinRT.Dev17.vsix
+      workingDirectory: $(Build.SourcesDirectory)\vsix\Dev17\bin\$(BuildConfiguration)\Standalone
+      failOnStderr: true
+
+  - task: CopyFiles@2
+    displayName: Stage Standalone VSIX Manifest (Dev17)
+    inputs:
+      SourceFolder: $(Build.SourcesDirectory)\vsix
+      Contents: |
+        extension.manifest.json
+        overview.md
+      TargetFolder: $(Build.ArtifactStagingDirectory)\Standalone\Dev17
+      OverWrite: true
+
+  - task: ManifestGeneratorTask@0
+    displayName: SBOM for Dev16
+    inputs:
+      BuildDropPath: $(Build.ArtifactStagingDirectory)\Standalone\Dev16
+
+  - task: ManifestGeneratorTask@0
+    displayName: SBOM for Dev17 Standalone
+    inputs:
+      BuildDropPath: $(Build.ArtifactStagingDirectory)\Standalone\Dev17
+
+  - task: ManifestGeneratorTask@0
+    displayName: SBOM for Dev17 Component
+    inputs:
+      BuildDropPath: $(Build.ArtifactStagingDirectory)\Component\Dev17
+
+  - task: PublishPipelineArtifact@0
+    displayName: Publish VSIX
+    inputs:
+      artifactName: Publish
+      targetPath: $(Build.ArtifactStagingDirectory)
+
+  - task: PublishSymbols@2
+    displayName: Publish Component VSIX symbols
+    inputs:
+      SymbolsFolder: $(Build.ArtifactStagingDirectory)
+      SearchPattern: '**/Microsoft.Windows.CppWinRT.Dev17.pdb'
+      SymbolServerType: TeamServices
+      SymbolsProduct: CppWinRT
+...
