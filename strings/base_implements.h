@@ -1190,8 +1190,7 @@ namespace winrt::impl
                     return decode_weak_ref(count_or_pointer)->get_source();
                 }
 
-                com_ptr<weak_ref_t> weak_ref;
-                *weak_ref.put() = new (std::nothrow) weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer));
+                com_ptr<weak_ref_t> weak_ref(new (std::nothrow) weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer)), take_ownership_from_abi);
 
                 if (!weak_ref)
                 {
