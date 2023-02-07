@@ -135,9 +135,12 @@ namespace winrt::impl
             }
             else
             {
-                resume_apartment(m_context, std::exchange(m_handle, {}), &m_awaiter->failure);
+                auto handle = std::exchange(m_handle, {});
+                if (!resume_apartment(m_context, handle, &m_awaiter->failure))
+                {
+                    handle.resume();
+                }
             }
-
         }
     };
 
@@ -182,7 +185,6 @@ namespace winrt::impl
     private:
         auto register_completed_callback(coroutine_handle<> handle)
         {
-            auto extend_lifetime = async;
             async.Completed(disconnect_aware_handler(this, handle));
 #ifdef _RESUMABLE_FUNCTIONS_SUPPORTED
             if (!suspending.exchange(false, std::memory_order_acquire))

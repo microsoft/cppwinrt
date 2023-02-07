@@ -68,8 +68,45 @@ namespace
         REQUIRE(consumed == 0);
 #endif
     }
+
+    // co_await the same apartment context and confirm that stack does not grow.
+    // This is in await_completed.cpp because it's basically the same thing as awaiting
+    // an already-completed coroutine, so the test uses the same infrastructure.
+    IAsyncAction TestApartmentContextNop()
+    {
+        winrt::apartment_context same_context;
+
+        uintptr_t initial = approximate_stack_pointer();
+        co_await resume_sync_from_await_suspend();
+        uintptr_t sync_usage = initial - approximate_stack_pointer();
+
+        initial = approximate_stack_pointer();
+        co_await same_context;
+        uintptr_t consumed = initial - approximate_stack_pointer();
+
+#ifdef _RESUMABLE_FUNCTIONS_SUPPORTED
+        // This branch is taken only for MSVC prerelease coroutines.
+        //
+        // MSVC prerelease coroutines prior to 16.11 do not implement "bool await_suspend" reliably,
+        // so we can't use it impl::apartment_awaiter. We must resume inline inside await_suspend,
+        // so there is a small amount of stack usage. (Pre-16.11 and post-16.11 prerelease coroutines
+        // are interoperable, so we cannot change behavior based on which compiler we are using,
+        // because that would introduce ODR violations. Our first opportunity to change behavior
+        // is the ABI breaking change with MSVC standard-conforming coroutines.)
+        REQUIRE(consumed <= sync_usage);
+#else
+        // MSVC standard-conforming coroutines (as well as gcc and clang coroutines)
+        // support "bool await_suspend" just fine.
+        REQUIRE(consumed == 0);
+#endif
+    }
 }
 TEST_CASE("await_completed_await")
 {
     SyncCompletion().get();
+}
+
+TEST_CASE("apartment_context_nop")
+{
+    TestApartmentContextNop().get();
 }
