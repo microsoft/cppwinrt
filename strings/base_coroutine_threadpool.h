@@ -118,19 +118,22 @@ namespace winrt::impl
         WINRT_ASSERT(context.valid());
         if ((context.m_context == nullptr) || (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
         {
-            handle();
+            return false;
         }
         else if (context.m_context_type == 1 /* APTTYPE_MTA */)
         {
             resume_background(handle);
+            return true;
         }
         else if (is_sta_thread())
         {
             resume_apartment_on_threadpool(context.m_context, handle, failure);
+            return true;
         }
         else
         {
             resume_apartment_sync(context.m_context, handle, failure);
+            return true;
         }
     }
 }
@@ -315,7 +318,7 @@ namespace winrt::impl
 {
     struct apartment_awaiter
     {
-        apartment_context context; // make a copy because resuming may destruct the original
+        apartment_context const& context;
         int32_t failure = 0;
 
         bool await_ready() const noexcept
@@ -328,9 +331,17 @@ namespace winrt::impl
             check_hresult(failure);
         }
 
-        void await_suspend(impl::coroutine_handle<> handle)
+        auto await_suspend(impl::coroutine_handle<> handle)
         {
-            impl::resume_apartment(context.context, handle, &failure);
+            auto context_copy = context;
+#ifdef _RESUMABLE_FUNCTIONS_SUPPORTED
+            if (!impl::resume_apartment(context_copy.context, handle, &failure))
+            {
+                handle.resume();
+            }
+#else
+            return impl::resume_apartment(context_copy.context, handle, &failure);
+#endif
         }
     };
 
