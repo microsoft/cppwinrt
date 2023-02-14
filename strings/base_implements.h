@@ -110,12 +110,12 @@ namespace winrt::impl
     template <typename D, typename I, typename Enable>
     struct producer_convert : producer<D, typename default_interface<I>::type>
     {
-        operator producer_ref<I> const() const noexcept
+        operator producer_ref<I>() const noexcept
         {
             return { (produce<D, typename default_interface<I>::type>*)this };
         }
 
-        operator producer_vtable<I> const() const noexcept
+        operator producer_vtable<I>() const noexcept
         {
             return { (void*)this };
         }
