@@ -17,6 +17,18 @@ namespace winrt
     }
 }
 
+// To confirm that two clocks have the same epoch, we
+// capture one clock, then the other, then the first again,
+// and verify that the three timestamps are ordered. This avoids
+// spurious failures if a test machine is slow or experiences a
+// clock tick at just the wrong time.
+//
+// We use a duration_cast to milliseconds so that the assertion
+// failure message tells us how many milliseconds of error we encountered.
+#define REQUIRE_ORDERED(a, b, c) \
+    REQUIRE(duration_cast<milliseconds>((b) - (a)).count() >= 0); \
+    REQUIRE(duration_cast<milliseconds>((c) - (b)).count() >= 0)
+
 namespace Catch
 {
     template<typename Rep, typename Period>
@@ -46,11 +58,13 @@ namespace Catch
 
 TEST_CASE("clock, now")
 {
-    Calendar calendar;
-    calendar.SetToNow();
+    // Confirm that clock::now agrees with Calendar::SetToNow.
+    Calendar calendar1;
+    calendar1.SetToNow();
     auto time = clock::now();
-    auto diff = calendar.GetDateTime() - time;
-    REQUIRE(abs(diff) < milliseconds{ 100 });
+    Calendar calendar2;
+    calendar2.SetToNow();
+    REQUIRE_ORDERED(calendar1.GetDateTime(), time, calendar2.GetDateTime());
 }
 
 TEST_CASE("clock, units")
@@ -66,73 +80,72 @@ TEST_CASE("clock, units")
 
 TEST_CASE("clock, time_t")
 {
-    const DateTime now_dt = clock::now();
+    const DateTime now1_dt = clock::now();
     const time_t now_tt = time(nullptr);
+    const DateTime now2_dt = clock::now();
 
     // Round trip from DateTime to time_t and back.
     // confirm that nothing happens other than truncating the fractional seconds
-    REQUIRE(clock::from_time_t(clock::to_time_t(now_dt)) == time_point_cast<seconds>(now_dt));
+    REQUIRE(clock::from_time_t(clock::to_time_t(now1_dt)) == time_point_cast<seconds>(now1_dt));
 
     // Same thing in reverse
     REQUIRE(clock::to_time_t(clock::from_time_t(now_tt)) == now_tt);
 
     // Conversions are verified to be consistent. Now, verify that we're correctly converting epochs
-    const auto diff = duration_cast<milliseconds>(abs(now_dt - clock::from_time_t(now_tt))).count();
-    REQUIRE(diff < 1000);
+    // Note that time_t has only 1s resolution, so we need to add 1 second of slop on either side.
+    REQUIRE_ORDERED(now1_dt - 1s, clock::from_time_t(now_tt), now2_dt + 1s);
 }
 
 TEST_CASE("clock, FILETIME")
 {
-    const DateTime now_dt = clock::now();
+    const DateTime now1_dt = clock::now();
     FILETIME now_ft;
     ::GetSystemTimePreciseAsFileTime(&now_ft);
+    const DateTime now2_dt = clock::now();
 
     // Round trip conversions
-    REQUIRE(clock::from_file_time(clock::to_file_time(now_dt)) == now_dt);
+    REQUIRE(clock::from_file_time(clock::to_file_time(now1_dt)) == now1_dt);
 
     REQUIRE(clock::to_file_time(clock::from_file_time(now_ft)) == now_ft);
 
     // Verify epoch
-    const auto diff = abs(now_dt - clock::from_file_time(now_ft));
-    REQUIRE(diff < milliseconds{ 100 });
+    REQUIRE_ORDERED(now1_dt, clock::from_file_time(now_ft), now2_dt);
 }
 
 TEST_CASE("clock, system_clock")
 {
-    DateTime const now_dt = clock::now();
-    auto const now_sys = system_clock::now();
+    DateTime const now1_dt = clock::now();
+    auto const now1_sys = system_clock::now();
+    DateTime const now2_dt = clock::now();
+    auto const now2_sys = system_clock::now();
 
     // Round trip DateTime to std::chrono::system_clock::time_point and back
-    REQUIRE(clock::from_sys(clock::to_sys(now_dt)) == now_dt);
+    REQUIRE(clock::from_sys(clock::to_sys(now1_dt)) == now1_dt);
 
     // Round trip other direction
-    REQUIRE(clock::to_sys(clock::from_sys(now_sys)) == now_sys);
+    REQUIRE(clock::to_sys(clock::from_sys(now1_sys)) == now1_sys);
 
     // Round trip with custom resolution
     {
-        auto const now_dt_sec = time_point_cast<seconds>(now_dt);
+        auto const now_dt_sec = time_point_cast<seconds>(now1_dt);
         REQUIRE(clock::from_sys(clock::to_sys(now_dt_sec)) == now_dt_sec);
     }
     {
-        auto const now_dt_mins = time_point_cast<minutes>(now_dt);
+        auto const now_dt_mins = time_point_cast<minutes>(now1_dt);
         REQUIRE(clock::from_sys(clock::to_sys(now_dt_mins)) == now_dt_mins);
     }
     {
-        auto const now_sys_sec = time_point_cast<seconds>(now_sys);
+        auto const now_sys_sec = time_point_cast<seconds>(now1_sys);
         REQUIRE(clock::to_sys(clock::from_sys(now_sys_sec)) == now_sys_sec);
     }
     {
-        auto const now_sys_mins = time_point_cast<seconds>(now_sys);
+        auto const now_sys_mins = time_point_cast<seconds>(now1_sys);
         REQUIRE(clock::to_sys(clock::from_sys(now_sys_mins)) == now_sys_mins);
     }
 
     // Verify that the epoch calculations are correct.
     {
-        auto const diff = now_dt - clock::from_sys(now_sys);
-        REQUIRE(abs(diff) < milliseconds{ 100 });
-    }
-    {
-        auto const diff = now_sys - clock::to_sys(now_dt);
-        REQUIRE(abs(diff) < milliseconds{ 100 });
+        REQUIRE_ORDERED(now1_dt, clock::from_sys(now1_sys), now2_dt);
+        REQUIRE_ORDERED(clock::from_sys(now1_sys), now2_dt, clock::from_sys(now2_sys));
     }
 }
