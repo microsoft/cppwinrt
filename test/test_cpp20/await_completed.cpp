@@ -38,8 +38,22 @@ namespace
         uintptr_t consumed = initial - approximate_stack_pointer();
         REQUIRE(consumed == 0);
     }
+
+    IAsyncAction TestApartmentContextNop()
+    {
+        // co_await the same apartment and confirm that stack does not grow.
+        winrt::apartment_context same_context;
+        uintptr_t initial = approximate_stack_pointer();
+        co_await same_context;
+        uintptr_t consumed = initial - approximate_stack_pointer();
+        REQUIRE(consumed == 0);
+    }
 }
 TEST_CASE("await_completed_await")
 {
     SyncCompletion().get();
+}
+TEST_CASE("apartment_context_nop")
+{
+    TestApartmentContextNop().get();
 }
