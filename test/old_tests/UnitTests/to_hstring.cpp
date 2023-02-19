@@ -91,8 +91,8 @@ namespace
             REQUIRE(a == c);
         }
         {
-            auto const stringable = make<stringable>();
-            REQUIRE(to_hstring(stringable) == stringable.ToString());
+            auto const obj = make<stringable>();
+            REQUIRE(to_hstring(obj) == obj.ToString());
         }
     }
 }
