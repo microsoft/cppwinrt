@@ -4,6 +4,14 @@
 
 using namespace winrt;
 
+struct stringable : winrt::implements<stringable, winrt::Windows::Foundation::IStringable>
+{
+    winrt::hstring ToString()
+    {
+        return L"a stringable object";
+    }
+};
+
 namespace
 {
     void test_cases()
@@ -81,6 +89,10 @@ namespace
             std::string const b = to_string(a);
             hstring const c = to_hstring(b);
             REQUIRE(a == c);
+        }
+        {
+            auto const stringable = make<stringable>();
+            REQUIRE(to_hstring(stringable) == stringable.ToString());
         }
     }
 }
