@@ -77,7 +77,7 @@ namespace winrt::impl
         return 0;
     };
 
-    inline void resume_apartment_sync(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure)
+    [[nodiscard]] inline bool resume_apartment_sync(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure)
     {
         com_callback_args args{};
         args.data = handle.address();
@@ -87,8 +87,9 @@ namespace winrt::impl
         {
             // Resume the coroutine on the wrong apartment, but tell it why.
             *failure = result;
-            handle();
+            return false;
         }
+        return true;
     }
 
     struct threadpool_resume
@@ -103,7 +104,10 @@ namespace winrt::impl
     inline void __stdcall fallback_submit_threadpool_callback(void*, void* p) noexcept
     {
         std::unique_ptr<threadpool_resume> state{ static_cast<threadpool_resume*>(p) };
-        resume_apartment_sync(state->m_context, state->m_handle, state->m_failure);
+        if (!resume_apartment_sync(state->m_context, state->m_handle, state->m_failure))
+        {
+            state->m_handle.resume();
+        }
     }
 
     inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure)
@@ -113,7 +117,7 @@ namespace winrt::impl
         state.release();
     }
 
-    inline auto resume_apartment(resume_apartment_context const& context, coroutine_handle<> handle, int32_t* failure)
+    [[nodiscard]] inline auto resume_apartment(resume_apartment_context const& context, coroutine_handle<> handle, int32_t* failure)
     {
         WINRT_ASSERT(context.valid());
         if ((context.m_context == nullptr) || (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
@@ -132,8 +136,7 @@ namespace winrt::impl
         }
         else
         {
-            resume_apartment_sync(context.m_context, handle, failure);
-            return true;
+            return resume_apartment_sync(context.m_context, handle, failure);
         }
     }
 }
@@ -331,17 +334,10 @@ namespace winrt::impl
             check_hresult(failure);
         }
 
-        auto await_suspend(impl::coroutine_handle<> handle)
+        bool await_suspend(impl::coroutine_handle<> handle)
         {
             auto context_copy = context;
-#ifdef _RESUMABLE_FUNCTIONS_SUPPORTED
-            if (!impl::resume_apartment(context_copy.context, handle, &failure))
-            {
-                handle.resume();
-            }
-#else
             return impl::resume_apartment(context_copy.context, handle, &failure);
-#endif
         }
     };
 
