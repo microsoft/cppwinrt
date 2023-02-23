@@ -74,6 +74,16 @@ TEST_CASE("as_implements")
     REQUIRE(foo.get() == foo2.get());
 }
 
+TEST_CASE("as_implements_uniform_initialization")
+{
+    // uniform initialization relies on IStringable(IStringable&&),
+    // which requires non-const rvalue semantics.
+    com_ptr<Foo> foo = make_self<Foo>();
+    IStringable stringable{ foo.as<IStringable>() };
+    com_ptr<Foo> foo2 = stringable.as<Foo>();
+    REQUIRE(foo.get() == foo2.get());
+}
+
 TEST_CASE("as_implements_inheritance")
 {
     com_ptr<Bar> bar = make_self<Bar>();
