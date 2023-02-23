@@ -110,12 +110,27 @@ namespace winrt::impl
     template <typename D, typename I, typename Enable>
     struct producer_convert : producer<D, typename default_interface<I>::type>
     {
-        operator producer_ref<I>() const noexcept
+#ifdef __clang__
+        // This is sub-optimal in that it requires an AddRef and Release of the
+        // implementation type for every conversion, but it works around an
+        // issue where Clang ignores the conversion of producer_ref<I> const
+        // to I&& (an rvalue ref that cannot bind a const rvalue).
+        // See CWG rev. 110 active issue 2077, "Overload resolution and invalid
+        // rvalue-reference initialization"
+        operator I() const noexcept
+        {
+            I result{ nullptr };
+            copy_from_abi(result, (produce<D, typename default_interface<I>::type>*)this);
+            return result;
+        }
+#else
+        operator producer_ref<I> const() const noexcept
         {
             return { (produce<D, typename default_interface<I>::type>*)this };
         }
+#endif
 
-        operator producer_vtable<I>() const noexcept
+        operator producer_vtable<I> const() const noexcept
         {
             return { (void*)this };
         }
