@@ -45,7 +45,7 @@ jobs:
 
             $source = "$(SourceBranch)"
             git fetch sourcerepo $source
-            git pull sourcerepo $sourcerepo
+            git pull sourcerepo $source
 
       - task: CmdLine@2
         inputs:
