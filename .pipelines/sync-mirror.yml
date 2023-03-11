@@ -1,0 +1,54 @@
+# Sync branches in a mirror repository to a base repo by running this pipeline
+# from the mirror repo, and supplying the base repo as a parameter
+name: $(MajorVersion).$(MinorVersion).$(date:yyMMdd)$(rev:.r)
+
+parameters:
+  - name: "SourceToTargetBranches"
+    type: object
+    default:
+      master: master
+  - name: "SourceRepository"
+    type: string
+    default: "https://github.com/microsoft/cppwinrt.git"
+
+jobs:
+  - job: SyncMirror
+    strategy:
+      matrix:
+        ${{ each branches in parameters.SourceToTargetBranches }}:
+          ${{ branches.key }}:
+            SourceBranch: ${{ branches.key }}
+            TargetBranch: ${{ branches.value }}
+    dependsOn: []
+    pool:
+      name: Azure Pipelines
+      vmImage: 'windows-2022'
+    steps:
+      - checkout: self
+        persistCredentials: true
+
+      - task: PowerShell@2
+        inputs:
+          targetType: 'inline'
+          script: |
+            Write-Host "SourceBranch " + "$(SourceBranch)"
+            Write-Host "TargetBranch " + "$(TargetBranch)"
+
+            $repo = "${{ parameters.SourceRepository }}"
+            git remote add sourcerepo $repo
+            git remote
+
+            $target = "$(TargetBranch)"
+            git fetch origin $target
+            git checkout $target
+            git pull origin $target
+
+            $source = "$(SourceBranch)"
+            git fetch sourcerepo $source
+            git pull sourcerepo $sourcerepo
+
+      - task: CmdLine@2
+        inputs:
+          script: |
+            git push
+
