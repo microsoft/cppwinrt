@@ -1,6 +1,6 @@
 # Sync branches in a mirror repository to a base repo by running this pipeline
 # from the mirror repo, and supplying the base repo as a parameter
-name: $(MajorVersion).$(MinorVersion).$(date:yyMMdd)$(rev:.r)
+name: $(BuildDefinitionName)_$(date:yyMMdd)$(rev:.r)
 
 parameters:
   - name: "SourceToTargetBranches"
