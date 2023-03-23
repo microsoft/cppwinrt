@@ -43,7 +43,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             <InterfaceIdentifierFileName Condition="'%(Midl.InterfaceIdentifierFileName)'==''">nul</InterfaceIdentifierFileName>
             <ProxyFileName Condition="'%(Midl.ProxyFileName)'==''">nul</ProxyFileName>
             <TypeLibraryName Condition="'%(Midl.TypeLibraryName)'==''"></TypeLibraryName>
-            <NoMidl>true</NoMidl>
+            <NoMidl Condition="'%(Midl.NoMidl)'==''">true</NoMidl>
         </Midl>
         <ProjectReference Condition="'$(XamlLanguage)' != 'C++' and '$(CppWinRTEnableDefaultCopyLocalFalse)' == 'true'">
             <!-- By default, for a C++/WinRT project,
