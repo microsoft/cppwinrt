@@ -463,7 +463,6 @@ $(XamlMetaDataProviderPch)
 
     <!--Insert Midl /references to Platform WinMDs, library reference WinMDs, and direct reference WinMDs-->
     <Target Name="CppWinRTSetMidlReferences"
-            Condition="'$(CppWinRTModernIDL)' != 'false'"
             DependsOnTargets="GetCppWinRTPlatformWinMDReferences;GetCppWinRTDirectWinMDReferences;GetCppWinRTProjectWinMDReferences;$(CppWinRTSetMidlReferencesDependsOn)"
             Inputs="$(MSBuildAllProjects);@(CppWinRTDirectWinMDReferences);@(CppWinRTStaticProjectWinMDReferences);@(CppWinRTDynamicProjectWinMDReferences);@(CppWinRTPlatformWinMDReferences)"
             Outputs="$(CppWinRTMidlResponseFile)">
@@ -475,8 +474,9 @@ $(XamlMetaDataProviderPch)
             <_MidlReferences Include="@(CppWinRTPlatformWinMDReferences)"/>
             <_MidlReferencesDistinct Remove="@(_MidlReferencesDistinct)" />
             <_MidlReferencesDistinct Include="@(_MidlReferences->'%(WinMDPath)'->Distinct())" />
-            <Midl Condition="'%(Midl.DisableReferences)'==''">
-                <AdditionalOptions>%(Midl.AdditionalOptions) %40"$(CppWinRTMidlResponseFile)"</AdditionalOptions>
+            <Midl>
+                <AdditionalOptions Condition="'%(Midl.NoMidl)'!='false'">%(Midl.AdditionalOptions) /nomidl</AdditionalOptions>
+                <AdditionalOptions Condition="'%(Midl.DisableReferences)'!='false' or '%(Midl.NoMidl)'!='false'">%(Midl.AdditionalOptions) /nomidl %40"$(CppWinRTMidlResponseFile)"</AdditionalOptions>
             </Midl>
         </ItemGroup>
         <PropertyGroup>
