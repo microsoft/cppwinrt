@@ -1,0 +1,11 @@
+import "Windows.Foundation.idl";
+
+namespace TestProxyStub
+{
+    [uuid("F219AC9A-9858-4F66-8DA7-47A9E08438AC")]
+    interface IAsyncContractParameter
+    {
+        String Name{ get; };
+        Object Details{ get; };
+    };
+}
