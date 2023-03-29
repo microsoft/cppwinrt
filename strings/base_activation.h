@@ -39,7 +39,7 @@ namespace winrt::impl
 
         if (hr == impl::error_not_initialized)
         {
-            auto usage = reinterpret_cast<int32_t(__stdcall*)(void** cookie) noexcept>(WINRT_IMPL_GetProcAddress(WINRT_IMPL_LoadLibraryW(L"combase.dll"), "CoIncrementMTAUsage"));
+            auto usage = reinterpret_cast<int32_t(__stdcall*)(void** cookie) noexcept>(WINRT_IMPL_GetProcAddress(load_library(L"combase.dll"), "CoIncrementMTAUsage"));
 
             if (!usage)
             {
@@ -66,7 +66,7 @@ namespace winrt::impl
         {
             path.resize(count);
             path += L".dll";
-            library_handle library(WINRT_IMPL_LoadLibraryW(path.c_str()));
+            library_handle library(load_library(path.c_str()));
             path.resize(path.size() - 4);
 
             if (!library)
