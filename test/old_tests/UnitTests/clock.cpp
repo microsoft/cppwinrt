@@ -92,8 +92,9 @@ TEST_CASE("clock, time_t")
     REQUIRE(clock::to_time_t(clock::from_time_t(now_tt)) == now_tt);
 
     // Conversions are verified to be consistent. Now, verify that we're correctly converting epochs
-    // Note that time_t has only 1s resolution, so we need to add 1 second of slop on either side.
-    REQUIRE_ORDERED(now1_dt - 1s, clock::from_time_t(now_tt), now2_dt + 1s);
+    // Note that time_t has only 1s resolution, so we need to add 2 seconds of slop on either side.
+    // (One second for measurement error, and another second for rounding error.)
+    REQUIRE_ORDERED(now1_dt - 2s, clock::from_time_t(now_tt), now2_dt + 2s);
 }
 
 TEST_CASE("clock, FILETIME")
