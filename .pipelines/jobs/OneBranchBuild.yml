@@ -30,7 +30,7 @@ jobs:
     ob_artifactSuffix: $(BuildPlatform)
     StagingFolder: $(ob_outputDirectory)
 
-    ${{ if eq(parameters.OfficialBuild, 'false' }}:
+    ${{ if eq(parameters.OfficialBuild, 'false') }}:
       ob_sdl_codeSignValidation_excludes: '-|**\*.exe;-|**\*.dll' 
 
     ob_symbolsPublishing_enabled: ${{ parameters.OfficialBuild }}
