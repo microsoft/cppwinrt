@@ -1,0 +1,76 @@
+# Build the NuGet package
+parameters:
+  - name: BuildConfiguration
+    type: string
+  - name: BuildVersion
+    type: string
+  - name: OfficialBuild
+    type: boolean
+    default: false
+
+jobs:
+  - job:
+    pool:
+      type: windows
+    
+    variables:
+      ob_outputDirectory: '$(Build.SourcesDirectory)\out'
+      ob_nugetPublishing_enabled: ${{ parameters.OfficialBuild }}
+      PackageVersion: ${{ parameters.BuildVersion }}
+
+    steps:
+      - task: UseDotNet@2
+        continueOnError: true
+        inputs: 
+          packageType: 'runtime'
+          version: '6.x'
+          performMultiLevelLookup: true
+
+      - task: NuGetToolInstaller@1
+        displayName: Use NuGet 6.0.2
+        continueOnError: True
+        inputs:
+          versionSpec: 6.0.2
+
+      - task: DownloadPipelineArtifact@1
+        displayName: 'Download x86 artifacts'
+        inputs:
+          artifactName: 'drop_build_x86'
+          targetPath: '$(Build.SourcesDirectory)/x86'
+
+      - task: DownloadPipelineArtifact@1
+        displayName: 'Download x64 artifacts'
+        inputs:
+          artifactName: 'drop_build_x64'
+          targetPath: '$(Build.SourcesDirectory)/x64'
+
+      - task: DownloadPipelineArtifact@1
+        displayName: 'Download arm artifacts'
+        inputs:
+          artifactName: 'drop_build_arm'
+          targetPath: '$(Build.SourcesDirectory)/arm'
+
+      - task: DownloadPipelineArtifact@1
+        displayName: 'Download arm64 artifacts'
+        inputs:
+          artifactName: 'drop_build_arm64'
+          targetPath: '$(Build.SourcesDirectory)/arm64'
+            
+      - task: NuGetCommand@2
+        displayName: 'Build NuGet package'
+        inputs:
+          command: 'pack'
+          packagesToPack: 'nuget/Microsoft.Windows.CppWinRT.nuspec'
+          versioningScheme: byEnvVar
+          versionEnvVar: 'PackageVersion'
+          buildProperties: 'cppwinrt_exe=$(Build.SourcesDirectory)\x86\cppwinrt\cppwinrt.exe;cppwinrt_fast_fwd_x86=$(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=$(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=$(Build.SourcesDirectory)\arm\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=$(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib'
+          packDestination: $(ob_outputDirectory)\packages
+
+      - task: onebranch.pipeline.signing@1
+        displayName: '🔒 Onebranch Signing for NuGet package'
+        condition: eq(${{ parameters.OfficialBuild }}, 'true')
+        inputs:
+          command: sign
+          signing_profile: external_distribution
+          files_to_sign: 'Microsoft.Windows.CppWinRT.*.nupkg'
+          search_root: $(ob_outputDirectory)\packages

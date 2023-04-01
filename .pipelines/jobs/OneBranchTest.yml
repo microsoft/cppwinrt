@@ -1,0 +1,114 @@
+parameters:
+  - name: BuildConfiguration
+    type: string
+  - name: BuildVersion
+    type: string
+
+jobs:
+- job:
+  pool:
+    type: windows
+  strategy:
+    matrix:
+      test.x86:
+        TestExe: 'test'
+        TestProject: 'test'
+        BuildPlatform: 'x86'
+      test_cpp20.x86:
+        TestExe: 'test_cpp20'
+        TestProject: 'test_cpp20'
+        BuildPlatform: 'x86'
+      test_cpp20_no_sourcelocation.x86:
+        TestExe: 'test_cpp20_no_sourcelocation'
+        TestProject: 'test_cpp20_no_sourcelocation'
+        BuildPlatform: 'x86'
+      test_win7.x86:
+        TestExe: 'test_win7'
+        TestProject: 'test_win7'
+        BuildPlatform: 'x86'
+      test_fast.x86:
+        TestExe: 'test_fast'
+        TestProject: 'test_fast'
+        BuildPlatform: 'x86'
+      test_slow.x86:
+        TestExe: 'test_slow'
+        TestProject: 'test_slow'
+        BuildPlatform: 'x86'
+      test_old.x86:
+        TestExe: 'test_old'
+        TestProject: 'old_tests\test_old'
+        BuildPlatform: 'x86'
+      test_module_lock_custom.x86:
+        TestExe: 'test_module_lock_custom'
+        TestProject: 'test_module_lock_custom'
+        BuildPlatform: 'x86'
+      test_module_lock_none.x86:
+        TestExe: 'test_module_lock_none'
+        TestProject: 'test_module_lock_none'
+        BuildPlatform: 'x86'
+
+  variables:
+    ob_outputDirectory: $(Build.SourcesDirectory)\out
+    ob_artifactSuffix: $(TestExe).$(BuildPlatform)
+    ob_sdl_codeSignValidation_excludes: '-|**\*.exe;-|**\*.dll' 
+
+    BuildPath: '$(Build.SourcesDirectory)/_build/$(BuildPlatform)/${{ parameters.BuildConfiguration }}'
+  
+  steps:
+    - task: UseDotNet@2
+      continueOnError: true
+      inputs: 
+        packageType: 'runtime'
+        version: '6.x'
+        performMultiLevelLookup: true
+
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download cppwinrt executable'
+      inputs:
+        artifactName: 'drop_build_$(BuildPlatform)'
+        targetPath: '$(Pipeline.Workspace)'
+
+    - task: CopyFiles@2
+      displayName: 'Patch cppwinrt executable into build directory'
+      inputs:
+        sourceFolder: '$(Pipeline.Workspace)'
+        Contents: '**\cppwinrt.exe'
+        TargetFolder: $(BuildPath)
+        flattenFolders: true
+
+    - task: NuGetCommand@2
+      displayName: NuGet restore cppwinrt.sln
+      inputs:
+        command: 'restore'
+        restoreSolution: '$(Build.SourcesDirectory)\cppwinrt.sln'
+
+    - task: PowerShell@2
+      displayName: Remove cppwinrt dependency from test projects
+      inputs:
+        targetType: inline
+        script: |
+          # Hack-ish: We already have a built exe, so we want to avoid rebuilding cppwinrt
+          mv cppwinrt.sln cppwinrt.sln.orig
+          Get-Content cppwinrt.sln.orig |
+            Where-Object { -not $_.Contains("{D613FB39-5035-4043-91E2-BAB323908AF4} = {D613FB39-5035-4043-91E2-BAB323908AF4}") } |
+            Set-Content cppwinrt.sln
+          "Modified contents"
+          Get-Content cppwinrt.sln
+      
+    - task: CmdLine@2
+      displayName: Run cppwinrt to build projection
+      inputs:
+        script: $(BuildPath)\cppwinrt.exe -in local -out $(BuildPath) -verbose
+
+    - task: VSBuild@1
+      displayName: Build test
+      inputs:
+        solution: $(Build.SourcesDirectory)\cppwinrt.sln
+        msbuildArgs: /t:test\$(TestProject) /m /p:CppWinRTBuildVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true /bl:$(ob_outputDirectory)\output.binlog
+        platform: $(BuildPlatform)
+        configuration: ${{ parameters.BuildConfiguration }}
+
+    - task: CmdLine@2
+      displayName: Run test
+      inputs:
+        script: $(BuildPath)\$(TestExe).exe
