@@ -1,0 +1,141 @@
+parameters:
+  - name: BuildConfiguration
+    type: string
+  - name: BuildVersion
+    type: string
+  - name: OutputDirectory
+    type: string
+    default: '$(Build.SourcesDirectory)\out'
+  - name: OfficialBuild
+    type: boolean
+    default: false
+
+jobs:
+- job:
+  pool:
+    type: windows
+  strategy:
+    matrix:
+      x86:
+        BuildPlatform: 'x86'
+      x64:
+        BuildPlatform: 'x64'
+      arm:
+        BuildPlatform: 'arm'
+      arm64:
+        BuildPlatform: 'arm64'
+
+  variables:
+    ob_outputDirectory: ${{ parameters.OutputDirectory }}
+    ob_artifactSuffix: $(BuildPlatform)
+    StagingFolder: $(ob_outputDirectory)
+
+    ${{ if eq(parameters.OfficialBuild, 'false') }}:
+      ob_sdl_codeSignValidation_excludes: '-|**\*.exe;-|**\*.dll' 
+
+    ob_symbolsPublishing_enabled: ${{ parameters.OfficialBuild }}
+    ob_symbolsPublishing_symbolsFolder: '$(ob_outputDirectory)'
+    ob_symbolsPublishing_searchPattern: '**\*.pdb'
+    ob_symbolsPublishing_indexSources: true
+
+  steps:
+    - task: UseDotNet@2
+      continueOnError: true
+      inputs: 
+        packageType: 'runtime'
+        version: '6.x'
+        performMultiLevelLookup: true
+
+    - task: NuGetCommand@2
+      displayName: NuGet restore cppwinrt.sln
+      inputs:
+        command: 'restore'
+        restoreSolution: '$(Build.SourcesDirectory)\cppwinrt.sln'
+
+    - task: VSBuild@1
+      displayName: Build fast_fwd
+      inputs:
+        solution: $(Build.SourcesDirectory)\cppwinrt.sln
+        msbuildArgs: /t:fast_fwd /m /p:CppWinRTBuildVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true
+        platform: $(BuildPlatform)
+        configuration: ${{ parameters.BuildConfiguration }}
+
+    - task: CopyFiles@2
+      displayName: Stage cppwinrt_fast_forwarder.lib
+      inputs:
+        SourceFolder: $(Build.SourcesDirectory)\_build\$(BuildPlatform)\$(BuildConfiguration)
+        Contents: cppwinrt_fast_forwarder.lib
+        TargetFolder: $(StagingFolder)
+
+    - task: NuGetCommand@2
+      displayName: NuGet restore cppwinrtvisualizer.sln
+      inputs:
+        command: 'restore'
+        restoreSolution: '$(Build.SourcesDirectory)\natvis\cppwinrtvisualizer.sln'
+        
+    - task: VSBuild@1
+      displayName: Build Component visualizer
+      condition: or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64'))
+      inputs:
+        solution: $(Build.SourcesDirectory)\natvis\cppwinrtvisualizer.sln
+        msbuildArgs: /m /p:Deployment=Component,CppWinRTBuildVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true
+        platform: $(BuildPlatform)
+        configuration: ${{ parameters.BuildConfiguration }}
+        
+    - task: VSBuild@1
+      displayName: Build Standalone visualizer
+      condition: or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64'))
+      inputs:
+        solution: $(Build.SourcesDirectory)\natvis\cppwinrtvisualizer.sln
+        msbuildArgs: /m /p:Deployment=Standalone,CppWinRTBuildVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true
+        platform: $(BuildPlatform)
+        configuration: ${{ parameters.BuildConfiguration }}
+
+    - task: CopyFiles@2
+      displayName: Stage Component cppwinrtvisualizer.*
+      condition: or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64'))
+      inputs:
+        SourceFolder: $(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Component
+        Contents: |
+          cppwinrtvisualizer.dll
+          cppwinrtvisualizer.pdb
+          cppwinrtvisualizer.vsdconfig
+        TargetFolder: $(StagingFolder)\Component
+
+    - task: CopyFiles@2
+      displayName: Stage Standalone cppwinrtvisualizer.*
+      condition: or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64'))
+      inputs:
+        SourceFolder: $(Build.SourcesDirectory)\natvis\$(BuildPlatform)\$(BuildConfiguration)\Standalone
+        Contents: |
+          cppwinrtvisualizer.dll
+          cppwinrtvisualizer.pdb
+          cppwinrtvisualizer.vsdconfig
+        TargetFolder: $(StagingFolder)\Standalone
+        
+    - task: VSBuild@1
+      displayName: Build cppwinrt
+      condition: or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'))
+      inputs:
+        solution: $(Build.SourcesDirectory)\cppwinrt.sln
+        msbuildArgs: /t:cppwinrt /m /p:CppWinRTBuildVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true
+        platform: $(BuildPlatform)
+        configuration: ${{ parameters.BuildConfiguration }}
+        
+    - task: CopyFiles@2
+      displayName: Stage cppwinrt.*
+      inputs:
+        SourceFolder: $(Build.SourcesDirectory)\_build\$(BuildPlatform)\$(BuildConfiguration)
+        Contents: |
+          cppwinrt.exe
+          cppwinrt.pdb
+        TargetFolder: $(StagingFolder)\cppwinrt
+
+    - task: onebranch.pipeline.signing@1
+      displayName: '🔒 Onebranch Signing for cppwinrt binaries'
+      condition: eq(${{ parameters.OfficialBuild }}, 'true')
+      inputs:
+        command: sign
+        signing_profile: external_distribution
+        files_to_sign: '**/*.dll;**/*.exe'
+        search_root: $(StagingFolder)

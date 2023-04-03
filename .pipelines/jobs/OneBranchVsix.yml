@@ -1,0 +1,147 @@
+parameters:
+  - name: BuildConfiguration
+    type: string
+  - name: BuildVersion
+    type: string
+  - name: OfficialBuild
+    type: boolean
+    default: false
+
+jobs:
+- job:
+  pool:
+    type: windows
+  strategy:
+    matrix:
+      Standalone:
+        Deployment: 'Standalone'
+        VsVersion: 'Dev17'
+        VsixFilename: Microsoft.Windows.CppWinRT.$(VsVersion)
+      Component:
+        Deployment: 'Component'
+        VsVersion: 'Dev17'
+        VsixFilename: Microsoft.Windows.CppWinRT.$(VsVersion)
+      Dev16:
+        Deployment: 'Standalone'
+        VsVersion: 'Dev16'
+        VsixFilename: Microsoft.Windows.CppWinRT
+  
+  variables:
+    ob_outputDirectory: $(Build.SourcesDirectory)\out
+    ob_artifactSuffix: $(VsVersion)_$(Deployment)
+
+    BuildFolder: $(Build.SourcesDirectory)\vsix\$(VsVersion)\bin\${{ parameters.BuildConfiguration }}\$(Deployment)
+
+    ob_symbolsPublishing_enabled: true
+    ob_symbolsPublishing_symbolsFolder: '$(ob_outputDirectory)'
+    ob_symbolsPublishing_searchPattern: '**\*.pdb'
+    ob_symbolsPublishing_indexSources: true
+    
+  steps:
+    - task: UseDotNet@2
+      continueOnError: true
+      inputs: 
+        packageType: 'sdk'
+        version: '6.x'
+        performMultiLevelLookup: true
+
+    - task: NuGetToolInstaller@1
+      displayName: Use NuGet 6.0.2
+      continueOnError: True
+      inputs:
+        versionSpec: 6.0.2
+
+    - task: NuGetCommand@2
+      displayName: NuGet restore
+      inputs:
+        command: 'restore'
+        restoreSolution: '$(Build.SourcesDirectory)\vsix\vsix.sln'
+
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download x86 binaries'
+      inputs:
+        artifactName: 'drop_build_x86'
+        targetPath: '$(Build.SourcesDirectory)\x86'
+
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download x64 binaries'
+      inputs:
+        artifactName: 'drop_build_x64'
+        targetPath: '$(Build.SourcesDirectory)\x64'
+
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download arm binaries'
+      inputs:
+        artifactName: 'drop_build_arm'
+        targetPath: '$(Build.SourcesDirectory)\arm'
+
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download arm64 binaries'
+      inputs:
+        artifactName: 'drop_build_arm64'
+        targetPath: '$(Build.SourcesDirectory)\arm64'
+    
+    - task: DownloadPipelineArtifact@2
+      displayName: 'Download NuGet'
+      inputs:
+        artifactName: 'drop_NuGet_'
+        targetPath: '$(Pipeline.Workspace)\nuget'
+
+    - task: VSBuild@1
+      displayName: Build VSIX
+      inputs:
+        solution: $(Build.SourcesDirectory)\vsix\vsix.sln
+        msbuildArgs: /t:vsix_$(VsVersion) /m /p:CppWinRTVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true,Deployment=$(Deployment),NatvisDirx86=$(Build.SourcesDirectory)\x86\$(Deployment)\,NatvisDirx64=$(Build.SourcesDirectory)\x64\$(Deployment)\,NatvisDirarm64=$(Build.SourcesDirectory)\arm64\$(Deployment)\,NupkgDir=$(Pipeline.Workspace)\nuget\packages /bl:$(ob_outputDirectory)\output.binlog
+        platform: 'Any CPU'
+        configuration: ${{ parameters.BuildConfiguration }}
+
+    - task: ExtractFiles@1
+      displayName: Extract VSIX contents for signing
+      inputs:
+        archiveFilePatterns: '$(BuildFolder)\$(VsixFilename).vsix'
+        destinationFolder: '$(Agent.TempDirectory)\$(VsixFilename)'
+        overwriteExistingFiles: true
+
+    - task: onebranch.pipeline.signing@1
+      displayName: '🔒 Onebranch Signing for VSIX contents'
+      condition: eq(${{ parameters.OfficialBuild }}, 'true')
+      inputs:
+        command: sign
+        signing_profile: external_distribution
+        files_to_sign: '**/Microsoft.Windows.CppWinRT.*.dll'
+        search_root: '$(Agent.TempDirectory)\$(VsixFilename)'
+    
+    - task: ArchiveFiles@2
+      displayName: 'Repack signed VSIX contents'
+      inputs:
+        rootFolderOrFile: '$(Agent.TempDirectory)\$(VsixFilename)'
+        includeRootFolder: false
+        archiveFile: '$(ob_outputDirectory)\$(VsixFilename).vsix'
+
+    - task: onebranch.pipeline.signing@1
+      displayName: '🔒 Onebranch Signing for VSIX'
+      condition: eq(${{ parameters.OfficialBuild }}, 'true')
+      inputs:
+        command: sign
+        signing_profile: external_distribution
+        files_to_sign: '$(VsixFilename).vsix'
+        search_root: '$(ob_outputDirectory)'
+
+    - task: CopyFiles@2
+      displayName: Stage VSIX Manifest
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)\vsix'
+        Contents: |
+          extension.manifest.json
+          overview.md
+        TargetFolder: '$(ob_outputDirectory)'
+
+    - task: CopyFiles@2
+      displayName: Stage VSIX json and symbols
+      inputs:
+        SourceFolder: $(Buildfolder)
+        Contents: |
+          $(VsixFilename).pdb
+          $(VsixFilename).json
+        TargetFolder: '$(ob_outputDirectory)'
+    
