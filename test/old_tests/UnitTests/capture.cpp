@@ -8,6 +8,7 @@ struct DECLSPEC_UUID("5fb96f8d-409c-42a9-99a7-8a95c1459dbd") ICapture : ::IUnkno
 {
     virtual int32_t __stdcall GetValue() noexcept = 0;
     virtual int32_t __stdcall CreateMemberCapture(int32_t value, GUID const& iid, void** object) noexcept = 0;
+    virtual int32_t __stdcall CreateMemberCapture2(int32_t value, GUID const& iid, ::IUnknown** object) noexcept = 0;
 };
 
 #ifdef __CRT_UUID_DECL
@@ -33,12 +34,24 @@ struct Capture : implements<Capture, ICapture>
         auto capture = make<Capture>(value);
         return capture->QueryInterface(iid, object);
     }
+
+    int32_t __stdcall CreateMemberCapture2(int32_t value, GUID const& iid, ::IUnknown** object) noexcept override
+    {
+        auto capture = make<Capture>(value);
+        return capture->QueryInterface(iid, reinterpret_cast<void**>(object));
+    }
 };
 
 HRESULT __stdcall CreateCapture(int value, GUID const& iid, void** object) noexcept
 {
     auto capture = make<Capture>(value);
     return capture->QueryInterface(iid, object);
+}
+
+HRESULT __stdcall CreateCapture2(int value, GUID const& iid, ::IUnknown** object) noexcept
+{
+    auto capture = make<Capture>(value);
+    return capture->QueryInterface(iid, reinterpret_cast<void**>(object));
 }
 
 TEST_CASE("capture")
@@ -66,6 +79,19 @@ TEST_CASE("capture")
     REQUIRE(b->GetValue() == 40);
 
     com_ptr<IDispatch> d;
+
+    // Capture with an unconventional result type.
+    auto e = capture<ICapture>(a, &ICapture::CreateMemberCapture2, 30);
+    REQUIRE(e->GetValue() == 30);
+    e = nullptr;
+    e.capture(a, &ICapture::CreateMemberCapture2, 40);
+    REQUIRE(e->GetValue() == 40);
+
+    com_ptr<ICapture> f = capture<ICapture>(CreateCapture2, 10);
+    REQUIRE(f->GetValue() == 10);
+    f = nullptr;
+    f.capture(CreateCapture2, 20);
+    REQUIRE(a->GetValue() == 20);
 
     REQUIRE_THROWS_AS(capture<IDispatch>(CreateCapture, 0), hresult_no_interface);
     REQUIRE_THROWS_AS(d.capture(CreateCapture, 0), hresult_no_interface);
@@ -103,6 +129,19 @@ TEST_CASE("try_capture")
     REQUIRE(b->GetValue() == 40);
 
     com_ptr<IDispatch> d;
+
+    // Capture with an unconventional result type.
+    auto e = try_capture<ICapture>(a, &ICapture::CreateMemberCapture2, 30);
+    REQUIRE(e->GetValue() == 30);
+    e = nullptr;
+    REQUIRE(e.try_capture(a, &ICapture::CreateMemberCapture2, 40));
+    REQUIRE(e->GetValue() == 40);
+
+    com_ptr<ICapture> f = try_capture<ICapture>(CreateCapture2, 10);
+    REQUIRE(f->GetValue() == 10);
+    f = nullptr;
+    REQUIRE(f.try_capture(CreateCapture2, 20));
+    REQUIRE(f->GetValue() == 20);
 
     REQUIRE(!try_capture<IDispatch>(CreateCapture, 0));
     REQUIRE(!d.try_capture(CreateCapture, 0));
