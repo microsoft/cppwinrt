@@ -143,6 +143,9 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TestProxyStub\TestProxyStub.vcxproj">
+      <Project>{98E28FC8-2EB7-4544-9B6A-941462C6D3E2}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\TestRuntimeComponent1\TestRuntimeComponent1.vcxproj">
       <Project>{e0ebbe54-c046-4611-b048-3ce893b1df8a}</Project>
     </ProjectReference>

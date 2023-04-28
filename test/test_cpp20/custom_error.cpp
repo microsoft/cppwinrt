@@ -7,11 +7,10 @@ namespace
 {
     static bool s_loggerCalled = false;
 
-    // Note that we are checking that the source line number matches expectations.  If lines above this are changed
-    // then this value needs to change as well.
     void FailOnLine15()
     {
         // Validate that handler translated exception
+#line 15 // Force next line to be reported as line number 15
         REQUIRE_THROWS_AS(check_hresult(0x80000018), hresult_illegal_delegate_assignment);
     }
 

@@ -41,3 +41,8 @@ int main(int argc, char * argv[])
     uninit_apartment();
     return result;
 }
+
+CATCH_TRANSLATE_EXCEPTION(winrt::hresult_error const& e)
+{
+    return to_string(e.message());
+}
