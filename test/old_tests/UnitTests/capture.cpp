@@ -48,7 +48,7 @@ HRESULT __stdcall CreateCapture(int value, GUID const& iid, void** object) noexc
     return capture->QueryInterface(iid, object);
 }
 
-HRESULT __stdcall CreateCapture2(int value, GUID const& iid, ::IUnknown** object) noexcept
+HRESULT __stdcall CreateCapture2(int value, GUID const& iid, ::IInspectable** object) noexcept
 {
     auto capture = make<Capture>(value);
     return capture->QueryInterface(iid, reinterpret_cast<void**>(object));
