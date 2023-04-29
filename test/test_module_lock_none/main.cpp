@@ -73,3 +73,8 @@ int main(int const argc, char** argv)
     (void)_CrtSetReportFile(_CRT_ERROR, _CRTDBG_FILE_STDERR);
     return Catch::Session().run(argc, argv);
 }
+
+CATCH_TRANSLATE_EXCEPTION(winrt::hresult_error const& e)
+{
+    return to_string(e.message());
+}

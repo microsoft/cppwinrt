@@ -1,0 +1,7 @@
+variables:
+  MajorVersion: "2"
+  MinorVersion: "0"
+  VersionDate: $[format('{0:yyMMdd}', pipeline.startTime)]
+  VersionCounter: $[counter(variables['VersionDate'], 1)]
+  BuildVersion: $(MajorVersion).$(MinorVersion).$(VersionDate).$(VersionCounter)
+  PatchVersion: $(VersionDate)$(VersionCounter)

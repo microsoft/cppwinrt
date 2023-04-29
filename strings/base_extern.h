@@ -24,7 +24,7 @@ __declspec(selectany) int32_t(__stdcall* winrt_activation_handler)(void* classId
 
 extern "C"
 {
-    void* __stdcall WINRT_IMPL_LoadLibraryW(wchar_t const* name) noexcept WINRT_IMPL_LINK(LoadLibraryW, 4);
+    void* __stdcall WINRT_IMPL_LoadLibraryExW(wchar_t const* name, void* unused, uint32_t flags) noexcept WINRT_IMPL_LINK(LoadLibraryExW, 12);
     int32_t __stdcall WINRT_IMPL_FreeLibrary(void* library) noexcept WINRT_IMPL_LINK(FreeLibrary, 4);
     void* __stdcall WINRT_IMPL_GetProcAddress(void* library, char const* name) noexcept WINRT_IMPL_LINK(GetProcAddress, 8);
 

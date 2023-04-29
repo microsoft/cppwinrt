@@ -126,6 +126,11 @@ namespace winrt::impl
         atomic_ref_count m_references{ 1 };
     };
 
+    inline void* load_library(wchar_t const* library) noexcept
+    {
+        return WINRT_IMPL_LoadLibraryExW(library, nullptr, 0x00001000 /* LOAD_LIBRARY_SEARCH_DEFAULT_DIRS */);
+    }
+
     template <typename F, typename L>
     void load_runtime_function(wchar_t const* library, char const* name, F& result, L fallback) noexcept
     {
@@ -134,7 +139,7 @@ namespace winrt::impl
             return;
         }
 
-        result = reinterpret_cast<F>(WINRT_IMPL_GetProcAddress(WINRT_IMPL_LoadLibraryW(library), name));
+        result = reinterpret_cast<F>(WINRT_IMPL_GetProcAddress(load_library(library), name));
 
         if (result)
         {
