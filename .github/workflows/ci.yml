@@ -314,7 +314,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { sys: mingw32, arch: i686, config: Release }
+          # 32-bit builds are running out of memory
+          # - { sys: mingw32, arch: i686, config: Release }
           - { sys: mingw64, arch: x86_64, config: Debug }
           - { sys: mingw64, arch: x86_64, config: Release }
           - { sys: ucrt64, arch: x86_64, config: Release }
