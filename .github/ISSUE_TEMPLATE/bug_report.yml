@@ -34,7 +34,7 @@ body:
           Uri uri(L"https://kennykerr.ca");
           printf("%ls\n", uri.ToString().c_str());
         }
-      render: rust
+      render: cpp
   - type: textarea
     attributes:
       label: Expected behavior
