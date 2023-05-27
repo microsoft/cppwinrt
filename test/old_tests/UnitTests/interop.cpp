@@ -7,6 +7,10 @@ using namespace Windows::Foundation;
 
 namespace
 {
+    struct __declspec(uuid("67F71701-A9FC-49AE-BDEC-98FA2759CC3C")) IClassicComInterface : ::IUnknown { };
+
+    struct ClassicCom : implements<ClassicCom, IClassicComInterface> {};
+
     struct Stringable : implements<Stringable, IStringable>
     {
         Stringable(std::wstring_view const& value = L"Stringable") : m_value(value)
@@ -29,6 +33,12 @@ namespace
     {
         object->AddRef();
         return object->Release();
+    }
+
+    template <typename T>
+    uint32_t get_ref_count(com_ptr<T> const& object)
+    {
+        return get_ref_count(object.get());
     }
 }
 
@@ -98,6 +108,43 @@ TEST_CASE("self")
     REQUIRE(get_ref_count(object) == 1);
 
     weak_ref<Stringable> weak = get_self<Stringable>(object)->get_weak();
+    REQUIRE(get_ref_count(object) == 1); // <-- still just one!
+
+    strong = weak.get();
+    REQUIRE(strong);
+    REQUIRE(get_ref_count(object) == 2);
+
+    strong = nullptr;
+    REQUIRE(get_ref_count(object) == 1);
+    object = nullptr;
+
+    strong = weak.get();
+    REQUIRE(!strong);
+}
+
+TEST_CASE("self_classic_com")
+{
+    com_ptr<ClassicCom> strong = make_self<ClassicCom>();
+
+    REQUIRE(get_ref_count(strong.get()) == 1);
+
+    com_ptr<IClassicComInterface> object = strong.as<IClassicComInterface>();
+
+    REQUIRE(get_ref_count(strong.get()) == 2);
+
+    ClassicCom* ptr = get_self<ClassicCom>(object);
+    REQUIRE(ptr == strong.get());
+
+    REQUIRE(get_ref_count(strong.get()) == 2);
+    strong = nullptr;
+    REQUIRE(get_ref_count(object) == 1);
+
+    strong = get_self<ClassicCom>(object)->get_strong();
+    REQUIRE(get_ref_count(object) == 2);
+    strong = nullptr;
+    REQUIRE(get_ref_count(object) == 1);
+
+    weak_ref<ClassicCom> weak = get_self<ClassicCom>(object)->get_weak();
     REQUIRE(get_ref_count(object) == 1); // <-- still just one!
 
     strong = weak.get();
