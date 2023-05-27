@@ -7,7 +7,7 @@ using namespace Windows::Foundation;
 
 namespace
 {
-    struct __declspec(uuid("67F71701-A9FC-49AE-BDEC-98FA2759CC3C")) IClassicComInterface : ::IUnknown { };
+    struct IClassicComInterface : ::IUnknown {};
 
     struct ClassicCom : implements<ClassicCom, IClassicComInterface> {};
 
@@ -41,6 +41,8 @@ namespace
         return get_ref_count(object.get());
     }
 }
+
+template <> inline constexpr winrt::guid winrt::impl::guid_v<IClassicComInterface>{ 0xc136bb75, 0xbc03, 0x41a6, { 0xa5, 0xdc, 0x5e, 0xfa, 0x67, 0x92, 0x4e, 0xbf } };
 
 TEST_CASE("interop")
 {
