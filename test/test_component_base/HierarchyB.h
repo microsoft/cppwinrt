@@ -10,6 +10,7 @@ namespace winrt::test_component_base::implementation
 
         HierarchyB(hstring const& name);
         void HierarchyB_Method();
+        void HierarchyB_TestInnerProtected();
     };
 }
 namespace winrt::test_component_base::factory_implementation

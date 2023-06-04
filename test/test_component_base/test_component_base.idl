@@ -8,6 +8,7 @@ namespace test_component_base
         HierarchyA(String name);
 
         void HierarchyA_Method();
+        protected Int32 HierarchyA_Protected();
     }
 
     unsealed runtimeclass HierarchyB : HierarchyA
@@ -16,5 +17,6 @@ namespace test_component_base
         HierarchyB(String name);
 
         void HierarchyB_Method();
+        void HierarchyB_TestInnerProtected();
     }
 }

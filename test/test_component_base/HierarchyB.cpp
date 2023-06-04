@@ -11,4 +11,8 @@ namespace winrt::test_component_base::implementation
     {
         throw hresult_not_implemented();
     }
+    void HierarchyB::HierarchyB_TestInnerProtected()
+    {
+        assert(HierarchyA_Protected() == 42);
+    }
 }

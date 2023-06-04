@@ -15,4 +15,8 @@ namespace winrt::test_component_base::implementation
         //test_component_base::IHierarchyA ia = *this;
         //assert(a);
     }
+    int HierarchyA::HierarchyA_Protected()
+    {
+        return 42;
+    }
 }
