@@ -143,6 +143,24 @@ namespace
         CallIDerived(obj);
         CallDerived(obj);
     }
+
+    template <typename T, typename = void>
+    struct has_ProtectedMember : std::false_type { };
+
+    template <typename T>
+    struct has_ProtectedMember<T, std::enable_if_t<std::is_member_function_pointer_v<decltype(&T::ProtectedMember)>>> : std::true_type { };
+
+    // make sure we can't access protected members directly
+    static_assert(!has_ProtectedMember<Composable::Base>::value);
+    static_assert(!has_ProtectedMember<Composable::Derived>::value);
+    static_assert(!has_ProtectedMember<Foo>::value);
+    static_assert(!has_ProtectedMember<Bar>::value);
+
+    // make sure we can't implicitly convert to IBaseProtected
+    static_assert(!std::is_convertible_v<Composable::Base, Composable::IBaseProtected>);
+    static_assert(!std::is_convertible_v<Composable::Derived, Composable::IBaseProtected>);
+    static_assert(!std::is_convertible_v<Foo, Composable::IBaseProtected>);
+    static_assert(!std::is_convertible_v<Bar, Composable::IBaseProtected>);
 }
 
 TEST_CASE("Composable conversions")
