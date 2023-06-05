@@ -2366,18 +2366,21 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
-            if (info.defaulted && !info.base)
+            if (!info.is_protected && !info.overridable)
             {
-                for (auto&& method : info.type.MethodList())
+                if (info.defaulted && !info.base)
                 {
-                    method_usage[get_name(method)].insert(default_interface_name);
+                    for (auto&& method : info.type.MethodList())
+                    {
+                        method_usage[get_name(method)].insert(default_interface_name);
+                    }
                 }
-            }
-            else
-            {
-                for (auto&& method : info.type.MethodList())
+                else
                 {
-                    method_usage[get_name(method)].insert(interface_name);
+                    for (auto&& method : info.type.MethodList())
+                    {
+                        method_usage[get_name(method)].insert(interface_name);
+                    }
                 }
             }
         }
