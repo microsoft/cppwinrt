@@ -347,11 +347,11 @@ struct property_type
 };
 
 void GetPropertyDataForType(
-    Microsoft::VisualStudio::Debugger::DkmProcess* process,
-    coded_index<TypeDefOrRef> const& index,
-    std::optional<PropertyCategory>& propCategory,
-    std::wstring& propAbiType,
-    std::wstring& propDisplayType
+    _In_ Microsoft::VisualStudio::Debugger::DkmProcess* process,
+    _In_ coded_index<TypeDefOrRef> const& index,
+    _Out_ std::optional<PropertyCategory>& propCategory,
+    _Out_ std::wstring& propAbiType,
+    _Out_ std::wstring& propDisplayType
 ){
     auto type = ResolveType(process, index);
     if (!type)
@@ -400,15 +400,18 @@ void GetPropertyDataForType(
         }
 
         propDisplayType = std::wstring(L"winrt::") + cppTypename;
-        if (get_category(type) == category::class_type)
+        switch (get_category(type))
         {
+        case category::class_type:
+        case category::interface_type:
             propCategory = PropertyCategory::Class;
             propAbiType = L"winrt::impl::inspectable_abi*";
-        }
-        else
-        {
+            break;
+
+        default:
             propCategory = PropertyCategory::Value;
             propAbiType = propDisplayType;
+            break;
         }
     }
 }
@@ -419,6 +422,7 @@ void GetInterfaceData(
     _Inout_ std::vector<PropertyData>& propertyData,
     _Out_ bool& isStringable
 ){
+    isStringable = false;
     auto [type, propIid] = ResolveTypeInterface(process, index);
     if (!type)
     {
@@ -493,14 +497,20 @@ void object_visualizer::GetPropertyData()
 {
     auto valueHome = make_com_ptr(m_pVisualizedExpression->ValueHome());
     com_ptr<DkmPointerValueHome> pObject = valueHome.as<DkmPointerValueHome>();
-    auto rc = GetRuntimeClass(m_pVisualizedExpression.get(), pObject.get(), m_objectType);
-    if (rc.empty())
+    auto rcTemp = GetRuntimeClass(m_pVisualizedExpression.get(), pObject.get(), m_objectType);
+    if (rcTemp.empty())
     {
         return;
     }
     auto process = m_pVisualizedExpression->RuntimeInstance()->Process();
-    // runtime class name is delimited by L"..."
-    GetTypeProperties(process, std::string_view{ rc.data() + 2, rc.length() - 3 });
+    std::string_view rc = rcTemp;
+    // Runtime class name is delimited by L"..."
+    rc = rc.substr(2, rc.size() - 3);
+    
+    // Strip any parameterized goo
+    rc = rc.substr(0, rc.find('<'));
+
+    GetTypeProperties(process, rc);
 }
 
 void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& type_name)
