@@ -516,15 +516,15 @@ void object_visualizer::GetPropertyData()
 void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& type_name)
 {
     // TODO: add support for direct generic interface implementations (e.g., key_value_pair)
-    auto type = FindType(process, type_name);
-    if (!type)
+    auto type = ResolveType(process, type_name);
+    if (!type.m_classType)
     {
         return;
     }
 
-    if (get_category(type) == category::class_type)
+    if (get_category(type.m_classType) == category::class_type)
     {
-        auto const& [extends_namespace, extends_name] = get_base_class_namespace_and_name(type);
+        auto const& [extends_namespace, extends_name] = get_base_class_namespace_and_name(type.m_classType);
         if(!extends_namespace.empty() && !extends_name.empty())
         {
             auto base_type = std::string(extends_namespace) + "." + std::string(extends_name);
@@ -533,20 +533,20 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
                 GetTypeProperties(process, base_type);
             }
         }
-        auto impls = type.InterfaceImpl();
+        auto impls = type.m_classType.InterfaceImpl();
         for (auto&& impl : impls)
         {
             GetInterfaceData(process, impl.Interface(), m_propertyData, m_isStringable);
         }
     }
-    else if (get_category(type) == category::interface_type)
+    else if (get_category(type.m_classType) == category::interface_type)
     {
-        auto impls = type.InterfaceImpl();
+        auto impls = type.m_classType.InterfaceImpl();
         for (auto&& impl : impls)
         {
             GetInterfaceData(process, impl.Interface(), m_propertyData, m_isStringable);
         }
-        GetInterfaceData(process, type.coded_index<TypeDefOrRef>(), m_propertyData, m_isStringable);
+        GetInterfaceData(process, type.m_classType.coded_index<TypeDefOrRef>(), m_propertyData, m_isStringable);
     }
 }
 

@@ -88,20 +88,37 @@ inline bool starts_with(std::string_view const& value, std::string_view const& m
     return 0 == value.compare(0, match.size(), match);
 }
 
-winmd::reader::TypeDef FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
-winmd::reader::TypeDef FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName);
+// Return a raw typedef known not to be a primitive or generic
+winmd::reader::TypeDef ResolveAsTypeDef(DkmProcess* process, std::string_view const& typeName);
 
-inline winmd::reader::TypeDef ResolveType(Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::coded_index<winmd::reader::TypeDefOrRef> index) noexcept
+struct ResolvedType
+{
+    ResolvedType() = default;
+    explicit ResolvedType(winmd::reader::TypeDef const& type)
+        : m_classType(type)
+    {}
+    explicit ResolvedType(winmd::reader::ElementType type)
+        : m_elementType(type)
+    {}
+    winmd::reader::TypeDef m_classType{};
+    winmd::reader::ElementType m_elementType{};
+    std::vector<ResolvedType> m_genericArgs;
+};
+
+ResolvedType ResolveType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
+ResolvedType ResolveType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName);
+ResolvedType ResolveType(Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::GenericTypeInstSig const& genericTypeSig);
+
+ResolvedType ResolveType(Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::coded_index<winmd::reader::TypeDefOrRef> index) noexcept
 {
     switch (index.type())
     {
     case winmd::reader::TypeDefOrRef::TypeDef:
-        return index.TypeDef();
+        return ResolvedType{ index.TypeDef() };
     case winmd::reader::TypeDefOrRef::TypeRef:
-        return FindType(process, index.TypeRef().TypeNamespace(), index.TypeRef().TypeName());
+        return ResolvedType{ ResolveType(process, index.TypeRef().TypeNamespace(), index.TypeRef().TypeName()) };
     default: //case TypeDefOrRef::TypeSpec:
-        return winmd::reader::find_required(index.TypeSpec().Signature().
-            GenericTypeInst().GenericType().TypeRef());
+        return ResolveType(process, index.TypeSpec().Signature().GenericTypeInst());
     }
 }
 

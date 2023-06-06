@@ -118,7 +118,8 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
     } 
 }
 
-TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
+// Return a raw typedef known not to be a primitive or generic
+TypeDef ResolveAsTypeDef(DkmProcess* process, std::string_view const& typeName)
 {
     auto type = db->find(typeName);
     if (!type)
@@ -135,17 +136,108 @@ TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
     return type;
 }
 
-TypeDef FindType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
+ResolvedType ResolveType(DkmProcess* process, std::string_view const& typeName)
+{
+    auto bracketPos = typeName.find('<');
+    if (bracketPos == std::string_view::npos)
+    {
+        constexpr std::pair<std::string_view, ElementType> elementNames[] = {
+            {"Boolean", ElementType::Boolean},
+            {"Int8", ElementType::I1},
+            {"Int16", ElementType::I2},
+            {"Int32", ElementType::I4},
+            {"Int64", ElementType::I8},
+            {"UInt8", ElementType::U1},
+            {"UInt16", ElementType::U2},
+            {"UInt32", ElementType::U4},
+            {"UInt64", ElementType::U8},
+            {"Single", ElementType::R4},
+            {"Double", ElementType::R8},
+            {"String", ElementType::String},
+            {"Object", ElementType::Object}
+        };
+        auto pos = std::find_if(std::begin(elementNames), std::end(elementNames), [&typeName](auto&& elem) { return elem.first == typeName; });
+        if (pos != std::end(elementNames))
+        {
+            return ResolvedType{ pos->second };
+        }
+        return ResolvedType{ ResolveAsTypeDef(process, typeName) };
+    }
+    assert(bracketPos < typeName.size() - 1);
+    assert(typeName.back() == '>');
+    auto genericTypeName = typeName.substr(0, bracketPos);
+    ResolvedType result{ ResolveAsTypeDef(process, genericTypeName) };
+
+    auto genericArgs = typeName.substr(bracketPos + 1, typeName.size() - bracketPos - 2);
+    auto commaPos = genericArgs.find(',');
+    result.m_genericArgs.push_back(ResolveType(process, genericArgs.substr(0, commaPos)));
+    while (commaPos != std::string_view::npos)
+    {
+        genericArgs = genericArgs.substr(commaPos + 1);
+        commaPos = genericArgs.find(',');
+        result.m_genericArgs.push_back(ResolveType(process, genericArgs.substr(0, commaPos)));
+    }
+    return result;
+}
+
+ResolvedType ResolveType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
 {
     auto type = db->find(typeNamespace, typeName);
-    if (!type)
+    if (type)
     {
-        std::string fullName(typeNamespace);
-        fullName.append(".");
-        fullName.append(typeName);
-        FindType(process, fullName);
+        return ResolvedType{ type };
     }
-    return type;
+
+    std::string fullName(typeNamespace);
+    fullName.append(".");
+    fullName.append(typeName);
+    return ResolveType(process, fullName);
+}
+
+ResolvedType ResolveType(Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::TypeSig const& type)
+{
+    return std::visit(overloaded{
+        [](ElementType type)
+        {
+            return ResolvedType{ type };
+        },
+        [process](coded_index<TypeDefOrRef> const& index)
+        {
+            return ResolveType(process, index);
+        },
+        [process](GenericTypeInstSig const& sig)
+        {
+            return ResolveType(process, sig);
+        },
+        [process](GenericTypeIndex const&)
+        {
+            NatvisDiagnostic(process, L"Invalid GenericTypeIndex encountered while resolving type", NatvisDiagnosticLevel::Error);
+            return ResolvedType{};
+        },
+        [process](GenericMethodTypeIndex const&)
+        {
+            NatvisDiagnostic(process, L"Invalid GenericMethodTypeIndex encountered while resolving type", NatvisDiagnosticLevel::Error);
+            return ResolvedType{};
+        }
+    }, type.Type());
+    if (std::holds_alternative<ElementType>(type.Type()))
+    {
+        return ResolvedType{ std::get<ElementType>(type.Type()) };
+    }
+    else if (std::holds_alternative<coded_index<TypeDefOrRef>>(type.Type()))
+    {
+        return ResolveType(process, std::get<coded_index<TypeDefOrRef>>(type.Type()));
+    }
+}
+
+ResolvedType ResolveType(Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::GenericTypeInstSig const& genericTypeSig)
+{
+    ResolvedType result{ ResolveType(process, genericTypeSig.GenericType()) };
+    for (auto const& arg : genericTypeSig.GenericArgs())
+    {
+        result.m_genericArgs.push_back(ResolveType(process, arg));
+    }
+    return result;
 }
 
 cppwinrt_visualizer::cppwinrt_visualizer()
