@@ -52,6 +52,7 @@
     <ClInclude Include="..\strings\base_collections_vector.h" />
     <ClInclude Include="..\strings\base_composable.h" />
     <ClInclude Include="..\strings\base_com_ptr.h" />
+    <ClInclude Include="..\strings\base_coroutine_collections.h" />
     <ClInclude Include="..\strings\base_coroutine_foundation.h" />
     <ClInclude Include="..\strings\base_coroutine_system.h" />
     <ClInclude Include="..\strings\base_coroutine_system_winui.h" />
