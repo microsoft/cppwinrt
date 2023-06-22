@@ -61,13 +61,10 @@ TEST_CASE("custom_error_logger")
     REQUIRE(fileNameSv.find("custom_error.cpp") != std::string::npos);
     const auto functionNameSv = std::string_view(s_loggerArgs.functionName);
     REQUIRE(!functionNameSv.empty());
-#if defined(__GNUC__) && !defined(__clang__)
-    REQUIRE(functionNameSv == "void {anonymous}::FailOnLine15()");
-#elif defined(__GNUC__) && defined(__clang__)
-    REQUIRE(functionNameSv == "void (anonymous namespace)::FailOnLine15()");
-#else
-    REQUIRE(functionNameSv == "void __cdecl `anonymous-namespace'::FailOnLine15(void)");
-#endif
+    // Every compiler has a slightly different naming approach for this function, and even the same
+    // compiler can change its mind over time.  Instead of matching the entire function name just
+    // match against the part we care about.
+    REQUIRE(functionNameSv.find("FailOnLine15" != std::string_view::npos));
 
     REQUIRE(s_loggerArgs.returnAddress);
     REQUIRE(s_loggerArgs.result == static_cast<int32_t>(0x80000018)); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
