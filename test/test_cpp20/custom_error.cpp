@@ -66,7 +66,7 @@ TEST_CASE("custom_error_logger")
 #elif defined(__GNUC__) && defined(__clang__)
     REQUIRE(functionNameSv == "void (anonymous namespace)::FailOnLine15()");
 #else
-    REQUIRE(functionNameSv == "FailOnLine15");
+    REQUIRE(functionNameSv == "void __cdecl `anonymous-namespace'::FailOnLine15(void)");
 #endif
 
     REQUIRE(s_loggerArgs.returnAddress);
