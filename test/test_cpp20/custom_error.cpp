@@ -64,7 +64,7 @@ TEST_CASE("custom_error_logger")
     // Every compiler has a slightly different naming approach for this function, and even the same
     // compiler can change its mind over time.  Instead of matching the entire function name just
     // match against the part we care about.
-    REQUIRE(functionNameSv.find("FailOnLine15" != std::string_view::npos));
+    REQUIRE((functionNameSv.find("FailOnLine15") != std::string_view::npos));
 
     REQUIRE(s_loggerArgs.returnAddress);
     REQUIRE(s_loggerArgs.result == static_cast<int32_t>(0x80000018)); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
