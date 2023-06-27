@@ -8,6 +8,7 @@ namespace winrt::test_component_base::implementation
         HierarchyA() = default;
 
         HierarchyA(hstring const& name);
+        HierarchyA(int32_t dummy, hstring const& name);
         void HierarchyA_Method();
         int HierarchyA_Protected();
     };
