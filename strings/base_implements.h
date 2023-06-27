@@ -243,6 +243,12 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename D, typename I>
+    D* get_self(com_ptr<I> const& from) noexcept
+    {
+        return static_cast<D*>(static_cast<impl::producer<D, I>*>(from.get()));
+    }
+
+    template <typename D, typename I>
     [[deprecated]] D* from_abi(I const& from) noexcept
     {
         return get_self<D>(from);
