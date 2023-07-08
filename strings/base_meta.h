@@ -13,6 +13,9 @@ WINRT_EXPORT namespace winrt
     template <typename T>
     struct com_ptr;
 
+    template <typename D, typename I>
+    D* get_self(com_ptr<I> const& from) noexcept;
+
     namespace param
     {
         template <typename T>
