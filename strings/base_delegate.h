@@ -179,6 +179,16 @@ namespace winrt::impl
         {
         }
 
+        template <typename O, typename M> delegate_base(std::shared_ptr<O>&& object, M method) :
+            delegate_base([o = std::move(object), method](auto&& ... args) { return ((*o).*(method))(args...); })
+        {
+        }
+
+        template <typename O, typename M> delegate_base(std::weak_ptr<O>&& object, M method) :
+            delegate_base([o = std::move(object), method](auto&& ... args) { if (auto s = o.lock()) { ((*s).*(method))(args...); } })
+        {
+        }
+
         auto operator()(Args const& ... args) const
         {
             return (*(variadic_delegate_abi<R, Args...> * *)this)->invoke(args...);
