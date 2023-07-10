@@ -2446,6 +2446,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         template <typename O, typename M> %(O* object, M method);
         template <typename O, typename M> %(com_ptr<O>&& object, M method);
         template <typename O, typename M> %(weak_ref<O>&& object, M method);
+        template <typename O, typename M> %(std::shared_ptr<O>&& object, M method);
+        template <typename O, typename M> %(std::weak_ptr<O>&& object, M method);
         auto operator()(%) const;
     };
 )";
@@ -2455,6 +2457,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         w.write(format,
             type_name,
             bind<write_generic_asserts>(generics),
+            type_name,
+            type_name,
             type_name,
             type_name,
             type_name,
@@ -2523,6 +2527,14 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         %([o = std::move(object), method](auto&&... args) { if (auto s = o.get()) { ((*s).*(method))(args...); } })
     {
     }
+    template <%> template <typename O, typename M> %<%>::%(std::shared_ptr<O>&& object, M method) :
+        %([o = std::move(object), method](auto&&... args) { return ((*o).*(method))(args...); })
+    {
+    }
+    template <%> template <typename O, typename M> %<%>::%(std::weak_ptr<O>&& object, M method) :
+        %([o = std::move(object), method](auto&&... args) { if (auto s = o.lock()) { ((*s).*(method))(args...); } })
+    {
+    }
     template <%> auto %<%>::operator()(%) const
     {%
         check_hresult((*(impl::abi_t<%<%>>**)this)->Invoke(%));%
@@ -2539,6 +2551,16 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 type_name,
                 type_name,
                 bind_list(", ", generics),
+                bind<write_generic_typenames>(generics),
+                type_name,
+                bind_list(", ", generics),
+                type_name,
+                type_name,
+                bind<write_generic_typenames>(generics),
+                type_name,
+                bind_list(", ", generics),
+                type_name,
+                type_name,
                 bind<write_generic_typenames>(generics),
                 type_name,
                 bind_list(", ", generics),
@@ -2591,6 +2613,14 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         %([o = std::move(object), method](auto&&... args) { if (auto s = o.get()) { ((*s).*(method))(args...); } })
     {
     }
+    template <typename O, typename M> %::%(std::shared_ptr<O>&& object, M method) :
+        %([o = std::move(object), method](auto&&... args) { return ((*o).*(method))(args...); })
+    {
+    }
+    template <typename O, typename M> %::%(std::weak_ptr<O>&& object, M method) :
+        %([o = std::move(object), method](auto&&... args) { if (auto s = o.lock()) { ((*s).*(method))(args...); } })
+    {
+    }
     inline auto %::operator()(%) const
     {%
         check_hresult((*(impl::abi_t<%>**)this)->Invoke(%));%
@@ -2598,6 +2628,12 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 )";
 
             w.write(format,
+                type_name,
+                type_name,
+                type_name,
+                type_name,
+                type_name,
+                type_name,
                 type_name,
                 type_name,
                 type_name,
