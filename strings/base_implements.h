@@ -1,3 +1,10 @@
+#if defined(_MSC_VER)
+#if defined(_DEBUG) && !defined(WINRT_NO_MAKE_DETECTION)
+#pragma detect_mismatch("C++/WinRT WINRT_NO_MAKE_DETECTION", "make detection enabled (DEBUG and !WINRT_NO_MAKE_DETECTION)")
+#else
+#pragma detect_mismatch("C++/WinRT WINRT_NO_MAKE_DETECTION", "make detection disabled (!DEBUG or WINRT_NO_MAKE_DETECTION)")
+#endif
+#endif
 
 namespace winrt::impl
 {
@@ -37,17 +44,8 @@ namespace winrt::impl
     template <template <typename> typename Condition, typename T>
     using tuple_if = typename tuple_if_base<Condition, T>::type;
 
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-
     template <typename T>
-    struct is_interface : std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, T>, std::conjunction<std::is_base_of<::IUnknown, T>, std::negation<is_implements<T>>>> {};
-
-#else
-
-    template <typename T>
-    struct is_interface : std::is_base_of<Windows::Foundation::IInspectable, T> {};
-
-#endif
+    struct is_interface : std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, T>, is_classic_com_interface<T>> {};
 
     template <typename T>
     struct is_marker : std::disjunction<std::is_base_of<marker, T>, std::is_void<T>> {};
@@ -112,10 +110,25 @@ namespace winrt::impl
     template <typename D, typename I, typename Enable>
     struct producer_convert : producer<D, typename default_interface<I>::type>
     {
+#ifdef __clang__
+        // This is sub-optimal in that it requires an AddRef and Release of the
+        // implementation type for every conversion, but it works around an
+        // issue where Clang ignores the conversion of producer_ref<I> const
+        // to I&& (an rvalue ref that cannot bind a const rvalue).
+        // See CWG rev. 110 active issue 2077, "Overload resolution and invalid
+        // rvalue-reference initialization"
+        operator I() const noexcept
+        {
+            I result{ nullptr };
+            copy_from_abi(result, (produce<D, typename default_interface<I>::type>*)this);
+            return result;
+        }
+#else
         operator producer_ref<I> const() const noexcept
         {
             return { (produce<D, typename default_interface<I>::type>*)this };
         }
+#endif
 
         operator producer_vtable<I> const() const noexcept
         {
@@ -230,6 +243,12 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename D, typename I>
+    D* get_self(com_ptr<I> const& from) noexcept
+    {
+        return static_cast<D*>(static_cast<impl::producer<D, I>*>(from.get()));
+    }
+
+    template <typename D, typename I>
     [[deprecated]] D* from_abi(I const& from) noexcept
     {
         return get_self<D>(from);
@@ -255,24 +274,24 @@ namespace winrt::impl
     template <>
     struct interface_list<>
     {
-        template <typename T, typename Predicate>
-        static constexpr void* find(const T*, const Predicate&) noexcept
+        template <typename Traits>
+        static constexpr auto find(Traits const& traits) noexcept
         {
-            return nullptr;
+            return traits.not_found();
         }
     };
 
     template <typename First, typename ... Rest>
     struct interface_list<First, Rest...>
     {
-        template <typename T, typename Predicate>
-        static constexpr void* find(const T* obj, const Predicate& pred) noexcept
+        template <typename Traits>
+        static constexpr auto find(Traits const& traits) noexcept
         {
-            if (pred.template test<First>())
+            if (traits.template test<First>())
             {
-                return to_abi<First>(obj);
+                return traits.template found<First>();
             }
-            return interface_list<Rest...>::find(obj, pred);
+            return interface_list<Rest...>::find(traits);
         }
         using first_interface = First;
     };
@@ -342,7 +361,9 @@ namespace winrt::impl
     template <typename ... T>
     struct uncloaked_iids<interface_list<T...>>
     {
+#ifdef _MSC_VER
 #pragma warning(suppress: 4307)
+#endif
         static constexpr std::array<guid, sizeof...(T)> value{ winrt::guid_of<T>() ... };
     };
 
@@ -364,34 +385,88 @@ namespace winrt::impl
         using type = typename implements_default_interface<T>::type;
     };
 
-    struct iid_finder
+    template<typename T>
+    struct find_iid_traits
     {
-        const guid& m_guid;
+        T const* m_object;
+        guid const& m_guid;
 
         template <typename I>
         constexpr bool test() const noexcept
         {
             return is_guid_of<typename default_interface<I>::type>(m_guid);
         }
+
+        template <typename I>
+        constexpr void* found() const noexcept
+        {
+            return to_abi<I>(m_object);
+        }
+
+        static constexpr void* not_found() noexcept
+        {
+            return nullptr;
+        }
     };
 
     template <typename T>
-    auto find_iid(const T* obj, const guid& iid) noexcept
+    auto find_iid(T const* obj, guid const& iid) noexcept
     {
-        return static_cast<unknown_abi*>(implemented_interfaces<T>::find(obj, iid_finder{ iid }));
+        return static_cast<unknown_abi*>(implemented_interfaces<T>::find(find_iid_traits<T>{ obj, iid }));
     }
 
-    struct inspectable_finder
+    template <typename I>
+    struct has_interface_traits
     {
+        template <typename T>
+        constexpr bool test() const noexcept
+        {
+            return std::is_same_v<T, I>;
+        }
+
+        template <typename>
+        static constexpr bool found() noexcept
+        {
+            return true;
+        }
+
+        static constexpr bool not_found() noexcept
+        {
+            return false;
+        }
+    };
+
+    template <typename T, typename I>
+    constexpr bool has_interface() noexcept
+    {
+        return impl::implemented_interfaces<T>::find(has_interface_traits<I>{});
+    }
+
+    template<typename T>
+    struct find_inspectable_traits
+    {
+        T const* m_object;
+
         template <typename I>
         static constexpr bool test() noexcept
         {
             return std::is_base_of_v<inspectable_abi, abi_t<I>>;
         }
+
+        template <typename I>
+        constexpr void* found() const noexcept
+        {
+            return to_abi<I>(m_object);
+        }
+
+        static constexpr void* not_found() noexcept
+        {
+            return nullptr;
+        }
     };
 
     template <typename T>
-    inspectable_abi* find_inspectable(const T* obj) noexcept
+    inspectable_abi* find_inspectable(T const* obj) noexcept
     {
         using default_interface = typename implements_default_interface<T>::type;
 
@@ -401,7 +476,7 @@ namespace winrt::impl
         }
         else
         {
-            return static_cast<inspectable_abi*>(implemented_interfaces<T>::find(obj, inspectable_finder{}));
+            return static_cast<inspectable_abi*>(implemented_interfaces<T>::find(find_inspectable_traits<T>{ obj }));
         }
     }
 
@@ -420,6 +495,15 @@ namespace winrt::impl
         static hstring get()
         {
             return hstring{ name_of<I>() };
+        }
+    };
+
+    template <>
+    struct runtime_class_name<Windows::Foundation::IInspectable>
+    {
+        static hstring get()
+        {
+            return {};
         }
     };
 
@@ -469,19 +553,18 @@ namespace winrt::impl
         }
     };
 
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-
     template <typename D, typename I>
-    struct producer<D, I, std::enable_if_t<std::is_base_of_v< ::IUnknown, I> && !is_implements_v<I>>> : I
+    struct producer<D, I, std::enable_if_t<is_classic_com_interface<I>::value>> : I
     {
-    };
-
-    template <typename D, typename I>
-    struct producer_convert<D, I, std::enable_if_t<std::is_base_of_v< ::IUnknown, I> && !is_implements_v<I>>> : producer<D, I>
-    {
-    };
-
+#ifndef WINRT_IMPL_IUNKNOWN_DEFINED
+        static_assert(std::is_void_v<I> /* dependent_false */, "To implement classic COM interfaces, you must #include <unknwn.h> before including C++/WinRT headers.");
 #endif
+    };
+
+    template <typename D, typename I>
+    struct producer_convert<D, I, std::enable_if_t<is_classic_com_interface<I>::value>> : producer<D, I>
+    {
+    };
 
     struct INonDelegatingInspectable : Windows::Foundation::IUnknown
     {
@@ -496,7 +579,7 @@ namespace winrt::impl
     template <typename D>
     struct produce<D, INonDelegatingInspectable> : produce_base<D, INonDelegatingInspectable>
     {
-        int32_t __stdcall QueryInterface(const guid& id, void** object) noexcept final
+        int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final
         {
             return this->shim().NonDelegatingQueryInterface(id, object);
         }
@@ -689,7 +772,7 @@ namespace winrt::impl
     };
 
     template <bool>
-    struct __declspec(empty_bases) root_implements_composing_outer
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer
     {
     protected:
         static constexpr bool is_composing = false;
@@ -697,7 +780,7 @@ namespace winrt::impl
     };
 
     template <>
-    struct __declspec(empty_bases) root_implements_composing_outer<true>
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer<true>
     {
         template <typename Qi>
         auto try_as() const noexcept
@@ -715,7 +798,7 @@ namespace winrt::impl
     };
 
     template <typename D, bool>
-    struct __declspec(empty_bases) root_implements_composable_inner
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composable_inner
     {
     protected:
         static constexpr inspectable_abi* outer() noexcept { return nullptr; }
@@ -725,7 +808,7 @@ namespace winrt::impl
     };
 
     template <typename D>
-    struct __declspec(empty_bases) root_implements_composable_inner<D, true> : producer<D, INonDelegatingInspectable>
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composable_inner<D, true> : producer<D, INonDelegatingInspectable>
     {
     protected:
         inspectable_abi* outer() noexcept { return m_outer; }
@@ -740,7 +823,7 @@ namespace winrt::impl
     };
 
     template <typename D, typename... I>
-    struct __declspec(novtable) root_implements
+    struct WINRT_IMPL_NOVTABLE root_implements
         : root_implements_composing_outer<std::disjunction_v<std::is_same<composing, I>...>>
         , root_implements_composable_inner<D, std::disjunction_v<std::is_same<composable, I>...>>
         , module_lock_updater<!std::disjunction_v<std::is_same<no_module_lock, I>...>>
@@ -825,7 +908,7 @@ namespace winrt::impl
         virtual ~root_implements() noexcept
         {
             // If a weak reference is created during destruction, this ensures that it is also destroyed.
-            subtract_reference();
+            subtract_final_reference();
         }
 
         int32_t __stdcall GetIids(uint32_t* count, guid** array) noexcept
@@ -891,10 +974,6 @@ namespace winrt::impl
 
             if (target == 0)
             {
-                // If a weak reference was previously created, the m_references value will not be stable value (won't be zero).
-                // This ensures destruction has a stable value during destruction.
-                m_references = 1;
-
                 if constexpr (has_final_release::value)
                 {
                     D::final_release(std::unique_ptr<D>(static_cast<D*>(this)));
@@ -908,7 +987,7 @@ namespace winrt::impl
             return target;
         }
 
-        int32_t __stdcall NonDelegatingQueryInterface(const guid& id, void** object) noexcept
+        int32_t __stdcall NonDelegatingQueryInterface(guid const& id, void** object) noexcept
         {
             if (is_guid_of<Windows::Foundation::IInspectable>(id) || is_guid_of<Windows::Foundation::IUnknown>(id))
             {
@@ -930,13 +1009,13 @@ namespace winrt::impl
 
         int32_t __stdcall NonDelegatingGetIids(uint32_t* count, guid** array) noexcept
         {
-            const auto& local_iids = static_cast<D*>(this)->get_local_iids();
-            const uint32_t& local_count = local_iids.first;
+            auto const& local_iids = static_cast<D*>(this)->get_local_iids();
+            uint32_t const& local_count = local_iids.first;
             if constexpr (root_implements_type::is_composing)
             {
                 if (local_count > 0)
                 {
-                    const com_array<guid>& inner_iids = get_interfaces(root_implements_type::m_inner);
+                    com_array<guid> const& inner_iids = get_interfaces(root_implements_type::m_inner);
                     *count = local_count + inner_iids.size();
                     *array = static_cast<guid*>(WINRT_IMPL_CoTaskMemAlloc(sizeof(guid)*(*count)));
                     if (*array == nullptr)
@@ -986,7 +1065,7 @@ namespace winrt::impl
         }
         catch (...) { return to_hresult(); }
 
-        uint32_t subtract_reference() noexcept
+        uint32_t subtract_final_reference() noexcept
         {
             if constexpr (is_weak_ref_source::value)
             {
@@ -1013,6 +1092,19 @@ namespace winrt::impl
             }
         }
 
+        uint32_t subtract_reference() noexcept
+        {
+            uint32_t result = subtract_final_reference();
+
+            if (result == 0)
+            {
+                // Ensure destruction happens with a stable reference count that isn't a weak reference.
+                m_references.store(1, std::memory_order_relaxed);
+            }
+
+            return result;
+        }
+
         template <typename T>
         winrt::weak_ref<T> get_weak()
         {
@@ -1034,8 +1126,6 @@ namespace winrt::impl
             return Windows::Foundation::TrustLevel::BaseTrust;
         }
 
-        using is_factory = std::disjunction<std::is_same<Windows::Foundation::IActivationFactory, I>...>;
-
     private:
 
         class has_final_release
@@ -1050,7 +1140,7 @@ namespace winrt::impl
 
         using is_agile = std::negation<std::disjunction<std::is_same<non_agile, I>...>>;
         using is_inspectable = std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, I>...>;
-        using is_weak_ref_source = std::conjunction<is_inspectable, std::negation<is_factory>, std::negation<std::disjunction<std::is_same<no_weak_ref, I>...>>>;
+        using is_weak_ref_source = std::negation<std::disjunction<std::is_same<no_weak_ref, I>...>>;
         using use_module_lock = std::negation<std::disjunction<std::is_same<no_module_lock, I>...>>;
         using weak_ref_t = impl::weak_ref<is_agile::value, use_module_lock::value>;
 
@@ -1112,64 +1202,70 @@ namespace winrt::impl
 
         impl::IWeakReferenceSource* make_weak_ref() noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
-            uintptr_t count_or_pointer = m_references.load(std::memory_order_relaxed);
-
-            if (is_weak_ref(count_or_pointer))
+            if constexpr (is_weak_ref_source::value)
             {
-                return decode_weak_ref(count_or_pointer)->get_source();
-            }
-
-            com_ptr<weak_ref_t> weak_ref;
-            *weak_ref.put() = new (std::nothrow) weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer));
-
-            if (!weak_ref)
-            {
-                return nullptr;
-            }
-
-            uintptr_t const encoding = encode_weak_ref(weak_ref.get());
-
-            for (;;)
-            {
-                if (m_references.compare_exchange_weak(count_or_pointer, encoding, std::memory_order_acq_rel, std::memory_order_relaxed))
-                {
-                    impl::IWeakReferenceSource* result = weak_ref->get_source();
-                    detach_abi(weak_ref);
-                    return result;
-                }
+                uintptr_t count_or_pointer = m_references.load(std::memory_order_relaxed);
 
                 if (is_weak_ref(count_or_pointer))
                 {
                     return decode_weak_ref(count_or_pointer)->get_source();
                 }
 
-                weak_ref->set_strong(static_cast<uint32_t>(count_or_pointer));
+                com_ptr<weak_ref_t> weak_ref(new (std::nothrow) weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer)), take_ownership_from_abi);
+
+                if (!weak_ref)
+                {
+                    return nullptr;
+                }
+
+                uintptr_t const encoding = encode_weak_ref(weak_ref.get());
+
+                while (true)
+                {
+                    if (m_references.compare_exchange_weak(count_or_pointer, encoding, std::memory_order_acq_rel, std::memory_order_relaxed))
+                    {
+                        impl::IWeakReferenceSource* result = weak_ref->get_source();
+                        detach_abi(weak_ref);
+                        return result;
+                    }
+
+                    if (is_weak_ref(count_or_pointer))
+                    {
+                        return decode_weak_ref(count_or_pointer)->get_source();
+                    }
+
+                    weak_ref->set_strong(static_cast<uint32_t>(count_or_pointer));
+                }
+            }
+            else
+            {
+                static_assert(is_weak_ref_source::value, "Weak references are not supported because no_weak_ref was specified.");
+                return nullptr;
             }
         }
 
         static bool is_weak_ref(intptr_t const value) noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
+            static_assert(is_weak_ref_source::value, "Weak references are not supported because no_weak_ref was specified.");
             return value < 0;
         }
 
         static weak_ref_t* decode_weak_ref(uintptr_t const value) noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
+            static_assert(is_weak_ref_source::value, "Weak references are not supported because no_weak_ref was specified.");
             return reinterpret_cast<weak_ref_t*>(value << 1);
         }
 
         static uintptr_t encode_weak_ref(weak_ref_t* value) noexcept
         {
-            static_assert(is_weak_ref_source::value, "This is only for weak ref support.");
+            static_assert(is_weak_ref_source::value, "Weak references are not supported because no_weak_ref was specified.");
             constexpr uintptr_t pointer_flag = static_cast<uintptr_t>(1) << ((sizeof(uintptr_t) * 8) - 1);
             WINRT_ASSERT((reinterpret_cast<uintptr_t>(value) & 1) == 0);
             return (reinterpret_cast<uintptr_t>(value) >> 1) | pointer_flag;
         }
 
         virtual unknown_abi* get_unknown() const noexcept = 0;
-        virtual std::pair<uint32_t, const guid*> get_local_iids() const noexcept = 0;
+        virtual std::pair<uint32_t, guid const*> get_local_iids() const noexcept = 0;
         virtual hstring GetRuntimeClassName() const = 0;
         virtual void* find_interface(guid const&) const noexcept = 0;
         virtual inspectable_abi* find_inspectable() const noexcept = 0;
@@ -1198,6 +1294,29 @@ namespace winrt::impl
     };
 #endif
 
+    template<typename T>
+    class has_initializer
+    {
+        template <typename U, typename = decltype(std::declval<U>().InitializeComponent())> static constexpr bool get_value(int) { return true; }
+        template <typename> static constexpr bool get_value(...) { return false; }
+
+    public:
+        static constexpr bool value = get_value<T>(0);
+    };
+
+    template<typename T, typename... Args>
+    T* create_and_initialize(Args&&... args)
+    {
+        com_ptr<T> instance{ new heap_implements<T>(std::forward<Args>(args)...), take_ownership_from_abi };
+
+        if constexpr (has_initializer<T>::value)
+        {
+            instance->InitializeComponent();
+        }
+
+        return instance.detach();
+    }
+
     inline com_ptr<IStaticLifetimeCollection> get_static_lifetime_map()
     {
         auto const lifetime_factory = get_activation_factory<impl::IStaticLifetime>(L"Windows.ApplicationModel.Core.CoreApplication");
@@ -1213,7 +1332,7 @@ namespace winrt::impl
 
         if constexpr (!has_static_lifetime_v<D>)
         {
-            return { to_abi<result_type>(new heap_implements<D>), take_ownership_from_abi };
+            return { to_abi<result_type>(create_and_initialize<D>()), take_ownership_from_abi };
         }
         else
         {
@@ -1227,7 +1346,7 @@ namespace winrt::impl
                 return { result, take_ownership_from_abi };
             }
 
-            result_type object{ to_abi<result_type>(new heap_implements<D>), take_ownership_from_abi };
+            result_type object{ to_abi<result_type>(create_and_initialize<D>()), take_ownership_from_abi };
 
             static slim_mutex lock;
             slim_lock_guard const guard{ lock };
@@ -1273,17 +1392,17 @@ WINRT_EXPORT namespace winrt
         }
         else if constexpr (impl::has_composable<D>::value)
         {
-            impl::com_ref<I> result{ to_abi<I>(new impl::heap_implements<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
+            impl::com_ref<I> result{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
             return result.template as<typename D::composable>();
         }
         else if constexpr (impl::has_class_type<D>::value)
         {
             static_assert(std::is_same_v<I, default_interface<typename D::class_type>>);
-            return typename D::class_type{ to_abi<I>(new impl::heap_implements<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
+            return typename D::class_type{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
         }
         else
         {
-            return impl::com_ref<I>{ to_abi<I>(new impl::heap_implements<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
+            return impl::com_ref<I>{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
         }
     }
 
@@ -1305,7 +1424,7 @@ WINRT_EXPORT namespace winrt
         }
         else
         {
-            return { new impl::heap_implements<D>(std::forward<Args>(args)...), take_ownership_from_abi };
+            return { impl::create_and_initialize<D>(std::forward<Args>(args)...), take_ownership_from_abi };
         }
     }
 
@@ -1326,7 +1445,6 @@ WINRT_EXPORT namespace winrt
 
         using base_type = typename impl::base_implements<D, I...>::type;
         using root_implements_type = typename base_type::root_implements_type;
-        using is_factory = typename root_implements_type::is_factory;
 
         using base_type::base_type;
 
@@ -1366,6 +1484,10 @@ WINRT_EXPORT namespace winrt
             return result;
         }
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winconsistent-missing-override"
+#endif
         impl::hresult_type __stdcall QueryInterface(impl::guid_type const& id, void** object) noexcept
         {
             return root_implements_type::QueryInterface(reinterpret_cast<guid const&>(id), object);
@@ -1397,6 +1519,9 @@ WINRT_EXPORT namespace winrt
         {
             return root_implements_type::abi_GetTrustLevel(reinterpret_cast<Windows::Foundation::TrustLevel*>(value));
         }
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
         void* find_interface(guid const& id) const noexcept override
         {
@@ -1408,7 +1533,7 @@ WINRT_EXPORT namespace winrt
             return impl::find_inspectable(static_cast<const D*>(this));
         }
 
-        std::pair<uint32_t, const guid*> get_local_iids() const noexcept override
+        std::pair<uint32_t, guid const*> get_local_iids() const noexcept override
         {
             using interfaces = impl::uncloaked_interfaces<D>;
             using local_iids = impl::uncloaked_iids<interfaces>;
@@ -1424,6 +1549,7 @@ WINRT_EXPORT namespace winrt
 
         hstring GetRuntimeClassName() const override
         {
+            static_assert(std::is_base_of_v<implements_type, D>, "Class must derive from implements<> or ClassT<> where the first template parameter is the derived class name, e.g. struct D : implements<D, ...>");
             return impl::runtime_class_name<typename impl::implements_default_interface<D>::type>::get();
         }
 

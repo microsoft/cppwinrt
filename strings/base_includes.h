@@ -1,10 +1,12 @@
 
+#include <intrin.h>
 #include <algorithm>
 #include <array>
 #include <atomic>
 #include <charconv>
 #include <chrono>
 #include <cstddef>
+#include <cstring>
 #include <iterator>
 #include <map>
 #include <memory>
@@ -12,138 +14,60 @@
 #include <stdexcept>
 #include <string_view>
 #include <string>
+#include <thread>
 #include <tuple>
 #include <type_traits>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 
-#if __has_include(<WindowsNumerics.impl.h>)
+#if __has_include(<version>)
+#include <version>
+#endif
+
+#if __has_include(<windowsnumerics.impl.h>)
 #define WINRT_IMPL_NUMERICS
 #include <directxmath.h>
 #endif
 
-#ifndef __clang__
+#ifndef WINRT_LEAN_AND_MEAN
+#include <ostream>
+#endif
+
+#ifdef __cpp_lib_format
+#include <format>
+#endif
+
+#ifdef __cpp_lib_source_location
+#include <source_location>
+#endif
+
+#ifdef __cpp_lib_coroutine
+
+#include <coroutine>
+
+namespace winrt::impl
+{
+    template <typename T = void>
+    using coroutine_handle = std::coroutine_handle<T>;
+
+    using suspend_always = std::suspend_always;
+    using suspend_never = std::suspend_never;
+}
+
+#elif __has_include(<experimental/coroutine>)
 
 #include <experimental/coroutine>
 
-#else
-
-namespace std::experimental
+namespace winrt::impl
 {
-    template <typename R, typename...> struct coroutine_traits
-    {
-        using promise_type = typename R::promise_type;
-    };
+    template <typename T = void>
+    using coroutine_handle = std::experimental::coroutine_handle<T>;
 
-    template <typename Promise = void> struct coroutine_handle;
-
-    template <> struct coroutine_handle<void>
-    {
-        coroutine_handle(decltype(nullptr)) noexcept
-        {
-        }
-
-        coroutine_handle() noexcept
-        {
-        }
-
-        static coroutine_handle from_address(void* address) noexcept
-        {
-            coroutine_handle result;
-            result.ptr = address;
-            return result;
-        }
-
-        coroutine_handle& operator=(decltype(nullptr)) noexcept
-        {
-            ptr = nullptr;
-            return *this;
-        }
-
-        explicit operator bool() const noexcept
-        {
-            return ptr;
-        }
-
-        void* address() const noexcept
-        {
-            return ptr;
-        }
-
-        void operator()() const
-        {
-            resume();
-        }
-
-        void resume() const
-        {
-            __builtin_coro_resume(ptr);
-        }
-
-        void destroy() const
-        {
-            __builtin_coro_destroy(ptr);
-        }
-
-        bool done() const
-        {
-            return __builtin_coro_done(ptr);
-        }
-
-    protected:
-        void* ptr{};
-    };
-
-    template <typename Promise> struct coroutine_handle : coroutine_handle<>
-    {
-        using coroutine_handle<>::operator=;
-
-        static coroutine_handle from_address(void* address) noexcept
-        {
-            coroutine_handle result;
-            result.ptr = address;
-            return result;
-        }
-
-        Promise& promise() const
-        {
-            return *reinterpret_cast<Promise*>(__builtin_coro_promise(ptr, alignof(Promise), false));
-        }
-
-        static coroutine_handle from_promise(Promise& promise)
-        {
-            coroutine_handle result;
-            result.ptr = __builtin_coro_promise(&promise, alignof(Promise), true);
-            return result;
-        }
-    };
-
-    template <typename Promise>
-    bool operator==(coroutine_handle<Promise> const& left, coroutine_handle<Promise> const& right) noexcept
-    {
-        return left.address() == right.address();
-    }
-
-    template <typename Promise>
-    bool operator!=(coroutine_handle<Promise> const& left, coroutine_handle<Promise> const& right) noexcept
-    {
-        return !(left == right);
-    }
-
-    struct suspend_always
-    {
-        bool await_ready() noexcept { return false; }
-        void await_suspend(coroutine_handle<>) noexcept {}
-        void await_resume() noexcept {}
-    };
-
-    struct suspend_never
-    {
-        bool await_ready() noexcept { return true; }
-        void await_suspend(coroutine_handle<>) noexcept {}
-        void await_resume() noexcept {}
-    };
+    using suspend_always = std::experimental::suspend_always;
+    using suspend_never = std::experimental::suspend_never;
 }
 
+#else
+#error C++/WinRT requires coroutine support, which is currently missing. Try enabling C++20 in your compiler.
 #endif

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <PropertyGroup>
+    <Deployment Condition="'$(Deployment)' == '' ">Standalone</Deployment>
+  </PropertyGroup>
+  
+  <!-- Useful folder paths -->
+  <PropertyGroup>
+    <RepoRoot>$(MSBuildThisFileDirectory)..\</RepoRoot>
+    <VSIXRootDir>$(MSBuildThisFileDirectory)</VSIXRootDir>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+    <MinimumVisualStudioVersion>15.0</MinimumVisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <VsixBuild>true</VsixBuild>
+    <RuntimeIdentifiers>win</RuntimeIdentifiers>
+    <UseCodebase>true</UseCodebase>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+
+</Project>

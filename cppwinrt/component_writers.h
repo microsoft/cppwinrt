@@ -27,7 +27,7 @@ namespace cppwinrt
             }
         }
 
-        bool first{ true };
+        bool first = true;
 
         for (auto&& name : interfaces)
         {
@@ -45,7 +45,7 @@ namespace cppwinrt
 
     static void write_component_class_base(writer& w, TypeDef const& type)
     {
-        bool first{ true };
+        bool first = true;
 
         for (auto&& base : get_bases(type))
         {
@@ -289,7 +289,7 @@ catch (...) { return winrt::to_hresult(); }
             bind<write_consume_args>(signature));
     }
 
-    void write_component_static_forwarder(writer& w, MethodDef const& method)
+    static void write_component_static_forwarder(writer& w, MethodDef const& method)
     {
         auto format = R"(        auto %(%)
         {
@@ -347,7 +347,7 @@ catch (...) { return winrt::to_hresult(); }
 
         if (!default_constructor)
         {
-            w.write(R"(        [[noreturn]] Windows::Foundation::IInspectable ActivateInstance() const
+            w.write(R"(        [[noreturn]] winrt::Windows::Foundation::IInspectable ActivateInstance() const
         {
             throw hresult_not_implemented();
         }
@@ -393,7 +393,7 @@ catch (...) { return winrt::to_hresult(); }
             return;
         }
 
-        write_type_namespace(w, type_namespace);
+        auto wrap_type = wrap_type_namespace(w, type_namespace);
 
         for (auto&&[factory_name, factory] : get_factories(w, type))
         {
@@ -498,16 +498,18 @@ catch (...) { return winrt::to_hresult(); }
                     {
                         auto format = R"(    % %::%(%)
     {
-        return @::implementation::%::%(%);
+        %@::implementation::%::%(%);
     }
 )";
 
+                        bool ignore_return = is_put_overload(method) || !signature.return_signature();
 
                         w.write(format,
                             signature.return_signature(),
                             type_name,
                             method_name,
                             bind<write_consume_params>(signature),
+                            ignore_return ? "" : "return ",
                             type_namespace,
                             type_name,
                             method_name,
@@ -519,7 +521,7 @@ catch (...) { return winrt::to_hresult(); }
                         auto format = R"(    %::%_revoker %::%(auto_revoke_t, %)
     {
         auto f = make<winrt::@::factory_implementation::%>().as<%>();
-        return { f, f.%(%) };
+        return %::%_revoker{ f, f.%(%) };
     }
 )";
 
@@ -532,14 +534,14 @@ catch (...) { return winrt::to_hresult(); }
                             type_namespace,
                             type_name,
                             factory_name,
+                            type_name,
+                            method_name,
                             method_name,
                             bind<write_consume_args>(signature));
                     }
                 }
             }
         }
-
-        write_close_namespace(w);
     }
 
     static void write_component_override_dispatch_base(writer& w, TypeDef const& type)
@@ -641,8 +643,8 @@ catch (...) { return winrt::to_hresult(); }
         {
             if (!info.base && info.is_default)
             {
-                auto methods = info.type.MethodList();
-                offset += methods.second - methods.first;
+                auto [first, second] = info.type.MethodList();
+                offset += second - first;
                 break;
             }
         }
@@ -741,7 +743,7 @@ catch (...) { return winrt::to_hresult(); }
             auto format = R"(namespace winrt::@::implementation
 {
     template <typename D%, typename... I>
-    struct __declspec(empty_bases) %_base : implements<D, @::%%%, %I...>%%%
+    struct WINRT_IMPL_EMPTY_BASES %_base : implements<D, @::%%%, %I...>%%%
     {
         using base_type = %_base;
         using class_type = @::%;
@@ -797,6 +799,7 @@ catch (...) { return winrt::to_hresult(); }
                 }
                 else
                 {
+                    composable_base_name = w.write_temp("using composable_base = B;");
                     base_type_parameter = ", typename B";
                     base_type_argument = ", B";
                     no_module_lock = "no_module_lock, ";
@@ -833,7 +836,7 @@ catch (...) { return winrt::to_hresult(); }
             auto format = R"(namespace winrt::@::factory_implementation
 {
     template <typename D, typename T, typename... I>
-    struct __declspec(empty_bases) %T : implements<D, Windows::Foundation::IActivationFactory%, I...>
+    struct WINRT_IMPL_EMPTY_BASES %T : implements<D, winrt::Windows::Foundation::IActivationFactory%, I...>
     {
         using instance_type = @::%;
 
@@ -860,7 +863,9 @@ catch (...) { return winrt::to_hresult(); }
         {
             auto format = R"(
 #if defined(WINRT_FORCE_INCLUDE_%_XAML_G_H) || __has_include("%.xaml.g.h")
+
 #include "%.xaml.g.h"
+
 #else
 
 namespace winrt::@::implementation
@@ -990,9 +995,24 @@ namespace winrt::@::implementation
     static void write_generated_static_assert(writer& w)
     {
         auto format = R"(
-// Note: Remove this static_assert after copying these generated source files to your project.
-// This assertion exists to avoid compiling these generated source files directly.
-static_assert(false, "Do not compile generated C++/WinRT source files directly");
+// WARNING: This file is automatically generated by a tool. Do not directly
+// add this file to your project, as any changes you make will be lost.
+// This file is a stub you can use as a starting point for your implementation.
+//
+// To add a copy of this file to your project:
+//   1. Copy this file from its original location to the location where you store 
+//      your other source files (e.g. the project root). 
+//   2. Add the copied file to your project. In Visual Studio, you can use 
+//      Project -> Add Existing Item.
+//   3. Delete this comment and the 'static_assert' (below) from the copied file.
+//      Do not modify the original file.
+//
+// To update an existing file in your project:
+//   1. Copy the relevant changes from this file and merge them into the copy 
+//      you made previously.
+//    
+// This assertion helps prevent accidental modification of generated files.
+static_assert(false, "This file is generated by a tool and will be overwritten. Open this error and view the comment for assistance.");
 )";
 
         w.write(format);

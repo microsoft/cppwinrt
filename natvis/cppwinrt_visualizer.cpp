@@ -93,14 +93,21 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
 {
     auto winmd_path = path{ processPath };
     auto probe_file = std::string{ typeName };
-    do
+    while (true)
     {
         winmd_path.replace_filename(probe_file + ".winmd");
         MetadataDiagnostic(process, L"Looking for ", winmd_path);
         if (FindMetadata(process, winmd_path))
         {
             MetadataDiagnostic(process, L"Loaded ", winmd_path);
-            db_files.push_back(winmd_path.string());
+
+            auto const path_string = winmd_path.string();
+
+            if (std::find(db_files.begin(), db_files.end(), path_string) == db_files.end())
+            {
+                db->add_database(path_string, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); });
+                db_files.push_back(path_string);
+            }
         }
         auto pos = probe_file.rfind('.');
         if (pos == std::string::npos)
@@ -108,8 +115,7 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
             break;
         }
         probe_file = probe_file.substr(0, pos);
-    } while (true);
-    db.reset(new cache(db_files));
+    } 
 }
 
 TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
@@ -125,6 +131,19 @@ TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
             NatvisDiagnostic(process,
                 std::wstring(L"Could not find metadata for ") + std::wstring(typeName.begin(), typeName.end()), NatvisDiagnosticLevel::Error);
         }
+    }
+    return type;
+}
+
+TypeDef FindType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
+{
+    auto type = db->find(typeNamespace, typeName);
+    if (!type)
+    {
+        std::string fullName(typeNamespace);
+        fullName.append(".");
+        fullName.append(typeName);
+        FindType(process, fullName);
     }
     return type;
 }
@@ -146,7 +165,7 @@ cppwinrt_visualizer::cppwinrt_visualizer()
                 db_files.push_back(file.path().string());
             }
         }
-        db.reset(new cache(db_files));
+        db.reset(new cache(db_files, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); }));
     }
     catch (...)
     {
@@ -188,21 +207,26 @@ HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
         IF_FAIL_RET(pTypeSymbol->get_name(&bstrTypeName));
 
         // Visualize top-level C++/WinRT objects containing ABI pointers
-        bool isAbiObject;
+        ObjectType objectType;
         if (wcscmp(bstrTypeName, L"winrt::Windows::Foundation::IInspectable") == 0)
         {
-            isAbiObject = false;
+            objectType = ObjectType::Projection;
         }
         // Visualize nested object properties via raw ABI pointers
         else if ((wcscmp(bstrTypeName, L"winrt::impl::IInspectable") == 0) ||
                  (wcscmp(bstrTypeName, L"winrt::impl::inspectable_abi") == 0))
         {
-            isAbiObject = true;
+            objectType = ObjectType::Abi;
+        }
+        // Visualize C++/WinRT object implementations
+        else if (wcsncmp(bstrTypeName, L"winrt::impl::producer<", wcslen(L"winrt::impl::producer<")) == 0)
+        {
+            objectType = ObjectType::Abi;
         }
         // Visualize all raw IInspectable pointers
         else if (wcscmp(bstrTypeName, L"IInspectable") == 0)
         {
-            isAbiObject = true;
+            objectType = ObjectType::Abi;
         }
         else
         {
@@ -212,7 +236,7 @@ HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
             return S_OK;
         }
 
-        IF_FAIL_RET(object_visualizer::CreateEvaluationResult(pVisualizedExpression, isAbiObject, ppResultObject));
+        IF_FAIL_RET(object_visualizer::CreateEvaluationResult(pVisualizedExpression, objectType, ppResultObject));
 
         return S_OK;
     }

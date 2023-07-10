@@ -1,6 +1,11 @@
 
 namespace winrt::impl
 {
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4458) // declaration hides class member (okay because we do not use named members of base class)
+#endif
+
     template <typename T, typename H>
     struct implements_delegate : abi_t<T>, H, update_module_lock
     {
@@ -86,7 +91,7 @@ namespace winrt::impl
     }
 
     template <typename R, typename... Args>
-    struct __declspec(novtable) variadic_delegate_abi : unknown_abi
+    struct WINRT_IMPL_NOVTABLE variadic_delegate_abi : unknown_abi
     {
         virtual R invoke(Args const& ...) = 0;
     };
@@ -146,7 +151,7 @@ namespace winrt::impl
     };
 
     template <typename R, typename... Args>
-    struct __declspec(empty_bases) delegate_base : Windows::Foundation::IUnknown
+    struct WINRT_IMPL_EMPTY_BASES delegate_base : Windows::Foundation::IUnknown
     {
         delegate_base(std::nullptr_t = nullptr) noexcept {}
         delegate_base(void* ptr, take_ownership_from_abi_t) noexcept : IUnknown(ptr, take_ownership_from_abi) {}
@@ -157,11 +162,11 @@ namespace winrt::impl
         {}
 
         template <typename F> delegate_base(F* handler) :
-            delegate_base([=](auto&& ... args) { handler(args...); })
+            delegate_base([=](auto&& ... args) { return handler(args...); })
         {}
 
         template <typename O, typename M> delegate_base(O* object, M method) :
-            delegate_base([=](auto&& ... args) { ((*object).*(method))(args...); })
+            delegate_base([=](auto&& ... args) { return ((*object).*(method))(args...); })
         {}
 
         template <typename O, typename M> delegate_base(com_ptr<O>&& object, M method) :
@@ -187,18 +192,22 @@ namespace winrt::impl
             return { static_cast<void*>(new variadic_delegate<H, R, Args...>(std::forward<H>(handler))), take_ownership_from_abi };
         }
     };
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 }
 
 WINRT_EXPORT namespace winrt
 {
     template <typename... Args>
-    struct __declspec(empty_bases) delegate : impl::delegate_base<void, Args...>
+    struct WINRT_IMPL_EMPTY_BASES delegate : impl::delegate_base<void, Args...>
     {
         using impl::delegate_base<void, Args...>::delegate_base;
     };
 
     template <typename R, typename... Args>
-    struct __declspec(empty_bases) delegate<R(Args...)> : impl::delegate_base<R, Args...>
+    struct WINRT_IMPL_EMPTY_BASES delegate<R(Args...)> : impl::delegate_base<R, Args...>
     {
         using impl::delegate_base<R, Args...>::delegate_base;
     };

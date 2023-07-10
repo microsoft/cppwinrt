@@ -20,6 +20,12 @@ enum class PropertyCategory
     Class,
 };
 
+enum class ObjectType
+{
+    Abi,
+    Projection,
+};
+
 // Metatdata for resolving a runtime class property value
 struct PropertyData 
 {
@@ -36,17 +42,17 @@ struct PropertyData
 struct __declspec(uuid("c7da92da-3bc9-4312-8a93-46f480663980"))
 object_visualizer : winrt::implements<object_visualizer, ::IUnknown>
 {
-    object_visualizer(Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression, bool isAbiObject)
+    object_visualizer(Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression, ObjectType objectType)
     {
         m_pVisualizedExpression = make_com_ptr(pVisualizedExpression);
-        m_isAbiObject = isAbiObject;
+        m_objectType = objectType;
     }
 
     ~object_visualizer()
     {
     }
 
-    static HRESULT CreateEvaluationResult(_In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression, _In_ bool isAbiObject, _Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResult** ppResultObject);
+    static HRESULT CreateEvaluationResult(_In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression, _In_ ObjectType objectType, _Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResult** ppResultObject);
 
     HRESULT CreateEvaluationResult(_Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResult** ppResultObject);
 
@@ -69,7 +75,7 @@ private:
     void GetPropertyData();
     void GetTypeProperties(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& type_name);
     winrt::com_ptr<Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression> m_pVisualizedExpression;
-    bool m_isAbiObject;
+    ObjectType m_objectType;
     std::vector<PropertyData> m_propertyData;
     bool m_isStringable{ false };
 };

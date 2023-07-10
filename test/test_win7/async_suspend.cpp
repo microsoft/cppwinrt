@@ -49,7 +49,15 @@ namespace
         handle completed{ CreateEvent(nullptr, true, false, nullptr) };
         auto async = make(start.get());
         REQUIRE(async.Status() == AsyncStatus::Started);
-        REQUIRE_THROWS_AS(async.GetResults(), hresult_illegal_method_call);
+        if constexpr (has_async_progress<decltype(async)>)
+        {
+            // You're allowed to peek at partial results of IAsyncXxxWithProgress.
+            REQUIRE_NOTHROW(async.GetResults());
+        }
+        else
+        {
+            REQUIRE_THROWS_AS(async.GetResults(), hresult_illegal_method_call);
+        }
 
         async.Completed([&](auto&& sender, AsyncStatus status)
             {

@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "catch.hpp"
 
+#ifdef _MSC_VER
 #pragma warning(disable: 4505)
+#endif
 
 using namespace winrt;
 using namespace Windows::Foundation;

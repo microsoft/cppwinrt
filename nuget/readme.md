@@ -36,7 +36,7 @@ It sets the following project properties and item metadata:
 | XamlLanguage | CppWinRT | Directs the Xaml compiler to generate C++/WinRT code |
 | ClCompile.CompileAsWinRT | *false | Enables ISO C++ compilation (disables C++/CX) |
 | ClCompile.LanguageStandard | *stdcpp17 | Enables C++17 language features |
-| ClCompile.AdditionalOptions | /bigobj /await | Enables support for large object files and coroutines |
+| ClCompile.AdditionalOptions | /bigobj | Enables support for large object files |
 | ClCompile.AdditionalIncludeDirectories | GeneratedFilesDir | Adds $(GeneratedFilesDir) to the C++ include dirs |
 | Link.AdditionalDependencies | WindowsApp.lib | Umbrella library for Windows Runtime imports |
 | Midl.AdditionalOptions | /reference ... | Enables faster compilation with winmd references (versus idl imports) |
@@ -61,6 +61,7 @@ C++/WinRT behavior can be customized with these project properties:
 | CppWinRTVerbosity | low \| *normal \| high | Sets the [importance](https://docs.microsoft.com/en-us/visualstudio/msbuild/message-task?view=vs-2017) of C++/WinRT build messages (see below) |
 | CppWinRTNamespaceMergeDepth | *1 | Sets the depth of namespace merging (Xaml apps require 1) |
 | CppWinRTRootNamespaceAutoMerge | true \| *false | Sets the namespace merge depth to be the length of the root namespace |
+| CppWinRTMergeNoValidate | true \| *false | Disables mdmerge validation |
 | CppWinRTUsePrefixes | *true \| false | Uses a dotted prefix namespace convention (versus a nested folder convention) |
 | CppWinRTPath | ...\cppwinrt.exe | NuGet package-relative path to cppwinrt.exe, for custom build rule invocation |
 | CppWinRTParameters | "" | Custom cppwinrt.exe command-line parameters (be sure to append to existing) |
@@ -68,12 +69,68 @@ C++/WinRT behavior can be customized with these project properties:
 | CppWinRTProjectLanguage | C++/CX \| *C++/WinRT | Selects the C++ dialect for the project.  C++/WinRT provides full projection support, C++/CX permits consuming projection headers. |
 | CppWinRTOptimized | true \| *false | Enables component projection [optimization features](https://kennykerr.ca/2019/06/07/cppwinrt-optimizing-components/) |
 | CppWinRTGenerateWindowsMetadata | true \| *false | Indicates whether this project produces Windows Metadata |
+| CppWinRTEnableDefaultPrivateFalse | true \| *false | Indicates whether this project uses C++/WinRT optimized default for copying binaries to the output directory |
 \*Default value
 
 To customize common C++/WinRT project properties: 
 * right-click the project node
 * expand the Common Properties item
 * select the C++/WinRT property page
+
+## InitializeComponent
+
+In older versions of C++/WinRT, Xaml objects called InitializeComponent from constructors. This can lead to memory corruption if InitializeComponent throws an exception.
+
+```cpp
+void MainPage::MainPage()
+{
+    // This pattern should no longer be used
+    InitializeComponent();
+}
+```
+
+C++/WinRT now calls InitializeComponent automatically and safely, after object construction. Explicit calls to InitializeComponent from constructors in existing code should now be removed. Multiple calls to InitializeComponent are idempotent.
+
+If a Xaml object needs to access a Xaml property during initialization, it should override InitializeComponent:
+
+```cpp
+void MainPage::InitializeComponent()
+{
+    // Call base InitializeComponent() to register with the Xaml runtime
+    MainPageT::InitializeComponent();
+    // Can now access Xaml properties
+    MyButton().Content(box_value(L"Click"));
+}
+```
+
+A non-Xaml object can also participate in two-phase construction by defining an InitializeComponent method.
+
+```cpp
+void MyComponent::InitializeComponent()
+{
+    // Execute initialization logic that may throw 
+}
+```
+
+***[Windows|Microsoft]::UI::Xaml::Markup::ComponentConnectorT***
+
+A consequence of calling InitializeComponent outside construction is that Xaml runtime callbacks to IComponentConnector::Connect and IComponentConnector2::GetBindingConnector are now dispatched to the most derived implementations. Previously, these calls were dispatched directly to the class under construction, as the vtable had yet to be initialized. For objects with markup that derive from composable base classes with markup, this is a breaking change. Derived classes must now implement IComponentConnector::Connect and IComponentConnector2::GetBindingConnector by explicitly calling into the base class. The ComponentConnectorT template provides a correct implemenation for these interfaces:
+
+```cpp
+struct DerivedPage : winrt::Windows::UI::Xaml::Markup::ComponentConnectorT<DerivedPageT<DerivedPage>>
+```
+
+If overriding DerivedPage::InitializeComponent, ComponentConnectorT::InitializeComponent should be called instead of DerivedPageT::InitializeComponent:
+
+```cpp
+void DerivedPage::InitializeComponent()
+{
+    // Call base InitializeComponent() to register with the Xaml runtime
+    ComponentConnectorT::InitializeComponent();
+    // Can now access Xaml properties from base or derived class
+    MyBaseButton().Content(box_value(L"Click"));
+}
+```
 
 ## Troubleshooting
 

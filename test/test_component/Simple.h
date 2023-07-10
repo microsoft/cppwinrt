@@ -16,6 +16,16 @@ namespace winrt::test_component::implementation
         // All we care about static events (for now) is that they build.
         static event_token StaticEvent(Windows::Foundation::EventHandler<IInspectable> const&) { return {}; }
         static void StaticEvent(event_token) { }
+
+        Windows::Foundation::Numerics::float2 ReturnVector2()
+        {
+            return { 123.0, 456.0 };
+        }
+
+        Windows::Foundation::Numerics::Rational ReturnRational()
+        {
+            return { 123, 456 };
+        }
     };
 }
 namespace winrt::test_component::factory_implementation

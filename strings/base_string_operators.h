@@ -55,9 +55,9 @@ WINRT_EXPORT namespace winrt
         return left < std::wstring_view(right);
     }
 
-    bool operator<(hstring const& left, nullptr_t) = delete;
+    bool operator<(hstring const& left, std::nullptr_t) = delete;
 
-    bool operator<(nullptr_t, hstring const& right) = delete;
+    bool operator<(std::nullptr_t, hstring const& right) = delete;
     inline bool operator!=(hstring const& left, hstring const& right) noexcept { return !(left == right); }
     inline bool operator>(hstring const& left, hstring const& right) noexcept { return right < left; }
     inline bool operator<=(hstring const& left, hstring const& right) noexcept { return !(right < left); }
@@ -160,4 +160,12 @@ WINRT_EXPORT namespace winrt
     {
         return impl::concat_hstring(left, right);
     }
+
+#ifndef WINRT_LEAN_AND_MEAN
+    inline std::wostream& operator<<(std::wostream& stream, hstring const& string)
+    {
+        stream << static_cast<std::wstring_view>(string);
+        return stream;
+    }
+#endif
 }

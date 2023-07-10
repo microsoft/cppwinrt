@@ -14,12 +14,11 @@ using namespace $safeprojectname$;
 using namespace $safeprojectname$::implementation;
 
 /// <summary>
-/// Initializes the singleton application object.  This is the first line of authored code
+/// Creates the singleton application object.  This is the first line of authored code
 /// executed, and as such is the logical equivalent of main() or WinMain().
 /// </summary>
 App::App()
 {
-    InitializeComponent();
     Suspending({ this, &App::OnSuspending });
 
 #if defined _DEBUG && !defined DISABLE_XAML_GENERATED_BREAK_ON_UNHANDLED_EXCEPTION

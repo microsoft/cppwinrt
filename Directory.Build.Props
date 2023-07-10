@@ -1,0 +1,74 @@
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Set common MSBuild properties and item metadata for CppWinRT tool and tests -->
+
+  <PropertyGroup>
+    <PlatformToolset>v143</PlatformToolset>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
+  </PropertyGroup>
+
+  <!--
+    Can be used as follows.
+
+    Compile with Visual C++:
+
+        msbuild /m /p:Configuration=Debug,Platform=x64 cppwinrt.sln
+
+    Compile with Clang:
+
+        msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1 cppwinrt.sln
+
+    Optionally add /t:<project> to only build a given a solution project:
+
+        msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1 cppwinrt.sln /t:cppwinrt
+  -->
+
+  <PropertyGroup Condition="'$(Clang)'=='1'">
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <!-- The experimental coroutines aren't supported under Clang -->
+    <CppWinRTLanguageStandard>20</CppWinRTLanguageStandard>
+    <!-- Disable vcpkg autolink because it's not compatible with lld-link -->
+    <VcpkgAutoLink>false</VcpkgAutoLink>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CppWinRTBuildVersion Condition="'$(CppWinRTBuildVersion)'==''">2.3.4.5</CppWinRTBuildVersion>
+    <CppWinRTPlatform>$(Platform)</CppWinRTPlatform>
+    <CppWinRTPlatform Condition="'$(Platform)'=='Win32'">x86</CppWinRTPlatform>
+    <OutDir>$(SolutionDir)_build\$(CppWinRTPlatform)\$(Configuration)\</OutDir>
+    <CppWinRTDir>$(OutDir)</CppWinRTDir>
+    <CppWinRTDir Condition="'$(Platform)'=='ARM' or '$(Platform)'=='ARM64'">$(SolutionDir)_build\x86\$(Configuration)\</CppWinRTDir>
+  </PropertyGroup>
+
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <SDLCheck>true</SDLCheck>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard Condition="'$(CppWinRTLanguageStandard)'==''">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(CppWinRTLanguageStandard)'=='20'">stdcpp20</LanguageStandard>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>CPPWINRT_VERSION_STRING="$(CppWinRTBuildVersion)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(TestsUseAnsiColor)'=='1'">CATCH_CONFIG_COLOUR_ANSI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <AdditionalOptions>/bigobj</AdditionalOptions>
+      <AdditionalOptions Condition="'$(CppWinRTLanguageStandard)'==''">/await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Clang)'=='1'">-Wno-unused-command-line-argument -fno-delayed-template-parsing -mcx16</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>onecore.lib</AdditionalDependencies>
+    </Link>
+    <ResourceCompile>
+      <PreprocessorDefinitions>CPPWINRT_VERSION_STRING="$(CppWinRTBuildVersion)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+
+  <!-- Each release of Visual Studio produces larger intermediate files.
+       To prevent build agents from running out of disk space, clean as we go. -->
+  <Target Name="CleanIntermediateFiles" AfterTargets="Build" Condition="'$(clean_intermediate_files)'=='true'">
+    <RemoveDir Directories="$(IntDir)" />
+  </Target>
+
+</Project>

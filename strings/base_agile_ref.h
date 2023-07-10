@@ -3,7 +3,7 @@ WINRT_EXPORT namespace winrt
 {
 #if defined (WINRT_NO_MODULE_LOCK)
 
-    // Defining WINRT_NO_MODULE_LOCK is appropriate for apps (executables) that don't implement something like DllCanUnloadNow
+    // Defining WINRT_NO_MODULE_LOCK is appropriate for apps (executables) or pinned DLLs (that don't support unloading)
     // and can thus avoid the synchronization overhead imposed by the default module lock.
 
     constexpr auto get_module_lock() noexcept
@@ -18,6 +18,11 @@ WINRT_EXPORT namespace winrt
             constexpr uint32_t operator--() noexcept
             {
                 return 0;
+            }
+
+            constexpr explicit operator bool() noexcept
+            {
+                return true;
             }
         };
 
@@ -121,15 +126,20 @@ namespace winrt::impl
         atomic_ref_count m_references{ 1 };
     };
 
+    inline void* load_library(wchar_t const* library) noexcept
+    {
+        return WINRT_IMPL_LoadLibraryExW(library, nullptr, 0x00001000 /* LOAD_LIBRARY_SEARCH_DEFAULT_DIRS */);
+    }
+
     template <typename F, typename L>
-    void load_runtime_function(char const* name, F& result, L fallback) noexcept
+    void load_runtime_function(wchar_t const* library, char const* name, F& result, L fallback) noexcept
     {
         if (result)
         {
             return;
         }
 
-        result = reinterpret_cast<F>(WINRT_IMPL_GetProcAddress(WINRT_IMPL_LoadLibraryW(L"combase.dll"), name));
+        result = reinterpret_cast<F>(WINRT_IMPL_GetProcAddress(load_library(library), name));
 
         if (result)
         {
@@ -167,7 +177,7 @@ namespace winrt::impl
     inline hresult get_agile_reference(winrt::guid const& iid, void* object, void** reference) noexcept
     {
         static int32_t(__stdcall * handler)(uint32_t options, winrt::guid const& iid, void* object, void** reference) noexcept;
-        load_runtime_function("RoGetAgileReference", handler, fallback_RoGetAgileReference);
+        load_runtime_function(L"combase.dll", "RoGetAgileReference", handler, fallback_RoGetAgileReference);
         return handler(0, iid, object, reference);
     }
 }
@@ -187,7 +197,7 @@ WINRT_EXPORT namespace winrt
             }
         }
 
-        impl::com_ref<T> get() const noexcept
+        [[nodiscard]] impl::com_ref<T> get() const noexcept
         {
             if (!m_ref)
             {
@@ -209,8 +219,10 @@ WINRT_EXPORT namespace winrt
         com_ptr<impl::IAgileReference> m_ref;
     };
 
+    template<typename T> agile_ref(T const&)->agile_ref<impl::wrapped_type_t<T>>;
+
     template <typename T>
-    agile_ref<T> make_agile(T const& object)
+    agile_ref<impl::wrapped_type_t<T>> make_agile(T const& object)
     {
         return object;
     }

@@ -16,4 +16,5 @@ TEST_CASE("names")
     check_terminated(name_of<IInspectable>());
     check_terminated(name_of<EventHandler<guid>>());
     check_terminated(name_of<TypedEventHandler<guid, Point>>());
+    check_terminated(name_of<Windows::Foundation::UniversalApiContract>());
 }

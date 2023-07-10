@@ -69,4 +69,48 @@ TEST_CASE("delegate")
         delegate<int(int, int)> d = [](int a, int b) {return a + b; };
         REQUIRE(d(4, 5) == 9);
     }
+
+    // void(int*) with function pointer
+    {
+        struct S
+        {
+            static void Invoke(int* p) { *p = 123; }
+        };
+        int value = 0;
+        delegate<void(int*)> d = &S::Invoke;
+        d(&value);
+        REQUIRE(value == 123);
+    }
+
+    // void(int*) with object and method pointer
+    {
+        struct S
+        {
+            void Invoke(int* p) { *p = 123; }
+        } s;
+        delegate<void(int*)> d{ &s, &S::Invoke };
+        int value = 0;
+        d(&value);
+        REQUIRE(value == 123);
+    }
+
+    // int() with function pointer
+    {
+        struct S
+        {
+            static int Value() { return 123; }
+        };
+        delegate<int()> d = &S::Value;
+        REQUIRE(d() == 123);
+    }
+
+    // int() with object and method pointer
+    {
+        struct S
+        {
+            int Value() { return 123; }
+        } s;
+        delegate<int()> d{ &s, &S::Value };
+        REQUIRE(d() == 123);
+    }
 }

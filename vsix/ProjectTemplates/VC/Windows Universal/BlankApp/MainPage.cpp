@@ -7,11 +7,6 @@ using namespace Windows::UI::Xaml;
 
 namespace winrt::$safeprojectname$::implementation
 {
-    MainPage::MainPage()
-    {
-        InitializeComponent();
-    }
-
     int32_t MainPage::MyProperty()
     {
         throw hresult_not_implemented();

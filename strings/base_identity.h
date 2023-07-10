@@ -453,17 +453,17 @@ namespace winrt::impl
     template <typename T>
     struct pinterface_guid
     {
+#ifdef _MSC_VER
 #pragma warning(suppress: 4307)
+#endif
         static constexpr guid value{ generate_guid(signature<T>::data) };
     };
 
     template <typename T>
-#ifdef __clang__
-    inline static const auto name_v
-#else
+#ifdef _MSC_VER
 #pragma warning(suppress: 4307)
-    inline constexpr auto name_v
 #endif
+    inline constexpr auto name_v
     {
         combine
         (

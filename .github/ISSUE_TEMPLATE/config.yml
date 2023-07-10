@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Visual Studio or C++ question
+    url: https://developercommunity.visualstudio.com/cpp
+    about: Your open channel to Microsoft engineering teams
+  - name: Windows API question
+    url: https://docs.microsoft.com/en-us/answers/topics/windows-api.html
+    about: Please ask questions about the Windows API on Microsoft Q&A

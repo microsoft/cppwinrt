@@ -21,6 +21,11 @@ namespace winrt::Composable::implementation
         return overridable().OverridableVirtualMethod();
     }
 
+    int32_t Base::CallOverridableNoexceptMethod() noexcept
+    {
+        return overridable().OverridableNoexceptMethod();
+    }
+
     hstring Base::OverridableMethod()
     {
         return L"Base::OverridableMethod";
@@ -29,6 +34,11 @@ namespace winrt::Composable::implementation
     hstring Base::OverridableVirtualMethod()
     {
         return L"Base::OverridableVirtualMethod";
+    }
+
+    int32_t Base::OverridableNoexceptMethod() noexcept
+    {
+        return 42;
     }
 
     hstring Base::Name() const

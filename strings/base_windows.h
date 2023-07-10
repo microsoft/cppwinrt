@@ -81,7 +81,20 @@ namespace winrt::impl
         return { result, take_ownership_from_abi };
     }
 
-    template <typename To, typename From>
+    template<typename T>
+    struct is_classic_com_interface : std::conjunction<std::is_base_of<::IUnknown, T>, std::negation<is_implements<T>>> {};
+
+    template <typename T>
+    struct is_com_interface : std::disjunction<std::is_base_of<Windows::Foundation::IUnknown, T>, std::is_base_of<unknown_abi, T>, is_implements<T>, is_classic_com_interface<T>> {};
+
+    template <typename T>
+    inline constexpr bool is_com_interface_v = is_com_interface<T>::value;
+
+    // You must include <winrt/Windows.Foundation.h> to use this overload.
+    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int> = 0>
+    auto as(From* ptr);
+
+    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0>
     com_ref<To> as(From* ptr)
     {
 #ifdef WINRT_DIAGNOSTICS
@@ -98,7 +111,11 @@ namespace winrt::impl
         return wrap_as_result<To>(result);
     }
 
-    template <typename To, typename From>
+    // You must include <winrt/Windows.Foundation.h> to use this overload.
+    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int> = 0>
+    auto try_as(From* ptr) noexcept;
+
+    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0>
     com_ref<To> try_as(From* ptr) noexcept
     {
 #ifdef WINRT_DIAGNOSTICS
@@ -197,8 +214,17 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
         template <typename To>
         bool try_as(To& to) const noexcept
         {
-            to = try_as<impl::wrapped_type_t<To>>();
-            return static_cast<bool>(to);
+            if constexpr (impl::is_com_interface_v<To> || !std::is_same_v<To, impl::wrapped_type_t<To>>)
+            {
+                to = try_as<impl::wrapped_type_t<To>>();
+                return static_cast<bool>(to);
+            }
+            else
+            {
+                auto result = try_as<To>();
+                to = result.has_value() ? result.value() : impl::empty_value<To>();
+                return result.has_value();
+            }
         }
 
         hresult as(guid const& id, void** result) const noexcept
@@ -229,7 +255,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
             }
         }
 
-        __declspec(noinline) void unconditional_release_ref() noexcept
+        WINRT_IMPL_NOINLINE void unconditional_release_ref() noexcept
         {
             std::exchange(m_ptr, {})->Release();
         }
@@ -335,14 +361,10 @@ WINRT_EXPORT namespace winrt
         }
     }
 
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-
     inline ::IUnknown* get_unknown(Windows::Foundation::IUnknown const& object) noexcept
     {
         return static_cast<::IUnknown*>(get_abi(object));
     }
-
-#endif
 }
 
 WINRT_EXPORT namespace winrt::Windows::Foundation

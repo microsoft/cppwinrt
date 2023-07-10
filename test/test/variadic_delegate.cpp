@@ -150,7 +150,7 @@ TEST_CASE("variadic_delegate")
 
     // Exception
     {
-        delegate<> d = [] { throw std::exception("what"); };
+        delegate<> d = [] { throw std::runtime_error("what"); };
         REQUIRE_THROWS_AS(d(), std::exception);
     }
 

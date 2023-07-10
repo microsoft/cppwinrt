@@ -1,0 +1,70 @@
+parameters:
+- name: 'debug'
+  displayName: 'Enable debug output'
+  type: boolean
+  default: false
+  
+variables:
+- template: variables/version.yml
+- template: variables/OneBranchVariables.yml
+  parameters:
+    debug: ${{ parameters.debug }}
+
+name: PullRequest_2.0.$(date:yyMMdd)$(rev:.r)
+
+trigger: none 
+
+pool:
+  type: windows
+
+resources:
+  repositories: 
+    - repository: templates
+      type: git
+      name: OneBranch.Pipelines/GovernedTemplates
+      ref: refs/heads/main
+
+extends:
+  template: v2/Microsoft.NonOfficial.yml@templates
+  parameters:
+    platform:
+      name: 'windows_undocked'
+      product: 'build_tools'
+    
+    globalSdl:
+      tsa:
+        enabled: false
+      sbom:
+        enabled: true
+
+    stages:
+    - stage: build
+      jobs:
+      - template: .pipelines/jobs/OneBranchBuild.yml@self
+        parameters:
+          BuildConfiguration: $(BuildConfiguration)
+          BuildVersion: $(BuildVersion)
+
+    - stage: NuGet
+      dependsOn: build
+      jobs:
+      - template: .pipelines/jobs/OneBranchNuGet.yml@self
+        parameters:
+          BuildConfiguration: $(BuildConfiguration)
+          BuildVersion: $(BuildVersion)
+
+    - stage: Test
+      dependsOn: build
+      jobs:
+      - template: .pipelines/jobs/OneBranchTest.yml@self
+        parameters:
+          BuildConfiguration: $(BuildConfiguration)
+          BuildVersion: $(BuildVersion)
+
+    - stage: Vsix
+      dependsOn: NuGet
+      jobs:
+      - template: .pipelines/jobs/OneBranchVsix.yml@self
+        parameters:
+          BuildConfiguration: $(BuildConfiguration)
+          BuildVersion: $(BuildVersion)

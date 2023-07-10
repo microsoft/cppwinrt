@@ -4,98 +4,57 @@
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace std::string_view_literals;
+using namespace std::chrono_literals;
 
+namespace
+{
+    template<typename T>
+    T empty()
+    {
+        if constexpr (std::is_convertible_v<T, Windows::Foundation::IUnknown>)
+        {
+            return T{ nullptr };
+        }
+        else
+        {
+            return T{};
+        }
+    }
+
+    template<typename T>
+    void TestRoundTrip(T const& value)
+    {
+        Windows::Foundation::IInspectable object = box_value(value);
+        REQUIRE(unbox_value<T>(object) == value);
+        REQUIRE(object.as<T>() == value);
+        T result = empty<T>();
+        object.as(result);
+        REQUIRE(result == value);
+    }
+}
 TEST_CASE("IReference, boxing round trip")
 {
-    {
-        const uint8_t value = 42;
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<uint8_t>(object) == value);
-    }
-    {
-        const int8_t value = 42;
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<int8_t>(object) == value);
-    }
-    {
-        const uint16_t value = 42;
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<uint16_t>(object) == value);
-    }
-    {
-        const int16_t value = 42;
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<int16_t>(object) == value);
-    }
-    {
-        const uint32_t value = 42;
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<uint32_t>(object) == value);
-    }
-    {
-        const int32_t value = 42;
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<int32_t>(object) == value);
-    }
-    {
-        const uint64_t value = 42;
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<uint64_t>(object) == value);
-    }
-    {
-        const int64_t value = 42;
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<int64_t>(object) == value);
-    }
-    {
-        const bool value = true;
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<bool>(object) == value);
-    }
-    {
-        const char16_t value = L'&';
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<char16_t>(object) == value);
-    }
-    {
-        const guid value = guid_of<Windows::Foundation::IStringable>();
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<guid>(object) == value);
-    }
-    {
-        const hstring value = L"I am not a string";
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<hstring>(object) == value);
-    }
-    {
-        const Windows::Foundation::Point value = { 42, 1729 };
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<Windows::Foundation::Point>(object) == value);
-    }
-    {
-        const Windows::Foundation::Size value = { 42, 1729 };
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<Windows::Foundation::Size>(object) == value);
-    }
-    {
-        const Windows::Foundation::Rect value = { 0, 0, 42, 1729 };
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<Windows::Foundation::Rect>(object) == value);
-    }
-    {
-        const Windows::Foundation::DateTime dt = clock::now();
-        Windows::Foundation::IInspectable object = box_value(dt);
-        REQUIRE(unbox_value<Windows::Foundation::DateTime>(object) == dt);
+    static_assert(std::is_convertible_v<Uri, Windows::Foundation::IUnknown>);
 
-        const Windows::Foundation::TimeSpan ts = clock::now() - dt;
-        object = box_value(ts);
-        REQUIRE(unbox_value<Windows::Foundation::TimeSpan>(object) == ts);
-    }
-    {
-        const Windows::Foundation::Uri value{ L"https://github.com/Microsoft/cppwinrt" };
-        Windows::Foundation::IInspectable object = box_value(value);
-        REQUIRE(unbox_value<Windows::Foundation::Uri>(object) == value);
-    }
+    TestRoundTrip<uint8_t>(42);
+    TestRoundTrip<int8_t>(42);
+    TestRoundTrip<uint16_t>(42);
+    TestRoundTrip<int16_t>(42);
+    TestRoundTrip<uint32_t>(42);
+    TestRoundTrip<int32_t>(42);
+    TestRoundTrip<uint64_t>(42);
+    TestRoundTrip<int64_t>(42);
+    TestRoundTrip<bool>(true);
+    TestRoundTrip<char16_t>(L'&');
+    TestRoundTrip<guid>(guid_of<IStringable>());
+    TestRoundTrip<hstring>(L"I am not a string");
+    TestRoundTrip<Point>({ 42, 1729 });
+    TestRoundTrip<Size>({ 42, 1729 });
+    TestRoundTrip<Rect>({ 0, 0, 42, 1729 });
+    const DateTime dt = clock::now();
+    TestRoundTrip<DateTime>(dt);
+    TestRoundTrip<TimeSpan>(clock::now() + 10s - dt);
+    TestRoundTrip<Uri>(Uri{ L"https://github.com/Microsoft/cppwinrt" });
 }
 
 TEST_CASE("IReference, unbox_value_or")

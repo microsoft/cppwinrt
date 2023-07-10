@@ -1,11 +1,15 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Item">
   <TemplateData>
     <DefaultName>BlankPage</DefaultName>
-    <Name>Blank Page (C++/WinRT)</Name>
-    <Description>A single page with no predefined layout, for a C++/WinRT Universal Windows Platform (UWP) app</Description>
+    <Name ID="1013" Package="FIXME-PACKAGEGUID" />
+    <Description ID="1014" Package="FIXME-PACKAGEGUID" />
     <ProjectType>VC</ProjectType>
-    <SortOrder>10</SortOrder>
+    <SortOrder>40</SortOrder>
     <TemplateID>microsoft.Windows.CppWinRT.BlankPage</TemplateID>
+    <TemplateGroupID>WinRT-Native-UAP</TemplateGroupID>
+    <AppliesTo>VisualC + WindowsXaml</AppliesTo>
+    <NumberOfParentCategoriesToRollUp>0</NumberOfParentCategoriesToRollUp>
+    <ShowByDefault>false</ShowByDefault>
     <Icon>cppwinrt.ico</Icon>
     <PreviewImage>cppwinrt.png</PreviewImage>
   </TemplateData>

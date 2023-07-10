@@ -3,7 +3,7 @@ namespace winrt::impl
 {
     template <> struct abi<Windows::Foundation::IUnknown>
     {
-        struct __declspec(novtable) type
+        struct WINRT_IMPL_NOVTABLE type
         {
             virtual int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept = 0;
             virtual uint32_t __stdcall AddRef() noexcept = 0;
@@ -15,7 +15,7 @@ namespace winrt::impl
 
     template <> struct abi<Windows::Foundation::IInspectable>
     {
-        struct __declspec(novtable) type : unknown_abi
+        struct WINRT_IMPL_NOVTABLE type : unknown_abi
         {
             virtual int32_t __stdcall GetIids(uint32_t* count, guid** ids) noexcept = 0;
             virtual int32_t __stdcall GetRuntimeClassName(void** name) noexcept = 0;
@@ -27,20 +27,20 @@ namespace winrt::impl
 
     template <> struct abi<Windows::Foundation::IActivationFactory>
     {
-        struct __declspec(novtable) type : inspectable_abi
+        struct WINRT_IMPL_NOVTABLE type : inspectable_abi
         {
             virtual int32_t __stdcall ActivateInstance(void** instance) noexcept = 0;
         };
     };
 
-    struct __declspec(novtable) IAgileObject : unknown_abi {};
+    struct WINRT_IMPL_NOVTABLE IAgileObject : unknown_abi {};
 
-    struct __declspec(novtable) IAgileReference : unknown_abi
+    struct WINRT_IMPL_NOVTABLE IAgileReference : unknown_abi
     {
         virtual int32_t __stdcall Resolve(guid const& id, void** object) noexcept = 0;
     };
 
-    struct __declspec(novtable) IMarshal : unknown_abi
+    struct WINRT_IMPL_NOVTABLE IMarshal : unknown_abi
     {
         virtual int32_t __stdcall GetUnmarshalClass(guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, guid* pCid) noexcept = 0;
         virtual int32_t __stdcall GetMarshalSizeMax(guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, uint32_t* pSize) noexcept = 0;
@@ -50,20 +50,20 @@ namespace winrt::impl
         virtual int32_t __stdcall DisconnectObject(uint32_t dwReserved) noexcept = 0;
     };
 
-    struct __declspec(novtable) IGlobalInterfaceTable : unknown_abi
+    struct WINRT_IMPL_NOVTABLE IGlobalInterfaceTable : unknown_abi
     {
         virtual int32_t __stdcall RegisterInterfaceInGlobal(void* object, guid const& iid, uint32_t* cookie) noexcept = 0;
         virtual int32_t __stdcall RevokeInterfaceFromGlobal(uint32_t cookie) noexcept = 0;
         virtual int32_t __stdcall GetInterfaceFromGlobal(uint32_t cookie, guid const& iid, void** object) noexcept = 0;
     };
 
-    struct __declspec(novtable) IStaticLifetime : inspectable_abi
+    struct WINRT_IMPL_NOVTABLE IStaticLifetime : inspectable_abi
     {
         virtual int32_t __stdcall unused() noexcept = 0;
         virtual int32_t __stdcall GetCollection(void** value) noexcept = 0;
     };
 
-    struct __declspec(novtable) IStaticLifetimeCollection : inspectable_abi
+    struct WINRT_IMPL_NOVTABLE IStaticLifetimeCollection : inspectable_abi
     {
         virtual int32_t __stdcall Lookup(void*, void**) noexcept = 0;
         virtual int32_t __stdcall unused() noexcept = 0;
@@ -74,23 +74,23 @@ namespace winrt::impl
         virtual int32_t __stdcall unused4() noexcept = 0;
     };
 
-    struct __declspec(novtable) IWeakReference : unknown_abi
+    struct WINRT_IMPL_NOVTABLE IWeakReference : unknown_abi
     {
         virtual int32_t __stdcall Resolve(guid const& iid, void** objectReference) noexcept = 0;
     };
 
-    struct __declspec(novtable) IWeakReferenceSource : unknown_abi
+    struct WINRT_IMPL_NOVTABLE IWeakReferenceSource : unknown_abi
     {
         virtual int32_t __stdcall GetWeakReference(IWeakReference** weakReference) noexcept = 0;
     };
 
-    struct __declspec(novtable) IRestrictedErrorInfo : unknown_abi
+    struct WINRT_IMPL_NOVTABLE IRestrictedErrorInfo : unknown_abi
     {
         virtual int32_t __stdcall GetErrorDetails(bstr* description, int32_t* error, bstr* restrictedDescription, bstr* capabilitySid) noexcept = 0;
         virtual int32_t __stdcall GetReference(bstr* reference) noexcept = 0;
     };
 
-    struct __declspec(novtable) IErrorInfo : unknown_abi
+    struct WINRT_IMPL_NOVTABLE IErrorInfo : unknown_abi
     {
         virtual int32_t __stdcall GetGUID(guid* value) noexcept = 0;
         virtual int32_t __stdcall GetSource(bstr* value) noexcept = 0;
@@ -99,7 +99,7 @@ namespace winrt::impl
         virtual int32_t __stdcall GetHelpContext(uint32_t* value) noexcept = 0;
     };
 
-    struct __declspec(novtable) ILanguageExceptionErrorInfo2 : unknown_abi
+    struct WINRT_IMPL_NOVTABLE ILanguageExceptionErrorInfo2 : unknown_abi
     {
         virtual int32_t __stdcall GetLanguageException(void** exception) noexcept = 0;
         virtual int32_t __stdcall GetPreviousLanguageExceptionErrorInfo(ILanguageExceptionErrorInfo2** previous) noexcept = 0;
@@ -109,12 +109,12 @@ namespace winrt::impl
 
     struct ICallbackWithNoReentrancyToApplicationSTA;
 
-    struct __declspec(novtable) IContextCallback : unknown_abi
+    struct WINRT_IMPL_NOVTABLE IContextCallback : unknown_abi
     {
         virtual int32_t __stdcall ContextCallback(int32_t(__stdcall* callback)(com_callback_args*), com_callback_args* args, guid const& iid, int method, void* reserved) noexcept = 0;
     };
 
-    struct __declspec(novtable) IServerSecurity : unknown_abi
+    struct WINRT_IMPL_NOVTABLE IServerSecurity : unknown_abi
     {
         virtual int32_t __stdcall QueryBlanket(uint32_t*, uint32_t*, wchar_t**, uint32_t*, uint32_t*, void**, uint32_t*) noexcept = 0;
         virtual int32_t __stdcall ImpersonateClient() noexcept = 0;
@@ -122,9 +122,14 @@ namespace winrt::impl
         virtual int32_t __stdcall IsImpersonating() noexcept = 0;
     };
 
-    struct __declspec(novtable) IBufferByteAccess : unknown_abi
+    struct WINRT_IMPL_NOVTABLE IBufferByteAccess : unknown_abi
     {
         virtual int32_t __stdcall Buffer(uint8_t** value) noexcept = 0;
+    };
+
+    struct WINRT_IMPL_NOVTABLE IMemoryBufferByteAccess : unknown_abi
+    {
+        virtual int32_t __stdcall GetBuffer(uint8_t** value, uint32_t* capacity) noexcept = 0;
     };
 
     template <> struct abi<Windows::Foundation::TimeSpan>
@@ -155,4 +160,5 @@ namespace winrt::impl
     template <> inline constexpr guid guid_v<IContextCallback>{ 0x000001da, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };
     template <> inline constexpr guid guid_v<IServerSecurity>{ 0x0000013E, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };
     template <> inline constexpr guid guid_v<IBufferByteAccess>{ 0x905a0fef, 0xbc53, 0x11df, { 0x8c,0x49,0x00,0x1e,0x4f,0xc6,0x86,0xda } };
+    template <> inline constexpr guid guid_v<IMemoryBufferByteAccess>{ 0x5b0d3235, 0x4dba, 0x4d44, { 0x86,0x5e,0x8f,0x1d,0x0e,0x4f,0xd0,0x4d } };
 }

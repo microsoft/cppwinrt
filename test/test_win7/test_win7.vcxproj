@@ -39,9 +39,8 @@
     <ProjectGuid>{2EF696B9-7F4A-410F-AE5C-5301565C0F08}</ProjectGuid>
     <RootNamespace>unittests</RootNamespace>
     <ProjectName>test_win7</ProjectName>
-    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
-  <Import Project="$(SolutionDir)\cppwinrt.props" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -108,20 +107,6 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IntDir>$(OutDir)temp\$(ProjectName)\</IntDir>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
@@ -137,7 +122,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -155,7 +140,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -173,7 +158,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -191,7 +176,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -209,7 +194,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -231,7 +216,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -253,7 +238,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -275,7 +260,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>$(OutputPath)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -358,9 +343,7 @@
     </ClCompile>
     <ClCompile Include="names.cpp" />
     <ClCompile Include="noexcept.cpp" />
-    <ClCompile Include="no_make_detection.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
+    <ClCompile Include="no_make_detection.cpp" />
     <ClCompile Include="numerics.cpp" />
     <ClCompile Include="out_params.cpp" />
     <ClCompile Include="parent_includes.cpp" />

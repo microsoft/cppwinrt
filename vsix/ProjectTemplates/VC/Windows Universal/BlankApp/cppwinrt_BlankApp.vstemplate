@@ -1,7 +1,7 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
-    <Name>Blank App (C++/WinRT)</Name>
-    <Description>A project for a single page C++/WinRT Universal Windows Platform (UWP) app with no predefined layout</Description>
+    <Name ID="1005" Package="FIXME-PACKAGEGUID" />
+    <Description ID="1006" Package="FIXME-PACKAGEGUID" />
     <ProjectType>VC</ProjectType>
     <SortOrder>1000</SortOrder>
     <TemplateID>microsoft.Windows.CppWinRT.BlankApp</TemplateID>

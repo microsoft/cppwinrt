@@ -51,4 +51,10 @@ TEST_CASE("agile_ref")
     agile_ref<IStringable> empty;
     IStringable object = empty.get();
     REQUIRE(object == nullptr);
+
+    // Verify that deduction guides work.
+    static_assert(std::is_same_v<agile_ref<IStringable>, decltype(agile_ref(object))>);
+    static_assert(std::is_same_v<agile_ref<Uri>, decltype(agile_ref(std::declval<Uri>()))>);
+    static_assert(std::is_same_v<agile_ref<::IPersist>, decltype(agile_ref(com_ptr<::IPersist>()))>);
+    static_assert(std::is_same_v<agile_ref<::IPersist>, decltype(make_agile(com_ptr<::IPersist>()))>);
 }

@@ -471,4 +471,55 @@ namespace winrt::test_component::implementation
         co_await args->wait_for_deferrals();
         co_return args->m_counter;
     }
+
+    // This test validates that defining WINRT_NO_MAKE_DETECTION actually
+    // allows an implementation to be final and have a private destructor.
+    // This is *not* recommended as there are no safeguards for direct and
+    // invalid allocations, but is provided for compatibility.
+
+    bool Class::TestNoMakeDetection()
+    {
+        static bool Destroyed{};
+
+        struct Stringable final : implements<Stringable, IStringable>
+        {
+            hstring ToString()
+            {
+                return L"Stringable";
+            }
+
+        private:
+
+            ~Stringable()
+            {
+                Destroyed = true;
+            }
+        };
+
+        bool pass = true;
+
+        {
+            Destroyed = false;
+            IStringable stringable{ (new Stringable())->get_abi<IStringable>(), take_ownership_from_abi };
+            pass = pass && !Destroyed;
+
+            stringable = nullptr;
+            pass = pass && Destroyed;
+        }
+        {
+            Destroyed = false;
+            IStringable stringable = make<Stringable>();
+            pass = pass && !Destroyed;
+            stringable = nullptr;
+            pass = pass && Destroyed;
+        }
+        return pass;
+    }
+}
+
+namespace
+{
+    void ValidateStaticEventAutoRevoke() {
+        auto x = winrt::test_component::Simple::StaticEvent(winrt::auto_revoke, [](auto&&, auto&&) {});
+    }
 }

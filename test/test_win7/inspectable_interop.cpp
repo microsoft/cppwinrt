@@ -6,11 +6,25 @@ using namespace winrt;
 
 namespace
 {
-    struct __declspec(uuid("ed0dd761-c31e-4803-8cf9-22a2cb20ec47")) IBadInterop : ::IInspectable
+    struct DECLSPEC_UUID("ed0dd761-c31e-4803-8cf9-22a2cb20ec47") IBadInterop : ::IInspectable
     {
         virtual int32_t __stdcall JustSayNo() noexcept = 0;
     };
+}
 
+#ifdef __CRT_UUID_DECL
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
+__CRT_UUID_DECL(IBadInterop, 0xed0dd761, 0xc31e, 0x4803, 0x8c, 0xf9, 0x22, 0xa2, 0xcb, 0x20, 0xec, 0x47)
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+#endif
+
+namespace
+{
     struct Sample : implements<Sample, Windows::Foundation::IActivationFactory, IBadInterop>
     {
         Windows::Foundation::IInspectable ActivateInstance()
@@ -18,15 +32,22 @@ namespace
             throw hresult_not_implemented();
         }
 
-        hstring GetRuntimeClassName()
+        hstring GetRuntimeClassName() const
         {
             return L"Sample";
         }
 
-        Windows::Foundation::TrustLevel GetTrustLevel()
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Woverloaded-virtual"
+#endif
+        Windows::Foundation::TrustLevel GetTrustLevel() const noexcept
         {
             return Windows::Foundation::TrustLevel::PartialTrust;
         }
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
 
         int32_t __stdcall JustSayNo() noexcept final
         {

@@ -1,7 +1,7 @@
 
 WINRT_EXPORT namespace winrt
 {
-    void check_hresult(hresult const result);
+    hresult check_hresult(hresult const result WINRT_IMPL_SOURCE_LOCATION_ARGS);
     hresult to_hresult() noexcept;
 
     template <typename D, typename I>
@@ -12,6 +12,9 @@ WINRT_EXPORT namespace winrt
 
     template <typename T>
     struct com_ptr;
+
+    template <typename D, typename I>
+    D* get_self(com_ptr<I> const& from) noexcept;
 
     namespace param
     {
@@ -118,14 +121,22 @@ namespace winrt::impl
     };
 
     template <typename T>
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-#ifdef __clang__
-    inline const guid guid_v{ __uuidof(T) };
-#else
-    inline constexpr guid guid_v{ __uuidof(T) };
+    struct classic_com_guid_error
+    {
+#if !defined(__MINGW32__) && defined(__clang__) && !WINRT_IMPL_HAS_DECLSPEC_UUID
+        static_assert(std::is_void_v<T> /* dependent_false */, "To use classic COM interfaces, you must compile with -fms-extensions.");
+#elif !defined(WINRT_IMPL_IUNKNOWN_DEFINED)
+        static_assert(std::is_void_v<T> /* dependent_false */, "To use classic COM interfaces, you must include <unknwn.h> before including C++/WinRT headers.");
+#else // MSVC won't hit this struct, so we can safely assume everything that isn't Clang isn't supported
+        static_assert(std::is_void_v<T> /* dependent_false */, "Classic COM interfaces are not supported with this compiler.");
 #endif
+    };
+
+    template <typename T>
+#if (defined(_MSC_VER) && !defined(__clang__)) || ((WINRT_IMPL_HAS_DECLSPEC_UUID || defined(__MINGW32__)) && defined(WINRT_IMPL_IUNKNOWN_DEFINED))
+    inline constexpr guid guid_v{ __uuidof(T) };
 #else
-    inline constexpr guid guid_v{};
+    inline constexpr guid guid_v = classic_com_guid_error<T>::value;
 #endif
 
     template <typename T>
@@ -153,7 +164,7 @@ namespace winrt::impl
     };
 
     template <typename D, typename... I>
-    struct __declspec(empty_bases) require : require_one<D, I>...
+    struct WINRT_IMPL_EMPTY_BASES require : require_one<D, I>...
     {};
 
     template <typename D, typename I>
@@ -166,7 +177,7 @@ namespace winrt::impl
     };
 
     template <typename D, typename... I>
-    struct __declspec(empty_bases) base : base_one<D, I>...
+    struct WINRT_IMPL_EMPTY_BASES base : base_one<D, I>...
     {};
 
     template <typename T>
@@ -225,15 +236,6 @@ namespace winrt::impl
 
     template <typename T>
     using wrapped_type_t = typename wrapped_type<T>::type;
-
-    template <template <typename...> typename Trait, typename Enabler, typename... Args>
-    struct is_detected : std::false_type {};
-
-    template <template <typename...> typename Trait, typename... Args>
-    struct is_detected<Trait, std::void_t<Trait<Args...>>, Args...> : std::true_type {};
-
-    template <template <typename...> typename Trait, typename... Args>
-    inline constexpr bool is_detected_v = std::is_same_v<typename is_detected<Trait, void, Args...>::type, std::true_type>;
 
     template <typename ... Types>
     struct typelist {};

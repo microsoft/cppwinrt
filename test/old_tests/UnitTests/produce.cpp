@@ -133,7 +133,7 @@ struct produce_IInspectable_RuntimeClassName : implements<produce_IInspectable_R
 TEST_CASE("produce_IInspectable_RuntimeClassName")
 {
     Windows::Foundation::IInspectable without = make<produce_IInspectable_No_RuntimeClassName>();
-    REQUIRE(get_class_name(without) == L"Object");
+    REQUIRE(get_class_name(without) == L"");
 
     Windows::Foundation::IInspectable with = make<produce_IInspectable_RuntimeClassName>();
     REQUIRE(get_class_name(with) == L"produce_IInspectable_RuntimeClassName");

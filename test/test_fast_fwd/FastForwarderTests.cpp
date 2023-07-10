@@ -1,8 +1,8 @@
 #include "pch.h"
 #include <string_view>
-#include "winrt\fast_forward.h"
-#include "winrt\Windows.Foundation.h"
-#include "winrt\FastForwarderTest.h"
+#include "winrt/fast_forward.h"
+#include "winrt/Windows.Foundation.h"
+#include "winrt/FastForwarderTest.h"
 #include "Class.g.h"
 
 using namespace std::literals;
@@ -202,7 +202,7 @@ namespace winrt::FastForwarderTest
 
 TEST_CASE("MockUri")
 {
-    Uri uri{ L"http://aka.ms/xlang" };
+    Uri uri{ L"http://aka.ms/cppwinrt" };
 
     auto str = make_fast_forwarder<IStringable>(uri, 1);
     REQUIRE_STR_EQUAL(uri.DisplayUri(), str.ToString());

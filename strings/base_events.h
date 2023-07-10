@@ -331,7 +331,9 @@ namespace winrt::impl
     com_ptr<event_array<T>> make_event_array(uint32_t const capacity)
     {
         void* raw = ::operator new(sizeof(event_array<T>) + (sizeof(T)* capacity));
+#ifdef _MSC_VER
 #pragma warning(suppress: 6386)
+#endif
         return { new(raw) event_array<T>(capacity), take_ownership_from_abi };
     }
 
@@ -352,7 +354,7 @@ namespace winrt::impl
             int32_t const code = to_hresult();
 
             static int32_t(__stdcall * handler)(int32_t, int32_t, void*) noexcept;
-            impl::load_runtime_function("RoTransformError", handler, fallback_RoTransformError);
+            impl::load_runtime_function(L"combase.dll", "RoTransformError", handler, fallback_RoTransformError);
             handler(code, 0, nullptr);
 
             if (code == static_cast<int32_t>(0x80010108) || // RPC_E_DISCONNECTED
@@ -375,8 +377,8 @@ WINRT_EXPORT namespace winrt
         using delegate_type = Delegate;
 
         event() = default;
-        event(event<Delegate> const&) = delete;
-        event<Delegate>& operator =(event<Delegate> const&) = delete;
+        event(event const&) = delete;
+        event& operator =(event const&) = delete;
 
         explicit operator bool() const noexcept
         {
@@ -463,6 +465,24 @@ WINRT_EXPORT namespace winrt
                     slim_lock_guard const swap_guard(m_swap);
                     temp_targets = std::exchange(m_targets, std::move(new_targets));
                 }
+            }
+        }
+
+        void clear()
+        {
+            // Extends life of old targets array to release delegates outside of lock.
+            delegate_array temp_targets;
+
+            {
+                slim_lock_guard const change_guard(m_change);
+
+                if (!m_targets)
+                {
+                    return;
+                }
+
+                slim_lock_guard const swap_guard(m_swap);
+                temp_targets = std::exchange(m_targets, nullptr);
             }
         }
 

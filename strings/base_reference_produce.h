@@ -111,128 +111,287 @@ namespace winrt::impl
     struct reference_traits
     {
         static auto make(T const& value) { return winrt::make<impl::reference<T>>(value); }
+        using itf = Windows::Foundation::IReference<T>;
     };
 
     template <>
     struct reference_traits<uint8_t>
     {
         static auto make(uint8_t value) { return Windows::Foundation::PropertyValue::CreateUInt8(value); }
+        using itf = Windows::Foundation::IReference<uint8_t>;
     };
 
     template <>
     struct reference_traits<uint16_t>
     {
         static auto make(uint16_t value) { return Windows::Foundation::PropertyValue::CreateUInt16(value); }
+        using itf = Windows::Foundation::IReference<uint16_t>;
     };
 
     template <>
     struct reference_traits<int16_t>
     {
         static auto make(int16_t value) { return Windows::Foundation::PropertyValue::CreateInt16(value); }
+        using itf = Windows::Foundation::IReference<int16_t>;
     };
 
     template <>
     struct reference_traits<uint32_t>
     {
         static auto make(uint32_t value) { return Windows::Foundation::PropertyValue::CreateUInt32(value); }
+        using itf = Windows::Foundation::IReference<uint32_t>;
     };
 
     template <>
     struct reference_traits<int32_t>
     {
         static auto make(int32_t value) { return Windows::Foundation::PropertyValue::CreateInt32(value); }
+        using itf = Windows::Foundation::IReference<int32_t>;
     };
 
     template <>
     struct reference_traits<uint64_t>
     {
         static auto make(uint64_t value) { return Windows::Foundation::PropertyValue::CreateUInt64(value); }
+        using itf = Windows::Foundation::IReference<uint64_t>;
     };
 
     template <>
     struct reference_traits<int64_t>
     {
         static auto make(int64_t value) { return Windows::Foundation::PropertyValue::CreateInt64(value); }
+        using itf = Windows::Foundation::IReference<int64_t>;
     };
 
     template <>
     struct reference_traits<float>
     {
         static auto make(float value) { return Windows::Foundation::PropertyValue::CreateSingle(value); }
+        using itf = Windows::Foundation::IReference<float>;
     };
 
     template <>
     struct reference_traits<double>
     {
         static auto make(double value) { return Windows::Foundation::PropertyValue::CreateDouble(value); }
+        using itf = Windows::Foundation::IReference<double>;
     };
 
     template <>
     struct reference_traits<char16_t>
     {
         static auto make(char16_t value) { return Windows::Foundation::PropertyValue::CreateChar16(value); }
+        using itf = Windows::Foundation::IReference<char16_t>;
     };
 
     template <>
     struct reference_traits<bool>
     {
         static auto make(bool value) { return Windows::Foundation::PropertyValue::CreateBoolean(value); }
+        using itf = Windows::Foundation::IReference<bool>;
     };
 
     template <>
     struct reference_traits<hstring>
     {
         static auto make(hstring const& value) { return Windows::Foundation::PropertyValue::CreateString(value); }
+        using itf = Windows::Foundation::IReference<hstring>;
     };
 
     template <>
     struct reference_traits<Windows::Foundation::IInspectable>
     {
         static auto make(Windows::Foundation::IInspectable const& value) { return Windows::Foundation::PropertyValue::CreateInspectable(value); }
+        using itf = Windows::Foundation::IInspectable;
     };
 
     template <>
     struct reference_traits<guid>
     {
         static auto make(guid const& value) { return Windows::Foundation::PropertyValue::CreateGuid(value); }
+        using itf = Windows::Foundation::IReference<guid>;
     };
 
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
     template <>
     struct reference_traits<GUID>
     {
-        static auto make(GUID const& value) { return Windows::Foundation::PropertyValue::CreateGuid(value); }
+        static auto make(GUID const& value) { return Windows::Foundation::PropertyValue::CreateGuid(reinterpret_cast<guid const&>(value)); }
+        using itf = Windows::Foundation::IReference<guid>;
     };
-#endif
 
     template <>
     struct reference_traits<Windows::Foundation::DateTime>
     {
         static auto make(Windows::Foundation::DateTime value) { return Windows::Foundation::PropertyValue::CreateDateTime(value); }
+        using itf = Windows::Foundation::IReference<Windows::Foundation::DateTime>;
     };
 
     template <>
     struct reference_traits<Windows::Foundation::TimeSpan>
     {
         static auto make(Windows::Foundation::TimeSpan value) { return Windows::Foundation::PropertyValue::CreateTimeSpan(value); }
+        using itf = Windows::Foundation::IReference<Windows::Foundation::TimeSpan>;
     };
 
     template <>
     struct reference_traits<Windows::Foundation::Point>
     {
         static auto make(Windows::Foundation::Point const& value) { return Windows::Foundation::PropertyValue::CreatePoint(value); }
+        using itf = Windows::Foundation::IReference<Windows::Foundation::Point>;
     };
 
     template <>
     struct reference_traits<Windows::Foundation::Size>
     {
         static auto make(Windows::Foundation::Size const& value) { return Windows::Foundation::PropertyValue::CreateSize(value); }
+        using itf = Windows::Foundation::IReference<Windows::Foundation::Size>;
     };
 
     template <>
     struct reference_traits<Windows::Foundation::Rect>
     {
         static auto make(Windows::Foundation::Rect const& value) { return Windows::Foundation::PropertyValue::CreateRect(value); }
+        using itf = Windows::Foundation::IReference<Windows::Foundation::Rect>;
+    };
+
+    template <>
+    struct reference_traits<com_array<uint8_t>>
+    {
+        static auto make(array_view<uint8_t const> const& value) { return Windows::Foundation::PropertyValue::CreateUInt8Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<uint8_t>;
+    };
+
+    template <>
+    struct reference_traits<com_array<int16_t>>
+    {
+        static auto make(array_view<int16_t const> const& value) { return Windows::Foundation::PropertyValue::CreateInt16Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<int16_t>;
+    };
+
+    template <>
+    struct reference_traits<com_array<uint16_t>>
+    {
+        static auto make(array_view<uint16_t const> const& value) { return Windows::Foundation::PropertyValue::CreateUInt16Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<uint16_t>;
+    };
+
+    template <>
+    struct reference_traits<com_array<int32_t>>
+    {
+        static auto make(array_view<int32_t const> const& value) { return Windows::Foundation::PropertyValue::CreateInt32Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<int32_t>;
+    };
+
+    template <>
+    struct reference_traits<com_array<uint32_t>>
+    {
+        static auto make(com_array<uint32_t> const& value) { return Windows::Foundation::PropertyValue::CreateUInt32Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<uint32_t>;
+    };
+
+    template <>
+    struct reference_traits<com_array<int64_t>>
+    {
+        static auto make(array_view<int64_t const> const& value) { return Windows::Foundation::PropertyValue::CreateInt64Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<int64_t>;
+    };
+
+    template <>
+    struct reference_traits<com_array<uint64_t>>
+    {
+        static auto make(array_view<uint64_t const> const& value) { return Windows::Foundation::PropertyValue::CreateUInt64Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<uint64_t>;
+    };
+
+    template <>
+    struct reference_traits<com_array<float>>
+    {
+        static auto make(array_view<float const> const& value) { return Windows::Foundation::PropertyValue::CreateSingleArray(value); }
+        using itf = Windows::Foundation::IReferenceArray<float>;
+    };
+
+    template <>
+    struct reference_traits<com_array<double>>
+    {
+        static auto make(array_view<double const> const& value) { return Windows::Foundation::PropertyValue::CreateDoubleArray(value); }
+        using itf = Windows::Foundation::IReferenceArray<double>;
+    };
+
+    template <>
+    struct reference_traits<com_array<char16_t>>
+    {
+        static auto make(array_view<char16_t const> const& value) { return Windows::Foundation::PropertyValue::CreateChar16Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<char16_t>;
+    };
+
+    template <>
+    struct reference_traits<com_array<bool>>
+    {
+        static auto make(array_view<bool const> const& value) { return Windows::Foundation::PropertyValue::CreateBooleanArray(value); }
+        using itf = Windows::Foundation::IReferenceArray<bool>;
+    };
+
+    template <>
+    struct reference_traits<com_array<hstring>>
+    {
+        static auto make(array_view<hstring const> const& value) { return Windows::Foundation::PropertyValue::CreateStringArray(value); }
+        using itf = Windows::Foundation::IReferenceArray<hstring>;
+    };
+
+    template <>
+    struct reference_traits<com_array<Windows::Foundation::IInspectable>>
+    {
+        static auto make(array_view<Windows::Foundation::IInspectable const> const& value) { return Windows::Foundation::PropertyValue::CreateInspectableArray(value); }
+        using itf = Windows::Foundation::IReferenceArray<Windows::Foundation::IInspectable>;
+    };
+
+    template <>
+    struct reference_traits<com_array<guid>>
+    {
+        static auto make(array_view<guid const> const& value) { return Windows::Foundation::PropertyValue::CreateGuidArray(value); }
+        using itf = Windows::Foundation::IReferenceArray<guid>;
+    };
+
+    template <>
+    struct reference_traits<com_array<GUID>>
+    {
+        static auto make(array_view<GUID const> const& value) { return Windows::Foundation::PropertyValue::CreateGuidArray(reinterpret_cast<array_view<guid const> const&>(value)); }
+        using itf = Windows::Foundation::IReferenceArray<guid>;
+    };
+
+    template <>
+    struct reference_traits<com_array<Windows::Foundation::DateTime>>
+    {
+        static auto make(array_view<Windows::Foundation::DateTime const> const& value) { return Windows::Foundation::PropertyValue::CreateDateTimeArray(value); }
+        using itf = Windows::Foundation::IReferenceArray<Windows::Foundation::DateTime>;
+    };
+
+    template <>
+    struct reference_traits<com_array<Windows::Foundation::TimeSpan>>
+    {
+        static auto make(array_view<Windows::Foundation::TimeSpan const> const& value) { return Windows::Foundation::PropertyValue::CreateTimeSpanArray(value); }
+        using itf = Windows::Foundation::IReferenceArray<Windows::Foundation::TimeSpan>;
+    };
+
+    template <>
+    struct reference_traits<com_array<Windows::Foundation::Point>>
+    {
+        static auto make(array_view<Windows::Foundation::Point const> const& value) { return Windows::Foundation::PropertyValue::CreatePointArray(value); }
+        using itf = Windows::Foundation::IReferenceArray<Windows::Foundation::Point>;
+    };
+
+    template <>
+    struct reference_traits<com_array<Windows::Foundation::Size>>
+    {
+        static auto make(array_view<Windows::Foundation::Size const> const& value) { return Windows::Foundation::PropertyValue::CreateSizeArray(value); }
+        using itf = Windows::Foundation::IReferenceArray<Windows::Foundation::Size>;
+    };
+
+    template <>
+    struct reference_traits<com_array<Windows::Foundation::Rect>>
+    {
+        static auto make(array_view<Windows::Foundation::Rect const> const& value) { return Windows::Foundation::PropertyValue::CreateRectArray(value); }
+        using itf = Windows::Foundation::IReferenceArray<Windows::Foundation::Rect>;
     };
 }
 
@@ -258,6 +417,93 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
     bool operator!=(IReference<T> const& left, IReference<T> const& right)
     {
         return !(left == right);
+    }
+}
+
+namespace winrt::impl
+{
+    template <typename T, typename From>
+    T unbox_value_type(From&& value)
+    {
+        if (!value)
+        {
+            throw hresult_no_interface();
+        }
+        if constexpr (std::is_enum_v<T>)
+        {
+            if (auto temp = value.template try_as<Windows::Foundation::IReference<T>>())
+            {
+                return temp.Value();
+            }
+            else
+            {
+                return static_cast<T>(value.template as<Windows::Foundation::IReference<std::underlying_type_t<T>>>().Value());
+            }
+        }
+        else if constexpr (std::is_same_v<T, com_array<GUID>>)
+        {
+            T result;
+            reinterpret_cast<com_array<guid>&>(result) = value.template as<typename impl::reference_traits<T>::itf>().Value();
+            return result;
+        }
+        else
+        {
+            return value.template as<typename impl::reference_traits<T>::itf>().Value();
+        }
+    }
+
+    template <typename T, typename Ret = T, typename From, typename U>
+    Ret unbox_value_type_or(From&& value, U&& default_value)
+    {
+        if constexpr (std::is_enum_v<T>)
+        {
+            if (auto temp = value.template try_as<Windows::Foundation::IReference<T>>())
+            {
+                return temp.Value();
+            }
+
+            if (auto temp = value.template try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>())
+            {
+                return static_cast<T>(temp.Value());
+            }
+        }
+        else if constexpr (std::is_same_v<T, com_array<GUID>>)
+        {
+            if (auto temp = value.template try_as<typename impl::reference_traits<T>::itf>())
+            {
+                T result;
+                reinterpret_cast<com_array<guid>&>(result) = temp.Value();
+                return result;
+            }
+        }
+        else
+        {
+            if (auto temp = value.template try_as<typename impl::reference_traits<T>::itf>())
+            {
+                return temp.Value();
+            }
+        }
+        return default_value;
+    }
+
+    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int>>
+    auto as(From* ptr)
+    {
+        if constexpr (impl::is_com_interface_v<From>)
+        {
+            return unbox_value_type<To>(reinterpret_cast<Windows::Foundation::IUnknown const&>(ptr));
+        }
+        else
+        {
+            return unbox_value_type<To>(reinterpret_cast<com_ptr<From> const&>(ptr));
+        }
+    }
+
+    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int>>
+    auto try_as(From* ptr) noexcept
+    {
+        using type = std::conditional_t<impl::is_com_interface_v<From>, Windows::Foundation::IUnknown, com_ptr<From>>;
+        return unbox_value_type_or<To, std::optional<To>>(reinterpret_cast<type const&>(ptr), std::nullopt);
     }
 }
 
@@ -290,31 +536,7 @@ WINRT_EXPORT namespace winrt
         }
         else
         {
-            if (!value)
-            {
-                throw hresult_no_interface();
-            }
-            if constexpr (std::is_enum_v<T>)
-            {
-                if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
-                {
-                    return temp.Value();
-                }
-                else
-                {
-                    return static_cast<T>(value.as<Windows::Foundation::IReference<std::underlying_type_t<T>>>().Value());
-                }
-            }
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-            else if constexpr (std::is_same_v<T, GUID>)
-            {
-                return value.as<Windows::Foundation::IReference<guid>>().Value();
-            }
-#endif
-            else
-            {
-                return value.as<Windows::Foundation::IReference<T>>().Value();
-            }
+            return impl::unbox_value_type<T>(value);
         }
     }
 
@@ -344,39 +566,14 @@ WINRT_EXPORT namespace winrt
                     return temp;
                 }
             }
-            else if constexpr (std::is_enum_v<T>)
-            {
-                if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
-                {
-                    return temp.Value();
-                }
-
-                if (auto temp = value.try_as<Windows::Foundation::IReference<std::underlying_type_t<T>>>())
-                {
-                    return static_cast<T>(temp.Value());
-                }
-            }
-#ifdef WINRT_IMPL_IUNKNOWN_DEFINED
-            else if constexpr (std::is_same_v<T, GUID>)
-            {
-                if (auto temp = value.try_as<Windows::Foundation::IReference<guid>>())
-                {
-                    return temp.Value();
-                }
-            }
-#endif
             else
             {
-                if (auto temp = value.try_as<Windows::Foundation::IReference<T>>())
-                {
-                    return temp.Value();
-                }
+                return impl::unbox_value_type_or<T>(value, default_value);
             }
         }
-
         return default_value;
     }
 
     template <typename T>
-    using optional = Windows::Foundation::IReference<T>;
+    using optional = typename impl::reference_traits<T>::itf;
 }

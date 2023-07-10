@@ -3,6 +3,7 @@
 #include <cassert>
 #include <array>
 #include <limits>
+#include <climits>
 #include <cstdint>
 #include <string>
 #include <string_view>
@@ -12,12 +13,16 @@
 #include <filesystem>
 #include <fstream>
 #include <regex>
-#include <Windows.h>
+
+#if defined(_WIN32) || defined(_WIN64)
+#include <windows.h>
 #include <shlwapi.h>
-#include <XmlLite.h>
+#include <xmllite.h>
+#endif
 
 namespace cppwinrt
 {
+#if defined(_WIN32) || defined(_WIN64)
     struct registry_key
     {
         HKEY handle{};
@@ -71,17 +76,31 @@ namespace cppwinrt
         }
     }
 
+    enum class xml_requirement
+    {
+        required = 0,
+        optional
+    };
+
     inline void add_files_from_xml(
         std::set<std::string>& files,
         std::string const& sdk_version,
         std::filesystem::path const& xml_path,
-        std::filesystem::path const& sdk_path)
+        std::filesystem::path const& sdk_path,
+        xml_requirement xml_path_requirement)
     {
         com_ptr<IStream> stream;
 
-        check_xml(SHCreateStreamOnFileW(
+        auto streamResult = SHCreateStreamOnFileW(
             xml_path.c_str(),
-            STGM_READ, &stream.ptr));
+            STGM_READ, &stream.ptr);
+        if (xml_path_requirement == xml_requirement::optional &&
+            (streamResult == HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND) ||
+             streamResult == HRESULT_FROM_WIN32(ERROR_PATH_NOT_FOUND)))
+        {
+            return;
+        }
+        check_xml(streamResult);
 
         com_ptr<IXmlReader> reader;
 
@@ -137,7 +156,9 @@ namespace cppwinrt
             HKEY_LOCAL_MACHINE,
             L"SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots",
             0,
-            KEY_READ,
+            // https://task.ms/29349404 - The SDK sometimes stores the 64 bit location into KitsRoot10 which is wrong,
+            // this breaks 64-bit cppwinrt.exe, so work around this by forcing to use the WoW64 hive.
+            KEY_READ | KEY_WOW64_32KEY, 
             &key))
         {
             throw std::invalid_argument("Could not find the Windows SDK in the registry");
@@ -179,11 +200,10 @@ namespace cppwinrt
     inline std::string get_module_path()
     {
         std::string path(100, '?');
-        DWORD actual_size{};
 
         while (true)
         {
-            actual_size = GetModuleFileNameA(nullptr, path.data(), 1 + static_cast<uint32_t>(path.size()));
+            DWORD actual_size = GetModuleFileNameA(nullptr, path.data(), 1 + static_cast<uint32_t>(path.size()));
 
             if (actual_size < 1 + path.size())
             {
@@ -276,6 +296,7 @@ namespace cppwinrt
 
         return result;
     }
+#endif /* defined(_WIN32) || defined(_WIN64) */
 
     [[noreturn]] inline void throw_invalid(std::string const& message)
     {
@@ -425,6 +446,7 @@ namespace cppwinrt
                 }
                 if (path == "local")
                 {
+#if defined(_WIN32) || defined(_WIN64)
                     std::array<char, 260> local{};
 #ifdef _WIN64
                     ExpandEnvironmentStringsA("%windir%\\System32\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
@@ -432,6 +454,9 @@ namespace cppwinrt
                     ExpandEnvironmentStringsA("%windir%\\SysNative\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
 #endif
                     add_directory(local.data());
+#else /* defined(_WIN32) || defined(_WIN64) */
+                    throw_invalid("Spec '", path, "' not supported outside of Windows");
+#endif /* defined(_WIN32) || defined(_WIN64) */
                     continue;
                 }
 
@@ -439,7 +464,11 @@ namespace cppwinrt
 
                 if (path == "sdk" || path == "sdk+")
                 {
+#if defined(_WIN32) || defined(_WIN64)
                     sdk_version = get_sdk_version();
+#else /* defined(_WIN32) || defined(_WIN64) */
+                    throw_invalid("Spec '", path, "' not supported outside of Windows");
+#endif /* defined(_WIN32) || defined(_WIN64) */
                 }
                 else
                 {
@@ -454,13 +483,14 @@ namespace cppwinrt
 
                 if (!sdk_version.empty())
                 {
+#if defined(_WIN32) || defined(_WIN64)
                     auto sdk_path = get_sdk_path();
                     auto xml_path = sdk_path;
                     xml_path /= L"Platforms\\UAP";
                     xml_path /= sdk_version;
                     xml_path /= L"Platform.xml";
 
-                    add_files_from_xml(files, sdk_version, xml_path, sdk_path);
+                    add_files_from_xml(files, sdk_version, xml_path, sdk_path, xml_requirement::required);
 
                     if (path.back() != '+')
                     {
@@ -472,8 +502,12 @@ namespace cppwinrt
                         xml_path = item.path() / sdk_version;
                         xml_path /= L"SDKManifest.xml";
 
-                        add_files_from_xml(files, sdk_version, xml_path, sdk_path);
+                        // Not all Extension SDKs include an SDKManifest.xml file; ignore those which do not (e.g. WindowsIoT).
+                        add_files_from_xml(files, sdk_version, xml_path, sdk_path, xml_requirement::optional);
                     }
+#else /* defined(_WIN32) || defined(_WIN64) */
+                    throw_invalid("Spec '", path, "' not supported outside of Windows");
+#endif /* defined(_WIN32) || defined(_WIN64) */
 
                     continue;
                 }
@@ -515,7 +549,11 @@ namespace cppwinrt
         template<typename O, typename L>
         void extract_option(std::string_view arg, O const& options, L& last)
         {
-            if (arg[0] == '-' || arg[0] == '/')
+            if (arg[0] == '-'
+#if defined(_WIN32) || defined(_WIN64)
+                || arg[0] == '/'
+#endif
+            )
             {
                 arg.remove_prefix(1);
                 last = find(options, arg);
@@ -586,7 +624,7 @@ namespace cppwinrt
             first_arg = true;
             *argument_count = 0;
 
-            for (;;)
+            while (true)
             {
                 if (*p)
                 {
@@ -604,7 +642,7 @@ namespace cppwinrt
                 if (*p == '\0')
                     break;
 
-                for (;;)
+                while (true)
                 {
                     copy_character = true;
 

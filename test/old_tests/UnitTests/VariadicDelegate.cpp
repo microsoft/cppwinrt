@@ -101,7 +101,7 @@ TEST_CASE("Variadic delegate - event")
 
 TEST_CASE("Variadic delegate - exception")
 {
-    delegate<> d = [] { throw std::exception("what"); };
+    delegate<> d = [] { throw std::runtime_error("what"); };
     REQUIRE_THROWS_AS(d(), std::exception);
 }
 

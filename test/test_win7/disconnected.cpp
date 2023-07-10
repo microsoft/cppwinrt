@@ -33,92 +33,98 @@ namespace
     }
 }
 
-TEST_CASE("disconnected")
+TEST_CASE("disconnected,1")
 {
-    {
-        event<EventHandler<int>> source;
+    event<EventHandler<int>> source;
 
-        source.add([](auto...)
-            {
-                throw hresult_error(RPC_E_DISCONNECTED);
-            });
+    source.add([](auto...)
+        {
+            throw hresult_error(RPC_E_DISCONNECTED);
+        });
 
-        auto token = source.add([](auto...)
-            {
-                throw hresult_error(E_INVALIDARG);
-            });
+    auto token = source.add([](auto...)
+        {
+            throw hresult_error(E_INVALIDARG);
+        });
 
-        // Should have two delegates
-        REQUIRE(source);
+    // Should have two delegates
+    REQUIRE(source);
 
-        // Should lose the disconnected delegate
-        source(nullptr, 123);
-        REQUIRE(source);
+    // Should lose the disconnected delegate
+    source(nullptr, 123);
+    REQUIRE(source);
 
-        // Fire the remaining delegate
-        source(nullptr, 123);
-        REQUIRE(source);
+    // Fire the remaining delegate
+    source(nullptr, 123);
+    REQUIRE(source);
 
-        // Remove the final delegate
-        source.remove(token);
+    // Remove the final delegate
+    source.remove(token);
 
-        // No more delegates
-        REQUIRE(!source);
+    // No more delegates
+    REQUIRE(!source);
 
-        source(nullptr, 123);
-    }
+    source(nullptr, 123);
+}
 
-    {
-        auto async = Action();
+TEST_CASE("disconnected,2")
+{
+    auto async = Action();
 
-        async.Completed([](auto&&...)
-            {
-                throw hresult_error(RPC_E_DISCONNECTED);
-            });
-    }
+    async.Completed([](auto&&...)
+        {
+            throw hresult_error(RPC_E_DISCONNECTED);
+        });
+}
 
-    {
-        auto async = ActionProgress();
-        handle signal{ CreateEventW(nullptr, true, false, nullptr) };
+TEST_CASE("disconnected,3")
+{
+    auto async = ActionProgress();
+    handle signal{ CreateEventW(nullptr, true, false, nullptr) };
 
-        async.Progress([](auto&&...)
-            {
-                throw hresult_error(RPC_E_DISCONNECTED);
-            });
+    async.Progress([](auto&&...)
+        {
+            throw hresult_error(RPC_E_DISCONNECTED);
+        });
 
-        async.Completed([&](auto&&...)
-            {
-                SetEvent(signal.get());
-                throw hresult_error(RPC_E_DISCONNECTED);
-            });
+    async.Completed([&](auto&&...)
+        {
+            SetEvent(signal.get());
+            throw hresult_error(RPC_E_DISCONNECTED);
+        });
 
-        WaitForSingleObject(signal.get(), INFINITE);
-    }
+    WaitForSingleObject(signal.get(), INFINITE);
+    // Give some time for to_hresult() to complete.
+    Sleep(500);
+}
 
-    {
-        auto async = Operation();
+TEST_CASE("disconnected,4")
+{
+    auto async = Operation();
 
-        async.Completed([](auto&&...)
-            {
-                throw hresult_error(RPC_E_DISCONNECTED);
-            });
-    }
+    async.Completed([](auto&&...)
+        {
+            throw hresult_error(RPC_E_DISCONNECTED);
+        });
+}
 
-    {
-        auto async = OperationProgress();
-        handle signal{ CreateEventW(nullptr, true, false, nullptr) };
+TEST_CASE("disconnected,5")
+{
+    auto async = OperationProgress();
+    handle signal{ CreateEventW(nullptr, true, false, nullptr) };
 
-        async.Progress([](auto&&...)
-            {
-                throw hresult_error(RPC_E_DISCONNECTED);
-            });
+    async.Progress([](auto&&...)
+        {
+            throw hresult_error(RPC_E_DISCONNECTED);
+        });
 
-        async.Completed([&](auto&&...)
-            {
-                SetEvent(signal.get());
-                throw hresult_error(RPC_E_DISCONNECTED);
-            });
+    async.Completed([&](auto&&...)
+        {
+            SetEvent(signal.get());
+            throw hresult_error(RPC_E_DISCONNECTED);
+        });
 
-        WaitForSingleObject(signal.get(), INFINITE);
-    }
+    WaitForSingleObject(signal.get(), INFINITE);
+    // Give some time for to_hresult() to complete.
+    Sleep(500);
 }

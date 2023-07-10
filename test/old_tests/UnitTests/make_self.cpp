@@ -1,6 +1,12 @@
 #include "pch.h"
 #include "catch.hpp"
 
+#if defined(_MSC_VER)
+#define WDECLSPECL_NOVTABLE __declspec(novtable)
+#else
+#define WDECLSPECL_NOVTABLE
+#endif
+
 //
 // These tests ensure that the make_self function works as expected to provide direct acccess
 // to an implementation.
@@ -11,10 +17,14 @@
 
 using namespace winrt;
 
-struct __declspec(uuid("eebb3a22-13a6-43b9-9d53-b7deb5a20ae5")) __declspec(novtable) IMakeSelf : IUnknown
+struct DECLSPEC_UUID("eebb3a22-13a6-43b9-9d53-b7deb5a20ae5") WDECLSPECL_NOVTABLE IMakeSelf : IUnknown
 {
     virtual HRESULT __stdcall Call() = 0;
 };
+
+#ifdef __CRT_UUID_DECL
+__CRT_UUID_DECL(IMakeSelf, 0xeebb3a22, 0x13a6, 0x43b9, 0x9d, 0x53, 0xb7, 0xde, 0xb5, 0xa2, 0x0a, 0xe5);
+#endif
 
 struct MakeSelfStringable : implements<MakeSelfStringable, Windows::Foundation::IStringable>
 {

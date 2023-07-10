@@ -14,12 +14,29 @@
     <CustomVisualizer Condition="this != 0" VisualizerId="2ec1a02f-997c-4693-840e-88ffa1e21b56"/>
     <DisplayString Condition="this == 0">null</DisplayString>
   </Type>
+  <!-- Visualize C++/WinRT object implementations -->
+  <Type Name="winrt::impl::producer&lt;*&gt;">
+    <CustomVisualizer Condition="this != 0" VisualizerId="2ec1a02f-997c-4693-840e-88ffa1e21b56"/>
+    <DisplayString Condition="this == 0">null</DisplayString>
+  </Type>
   <!--Visualize all raw IInspectable pointers-->
   <Type Name="IInspectable">
     <CustomVisualizer Condition="this != 0" VisualizerId="2ec1a02f-997c-4693-840e-88ffa1e21b56"/>
     <DisplayString Condition="this == 0">null</DisplayString>
   </Type>
   <!--Primitive type visualizers-->
+  <Type Name="winrt::Windows::UI::Color">
+    <DisplayString>#{A,nvoXb}{R,nvoXb}{G,nvoXb}{B,nvoXb}</DisplayString>
+  </Type>
+  <Type Name="winrt::array_view&lt;*&gt;">
+    <DisplayString>{{size = {m_size}, {m_data,[m_size]}}}</DisplayString>
+    <Expand>
+      <ArrayItems>
+        <Size>m_size</Size>
+        <ValuePointer>m_data</ValuePointer>
+      </ArrayItems>
+    </Expand>
+  </Type>
   <Type Name="winrt::com_ptr&lt;*&gt;">
     <DisplayString>{m_ptr}</DisplayString>
     <Expand>
@@ -32,6 +49,9 @@
   </Type>
   <Type Name="winrt::hresult">
     <DisplayString>{value,hr}</DisplayString>
+  </Type>
+  <Type Name="winrt::hresult_error">
+    <DisplayString>{m_code}</DisplayString>
   </Type>
   <Type Name="winrt::hstring">
     <DisplayString>{m_handle.m_value,sh}</DisplayString>

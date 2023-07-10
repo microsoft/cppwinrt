@@ -92,6 +92,18 @@ namespace cppwinrt
         return result;
     }
 
+    static bool transform_special_numeric_type(std::string_view& name)
+    {
+        if (name == "Matrix3x2") { name = "float3x2"; return true; }
+        else if (name == "Matrix4x4") { name = "float4x4"; return true; }
+        else if (name == "Plane") { name = "plane"; return true; }
+        else if (name == "Quaternion") { name = "quaternion"; return true; }
+        else if (name == "Vector2") { name = "float2"; return true; }
+        else if (name == "Vector3") { name = "float3"; return true; }
+        else if (name == "Vector4") { name = "float4"; return true; }
+        return false;
+    }
+
     struct writer : writer_base<writer>
     {
         using writer_base<writer>::write;
@@ -143,6 +155,27 @@ namespace cppwinrt
             writer* owner;
         };
 
+        template<typename T>
+        struct member_value_guard
+        {
+            writer* const owner;
+            T writer::* const member;
+            T const previous;
+            explicit member_value_guard(writer* arg, T writer::* ptr, T value) :
+                owner(arg), member(ptr), previous(std::exchange(owner->*member, value))
+            {
+            }
+
+            ~member_value_guard()
+            {
+                owner->*member = previous;
+            }
+
+            member_value_guard(member_value_guard const&) = delete;
+            member_value_guard& operator=(member_value_guard const&) = delete;
+
+        };
+
         void add_depends(TypeDef const& type)
         {
             auto ns = type.TypeNamespace();
@@ -182,6 +215,21 @@ namespace cppwinrt
 
             generic_param_stack.push_back(std::move(names));
             return generic_param_guard{ this };
+        }
+
+        [[nodiscard]] auto push_abi_types(bool value)
+        {
+            return member_value_guard(this, &writer::abi_types, value);
+        }
+
+        [[nodiscard]] auto push_async_types(bool value)
+        {
+            return member_value_guard(this, &writer::async_types, value);
+        }
+
+        [[nodiscard]] auto push_delegate_types(bool value)
+        {
+            return member_value_guard(this, &writer::delegate_types, value);
         }
 
         void write_value(int32_t value)
@@ -237,11 +285,9 @@ namespace cppwinrt
 
             if (!empty(generics))
             {
-                write("@::%<%>", ns, remove_tick(name), bind_list(", ", generics));
+                write("winrt::@::%<%>", ns, remove_tick(name), bind_list(", ", generics));
                 return;
             }
-
-            // TODO: get rid of all these renames once parity with cppwinrt.exe has been reached...
 
             if (name == "EventRegistrationToken" && ns == "Windows.Foundation")
             {
@@ -255,17 +301,9 @@ namespace cppwinrt
             {
                 auto category = get_category(type);
 
-                if (ns == "Windows.Foundation.Numerics")
+                if (ns == "Windows.Foundation.Numerics" && transform_special_numeric_type(name))
                 {
-                    if (name == "Matrix3x2") { name = "float3x2"; }
-                    else if (name == "Matrix4x4") { name = "float4x4"; }
-                    else if (name == "Plane") { name = "plane"; }
-                    else if (name == "Quaternion") { name = "quaternion"; }
-                    else if (name == "Vector2") { name = "float2"; }
-                    else if (name == "Vector3") { name = "float3"; }
-                    else if (name == "Vector4") { name = "float4"; }
-
-                    write("@::%", ns, name);
+                    write("winrt::@::%", ns, name);
                 }
                 else if (category == category::struct_type)
                 {
@@ -275,7 +313,7 @@ namespace cppwinrt
                     }
                     else if ((name == "Point" || name == "Size" || name == "Rect") && ns == "Windows.Foundation")
                     {
-                        write("@::%", ns, name);
+                        write("winrt::@::%", ns, name);
                     }
                     else if (delegate_types)
                     {
@@ -307,11 +345,11 @@ namespace cppwinrt
                     else if (name == "Vector3") { name = "float3"; }
                     else if (name == "Vector4") { name = "float4"; }
 
-                    write("@::%", ns, name);
+                    write("winrt::@::%", ns, name);
                 }
                 else
                 {
-                    write("@::%", ns, name);
+                    write("winrt::@::%", ns, name);
                 }
             }
         }
@@ -364,14 +402,14 @@ namespace cppwinrt
 
                 if (consume_types)
                 {
-                    static constexpr std::string_view iterable("Windows::Foundation::Collections::IIterable<"sv);
-                    static constexpr std::string_view vector_view("Windows::Foundation::Collections::IVectorView<"sv);
-                    static constexpr std::string_view map_view("Windows::Foundation::Collections::IMapView<"sv);
-                    static constexpr std::string_view vector("Windows::Foundation::Collections::IVector<"sv);
-                    static constexpr std::string_view map("Windows::Foundation::Collections::IMap<"sv);
+                    static constexpr std::string_view iterable("winrt::Windows::Foundation::Collections::IIterable<"sv);
+                    static constexpr std::string_view vector_view("winrt::Windows::Foundation::Collections::IVectorView<"sv);
+                    static constexpr std::string_view map_view("winrt::Windows::Foundation::Collections::IMapView<"sv);
+                    static constexpr std::string_view vector("winrt::Windows::Foundation::Collections::IVector<"sv);
+                    static constexpr std::string_view map("winrt::Windows::Foundation::Collections::IMap<"sv);
 
                     consume_types = false;
-                    auto full_name = write_temp("@::%<%>", ns, name, bind_list(", ", type.GenericArgs()));
+                    auto full_name = write_temp("winrt::@::%<%>", ns, name, bind_list(", ", type.GenericArgs()));
                     consume_types = true;
 
                     if (starts_with(full_name, iterable))
@@ -423,7 +461,7 @@ namespace cppwinrt
                 }
                 else
                 {
-                    write("@::%<%>", ns, name, bind_list(", ", type.GenericArgs()));
+                    write("winrt::@::%<%>", ns, name, bind_list(", ", type.GenericArgs()));
                 }
             }
         }
@@ -468,7 +506,7 @@ namespace cppwinrt
                         }
                         else
                         {
-                            write("Windows::Foundation::IInspectable");
+                            write("winrt::Windows::Foundation::IInspectable");
                         }
                     }
                     else

@@ -1,0 +1,9 @@
+namespace ConsoleApplication1
+{
+    [default_interface]
+    runtimeclass ConsoleApplication1Class
+    {
+        ConsoleApplication1Class();
+        void Test();
+    }
+}
