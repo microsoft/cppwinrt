@@ -743,13 +743,13 @@ catch (...) { return winrt::to_hresult(); }
             auto format = R"(namespace winrt::@::implementation
 {
     template <typename D%, typename... I>
-    struct WINRT_IMPL_EMPTY_BASES %_base : implements<D, @::%%%, %I...>%%%
+    struct WINRT_IMPL_EMPTY_BASES %_base : implements<D, @::%%%, %I...>%%%%
     {
         using base_type = %_base;
         using class_type = @::%;
         using implements_type = typename %_base::implements_type;
         using implements_type::implements_type;
-        %
+        %%
         hstring GetRuntimeClassName() const
         {
             return L"%.%";
@@ -764,6 +764,8 @@ catch (...) { return winrt::to_hresult(); }
             std::string base_type_argument;
             std::string no_module_lock;
             std::string external_requires;
+            std::string external_protected_requires;
+            std::string friends;
 
             if (base_type)
             {
@@ -774,7 +776,9 @@ catch (...) { return winrt::to_hresult(); }
                     composable_base_name = w.write_temp("using composable_base = %;", base_type);
                     auto base_interfaces = get_interfaces(w, base_type);
                     uint32_t base_interfaces_count{};
+                    uint32_t protected_base_interfaces_count{};
                     external_requires = ",\n        impl::require<D";
+                    external_protected_requires = ",\n        protected impl::require<D";
 
                     for (auto&&[name, info] : base_interfaces)
                     {
@@ -783,9 +787,25 @@ catch (...) { return winrt::to_hresult(); }
                             continue;
                         }
 
-                        ++base_interfaces_count;
-                        external_requires += ", ";
-                        external_requires += name;
+                        if (info.is_protected || info.overridable)
+                        {
+                            ++protected_base_interfaces_count;
+                            external_protected_requires += ", ";
+                            external_protected_requires += name;
+
+                            friends += "\n        friend impl::consume_t<D, ";
+                            friends += name;
+                            friends += ">;";
+                            friends += "\n        friend impl::require_one<D, ";
+                            friends += name;
+                            friends += ">;";
+                        }
+                        else
+                        {
+                            ++base_interfaces_count;
+                            external_requires += ", ";
+                            external_requires += name;
+                        }
                     }
 
                     if (base_interfaces_count)
@@ -795,6 +815,15 @@ catch (...) { return winrt::to_hresult(); }
                     else
                     {
                         external_requires.clear();
+                    }
+
+                    if (protected_base_interfaces_count)
+                    {
+                        external_protected_requires += '>';
+                    }
+                    else
+                    {
+                        external_protected_requires.clear();
                     }
                 }
                 else
@@ -816,6 +845,7 @@ catch (...) { return winrt::to_hresult(); }
                 base_type_argument,
                 no_module_lock,
                 external_requires,
+                external_protected_requires,
                 bind<write_component_class_base>(type),
                 bind<write_component_override_defaults>(type),
                 type_name,
@@ -823,6 +853,7 @@ catch (...) { return winrt::to_hresult(); }
                 type_name,
                 type_name,
                 composable_base_name,
+                friends,
                 type_namespace,
                 type_name,
                 bind<write_component_class_override_constructors>(type),

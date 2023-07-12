@@ -12,4 +12,9 @@ namespace winrt::Composable::implementation
     {
         return L"Derived::OverridableVirtualMethod";
     }
+
+    int32_t Derived::CallProtectedMethod()
+    {
+        return ProtectedMethod();
+    }
 }
