@@ -31,6 +31,16 @@ WINRT_EXPORT namespace winrt
             array_view(value.begin(), static_cast<size_type>(value.size()))
         {}
 
+#ifdef __cpp_lib_span
+        template <typename T>
+        array_view(std::span<T> span) : array_view(span.data(), static_cast<size_t>(span.size())) {}
+
+        operator std::span<T>() const noexcept
+        {
+            return { m_data, m_size };
+        }
+#endif
+
         template <typename C, size_type N>
         array_view(C(&value)[N]) noexcept :
             array_view(value, N)
