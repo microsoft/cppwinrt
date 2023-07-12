@@ -15,6 +15,16 @@ If you really want to build it yourself, the simplest way to do so is to run the
 
 * Open a dev command prompt pointing at the root of the repo.
 * Open the `cppwinrt.sln` solution.
-* Build the x64 Release configuration of the `prebuild` and `cppwinrt` projects only. Do not attempt to build anything else just yet.
+* Build the x64 Release configuration of the `cppwinrt` project only. Do not attempt to build anything else just yet.
 * Run `build_projection.cmd` in the dev command prompt.
 * Switch to the x64 Debug configuration in Visual Studio and build all projects as needed.
+
+## Comparing Outputs
+
+Comparing the output of the prior release and your current changes will help show the impact of any updates. Starting from
+a dev command prompt at the root of the repo _after_ following the above build instructions:
+
+* Run `build_projection.cmd` in the dev command prompt
+* Run `build_prior_projection.cmd` in the dev command prompt as well
+* Run `prepare_versionless_diffs.cmd` which removes version stamps on both current and prior projection
+* Use a directory-level differencing tool to compare `_build\$(arch)\$(flavor)\winrt` and `_reference\$(arch)\$(flavor)\winrt`

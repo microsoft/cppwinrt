@@ -41,6 +41,11 @@ namespace winrt::Composable::implementation
         return 42;
     }
 
+    int32_t Base::ProtectedMethod()
+    {
+        return 0xDEADBEEF;
+    }
+
     hstring Base::Name() const
     {
         return m_name;

@@ -40,6 +40,20 @@ namespace
             return L"Object";
         }
     };
+
+    struct ObjectStd : std::enable_shared_from_this<ObjectStd>
+    {
+        int& m_count;
+
+        ObjectStd(int& count) : m_count(count)
+        {
+        }
+
+        void Callback()
+        {
+            ++m_count;
+        }
+    };
 }
 
 TEST_CASE("variadic_delegate")
@@ -87,6 +101,44 @@ TEST_CASE("variadic_delegate")
         auto object = make_self<Object>(count);
 
         delegate<> up{ object->get_weak(), &Object::Callback };
+
+        REQUIRE(count == 0);
+        up();
+        REQUIRE(count == 1);
+        up();
+        REQUIRE(count == 2);
+
+        object = nullptr;
+
+        up();
+        REQUIRE(count == 2); // Unchanged
+    }
+
+    // shared_from_this
+    {
+        int count{};
+        auto object = std::make_shared<ObjectStd>(count);
+
+        delegate<> up{ object->shared_from_this(), &ObjectStd::Callback };
+
+        REQUIRE(count == 0);
+        up();
+        REQUIRE(count == 1);
+        up();
+        REQUIRE(count == 2);
+
+        object = nullptr;
+
+        up();
+        REQUIRE(count == 3);
+    }
+
+    // weak_from_this
+    {
+        int count{};
+        auto object = std::make_shared<ObjectStd>(count);
+
+        delegate<> up{ object->weak_from_this(), &ObjectStd::Callback };
 
         REQUIRE(count == 0);
         up();

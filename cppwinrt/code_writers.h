@@ -2035,10 +2035,36 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
     {
         for (auto&& [name, info] : interfaces)
         {
-            if (!info.overridable)
+            if (!info.overridable && !info.is_protected)
             {
                 w.write(", %", name);
             }
+        }
+    }
+
+    static void write_class_override_protected_requires(writer& w, get_interfaces_t const& interfaces)
+    {
+        bool first = true;
+
+        for (auto&& [name, info] : interfaces)
+        {
+            if (info.is_protected)
+            {
+                if (first)
+                {
+                    first = false;
+                    w.write(",\n        protected impl::require<D, %", name);
+                }
+                else
+                {
+                    w.write(", %", name);
+                }
+            }
+        }
+
+        if (!first)
+        {
+            w.write('>');
         }
     }
 
@@ -2070,6 +2096,18 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         for (auto&& base : get_bases(type))
         {
             w.write(", %", base);
+        }
+    }
+
+    static void write_class_override_friends(writer& w, get_interfaces_t const& interfaces)
+    {
+        for (auto&& [name, info] : interfaces)
+        {
+            if (info.is_protected)
+            {
+                w.write("\n        friend impl::consume_t<D, %>;", name);
+                w.write("\n        friend impl::require_one<D, %>;", name);
+            }
         }
     }
 
@@ -2243,10 +2281,10 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         auto format = R"(    template <typename D, typename... Interfaces>
     struct %T :
         implements<D%, composing, Interfaces...>,
-        impl::require<D%>,
+        impl::require<D%>%,
         impl::base<D, %%>%
     {
-        using composable = %;
+        using composable = %;%
     protected:
 %%    };
 )";
@@ -2258,10 +2296,12 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             type_name,
             bind<write_class_override_implements>(interfaces),
             bind<write_class_override_requires>(interfaces),
+            bind<write_class_override_protected_requires>(interfaces),
             type_name,
             bind<write_class_override_bases>(type),
             bind<write_class_override_defaults>(interfaces),
             type_name,
+            bind<write_class_override_friends>(interfaces),
             bind<write_class_override_constructors>(type, factories),
             bind<write_class_override_usings>(interfaces));
     }
@@ -2326,18 +2366,21 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
-            if (info.defaulted && !info.base)
+            if (!info.is_protected && !info.overridable)
             {
-                for (auto&& method : info.type.MethodList())
+                if (info.defaulted && !info.base)
                 {
-                    method_usage[get_name(method)].insert(default_interface_name);
+                    for (auto&& method : info.type.MethodList())
+                    {
+                        method_usage[get_name(method)].insert(default_interface_name);
+                    }
                 }
-            }
-            else
-            {
-                for (auto&& method : info.type.MethodList())
+                else
                 {
-                    method_usage[get_name(method)].insert(interface_name);
+                    for (auto&& method : info.type.MethodList())
+                    {
+                        method_usage[get_name(method)].insert(interface_name);
+                    }
                 }
             }
         }
@@ -2446,6 +2489,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         template <typename O, typename M> %(O* object, M method);
         template <typename O, typename M> %(com_ptr<O>&& object, M method);
         template <typename O, typename M> %(weak_ref<O>&& object, M method);
+        template <typename O, typename M> %(std::shared_ptr<O>&& object, M method);
+        template <typename O, typename M> %(std::weak_ptr<O>&& object, M method);
         auto operator()(%) const;
     };
 )";
@@ -2455,6 +2500,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         w.write(format,
             type_name,
             bind<write_generic_asserts>(generics),
+            type_name,
+            type_name,
             type_name,
             type_name,
             type_name,
@@ -2523,6 +2570,14 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         %([o = std::move(object), method](auto&&... args) { if (auto s = o.get()) { ((*s).*(method))(args...); } })
     {
     }
+    template <%> template <typename O, typename M> %<%>::%(std::shared_ptr<O>&& object, M method) :
+        %([o = std::move(object), method](auto&&... args) { return ((*o).*(method))(args...); })
+    {
+    }
+    template <%> template <typename O, typename M> %<%>::%(std::weak_ptr<O>&& object, M method) :
+        %([o = std::move(object), method](auto&&... args) { if (auto s = o.lock()) { ((*s).*(method))(args...); } })
+    {
+    }
     template <%> auto %<%>::operator()(%) const
     {%
         check_hresult((*(impl::abi_t<%<%>>**)this)->Invoke(%));%
@@ -2539,6 +2594,16 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 type_name,
                 type_name,
                 bind_list(", ", generics),
+                bind<write_generic_typenames>(generics),
+                type_name,
+                bind_list(", ", generics),
+                type_name,
+                type_name,
+                bind<write_generic_typenames>(generics),
+                type_name,
+                bind_list(", ", generics),
+                type_name,
+                type_name,
                 bind<write_generic_typenames>(generics),
                 type_name,
                 bind_list(", ", generics),
@@ -2591,6 +2656,14 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         %([o = std::move(object), method](auto&&... args) { if (auto s = o.get()) { ((*s).*(method))(args...); } })
     {
     }
+    template <typename O, typename M> %::%(std::shared_ptr<O>&& object, M method) :
+        %([o = std::move(object), method](auto&&... args) { return ((*o).*(method))(args...); })
+    {
+    }
+    template <typename O, typename M> %::%(std::weak_ptr<O>&& object, M method) :
+        %([o = std::move(object), method](auto&&... args) { if (auto s = o.lock()) { ((*s).*(method))(args...); } })
+    {
+    }
     inline auto %::operator()(%) const
     {%
         check_hresult((*(impl::abi_t<%>**)this)->Invoke(%));%
@@ -2598,6 +2671,12 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 )";
 
             w.write(format,
+                type_name,
+                type_name,
+                type_name,
+                type_name,
+                type_name,
+                type_name,
                 type_name,
                 type_name,
                 type_name,
@@ -2768,7 +2847,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
         for (auto&& [interface_name, info] : get_interfaces(w, type))
         {
-            if (!info.defaulted || info.base)
+            if ((!info.defaulted || info.base) && (!info.is_protected && !info.overridable))
             {
                 if (first)
                 {

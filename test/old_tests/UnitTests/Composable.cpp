@@ -14,6 +14,7 @@ namespace
     constexpr auto Base_OverridableMethod{ L"Base::OverridableMethod"sv };
     constexpr auto Base_OverridableVirtualMethod{ L"Base::OverridableVirtualMethod"sv };
     constexpr auto Base_OverridableNoexceptMethod{ 42 };
+    constexpr auto Base_ProtectedMethod{ 0xDEADBEEF };
 
     constexpr auto Derived_VirtualMethod{ L"Derived::VirtualMethod"sv };
     constexpr auto Derived_OverridableVirtualMethod{ L"Derived::OverridableVirtualMethod"sv };
@@ -61,12 +62,20 @@ TEST_CASE("Composable.OverriddenBase")
             {
                 return OverriddenBase_OverridableNoexceptMethod;
             }
+
+            int32_t CallProtectedMethod()
+            {
+                return ProtectedMethod();
+            }
         };
-        auto object = make<OverriddenBase>();
+
+        auto object_self = make_self<OverriddenBase>();
+        auto object = object_self.as<Base>();
         REQUIRE(object.VirtualMethod() == Base_VirtualMethod);
         REQUIRE(object.CallOverridableMethod() == OverriddenBase_OverridableMethod);
         REQUIRE(object.CallOverridableVirtualMethod() == OverriddenBase_OverridableVirtualMethod);
         REQUIRE(object.CallOverridableNoexceptMethod() == OverriddenBase_OverridableNoexceptMethod);
+        REQUIRE(object_self->CallProtectedMethod() == Base_ProtectedMethod);
     }
     {
         const std::wstring OverridableMethodResult = std::wstring(OverriddenBase_OverridableMethod) + L"=>" + Base_OverridableMethod.data();
@@ -106,6 +115,7 @@ TEST_CASE("Composable.Derived")
     REQUIRE(obj.CallOverridableMethod() == Base_OverridableMethod);
     REQUIRE(obj.CallOverridableVirtualMethod() == Derived_OverridableVirtualMethod);
     REQUIRE(obj.CallOverridableNoexceptMethod() == Base_OverridableNoexceptMethod);
+    REQUIRE(obj.CallProtectedMethod() == Base_ProtectedMethod);
 }
 
 namespace
@@ -133,6 +143,24 @@ namespace
         CallIDerived(obj);
         CallDerived(obj);
     }
+
+    template <typename T, typename = void>
+    struct has_ProtectedMember : std::false_type { };
+
+    template <typename T>
+    struct has_ProtectedMember<T, std::enable_if_t<std::is_member_function_pointer_v<decltype(&T::ProtectedMember)>>> : std::true_type { };
+
+    // make sure we can't access protected members directly
+    static_assert(!has_ProtectedMember<Composable::Base>::value);
+    static_assert(!has_ProtectedMember<Composable::Derived>::value);
+    static_assert(!has_ProtectedMember<Foo>::value);
+    static_assert(!has_ProtectedMember<Bar>::value);
+
+    // make sure we can't implicitly convert to IBaseProtected
+    static_assert(!std::is_convertible_v<Composable::Base, Composable::IBaseProtected>);
+    static_assert(!std::is_convertible_v<Composable::Derived, Composable::IBaseProtected>);
+    static_assert(!std::is_convertible_v<Foo, Composable::IBaseProtected>);
+    static_assert(!std::is_convertible_v<Bar, Composable::IBaseProtected>);
 }
 
 TEST_CASE("Composable conversions")
