@@ -342,6 +342,24 @@ namespace winrt::impl
         return 1;
     }
 
+    WINRT_IMPL_NOINLINE static bool report_failed_invoke()
+    {
+        int32_t const code = to_hresult();
+
+        static int32_t(__stdcall * handler)(int32_t, int32_t, void*) noexcept;
+        impl::load_runtime_function(L"combase.dll", "RoTransformError", handler, fallback_RoTransformError);
+        handler(code, 0, nullptr);
+
+        if (code == static_cast<int32_t>(0x80010108) || // RPC_E_DISCONNECTED
+            code == static_cast<int32_t>(0x800706BA) || // HRESULT_FROM_WIN32(RPC_S_SERVER_UNAVAILABLE)
+            code == static_cast<int32_t>(0x89020001))   // JSCRIPT_E_CANTEXECUTE
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     template <typename Delegate, typename... Arg>
     bool invoke(Delegate const& delegate, Arg const&... args) noexcept
     {
@@ -351,18 +369,7 @@ namespace winrt::impl
         }
         catch (...)
         {
-            int32_t const code = to_hresult();
-
-            static int32_t(__stdcall * handler)(int32_t, int32_t, void*) noexcept;
-            impl::load_runtime_function(L"combase.dll", "RoTransformError", handler, fallback_RoTransformError);
-            handler(code, 0, nullptr);
-
-            if (code == static_cast<int32_t>(0x80010108) || // RPC_E_DISCONNECTED
-                code == static_cast<int32_t>(0x800706BA) || // HRESULT_FROM_WIN32(RPC_S_SERVER_UNAVAILABLE)
-                code == static_cast<int32_t>(0x89020001))   // JSCRIPT_E_CANTEXECUTE
-            {
-                return false;
-            }
+            return report_failed_invoke();
         }
 
         return true;
