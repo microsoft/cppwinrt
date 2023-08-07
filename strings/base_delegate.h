@@ -8,22 +8,22 @@ namespace winrt::impl
 
     template<bool try_marshaling> struct implements_delegate_base
     {
-        WINRT_IMPL_NOINLINE uint32_t inc_ref() noexcept
+        WINRT_IMPL_NOINLINE uint32_t increment_reference() noexcept
         {
             return ++m_references;
         }
 
-        WINRT_IMPL_NOINLINE uint32_t dec_ref() noexcept
+        WINRT_IMPL_NOINLINE uint32_t decrement_reference() noexcept
         {
             return --m_references;
         }
 
-        WINRT_IMPL_NOINLINE uint32_t QueryInterfaceImpl(guid const& id, void** result, unknown_abi* outerAbiPtr, guid const& outerId)
+        WINRT_IMPL_NOINLINE uint32_t query_interface(guid const& id, void** result, unknown_abi* outerAbiPtr, guid const& outerId)
         {
             if ((id == outerId) || is_guid_of<Windows::Foundation::IUnknown>(id) || is_guid_of<IAgileObject>(id))
             {
                 *result = outerAbiPtr;
-                inc_ref();
+                increment_reference();
                 return 0;
             }
 
@@ -52,17 +52,17 @@ namespace winrt::impl
 
         int32_t __stdcall QueryInterface(guid const& id, void** result) noexcept final
         {
-            return QueryInterfaceImpl(id, result, static_cast<abi_t<T>*>(this), guid_of<T>());
+            return query_interface(id, result, static_cast<abi_t<T>*>(this), guid_of<T>());
         }
 
         uint32_t __stdcall AddRef() noexcept final
         {
-            return inc_ref();
+            return increment_reference();
         }
 
         uint32_t __stdcall Release() noexcept final
         {
-            auto const remaining = dec_ref();
+            auto const remaining = decrement_reference();
 
             if (remaining == 0)
             {
@@ -138,17 +138,17 @@ namespace winrt::impl
 
         int32_t __stdcall QueryInterface(guid const& id, void** result) noexcept final
         {
-            return QueryInterfaceImpl(id, result, static_cast<unknown_abi*>(this), guid_of<Windows::Foundation::IUnknown>());
+            return query_interface(id, result, static_cast<unknown_abi*>(this), guid_of<Windows::Foundation::IUnknown>());
         }
 
         uint32_t __stdcall AddRef() noexcept final
         {
-            return inc_ref();
+            return increment_reference();
         }
 
         uint32_t __stdcall Release() noexcept final
         {
-            auto const remaining = dec_ref();
+            auto const remaining = decrement_reference();
 
             if (remaining == 0)
             {
