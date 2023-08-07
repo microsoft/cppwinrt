@@ -31,6 +31,25 @@ namespace
         }
     };
 
+    template <typename Sender, typename Args>
+    struct ObjectStd : std::enable_shared_from_this<ObjectStd<Sender, Args>>
+    {
+        ~ObjectStd()
+        {
+            destroyed = true;
+        }
+
+        void StrongHandler(Sender const&, Args const&)
+        {
+            ++strong_count;
+        }
+
+        void WeakHandler(Sender const&, Args const&)
+        {
+            ++weak_count;
+        }
+    };
+
     struct ReturnObject : implements<ReturnObject, IInspectable>
     {
         ~ReturnObject()
@@ -44,8 +63,21 @@ namespace
         }
     };
 
+    struct ReturnObjectStd : std::enable_shared_from_this<ReturnObjectStd>
+    {
+        ~ReturnObjectStd()
+        {
+            destroyed = true;
+        }
+
+        int Handler(int a, int b)
+        {
+            return a + b;
+        }
+    };
+
     template <typename Delegate, typename Sender, typename Args>
-    void test_delegate()
+    void test_delegate_winrt()
     {
         auto object = make_self<Object<Sender, Args>>();
 
@@ -81,6 +113,51 @@ namespace
         weak({}, {});
         REQUIRE(weak_count == 2);
     }
+
+    template <typename Delegate, typename Sender, typename Args>
+    void test_delegate_std()
+    {
+        auto object = std::make_shared<ObjectStd<Sender, Args>>();
+
+        Delegate strong{ object->shared_from_this(), &ObjectStd<Sender, Args>::StrongHandler };
+        Delegate weak{ object->weak_from_this(), &ObjectStd<Sender, Args>::WeakHandler };
+
+        destroyed = false;
+        strong_count = 0;
+        weak_count = 0;
+
+        // Both weak and strong handlers
+        strong({}, {});
+        weak({}, {});
+        REQUIRE(strong_count == 1);
+        REQUIRE(weak_count == 1);
+
+        // Local 'object' strong reference is released
+        object = nullptr;
+
+        // Still both since strong handler keeps object alive
+        strong({}, {});
+        weak({}, {});
+        REQUIRE(strong_count == 2);
+        REQUIRE(weak_count == 2);
+
+        // ~Object is called since the strong delegate is destroyed
+        REQUIRE(!destroyed);
+        strong = nullptr;
+        REQUIRE(destroyed);
+
+        // Weak delegate remains but no longer fires
+        REQUIRE(weak_count == 2);
+        weak({}, {});
+        REQUIRE(weak_count == 2);
+    }
+
+    template <typename Delegate, typename Sender, typename Args>
+    void test_delegate()
+    {
+        test_delegate_winrt<Delegate, Sender, Args>();
+        test_delegate_std<Delegate, Sender, Args>();
+    }
 }
 
 TEST_CASE("delegate_weak_strong")
@@ -111,8 +188,10 @@ TEST_CASE("delegate_weak_strong")
     // scenarios such as callbacks so weak support isn't interesting anyway, but it does work with get_strong.
 
     auto object = make_self<ReturnObject>();
-
     Component::TwoArgDelegateReturn strong{ object->get_strong(), &ReturnObject::Handler };
-
     REQUIRE(5 == strong(2, 3));
+
+    auto objectStd = std::make_shared<ReturnObjectStd>();
+    Component::TwoArgDelegateReturn strongStd{ objectStd->shared_from_this(), &ReturnObjectStd::Handler };
+    REQUIRE(5 == strongStd(2, 3));
 }

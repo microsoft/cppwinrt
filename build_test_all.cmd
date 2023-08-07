@@ -10,7 +10,7 @@ if "%target_configuration%"=="" set target_configuration=Release
 if "%target_version%"=="" set target_version=1.2.3.4
 
 if not exist ".\.nuget" mkdir ".\.nuget"
-if not exist ".\.nuget\nuget.exe" powershell -Command "Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile .\.nuget\nuget.exe"
+if not exist ".\.nuget\nuget.exe" powershell -Command "$ProgressPreference = 'SilentlyContinue' ; Invoke-WebRequest https://dist.nuget.org/win-x86-commandline/latest/nuget.exe -OutFile .\.nuget\nuget.exe"
 
 call .nuget\nuget.exe restore cppwinrt.sln"
 call .nuget\nuget.exe restore natvis\cppwinrtvisualizer.sln

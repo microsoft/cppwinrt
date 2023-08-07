@@ -18,6 +18,7 @@ namespace winrt::Composable::implementation
         hstring OverridableMethod() ;
         virtual hstring OverridableVirtualMethod();
         int32_t OverridableNoexceptMethod() noexcept;
+        int32_t ProtectedMethod();
 
         hstring Name() const;
 
