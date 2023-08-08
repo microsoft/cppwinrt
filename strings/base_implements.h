@@ -1156,44 +1156,48 @@ namespace winrt::impl
                 return 0;
             }
 
-            if constexpr (is_agile::value)
-            {
-                if (is_guid_of<IAgileObject>(id))
-                {
-                    *object = get_unknown();
-                    AddRef();
-                    return 0;
-                }
+            return query_interface_common(id, object);
+        }
 
-                if (is_guid_of<IMarshal>(id))
-                {
-                    return make_marshaler(get_unknown(), object);
-                }
-            }
-
-            if constexpr (is_inspectable::value)
-            {
-                if (is_guid_of<Windows::Foundation::IInspectable>(id))
-                {
-                    *object = find_inspectable();
-                    AddRef();
-                    return 0;
-                }
-            }
-
+        WINRT_IMPL_NOINLINE int32_t query_interface_common(guid const& id, void** object) noexcept
+        {
             if (is_guid_of<Windows::Foundation::IUnknown>(id))
             {
                 *object = get_unknown();
                 AddRef();
                 return 0;
             }
-
-            if constexpr (is_weak_ref_source::value)
+            else if (is_guid_of<Windows::Foundation::IInspectable>(id))
             {
-                if (is_guid_of<impl::IWeakReferenceSource>(id))
+                if constexpr (is_inspectable::value)
+                {
+                    *object = find_inspectable();
+                    AddRef();
+                    return 0;
+                }
+            }
+            else if (is_guid_of<impl::IWeakReferenceSource>(id))
+            {
+                if constexpr (is_weak_ref_source::value)
                 {
                     *object = make_weak_ref();
                     return *object ? error_ok : error_bad_alloc;
+                }
+            }
+            else if (is_guid_of<impl::IAgileObject>(id))
+            {
+                if constexpr (is_agile::value)
+                {
+                    *object = get_unknown();
+                    AddRef();
+                    return 0;
+                }
+            }
+            else if (is_guid_of<IMarshal>(id))
+            {
+                if constexpr (is_agile::value)
+                {
+                    return make_marshaler(get_unknown(), object);
                 }
             }
 

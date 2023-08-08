@@ -6,30 +6,33 @@ namespace winrt::impl
 #pragma warning(disable:4458) // declaration hides class member (okay because we do not use named members of base class)
 #endif
 
-    struct implements_delegate_base
+    template<bool try_marshaling> struct implements_delegate_base
     {
-        WINRT_IMPL_NOINLINE uint32_t inc_ref() noexcept
+        WINRT_IMPL_NOINLINE uint32_t increment_reference() noexcept
         {
             return ++m_references;
         }
 
-        WINRT_IMPL_NOINLINE uint32_t dec_ref() noexcept
+        WINRT_IMPL_NOINLINE uint32_t decrement_reference() noexcept
         {
             return --m_references;
         }
 
-        WINRT_IMPL_NOINLINE uint32_t QueryInterfaceImpl(guid const& id, void** result, unknown_abi* outerAbiPtr, guid const& outerId)
+        WINRT_IMPL_NOINLINE uint32_t query_interface(guid const& id, void** result, unknown_abi* outerAbiPtr, guid const& outerId)
         {
             if ((id == outerId) || is_guid_of<Windows::Foundation::IUnknown>(id) || is_guid_of<IAgileObject>(id))
             {
                 *result = outerAbiPtr;
-                inc_ref();
+                increment_reference();
                 return 0;
             }
 
-            if (is_guid_of<IMarshal>(id))
+            if constexpr (try_marshaling)
             {
-                return make_marshaler(outerAbiPtr, result);
+                if (is_guid_of<IMarshal>(id))
+                {
+                    return make_marshaler(outerAbiPtr, result);
+                }
             }
 
             *result = nullptr;
@@ -41,7 +44,7 @@ namespace winrt::impl
     };
 
     template <typename T, typename H>
-    struct implements_delegate : abi_t<T>, implements_delegate_base, H, update_module_lock
+    struct implements_delegate : abi_t<T>, implements_delegate_base<true>, H, update_module_lock
     {
         implements_delegate(H&& handler) : H(std::forward<H>(handler))
         {
@@ -49,17 +52,17 @@ namespace winrt::impl
 
         int32_t __stdcall QueryInterface(guid const& id, void** result) noexcept final
         {
-            return QueryInterfaceImpl(id, result, static_cast<abi_t<T>*>(this), guid_of<T>());
+            return query_interface(id, result, static_cast<abi_t<T>*>(this), guid_of<T>());
         }
 
         uint32_t __stdcall AddRef() noexcept final
         {
-            return inc_ref();
+            return increment_reference();
         }
 
         uint32_t __stdcall Release() noexcept final
         {
-            auto const remaining = dec_ref();
+            auto const remaining = decrement_reference();
 
             if (remaining == 0)
             {
@@ -90,15 +93,16 @@ namespace winrt::impl
                 return delegate;
             }
 
+            const auto id = guid_of<T>();
             com_ptr<IAgileReference> ref;
-            get_agile_reference(guid_of<T>(), get_abi(delegate), ref.put_void());
+            get_agile_reference(id, get_abi(delegate), ref.put_void());
 
             if (ref)
             {
-                return [ref = std::move(ref)](auto&& ... args)
+                return [ref = std::move(ref), id](auto&& ... args)
                 {
                     T delegate;
-                    ref->Resolve(guid_of<T>(), put_abi(delegate));
+                    ref->Resolve(id, put_abi(delegate));
                     return delegate(args...);
                 };
             }
@@ -114,7 +118,7 @@ namespace winrt::impl
     };
 
     template <typename H, typename R, typename... Args>
-    struct variadic_delegate final : variadic_delegate_abi<R, Args...>, H, update_module_lock
+    struct variadic_delegate final : variadic_delegate_abi<R, Args...>, implements_delegate_base<false>, H, update_module_lock
     {
         variadic_delegate(H&& handler) : H(std::forward<H>(handler))
         {
@@ -134,25 +138,17 @@ namespace winrt::impl
 
         int32_t __stdcall QueryInterface(guid const& id, void** result) noexcept final
         {
-            if (is_guid_of<Windows::Foundation::IUnknown>(id) || is_guid_of<IAgileObject>(id))
-            {
-                *result = static_cast<unknown_abi*>(this);
-                AddRef();
-                return 0;
-            }
-
-            *result = nullptr;
-            return error_no_interface;
+            return query_interface(id, result, static_cast<unknown_abi*>(this), guid_of<Windows::Foundation::IUnknown>());
         }
 
         uint32_t __stdcall AddRef() noexcept final
         {
-            return ++m_references;
+            return increment_reference();
         }
 
         uint32_t __stdcall Release() noexcept final
         {
-            auto const remaining = --m_references;
+            auto const remaining = decrement_reference();
 
             if (remaining == 0)
             {
@@ -161,10 +157,6 @@ namespace winrt::impl
 
             return remaining;
         }
-
-    private:
-
-        atomic_ref_count m_references{ 1 };
     };
 
     template <typename R, typename... Args>

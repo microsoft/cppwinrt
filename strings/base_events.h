@@ -525,7 +525,6 @@ WINRT_EXPORT namespace winrt
             return token;
         }
 
-
         event_token get_token(delegate_type const& delegate) const noexcept
         {
             return event_token{ reinterpret_cast<int64_t>(WINRT_IMPL_EncodePointer(get_abi(delegate))) };
