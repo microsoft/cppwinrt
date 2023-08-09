@@ -6,7 +6,7 @@ namespace winrt::impl
 #pragma warning(disable:4458) // declaration hides class member (okay because we do not use named members of base class)
 #endif
 
-    template<bool try_marshaling> struct implements_delegate_base
+    struct implements_delegate_base
     {
         WINRT_IMPL_NOINLINE uint32_t increment_reference() noexcept
         {
@@ -18,21 +18,18 @@ namespace winrt::impl
             return --m_references;
         }
 
-        WINRT_IMPL_NOINLINE uint32_t query_interface(guid const& id, void** result, unknown_abi* outerAbiPtr, guid const& outerId)
+        WINRT_IMPL_NOINLINE uint32_t query_interface(guid const& id, void** result, unknown_abi* derivedAbiPtr, guid const& derivedId) noexcept
         {
-            if ((id == outerId) || is_guid_of<Windows::Foundation::IUnknown>(id) || is_guid_of<IAgileObject>(id))
+            if (id == derivedId || is_guid_of<Windows::Foundation::IUnknown>(id) || is_guid_of<IAgileObject>(id))
             {
-                *result = outerAbiPtr;
+                *result = derivedAbiPtr;
                 increment_reference();
                 return 0;
             }
 
-            if constexpr (try_marshaling)
+            if (is_guid_of<IMarshal>(id))
             {
-                if (is_guid_of<IMarshal>(id))
-                {
-                    return make_marshaler(outerAbiPtr, result);
-                }
+                return make_marshaler(derivedAbiPtr, result);
             }
 
             *result = nullptr;
@@ -44,7 +41,7 @@ namespace winrt::impl
     };
 
     template <typename T, typename H>
-    struct implements_delegate : abi_t<T>, implements_delegate_base<true>, H, update_module_lock
+    struct implements_delegate : abi_t<T>, implements_delegate_base, H, update_module_lock
     {
         implements_delegate(H&& handler) : H(std::forward<H>(handler))
         {
@@ -118,7 +115,7 @@ namespace winrt::impl
     };
 
     template <typename H, typename R, typename... Args>
-    struct variadic_delegate final : variadic_delegate_abi<R, Args...>, implements_delegate_base<false>, H, update_module_lock
+    struct variadic_delegate final : variadic_delegate_abi<R, Args...>, implements_delegate_base, H, update_module_lock
     {
         variadic_delegate(H&& handler) : H(std::forward<H>(handler))
         {

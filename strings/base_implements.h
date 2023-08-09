@@ -1167,35 +1167,36 @@ namespace winrt::impl
                 AddRef();
                 return 0;
             }
-            else if (is_guid_of<Windows::Foundation::IInspectable>(id))
+
+            if constexpr (is_inspectable::value)
             {
-                if constexpr (is_inspectable::value)
+                if (is_guid_of<Windows::Foundation::IInspectable>(id))
                 {
                     *object = find_inspectable();
                     AddRef();
                     return 0;
                 }
             }
-            else if (is_guid_of<impl::IWeakReferenceSource>(id))
+
+            if constexpr (is_weak_ref_source::value)
             {
-                if constexpr (is_weak_ref_source::value)
+                if (is_guid_of<impl::IWeakReferenceSource>(id))
                 {
                     *object = make_weak_ref();
                     return *object ? error_ok : error_bad_alloc;
                 }
             }
-            else if (is_guid_of<impl::IAgileObject>(id))
+            
+            if constexpr (is_agile::value)
             {
-                if constexpr (is_agile::value)
+                if (is_guid_of<impl::IAgileObject>(id))
                 {
                     *object = get_unknown();
                     AddRef();
                     return 0;
                 }
-            }
-            else if (is_guid_of<IMarshal>(id))
-            {
-                if constexpr (is_agile::value)
+
+                if (is_guid_of<IMarshal>(id))
                 {
                     return make_marshaler(get_unknown(), object);
                 }
