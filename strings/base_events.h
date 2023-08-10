@@ -342,6 +342,24 @@ namespace winrt::impl
         return 1;
     }
 
+    WINRT_IMPL_NOINLINE inline bool report_failed_invoke()
+    {
+        int32_t const code = to_hresult();
+
+        static int32_t(__stdcall * handler)(int32_t, int32_t, void*) noexcept;
+        impl::load_runtime_function(L"combase.dll", "RoTransformError", handler, fallback_RoTransformError);
+        handler(code, 0, nullptr);
+
+        if (code == static_cast<int32_t>(0x80010108) || // RPC_E_DISCONNECTED
+            code == static_cast<int32_t>(0x800706BA) || // HRESULT_FROM_WIN32(RPC_S_SERVER_UNAVAILABLE)
+            code == static_cast<int32_t>(0x89020001))   // JSCRIPT_E_CANTEXECUTE
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     template <typename Delegate, typename... Arg>
     bool invoke(Delegate const& delegate, Arg const&... args) noexcept
     {
@@ -351,18 +369,7 @@ namespace winrt::impl
         }
         catch (...)
         {
-            int32_t const code = to_hresult();
-
-            static int32_t(__stdcall * handler)(int32_t, int32_t, void*) noexcept;
-            impl::load_runtime_function(L"combase.dll", "RoTransformError", handler, fallback_RoTransformError);
-            handler(code, 0, nullptr);
-
-            if (code == static_cast<int32_t>(0x80010108) || // RPC_E_DISCONNECTED
-                code == static_cast<int32_t>(0x800706BA) || // HRESULT_FROM_WIN32(RPC_S_SERVER_UNAVAILABLE)
-                code == static_cast<int32_t>(0x89020001))   // JSCRIPT_E_CANTEXECUTE
-            {
-                return false;
-            }
+            return report_failed_invoke();
         }
 
         return true;
@@ -387,28 +394,7 @@ WINRT_EXPORT namespace winrt
 
         event_token add(delegate_type const& delegate)
         {
-            event_token token{};
-
-            // Extends life of old targets array to release delegates outside of lock.
-            delegate_array temp_targets;
-
-            {
-                slim_lock_guard const change_guard(m_change);
-                delegate_array new_targets = impl::make_event_array<delegate_type>((!m_targets) ? 1 : m_targets->size() + 1);
-
-                if (m_targets)
-                {
-                    std::copy_n(m_targets->begin(), m_targets->size(), new_targets->begin());
-                }
-
-                new_targets->back() = impl::make_agile_delegate(delegate);
-                token = get_token(new_targets->back());
-
-                slim_lock_guard const swap_guard(m_swap);
-                temp_targets = std::exchange(m_targets, std::move(new_targets));
-            }
-
-            return token;
+            return add_agile(impl::make_agile_delegate(delegate));
         }
 
         void remove(event_token const token)
@@ -509,6 +495,32 @@ WINRT_EXPORT namespace winrt
         }
 
     private:
+
+        WINRT_IMPL_NOINLINE event_token add_agile(delegate_type delegate)
+        {
+            event_token token{};
+
+            // Extends life of old targets array to release delegates outside of lock.
+            delegate_array temp_targets;
+
+            {
+                slim_lock_guard const change_guard(m_change);
+                delegate_array new_targets = impl::make_event_array<delegate_type>((!m_targets) ? 1 : m_targets->size() + 1);
+
+                if (m_targets)
+                {
+                    std::copy_n(m_targets->begin(), m_targets->size(), new_targets->begin());
+                }
+
+                new_targets->back() = std::move(delegate);
+                token = get_token(new_targets->back());
+
+                slim_lock_guard const swap_guard(m_swap);
+                temp_targets = std::exchange(m_targets, std::move(new_targets));
+            }
+
+            return token;
+        }
 
         event_token get_token(delegate_type const& delegate) const noexcept
         {

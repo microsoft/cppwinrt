@@ -11,11 +11,13 @@ C++/WinRT is an entirely standard C++ language projection for Windows Runtime (W
 
 Don't build C++/WinRT yourself - just download the latest version here: https://aka.ms/cppwinrt/nuget
 
+## Working on the compiler
+
 If you really want to build it yourself, the simplest way to do so is to run the `build_test_all.cmd` script in the root directory. Developers needing to work on the C++/WinRT compiler itself should go through the following steps to arrive at an efficient inner loop:
 
 * Open a dev command prompt pointing at the root of the repo.
 * Open the `cppwinrt.sln` solution.
-* Build the x64 Release configuration of the `cppwinrt` project only. Do not attempt to build anything else just yet.
+* Rebuild the x64 Release configuration of the `cppwinrt` project only. Do not attempt to build anything else just yet.
 * Run `build_projection.cmd` in the dev command prompt.
 * Switch to the x64 Debug configuration in Visual Studio and build all projects as needed.
 

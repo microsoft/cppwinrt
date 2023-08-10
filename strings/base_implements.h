@@ -1156,19 +1156,16 @@ namespace winrt::impl
                 return 0;
             }
 
-            if constexpr (is_agile::value)
-            {
-                if (is_guid_of<IAgileObject>(id))
-                {
-                    *object = get_unknown();
-                    AddRef();
-                    return 0;
-                }
+            return query_interface_common(id, object);
+        }
 
-                if (is_guid_of<IMarshal>(id))
-                {
-                    return make_marshaler(get_unknown(), object);
-                }
+        WINRT_IMPL_NOINLINE int32_t query_interface_common(guid const& id, void** object) noexcept
+        {
+            if (is_guid_of<Windows::Foundation::IUnknown>(id))
+            {
+                *object = get_unknown();
+                AddRef();
+                return 0;
             }
 
             if constexpr (is_inspectable::value)
@@ -1181,19 +1178,27 @@ namespace winrt::impl
                 }
             }
 
-            if (is_guid_of<Windows::Foundation::IUnknown>(id))
-            {
-                *object = get_unknown();
-                AddRef();
-                return 0;
-            }
-
             if constexpr (is_weak_ref_source::value)
             {
                 if (is_guid_of<impl::IWeakReferenceSource>(id))
                 {
                     *object = make_weak_ref();
                     return *object ? error_ok : error_bad_alloc;
+                }
+            }
+            
+            if constexpr (is_agile::value)
+            {
+                if (is_guid_of<impl::IAgileObject>(id))
+                {
+                    *object = get_unknown();
+                    AddRef();
+                    return 0;
+                }
+
+                if (is_guid_of<IMarshal>(id))
+                {
+                    return make_marshaler(get_unknown(), object);
                 }
             }
 

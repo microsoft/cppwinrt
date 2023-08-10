@@ -115,6 +115,19 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_cpp20_no_sourcelocatio
 		{D613FB39-5035-4043-91E2-BAB323908AF4} = {D613FB39-5035-4043-91E2-BAB323908AF4}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D15C8430-A7CD-4616-BD84-243B26A9F1C2}"
+	ProjectSection(SolutionItems) = preProject
+		build_nuget.cmd = build_nuget.cmd
+		build_prior_projection.cmd = build_prior_projection.cmd
+		build_projection.cmd = build_projection.cmd
+		build_test_all.cmd = build_test_all.cmd
+		build_vsix.cmd = build_vsix.cmd
+		compile_tests.cmd = compile_tests.cmd
+		prepare_versionless_diffs.cmd = prepare_versionless_diffs.cmd
+		README.md = README.md
+		run_tests.cmd = run_tests.cmd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
