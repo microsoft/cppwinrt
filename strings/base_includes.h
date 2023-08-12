@@ -34,6 +34,10 @@
 #include <ostream>
 #endif
 
+#ifdef __cpp_lib_span
+#include <span>
+#endif
+
 #ifdef __cpp_lib_format
 #include <format>
 #endif
