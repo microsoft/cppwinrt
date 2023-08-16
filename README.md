@@ -17,9 +17,13 @@ If you really want to build it yourself, the simplest way to do so is to run the
 
 * Open a dev command prompt pointing at the root of the repo.
 * Open the `cppwinrt.sln` solution.
-* Rebuild the x64 Release configuration of the `cppwinrt` project only. Do not attempt to build anything else just yet.
-* Run `build_projection.cmd` in the dev command prompt.
-* Switch to the x64 Debug configuration in Visual Studio and build all projects as needed.
+* Choose a configuration (x64, x86, Release, Debug) and build projects as needed.
+
+If you are working on an ARM64 or ARM specific issue from an x64 or x86 host, you will need to instead:
+
+* Open the `cppwinrt.sln` solution
+* Build the x86 version of the "cppwinrt" project first
+* Switch to your preferred configuration and build the test binaries and run them in your test environment
 
 ## Comparing Outputs
 
