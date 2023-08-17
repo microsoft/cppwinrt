@@ -483,7 +483,7 @@ jobs:
 
       - name: Test run (build projection using Windows.winmd)
         run: |
-          curl -o Windows.winmd -L https://github.com/microsoft/windows-rs/raw/master/crates/libs/metadata/default/Windows.winmd
+          curl -o Windows.winmd -L https://github.com/microsoft/windows-rs/raw/master/crates/libs/bindgen/default/Windows.winmd
           install/bin/cppwinrt -in Windows.winmd -out /tmp/cppwinrt -verbose
 
       - id: setup-llvm
@@ -575,7 +575,7 @@ jobs:
 
       - name: Test run (build projection using Windows.winmd)
         run: |
-          curl -o Windows.winmd -L https://github.com/microsoft/windows-rs/raw/master/crates/libs/metadata/default/Windows.winmd
+          curl -o Windows.winmd -L https://github.com/microsoft/windows-rs/raw/master/crates/libs/bindgen/default/Windows.winmd
           install/bin/cppwinrt -in Windows.winmd -out build/out -verbose
 
   build-msvc-natvis:
