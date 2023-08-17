@@ -182,18 +182,6 @@
       <AdditionalMetadataDirectories>C:\Windows\System32\WinMetadata</AdditionalMetadataDirectories>
       <PrependWithABINamepsace>true</PrependWithABINamepsace>
     </Midl>
-    <CustomBuildStep>
-      <Command>$(CppWinRTDir)cppwinrt -input $(OutputPath)test_component.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component -ref sdk -verbose -prefix -opt -lib test -fastabi -overwrite -name test_component</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message />
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>Generated Files\module.g.cpp</Outputs>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(OutputPath)test_component.winmd</Inputs>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
     <ClCompile>
@@ -243,19 +231,6 @@
       <AdditionalMetadataDirectories>C:\Windows\System32\WinMetadata</AdditionalMetadataDirectories>
       <PrependWithABINamepsace>true</PrependWithABINamepsace>
     </Midl>
-    <CustomBuildStep>
-      <Command>$(CppWinRTDir)cppwinrt -input $(OutputPath)test_component.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component -ref sdk -verbose -prefix -opt -lib test -fastabi -overwrite -name test_component</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message>
-      </Message>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>Generated Files\module.g.cpp</Outputs>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(OutputPath)test_component.winmd</Inputs>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <ClCompile>
@@ -305,19 +280,6 @@
       <AdditionalMetadataDirectories>C:\Windows\System32\WinMetadata</AdditionalMetadataDirectories>
       <PrependWithABINamepsace>true</PrependWithABINamepsace>
     </Midl>
-    <CustomBuildStep>
-      <Command>$(CppWinRTDir)cppwinrt -input $(OutputPath)test_component.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component -ref sdk -verbose -prefix -opt -lib test -fastabi -overwrite -name test_component</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message>
-      </Message>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>Generated Files\module.g.cpp</Outputs>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(OutputPath)test_component.winmd</Inputs>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -354,18 +316,6 @@
       <AdditionalMetadataDirectories>C:\Windows\System32\WinMetadata</AdditionalMetadataDirectories>
       <PrependWithABINamepsace>true</PrependWithABINamepsace>
     </Midl>
-    <CustomBuildStep>
-      <Command>$(CppWinRTDir)cppwinrt -input $(OutputPath)test_component.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component -ref sdk -verbose -prefix -opt -lib test -fastabi -overwrite -name test_component</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message />
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>Generated Files\module.g.cpp</Outputs>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(OutputPath)test_component.winmd</Inputs>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -406,18 +356,6 @@
       <AdditionalMetadataDirectories>C:\Windows\System32\WinMetadata</AdditionalMetadataDirectories>
       <PrependWithABINamepsace>true</PrependWithABINamepsace>
     </Midl>
-    <CustomBuildStep>
-      <Command>$(CppWinRTDir)cppwinrt -input $(OutputPath)test_component.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component -ref sdk -verbose -prefix -opt -lib test -fastabi -overwrite -name test_component</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message />
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>Generated Files\module.g.cpp</Outputs>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(OutputPath)test_component.winmd</Inputs>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <ClCompile>
@@ -471,19 +409,6 @@
       <AdditionalMetadataDirectories>C:\Windows\System32\WinMetadata</AdditionalMetadataDirectories>
       <PrependWithABINamepsace>true</PrependWithABINamepsace>
     </Midl>
-    <CustomBuildStep>
-      <Command>$(CppWinRTDir)cppwinrt -input $(OutputPath)test_component.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component -ref sdk -verbose -prefix -opt -lib test -fastabi -overwrite -name test_component</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message>
-      </Message>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>Generated Files\module.g.cpp</Outputs>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(OutputPath)test_component.winmd</Inputs>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
     <ClCompile>
@@ -537,19 +462,6 @@
       <AdditionalMetadataDirectories>C:\Windows\System32\WinMetadata</AdditionalMetadataDirectories>
       <PrependWithABINamepsace>true</PrependWithABINamepsace>
     </Midl>
-    <CustomBuildStep>
-      <Command>$(CppWinRTDir)cppwinrt -input $(OutputPath)test_component.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component -ref sdk -verbose -prefix -opt -lib test -fastabi -overwrite -name test_component</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message>
-      </Message>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>Generated Files\module.g.cpp</Outputs>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(OutputPath)test_component.winmd</Inputs>
-    </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -590,17 +502,16 @@
       <AdditionalMetadataDirectories>C:\Windows\System32\WinMetadata</AdditionalMetadataDirectories>
       <PrependWithABINamepsace>true</PrependWithABINamepsace>
     </Midl>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup>
     <CustomBuildStep>
-      <Command>$(CppWinRTDir)cppwinrt -input $(OutputPath)test_component.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component -ref sdk -verbose -prefix -opt -lib test -fastabi -overwrite -name test_component</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message />
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>Generated Files\module.g.cpp</Outputs>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(OutputPath)test_component.winmd</Inputs>
+      <Command>
+      $(CppWinRTDir)cppwinrt -in local -out $(OutputPath) -verbose
+      $(CppWinRTDir)cppwinrt -input $(OutputPath)test_component.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component -ref sdk -verbose -prefix -opt -lib test -fastabi -overwrite -name test_component
+      </Command>
+      <Message>Projecting Windows and component metadata into $(OutputPath)</Message>
+      <Outputs>$(OutputPath)\winrt\base.h;Generated Files\module.g.cpp</Outputs>
+      <Inputs>$(CppWinRTDir)cppwinrt.exe;$(OutputPath)test_component.winmd</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
