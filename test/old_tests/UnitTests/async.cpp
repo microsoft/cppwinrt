@@ -1553,6 +1553,26 @@ TEST_CASE("async, resume_after")
     REQUIRE(after != GetCurrentThreadId());
 }
 
+namespace
+{
+    IAsyncAction test_resume_after_illegal_state(winrt::impl::timespan_awaiter &awaiter)
+    {
+        co_await awaiter;
+    }
+}
+
+TEST_CASE("async, resume_after, illegal_state")
+{
+    auto awaiter = resume_after(1s);
+
+    IAsyncAction first = test_resume_after_illegal_state(awaiter);
+    IAsyncAction second = test_resume_after_illegal_state(awaiter);
+
+    REQUIRE_THROWS_AS(second.get(), hresult_illegal_method_call);
+
+    first.get(); // allow first coroutine to succeed
+}
+
 //
 // Other tests already excercise resume_on_signal so here we focus on testing the timeout.
 //
@@ -1583,4 +1603,26 @@ TEST_CASE("async, resume_on_signal")
     Sleep(50);
     SetEvent(event.get()); // allow final resume_on_signal to succeed
     async.get();
+}
+
+namespace
+{
+    IAsyncAction test_resume_on_signal_illegal_state(winrt::impl::signal_awaiter &awaiter)
+    {
+        co_await awaiter;
+    }
+}
+
+TEST_CASE("async, resume_on_signal, illegal_state")
+{
+    handle event { CreateEvent(nullptr, false, false, nullptr) };
+    auto awaiter = resume_on_signal(event.get());
+
+    IAsyncAction first = test_resume_on_signal_illegal_state(awaiter);
+    IAsyncAction second = test_resume_on_signal_illegal_state(awaiter);
+
+    REQUIRE_THROWS_AS(second.get(), hresult_illegal_method_call);
+
+    SetEvent(event.get()); // allow first coroutine to succeed
+    first.get();
 }

@@ -381,10 +381,23 @@ namespace winrt::impl
         template <typename T>
         void await_suspend(impl::coroutine_handle<T> handle)
         {
-            set_cancellable_promise_from_handle(handle);
+            handle_type<timer_traits> new_timer;
+            new_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr)));
 
-            m_handle = handle;
-            create_threadpool_timer();
+            state expected = state::idle;
+            if (m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
+            {
+                set_cancellable_promise_from_handle(handle);
+
+                m_handle = handle;
+                m_timer = std::move(new_timer);
+
+                set_threadpool_timer();
+            }
+            else
+            {
+                throw hresult_illegal_method_call();
+            }
         }
 
         void await_resume()
@@ -396,17 +409,10 @@ namespace winrt::impl
         }
 
     private:
-        void create_threadpool_timer()
+        void set_threadpool_timer()
         {
-            m_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr)));
             int64_t relative_count = -m_duration.count();
             WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &relative_count, 0, 0);
-
-            state expected = state::idle;
-            if (!m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
-            {
-                fire_immediately();
-            }
         }
 
         static int32_t __stdcall fallback_SetThreadpoolTimerEx(winrt::impl::ptp_timer, void*, uint32_t, uint32_t) noexcept
@@ -495,12 +501,25 @@ namespace winrt::impl
         }
 
         template <typename T>
-        void await_suspend(impl::coroutine_handle<T> resume)
+        void await_suspend(impl::coroutine_handle<T> handle)
         {
-            set_cancellable_promise_from_handle(resume);
+            handle_type<wait_traits> new_wait;
+            new_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
 
-            m_resume = resume;
-            create_threadpool_wait();
+            state expected = state::idle;
+            if (m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
+            {
+                set_cancellable_promise_from_handle(handle);
+
+                m_resume = handle;
+                m_wait = std::move(new_wait);
+
+                set_threadpool_wait();
+            }
+            else
+            {
+                throw hresult_illegal_method_call();
+            }
         }
 
         bool await_resume()
@@ -518,18 +537,11 @@ namespace winrt::impl
             return 0; // pretend wait has already triggered and a callback is on its way
         }
 
-        void create_threadpool_wait()
+        void set_threadpool_wait()
         {
-            m_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
             int64_t relative_count = -m_timeout.count();
             int64_t* file_time = relative_count != 0 ? &relative_count : nullptr;
             WINRT_IMPL_SetThreadpoolWait(m_wait.get(), m_handle, file_time);
-
-            state expected = state::idle;
-            if (!m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
-            {
-                fire_immediately();
-            }
         }
 
         void fire_immediately() noexcept
