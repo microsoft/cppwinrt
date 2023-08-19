@@ -32,8 +32,12 @@ WINRT_EXPORT namespace winrt
         {}
 
 #ifdef __cpp_lib_span
-        template <typename T>
-        array_view(std::span<T> span) : array_view(span.data(), static_cast<size_t>(span.size())) {}
+        template <typename C, std::size_t extent>
+        array_view(std::span<C, extent> span) noexcept :
+            array_view(span.data(), static_cast<size_type>(span.size())) 
+        {
+            WINRT_ASSERT(span.size() <= UINT_MAX);
+        }
 
         operator std::span<T>() const noexcept
         {
@@ -233,6 +237,11 @@ WINRT_EXPORT namespace winrt
     template <typename C, size_t N> array_view(std::array<C, N>& value) -> array_view<C>;
     template <typename C, size_t N> array_view(std::array<C, N> const& value) -> array_view<C const>;
 
+#ifdef __cpp_lib_span
+    template <typename C, std::size_t extent> array_view(std::span<C, extent>& value) -> array_view<C>;
+    template <typename C, std::size_t extent> array_view(std::span<C, extent> const& value) -> array_view<C const>;
+#endif
+
     template <typename T>
     struct com_array : array_view<T>
     {
@@ -283,6 +292,15 @@ WINRT_EXPORT namespace winrt
         explicit com_array(std::array<U, N> const& value) :
             com_array(value.begin(), value.end())
         {}
+
+#ifdef __cpp_lib_span
+        template <typename U, std::size_t extent>
+        explicit com_array(std::span<U, extent> span) noexcept : 
+            com_array(span.data(), span.data() + span.size()) 
+        {
+            WINRT_ASSERT(span.size() <= UINT_MAX);
+        }
+#endif
 
         template <typename U, size_t N>
         explicit com_array(U const(&value)[N]) :
@@ -384,6 +402,11 @@ WINRT_EXPORT namespace winrt
     template <size_t N, typename C> com_array(std::array<C, N> const&) -> com_array<std::decay_t<C>>;
     template <size_t N, typename C> com_array(C const(&)[N]) -> com_array<std::decay_t<C>>;
     template <typename C> com_array(std::initializer_list<C>) -> com_array<std::decay_t<C>>;
+
+#ifdef __cpp_lib_span
+    template <typename C, std::size_t extent> com_array(std::span<C, extent> const& value) -> com_array<std::decay_t<C>>;
+#endif
+
 
     namespace impl
     {
