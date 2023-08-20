@@ -42,6 +42,23 @@ TEST_CASE("array,DataReader,std::span")
     REQUIRE(a[2] == 3);
 }
 
+//
+// This test illustrates passing a std::array to a method that takes array_view<T>
+//
+TEST_CASE("array,DataReader,std::span,direct")
+{
+    auto reader = CreateDataReader({ 1, 2, 3 }).get();
+
+    std::array<byte, 3> a{};
+    reader.ReadBytes(a); // FillArray pattern
+
+    REQUIRE(a.size() == 3);
+    REQUIRE(a[0] == 1);
+    REQUIRE(a[1] == 2);
+    REQUIRE(a[2] == 3);
+}
+
+
 TEST_CASE("array_view,span")
 {
     {
