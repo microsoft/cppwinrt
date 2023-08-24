@@ -32,7 +32,7 @@ WINRT_EXPORT namespace winrt
         {}
 
 #ifdef __cpp_lib_span
-        template <typename C, std::size_t extent>
+        template <typename C, size_t extent>
         array_view(std::span<C, extent> span) noexcept :
             array_view(span.data(), static_cast<size_type>(span.size())) 
         {
@@ -238,8 +238,8 @@ WINRT_EXPORT namespace winrt
     template <typename C, size_t N> array_view(std::array<C, N> const& value) -> array_view<C const>;
 
 #ifdef __cpp_lib_span
-    template <typename C, std::size_t extent> array_view(std::span<C, extent>& value) -> array_view<C>;
-    template <typename C, std::size_t extent> array_view(std::span<C, extent> const& value) -> array_view<C const>;
+    template <typename C, size_t extent> array_view(std::span<C, extent>& value) -> array_view<C>;
+    template <typename C, size_t extent> array_view(std::span<C, extent> const& value) -> array_view<C const>;
 #endif
 
     template <typename T>
@@ -294,7 +294,7 @@ WINRT_EXPORT namespace winrt
         {}
 
 #ifdef __cpp_lib_span
-        template <typename U, std::size_t extent>
+        template <typename U, size_t extent>
         explicit com_array(std::span<U, extent> span) noexcept : 
             com_array(span.data(), span.data() + span.size()) 
         {
@@ -404,7 +404,7 @@ WINRT_EXPORT namespace winrt
     template <typename C> com_array(std::initializer_list<C>) -> com_array<std::decay_t<C>>;
 
 #ifdef __cpp_lib_span
-    template <typename C, std::size_t extent> com_array(std::span<C, extent> const& value) -> com_array<std::decay_t<C>>;
+    template <typename C, size_t extent> com_array(std::span<C, extent> const& value) -> com_array<std::decay_t<C>>;
 #endif
 
 
