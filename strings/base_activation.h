@@ -18,13 +18,6 @@ namespace winrt::impl
 
     using library_handle = handle_type<library_traits>;
 
-    inline int32_t __stdcall fallback_RoGetActivationFactory(void*, guid const&, void** factory) noexcept
-    {
-        *factory = nullptr;
-        return error_class_not_available;
-    }
-
-
     template <bool isSameInterfaceAsIActivationFactory>
     WINRT_IMPL_NOINLINE hresult get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
     {
@@ -33,9 +26,7 @@ namespace winrt::impl
             return winrt_activation_handler(*(void**)(&name), guid, result);
         }
 
-        static int32_t(__stdcall * handler)(void* classId, winrt::guid const& iid, void** factory) noexcept;
-        impl::load_runtime_function(L"combase.dll", "RoGetActivationFactory", handler, fallback_RoGetActivationFactory);
-        hresult hr = handler(*(void**)(&name), guid, result);
+        hresult hr = WINRT_IMPL_RoGetActivationFactory(*(void**)(&name), guid, result);
 
         if (hr == impl::error_not_initialized)
         {
@@ -48,7 +39,7 @@ namespace winrt::impl
 
             void* cookie;
             usage(&cookie);
-            hr = handler(*(void**)(&name), guid, result);
+            hr = WINRT_IMPL_RoGetActivationFactory(*(void**)(&name), guid, result);
         }
 
         if (hr == 0)
