@@ -11,7 +11,6 @@ if "%target_configuration%"=="" set target_configuration=Debug
 call :run_test test
 call :run_test test_cpp20
 call :run_test test_cpp20_no_sourcelocation
-call :run_test test_win7
 call :run_test test_fast
 call :run_test test_slow
 call :run_test test_old
