@@ -22,10 +22,6 @@ jobs:
         TestExe: 'test_cpp20_no_sourcelocation'
         TestProject: 'test_cpp20_no_sourcelocation'
         BuildPlatform: 'x86'
-      test_win7.x86:
-        TestExe: 'test_win7'
-        TestProject: 'test_win7'
-        BuildPlatform: 'x86'
       test_fast.x86:
         TestExe: 'test_fast'
         TestProject: 'test_fast'

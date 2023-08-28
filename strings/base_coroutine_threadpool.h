@@ -409,17 +409,9 @@ namespace winrt::impl
             }
         }
 
-        static int32_t __stdcall fallback_SetThreadpoolTimerEx(winrt::impl::ptp_timer, void*, uint32_t, uint32_t) noexcept
-        {
-            return 0; // pretend timer has already triggered and a callback is on its way
-        }
-
         void fire_immediately() noexcept
         {
-            static int32_t(__stdcall * handler)(winrt::impl::ptp_timer, void*, uint32_t, uint32_t) noexcept;
-            impl::load_runtime_function(L"kernel32.dll", "SetThreadpoolTimerEx", handler, fallback_SetThreadpoolTimerEx);
-
-            if (handler(m_timer.get(), nullptr, 0, 0))
+            if (WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), nullptr, 0, 0))
             {
                 int64_t now = 0;
                 WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &now, 0, 0);
@@ -513,10 +505,6 @@ namespace winrt::impl
         }
 
     private:
-        static int32_t __stdcall fallback_SetThreadpoolWaitEx(winrt::impl::ptp_wait, void*, void*, void*) noexcept
-        {
-            return 0; // pretend wait has already triggered and a callback is on its way
-        }
 
         void create_threadpool_wait()
         {
@@ -534,10 +522,7 @@ namespace winrt::impl
 
         void fire_immediately() noexcept
         {
-            static int32_t(__stdcall * handler)(winrt::impl::ptp_wait, void*, void*, void*) noexcept;
-            impl::load_runtime_function(L"kernel32.dll", "SetThreadpoolWaitEx", handler, fallback_SetThreadpoolWaitEx);
-
-            if (handler(m_wait.get(), nullptr, nullptr, nullptr))
+            if (WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), nullptr, nullptr, nullptr))
             {
                 int64_t now = 0;
                 WINRT_IMPL_SetThreadpoolWait(m_wait.get(), WINRT_IMPL_GetCurrentProcess(), &now);
