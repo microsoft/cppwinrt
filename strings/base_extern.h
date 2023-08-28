@@ -24,6 +24,14 @@ __declspec(selectany) int32_t(__stdcall* winrt_activation_handler)(void* classId
 
 extern "C"
 {
+    int32_t __stdcall WINRT_IMPL_RoGetActivationFactory(void* classId, winrt::guid const& iid, void** factory) noexcept WINRT_IMPL_LINK(RoGetActivationFactory, 12);
+    int32_t __stdcall WINRT_IMPL_RoGetAgileReference(uint32_t options, winrt::guid const& iid, void* object, void** reference) noexcept WINRT_IMPL_LINK(RoGetAgileReference, 16);
+    int32_t __stdcall WINRT_IMPL_SetThreadpoolTimerEx(winrt::impl::ptp_timer, void*, uint32_t, uint32_t) noexcept WINRT_IMPL_LINK(SetThreadpoolTimerEx, 16);
+    int32_t __stdcall WINRT_IMPL_SetThreadpoolWaitEx(winrt::impl::ptp_wait, void*, void*, void*) noexcept WINRT_IMPL_LINK(SetThreadpoolWaitEx, 16);
+    int32_t __stdcall WINRT_IMPL_RoOriginateLanguageException(int32_t error, void* message, void* exception) noexcept WINRT_IMPL_LINK(RoOriginateLanguageException, 12);
+    void __stdcall WINRT_IMPL_RoFailFastWithErrorContext(int32_t) noexcept WINRT_IMPL_LINK(RoFailFastWithErrorContext, 4);
+    int32_t __stdcall WINRT_IMPL_RoTransformError(int32_t, int32_t, void*) noexcept WINRT_IMPL_LINK(RoTransformError, 12);
+
     void* __stdcall WINRT_IMPL_LoadLibraryExW(wchar_t const* name, void* unused, uint32_t flags) noexcept WINRT_IMPL_LINK(LoadLibraryExW, 12);
     int32_t __stdcall WINRT_IMPL_FreeLibrary(void* library) noexcept WINRT_IMPL_LINK(FreeLibrary, 4);
     void* __stdcall WINRT_IMPL_GetProcAddress(void* library, char const* name) noexcept WINRT_IMPL_LINK(GetProcAddress, 8);
