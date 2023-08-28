@@ -280,6 +280,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="array_span.cpp" />
     <ClCompile Include="await_completed.cpp" />
     <ClCompile Include="custom_error.cpp" />
     <ClCompile Include="format.cpp" />
