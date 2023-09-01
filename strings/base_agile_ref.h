@@ -131,54 +131,9 @@ namespace winrt::impl
         return WINRT_IMPL_LoadLibraryExW(library, nullptr, 0x00001000 /* LOAD_LIBRARY_SEARCH_DEFAULT_DIRS */);
     }
 
-    template <typename F, typename L>
-    void load_runtime_function(wchar_t const* library, char const* name, F& result, L fallback) noexcept
-    {
-        if (result)
-        {
-            return;
-        }
-
-        result = reinterpret_cast<F>(WINRT_IMPL_GetProcAddress(load_library(library), name));
-
-        if (result)
-        {
-            return;
-        }
-
-        result = fallback;
-    }
-
-    inline int32_t __stdcall fallback_RoGetAgileReference(uint32_t, winrt::guid const& iid, void* object, void** reference) noexcept
-    {
-        *reference = nullptr;
-        static constexpr guid git_clsid{ 0x00000323, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };
-
-        com_ptr<IGlobalInterfaceTable> git;
-        hresult hr = WINRT_IMPL_CoCreateInstance(git_clsid, nullptr, 1 /*CLSCTX_INPROC_SERVER*/, guid_of<IGlobalInterfaceTable>(), git.put_void());
-
-        if (hr < 0)
-        {
-            return hr;
-        }
-
-        uint32_t cookie{};
-        hr = git->RegisterInterfaceInGlobal(object, iid, &cookie);
-
-        if (hr < 0)
-        {
-            return hr;
-        }
-
-        *reference = new agile_ref_fallback(std::move(git), cookie);
-        return 0;
-    }
-
     inline hresult get_agile_reference(winrt::guid const& iid, void* object, void** reference) noexcept
     {
-        static int32_t(__stdcall * handler)(uint32_t options, winrt::guid const& iid, void* object, void** reference) noexcept;
-        load_runtime_function(L"combase.dll", "RoGetAgileReference", handler, fallback_RoGetAgileReference);
-        return handler(0, iid, object, reference);
+        return WINRT_IMPL_RoGetAgileReference(0, iid, object, reference);
     }
 }
 
