@@ -801,7 +801,7 @@ namespace winrt::impl
     struct WINRT_IMPL_EMPTY_BASES root_implements_composable_inner
     {
     protected:
-        static constexpr inspectable_abi* outer() noexcept { return nullptr; }
+        static inspectable_abi* outer() noexcept { return nullptr; }
 
         template <typename, typename, typename>
         friend class produce_dispatch_to_overridable_base;
