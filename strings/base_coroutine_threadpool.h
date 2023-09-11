@@ -366,7 +366,8 @@ namespace winrt::impl
             promise->set_canceller([](void* context)
             {
                 auto that = static_cast<timespan_awaiter*>(context);
-                if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
+                that->m_cancelled.store(true, std::memory_order_acquire);
+                if (WINRT_IMPL_IsThreadpoolTimerSet(that->m_timer.get()))
                 {
                     that->fire_immediately();
                 }
@@ -384,8 +385,7 @@ namespace winrt::impl
             handle_type<timer_traits> new_timer;
             new_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr)));
 
-            state expected = state::idle;
-            if (m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
+            if (!m_timer || !WINRT_IMPL_IsThreadpoolTimerSet(m_timer.get()))
             {
                 set_cancellable_promise_from_handle(handle);
 
@@ -402,7 +402,7 @@ namespace winrt::impl
 
         void await_resume()
         {
-            if (m_state.exchange(state::idle, std::memory_order_relaxed) == state::canceled)
+            if (m_cancelled.exchange(false, std::memory_order_relaxed) == true)
             {
                 throw hresult_canceled();
             }
@@ -412,7 +412,7 @@ namespace winrt::impl
         void set_threadpool_timer()
         {
             int64_t relative_count = -m_duration.count();
-            WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &relative_count, 0, 0);
+            WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &relative_count, 0, 0);
         }
 
         void fire_immediately() noexcept
@@ -420,7 +420,7 @@ namespace winrt::impl
             if (WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), nullptr, 0, 0))
             {
                 int64_t now = 0;
-                WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &now, 0, 0);
+                WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &now, 0, 0);
             }
         }
 
@@ -445,12 +445,10 @@ namespace winrt::impl
             }
         };
 
-        enum class state { idle, pending, canceled };
-
         handle_type<timer_traits> m_timer;
         Windows::Foundation::TimeSpan m_duration;
         impl::coroutine_handle<> m_handle;
-        std::atomic<state> m_state{ state::idle };
+        std::atomic<bool> m_cancelled;
     };
 
     struct signal_awaiter : cancellable_awaiter<signal_awaiter>
@@ -480,8 +478,18 @@ namespace winrt::impl
             promise->set_canceller([](void* context)
             {
                 auto that = static_cast<signal_awaiter*>(context);
-                if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
+                state expected = state::suspended;
+                if (that->m_state.compare_exchange_strong(expected, state::canceled, std::memory_order_acquire))
                 {
+                    that->fire_immediately();
+                }
+                else if (expected == state::suspending)
+                {
+                    for (; that->m_state.compare_exchange_strong(expected, state::canceled, std::memory_order_acquire); expected = state::suspended)
+                    {
+                        // spinlock until suspended
+                    }
+
                     that->fire_immediately();
                 }
             }, this);
@@ -499,13 +507,14 @@ namespace winrt::impl
             new_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
 
             state expected = state::idle;
-            if (m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
+            if (m_state.compare_exchange_strong(expected, state::suspending, std::memory_order_release))
             {
                 set_cancellable_promise_from_handle(handle);
 
                 m_resume = handle;
                 m_wait = std::move(new_wait);
 
+                m_state.store(state::suspended, std::memory_order_release);
                 set_threadpool_wait();
             }
             else
@@ -529,7 +538,7 @@ namespace winrt::impl
         {
             int64_t relative_count = -m_timeout.count();
             int64_t* file_time = relative_count != 0 ? &relative_count : nullptr;
-            WINRT_IMPL_SetThreadpoolWait(m_wait.get(), m_handle, file_time);
+            WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), m_handle, file_time, nullptr);
         }
 
         void fire_immediately() noexcept
@@ -537,7 +546,7 @@ namespace winrt::impl
             if (WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), nullptr, nullptr, nullptr))
             {
                 int64_t now = 0;
-                WINRT_IMPL_SetThreadpoolWait(m_wait.get(), WINRT_IMPL_GetCurrentProcess(), &now);
+                WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), WINRT_IMPL_GetCurrentProcess(), &now, nullptr);
             }
         }
 
@@ -563,7 +572,7 @@ namespace winrt::impl
             }
         };
 
-        enum class state { idle, pending, canceled };
+        enum class state { idle, suspending, suspended, canceled };
 
         handle_type<wait_traits> m_wait;
         Windows::Foundation::TimeSpan m_timeout;
