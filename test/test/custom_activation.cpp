@@ -53,19 +53,23 @@ TEST_CASE("custom_activation")
 
 // An activation handler that can only deal with Windows.Foundation.Uri.
 bool invoked_unimplemented = false;
-bool __stdcall another_handler(void* classId, winrt::guid const& iid, void** factory, int32_t* hr) noexcept
+bool __stdcall uri_only_activation_handler(void* classId, winrt::guid const& iid, void** factory, int32_t* hr) noexcept
 {
+    using namespace std::literals::string_view_literals;
+
+    std::wstring_view const name{ *reinterpret_cast<winrt::hstring*>(&classId) };
     // custom_factory is only interested in Windows.Foundation.Uri
-    if (iid != guid_of<IUriRuntimeClassFactory>()) {
-        invoked_unimplemented = true;
-        // to be explicit.
-        *factory = nullptr;
+    if (name == L"Windows.Foundation.Uri"sv) {
+        *factory = detach_abi(make<custom_factory>());
         *hr = 0;
-        return false;
+        return true;
     }
-    *factory = detach_abi(make<custom_factory>());
+
+    invoked_unimplemented = true;
+    // to be explicit.
+    *factory = nullptr;
     *hr = 0;
-    return true;
+    return false;
 }
 
 TEST_CASE("partial_custom_activation")
@@ -75,7 +79,7 @@ TEST_CASE("partial_custom_activation")
     // Set up global handler
     REQUIRE(!winrt_activation_handler);
     REQUIRE(!try_winrt_activation_handler);
-    try_winrt_activation_handler = another_handler;
+    try_winrt_activation_handler = uri_only_activation_handler;
     REQUIRE(!invoked_unimplemented);
 
     // Activates something the handler cannot deal with. It shouldn't crash and the decoder should behave normally.
