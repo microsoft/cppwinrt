@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props" Condition="Exists('packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" />
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Debug</Configuration>
@@ -131,7 +130,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>VSDEBUGENG_USE_CPP11_SCOPED_ENUMS;_DEBUG;VISUALIZER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);..\cppwinrt;..\strings;$(DIASDKInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\winmd;$(IntDir);..\cppwinrt;..\strings;$(DIASDKInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
@@ -211,7 +210,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>VSDEBUGENG_USE_CPP11_SCOPED_ENUMS;NDEBUG;VISUALIZER_EXPORTS;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(IntDir);..\cppwinrt;..\strings;$(DIASDKInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>.\winmd;$(IntDir);..\cppwinrt;..\strings;$(DIASDKInc);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <ControlFlowGuard>Guard</ControlFlowGuard>
@@ -321,6 +320,5 @@
     </PropertyGroup>
     <Error Condition="!Exists('packages\Microsoft.VSSDK.Debugger.VSDConfigTool.16.0.2012201-preview\build\Microsoft.VSSDK.Debugger.VSDConfigTool.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VSSDK.Debugger.VSDConfigTool.16.0.2012201-preview\build\Microsoft.VSSDK.Debugger.VSDConfigTool.targets'))" />
     <Error Condition="!Exists('packages\Microsoft.VSSDK.Debugger.VSDebugEng.16.0.2012201-preview\Microsoft.VSSDK.Debugger.VSDebugEng.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.VSSDK.Debugger.VSDebugEng.16.0.2012201-preview\Microsoft.VSSDK.Debugger.VSDebugEng.targets'))" />
-    <Error Condition="!Exists('packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.Windows.WinMD.1.0.210629.2\build\native\Microsoft.Windows.WinMD.props'))" />
   </Target>
 </Project>
