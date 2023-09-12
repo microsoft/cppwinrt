@@ -28,8 +28,7 @@ namespace
         REQUIRE(expected);
         REQUIRE(iid == guid_of<IUriRuntimeClassFactory>());
 
-        *factory = detach_abi(make<custom_factory>());
-        return 0;
+        return make<custom_factory>().as(iid, factory);
     }
 }
 
@@ -60,8 +59,7 @@ bool __stdcall uri_only_activation_handler(void* classId, winrt::guid const& iid
     std::wstring_view const name{ *reinterpret_cast<winrt::hstring*>(&classId) };
     // custom_factory is only interested in Windows.Foundation.Uri
     if (name == L"Windows.Foundation.Uri"sv) {
-        *factory = detach_abi(make<custom_factory>());
-        *hr = 0;
+        *hr = make<custom_factory>().as(iid, factory);
         return true;
     }
 
