@@ -38,11 +38,18 @@ namespace
             return winrt::to_hresult();
         }
     }
+
+    void check_custom_factory_activation(std::wstring_view required_domain)
+    {
+        auto uri = Uri(L"http://ignored.com");
+        REQUIRE(uri.Domain() == required_domain);
+    }
 }
 
 TEST_CASE("custom_activation")
 {
     custom_factory::mock_uri = Uri(L"http://actual.com");
+    const auto mock_domain = custom_factory::mock_uri.Domain();
     clear_factory_cache();
 
     // Set up global handler
@@ -50,8 +57,7 @@ TEST_CASE("custom_activation")
     winrt_activation_handler = handler;
 
     // Windows.Foundation.Uri activation factory now returns mock object
-    auto uri = Uri(L"http://ignored.com");
-    REQUIRE(uri.Domain() == L"actual.com");
+    check_custom_factory_activation(mock_domain);
 
     // Remove global handler
     winrt_activation_handler = nullptr;
@@ -89,11 +95,12 @@ bool __stdcall uri_only_activation_handler(void* classId, winrt::guid const& iid
 
 TEST_CASE("partial_custom_activation")
 {
-    clear_factory_cache();
-
     // Set up global handler
     REQUIRE(!winrt_activation_handler);
     REQUIRE(!try_winrt_activation_handler);
+    custom_factory::mock_uri = Uri(L"http://actual.com");
+    const auto mock_domain = custom_factory::mock_uri.Domain();
+    clear_factory_cache();
     try_winrt_activation_handler = uri_only_activation_handler;
     REQUIRE(!invoked_unimplemented);
 
@@ -102,6 +109,9 @@ TEST_CASE("partial_custom_activation")
     REQUIRE(invoked_unimplemented);
     REQUIRE(decoder.GetFirstValueByName(L"uname") == L"c");
     REQUIRE(decoder.GetFirstValueByName(L"passwd") == L"d");
+
+    // Windows.Foundation.Uri activation factory now returns mock object
+    check_custom_factory_activation(mock_domain);
 
     // Remove global handler
     try_winrt_activation_handler = nullptr;
