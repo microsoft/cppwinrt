@@ -21,6 +21,15 @@ namespace winrt::impl
     template <bool isSameInterfaceAsIActivationFactory>
     WINRT_IMPL_NOINLINE hresult get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
     {
+        if (try_winrt_activation_handler)
+        {
+            int32_t hr;
+            if (try_winrt_activation_handler(*(void**)(&name), guid, result, &hr))
+            {
+                return hr;
+            }
+        }
+
         if (winrt_activation_handler)
         {
             return winrt_activation_handler(*(void**)(&name), guid, result);

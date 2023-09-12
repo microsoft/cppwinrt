@@ -50,3 +50,41 @@ TEST_CASE("custom_activation")
     winrt_activation_handler = nullptr;
     clear_factory_cache();
 }
+
+// An activation handler that can only deal with Windows.Foundation.Uri.
+bool invoked_unimplemented = false;
+bool __stdcall another_handler(void* classId, winrt::guid const& iid, void** factory, int32_t* hr) noexcept
+{
+    // custom_factory is only interested in Windows.Foundation.Uri
+    if (iid != guid_of<IUriRuntimeClassFactory>()) {
+        invoked_unimplemented = true;
+        // to be explicit.
+        *factory = nullptr;
+        *hr = 0;
+        return false;
+    }
+    *factory = detach_abi(make<custom_factory>());
+    *hr = 0;
+    return true;
+}
+
+TEST_CASE("partial_custom_activation")
+{
+    clear_factory_cache();
+
+    // Set up global handler
+    REQUIRE(!winrt_activation_handler);
+    REQUIRE(!try_winrt_activation_handler);
+    try_winrt_activation_handler = another_handler;
+    REQUIRE(!invoked_unimplemented);
+
+    // Activates something the handler cannot deal with. It shouldn't crash and the decoder should behave normally.
+    WwwFormUrlDecoder decoder{ L"uname=c&passwd=d" };
+    REQUIRE(invoked_unimplemented);
+    REQUIRE(decoder.GetFirstValueByName(L"uname") == L"c");
+    REQUIRE(decoder.GetFirstValueByName(L"passwd") == L"d");
+
+    // Remove global handler
+    try_winrt_activation_handler = nullptr;
+    clear_factory_cache();
+}
