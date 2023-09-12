@@ -193,6 +193,25 @@ namespace winrt::impl
         }
     }
 
+    template<typename T, auto empty_value = T{}>
+    struct movable_primitive
+    {
+        T value = empty_value;
+        movable_primitive() = default;
+        movable_primitive(T const& init) : value(init) {}
+        movable_primitive(movable_primitive const&) = default;
+        movable_primitive(movable_primitive&& other) :
+            value(other.detach()) {}
+        movable_primitive& operator=(movable_primitive const&) = default;
+        movable_primitive& operator=(movable_primitive&& other)
+        {
+            value = other.detach();
+            return *this;
+        }
+
+        T detach() { return std::exchange(value, empty_value); }
+    };
+
     template <typename T, typename Enable = void>
     struct arg
     {
