@@ -136,3 +136,36 @@ TEST_CASE("await_adapter_agile")
     AgileAsync(dispatcher).get();
     controller.ShutdownQueueAsync().get();
 }
+
+namespace
+{
+    IAsyncAction AgileAsyncVariable(DispatcherQueue dispatcher)
+    {
+        // Switch to the STA.
+        co_await resume_foreground(dispatcher);
+        REQUIRE(is_sta());
+
+        // Ask for agile resumption of a coroutine that finishes on a background thread.
+        // Add a 100ms delay to ensure we suspend. Store the resume_agile in a variable
+        // and await the variable.
+        auto op = resume_agile(OtherBackgroundDelayAsync());
+        co_await op;
+        // We should be on the background thread now.
+        REQUIRE(!is_sta());
+
+        // Second attempt to await the op should fail cleanly.
+        REQUIRE_THROWS_AS(co_await op, hresult_illegal_delegate_assignment);
+        // We should still be on the background thread.
+        REQUIRE(!is_sta());
+    }
+}
+
+
+TEST_CASE("await_adapter_agile_variable")
+{
+    auto controller = DispatcherQueueController::CreateOnDedicatedThread();
+    auto dispatcher = controller.DispatcherQueue();
+
+    AgileAsyncVariable(dispatcher).get();
+    controller.ShutdownQueueAsync().get();
+}

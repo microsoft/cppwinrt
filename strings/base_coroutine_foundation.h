@@ -151,11 +151,12 @@ namespace winrt::impl
 
 #ifdef WINRT_IMPL_COROUTINES
     template <typename Async, bool preserve_context = true>
-    struct await_adapter : cancellable_awaiter<await_adapter<Async>>
+    struct await_adapter : cancellable_awaiter<await_adapter<Async, preserve_context>>
     {
-        await_adapter(Async const& async) : async(async) { }
+        template<typename T>
+        await_adapter(T&& async) : async(std::forward<T>(async)) { }
 
-        Async const& async;
+        std::conditional_t<preserve_context, Async const&, Async> async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
         int32_t failure = 0;
         std::atomic<bool> suspending = true;
@@ -190,6 +191,11 @@ namespace winrt::impl
     private:
         bool register_completed_callback(coroutine_handle<> handle)
         {
+            if constexpr (!preserve_context)
+            {
+                // Ensure that the illegal delegate assignment propagates properly.
+                suspending.store(true, std::memory_order_relaxed);
+            }
             async.Completed(disconnect_aware_handler<preserve_context, await_adapter>(this, handle));
             return suspending.exchange(false, std::memory_order_acquire);
         }
@@ -257,9 +263,9 @@ namespace winrt::impl
 WINRT_EXPORT namespace winrt
 {
     template<typename Async, typename = std::enable_if_t<std::is_convertible_v<Async, winrt::Windows::Foundation::IAsyncInfo>>>
-    inline impl::await_adapter<Async, false> resume_agile(Async const& async)
+    inline impl::await_adapter<std::decay_t<Async>, false> resume_agile(Async&& async)
     {
-        return { async };
+        return { std::forward<Async>(async) };
     };
 }
 
