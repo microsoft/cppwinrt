@@ -43,6 +43,7 @@
 #include <variant>
 #include <cmd_reader.h>
 #include <winmd_reader.h>
+#include <rometadataresolution.h>
 
 #ifndef IF_FAIL_RET
 #define IF_FAIL_RET(expr) { HRESULT _hr = (expr); if(FAILED(_hr)) { return(_hr); } }
@@ -94,7 +95,6 @@ inline bool starts_with(std::string_view const& value, std::string_view const& m
 winmd::reader::TypeDef FindSimpleType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
 winmd::reader::TypeDef FindSimpleType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName);
 winmd::reader::TypeSig FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
-winmd::reader::TypeSig FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName);
 
 inline winmd::reader::TypeDef ResolveType(Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::coded_index<winmd::reader::TypeDefOrRef> index) noexcept
 {

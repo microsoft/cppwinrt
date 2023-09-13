@@ -98,6 +98,18 @@ struct signature_generator
         }
     }
 
+    static std::string get_signature(GenericTypeInstSig const& type)
+    {
+        std::string sig = "pinterface(" + get_guid_signature(type.GenericType());
+        for (auto&& arg : type.GenericArgs())
+        {
+            sig += ";";
+            sig += get_signature(arg);
+        }
+        sig += ")";
+        return sig;
+    }
+
 private:
     static std::string get_class_signature(TypeDef const& type)
     {
@@ -152,20 +164,8 @@ private:
         case TypeDefOrRef::TypeRef:
             return get_guid_signature(find_required(type.TypeRef()));
         default: //case TypeDefOrRef::TypeSpec:
-            return get_guid_signature(type.TypeSpec().Signature().GenericTypeInst().GenericType());
+            return get_signature(type.TypeSpec().Signature().GenericTypeInst());
         }
-    }
-
-    static std::string get_signature(GenericTypeInstSig const& type)
-    {
-        std::string sig = "pinterface(" + get_guid_signature(type.GenericType());
-        for (auto&& arg : type.GenericArgs())
-        {
-            sig += ";";
-            sig += get_signature(arg);
-        }
-        sig += ")";
-        return sig;
     }
 
     static std::string get_signature(TypeSig::value_type const& type)
@@ -266,7 +266,7 @@ static auto calculate_sha1(std::vector<uint8_t> const& input)
     return get_result(intermediate_hash);
 }
 
-static guid generate_guid(coded_index<TypeDefOrRef> const& type)
+static guid generate_guid(GenericTypeInstSig const& type)
 {
     constexpr guid namespace_guid = { 0xd57af411, 0x737b, 0xc042,{ 0xab, 0xae, 0x87, 0x8b, 0x1e, 0x16, 0xad, 0xee } };
     constexpr auto namespace_bytes = winrt::impl::to_array(namespace_guid);
@@ -284,30 +284,32 @@ std::pair<TypeDef, std::wstring> ResolveTypeInterface(DkmProcess* process, winmd
     if (auto ptrIndex = std::get_if<coded_index<TypeDefOrRef>>(&typeSig.Type()))
     {
         index = *ptrIndex;
+        // TODO: Cache on the whole TypeSig, not just the generic index
+        if (auto found = _cache.find(index); found != _cache.end())
+        {
+            return found->second;
+        }
+
+        TypeDef type = ResolveType(process, index);
+        if (!type)
+        {
+            return {};
+        }
+
+        auto guid = index.type() == TypeDefOrRef::TypeSpec ?
+            format_guid(generate_guid(index.TypeSpec().Signature().GenericTypeInst())) : format_guid(get_guid(type));
+
+        auto type_guid = std::pair{ type, guid };
+        _cache[index] = type_guid;
+        return type_guid;
     }
     else if (auto* ptrGeneric = std::get_if<GenericTypeInstSig>(&typeSig.Type()))
     {
         index = ptrGeneric->GenericType();
+        auto guid = format_guid(generate_guid(*ptrGeneric));
+        return { index.TypeDef(), guid };
     }
-
-    // TODO: Cache on the whole TypeSig, not just the generic index
-    if (auto found = _cache.find(index); found != _cache.end())
-    {
-        return found->second;
-    }
-
-    TypeDef type = ResolveType(process, index);
-    if (!type)
-    {
-        return {};
-    }
-
-    auto guid = index.type() == TypeDefOrRef::TypeSpec ?
-        format_guid(generate_guid(index)) : format_guid(get_guid(type));
-
-    auto type_guid = std::pair{ type, guid };
-    _cache[index] = type_guid;
-    return type_guid;
+    return {};
 };
 
 void ClearTypeResolver()

@@ -150,6 +150,71 @@ TypeDef FindSimpleType(DkmProcess* process, std::string_view const& typeNamespac
     return type;
 }
 
+std::vector<std::string> ParseTypeName(std::string_view name)
+{
+    DWORD count;
+    HSTRING* parts;
+    auto wide_name = winrt::to_hstring(name);
+    winrt::check_hresult(::RoParseTypeName(static_cast<HSTRING>(get_abi(wide_name)), &count, &parts));
+
+    winrt::com_array<winrt::hstring> wide_parts{ parts, count, winrt::take_ownership_from_abi };
+    std::vector<std::string> result;
+    for (auto&& part : wide_parts)
+    {
+        result.push_back(winrt::to_string(part));
+    }
+    return result;
+}
+
+template <std::input_iterator iter, std::sentinel_for<iter> sent>
+TypeSig ResolveGenericTypePart(DkmProcess* process, iter& it, sent const& end)
+{
+    constexpr std::pair<std::string_view, ElementType> elementNames[] = {
+        {"Boolean", ElementType::Boolean},
+        {"Int8", ElementType::I1},
+        {"Int16", ElementType::I2},
+        {"Int32", ElementType::I4},
+        {"Int64", ElementType::I8},
+        {"UInt8", ElementType::U1},
+        {"UInt16", ElementType::U2},
+        {"UInt32", ElementType::U4},
+        {"UInt64", ElementType::U8},
+        {"Single", ElementType::R4},
+        {"Double", ElementType::R8},
+        {"String", ElementType::String},
+        {"Object", ElementType::Object}
+    };
+    std::string_view partName = *it;
+    auto basic_type_pos = std::find_if(std::begin(elementNames), std::end(elementNames), [&partName](auto&& elem) { return elem.first == partName; });
+    if (basic_type_pos != std::end(elementNames))
+    {
+        return TypeSig{ basic_type_pos->second };
+    }
+    
+    TypeDef type = FindSimpleType(process, partName);
+    auto tickPos = partName.rfind('`');
+    if (tickPos == std::string_view::basic_string_view::npos)
+    {
+        return TypeSig{ type.coded_index<TypeDefOrRef>() };
+    }
+
+    int paramCount = 0;
+    std::from_chars(partName.data() + tickPos + 1, partName.data() + partName.size(), paramCount);
+    std::vector<TypeSig> genericArgs;
+    for (int i = 0; i < paramCount; ++i)
+    {
+        genericArgs.push_back(ResolveGenericTypePart(process, ++it, end));
+    }
+    return TypeSig{ GenericTypeInstSig{ type.coded_index<TypeDefOrRef>(), std::move(genericArgs) } };
+}
+
+TypeSig ResolveGenericType(DkmProcess* process, std::string_view genericName)
+{
+    auto parts = ParseTypeName(genericName);
+    auto begin = parts.begin();
+    return ResolveGenericTypePart(process, begin, parts.end());
+}
+
 TypeSig FindType(DkmProcess* process, std::string_view const& typeName)
 {
     auto paramIndex = typeName.find('<');
@@ -159,24 +224,7 @@ TypeSig FindType(DkmProcess* process, std::string_view const& typeName)
     }
     else
     {
-        XLANG_ASSERT(typeName.back() == '>');
-        return TypeSig{ FindSimpleType(process, typeName.substr(0, paramIndex)).coded_index<TypeDefOrRef>() };
-        // TODO: Assemble the GenericTypeInstSig
-    }
-}
-
-TypeSig FindType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
-{
-    auto paramIndex = typeName.find('<');
-    if (paramIndex == std::string_view::npos)
-    {
-        return TypeSig{ FindSimpleType(process, typeNamespace, typeName).coded_index<TypeDefOrRef>() };
-    }
-    else
-    {
-        XLANG_ASSERT(typeName.back() == '>');
-        return TypeSig{ FindSimpleType(process, typeNamespace, typeName.substr(0, paramIndex)).coded_index<TypeDefOrRef>() };
-        // TODO: Assemble the GenericTypeInstSig
+        return ResolveGenericType(process, typeName);
     }
 }
 
