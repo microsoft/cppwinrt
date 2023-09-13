@@ -278,8 +278,19 @@ static guid generate_guid(coded_index<TypeDefOrRef> const& type)
     return set_named_guid_fields(endian_swap(to_guid(calculate_sha1(buffer))));
 }
 
-std::pair<TypeDef, std::wstring> ResolveTypeInterface(DkmProcess* process, coded_index<TypeDefOrRef> index)
+std::pair<TypeDef, std::wstring> ResolveTypeInterface(DkmProcess* process, winmd::reader::TypeSig const& typeSig)
 {
+    coded_index<TypeDefOrRef> index;
+    if (auto ptrIndex = std::get_if<coded_index<TypeDefOrRef>>(&typeSig.Type()))
+    {
+        index = *ptrIndex;
+    }
+    else if (auto* ptrGeneric = std::get_if<GenericTypeInstSig>(&typeSig.Type()))
+    {
+        index = ptrGeneric->GenericType();
+    }
+
+    // TODO: Cache on the whole TypeSig, not just the generic index
     if (auto found = _cache.find(index); found != _cache.end())
     {
         return found->second;

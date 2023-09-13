@@ -348,11 +348,11 @@ struct property_type
 
 void GetInterfaceData(
     Microsoft::VisualStudio::Debugger::DkmProcess* process,
-    coded_index<TypeDefOrRef> index,
+    TypeSig const& typeSig,
     _Inout_ std::vector<PropertyData>& propertyData,
     _Out_ bool& isStringable
 ){
-    auto [type, propIid] = ResolveTypeInterface(process, index);
+    auto [type, propIid] = ResolveTypeInterface(process, typeSig);
     if (!type)
     {
         return;
@@ -493,10 +493,29 @@ void object_visualizer::GetPropertyData()
     GetTypeProperties(process, std::string_view{ rc.data() + 2, rc.length() - 3 });
 }
 
+TypeSig ExpandInterfaceImplForType(coded_index<TypeDefOrRef> impl, TypeSig const& type)
+{
+    if (std::holds_alternative<coded_index<TypeDefOrRef>>(type.Type()))
+    {
+        return TypeSig{ impl };
+    }
+    return TypeSig{ impl };
+}
+
 void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& type_name)
 {
     // TODO: add support for direct generic interface implementations (e.g., key_value_pair)
-    auto type = FindType(process, type_name);
+    auto typeSig = FindType(process, type_name);
+    TypeDef type{};
+    if (auto const* index = std::get_if<coded_index<TypeDefOrRef>>(&typeSig.Type()))
+    {
+        type = index->TypeDef();
+    }
+    else if (auto const* genericInst = std::get_if<GenericTypeInstSig>(&typeSig.Type()))
+    {
+        type = genericInst->GenericType().TypeDef();
+    }
+
     if (!type)
     {
         return;
@@ -516,7 +535,7 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
         auto impls = type.InterfaceImpl();
         for (auto&& impl : impls)
         {
-            GetInterfaceData(process, impl.Interface(), m_propertyData, m_isStringable);
+            GetInterfaceData(process, ExpandInterfaceImplForType(impl.Interface(), typeSig), m_propertyData, m_isStringable);
         }
     }
     else if (get_category(type) == category::interface_type)
@@ -524,9 +543,9 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
         auto impls = type.InterfaceImpl();
         for (auto&& impl : impls)
         {
-            GetInterfaceData(process, impl.Interface(), m_propertyData, m_isStringable);
+            GetInterfaceData(process, ExpandInterfaceImplForType(impl.Interface(), typeSig), m_propertyData, m_isStringable);
         }
-        GetInterfaceData(process, type.coded_index<TypeDefOrRef>(), m_propertyData, m_isStringable);
+        GetInterfaceData(process, typeSig, m_propertyData, m_isStringable);
     }
 }
 

@@ -118,8 +118,9 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
     } 
 }
 
-TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
+TypeDef FindSimpleType(DkmProcess* process, std::string_view const& typeName)
 {
+    XLANG_ASSERT(typeName.find('<') == std::string_view::npos);
     auto type = db_cache->find(typeName);
     if (!type)
     {
@@ -135,8 +136,9 @@ TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
     return type;
 }
 
-TypeDef FindType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
+TypeDef FindSimpleType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
 {
+    XLANG_ASSERT(typeName.find('<') == std::string_view::npos);
     auto type = db_cache->find(typeNamespace, typeName);
     if (!type)
     {
@@ -146,6 +148,36 @@ TypeDef FindType(DkmProcess* process, std::string_view const& typeNamespace, std
         FindType(process, fullName);
     }
     return type;
+}
+
+TypeSig FindType(DkmProcess* process, std::string_view const& typeName)
+{
+    auto paramIndex = typeName.find('<');
+    if (paramIndex == std::string_view::npos)
+    {
+        return TypeSig{ FindSimpleType(process, typeName).coded_index<TypeDefOrRef>() };
+    }
+    else
+    {
+        XLANG_ASSERT(typeName.back() == '>');
+        return TypeSig{ FindSimpleType(process, typeName.substr(0, paramIndex)).coded_index<TypeDefOrRef>() };
+        // TODO: Assemble the GenericTypeInstSig
+    }
+}
+
+TypeSig FindType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
+{
+    auto paramIndex = typeName.find('<');
+    if (paramIndex == std::string_view::npos)
+    {
+        return TypeSig{ FindSimpleType(process, typeNamespace, typeName).coded_index<TypeDefOrRef>() };
+    }
+    else
+    {
+        XLANG_ASSERT(typeName.back() == '>');
+        return TypeSig{ FindSimpleType(process, typeNamespace, typeName.substr(0, paramIndex)).coded_index<TypeDefOrRef>() };
+        // TODO: Assemble the GenericTypeInstSig
+    }
 }
 
 cppwinrt_visualizer::cppwinrt_visualizer()
