@@ -307,7 +307,7 @@ std::pair<TypeDef, std::wstring> ResolveTypeInterface(DkmProcess* process, winmd
     {
         index = ptrGeneric->GenericType();
         auto guid = format_guid(generate_guid(*ptrGeneric));
-        return { index.TypeDef(), guid };
+        return { ResolveType(process, index), guid };
     }
     return {};
 };

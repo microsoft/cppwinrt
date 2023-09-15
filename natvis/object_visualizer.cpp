@@ -697,11 +697,37 @@ void object_visualizer::GetPropertyData()
     GetTypeProperties(process, std::string_view{ rc.data() + 2, rc.length() - 3 });
 }
 
+GenericTypeInstSig ReplaceGenericIndices(GenericTypeInstSig const& sig, std::vector<TypeSig> const& genericArgs)
+{
+    std::vector<TypeSig> replacementArgs;
+    for (auto&& arg : sig.GenericArgs())
+    {
+        if (auto pGenericSig = std::get_if<GenericTypeInstSig>(&arg.Type()))
+        {
+            replacementArgs.emplace_back(ReplaceGenericIndices(*pGenericSig, genericArgs));
+        }
+        else if (auto pGenericIndex = std::get_if<GenericTypeIndex>(&arg.Type()))
+        {
+            replacementArgs.push_back(genericArgs[pGenericIndex->index]);
+        }
+        else
+        {
+            replacementArgs.push_back(arg);
+        }
+    }
+    return GenericTypeInstSig{ sig.GenericType(), std::move(replacementArgs) };
+}
+
 TypeSig ExpandInterfaceImplForType(coded_index<TypeDefOrRef> impl, TypeSig const& type)
 {
-    if (std::holds_alternative<coded_index<TypeDefOrRef>>(type.Type()))
+    if (auto pGenericInst = std::get_if<GenericTypeInstSig>(&type.Type()))
     {
-        return TypeSig{ impl };
+        if (impl.type() == TypeDefOrRef::TypeSpec)
+        {
+            auto const& genericArgs = pGenericInst->GenericArgs();
+            auto newSig = ReplaceGenericIndices(impl.TypeSpec().Signature().GenericTypeInst(), std::vector<TypeSig>{ genericArgs.first, genericArgs.second });
+            return TypeSig{ newSig };
+        }
     }
     return TypeSig{ impl };
 }
@@ -713,11 +739,11 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
     TypeDef type{};
     if (auto const* index = std::get_if<coded_index<TypeDefOrRef>>(&typeSig.Type()))
     {
-        type = index->TypeDef();
+        type = ResolveType(process, *index);
     }
     else if (auto const* genericInst = std::get_if<GenericTypeInstSig>(&typeSig.Type()))
     {
-        type = genericInst->GenericType().TypeDef();
+        type = ResolveType(process, genericInst->GenericType());
     }
 
     if (!type)
