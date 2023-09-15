@@ -110,7 +110,7 @@ static HRESULT EvaluatePropertyExpression(
     wchar_t wszEvalText[500];
     std::wstring propCast;
     PCWSTR propField;
-    if (prop.category < PropertyCategory::Value)
+    if (IsBuiltIn(prop.category))
     {
         propField = g_categoryData[(int)prop.category].propField;
     }
@@ -278,7 +278,7 @@ static HRESULT CreateChildVisualizedExpression(
     IF_FAIL_RET(DkmString::Create(prop.displayName.c_str(), pDisplayName.put()));
 
     PCWSTR displayType;
-    if (prop.category < PropertyCategory::Value)
+    if (IsBuiltIn(prop.category))
     {
         displayType = g_categoryData[(int)prop.category].displayType;
     }
@@ -346,6 +346,281 @@ struct property_type
     MethodDef set;
 };
 
+std::optional<PropertyCategory> GetPropertyCategory(
+    Microsoft::VisualStudio::Debugger::DkmProcess* process,
+    TypeSig const& owningType,
+    TypeSig const& propertyType
+)
+{
+    std::optional<PropertyCategory> propCategory;
+    if (auto pElementType = std::get_if<ElementType>(&propertyType.Type()))
+    {
+        if ((ElementType::Boolean <= *pElementType) && (*pElementType <= ElementType::String))
+        {
+            propCategory = (PropertyCategory)(static_cast<std::underlying_type<ElementType>::type>(*pElementType) -
+                static_cast<std::underlying_type<ElementType>::type>(ElementType::Boolean));
+        }
+        else if (*pElementType == ElementType::Object)
+        {
+            // result = PropertyCategory::Class;
+        }
+    }
+    else if (auto pIndex = std::get_if<coded_index<TypeDefOrRef>>(&propertyType.Type()))
+    {
+        auto type = ResolveType(process, *pIndex);
+        if (type)
+        {
+            if (get_category(type) == category::class_type || get_category(type) == category::interface_type)
+            {
+                propCategory = PropertyCategory::Class;
+            }
+            else
+            {
+                propCategory = PropertyCategory::Value;
+            }
+        }
+        else if (pIndex->type() == TypeDefOrRef::TypeRef)
+        {
+            auto typeRef = pIndex->TypeRef();
+            if (typeRef.TypeNamespace() == "System" && typeRef.TypeName() == "Guid")
+            {
+                propCategory = PropertyCategory::Guid;
+            }
+        }
+    }
+    else if (auto pGenericInst = std::get_if<GenericTypeInstSig>(&propertyType.Type()))
+    {
+        XLANG_ASSERT(get_category(ResolveType(process, pGenericInst->GenericType())) == category::interface_type);
+        propCategory = PropertyCategory::Class;
+    }
+    else if (auto pGenericIndex = std::get_if<GenericTypeIndex>(&propertyType.Type()))
+    {
+        if (auto pOwner = std::get_if<GenericTypeInstSig>(&owningType.Type()))
+        {
+            auto const& index = pGenericIndex->index;
+            auto const& genericArgs = pOwner->GenericArgs();
+            propCategory = GetPropertyCategory(process, owningType, genericArgs.first[index]);
+        }
+        else
+        {
+            NatvisDiagnostic(process, L"Can't resolve GenericTypeIndex property on non-generic Type", NatvisDiagnosticLevel::Warning);
+        }
+    }
+    else
+    {
+        NatvisDiagnostic(process, L"Unsupported TypeSig encountered", NatvisDiagnosticLevel::Warning);
+    }
+    return propCategory;
+}
+
+struct writer
+{
+    std::vector<TypeSig> generic_params;
+
+    std::string result;
+
+    void write(char c)
+    {
+        result.push_back(c);
+    }
+
+    void write(std::string_view const& str)
+    {
+        for (auto c : str)
+        {
+            if (c == '.')
+            {
+                write(':');
+                write(':');
+            }
+            else if (c != '`')
+            {
+                write(c);
+            }
+            else
+            {
+                return;
+            }
+        }
+    }
+
+    void write(ElementType type)
+    {
+        switch (type)
+        {
+        case ElementType::Boolean:
+            write("bool");
+            break;
+        case ElementType::Char:
+            write("wchar_t");
+            break;
+        case ElementType::I1:
+            write("int8_t");
+            break;
+        case ElementType::U1:
+            write("uint8_t");
+            break;
+        case ElementType::I2:
+            write("int16_t");
+            break;
+        case ElementType::U2:
+            write("uint16_t");
+            break;
+        case ElementType::I4:
+            write("int32_t");
+            break;
+        case ElementType::U4:
+            write("uint32_t");
+            break;
+        case ElementType::I8:
+            write("int64_t");
+            break;
+        case ElementType::U8:
+            write("uint64_t");
+            break;
+        case ElementType::R4:
+            write("float");
+            break;
+        case ElementType::R8:
+            write("double");
+            break;
+        case ElementType::String:
+            write("winrt::hstring");
+            break;
+        case ElementType::Object:
+            write("winrt::Windows::Foundation::IInspectable");
+            break;
+        default:
+            XLANG_ASSERT(false);
+            break;
+        };
+    }
+
+    void write_namespace_and_type(std::string_view ns, std::string_view name)
+    {
+        if (ns == "System")
+        {
+            if (name == "Guid")
+            {
+                ns = "";
+                name = "guid";
+            }
+        }
+        else if (ns == "Windows.Foundation")
+        {
+            if (name == "EventRegistrationToken")
+            {
+                ns = "";
+                name = "event_token";
+            }
+            else if (name == "HResult")
+            {
+                ns = "";
+                name = "hresult";
+            }
+        }
+        else if (ns == "Windows.Foundation.Numerics")
+        {
+            if (name == "Matrix3x2") { name = "float3x2"; }
+            else if (name == "Matrix4x4") { name = "float4x4"; }
+            else if (name == "Plane") { name = "plane"; }
+            else if (name == "Quaternion") { name = "quarternion"; }
+            else if (name == "Vector2") { name = "float2"; }
+            else if (name == "Vector3") { name = "float3"; }
+            else if (name == "Vector4") { name = "float4"; }
+        }
+
+        write("winrt::");
+        if (!ns.empty())
+        {
+            write(ns);
+            write("::");
+        }
+        write(name);
+    }
+
+    void write(TypeRef const& type)
+    {
+        write_namespace_and_type(type.TypeNamespace(), type.TypeName());
+    }
+
+    void write(TypeDef const& type)
+    {
+        write_namespace_and_type(type.TypeNamespace(), type.TypeName());
+    }
+
+    void write(TypeSpec const& type)
+    {
+        write(type.Signature().GenericTypeInst());
+    }
+
+    void write(coded_index<TypeDefOrRef> type)
+    {
+        switch (type.type())
+        {
+        case TypeDefOrRef::TypeDef:
+            write(type.TypeDef());
+            break;
+        case TypeDefOrRef::TypeRef:
+            write(type.TypeRef());
+            break;
+        case TypeDefOrRef::TypeSpec:
+            write(type.TypeSpec());
+            break;
+        }
+    }
+
+    void write(GenericTypeInstSig const& type)
+    {
+        write(type.GenericType());
+        bool first = true;
+        for (auto&& elem : type.GenericArgs())
+        {
+            if (first)
+            {
+                first = false;
+            }
+            else
+            {
+                write(", ");
+            }
+            write(elem);
+        }
+    }
+
+    void write(GenericTypeIndex const& var)
+    {
+        write(generic_params[var.index]);
+    }
+
+    void write(GenericMethodTypeIndex const&)
+    {
+        // Nothing
+    }
+
+    void write(TypeSig const& type)
+    {
+        std::visit([this](auto&& arg)
+            {
+                write(arg);
+            }, type.Type());
+    }
+};
+
+std::wstring string_to_wstring(std::string_view const& str)
+{
+    int const size = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), nullptr, 0);
+    if (size == 0)
+    {
+        return {};
+    }
+
+    std::wstring result(size, L'?');
+    auto size_result = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), result.data(), size);
+    XLANG_ASSERT(size == size_result);
+    return result;
+}
+
 void GetInterfaceData(
     Microsoft::VisualStudio::Debugger::DkmProcess* process,
     TypeSig const& typeSig,
@@ -353,6 +628,7 @@ void GetInterfaceData(
     _Out_ bool& isStringable
 ){
     auto [type, propIid] = ResolveTypeInterface(process, typeSig);
+
     if (!type)
     {
         return;
@@ -375,106 +651,34 @@ void GetInterfaceData(
             continue;
         }
 
-        std::optional<PropertyCategory> propCategory;
-        std::wstring propAbiType;
-        std::wstring propDisplayType;
-
-        auto retType = method.Signature().ReturnType();
-        std::visit(overloaded{
-            [&](ElementType type)
+        std::optional<PropertyCategory> propCategory = GetPropertyCategory(process, typeSig, method.Signature().ReturnType().Type());
+        if (propCategory)
+        {
+            std::wstring propAbiType;
+            std::wstring propDisplayType;
+            if (!IsBuiltIn(*propCategory))
             {
-                if ((ElementType::Boolean <= type) && (type <= ElementType::String))
+                writer writer;
+                if (auto pGenericTypeInst = std::get_if<GenericTypeInstSig>(&typeSig.Type()))
                 {
-                    propCategory = (PropertyCategory)(static_cast<std::underlying_type<ElementType>::type>(type) -
-                        static_cast<std::underlying_type<ElementType>::type>(ElementType::Boolean));
+                    auto const& genericArgs = pGenericTypeInst->GenericArgs();
+                    writer.generic_params.assign(genericArgs.first, genericArgs.second);
                 }
-                else if (type == ElementType::Object)
+                writer.write(method.Signature().ReturnType().Type());
+                propDisplayType = string_to_wstring(writer.result);
+                
+                if (*propCategory == PropertyCategory::Class)
                 {
-                    //propDisplayType = L"winrt::Windows::Foundation::IInspectable";
-                    //propCategory = PropertyCategory::Class;
-                    //propAbiType = L"winrt::impl::inspectable_abi*";
-                }
-            },
-            [&](coded_index<TypeDefOrRef> const& index)
-            {
-                auto type = ResolveType(process, index);
-                if (!type)
-                {
-                    return;
-                }
-
-                auto typeName = type.TypeName();
-                if (typeName == "GUID"sv)
-                {
-                    propCategory = PropertyCategory::Guid;
+                    propAbiType = L"winrt::impl::inspectable_abi*";
                 }
                 else
                 {
-                    auto ns = std::string(type.TypeNamespace());
-                    auto name = std::string(type.TypeName());
-
-                    // Map numeric type names
-                    if (ns == "Windows.Foundation.Numerics")
-                    {
-                        if (name == "Matrix3x2") { name = "float3x2"; }
-                        else if (name == "Matrix4x4") { name = "float4x4"; }
-                        else if (name == "Plane") { name = "plane"; }
-                        else if (name == "Quaternion") { name = "quaternion"; }
-                        else if (name == "Vector2") { name = "float2"; }
-                        else if (name == "Vector3") { name = "float3"; }
-                        else if (name == "Vector4") { name = "float4"; }
-                    }
-
-                    // Types come back from winmd files with '.', need to be '::'
-                    // Ex. Windows.Foundation.Uri needs to be Windows::Foundation::Uri
-                    auto fullTypeName = ns + "::" + name;
-                    wchar_t cppTypename[500];
-                    size_t i, j;
-                    for (i = 0, j = 0; i < (fullTypeName.length() + 1); i++, j++)
-                    {
-                        if (fullTypeName[i] == L'.')
-                        {
-                            cppTypename[j++] = L':';
-                            cppTypename[j] = L':';
-                        }
-                        else
-                        {
-                            cppTypename[j] = fullTypeName[i];
-                        }
-                    }
-
-                    propDisplayType = std::wstring(L"winrt::") + cppTypename;
-                    if(get_category(type) == category::class_type)
-                    {
-                        propCategory = PropertyCategory::Class;
-                        propAbiType = L"winrt::impl::inspectable_abi*";
-                    }
-                    else
-                    {
-                        propCategory = PropertyCategory::Value;
-                        propAbiType = propDisplayType;
-                    }
+                    propAbiType = propDisplayType;
                 }
-            },
-            [&](GenericTypeIndex /*var*/)
-            {
-                    NatvisDiagnostic(process, L"Generics not yet supported", NatvisDiagnosticLevel::Warning);
-            },
-            [&](GenericMethodTypeIndex /*var*/)
-            {
-                    NatvisDiagnostic(process, L"Generics not yet supported", NatvisDiagnosticLevel::Warning);
-            },
-            [&](GenericTypeInstSig const& /*type*/)
-            {
-                    NatvisDiagnostic(process, L"Generics not yet supported", NatvisDiagnosticLevel::Warning);
             }
-        }, retType.Type().Type());
 
-        if (propCategory)
-        {
             auto propName = method.Name().substr(4);
-            std::wstring propDisplayName(propName.cbegin(), propName.cend());
-            propertyData.push_back({ propIid, propIndex, *propCategory, propAbiType, propDisplayType, propDisplayName });
+            propertyData.emplace_back(propIid, propIndex, *propCategory, std::move(propAbiType), std::move(propDisplayType), string_to_wstring(propName));
         }
     }
 }
