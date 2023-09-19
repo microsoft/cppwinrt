@@ -366,11 +366,8 @@ namespace winrt::impl
             promise->set_canceller([](void* context)
             {
                 auto that = static_cast<timespan_awaiter*>(context);
-                that->m_cancelled.store(true, std::memory_order_acquire);
-                if (WINRT_IMPL_IsThreadpoolTimerSet(that->m_timer.get()))
-                {
-                    that->fire_immediately();
-                }
+                that->m_cancelled.store(true, std::memory_order_release);
+                that->fire_immediately();
             }, this);
         }
 
