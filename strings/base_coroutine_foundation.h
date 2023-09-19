@@ -99,44 +99,49 @@ namespace winrt::impl
         return async.GetResults();
     }
 
-    template<typename Awaiter>
-    struct disconnect_aware_handler
+    struct ignore_apartment_context {};
+
+    template<bool preserve_context, typename Awaiter>
+    struct disconnect_aware_handler : private std::conditional_t<preserve_context, resume_apartment_context, ignore_apartment_context>
     {
         disconnect_aware_handler(Awaiter* awaiter, coroutine_handle<> handle) noexcept
             : m_awaiter(awaiter), m_handle(handle) { }
 
-        disconnect_aware_handler(disconnect_aware_handler&& other) noexcept
-            : m_context(std::move(other.m_context))
-            , m_awaiter(std::exchange(other.m_awaiter, {}))
-            , m_handle(std::exchange(other.m_handle, {})) { }
+        disconnect_aware_handler(disconnect_aware_handler&& other) = default;
 
         ~disconnect_aware_handler()
         {
-            if (m_handle) Complete();
+            if (m_handle.value) Complete();
         }
 
         template<typename Async>
         void operator()(Async&&, Windows::Foundation::AsyncStatus status)
         {
-            m_awaiter->status = status;
+            m_awaiter.value->status = status;
             Complete();
         }
 
     private:
-        resume_apartment_context m_context;
-        Awaiter* m_awaiter;
-        coroutine_handle<> m_handle;
+        movable_primitive<Awaiter*> m_awaiter;
+        movable_primitive<coroutine_handle<>, nullptr> m_handle;
 
         void Complete()
         {
-            if (m_awaiter->suspending.exchange(false, std::memory_order_release))
+            if (m_awaiter.value->suspending.exchange(false, std::memory_order_release))
             {
-                m_handle = nullptr; // resumption deferred to await_suspend
+                m_handle.value = nullptr; // resumption deferred to await_suspend
             }
             else
             {
-                auto handle = std::exchange(m_handle, {});
-                if (!resume_apartment(m_context, handle, &m_awaiter->failure))
+                auto handle = m_handle.detach();
+                if constexpr (preserve_context)
+                {
+                    if (!resume_apartment(*this, handle, &m_awaiter.value->failure))
+                    {
+                        handle.resume();
+                    }
+                }
+                else
                 {
                     handle.resume();
                 }
@@ -145,12 +150,13 @@ namespace winrt::impl
     };
 
 #ifdef WINRT_IMPL_COROUTINES
-    template <typename Async>
-    struct await_adapter : cancellable_awaiter<await_adapter<Async>>
+    template <typename Async, bool preserve_context = true>
+    struct await_adapter : cancellable_awaiter<await_adapter<Async, preserve_context>>
     {
-        await_adapter(Async const& async) : async(async) { }
+        template<typename T>
+        await_adapter(T&& async) : async(std::forward<T>(async)) { }
 
-        Async const& async;
+        std::conditional_t<preserve_context, Async const&, Async> async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
         int32_t failure = 0;
         std::atomic<bool> suspending = true;
@@ -185,7 +191,12 @@ namespace winrt::impl
     private:
         bool register_completed_callback(coroutine_handle<> handle)
         {
-            async.Completed(disconnect_aware_handler(this, handle));
+            if constexpr (!preserve_context)
+            {
+                // Ensure that the illegal delegate assignment propagates properly.
+                suspending.store(true, std::memory_order_relaxed);
+            }
+            async.Completed(disconnect_aware_handler<preserve_context, await_adapter>(this, handle));
             return suspending.exchange(false, std::memory_order_acquire);
         }
 
@@ -249,6 +260,15 @@ namespace winrt::impl
 }
 
 #ifdef WINRT_IMPL_COROUTINES
+WINRT_EXPORT namespace winrt
+{
+    template<typename Async, typename = std::enable_if_t<std::is_convertible_v<Async, winrt::Windows::Foundation::IAsyncInfo>>>
+    inline impl::await_adapter<std::decay_t<Async>, false> resume_agile(Async&& async)
+    {
+        return { std::forward<Async>(async) };
+    };
+}
+
 WINRT_EXPORT namespace winrt::Windows::Foundation
 {
     inline impl::await_adapter<IAsyncAction> operator co_await(IAsyncAction const& async)

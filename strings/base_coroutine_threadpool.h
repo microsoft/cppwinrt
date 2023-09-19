@@ -52,23 +52,14 @@ namespace winrt::impl
     {
         resume_apartment_context() = default;
         resume_apartment_context(std::nullptr_t) : m_context(nullptr), m_context_type(-1) {}
-        resume_apartment_context(resume_apartment_context const&) = default;
-        resume_apartment_context(resume_apartment_context&& other) noexcept :
-            m_context(std::move(other.m_context)), m_context_type(std::exchange(other.m_context_type, -1)) {}
-        resume_apartment_context& operator=(resume_apartment_context const&) = default;
-        resume_apartment_context& operator=(resume_apartment_context&& other) noexcept
-        {
-            m_context = std::move(other.m_context);
-            m_context_type = std::exchange(other.m_context_type, -1);
-            return *this;
-        }
+
         bool valid() const noexcept
         {
-            return m_context_type >= 0;
+            return m_context_type.value >= 0;
         }
 
         com_ptr<IContextCallback> m_context = try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext);
-        int32_t m_context_type = get_apartment_type().first;
+        movable_primitive<int32_t, -1> m_context_type = get_apartment_type().first;
     };
 
     inline int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
@@ -124,7 +115,7 @@ namespace winrt::impl
         {
             return false;
         }
-        else if (context.m_context_type == 1 /* APTTYPE_MTA */)
+        else if (context.m_context_type.value == 1 /* APTTYPE_MTA */)
         {
             resume_background(handle);
             return true;
