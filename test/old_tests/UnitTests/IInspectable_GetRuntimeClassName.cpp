@@ -18,7 +18,7 @@ struct Test_GetRuntimeClassName_NoOverride : implements<Test_GetRuntimeClassName
 
 struct Test_GetRuntimeClassName_Override : implements<Test_GetRuntimeClassName_Override, Windows::Foundation::IInspectable>
 {
-    hstring GetRuntimeClassName()
+    hstring GetRuntimeClassName() const override
     {
         return L"GetRuntimeClassName";
     }
