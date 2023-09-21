@@ -332,34 +332,124 @@ namespace winrt::impl
         }
     };
 
-    struct timespan_awaiter : cancellable_awaiter<timespan_awaiter>
+    template <typename Derived, typename Traits, typename Result = void>
+    struct threadpool_awaiter_base : cancellable_awaiter<threadpool_awaiter_base<Derived, Traits, Result>>
     {
-        explicit timespan_awaiter(Windows::Foundation::TimeSpan duration) noexcept :
-            m_duration(duration)
-        {
-        }
-
-#if defined(__GNUC__) && !defined(__clang__)
-        // HACK: GCC seems to require a move when calling operator co_await
-        // on the return value of resume_after.
-        // This might be related to upstream bug:
-        // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99575
-        timespan_awaiter(timespan_awaiter &&other) noexcept :
-            m_timer{std::move(other.m_timer)},
-            m_duration{std::move(other.m_duration)},
-            m_handle{std::move(other.m_handle)},
-            m_state{other.m_state.load()}
-        {}
-#endif
-
         void enable_cancellation(cancellable_promise* promise)
         {
             promise->set_canceller([](void* context)
             {
-                auto that = static_cast<timespan_awaiter*>(context);
-                that->m_cancelled.store(true, std::memory_order_release);
-                that->fire_immediately();
+                auto that = static_cast<threadpool_awaiter_base*>(context);
+                if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::suspended)
+                {
+                    if (static_cast<Derived*>(that)->cancel(that->m_handle.get()))
+                    {
+                        static_cast<Derived*>(that)->fire_immediately(that->m_handle.get());
+                    }
+                }
             }, this);
+        }
+
+        Result await_resume()
+        {
+            if (m_state.exchange(state::idle, std::memory_order_relaxed) == state::canceled)
+            {
+                throw hresult_canceled();
+            }
+
+            if constexpr (!std::is_same_v<void, Result>)
+            {
+                return static_cast<Derived*>(this)->get_result();
+            }
+        }
+
+        template <typename T>
+        bool await_suspend(impl::coroutine_handle<T> resume)
+        {
+            handle_type<Traits> new_handle;
+            new_handle.attach(check_pointer(static_cast<Derived*>(this)->create_threadpool_handle()));
+
+            state expected = state::idle;
+            if (m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
+            {
+                this->set_cancellable_promise_from_handle(resume);
+
+                m_resume = resume;
+                m_handle = std::move(new_handle);
+
+                if (m_state.load(std::memory_order_acquire) != state::canceled)
+                {
+                    slim_lock_guard guard{m_mutex};
+
+                    static_cast<Derived*>(this)->suspend_on_threadpool(m_handle.get());
+
+                    expected = state::pending;
+                    if (!m_state.compare_exchange_strong(expected, state::suspended, std::memory_order_release))
+                    {
+                        // handle the case of the cancelation occurring while we where suspending on the thread pool
+                        if (static_cast<Derived*>(this)->cancel(m_handle.get()))
+                        {
+                            // we canceled before a callback was scheduled, so we can short-circuit
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+                else
+                {
+                    // short-circuit in case of an early cancelation
+                    return false;
+                }
+            }
+            else
+            {
+                throw hresult_illegal_method_call();
+            }
+        }
+
+    protected:
+        threadpool_awaiter_base() = default;
+
+        void resume()
+        {
+            {
+                // acquire the mutex to ensure await_suspend is finished executing
+                slim_lock_guard guard{m_mutex};
+            }
+
+            m_resume();
+        }
+
+    private:
+        enum class state { idle, pending, suspended, canceled };
+
+        handle_type<Traits> m_handle;
+        impl::coroutine_handle<> m_resume{ nullptr };
+        std::atomic<state> m_state{ state::idle };
+        slim_mutex m_mutex;
+    };
+
+    struct tp_timer_traits
+    {
+        using type = impl::ptp_timer;
+
+        static void close(type value) noexcept
+        {
+            WINRT_IMPL_CloseThreadpoolTimer(value);
+        }
+
+        static constexpr type invalid() noexcept
+        {
+            return nullptr;
+        }
+    };
+
+    struct timespan_awaiter : threadpool_awaiter_base<timespan_awaiter, tp_timer_traits>
+    {
+        explicit timespan_awaiter(Windows::Foundation::TimeSpan duration) noexcept :
+            m_duration(duration)
+        {
         }
 
         bool await_ready() const noexcept
@@ -367,207 +457,104 @@ namespace winrt::impl
             return m_duration.count() <= 0;
         }
 
-        template <typename T>
-        void await_suspend(impl::coroutine_handle<T> handle)
+        impl::ptp_timer create_threadpool_handle() noexcept
         {
-            handle_type<timer_traits> new_timer;
-            new_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr)));
-
-            if (!m_timer || !WINRT_IMPL_IsThreadpoolTimerSet(m_timer.get()))
-            {
-                set_cancellable_promise_from_handle(handle);
-
-                m_handle = handle;
-                m_timer = std::move(new_timer);
-
-                set_threadpool_timer();
-            }
-            else
-            {
-                throw hresult_illegal_method_call();
-            }
+            return WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr);
         }
 
-        void await_resume()
+        void suspend_on_threadpool(impl::ptp_timer handle) const noexcept
         {
-            if (m_cancelled.exchange(false, std::memory_order_relaxed) == true)
-            {
-                throw hresult_canceled();
-            }
+            int64_t relative_count = -m_duration.count();
+            WINRT_IMPL_SetThreadpoolTimerEx(handle, &relative_count, 0, 0);
+        }
+
+        bool cancel(impl::ptp_timer handle) const noexcept
+        {
+            return WINRT_IMPL_SetThreadpoolTimerEx(handle, nullptr, 0, 0);
+        }
+
+        void fire_immediately(impl::ptp_timer handle) const noexcept
+        {
+            int64_t now = 0;
+            WINRT_IMPL_SetThreadpoolTimerEx(handle, &now, 0, 0);
         }
 
     private:
-        void set_threadpool_timer()
-        {
-            int64_t relative_count = -m_duration.count();
-            WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &relative_count, 0, 0);
-        }
-
-        void fire_immediately() noexcept
-        {
-            if (WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), nullptr, 0, 0))
-            {
-                int64_t now = 0;
-                WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), &now, 0, 0);
-            }
-        }
-
         static void __stdcall callback(void*, void* context, void*) noexcept
         {
             auto that = reinterpret_cast<timespan_awaiter*>(context);
-            that->m_handle();
+            that->resume();
         }
 
-        struct timer_traits
-        {
-            using type = impl::ptp_timer;
-
-            static void close(type value) noexcept
-            {
-                WINRT_IMPL_CloseThreadpoolTimer(value);
-            }
-
-            static constexpr type invalid() noexcept
-            {
-                return nullptr;
-            }
-        };
-
-        handle_type<timer_traits> m_timer;
         Windows::Foundation::TimeSpan m_duration;
-        impl::coroutine_handle<> m_handle;
-        std::atomic<bool> m_cancelled;
     };
 
-    struct signal_awaiter : cancellable_awaiter<signal_awaiter>
+    struct tp_wait_traits
+    {
+        using type = impl::ptp_wait;
+
+        static void close(type value) noexcept
+        {
+            WINRT_IMPL_CloseThreadpoolWait(value);
+        }
+
+        static constexpr type invalid() noexcept
+        {
+            return nullptr;
+        }
+    };
+
+    struct signal_awaiter : threadpool_awaiter_base<signal_awaiter, tp_wait_traits, bool>
     {
         signal_awaiter(void* handle, Windows::Foundation::TimeSpan timeout) noexcept :
             m_timeout(timeout),
             m_handle(handle)
         {}
 
-#if defined(__GNUC__) && !defined(__clang__)
-        // HACK: GCC seems to require a move when calling operator co_await
-        // on the return value of resume_on_signal.
-        // This might be related to upstream bug:
-        // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99575
-        signal_awaiter(signal_awaiter &&other) noexcept :
-            m_wait{std::move(other.m_wait)},
-            m_timeout{std::move(other.m_timeout)},
-            m_handle{std::move(other.m_handle)},
-            m_result{std::move(other.m_result)},
-            m_resume{std::move(other.m_resume)},
-            m_state{other.m_state.load()}
-        {}
-#endif
-
-        void enable_cancellation(cancellable_promise* promise)
-        {
-            promise->set_canceller([](void* context)
-            {
-                auto that = static_cast<signal_awaiter*>(context);
-                state expected = state::suspended;
-                if (that->m_state.compare_exchange_strong(expected, state::canceled, std::memory_order_acquire))
-                {
-                    that->fire_immediately();
-                }
-                else if (expected == state::suspending)
-                {
-                    for (; that->m_state.compare_exchange_strong(expected, state::canceled, std::memory_order_acquire); expected = state::suspended)
-                    {
-                        // spinlock until suspended
-                    }
-
-                    that->fire_immediately();
-                }
-            }, this);
-        }
-
         bool await_ready() const noexcept
         {
             return WINRT_IMPL_WaitForSingleObject(m_handle, 0) == 0;
         }
 
-        template <typename T>
-        void await_suspend(impl::coroutine_handle<T> handle)
+        bool get_result() const noexcept
         {
-            handle_type<wait_traits> new_wait;
-            new_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
-
-            state expected = state::idle;
-            if (m_state.compare_exchange_strong(expected, state::suspending, std::memory_order_release))
-            {
-                set_cancellable_promise_from_handle(handle);
-
-                m_resume = handle;
-                m_wait = std::move(new_wait);
-
-                m_state.store(state::suspended, std::memory_order_release);
-                set_threadpool_wait();
-            }
-            else
-            {
-                throw hresult_illegal_method_call();
-            }
-        }
-
-        bool await_resume()
-        {
-            if (m_state.exchange(state::idle, std::memory_order_relaxed) == state::canceled)
-            {
-                throw hresult_canceled();
-            }
             return m_result == 0;
         }
 
-    private:
+        impl::ptp_wait create_threadpool_handle() noexcept
+        {
+            return WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr);
+        }
 
-        void set_threadpool_wait()
+        void suspend_on_threadpool(impl::ptp_wait handle) const noexcept
         {
             int64_t relative_count = -m_timeout.count();
             int64_t* file_time = relative_count != 0 ? &relative_count : nullptr;
-            WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), m_handle, file_time, nullptr);
+            WINRT_IMPL_SetThreadpoolWaitEx(handle, m_handle, file_time, nullptr);
         }
 
-        void fire_immediately() noexcept
+        bool cancel(impl::ptp_wait handle) const noexcept
         {
-            if (WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), nullptr, nullptr, nullptr))
-            {
-                int64_t now = 0;
-                WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), WINRT_IMPL_GetCurrentProcess(), &now, nullptr);
-            }
+            return WINRT_IMPL_SetThreadpoolWaitEx(handle, nullptr, nullptr, nullptr);
         }
 
+        void fire_immediately(impl::ptp_wait handle) const noexcept
+        {
+            int64_t now = 0;
+            WINRT_IMPL_SetThreadpoolWaitEx(handle, WINRT_IMPL_GetCurrentProcess(), &now, nullptr);
+        }
+
+    private:
         static void __stdcall callback(void*, void* context, void*, uint32_t result) noexcept
         {
             auto that = static_cast<signal_awaiter*>(context);
             that->m_result = result;
-            that->m_resume();
+            that->resume();
         }
 
-        struct wait_traits
-        {
-            using type = impl::ptp_wait;
-
-            static void close(type value) noexcept
-            {
-                WINRT_IMPL_CloseThreadpoolWait(value);
-            }
-
-            static constexpr type invalid() noexcept
-            {
-                return nullptr;
-            }
-        };
-
-        enum class state { idle, suspending, suspended, canceled };
-
-        handle_type<wait_traits> m_wait;
         Windows::Foundation::TimeSpan m_timeout;
         void* m_handle;
         uint32_t m_result{};
-        impl::coroutine_handle<> m_resume{ nullptr };
-        std::atomic<state> m_state{ state::idle };
     };
 }
 
