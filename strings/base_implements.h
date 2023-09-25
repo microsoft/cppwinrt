@@ -783,6 +783,12 @@ namespace winrt::impl
     struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer<true>
     {
         template <typename Qi>
+        auto as() const
+        {
+            return m_inner.as<Qi>();
+        }
+
+        template <typename Qi>
         auto try_as() const noexcept
         {
             return m_inner.try_as<Qi>();
