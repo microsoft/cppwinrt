@@ -17,6 +17,7 @@ namespace winrt::impl
 WINRT_EXPORT namespace winrt
 {
     struct non_agile : impl::marker {};
+    struct no_ref_count : impl::marker {};
     struct no_weak_ref : impl::marker {};
     struct composing : impl::marker {};
     struct composable : impl::marker {};
@@ -907,8 +908,11 @@ namespace winrt::impl
 
         virtual ~root_implements() noexcept
         {
-            // If a weak reference is created during destruction, this ensures that it is also destroyed.
-            subtract_final_reference();
+            if constexpr (is_default_ref_counted::value)
+            {
+                // If a weak reference is created during destruction, this ensures that it is also destroyed.
+                subtract_final_reference();
+            }
         }
 
         int32_t __stdcall GetIids(uint32_t* count, guid** array) noexcept
@@ -962,29 +966,40 @@ namespace winrt::impl
                     }
                 }
             }
-            else
+            else if constexpr (is_default_ref_counted::value)
             {
                 return 1 + m_references.fetch_add(1, std::memory_order_relaxed);
+            }
+            else
+            {
+                return static_cast<D*>(this)->add_ref();
             }
         }
 
         uint32_t __stdcall NonDelegatingRelease() noexcept
         {
-            uint32_t const target = subtract_reference();
-
-            if (target == 0)
+            if constexpr (is_default_ref_counted::value)
             {
-                if constexpr (has_final_release::value)
-                {
-                    D::final_release(std::unique_ptr<D>(static_cast<D*>(this)));
-                }
-                else
-                {
-                    delete this;
-                }
-            }
+                uint32_t const target = subtract_reference();
 
-            return target;
+                if (target == 0)
+                {
+                    if constexpr (has_final_release::value)
+                    {
+                        D::final_release(std::unique_ptr<D>(static_cast<D*>(this)));
+                    }
+                    else
+                    {
+                        delete this;
+                    }
+                }
+
+                return target;
+            }
+            else
+            {
+                return static_cast<D*>(this)->release_ref();
+            }
         }
 
         int32_t __stdcall NonDelegatingQueryInterface(guid const& id, void** object) noexcept
@@ -1086,7 +1101,7 @@ namespace winrt::impl
                     }
                 }
             }
-            else
+            else if constexpr (is_default_ref_counted::value)
             {
                 return m_references.fetch_sub(1, std::memory_order_release) - 1;
             }
@@ -1094,15 +1109,18 @@ namespace winrt::impl
 
         uint32_t subtract_reference() noexcept
         {
-            uint32_t result = subtract_final_reference();
-
-            if (result == 0)
+            if constexpr (is_default_ref_counted::value)
             {
-                // Ensure destruction happens with a stable reference count that isn't a weak reference.
-                m_references.store(1, std::memory_order_relaxed);
-            }
+                uint32_t result = subtract_final_reference();
 
-            return result;
+                if (result == 0)
+                {
+                    // Ensure destruction happens with a stable reference count that isn't a weak reference.
+                    m_references.store(1, std::memory_order_relaxed);
+                }
+
+                return result;
+            }
         }
 
         template <typename T>
@@ -1140,7 +1158,8 @@ namespace winrt::impl
 
         using is_agile = std::negation<std::disjunction<std::is_same<non_agile, I>...>>;
         using is_inspectable = std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, I>...>;
-        using is_weak_ref_source = std::negation<std::disjunction<std::is_same<no_weak_ref, I>...>>;
+        using is_default_ref_counted = std::negation<std::disjunction<std::is_same<no_ref_count, I>...>>;
+        using is_weak_ref_source = std::conjunction<std::negation<std::disjunction<std::is_same<no_weak_ref, I>...>>, is_default_ref_counted>;
         using use_module_lock = std::negation<std::disjunction<std::is_same<no_module_lock, I>...>>;
         using weak_ref_t = impl::weak_ref<is_agile::value, use_module_lock::value>;
 
