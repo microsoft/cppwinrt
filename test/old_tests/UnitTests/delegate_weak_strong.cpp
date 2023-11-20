@@ -8,55 +8,85 @@ using namespace Windows::Foundation::Collections;
 
 namespace
 {
-    bool destroyed{};
-    int strong_count{};
-    int weak_count{};
+    struct Counters
+    {
+        bool destroyed{};
+        int strong_count{};
+        int weak_count{};
+        int weak_lambda_count{};
+
+        bool is_count(int value)
+        {
+            return strong_count == value && weak_count == value && weak_lambda_count == value;
+        }
+    };
 
     template <typename Sender, typename Args>
     struct Object : implements<Object<Sender, Args>, IInspectable>
     {
+        std::shared_ptr<Counters> m_counters;
+
+        Object(std::shared_ptr<Counters> const& counters) : m_counters(counters) {}
+
+        static auto make(std::shared_ptr<Counters> const& counters)
+        {
+            return make_self<Object>(counters);
+        }
+
+        auto strong() { return this->get_strong(); }
+        auto weak() { return this->get_weak(); }
+
         ~Object()
         {
-            destroyed = true;
+            m_counters->destroyed = true;
         }
 
         void StrongHandler(Sender const&, Args const&)
         {
-            ++strong_count;
+            REQUIRE(!m_counters->destroyed);
+            ++m_counters->strong_count;
         }
 
         void WeakHandler(Sender const&, Args const&)
         {
-            ++weak_count;
+            REQUIRE(!m_counters->destroyed);
+            ++m_counters->weak_count;
         }
     };
 
     template <typename Sender, typename Args>
     struct ObjectStd : std::enable_shared_from_this<ObjectStd<Sender, Args>>
     {
+        std::shared_ptr<Counters> m_counters;
+
+        ObjectStd(std::shared_ptr<Counters> const& counters) : m_counters(counters) {}
+
+        static auto make(std::shared_ptr<Counters> const& counters)
+        {
+            return std::make_shared<ObjectStd>(counters);
+        }
+
+        auto strong() { return this->shared_from_this(); }
+        auto weak() { return this->weak_from_this(); }
+
         ~ObjectStd()
         {
-            destroyed = true;
+            m_counters->destroyed = true;
         }
 
         void StrongHandler(Sender const&, Args const&)
         {
-            ++strong_count;
+            ++m_counters->strong_count;
         }
 
         void WeakHandler(Sender const&, Args const&)
         {
-            ++weak_count;
+            ++m_counters->weak_count;
         }
     };
 
     struct ReturnObject : implements<ReturnObject, IInspectable>
     {
-        ~ReturnObject()
-        {
-            destroyed = true;
-        }
-
         int Handler(int a, int b)
         {
             return a + b;
@@ -65,91 +95,63 @@ namespace
 
     struct ReturnObjectStd : std::enable_shared_from_this<ReturnObjectStd>
     {
-        ~ReturnObjectStd()
-        {
-            destroyed = true;
-        }
-
         int Handler(int a, int b)
         {
             return a + b;
         }
     };
 
-    template <typename Delegate, typename Sender, typename Args>
-    void test_delegate_winrt()
+    template <typename Recipient, typename Delegate>
+    void test_delegate_pattern()
     {
-        auto object = make_self<Object<Sender, Args>>();
+        auto counters = std::make_shared<Counters>();
+        auto object = Recipient::make(counters);
 
-        Delegate strong{ object->get_strong(), &Object<Sender, Args>::StrongHandler };
-        Delegate weak{ object->get_weak(), &Object<Sender, Args>::WeakHandler };
+        Delegate strong{ object->strong(), &Recipient::StrongHandler};
+        Delegate weak{ object->weak(), &Recipient::WeakHandler };
+        Delegate weak_lambda{ object->weak(),[counters](auto&&, auto&&) {
+            REQUIRE(!counters->destroyed);
+            ++counters->weak_lambda_count;
+        } };
 
-        destroyed = false;
-        strong_count = 0;
-        weak_count = 0;
-
-        // Both weak and strong handlers
+        // All handlers are active at this point
         strong({}, {});
         weak({}, {});
-        REQUIRE(strong_count == 1);
-        REQUIRE(weak_count == 1);
+        weak_lambda({}, {});
+        REQUIRE(counters->is_count(1));
 
         // Local 'object' strong reference is released
         object = nullptr;
 
-        // Still both since strong handler keeps object alive
+        // Still invoked since strong handler keeps object alive
         strong({}, {});
         weak({}, {});
-        REQUIRE(strong_count == 2);
-        REQUIRE(weak_count == 2);
+        weak_lambda({}, {});
+        REQUIRE(counters->is_count(2));
 
-        // ~Object is called since the strong delegate is destroyed
-        REQUIRE(!destroyed);
+        // ~Recipient is called since the strong delegate is destroyed
+        REQUIRE(!counters->destroyed);
         strong = nullptr;
-        REQUIRE(destroyed);
+        REQUIRE(counters->destroyed);
 
         // Weak delegate remains but no longer fires
-        REQUIRE(weak_count == 2);
+        // Strong delegate shouldn't fire either
+        REQUIRE(counters->is_count(2));
         weak({}, {});
-        REQUIRE(weak_count == 2);
+        weak_lambda({}, {});
+        REQUIRE(counters->is_count(2));
+    }
+
+    template <typename Delegate, typename Sender, typename Args>
+    void test_delegate_winrt()
+    {
+        test_delegate_pattern<Object<Sender, Args>, Delegate>();
     }
 
     template <typename Delegate, typename Sender, typename Args>
     void test_delegate_std()
     {
-        auto object = std::make_shared<ObjectStd<Sender, Args>>();
-
-        Delegate strong{ object->shared_from_this(), &ObjectStd<Sender, Args>::StrongHandler };
-        Delegate weak{ object->weak_from_this(), &ObjectStd<Sender, Args>::WeakHandler };
-
-        destroyed = false;
-        strong_count = 0;
-        weak_count = 0;
-
-        // Both weak and strong handlers
-        strong({}, {});
-        weak({}, {});
-        REQUIRE(strong_count == 1);
-        REQUIRE(weak_count == 1);
-
-        // Local 'object' strong reference is released
-        object = nullptr;
-
-        // Still both since strong handler keeps object alive
-        strong({}, {});
-        weak({}, {});
-        REQUIRE(strong_count == 2);
-        REQUIRE(weak_count == 2);
-
-        // ~Object is called since the strong delegate is destroyed
-        REQUIRE(!destroyed);
-        strong = nullptr;
-        REQUIRE(destroyed);
-
-        // Weak delegate remains but no longer fires
-        REQUIRE(weak_count == 2);
-        weak({}, {});
-        REQUIRE(weak_count == 2);
+        test_delegate_pattern<ObjectStd<Sender, Args>, Delegate>();
     }
 
     template <typename Delegate, typename Sender, typename Args>
