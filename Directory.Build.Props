@@ -22,6 +22,10 @@
     Optionally add /t:<project> to only build a given a solution project:
 
         msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1 cppwinrt.sln /t:cppwinrt
+
+    If you have deployed the LLVM toolset elsewhere, add its path to the configuration:
+
+        msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1,LLVMToolsVersion=17.0.5,LLVMInstallDir=C:\llvm cppwinrt.sln
   -->
 
   <PropertyGroup Condition="'$(Clang)'=='1'">

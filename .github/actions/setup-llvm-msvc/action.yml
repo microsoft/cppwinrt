@@ -4,7 +4,7 @@ inputs:
   llvm-version:
     description: 'LLVM version'
     required: true
-    default: '15.0.5'
+    default: '17.0.5'
 outputs:
   llvm-path:
     description: "The path in which LLVM is installed to"
