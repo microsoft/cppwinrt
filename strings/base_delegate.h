@@ -180,8 +180,11 @@ namespace winrt::impl
         {
         }
 
-        template <typename O, typename M> delegate_base(winrt::weak_ref<O>&& object, M method) :
-            delegate_base([o = std::move(object), method](auto&& ... args) { if (auto s = o.get()) { ((*s).*(method))(args...); } })
+        template <typename O, typename LM> delegate_base(winrt::weak_ref<O>&& object, LM&& lambda_or_method) :
+            delegate_base([o = std::move(object), lm = std::forward<LM>(lambda_or_method)](auto&&... args) { if (auto s = o.get()) {
+            if constexpr (std::is_member_function_pointer_v<LM>) ((*s).*(lm))(args...);
+            else lm(args...);
+        }})
         {
         }
 
@@ -190,8 +193,11 @@ namespace winrt::impl
         {
         }
 
-        template <typename O, typename M> delegate_base(std::weak_ptr<O>&& object, M method) :
-            delegate_base([o = std::move(object), method](auto&& ... args) { if (auto s = o.lock()) { ((*s).*(method))(args...); } })
+        template <typename O, typename LM> delegate_base(std::weak_ptr<O>&& object, LM&& lambda_or_method) :
+            delegate_base([o = std::move(object), lm = std::forward<LM>(lambda_or_method)](auto&&... args) { if (auto s = o.lock()) {
+                if constexpr (std::is_member_function_pointer_v<LM>) ((*s).*(lm))(args...);
+                else lm(args...);
+        }})
         {
         }
 
