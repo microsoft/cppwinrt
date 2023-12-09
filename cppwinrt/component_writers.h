@@ -468,6 +468,29 @@ catch (...) { return winrt::to_hresult(); }
             }
             else if (factory.statics)
             {
+                {
+                    auto format = R"(    template <int = 0>
+    static auto Get%Statics()
+    {
+        if constexpr (winrt::impl::has_static_lifetime_v<@::factory_implementation::%>)
+        {
+            return winrt::make_self<@::factory_implementation::%>();
+        }
+        else
+        {
+            return std::add_pointer_t<@::factory_implementation::%::statics_type>{ nullptr };
+        }
+    })";
+                    w.write(format,
+                        type_name,
+                        type_namespace,
+                        type_name,
+                        type_namespace,
+                        type_name,
+                        type_namespace,
+                        type_name);
+                }
+
                 for (auto&& method : factory.type.MethodList())
                 {
                     method_signature signature{ method };
@@ -498,7 +521,7 @@ catch (...) { return winrt::to_hresult(); }
                     {
                         auto format = R"(    % %::%(%)
     {
-        %@::implementation::%::%(%);
+        %Get%Statics()->%(%);
     }
 )";
 
@@ -510,7 +533,6 @@ catch (...) { return winrt::to_hresult(); }
                             method_name,
                             bind<write_consume_params>(signature),
                             ignore_return ? "" : "return ",
-                            type_namespace,
                             type_name,
                             method_name,
                             bind<write_consume_args>(signature));
@@ -870,6 +892,7 @@ catch (...) { return winrt::to_hresult(); }
     struct WINRT_IMPL_EMPTY_BASES %T : implements<D, winrt::Windows::Foundation::IActivationFactory%, I...>
     {
         using instance_type = @::%;
+        using statics_type = T;        
 
         hstring GetRuntimeClassName() const
         {

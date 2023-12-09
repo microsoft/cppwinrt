@@ -163,6 +163,11 @@ namespace test_component
         static void StaticMethodWithAsyncReturn();
     }
 
+    static runtimeclass StaticClass
+    {
+        static void Method();
+    }
+
     namespace Structs
     {
         struct All

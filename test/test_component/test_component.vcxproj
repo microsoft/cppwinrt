@@ -523,6 +523,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Simple.cpp" />
+    <ClCompile Include="StaticClass.cpp" />
     <ClCompile Include="test_auto.cpp" />
     <ClCompile Include="Velocity.Class1.cpp" />
     <ClCompile Include="Velocity.Class2.cpp" />
