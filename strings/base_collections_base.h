@@ -77,6 +77,15 @@ namespace winrt::impl
     };
 }
 
+//struct WINRT_IMPL_NOVTABLE IIgnoreNextError : unknown_abi
+//{
+//    virtual void __stdcall IgnoreNextError() noexcept = 0;
+//};
+//
+//template <> inline constexpr guid guid_v<IIgnoreNextError>{ 0x5b0d3235, 0x4dba, 0x4d44, { 0x86,0x5e,0x8f,0x1d,0x0e,0x4f,0xd0,0x4d } };
+//
+
+
 WINRT_EXPORT namespace winrt
 {
     template <typename D, typename T, typename Version = impl::no_collection_version>
@@ -513,7 +522,14 @@ WINRT_EXPORT namespace winrt
 
             if (pair == static_cast<D const&>(*this).get_container().end())
             {
-                throw hresult_out_of_bounds();
+                if (m_dontOriginateBoundsError)
+                {
+                    throw non_originating_hresult_out_of_bounds();
+                }
+                else
+                {
+                    throw hresult_out_of_bounds();
+                }
             }
 
             return static_cast<D const&>(*this).unwrap_value(pair->second);
@@ -536,6 +552,16 @@ WINRT_EXPORT namespace winrt
             first = nullptr;
             second = nullptr;
         }
+
+    //    // IIgnoreNextError
+    //    void IgnoreNextError()
+    //    {
+    //        m_ignoreNextError = true;
+    //    }
+    //private:
+    //    bool m_ignoreNextError{ false };
+    protected:
+        bool m_dontOriginateBoundsError{ false };
     };
 
     template <typename D, typename K, typename V>
@@ -571,7 +597,14 @@ WINRT_EXPORT namespace winrt
             auto found = container.find(static_cast<D const&>(*this).wrap_value(key));
             if (found == container.end())
             {
-                throw hresult_out_of_bounds();
+                if (map_view_base<D, K, V, impl::collection_version>::m_dontOriginateBoundsError)
+                {
+                    throw non_originating_hresult_out_of_bounds();
+                }
+                else
+                {
+                    throw hresult_out_of_bounds();
+                }
             }
             this->increment_version();
             removedNode = container.extract(found);

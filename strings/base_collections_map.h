@@ -12,8 +12,9 @@ namespace winrt::impl
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        explicit observable_map_impl(Container&& values) : m_values(std::forward<Container>(values))
+        explicit observable_map_impl(Container&& values, bool dontOriginateError = false) : m_values(std::forward<Container>(values))
         {
+            this->m_dontOriginateBoundsError = dontOriginateError;
         }
 
         auto& get_container() noexcept
@@ -44,75 +45,75 @@ namespace winrt::impl
 WINRT_EXPORT namespace winrt
 {
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> single_threaded_map()
+    Windows::Foundation::Collections::IMap<K, V> single_threaded_map(bool dontOriginateError = false)
     {
-        return make<impl::input_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{});
+        return make<impl::input_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{}, dontOriginateError);
     }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> single_threaded_map(std::map<K, V, Compare, Allocator>&& values)
+    Windows::Foundation::Collections::IMap<K, V> single_threaded_map(std::map<K, V, Compare, Allocator>&& values, bool dontOriginateError = false)
     {
-        return make<impl::input_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values));
+        return make<impl::input_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values), dontOriginateError);
     }
 
     template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> single_threaded_map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values)
+    Windows::Foundation::Collections::IMap<K, V> single_threaded_map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values, bool dontOriginateError = false)
     {
-        return make<impl::input_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values));
+        return make<impl::input_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values), dontOriginateError);
     }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> multi_threaded_map()
+    Windows::Foundation::Collections::IMap<K, V> multi_threaded_map(bool dontOriginateError = false)
     {
-        return make<impl::multi_threaded_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{});
+        return make<impl::multi_threaded_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{}, dontOriginateError);
     }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> multi_threaded_map(std::map<K, V, Compare, Allocator>&& values)
+    Windows::Foundation::Collections::IMap<K, V> multi_threaded_map(std::map<K, V, Compare, Allocator>&& values, bool dontOriginateError = false)
     {
-        return make<impl::multi_threaded_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values));
+        return make<impl::multi_threaded_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values), dontOriginateError);
     }
 
     template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> multi_threaded_map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values)
+    Windows::Foundation::Collections::IMap<K, V> multi_threaded_map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values, bool dontOriginateError = false)
     {
-        return make<impl::multi_threaded_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values));
+        return make<impl::multi_threaded_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values), dontOriginateError);
     }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> single_threaded_observable_map()
+    Windows::Foundation::Collections::IObservableMap<K, V> single_threaded_observable_map(bool dontOriginateError = false)
     {
-        return make<impl::observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{});
+        return make<impl::observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{}, dontOriginateError);
     }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> single_threaded_observable_map(std::map<K, V, Compare, Allocator>&& values)
+    Windows::Foundation::Collections::IObservableMap<K, V> single_threaded_observable_map(std::map<K, V, Compare, Allocator>&& values, bool dontOriginateError = false)
     {
-        return make<impl::observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values));
+        return make<impl::observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values), dontOriginateError);
     }
 
     template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> single_threaded_observable_map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values)
+    Windows::Foundation::Collections::IObservableMap<K, V> single_threaded_observable_map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values, bool dontOriginateError = false)
     {
-        return make<impl::observable_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values));
+        return make<impl::observable_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values), dontOriginateError);
     }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> multi_threaded_observable_map()
+    Windows::Foundation::Collections::IObservableMap<K, V> multi_threaded_observable_map(bool dontOriginateError = false)
     {
-        return make<impl::multi_threaded_observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{});
+        return make<impl::multi_threaded_observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{}, dontOriginateError);
     }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> multi_threaded_observable_map(std::map<K, V, Compare, Allocator>&& values)
+    Windows::Foundation::Collections::IObservableMap<K, V> multi_threaded_observable_map(std::map<K, V, Compare, Allocator>&& values, bool dontOriginateError = false)
     {
-        return make<impl::multi_threaded_observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values));
+        return make<impl::multi_threaded_observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values), dontOriginateError);
     }
 
     template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> multi_threaded_observable_map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values)
+    Windows::Foundation::Collections::IObservableMap<K, V> multi_threaded_observable_map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values, bool dontOriginateError = false)
     {
-        return make<impl::multi_threaded_observable_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values));
+        return make<impl::multi_threaded_observable_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values), dontOriginateError);
     }
 }
 

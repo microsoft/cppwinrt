@@ -202,10 +202,11 @@ namespace winrt::impl
 
         static fire_and_forget cancel_asynchronously(Async async)
         {
+            auto asyncRef = async;
             co_await winrt::resume_background();
             try
             {
-                async.Cancel();
+                asyncRef.Cancel();
             }
             catch (hresult_error const&)
             {
@@ -351,6 +352,10 @@ namespace winrt::impl
             return m_promise->enable_cancellation_propagation(value);
         }
 
+        bool avoid_logging(bool value = true) const noexcept
+        {
+            return m_promise->enable_avoid_rooriginate_cancel(value);
+        }
     private:
 
         Promise* m_promise;
@@ -484,7 +489,14 @@ namespace winrt::impl
                 if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Started)
                 {
                     m_status.store(AsyncStatus::Canceled, std::memory_order_relaxed);
-                    m_exception = std::make_exception_ptr(hresult_canceled());
+                    if (cancellable_promise::avoid_rooriginate_cancel_enabled())
+                    {
+                        m_exception = std::make_exception_ptr(non_originating_hresult_canceled());
+                    }
+                    else
+                    {
+                        m_exception = std::make_exception_ptr(hresult_canceled());
+                    }
                     cancel = std::move(m_cancel);
                 }
             }
@@ -628,7 +640,14 @@ namespace winrt::impl
         {
             if (Status() == AsyncStatus::Canceled)
             {
-                throw winrt::hresult_canceled();
+                if (cancellable_promise::avoid_rooriginate_cancel_enabled())
+                {
+                    throw winrt::non_originating_hresult_canceled();
+                }
+                else
+                {
+                    throw winrt::hresult_canceled();
+                }
             }
 
             return std::forward<Expression>(expression);

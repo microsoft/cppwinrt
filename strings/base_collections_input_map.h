@@ -9,8 +9,9 @@ namespace winrt::impl
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        explicit map_impl(Container&& values) : m_values(std::forward<Container>(values))
-        {
+        explicit map_impl(Container&& values, bool dontOriginateError = false) : m_values(std::forward<Container>(values))
+        { 
+            this->m_dontOriginateBoundsError = dontOriginateError;
         }
 
         auto& get_container() noexcept
@@ -35,9 +36,9 @@ namespace winrt::impl
     using input_map = map_impl<K, V, Container, single_threaded_collection_base>;
 
     template <typename K, typename V, typename Container>
-    auto make_input_map(Container&& values)
+    auto make_input_map(Container&& values, bool dontOriginateError = false)
     {
-        return make<input_map<K, V, Container>>(std::forward<Container>(values));
+        return make<input_map<K, V, Container>>(std::forward<Container>(values), dontOriginateError);
     }
 }
 
@@ -68,19 +69,19 @@ WINRT_EXPORT namespace winrt::param
         }
 
         template <typename Compare, typename Allocator>
-        map(std::map<K, V, Compare, Allocator>&& values) :
-            m_interface(impl::make_input_map<K, V>(std::move(values)))
+        map(std::map<K, V, Compare, Allocator>&& values, bool dontOriginateError = false) :
+            m_interface(impl::make_input_map<K, V>(std::move(values), dontOriginateError))
         {
         }
 
         template <typename Hash, typename KeyEqual, typename Allocator>
-        map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values) :
-            m_interface(impl::make_input_map<K, V>(std::move(values)))
+        map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values, bool dontOriginateError = false) :
+            m_interface(impl::make_input_map<K, V>(std::move(values), dontOriginateError))
         {
         }
 
-        map(std::initializer_list<std::pair<K const, V>> values) :
-            m_interface(impl::make_input_map<K, V>(std::map<K, V>(values)))
+        map(std::initializer_list<std::pair<K const, V>> values, bool dontOriginateError = false) :
+            m_interface(impl::make_input_map<K, V>(std::map<K, V>(values, dontOriginateError)))
         {
         }
 

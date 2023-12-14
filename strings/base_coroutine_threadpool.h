@@ -180,12 +180,23 @@ WINRT_EXPORT namespace winrt
             return m_propagate_cancellation;
         }
 
+        bool enable_avoid_rooriginate_cancel(bool value) noexcept
+        {
+            return std::exchange(m_avoid_rooriginate_cancel, value);
+        }
+
+        bool avoid_rooriginate_cancel_enabled() const noexcept
+        {
+            return m_avoid_rooriginate_cancel;
+        }
+
     private:
         static inline auto const cancelling_ptr = reinterpret_cast<canceller_t>(1);
 
         std::atomic<canceller_t> m_canceller{ nullptr };
         void* m_context{ nullptr };
         bool m_propagate_cancellation{ false };
+        bool m_avoid_rooriginate_cancel{ false };
     };
 
     template <typename Derived>
