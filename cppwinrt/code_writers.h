@@ -1368,11 +1368,6 @@ namespace cppwinrt
             w.write(R"(
         auto TryLookup(param_type<K> const& key) const
         {
-            //if (auto ignoreError = as<IIgnoreNextError>())
-            //{
-            //    ignoreError->IgnoreNextError();
-            //}
-
             if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
             {
                 V result{ nullptr };
@@ -1399,11 +1394,6 @@ namespace cppwinrt
             w.write(R"(
         auto TryLookup(param_type<K> const& key) const
         {
-            //if (auto ignoreError = as<IIgnoreNextError>())
-            //{
-            //    ignoreError->IgnoreNextError();
-            //}
-
             if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, V>)
             {
                 V result{ nullptr };
@@ -1426,10 +1416,6 @@ namespace cppwinrt
 
         auto TryRemove(param_type<K> const& key) const
         {
-            /*if (auto ignoreError = as<IIgnoreNextError>())
-            {
-                ignoreError->IgnoreNextError();
-            }*/
             return 0 == impl::check_hresult_allow_bounds(WINRT_IMPL_SHIM(Windows::Foundation::Collections::IMap<K, V>)->Remove(get_abi(key)));
         }
 )");
