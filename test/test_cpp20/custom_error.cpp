@@ -2,6 +2,7 @@
 
 using namespace winrt;
 using namespace Windows::Foundation;
+using namespace Windows::Foundation::Collections;
 
 namespace
 {
@@ -63,6 +64,32 @@ TEST_CASE("custom_error_logger")
 
     REQUIRE(s_loggerArgs.returnAddress);
     REQUIRE(s_loggerArgs.result == static_cast<int32_t>(0x80000018)); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
+
+    s_loggerCalled = false;
+
+    {
+        // Log a try lookup
+        IMap<hstring, int> c = single_threaded_map<hstring, int>();
+        c.Insert(L"hello"sv, 1);
+        c.Lookup(L"hello"sv);
+        auto val = c.TryLookup(L"hello"sv);
+        REQUIRE(val);
+        c.Remove(L"hello"sv);
+        REQUIRE(!s_loggerCalled);
+        // Now after we remove the item, TryLookup will fail and the logger will be called.  
+
+        val = c.TryLookup(L"hello"sv);
+        REQUIRE(!val);
+        REQUIRE(s_loggerCalled);
+
+        // now create an empty map that _doesn't_ log
+        s_loggerCalled = false;
+        IMap<hstring, int> c2 = single_threaded_map<hstring, int>(std::map<hstring, int>{}, true);
+        val = c2.TryLookup(L"hello"sv);
+        REQUIRE(!val);
+        // ensure that the logger wasn't called
+        REQUIRE(!s_loggerCalled);
+    }
 
     // Remove global handler
     winrt_throw_hresult_handler = nullptr;

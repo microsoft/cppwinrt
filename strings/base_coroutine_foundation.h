@@ -629,6 +629,10 @@ namespace winrt::impl
             {
                 m_status.store(AsyncStatus::Canceled, std::memory_order_relaxed);
             }
+            catch (non_originating_hresult_canceled const&)
+            {
+                m_status.store(AsyncStatus::Canceled, std::memory_order_relaxed);
+            }
             catch (...)
             {
                 m_status.store(AsyncStatus::Error, std::memory_order_relaxed);

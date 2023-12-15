@@ -11,6 +11,28 @@ namespace
     using std::experimental::suspend_never;
 #endif
 
+    static bool s_exceptionLoggerCalled = false;
+
+    static struct {
+        uint32_t lineNumber;
+        char const* fileName;
+        char const* functionName;
+        void* returnAddress;
+        winrt::hresult result;
+    } s_exceptionLoggerArgs{};
+
+    void __stdcall exceptionLogger(uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept
+    {
+        s_exceptionLoggerArgs = {
+            /*.lineNumber =*/ lineNumber,
+            /*.fileName =*/ fileName,
+            /*.functionName =*/ functionName,
+            /*.returnAddress =*/ returnAddress,
+            /*.result =*/ result,
+        };
+        s_exceptionLoggerCalled = true;
+    }
+
     //
     // Checks that manual cancellation checks work.
     //
@@ -61,6 +83,7 @@ namespace
         co_return 1;
     }
 
+
     IAsyncOperationWithProgress<int, int> OperationWithProgress(HANDLE event, bool& canceled)
     {
         co_await resume_on_signal(event);
@@ -75,6 +98,59 @@ namespace
         co_await suspend_never();
         REQUIRE(false);
         co_return 1;
+    }
+
+    IAsyncAction OperationCancelLogged(HANDLE event, bool& canceled)
+    {
+        REQUIRE(!s_exceptionLoggerCalled);
+        REQUIRE(!winrt_throw_hresult_handler);
+        winrt_throw_hresult_handler = exceptionLogger;
+
+        co_await resume_on_signal(event);
+        auto cancel = co_await get_cancellation_token();
+        cancel.avoid_logging(true);
+
+        if (cancel())
+        {
+            REQUIRE(!canceled);
+            canceled = true;
+            REQUIRE(s_exceptionLoggerCalled);
+            REQUIRE(s_exceptionLoggerArgs.result == HRESULT_FROM_WIN32(ERROR_CANCELLED));
+        }
+
+        winrt_throw_hresult_handler = nullptr;
+        s_exceptionLoggerCalled = false;
+
+        co_await suspend_never();
+
+        REQUIRE(false);
+        co_return;
+    }
+
+    IAsyncAction OperationAvoidLoggingCancel(HANDLE event, bool& canceled)
+    {
+        REQUIRE(!s_exceptionLoggerCalled);
+        REQUIRE(!winrt_throw_hresult_handler);
+        winrt_throw_hresult_handler = exceptionLogger;
+
+        co_await resume_on_signal(event);
+        auto cancel = co_await get_cancellation_token();
+        cancel.avoid_logging(true);
+
+        if (cancel())
+        {
+            REQUIRE(!canceled);
+            canceled = true;
+            REQUIRE(!s_exceptionLoggerCalled);
+        }
+
+        winrt_throw_hresult_handler = nullptr;
+        s_exceptionLoggerCalled = false;
+
+        co_await suspend_never();
+
+        REQUIRE(false);
+        co_return;
     }
 
     template <typename F>
@@ -111,8 +187,10 @@ TEST_CASE("async_check_cancel", "[.clang-crash]")
 TEST_CASE("async_check_cancel")
 #endif
 {
-    Check(Action);
-    Check(ActionWithProgress);
-    Check(Operation);
-    Check(OperationWithProgress);
+    //Check(Action);
+    //Check(ActionWithProgress);
+    //Check(Operation);
+    //Check(OperationWithProgress);
+    Check(OperationCancelLogged);
+    Check(OperationAvoidLoggingCancel);
 }

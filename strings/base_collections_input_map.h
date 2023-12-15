@@ -81,7 +81,7 @@ WINRT_EXPORT namespace winrt::param
         }
 
         map(std::initializer_list<std::pair<K const, V>> values, bool dontOriginateError = false) :
-            m_interface(impl::make_input_map<K, V>(std::map<K, V>(values, dontOriginateError)))
+            m_interface(impl::make_input_map<K, V>(std::map<K, V>(values), dontOriginateError))
         {
         }
 

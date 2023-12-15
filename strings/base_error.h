@@ -206,9 +206,25 @@ WINRT_EXPORT namespace winrt
             originate(code, nullptr WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
 
+        explicit hresult_error(hresult const code, bool avoidOrigination WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : m_code(verify_error(code))
+        {
+            if (!avoidOrigination)
+            {
+                originate(code, nullptr WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            }
+        }
+
         hresult_error(hresult const code, param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : m_code(verify_error(code))
         {
             originate(code, get_abi(message) WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+        }
+
+        hresult_error(hresult const code, param::hstring const& message, bool avoidOrigination WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : m_code(verify_error(code))
+        {
+            if (!avoidOrigination)
+            {
+                originate(code, get_abi(message) WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            }
         }
 
         hresult_error(hresult const code, take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : m_code(verify_error(code))
@@ -294,7 +310,7 @@ WINRT_EXPORT namespace winrt
             return m_code;
         }
 
-    protected:
+    private:
 
         void originate(hresult const code, void* message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept
         {
@@ -337,29 +353,6 @@ WINRT_EXPORT namespace winrt
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
-    };
-
-    struct non_originating_hresult_error : hresult_error
-    {
-    protected:
-        void originate(hresult const /*code*/, void* /*message*/ WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept
-        {
-            // override and do nothing. 
-        }
-    };
-
-    struct non_originating_hresult_canceled : hresult_error
-    {
-        non_originating_hresult_canceled(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_access_denied WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        non_originating_hresult_canceled(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_access_denied, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        non_originating_hresult_canceled(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_access_denied, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-    };
-
-    struct non_originating_hresult_out_of_bounds : hresult_error
-    {
-        non_originating_hresult_out_of_bounds(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_access_denied WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        non_originating_hresult_out_of_bounds(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_access_denied, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        non_originating_hresult_out_of_bounds(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_access_denied, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
     };
 
     struct hresult_access_denied : hresult_error
@@ -451,6 +444,18 @@ WINRT_EXPORT namespace winrt
         hresult_canceled(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_canceled WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
         hresult_canceled(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_canceled, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
         hresult_canceled(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_canceled, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+    };
+
+    struct non_originating_hresult_canceled : hresult_error
+    {
+        non_originating_hresult_canceled(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_canceled, true /*don't originate*/ WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        non_originating_hresult_canceled(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_canceled, message, true /*don't originate*/ WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+    };
+
+    struct non_originating_hresult_out_of_bounds : hresult_error
+    {
+        non_originating_hresult_out_of_bounds(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_out_of_bounds, true /*don't originate*/ WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        non_originating_hresult_out_of_bounds(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_out_of_bounds, message, true /*don't originate*/ WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
     };
 
     [[noreturn]] inline WINRT_IMPL_NOINLINE void throw_hresult(hresult const result WINRT_IMPL_SOURCE_LOCATION_ARGS)
