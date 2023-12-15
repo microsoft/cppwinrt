@@ -85,6 +85,14 @@ typedef struct _GUID GUID;
 // Some projects may decide to disable std::source_location support to prevent source code information from ending up in their
 // release binaries, or to reduce binary size.  Defining WINRT_NO_SOURCE_LOCATION will prevent this feature from activating.
 #if defined(__cpp_lib_source_location) && !defined(WINRT_NO_SOURCE_LOCATION)
+
+// std::source_location includes function_name which can be helpful but creates a lot of binary size impact.  Many consumers
+// have defined WINRT_NO_SOURCE_LOCATION to prevent this impact, losing the value of source_location.  We have defined a
+// slim_source_location struct that is equivalent but excludes function_name.  This should have the vast majority of the
+// usefulness of source_location while having a much smaller binary impact.
+//
+// When building _DEBUG binary size is not usually much of a concern, so we can use the full source_location type.
+#ifdef _DEBUG
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , std::source_location const& sourceInformation
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS , std::source_location const& sourceInformation = std::source_location::current()
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM std::source_location const& sourceInformation = std::source_location::current()
@@ -96,6 +104,25 @@ typedef struct _GUID GUID;
 
 #ifdef _MSC_VER
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "true")
+#endif // _MSC_VER
+
+#else // !_DEBUG
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , winrt::impl::slim_source_location const& sourceInformation
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS , winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()
+
+#define WINRT_IMPL_SOURCE_LOCATION_FORWARD , sourceInformation
+#define WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM sourceInformation
+
+#define WINRT_SOURCE_LOCATION_ACTIVE
+
+#ifdef _MSC_VER
+#pragma detect_mismatch("WINRT_SOURCE_LOCATION", "slim")
+#endif // _MSC_VER
+
+#endif // _DEBUG
+
+
 #endif
 #else
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT

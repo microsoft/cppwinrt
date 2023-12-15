@@ -247,3 +247,49 @@ namespace winrt::impl
     inline constexpr hresult error_not_initialized{ static_cast<hresult>(0x800401F0) }; // CO_E_NOTINITIALIZED
     inline constexpr hresult error_file_not_found{ static_cast<hresult>(0x80070002) }; // HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND)
 }
+
+#if defined(__cpp_lib_source_location) && !defined(WINRT_NO_SOURCE_LOCATION)
+namespace winrt::impl
+{
+    // This struct is intended to be highly similar to std::source_location.  The key difference is
+    // that function_name is NOT included.  Function names do not fold to identical strings and can
+    // have heavy binary size overhead when templates cause many permutations to exist.
+    struct slim_source_location
+    {
+        [[nodiscard]] static consteval slim_source_location current(
+            const std::uint_least32_t line = __builtin_LINE(),
+            const char* const file = __builtin_FILE()) noexcept
+        {
+            return slim_source_location{ line, fille };
+        }
+
+        [[nodiscard]] constexpr slim_source_location() noexcept = default;
+
+        [[nodiscard]] constexpr slim_source_location(const std::uint_least32_t line,
+            const char* const file) noexcept :
+            m_line(line),
+            m_file(file)
+        {}
+
+        [[nodiscard]] constexpr std::uint_least32_t line() const noexcept
+        {
+            return m_line;
+        }
+
+        [[nodiscard]] constexpr const char* file_name() const noexcept
+        {
+            return m_file;
+        }
+
+        constexpr const char* function_name() const noexcept
+        {
+            // This is intentionally not included.  See comment above.
+            return nullptr;
+        }
+
+    private:
+        const std::uint_least32_t m_line{};
+        const char* const m_file{};
+    };
+}
+#endif defined(__cpp_lib_source_location) && !defined(WINRT_NO_SOURCE_LOCATION)
