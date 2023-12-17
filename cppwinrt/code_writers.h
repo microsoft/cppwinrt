@@ -2488,9 +2488,9 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         template <typename F> %(F* function);
         template <typename O, typename M> %(O* object, M method);
         template <typename O, typename M> %(com_ptr<O>&& object, M method);
-        template <typename O, typename M> %(weak_ref<O>&& object, M method);
+        template <typename O, typename LM> %(weak_ref<O>&& object, LM&& lambda_or_method);
         template <typename O, typename M> %(std::shared_ptr<O>&& object, M method);
-        template <typename O, typename M> %(std::weak_ptr<O>&& object, M method);
+        template <typename O, typename LM> %(std::weak_ptr<O>&& object, LM&& lambda_or_method);
         auto operator()(%) const;
     };
 )";
@@ -2566,16 +2566,22 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         %([o = std::move(object), method](auto&&... args) { return ((*o).*(method))(args...); })
     {
     }
-    template <%> template <typename O, typename M> %<%>::%(weak_ref<O>&& object, M method) :
-        %([o = std::move(object), method](auto&&... args) { if (auto s = o.get()) { ((*s).*(method))(args...); } })
+    template <%> template <typename O, typename LM> %<%>::%(weak_ref<O>&& object, LM&& lambda_or_method) :
+        %([o = std::move(object), lm = std::forward<LM>(lambda_or_method)](auto&&... args) { if (auto s = o.get()) {
+            if constexpr (std::is_member_function_pointer_v<LM>) ((*s).*(lm))(args...);
+            else lm(args...);
+        } })
     {
     }
     template <%> template <typename O, typename M> %<%>::%(std::shared_ptr<O>&& object, M method) :
         %([o = std::move(object), method](auto&&... args) { return ((*o).*(method))(args...); })
     {
     }
-    template <%> template <typename O, typename M> %<%>::%(std::weak_ptr<O>&& object, M method) :
-        %([o = std::move(object), method](auto&&... args) { if (auto s = o.lock()) { ((*s).*(method))(args...); } })
+    template <%> template <typename O, typename LM> %<%>::%(std::weak_ptr<O>&& object, LM&& lambda_or_method) :
+        %([o = std::move(object), lm = std::forward<LM>(lambda_or_method)](auto&&... args) { if (auto s = o.lock()) {
+            if constexpr (std::is_member_function_pointer_v<LM>) ((*s).*(lm))(args...);
+            else lm(args...);
+        } })
     {
     }
     template <%> auto %<%>::operator()(%) const
@@ -2652,16 +2658,22 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         %([o = std::move(object), method](auto&&... args) { return ((*o).*(method))(args...); })
     {
     }
-    template <typename O, typename M> %::%(weak_ref<O>&& object, M method) :
-        %([o = std::move(object), method](auto&&... args) { if (auto s = o.get()) { ((*s).*(method))(args...); } })
+    template <typename O, typename LM> %::%(weak_ref<O>&& object, LM&& lambda_or_method) :
+        %([o = std::move(object), lm = std::forward<LM>(lambda_or_method)](auto&&... args) { if (auto s = o.get()) {
+            if constexpr (std::is_member_function_pointer_v<LM>) ((*s).*(lm))(args...);
+            else lm(args...);
+        } })
     {
     }
     template <typename O, typename M> %::%(std::shared_ptr<O>&& object, M method) :
         %([o = std::move(object), method](auto&&... args) { return ((*o).*(method))(args...); })
     {
     }
-    template <typename O, typename M> %::%(std::weak_ptr<O>&& object, M method) :
-        %([o = std::move(object), method](auto&&... args) { if (auto s = o.lock()) { ((*s).*(method))(args...); } })
+    template <typename O, typename LM> %::%(std::weak_ptr<O>&& object, LM&& lambda_or_method) :
+        %([o = std::move(object), lm = std::forward<LM>(lambda_or_method)](auto&&... args) { if (auto s = o.lock()) {
+            if constexpr (std::is_member_function_pointer_v<LM>) ((*s).*(lm))(args...);
+            else lm(args...);
+        } })
     {
     }
     inline auto %::operator()(%) const
