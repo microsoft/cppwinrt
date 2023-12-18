@@ -1,18 +1,15 @@
 
 namespace winrt::impl
 {
-    template <typename K, typename V, typename Container, typename ThreadingBase>
+    template <typename K, typename V, typename Container, typename ThreadingBase, bool ShouldOriginate = true>
     struct map_impl :
-        implements<map_impl<K, V, Container, ThreadingBase>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
-        map_base<map_impl<K, V, Container, ThreadingBase>, K, V>,
+        implements<map_impl<K, V, Container, ThreadingBase, ShouldOriginate>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+        map_base<map_impl<K, V, Container, ThreadingBase, ShouldOriginate>, K, V, ShouldOriginate>,
         ThreadingBase
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        explicit map_impl(Container&& values, bool dontOriginateError = false) : m_values(std::forward<Container>(values))
-        { 
-            this->m_dontOriginateBoundsError = dontOriginateError;
-        }
+        explicit map_impl(Container&& values) : m_values(std::forward<Container>(values)) {}
 
         auto& get_container() noexcept
         {
@@ -32,19 +29,19 @@ namespace winrt::impl
         Container m_values;
     };
 
-    template <typename K, typename V, typename Container>
-    using input_map = map_impl<K, V, Container, single_threaded_collection_base>;
+    template <typename K, typename V, typename Container, bool ShouldOriginate = true>
+    using input_map = map_impl<K, V, Container, single_threaded_collection_base, ShouldOriginate>;
 
-    template <typename K, typename V, typename Container>
-    auto make_input_map(Container&& values, bool dontOriginateError = false)
+    template <typename K, typename V, typename Container, bool ShouldOriginate = true>
+    auto make_input_map(Container&& values)
     {
-        return make<input_map<K, V, Container>>(std::forward<Container>(values), dontOriginateError);
+        return make<input_map<K, V, Container, ShouldOriginate>>(std::forward<Container>(values));
     }
 }
 
 WINRT_EXPORT namespace winrt::param
 {
-    template <typename K, typename V>
+    template <typename K, typename V, bool ShouldOriginate = true>
     struct map
     {
         using value_type = Windows::Foundation::Collections::IKeyValuePair<K, V>;
@@ -69,19 +66,19 @@ WINRT_EXPORT namespace winrt::param
         }
 
         template <typename Compare, typename Allocator>
-        map(std::map<K, V, Compare, Allocator>&& values, bool dontOriginateError = false) :
-            m_interface(impl::make_input_map<K, V>(std::move(values), dontOriginateError))
+        map(std::map<K, V, Compare, Allocator>&& values) :
+            m_interface(impl::make_input_map<K, V, std::map<K, V, Compare, Allocator>, ShouldOriginate>(std::move(values)))
         {
         }
 
         template <typename Hash, typename KeyEqual, typename Allocator>
-        map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values, bool dontOriginateError = false) :
-            m_interface(impl::make_input_map<K, V>(std::move(values), dontOriginateError))
+        map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values) :
+            m_interface(impl::make_input_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>, ShouldOriginate>(std::move(values)))
         {
         }
 
-        map(std::initializer_list<std::pair<K const, V>> values, bool dontOriginateError = false) :
-            m_interface(impl::make_input_map<K, V>(std::map<K, V>(values), dontOriginateError))
+        map(std::initializer_list<std::pair<K const, V>> values) :
+            m_interface(impl::make_input_map<K, V, std::map<K, V>, ShouldOriginate>(std::map<K, V>(values)))
         {
         }
 
@@ -104,8 +101,8 @@ WINRT_EXPORT namespace winrt::param
         bool m_owned{ true };
     };
 
-    template <typename K, typename V>
-    auto get_abi(map<K, V> const& object) noexcept
+    template <typename K, typename V, bool ShouldOriginate = true>
+    auto get_abi(map<K, V, ShouldOriginate> const& object) noexcept
     {
         return *(void**)(&object);
     }

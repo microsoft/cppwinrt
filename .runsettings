@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <MaxCpuCount>1</MaxCpuCount>
+    <ResultsDirectory>.\TestResults</ResultsDirectory><!-- Path relative to solution directory -->
+    <TestSessionTimeout>60000</TestSessionTimeout><!-- Milliseconds -->
+    <ForceListContent>true</ForceListContent>
+
+  </RunConfiguration>
+
+  <!-- Adapter Specific sections -->
+
+  <!-- Catch2 adapter -->
+  <Catch2Adapter>
+    <Logging>Verbose</Logging>
+    <FilenameFilter>^test</FilenameFilter><!-- Regex filter -->
+    <ForceListContent>true</ForceListContent>
+    <CombinedTimeout>30000</CombinedTimeout><!-- 30s in Milliseconds -->
+    <DebugBreak>on</DebugBreak>
+    <IncludeHidden>true</IncludeHidden>
+    <Logging>Normal</Logging>
+    <MessageFormat>StatsOnly</MessageFormat>
+    <StackTraceFormat>ShortInfo</StackTraceFormat>
+    <StackTracePointReplacement>,</StackTracePointReplacement>
+    <TestCaseTimeout>20000</TestCaseTimeout><!-- 20s in Milliseconds -->
+    <Overrides>
+      <Source dllfilter="CatchDll_Dummy" filter="Catch_Dummy">
+        <TestCaseTimeout>10</TestCaseTimeout><!-- Milliseconds -->
+      </Source>
+    </Overrides>
+  </Catch2Adapter>
+</RunSettings>

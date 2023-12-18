@@ -503,7 +503,7 @@ WINRT_EXPORT namespace winrt
         };
     };
 
-    template <typename D, typename K, typename V, typename Version = impl::no_collection_version>
+    template <typename D, typename K, typename V, bool ShouldOriginate = true, typename Version = impl::no_collection_version>
     struct map_view_base : iterable_base<D, Windows::Foundation::Collections::IKeyValuePair<K, V>, Version>
     {
         V Lookup(K const& key) const
@@ -513,13 +513,13 @@ WINRT_EXPORT namespace winrt
 
             if (pair == static_cast<D const&>(*this).get_container().end())
             {
-                if (m_dontOriginateBoundsError)
+                if constexpr (ShouldOriginate)
                 {
-                    throw non_originating_hresult_out_of_bounds();
+                    throw hresult_out_of_bounds();
                 }
                 else
                 {
-                    throw hresult_out_of_bounds();
+                    throw non_originating_hresult_out_of_bounds();
                 }
             }
 
@@ -544,19 +544,10 @@ WINRT_EXPORT namespace winrt
             second = nullptr;
         }
 
-    //    // IIgnoreNextError
-    //    void IgnoreNextError()
-    //    {
-    //        m_ignoreNextError = true;
-    //    }
-    //private:
-    //    bool m_ignoreNextError{ false };
-    protected:
-        bool m_dontOriginateBoundsError{ false };
     };
 
-    template <typename D, typename K, typename V>
-    struct map_base : map_view_base<D, K, V, impl::collection_version>
+    template <typename D, typename K, typename V, bool ShouldOriginate = true>
+    struct map_base : map_view_base<D, K, V, ShouldOriginate, impl::collection_version>
     {
         Windows::Foundation::Collections::IMapView<K, V> GetView() const
         {
@@ -588,13 +579,13 @@ WINRT_EXPORT namespace winrt
             auto found = container.find(static_cast<D const&>(*this).wrap_value(key));
             if (found == container.end())
             {
-                if (map_view_base<D, K, V, impl::collection_version>::m_dontOriginateBoundsError)
+                if constexpr (ShouldOriginate)
                 {
-                    throw non_originating_hresult_out_of_bounds();
+                    throw hresult_out_of_bounds();
                 }
                 else
                 {
-                    throw hresult_out_of_bounds();
+                    throw non_originating_hresult_out_of_bounds();
                 }
             }
             this->increment_version();
@@ -611,8 +602,8 @@ WINRT_EXPORT namespace winrt
         }
     };
 
-    template <typename D, typename K, typename V>
-    struct observable_map_base : map_base<D, K, V>
+    template <typename D, typename K, typename V, bool ShouldOriginate>
+    struct observable_map_base : map_base<D, K, V, ShouldOriginate>
     {
         event_token MapChanged(Windows::Foundation::Collections::MapChangedEventHandler<K, V> const& handler)
         {
@@ -626,20 +617,20 @@ WINRT_EXPORT namespace winrt
 
         bool Insert(K const& key, V const& value)
         {
-            bool const result = map_base<D, K, V>::Insert(key, value);
+            bool const result = map_base<D, K, V, ShouldOriginate>::Insert(key, value);
             call_changed(Windows::Foundation::Collections::CollectionChange::ItemInserted, key);
             return result;
         }
 
         void Remove(K const& key)
         {
-            map_base<D, K, V>::Remove(key);
+            map_base<D, K, V, ShouldOriginate>::Remove(key);
             call_changed(Windows::Foundation::Collections::CollectionChange::ItemRemoved, key);
         }
 
         void Clear() noexcept
         {
-            map_base<D, K, V>::Clear();
+            map_base<D, K, V, ShouldOriginate>::Clear();
             call_changed(Windows::Foundation::Collections::CollectionChange::Reset, impl::empty_value<K>());
         }
 
