@@ -494,7 +494,7 @@ TEST_CASE("hresult, throw_last_error")
 TEST_CASE("hresult, trim_hresult_message")
 {
     hresult_error e(E_FAIL, L":) is \u263A \n \t ");
-
+    auto x = e.message();
     REQUIRE(e.message() == L":) is \u263A");
 }
 
@@ -580,6 +580,7 @@ TEST_CASE("hresult, to_message")
     }
     catch (...)
     {
+        auto  x = to_message();
         REQUIRE(to_message() == L"oh no, invalid handle");
     }
 }

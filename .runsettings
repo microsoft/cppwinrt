@@ -23,10 +23,5 @@
     <StackTraceFormat>ShortInfo</StackTraceFormat>
     <StackTracePointReplacement>,</StackTracePointReplacement>
     <TestCaseTimeout>20000</TestCaseTimeout><!-- 20s in Milliseconds -->
-    <Overrides>
-      <Source dllfilter="CatchDll_Dummy" filter="Catch_Dummy">
-        <TestCaseTimeout>10</TestCaseTimeout><!-- Milliseconds -->
-      </Source>
-    </Overrides>
   </Catch2Adapter>
 </RunSettings>

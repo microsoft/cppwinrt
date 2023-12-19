@@ -84,7 +84,7 @@ TEST_CASE("custom_error_logger")
 
         // now create an empty map that _doesn't_ log
         s_loggerCalled = false;
-        IMap<hstring, int> c2 = single_threaded_map<hstring, int>(std::map<hstring, int>{}, true);
+        IMap<hstring, int> c2 = single_threaded_map<hstring, int, false>(std::map<hstring, int>{});
         val = c2.TryLookup(L"hello"sv);
         REQUIRE(!val);
         // ensure that the logger wasn't called

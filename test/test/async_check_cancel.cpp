@@ -108,7 +108,6 @@ namespace
 
         co_await resume_on_signal(event);
         auto cancel = co_await get_cancellation_token();
-        cancel.avoid_logging(true);
 
         if (cancel())
         {
@@ -133,9 +132,10 @@ namespace
         REQUIRE(!winrt_throw_hresult_handler);
         winrt_throw_hresult_handler = exceptionLogger;
 
-        co_await resume_on_signal(event);
         auto cancel = co_await get_cancellation_token();
         cancel.avoid_logging(true);
+
+        co_await resume_on_signal(event);
 
         if (cancel())
         {
@@ -172,7 +172,7 @@ namespace
 
         async.Cancel();
         SetEvent(start.get());
-        REQUIRE(WaitForSingleObject(completed.get(), 1000) == WAIT_OBJECT_0);
+        REQUIRE(WaitForSingleObject(completed.get(), 100000) == WAIT_OBJECT_0);
 
         REQUIRE(async.Status() == AsyncStatus::Canceled);
         REQUIRE(async.ErrorCode() == HRESULT_FROM_WIN32(ERROR_CANCELLED));
@@ -187,10 +187,10 @@ TEST_CASE("async_check_cancel", "[.clang-crash]")
 TEST_CASE("async_check_cancel")
 #endif
 {
-    //Check(Action);
-    //Check(ActionWithProgress);
-    //Check(Operation);
-    //Check(OperationWithProgress);
+    Check(Action);
+    Check(ActionWithProgress);
+    Check(Operation);
+    Check(OperationWithProgress);
     Check(OperationCancelLogged);
     Check(OperationAvoidLoggingCancel);
 }

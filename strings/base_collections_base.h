@@ -602,7 +602,7 @@ WINRT_EXPORT namespace winrt
         }
     };
 
-    template <typename D, typename K, typename V, bool ShouldOriginate>
+    template <typename D, typename K, typename V, bool ShouldOriginate = true>
     struct observable_map_base : map_base<D, K, V, ShouldOriginate>
     {
         event_token MapChanged(Windows::Foundation::Collections::MapChangedEventHandler<K, V> const& handler)

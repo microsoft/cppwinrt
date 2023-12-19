@@ -29,7 +29,7 @@ namespace winrt::impl
         Container m_values;
     };
 
-    template <typename K, typename V, typename Container, bool ShouldOriginate = true>
+    template <typename K, typename V, typename Container, bool ShouldOriginate>
     using input_map = map_impl<K, V, Container, single_threaded_collection_base, ShouldOriginate>;
 
     template <typename K, typename V, typename Container, bool ShouldOriginate = true>
@@ -41,7 +41,7 @@ namespace winrt::impl
 
 WINRT_EXPORT namespace winrt::param
 {
-    template <typename K, typename V, bool ShouldOriginate = true>
+    template <typename K, typename V>
     struct map
     {
         using value_type = Windows::Foundation::Collections::IKeyValuePair<K, V>;
@@ -67,18 +67,18 @@ WINRT_EXPORT namespace winrt::param
 
         template <typename Compare, typename Allocator>
         map(std::map<K, V, Compare, Allocator>&& values) :
-            m_interface(impl::make_input_map<K, V, std::map<K, V, Compare, Allocator>, ShouldOriginate>(std::move(values)))
+            m_interface(impl::make_input_map<K, V>(std::move(values)))
         {
         }
 
         template <typename Hash, typename KeyEqual, typename Allocator>
         map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values) :
-            m_interface(impl::make_input_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>, ShouldOriginate>(std::move(values)))
+            m_interface(impl::make_input_map<K, V>(std::move(values)))
         {
         }
 
         map(std::initializer_list<std::pair<K const, V>> values) :
-            m_interface(impl::make_input_map<K, V, std::map<K, V>, ShouldOriginate>(std::map<K, V>(values)))
+            m_interface(impl::make_input_map<K, V>(std::map<K, V>(values)))
         {
         }
 
@@ -101,8 +101,8 @@ WINRT_EXPORT namespace winrt::param
         bool m_owned{ true };
     };
 
-    template <typename K, typename V, bool ShouldOriginate = true>
-    auto get_abi(map<K, V, ShouldOriginate> const& object) noexcept
+    template <typename K, typename V>
+    auto get_abi(map<K, V> const& object) noexcept
     {
         return *(void**)(&object);
     }
