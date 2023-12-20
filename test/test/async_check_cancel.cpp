@@ -133,7 +133,7 @@ namespace
         winrt_throw_hresult_handler = exceptionLogger;
 
         auto cancel = co_await get_cancellation_token();
-        cancel.avoid_logging(true);
+        cancel.avoid_cancel_origination(true);
 
         co_await resume_on_signal(event);
 
@@ -172,7 +172,7 @@ namespace
 
         async.Cancel();
         SetEvent(start.get());
-        REQUIRE(WaitForSingleObject(completed.get(), 100000) == WAIT_OBJECT_0);
+        REQUIRE(WaitForSingleObject(completed.get(), IsDebuggerPresent() ? INFINITE : 1000) == WAIT_OBJECT_0);
 
         REQUIRE(async.Status() == AsyncStatus::Canceled);
         REQUIRE(async.ErrorCode() == HRESULT_FROM_WIN32(ERROR_CANCELLED));

@@ -202,11 +202,10 @@ namespace winrt::impl
 
         static fire_and_forget cancel_asynchronously(Async async)
         {
-            auto asyncRef = async;
             co_await winrt::resume_background();
             try
             {
-                asyncRef.Cancel();
+                async.Cancel();
             }
             catch (hresult_error const&)
             {
@@ -352,9 +351,9 @@ namespace winrt::impl
             return m_promise->enable_cancellation_propagation(value);
         }
 
-        bool avoid_logging(bool value = true) const noexcept
+        bool avoid_cancel_origination(bool value = true) const noexcept
         {
-            return m_promise->enable_avoid_rooriginate_cancel(value);
+            return m_promise->enable_avoid_cancel_origination(value);
         }
     private:
 
@@ -489,7 +488,7 @@ namespace winrt::impl
                 if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Started)
                 {
                     m_status.store(AsyncStatus::Canceled, std::memory_order_relaxed);
-                    if (cancellable_promise::avoid_rooriginate_cancel_enabled())
+                    if (cancellable_promise::avoid_cancel_origination_enabled())
                     {
                         m_exception = std::make_exception_ptr(non_originating_hresult_canceled());
                     }
@@ -644,7 +643,7 @@ namespace winrt::impl
         {
             if (Status() == AsyncStatus::Canceled)
             {
-                if (cancellable_promise::avoid_rooriginate_cancel_enabled())
+                if (cancellable_promise::avoid_cancel_origination_enabled())
                 {
                     throw winrt::non_originating_hresult_canceled();
                 }

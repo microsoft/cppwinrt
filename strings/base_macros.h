@@ -85,9 +85,9 @@ typedef struct _GUID GUID;
 // Some projects may decide to disable std::source_location support to prevent source code information from ending up in their
 // release binaries, or to reduce binary size.  Defining WINRT_NO_SOURCE_LOCATION will prevent this feature from activating.
 #if defined(__cpp_lib_source_location) && !defined(WINRT_NO_SOURCE_LOCATION)
-#define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , std::source_location const& sourceInformation
-#define WINRT_IMPL_SOURCE_LOCATION_ARGS , std::source_location const& sourceInformation = std::source_location::current()
-#define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM std::source_location const& sourceInformation = std::source_location::current()
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , [[maybe_unused]] std::source_location const& sourceInformation
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS , [[maybe_unused]]std::source_location const& sourceInformation = std::source_location::current()
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM [[maybe_unused]] std::source_location const& sourceInformation = std::source_location::current()
 
 #define WINRT_IMPL_SOURCE_LOCATION_FORWARD , sourceInformation
 #define WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM sourceInformation
