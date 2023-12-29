@@ -859,9 +859,9 @@ $(XamlMetaDataProviderPch)
     <!--Add references to all merged project WinMD files for Xaml Compiler-->
     <Target Name="CppWinRTAddXamlReferences"
             Condition="'@(Page)@(ApplicationDefinition)' != '' and '$(XamlLanguage)' == 'CppWinRT'"
-            DependsOnTargets="$(CppWinRTAddXamlReferencesDependsOn)">
+            DependsOnTargets="$(CppWinRTAddXamlReferencesDependsOn);CppWinRTGetResolvedWinMD;GetCppWinRTProjectWinMDReferences">
         <ItemGroup>
-            <XamlReferencesToCompile Include="$(OutDir)*.winmd" />
+            <XamlReferencesToCompile Include="@(WinMDFullPath);@(CppWinRTDynamicProjectWinMDReferences)" />
         </ItemGroup>
     </Target>
 
