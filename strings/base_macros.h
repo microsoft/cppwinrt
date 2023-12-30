@@ -85,6 +85,58 @@ typedef struct _GUID GUID;
 // Some projects may decide to disable std::source_location support to prevent source code information from ending up in their
 // release binaries, or to reduce binary size.  Defining WINRT_NO_SOURCE_LOCATION will prevent this feature from activating.
 #if defined(__cpp_lib_source_location) && !defined(WINRT_NO_SOURCE_LOCATION)
+
+namespace winrt::impl
+{
+    // This struct is intended to be highly similar to std::source_location.  The key difference is
+    // that function_name is NOT included.  Function names do not fold to identical strings and can
+    // have heavy binary size overhead when templates cause many permutations to exist.
+    struct slim_source_location
+    {
+        [[nodiscard]] static consteval slim_source_location current(
+            const std::uint_least32_t line = __builtin_LINE(),
+            const char* const file = __builtin_FILE()) noexcept
+        {
+            return slim_source_location{ line, file };
+        }
+
+        [[nodiscard]] constexpr slim_source_location() noexcept = default;
+
+        [[nodiscard]] constexpr slim_source_location(const std::uint_least32_t line,
+            const char* const file) noexcept :
+            m_line(line),
+            m_file(file)
+        {}
+
+        [[nodiscard]] constexpr std::uint_least32_t line() const noexcept
+        {
+            return m_line;
+        }
+
+        [[nodiscard]] constexpr const char* file_name() const noexcept
+        {
+            return m_file;
+        }
+
+        constexpr const char* function_name() const noexcept
+        {
+            // This is intentionally not included.  See comment above.
+            return nullptr;
+        }
+
+    private:
+        const std::uint_least32_t m_line{};
+        const char* const m_file{};
+    };
+}
+
+// std::source_location includes function_name which can be helpful but creates a lot of binary size impact.  Many consumers
+// have defined WINRT_NO_SOURCE_LOCATION to prevent this impact, losing the value of source_location.  We have defined a
+// slim_source_location struct that is equivalent but excludes function_name.  This should have the vast majority of the
+// usefulness of source_location while having a much smaller binary impact.
+//
+// When building _DEBUG binary size is not usually much of a concern, so we can use the full source_location type.
+#ifdef _DEBUG
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , std::source_location const& sourceInformation
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS , std::source_location const& sourceInformation = std::source_location::current()
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM std::source_location const& sourceInformation = std::source_location::current()
@@ -96,7 +148,24 @@ typedef struct _GUID GUID;
 
 #ifdef _MSC_VER
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "true")
-#endif
+#endif // _MSC_VER
+
+#else // !_DEBUG
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , winrt::impl::slim_source_location const& sourceInformation
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS , winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()
+#define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()
+
+#define WINRT_IMPL_SOURCE_LOCATION_FORWARD , sourceInformation
+#define WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM sourceInformation
+
+#define WINRT_SOURCE_LOCATION_ACTIVE
+
+#ifdef _MSC_VER
+#pragma detect_mismatch("WINRT_SOURCE_LOCATION", "slim")
+#endif // _MSC_VER
+
+#endif // _DEBUG
+
 #else
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS
@@ -107,5 +176,5 @@ typedef struct _GUID GUID;
 
 #ifdef _MSC_VER
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "false")
-#endif
-#endif
+#endif //  _MSC_VER
+#endif // defined(__cpp_lib_source_location) && !defined(WINRT_NO_SOURCE_LOCATION)
