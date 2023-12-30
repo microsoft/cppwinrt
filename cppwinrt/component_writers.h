@@ -468,29 +468,6 @@ catch (...) { return winrt::to_hresult(); }
             }
             else if (factory.statics)
             {
-                /* {
-                    auto format = R"(    template <int = 0>
-    static auto Get%Statics()
-    {
-        if constexpr (winrt::impl::has_static_lifetime_v<@::factory_implementation::%>)
-        {
-            return winrt::make_self<@::factory_implementation::%>();
-        }
-        else
-        {
-            return std::add_pointer_t<@::factory_implementation::%::statics_type>{ nullptr };
-        }
-    })";
-                    w.write(format,
-                        type_name,
-                        type_namespace,
-                        type_name,
-                        type_namespace,
-                        type_name,
-                        type_namespace,
-                        type_name);
-                }*/
-
                 for (auto&& method : factory.type.MethodList())
                 {
                     method_signature signature{ method };
