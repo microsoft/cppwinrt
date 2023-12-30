@@ -468,7 +468,7 @@ catch (...) { return winrt::to_hresult(); }
             }
             else if (factory.statics)
             {
-                {
+                /* {
                     auto format = R"(    template <int = 0>
     static auto Get%Statics()
     {
@@ -489,7 +489,7 @@ catch (...) { return winrt::to_hresult(); }
                         type_name,
                         type_namespace,
                         type_name);
-                }
+                }*/
 
                 for (auto&& method : factory.type.MethodList())
                 {
@@ -519,22 +519,46 @@ catch (...) { return winrt::to_hresult(); }
                     }
                     else
                     {
-                        auto format = R"(    % %::%(%)
+                        auto format = R"(    template <typename S>
+    % %_%(%)
     {
-        %Get%Statics()->%(%);
+        if constexpr (winrt::impl::has_static_lifetime_v<S>)
+        {
+            %winrt::make_self<S>()->%(%);
+        }
+        else
+        {
+            %S::statics_type::%(%);
+        }
+    }
+    
+    % %::%(%)
+    {
+        %%_%<factory_implementation::%>(%);
     }
 )";
 
                         bool ignore_return = is_put_overload(method) || !signature.return_signature();
-
+                        auto statement_prefix = ignore_return ? "" : "return ";
                         w.write(format,
                             signature.return_signature(),
                             type_name,
                             method_name,
                             bind<write_consume_params>(signature),
-                            ignore_return ? "" : "return ",
+                            statement_prefix,
+                            method_name,
+                            bind<write_consume_args>(signature),
+                            statement_prefix,
+                            method_name,
+                            bind<write_consume_args>(signature),
+                            signature.return_signature(),
                             type_name,
                             method_name,
+                            bind<write_consume_params>(signature),
+                            statement_prefix,
+                            type_name,
+                            method_name,
+                            type_name,
                             bind<write_consume_args>(signature));
                     }
 
