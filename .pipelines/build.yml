@@ -422,7 +422,7 @@ jobs:
       command: pack
       searchPatternPack: nuget/Microsoft.Windows.CppWinRT.nuspec
       versioningScheme: byBuildNumber
-      buildProperties: 'cppwinrt_exe=$(Build.ArtifactStagingDirectory)\x86\cppwinrt.exe;cppwinrt_fast_fwd_x86=$(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=$(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=$(Build.SourcesDirectory)\arm\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=$(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib '
+      buildProperties: 'target_version=$(Build.BuildNumber);cppwinrt_exe=$(Build.ArtifactStagingDirectory)\x86\cppwinrt.exe;cppwinrt_fast_fwd_x86=$(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=$(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=$(Build.SourcesDirectory)\arm\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=$(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib '
 
   - task: ComponentGovernanceComponentDetection@0
     displayName: Component Detection
