@@ -418,6 +418,7 @@
     <ClCompile Include="single_threaded_observable_vector.cpp" />
     <ClCompile Include="structs.cpp" />
     <ClCompile Include="struct_delegate.cpp" />
+    <ClCompile Include="suppress_error_info.cpp" />
     <ClCompile Include="tearoff.cpp" />
     <ClCompile Include="thread_pool.cpp" />
     <ClCompile Include="uniform_in_params.cpp" />

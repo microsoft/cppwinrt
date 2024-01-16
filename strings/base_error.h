@@ -313,8 +313,8 @@ WINRT_EXPORT namespace winrt
             }
 
             com_ptr<impl::IErrorInfo> info;
-            WINRT_VERIFY_(0, WINRT_IMPL_GetErrorInfo(0, info.put_void()));
-            WINRT_VERIFY(info.try_as(m_info));
+            WINRT_IMPL_GetErrorInfo(0, info.put_void());
+            info.try_as(m_info);
         }
 
         static hresult verify_error(hresult const code) noexcept
