@@ -567,12 +567,18 @@ namespace winrt::impl
     template <typename... Args>
     inline hstring base_format(Args&&... args)
     {
-        auto const size = std::formatted_size(std::forward<Args>(args)...);
+        // don't forward because an object could be moved-from, causing issues
+        // for the second format call.
+        // not forwarding lets us take both rvalues and lvalues but pass them
+        // further down as an lvalue ref. some types can only be formatted
+        // when non-const (e.g. ranges::filter_view) so take a const reference
+        // as parameter wouldn't work for all scenarios.
+        auto const size = std::formatted_size(args...);
         WINRT_ASSERT(size < UINT_MAX);
         auto const size32 = static_cast<uint32_t>(size);
 
         hstring_builder builder(size32);
-        WINRT_VERIFY_(size32, std::format_to_n(builder.data(), size32, std::forward<Args>(args)...).size);
+        WINRT_VERIFY_(size32, std::format_to_n(builder.data(), size32, args...).size);
         return builder.to_hstring();
     }
 #endif
