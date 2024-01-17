@@ -571,7 +571,7 @@ namespace winrt::impl
         // for the second format call.
         // not forwarding lets us take both rvalues and lvalues but pass them
         // further down as an lvalue ref. some types can only be formatted
-        // when non-const (e.g. ranges::filter_view) so take a const reference
+        // when non-const (e.g. ranges::filter_view) so taking a const reference
         // as parameter wouldn't work for all scenarios.
         auto const size = std::formatted_size(args...);
         WINRT_ASSERT(size < UINT_MAX);
@@ -588,15 +588,15 @@ WINRT_EXPORT namespace winrt
 {
 #if __cpp_lib_format >= 202207L
     template <typename... Args>
-    inline hstring format(std::wformat_string<Args...> const fmt, Args&&... args)
+    inline hstring format(std::wformat_string<Args&...> const fmt, Args&&... args)
     {
-        return impl::base_format(fmt, std::forward<Args>(args)...);
+        return impl::base_format(fmt, args...);
     }
 
     template <typename... Args>
-    inline hstring format(std::locale const& loc, std::wformat_string<Args...> const fmt, Args&&... args)
+    inline hstring format(std::locale const& loc, std::wformat_string<Args&...> const fmt, Args&&... args)
     {
-        return impl::base_format(loc, fmt, std::forward<Args>(args)...);
+        return impl::base_format(loc, fmt, args...);
     }
 #endif
 
