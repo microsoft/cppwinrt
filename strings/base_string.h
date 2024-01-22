@@ -567,12 +567,18 @@ namespace winrt::impl
     template <typename... Args>
     inline hstring base_format(Args&&... args)
     {
-        auto const size = std::formatted_size(std::forward<Args>(args)...);
+        // don't forward because an object could be moved-from, causing issues
+        // for the second format call.
+        // not forwarding lets us take both rvalues and lvalues but pass them
+        // further down as an lvalue ref. some types can only be formatted
+        // when non-const (e.g. ranges::filter_view) so taking a const reference
+        // as parameter wouldn't work for all scenarios.
+        auto const size = std::formatted_size(args...);
         WINRT_ASSERT(size < UINT_MAX);
         auto const size32 = static_cast<uint32_t>(size);
 
         hstring_builder builder(size32);
-        WINRT_VERIFY_(size32, std::format_to_n(builder.data(), size32, std::forward<Args>(args)...).size);
+        WINRT_VERIFY_(size32, std::format_to_n(builder.data(), size32, args...).size);
         return builder.to_hstring();
     }
 #endif
@@ -582,15 +588,15 @@ WINRT_EXPORT namespace winrt
 {
 #if __cpp_lib_format >= 202207L
     template <typename... Args>
-    inline hstring format(std::wformat_string<Args...> const fmt, Args&&... args)
+    inline hstring format(std::wformat_string<Args&...> const fmt, Args&&... args)
     {
-        return impl::base_format(fmt, std::forward<Args>(args)...);
+        return impl::base_format(fmt, args...);
     }
 
     template <typename... Args>
-    inline hstring format(std::locale const& loc, std::wformat_string<Args...> const fmt, Args&&... args)
+    inline hstring format(std::locale const& loc, std::wformat_string<Args&...> const fmt, Args&&... args)
     {
-        return impl::base_format(loc, fmt, std::forward<Args>(args)...);
+        return impl::base_format(loc, fmt, args...);
     }
 #endif
 
