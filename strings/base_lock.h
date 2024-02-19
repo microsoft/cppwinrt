@@ -50,7 +50,7 @@ WINRT_EXPORT namespace winrt
         impl::srwlock m_lock{};
     };
 
-    struct slim_lock_guard
+    struct [[maybe_unused]] slim_lock_guard
     {
         explicit slim_lock_guard(slim_mutex& m) noexcept :
         m_mutex(m)
@@ -69,7 +69,7 @@ WINRT_EXPORT namespace winrt
         slim_mutex& m_mutex;
     };
 
-    struct slim_shared_lock_guard
+    struct [[maybe_unused]] slim_shared_lock_guard
     {
         explicit slim_shared_lock_guard(slim_mutex& m) noexcept :
             m_mutex(m)

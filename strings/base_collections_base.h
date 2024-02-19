@@ -1,6 +1,6 @@
 namespace winrt::impl
 {
-    struct nop_lock_guard {};
+    struct [[maybe_unused]] nop_lock_guard {};
 
     struct single_threaded_collection_base
     {

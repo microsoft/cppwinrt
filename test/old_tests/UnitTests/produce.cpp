@@ -124,7 +124,7 @@ struct produce_IInspectable_No_RuntimeClassName : implements<produce_IInspectabl
 
 struct produce_IInspectable_RuntimeClassName : implements<produce_IInspectable_RuntimeClassName, Windows::Foundation::IInspectable>
 {
-    hstring GetRuntimeClassName()
+    hstring GetRuntimeClassName() const override
     {
         return L"produce_IInspectable_RuntimeClassName";
     }
