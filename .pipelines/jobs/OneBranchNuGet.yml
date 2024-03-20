@@ -62,6 +62,8 @@ jobs:
           command: 'custom'
           arguments: 'pack nuget/Microsoft.Windows.CppWinRT.nuspec -NonInteractive -OutputDirectory $(ob_outputDirectory)\packages -Properties Configuration=release;cppwinrt_exe=C:\__w\1\s\x86\cppwinrt\cppwinrt.exe;cppwinrt_fast_fwd_x86=C:\__w\1\s\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=C:\__w\1\s\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=C:\__w\1\s\arm\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=C:\__w\1\s\arm64\cppwinrt_fast_forwarder.lib;target_version=$(PackageVersion) -Version $(PackageVersion) -Verbosity Detailed'
 
+      # C:\hostedtoolcache\windows\NuGet\5.3.1\x64\nuget.exe push D:\a\_work\1\a\Microsoft.Windows.CsWinRT.2.0.7-prerelease.240311.1.nupkg -NonInteractive -Source https://microsoft.pkgs.visualstudio.com/_packaging/CsWinRT/nuget/v3/index.json -ApiKey VSTS
+
       # - task: NuGetCommand@2
       #   displayName: 'Build NuGet package'
       #   inputs:

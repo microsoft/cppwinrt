@@ -37,7 +37,9 @@ extends:
     
     nugetPublishing:
       feeds:
-        name: CppWinRT
+      - name: https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json
+        files_toPublish: '**/*.nupkg'
+        continueOnConflict: false
 
     stages:
     - stage: build
