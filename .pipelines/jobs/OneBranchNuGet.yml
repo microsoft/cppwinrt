@@ -86,6 +86,6 @@ jobs:
       - task: PkgESNuGetPublisher@0
         displayName: Publish NuGet Package
         inputs:
-          searchPattern: $(ob_outputDirectory\packages\Microsoft.Windows.CppWinRT.$(PackageVersion).nupkg
+          searchPattern: $(ob_outputDirectory)\packages\Microsoft.Windows.CppWinRT.$(PackageVersion).nupkg
           nuGetFeedType: internal
           feedName: https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json
