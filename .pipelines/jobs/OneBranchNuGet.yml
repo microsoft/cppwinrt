@@ -15,7 +15,7 @@ jobs:
     
     variables:
       ob_outputDirectory: '$(Build.SourcesDirectory)\out'
-      ob_nugetPublishing_enabled: ${{ parameters.OfficialBuild }}
+      # ob_nugetPublishing_enabled: ${{ parameters.OfficialBuild }}
       PackageVersion: ${{ parameters.BuildVersion }}
 
     steps:
@@ -82,3 +82,10 @@ jobs:
           signing_profile: external_distribution
           files_to_sign: 'Microsoft.Windows.CppWinRT.*.nupkg'
           search_root: $(ob_outputDirectory)\packages
+
+      - task: PkgESNuGetPublisher@0
+        displayName: Publish NuGet Package
+        inputs:
+          searchPattern: $(ob_outputDirectory\packages\Microsoft.Windows.CppWinRT.$(PackageVersion).nupkg
+          nuGetFeedType: internal
+          feedName: https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json

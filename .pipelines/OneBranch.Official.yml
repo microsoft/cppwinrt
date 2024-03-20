@@ -35,11 +35,11 @@ extends:
       tsa:
         enabled: false
     
-    nugetPublishing:
-      feeds:
-      - name: https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json
-        files_toPublish: '**/*.nupkg'
-        continueOnConflict: false
+    # nugetPublishing:
+    #   feeds:
+    #   - name: https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json
+    #     files_toPublish: '**/*.nupkg'
+    #     continueOnConflict: false
 
     stages:
     - stage: build
