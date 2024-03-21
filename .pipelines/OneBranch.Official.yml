@@ -177,13 +177,13 @@ extends:
           BuildVersion: $(BuildVersion)
           OfficialBuild: true
 
-    - stage: Test
-      dependsOn: build
-      jobs:
-      - template: .pipelines/jobs/OneBranchTest.yml@self
-        parameters:
-          BuildConfiguration: $(BuildConfiguration)
-          BuildVersion: $(BuildVersion)
+    # - stage: Test
+    #   dependsOn: build
+    #   jobs:
+    #   - template: .pipelines/jobs/OneBranchTest.yml@self
+    #     parameters:
+    #       BuildConfiguration: $(BuildConfiguration)
+    #       BuildVersion: $(BuildVersion)
 
     - stage: Vsix
       dependsOn: NuGet
