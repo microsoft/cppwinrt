@@ -81,14 +81,14 @@ jobs:
           Contents: Microsoft.Windows.CppWinRT.2.0.240321.2.nupkg
           TargetFolder: $(ob_outputDirectory)\packages
 
-      - task: onebranch.pipeline.signing@1
-        displayName: '🔒 Onebranch Signing for NuGet package'
-        condition: eq(${{ parameters.OfficialBuild }}, 'true')
-        inputs:
-          command: sign
-          signing_profile: external_distribution
-          files_to_sign: 'Microsoft.Windows.CppWinRT.*.nupkg'
-          search_root: $(ob_outputDirectory)\packages
+      # - task: onebranch.pipeline.signing@1
+      #   displayName: '🔒 Onebranch Signing for NuGet package'
+      #   condition: eq(${{ parameters.OfficialBuild }}, 'true')
+      #   inputs:
+      #     command: sign
+      #     # signing_profile: external_distribution
+      #     files_to_sign: 'Microsoft.Windows.CppWinRT.*.nupkg'
+      #     search_root: $(ob_outputDirectory)\packages
 
       - task: PkgESNuGetPublisher@0
         displayName: Publish NuGet Package
