@@ -42,16 +42,16 @@ extends:
     #     continueOnConflict: false
 
     stages:
-    - stage: build
-      pool:
-        type: windows
+    # - stage: build
+    #   pool:
+    #     type: windows
 
-      jobs:
-      - template: .pipelines/jobs/OneBranchBuild.yml@self
-        parameters:
-          BuildConfiguration: $(BuildConfiguration)
-          BuildVersion: $(BuildVersion)
-          OfficialBuild: true
+    #   jobs:
+    #   - template: .pipelines/jobs/OneBranchBuild.yml@self
+    #     parameters:
+    #       BuildConfiguration: $(BuildConfiguration)
+    #       BuildVersion: $(BuildVersion)
+    #       OfficialBuild: true
 
     - stage: vpack
       dependsOn: build
