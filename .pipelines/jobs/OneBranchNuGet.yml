@@ -83,9 +83,9 @@ jobs:
           files_to_sign: 'Microsoft.Windows.CppWinRT.*.nupkg'
           search_root: $(ob_outputDirectory)\packages
 
-      - task: PkgESNuGetPublisher@0
-        displayName: Publish NuGet Package
-        inputs:
-          searchPattern: $(ob_outputDirectory)\packages\Microsoft.Windows.CppWinRT.$(PackageVersion).nupkg
-          nuGetFeedType: internal
-          feedName: https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json
+      # - task: PkgESNuGetPublisher@0
+      #   displayName: Publish NuGet Package
+      #   inputs:
+      #     searchPattern: $(ob_outputDirectory)\packages\Microsoft.Windows.CppWinRT.$(PackageVersion).nupkg
+      #     nuGetFeedType: internal
+      #     feedName: https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json
