@@ -169,7 +169,7 @@ extends:
                   echo d | xcopy $(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib  build\native\lib\arm64
 
     - stage: NuGet
-      dependsOn: build
+      # dependsOn: build
       jobs:
       - template: .pipelines/jobs/OneBranchNuGet.yml@self
         parameters:
