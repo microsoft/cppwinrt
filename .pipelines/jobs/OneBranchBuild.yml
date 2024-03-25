@@ -37,6 +37,10 @@ jobs:
     ob_symbolsPublishing_symbolsFolder: '$(ob_outputDirectory)'
     ob_symbolsPublishing_searchPattern: '**\*.pdb'
     ob_symbolsPublishing_indexSources: true
+    # Native compiler version override for win undock. The two values below are for GE, defined in:
+    # https://dev.azure.com/microsoft/OS/_git/UndockedES?path=/Pipelines/Config/CompilerToolsSettings.json
+    compilerOverridePackageName: "DevDiv.rel.LKG16.VCTools"    
+    compilerOverridePackageVersion: "19.38.3313310000+DevDivGIT.CI20231130.01-8BB7F026181F5D52D44CA519FF6A47BFA2763E45"  
 
   steps:
     - task: UseDotNet@2
@@ -51,6 +55,17 @@ jobs:
       inputs:
         command: 'restore'
         restoreSolution: '$(Build.SourcesDirectory)\cppwinrt.sln'
+
+
+
+    - task: WinUndockNativeCompiler@1
+      displayName: 'Setup native compiler version overrider'
+      inputs:
+        microsoftDropReadPat: $(System.AccessToken)
+        compilerPackageName: $(compilerOverridePackageName)
+        compilerPackageVersion: $(compilerOverridePackageVersion)
+        slnDirectory: $(Build.SourcesDirectory)   # Must point to the folder that contains the .sln file(s) passed to the MSBuild task.
+  
 
     - task: VSBuild@1
       displayName: Build fast_fwd
