@@ -108,7 +108,7 @@ jobs:
       inputs:
         command: sign
         signing_profile: external_distribution
-        files_to_sign: '**/Microsoft.Windows.CppWinRT.*.dll'
+        files_to_sign: '**/*Microsoft.Windows.CppWinRT.*.dll'
         search_root: '$(Agent.TempDirectory)\$(VsixFilename)'
     
     - task: ArchiveFiles@2
