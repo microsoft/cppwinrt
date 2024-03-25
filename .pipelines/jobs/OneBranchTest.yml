@@ -55,7 +55,7 @@ jobs:
       continueOnError: true
       inputs: 
         packageType: 'runtime'
-        version: '6.0.414'
+        version: '6.x'
         performMultiLevelLookup: true
 
     - task: DownloadPipelineArtifact@2
