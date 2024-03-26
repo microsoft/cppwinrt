@@ -50,10 +50,6 @@ jobs:
     ob_outputDirectory: $(Build.SourcesDirectory)\out
     ob_artifactSuffix: $(TestExe).$(BuildPlatform)
     ob_sdl_codeSignValidation_excludes: '-|**\*.exe;-|**\*.dll' 
-    # Native compiler version override for win undock. The two values below are for GE, defined in:
-    # https://dev.azure.com/microsoft/OS/_git/UndockedES?path=/Pipelines/Config/CompilerToolsSettings.json
-    compilerOverridePackageName: "DevDiv.rel.LKG16.VCTools"    
-    compilerOverridePackageVersion: "19.38.3313310000+DevDivGIT.CI20231130.01-8BB7F026181F5D52D44CA519FF6A47BFA2763E45"  
 
     BuildPath: '$(Build.SourcesDirectory)/_build/$(BuildPlatform)/${{ parameters.BuildConfiguration }}'
   
@@ -102,14 +98,6 @@ jobs:
       displayName: Run cppwinrt to build projection
       inputs:
         script: $(BuildPath)\cppwinrt.exe -in local -out $(BuildPath) -verbose
-
-    - task: WinUndockNativeCompiler@1
-      displayName: 'Setup native compiler version overrider'
-      inputs:
-        microsoftDropReadPat: $(System.AccessToken)
-        compilerPackageName: $(compilerOverridePackageName)
-        compilerPackageVersion: $(compilerOverridePackageVersion)
-        slnDirectory: $(Build.SourcesDirectory)
 
     - task: VSBuild@1
       displayName: Build test
