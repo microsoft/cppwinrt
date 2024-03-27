@@ -55,11 +55,11 @@ jobs:
           artifactName: 'drop_build_arm64'
           targetPath: '$(Build.SourcesDirectory)/arm64'
             
-      - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
+      - task: NuGetCommand@2
         displayName: 'Build NuGet package'
         inputs:
           command: 'custom'
-          arguments: 'pack nuget/Microsoft.Windows.CppWinRT.nuspec -NonInteractive -OutputDirectory $(ob_outputDirectory)\packages -Properties Configuration=release;cppwinrt_exe=C:\__w\1\s\x86\cppwinrt\cppwinrt.exe;cppwinrt_fast_fwd_x86=C:\__w\1\s\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=C:\__w\1\s\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=C:\__w\1\s\arm\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=C:\__w\1\s\arm64\cppwinrt_fast_forwarder.lib;target_version=$(PackageVersion) -Version $(PackageVersion) -Verbosity Detailed'
+          arguments: 'pack nuget/Microsoft.Windows.CppWinRT.nuspec -NonInteractive -OutputDirectory $(ob_outputDirectory)\packages -Properties Configuration=release;cppwinrt_exe=$(Build.SourcesDirectory)\x86\cppwinrt\cppwinrt.exe;cppwinrt_fast_fwd_x86=$(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=$(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=$(Build.SourcesDirectory)\arm\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=$(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib;target_version=$(PackageVersion) -Version $(PackageVersion) -Verbosity Detailed'
 
       - task: onebranch.pipeline.signing@1
         displayName: '🔒 Onebranch Signing for NuGet package'
@@ -70,7 +70,7 @@ jobs:
           files_to_sign: 'Microsoft.Windows.CppWinRT.*.nupkg'
           search_root: $(ob_outputDirectory)\packages
 
-      - task: 333b11bd-d341-40d9-afcf-b32d5ce6f23b@2
+      - task: NuGetCommand@2
         displayName: 'Publish NuGet package'
         inputs:
           command: 'custom'
