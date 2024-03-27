@@ -8,6 +8,9 @@ jobs:
 - job:
   pool:
     type: windows
+    isCustom: true
+    name: 'Azure Pipelines'
+    vmImage: 'windows-2022' # (or 2019)
   strategy:
     matrix:
       test.x86:

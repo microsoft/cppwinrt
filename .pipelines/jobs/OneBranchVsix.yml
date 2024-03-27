@@ -108,8 +108,8 @@ jobs:
       inputs:
         command: sign
         signing_profile: external_distribution
-        files_to_sign: '**/Microsoft.Windows.CppWinRT.*.dll'
-        search_root: '$(Agent.TempDirectory)\$(VsixFilename)'
+        files_to_sign: '**\*.dll'
+        search_root: '$(Agent.TempDirectory)'
     
     - task: ArchiveFiles@2
       displayName: 'Repack signed VSIX contents'

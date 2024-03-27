@@ -34,10 +34,6 @@ extends:
     globalSdl:
       tsa:
         enabled: false
-    
-    nugetPublishing:
-      feeds:
-        name: CppWinRT
 
     stages:
     - stage: build
