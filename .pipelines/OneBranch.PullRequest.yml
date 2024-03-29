@@ -3,7 +3,11 @@ parameters:
   displayName: 'Enable debug output'
   type: boolean
   default: false
-  
+- name: PublishNuGet
+  displayName: Publish NuGet package to internal feed
+  type: boolean
+  default: false  
+
 variables:
 - template: variables/version.yml
 - template: variables/OneBranchVariables.yml
@@ -52,6 +56,7 @@ extends:
         parameters:
           BuildConfiguration: $(BuildConfiguration)
           BuildVersion: $(BuildVersion)
+          PublishNuGet: ${{ parameters.PublishNuget }}
 
     - stage: Test
       dependsOn: build

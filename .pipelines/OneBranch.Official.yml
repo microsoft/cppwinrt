@@ -3,6 +3,10 @@ parameters: # parameters are shown up in ADO UI in a build queue time
   displayName: 'Enable debug output'
   type: boolean
   default: false
+- name: PublishNuGet
+  displayName: Publish NuGet package to internal feed
+  type: boolean
+  default: true  
 
 variables:
 - template: variables/version.yml
@@ -170,6 +174,7 @@ extends:
           BuildConfiguration: $(BuildConfiguration)
           BuildVersion: $(BuildVersion)
           OfficialBuild: true
+          PublishNuGet: ${{ parameters.PublishNuget }}
 
     - stage: Test
       dependsOn: build

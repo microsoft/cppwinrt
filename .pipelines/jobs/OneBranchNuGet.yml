@@ -7,6 +7,10 @@ parameters:
   - name: OfficialBuild
     type: boolean
     default: false
+  - name: PublishNuGet
+    type: boolean
+    displayName: Publish NuGet package to internal feed
+    default: false
 
 jobs:
   - job:
@@ -72,6 +76,7 @@ jobs:
 
       - task: NuGetCommand@2
         displayName: 'Publish NuGet package'
+        condition: eq(${{ parameters.PublishNuGet }}, 'true')
         inputs:
           command: 'custom'
           arguments: 'push $(ob_outputDirectory)\packages\Microsoft.Windows.CppWinRT.$(PackageVersion).nupkg -NonInteractive -Source https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json -ApiKey VSTS'
