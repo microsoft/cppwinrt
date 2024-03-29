@@ -15,7 +15,6 @@ jobs:
     
     variables:
       ob_outputDirectory: '$(Build.SourcesDirectory)\out'
-      ob_nugetPublishing_enabled: ${{ parameters.OfficialBuild }}
       PackageVersion: ${{ parameters.BuildVersion }}
 
     steps:
@@ -59,12 +58,8 @@ jobs:
       - task: NuGetCommand@2
         displayName: 'Build NuGet package'
         inputs:
-          command: 'pack'
-          packagesToPack: 'nuget/Microsoft.Windows.CppWinRT.nuspec'
-          versioningScheme: byEnvVar
-          versionEnvVar: 'PackageVersion'
-          buildProperties: 'cppwinrt_exe=$(Build.SourcesDirectory)\x86\cppwinrt\cppwinrt.exe;cppwinrt_fast_fwd_x86=$(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=$(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=$(Build.SourcesDirectory)\arm\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=$(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib'
-          packDestination: $(ob_outputDirectory)\packages
+          command: 'custom'
+          arguments: 'pack nuget/Microsoft.Windows.CppWinRT.nuspec -NonInteractive -OutputDirectory $(ob_outputDirectory)\packages -Properties Configuration=release;cppwinrt_exe=$(Build.SourcesDirectory)\x86\cppwinrt\cppwinrt.exe;cppwinrt_fast_fwd_x86=$(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=$(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=$(Build.SourcesDirectory)\arm\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=$(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib;target_version=$(PackageVersion) -Version $(PackageVersion) -Verbosity Detailed'
 
       - task: onebranch.pipeline.signing@1
         displayName: '🔒 Onebranch Signing for NuGet package'
@@ -74,3 +69,9 @@ jobs:
           signing_profile: external_distribution
           files_to_sign: 'Microsoft.Windows.CppWinRT.*.nupkg'
           search_root: $(ob_outputDirectory)\packages
+
+      - task: NuGetCommand@2
+        displayName: 'Publish NuGet package'
+        inputs:
+          command: 'custom'
+          arguments: 'push $(ob_outputDirectory)\packages\Microsoft.Windows.CppWinRT.$(PackageVersion).nupkg -NonInteractive -Source https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json -ApiKey VSTS'
