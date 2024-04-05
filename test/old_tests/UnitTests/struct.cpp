@@ -10,7 +10,7 @@ using namespace Windows::Web::Http;
 //
 // This first test ensures that structures with HSTRING fields are projected correctly.
 // In this case, a suitable interface is provided by the Windows SDK to simplify testing.
-// IControlTemplate provides the necessary methods for excercising input and output 
+// IControlTemplate provides the necessary methods for exercising input and output 
 // patterns for code generation.
 //
 
