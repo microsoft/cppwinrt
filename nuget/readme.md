@@ -41,7 +41,7 @@ It sets the following project properties and item metadata:
 | Link.AdditionalDependencies | WindowsApp.lib | Umbrella library for Windows Runtime imports |
 | Midl.AdditionalOptions | /reference ... | Enables faster compilation with winmd references (versus idl imports) |
 | Midl.EnableWindowsRuntime | true | Enables Windows Runtime semantics |
-| Midl.MetadataFileName | Unmerged\%(Filename).winmd | Generates unmerged metadata in a tempoary location |
+| Midl.MetadataFileName | Unmerged\%(Filename).winmd | Generates unmerged metadata in a temporary location |
 | Midl.GenerateClientFiles, GenerateServerFiles, GenerateStublessProxies, GenerateTypeLibrary, HeaderFileName, DllDataFileName, InterfaceIdentifierFileName, ProxyFileName, TypeLibraryName | *nul, *None, *false | Disable unnecessary output |
 \*If not already set 
 
