@@ -275,7 +275,7 @@ namespace
     };
 
     //
-    // This implementation use an abi_guard type alias that thows
+    // This implementation use an abi_guard type alias that throws
     //
     struct F : implements<F, IClosable, IStringable>
     {
