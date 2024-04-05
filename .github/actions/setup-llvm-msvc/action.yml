@@ -14,7 +14,7 @@ runs:
   steps:
     - name: Cache LLVM and tools
       id: cache-llvm
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           .LLVM
