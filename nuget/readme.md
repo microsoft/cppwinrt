@@ -114,7 +114,7 @@ void MyComponent::InitializeComponent()
 
 ***[Windows|Microsoft]::UI::Xaml::Markup::ComponentConnectorT***
 
-A consequence of calling InitializeComponent outside construction is that Xaml runtime callbacks to IComponentConnector::Connect and IComponentConnector2::GetBindingConnector are now dispatched to the most derived implementations. Previously, these calls were dispatched directly to the class under construction, as the vtable had yet to be initialized. For objects with markup that derive from composable base classes with markup, this is a breaking change. Derived classes must now implement IComponentConnector::Connect and IComponentConnector2::GetBindingConnector by explicitly calling into the base class. The ComponentConnectorT template provides a correct implemenation for these interfaces:
+A consequence of calling InitializeComponent outside construction is that Xaml runtime callbacks to IComponentConnector::Connect and IComponentConnector2::GetBindingConnector are now dispatched to the most derived implementations. Previously, these calls were dispatched directly to the class under construction, as the vtable had yet to be initialized. For objects with markup that derive from composable base classes with markup, this is a breaking change. Derived classes must now implement IComponentConnector::Connect and IComponentConnector2::GetBindingConnector by explicitly calling into the base class. The ComponentConnectorT template provides a correct implementation for these interfaces:
 
 ```cpp
 struct DerivedPage : winrt::Windows::UI::Xaml::Markup::ComponentConnectorT<DerivedPageT<DerivedPage>>
