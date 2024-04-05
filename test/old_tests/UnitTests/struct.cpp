@@ -47,7 +47,7 @@ TEST_CASE("struct, TypeName")
 //
 // This second test ensures that structures with IReference<T> fields are projected correctly.
 // In this case, a suitable interface is not available in the Windows SDK so we hand-roll the 
-// the necessary intput and output patterms for code generation. We also rely on a custom 
+// the necessary input and output patterms for code generation. We also rely on a custom 
 // implementation of IReference<T> so that we can additionally check that the object is 
 // destroyed correctly. 
 //
