@@ -147,7 +147,7 @@ For example, if the verbosity is set to minimal, then only messages with high im
 The default importance of C++/WinRT build messages is 'normal', but this can be overridden with the CppWinRTVerbosity property to enable throttling of C++/WinRT messages independent of the overall verbosity level.
 
 Example:
-> msbuild project.vcxproj /vebosity:minimal /property:CppWinRTVerbosity=high ...
+> msbuild project.vcxproj /verbosity:minimal /property:CppWinRTVerbosity=high ...
 
 For more complex analysis of build errors, the [MSBuild Binary and Structured Log Viewer](http://msbuildlog.com/) is highly recommended.
 
