@@ -23,7 +23,7 @@ jobs:
             config: Release
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - id: setup-llvm
         name: Set up LLVM (MSVC)
@@ -107,7 +107,7 @@ jobs:
             config: Release
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - id: setup-llvm
         name: Set up LLVM (MSVC)
@@ -260,7 +260,7 @@ jobs:
       CMAKE_COLOR_DIAGNOSTICS: 1
       CLICOLOR_FORCE: 1
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install cross compiler
         run: |
@@ -293,7 +293,7 @@ jobs:
         Deployment: [Component, Standalone]
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Download nuget
         run: |
@@ -331,7 +331,7 @@ jobs:
         config: [Release]
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Fetch cppwinrt executables
         uses: actions/download-artifact@v3
@@ -381,7 +381,7 @@ jobs:
     name: Build nuget package with MSVC
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Package
         run: |
