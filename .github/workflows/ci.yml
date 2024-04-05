@@ -73,7 +73,7 @@ jobs:
       - name: Upload built executables
         uses: actions/upload-artifact@v3
         with:
-          name: msvc-build-${{ matrix.arch }}-${{ matrix.config }}-bin
+          name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: |
             _build/${{ matrix.arch }}/${{ matrix.config }}/*.exe
             _build/${{ matrix.arch }}/${{ matrix.config }}/*.dll
@@ -118,14 +118,14 @@ jobs:
         if: matrix.arch != 'arm64'
         uses: actions/download-artifact@v3
         with:
-          name: msvc-build-${{ matrix.arch }}-${{ matrix.config }}-bin
+          name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
 
       - name: Fetch x86 cppwinrt executables (arm64 only)
         if: matrix.arch == 'arm64'
         uses: actions/download-artifact@v3
         with:
-          name: msvc-build-x86-Release-bin
+          name: msvc-build-${{ matrix.compiler}}-x86-Release-bin
           path: _build/x86/Release/
 
       - name: Download nuget
@@ -242,7 +242,7 @@ jobs:
         if: matrix.arch == 'arm64'
         uses: actions/upload-artifact@v3
         with:
-          name: msvc-tests-${{ matrix.arch }}-${{ matrix.config }}-bin
+          name: msvc-tests-${{ matrix.test_exe }}-${{ matrix.compiler }}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: |
             _build/${{ matrix.arch }}/${{ matrix.config }}/*.exe
             _build/${{ matrix.arch }}/${{ matrix.config }}/*.dll
@@ -323,10 +323,12 @@ jobs:
           cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" /p:Deployment=${{ matrix.Deployment }} natvis\cppwinrtvisualizer.sln
 
   build-msvc-nuget-test:
-    name: 'Build nuget test'
+    name: 'Build nuget test (${{ matrix.arch }})'
     needs: test-msvc-cppwinrt-build
     strategy:
       matrix:
+        compiler:
+          - MSVC
         arch: [x86, x64]
         config: [Release]
     runs-on: windows-latest
@@ -336,7 +338,7 @@ jobs:
       - name: Fetch cppwinrt executables
         uses: actions/download-artifact@v3
         with:
-          name: msvc-build-${{ matrix.arch }}-${{ matrix.config }}-bin
+          name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
 
       - name: Download nuget
