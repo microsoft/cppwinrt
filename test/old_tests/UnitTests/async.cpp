@@ -1098,7 +1098,7 @@ TEST_CASE("async, Cancel_IAsyncOperationWithProgress, 2")
 }
 
 //
-// These tests confirm the implicit cancelation behavior. The obeservable behavior should be the same as above
+// These tests confirm the implicit cancelation behavior. The observable behavior should be the same as above
 // but the implementation relies on an exception so we confirm that the state changes occur as before.
 //
 
