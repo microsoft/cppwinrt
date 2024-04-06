@@ -247,7 +247,7 @@ namespace Component
     runtimeclass FastInputVector
     {
         // Don't confuse this for a high-performance vector. This is for testing fast-input binding support.
-        // The default interface is intentionally not one of the collection intefaces to force them to be convertible for testing.
+        // The default interface is intentionally not one of the collection interfaces to force them to be convertible for testing.
         [default] interface Windows.Foundation.IClosable;
         interface Windows.Foundation.Collections.IVector<HSTRING>;
         interface Windows.Foundation.Collections.IVectorView<HSTRING>;
@@ -265,7 +265,7 @@ namespace Component
     runtimeclass FastInputMap
     {
         // Don't confuse this for a high-performance map. This is for testing fast-input binding support.
-        // The default interface is intentionally not one of the collection intefaces to force them to be convertible for testing.
+        // The default interface is intentionally not one of the collection interfaces to force them to be convertible for testing.
         [default] interface Windows.Foundation.IClosable;
         interface Windows.Foundation.Collections.IMap<HSTRING, HSTRING>;
         interface Windows.Foundation.Collections.IMapView<HSTRING, HSTRING>;
