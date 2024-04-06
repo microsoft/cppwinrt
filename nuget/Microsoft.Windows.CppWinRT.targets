@@ -861,7 +861,9 @@ $(XamlMetaDataProviderPch)
             Condition="'@(Page)@(ApplicationDefinition)' != '' and '$(XamlLanguage)' == 'CppWinRT'"
             DependsOnTargets="$(CppWinRTAddXamlReferencesDependsOn);CppWinRTGetResolvedWinMD;GetCppWinRTProjectWinMDReferences">
         <ItemGroup>
-            <XamlReferencesToCompile Include="@(WinMDFullPath);@(CppWinRTDynamicProjectWinMDReferences)" />
+            <XamlReferencesToCompile Include="$(OutDir)*.winmd" />
+            <!--Remove references to stale artifacts that will be copied later-->
+            <XamlReferencesToCompile Remove="@(ReferenceCopyLocalPaths)" MatchOnMetadata="FileName;Extension"/>
         </ItemGroup>
     </Target>
 
