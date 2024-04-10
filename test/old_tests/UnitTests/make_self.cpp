@@ -8,7 +8,7 @@
 #endif
 
 //
-// These tests ensure that the make_self function works as expected to provide direct acccess
+// These tests ensure that the make_self function works as expected to provide direct access
 // to an implementation.
 //
 // The IMakeSelf IUnknown interface is also tested as this covers an edge case in the implements

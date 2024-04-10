@@ -41,7 +41,7 @@ It sets the following project properties and item metadata:
 | Link.AdditionalDependencies | WindowsApp.lib | Umbrella library for Windows Runtime imports |
 | Midl.AdditionalOptions | /reference ... | Enables faster compilation with winmd references (versus idl imports) |
 | Midl.EnableWindowsRuntime | true | Enables Windows Runtime semantics |
-| Midl.MetadataFileName | Unmerged\%(Filename).winmd | Generates unmerged metadata in a tempoary location |
+| Midl.MetadataFileName | Unmerged\%(Filename).winmd | Generates unmerged metadata in a temporary location |
 | Midl.GenerateClientFiles, GenerateServerFiles, GenerateStublessProxies, GenerateTypeLibrary, HeaderFileName, DllDataFileName, InterfaceIdentifierFileName, ProxyFileName, TypeLibraryName | *nul, *None, *false | Disable unnecessary output |
 \*If not already set 
 
@@ -114,7 +114,7 @@ void MyComponent::InitializeComponent()
 
 ***[Windows|Microsoft]::UI::Xaml::Markup::ComponentConnectorT***
 
-A consequence of calling InitializeComponent outside construction is that Xaml runtime callbacks to IComponentConnector::Connect and IComponentConnector2::GetBindingConnector are now dispatched to the most derived implementations. Previously, these calls were dispatched directly to the class under construction, as the vtable had yet to be initialized. For objects with markup that derive from composable base classes with markup, this is a breaking change. Derived classes must now implement IComponentConnector::Connect and IComponentConnector2::GetBindingConnector by explicitly calling into the base class. The ComponentConnectorT template provides a correct implemenation for these interfaces:
+A consequence of calling InitializeComponent outside construction is that Xaml runtime callbacks to IComponentConnector::Connect and IComponentConnector2::GetBindingConnector are now dispatched to the most derived implementations. Previously, these calls were dispatched directly to the class under construction, as the vtable had yet to be initialized. For objects with markup that derive from composable base classes with markup, this is a breaking change. Derived classes must now implement IComponentConnector::Connect and IComponentConnector2::GetBindingConnector by explicitly calling into the base class. The ComponentConnectorT template provides a correct implementation for these interfaces:
 
 ```cpp
 struct DerivedPage : winrt::Windows::UI::Xaml::Markup::ComponentConnectorT<DerivedPageT<DerivedPage>>
@@ -147,7 +147,7 @@ For example, if the verbosity is set to minimal, then only messages with high im
 The default importance of C++/WinRT build messages is 'normal', but this can be overridden with the CppWinRTVerbosity property to enable throttling of C++/WinRT messages independent of the overall verbosity level.
 
 Example:
-> msbuild project.vcxproj /vebosity:minimal /property:CppWinRTVerbosity=high ...
+> msbuild project.vcxproj /verbosity:minimal /property:CppWinRTVerbosity=high ...
 
 For more complex analysis of build errors, the [MSBuild Binary and Structured Log Viewer](http://msbuildlog.com/) is highly recommended.
 

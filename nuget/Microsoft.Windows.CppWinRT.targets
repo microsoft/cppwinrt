@@ -28,7 +28,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTParameters Condition="'$(CppWinRTFastAbi)'=='true'">$(CppWinRTParameters) -fastabi</CppWinRTParameters>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)bin\"</CppWinRTPath>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)"</CppWinRTPath>
-        <!-- By default enable C++/WinRT to include target platform winmds if we didn't overide sdk references and the C++ Project system isn't already adding them -->
+        <!-- By default enable C++/WinRT to include target platform winmds if we didn't override sdk references and the C++ Project system isn't already adding them -->
         <!-- _PrepareForReferenceResolution adds the references if TargetPlatformIdentifier is UAP -->
         <CppWinRTImplicitlyExpandTargetPlatform Condition="'$(CppWinRTImplicitlyExpandTargetPlatform)' == '' and '$(CppWinRTOverrideSDKReferences)' != 'true' and '$(TargetPlatformIdentifier)' != 'UAP'">true</CppWinRTImplicitlyExpandTargetPlatform>
         <XamlLanguage Condition="'$(CppWinRTProjectLanguage)' == 'C++/CX'">C++</XamlLanguage>
@@ -861,7 +861,9 @@ $(XamlMetaDataProviderPch)
             Condition="'@(Page)@(ApplicationDefinition)' != '' and '$(XamlLanguage)' == 'CppWinRT'"
             DependsOnTargets="$(CppWinRTAddXamlReferencesDependsOn);CppWinRTGetResolvedWinMD;GetCppWinRTProjectWinMDReferences">
         <ItemGroup>
-            <XamlReferencesToCompile Include="@(WinMDFullPath);@(CppWinRTDynamicProjectWinMDReferences)" />
+            <XamlReferencesToCompile Include="$(OutDir)*.winmd" />
+            <!--Remove references to stale artifacts that will be copied later-->
+            <XamlReferencesToCompile Remove="@(ReferenceCopyLocalPaths)" MatchOnMetadata="FileName;Extension"/>
         </ItemGroup>
     </Target>
 
