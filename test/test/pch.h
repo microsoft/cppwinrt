@@ -5,6 +5,7 @@
 #include "mingw_com_support.h"
 
 #define WINRT_LEAN_AND_MEAN
+#define WINRT_REG_FREE
 #include <unknwn.h>
 #include "winrt/Windows.Foundation.Collections.h"
 #include "winrt/Windows.Foundation.Numerics.h"

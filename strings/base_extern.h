@@ -40,6 +40,7 @@ extern "C"
     int32_t __stdcall WINRT_IMPL_GetErrorInfo(uint32_t reserved, void** info) noexcept WINRT_IMPL_LINK(GetErrorInfo, 8);
     int32_t __stdcall WINRT_IMPL_CoInitializeEx(void*, uint32_t type) noexcept WINRT_IMPL_LINK(CoInitializeEx, 8);
     void    __stdcall WINRT_IMPL_CoUninitialize() noexcept WINRT_IMPL_LINK(CoUninitialize, 0);
+    int32_t __stdcall WINRT_IMPL_CoIncrementMTAUsage(void** cookie) noexcept WINRT_IMPL_LINK(CoIncrementMTAUsage, 4);
 
     int32_t  __stdcall WINRT_IMPL_CoCreateFreeThreadedMarshaler(void* outer, void** marshaler) noexcept WINRT_IMPL_LINK(CoCreateFreeThreadedMarshaler, 8);
     int32_t  __stdcall WINRT_IMPL_CoCreateInstance(winrt::guid const& clsid, void* outer, uint32_t context, winrt::guid const& iid, void** object) noexcept WINRT_IMPL_LINK(CoCreateInstance, 20);
