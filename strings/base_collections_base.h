@@ -619,14 +619,16 @@ WINRT_EXPORT namespace winrt
             call_changed(Windows::Foundation::Collections::CollectionChange::Reset, impl::empty_value<K>());
         }
 
-    private:
-
-        event<Windows::Foundation::Collections::MapChangedEventHandler<K, V>> m_changed;
+    protected:
 
         void call_changed(Windows::Foundation::Collections::CollectionChange const change, K const& key)
         {
             m_changed(static_cast<D const&>(*this), make<args>(change, key));
         }
+
+    private:
+
+        event<Windows::Foundation::Collections::MapChangedEventHandler<K, V>> m_changed;
 
         struct args : implements<args, Windows::Foundation::Collections::IMapChangedEventArgs<K>>
         {
