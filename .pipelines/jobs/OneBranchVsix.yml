@@ -56,6 +56,8 @@ jobs:
       inputs:
         command: 'restore'
         restoreSolution: '$(Build.SourcesDirectory)\vsix\vsix.sln'
+        feedsToUse: config
+        nugetConfigPath: NuGet.config
 
     - task: DownloadPipelineArtifact@2
       displayName: 'Download x86 binaries'

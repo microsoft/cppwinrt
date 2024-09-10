@@ -51,6 +51,8 @@ jobs:
       inputs:
         command: 'restore'
         restoreSolution: '$(Build.SourcesDirectory)\cppwinrt.sln'
+        feedsToUse: config
+        nugetConfigPath: NuGet.config
 
     - task: VSBuild@1
       displayName: Build fast_fwd
@@ -72,6 +74,8 @@ jobs:
       inputs:
         command: 'restore'
         restoreSolution: '$(Build.SourcesDirectory)\natvis\cppwinrtvisualizer.sln'
+        feedsToUse: config
+        nugetConfigPath: NuGet.config
         
     - task: VSBuild@1
       displayName: Build Component visualizer

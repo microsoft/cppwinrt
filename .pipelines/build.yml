@@ -49,6 +49,10 @@ jobs:
 
   - task: NuGetCommand@2
     displayName: NuGet restore
+    inputs:
+      command: 'restore'
+      feedsToUse: config
+      nugetConfigPath: NuGet.config
 
   - task: CmdLine@2
     displayName: Build Tools
@@ -322,6 +326,10 @@ jobs:
 
   - task: NuGetCommand@2
     displayName: NuGet restore
+    inputs:
+      command: 'restore'
+      feedsToUse: config
+      nugetConfigPath: NuGet.config
 
   - task: DownloadPipelineArtifact@1
     displayName: Download x86 Artifacts
