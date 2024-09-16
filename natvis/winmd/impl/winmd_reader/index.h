@@ -48,9 +48,9 @@ namespace winmd::reader
     {
         using index_base<TypeDefOrRef>::index_base;
 
-        TypeDef TypeDef() const;
-        TypeRef TypeRef() const;
-        TypeSpec TypeSpec() const;
+        reader::TypeDef TypeDef() const;
+        reader::TypeRef TypeRef() const;
+        reader::TypeSpec TypeSpec() const;
         auto CustomAttribute() const;
     };
 }

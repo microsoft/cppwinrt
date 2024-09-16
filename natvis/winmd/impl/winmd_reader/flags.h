@@ -303,7 +303,7 @@ namespace winmd::reader
 
     struct MethodImplAttributes : impl::AttributesBase<uint16_t>
     {
-        constexpr CodeType CodeType() const noexcept
+        constexpr reader::CodeType CodeType() const noexcept
         {
             return get_enum<reader::CodeType>(CodeType_mask);
         }
@@ -311,7 +311,7 @@ namespace winmd::reader
         {
             set_enum(arg, CodeType_mask);
         }
-        constexpr Managed Managed() const noexcept
+        constexpr reader::Managed Managed() const noexcept
         {
             return get_enum<reader::Managed>(Managed_mask);
         }
@@ -600,7 +600,7 @@ namespace winmd::reader
         {
             set_bit(arg, WindowsRuntime_bit);
         }
-        constexpr StringFormat StringFormat() const noexcept
+        constexpr reader::StringFormat StringFormat() const noexcept
         {
             return get_enum<reader::StringFormat>(StringFormat_mask);
         }
