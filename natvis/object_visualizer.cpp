@@ -574,6 +574,7 @@ struct writer
     {
         write(type.GenericType());
         bool first = true;
+        write("<");
         for (auto&& elem : type.GenericArgs())
         {
             if (first)
@@ -586,6 +587,7 @@ struct writer
             }
             write(elem);
         }
+        write(">");
     }
 
     void write(GenericTypeIndex const& var)
