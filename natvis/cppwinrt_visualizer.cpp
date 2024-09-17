@@ -273,7 +273,7 @@ cppwinrt_visualizer::~cppwinrt_visualizer()
 
 HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
     _In_ DkmVisualizedExpression* pVisualizedExpression,
-    _Deref_out_ DkmEvaluationResult** ppResultObject
+    _COM_Outptr_result_maybenull_ DkmEvaluationResult** ppResultObject
 )
 {
     try
@@ -313,6 +313,7 @@ HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
             // unrecognized type
             NatvisDiagnostic(pVisualizedExpression, 
                 std::wstring(L"Unrecognized type: ") + (LPWSTR)bstrTypeName,  NatvisDiagnosticLevel::Error);
+            *ppResultObject = nullptr;
             return S_OK;
         }
 
