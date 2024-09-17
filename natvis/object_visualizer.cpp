@@ -627,8 +627,9 @@ void GetInterfaceData(
     Microsoft::VisualStudio::Debugger::DkmProcess* process,
     TypeSig const& typeSig,
     _Inout_ std::vector<PropertyData>& propertyData,
-    _Out_ bool& isStringable
-){
+    _Inout_ bool& isStringable,
+    _Inout_ std::unique_ptr<IteratorPropertyData>& iteratorPropertyData)
+{
     auto [type, propIid] = ResolveTypeInterface(process, typeSig);
 
     if (!type)
@@ -640,6 +641,16 @@ void GetInterfaceData(
     {
         isStringable = true;
         return;
+    }
+
+    std::unique_ptr<IteratorPropertyData> tempIteratorData;
+    if (type.TypeNamespace() == "Windows.Foundation.Collections"sv &&
+        type.TypeName() == "IIterator`1")
+    {
+        XLANG_ASSERT(!iteratorPropertyData);
+        tempIteratorData = std::make_unique<IteratorPropertyData>();
+        tempIteratorData->hasCurrentProperty.index = -1;
+        tempIteratorData->currentProperty.index = -1;
     }
 
     int32_t propIndex = -1;
@@ -680,8 +691,29 @@ void GetInterfaceData(
             }
 
             auto propName = method.Name().substr(4);
-            propertyData.emplace_back(propIid, propIndex, *propCategory, std::move(propAbiType), std::move(propDisplayType), string_to_wstring(propName));
+            PropertyData tempData(propIid, propIndex, *propCategory, std::move(propAbiType), std::move(propDisplayType), string_to_wstring(propName));
+            if (tempIteratorData)
+            {
+                if (method.Name() == "get_Current")
+                {
+                    tempIteratorData->currentProperty = std::move(tempData);
+                }
+                else if (method.Name() == "get_HasCurrent")
+                {
+                    tempIteratorData->hasCurrentProperty = std::move(tempData);
+                }
+            }
+            else
+            {
+                propertyData.emplace_back(std::move(tempData));
+            }
         }
+    }
+    if (tempIteratorData)
+    {
+        XLANG_ASSERT(tempIteratorData->currentProperty.index != -1);
+        XLANG_ASSERT(tempIteratorData->hasCurrentProperty.index != -1);
+        iteratorPropertyData = std::move(tempIteratorData);
     }
 }
 
@@ -767,7 +799,7 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
         auto impls = type.InterfaceImpl();
         for (auto&& impl : impls)
         {
-            GetInterfaceData(process, ExpandInterfaceImplForType(impl.Interface(), typeSig), m_propertyData, m_isStringable);
+            GetInterfaceData(process, ExpandInterfaceImplForType(impl.Interface(), typeSig), m_propertyData, m_isStringable, m_iteratorPropertyData);
         }
     }
     else if (get_category(type) == category::interface_type)
@@ -775,9 +807,9 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
         auto impls = type.InterfaceImpl();
         for (auto&& impl : impls)
         {
-            GetInterfaceData(process, ExpandInterfaceImplForType(impl.Interface(), typeSig), m_propertyData, m_isStringable);
+            GetInterfaceData(process, ExpandInterfaceImplForType(impl.Interface(), typeSig), m_propertyData, m_isStringable, m_iteratorPropertyData);
         }
-        GetInterfaceData(process, typeSig, m_propertyData, m_isStringable);
+        GetInterfaceData(process, typeSig, m_propertyData, m_isStringable, m_iteratorPropertyData);
     }
 }
 
@@ -874,7 +906,7 @@ HRESULT object_visualizer::GetChildren(
     _Deref_out_ DkmEvaluationResultEnumContext** ppEnumContext)
 {
     // Ignore metadata errors to ensure that Raw Data is always available
-    if (m_propertyData.empty())
+    if (GetChildCount() == 0)
     {
         try
         {
@@ -897,7 +929,7 @@ HRESULT object_visualizer::GetChildren(
 
     com_ptr<DkmEvaluationResultEnumContext> pEnumContext;
     IF_FAIL_RET(DkmEvaluationResultEnumContext::Create(
-        static_cast<uint32_t>(m_propertyData.size()),
+        static_cast<uint32_t>(GetChildCount()),
         m_pVisualizedExpression->StackFrame(),
         pInspectionContext,
         this,
@@ -918,7 +950,7 @@ HRESULT object_visualizer::GetItems(
     _Out_ DkmArray<DkmChildVisualizedExpression*>* pItems)
 {
     CAutoDkmArray<DkmChildVisualizedExpression*> resultValues;
-    IF_FAIL_RET(DkmAllocArray(std::min(m_propertyData.size(), size_t(Count)), &resultValues));
+    IF_FAIL_RET(DkmAllocArray(std::min(GetChildCount(), size_t(Count)), &resultValues));
 
     auto pParent = pVisualizedExpression;
     auto childCount = std::min(m_propertyData.size() - StartIndex, (size_t)Count);
