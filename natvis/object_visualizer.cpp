@@ -932,6 +932,8 @@ HRESULT object_visualizer::GetChildren(
     _Out_ DkmArray<DkmChildVisualizedExpression*>* pInitialChildren,
     _Deref_out_ DkmEvaluationResultEnumContext** ppEnumContext)
 {
+    pInitialChildren->Members = nullptr;
+    pInitialChildren->Length = 0;
     // Ignore metadata errors to ensure that Raw Data is always available
     if (GetChildCount() == 0)
     {
@@ -962,7 +964,10 @@ HRESULT object_visualizer::GetChildren(
         this,
         pEnumContext.put()));
 
-    IF_FAIL_RET(GetItems(m_pVisualizedExpression.get(), pEnumContext.get(), 0, InitialRequestSize, pInitialChildren));
+    if (InitialRequestSize > 0)
+    {
+        IF_FAIL_RET(GetItems(m_pVisualizedExpression.get(), pEnumContext.get(), 0, InitialRequestSize, pInitialChildren));
+    }
 
     *ppEnumContext = pEnumContext.detach();
 
