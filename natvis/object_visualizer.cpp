@@ -207,6 +207,33 @@ static std::string GetRuntimeClass(
     return to_string(pValue->Value());
 }
 
+static HRESULT EvaluateBool(
+    const PropertyData& prop,
+    _In_ DkmVisualizedExpression* pExpression,
+    _In_ DkmPointerValueHome* pObject,
+    ObjectType objectType,
+    _Out_ bool& value
+)
+{
+    XLANG_ASSERT(prop.category == PropertyCategory::Bool);
+    com_ptr<DkmEvaluationResult> pEvaluationResult;
+    IF_FAIL_RET(EvaluatePropertyExpression(prop, pExpression, pObject, objectType, pEvaluationResult));
+    if (pEvaluationResult->TagValue() != DkmEvaluationResult::Tag::SuccessResult)
+    {
+        return E_FAIL;
+    }
+    com_ptr<DkmSuccessEvaluationResult> pSuccessEvaluationResult = pEvaluationResult.as<DkmSuccessEvaluationResult>();
+    auto pValue = pSuccessEvaluationResult->Value();
+    auto pType = pSuccessEvaluationResult->Type();
+    if (!pValue || !pValue->Value() || !pType || !pType->Value() || pType->Value() != L"bool"sv)
+    {
+        return E_FAIL;
+    }
+
+    value = L"true"sv == pValue->Value();
+    return S_OK;
+}
+
 static HRESULT ObjectToString(
     _In_ DkmVisualizedExpression* pExpression,
     _In_ DkmPointerValueHome* pObject,
@@ -942,6 +969,47 @@ HRESULT object_visualizer::GetChildren(
     return S_OK;
 }
 
+HRESULT CreateFailedEvaulationExpression(_In_ DkmVisualizedExpression* pParent,
+    _In_ const DkmSourceString& errorMessage,
+    _In_ const DkmSourceString& displayName,
+    _COM_Outptr_ DkmChildVisualizedExpression** ppResult)
+{
+    com_ptr<DkmString> pErrorMessage;
+    IF_FAIL_RET(DkmString::Create(errorMessage, pErrorMessage.put()));
+
+    com_ptr<DkmString> pDisplayName;
+    IF_FAIL_RET(DkmString::Create(displayName, pDisplayName.put()));
+
+    com_ptr<DkmFailedEvaluationResult> pVisualizedResult;
+    IF_FAIL_RET(DkmFailedEvaluationResult::Create(
+        pParent->InspectionContext(),
+        pParent->StackFrame(),
+        pDisplayName.get(),
+        nullptr,
+        pErrorMessage.get(),
+        DkmEvaluationResultFlags::ExceptionThrown,
+        DkmDataItem::Null(),
+        pVisualizedResult.put()
+    ));
+
+    com_ptr<DkmChildVisualizedExpression> pVisualizedExpression;
+    IF_FAIL_RET(DkmChildVisualizedExpression::Create(
+        pParent->InspectionContext(),
+        pParent->VisualizerId(),
+        pParent->SourceId(),
+        pParent->StackFrame(),
+        nullptr,
+        pVisualizedResult.get(),
+        pParent,
+        2,
+        DkmDataItem::Null(),
+        pVisualizedExpression.put()
+    ));
+
+    *ppResult = pVisualizedExpression.detach();
+    return S_OK;
+}
+
 HRESULT object_visualizer::GetItems(
     _In_ DkmVisualizedExpression* pVisualizedExpression,
     _In_ DkmEvaluationResultEnumContext* /*pEnumContext*/,
@@ -950,50 +1018,84 @@ HRESULT object_visualizer::GetItems(
     _Out_ DkmArray<DkmChildVisualizedExpression*>* pItems)
 {
     CAutoDkmArray<DkmChildVisualizedExpression*> resultValues;
-    IF_FAIL_RET(DkmAllocArray(std::min(GetChildCount(), size_t(Count)), &resultValues));
+    auto childCount = std::min(GetChildCount(), size_t(Count));
+    auto propertyCount = std::min(m_propertyData.size() - StartIndex, (size_t)Count);
+    auto pseudoPropertyCount = childCount - propertyCount;
+    XLANG_ASSERT(pseudoPropertyCount >= 0);
+
+    IF_FAIL_RET(DkmAllocArray(childCount, &resultValues));
 
     auto pParent = pVisualizedExpression;
-    auto childCount = std::min(m_propertyData.size() - StartIndex, (size_t)Count);
-    for(size_t i = 0; i < childCount; ++i)
+    for(size_t i = 0; i < propertyCount; ++i)
     {
         auto& prop = m_propertyData[i + (size_t)StartIndex];
         com_ptr<DkmChildVisualizedExpression> pPropertyVisualized;
         if(FAILED(CreateChildVisualizedExpression(prop, pParent, m_objectType, pPropertyVisualized.put())))
         {
-            com_ptr<DkmString> pErrorMessage;
-            IF_FAIL_RET(DkmString::Create(L"<Property evaluation failed>", pErrorMessage.put()));
-
-            com_ptr<DkmString> pDisplayName;
-            IF_FAIL_RET(DkmString::Create(prop.displayName.c_str(), pDisplayName.put()));
-
-            com_ptr<DkmFailedEvaluationResult> pVisualizedResult;
-            IF_FAIL_RET(DkmFailedEvaluationResult::Create(
-                pParent->InspectionContext(),
-                pParent->StackFrame(),
-                pDisplayName.get(),
-                nullptr,
-                pErrorMessage.get(),
-                DkmEvaluationResultFlags::ExceptionThrown,
-                DkmDataItem::Null(),
-                pVisualizedResult.put()
-            ));
-
-            IF_FAIL_RET(DkmChildVisualizedExpression::Create(
-                pParent->InspectionContext(),
-                pParent->VisualizerId(),
-                pParent->SourceId(),
-                pParent->StackFrame(),
-                nullptr,
-                pVisualizedResult.get(),
-                pParent,
-                2,
-                DkmDataItem::Null(),
-                pPropertyVisualized.put()
-            ));
+            IF_FAIL_RET(CreateFailedEvaulationExpression(pParent, L"<Property evaluation failed>", prop.displayName.c_str(), pPropertyVisualized.put()));
         }
         resultValues.Members[i] = pPropertyVisualized.detach();
     }
 
+    IF_FAIL_RET(GetPseudoProperties(pVisualizedExpression, pseudoPropertyCount, resultValues.Members + propertyCount));
+
     *pItems = resultValues.Detach();
     return S_OK;
 }
+
+HRESULT GetIteratorPseudoProperty(
+    _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pParent,
+    _In_ DkmPointerValueHome* pObject,
+    _In_ ObjectType objectType,
+    _Inout_ IteratorPropertyData& propertyData,
+    _COM_Outptr_ DkmChildVisualizedExpression** ppResult)
+{
+    if (!propertyData.hasCurrent.has_value())
+    {
+        bool value;
+        if (FAILED(EvaluateBool(propertyData.hasCurrentProperty, pParent, pObject, objectType, value)))
+        {
+            return CreateFailedEvaulationExpression(pParent, L"<Property evaluation failed>", propertyData.hasCurrentProperty.displayName.c_str(), ppResult);
+        }
+        propertyData.hasCurrent = value;
+    }
+
+    const auto& prop = propertyData.hasCurrent.value() ? propertyData.currentProperty : propertyData.hasCurrentProperty;
+    com_ptr<DkmChildVisualizedExpression> pPropertyVisualized;
+    if (FAILED(CreateChildVisualizedExpression(prop, pParent, objectType, pPropertyVisualized.put())))
+    {
+        return CreateFailedEvaulationExpression(pParent, L"<Property evaluation failed>", prop.displayName.c_str(), ppResult);
+    }
+    *ppResult = pPropertyVisualized.detach();
+    return S_OK;
+}
+
+HRESULT object_visualizer::GetPseudoProperties(
+    _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pParent,
+    size_t Count,
+    _Out_writes_(Count) Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression** expressions)
+{
+    size_t resultIndex = 0;
+    if (resultIndex == Count)
+    {
+        return S_OK;
+    }
+
+    auto valueHome = make_com_ptr(pParent->ValueHome());
+    com_ptr<DkmPointerValueHome> pObject;
+    IF_FAIL_RET(valueHome->QueryInterface(__uuidof(DkmPointerValueHome), (void**)pObject.put()));
+
+    if (m_iteratorPropertyData)
+    {
+        IF_FAIL_RET(GetIteratorPseudoProperty(pParent, pObject.get(), m_objectType, *m_iteratorPropertyData, expressions + resultIndex));
+        ++resultIndex;
+    }
+
+    return S_OK;
+}
+
+size_t object_visualizer::GetPseudoPropertyCount() const
+{
+    return m_iteratorPropertyData ? 1 : 0;
+}
+

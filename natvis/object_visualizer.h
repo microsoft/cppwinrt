@@ -45,6 +45,7 @@ struct PropertyData
 // Special case for IIterator`1<T>
 struct IteratorPropertyData
 {
+    std::optional<bool> hasCurrent;
     PropertyData currentProperty;
     PropertyData hasCurrentProperty;
 };
@@ -86,10 +87,16 @@ object_visualizer : winrt::implements<object_visualizer, ::IUnknown>
 private:
     void GetPropertyData();
     void GetTypeProperties(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& type_name);
-    size_t GetChildCount() const { return m_iteratorPropertyData ? m_propertyData.size() + 1 : m_propertyData.size(); }
+    size_t GetChildCount() const { return m_propertyData.size() + GetPseudoPropertyCount(); }
     winrt::com_ptr<Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression> m_pVisualizedExpression;
     ObjectType m_objectType;
     std::vector<PropertyData> m_propertyData;
     bool m_isStringable{ false };
     std::unique_ptr<IteratorPropertyData> m_iteratorPropertyData;
+
+    HRESULT GetPseudoProperties(
+        _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
+        size_t Count,
+        _Out_writes_(Count) Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression** expressions);
+    size_t GetPseudoPropertyCount() const;
 };
