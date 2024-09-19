@@ -96,6 +96,7 @@ private:
 
     HRESULT GetPseudoProperties(
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
+        size_t StartIndex,
         size_t Count,
         _Out_writes_(Count) Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression** expressions);
     size_t GetPseudoPropertyCount() const;

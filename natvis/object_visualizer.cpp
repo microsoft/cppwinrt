@@ -1018,26 +1018,27 @@ HRESULT object_visualizer::GetItems(
     _Out_ DkmArray<DkmChildVisualizedExpression*>* pItems)
 {
     CAutoDkmArray<DkmChildVisualizedExpression*> resultValues;
-    auto childCount = std::min(GetChildCount(), size_t(Count));
-    auto propertyCount = std::min(m_propertyData.size() - StartIndex, (size_t)Count);
-    auto pseudoPropertyCount = childCount - propertyCount;
-    XLANG_ASSERT(pseudoPropertyCount >= 0);
+    auto childCount = std::min(GetChildCount() - StartIndex, (size_t)Count);
+    auto EndIndex = StartIndex + childCount;
 
     IF_FAIL_RET(DkmAllocArray(childCount, &resultValues));
 
     auto pParent = pVisualizedExpression;
-    for(size_t i = 0; i < propertyCount; ++i)
+    UINT32 currentIndex = StartIndex;
+    for(; currentIndex < m_propertyData.size() && currentIndex < EndIndex; ++currentIndex)
     {
-        auto& prop = m_propertyData[i + (size_t)StartIndex];
+        auto& prop = m_propertyData[currentIndex];
         com_ptr<DkmChildVisualizedExpression> pPropertyVisualized;
         if(FAILED(CreateChildVisualizedExpression(prop, pParent, m_objectType, pPropertyVisualized.put())))
         {
             IF_FAIL_RET(CreateFailedEvaulationExpression(pParent, L"<Property evaluation failed>", prop.displayName.c_str(), pPropertyVisualized.put()));
         }
-        resultValues.Members[i] = pPropertyVisualized.detach();
+        resultValues.Members[currentIndex - StartIndex] = pPropertyVisualized.detach();
     }
 
-    IF_FAIL_RET(GetPseudoProperties(pVisualizedExpression, pseudoPropertyCount, resultValues.Members + propertyCount));
+    auto pseudoPropertyStartIndex = currentIndex - m_propertyData.size();
+    auto pseudoPropertyCount = EndIndex - pseudoPropertyStartIndex;
+    IF_FAIL_RET(GetPseudoProperties(pVisualizedExpression, pseudoPropertyStartIndex, pseudoPropertyCount, resultValues.Members + currentIndex));
 
     *pItems = resultValues.Detach();
     return S_OK;
@@ -1072,11 +1073,11 @@ HRESULT GetIteratorPseudoProperty(
 
 HRESULT object_visualizer::GetPseudoProperties(
     _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pParent,
+    size_t StartIndex,
     size_t Count,
     _Out_writes_(Count) Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression** expressions)
 {
-    size_t resultIndex = 0;
-    if (resultIndex == Count)
+    if (StartIndex == Count)
     {
         return S_OK;
     }
@@ -1087,8 +1088,8 @@ HRESULT object_visualizer::GetPseudoProperties(
 
     if (m_iteratorPropertyData)
     {
-        IF_FAIL_RET(GetIteratorPseudoProperty(pParent, pObject.get(), m_objectType, *m_iteratorPropertyData, expressions + resultIndex));
-        ++resultIndex;
+        IF_FAIL_RET(GetIteratorPseudoProperty(pParent, pObject.get(), m_objectType, *m_iteratorPropertyData, expressions + StartIndex));
+        ++StartIndex;
     }
 
     return S_OK;
