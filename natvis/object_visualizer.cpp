@@ -367,12 +367,6 @@ static HRESULT CreateChildVisualizedExpression(
     return S_OK;
 }
 
-struct property_type
-{
-    MethodDef get;
-    MethodDef set;
-};
-
 std::optional<PropertyCategory> GetPropertyCategory(
     Microsoft::VisualStudio::Debugger::DkmProcess* process,
     TypeSig const& owningType,
