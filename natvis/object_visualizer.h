@@ -45,9 +45,36 @@ struct PropertyData
 // Special case for IIterator`1<T>
 struct IteratorPropertyData
 {
+    IteratorPropertyData()
+    {
+        currentProperty.index = -1;
+        hasCurrentProperty.index = -1;
+    }
     std::optional<bool> hasCurrent;
     PropertyData currentProperty;
     PropertyData hasCurrentProperty;
+};
+
+// Special case for IVector`1<T> and IVectorView`1<T>
+struct VectorPropertyData
+{
+    VectorPropertyData()
+    {
+        firstProperty.index = -1;
+        moveNextProperty.index = -1;
+        sizeProperty.index = -1;
+    }
+    std::optional<uint32_t> size;
+    PropertyData sizeProperty;
+    PropertyData firstProperty; // IIterable`1<T>.First()
+    PropertyData moveNextProperty; // IIterator`1<T>.MoveNext()
+    winrt::com_ptr<Microsoft::VisualStudio::Debugger::Evaluation::DkmPointerValueHome> iteratorInstance;
+};
+
+struct PseudoPropertyData
+{
+    std::unique_ptr<IteratorPropertyData> m_iteratorPropertyData;
+    std::unique_ptr<VectorPropertyData> m_vectorPropertyData;
 };
 
 // object_visualizer provides the visualization data model for WinRT objects, 
@@ -92,7 +119,7 @@ private:
     ObjectType m_objectType;
     std::vector<PropertyData> m_propertyData;
     bool m_isStringable{ false };
-    std::unique_ptr<IteratorPropertyData> m_iteratorPropertyData;
+    PseudoPropertyData m_pseudoPropertyData;
 
     HRESULT GetPseudoProperties(
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,

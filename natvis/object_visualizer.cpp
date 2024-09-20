@@ -630,128 +630,6 @@ struct writer
     }
 };
 
-std::wstring string_to_wstring(std::string_view const& str)
-{
-    int const size = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), nullptr, 0);
-    if (size == 0)
-    {
-        return {};
-    }
-
-    std::wstring result(size, L'?');
-    auto size_result = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), result.data(), size);
-    XLANG_ASSERT(size == size_result);
-    return result;
-}
-
-void GetInterfaceData(
-    Microsoft::VisualStudio::Debugger::DkmProcess* process,
-    TypeSig const& typeSig,
-    _Inout_ std::vector<PropertyData>& propertyData,
-    _Inout_ bool& isStringable,
-    _Inout_ std::unique_ptr<IteratorPropertyData>& iteratorPropertyData)
-{
-    auto [type, propIid] = ResolveTypeInterface(process, typeSig);
-
-    if (!type)
-    {
-        return;
-    }
-
-    if (propIid == IID_IStringable)
-    {
-        isStringable = true;
-        return;
-    }
-
-    std::unique_ptr<IteratorPropertyData> tempIteratorData;
-    if (type.TypeNamespace() == "Windows.Foundation.Collections"sv &&
-        type.TypeName() == "IIterator`1")
-    {
-        XLANG_ASSERT(!iteratorPropertyData);
-        tempIteratorData = std::make_unique<IteratorPropertyData>();
-        tempIteratorData->hasCurrentProperty.index = -1;
-        tempIteratorData->currentProperty.index = -1;
-    }
-
-    int32_t propIndex = -1;
-    for (auto&& method : type.MethodList())
-    {
-        propIndex++;
-
-        auto isGetter = method.Flags().SpecialName() && starts_with(method.Name(), "get_");
-        if (!isGetter)
-        {
-            continue;
-        }
-
-        std::optional<PropertyCategory> propCategory = GetPropertyCategory(process, typeSig, method.Signature().ReturnType().Type());
-        if (propCategory)
-        {
-            std::wstring propAbiType;
-            std::wstring propDisplayType;
-            if (!IsBuiltIn(*propCategory))
-            {
-                writer writer;
-                if (auto pGenericTypeInst = std::get_if<GenericTypeInstSig>(&typeSig.Type()))
-                {
-                    auto const& genericArgs = pGenericTypeInst->GenericArgs();
-                    writer.generic_params.assign(genericArgs.first, genericArgs.second);
-                }
-                writer.write(method.Signature().ReturnType().Type());
-                propDisplayType = string_to_wstring(writer.result);
-                
-                if (*propCategory == PropertyCategory::Class)
-                {
-                    propAbiType = L"winrt::impl::inspectable_abi*";
-                }
-                else
-                {
-                    propAbiType = propDisplayType;
-                }
-            }
-
-            auto propName = method.Name().substr(4);
-            PropertyData tempData(propIid, propIndex, *propCategory, std::move(propAbiType), std::move(propDisplayType), string_to_wstring(propName));
-            if (tempIteratorData)
-            {
-                if (method.Name() == "get_Current")
-                {
-                    tempIteratorData->currentProperty = std::move(tempData);
-                }
-                else if (method.Name() == "get_HasCurrent")
-                {
-                    tempIteratorData->hasCurrentProperty = std::move(tempData);
-                }
-            }
-            else
-            {
-                propertyData.emplace_back(std::move(tempData));
-            }
-        }
-    }
-    if (tempIteratorData)
-    {
-        XLANG_ASSERT(tempIteratorData->currentProperty.index != -1);
-        XLANG_ASSERT(tempIteratorData->hasCurrentProperty.index != -1);
-        iteratorPropertyData = std::move(tempIteratorData);
-    }
-}
-
-void object_visualizer::GetPropertyData()
-{
-    auto valueHome = make_com_ptr(m_pVisualizedExpression->ValueHome());
-    com_ptr<DkmPointerValueHome> pObject = valueHome.as<DkmPointerValueHome>();
-    auto rc = GetRuntimeClass(m_pVisualizedExpression.get(), pObject.get(), m_objectType);
-    if (rc.empty())
-    {
-        return;
-    }
-    auto process = m_pVisualizedExpression->RuntimeInstance()->Process();
-    // runtime class name is delimited by L"..."
-    GetTypeProperties(process, std::string_view{ rc.data() + 2, rc.length() - 3 });
-}
-
 GenericTypeInstSig ReplaceGenericIndices(GenericTypeInstSig const& sig, std::vector<TypeSig> const& genericArgs)
 {
     std::vector<TypeSig> replacementArgs;
@@ -787,6 +665,187 @@ TypeSig ExpandInterfaceImplForType(coded_index<TypeDefOrRef> impl, TypeSig const
     return TypeSig{ impl };
 }
 
+std::wstring string_to_wstring(std::string_view const& str)
+{
+    int const size = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), nullptr, 0);
+    if (size == 0)
+    {
+        return {};
+    }
+
+    std::wstring result(size, L'?');
+    auto size_result = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), result.data(), size);
+    XLANG_ASSERT(size == size_result);
+    return result;
+}
+
+std::optional<PropertyData> CreatePropertyData(
+    Microsoft::VisualStudio::Debugger::DkmProcess* process,
+    TypeSig const& typeSig,
+    MethodDef const& method,
+    std::string_view propName,
+    const std::wstring& propIid,
+    int32_t propIndex
+)
+{
+    std::optional<PropertyCategory> propCategory = GetPropertyCategory(process, typeSig, method.Signature().ReturnType().Type());
+    if (propCategory)
+    {
+        std::wstring propAbiType;
+        std::wstring propDisplayType;
+        if (!IsBuiltIn(*propCategory))
+        {
+            writer writer;
+            if (auto pGenericTypeInst = std::get_if<GenericTypeInstSig>(&typeSig.Type()))
+            {
+                auto const& genericArgs = pGenericTypeInst->GenericArgs();
+                writer.generic_params.assign(genericArgs.first, genericArgs.second);
+            }
+            writer.write(method.Signature().ReturnType().Type());
+            propDisplayType = string_to_wstring(writer.result);
+
+            if (*propCategory == PropertyCategory::Class)
+            {
+                propAbiType = L"winrt::impl::inspectable_abi*";
+            }
+            else
+            {
+                propAbiType = propDisplayType;
+            }
+        }
+
+        return PropertyData(propIid, propIndex, *propCategory, std::move(propAbiType), std::move(propDisplayType), string_to_wstring(propName));
+    }
+    return {};
+}
+
+void GetInterfaceData(
+    Microsoft::VisualStudio::Debugger::DkmProcess* process,
+    TypeSig const& typeSig,
+    _Inout_ std::vector<PropertyData>& propertyData,
+    _Inout_ bool& isStringable,
+    _Inout_ PseudoPropertyData& pseudoPropertyData)
+{
+    auto [type, propIid] = ResolveTypeInterface(process, typeSig);
+
+    if (!type)
+    {
+        return;
+    }
+
+    if (propIid == IID_IStringable)
+    {
+        isStringable = true;
+        return;
+    }
+
+    std::unique_ptr<IteratorPropertyData> tempIteratorData;
+    bool processingCollection = false;
+    if (type.TypeNamespace() == "Windows.Foundation.Collections"sv)
+    {
+        if (type.TypeName() == "IIterator`1"sv)
+        {
+            XLANG_ASSERT(!pseudoPropertyData.m_iteratorPropertyData);
+            tempIteratorData = std::make_unique<IteratorPropertyData>();
+        }
+        else if (type.TypeName() == "IIterable`1"sv || type.TypeName() == "IVector`1"sv || type.TypeName() == "IVectorView`1"sv)
+        {
+            processingCollection = true;
+            if (!pseudoPropertyData.m_vectorPropertyData)
+            {
+                pseudoPropertyData.m_vectorPropertyData = std::make_unique<VectorPropertyData>();
+            }
+            if (type.TypeName() == "IIterable`1"sv)
+            {
+                auto iterableMethods = type.MethodList();
+                auto firstMethod = std::find_if(begin(iterableMethods), end(iterableMethods), [](MethodDef const& method)
+                    {
+                        return method.Name() == "First"sv;
+                    });
+                XLANG_ASSERT(firstMethod != end(iterableMethods));
+                if (firstMethod != end(iterableMethods))
+                {
+                    auto firstIndex = static_cast<int32_t>(firstMethod - begin(iterableMethods));
+                    auto firstProperty = CreatePropertyData(process, typeSig, firstMethod, "First", propIid, firstIndex);
+                    pseudoPropertyData.m_vectorPropertyData->firstProperty = firstProperty.value();
+
+                    // Now we follow First()'s return type to get the MoveNext() method
+                    auto iteratorGenericTypeSig = firstMethod.Signature().ReturnType().Type();
+                    XLANG_ASSERT(std::holds_alternative<GenericTypeInstSig>(iteratorGenericTypeSig.Type()));
+
+                    if (auto pGenericInst = std::get_if<GenericTypeInstSig>(&iteratorGenericTypeSig.Type()))
+                    {
+                        auto iterableGenericArgs = std::get_if<GenericTypeInstSig>(&typeSig.Type())->GenericArgs();
+                        TypeSig iteratorTypeSig{ ReplaceGenericIndices(*pGenericInst, std::vector<TypeSig>{ iterableGenericArgs.first, iterableGenericArgs.second }) };
+                        auto [iteratorType, iteratorPropIid] = ResolveTypeInterface(process, iteratorTypeSig);
+                    }
+                }
+            }
+        }
+    }
+
+    int32_t propIndex = -1;
+    for (auto&& method : type.MethodList())
+    {
+        propIndex++;
+
+        auto isGetter = method.Flags().SpecialName() && starts_with(method.Name(), "get_");
+        if (!isGetter)
+        {
+            continue;
+        }
+        std::string_view propName = method.Name().substr(4);
+        auto propData = CreatePropertyData(process, typeSig, method, propName, propIid, propIndex);
+        if (!propData.has_value())
+        {
+            continue;
+        }
+
+        if (processingCollection && propName == "Size"sv)
+        {
+            XLANG_ASSERT(pseudoPropertyData.m_vectorPropertyData);
+            pseudoPropertyData.m_vectorPropertyData->sizeProperty = propData.value();
+        }
+
+        if (tempIteratorData)
+        {
+            if (method.Name() == "get_Current"sv)
+            {
+                tempIteratorData->currentProperty = propData.value();
+            }
+            else if (method.Name() == "get_HasCurrent"sv)
+            {
+                tempIteratorData->hasCurrentProperty = propData.value();
+            }
+        }
+        else
+        {
+            propertyData.emplace_back(propData.value());
+        }
+        
+    }
+    if (tempIteratorData)
+    {
+        XLANG_ASSERT(tempIteratorData->currentProperty.index != -1);
+        XLANG_ASSERT(tempIteratorData->hasCurrentProperty.index != -1);
+        pseudoPropertyData.m_iteratorPropertyData = std::move(tempIteratorData);
+    }
+}
+
+void object_visualizer::GetPropertyData()
+{
+    auto valueHome = make_com_ptr(m_pVisualizedExpression->ValueHome());
+    com_ptr<DkmPointerValueHome> pObject = valueHome.as<DkmPointerValueHome>();
+    auto rc = GetRuntimeClass(m_pVisualizedExpression.get(), pObject.get(), m_objectType);
+    if (rc.empty())
+    {
+        return;
+    }
+    auto process = m_pVisualizedExpression->RuntimeInstance()->Process();
+    // runtime class name is delimited by L"..."
+    GetTypeProperties(process, std::string_view{ rc.data() + 2, rc.length() - 3 });
+}
+
 void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& type_name)
 {
     // TODO: add support for direct generic interface implementations (e.g., key_value_pair)
@@ -820,7 +879,7 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
         auto impls = type.InterfaceImpl();
         for (auto&& impl : impls)
         {
-            GetInterfaceData(process, ExpandInterfaceImplForType(impl.Interface(), typeSig), m_propertyData, m_isStringable, m_iteratorPropertyData);
+            GetInterfaceData(process, ExpandInterfaceImplForType(impl.Interface(), typeSig), m_propertyData, m_isStringable, m_pseudoPropertyData);
         }
     }
     else if (get_category(type) == category::interface_type)
@@ -828,9 +887,9 @@ void object_visualizer::GetTypeProperties(Microsoft::VisualStudio::Debugger::Dkm
         auto impls = type.InterfaceImpl();
         for (auto&& impl : impls)
         {
-            GetInterfaceData(process, ExpandInterfaceImplForType(impl.Interface(), typeSig), m_propertyData, m_isStringable, m_iteratorPropertyData);
+            GetInterfaceData(process, ExpandInterfaceImplForType(impl.Interface(), typeSig), m_propertyData, m_isStringable, m_pseudoPropertyData);
         }
-        GetInterfaceData(process, typeSig, m_propertyData, m_isStringable, m_iteratorPropertyData);
+        GetInterfaceData(process, typeSig, m_propertyData, m_isStringable, m_pseudoPropertyData);
     }
 }
 
@@ -1085,9 +1144,9 @@ HRESULT object_visualizer::GetPseudoProperties(
     com_ptr<DkmPointerValueHome> pObject;
     IF_FAIL_RET(valueHome->QueryInterface(__uuidof(DkmPointerValueHome), (void**)pObject.put()));
 
-    if (m_iteratorPropertyData)
+    if (m_pseudoPropertyData.m_iteratorPropertyData)
     {
-        IF_FAIL_RET(GetIteratorPseudoProperty(pParent, pObject.get(), m_objectType, *m_iteratorPropertyData, expressions + StartIndex));
+        IF_FAIL_RET(GetIteratorPseudoProperty(pParent, pObject.get(), m_objectType, *m_pseudoPropertyData.m_iteratorPropertyData, expressions + StartIndex));
         ++StartIndex;
     }
 
@@ -1096,6 +1155,11 @@ HRESULT object_visualizer::GetPseudoProperties(
 
 size_t object_visualizer::GetPseudoPropertyCount() const
 {
-    return m_iteratorPropertyData ? 1 : 0;
+    size_t result = 0;
+    if (m_pseudoPropertyData.m_iteratorPropertyData)
+    {
+        ++result;
+    }
+    return result;
 }
 
