@@ -207,31 +207,97 @@ static std::string GetRuntimeClass(
     return to_string(pValue->Value());
 }
 
-static HRESULT EvaluateBool(
+template <typename T>
+struct EvaulationResultConverter
+{
+    static constexpr auto category{ PropertyCategory::Class };
+};
+
+template <>
+struct EvaulationResultConverter<bool>
+{
+    static constexpr auto category{ PropertyCategory::Bool };
+    static void Convert(_In_ DkmString* pValue, _In_ DkmString* pType, _In_opt_ DkmDataAddress*, _Out_ bool& result)
+    {
+        if (pType->Value() != L"bool"sv)
+        {
+            throw winrt::hresult_error(E_FAIL, std::wstring(L"Evaluation returned incorrect type: ") + pType->Value());
+        }
+        if (pValue->Value() == L"true"sv)
+        {
+            result = true;
+        }
+        else if (pValue->Value() == L"false"sv)
+        {
+            result = false;
+        }
+        else
+        {
+            throw hresult_out_of_bounds(std::wstring(L"result out of range: ") + pValue->Value());
+        }
+    }
+};
+
+template <>
+struct EvaulationResultConverter<uint32_t>
+{
+    static constexpr auto category{ PropertyCategory::Uint4 };
+    static void Convert(_In_ DkmString* pValue, _In_ DkmString* pType, _In_opt_ DkmDataAddress*, _Out_ uint32_t& result)
+    {
+        if (pType->Value() != L"uint32_t"sv &&  pType->Value() != L"unsigned int"sv)
+        {
+            throw winrt::hresult_error(E_FAIL, std::wstring(L"Evaluation returned incorrect type: ") + pType->Value());
+        }
+        result = std::stoul(std::wstring(pValue->Value()), nullptr, 0);
+    }
+};
+
+template <>
+struct EvaulationResultConverter<com_ptr<DkmPointerValueHome>>
+{
+    static constexpr auto category{ PropertyCategory::Class };
+    static void Convert(_In_ DkmString*, _In_ DkmString*, _In_opt_ DkmDataAddress* pAddress, _Out_ com_ptr<DkmPointerValueHome>& result)
+    {
+        com_ptr<DkmPointerValueHome> pointer;
+        winrt::check_hresult(DkmPointerValueHome::Create(pAddress->Value(), result.put()));
+    }
+};
+
+template <typename T>
+static HRESULT EvaluatePropertyValue(
     const PropertyData& prop,
     _In_ DkmVisualizedExpression* pExpression,
     _In_ DkmPointerValueHome* pObject,
     ObjectType objectType,
-    _Out_ bool& value
-)
+    _Out_ T& value
+) try
 {
-    XLANG_ASSERT(prop.category == PropertyCategory::Bool);
+    XLANG_ASSERT(prop.category == EvaulationResultConverter<T>::category);
     com_ptr<DkmEvaluationResult> pEvaluationResult;
-    IF_FAIL_RET(EvaluatePropertyExpression(prop, pExpression, pObject, objectType, pEvaluationResult));
-    if (pEvaluationResult->TagValue() != DkmEvaluationResult::Tag::SuccessResult)
+    winrt::check_hresult(EvaluatePropertyExpression(prop, pExpression, pObject, objectType, pEvaluationResult));
+    auto pSuccessEvaluationResult = DkmSuccessEvaluationResult::TryCast(pEvaluationResult.get());
+    if (!pSuccessEvaluationResult)
     {
-        return E_FAIL;
+        std::wstring errorMessage = L"Evaluation failed: ";
+        if (auto pFailedEvaluationResult = DkmFailedEvaluationResult::TryCast(pEvaluationResult.get()))
+        {
+            errorMessage += pFailedEvaluationResult->ErrorMessage()->Value();
+        }
+        throw winrt::hresult_error(E_FAIL, errorMessage);
     }
-    com_ptr<DkmSuccessEvaluationResult> pSuccessEvaluationResult = pEvaluationResult.as<DkmSuccessEvaluationResult>();
     auto pValue = pSuccessEvaluationResult->Value();
     auto pType = pSuccessEvaluationResult->Type();
-    if (!pValue || !pValue->Value() || !pType || !pType->Value() || pType->Value() != L"bool"sv)
+    if (!pValue || !pType)
     {
-        return E_FAIL;
+        throw winrt::hresult_error(E_FAIL, L"Evaluation returned null value or type");
     }
-
-    value = L"true"sv == pValue->Value();
+    EvaulationResultConverter<T>::Convert(pValue, pType, pSuccessEvaluationResult->Address(), value);
     return S_OK;
+}
+catch (...)
+{
+    NatvisDiagnostic(pExpression, std::wstring(L"EvaluatePropertyValue error - ") + winrt::to_message(), NatvisDiagnosticLevel::Error);
+    return winrt::to_hresult();
 }
 
 static HRESULT ObjectToString(
@@ -265,6 +331,7 @@ static HRESULT ObjectToString(
 static HRESULT CreateChildVisualizedExpression(
     _In_ PropertyData const& prop,
     _In_ DkmVisualizedExpression* pParent,
+    _In_ DkmPointerValueHome* pObject,
     ObjectType objectType,
     _Deref_out_ DkmChildVisualizedExpression** ppResult
 )
@@ -272,9 +339,7 @@ static HRESULT CreateChildVisualizedExpression(
     *ppResult = nullptr;
 
     com_ptr<DkmEvaluationResult> pEvaluationResult;
-    auto valueHome = make_com_ptr(pParent->ValueHome());
-    com_ptr<DkmPointerValueHome> pParentPointer = valueHome.as<DkmPointerValueHome>();
-    IF_FAIL_RET(EvaluatePropertyExpression(prop, pParent, pParentPointer.get(), objectType, pEvaluationResult));
+    IF_FAIL_RET(EvaluatePropertyExpression(prop, pParent, pObject, objectType, pEvaluationResult));
     if (pEvaluationResult->TagValue() != DkmEvaluationResult::Tag::SuccessResult)
     {
         return E_FAIL;
@@ -365,6 +430,21 @@ static HRESULT CreateChildVisualizedExpression(
     *ppResult = pChildVisualizedExpression.detach();
 
     return S_OK;
+}
+
+static HRESULT CreateChildVisualizedExpression(
+    _In_ PropertyData const& prop,
+    _In_ DkmVisualizedExpression* pParent,
+    ObjectType objectType,
+    _Deref_out_ DkmChildVisualizedExpression** ppResult
+)
+{
+    auto pParentPointer = DkmPointerValueHome::TryCast(pParent->ValueHome());
+    if (!pParentPointer)
+    {
+        return E_NOINTERFACE;
+    }
+    return CreateChildVisualizedExpression(prop, pParent, pParentPointer, objectType, ppResult);
 }
 
 std::optional<PropertyCategory> GetPropertyCategory(
@@ -719,6 +799,195 @@ std::optional<PropertyData> CreatePropertyData(
     return {};
 }
 
+template <typename MethodList>
+MethodDef FindMethodByName(MethodList&& methods, std::string_view const& name)
+{
+    auto iter = std::ranges::find_if(methods, [&name](auto&& method) { return name == method.Name(); });
+    if (iter != end(methods))
+    {
+        return *iter;
+    }
+    else
+    {
+        return MethodDef{ nullptr, 0 };
+    }
+}
+
+// Return property names to ignore in normal processing
+std::vector<std::string_view> GetIteratorPseudoProperties(
+    Microsoft::VisualStudio::Debugger::DkmProcess* process,
+    TypeSig const& typeSig,
+    TypeDef const& type,
+    std::wstring const& propIid,
+    _Inout_ PseudoPropertyData& pseudoPropertyData)
+{
+    if ((type.TypeNamespace() != "Windows.Foundation.Collections"sv) ||
+        type.TypeName() != "IIterator`1"sv)
+    {
+        return {};
+    }
+
+    const auto currentMethod = FindMethodByName(type.MethodList(), "get_Current"sv);
+    if (!currentMethod || !currentMethod.Flags().SpecialName())
+    {
+        NatvisDiagnostic(process, L"IIterator<T>.Current not present or missing SpecialName flag", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+
+    const auto hasCurrentMethod = FindMethodByName(type.MethodList(), "get_HasCurrent"sv);
+    if (!hasCurrentMethod || !hasCurrentMethod.Flags().SpecialName())
+    {
+        NatvisDiagnostic(process, L"IIterator<T>.HasCurrent not present or missing SpecialName flag", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+
+    auto currentPropData = CreatePropertyData(process, typeSig, currentMethod, "Current", propIid, currentMethod - type.MethodList().first);
+    if (!currentPropData)
+    {
+        NatvisDiagnostic(process, L"Failed to create property data for IIterator<T>.Current", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+
+    auto hasCurrentPropData = CreatePropertyData(process, typeSig, hasCurrentMethod, "HasCurrent", propIid, hasCurrentMethod - type.MethodList().first);
+    if (!hasCurrentPropData)
+    {
+        NatvisDiagnostic(process, L"Failed to create property data for IIterator<T>.HasCurrent", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+
+    XLANG_ASSERT(!pseudoPropertyData.m_iteratorPropertyData);
+    pseudoPropertyData.m_iteratorPropertyData = std::make_unique<IteratorPropertyData>();
+    pseudoPropertyData.m_iteratorPropertyData->currentProperty = std::move(currentPropData).value();
+    pseudoPropertyData.m_iteratorPropertyData->hasCurrentProperty = std::move(hasCurrentPropData).value();
+    return { "get_Current"sv, "get_HasCurrent"sv };
+}
+
+// Return property names to ignore in normal processing
+std::vector<std::string_view> GetVectorPseudoProperties(
+    Microsoft::VisualStudio::Debugger::DkmProcess* process,
+    TypeSig const& typeSig,
+    TypeDef const& type,
+    std::wstring const& propIid,
+    _Inout_ PseudoPropertyData& pseudoPropertyData)
+{
+    if (type.TypeNamespace() != "Windows.Foundation.Collections"sv || 
+        (type.TypeName() != "IVector`1"sv && type.TypeName() != "IVectorView`1"sv && type.TypeName() != "IIterable`1"sv))
+    {
+        return {};
+    }
+
+    if (!pseudoPropertyData.m_vectorPropertyData)
+    {
+        pseudoPropertyData.m_vectorPropertyData = std::make_unique<VectorPropertyData>();
+    }
+
+    if (type.TypeName() == "IVector`1"sv || type.TypeName() == "IVectorView`1"sv)
+    {
+        const auto sizeMethod = FindMethodByName(type.MethodList(), "get_Size"sv);
+        if (!sizeMethod || !sizeMethod.Flags().SpecialName())
+        {
+            NatvisDiagnostic(process, L"IVector<T>.Size not present or missing SpecialName flag", NatvisDiagnosticLevel::Warning);
+            return {};
+        }
+        auto propData = CreatePropertyData(process, typeSig, sizeMethod, "Size", propIid, sizeMethod - type.MethodList().first);
+        if (!propData)
+        {
+            NatvisDiagnostic(process, L"Failed to create property data for IVector<T>.Size", NatvisDiagnosticLevel::Warning);
+            return {};
+        }
+        pseudoPropertyData.m_vectorPropertyData->sizeProperty = std::move(propData).value();
+        // It's OK to not ignore Size and leave it also as a normal property.
+        return {};
+    }
+
+    XLANG_ASSERT(type.TypeName() == "IIterable`1"sv);
+    const auto firstMethod = FindMethodByName(type.MethodList(), "First"sv);
+    if (!firstMethod)
+    {
+        NatvisDiagnostic(process, L"Failed to find method for IIterable<T>.First()", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+    auto firstProperty = CreatePropertyData(process, typeSig, firstMethod, "First", propIid, firstMethod - type.MethodList().first);
+    if (!firstProperty)
+    {
+        NatvisDiagnostic(process, L"Failed to create property data for IIterable<T>.First()", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+
+    // Follow the return type of First() to get IIterator<!T>
+    auto firstReturnType = firstMethod.Signature().ReturnType().Type();
+    auto firstReturnGenericInst = std::get_if<GenericTypeInstSig>(&firstReturnType.Type());
+    if (!firstReturnGenericInst)
+    {
+        NatvisDiagnostic(process, L"IIterable<T>.First() return type not a GenericTypeInst", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+    auto iterableGenericInst = std::get_if<GenericTypeInstSig>(&typeSig.Type());
+    if (!iterableGenericInst)
+    {
+        NatvisDiagnostic(process, L"IIterable<T> not a GenericTypeInst", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+    auto iterableGenericArgs = iterableGenericInst->GenericArgs();
+
+    // So far, we should have IIterator`1<!0>. Now we need to instantiate this with the generic arg in the originating IIterable`<T> to get IIterator`1<!T>
+    TypeSig iteratorTypeSig = TypeSig{ ReplaceGenericIndices(*firstReturnGenericInst, std::vector<TypeSig>{ iterableGenericArgs.first, iterableGenericArgs.second }) };
+    auto [iteratorType, iteratorPropIid] = ResolveTypeInterface(process, iteratorTypeSig);
+
+    if (iteratorType.TypeNamespace() != "Windows.Foundation.Collections"sv || iteratorType.TypeName() != "IIterator`1"sv)
+    {
+        NatvisDiagnostic(process, L"IIterable<T>.First() did not resolve to IIterator", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+
+    const auto moveNextMethod = FindMethodByName(iteratorType.MethodList(), "MoveNext"sv);
+    if (!moveNextMethod)
+    {
+        NatvisDiagnostic(process, L"Failed to find method for IIterator<T>.MoveNext()", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+    auto moveNextProperty = CreatePropertyData(process, iteratorTypeSig, moveNextMethod, "MoveNext", iteratorPropIid, moveNextMethod - iteratorType.MethodList().first);
+    if (!moveNextProperty)
+    {
+        NatvisDiagnostic(process, L"Failed to create property data for IIterator<T>.MoveNext()", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+    const auto currentMethod = FindMethodByName(iteratorType.MethodList(), "get_Current"sv);
+    if (!currentMethod)
+    {
+        NatvisDiagnostic(process, L"Failed to find method for IIterator<T>.get_Current()", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+    auto currentProperty = CreatePropertyData(process, iteratorTypeSig, currentMethod, "Current", iteratorPropIid, currentMethod - iteratorType.MethodList().first);
+    if (!currentProperty)
+    {
+        NatvisDiagnostic(process, L"Failed to create property data for IIterator<T>.get_Current()", NatvisDiagnosticLevel::Warning);
+        return {};
+    }
+
+
+    pseudoPropertyData.m_vectorPropertyData->firstProperty = std::move(firstProperty).value();
+    pseudoPropertyData.m_vectorPropertyData->moveNextProperty = std::move(moveNextProperty).value();
+    pseudoPropertyData.m_vectorPropertyData->currentProperty = std::move(currentProperty).value();
+    return {};
+}
+
+// Return property names to ignore in normal processing
+std::vector<std::string_view> GetPseudoProperties(
+    Microsoft::VisualStudio::Debugger::DkmProcess* process,
+    TypeSig const& typeSig,
+    TypeDef const& type,
+    std::wstring const& propIid,
+    _Inout_ PseudoPropertyData& pseudoPropertyData)
+{
+    std::vector<std::string_view> result;
+    auto ignore = GetIteratorPseudoProperties(process, typeSig, type, propIid, pseudoPropertyData);
+    result.insert(result.end(), ignore.begin(), ignore.end());
+    ignore = GetVectorPseudoProperties(process, typeSig, type, propIid, pseudoPropertyData);
+    result.insert(result.end(), ignore.begin(), ignore.end());
+    return result;
+}
+
 void GetInterfaceData(
     Microsoft::VisualStudio::Debugger::DkmProcess* process,
     TypeSig const& typeSig,
@@ -739,50 +1008,7 @@ void GetInterfaceData(
         return;
     }
 
-    std::unique_ptr<IteratorPropertyData> tempIteratorData;
-    bool processingCollection = false;
-    if (type.TypeNamespace() == "Windows.Foundation.Collections"sv)
-    {
-        if (type.TypeName() == "IIterator`1"sv)
-        {
-            XLANG_ASSERT(!pseudoPropertyData.m_iteratorPropertyData);
-            tempIteratorData = std::make_unique<IteratorPropertyData>();
-        }
-        else if (type.TypeName() == "IIterable`1"sv || type.TypeName() == "IVector`1"sv || type.TypeName() == "IVectorView`1"sv)
-        {
-            processingCollection = true;
-            if (!pseudoPropertyData.m_vectorPropertyData)
-            {
-                pseudoPropertyData.m_vectorPropertyData = std::make_unique<VectorPropertyData>();
-            }
-            if (type.TypeName() == "IIterable`1"sv)
-            {
-                auto iterableMethods = type.MethodList();
-                auto firstMethod = std::find_if(begin(iterableMethods), end(iterableMethods), [](MethodDef const& method)
-                    {
-                        return method.Name() == "First"sv;
-                    });
-                XLANG_ASSERT(firstMethod != end(iterableMethods));
-                if (firstMethod != end(iterableMethods))
-                {
-                    auto firstIndex = static_cast<int32_t>(firstMethod - begin(iterableMethods));
-                    auto firstProperty = CreatePropertyData(process, typeSig, firstMethod, "First", propIid, firstIndex);
-                    pseudoPropertyData.m_vectorPropertyData->firstProperty = firstProperty.value();
-
-                    // Now we follow First()'s return type to get the MoveNext() method
-                    auto iteratorGenericTypeSig = firstMethod.Signature().ReturnType().Type();
-                    XLANG_ASSERT(std::holds_alternative<GenericTypeInstSig>(iteratorGenericTypeSig.Type()));
-
-                    if (auto pGenericInst = std::get_if<GenericTypeInstSig>(&iteratorGenericTypeSig.Type()))
-                    {
-                        auto iterableGenericArgs = std::get_if<GenericTypeInstSig>(&typeSig.Type())->GenericArgs();
-                        TypeSig iteratorTypeSig{ ReplaceGenericIndices(*pGenericInst, std::vector<TypeSig>{ iterableGenericArgs.first, iterableGenericArgs.second }) };
-                        auto [iteratorType, iteratorPropIid] = ResolveTypeInterface(process, iteratorTypeSig);
-                    }
-                }
-            }
-        }
-    }
+    auto ignoreMethods = GetPseudoProperties(process, typeSig, type, propIid, pseudoPropertyData);
 
     int32_t propIndex = -1;
     for (auto&& method : type.MethodList())
@@ -794,6 +1020,11 @@ void GetInterfaceData(
         {
             continue;
         }
+        if (std::ranges::any_of(ignoreMethods, [methodName = method.Name()](auto&& name) { return name == methodName; }))
+        {
+            continue;
+        }
+
         std::string_view propName = method.Name().substr(4);
         auto propData = CreatePropertyData(process, typeSig, method, propName, propIid, propIndex);
         if (!propData.has_value())
@@ -801,34 +1032,7 @@ void GetInterfaceData(
             continue;
         }
 
-        if (processingCollection && propName == "Size"sv)
-        {
-            XLANG_ASSERT(pseudoPropertyData.m_vectorPropertyData);
-            pseudoPropertyData.m_vectorPropertyData->sizeProperty = propData.value();
-        }
-
-        if (tempIteratorData)
-        {
-            if (method.Name() == "get_Current"sv)
-            {
-                tempIteratorData->currentProperty = propData.value();
-            }
-            else if (method.Name() == "get_HasCurrent"sv)
-            {
-                tempIteratorData->hasCurrentProperty = propData.value();
-            }
-        }
-        else
-        {
-            propertyData.emplace_back(propData.value());
-        }
-        
-    }
-    if (tempIteratorData)
-    {
-        XLANG_ASSERT(tempIteratorData->currentProperty.index != -1);
-        XLANG_ASSERT(tempIteratorData->hasCurrentProperty.index != -1);
-        pseudoPropertyData.m_iteratorPropertyData = std::move(tempIteratorData);
+        propertyData.emplace_back(std::move(propData).value());
     }
 }
 
@@ -1009,6 +1213,8 @@ HRESULT object_visualizer::GetChildren(
         }
     }
 
+    IF_FAIL_RET(EnsurePseudoProperties());
+
     com_ptr<DkmEvaluationResultEnumContext> pEnumContext;
     IF_FAIL_RET(DkmEvaluationResultEnumContext::Create(
         static_cast<uint32_t>(GetChildCount()),
@@ -1094,15 +1300,15 @@ HRESULT object_visualizer::GetItems(
         resultValues.Members[currentIndex - StartIndex] = pPropertyVisualized.detach();
     }
 
+    auto propertiesAdded = currentIndex - StartIndex;
     auto pseudoPropertyStartIndex = currentIndex - m_propertyData.size();
-    auto pseudoPropertyCount = EndIndex - pseudoPropertyStartIndex;
-    IF_FAIL_RET(GetPseudoProperties(pVisualizedExpression, pseudoPropertyStartIndex, pseudoPropertyCount, resultValues.Members + currentIndex));
+    IF_FAIL_RET(EvaluatePseudoProperties(pVisualizedExpression, pseudoPropertyStartIndex, Count - propertiesAdded, resultValues.Members + propertiesAdded));
 
     *pItems = resultValues.Detach();
     return S_OK;
 }
 
-HRESULT GetIteratorPseudoProperty(
+void EvaulateIteratorPseudoProperty(
     _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pParent,
     _In_ DkmPointerValueHome* pObject,
     _In_ ObjectType objectType,
@@ -1112,9 +1318,9 @@ HRESULT GetIteratorPseudoProperty(
     if (!propertyData.hasCurrent.has_value())
     {
         bool value;
-        if (FAILED(EvaluateBool(propertyData.hasCurrentProperty, pParent, pObject, objectType, value)))
+        if (FAILED(EvaluatePropertyValue(propertyData.hasCurrentProperty, pParent, pObject, objectType, value)))
         {
-            return CreateFailedEvaulationExpression(pParent, L"<Property evaluation failed>", propertyData.hasCurrentProperty.displayName.c_str(), ppResult);
+            check_hresult(CreateFailedEvaulationExpression(pParent, L"<Property evaluation failed>", propertyData.hasCurrentProperty.displayName.c_str(), ppResult));
         }
         propertyData.hasCurrent = value;
     }
@@ -1123,17 +1329,68 @@ HRESULT GetIteratorPseudoProperty(
     com_ptr<DkmChildVisualizedExpression> pPropertyVisualized;
     if (FAILED(CreateChildVisualizedExpression(prop, pParent, objectType, pPropertyVisualized.put())))
     {
-        return CreateFailedEvaulationExpression(pParent, L"<Property evaluation failed>", prop.displayName.c_str(), ppResult);
+        check_hresult(CreateFailedEvaulationExpression(pParent, L"<Property evaluation failed>", prop.displayName.c_str(), ppResult));
     }
     *ppResult = pPropertyVisualized.detach();
-    return S_OK;
 }
 
-HRESULT object_visualizer::GetPseudoProperties(
+void EvaluateNextVectorElement(
+    _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pParent,
+    _Inout_ VectorPropertyData& propertyData)
+{
+    XLANG_ASSERT(propertyData.elementExpressions.size() < propertyData.size);
+    auto currentIndex = propertyData.elementExpressions.size();
+    com_ptr<DkmChildVisualizedExpression> pPropertyVisualized;
+    auto elementProperty = propertyData.currentProperty;
+    elementProperty.displayName = std::format(L"[{}]", currentIndex);
+    if (FAILED(CreateChildVisualizedExpression(elementProperty, pParent, propertyData.iteratorInstance.get(), ObjectType::Abi, pPropertyVisualized.put())))
+    {
+        check_hresult(CreateFailedEvaulationExpression(pParent, L"<Property evaluation failed>", elementProperty.displayName.c_str(), pPropertyVisualized.put()));
+    }
+    propertyData.elementExpressions.push_back(std::move(pPropertyVisualized));
+
+    // Execute MoveCurrent
+    bool moveCurrentResult;
+    check_hresult(EvaluatePropertyValue(propertyData.moveNextProperty, pParent, propertyData.iteratorInstance.get(), ObjectType::Abi, moveCurrentResult));
+}
+
+size_t EvaluateVectorPseudoProperties(
+    _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pParent,
+    _In_ DkmPointerValueHome* pObject,
+    _In_ ObjectType objectType,
+    size_t StartIndex,
+    size_t Count,
+    _Inout_ VectorPropertyData& propertyData,
+    _Outptr_result_buffer_to_(Count, return) DkmChildVisualizedExpression** ppResult)
+{
+    if (StartIndex == Count)
+    {
+        return 0;
+    }
+
+    if (propertyData.failureExpression)
+    {
+        propertyData.failureExpression.copy_to(ppResult);
+        return 1;
+    }
+
+    // If this isn't the case, did we get out of sync somehow?
+    XLANG_ASSERT(propertyData.elementExpressions.size() == StartIndex);
+
+    auto elementsToFetch = std::min(Count, propertyData.size.value() - propertyData.elementExpressions.size());
+    for (size_t i = 0; i < elementsToFetch; ++i)
+    {
+        EvaluateNextVectorElement(pParent, propertyData);
+        propertyData.elementExpressions.back().copy_to(ppResult + i);
+    }
+    return elementsToFetch;
+}
+
+HRESULT object_visualizer::EvaluatePseudoProperties(
     _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pParent,
     size_t StartIndex,
     size_t Count,
-    _Out_writes_(Count) Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression** expressions)
+    _Outptr_result_buffer_(Count) Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression** expressions) try
 {
     if (StartIndex == Count)
     {
@@ -1141,15 +1398,72 @@ HRESULT object_visualizer::GetPseudoProperties(
     }
 
     auto valueHome = make_com_ptr(pParent->ValueHome());
-    com_ptr<DkmPointerValueHome> pObject;
-    IF_FAIL_RET(valueHome->QueryInterface(__uuidof(DkmPointerValueHome), (void**)pObject.put()));
+    auto pObject = DkmPointerValueHome::TryCast(valueHome.get());
+    if (!pObject)
+    {
+        return E_NOINTERFACE;
+    }
 
     if (m_pseudoPropertyData.m_iteratorPropertyData)
     {
-        IF_FAIL_RET(GetIteratorPseudoProperty(pParent, pObject.get(), m_objectType, *m_pseudoPropertyData.m_iteratorPropertyData, expressions + StartIndex));
-        ++StartIndex;
+        if (StartIndex == 0)
+        {
+            EvaulateIteratorPseudoProperty(pParent, pObject, m_objectType, *m_pseudoPropertyData.m_iteratorPropertyData, expressions);
+            ++StartIndex;
+            ++expressions;
+            --Count;
+        }
+        --StartIndex;
     }
 
+    if (m_pseudoPropertyData.m_vectorPropertyData)
+    {
+        EvaluateVectorPseudoProperties(pParent, pObject, m_objectType, StartIndex, Count, *m_pseudoPropertyData.m_vectorPropertyData, expressions);
+    }
+
+    return S_OK;
+}
+catch (...)
+{
+    return winrt::to_hresult();
+}
+
+HRESULT EnsureVectorPseudoProperties(
+    _In_ DkmVisualizedExpression* pParent,
+    _In_ DkmPointerValueHome* pParentObject,
+    ObjectType parentObjectType,
+    _Inout_ VectorPropertyData& propertyData)
+{
+    // Evaluate Size and obtain IITerator from IIterable<T>.First() for vector properties
+    uint32_t size;
+    if (FAILED(EvaluatePropertyValue(propertyData.sizeProperty, pParent, pParentObject, parentObjectType, size)))
+    {
+        return CreateFailedEvaulationExpression(pParent, L"Failed to evaluate collection Size", L"[elements]", propertyData.failureExpression.put());
+    }
+    com_ptr<DkmPointerValueHome> pIterator;
+    if (FAILED(EvaluatePropertyValue(propertyData.firstProperty, pParent, pParentObject, parentObjectType, pIterator)))
+    {
+        return CreateFailedEvaulationExpression(pParent, L"Failed to evaluate collection.First()", L"[elements]", propertyData.failureExpression.put());
+    }
+
+    propertyData.size = size;
+    propertyData.iteratorInstance = pIterator;
+    return S_OK;
+}
+
+HRESULT object_visualizer::EnsurePseudoProperties()
+{
+    auto valueHome = make_com_ptr(m_pVisualizedExpression->ValueHome());
+    auto pObject = DkmPointerValueHome::TryCast(valueHome.get());
+    if (!pObject)
+    {
+        return E_NOINTERFACE;
+    }
+
+    if (m_pseudoPropertyData.m_vectorPropertyData)
+    {
+        IF_FAIL_RET(EnsureVectorPseudoProperties(m_pVisualizedExpression.get(), pObject, m_objectType, *m_pseudoPropertyData.m_vectorPropertyData));
+    }
     return S_OK;
 }
 
@@ -1159,6 +1473,18 @@ size_t object_visualizer::GetPseudoPropertyCount() const
     if (m_pseudoPropertyData.m_iteratorPropertyData)
     {
         ++result;
+    }
+    if (m_pseudoPropertyData.m_vectorPropertyData)
+    {
+        if (m_pseudoPropertyData.m_vectorPropertyData->size)
+        {
+            result += m_pseudoPropertyData.m_vectorPropertyData->size.value();
+        }
+        else
+        {
+            // Save one space for the catch-all failure
+            ++result;
+        }
     }
     return result;
 }

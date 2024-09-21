@@ -68,7 +68,13 @@ struct VectorPropertyData
     PropertyData sizeProperty;
     PropertyData firstProperty; // IIterable`1<T>.First()
     PropertyData moveNextProperty; // IIterator`1<T>.MoveNext()
+    PropertyData currentProperty; // IIterator`1<T>.Current()
     winrt::com_ptr<Microsoft::VisualStudio::Debugger::Evaluation::DkmPointerValueHome> iteratorInstance;
+
+    // Each element will be evaludated on the fly, but if we fail to initially get Size or IIterable<T>.First(), stash a catch-all failure here.
+    winrt::com_ptr<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression> failureExpression;
+
+    std::vector<winrt::com_ptr<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression>> elementExpressions;
 };
 
 struct PseudoPropertyData
@@ -121,7 +127,8 @@ private:
     bool m_isStringable{ false };
     PseudoPropertyData m_pseudoPropertyData;
 
-    HRESULT GetPseudoProperties(
+    HRESULT EnsurePseudoProperties();
+    HRESULT EvaluatePseudoProperties(
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
         size_t StartIndex,
         size_t Count,
