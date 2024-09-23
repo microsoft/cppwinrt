@@ -11,8 +11,11 @@ using namespace std::filesystem;
 using namespace winrt;
 using namespace winmd::reader;
 
-std::vector<std::string> db_files;
-std::unique_ptr<cache> db_cache;
+namespace natvis
+{
+    std::vector<std::string> db_files;
+    std::unique_ptr<cache> db_cache;
+}
 
 void MetadataDiagnostic(DkmProcess* process, std::wstring const& status, std::filesystem::path const& path)
 {
@@ -103,10 +106,10 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
 
             auto const path_string = winmd_path.string();
 
-            if (std::find(db_files.begin(), db_files.end(), path_string) == db_files.end())
+            if (std::find(natvis::db_files.begin(), natvis::db_files.end(), path_string) == natvis::db_files.end())
             {
-                db_cache->add_database(path_string, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); });
-                db_files.push_back(path_string);
+                natvis::db_cache->add_database(path_string, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); });
+                natvis::db_files.push_back(path_string);
             }
         }
         auto pos = probe_file.rfind('.');
@@ -121,12 +124,12 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
 TypeDef FindSimpleType(DkmProcess* process, std::string_view const& typeName)
 {
     XLANG_ASSERT(typeName.find('<') == std::string_view::npos);
-    auto type = db_cache->find(typeName);
+    auto type = natvis::db_cache->find(typeName);
     if (!type)
     {
         auto processPath = process->Path()->Value();
         LoadMetadata(process, processPath, typeName);
-        type = db_cache->find(typeName);
+        type = natvis::db_cache->find(typeName);
         if (!type)
         {
             NatvisDiagnostic(process,
@@ -139,13 +142,13 @@ TypeDef FindSimpleType(DkmProcess* process, std::string_view const& typeName)
 TypeDef FindSimpleType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
 {
     XLANG_ASSERT(typeName.find('<') == std::string_view::npos);
-    auto type = db_cache->find(typeNamespace, typeName);
+    auto type = natvis::db_cache->find(typeNamespace, typeName);
     if (!type)
     {
         std::string fullName(typeNamespace);
         fullName.append(".");
         fullName.append(typeName);
-        FindType(process, fullName);
+        FindSimpleType(process, fullName);
     }
     return type;
 }
@@ -242,10 +245,10 @@ cppwinrt_visualizer::cppwinrt_visualizer()
         {
             if (std::filesystem::is_regular_file(file))
             {
-                db_files.push_back(file.path().string());
+                natvis::db_files.push_back(file.path().string());
             }
         }
-        db_cache.reset(new cache(db_files, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); }));
+        natvis::db_cache.reset(new cache(natvis::db_files, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); }));
     }
     catch (...)
     {
@@ -267,8 +270,8 @@ cppwinrt_visualizer::cppwinrt_visualizer()
 cppwinrt_visualizer::~cppwinrt_visualizer()
 {
     ClearTypeResolver();
-    db_files.clear();
-    db_cache.reset();
+    natvis::db_files.clear();
+    natvis::db_cache.reset();
 }
 
 HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
