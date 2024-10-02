@@ -82,7 +82,7 @@ namespace winrt::impl
 
                 operator wfc::IIterator<Windows::Foundation::IInspectable>()
                 {
-                    auto guard = container->acquire_shared();
+                    [[maybe_unused]] auto guard = container->acquire_shared();
                     return make<iterator>(container);
                 }
             };
@@ -141,7 +141,7 @@ namespace winrt::impl
 
         uint32_t GetMany(uint32_t const startIndex, array_view<Windows::Foundation::IInspectable> values) const
         {
-            auto guard = this->acquire_shared();
+            [[maybe_unused]] auto guard = this->acquire_shared();
             if (startIndex >= m_values.size())
             {
                 return 0;
@@ -239,7 +239,7 @@ namespace winrt::impl
 
             Windows::Foundation::IInspectable Current() const
             {
-                auto guard = m_owner->acquire_shared();
+                [[maybe_unused]] auto guard = m_owner->acquire_shared();
                 check_version(*m_owner);
                 if (m_current == m_end)
                 {
@@ -251,14 +251,14 @@ namespace winrt::impl
 
             bool HasCurrent() const
             {
-                auto guard = m_owner->acquire_shared();
+                [[maybe_unused]] auto guard = m_owner->acquire_shared();
                 check_version(*m_owner);
                 return m_current != m_end;
             }
 
             bool MoveNext()
             {
-                auto guard = m_owner->acquire_exclusive();
+                [[maybe_unused]] auto guard = m_owner->acquire_exclusive();
                 check_version(*m_owner);
                 if (m_current != m_end)
                 {
@@ -270,7 +270,7 @@ namespace winrt::impl
 
             uint32_t GetMany(array_view<Windows::Foundation::IInspectable> values)
             {
-                auto guard = m_owner->acquire_exclusive();
+                [[maybe_unused]] auto guard = m_owner->acquire_exclusive();
                 check_version(*m_owner);
                 uint32_t const actual = (std::min)(static_cast<uint32_t>(std::distance(m_current, m_end)), values.size());
 
