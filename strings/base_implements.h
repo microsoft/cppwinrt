@@ -788,6 +788,12 @@ namespace winrt::impl
             return m_inner.try_as<Qi>();
         }
 
+        template <typename Qi>
+        auto as_or_failfast() const noexcept
+        {
+            return m_inner.as_or_failfast<Qi>();
+        }
+
         explicit operator bool() const noexcept
         {
             return m_inner.operator bool();

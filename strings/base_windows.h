@@ -131,6 +131,27 @@ namespace winrt::impl
         ptr->QueryInterface(guid_of<To>(), &result);
         return wrap_as_result<To>(result);
     }
+
+    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0>
+    com_ref<To> as_or_failfast(From* ptr) noexcept
+    {
+#ifdef WINRT_DIAGNOSTICS
+        get_diagnostics_info().add_query<To>();
+#endif
+
+        if (!ptr)
+        {
+            return nullptr;
+        }
+
+        void* result{};
+        hresult code = ptr->QueryInterface(guid_of<To>(), &result);
+        if (code < 0)
+        {
+            WINRT_IMPL_RoFailFastWithErrorContext(code);
+        }
+        return wrap_as_result<To>(result);
+    }
 }
 
 WINRT_EXPORT namespace winrt::Windows::Foundation
@@ -203,6 +224,12 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
         auto try_as() const noexcept
         {
             return impl::try_as<To>(m_ptr);
+        }
+
+        template <typename To>
+        auto as_or_failfast() const noexcept
+        {
+            return impl::as_or_failfast<To>(m_ptr);
         }
 
         template <typename To>
