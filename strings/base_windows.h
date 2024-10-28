@@ -148,6 +148,10 @@ namespace winrt::impl
         hresult code = ptr->QueryInterface(guid_of<To>(), &result);
         if (code < 0)
         {
+            // Capture an error context immediately before the failfast call.  The failfast gives the best
+            // output when there is a "stowed" exception.  Capturing the error context will stow it enough
+            // for the failfast to find it and use it when creating an exception context record.
+            WINRT_IMPL_RoCaptureErrorContext(code);
             WINRT_IMPL_RoFailFastWithErrorContext(code);
         }
         return wrap_as_result<To>(result);
