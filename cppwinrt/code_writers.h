@@ -1131,7 +1131,9 @@ namespace cppwinrt
                 // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        WINRT_IMPL_SHIM(%)->%(%);%
+        const auto castedResult = WINRT_IMPL_SHIM(%);
+        check_cast_result(castedResult);
+        castedResult->%(%);%
     }
 )";
             }
@@ -1139,7 +1141,9 @@ namespace cppwinrt
             {
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%
+        const auto castedResult = WINRT_IMPL_SHIM(%);
+        check_cast_result(castedResult);
+        WINRT_VERIFY_(0, castedResult->%(%));%
     }
 )";
             }
@@ -1148,7 +1152,9 @@ namespace cppwinrt
         {
             format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
     {%
-        check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
+        const auto castedResult = WINRT_IMPL_SHIM(%);
+        check_cast_result(castedResult);
+        check_hresult(castedResult->%(%));%
     }
 )";
         }
