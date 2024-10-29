@@ -1129,9 +1129,13 @@ namespace cppwinrt
             if (is_remove_overload(method))
             {
                 // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
+                //
+                // The `noexcept` versions will crash if check_cast_result throws but that is no different than previous
+                // behavior where it would not check the cast result and nullptr crash.  At least the exception will terminate
+                // immediately while preserving the error code and local variables.
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        const auto castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+        const auto& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
         const auto abiType = *(abi_t<%>**)&castedResult;
         check_cast_result(abiType);
         abiType->%(%);%
@@ -1142,7 +1146,7 @@ namespace cppwinrt
             {
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        const auto castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+        const auto& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
         const auto abiType = *(abi_t<%>**)&castedResult;
         check_cast_result(abiType);
         WINRT_VERIFY_(0, abiType->%(%));%
@@ -1154,7 +1158,7 @@ namespace cppwinrt
         {
             format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
     {%
-        const auto castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+        const auto& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
         const auto abiType = *(abi_t<%>**)&castedResult;
         check_cast_result(abiType);
         check_hresult(abiType->%(%));%
