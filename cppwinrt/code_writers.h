@@ -2716,7 +2716,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_struct_field(writer& w, std::pair<std::string_view, std::string> const& field)
     {
-        w.write("        @ %;\n",
+        w.write("        @ % {};\n",
             field.second,
             field.first);
     }
