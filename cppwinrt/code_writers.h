@@ -1131,9 +1131,10 @@ namespace cppwinrt
                 // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        const auto castedResult = WINRT_IMPL_SHIM(%);
-        check_cast_result(castedResult);
-        castedResult->%(%);%
+        const auto castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+        const auto abiType = *(abi_t<%>**)&castedResult;
+        check_cast_result(abiType);
+        abiType->%(%);%
     }
 )";
             }
@@ -1141,9 +1142,10 @@ namespace cppwinrt
             {
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        const auto castedResult = WINRT_IMPL_SHIM(%);
-        check_cast_result(castedResult);
-        WINRT_VERIFY_(0, castedResult->%(%));%
+        const auto castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+        const auto abiType = *(abi_t<%>**)&castedResult;
+        check_cast_result(abiType);
+        WINRT_VERIFY_(0, abiType->%(%));%
     }
 )";
             }
@@ -1152,9 +1154,10 @@ namespace cppwinrt
         {
             format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
     {%
-        const auto castedResult = WINRT_IMPL_SHIM(%);
-        check_cast_result(castedResult);
-        check_hresult(castedResult->%(%));%
+        const auto castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+        const auto abiType = *(abi_t<%>**)&castedResult;
+        check_cast_result(abiType);
+        check_hresult(abiType->%(%));%
     }
 )";
         }
@@ -1166,6 +1169,7 @@ namespace cppwinrt
             method_name,
             bind<write_consume_params>(signature),
             bind<write_consume_return_type>(signature, false),
+            type,
             type,
             get_abi_name(method),
             bind<write_abi_args>(signature),

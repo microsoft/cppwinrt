@@ -530,7 +530,7 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename T>
-    WINRT_IMPL_NOINLINE void check_cast_result(T const& from WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    WINRT_IMPL_NOINLINE void check_cast_result(T* from WINRT_IMPL_SOURCE_LOCATION_ARGS)
     {
         if (!from)
         {
