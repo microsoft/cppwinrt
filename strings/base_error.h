@@ -529,28 +529,6 @@ WINRT_EXPORT namespace winrt
         return pointer;
     }
 
-    template <typename T>
-    WINRT_IMPL_NOINLINE void check_cast_result(T* from WINRT_IMPL_SOURCE_LOCATION_ARGS)
-    {
-        if (!from)
-        {
-            com_ptr<impl::IRestrictedErrorInfo> restrictedError;
-            if (WINRT_IMPL_GetRestrictedErrorInfo(restrictedError.put_void()) == 0)
-            {
-                WINRT_IMPL_SetRestrictedErrorInfo(restrictedError.get());
-
-                int32_t code;
-                impl::bstr_handle description;
-                impl::bstr_handle restrictedDescription;
-                impl::bstr_handle capabilitySid;
-                if (restrictedError->GetErrorDetails(description.put(), &code, restrictedDescription.put(), capabilitySid.put()) == 0)
-                {
-                    check_hresult(code WINRT_IMPL_SOURCE_LOCATION_FORWARD);
-                }
-            }
-        }
-    }
-
     [[noreturn]] inline void terminate() noexcept
     {
         WINRT_IMPL_RoFailFastWithErrorContext(to_hresult());
@@ -567,6 +545,28 @@ namespace winrt::impl
             check_hresult(result WINRT_IMPL_SOURCE_LOCATION_FORWARD);
         }
         return result;
+    }
+
+    template <typename T>
+    WINRT_IMPL_NOINLINE void check_cast_result(T* from WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    {
+        if (!from)
+        {
+            com_ptr<impl::IRestrictedErrorInfo> restrictedError;
+            if (WINRT_IMPL_GetRestrictedErrorInfo(restrictedError.put_void()) == 0)
+            {
+                WINRT_IMPL_SetRestrictedErrorInfo(restrictedError.get());
+
+                int32_t code;
+                impl::bstr_handle description;
+                impl::bstr_handle restrictedDescription;
+                impl::bstr_handle capabilitySid;
+                if (restrictedError->GetErrorDetails(description.put(), &code, restrictedDescription.put(), capabilitySid.put()) == 0)
+                {
+                    throw hresult_error(code, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+                }
+            }
+        }
     }
 }
 
