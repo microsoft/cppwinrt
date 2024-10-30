@@ -163,6 +163,13 @@ namespace test_component
         static void StaticMethodWithAsyncReturn();
     }
 
+    // This class declares that it implements another interface but under the covers it actually does
+    // not.  This allows us to test the behavior when QI's that should not fail, do fail.
+    runtimeclass LiesAboutInheritance : Windows.Foundation.IStringable
+    {
+        void StubMethod();
+    }
+
     namespace Structs
     {
         struct All

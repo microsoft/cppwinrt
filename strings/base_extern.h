@@ -29,8 +29,11 @@ extern "C"
     int32_t __stdcall WINRT_IMPL_SetThreadpoolTimerEx(winrt::impl::ptp_timer, void*, uint32_t, uint32_t) noexcept WINRT_IMPL_LINK(SetThreadpoolTimerEx, 16);
     int32_t __stdcall WINRT_IMPL_SetThreadpoolWaitEx(winrt::impl::ptp_wait, void*, void*, void*) noexcept WINRT_IMPL_LINK(SetThreadpoolWaitEx, 16);
     int32_t __stdcall WINRT_IMPL_RoOriginateLanguageException(int32_t error, void* message, void* exception) noexcept WINRT_IMPL_LINK(RoOriginateLanguageException, 12);
+    int32_t __stdcall WINRT_IMPL_RoCaptureErrorContext(int32_t error) noexcept WINRT_IMPL_LINK(RoCaptureErrorContext, 4);
     void __stdcall WINRT_IMPL_RoFailFastWithErrorContext(int32_t) noexcept WINRT_IMPL_LINK(RoFailFastWithErrorContext, 4);
     int32_t __stdcall WINRT_IMPL_RoTransformError(int32_t, int32_t, void*) noexcept WINRT_IMPL_LINK(RoTransformError, 12);
+    int32_t __stdcall WINRT_IMPL_GetRestrictedErrorInfo(void**) noexcept WINRT_IMPL_LINK(GetRestrictedErrorInfo, 4);
+    int32_t __stdcall WINRT_IMPL_SetRestrictedErrorInfo(void*) noexcept WINRT_IMPL_LINK(SetRestrictedErrorInfo, 4);
 
     void* __stdcall WINRT_IMPL_LoadLibraryExW(wchar_t const* name, void* unused, uint32_t flags) noexcept WINRT_IMPL_LINK(LoadLibraryExW, 12);
     int32_t __stdcall WINRT_IMPL_FreeLibrary(void* library) noexcept WINRT_IMPL_LINK(FreeLibrary, 4);

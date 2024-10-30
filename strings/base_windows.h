@@ -128,7 +128,11 @@ namespace winrt::impl
         }
 
         void* result{};
-        ptr->QueryInterface(guid_of<To>(), &result);
+        hresult code = ptr->QueryInterface(guid_of<To>(), &result);
+        if (code < 0)
+        {
+            WINRT_IMPL_RoCaptureErrorContext(code);
+        }
         return wrap_as_result<To>(result);
     }
 }

@@ -88,6 +88,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fast_fwd", "fast_fwd\fast_fwd.vcxproj", "{A63B3AD1-AB7B-461E-9FFF-2447F5BCD459}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "scratch", "scratch\scratch.vcxproj", "{E893622C-47DE-4F83-B422-0A26711590A4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D613FB39-5035-4043-91E2-BAB323908AF4} = {D613FB39-5035-4043-91E2-BAB323908AF4}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_module_lock_none", "test\test_module_lock_none\test_module_lock_none.vcxproj", "{D48A96C2-8512-4CC3-B6E4-7CFF07ED8ED3}"
 	ProjectSection(ProjectDependencies) = postProject

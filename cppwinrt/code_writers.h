@@ -1129,9 +1129,16 @@ namespace cppwinrt
             if (is_remove_overload(method))
             {
                 // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
+                //
+                // The `noexcept` versions will crash if check_cast_result throws but that is no different than previous
+                // behavior where it would not check the cast result and nullptr crash.  At least the exception will terminate
+                // immediately while preserving the error code and local variables.
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        WINRT_IMPL_SHIM(%)->%(%);%
+        auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+        auto const abiType = *(abi_t<%>**)&castedResult;
+        check_cast_result(abiType);
+        abiType->%(%);%
     }
 )";
             }
@@ -1139,7 +1146,10 @@ namespace cppwinrt
             {
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        WINRT_VERIFY_(0, WINRT_IMPL_SHIM(%)->%(%));%
+        auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+        auto const abiType = *(abi_t<%>**)&castedResult;
+        check_cast_result(abiType);
+        WINRT_VERIFY_(0, abiType->%(%));%
     }
 )";
             }
@@ -1148,7 +1158,10 @@ namespace cppwinrt
         {
             format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
     {%
-        check_hresult(WINRT_IMPL_SHIM(%)->%(%));%
+        auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+        auto const abiType = *(abi_t<%>**)&castedResult;
+        check_cast_result(abiType);
+        check_hresult(abiType->%(%));%
     }
 )";
         }
@@ -1160,6 +1173,7 @@ namespace cppwinrt
             method_name,
             bind<write_consume_params>(signature),
             bind<write_consume_return_type>(signature, false),
+            type,
             type,
             get_abi_name(method),
             bind<write_abi_args>(signature),
