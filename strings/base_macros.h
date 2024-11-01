@@ -77,6 +77,12 @@ struct IUnknown;
 typedef struct _GUID GUID;
 #endif
 
+#if defined(__cpp_consteval)
+#define WINRT_IMPL_CONSTEVAL consteval
+#else
+#define WINRT_IMPL_CONSTEVAL
+#endif
+
 // std::source_location is a C++20 feature, which is above the C++17 feature floor for cppwinrt.  The source location needs
 // to be the calling code, not cppwinrt itself, so that it is useful to developers building on top of this library.  As a
 // result any public-facing method that can result in an error needs a default-constructed source_location argument.  Because
@@ -84,7 +90,17 @@ typedef struct _GUID GUID;
 //
 // Some projects may decide to disable std::source_location support to prevent source code information from ending up in their
 // release binaries, or to reduce binary size.  Defining WINRT_NO_SOURCE_LOCATION will prevent this feature from activating.
-#if defined(__cpp_lib_source_location) && !defined(WINRT_NO_SOURCE_LOCATION)
+#if !defined(WINRT_NO_SOURCE_LOCATION)
+
+// Some projects mix static libs compiled as cpp17 and cpp20 into the same binary.  The source_location ODR check creates
+// (legitimate) build breaks in those projects because it is not safe to mix the two.  To ease the compatibility burden on
+// these projects updating to a newer cppwinrt we can define the builtin's to be empty in cpp17 mode.  This does not provide
+// the correct data, but it does avoid the ODR violations.  winrt::impl::slim_source_location can serve both modes.
+#if !defined(__cpp_lib_source_location)
+#define __builtin_LINE() 0
+#define __builtin_FILE() nullptr
+#define WINRT_IMPL_EMPTY_SOURCE_LOCATION
+#endif
 
 namespace winrt::impl
 {
@@ -93,7 +109,7 @@ namespace winrt::impl
     // have heavy binary size overhead when templates cause many permutations to exist.
     struct slim_source_location
     {
-        [[nodiscard]] static consteval slim_source_location current(
+        [[nodiscard]] static WINRT_IMPL_CONSTEVAL slim_source_location current(
             const std::uint_least32_t line = __builtin_LINE(),
             const char* const file = __builtin_FILE()) noexcept
         {
@@ -136,7 +152,7 @@ namespace winrt::impl
 // usefulness of source_location while having a much smaller binary impact.
 //
 // When building _DEBUG binary size is not usually much of a concern, so we can use the full source_location type.
-#ifdef _DEBUG
+#if defined(_DEBUG) && !defined(WINRT_IMPL_EMPTY_SOURCE_LOCATION)
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , std::source_location const& sourceInformation
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS , std::source_location const& sourceInformation = std::source_location::current()
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM std::source_location const& sourceInformation = std::source_location::current()
@@ -150,7 +166,7 @@ namespace winrt::impl
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "true")
 #endif // _MSC_VER
 
-#else // !_DEBUG
+#else // !_DEBUG || WINRT_IMPL_EMPTY_SOURCE_LOCATION
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , winrt::impl::slim_source_location const& sourceInformation
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS , winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()
@@ -164,7 +180,7 @@ namespace winrt::impl
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "slim")
 #endif // _MSC_VER
 
-#endif // _DEBUG
+#endif // _DEBUG / WINRT_IMPL_EMPTY_SOURCE_LOCATION
 
 #else
 #define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT
