@@ -104,18 +104,19 @@ typedef struct _GUID GUID;
 // is acceptable.
 
 #if !defined(__cpp_lib_source_location) || defined(WINRT_NO_SOURCE_LOCATION)
-// cpp17 mode.  The source_location intrinsics are not available.
-// The caller has disabled source_location support.  Ensure that there is no binary size overhead for line/file/function.
+// Case1: cpp17 mode.  The source_location intrinsics are not available.
+// Cas2: The caller has disabled source_location support.  Ensure that there is no binary size overhead for line/file/function.
 #define WINRT_IMPL_BUILTIN_LINE 0
 #define WINRT_IMPL_BUILTIN_FILE nullptr
 #define WINRT_IMPL_BUILTIN_FUNCTION nullptr
 #elif _DEBUG
-// Debug builds include FUNCTION information, which has a heavy binary size impact.
+// cpp20 _DEBUG builds include function information, which has a heavy binary size impact, in addition to file/line.
 #define WINRT_IMPL_BUILTIN_LINE __builtin_LINE()
 #define WINRT_IMPL_BUILTIN_FILE __builtin_FILE()
 #define WINRT_IMPL_BUILTIN_FUNCTION __builtin_FUNCTION()
 #else
-// Release builds in cpp20 mode get file and line information.
+// Release builds in cpp20 mode get file and line information but NOT function information.  Function strings
+// quickly add up to a substantial binary size impact, especially when templates are heavily used.
 #define WINRT_IMPL_BUILTIN_LINE __builtin_LINE()
 #define WINRT_IMPL_BUILTIN_FILE __builtin_FILE()
 #define WINRT_IMPL_BUILTIN_FUNCTION nullptr
