@@ -103,12 +103,8 @@ typedef struct _GUID GUID;
 // value at the cost of binary size.  The assumption is that binary size is considered less important in debug builds so this tradeoff
 // is acceptable.
 
-#if !defined(__cpp_lib_source_location)
+#if !defined(__cpp_lib_source_location) || defined(WINRT_NO_SOURCE_LOCATION)
 // cpp17 mode.  The source_location intrinsics are not available.
-#define WINRT_IMPL_BUILTIN_LINE 0
-#define WINRT_IMPL_BUILTIN_FILE nullptr
-#define WINRT_IMPL_BUILTIN_FUNCTION nullptr
-#elif defined(WINRT_NO_SOURCE_LOCATION)
 // The caller has disabled source_location support.  Ensure that there is no binary size overhead for line/file/function.
 #define WINRT_IMPL_BUILTIN_LINE 0
 #define WINRT_IMPL_BUILTIN_FILE nullptr
@@ -172,15 +168,6 @@ namespace winrt::impl
         const char* const m_function{};
     };
 }
-
-#define WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT , winrt::impl::slim_source_location const& sourceInformation
-#define WINRT_IMPL_SOURCE_LOCATION_ARGS , winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()
-#define WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()
-
-#define WINRT_IMPL_SOURCE_LOCATION_FORWARD , sourceInformation
-#define WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM sourceInformation
-
-#define WINRT_SOURCE_LOCATION_ACTIVE
 
 #ifdef _MSC_VER
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "slim")
