@@ -105,7 +105,7 @@ typedef struct _GUID GUID;
 
 #if !defined(__cpp_lib_source_location) || defined(WINRT_NO_SOURCE_LOCATION)
 // Case1: cpp17 mode.  The source_location intrinsics are not available.
-// Cas2: The caller has disabled source_location support.  Ensure that there is no binary size overhead for line/file/function.
+// Case2: The caller has disabled source_location support.  Ensure that there is no binary size overhead for line/file/function.
 #define WINRT_IMPL_BUILTIN_LINE 0
 #define WINRT_IMPL_BUILTIN_FILE nullptr
 #define WINRT_IMPL_BUILTIN_FUNCTION nullptr
