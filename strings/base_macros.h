@@ -103,7 +103,7 @@ typedef struct _GUID GUID;
 // value at the cost of binary size.  The assumption is that binary size is considered less important in debug builds so this tradeoff
 // is acceptable.
 //
-// The different behavior of the default parameters to winrt::impl::slim_sourc_location::current() is technically an ODR violation,
+// The different behavior of the default parameters to winrt::impl::slim_source_location::current() is technically an ODR violation,
 // albeit a minor one.  There should be no serious consequence to this violation.  In practice it means that mixing cpp17/cpp20,
 // or mixing WINRT_NO_SOURCE_LOCATION with undefining it, will lead to inconsistent source location information.  It may be missing
 // when it is expected to be included, or it may be present when it is not expected.  The behavior will depend on the linker's choice
