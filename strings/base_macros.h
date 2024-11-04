@@ -102,6 +102,12 @@ typedef struct _GUID GUID;
 // To help with debugging the __builtin_FUNCTION() intrinsic will be used in _DEBUG builds.  This will provide a bit more diagnostic
 // value at the cost of binary size.  The assumption is that binary size is considered less important in debug builds so this tradeoff
 // is acceptable.
+//
+// The different behavior of the default parameters to winrt::impl::slim_sourc_location::current() is technically an ODR violation,
+// albeit a minor one.  There should be no serious consequence to this violation.  In practice it means that mixing cpp17/cpp20,
+// or mixing WINRT_NO_SOURCE_LOCATION with undefining it, will lead to inconsistent source location information.  It may be missing
+// when it is expected to be included, or it may be present when it is not expected.  The behavior will depend on the linker's choice
+// when there are multiple translation units with different options.  This violation is tracked by https://github.com/microsoft/cppwinrt/issues/1445.
 
 #if !defined(__cpp_lib_source_location) || defined(WINRT_NO_SOURCE_LOCATION)
 // Case1: cpp17 mode.  The source_location intrinsics are not available.
