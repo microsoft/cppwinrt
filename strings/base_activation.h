@@ -20,10 +20,9 @@ namespace winrt::impl
 
     // This function pointer will be null unless one or more translation units in a binary define WINRT_REG_FREE before
     // including winrt/base.h.  If that is defined then the overall binary will support regfree COM activation.
-    inline hresult(*reg_free_factory_getter)(param::hstring const&, bool, guid const&, void**) = nullptr;
+    inline hresult(*reg_free_factory_getter)(param::hstring const&, guid const&, void**) = nullptr;
 
-    template <bool isSameInterfaceAsIActivationFactory>
-    WINRT_IMPL_NOINLINE hresult get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
+    WINRT_IMPL_NOINLINE inline hresult get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
     {
         if (winrt_activation_handler)
         {
@@ -44,16 +43,20 @@ namespace winrt::impl
             return 0;
         }
 
-        if (reg_free_factory_getter)
+        // If the class is not registered, and regfree support is enabled, give that a chance to make the activation succeed.
+        // We should not attempt to fallback to regfree for error codes besides class not registered.  If the activation is out
+        // of process then we could have RPC error codes.  It would be bad if a class that should only ever be used out of proc
+        // is erroneously activated inproc.
+        if ((hr == error_class_not_registered) && reg_free_factory_getter)
         {
-            return reg_free_factory_getter(name, isSameInterfaceAsIActivationFactory, guid, result);
+            return reg_free_factory_getter(name, guid, result);
         }
 
         return hr;
     }
 
 #ifdef WINRT_REG_FREE
-    WINRT_IMPL_NOINLINE inline hresult reg_free_get_activation_factory(param::hstring const& name, bool isSameInterfaceAsIActivationFactory, winrt::guid const& guid, void** result) noexcept
+    WINRT_IMPL_NOINLINE inline hresult reg_free_get_activation_factory(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
     {
         com_ptr<IErrorInfo> error_info;
         WINRT_IMPL_GetErrorInfo(0, error_info.put_void());
@@ -87,13 +90,7 @@ namespace winrt::impl
                 continue;
             }
 
-            if (isSameInterfaceAsIActivationFactory)
-            {
-                *result = library_factory.detach();
-                library.detach();
-                return 0;
-            }
-            else if (0 == library_factory.as(guid, result))
+            if (0 == library_factory.as(guid, result))
             {
                 library.detach();
                 return 0;
@@ -116,7 +113,7 @@ namespace winrt::impl
     template <typename Interface>
     hresult get_runtime_activation_factory(param::hstring const& name, void** result) noexcept
     {
-        return get_runtime_activation_factory_impl<std::is_same_v<Interface, Windows::Foundation::IActivationFactory>>(name, guid_of<Interface>(), result);
+        return get_runtime_activation_factory_impl(name, guid_of<Interface>(), result);
     }
 }
 
