@@ -85,10 +85,10 @@ extends:
             - task: CopyFiles@2
               displayName: 'Stage compiler vpack contents'
               inputs:
-                SourceFolder: $(Build.SourcesDirectory)/x86
+                SourceFolder: $(Build.SourcesDirectory)/x86/cppwinrt
                 Contents: |
-                  cppwinrt/cppwinrt.exe
-                  cppwinrt/cppwinrt.pdb
+                  cppwinrt.exe
+                  cppwinrt.pdb
                 TargetFolder: $(ob_outputDirectory)
             
         - job: MSBuild_vpack
