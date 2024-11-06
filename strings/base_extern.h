@@ -35,7 +35,9 @@ extern "C"
     int32_t __stdcall WINRT_IMPL_GetRestrictedErrorInfo(void**) noexcept WINRT_IMPL_LINK(GetRestrictedErrorInfo, 4);
     int32_t __stdcall WINRT_IMPL_SetRestrictedErrorInfo(void*) noexcept WINRT_IMPL_LINK(SetRestrictedErrorInfo, 4);
 
+#ifdef WINRT_REG_FREE
     void* __stdcall WINRT_IMPL_LoadLibraryExW(wchar_t const* name, void* unused, uint32_t flags) noexcept WINRT_IMPL_LINK(LoadLibraryExW, 12);
+#endif // WINRT_REG_FREE
     int32_t __stdcall WINRT_IMPL_FreeLibrary(void* library) noexcept WINRT_IMPL_LINK(FreeLibrary, 4);
     void* __stdcall WINRT_IMPL_GetProcAddress(void* library, char const* name) noexcept WINRT_IMPL_LINK(GetProcAddress, 8);
 
@@ -43,6 +45,7 @@ extern "C"
     int32_t __stdcall WINRT_IMPL_GetErrorInfo(uint32_t reserved, void** info) noexcept WINRT_IMPL_LINK(GetErrorInfo, 8);
     int32_t __stdcall WINRT_IMPL_CoInitializeEx(void*, uint32_t type) noexcept WINRT_IMPL_LINK(CoInitializeEx, 8);
     void    __stdcall WINRT_IMPL_CoUninitialize() noexcept WINRT_IMPL_LINK(CoUninitialize, 0);
+    int32_t __stdcall WINRT_IMPL_CoIncrementMTAUsage(void** cookie) noexcept WINRT_IMPL_LINK(CoIncrementMTAUsage, 4);
 
     int32_t  __stdcall WINRT_IMPL_CoCreateFreeThreadedMarshaler(void* outer, void** marshaler) noexcept WINRT_IMPL_LINK(CoCreateFreeThreadedMarshaler, 8);
     int32_t  __stdcall WINRT_IMPL_CoCreateInstance(winrt::guid const& clsid, void* outer, uint32_t context, winrt::guid const& iid, void** object) noexcept WINRT_IMPL_LINK(CoCreateInstance, 20);

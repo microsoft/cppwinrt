@@ -18,6 +18,10 @@ namespace winrt::impl
 
     using library_handle = handle_type<library_traits>;
 
+    // This function pointer will be null unless one or more translation units in a binary define WINRT_REG_FREE before
+    // including winrt/base.h.  If that is defined then the overall binary will support regfree COM activation.
+    inline hresult(*reg_free_factory_getter)(param::hstring const&, bool, guid const&, void**) = nullptr;
+
     template <bool isSameInterfaceAsIActivationFactory>
     WINRT_IMPL_NOINLINE hresult get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
     {
@@ -30,15 +34,8 @@ namespace winrt::impl
 
         if (hr == impl::error_not_initialized)
         {
-            auto usage = reinterpret_cast<int32_t(__stdcall*)(void** cookie) noexcept>(WINRT_IMPL_GetProcAddress(load_library(L"combase.dll"), "CoIncrementMTAUsage"));
-
-            if (!usage)
-            {
-                return hr;
-            }
-
             void* cookie;
-            usage(&cookie);
+            WINRT_IMPL_CoIncrementMTAUsage(&cookie);
             hr = WINRT_IMPL_RoGetActivationFactory(*(void**)(&name), guid, result);
         }
 
@@ -47,6 +44,17 @@ namespace winrt::impl
             return 0;
         }
 
+        if (reg_free_factory_getter)
+        {
+            return reg_free_factory_getter(name, isSameInterfaceAsIActivationFactory, guid, result);
+        }
+
+        return hr;
+    }
+
+#ifdef WINRT_REG_FREE
+    WINRT_IMPL_NOINLINE hresult reg_free_get_activation_factory(param::hstring const& name, bool isSameInterfaceAsIActivationFactory, winrt::guid const& guid, void** result) noexcept
+    {
         com_ptr<IErrorInfo> error_info;
         WINRT_IMPL_GetErrorInfo(0, error_info.put_void());
 
@@ -79,7 +87,7 @@ namespace winrt::impl
                 continue;
             }
 
-            if constexpr (isSameInterfaceAsIActivationFactory)
+            if (isSameInterfaceAsIActivationFactory)
             {
                 *result = library_factory.detach();
                 library.detach();
@@ -93,8 +101,17 @@ namespace winrt::impl
         }
 
         WINRT_IMPL_SetErrorInfo(0, error_info.get());
-        return hr;
+        return error_class_not_registered;
     }
+
+    // This file has been compiled by a translation unit with WINRT_REG_FREE defined.  Fill in the reg_free_factory_getter function
+    // pointer so that regfree behavior is activated.
+    inline unsigned int reg_free_init = []() {
+        reg_free_factory_getter = reg_free_get_activation_factory;
+        return 0U;
+    }();
+
+#endif // WINRT_REG_FREE
 
     template <typename Interface>
     hresult get_runtime_activation_factory(param::hstring const& name, void** result) noexcept
