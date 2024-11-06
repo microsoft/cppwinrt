@@ -53,7 +53,7 @@ namespace winrt::impl
     }
 
 #ifdef WINRT_REG_FREE
-    WINRT_IMPL_NOINLINE hresult reg_free_get_activation_factory(param::hstring const& name, bool isSameInterfaceAsIActivationFactory, winrt::guid const& guid, void** result) noexcept
+    WINRT_IMPL_NOINLINE inline hresult reg_free_get_activation_factory(param::hstring const& name, bool isSameInterfaceAsIActivationFactory, winrt::guid const& guid, void** result) noexcept
     {
         com_ptr<IErrorInfo> error_info;
         WINRT_IMPL_GetErrorInfo(0, error_info.put_void());
