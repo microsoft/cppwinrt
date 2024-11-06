@@ -123,8 +123,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -142,8 +141,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -161,8 +159,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -180,8 +177,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -199,8 +195,7 @@
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -222,8 +217,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -245,8 +239,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -268,8 +261,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <PreBuildEvent>
-      <Command>
-      </Command>
+      <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose -fastabi</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>
@@ -280,6 +272,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="activation_without_regfree.cpp" />
     <ClCompile Include="array_span.cpp" />
     <ClCompile Include="await_completed.cpp" />
     <ClCompile Include="custom_error.cpp" />
