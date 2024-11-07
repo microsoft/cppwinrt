@@ -1,0 +1,9 @@
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+    <file name="test_component.dll">
+        <activatableClass
+            name="test_component.Simple"
+            threadingModel="both"
+            xmlns="urn:schemas-microsoft-com:winrt.v1"
+         />
+    </file>
+</assembly>

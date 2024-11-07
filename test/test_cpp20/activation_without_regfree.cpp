@@ -14,6 +14,21 @@ TEST_CASE("activation_withoug_regfree_system_type")
     REQUIRE_NOTHROW(Uri(L"https://bing.com"));
 }
 
+TEST_CASE("activation_manifested_avoiding_regfree")
+{
+    bool fusionRegistrationWorked{ false };
+    try
+    {
+        // app.manifest has registration for the Simple runtimeclass so activation should succeed.
+        Simple s{};
+        fusionRegistrationWorked = true;
+    }
+    catch (...)
+    {
+    }
+    REQUIRE(fusionRegistrationWorked);
+}
+
 TEST_CASE("activation_withoug_regfree_fails")
 {
     bool threwException{ false };
