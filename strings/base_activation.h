@@ -47,7 +47,7 @@ namespace winrt::impl
         // We should not attempt to fallback to regfree for error codes besides class not registered.  If the activation is out
         // of process then we could have RPC error codes.  It would be bad if a class that should only ever be used out of proc
         // is erroneously activated inproc.
-        if ((hr == error_class_not_registered) && reg_free_factory_getter)
+        if (((hr == error_class_not_registered) || (hr == error_class_not_available)) && reg_free_factory_getter)
         {
             return reg_free_factory_getter(name, guid, result);
         }
