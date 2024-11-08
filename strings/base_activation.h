@@ -108,7 +108,16 @@ namespace winrt::impl
         return 0U;
     }();
 
+    // This pragma is used to detect if the translation unit containing regfree usage is being linked with another translation
+    // unit that declared WINRT_NEVER_REG_FREE.
+#pragma detect_mismatch("WINRT_REG_FREE", "enabled")
 #endif // WINRT_REG_FREE
+
+#ifdef WINRT_NEVER_REG_FREE
+    // This pragma is used to ensure that a binary will never have winrt regfree logic enabled.  Defining WINRT_NEVER_REG_FREE will
+    // cause this pragma to break linkage if any translation units in the same binary defined WINRT_REG_FREE.
+#pragma detect_mismatch("WINRT_REG_FREE", "never")
+#endif // WINRT_NEVER_REG_FREE
 
     template <typename Interface>
     hresult get_runtime_activation_factory(param::hstring const& name, void** result) noexcept

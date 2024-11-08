@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "winrt/test_component.h"
 
-#ifdef WINRT_REG_FREE
-#error "This test needs WINRT_REG_FREE to be undefined"
-#endif
-
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace test_component;

@@ -3,6 +3,7 @@
 #pragma warning(4: 4458) // ensure we compile clean with this warning enabled
 
 #define WINRT_LEAN_AND_MEAN
+#define WINRT_NEVER_REG_FREE
 #include <unknwn.h>
 #include "winrt/Windows.Data.Json.h"
 #include "winrt/Windows.Foundation.h"
