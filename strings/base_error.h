@@ -539,8 +539,7 @@ namespace winrt::impl
         return result;
     }
 
-    template <typename T>
-    WINRT_IMPL_NOINLINE void check_cast_result(T* from, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
+    inline WINRT_IMPL_NOINLINE void check_cast_result(void* from, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
     {
         if (!from)
         {

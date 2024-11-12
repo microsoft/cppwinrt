@@ -1135,10 +1135,18 @@ namespace cppwinrt
                 // immediately while preserving the error code and local variables.
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
-        auto const abiType = *(abi_t<%>**)&castedResult;
-        check_cast_result(abiType);
-        abiType->%(%);%
+        if constexpr (!std::is_same_v<D, %>)
+        {
+            auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+            auto const abiType = *(abi_t<%>**)&castedResult;
+            check_cast_result(abiType);
+            abiType->%(%);
+        }
+        else
+        {
+            auto const abiType = *(abi_t<%>**)this;
+            abiType->%(%);
+        }%
     }
 )";
             }
@@ -1146,10 +1154,18 @@ namespace cppwinrt
             {
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
-        auto const abiType = *(abi_t<%>**)&castedResult;
-        check_cast_result(abiType);
-        WINRT_VERIFY_(0, abiType->%(%));%
+        if constexpr (!std::is_same_v<D, %>)
+        {
+            auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+            auto const abiType = *(abi_t<%>**)&castedResult;
+            check_cast_result(abiType);
+            WINRT_VERIFY_(0, abiType->%(%));
+        }
+        else
+        {
+            auto const abiType = *(abi_t<%>**)this;
+            WINRT_VERIFY_(0, abiType->%(%));
+        }%
     }
 )";
             }
@@ -1158,10 +1174,18 @@ namespace cppwinrt
         {
             format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
     {%
-        auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
-        auto const abiType = *(abi_t<%>**)&castedResult;
-        check_cast_result(abiType);
-        check_hresult(abiType->%(%));%
+        if constexpr (!std::is_same_v<D, %>)
+        {
+            auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+            auto const abiType = *(abi_t<%>**)&castedResult;
+            check_cast_result(abiType);
+            check_hresult(abiType->%(%));
+        }
+        else
+        {
+            auto const abiType = *(abi_t<%>**)this;
+            check_hresult(abiType->%(%));
+        }%
     }
 )";
         }
@@ -1174,6 +1198,10 @@ namespace cppwinrt
             bind<write_consume_params>(signature),
             bind<write_consume_return_type>(signature, false),
             type,
+            type,
+            type,
+            get_abi_name(method),
+            bind<write_abi_args>(signature),
             type,
             get_abi_name(method),
             bind<write_abi_args>(signature),
