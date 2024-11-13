@@ -133,7 +133,7 @@ namespace winrt::impl
     }
 
     template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0>
-    std::pair<com_ref<To>, hresult> try_as_reason(From* ptr) noexcept
+    std::pair<com_ref<To>, hresult> try_as_with_reason(From* ptr) noexcept
     {
 #ifdef WINRT_DIAGNOSTICS
         get_diagnostics_info().add_query<To>();
@@ -223,9 +223,9 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
         }
 
         template <typename To>
-        auto try_as_reason() const noexcept
+        auto try_as_with_reason() const noexcept
         {
-            return impl::try_as_reason<To>(m_ptr);
+            return impl::try_as_with_reason<To>(m_ptr);
         }
 
         template <typename To>

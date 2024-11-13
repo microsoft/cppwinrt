@@ -789,9 +789,9 @@ namespace winrt::impl
         }
 
         template <typename Qi>
-        auto try_as_reason() const noexcept
+        auto try_as_with_reason() const noexcept
         {
-            return m_inner.try_as_reason<Qi>();
+            return m_inner.try_as_with_reason<Qi>();
         }
 
         explicit operator bool() const noexcept
