@@ -538,14 +538,6 @@ namespace winrt::impl
         }
         return result;
     }
-
-    inline WINRT_IMPL_NOINLINE void check_cast_result(hresult const result, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
-    {
-        if (result != 0)
-        {
-            throw hresult_error(result, take_ownership_from_abi, sourceInformation);
-        }
-    }
 }
 
 #undef WINRT_IMPL_RETURNADDRESS
