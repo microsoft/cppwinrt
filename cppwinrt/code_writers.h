@@ -1137,9 +1137,9 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+            auto const [castedResult, code] = static_cast<D const*>(this)->template try_as_reason<%>();
+            check_cast_result(code);
             auto const abiType = *(abi_t<%>**)&castedResult;
-            check_cast_result(abiType);
             abiType->%(%);
         }
         else
@@ -1156,9 +1156,9 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+            auto const [castedResult, code] = static_cast<D const*>(this)->template try_as_reason<%>();
+            check_cast_result(code);
             auto const abiType = *(abi_t<%>**)&castedResult;
-            check_cast_result(abiType);
             WINRT_VERIFY_(0, abiType->%(%));
         }
         else
@@ -1176,9 +1176,9 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const& castedResult = static_cast<% const&>(static_cast<D const&>(*this));
+            auto const [castedResult, code] = static_cast<D const*>(this)->template try_as_reason<%>();
+            check_cast_result(code);
             auto const abiType = *(abi_t<%>**)&castedResult;
-            check_cast_result(abiType);
             check_hresult(abiType->%(%));
         }
         else
