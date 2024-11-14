@@ -1130,15 +1130,14 @@ namespace cppwinrt
             {
                 // we intentionally ignore errors when unregistering event handlers to be consistent with event_revoker
                 //
-                // The `noexcept` versions will crash if check_hresult throws but that is no different than previous
+                // The `noexcept` versions will crash if .as<>() throws but that is no different than previous
                 // behavior where it would not check the cast result and nullptr crash.  At least the exception will terminate
                 // immediately while preserving the error code and local variables.
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const& [castedResult, code] = static_cast<D const*>(this)->template try_as_with_reason<%>();
-            check_hresult(code);
+            auto const& castedResult = static_cast<D const*>(this)->template as<%>();
             auto const abiType = *(abi_t<%>**)&castedResult;
             abiType->%(%);
         }
@@ -1156,8 +1155,7 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const& [castedResult, code] = static_cast<D const*>(this)->template try_as_with_reason<%>();
-            check_hresult(code);
+            auto const& castedResult = static_cast<D const*>(this)->template as<%>();
             auto const abiType = *(abi_t<%>**)&castedResult;
             WINRT_VERIFY_(0, abiType->%(%));
         }
@@ -1176,8 +1174,7 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const& [castedResult, code] = static_cast<D const*>(this)->template try_as_with_reason<%>();
-            check_hresult(code);
+            auto const& castedResult = static_cast<D const*>(this)->template as<%>();
             auto const abiType = *(abi_t<%>**)&castedResult;
             check_hresult(abiType->%(%));
         }

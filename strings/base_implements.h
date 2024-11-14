@@ -783,15 +783,15 @@ namespace winrt::impl
     struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer<true>
     {
         template <typename Qi>
-        auto try_as() const noexcept
+        auto as() const noexcept
         {
-            return m_inner.try_as<Qi>();
+            return m_inner.as<Qi>();
         }
 
         template <typename Qi>
-        auto try_as_with_reason() const noexcept
+        auto try_as() const noexcept
         {
-            return m_inner.try_as_with_reason<Qi>();
+            return m_inner.try_as<Qi>();
         }
 
         explicit operator bool() const noexcept
