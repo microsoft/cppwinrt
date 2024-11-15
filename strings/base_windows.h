@@ -148,6 +148,12 @@ namespace winrt::impl
         hresult code = ptr->QueryInterface(guid_of<To>(), &result);
         return { wrap_as_result<To>(result), code };
     }
+
+    template <typename To, typename From>
+    auto try_as_with_reason(From ptr) noexcept
+    {
+        return ptr->template try_as_with_reason<To>();
+    }
 }
 
 WINRT_EXPORT namespace winrt::Windows::Foundation

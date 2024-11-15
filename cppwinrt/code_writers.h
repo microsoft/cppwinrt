@@ -1137,7 +1137,7 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const& [castedResult, code] = static_cast<D const*>(this)->template try_as_with_reason<%>();
+            auto const [castedResult, code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
             check_hresult(code);
             auto const abiType = *(abi_t<%>**)&castedResult;
             abiType->%(%);
@@ -1156,7 +1156,7 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const& [castedResult, code] = static_cast<D const*>(this)->template try_as_with_reason<%>();
+            auto const [castedResult, code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
             check_hresult(code);
             auto const abiType = *(abi_t<%>**)&castedResult;
             WINRT_VERIFY_(0, abiType->%(%));
@@ -1176,7 +1176,7 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const& [castedResult, code] = static_cast<D const*>(this)->template try_as_with_reason<%>();
+            auto const [castedResult, code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
             check_hresult(code);
             auto const abiType = *(abi_t<%>**)&castedResult;
             check_hresult(abiType->%(%));
