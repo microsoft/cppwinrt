@@ -373,11 +373,6 @@ jobs:
       - name: Run nuget test
         run: |
           cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" test\nuget\NugetTest.sln
-          if ($LastExitCode -ne 0) {
-            echo "::warning::nuget test failed"
-          }
-          # FIXME: This build was failing from the start
-          exit 0
 
   build-nuget:
     name: Build nuget package with MSVC
