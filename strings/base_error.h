@@ -538,27 +538,6 @@ namespace winrt::impl
         }
         return result;
     }
-
-    inline WINRT_IMPL_NOINLINE void check_cast_result(void* from, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
-    {
-        if (!from)
-        {
-            com_ptr<impl::IRestrictedErrorInfo> restrictedError;
-            if (WINRT_IMPL_GetRestrictedErrorInfo(restrictedError.put_void()) == 0)
-            {
-                WINRT_IMPL_SetRestrictedErrorInfo(restrictedError.get());
-
-                int32_t code;
-                impl::bstr_handle description;
-                impl::bstr_handle restrictedDescription;
-                impl::bstr_handle capabilitySid;
-                if (restrictedError->GetErrorDetails(description.put(), &code, restrictedDescription.put(), capabilitySid.put()) == 0)
-                {
-                    throw hresult_error(code, take_ownership_from_abi, sourceInformation);
-                }
-            }
-        }
-    }
 }
 
 #undef WINRT_IMPL_RETURNADDRESS

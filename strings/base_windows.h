@@ -128,12 +128,31 @@ namespace winrt::impl
         }
 
         void* result{};
-        hresult code = ptr->QueryInterface(guid_of<To>(), &result);
-        if (code < 0)
-        {
-            WINRT_IMPL_RoCaptureErrorContext(code);
-        }
+        ptr->QueryInterface(guid_of<To>(), &result);
         return wrap_as_result<To>(result);
+    }
+
+    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0>
+    std::pair<com_ref<To>, hresult> try_as_with_reason(From* ptr) noexcept
+    {
+#ifdef WINRT_DIAGNOSTICS
+        get_diagnostics_info().add_query<To>();
+#endif
+
+        if (!ptr)
+        {
+            return { nullptr, 0 };
+        }
+
+        void* result{};
+        hresult code = ptr->QueryInterface(guid_of<To>(), &result);
+        return { wrap_as_result<To>(result), code };
+    }
+
+    template <typename To, typename From>
+    auto try_as_with_reason(From ptr) noexcept
+    {
+        return ptr->template try_as_with_reason<To>();
     }
 }
 
@@ -207,6 +226,12 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
         auto try_as() const noexcept
         {
             return impl::try_as<To>(m_ptr);
+        }
+
+        template <typename To>
+        auto try_as_with_reason() const noexcept
+        {
+            return impl::try_as_with_reason<To>(m_ptr);
         }
 
         template <typename To>

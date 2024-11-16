@@ -792,9 +792,20 @@ namespace winrt::impl
         {
             return m_inner.operator bool();
         }
+
+        template <typename To, typename From>
+        friend auto winrt::impl::try_as_with_reason(From ptr) noexcept;
+
     protected:
         static constexpr bool is_composing = true;
         Windows::Foundation::IInspectable m_inner;
+
+    private:
+        template <typename Qi>
+        auto try_as_with_reason() const noexcept
+        {
+            return m_inner.try_as_with_reason<Qi>();
+        }
     };
 
     template <typename D, bool>
