@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|ARM">
-      <Configuration>Debug</Configuration>
-      <Platform>ARM</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|ARM64">
       <Configuration>Debug</Configuration>
       <Platform>ARM64</Platform>
@@ -12,10 +8,6 @@
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|ARM">
-      <Configuration>Release</Configuration>
-      <Platform>ARM</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|ARM64">
       <Configuration>Release</Configuration>
@@ -46,23 +38,12 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <UseDebugLibraries>false</UseDebugLibraries>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -93,16 +74,10 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
@@ -119,19 +94,11 @@
     <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
     <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
-    <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
     <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
     <ExecutablePath>$(VC_ExecutablePath_x86_ARM64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
-    <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
     <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
     <ExecutablePath>$(VC_ExecutablePath_x86);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(SystemRoot)\SysWow64;$(FxCopDir);$(PATH);</ExecutablePath>
   </PropertyGroup>
@@ -187,68 +154,6 @@
     </CustomBuildStep>
     <CustomBuildStep>
       <Message />
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>Generated Files\module.g.cpp</Outputs>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(OutputPath)test_component_folders.winmd</Inputs>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4100</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-    </ClCompile>
-    <Link>
-      <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
-    </Link>
-    <Midl>
-      <EnableWindowsRuntime>true</EnableWindowsRuntime>
-    </Midl>
-    <Midl>
-      <MetadataFileName>$(OutputPath)test_component_folders.winmd</MetadataFileName>
-      <IgnoreStandardIncludePath>
-      </IgnoreStandardIncludePath>
-      <WarningLevel>
-      </WarningLevel>
-      <WarnAsError>
-      </WarnAsError>
-      <SuppressStartupBanner>
-      </SuppressStartupBanner>
-      <DefaultCharType>
-      </DefaultCharType>
-      <HeaderFileName>nul</HeaderFileName>
-      <GenerateTypeLibrary>
-      </GenerateTypeLibrary>
-      <TypeLibraryName>
-      </TypeLibraryName>
-      <ErrorCheckAllocations>
-      </ErrorCheckAllocations>
-      <ErrorCheckBounds>
-      </ErrorCheckBounds>
-      <ErrorCheckEnumRange>
-      </ErrorCheckEnumRange>
-      <ErrorCheckRefPointers>
-      </ErrorCheckRefPointers>
-      <ErrorCheckStubData>
-      </ErrorCheckStubData>
-      <StructMemberAlignment>
-      </StructMemberAlignment>
-      <MinimumTargetSystem>
-      </MinimumTargetSystem>
-      <AdditionalOptions>/nomidl %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalMetadataDirectories>C:\Windows\System32\WinMetadata</AdditionalMetadataDirectories>
-      <PrependWithABINamepsace>true</PrependWithABINamepsace>
-    </Midl>
-    <CustomBuildStep>
-      <Command>$(CppWinRTDir)cppwinrt -input $(OutputPath)test_component_folders.winmd -comp -out "$(ProjectDir)Generated Files" -ref sdk -verbose -overwrite -name test_component_folders</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message>
-      </Message>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>Generated Files\module.g.cpp</Outputs>
@@ -411,72 +316,6 @@
     </CustomBuildStep>
     <CustomBuildStep>
       <Message />
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Outputs>Generated Files\module.g.cpp</Outputs>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Inputs>$(OutputPath)test_component_folders.winmd</Inputs>
-    </CustomBuildStep>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM'">
-    <ClCompile>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(OutputPath);Generated Files</AdditionalIncludeDirectories>
-      <DisableSpecificWarnings>4100</DisableSpecificWarnings>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-    </ClCompile>
-    <Link>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
-    </Link>
-    <Midl>
-      <EnableWindowsRuntime>true</EnableWindowsRuntime>
-    </Midl>
-    <Midl>
-      <MetadataFileName>$(OutputPath)test_component_folders.winmd</MetadataFileName>
-      <IgnoreStandardIncludePath>
-      </IgnoreStandardIncludePath>
-      <WarningLevel>
-      </WarningLevel>
-      <WarnAsError>
-      </WarnAsError>
-      <SuppressStartupBanner>
-      </SuppressStartupBanner>
-      <DefaultCharType>
-      </DefaultCharType>
-      <HeaderFileName>nul</HeaderFileName>
-      <GenerateTypeLibrary>
-      </GenerateTypeLibrary>
-      <TypeLibraryName>
-      </TypeLibraryName>
-      <ErrorCheckAllocations>
-      </ErrorCheckAllocations>
-      <ErrorCheckBounds>
-      </ErrorCheckBounds>
-      <ErrorCheckEnumRange>
-      </ErrorCheckEnumRange>
-      <ErrorCheckRefPointers>
-      </ErrorCheckRefPointers>
-      <ErrorCheckStubData>
-      </ErrorCheckStubData>
-      <StructMemberAlignment>
-      </StructMemberAlignment>
-      <MinimumTargetSystem>
-      </MinimumTargetSystem>
-      <AdditionalOptions>/nomidl %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalMetadataDirectories>C:\Windows\System32\WinMetadata</AdditionalMetadataDirectories>
-      <PrependWithABINamepsace>true</PrependWithABINamepsace>
-    </Midl>
-    <CustomBuildStep>
-      <Command>$(CppWinRTDir)cppwinrt -input $(OutputPath)test_component_folders.winmd -comp -out "$(ProjectDir)Generated Files" -ref sdk -verbose -overwrite -name test_component_folders</Command>
-    </CustomBuildStep>
-    <CustomBuildStep>
-      <Message>
-      </Message>
     </CustomBuildStep>
     <CustomBuildStep>
       <Outputs>Generated Files\module.g.cpp</Outputs>

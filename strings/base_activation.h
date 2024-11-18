@@ -119,10 +119,8 @@ WINRT_EXPORT namespace winrt
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-#if defined(__GNUC__) && (defined(__arm__) || defined(__aarch64__))
+#if defined(__GNUC__) && defined(__aarch64__)
 #define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER __asm__ __volatile__ ("dmb ish");
-#elif defined _M_ARM
-#define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER (__dmb(_ARM_BARRIER_ISH));
 #elif defined _M_ARM64
 #define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER (__dmb(_ARM64_BARRIER_ISH));
 #endif
@@ -135,7 +133,7 @@ namespace winrt::impl
         int32_t const result = *target;
         _ReadWriteBarrier();
         return result;
-#elif defined _M_ARM || defined _M_ARM64
+#elif defined _M_ARM64
 #if defined(__GNUC__)
         int32_t const result = *target;
 #else
@@ -308,7 +306,7 @@ namespace winrt::impl
 
     static_assert(std::is_standard_layout_v<factory_cache_entry_base>);
 
-#if !defined _M_IX86 && !defined _M_X64 && !defined _M_ARM && !defined _M_ARM64
+#if !defined _M_IX86 && !defined _M_X64 && !defined _M_ARM64
 #error Unsupported architecture: verify that zero-initialization of SLIST_HEADER is still safe
 #endif
 
