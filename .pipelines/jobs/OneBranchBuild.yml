@@ -20,8 +20,6 @@ jobs:
         BuildPlatform: 'x86'
       x64:
         BuildPlatform: 'x64'
-      arm:
-        BuildPlatform: 'arm'
       arm64:
         BuildPlatform: 'arm64'
 

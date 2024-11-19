@@ -72,12 +72,6 @@ jobs:
         targetPath: '$(Build.SourcesDirectory)\x64'
 
     - task: DownloadPipelineArtifact@2
-      displayName: 'Download arm binaries'
-      inputs:
-        artifactName: 'drop_build_arm'
-        targetPath: '$(Build.SourcesDirectory)\arm'
-
-    - task: DownloadPipelineArtifact@2
       displayName: 'Download arm64 binaries'
       inputs:
         artifactName: 'drop_build_arm64'
