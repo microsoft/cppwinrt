@@ -131,12 +131,6 @@ extends:
                 targetPath: '$(Build.SourcesDirectory)/x64'
 
             - task: DownloadPipelineArtifact@2
-              displayName: 'Download arm artifacts'
-              inputs:
-                artifactName: 'drop_build_arm'
-                targetPath: '$(Build.SourcesDirectory)/arm'
-
-            - task: DownloadPipelineArtifact@2
               displayName: 'Download arm64 artifacts'
               inputs:
                 artifactName: 'drop_build_arm64'
@@ -159,7 +153,6 @@ extends:
                   echo d | xcopy $(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib build\native\lib\Win32
                   echo d | xcopy $(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib  build\native\lib\amd64
                   echo d | xcopy $(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib  build\native\lib\x64
-                  echo d | xcopy $(Build.SourcesDirectory)\arm\cppwinrt_fast_forwarder.lib  build\native\lib\arm
                   echo d | xcopy $(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib  build\native\lib\arm64
 
     - stage: NuGet

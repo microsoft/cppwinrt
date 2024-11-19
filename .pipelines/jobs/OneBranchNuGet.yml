@@ -44,12 +44,6 @@ jobs:
           targetPath: '$(Build.SourcesDirectory)/x64'
 
       - task: DownloadPipelineArtifact@1
-        displayName: 'Download arm artifacts'
-        inputs:
-          artifactName: 'drop_build_arm'
-          targetPath: '$(Build.SourcesDirectory)/arm'
-
-      - task: DownloadPipelineArtifact@1
         displayName: 'Download arm64 artifacts'
         inputs:
           artifactName: 'drop_build_arm64'
@@ -59,7 +53,7 @@ jobs:
         displayName: 'Build NuGet package'
         inputs:
           command: 'custom'
-          arguments: 'pack nuget/Microsoft.Windows.CppWinRT.nuspec -NonInteractive -OutputDirectory $(ob_outputDirectory)\packages -Properties Configuration=release;cppwinrt_exe=$(Build.SourcesDirectory)\x86\cppwinrt\cppwinrt.exe;cppwinrt_fast_fwd_x86=$(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=$(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=$(Build.SourcesDirectory)\arm\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=$(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib;target_version=$(PackageVersion) -Version $(PackageVersion) -Verbosity Detailed'
+          arguments: 'pack nuget/Microsoft.Windows.CppWinRT.nuspec -NonInteractive -OutputDirectory $(ob_outputDirectory)\packages -Properties Configuration=release;cppwinrt_exe=$(Build.SourcesDirectory)\x86\cppwinrt\cppwinrt.exe;cppwinrt_fast_fwd_x86=$(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=$(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=$(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib;target_version=$(PackageVersion) -Version $(PackageVersion) -Verbosity Detailed'
 
       - task: onebranch.pipeline.signing@1
         displayName: '🔒 Onebranch Signing for NuGet package'

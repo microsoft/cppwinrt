@@ -23,7 +23,7 @@
         <GeneratedFilesDir>$(IntDir)Generated Files\</GeneratedFilesDir>
         <CppWinRTVerbosity>high</CppWinRTVerbosity>
         <CppWinRTPlatform>$(Platform)</CppWinRTPlatform>
-        <CppWinRTPlatform Condition="'$(Platform)'=='Win32' or '$(Platform)'=='ARM' or '$(Platform)'=='ARM64'">x86</CppWinRTPlatform>
+        <CppWinRTPlatform Condition="'$(Platform)'=='Win32' or '$(Platform)'=='ARM64'">x86</CppWinRTPlatform>
         <CppWinRTPath>$(SolutionDir)..\..\_build\$(CppWinRTPlatform)\$(Configuration)\</CppWinRTPath>
     </PropertyGroup>
 
