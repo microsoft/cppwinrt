@@ -40,8 +40,9 @@
     <CppWinRTPackageDir>..\_build\$(Platform)\$(Configuration)</CppWinRTPackageDir>
     <CppWinRTPackage>false</CppWinRTPackage>
     <!-- Null out CAExcludePath so that the include files are not automatically excluded from analysis. -->
-    <!-- <CAExcludePath></CAExcludePath> -->
-    <!-- <RunCodeAnalysis>true</RunCodeAnalysis> -->
+    <CAExcludePath>
+    </CAExcludePath>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
@@ -55,16 +56,18 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\..\cppwinrt</AdditionalIncludeDirectories>
+      <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <!-- <ExternalWarningLevel>Level4</ExternalWarningLevel> -->
-      <!-- <ExternalTemplatesDiagnostics>true</ExternalTemplatesDiagnostics> -->
-      <!-- <AnalyzeExternalRuleset>NativeRecommendedRules.ruleset</AnalyzeExternalRuleset> -->
+      <ExternalWarningLevel>Level4</ExternalWarningLevel>
+      <ExternalTemplatesDiagnostics>true</ExternalTemplatesDiagnostics>
+      <AnalyzeExternalRuleset>AllRules.ruleset</AnalyzeExternalRuleset>
+      <AdditionalOptions>%(AdditionalOptions) /Wv:19.40</AdditionalOptions>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
     </Link>
     <PreBuildEvent>
-      <!-- <Command>$(CppWinRTDir)cppwinrt -in $(OutputPath)test_component.winmd $(OutputPath)test_component_no_pch.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose</Command> -->
       <Command>powershell.exe -NoProfile -NonInteractive -File "$(ProjectDir)GeneratePrecompiledHeader.ps1" -generatedFilesDir "$(ProjectDir)Generated Files" -cppwinrtHeaderFolder "$(CppWinRTDir)\winrt"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
