@@ -1137,15 +1137,15 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const [castedResult, code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
-            check_hresult(code);
-            auto const abiType = *(abi_t<%>**)&castedResult;
-            abiType->%(%);
+            auto const [_winrt_casted_result, _winrt_cast_result_code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
+            check_hresult(_winrt_cast_result_code);
+            auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
+            _winrt_abi_type->%(%);
         }
         else
         {
-            auto const abiType = *(abi_t<%>**)this;
-            abiType->%(%);
+            auto const _winrt_abi_type = *(abi_t<%>**)this;
+            _winrt_abi_type->%(%);
         }%
     }
 )";
@@ -1156,15 +1156,15 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const [castedResult, code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
-            check_hresult(code);
-            auto const abiType = *(abi_t<%>**)&castedResult;
-            WINRT_VERIFY_(0, abiType->%(%));
+            auto const [_winrt_casted_result, _winrt_cast_result_code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
+            check_hresult(_winrt_cast_result_code);
+            auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
+            WINRT_VERIFY_(0, _winrt_abi_type->%(%));
         }
         else
         {
-            auto const abiType = *(abi_t<%>**)this;
-            WINRT_VERIFY_(0, abiType->%(%));
+            auto const _winrt_abi_type = *(abi_t<%>**)this;
+            WINRT_VERIFY_(0, _winrt_abi_type->%(%));
         }%
     }
 )";
@@ -1176,15 +1176,15 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const [castedResult, code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
-            check_hresult(code);
-            auto const abiType = *(abi_t<%>**)&castedResult;
-            check_hresult(abiType->%(%));
+            auto const [_winrt_casted_result, _winrt_cast_result_code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
+            check_hresult(_winrt_cast_result_code);
+            auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
+            check_hresult(_winrt_abi_type->%(%));
         }
         else
         {
-            auto const abiType = *(abi_t<%>**)this;
-            check_hresult(abiType->%(%));
+            auto const _winrt_abi_type = *(abi_t<%>**)this;
+            check_hresult(_winrt_abi_type->%(%));
         }%
     }
 )";
