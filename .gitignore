@@ -8,6 +8,7 @@
 *.nupkg
 test*.xml
 test*_results.txt
+stress_test_results.txt
 test_failures.txt
 build
 packages
