@@ -39,6 +39,9 @@
     <!-- Not using the real nuget package so override-->
     <CppWinRTPackageDir>..\_build\$(Platform)\$(Configuration)</CppWinRTPackageDir>
     <CppWinRTPackage>false</CppWinRTPackage>
+    <!-- Null out CAExcludePath so that the include files are not automatically excluded from analysis. -->
+    <!-- <CAExcludePath></CAExcludePath> -->
+    <!-- <RunCodeAnalysis>true</RunCodeAnalysis> -->
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)'=='Debug'" Label="Configuration">
@@ -53,6 +56,9 @@
     <ClCompile>
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..;..\..\cppwinrt</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
+      <!-- <ExternalWarningLevel>Level4</ExternalWarningLevel> -->
+      <!-- <ExternalTemplatesDiagnostics>true</ExternalTemplatesDiagnostics> -->
+      <!-- <AnalyzeExternalRuleset>NativeRecommendedRules.ruleset</AnalyzeExternalRuleset> -->
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

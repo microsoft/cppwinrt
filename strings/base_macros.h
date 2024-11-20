@@ -17,10 +17,10 @@
 
 #ifdef _MSC_VER
 // Note: this is a workaround for a false-positive warning produced by the Visual C++ 15.9 compiler.
-#pragma warning(disable : 5046)
+//#pragma warning(disable : 5046)
 
 // Note: this is a workaround for a false-positive warning produced by the Visual C++ 16.3 compiler.
-#pragma warning(disable : 4268)
+//#pragma warning(disable : 4268)
 #endif
 
 #if defined(__cpp_lib_coroutine) || defined(__cpp_coroutines) || defined(_RESUMABLE_FUNCTIONS_SUPPORTED)

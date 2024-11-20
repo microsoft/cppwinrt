@@ -20,7 +20,7 @@ foreach ($header in $allHeaders)
 {
     $chunks = $header.FullName.Split("\\");
     $header = $chunks[$chunks.Length - 1];
-    $generatedPchContent += "#include <winrt/$header>`r`n";
+    $generatedPchContent += "#include `"winrt/$header`"`r`n";
 }
 
 Set-Content -Path "$generatedFilesDir\\pch.h" -Value $generatedPchContent -Force -Encoding UTF8
