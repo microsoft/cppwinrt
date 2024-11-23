@@ -2150,6 +2150,10 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 w.write("\n        friend impl::consume_t<D, %>;", name);
                 w.write("\n        friend impl::require_one<D, %>;", name);
             }
+            else if (info.overridable)
+            {
+                w.write("\n        friend impl::produce<D, %>;", name);
+            }
         }
     }
 
@@ -2275,13 +2279,13 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_class_override_usings(writer& w, get_interfaces_t const& required_interfaces)
     {
-        std::map<std::string_view, std::set<std::string>> method_usage;
+        std::map<std::string_view, std::map<std::string, interface_info>> method_usage;
 
-        for (auto&& [interface_name, info] : required_interfaces)
+        for (auto&& interface_desc : required_interfaces)
         {
-            for (auto&& method : info.type.MethodList())
+            for (auto&& method : interface_desc.second.type.MethodList())
             {
-                method_usage[get_name(method)].insert(interface_name);
+                method_usage[get_name(method)].insert(interface_desc);
             }
         }
 
@@ -2292,9 +2296,9 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 continue;
             }
 
-            for (auto&& interface_name : interfaces)
+            for (auto&& [interface_name, info] : interfaces)
             {
-                w.write("        using impl::consume_t<D, %>::%;\n",
+                w.write(info.overridable ? "        using %T<D>::%;\n" : "        using impl::consume_t<D, %>::%;\n",
                     interface_name,
                     method_name);
             }
