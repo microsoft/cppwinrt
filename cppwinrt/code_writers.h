@@ -2298,7 +2298,9 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
             for (auto&& [interface_name, info] : interfaces)
             {
-                w.write(info.overridable ? "        using %T<D>::%;\n" : "        using impl::consume_t<D, %>::%;\n",
+                w.write(info.overridable
+                        ? "        using %T<D>::%;\n"
+                        : "        using impl::consume_t<D, %>::%;\n",
                     interface_name,
                     method_name);
             }

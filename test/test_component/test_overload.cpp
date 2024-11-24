@@ -8,12 +8,12 @@ using namespace test_component;
 
 struct DerivedClass : OverloadClassT<DerivedClass>
 {
-	void Foo()
-	{
-		// make sure we can actually call the overloads (no ambiguous call errors)
-		Overload();
-		Overload(1);
-		Overload(1, 2);
-		Overload(1, 2, 3);
-	}
+    void Foo()
+    {
+        // make sure we can actually call the overloads (no ambiguous call errors)
+        Overload();
+        Overload(1);
+        Overload(1, 2);
+        Overload(1, 2, 3);
+    }
 };
