@@ -484,7 +484,9 @@ namespace winrt::impl
                 if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Started)
                 {
                     m_status.store(AsyncStatus::Canceled, std::memory_order_relaxed);
+#ifndef _LIBCPP_ABI_MICROSOFT
                     m_exception = std::make_exception_ptr(hresult_canceled());
+#endif
                     cancel = std::move(m_cancel);
                 }
             }
@@ -605,6 +607,9 @@ namespace winrt::impl
 
         void unhandled_exception() noexcept
         {
+#ifdef _LIBCPP_ABI_MICROSOFT
+            ::std::abort();
+#else
             slim_lock_guard const guard(m_lock);
             WINRT_ASSERT(m_status.load(std::memory_order_relaxed) == AsyncStatus::Started || m_status.load(std::memory_order_relaxed) == AsyncStatus::Canceled);
             m_exception = std::current_exception();
@@ -621,6 +626,7 @@ namespace winrt::impl
             {
                 m_status.store(AsyncStatus::Error, std::memory_order_relaxed);
             }
+#endif
         }
 
         template <typename Expression>
@@ -678,7 +684,9 @@ namespace winrt::impl
             }
         }
 
+#ifndef _LIBCPP_ABI_MICROSOFT
         std::exception_ptr m_exception{};
+#endif
         slim_mutex m_lock;
         async_completed_handler_t<AsyncInterface> m_completed;
         winrt::delegate<> m_cancel;
