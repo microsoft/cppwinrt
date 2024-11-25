@@ -7,19 +7,15 @@ __declspec(selectany) int32_t(__stdcall* winrt_activation_handler)(void* classId
 #if defined(_MSC_VER) && !defined(__clang__)
 #ifdef _M_HYBRID
 #define WINRT_IMPL_LINK(function, count) __pragma(comment(linker, "/alternatename:#WINRT_IMPL_" #function "@" #count "=#" #function "@" #count))
-#define WINRT_IMPL_LINK2(function1, function2, count) __pragma(comment(linker, "/alternatename:#WINRT_" #function1 "@" #count "=#" #function2 "@" #count))
 #define WINRT_IMPL_DLLIMPORT
 #elif _M_ARM64EC
 #define WINRT_IMPL_LINK(function, count) __pragma(comment(linker, "/alternatename:#WINRT_IMPL_" #function "=#" #function))
-#define WINRT_IMPL_LINK2(function1, function2, count) __pragma(comment(linker, "/alternatename:#WINRT_" #function1 "=#" #function2))
 #define WINRT_IMPL_DLLIMPORT
 #elif _M_IX86
 #define WINRT_IMPL_LINK(function, count) __pragma(comment(linker, "/alternatename:__imp__WINRT_IMPL_" #function "@" #count "=__imp__" #function "@" #count))
-#define WINRT_IMPL_LINK2(function1, function2, count) __pragma(comment(linker, "/alternatename:__imp__WINRT_" #function1 "@" #count "=__imp__" #function2 "@" #count))
 #define WINRT_IMPL_DLLIMPORT __declspec(dllimport)
 #else
 #define WINRT_IMPL_LINK(function, count) __pragma(comment(linker, "/alternatename:__imp_WINRT_IMPL_" #function "=__imp_" #function))
-#define WINRT_IMPL_LINK2(function1, function2, count) __pragma(comment(linker, "/alternatename:__imp_WINRT_" #function1 "=__imp_" #function2))
 #define WINRT_IMPL_DLLIMPORT __declspec(dllimport)
 #endif
 #define WINRT_IMPL_EXTERN_C_BEGIN extern "C" {
@@ -27,20 +23,16 @@ __declspec(selectany) int32_t(__stdcall* winrt_activation_handler)(void* classId
 #elif defined(__GNUC__) || defined(__clang__)
 #if defined(__arm64ec__) || defined(_M_ARM64EC)
 #define WINRT_IMPL_LINK(function, count) __asm__("#" #function)
-#define WINRT_IMPL_LINK2(function1, function2, count) __asm__("#" #function2)
 #define WINRT_IMPL_DLLIMPORT
 #elif SIZE_MAX <= UINT_LEAST32_MAX && (defined(__x86__) || defined(_M_IX86) || defined(__i386__))
 #if !defined(__clang__)
 #define WINRT_IMPL_LINK(function, count) __asm__(#function "@" #count)
-#define WINRT_IMPL_LINK2(function1, function2, count) __asm__(#function2 "@" #count)
 #else
 #define WINRT_IMPL_LINK(function, count) __asm__("_" #function "@" #count)
-#define WINRT_IMPL_LINK2(function1, function2, count) __asm__("_" #function2 "@" #count)
 #endif
 #define WINRT_IMPL_DLLIMPORT [[__gnu__::__dllimport__]]
 #else
 #define WINRT_IMPL_LINK(function, count) __asm__(#function)
-#define WINRT_IMPL_LINK2(function1, function2, count) __asm__(#function2)
 #define WINRT_IMPL_DLLIMPORT [[__gnu__::__dllimport__]]
 #endif
 #define WINRT_IMPL_EXTERN_C_BEGIN
@@ -129,19 +121,15 @@ WINRT_IMPL_DLLIMPORT void __stdcall WINRT_IMPL_SetThreadpoolThreadMaximum(winrt:
 WINRT_IMPL_DLLIMPORT int32_t __stdcall WINRT_IMPL_SetThreadpoolThreadMinimum(winrt::impl::ptp_pool pool, uint32_t value) noexcept WINRT_IMPL_LINK(SetThreadpoolThreadMinimum, 8);
 WINRT_IMPL_DLLIMPORT void     __stdcall WINRT_IMPL_CloseThreadpool(winrt::impl::ptp_pool pool) noexcept WINRT_IMPL_LINK(CloseThreadpool, 4);
 
-WINRT_IMPL_DLLIMPORT int32_t __stdcall WINRT_CanUnloadNow() noexcept WINRT_IMPL_LINK2(CanUnloadNow, DllCanUnloadNow, 0);
-WINRT_IMPL_DLLIMPORT int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept WINRT_IMPL_LINK2(GetActivationFactory, GetActivationFactory, 8);
-
 WINRT_IMPL_EXTERN_C_END
+
+extern "C"
+{
+int32_t __stdcall WINRT_CanUnloadNow() noexcept;
+int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept;
+}
 
 #undef WINRT_IMPL_DLLIMPORT
 #undef WINRT_IMPL_LINK
-#undef WINRT_IMPL_LINK2
 #undef WINRT_IMPL_EXTERN_C_BEGIN
 #undef WINRT_IMPL_EXTERN_C_END
-
-#if defined(_MSC_VER) && !defined(_KERNEL_MODE)
-#pragma comment(lib, "ole32.lib")
-#pragma comment(lib, "oleaut32.lib")
-#pragma comment(lib, "runtimeobject.lib")
-#endif
