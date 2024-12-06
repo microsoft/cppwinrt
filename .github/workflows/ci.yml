@@ -12,7 +12,10 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-        fetch-depth: 0
+        with:
+          # Force a non-shallow checkout, so that clang-format can access source history to compare against
+          # See https://github.com/actions/checkout for more details.
+          fetch-depth: 0
 
       - name: Find vcvars64.bat
         run: |
