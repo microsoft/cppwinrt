@@ -21,7 +21,7 @@ jobs:
           & "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
 
           & .\find_clang_format.cmd
-          if $($LASTEXITCODE -ne 0) {
+          if ($LASTEXITCODE -ne 0) {
             exit /b $LASTEXITCODE
           }
 
