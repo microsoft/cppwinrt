@@ -15,10 +15,13 @@ jobs:
 
       - name: Check Formatting
         run: |
-          $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
-          if (!$VSDevCmd) { exit 1 }
-          Write-Host "Using VSDevCmd: ${VSDevCmd}"
-          & $VSDevCmd;
+          $vcvars64 = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find VC\Auxiliary\Build\vcvars64.bat
+          if (!$vcvars64) { exit 1 }
+          Write-Host "Using vcvars64: ${vcvars64}"
+
+          # We need environment variables from running a batch file, but are running pwsh, so they would all be lost when cmd exits.  We
+          # circumvent this problem by launching a fresh pwsh process after the batch file runs so execution continues with them set.
+          cmd "/k" '"C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat" & pwsh'
 
           & .\find_clang_format.cmd
           if ($LASTEXITCODE -ne 0) {
