@@ -12,6 +12,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
+        fetch-depth: 0
 
       - name: Find vcvars64.bat
         run: |
