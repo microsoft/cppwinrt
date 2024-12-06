@@ -33,7 +33,7 @@ jobs:
           git clang-format master --binary "%CLANG_FORMAT%" --style file -- cppwinrt/*.h cppwinrt/*.cpp fast_fwd/*.h fast_fwd/*.cpp prebuild/*.h prebuild/*.cpp scratch/*.h scratch/*.cpp strings/*.h strings/*.cpp test/*.h test/*.cpp vsix/*.h vsix/*.cpp
 
           if %ERRORLEVEL% neq 0 (
-            echo ::error ERROR: This branch contains changes that have not been formatted with 'clang-format'
+            echo ::error::This branch contains changes that have not been formatted with 'clang-format',
             echo NOTE:  To resolve this issue, you can run 'clang-format' in the following ways:
             echo        * Run build_test_all.cmd which will run 'clang-format' on _all_ source files. This script is
             echo          simpler to run, however there's a chance it may touch additional files you never changed due to you having
