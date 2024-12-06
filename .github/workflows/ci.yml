@@ -30,7 +30,7 @@ jobs:
             exit /b %ERRORLEVEL%
           )
 
-          git clang-format origin/master --binary "%CLANG_FORMAT%" --style file -- cppwinrt/*.h cppwinrt/*.cpp fast_fwd/*.h fast_fwd/*.cpp prebuild/*.h prebuild/*.cpp scratch/*.h scratch/*.cpp strings/*.h strings/*.cpp test/*.h test/*.cpp vsix/*.h vsix/*.cpp
+          git clang-format master --binary "%CLANG_FORMAT%" --style file -- cppwinrt/*.h cppwinrt/*.cpp fast_fwd/*.h fast_fwd/*.cpp prebuild/*.h prebuild/*.cpp scratch/*.h scratch/*.cpp strings/*.h strings/*.cpp test/*.h test/*.cpp vsix/*.h vsix/*.cpp
 
           if %ERRORLEVEL% neq 0 (
             echo ::error ERROR: This branch contains changes that have not been formatted with 'clang-format'
