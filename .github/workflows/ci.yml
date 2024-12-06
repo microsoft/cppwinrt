@@ -13,7 +13,7 @@ jobs:
     steps:
       - name: Check Formatting
         run: |
-          cmd /c "powershell .github\Workflows\CheckClangFormatting.ps1"
+          cmd /c "powershell .\.github\Workflows\CheckClangFormatting.ps1"
 
   test-msvc-cppwinrt-build:
     name: '${{ matrix.compiler }}: Build (${{ matrix.arch }}, ${{ matrix.config }})'
