@@ -13,31 +13,35 @@ jobs:
     steps:
       - name: Check Formatting
         run: |
-          if NOT EXIST "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat" (
-            echo ERROR: Could not locate 'vcvars' batch file. This script is intended to be run from a build machine & exit /B 1
-          )
-          call "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+          if (!(Test-Path "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat")) {
+            Write-Host ERROR: Could not locate 'vcvars' batch file. This script is intended to be run from a build machine
+            exit /B 1
+          }
+          
+          & "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
 
-          call find_clang_format.cmd
-          if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
+          & .\find_clang_format.cmd
+          if $($LASTEXITCODE -ne 0) {
+            exit /b $LASTEXITCODE
+          }
 
-          git clang-format origin/master --binary "%CLANG_FORMAT%" --style file -- cppwinrt/*.h cppwinrt/*.cpp fast_fwd/*.h fast_fwd/*.cpp prebuild/*.h prebuild/*.cpp scratch/*.h scratch/*.cpp strings/*.h strings/*.cpp test/*.h test/*.cpp vsix/*.h vsix/*.cpp
+          & git clang-format origin/master --binary "$env:CLANG_FORMAT" --style file -- cppwinrt/*.h cppwinrt/*.cpp fast_fwd/*.h fast_fwd/*.cpp prebuild/*.h prebuild/*.cpp scratch/*.h scratch/*.cpp strings/*.h strings/*.cpp test/*.h test/*.cpp vsix/*.h vsix/*.cpp
 
-          if %ERRORLEVEL% neq 0 (
-            echo ##vso[task.logissue type=error]ERROR: This branch contains changes that have not been formatted with 'clang-format'
-            echo NOTE:  To resolve this issue, you can run 'clang-format' in the following ways:
-            echo        * Run `build_test_all.cmd` which will run 'clang-format' on _all_ source files. This script is
-            echo          simpler to run, however there's a chance it may touch additional files you never changed due to you having
-            echo          a mis-matched version of 'clang-format'. This may require you to manually revert changes made by
-            echo          'clang-format' to the locations where you made no code changes.
-            echo.
-            echo        For more information, please see https://github.com/microsoft/cppwinrt?tab=readme-ov-file#formatting
-            echo.
-            echo NOTE:  As an additional note, given that different versions of 'clang-format' may have different behaviors, this
-            echo        may be a false positive. If you believe that to be the case ^(e.g. none of the above resulted in modifications
-            echo        to the code you have changed^), please note this in your PR.
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host ::error ERROR: This branch contains changes that have not been formatted with 'clang-format'
+            Write-Host NOTE:  To resolve this issue, you can run 'clang-format' in the following ways:
+            Write-Host        * Run `build_test_all.cmd` which will run 'clang-format' on _all_ source files. This script is
+            Write-Host          simpler to run, however there's a chance it may touch additional files you never changed due to you having
+            Write-Host          a mis-matched version of 'clang-format'. This may require you to manually revert changes made by
+            Write-Host          'clang-format' to the locations where you made no code changes.
+            Write-Host
+            Write-Host        For more information, please see https://github.com/microsoft/cppwinrt?tab=readme-ov-file#formatting
+            Write-Host
+            Write-Host NOTE:  As an additional note, given that different versions of 'clang-format' may have different behaviors, this
+            Write-Host        may be a false positive. If you believe that to be the case ^(e.g. none of the above resulted in modifications
+            Write-Host        to the code you have changed^), please note this in your PR.
             exit /b 1
-          )
+          }
 
   test-msvc-cppwinrt-build:
     name: '${{ matrix.compiler }}: Build (${{ matrix.arch }}, ${{ matrix.config }})'
