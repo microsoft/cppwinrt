@@ -21,7 +21,7 @@ jobs:
           & "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
 
           $originalWorkingDirectory = Get-Location
-          Set-Location ${{ github.action_path }}\..\..\
+          Set-Location ${{ github.env.GITHUB_WORKSPACE }}
 
           & .\find_clang_format.cmd
           if ($LASTEXITCODE -ne 0) {
