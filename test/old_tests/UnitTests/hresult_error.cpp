@@ -30,7 +30,7 @@ TEST_CASE("hresult,S_FALSE")
         check_hresult(S_FALSE);
         FAIL("Previous line should throw");
     }
-    catch (hresult_error const & e)
+    catch (hresult_error const& e)
     {
         REQUIRE(S_FALSE == e.code());
     }
@@ -47,7 +47,7 @@ TEST_CASE("hresult,init_apartment")
         init_apartment(apartment_type::single_threaded);
         FAIL("Previous line should throw");
     }
-    catch (hresult_error const & e)
+    catch (hresult_error const& e)
     {
         REQUIRE(e.code() == RPC_E_CHANGED_MODE);
     }
@@ -62,7 +62,7 @@ TEST_CASE("hresult,restricted,consuming")
         Uri uri(L"BAD");
         FAIL("Previous line should throw");
     }
-    catch (hresult_invalid_argument const & e) // catching specific exception type
+    catch (hresult_invalid_argument const& e) // catching specific exception type
     {
         REQUIRE(E_INVALIDARG == e.code());
         REQUIRE(L"BAD is not a valid absolute URI." == e.message());
@@ -73,7 +73,7 @@ TEST_CASE("hresult,restricted,consuming")
         Uri uri(L"BAD");
         FAIL("Previous line should throw");
     }
-    catch (hresult_error const & e) // catching generic exception type
+    catch (hresult_error const& e) // catching generic exception type
     {
         REQUIRE(E_INVALIDARG == e.code());
         REQUIRE(L"BAD is not a valid absolute URI." == e.message());
@@ -88,7 +88,7 @@ TEST_CASE("hresult,restricted,producing")
     {
         throw hresult_invalid_argument(); // default restricted error info message
     }
-    catch (hresult_invalid_argument const & e)
+    catch (hresult_invalid_argument const& e)
     {
         REQUIRE(E_INVALIDARG == e.code());
         REQUIRE(L"The parameter is incorrect." == e.message());
@@ -98,7 +98,7 @@ TEST_CASE("hresult,restricted,producing")
     {
         throw hresult_invalid_argument(hresult_error::from_abi); // no restricted error info at all
     }
-    catch (hresult_invalid_argument const & e)
+    catch (hresult_invalid_argument const& e)
     {
         REQUIRE(E_INVALIDARG == e.code());
         REQUIRE(L"The parameter is incorrect." == e.message());
@@ -108,7 +108,7 @@ TEST_CASE("hresult,restricted,producing")
     {
         throw hresult_invalid_argument(L"Better luck next time!"); // custom message for restricted error info message
     }
-    catch (hresult_invalid_argument const & e)
+    catch (hresult_invalid_argument const& e)
     {
         REQUIRE(E_INVALIDARG == e.code());
         REQUIRE(L"Better luck next time!" == e.message());
@@ -119,7 +119,7 @@ TEST_CASE("hresult,restricted,producing")
         RoOriginateLanguageException(E_INVALIDARG, get_abi(hstring(L"Correctly matched error info")), nullptr);
         throw hresult_invalid_argument(hresult_error::from_abi); // no restricted error info at all
     }
-    catch (hresult_invalid_argument const & e)
+    catch (hresult_invalid_argument const& e)
     {
         REQUIRE(E_INVALIDARG == e.code());
         REQUIRE(L"Correctly matched error info" == e.message());
@@ -130,7 +130,7 @@ TEST_CASE("hresult,restricted,producing")
         RoOriginateLanguageException(E_FAIL, get_abi(hstring(L"Incorrectly matched error info")), nullptr);
         throw hresult_invalid_argument(hresult_error::from_abi); // no restricted error info at all
     }
-    catch (hresult_invalid_argument const & e)
+    catch (hresult_invalid_argument const& e)
     {
         REQUIRE(E_INVALIDARG == e.code());
         REQUIRE(L"The parameter is incorrect." == e.message());
@@ -156,7 +156,7 @@ TEST_CASE("hresult,propagate,implements")
         IStringable value = make<SamplePropagate>();
         value.ToString();
     }
-    catch (hresult_invalid_argument const & e)
+    catch (hresult_invalid_argument const& e)
     {
         REQUIRE(E_INVALIDARG == e.code());
         REQUIRE(L"BAD is not a valid absolute URI." == e.message());
@@ -182,7 +182,7 @@ TEST_CASE("hresult,originate,implements")
         IStringable value = make<SampleOriginate>();
         value.ToString();
     }
-    catch (hresult_access_denied const & e)
+    catch (hresult_access_denied const& e)
     {
         REQUIRE(E_ACCESSDENIED == e.code());
         REQUIRE(L"Not so fast!" == e.message());
@@ -197,7 +197,7 @@ TEST_CASE("hresult_access_denied")
     {
         throw hresult_access_denied(); // default restricted error info message
     }
-    catch (hresult_access_denied const & e)
+    catch (hresult_access_denied const& e)
     {
         REQUIRE(E_ACCESSDENIED == e.code());
         REQUIRE(L"Access is denied." == e.message());
@@ -207,7 +207,7 @@ TEST_CASE("hresult_access_denied")
     {
         throw hresult_access_denied(hresult_error::from_abi); // no restricted error info at all
     }
-    catch (hresult_access_denied const & e)
+    catch (hresult_access_denied const& e)
     {
         REQUIRE(E_ACCESSDENIED == e.code());
         REQUIRE(L"Access is denied." == e.message());
@@ -217,7 +217,7 @@ TEST_CASE("hresult_access_denied")
     {
         throw hresult_access_denied(L"test message"); // custom message for restricted error info message
     }
-    catch (hresult_access_denied const & e)
+    catch (hresult_access_denied const& e)
     {
         REQUIRE(E_ACCESSDENIED == e.code());
         REQUIRE(L"test message" == e.message());
@@ -232,7 +232,7 @@ TEST_CASE("hresult_wrong_thread")
     {
         throw hresult_wrong_thread(); // default restricted error info message
     }
-    catch (hresult_wrong_thread const & e)
+    catch (hresult_wrong_thread const& e)
     {
         REQUIRE(RPC_E_WRONG_THREAD == e.code());
         REQUIRE(L"The application called an interface that was marshalled for a different thread." == e.message());
@@ -242,7 +242,7 @@ TEST_CASE("hresult_wrong_thread")
     {
         throw hresult_wrong_thread(hresult_error::from_abi); // no restricted error info at all
     }
-    catch (hresult_wrong_thread const & e)
+    catch (hresult_wrong_thread const& e)
     {
         REQUIRE(RPC_E_WRONG_THREAD == e.code());
         REQUIRE(L"The application called an interface that was marshalled for a different thread." == e.message());
@@ -252,7 +252,7 @@ TEST_CASE("hresult_wrong_thread")
     {
         throw hresult_wrong_thread(L"test message"); // custom message for restricted error info message
     }
-    catch (hresult_wrong_thread const & e)
+    catch (hresult_wrong_thread const& e)
     {
         REQUIRE(RPC_E_WRONG_THREAD == e.code());
         REQUIRE(L"test message" == e.message());
@@ -267,7 +267,7 @@ TEST_CASE("hresult_not_implemented")
     {
         throw hresult_not_implemented(); // default restricted error info message
     }
-    catch (hresult_not_implemented const & e)
+    catch (hresult_not_implemented const& e)
     {
         REQUIRE(E_NOTIMPL == e.code());
         REQUIRE(L"Not implemented" == e.message());
@@ -277,7 +277,7 @@ TEST_CASE("hresult_not_implemented")
     {
         throw hresult_not_implemented(hresult_error::from_abi); // no restricted error info at all
     }
-    catch (hresult_not_implemented const & e)
+    catch (hresult_not_implemented const& e)
     {
         REQUIRE(E_NOTIMPL == e.code());
         REQUIRE(L"Not implemented" == e.message());
@@ -287,7 +287,7 @@ TEST_CASE("hresult_not_implemented")
     {
         throw hresult_not_implemented(L"test message"); // custom message for restricted error info message
     }
-    catch (hresult_not_implemented const & e)
+    catch (hresult_not_implemented const& e)
     {
         REQUIRE(E_NOTIMPL == e.code());
         REQUIRE(L"test message" == e.message());
@@ -302,7 +302,7 @@ TEST_CASE("hresult_invalid_argument")
     {
         throw hresult_invalid_argument(); // default restricted error info message
     }
-    catch (hresult_invalid_argument const & e)
+    catch (hresult_invalid_argument const& e)
     {
         REQUIRE(E_INVALIDARG == e.code());
         REQUIRE(L"The parameter is incorrect." == e.message());
@@ -312,7 +312,7 @@ TEST_CASE("hresult_invalid_argument")
     {
         throw hresult_invalid_argument(hresult_error::from_abi); // no restricted error info at all
     }
-    catch (hresult_invalid_argument const & e)
+    catch (hresult_invalid_argument const& e)
     {
         REQUIRE(E_INVALIDARG == e.code());
         REQUIRE(L"The parameter is incorrect." == e.message());
@@ -322,7 +322,7 @@ TEST_CASE("hresult_invalid_argument")
     {
         throw hresult_invalid_argument(L"test message"); // custom message for restricted error info message
     }
-    catch (hresult_invalid_argument const & e)
+    catch (hresult_invalid_argument const& e)
     {
         REQUIRE(E_INVALIDARG == e.code());
         REQUIRE(L"test message" == e.message());
@@ -337,7 +337,7 @@ TEST_CASE("hresult_out_of_bounds")
     {
         throw hresult_out_of_bounds(); // default restricted error info message
     }
-    catch (hresult_out_of_bounds const & e)
+    catch (hresult_out_of_bounds const& e)
     {
         REQUIRE(E_BOUNDS == e.code());
         REQUIRE(L"The operation attempted to access data outside the valid range" == e.message());
@@ -347,7 +347,7 @@ TEST_CASE("hresult_out_of_bounds")
     {
         throw hresult_out_of_bounds(hresult_error::from_abi); // no restricted error info at all
     }
-    catch (hresult_out_of_bounds const & e)
+    catch (hresult_out_of_bounds const& e)
     {
         REQUIRE(E_BOUNDS == e.code());
         REQUIRE(L"The operation attempted to access data outside the valid range" == e.message());
@@ -357,7 +357,7 @@ TEST_CASE("hresult_out_of_bounds")
     {
         throw hresult_out_of_bounds(L"test message"); // custom message for restricted error info message
     }
-    catch (hresult_out_of_bounds const & e)
+    catch (hresult_out_of_bounds const& e)
     {
         REQUIRE(E_BOUNDS == e.code());
         REQUIRE(L"test message" == e.message());
@@ -372,7 +372,7 @@ TEST_CASE("hresult_no_interface")
     {
         throw hresult_no_interface(); // default restricted error info message
     }
-    catch (hresult_no_interface const & e)
+    catch (hresult_no_interface const& e)
     {
         REQUIRE(E_NOINTERFACE == e.code());
         REQUIRE(L"No such interface supported" == e.message());
@@ -382,7 +382,7 @@ TEST_CASE("hresult_no_interface")
     {
         throw hresult_no_interface(hresult_error::from_abi); // no restricted error info at all
     }
-    catch (hresult_no_interface const & e)
+    catch (hresult_no_interface const& e)
     {
         REQUIRE(E_NOINTERFACE == e.code());
         REQUIRE(L"No such interface supported" == e.message());
@@ -392,7 +392,7 @@ TEST_CASE("hresult_no_interface")
     {
         throw hresult_no_interface(L"test message"); // custom message for restricted error info message
     }
-    catch (hresult_no_interface const & e)
+    catch (hresult_no_interface const& e)
     {
         REQUIRE(E_NOINTERFACE == e.code());
         REQUIRE(L"test message" == e.message());
@@ -407,7 +407,7 @@ TEST_CASE("hresult_class_not_available")
     {
         throw hresult_class_not_available(); // default restricted error info message
     }
-    catch (hresult_class_not_available const & e)
+    catch (hresult_class_not_available const& e)
     {
         REQUIRE(CLASS_E_CLASSNOTAVAILABLE == e.code());
         REQUIRE(L"ClassFactory cannot supply requested class" == e.message());
@@ -417,7 +417,7 @@ TEST_CASE("hresult_class_not_available")
     {
         throw hresult_class_not_available(hresult_error::from_abi); // no restricted error info at all
     }
-    catch (hresult_class_not_available const & e)
+    catch (hresult_class_not_available const& e)
     {
         REQUIRE(CLASS_E_CLASSNOTAVAILABLE == e.code());
         REQUIRE(L"ClassFactory cannot supply requested class" == e.message());
@@ -427,7 +427,7 @@ TEST_CASE("hresult_class_not_available")
     {
         throw hresult_class_not_available(L"test message"); // custom message for restricted error info message
     }
-    catch (hresult_class_not_available const & e)
+    catch (hresult_class_not_available const& e)
     {
         REQUIRE(CLASS_E_CLASSNOTAVAILABLE == e.code());
         REQUIRE(L"test message" == e.message());
@@ -483,7 +483,7 @@ TEST_CASE("hresult, exception")
 }
 
 #ifdef _MSC_VER
-#pragma warning(disable: 4702)  // unreachable code
+#pragma warning(disable : 4702) // unreachable code
 #endif
 TEST_CASE("hresult, throw_last_error")
 {
@@ -502,7 +502,7 @@ TEST_CASE("hresult, std abi support")
 {
     try
     {
-        EventHandler<int> handler = [](auto&& ...)
+        EventHandler<int> handler = [](auto&&...)
         {
             throw std::runtime_error("std__exception");
         };
@@ -518,7 +518,7 @@ TEST_CASE("hresult, std abi support")
 
     try
     {
-        EventHandler<int> handler = [](auto&& ...)
+        EventHandler<int> handler = [](auto&&...)
         {
             throw std::bad_alloc();
         };
@@ -527,12 +527,11 @@ TEST_CASE("hresult, std abi support")
         FAIL("Previous line should throw");
     }
     catch (std::bad_alloc const&)
-    {
-    }
+    {}
 
     try
     {
-        EventHandler<int> handler = [](auto&& ...)
+        EventHandler<int> handler = [](auto&&...)
         {
             throw std::out_of_range("std__out_of_range");
         };
@@ -548,7 +547,7 @@ TEST_CASE("hresult, std abi support")
 
     try
     {
-        EventHandler<int> handler = [](auto&& ...)
+        EventHandler<int> handler = [](auto&&...)
         {
             throw std::invalid_argument("std__invalid_argument");
         };

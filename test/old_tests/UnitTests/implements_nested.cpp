@@ -14,10 +14,8 @@ struct nested_base : implements<nested_base, Windows::Foundation::IStringable>
 struct nested_derived : implements<nested_derived, Windows::Foundation::IClosable, nested_base>
 {
     void Close()
-    {
+    {}
 
-    }
-    
     hstring ToString() override
     {
         return L"nested_derived";

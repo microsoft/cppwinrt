@@ -13,22 +13,31 @@ namespace
     struct TestAgile : implements<TestAgile, IClosable>
     {
         bool& m_destroyed;
-        TestAgile(bool& destroyed) : m_destroyed(destroyed) { m_destroyed = false; }
-        ~TestAgile() { m_destroyed = true; }
+        TestAgile(bool& destroyed) :
+            m_destroyed(destroyed)
+        {
+            m_destroyed = false;
+        }
+        ~TestAgile()
+        {
+            m_destroyed = true;
+        }
 
-        void Close() {}
+        void Close()
+        {}
     };
 
     struct TestNonAgile : implements<TestNonAgile, non_agile, IClosable>
     {
-        void Close() {}
+        void Close()
+        {}
     };
-}
+} // namespace
 
 TEST_CASE("agility")
 {
-    using Windows::Foundation::IUnknown;
     using Windows::Foundation::IInspectable;
+    using Windows::Foundation::IUnknown;
 
     // Test agility
     {

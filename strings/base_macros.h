@@ -136,22 +136,15 @@ namespace winrt::impl
     struct slim_source_location
     {
         [[nodiscard]] static WINRT_IMPL_CONSTEVAL slim_source_location current(
-            const std::uint_least32_t line = WINRT_IMPL_BUILTIN_LINE,
-            const char* const file = WINRT_IMPL_BUILTIN_FILE,
-            const char* const function = WINRT_IMPL_BUILTIN_FUNCTION) noexcept
+            const std::uint_least32_t line = WINRT_IMPL_BUILTIN_LINE, const char* const file = WINRT_IMPL_BUILTIN_FILE, const char* const function = WINRT_IMPL_BUILTIN_FUNCTION) noexcept
         {
             return slim_source_location{ line, file, function };
         }
 
         [[nodiscard]] constexpr slim_source_location() noexcept = default;
 
-        [[nodiscard]] constexpr slim_source_location(
-            const std::uint_least32_t line,
-            const char* const file,
-            const char* const function) noexcept :
-            m_line(line),
-            m_file(file),
-            m_function(function)
+        [[nodiscard]] constexpr slim_source_location(const std::uint_least32_t line, const char* const file, const char* const function) noexcept :
+            m_line(line), m_file(file), m_function(function)
         {}
 
         [[nodiscard]] constexpr std::uint_least32_t line() const noexcept
@@ -174,7 +167,7 @@ namespace winrt::impl
         const char* const m_file{};
         const char* const m_function{};
     };
-}
+} // namespace winrt::impl
 
 #ifdef _MSC_VER
 #pragma detect_mismatch("WINRT_SOURCE_LOCATION", "slim")

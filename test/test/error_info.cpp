@@ -28,7 +28,7 @@ namespace
 
         return E_INVALIDARG;
     }
-}
+} // namespace
 
 TEST_CASE("error_info")
 {

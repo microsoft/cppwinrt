@@ -53,7 +53,7 @@ WINRT_EXPORT namespace winrt
     struct slim_lock_guard
     {
         explicit slim_lock_guard(slim_mutex& m) noexcept :
-        m_mutex(m)
+            m_mutex(m)
         {
             m_mutex.lock();
         }
@@ -94,8 +94,7 @@ WINRT_EXPORT namespace winrt
         slim_condition_variable const& operator=(slim_condition_variable const&) = delete;
         slim_condition_variable() noexcept = default;
 
-        template <typename T>
-        void wait(slim_mutex& x, T predicate)
+        template <typename T> void wait(slim_mutex& x, T predicate)
         {
             while (!predicate())
             {
@@ -103,8 +102,7 @@ WINRT_EXPORT namespace winrt
             }
         }
 
-        template <typename T>
-        bool wait_for(slim_mutex& x, std::chrono::high_resolution_clock::duration const timeout, T predicate)
+        template <typename T> bool wait_for(slim_mutex& x, std::chrono::high_resolution_clock::duration const timeout, T predicate)
         {
             auto const until = std::chrono::high_resolution_clock::now() + timeout;
 

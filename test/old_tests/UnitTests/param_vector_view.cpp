@@ -7,8 +7,7 @@ using namespace Windows::Foundation::Collections;
 
 namespace
 {
-    template <typename T>
-    auto make_copy(T const & param)
+    template <typename T> auto make_copy(T const& param)
     {
         typename T::interface_type copy;
         copy_from_abi(copy, get_abi(param));
@@ -76,14 +75,14 @@ namespace
 
     struct viewable
     {
-        IVectorView<int> view{ single_threaded_vector<int>({ 1,2,3 }).GetView() };
+        IVectorView<int> view{ single_threaded_vector<int>({ 1, 2, 3 }).GetView() };
 
         operator IVectorView<int>() const
         {
             return view;
         }
     };
-}
+} // namespace
 
 TEST_CASE("test_vector_view")
 {
@@ -91,21 +90,21 @@ TEST_CASE("test_vector_view")
     test_null_vector_view(nullptr);
 
     // initializer_list
-    test_vector_view({1,2,3});
+    test_vector_view({ 1, 2, 3 });
 
     // std::vector rvalue
-    test_vector_view(std::vector<int>{ 1,2,3 });
+    test_vector_view(std::vector<int>{ 1, 2, 3 });
 
     // std::vector lvalue
     std::vector<int> local{ 1, 2, 3 };
     test_vector_view(local);
 
     // any other range
-    std::deque<int> list{1,2,3};
-    test_vector_view({list.begin(), list.end()});
+    std::deque<int> list{ 1, 2, 3 };
+    test_vector_view({ list.begin(), list.end() });
 
     // WinRT interface
-    IVectorView<int> view = single_threaded_vector<int>({ 1,2,3 }).GetView();
+    IVectorView<int> view = single_threaded_vector<int>({ 1, 2, 3 }).GetView();
     test_vector_view(view);
 
     // Convertible WinRT interface
@@ -114,7 +113,6 @@ TEST_CASE("test_vector_view")
 
 TEST_CASE("test_vector_view_scope")
 {
-    IVectorView<int> a = test_vector_view_scope({ 1,2,3 });
+    IVectorView<int> a = test_vector_view_scope({ 1, 2, 3 });
     REQUIRE_THROWS_AS(a.First(), hresult_illegal_method_call);
 }
-

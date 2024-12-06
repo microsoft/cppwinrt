@@ -8,14 +8,14 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
         Point() noexcept = default;
 
-        constexpr Point(float X, float Y) noexcept
-            : X(X), Y(Y)
+        constexpr Point(float X, float Y) noexcept :
+            X(X), Y(Y)
         {}
 
 #ifdef WINRT_IMPL_NUMERICS
 
-        constexpr Point(Numerics::float2 const& value) noexcept
-            : X(value.x), Y(value.y)
+        constexpr Point(Numerics::float2 const& value) noexcept :
+            X(value.x), Y(value.y)
         {}
 
         operator Numerics::float2() const noexcept
@@ -43,14 +43,14 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
         Size() noexcept = default;
 
-        constexpr Size(float Width, float Height) noexcept
-            : Width(Width), Height(Height)
+        constexpr Size(float Width, float Height) noexcept :
+            Width(Width), Height(Height)
         {}
 
 #ifdef WINRT_IMPL_NUMERICS
 
-        constexpr Size(Numerics::float2 const& value) noexcept
-            : Width(value.x), Height(value.y)
+        constexpr Size(Numerics::float2 const& value) noexcept :
+            Width(value.x), Height(value.y)
         {}
 
         operator Numerics::float2() const noexcept
@@ -84,7 +84,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
             X(X), Y(Y), Width(Width), Height(Height)
         {}
 
-        constexpr Rect(Point const& point, Size const& size)  noexcept :
+        constexpr Rect(Point const& point, Size const& size) noexcept :
             X(point.X), Y(point.Y), Width(size.Width), Height(size.Height)
         {}
     };
@@ -115,7 +115,7 @@ namespace winrt::impl
     {
         using type = struct_category<float, float>;
     };
-    
+
     template <> struct category<Windows::Foundation::Rect>
     {
         using type = struct_category<float, float, float, float>;
@@ -153,12 +153,7 @@ namespace winrt::impl
 
     template <> struct category<Windows::Foundation::Numerics::float4x4>
     {
-        using type = struct_category<
-            float, float, float, float,
-            float, float, float, float,
-            float, float, float, float,
-            float, float, float, float
-        >;
+        using type = struct_category<float, float, float, float, float, float, float, float, float, float, float, float, float, float, float, float>;
     };
 
     template <> struct category<Windows::Foundation::Numerics::quaternion>
@@ -172,4 +167,4 @@ namespace winrt::impl
     };
 
 #endif
-}
+} // namespace winrt::impl

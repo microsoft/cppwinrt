@@ -81,7 +81,7 @@ namespace
         REQUIRE(!check_privilege());
         REQUIRE(has_thread_token());
     }
-}
+} // namespace
 
 TEST_CASE("Security")
 {

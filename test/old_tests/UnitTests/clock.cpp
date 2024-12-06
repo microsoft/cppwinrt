@@ -12,10 +12,9 @@ namespace winrt
 {
     bool operator==(const FILETIME& lhs, const FILETIME& rhs) noexcept
     {
-        return lhs.dwHighDateTime == rhs.dwHighDateTime &&
-            lhs.dwLowDateTime == rhs.dwLowDateTime;
+        return lhs.dwHighDateTime == rhs.dwHighDateTime && lhs.dwLowDateTime == rhs.dwLowDateTime;
     }
-}
+} // namespace winrt
 
 // To confirm that two clocks have the same epoch, we
 // capture one clock, then the other, then the first again,
@@ -31,8 +30,7 @@ namespace winrt
 
 namespace Catch
 {
-    template<typename Rep, typename Period>
-    std::string toString(const duration<Rep, Period>& value_)
+    template <typename Rep, typename Period> std::string toString(const duration<Rep, Period>& value_)
     {
         nanoseconds value = value_;
         std::string result;
@@ -47,14 +45,17 @@ namespace Catch
         if (value >= nanoseconds{ 1 })
         {
             auto count = duration_cast<nanoseconds>(value).count();
-            if (!result.empty()) { result.append(", "); }
+            if (!result.empty())
+            {
+                result.append(", ");
+            }
             result.append(std::to_string(count));
             result.append(" nanoseconds");
             value %= nanoseconds{ 1 };
         }
         return result;
     }
-}
+} // namespace Catch
 
 TEST_CASE("clock, now")
 {

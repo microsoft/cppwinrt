@@ -16,8 +16,7 @@ namespace cppwinrt
         return static_cast<std::stringstream const&>(std::stringstream() << file.rdbuf()).str();
     }
 
-    template <typename T>
-    struct writer_base
+    template <typename T> struct writer_base
     {
         writer_base(writer_base const&) = delete;
         writer_base& operator=(writer_base const&) = delete;
@@ -27,8 +26,7 @@ namespace cppwinrt
             m_first.reserve(16 * 1024);
         }
 
-        template <typename... Args>
-        void write(std::string_view const& value, Args const&... args)
+        template <typename... Args> void write(std::string_view const& value, Args const&... args)
         {
 #if defined(_DEBUG)
             auto expected = count_placeholders(value);
@@ -38,8 +36,7 @@ namespace cppwinrt
             write_segment(value, args...);
         }
 
-        template <typename... Args>
-        std::string write_temp(std::string_view const& value, Args const&... args)
+        template <typename... Args> std::string write_temp(std::string_view const& value, Args const&... args)
         {
 #if defined(_DEBUG)
             bool restore_debug_trace = debug_trace;
@@ -98,8 +95,7 @@ namespace cppwinrt
             write(value);
         }
 
-        template <typename F, typename = std::enable_if_t<std::is_invocable_v<F, T&>>>
-        void write(F const& f)
+        template <typename F, typename = std::enable_if_t<std::is_invocable_v<F, T&>>> void write(F const& f)
         {
             f(*static_cast<T*>(this));
         }
@@ -134,8 +130,7 @@ namespace cppwinrt
             write(std::to_string(value));
         }
 
-        template <typename... Args>
-        void write_printf(char const* format, Args const&... args)
+        template <typename... Args> void write_printf(char const* format, Args const&... args)
         {
             char buffer[128];
 #if defined(_WIN32) || defined(_WIN64)
@@ -151,8 +146,7 @@ namespace cppwinrt
             write(std::string_view{ buffer, size });
         }
 
-        template <auto F, typename List, typename... Args>
-        void write_each(List const& list, Args const&... args)
+        template <auto F, typename List, typename... Args> void write_each(List const& list, Args const&... args)
         {
             for (auto&& item : list)
             {
@@ -181,13 +175,13 @@ namespace cppwinrt
                 file.exceptions(std::ofstream::failbit | std::ofstream::badbit);
                 try
                 {
-                  file.open(filename, std::ios::out | std::ios::binary);
-                  file.write(m_first.data(), m_first.size());
-                  file.write(m_second.data(), m_second.size());
+                    file.open(filename, std::ios::out | std::ios::binary);
+                    file.write(m_first.data(), m_first.size());
+                    file.write(m_second.data(), m_second.size());
                 }
                 catch (std::ofstream::failure const& e)
                 {
-                  throw std::filesystem::filesystem_error(e.what(), filename, std::io_errc::stream);
+                    throw std::filesystem::filesystem_error(e.what(), filename, std::io_errc::stream);
                 }
             }
             m_first.clear();
@@ -242,7 +236,6 @@ namespace cppwinrt
 #endif
 
     private:
-
         static constexpr uint32_t count_placeholders(std::string_view const& format) noexcept
         {
             uint32_t count{};
@@ -286,8 +279,7 @@ namespace cppwinrt
             write_segment(value.substr(offset + 2));
         }
 
-        template <typename First, typename... Rest>
-        void write_segment(std::string_view const& value, First const& first, Rest const&... rest)
+        template <typename First, typename... Rest> void write_segment(std::string_view const& value, First const& first, Rest const&... rest)
         {
             auto offset = value.find_first_of("^%@");
             assert(offset != std::string_view::npos);
@@ -326,13 +318,12 @@ namespace cppwinrt
         std::vector<char> m_first;
     };
 
-
-    template <typename T>
-    struct indented_writer_base : writer_base<T>
+    template <typename T> struct indented_writer_base : writer_base<T>
     {
         struct indent_guard
         {
-            indent_guard(indented_writer_base<T>& w, int32_t offset = 1) noexcept : m_writer(w), m_offset(offset)
+            indent_guard(indented_writer_base<T>& w, int32_t offset = 1) noexcept :
+                m_writer(w), m_offset(offset)
             {
                 m_writer.m_indent += m_offset;
             }
@@ -346,7 +337,6 @@ namespace cppwinrt
             indented_writer_base<T>& m_writer;
             int32_t m_offset{};
         };
-
 
         void write_indent()
         {
@@ -405,8 +395,7 @@ namespace cppwinrt
             writer_base<T>::write_impl(value);
         }
 
-        template <typename... Args>
-        std::string write_temp(std::string_view const& value, Args const& ... args)
+        template <typename... Args> std::string write_temp(std::string_view const& value, Args const&... args)
         {
             auto restore_indent = m_indent;
             m_indent = 0;
@@ -421,9 +410,7 @@ namespace cppwinrt
         int32_t m_indent{};
     };
 
-
-    template <auto F, typename... Args>
-    auto bind(Args&&... args)
+    template <auto F, typename... Args> auto bind(Args&&... args)
     {
         return [&](auto& writer)
         {
@@ -431,8 +418,7 @@ namespace cppwinrt
         };
     }
 
-    template <typename F, typename... Args>
-    auto bind(F fwrite, Args const&... args)
+    template <typename F, typename... Args> auto bind(F fwrite, Args const&... args)
     {
         return [&, fwrite](auto& writer)
         {
@@ -440,8 +426,7 @@ namespace cppwinrt
         };
     }
 
-    template <auto F, typename List, typename... Args>
-    auto bind_each(List const& list, Args const&... args)
+    template <auto F, typename List, typename... Args> auto bind_each(List const& list, Args const&... args)
     {
         return [&](auto& writer)
         {
@@ -452,8 +437,7 @@ namespace cppwinrt
         };
     }
 
-    template <typename List, typename... Args>
-    auto bind_each(List const& list, Args const&... args)
+    template <typename List, typename... Args> auto bind_each(List const& list, Args const&... args)
     {
         return [&](auto& writer)
         {
@@ -464,8 +448,7 @@ namespace cppwinrt
         };
     }
 
-    template <typename F, typename List, typename... Args>
-    auto bind_each(F fwrite, List const& list, Args const&... args)
+    template <typename F, typename List, typename... Args> auto bind_each(F fwrite, List const& list, Args const&... args)
     {
         return [&, fwrite](auto& writer)
         {
@@ -476,8 +459,7 @@ namespace cppwinrt
         };
     }
 
-    template <auto F, typename T, typename... Args>
-    auto bind_list(std::string_view const& delimiter, T const& list, Args const&... args)
+    template <auto F, typename T, typename... Args> auto bind_list(std::string_view const& delimiter, T const& list, Args const&... args)
     {
         return [&](auto& writer)
         {
@@ -499,8 +481,7 @@ namespace cppwinrt
         };
     }
 
-    template <typename T>
-    auto bind_list(std::string_view const& delimiter, T const& list)
+    template <typename T> auto bind_list(std::string_view const& delimiter, T const& list)
     {
         return [&](auto& writer)
         {
@@ -521,4 +502,4 @@ namespace cppwinrt
             }
         };
     }
-}
+} // namespace cppwinrt

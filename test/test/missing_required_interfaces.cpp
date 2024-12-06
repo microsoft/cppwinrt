@@ -9,9 +9,10 @@ namespace
     struct LiesAboutInheritance : public winrt::implements<LiesAboutInheritance, winrt::test_component::ILiesAboutInheritance>
     {
         LiesAboutInheritance() = default;
-        void StubMethod() {}
+        void StubMethod()
+        {}
     };
-}
+} // namespace
 
 TEST_CASE("missing_required_interfaces")
 {

@@ -8,8 +8,7 @@ using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Component;
 
-template <typename T>
-void test_exception(HRESULT const code, std::wstring_view message)
+template <typename T> void test_exception(HRESULT const code, std::wstring_view message)
 {
     REQUIRE_THROWS_AS(check_hresult(code), T);
 
@@ -67,7 +66,7 @@ void test_exception(HRESULT const code, std::wstring_view message)
 }
 
 #ifdef _MSC_VER
-#pragma warning(disable: 4702)  // unreachable code
+#pragma warning(disable : 4702) // unreachable code
 #endif
 TEST_CASE("Errors")
 {
@@ -97,7 +96,7 @@ TEST_CASE("Errors")
         init_apartment(apartment_type::single_threaded);
         FAIL("Previous line should throw");
     }
-    catch (hresult_error const & e)
+    catch (hresult_error const& e)
     {
         REQUIRE(e.code() == RPC_E_CHANGED_MODE);
     }
@@ -108,7 +107,7 @@ TEST_CASE("Errors")
         Uri uri(L"BAD");
         FAIL("Previous line should throw");
     }
-    catch (hresult_invalid_argument const & e) // catching specific exception type
+    catch (hresult_invalid_argument const& e) // catching specific exception type
     {
         REQUIRE(L"BAD is not a valid absolute URI." == e.message());
     }
@@ -132,7 +131,7 @@ TEST_CASE("Errors")
         errors.Propagate();
         FAIL("Previous line should throw");
     }
-    catch (hresult_invalid_argument const & e) // catching specific exception type
+    catch (hresult_invalid_argument const& e) // catching specific exception type
     {
         REQUIRE(L"BAD is not a valid absolute URI." == e.message());
     }
@@ -252,11 +251,11 @@ TEST_CASE("Errors")
             throw hresult_no_interface();
         };
 
-        REQUIRE_THROWS_AS(d(1,2), hresult_no_interface);
+        REQUIRE_THROWS_AS(d(1, 2), hresult_no_interface);
     }
 
     {
-        ReturnDelegate d = []()-> hstring
+        ReturnDelegate d = []() -> hstring
         {
             throw hresult_no_interface();
         };

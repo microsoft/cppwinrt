@@ -23,4 +23,4 @@ namespace winrt::$rootnamespace$::implementation
     {
         Button().Content(box_value(L"Clicked"));
     }
-}
+} // namespace winrt::$rootnamespace$::implementation

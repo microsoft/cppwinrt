@@ -19,7 +19,7 @@ namespace
             return L"FastStringable";
         }
     };
-}
+} // namespace
 
 TEST_CASE("module_lock_none")
 {
@@ -66,7 +66,12 @@ TEST_CASE("module_lock_none")
 
 int main(int const argc, char** argv)
 {
-    std::set_terminate([] { reportFatal("Abnormal termination"); ExitProcess(1); });
+    std::set_terminate(
+        []
+        {
+            reportFatal("Abnormal termination");
+            ExitProcess(1);
+        });
     _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
     (void)_CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
     _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);

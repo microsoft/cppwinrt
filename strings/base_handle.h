@@ -1,20 +1,19 @@
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename T>
-    struct handle_type
+    template <typename T> struct handle_type
     {
         using type = typename T::type;
 
         handle_type() noexcept = default;
 
-        explicit handle_type(type value) noexcept : m_value(value)
-        {
-        }
+        explicit handle_type(type value) noexcept :
+            m_value(value)
+        {}
 
-        handle_type(handle_type&& other) noexcept : m_value(other.detach())
-        {
-        }
+        handle_type(handle_type&& other) noexcept :
+            m_value(other.detach())
+        {}
 
         handle_type& operator=(handle_type&& other) noexcept
         {
@@ -23,7 +22,7 @@ WINRT_EXPORT namespace winrt
                 attach(other.detach());
             }
 
-            return*this;
+            return *this;
         }
 
         ~handle_type() noexcept
@@ -75,7 +74,6 @@ WINRT_EXPORT namespace winrt
         }
 
     private:
-
         type m_value = T::invalid();
     };
 

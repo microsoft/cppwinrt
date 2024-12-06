@@ -35,4 +35,4 @@ namespace winrt::Component::implementation
         // Some unsupported exception that is still rooted in std::exception.
         throw std::range_error("std_exception");
     }
-}
+} // namespace winrt::Component::implementation

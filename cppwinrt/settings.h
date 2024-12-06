@@ -34,4 +34,4 @@ namespace cppwinrt
     };
 
     extern settings_type settings;
-}
+} // namespace cppwinrt

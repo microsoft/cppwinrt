@@ -27,7 +27,12 @@ namespace
         void wait_for_state(int n)
         {
             slim_lock_guard guard(m_lock);
-            m_cv.wait(m_lock, [&] { return n == m_state; });
+            m_cv.wait(
+                m_lock,
+                [&]
+                {
+                    return n == m_state;
+                });
         }
 
         slim_condition_variable m_cv;
@@ -113,7 +118,7 @@ namespace
         REQUIRE(counter == 2);
         seq.wait_for_state(3); // make sure second handler is finished
     }
-}
+} // namespace
 
 TEST_CASE("event_deferral")
 {
@@ -122,5 +127,3 @@ TEST_CASE("event_deferral")
     TestTakenDeferral().get();
     TestTwoDeferrals().get();
 }
-
-

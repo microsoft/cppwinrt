@@ -9,14 +9,12 @@ using namespace Windows::Graphics::Display;
 using namespace Windows::Networking;
 using namespace Windows::Networking::Sockets;
 
-template<typename T, typename U = T>
-void compare(T const& expected, U const& actual)
+template <typename T, typename U = T> void compare(T const& expected, U const& actual)
 {
     REQUIRE(memcmp(&expected, &actual, sizeof(T)) == 0);
 }
 
-template<>
-void compare(hstring const& expected, HSTRING const& actual)
+template <> void compare(hstring const& expected, HSTRING const& actual)
 {
     INT32 result;
     REQUIRE(WindowsCompareStringOrdinal(static_cast<HSTRING>(get_abi(expected)), actual, &result) == S_OK);
@@ -25,7 +23,7 @@ void compare(hstring const& expected, HSTRING const& actual)
 
 //
 // This test does not validate the natvis script directly, but does execute the property expressions invoked by natvis
-// 
+//
 TEST_CASE("natvis, Uri")
 {
     Uri uri(L"http://moderncpp.com/");
@@ -82,7 +80,8 @@ TEST_CASE("natvis, TimedTextRegion")
     compare(textRegion.Extent(), *(winrt::Windows::Media::Core::TimedTextSize*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 4).v);
     compare(textRegion.Background(), *(winrt::Windows::UI::Color*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 6).v);
     compare(textRegion.WritingMode(), *(winrt::Windows::Media::Core::TimedTextWritingMode*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 8).v);
-    compare(textRegion.DisplayAlignment(), *(winrt::Windows::Media::Core::TimedTextDisplayAlignment*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 10).v);
+    compare(
+        textRegion.DisplayAlignment(), *(winrt::Windows::Media::Core::TimedTextDisplayAlignment*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 10).v);
     compare(textRegion.LineHeight(), *(winrt::Windows::Media::Core::TimedTextDouble*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 12).v);
     compare(textRegion.IsOverflowClipped(), WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 14).b);
     compare(textRegion.Padding(), *(winrt::Windows::Media::Core::TimedTextPadding*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 16).v);
@@ -99,11 +98,14 @@ TEST_CASE("natvis, StreamSocketInformation")
     connect.get();
     auto ssi = socket.Information();
 
-    compare(ssi.ServerCertificateErrorSeverity(), *(winrt::Windows::Networking::Sockets::SocketSslErrorSeverity*)WINRT_get_val(&ssi, L"{12C28452-4BDC-4EE4-976A-CF130E9D92E3}", 0).v);
+    compare(
+        ssi.ServerCertificateErrorSeverity(),
+        *(winrt::Windows::Networking::Sockets::SocketSslErrorSeverity*)WINRT_get_val(&ssi, L"{12C28452-4BDC-4EE4-976A-CF130E9D92E3}", 0).v);
     compare(ssi.LocalPort(), WINRT_get_val(&ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 1).s);
     compare(ssi.RemoteServiceName(), WINRT_get_val(&ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 4).s);
     compare(ssi.RemotePort(), WINRT_get_val(&ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 5).s);
-    compare(ssi.RoundTripTimeStatistics(), *(winrt::Windows::Networking::Sockets::RoundTripTimeStatistics*)WINRT_get_val(&ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 6).v);
+    compare(
+        ssi.RoundTripTimeStatistics(), *(winrt::Windows::Networking::Sockets::RoundTripTimeStatistics*)WINRT_get_val(&ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 6).v);
     compare(ssi.BandwidthStatistics(), *(winrt::Windows::Networking::Sockets::BandwidthStatistics*)WINRT_get_val(&ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 7).v);
     compare(ssi.ProtectionLevel(), *(winrt::Windows::Networking::Sockets::SocketProtectionLevel*)WINRT_get_val(&ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 8).v);
 }

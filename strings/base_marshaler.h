@@ -101,7 +101,6 @@ namespace winrt::impl
             }
 
         private:
-
             static com_ptr<IMarshal> get_marshaler() noexcept
             {
                 com_ptr<unknown_abi> unknown;
@@ -117,4 +116,4 @@ namespace winrt::impl
         *result = new (std::nothrow) marshaler(outer);
         return *result ? error_ok : error_bad_alloc;
     }
-}
+} // namespace winrt::impl

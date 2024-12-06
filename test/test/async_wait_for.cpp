@@ -94,7 +94,7 @@ namespace
 
         REQUIRE(long_delay.wait_for(100ms) == AsyncStatus::Started);
     }
-}
+} // namespace
 
 #if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.

@@ -1,8 +1,6 @@
 
 // WINRT_version is used by Microsoft to analyze C++/WinRT library adoption and inform future product decisions.
-extern "C"
-__declspec(selectany)
-char const * const WINRT_version = "C++/WinRT version:" CPPWINRT_VERSION;
+extern "C" __declspec(selectany) char const* const WINRT_version = "C++/WinRT version:" CPPWINRT_VERSION;
 
 #if defined(_MSC_VER)
 #ifdef _M_IX86
@@ -16,8 +14,7 @@ char const * const WINRT_version = "C++/WinRT version:" CPPWINRT_VERSION;
 
 WINRT_EXPORT namespace winrt
 {
-    template <size_t BaseSize, size_t ComponentSize>
-    constexpr bool check_version(char const(&base)[BaseSize], char const(&component)[ComponentSize]) noexcept
+    template <size_t BaseSize, size_t ComponentSize> constexpr bool check_version(char const(&base)[BaseSize], char const(&component)[ComponentSize]) noexcept
     {
         if constexpr (BaseSize != ComponentSize)
         {

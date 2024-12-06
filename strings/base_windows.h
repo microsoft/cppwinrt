@@ -17,23 +17,20 @@ namespace winrt::impl
 
     struct diagnostics_cache
     {
-        template <typename T>
-        void add_query()
+        template <typename T> void add_query()
         {
             slim_lock_guard const guard(m_lock);
             ++m_info.queries[name_of<T>()];
         }
 
-        template <typename T>
-        void add_factory()
+        template <typename T> void add_factory()
         {
             slim_lock_guard const guard(m_lock);
             factory_diagnostics_info& factory = m_info.factories[name_of<T>()];
             ++factory.requests;
         }
 
-        template <typename T>
-        void non_agile_factory()
+        template <typename T> void non_agile_factory()
         {
             slim_lock_guard const guard(m_lock);
             factory_diagnostics_info& factory = m_info.factories[name_of<T>()];
@@ -53,7 +50,6 @@ namespace winrt::impl
         }
 
     private:
-
         slim_mutex m_lock;
         diagnostics_info m_info;
     };
@@ -66,36 +62,32 @@ namespace winrt::impl
 
 #endif
 
-    template <typename T>
-    using com_ref = std::conditional_t<std::is_base_of_v<Windows::Foundation::IUnknown, T>, T, com_ptr<T>>;
+    template <typename T> using com_ref = std::conditional_t<std::is_base_of_v<Windows::Foundation::IUnknown, T>, T, com_ptr<T>>;
 
-    template <typename T, std::enable_if_t<is_implements_v<T>, int> = 0>
-    com_ref<T> wrap_as_result(void* result)
+    template <typename T, std::enable_if_t<is_implements_v<T>, int> = 0> com_ref<T> wrap_as_result(void* result)
     {
         return { &static_cast<produce<T, typename default_interface<T>::type>*>(result)->shim(), take_ownership_from_abi };
     }
 
-    template <typename T, std::enable_if_t<!is_implements_v<T>, int> = 0>
-    com_ref<T> wrap_as_result(void* result)
+    template <typename T, std::enable_if_t<!is_implements_v<T>, int> = 0> com_ref<T> wrap_as_result(void* result)
     {
         return { result, take_ownership_from_abi };
     }
 
-    template<typename T>
-    struct is_classic_com_interface : std::conjunction<std::is_base_of<::IUnknown, T>, std::negation<is_implements<T>>> {};
+    template <typename T> struct is_classic_com_interface : std::conjunction<std::is_base_of<::IUnknown, T>, std::negation<is_implements<T>>>
+    {};
 
     template <typename T>
-    struct is_com_interface : std::disjunction<std::is_base_of<Windows::Foundation::IUnknown, T>, std::is_base_of<unknown_abi, T>, is_implements<T>, is_classic_com_interface<T>> {};
+    struct is_com_interface
+        : std::disjunction<std::is_base_of<Windows::Foundation::IUnknown, T>, std::is_base_of<unknown_abi, T>, is_implements<T>, is_classic_com_interface<T>>
+    {};
 
-    template <typename T>
-    inline constexpr bool is_com_interface_v = is_com_interface<T>::value;
+    template <typename T> inline constexpr bool is_com_interface_v = is_com_interface<T>::value;
 
     // You must include <winrt/Windows.Foundation.h> to use this overload.
-    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int> = 0>
-    auto as(From* ptr);
+    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int> = 0> auto as(From* ptr);
 
-    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0>
-    com_ref<To> as(From* ptr)
+    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0> com_ref<To> as(From* ptr)
     {
 #ifdef WINRT_DIAGNOSTICS
         get_diagnostics_info().add_query<To>();
@@ -112,11 +104,9 @@ namespace winrt::impl
     }
 
     // You must include <winrt/Windows.Foundation.h> to use this overload.
-    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int> = 0>
-    auto try_as(From* ptr) noexcept;
+    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int> = 0> auto try_as(From* ptr) noexcept;
 
-    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0>
-    com_ref<To> try_as(From* ptr) noexcept
+    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0> com_ref<To> try_as(From* ptr) noexcept
     {
 #ifdef WINRT_DIAGNOSTICS
         get_diagnostics_info().add_query<To>();
@@ -132,8 +122,7 @@ namespace winrt::impl
         return wrap_as_result<To>(result);
     }
 
-    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0>
-    std::pair<com_ref<To>, hresult> try_as_with_reason(From* ptr) noexcept
+    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0> std::pair<com_ref<To>, hresult> try_as_with_reason(From* ptr) noexcept
     {
 #ifdef WINRT_DIAGNOSTICS
         get_diagnostics_info().add_query<To>();
@@ -149,33 +138,34 @@ namespace winrt::impl
         return { wrap_as_result<To>(result), code };
     }
 
-    template <typename To, typename From>
-    auto try_as_with_reason(From ptr) noexcept
+    template <typename To, typename From> auto try_as_with_reason(From ptr) noexcept
     {
         return ptr->template try_as_with_reason<To>();
     }
-}
+} // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt::Windows::Foundation
 {
     struct IUnknown
     {
         IUnknown() noexcept = default;
-        IUnknown(std::nullptr_t) noexcept {}
+        IUnknown(std::nullptr_t) noexcept
+        {}
         void* operator new(size_t) = delete;
 
-        IUnknown(void* ptr, take_ownership_from_abi_t) noexcept : m_ptr(static_cast<impl::unknown_abi*>(ptr))
-        {
-        }
+        IUnknown(void* ptr, take_ownership_from_abi_t) noexcept :
+            m_ptr(static_cast<impl::unknown_abi*>(ptr))
+        {}
 
-        IUnknown(IUnknown const& other) noexcept : m_ptr(other.m_ptr)
+        IUnknown(IUnknown const& other) noexcept :
+            m_ptr(other.m_ptr)
         {
             add_ref();
         }
 
-        IUnknown(IUnknown&& other) noexcept : m_ptr(std::exchange(other.m_ptr, {}))
-        {
-        }
+        IUnknown(IUnknown&& other) noexcept :
+            m_ptr(std::exchange(other.m_ptr, {}))
+        {}
 
         ~IUnknown() noexcept
         {
@@ -191,7 +181,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
                 add_ref();
             }
 
-            return*this;
+            return *this;
         }
 
         IUnknown& operator=(IUnknown&& other) noexcept
@@ -202,7 +192,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
                 m_ptr = std::exchange(other.m_ptr, {});
             }
 
-            return*this;
+            return *this;
         }
 
         explicit operator bool() const noexcept
@@ -213,35 +203,30 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
         IUnknown& operator=(std::nullptr_t) noexcept
         {
             release_ref();
-            return*this;
+            return *this;
         }
 
-        template <typename To>
-        auto as() const
+        template <typename To> auto as() const
         {
             return impl::as<To>(m_ptr);
         }
 
-        template <typename To>
-        auto try_as() const noexcept
+        template <typename To> auto try_as() const noexcept
         {
             return impl::try_as<To>(m_ptr);
         }
 
-        template <typename To>
-        auto try_as_with_reason() const noexcept
+        template <typename To> auto try_as_with_reason() const noexcept
         {
             return impl::try_as_with_reason<To>(m_ptr);
         }
 
-        template <typename To>
-        void as(To& to) const
+        template <typename To> void as(To& to) const
         {
             to = as<impl::wrapped_type_t<To>>();
         }
 
-        template <typename To>
-        bool try_as(To& to) const noexcept
+        template <typename To> bool try_as(To& to) const noexcept
         {
             if constexpr (impl::is_com_interface_v<To> || !std::is_same_v<To, impl::wrapped_type_t<To>>)
             {
@@ -267,7 +252,6 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
         }
 
     private:
-
         void add_ref() const noexcept
         {
             if (m_ptr)
@@ -295,14 +279,12 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
-    auto get_abi(T const& object) noexcept
+    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0> auto get_abi(T const& object) noexcept
     {
         return reinterpret_cast<impl::abi_t<T> const&>(object);
     }
 
-    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
-    auto put_abi(T& object) noexcept
+    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0> auto put_abi(T & object) noexcept
     {
         if constexpr (!std::is_trivially_destructible_v<T>)
         {
@@ -312,20 +294,18 @@ WINRT_EXPORT namespace winrt
         return reinterpret_cast<impl::abi_t<T>*>(&object);
     }
 
-    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
-    void copy_from_abi(T& object, V&& value)
+    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0> void copy_from_abi(T & object, V && value)
     {
         object = reinterpret_cast<T const&>(value);
     }
 
-    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
-    void copy_to_abi(T const& object, V& value)
+    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0> void copy_to_abi(T const& object, V& value)
     {
         reinterpret_cast<T&>(value) = object;
     }
 
     template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, std::decay_t<T>> && !std::is_convertible_v<T, std::wstring_view>, int> = 0>
-    auto detach_abi(T&& object)
+    auto detach_abi(T && object)
     {
         impl::abi_t<T> result{};
         reinterpret_cast<T&>(result) = std::move(object);
@@ -337,26 +317,26 @@ WINRT_EXPORT namespace winrt
         return *(void**)(&object);
     }
 
-    inline void** put_abi(Windows::Foundation::IUnknown& object) noexcept
+    inline void** put_abi(Windows::Foundation::IUnknown & object) noexcept
     {
         object = nullptr;
         return reinterpret_cast<void**>(&object);
     }
 
-    inline void attach_abi(Windows::Foundation::IUnknown& object, void* value) noexcept
+    inline void attach_abi(Windows::Foundation::IUnknown & object, void* value) noexcept
     {
         object = nullptr;
         *put_abi(object) = value;
     }
 
-    inline void* detach_abi(Windows::Foundation::IUnknown& object) noexcept
+    inline void* detach_abi(Windows::Foundation::IUnknown & object) noexcept
     {
         void* temp = get_abi(object);
         *reinterpret_cast<void**>(&object) = nullptr;
         return temp;
     }
 
-    inline void* detach_abi(Windows::Foundation::IUnknown&& object) noexcept
+    inline void* detach_abi(Windows::Foundation::IUnknown && object) noexcept
     {
         void* temp = get_abi(object);
         *reinterpret_cast<void**>(&object) = nullptr;
@@ -368,7 +348,7 @@ WINRT_EXPORT namespace winrt
         return nullptr;
     }
 
-    inline void copy_from_abi(Windows::Foundation::IUnknown& object, void* value) noexcept
+    inline void copy_from_abi(Windows::Foundation::IUnknown & object, void* value) noexcept
     {
         object = nullptr;
 
@@ -446,7 +426,10 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
     struct IInspectable : IUnknown
     {
-        IInspectable(std::nullptr_t = nullptr) noexcept {}
-        IInspectable(void* ptr, take_ownership_from_abi_t) noexcept : IUnknown(ptr, take_ownership_from_abi) {}
+        IInspectable(std::nullptr_t = nullptr) noexcept
+        {}
+        IInspectable(void* ptr, take_ownership_from_abi_t) noexcept :
+            IUnknown(ptr, take_ownership_from_abi)
+        {}
     };
 }

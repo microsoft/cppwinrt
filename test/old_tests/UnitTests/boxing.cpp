@@ -8,8 +8,7 @@ using namespace std::chrono_literals;
 
 namespace
 {
-    template<typename T>
-    T empty()
+    template <typename T> T empty()
     {
         if constexpr (std::is_convertible_v<T, Windows::Foundation::IUnknown>)
         {
@@ -21,8 +20,7 @@ namespace
         }
     }
 
-    template<typename T>
-    void TestRoundTrip(T const& value)
+    template <typename T> void TestRoundTrip(T const& value)
     {
         Windows::Foundation::IInspectable object = box_value(value);
         REQUIRE(unbox_value<T>(object) == value);
@@ -31,7 +29,7 @@ namespace
         object.as(result);
         REQUIRE(result == value);
     }
-}
+} // namespace
 TEST_CASE("IReference, boxing round trip")
 {
     static_assert(std::is_convertible_v<Uri, Windows::Foundation::IUnknown>);

@@ -7,5 +7,4 @@
 using namespace winrt;
 
 namespace winrt::TestRuntimeComponentNamespace::implementation
-{
-}
+{}

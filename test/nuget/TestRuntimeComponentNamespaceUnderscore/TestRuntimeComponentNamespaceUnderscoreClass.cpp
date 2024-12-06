@@ -5,6 +5,5 @@
 namespace winrt::TestRuntimeComponent_NamespaceUnderscore::implementation
 {
     void TestRuntimeComponentNamespaceUnderscoreClass::Test()
-    {
-    }
-}
+    {}
+} // namespace winrt::TestRuntimeComponent_NamespaceUnderscore::implementation

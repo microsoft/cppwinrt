@@ -13,7 +13,7 @@ namespace
             return L"Stringable";
         }
     };
-}
+} // namespace
 
 TEST_CASE("module_lock_dll")
 {

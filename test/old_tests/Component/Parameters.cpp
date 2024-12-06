@@ -128,4 +128,4 @@ namespace winrt::Component::implementation
 
         std::copy_n(m_object_array.begin(), actual, value.begin());
     }
-}
+} // namespace winrt::Component::implementation

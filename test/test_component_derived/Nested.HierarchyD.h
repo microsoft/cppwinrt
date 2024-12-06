@@ -12,10 +12,9 @@ namespace winrt::test_component_derived::Nested::implementation
         HierarchyD(hstring const& name);
         void HierarchyD_Method();
     };
-}
+} // namespace winrt::test_component_derived::Nested::implementation
 namespace winrt::test_component_derived::Nested::factory_implementation
 {
     struct HierarchyD : HierarchyDT<HierarchyD, implementation::HierarchyD>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component_derived::Nested::factory_implementation

@@ -17,4 +17,4 @@ namespace winrt::Component::implementation
     {
         throw hresult_not_implemented();
     }
-}
+} // namespace winrt::Component::implementation

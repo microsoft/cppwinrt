@@ -42,8 +42,7 @@ namespace winrt::impl
         case 3: /* APTTYPE_MAINSTA */
             return true;
         case 2: /* APTTYPE_NA */
-            return type.second == 3 /* APTTYPEQUALIFIER_NA_ON_STA */ ||
-                type.second == 5 /* APTTYPEQUALIFIER_NA_ON_MAINSTA */;
+            return type.second == 3 /* APTTYPEQUALIFIER_NA_ON_STA */ || type.second == 5 /* APTTYPEQUALIFIER_NA_ON_MAINSTA */;
         }
         return false;
     }
@@ -51,7 +50,9 @@ namespace winrt::impl
     struct resume_apartment_context
     {
         resume_apartment_context() = default;
-        resume_apartment_context(std::nullptr_t) : m_context(nullptr), m_context_type(-1) {}
+        resume_apartment_context(std::nullptr_t) :
+            m_context(nullptr), m_context_type(-1)
+        {}
 
         bool valid() const noexcept
         {
@@ -86,7 +87,8 @@ namespace winrt::impl
     struct threadpool_resume
     {
         threadpool_resume(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure) :
-            m_context(context), m_handle(handle), m_failure(failure) { }
+            m_context(context), m_handle(handle), m_failure(failure)
+        {}
         com_ptr<IContextCallback> m_context;
         coroutine_handle<> m_handle;
         int32_t* m_failure;
@@ -130,13 +132,13 @@ namespace winrt::impl
             return resume_apartment_sync(context.m_context, handle, failure);
         }
     }
-}
+} // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
     struct cancellable_promise
     {
-        using canceller_t = void(*)(void*);
+        using canceller_t = void (*)(void*);
 
         void set_canceller(canceller_t canceller, void* context)
         {
@@ -188,8 +190,7 @@ WINRT_EXPORT namespace winrt
         bool m_propagate_cancellation{ false };
     };
 
-    template <typename Derived>
-    struct cancellable_awaiter
+    template <typename Derived> struct cancellable_awaiter
     {
         cancellable_awaiter() noexcept = default;
         cancellable_awaiter(cancellable_awaiter const&) = default;
@@ -205,8 +206,7 @@ WINRT_EXPORT namespace winrt
         void operator=(cancellable_awaiter const&) = delete;
 
     protected:
-        template <typename T>
-        void set_cancellable_promise_from_handle(impl::coroutine_handle<T> const& handle)
+        template <typename T> void set_cancellable_promise_from_handle(impl::coroutine_handle<T> const& handle)
         {
             if constexpr (std::is_base_of_v<cancellable_promise, T>)
             {
@@ -240,8 +240,7 @@ WINRT_EXPORT namespace winrt
             }
 
             void await_resume() const noexcept
-            {
-            }
+            {}
 
             void await_suspend(impl::coroutine_handle<> handle) const
             {
@@ -252,14 +251,13 @@ WINRT_EXPORT namespace winrt
         return awaitable{};
     }
 
-    template <typename T>
-    [[nodiscard]] auto resume_background(T const& context) noexcept
+    template <typename T> [[nodiscard]] auto resume_background(T const& context) noexcept
     {
         struct awaitable
         {
-            awaitable(T const& context) : m_context(context)
-            {
-            }
+            awaitable(T const& context) :
+                m_context(context)
+            {}
 
             bool await_ready() const noexcept
             {
@@ -267,8 +265,7 @@ WINRT_EXPORT namespace winrt
             }
 
             void await_resume() const noexcept
-            {
-            }
+            {}
 
             void await_suspend(impl::coroutine_handle<> resume)
             {
@@ -281,7 +278,6 @@ WINRT_EXPORT namespace winrt
             }
 
         private:
-
             static void __stdcall callback(void*, void* context) noexcept
             {
                 auto that = static_cast<awaitable*>(context);
@@ -299,10 +295,18 @@ WINRT_EXPORT namespace winrt
     struct apartment_context
     {
         apartment_context() = default;
-        apartment_context(std::nullptr_t) : context(nullptr) { }
+        apartment_context(std::nullptr_t) :
+            context(nullptr)
+        {}
 
-        operator bool() const noexcept { return context.valid(); }
-        bool operator!() const noexcept { return !context.valid(); }
+        operator bool() const noexcept
+        {
+            return context.valid();
+        }
+        bool operator!() const noexcept
+        {
+            return !context.valid();
+        }
 
         impl::resume_apartment_context context;
     };
@@ -336,32 +340,30 @@ namespace winrt::impl
     {
         explicit timespan_awaiter(Windows::Foundation::TimeSpan duration) noexcept :
             m_duration(duration)
-        {
-        }
+        {}
 
 #if defined(__GNUC__) && !defined(__clang__)
         // HACK: GCC seems to require a move when calling operator co_await
         // on the return value of resume_after.
         // This might be related to upstream bug:
         // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99575
-        timespan_awaiter(timespan_awaiter &&other) noexcept :
-            m_timer{std::move(other.m_timer)},
-            m_duration{std::move(other.m_duration)},
-            m_handle{std::move(other.m_handle)},
-            m_state{other.m_state.load()}
+        timespan_awaiter(timespan_awaiter&& other) noexcept :
+            m_timer{ std::move(other.m_timer) }, m_duration{ std::move(other.m_duration) }, m_handle{ std::move(other.m_handle) }, m_state{ other.m_state.load() }
         {}
 #endif
 
         void enable_cancellation(cancellable_promise* promise)
         {
-            promise->set_canceller([](void* context)
-            {
-                auto that = static_cast<timespan_awaiter*>(context);
-                if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
+            promise->set_canceller(
+                [](void* context)
                 {
-                    that->fire_immediately();
-                }
-            }, this);
+                    auto that = static_cast<timespan_awaiter*>(context);
+                    if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
+                    {
+                        that->fire_immediately();
+                    }
+                },
+                this);
         }
 
         bool await_ready() const noexcept
@@ -369,8 +371,7 @@ namespace winrt::impl
             return m_duration.count() <= 0;
         }
 
-        template <typename T>
-        void await_suspend(impl::coroutine_handle<T> handle)
+        template <typename T> void await_suspend(impl::coroutine_handle<T> handle)
         {
             set_cancellable_promise_from_handle(handle);
 
@@ -430,7 +431,12 @@ namespace winrt::impl
             }
         };
 
-        enum class state { idle, pending, canceled };
+        enum class state
+        {
+            idle,
+            pending,
+            canceled
+        };
 
         handle_type<timer_traits> m_timer;
         Windows::Foundation::TimeSpan m_duration;
@@ -441,8 +447,7 @@ namespace winrt::impl
     struct signal_awaiter : cancellable_awaiter<signal_awaiter>
     {
         signal_awaiter(void* handle, Windows::Foundation::TimeSpan timeout) noexcept :
-            m_timeout(timeout),
-            m_handle(handle)
+            m_timeout(timeout), m_handle(handle)
         {}
 
 #if defined(__GNUC__) && !defined(__clang__)
@@ -450,26 +455,28 @@ namespace winrt::impl
         // on the return value of resume_on_signal.
         // This might be related to upstream bug:
         // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99575
-        signal_awaiter(signal_awaiter &&other) noexcept :
-            m_wait{std::move(other.m_wait)},
-            m_timeout{std::move(other.m_timeout)},
-            m_handle{std::move(other.m_handle)},
-            m_result{std::move(other.m_result)},
-            m_resume{std::move(other.m_resume)},
-            m_state{other.m_state.load()}
+        signal_awaiter(signal_awaiter&& other) noexcept :
+            m_wait{ std::move(other.m_wait) },
+            m_timeout{ std::move(other.m_timeout) },
+            m_handle{ std::move(other.m_handle) },
+            m_result{ std::move(other.m_result) },
+            m_resume{ std::move(other.m_resume) },
+            m_state{ other.m_state.load() }
         {}
 #endif
 
         void enable_cancellation(cancellable_promise* promise)
         {
-            promise->set_canceller([](void* context)
-            {
-                auto that = static_cast<signal_awaiter*>(context);
-                if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
+            promise->set_canceller(
+                [](void* context)
                 {
-                    that->fire_immediately();
-                }
-            }, this);
+                    auto that = static_cast<signal_awaiter*>(context);
+                    if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
+                    {
+                        that->fire_immediately();
+                    }
+                },
+                this);
         }
 
         bool await_ready() const noexcept
@@ -477,8 +484,7 @@ namespace winrt::impl
             return WINRT_IMPL_WaitForSingleObject(m_handle, 0) == 0;
         }
 
-        template <typename T>
-        void await_suspend(impl::coroutine_handle<T> resume)
+        template <typename T> void await_suspend(impl::coroutine_handle<T> resume)
         {
             set_cancellable_promise_from_handle(resume);
 
@@ -496,7 +502,6 @@ namespace winrt::impl
         }
 
     private:
-
         void create_threadpool_wait()
         {
             m_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
@@ -542,7 +547,12 @@ namespace winrt::impl
             }
         };
 
-        enum class state { idle, pending, canceled };
+        enum class state
+        {
+            idle,
+            pending,
+            canceled
+        };
 
         handle_type<wait_traits> m_wait;
         Windows::Foundation::TimeSpan m_timeout;
@@ -551,14 +561,14 @@ namespace winrt::impl
         impl::coroutine_handle<> m_resume{ nullptr };
         std::atomic<state> m_state{ state::idle };
     };
-}
+} // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
 #ifdef WINRT_IMPL_COROUTINES
     inline impl::apartment_awaiter operator co_await(apartment_context const& context)
     {
-        return{ context };
+        return { context };
     }
 #endif
 
@@ -599,8 +609,7 @@ WINRT_EXPORT namespace winrt
         }
 
         void await_resume() const noexcept
-        {
-        }
+        {}
 
         void await_suspend(impl::coroutine_handle<> handle)
         {
@@ -611,7 +620,6 @@ WINRT_EXPORT namespace winrt
         }
 
     private:
-
         static void __stdcall callback(void*, void* context) noexcept
         {
             impl::coroutine_handle<>::from_address(context)();
@@ -659,7 +667,8 @@ WINRT_EXPORT namespace winrt
         environment m_environment;
     };
 
-    struct fire_and_forget {};
+    struct fire_and_forget
+    {};
 }
 
 #ifdef __cpp_lib_coroutine
@@ -668,28 +677,26 @@ namespace std
 namespace std::experimental
 #endif
 {
-    template <typename... Args>
-    struct coroutine_traits<winrt::fire_and_forget, Args...>
+    template <typename... Args> struct coroutine_traits<winrt::fire_and_forget, Args...>
     {
         struct promise_type
         {
             winrt::fire_and_forget get_return_object() const noexcept
             {
-                return{};
+                return {};
             }
 
             void return_void() const noexcept
-            {
-            }
+            {}
 
             suspend_never initial_suspend() const noexcept
             {
-                return{};
+                return {};
             }
 
             suspend_never final_suspend() const noexcept
             {
-                return{};
+                return {};
             }
 
             void unhandled_exception() const noexcept

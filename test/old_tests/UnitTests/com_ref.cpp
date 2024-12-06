@@ -4,13 +4,11 @@
 namespace
 {
     struct DECLSPEC_UUID("52bb7805-e46e-46f9-8508-86606d2f6bc1") IClassic : ::IUnknown
-    {
-    };
+    {};
 
     struct Classic : winrt::implements<Classic, IClassic, winrt::Windows::Foundation::IInspectable>
-    {
-    };
-}
+    {};
+} // namespace
 
 #ifdef __CRT_UUID_DECL
 #ifdef __GNUC__
@@ -41,4 +39,3 @@ TEST_CASE("com_ref agile_ref")
         REQUIRE(agile.get() == classic);
     }
 }
-

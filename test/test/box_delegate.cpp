@@ -12,7 +12,7 @@ TEST_CASE("box_delegate")
     Handler unbox = winrt::unbox_value<Handler>(box);
     REQUIRE(winrt::get_abi(unbox) == winrt::get_abi(d));
 
-    unbox = winrt::unbox_value_or<Handler>(box, Handler {});
+    unbox = winrt::unbox_value_or<Handler>(box, Handler{});
     REQUIRE(winrt::get_abi(unbox) == winrt::get_abi(d));
 
     unbox = winrt::unbox_value_or<Handler>(winrt::Windows::Foundation::IInspectable{}, Handler{});

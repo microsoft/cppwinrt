@@ -1,8 +1,7 @@
 
 namespace winrt::impl
 {
-    template <typename T>
-    struct fast_iterator
+    template <typename T> struct fast_iterator
     {
         using iterator_concept = std::random_access_iterator_tag;
         using iterator_category = std::input_iterator_tag;
@@ -14,8 +13,7 @@ namespace winrt::impl
         fast_iterator() noexcept = default;
 
         fast_iterator(T const& collection, uint32_t const index) noexcept :
-            m_collection(&collection),
-            m_index(index)
+            m_collection(&collection), m_index(index)
         {}
 
         fast_iterator& operator++() noexcept
@@ -125,24 +123,26 @@ namespace winrt::impl
         }
 
     private:
-
         T const* m_collection = nullptr;
         uint32_t m_index = 0;
     };
 
-    template <typename T>
-    class has_GetAt
+    template <typename T> class has_GetAt
     {
-        template <typename U, typename = decltype(std::declval<U>().GetAt(0))> static constexpr bool get_value(int) { return true; }
-        template <typename> static constexpr bool get_value(...) { return false; }
+        template <typename U, typename = decltype(std::declval<U>().GetAt(0))> static constexpr bool get_value(int)
+        {
+            return true;
+        }
+        template <typename> static constexpr bool get_value(...)
+        {
+            return false;
+        }
 
     public:
-
         static constexpr bool value = get_value<T>(0);
     };
 
-    template <typename T, std::enable_if_t<!has_GetAt<T>::value, int> = 0>
-    auto get_begin_iterator(T const& collection) -> decltype(collection.First())
+    template <typename T, std::enable_if_t<!has_GetAt<T>::value, int> = 0> auto get_begin_iterator(T const& collection) -> decltype(collection.First())
     {
         auto result = collection.First();
 
@@ -160,30 +160,26 @@ namespace winrt::impl
         return {};
     }
 
-    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
-    fast_iterator<T> get_begin_iterator(T const& collection) noexcept
+    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0> fast_iterator<T> get_begin_iterator(T const& collection) noexcept
     {
         return { collection, 0 };
     }
 
-    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
-    fast_iterator<T> get_end_iterator(T const& collection)
+    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0> fast_iterator<T> get_end_iterator(T const& collection)
     {
         return { collection, collection.Size() };
     }
 
-    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
-    auto rbegin(T const& collection)
+    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0> auto rbegin(T const& collection)
     {
         return std::make_reverse_iterator(get_end_iterator(collection));
     }
 
-    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
-    auto rend(T const& collection)
+    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0> auto rend(T const& collection)
     {
         return std::make_reverse_iterator(get_begin_iterator(collection));
     }
 
     using std::begin;
     using std::end;
-}
+} // namespace winrt::impl

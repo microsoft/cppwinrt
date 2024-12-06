@@ -38,7 +38,7 @@ namespace
             return a + b.Value + static_cast<int>(b.GridUnitType);
         }
     };
-}
+} // namespace
 
 TEST_CASE("StructCodeGen")
 {

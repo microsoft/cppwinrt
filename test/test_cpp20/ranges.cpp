@@ -40,7 +40,11 @@ TEST_CASE("ranges")
         winrt::Windows::Foundation::Collections::IIterable<int> iterable = winrt::single_threaded_vector<int>({ 1, 2, 3 });
 
         std::vector<int> result;
-        for (const int i : iterable | std::views::transform([](int i) { return i * 2; }))
+        for (const int i : iterable | std::views::transform(
+                                          [](int i)
+                                          {
+                                              return i * 2;
+                                          }))
         {
             result.push_back(i);
         }

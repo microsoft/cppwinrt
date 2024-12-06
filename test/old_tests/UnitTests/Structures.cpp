@@ -75,4 +75,3 @@ TEST_CASE("Structures")
         REQUIRE(view == std::array<WrapStructure, 3>{ one, two, three });
     }
 }
-

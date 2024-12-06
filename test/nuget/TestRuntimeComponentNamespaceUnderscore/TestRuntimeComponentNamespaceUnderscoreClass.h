@@ -10,11 +10,11 @@ namespace winrt::TestRuntimeComponent_NamespaceUnderscore::implementation
 
         void Test();
     };
-}
+} // namespace winrt::TestRuntimeComponent_NamespaceUnderscore::implementation
 
 namespace winrt::TestRuntimeComponent_NamespaceUnderscore::factory_implementation
 {
-    struct TestRuntimeComponentNamespaceUnderscoreClass : TestRuntimeComponentNamespaceUnderscoreClassT<TestRuntimeComponentNamespaceUnderscoreClass, implementation::TestRuntimeComponentNamespaceUnderscoreClass>
-    {
-    };
-}
+    struct TestRuntimeComponentNamespaceUnderscoreClass
+        : TestRuntimeComponentNamespaceUnderscoreClassT<TestRuntimeComponentNamespaceUnderscoreClass, implementation::TestRuntimeComponentNamespaceUnderscoreClass>
+    {};
+} // namespace winrt::TestRuntimeComponent_NamespaceUnderscore::factory_implementation

@@ -17,8 +17,7 @@ namespace
     struct A : implements<A, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -65,8 +64,7 @@ namespace
     struct B : implements<B, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -107,8 +105,7 @@ namespace
     struct C : implements<C, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -150,8 +147,7 @@ namespace
     struct D : implements<D, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -163,7 +159,7 @@ namespace
 
         struct abi_guard
         {
-            abi_guard(D & that) :
+            abi_guard(D& that) :
                 m_that(that)
             {
                 ++m_that.m_enter;
@@ -175,8 +171,7 @@ namespace
             }
 
         private:
-
-            D & m_that;
+            D& m_that;
         };
     };
 
@@ -203,10 +198,9 @@ namespace
         REQUIRE(impl->m_exit == 2);
     }
 
-    template <typename T>
-    struct count_guard
+    template <typename T> struct count_guard
     {
-        count_guard(T & that) :
+        count_guard(T& that) :
             m_that(that)
         {
             ++m_that.m_enter;
@@ -218,8 +212,7 @@ namespace
         }
 
     private:
-
-        T & m_that;
+        T& m_that;
     };
 
     //
@@ -228,8 +221,7 @@ namespace
     struct E : implements<E, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -265,10 +257,9 @@ namespace
         REQUIRE(impl->m_exit == 2);
     }
 
-    template <typename T>
-    struct throw_guard
+    template <typename T> struct throw_guard
     {
-        throw_guard(T &)
+        throw_guard(T&)
         {
             throw hresult_wrong_thread();
         }
@@ -280,8 +271,7 @@ namespace
     struct F : implements<F, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -304,4 +294,4 @@ namespace
         IStringable stringable = impl.as<IStringable>();
         REQUIRE_THROWS_AS(stringable.ToString(), hresult_wrong_thread);
     }
-}
+} // namespace

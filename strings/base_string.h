@@ -5,9 +5,9 @@ namespace winrt::impl
     {
         atomic_ref_count() noexcept = default;
 
-        explicit atomic_ref_count(uint32_t count) noexcept : m_count(count)
-        {
-        }
+        explicit atomic_ref_count(uint32_t count) noexcept :
+            m_count(count)
+        {}
 
         uint32_t operator=(uint32_t count) noexcept
         {
@@ -41,7 +41,6 @@ namespace winrt::impl
         }
 
     private:
-
         std::atomic<int32_t> m_count;
     };
 
@@ -155,7 +154,7 @@ namespace winrt::impl
             return nullptr;
         }
     };
-}
+} // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
@@ -171,9 +170,9 @@ WINRT_EXPORT namespace winrt
 
         hstring() noexcept = default;
 
-        hstring(void* ptr, take_ownership_from_abi_t) noexcept : m_handle(static_cast<impl::hstring_header*>(ptr))
-        {
-        }
+        hstring(void* ptr, take_ownership_from_abi_t) noexcept :
+            m_handle(static_cast<impl::hstring_header*>(ptr))
+        {}
 
         hstring(hstring const& value) :
             m_handle(impl::duplicate_hstring(value.m_handle.get()))
@@ -182,7 +181,7 @@ WINRT_EXPORT namespace winrt
         hstring& operator=(hstring const& value)
         {
             m_handle.attach(impl::duplicate_hstring(value.m_handle.get()));
-            return*this;
+            return *this;
         }
 
         hstring(hstring&&) noexcept = default;
@@ -230,7 +229,7 @@ WINRT_EXPORT namespace winrt
         {
             if (m_handle)
             {
-                return{ m_handle.get()->ptr, m_handle.get()->length };
+                return { m_handle.get()->ptr, m_handle.get()->length };
             }
             else
             {
@@ -241,19 +240,19 @@ WINRT_EXPORT namespace winrt
         const_reference operator[](size_type pos) const noexcept
         {
             WINRT_ASSERT(pos < size());
-            return*(begin() + pos);
+            return *(begin() + pos);
         }
 
         const_reference front() const noexcept
         {
             WINRT_ASSERT(!empty());
-            return*begin();
+            return *begin();
         }
 
         const_reference back() const noexcept
         {
             WINRT_ASSERT(!empty());
-            return*(end() - 1);
+            return *(end() - 1);
         }
 
         const_pointer data() const noexcept
@@ -326,7 +325,7 @@ WINRT_EXPORT namespace winrt
         {
             return rend();
         }
-        
+
 #ifdef __cpp_lib_starts_ends_with
         bool starts_with(wchar_t const value) const noexcept
         {
@@ -358,7 +357,7 @@ WINRT_EXPORT namespace winrt
             return operator std::wstring_view().ends_with(pointer);
         }
 #endif
-        
+
         bool empty() const noexcept
         {
             return !m_handle;
@@ -382,7 +381,6 @@ WINRT_EXPORT namespace winrt
         }
 
     private:
-
         handle_type<impl::hstring_traits> m_handle;
     };
 
@@ -391,31 +389,31 @@ WINRT_EXPORT namespace winrt
         return *(void**)(&object);
     }
 
-    inline void** put_abi(hstring& object) noexcept
+    inline void** put_abi(hstring & object) noexcept
     {
         object.clear();
         return reinterpret_cast<void**>(&object);
     }
 
-    inline void attach_abi(hstring& object, void* value) noexcept
+    inline void attach_abi(hstring & object, void* value) noexcept
     {
         object.clear();
         *put_abi(object) = value;
     }
 
-    inline void* detach_abi(hstring& object) noexcept
+    inline void* detach_abi(hstring & object) noexcept
     {
         void* temp = get_abi(object);
         *reinterpret_cast<void**>(&object) = nullptr;
         return temp;
     }
 
-    inline void* detach_abi(hstring&& object) noexcept
+    inline void* detach_abi(hstring && object) noexcept
     {
         return detach_abi(object);
     }
 
-    inline void copy_from_abi(hstring& object, void* value)
+    inline void copy_from_abi(hstring & object, void* value)
     {
         attach_abi(object, impl::duplicate_hstring(static_cast<impl::hstring_header*>(value)));
     }
@@ -438,8 +436,8 @@ WINRT_EXPORT namespace winrt
 }
 
 #ifdef __cpp_lib_format
-template<>
-struct std::formatter<winrt::hstring, wchar_t> : std::formatter<std::wstring_view, wchar_t> {};
+template <> struct std::formatter<winrt::hstring, wchar_t> : std::formatter<std::wstring_view, wchar_t>
+{};
 #endif
 
 namespace winrt::impl
@@ -461,8 +459,7 @@ namespace winrt::impl
 
         explicit hstring_builder(uint32_t const size) :
             m_handle(impl::precreate_hstring_on_heap(size))
-        {
-        }
+        {}
 
         wchar_t* data() noexcept
         {
@@ -475,22 +472,19 @@ namespace winrt::impl
         }
 
     private:
-
         handle_type<impl::hstring_traits> m_handle;
     };
 
-    template <typename T>
-    struct bind_in
+    template <typename T> struct bind_in
     {
-        bind_in(T const& object) noexcept : object(object)
-        {
-        }
+        bind_in(T const& object) noexcept :
+            object(object)
+        {}
 
         T const& object;
 
 #if !defined(__GNUC__) || defined(__clang__)
-        template <typename R>
-        operator R const& () const noexcept
+        template <typename R> operator R const&() const noexcept
         {
             return reinterpret_cast<R const&>(object);
         }
@@ -499,24 +493,22 @@ namespace winrt::impl
         // function according to CWG issue 976. To make this compile on GCC,
         // we have to intentionally drop the const qualifier.
         // Ref: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61663
-        template <typename R>
-        operator R& () const noexcept
+        template <typename R> operator R&() const noexcept
         {
             return const_cast<R&>(reinterpret_cast<R const&>(object));
         }
 #endif
     };
 
-    template <typename T>
-    struct bind_out
+    template <typename T> struct bind_out
     {
-        bind_out(T& object) noexcept : object(object)
-        {
-        }
+        bind_out(T& object) noexcept :
+            object(object)
+        {}
 
         T& object;
 
-        operator void** () const noexcept
+        operator void**() const noexcept
         {
             if constexpr (std::is_same_v<T, hstring>)
             {
@@ -530,8 +522,7 @@ namespace winrt::impl
             return (void**)(&object);
         }
 
-        template <typename R>
-        operator R* () const noexcept
+        template <typename R> operator R*() const noexcept
         {
             if constexpr (!std::is_trivially_destructible_v<T>)
             {
@@ -542,8 +533,7 @@ namespace winrt::impl
         }
     };
 
-    template <typename T>
-    inline hstring hstring_convert(T value)
+    template <typename T> inline hstring hstring_convert(T value)
     {
         static_assert(std::is_arithmetic_v<T>);
         char temp[32];
@@ -560,12 +550,11 @@ namespace winrt::impl
         WINRT_ASSERT(result.ec == std::errc{});
         wchar_t buffer[32];
         auto end = std::copy(std::begin(temp), result.ptr, buffer);
-        return hstring{ std::wstring_view{ buffer, static_cast<std::size_t>(end - buffer)} };
+        return hstring{ std::wstring_view{ buffer, static_cast<std::size_t>(end - buffer) } };
     }
 
 #if __cpp_lib_format >= 202207L
-    template <typename... Args>
-    inline hstring base_format(Args&&... args)
+    template <typename... Args> inline hstring base_format(Args&&... args)
     {
         // don't forward because an object could be moved-from, causing issues
         // for the second format call.
@@ -582,19 +571,17 @@ namespace winrt::impl
         return builder.to_hstring();
     }
 #endif
-}
+} // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
 #if __cpp_lib_format >= 202207L
-    template <typename... Args>
-    inline hstring format(std::wformat_string<Args&...> const fmt, Args&&... args)
+    template <typename... Args> inline hstring format(std::wformat_string<Args&...> const fmt, Args&&... args)
     {
         return impl::base_format(fmt, args...);
     }
 
-    template <typename... Args>
-    inline hstring format(std::locale const& loc, std::wformat_string<Args&...> const fmt, Args&&... args)
+    template <typename... Args> inline hstring format(std::locale const& loc, std::wformat_string<Args&...> const fmt, Args&&... args)
     {
         return impl::base_format(loc, fmt, args...);
     }
@@ -602,7 +589,10 @@ WINRT_EXPORT namespace winrt
 
     inline bool embedded_null(hstring const& value) noexcept
     {
-        return std::any_of(value.begin(), value.end(), [](auto item)
+        return std::any_of(
+            value.begin(),
+            value.end(),
+            [](auto item)
             {
                 return item == 0;
             });
@@ -671,8 +661,7 @@ WINRT_EXPORT namespace winrt
         return value;
     }
 
-    template <typename T, std::enable_if_t<std::is_same_v<T, bool>, int> = 0>
-    hstring to_hstring(T const value)
+    template <typename T, std::enable_if_t<std::is_same_v<T, bool>, int> = 0> hstring to_hstring(T const value)
     {
         if (value)
         {
@@ -688,21 +677,31 @@ WINRT_EXPORT namespace winrt
     {
         wchar_t buffer[40];
         //{00000000-0000-0000-0000-000000000000}
-        swprintf_s(buffer, L"{%08x-%04hx-%04hx-%02hhx%02hhx-%02hhx%02hhx%02hhx%02hhx%02hhx%02hhx}",
-            value.Data1, value.Data2, value.Data3, value.Data4[0], value.Data4[1],
-            value.Data4[2], value.Data4[3], value.Data4[4], value.Data4[5], value.Data4[6], value.Data4[7]);
+        swprintf_s(
+            buffer,
+            L"{%08x-%04hx-%04hx-%02hhx%02hhx-%02hhx%02hhx%02hhx%02hhx%02hhx%02hhx}",
+            value.Data1,
+            value.Data2,
+            value.Data3,
+            value.Data4[0],
+            value.Data4[1],
+            value.Data4[2],
+            value.Data4[3],
+            value.Data4[4],
+            value.Data4[5],
+            value.Data4[6],
+            value.Data4[7]);
         return hstring{ buffer };
     }
 
-    template <typename T, std::enable_if_t<std::is_convertible_v<T, std::string_view>, int> = 0>
-    hstring to_hstring(T const& value)
+    template <typename T, std::enable_if_t<std::is_convertible_v<T, std::string_view>, int> = 0> hstring to_hstring(T const& value)
     {
         std::string_view const view(value);
         int const size = WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), nullptr, 0);
 
         if (size == 0)
         {
-            return{};
+            return {};
         }
 
         impl::hstring_builder result(size);
@@ -716,7 +715,7 @@ WINRT_EXPORT namespace winrt
 
         if (size == 0)
         {
-            return{};
+            return {};
         }
 
         std::string result(size, '?');

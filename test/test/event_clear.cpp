@@ -12,13 +12,15 @@ TEST_CASE("event_clear")
     event<TypedEventHandler<int, int>> event;
     int counter{};
 
-    auto a = event.add([&](auto && ...)
+    auto a = event.add(
+        [&](auto&&...)
         {
             counter += 1;
         });
     (void)a;
 
-    auto b = event.add([&](auto && ...)
+    auto b = event.add(
+        [&](auto&&...)
         {
             counter += 10;
         });

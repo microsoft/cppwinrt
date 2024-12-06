@@ -7,11 +7,11 @@ namespace winrt::test_component::implementation
     struct Class : ClassT<Class>
     {
         Class() = default;
-        Class(hstring const&) {}
+        Class(hstring const&)
+        {}
 
         static void StaticTest()
-        {
-        }
+        {}
 
         static int32_t StaticTestReturn()
         {
@@ -46,7 +46,8 @@ namespace winrt::test_component::implementation
         static hstring InIterable(Windows::Foundation::Collections::IIterable<hstring> const& value);
         static hstring InIterablePair(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& value);
         static Windows::Foundation::IAsyncOperation<hstring> InAsyncIterable(Windows::Foundation::Collections::IIterable<hstring> value);
-        static Windows::Foundation::IAsyncOperation<hstring> InAsyncIterablePair(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> value);
+        static Windows::Foundation::IAsyncOperation<hstring> InAsyncIterablePair(
+            Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> value);
         static hstring InMap(Windows::Foundation::Collections::IMap<hstring, hstring> const& value);
         static hstring InMapView(Windows::Foundation::Collections::IMapView<hstring, hstring> const& value);
         static Windows::Foundation::IAsyncOperation<hstring> InAsyncMapView(Windows::Foundation::Collections::IMapView<hstring, hstring> value);
@@ -130,12 +131,10 @@ namespace winrt::test_component::implementation
         }
 
     private:
-
         bool m_fail{};
         event<Windows::Foundation::TypedEventHandler<test_component::Class, test_component::DeferrableEventArgs>> m_deferrableEvent;
 
-        template<typename T>
-        static void simulate_rpc_behavior(array_view<T> const& value)
+        template <typename T> static void simulate_rpc_behavior(array_view<T> const& value)
         {
             // RPC requires array pointers to be non-null.
             if (value.begin() == nullptr)
@@ -148,14 +147,16 @@ namespace winrt::test_component::implementation
     struct DeferrableEventArgs : DeferrableEventArgsT<DeferrableEventArgs>, deferrable_event_args<DeferrableEventArgs>
     {
         DeferrableEventArgs() = default;
-        void IncrementCounter() { ++m_counter; }
+        void IncrementCounter()
+        {
+            ++m_counter;
+        }
         std::atomic<int> m_counter = 0;
     };
 
-}
+} // namespace winrt::test_component::implementation
 namespace winrt::test_component::factory_implementation
 {
     struct Class : ClassT<Class, implementation::Class>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component::factory_implementation

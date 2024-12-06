@@ -1,9 +1,7 @@
 #include "pch.h"
 
 struct writer : cppwinrt::writer_base<writer>
-{
-
-};
+{};
 
 int main(int const argc, char** argv)
 {
@@ -40,12 +38,14 @@ namespace cppwinrt::strings {
 
         auto view = cppwinrt::file_to_string(path.string());
 
-        strings_h.write(R"(extern char const %[%];
+        strings_h.write(
+            R"(extern char const %[%];
 )",
             name.string(),
             static_cast<uint64_t>(view.size() + 1));
 
-        strings_cpp.write(R"(extern char const %[] = R"xyz()xyz"
+        strings_cpp.write(
+            R"(extern char const %[] = R"xyz()xyz"
 )",
             name.string());
 
@@ -56,7 +56,8 @@ namespace cppwinrt::strings {
             auto const size = std::min(size_t{ 16'000 }, remainder.size());
             auto const chunk = remainder.substr(0, size);
 
-            strings_cpp.write(R"(R"xyz(%)xyz"
+            strings_cpp.write(
+                R"(R"xyz(%)xyz"
 )",
                 chunk);
 
@@ -77,7 +78,8 @@ namespace cppwinrt::strings {
 
     writer version_rc;
 
-    version_rc.write(R"(
+    version_rc.write(
+        R"(
 #include "winres.h"
 
 VS_VERSION_INFO VERSIONINFO
@@ -112,7 +114,7 @@ BEGIN
     END
 END
 )",
-    CPPWINRT_VERSION_STRING);
+        CPPWINRT_VERSION_STRING);
 
     std::filesystem::create_directories(argv[2]);
     auto const output = std::filesystem::canonical(argv[2]);

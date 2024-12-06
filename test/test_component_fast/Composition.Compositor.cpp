@@ -9,4 +9,4 @@ namespace winrt::test_component_fast::Composition::implementation
     {
         return make<SpriteVisual>(*this);
     }
-}
+} // namespace winrt::test_component_fast::Composition::implementation

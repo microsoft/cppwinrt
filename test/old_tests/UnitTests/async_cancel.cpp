@@ -21,10 +21,11 @@ namespace
     {
         auto cancel = co_await get_cancellation_token();
 
-        cancel.callback([]
-        {
-            REQUIRE(false);
-        });
+        cancel.callback(
+            []
+            {
+                REQUIRE(false);
+            });
 
         co_return;
     }
@@ -35,25 +36,26 @@ namespace
         auto cancel = co_await get_cancellation_token();
         REQUIRE(!signaled(callback));
 
-        cancel.callback([&]
-        {
-            SetEvent(callback.get());
-        });
+        cancel.callback(
+            [&]
+            {
+                SetEvent(callback.get());
+            });
 
         REQUIRE(signaled(callback));
         SetEvent(end.get());
     }
-
 
     IAsyncAction cancel_after_callback(handle const& end, handle const& callback)
     {
         auto cancel = co_await get_cancellation_token();
         REQUIRE(!signaled(callback));
 
-        cancel.callback([&]
-        {
-            SetEvent(callback.get());
-        });
+        cancel.callback(
+            [&]
+            {
+                SetEvent(callback.get());
+            });
 
         REQUIRE(!signaled(callback));
         co_await resume_on_signal(end.get());
@@ -61,11 +63,9 @@ namespace
 
     // Other projections report cancellation via the Completed handler and Status,
     // rather than via ErrorCode and GetResults. Verify we interop cancellation properly.
-    template<typename T, typename Async>
-    struct foreign_canceled_async : implements<T, Async, IAsyncInfo>
+    template <typename T, typename Async> struct foreign_canceled_async : implements<T, Async, IAsyncInfo>
     {
-        template<typename Handler>
-        void Completed(Handler&& complete)
+        template <typename Handler> void Completed(Handler&& complete)
         {
             complete(*this, AsyncStatus::Canceled);
         }
@@ -96,23 +96,18 @@ namespace
         }
 
         void Cancel() const noexcept
-        {
-        }
+        {}
 
         void Close() const noexcept
-        {
-        }
+        {}
     };
 
     struct foreign_canceled_action : foreign_canceled_async<foreign_canceled_action, IAsyncAction>
-    {
-    };
+    {};
 
-    template<typename TResult>
-    struct foreign_canceled_operation : foreign_canceled_async<foreign_canceled_operation<TResult>, IAsyncOperation<TResult>>
-    {
-    };
-}
+    template <typename TResult> struct foreign_canceled_operation : foreign_canceled_async<foreign_canceled_operation<TResult>, IAsyncOperation<TResult>>
+    {};
+} // namespace
 
 TEST_CASE("async_cancel_no_async")
 {
