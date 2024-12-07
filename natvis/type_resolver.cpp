@@ -7,7 +7,8 @@ using namespace Microsoft::VisualStudio::Debugger;
 
 static std::map<coded_index<TypeDefOrRef>, std::pair<TypeDef, std::wstring>> _cache;
 
-template <typename T> static bool has_attribute(T const& row, std::string_view const& type_namespace, std::string_view const& type_name) noexcept
+template <typename T>
+static bool has_attribute(T const& row, std::string_view const& type_namespace, std::string_view const& type_name) noexcept
 {
     return static_cast<bool>(get_attribute(row, type_namespace, type_name));
 }
@@ -206,10 +207,7 @@ private:
                     return "";
                 }
             },
-            [&](auto&& type)
-            {
-                return get_signature(type);
-            });
+            [&](auto&& type) { return get_signature(type); });
     }
 
     static std::string get_signature(TypeDef const& type)

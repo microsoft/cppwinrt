@@ -68,9 +68,16 @@ enum class NatvisDiagnosticLevel
     Verbose
 };
 NatvisDiagnosticLevel GetNatvisDiagnosticLevel();
-HRESULT NatvisDiagnostic(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::wstring_view const& messageText, NatvisDiagnosticLevel level, HRESULT errorCode = S_OK);
+HRESULT NatvisDiagnostic(
+    Microsoft::VisualStudio::Debugger::DkmProcess* process,
+    std::wstring_view const& messageText,
+    NatvisDiagnosticLevel level,
+    HRESULT errorCode = S_OK);
 inline HRESULT NatvisDiagnostic(
-    Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* expression, std::wstring_view const& messageText, NatvisDiagnosticLevel level, HRESULT errorCode = S_OK)
+    Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* expression,
+    std::wstring_view const& messageText,
+    NatvisDiagnosticLevel level,
+    HRESULT errorCode = S_OK)
 {
     return NatvisDiagnostic(expression->RuntimeInstance()->Process(), messageText, level, errorCode);
 }
@@ -98,9 +105,11 @@ inline bool starts_with(std::string_view const& value, std::string_view const& m
 }
 
 winmd::reader::TypeDef FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
-winmd::reader::TypeDef FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName);
+winmd::reader::TypeDef FindType(
+    Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName);
 
-inline winmd::reader::TypeDef ResolveType(Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::coded_index<winmd::reader::TypeDefOrRef> index) noexcept
+inline winmd::reader::TypeDef ResolveType(
+    Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::coded_index<winmd::reader::TypeDefOrRef> index) noexcept
 {
     switch (index.type())
     {
@@ -113,6 +122,7 @@ inline winmd::reader::TypeDef ResolveType(Microsoft::VisualStudio::Debugger::Dkm
     }
 }
 
-std::pair<winmd::reader::TypeDef, std::wstring> ResolveTypeInterface(Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::coded_index<winmd::reader::TypeDefOrRef> index);
+std::pair<winmd::reader::TypeDef, std::wstring> ResolveTypeInterface(
+    Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::coded_index<winmd::reader::TypeDefOrRef> index);
 
 void ClearTypeResolver();

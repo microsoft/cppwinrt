@@ -39,7 +39,8 @@ struct PropertyData
 
 // object_visualizer provides the visualization data model for WinRT objects,
 // both for root-level RAII IInspectables, and for nested ABI IInspectable properties.
-struct __declspec(uuid("c7da92da-3bc9-4312-8a93-46f480663980")) object_visualizer : winrt::implements<object_visualizer, ::IUnknown>
+struct __declspec(uuid("c7da92da-3bc9-4312-8a93-46f480663980")) object_visualizer
+    : winrt::implements<object_visualizer, ::IUnknown>
 {
     object_visualizer(Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression, ObjectType objectType)
     {

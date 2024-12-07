@@ -15,7 +15,8 @@ HRESULT property_visualizer::GetChildren(
 {
     // Forward this on to the EE.
     CAutoDkmArray<DkmEvaluationResult*> initialChildren;
-    IF_FAIL_RET(m_pVisualizedExpression->GetChildrenCallback(m_pEEEvaluationResult.get(), InitialRequestSize, pInspectionContext, &initialChildren, ppEnumContext));
+    IF_FAIL_RET(m_pVisualizedExpression->GetChildrenCallback(
+        m_pEEEvaluationResult.get(), InitialRequestSize, pInspectionContext, &initialChildren, ppEnumContext));
 
     // Need to create a DkmArray of DkmChildVisualizedExpression that contain the evaluation results and return that.
     DkmAllocArray(initialChildren.Length, pVisualizedInitialChildren);
@@ -29,7 +30,8 @@ HRESULT property_visualizer::GetChildren(
             return E_FAIL;
         }
 
-        DkmSuccessEvaluationResult* pCurrSuccessEvaluationResult = (DkmSuccessEvaluationResult*)(pCurrEvaluationResult.get());
+        DkmSuccessEvaluationResult* pCurrSuccessEvaluationResult =
+            (DkmSuccessEvaluationResult*)(pCurrEvaluationResult.get());
 
         winrt::com_ptr<DkmPointerValueHome> pPointerValueHome;
         IF_FAIL_RET(DkmPointerValueHome::Create(pCurrSuccessEvaluationResult->Address()->Value(), pPointerValueHome.put()));
@@ -53,7 +55,11 @@ HRESULT property_visualizer::GetChildren(
     return S_OK;
 }
 
-HRESULT property_visualizer::GetItems(_In_ DkmEvaluationResultEnumContext* pEnumContext, _In_ UINT32 StartIndex, _In_ UINT32 Count, _Out_ DkmArray<DkmChildVisualizedExpression*>* pItems)
+HRESULT property_visualizer::GetItems(
+    _In_ DkmEvaluationResultEnumContext* pEnumContext,
+    _In_ UINT32 StartIndex,
+    _In_ UINT32 Count,
+    _Out_ DkmArray<DkmChildVisualizedExpression*>* pItems)
 {
     // Forward this on to the EE.
     CAutoDkmArray<DkmEvaluationResult*> evaluationResults;
@@ -70,7 +76,8 @@ HRESULT property_visualizer::GetItems(_In_ DkmEvaluationResultEnumContext* pEnum
             return E_FAIL;
         }
 
-        DkmSuccessEvaluationResult* pCurrSuccessEvaluationResult = (DkmSuccessEvaluationResult*)(pCurrEvaluationResult.get());
+        DkmSuccessEvaluationResult* pCurrSuccessEvaluationResult =
+            (DkmSuccessEvaluationResult*)(pCurrEvaluationResult.get());
 
         winrt::com_ptr<DkmPointerValueHome> pPointerValueHome;
         auto address = pCurrSuccessEvaluationResult->Address();

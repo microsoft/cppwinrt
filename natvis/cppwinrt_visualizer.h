@@ -1,6 +1,7 @@
 #pragma once
 
-struct cppwinrt_visualizer : winrt::implements<cppwinrt_visualizer, ::Microsoft::VisualStudio::Debugger::ComponentInterfaces::IDkmCustomVisualizer>
+struct cppwinrt_visualizer
+    : winrt::implements<cppwinrt_visualizer, ::Microsoft::VisualStudio::Debugger::ComponentInterfaces::IDkmCustomVisualizer>
 {
     cppwinrt_visualizer();
     ~cppwinrt_visualizer();

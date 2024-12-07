@@ -15,7 +15,7 @@ if "%target_version%"=="" set target_version=1.2.3.4
 call "%~dp0/find_clang_format.cmd"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-set DIRS=cppwinrt fast_fwd prebuild scratch strings test vsix
+set DIRS=cppwinrt fast_fwd natvis prebuild scratch strings test vsix
 set EXTS=.cpp .h
 for %%d in (%DIRS%) do call :format_files %~dp0%%d
 goto :post_format
