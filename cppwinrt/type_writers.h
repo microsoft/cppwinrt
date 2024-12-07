@@ -594,14 +594,8 @@ namespace cppwinrt
                         assert(false);
                     }
                 },
-                [&](GenericTypeIndex var)
-                {
-                    write(generic_param_stack.back()[var.index]);
-                },
-                [&](auto&& type)
-                {
-                    write(type);
-                });
+                [&](GenericTypeIndex var) { write(generic_param_stack.back()[var.index]); },
+                [&](auto&& type) { write(type); });
         }
 
         void write(TypeSig const& signature)

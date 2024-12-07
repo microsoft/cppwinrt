@@ -62,7 +62,8 @@ namespace winrt::impl
 
 #endif
 
-    template <typename T> using com_ref = std::conditional_t<std::is_base_of_v<Windows::Foundation::IUnknown, T>, T, com_ptr<T>>;
+    template <typename T>
+    using com_ref = std::conditional_t<std::is_base_of_v<Windows::Foundation::IUnknown, T>, T, com_ptr<T>>;
 
     template <typename T, std::enable_if_t<is_implements_v<T>, int> = 0> com_ref<T> wrap_as_result(void* result)
     {
@@ -74,7 +75,8 @@ namespace winrt::impl
         return { result, take_ownership_from_abi };
     }
 
-    template <typename T> struct is_classic_com_interface : std::conjunction<std::is_base_of<::IUnknown, T>, std::negation<is_implements<T>>>
+    template <typename T>
+    struct is_classic_com_interface : std::conjunction<std::is_base_of<::IUnknown, T>, std::negation<is_implements<T>>>
     {};
 
     template <typename T>
@@ -104,9 +106,11 @@ namespace winrt::impl
     }
 
     // You must include <winrt/Windows.Foundation.h> to use this overload.
-    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int> = 0> auto try_as(From* ptr) noexcept;
+    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int> = 0>
+    auto try_as(From* ptr) noexcept;
 
-    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0> com_ref<To> try_as(From* ptr) noexcept
+    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0>
+    com_ref<To> try_as(From* ptr) noexcept
     {
 #ifdef WINRT_DIAGNOSTICS
         get_diagnostics_info().add_query<To>();
@@ -122,7 +126,8 @@ namespace winrt::impl
         return wrap_as_result<To>(result);
     }
 
-    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0> std::pair<com_ref<To>, hresult> try_as_with_reason(From* ptr) noexcept
+    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0>
+    std::pair<com_ref<To>, hresult> try_as_with_reason(From* ptr) noexcept
     {
 #ifdef WINRT_DIAGNOSTICS
         get_diagnostics_info().add_query<To>();
@@ -279,12 +284,14 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0> auto get_abi(T const& object) noexcept
+    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
+    auto get_abi(T const& object) noexcept
     {
         return reinterpret_cast<impl::abi_t<T> const&>(object);
     }
 
-    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0> auto put_abi(T & object) noexcept
+    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
+    auto put_abi(T & object) noexcept
     {
         if constexpr (!std::is_trivially_destructible_v<T>)
         {
@@ -294,12 +301,14 @@ WINRT_EXPORT namespace winrt
         return reinterpret_cast<impl::abi_t<T>*>(&object);
     }
 
-    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0> void copy_from_abi(T & object, V && value)
+    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
+    void copy_from_abi(T & object, V && value)
     {
         object = reinterpret_cast<T const&>(value);
     }
 
-    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0> void copy_to_abi(T const& object, V& value)
+    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
+    void copy_to_abi(T const& object, V& value)
     {
         reinterpret_cast<T&>(value) = object;
     }

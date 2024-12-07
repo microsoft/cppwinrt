@@ -50,11 +50,7 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         window.PointerPressed({ this, &App::OnPointerPressed });
         window.PointerMoved({ this, &App::OnPointerMoved });
 
-        window.PointerReleased(
-            [&](auto&&...)
-            {
-                m_selected = nullptr;
-            });
+        window.PointerReleased([&](auto&&...) { m_selected = nullptr; });
     }
 
     void OnPointerPressed(IInspectable const&, PointerEventArgs const& args)
@@ -100,7 +96,9 @@ struct App : implements<App, IFrameworkViewSource, IFrameworkView>
         Compositor compositor = m_visuals.Compositor();
         SpriteVisual visual = compositor.CreateSpriteVisual();
 
-        static Color colors[] = { { 0xDC, 0x5B, 0x9B, 0xD5 }, { 0xDC, 0xED, 0x7D, 0x31 }, { 0xDC, 0x70, 0xAD, 0x47 }, { 0xDC, 0xFF, 0xC0, 0x00 } };
+        static Color colors[] = {
+            { 0xDC, 0x5B, 0x9B, 0xD5 }, { 0xDC, 0xED, 0x7D, 0x31 }, { 0xDC, 0x70, 0xAD, 0x47 }, { 0xDC, 0xFF, 0xC0, 0x00 }
+        };
 
         static unsigned last = 0;
         unsigned const next = ++last % _countof(colors);

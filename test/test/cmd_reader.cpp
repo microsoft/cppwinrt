@@ -27,7 +27,8 @@ public:
         write_response_file(input);
     }
 
-    template <size_t numOptions> reader create_reader(size_t const argc, const char* argv[], const option (&options)[numOptions])
+    template <size_t numOptions>
+    reader create_reader(size_t const argc, const char* argv[], const option (&options)[numOptions])
     {
         return reader{ argc, argv, options };
     }
@@ -41,7 +42,8 @@ public:
 TEST_CASE("cmd_reader")
 {
     static constexpr option options[]{
-        { "input", 1 }, { "reference", 0 }, { "output", 0, 1 }, { "component", 0, 1 }, { "filter", 0 }, { "name", 0, 1 }, { "verbose", 0, 0 },
+        { "input", 1 },  { "reference", 0 }, { "output", 0, 1 },  { "component", 0, 1 },
+        { "filter", 0 }, { "name", 0, 1 },   { "verbose", 0, 0 },
     };
 
     // input and output

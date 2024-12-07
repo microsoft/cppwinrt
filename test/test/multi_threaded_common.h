@@ -84,7 +84,8 @@ namespace concurrent_collections
             }
         }
 
-        template <typename Background, typename Foreground> void race(collection_action action, Background&& background, Foreground&& foreground)
+        template <typename Background, typename Foreground>
+        void race(collection_action action, Background&& background, Foreground&& foreground)
         {
             race_action = action;
             step = 1;
@@ -135,7 +136,8 @@ namespace concurrent_collections
 #pragma endregion
 
 #pragma region iterator wrapper
-    template <typename Container, typename Iterator, typename ConvertibleFrom = void> struct concurrency_checked_random_access_iterator : Iterator
+    template <typename Container, typename Iterator, typename ConvertibleFrom = void>
+    struct concurrency_checked_random_access_iterator : Iterator
     {
         using container = Container;
         using iterator = Iterator;
@@ -328,7 +330,8 @@ namespace concurrent_collections
         std::atomic<int> mutable m_lock;
     };
 
-    template <typename Collection> struct deadlock_object : winrt::implements<deadlock_object<Collection>, winrt::Windows::Foundation::IInspectable>
+    template <typename Collection>
+    struct deadlock_object : winrt::implements<deadlock_object<Collection>, winrt::Windows::Foundation::IInspectable>
     {
         Collection collection;
 

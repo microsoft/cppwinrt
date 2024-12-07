@@ -80,12 +80,7 @@ namespace
     {
         apartment_context context{ nullptr };
         REQUIRE(!context); // constructed empty
-        InvokeInContext(
-            com_context.get(),
-            [&]
-            {
-                context = apartment_context();
-            });
+        InvokeInContext(com_context.get(), [&] { context = apartment_context(); });
         return context;
     }
 
@@ -98,7 +93,8 @@ namespace
         APTTYPE type;
         APTTYPEQUALIFIER qualifier;
         check_hresult(CoGetApartmentType(&type, &qualifier));
-        return (type == APTTYPE_NA) && (qualifier == APTTYPEQUALIFIER_NA_ON_MTA || qualifier == APTTYPEQUALIFIER_NA_ON_IMPLICIT_MTA);
+        return (type == APTTYPE_NA) &&
+               (qualifier == APTTYPEQUALIFIER_NA_ON_MTA || qualifier == APTTYPEQUALIFIER_NA_ON_IMPLICIT_MTA);
     }
 #endif
 

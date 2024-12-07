@@ -128,7 +128,8 @@ TEST_CASE("FastInput")
         REQUIRE(fast.IterablePair(map) == L"AaBbCc");
         REQUIRE_THROWS_AS(fast.UseIterablePair(), hresult_illegal_method_call);
 
-        IMap<hstring, hstring> convertible = single_threaded_map<hstring, hstring>(std::map<hstring, hstring>{ { { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } } });
+        IMap<hstring, hstring> convertible = single_threaded_map<hstring, hstring>(
+            std::map<hstring, hstring>{ { { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } } });
         REQUIRE(fast.IterablePair(convertible) == L"AaBbCc");
         fast.UseIterablePair();
 
@@ -136,7 +137,8 @@ TEST_CASE("FastInput")
         REQUIRE(fast.IterablePair({ range.begin(), range.end() }) == L"AaBbCc");
         REQUIRE_THROWS_AS(fast.UseIterablePair(), hresult_illegal_method_call);
 
-        IIterable<IKeyValuePair<hstring, hstring>> actual = single_threaded_map<hstring>(std::map<hstring, hstring>{ { { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } } });
+        IIterable<IKeyValuePair<hstring, hstring>> actual =
+            single_threaded_map<hstring>(std::map<hstring, hstring>{ { { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } } });
         REQUIRE(fast.IterablePair(actual) == L"AaBbCc");
         fast.UseIterablePair();
 
@@ -232,14 +234,18 @@ TEST_CASE("FastInput")
         REQUIRE(fast.IterablePairAsync(std::map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }).get() == L"AaBbCc");
         fast.UseIterablePair();
 
-        REQUIRE(fast.IterablePairAsync(std::unordered_map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }).get() == L"AaBbCc");
+        REQUIRE(
+            fast.IterablePairAsync(std::unordered_map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } })
+                .get() == L"AaBbCc");
         fast.UseIterablePair();
 
-        IMap<hstring, hstring> convertible = single_threaded_map<hstring, hstring>(std::map<hstring, hstring>{ { { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } } });
+        IMap<hstring, hstring> convertible = single_threaded_map<hstring, hstring>(
+            std::map<hstring, hstring>{ { { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } } });
         REQUIRE(fast.IterablePairAsync(convertible).get() == L"AaBbCc");
         fast.UseIterablePair();
 
-        IIterable<IKeyValuePair<hstring, hstring>> actual = single_threaded_map<hstring>(std::map<hstring, hstring>{ { { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } } });
+        IIterable<IKeyValuePair<hstring, hstring>> actual =
+            single_threaded_map<hstring>(std::map<hstring, hstring>{ { { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } } });
         REQUIRE(fast.IterablePairAsync(actual).get() == L"AaBbCc");
         fast.UseIterablePair();
 
@@ -253,7 +259,9 @@ TEST_CASE("FastInput")
         REQUIRE(fast.MapViewAsync(std::map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }).get() == L"AaBbCc");
         fast.UseIterablePair();
 
-        REQUIRE(fast.MapViewAsync(std::unordered_map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }).get() == L"AaBbCc");
+        REQUIRE(
+            fast.MapViewAsync(std::unordered_map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }).get() ==
+            L"AaBbCc");
         fast.UseIterablePair();
 
         FastInputMap convertible({ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } });

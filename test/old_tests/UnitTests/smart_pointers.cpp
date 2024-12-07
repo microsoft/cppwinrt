@@ -222,12 +222,7 @@ TEST_CASE("smart_pointers_event_revoker")
     auto v = single_threaded_observable_vector<int>();
     int handler{};
 
-    event_revoker<IObservableVector<int>> t = v.VectorChanged(
-        auto_revoke,
-        [&](auto&&...)
-        {
-            ++handler;
-        });
+    event_revoker<IObservableVector<int>> t = v.VectorChanged(auto_revoke, [&](auto&&...) { ++handler; });
     REQUIRE(t);
 
     // Move constructor.
@@ -263,29 +258,14 @@ TEST_CASE("smart_pointers_event_revoker")
 
     // rvalue assign.
     handler = 0;
-    t = v.VectorChanged(
-        auto_revoke,
-        [&](auto&&...)
-        {
-            handler += 10;
-        });
+    t = v.VectorChanged(auto_revoke, [&](auto&&...) { handler += 10; });
     v.Append(1);
     REQUIRE(handler == 10);
 
     // rvalue replace.
     handler = 0;
-    t = v.VectorChanged(
-        auto_revoke,
-        [&](auto&&...)
-        {
-            handler += 10;
-        });
-    t = v.VectorChanged(
-        auto_revoke,
-        [&](auto&&...)
-        {
-            handler += 100;
-        });
+    t = v.VectorChanged(auto_revoke, [&](auto&&...) { handler += 10; });
+    t = v.VectorChanged(auto_revoke, [&](auto&&...) { handler += 100; });
     v.Append(1);
     REQUIRE(handler == 100);
 }
@@ -294,12 +274,7 @@ TEST_CASE("smart_pointers_factory_event_revoker")
 {
     int handler{};
 
-    factory_event_revoker<IEventsStatics> t = Events::StaticEvent(
-        auto_revoke,
-        [&](auto&&...)
-        {
-            ++handler;
-        });
+    factory_event_revoker<IEventsStatics> t = Events::StaticEvent(auto_revoke, [&](auto&&...) { ++handler; });
     REQUIRE(t);
 
     // Move constructor.
@@ -335,29 +310,14 @@ TEST_CASE("smart_pointers_factory_event_revoker")
 
     // rvalue assign.
     handler = 0;
-    t = Events::StaticEvent(
-        auto_revoke,
-        [&](auto&&...)
-        {
-            handler += 10;
-        });
+    t = Events::StaticEvent(auto_revoke, [&](auto&&...) { handler += 10; });
     Events::RaiseStaticEvent(1);
     REQUIRE(handler == 10);
 
     // rvalue replace.
     handler = 0;
-    t = Events::StaticEvent(
-        auto_revoke,
-        [&](auto&&...)
-        {
-            handler += 10;
-        });
-    t = Events::StaticEvent(
-        auto_revoke,
-        [&](auto&&...)
-        {
-            handler += 100;
-        });
+    t = Events::StaticEvent(auto_revoke, [&](auto&&...) { handler += 10; });
+    t = Events::StaticEvent(auto_revoke, [&](auto&&...) { handler += 100; });
     Events::RaiseStaticEvent(1);
     REQUIRE(handler == 100);
 }

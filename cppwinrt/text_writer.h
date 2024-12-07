@@ -279,7 +279,8 @@ namespace cppwinrt
             write_segment(value.substr(offset + 2));
         }
 
-        template <typename First, typename... Rest> void write_segment(std::string_view const& value, First const& first, Rest const&... rest)
+        template <typename First, typename... Rest>
+        void write_segment(std::string_view const& value, First const& first, Rest const&... rest)
         {
             auto offset = value.find_first_of("^%@");
             assert(offset != std::string_view::npos);
@@ -448,7 +449,8 @@ namespace cppwinrt
         };
     }
 
-    template <typename F, typename List, typename... Args> auto bind_each(F fwrite, List const& list, Args const&... args)
+    template <typename F, typename List, typename... Args>
+    auto bind_each(F fwrite, List const& list, Args const&... args)
     {
         return [&, fwrite](auto& writer)
         {
@@ -459,7 +461,8 @@ namespace cppwinrt
         };
     }
 
-    template <auto F, typename T, typename... Args> auto bind_list(std::string_view const& delimiter, T const& list, Args const&... args)
+    template <auto F, typename T, typename... Args>
+    auto bind_list(std::string_view const& delimiter, T const& list, Args const&... args)
     {
         return [&](auto& writer)
         {

@@ -38,13 +38,17 @@ namespace
     // That way, you can just step through the entire test in single-threaded mode and confirm that
     // something bad happens at each scenario.
 #if 1
-    template <typename K, typename V, typename Container> using custom_threaded_map = winrt::impl::multi_threaded_map<K, V, Container>;
+    template <typename K, typename V, typename Container>
+    using custom_threaded_map = winrt::impl::multi_threaded_map<K, V, Container>;
 
-    template <typename K, typename V, typename Container> using custom_observable_map = winrt::impl::multi_threaded_observable_map<K, V, Container>;
+    template <typename K, typename V, typename Container>
+    using custom_observable_map = winrt::impl::multi_threaded_observable_map<K, V, Container>;
 #else
-    template <typename K, typename V, typename Container> using custom_threaded_map = winrt::impl::input_map<K, V, Container>;
+    template <typename K, typename V, typename Container>
+    using custom_threaded_map = winrt::impl::input_map<K, V, Container>;
 
-    template <typename K, typename V, typename Container> using custom_observable_map = winrt::impl::observable_map<K, V, Container>;
+    template <typename K, typename V, typename Container>
+    using custom_observable_map = winrt::impl::observable_map<K, V, Container>;
 #endif
 
     template <MapKind kind, typename Container> auto make_threaded_map(Container&& values)
@@ -80,7 +84,8 @@ namespace
         using pointer = typename inner::pointer;
         using const_pointer = typename inner::const_pointer;
         using iterator = concurrency_checked_random_access_iterator<concurrency_checked_map, typename inner::iterator>;
-        using const_iterator = concurrency_checked_random_access_iterator<concurrency_checked_map, typename inner::const_iterator, typename inner::iterator>;
+        using const_iterator =
+            concurrency_checked_random_access_iterator<concurrency_checked_map, typename inner::const_iterator, typename inner::iterator>;
         using reverse_iterator = std::reverse_iterator<iterator>;
         using const_reverse_iterator = std::reverse_iterator<const_iterator>;
         using node_type = typename inner::node_type;
@@ -177,40 +182,19 @@ namespace
         };
 
         // Verify that Insert does not run concurrently with HasKey().
-        race(
-            collection_action::insert,
-            [&]
-            {
-                m.Insert(42, conditional_box<T>(42));
-            },
-            [&]
-            {
-                CHECK(m.HasKey(2));
-            });
+        race(collection_action::insert, [&] { m.Insert(42, conditional_box<T>(42)); }, [&] { CHECK(m.HasKey(2)); });
 
         // Verify that Insert does not run concurrently with Lookup().
         race(
             collection_action::insert,
-            [&]
-            {
-                m.Insert(42, conditional_box<T>(42));
-            },
-            [&]
-            {
-                CHECK(conditional_unbox<T>(m.Lookup(2)));
-            });
+            [&] { m.Insert(42, conditional_box<T>(42)); },
+            [&] { CHECK(conditional_unbox<T>(m.Lookup(2))); });
 
         // Verify that Insert does not run concurrently with another Insert().
         race(
             collection_action::insert,
-            [&]
-            {
-                m.Insert(43, conditional_box<T>(43));
-            },
-            [&]
-            {
-                m.Insert(43, conditional_box<T>(43));
-            });
+            [&] { m.Insert(43, conditional_box<T>(43)); },
+            [&] { m.Insert(43, conditional_box<T>(43)); });
 
         // Iterator invalidation tests are a little different because we perform
         // the mutation from the foreground thread after the read operation
@@ -232,10 +216,7 @@ namespace
                     catch (hresult_error const&)
                     {}
                 },
-                [&]
-                {
-                    m.Remove(1);
-                });
+                [&] { m.Remove(1); });
             CHECK((kvp && conditional_unbox<T>(kvp.Value()) == 1));
         }
         {
@@ -252,10 +233,7 @@ namespace
                     catch (hresult_error const&)
                     {}
                 },
-                [&]
-                {
-                    m.Remove(1);
-                });
+                [&] { m.Remove(1); });
             CHECK(moved);
         }
         {
@@ -272,10 +250,7 @@ namespace
                     catch (hresult_error const&)
                     {}
                 },
-                [&]
-                {
-                    m.Insert(42, conditional_box<T>(42));
-                });
+                [&] { m.Insert(42, conditional_box<T>(42)); });
             CHECK((kvp && conditional_unbox<T>(kvp.Value()) == 1));
         }
         {
@@ -292,10 +267,7 @@ namespace
                     catch (hresult_error const&)
                     {}
                 },
-                [&]
-                {
-                    m.Insert(42, conditional_box<T>(42));
-                });
+                [&] { m.Insert(42, conditional_box<T>(42)); });
             CHECK(moved);
         }
 
@@ -313,10 +285,7 @@ namespace
                     it = m.First();
                     CHECK(it.GetMany(kvp1) == 1);
                 },
-                [&]
-                {
-                    CHECK(it.GetMany(kvp2) == 1);
-                });
+                [&] { CHECK(it.GetMany(kvp2) == 1); });
             CHECK(kvp1[0].Key() != kvp2[0].Key());
         }
     }

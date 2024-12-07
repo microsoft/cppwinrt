@@ -77,12 +77,14 @@ TEST_CASE("Errors")
     // These are our HRESULT mappings.
     test_exception<hresult_access_denied>(E_ACCESSDENIED, L"Access is denied.");
     test_exception<hresult_class_not_available>(CLASS_E_CLASSNOTAVAILABLE, L"ClassFactory cannot supply requested class");
-    test_exception<hresult_wrong_thread>(RPC_E_WRONG_THREAD, L"The application called an interface that was marshalled for a different thread.");
+    test_exception<hresult_wrong_thread>(
+        RPC_E_WRONG_THREAD, L"The application called an interface that was marshalled for a different thread.");
     test_exception<hresult_not_implemented>(E_NOTIMPL, L"Not implemented");
     test_exception<hresult_invalid_argument>(E_INVALIDARG, L"The parameter is incorrect.");
     test_exception<hresult_out_of_bounds>(E_BOUNDS, L"The operation attempted to access data outside the valid range");
     test_exception<hresult_no_interface>(E_NOINTERFACE, L"No such interface supported");
-    test_exception<hresult_changed_state>(E_CHANGED_STATE, L"A concurrent or interleaved operation changed the state of the object, invalidating this operation.");
+    test_exception<hresult_changed_state>(
+        E_CHANGED_STATE, L"A concurrent or interleaved operation changed the state of the object, invalidating this operation.");
     test_exception<hresult_illegal_method_call>(E_ILLEGAL_METHOD_CALL, L"A method was called at an unexpected time.");
     test_exception<hresult_illegal_state_change>(E_ILLEGAL_STATE_CHANGE, L"An illegal state change was requested.");
     test_exception<hresult_illegal_delegate_assignment>(E_ILLEGAL_DELEGATE_ASSIGNMENT, L"A delegate was assigned when not allowed.");

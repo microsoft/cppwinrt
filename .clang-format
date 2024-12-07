@@ -1,6 +1,6 @@
 ﻿---
 Language: Cpp
-# BasedOnStyle: LLVM
+BasedOnStyle: Microsoft
 
 AccessModifierOffset: -4
 AlignAfterOpenBracket: AlwaysBreak
@@ -10,39 +10,22 @@ AlignOperands: true
 AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortBlocksOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: None
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLambdasOnASingleLine: Empty
-AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterDefinitionReturnType: None
-AlwaysBreakAfterReturnType: None
+AllowShortLambdasOnASingleLine: Inline
 AlwaysBreakBeforeMultilineStrings: true
 AlwaysBreakTemplateDeclarations: MultiLine
 BinPackArguments: false
 BinPackParameters: false
 BraceWrapping:
   AfterCaseLabel: true
-  AfterClass: true
-  AfterControlStatement: true
-  AfterEnum: true
-  AfterFunction: true
-  AfterNamespace: true
-  AfterStruct: true
   AfterUnion: true
-  AfterExternBlock: true
-  BeforeCatch: true
-  BeforeElse: true
   BeforeLambdaBody: true
   SplitEmptyFunction: false
   SplitEmptyRecord: false
   SplitEmptyNamespace: false
 BreakBeforeBinaryOperators: None
-BreakBeforeBraces: Custom
 BreakBeforeTernaryOperators: true
 BreakConstructorInitializers: AfterColon
 BreakStringLiterals: false
-ColumnLimit: 170
 CommentPragmas: '^ IWYU pragma:'
 CompactNamespaces: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
@@ -58,7 +41,6 @@ IndentCaseLabels: false
 IncludeCategories:
   - Regex: '^"(stdafx.h|pch.h|precomp.h)"$'
     Priority: -1
-IndentWidth: 4
 IndentWrappedFunctionNames: false
 KeepEmptyLinesAtTheStartOfBlocks: true
 MacroBlockBegin: '^BEGIN_COM_MAP$|^BEGIN_CONNECTION_POINT_MAP$|^BEGIN_HELPER_NODEMAP$|^BEGIN_MODULE$|^BEGIN_MSG_MAP$|^BEGIN_OBJECT_MAP$|^BEGIN_TEST_CLASS$|^BEGIN_TEST_METHOD$|^BEGIN_TEST_METHOD_PROPERTIES$'
@@ -74,7 +56,6 @@ PenaltyBreakComment: 300
 PenaltyBreakFirstLessLess: 120
 PenaltyBreakString: 2000
 PenaltyExcessCharacter: 2
-PenaltyReturnTypeOnItsOwnLine: 1000
 PointerAlignment: Left
 SortIncludes: false
 SpaceAfterCStyleCast: false
@@ -88,8 +69,6 @@ SpacesInCStyleCastParentheses: false
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard: Latest
-TabWidth: 4
-UseTab: Never
 
 AttributeMacros: [
   CALLBACK,
@@ -173,11 +152,6 @@ StatementMacros: [
   CoCreatableClassWithFactory,
   CoCreatableClassWithFactoryEx,
 
-  # Additional definitions for the WIL repo
-  _Translates_NTSTATUS_to_HRESULT_,
-  _Translates_Win32_to_HRESULT_,
-  _Translates_last_error_to_HRESULT_,
-
   TEST_CASE,
   SECTION,
 ]
@@ -187,50 +161,3 @@ TypenameMacros: [
   STDMETHOD,
   STDAPI_,
 ]
-
-# Additional definitions for the WIL repo
-WhitespaceSensitiveMacros: [
-  __WI_CLANG_DISABLE_WARNING,
-]
-
-# TODO: Only supported by clang-format version 17+
-# Macros:
-# - WI_NOEXCEPT=noexcept
-# - __R_FN_PARAMS_FULL=int x
-# - RESULT_NORETURN=[[noreturn]]
----
-Language: CSharp
-AlignAfterOpenBracket: AlwaysBreak
-AllowShortBlocksOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: None
-AllowShortIfStatementsOnASingleLine: false
-AllowShortLoopsOnASingleLine: false
-BraceWrapping:
-  AfterCaseLabel: true
-  AfterClass: true
-  AfterControlStatement: true
-  AfterEnum: true
-  AfterFunction: true
-  AfterNamespace: true
-  AfterStruct: true
-  BeforeCatch: true
-  BeforeElse: true
-  SplitEmptyFunction: true
-  SplitEmptyRecord: true
-  SplitEmptyNamespace: true
-BreakBeforeBraces: Custom
-ColumnLimit: 130
-DerivePointerAlignment: false
-IndentWidth: 4
-PenaltyBreakBeforeFirstCallParameter: 19
-PenaltyBreakComment: 300
-PenaltyBreakFirstLessLess: 120
-PenaltyBreakString: 2000
-PenaltyExcessCharacter: 2
-PenaltyReturnTypeOnItsOwnLine: 1000
-PointerAlignment: Left
-TabWidth: 4
-UseTab: Never
-...
-

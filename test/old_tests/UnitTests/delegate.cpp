@@ -299,7 +299,8 @@ TEST_CASE("delegate,AsyncActionWithProgressCompletedHandler")
 
     SECTION("lambda")
     {
-        AsyncActionWithProgressCompletedHandler<double> h = [](const IAsyncActionWithProgress<double>& sender, const AsyncStatus args)
+        AsyncActionWithProgressCompletedHandler<double> h =
+            [](const IAsyncActionWithProgress<double>& sender, const AsyncStatus args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == AsyncStatus::Completed);
@@ -350,7 +351,8 @@ TEST_CASE("delegate,AsyncOperationProgressHandler")
 
     SECTION("lambda")
     {
-        AsyncOperationProgressHandler<uint64_t, uint64_t> h = [](const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, uint64_t args)
+        AsyncOperationProgressHandler<uint64_t, uint64_t> h =
+            [](const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, uint64_t args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == 123);
@@ -373,7 +375,8 @@ TEST_CASE("delegate,AsyncOperationProgressHandler")
     }
 }
 
-static void AsyncOperationWithProgressCompletedHandler_Free(const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, const AsyncStatus args)
+static void AsyncOperationWithProgressCompletedHandler_Free(
+    const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, const AsyncStatus args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == AsyncStatus::Completed);
@@ -401,7 +404,8 @@ TEST_CASE("delegate,AsyncOperationWithProgressCompletedHandler")
 
     SECTION("lambda")
     {
-        AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> h = [](const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, const AsyncStatus args)
+        AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> h =
+            [](const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, const AsyncStatus args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == AsyncStatus::Completed);
@@ -419,7 +423,9 @@ TEST_CASE("delegate,AsyncOperationWithProgressCompletedHandler")
     SECTION("member function")
     {
         AsyncOperationWithProgressCompletedHandler_Member object;
-        AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> h{ &object, &AsyncOperationWithProgressCompletedHandler_Member::Handler };
+        AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> h{
+            &object, &AsyncOperationWithProgressCompletedHandler_Member::Handler
+        };
         h(nullptr, AsyncStatus::Completed);
     }
 }
@@ -503,7 +509,8 @@ TEST_CASE("delegate,EventHandler")
 
     SECTION("lambda")
     {
-        EventHandler<Windows::Foundation::IInspectable> h = [](const Windows::Foundation::IInspectable& sender, const Windows::Foundation::IInspectable& args)
+        EventHandler<Windows::Foundation::IInspectable> h =
+            [](const Windows::Foundation::IInspectable& sender, const Windows::Foundation::IInspectable& args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == nullptr);
@@ -554,7 +561,8 @@ TEST_CASE("delegate,TypedEventHandler")
 
     SECTION("lambda")
     {
-        TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> h = [](const DisplayInformation& sender, const Windows::Foundation::IInspectable& args)
+        TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> h =
+            [](const DisplayInformation& sender, const Windows::Foundation::IInspectable& args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == nullptr);
@@ -577,7 +585,8 @@ TEST_CASE("delegate,TypedEventHandler")
     }
 }
 
-static void VectorChangedEventHandler_Free(IObservableVector<Windows::Foundation::IInspectable> const& sender, IVectorChangedEventArgs const& args)
+static void VectorChangedEventHandler_Free(
+    IObservableVector<Windows::Foundation::IInspectable> const& sender, IVectorChangedEventArgs const& args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == nullptr);
@@ -605,7 +614,8 @@ TEST_CASE("delegate,VectorChangedEventHandler")
 
     SECTION("lambda")
     {
-        VectorChangedEventHandler<Windows::Foundation::IInspectable> h = [](IObservableVector<Windows::Foundation::IInspectable> const& sender, IVectorChangedEventArgs const& args)
+        VectorChangedEventHandler<Windows::Foundation::IInspectable> h =
+            [](IObservableVector<Windows::Foundation::IInspectable> const& sender, IVectorChangedEventArgs const& args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == nullptr);
@@ -628,7 +638,8 @@ TEST_CASE("delegate,VectorChangedEventHandler")
     }
 }
 
-static void MapChangedEventHandler_Free(IObservableMap<hstring, Windows::Foundation::IInspectable> const& sender, IMapChangedEventArgs<hstring> const& args)
+static void MapChangedEventHandler_Free(
+    IObservableMap<hstring, Windows::Foundation::IInspectable> const& sender, IMapChangedEventArgs<hstring> const& args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == nullptr);
@@ -657,7 +668,8 @@ TEST_CASE("delegate,MapChangedEventHandler")
     SECTION("lambda")
     {
         MapChangedEventHandler<hstring, Windows::Foundation::IInspectable> h =
-            [](IObservableMap<hstring, Windows::Foundation::IInspectable> const& sender, IMapChangedEventArgs<hstring> const& args)
+            [](IObservableMap<hstring, Windows::Foundation::IInspectable> const& sender,
+               IMapChangedEventArgs<hstring> const& args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == nullptr);
@@ -683,8 +695,8 @@ TEST_CASE("delegate,MapChangedEventHandler")
 TEST_CASE("delegate,collection")
 {
     //
-    // Mostly a compilation test to ensure that we can create collections of delegates. This is a rare corner case that was
-    // previously not working.
+    // Mostly a compilation test to ensure that we can create collections of delegates. This is a rare corner case that
+    // was previously not working.
     //
 
     IVector<EventHandler<int>> v = single_threaded_vector<EventHandler<int>>();

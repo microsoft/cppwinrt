@@ -36,18 +36,23 @@ namespace
     // That way, you can just step through the entire test and confirm that something bad happens
     // at each scenario.
 #if 1
-    template <typename T, typename Container> using custom_threaded_vector = winrt::impl::multi_threaded_vector<T, Container>;
+    template <typename T, typename Container>
+    using custom_threaded_vector = winrt::impl::multi_threaded_vector<T, Container>;
 
-    template <typename Container> using custom_inspectable_observable_vector = winrt::impl::multi_threaded_inspectable_observable_vector<Container>;
+    template <typename Container>
+    using custom_inspectable_observable_vector = winrt::impl::multi_threaded_inspectable_observable_vector<Container>;
 
-    template <typename T, typename Container> using custom_convertible_observable_vector = winrt::impl::multi_threaded_convertible_observable_vector<T, Container>;
+    template <typename T, typename Container>
+    using custom_convertible_observable_vector = winrt::impl::multi_threaded_convertible_observable_vector<T, Container>;
 
 #else
     template <typename T, typename Container> using custom_threaded_vector = winrt::impl::input_vector<T, Container>;
 
-    template <typename Container> using custom_inspectable_observable_vector = winrt::impl::inspectable_observable_vector<Container>;
+    template <typename Container>
+    using custom_inspectable_observable_vector = winrt::impl::inspectable_observable_vector<Container>;
 
-    template <typename T, typename Container> using custom_convertible_observable_vector = winrt::impl::convertible_observable_vector<T, Container>;
+    template <typename T, typename Container>
+    using custom_convertible_observable_vector = winrt::impl::convertible_observable_vector<T, Container>;
 #endif
 
     template <VectorKind kind, typename Container> auto make_threaded_vector(Container&& values)
@@ -81,7 +86,8 @@ namespace
 
 #pragma region vector wrapper
     // Add more wrapper methods as necessary.
-    template <typename T, typename Allocator = std::allocator<T>> struct concurrency_checked_vector : private std::vector<T, Allocator>, concurrency_guard
+    template <typename T, typename Allocator = std::allocator<T>>
+    struct concurrency_checked_vector : private std::vector<T, Allocator>, concurrency_guard
     {
         using inner = typename concurrency_checked_vector::vector;
         using value_type = typename inner::value_type;
@@ -91,7 +97,8 @@ namespace
         using reference = typename inner::reference;
         using const_reference = typename inner::const_reference;
         using iterator = concurrency_checked_random_access_iterator<concurrency_checked_vector, typename inner::iterator>;
-        using const_iterator = concurrency_checked_random_access_iterator<concurrency_checked_vector, typename inner::const_iterator, typename inner::iterator>;
+        using const_iterator =
+            concurrency_checked_random_access_iterator<concurrency_checked_vector, typename inner::const_iterator, typename inner::iterator>;
         using reverse_iterator = std::reverse_iterator<iterator>;
         using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -264,34 +271,16 @@ namespace
         // Verify that Append does not run concurrently with GetAt().
         race(
             collection_action::push_back,
-            [&]
-            {
-                v.Append(conditional_box<T>(42));
-            },
-            [&]
-            {
-                CHECK(conditional_unbox<T>(v.GetAt(3)) == 42);
-            });
+            [&] { v.Append(conditional_box<T>(42)); },
+            [&] { CHECK(conditional_unbox<T>(v.GetAt(3)) == 42); });
 
         // Verify that Append does not run concurrently with Size().
-        race(
-            collection_action::push_back,
-            [&]
-            {
-                v.Append(conditional_box<T>(42));
-            },
-            [&]
-            {
-                CHECK(v.Size() == 4);
-            });
+        race(collection_action::push_back, [&] { v.Append(conditional_box<T>(42)); }, [&] { CHECK(v.Size() == 4); });
 
         // Verify that Append does not run concurrently with IndexOf().
         race(
             collection_action::push_back,
-            [&]
-            {
-                v.Append(conditional_box<T>(42));
-            },
+            [&] { v.Append(conditional_box<T>(42)); },
             [&]
             {
                 uint32_t index;
@@ -311,34 +300,19 @@ namespace
         // Verify that Append does not run concurrently with another Append().
         race(
             collection_action::push_back,
-            [&]
-            {
-                v.Append(conditional_box<T>(42));
-            },
-            [&]
-            {
-                v.Append(conditional_box<T>(43));
-            });
+            [&] { v.Append(conditional_box<T>(42)); },
+            [&] { v.Append(conditional_box<T>(43)); });
 
         // Verify that Append does not run concurrently with ReplaceAll().
         race(
             collection_action::push_back,
-            [&]
-            {
-                v.Append(conditional_box<T>(42));
-            },
-            [&]
-            {
-                v.ReplaceAll({ conditional_box<T>(1), conditional_box<T>(2) });
-            });
+            [&] { v.Append(conditional_box<T>(42)); },
+            [&] { v.ReplaceAll({ conditional_box<T>(1), conditional_box<T>(2) }); });
 
         // Verify that Append does not run concurrently with GetMany().
         race(
             collection_action::push_back,
-            [&]
-            {
-                v.Append(conditional_box<T>(42));
-            },
+            [&] { v.Append(conditional_box<T>(42)); },
             [&]
             {
                 T values[10];
@@ -352,34 +326,16 @@ namespace
         // Verify that InsertAt does not run concurrently with GetAt().
         race(
             collection_action::insert,
-            [&]
-            {
-                v.InsertAt(1, conditional_box<T>(42));
-            },
-            [&]
-            {
-                CHECK(conditional_unbox<T>(v.GetAt(1)) == 42);
-            });
+            [&] { v.InsertAt(1, conditional_box<T>(42)); },
+            [&] { CHECK(conditional_unbox<T>(v.GetAt(1)) == 42); });
 
         // Verify that InsertAt does not run concurrently with Size().
-        race(
-            collection_action::insert,
-            [&]
-            {
-                v.InsertAt(1, conditional_box<T>(42));
-            },
-            [&]
-            {
-                CHECK(v.Size() == 4);
-            });
+        race(collection_action::insert, [&] { v.InsertAt(1, conditional_box<T>(42)); }, [&] { CHECK(v.Size() == 4); });
 
         // Verify that InsertAt does not run concurrently with GetMany().
         race(
             collection_action::insert,
-            [&]
-            {
-                v.InsertAt(1, conditional_box<T>(42));
-            },
+            [&] { v.InsertAt(1, conditional_box<T>(42)); },
             [&]
             {
                 T values[10];
@@ -391,40 +347,16 @@ namespace
             });
 
         // Verify that RemoveAt does not run concurrently with GetAt().
-        race(
-            collection_action::erase,
-            [&]
-            {
-                v.RemoveAt(1);
-            },
-            [&]
-            {
-                CHECK(conditional_unbox<T>(v.GetAt(1)) == 3);
-            });
+        race(collection_action::erase, [&] { v.RemoveAt(1); }, [&] { CHECK(conditional_unbox<T>(v.GetAt(1)) == 3); });
 
         // Verify that RemoveAt does not run concurrently with Size().
-        race(
-            collection_action::erase,
-            [&]
-            {
-                v.RemoveAt(1);
-            },
-            [&]
-            {
-                CHECK(v.Size() == 2);
-            });
+        race(collection_action::erase, [&] { v.RemoveAt(1); }, [&] { CHECK(v.Size() == 2); });
 
         // Verify that SetAt does not run concurrently with GetAt().
         race(
             collection_action::at,
-            [&]
-            {
-                v.SetAt(1, conditional_box<T>(42));
-            },
-            [&]
-            {
-                CHECK(conditional_unbox<T>(v.GetAt(1)) == 42);
-            });
+            [&] { v.SetAt(1, conditional_box<T>(42)); },
+            [&] { CHECK(conditional_unbox<T>(v.GetAt(1)) == 42); });
 
         // Iterator invalidation tests are a little different because we perform
         // the mutation from the foreground thread after the read operation
@@ -441,10 +373,7 @@ namespace
                     it = v.First();
                     t = it.Current();
                 },
-                [&]
-                {
-                    v.InsertAt(0, conditional_box<T>(42));
-                });
+                [&] { v.InsertAt(0, conditional_box<T>(42)); });
             CHECK(conditional_unbox<T>(t) == 1);
         }
 
@@ -462,10 +391,7 @@ namespace
                     it = v.First();
                     CHECK(it.GetMany(t1) == 1);
                 },
-                [&]
-                {
-                    CHECK(it.GetMany(t2) == 1);
-                });
+                [&] { CHECK(it.GetMany(t2) == 1); });
             CHECK(conditional_unbox<T>(t1[0]) != conditional_unbox<T>(t2[0]));
         }
     }

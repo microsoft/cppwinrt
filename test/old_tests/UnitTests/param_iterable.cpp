@@ -117,9 +117,7 @@ namespace
             array.begin(),
             array.end(),
             [](IKeyValuePair<int, int> const& left, IKeyValuePair<int, int> const& right)
-            {
-                return left.Key() < right.Key();
-            });
+            { return left.Key() < right.Key(); });
 
         REQUIRE(array[0].Key() == 1);
         REQUIRE(array[0].Value() == 10);
@@ -204,14 +202,16 @@ TEST_CASE("test_iterable_pair")
     test_iterable_pair(local_unordered_map);
 
     // WinRT interface
-    IIterable<IKeyValuePair<int, int>> iterable = single_threaded_map<int, int>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } });
+    IIterable<IKeyValuePair<int, int>> iterable =
+        single_threaded_map<int, int>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } });
     test_iterable_pair(iterable);
 
     // Convertible WinRT interface
     test_iterable_pair(single_threaded_map<int, int>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } }));
 
     // Other internal implementations of IIterable
-    test_iterable_pair(make<impl::input_map_view<int, int, std::map<int, int>>>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } }));
+    test_iterable_pair(
+        make<impl::input_map_view<int, int, std::map<int, int>>>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } }));
     test_iterable_pair(impl::make_scoped_input_map_view<int, int, std::map<int, int>>(local_map).first);
 }
 

@@ -2,9 +2,10 @@
 namespace winrt::impl
 {
     template <typename T, typename Container, typename ThreadingBase>
-    struct vector_impl : implements<vector_impl<T, Container, ThreadingBase>, wfc::IVector<T>, wfc::IVectorView<T>, wfc::IIterable<T>>,
-                         vector_base<vector_impl<T, Container, ThreadingBase>, T>,
-                         ThreadingBase
+    struct vector_impl
+        : implements<vector_impl<T, Container, ThreadingBase>, wfc::IVector<T>, wfc::IVectorView<T>, wfc::IIterable<T>>,
+          vector_base<vector_impl<T, Container, ThreadingBase>, T>,
+          ThreadingBase
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
@@ -29,7 +30,8 @@ namespace winrt::impl
         Container m_values;
     };
 
-    template <typename T, typename Container> using input_vector = vector_impl<T, Container, single_threaded_collection_base>;
+    template <typename T, typename Container>
+    using input_vector = vector_impl<T, Container, single_threaded_collection_base>;
 } // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt::param
@@ -51,7 +53,8 @@ WINRT_EXPORT namespace winrt::param
             attach_abi(m_interface, winrt::get_abi(values));
         }
 
-        template <typename Collection, std::enable_if_t<std::is_convertible_v<Collection, interface_type>, int> = 0> vector(Collection const& values) noexcept
+        template <typename Collection, std::enable_if_t<std::is_convertible_v<Collection, interface_type>, int> = 0>
+        vector(Collection const& values) noexcept
         {
             m_interface = values;
         }

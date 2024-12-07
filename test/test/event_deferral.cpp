@@ -27,12 +27,7 @@ namespace
         void wait_for_state(int n)
         {
             slim_lock_guard guard(m_lock);
-            m_cv.wait(
-                m_lock,
-                [&]
-                {
-                    return n == m_state;
-                });
+            m_cv.wait(m_lock, [&] { return n == m_state; });
         }
 
         slim_condition_variable m_cv;

@@ -4,7 +4,8 @@ TEST_CASE("box_delegate")
 {
     using Handler = winrt::Windows::Foundation::TypedEventHandler<int, bool>;
 
-    Handler d = [](auto&&...) {};
+    Handler d = [](auto&&...) {
+    };
     REQUIRE(d);
 
     auto box = winrt::box_value(d);

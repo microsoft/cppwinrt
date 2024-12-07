@@ -20,10 +20,7 @@ namespace
             end(container),
             begin(expected),
             end(expected),
-            [](auto&& left, auto&& right)
-            {
-                return left.Key() == right.first && left.Value() == right.second;
-            });
+            [](auto&& left, auto&& right) { return left.Key() == right.first && left.Value() == right.second; });
 
         REQUIRE(equal);
     }
@@ -35,15 +32,13 @@ namespace
             end(container),
             begin(expected),
             end(expected),
-            [](auto&& left, auto&& right)
-            {
-                return left.ToString() == right.ToString();
-            });
+            [](auto&& left, auto&& right) { return left.ToString() == right.ToString(); });
 
         REQUIRE(equal);
     }
 
-    template <typename A, typename K, typename V> void test_associative_stringable(A const& container, std::map<K, V> const& expected)
+    template <typename A, typename K, typename V>
+    void test_associative_stringable(A const& container, std::map<K, V> const& expected)
     {
         bool const equal = std::equal(
             begin(container),
@@ -76,7 +71,8 @@ namespace
         std::vector<int> m_values{ 1, 2, 3 };
     };
 
-    struct simple_iterable_with_custom_container : implements<simple_iterable_with_custom_container, IIterable<int>>, iterable_base<simple_iterable_with_custom_container, int>
+    struct simple_iterable_with_custom_container : implements<simple_iterable_with_custom_container, IIterable<int>>,
+                                                   iterable_base<simple_iterable_with_custom_container, int>
     {
         auto get_container() const noexcept
         {
@@ -102,7 +98,8 @@ namespace
         std::vector<int> m_values{ 1, 2, 3 };
     };
 
-    struct simple_vector_view : implements<simple_vector_view, IVectorView<int>, IIterable<int>>, vector_view_base<simple_vector_view, int>
+    struct simple_vector_view : implements<simple_vector_view, IVectorView<int>, IIterable<int>>,
+                                vector_view_base<simple_vector_view, int>
     {
         auto& get_container() const noexcept
         {
@@ -112,8 +109,9 @@ namespace
         std::vector<int> m_values{ 1, 2, 3 };
     };
 
-    struct simple_vector_view_with_custom_container : implements<simple_vector_view_with_custom_container, IVectorView<int>, IIterable<int>>,
-                                                      vector_view_base<simple_vector_view_with_custom_container, int>
+    struct simple_vector_view_with_custom_container
+        : implements<simple_vector_view_with_custom_container, IVectorView<int>, IIterable<int>>,
+          vector_view_base<simple_vector_view_with_custom_container, int>
     {
         auto get_container() const noexcept
         {
@@ -139,7 +137,8 @@ namespace
         std::vector<int> m_values{ 1, 2, 3 };
     };
 
-    struct simple_vector : implements<simple_vector, IVector<int>, IVectorView<int>, IIterable<int>>, vector_base<simple_vector, int>
+    struct simple_vector : implements<simple_vector, IVector<int>, IVectorView<int>, IIterable<int>>,
+                           vector_base<simple_vector, int>
     {
         auto& get_container() const noexcept
         {
@@ -154,8 +153,9 @@ namespace
         std::vector<int> m_values{ 1, 2, 3 };
     };
 
-    struct simple_observable_vector : implements<simple_observable_vector, IObservableVector<int>, IVector<int>, IVectorView<int>, IIterable<int>>,
-                                      observable_vector_base<simple_observable_vector, int>
+    struct simple_observable_vector
+        : implements<simple_observable_vector, IObservableVector<int>, IVector<int>, IVectorView<int>, IIterable<int>>,
+          observable_vector_base<simple_observable_vector, int>
     {
         auto& get_container() const noexcept
         {
@@ -170,7 +170,8 @@ namespace
         std::vector<int> m_values{ 1, 2, 3 };
     };
 
-    struct simple_iterable_pair : implements<simple_iterable_pair, IIterable<IKeyValuePair<int, hstring>>>, iterable_base<simple_iterable_pair, IKeyValuePair<int, hstring>>
+    struct simple_iterable_pair : implements<simple_iterable_pair, IIterable<IKeyValuePair<int, hstring>>>,
+                                  iterable_base<simple_iterable_pair, IKeyValuePair<int, hstring>>
     {
         auto& get_container() const noexcept
         {
@@ -180,7 +181,8 @@ namespace
         std::map<int, hstring> m_values{ { 1, L"one" }, { 2, L"two" }, { 3, L"three" } };
     };
 
-    struct simple_map_view : implements<simple_map_view, IMapView<int, hstring>, IIterable<IKeyValuePair<int, hstring>>>, map_view_base<simple_map_view, int, hstring>
+    struct simple_map_view : implements<simple_map_view, IMapView<int, hstring>, IIterable<IKeyValuePair<int, hstring>>>,
+                             map_view_base<simple_map_view, int, hstring>
     {
         auto& get_container() const noexcept
         {
@@ -190,7 +192,9 @@ namespace
         std::map<int, hstring> m_values{ { 1, L"one" }, { 2, L"two" }, { 3, L"three" } };
     };
 
-    struct simple_map : implements<simple_map, IMap<int, hstring>, IMapView<int, hstring>, IIterable<IKeyValuePair<int, hstring>>>, map_base<simple_map, int, hstring>
+    struct simple_map
+        : implements<simple_map, IMap<int, hstring>, IMapView<int, hstring>, IIterable<IKeyValuePair<int, hstring>>>,
+          map_base<simple_map, int, hstring>
     {
         auto& get_container() const noexcept
         {
@@ -274,10 +278,13 @@ namespace
             return ref.get();
         }
 
-        std::vector<agile_ref<IStringable>> m_values{ make<stringable>(L"one"), make<stringable>(L"two"), make<stringable>(L"three") };
+        std::vector<agile_ref<IStringable>> m_values{ make<stringable>(L"one"),
+                                                      make<stringable>(L"two"),
+                                                      make<stringable>(L"three") };
     };
 
-    struct agile_vector_view : implements<agile_vector_view, IVectorView<IStringable>, IIterable<IStringable>>, vector_view_base<agile_vector_view, IStringable>
+    struct agile_vector_view : implements<agile_vector_view, IVectorView<IStringable>, IIterable<IStringable>>,
+                               vector_view_base<agile_vector_view, IStringable>
     {
         auto& get_container() const noexcept
         {
@@ -294,10 +301,13 @@ namespace
             return ref.get();
         }
 
-        std::vector<agile_ref<IStringable>> m_values{ make<stringable>(L"one"), make<stringable>(L"two"), make<stringable>(L"three") };
+        std::vector<agile_ref<IStringable>> m_values{ make<stringable>(L"one"),
+                                                      make<stringable>(L"two"),
+                                                      make<stringable>(L"three") };
     };
 
-    struct agile_vector : implements<agile_vector, IVector<IStringable>, IVectorView<IStringable>, IIterable<IStringable>>, vector_base<agile_vector, IStringable>
+    struct agile_vector : implements<agile_vector, IVector<IStringable>, IVectorView<IStringable>, IIterable<IStringable>>,
+                          vector_base<agile_vector, IStringable>
     {
         auto& get_container() const noexcept
         {
@@ -319,7 +329,9 @@ namespace
             return ref.get();
         }
 
-        std::vector<agile_ref<IStringable>> m_values{ make<stringable>(L"one"), make<stringable>(L"two"), make<stringable>(L"three") };
+        std::vector<agile_ref<IStringable>> m_values{ make<stringable>(L"one"),
+                                                      make<stringable>(L"two"),
+                                                      make<stringable>(L"three") };
     };
 
     struct agile_observable_vector
@@ -346,7 +358,9 @@ namespace
             return ref.get();
         }
 
-        std::vector<agile_ref<IStringable>> m_values{ make<stringable>(L"one"), make<stringable>(L"two"), make<stringable>(L"three") };
+        std::vector<agile_ref<IStringable>> m_values{ make<stringable>(L"one"),
+                                                      make<stringable>(L"two"),
+                                                      make<stringable>(L"three") };
     };
 } // namespace
 
@@ -395,8 +409,9 @@ namespace
                                                                  { L"three", make<stringable>(L"three") } };
     };
 
-    struct agile_map_view : implements<agile_map_view, IMapView<hstring, IStringable>, IIterable<IKeyValuePair<hstring, IStringable>>>,
-                            map_view_base<agile_map_view, hstring, IStringable>
+    struct agile_map_view
+        : implements<agile_map_view, IMapView<hstring, IStringable>, IIterable<IKeyValuePair<hstring, IStringable>>>,
+          map_view_base<agile_map_view, hstring, IStringable>
     {
         auto& get_container() const noexcept
         {
@@ -428,8 +443,9 @@ namespace
                                                                  { L"three", make<stringable>(L"three") } };
     };
 
-    struct agile_map : implements<agile_map, IMap<hstring, IStringable>, IMapView<hstring, IStringable>, IIterable<IKeyValuePair<hstring, IStringable>>>,
-                       map_base<agile_map, hstring, IStringable>
+    struct agile_map
+        : implements<agile_map, IMap<hstring, IStringable>, IMapView<hstring, IStringable>, IIterable<IKeyValuePair<hstring, IStringable>>>,
+          map_base<agile_map, hstring, IStringable>
     {
         auto& get_container() const noexcept
         {
@@ -508,7 +524,9 @@ namespace
 
 TEST_CASE("wrapped_associative_containers")
 {
-    std::map<hstring, IStringable> sequence{ { L"one", make<stringable>(L"one") }, { L"two", make<stringable>(L"two") }, { L"three", make<stringable>(L"three") } };
+    std::map<hstring, IStringable> sequence{ { L"one", make<stringable>(L"one") },
+                                             { L"two", make<stringable>(L"two") },
+                                             { L"three", make<stringable>(L"three") } };
 
     test_associative_stringable(make<agile_iterable_pair>(), sequence);
     test_associative_stringable(make<agile_map_view>(), sequence);

@@ -71,7 +71,14 @@ namespace
     }
 
     template <typename T>
-    void check(T const& no_suspend_ok, T const& no_suspend_fail, T const& delay_ok, T const& delay_fail, T const& no_suspend_cancel, T const& delay_cancel, T const& long_delay)
+    void check(
+        T const& no_suspend_ok,
+        T const& no_suspend_fail,
+        T const& delay_ok,
+        T const& delay_fail,
+        T const& no_suspend_cancel,
+        T const& delay_cancel,
+        T const& long_delay)
     {
         REQUIRE(no_suspend_ok.wait_for(0s) == AsyncStatus::Completed);
         no_suspend_ok.get();

@@ -81,13 +81,17 @@ namespace cppwinrt
     };
 
     inline void add_files_from_xml(
-        std::set<std::string>& files, std::string const& sdk_version, std::filesystem::path const& xml_path, std::filesystem::path const& sdk_path, xml_requirement xml_path_requirement)
+        std::set<std::string>& files,
+        std::string const& sdk_version,
+        std::filesystem::path const& xml_path,
+        std::filesystem::path const& sdk_path,
+        xml_requirement xml_path_requirement)
     {
         com_ptr<IStream> stream;
 
         auto streamResult = SHCreateStreamOnFileW(xml_path.c_str(), STGM_READ, &stream.ptr);
-        if (xml_path_requirement == xml_requirement::optional &&
-            (streamResult == HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND) || streamResult == HRESULT_FROM_WIN32(ERROR_PATH_NOT_FOUND)))
+        if (xml_path_requirement == xml_requirement::optional && (streamResult == HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND) ||
+                                                                  streamResult == HRESULT_FROM_WIN32(ERROR_PATH_NOT_FOUND)))
         {
             return;
         }
@@ -144,8 +148,8 @@ namespace cppwinrt
                      HKEY_LOCAL_MACHINE,
                      L"SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots",
                      0,
-                     // https://task.ms/29349404 - The SDK sometimes stores the 64 bit location into KitsRoot10 which is wrong,
-                     // this breaks 64-bit cppwinrt.exe, so work around this by forcing to use the WoW64 hive.
+                     // https://task.ms/29349404 - The SDK sometimes stores the 64 bit location into KitsRoot10 which is
+                     // wrong, this breaks 64-bit cppwinrt.exe, so work around this by forcing to use the WoW64 hive.
                      KEY_READ | KEY_WOW64_32KEY,
                      &key))
         {
@@ -299,7 +303,8 @@ namespace cppwinrt
 
     struct reader
     {
-        template <typename C, typename V, size_t numOptions> reader(C const argc, V const argv, const option (&options)[numOptions])
+        template <typename C, typename V, size_t numOptions>
+        reader(C const argc, V const argv, const option (&options)[numOptions])
         {
 #ifdef _DEBUG
             {
@@ -422,9 +427,11 @@ namespace cppwinrt
 #if defined(_WIN32) || defined(_WIN64)
                     std::array<char, 260> local{};
 #ifdef _WIN64
-                    ExpandEnvironmentStringsA("%windir%\\System32\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
+                    ExpandEnvironmentStringsA(
+                        "%windir%\\System32\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
 #else
-                    ExpandEnvironmentStringsA("%windir%\\SysNative\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
+                    ExpandEnvironmentStringsA(
+                        "%windir%\\SysNative\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
 #endif
                     add_directory(local.data());
 #else  /* defined(_WIN32) || defined(_WIN64) */
@@ -493,12 +500,7 @@ namespace cppwinrt
 
         auto files(std::string_view const& name) const
         {
-            return files(
-                name,
-                [](auto&&)
-                {
-                    return true;
-                });
+            return files(name, [](auto&&) { return true; });
         }
 
     private:
@@ -555,7 +557,8 @@ namespace cppwinrt
             }
         }
 
-        template <typename O, typename L> void extract_response_file(std::string_view const& arg, O const& options, L& last)
+        template <typename O, typename L>
+        void extract_response_file(std::string_view const& arg, O const& options, L& last)
         {
             std::filesystem::path response_path{ std::string{ arg } };
             std::string extension = response_path.extension().generic_string();
@@ -563,10 +566,7 @@ namespace cppwinrt
                 extension.begin(),
                 extension.end(),
                 extension.begin(),
-                [](auto c)
-                {
-                    return static_cast<unsigned char>(::tolower(c));
-                });
+                [](auto c) { return static_cast<unsigned char>(::tolower(c)); });
 
             // Check if misuse of @ prefix, so if directory or metadata file instead of response file.
             if (is_directory(response_path) || extension == ".winmd")
@@ -589,7 +589,8 @@ namespace cppwinrt
             }
         }
 
-        template <typename Character> static void parse_command_line(Character* cmdstart, std::vector<std::string>& argv, size_t* argument_count)
+        template <typename Character>
+        static void parse_command_line(Character* cmdstart, std::vector<std::string>& argv, size_t* argument_count)
         {
 
             std::string arg;

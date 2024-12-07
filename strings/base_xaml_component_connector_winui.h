@@ -42,7 +42,8 @@ WINRT_EXPORT namespace winrt::Microsoft::UI::Xaml::Markup
         }
 
     private:
-        static constexpr bool m_has_connectable_base{ impl::has_initializer<composable_base>::value && impl::has_interface<D, IComponentConnector>() };
+        static constexpr bool m_has_connectable_base{ impl::has_initializer<composable_base>::value &&
+                                                      impl::has_interface<D, IComponentConnector>() };
 
         bool m_dispatch_base{};
     };

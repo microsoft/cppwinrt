@@ -14,7 +14,9 @@ namespace winrt::impl
 
     template <typename T> struct key_value_pair;
 
-    template <typename K, typename V> struct key_value_pair<wfc::IKeyValuePair<K, V>> : implements<key_value_pair<wfc::IKeyValuePair<K, V>>, wfc::IKeyValuePair<K, V>>
+    template <typename K, typename V>
+    struct key_value_pair<wfc::IKeyValuePair<K, V>>
+        : implements<key_value_pair<wfc::IKeyValuePair<K, V>>, wfc::IKeyValuePair<K, V>>
     {
         key_value_pair(K key, V value) :
             m_key(std::move(key)), m_value(std::move(value))

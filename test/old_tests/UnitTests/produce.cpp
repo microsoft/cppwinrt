@@ -3,8 +3,8 @@
 
 //
 // These tests cover the production of the three core interfaces namely IUnknown, IInspectable, and IActivationFactory.
-// Tests ensure that the ABI surface lines up on the consumer and producer sides and this is mainly done simply by calling
-// the various interface methods.
+// Tests ensure that the ABI surface lines up on the consumer and producer sides and this is mainly done simply by
+// calling the various interface methods.
 //
 
 using namespace winrt;
@@ -139,10 +139,12 @@ TEST_CASE("produce_IInspectable")
 
 // RuntimeClassName may optionally be implemented with the projection.
 
-struct produce_IInspectable_No_RuntimeClassName : implements<produce_IInspectable_No_RuntimeClassName, Windows::Foundation::IInspectable>
+struct produce_IInspectable_No_RuntimeClassName
+    : implements<produce_IInspectable_No_RuntimeClassName, Windows::Foundation::IInspectable>
 {};
 
-struct produce_IInspectable_RuntimeClassName : implements<produce_IInspectable_RuntimeClassName, Windows::Foundation::IInspectable>
+struct produce_IInspectable_RuntimeClassName
+    : implements<produce_IInspectable_RuntimeClassName, Windows::Foundation::IInspectable>
 {
     hstring GetRuntimeClassName()
     {

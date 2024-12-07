@@ -77,9 +77,12 @@ TEST_CASE("Composable.OverriddenBase")
         REQUIRE(object_self->CallProtectedMethod() == Base_ProtectedMethod);
     }
     {
-        const std::wstring OverridableMethodResult = std::wstring(OverriddenBase_OverridableMethod) + L"=>" + Base_OverridableMethod.data();
-        const std::wstring OverridableVirtualMethodResult = std::wstring(OverriddenBase_OverridableVirtualMethod) + L"=>" + Base_OverridableVirtualMethod.data();
-        const int32_t OverridableNoexceptMethodResult = OverriddenBase_OverridableNoexceptMethod + Base_OverridableNoexceptMethod;
+        const std::wstring OverridableMethodResult =
+            std::wstring(OverriddenBase_OverridableMethod) + L"=>" + Base_OverridableMethod.data();
+        const std::wstring OverridableVirtualMethodResult =
+            std::wstring(OverriddenBase_OverridableVirtualMethod) + L"=>" + Base_OverridableVirtualMethod.data();
+        const int32_t OverridableNoexceptMethodResult =
+            OverriddenBase_OverridableNoexceptMethod + Base_OverridableNoexceptMethod;
 
         struct OverriddenBase : BaseT<OverriddenBase>
         {
@@ -152,7 +155,9 @@ namespace
     template <typename T, typename = void> struct has_ProtectedMember : std::false_type
     {};
 
-    template <typename T> struct has_ProtectedMember<T, std::enable_if_t<std::is_member_function_pointer_v<decltype(&T::ProtectedMember)>>> : std::true_type
+    template <typename T>
+    struct has_ProtectedMember<T, std::enable_if_t<std::is_member_function_pointer_v<decltype(&T::ProtectedMember)>>>
+        : std::true_type
     {};
 
     // make sure we can't access protected members directly

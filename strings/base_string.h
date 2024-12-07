@@ -74,14 +74,16 @@ namespace winrt::impl
     inline shared_hstring_header* precreate_hstring_on_heap(uint32_t length)
     {
         WINRT_ASSERT(length != 0);
-        uint64_t bytes_required = static_cast<uint64_t>(sizeof(shared_hstring_header)) + static_cast<uint64_t>(sizeof(wchar_t)) * static_cast<uint64_t>(length);
+        uint64_t bytes_required = static_cast<uint64_t>(sizeof(shared_hstring_header)) +
+                                  static_cast<uint64_t>(sizeof(wchar_t)) * static_cast<uint64_t>(length);
 
         if (bytes_required > UINT_MAX)
         {
             throw std::invalid_argument("length");
         }
 
-        auto header = static_cast<shared_hstring_header*>(WINRT_IMPL_HeapAlloc(WINRT_IMPL_GetProcessHeap(), 0, static_cast<std::size_t>(bytes_required)));
+        auto header = static_cast<shared_hstring_header*>(
+            WINRT_IMPL_HeapAlloc(WINRT_IMPL_GetProcessHeap(), 0, static_cast<std::size_t>(bytes_required)));
 
         if (!header)
         {
@@ -581,7 +583,8 @@ WINRT_EXPORT namespace winrt
         return impl::base_format(fmt, args...);
     }
 
-    template <typename... Args> inline hstring format(std::locale const& loc, std::wformat_string<Args&...> const fmt, Args&&... args)
+    template <typename... Args>
+    inline hstring format(std::locale const& loc, std::wformat_string<Args&...> const fmt, Args&&... args)
     {
         return impl::base_format(loc, fmt, args...);
     }
@@ -589,13 +592,7 @@ WINRT_EXPORT namespace winrt
 
     inline bool embedded_null(hstring const& value) noexcept
     {
-        return std::any_of(
-            value.begin(),
-            value.end(),
-            [](auto item)
-            {
-                return item == 0;
-            });
+        return std::any_of(value.begin(), value.end(), [](auto item) { return item == 0; });
     }
 
     inline hstring to_hstring(uint8_t value)
@@ -694,10 +691,12 @@ WINRT_EXPORT namespace winrt
         return hstring{ buffer };
     }
 
-    template <typename T, std::enable_if_t<std::is_convertible_v<T, std::string_view>, int> = 0> hstring to_hstring(T const& value)
+    template <typename T, std::enable_if_t<std::is_convertible_v<T, std::string_view>, int> = 0>
+    hstring to_hstring(T const& value)
     {
         std::string_view const view(value);
-        int const size = WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), nullptr, 0);
+        int const size =
+            WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), nullptr, 0);
 
         if (size == 0)
         {
@@ -705,13 +704,17 @@ WINRT_EXPORT namespace winrt
         }
 
         impl::hstring_builder result(size);
-        WINRT_VERIFY_(size, WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), result.data(), size));
+        WINRT_VERIFY_(
+            size,
+            WINRT_IMPL_MultiByteToWideChar(
+                65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), result.data(), size));
         return result.to_hstring();
     }
 
     inline std::string to_string(std::wstring_view value)
     {
-        int const size = WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<int32_t>(value.size()), nullptr, 0, nullptr, nullptr);
+        int const size = WINRT_IMPL_WideCharToMultiByte(
+            65001 /*CP_UTF8*/, 0, value.data(), static_cast<int32_t>(value.size()), nullptr, 0, nullptr, nullptr);
 
         if (size == 0)
         {
@@ -719,7 +722,10 @@ WINRT_EXPORT namespace winrt
         }
 
         std::string result(size, '?');
-        WINRT_VERIFY_(size, WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<int32_t>(value.size()), result.data(), size, nullptr, nullptr));
+        WINRT_VERIFY_(
+            size,
+            WINRT_IMPL_WideCharToMultiByte(
+                65001 /*CP_UTF8*/, 0, value.data(), static_cast<int32_t>(value.size()), result.data(), size, nullptr, nullptr));
         return result;
     }
 }

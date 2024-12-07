@@ -50,7 +50,8 @@ TEST_CASE("delegates")
         REQUIRE(value == L"Test");
     }
     {
-        OutStringDelegate d = [](hstring&) {};
+        OutStringDelegate d = [](hstring&) {
+        };
         hstring value = L"old";
         d(value);
         REQUIRE(value == L"");
@@ -65,7 +66,8 @@ TEST_CASE("delegates")
         REQUIRE(value == 123);
     }
     {
-        OutInt32Delegate d = [](int32_t&) {};
+        OutInt32Delegate d = [](int32_t&) {
+        };
         int32_t value{ 123 };
         d(value);
         REQUIRE(value == 123);

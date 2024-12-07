@@ -83,48 +83,13 @@ namespace
         values.ReplaceAll({});
         compare(values, {});
 
-        test_invalidation(
-            values,
-            [&]
-            {
-                values.Clear();
-            });
-        test_invalidation(
-            values,
-            [&]
-            {
-                values.SetAt(0, 0);
-            });
-        test_invalidation(
-            values,
-            [&]
-            {
-                values.InsertAt(0, 0);
-            });
-        test_invalidation(
-            values,
-            [&]
-            {
-                values.RemoveAt(0);
-            });
-        test_invalidation(
-            values,
-            [&]
-            {
-                values.Append(0);
-            });
-        test_invalidation(
-            values,
-            [&]
-            {
-                values.RemoveAtEnd();
-            });
-        test_invalidation(
-            values,
-            [&]
-            {
-                values.ReplaceAll({});
-            });
+        test_invalidation(values, [&] { values.Clear(); });
+        test_invalidation(values, [&] { values.SetAt(0, 0); });
+        test_invalidation(values, [&] { values.InsertAt(0, 0); });
+        test_invalidation(values, [&] { values.RemoveAt(0); });
+        test_invalidation(values, [&] { values.Append(0); });
+        test_invalidation(values, [&] { values.RemoveAtEnd(); });
+        test_invalidation(values, [&] { values.ReplaceAll({}); });
     }
 } // namespace
 

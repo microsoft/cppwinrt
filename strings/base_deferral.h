@@ -14,7 +14,8 @@ WINRT_EXPORT namespace winrt
                 throw hresult_illegal_method_call();
             }
 
-            Windows::Foundation::Deferral deferral{ { static_cast<D&>(*this).get_strong(), &deferrable_event_args::one_deferral_completed } };
+            Windows::Foundation::Deferral deferral{ { static_cast<D&>(*this).get_strong(),
+                                                      &deferrable_event_args::one_deferral_completed } };
             ++m_outstanding_deferrals;
             return deferral;
         }

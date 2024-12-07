@@ -25,7 +25,8 @@ namespace
     // Expect it to succeed with v1.
     // Unboxing nullptr or a non-T to T should fail.
     // v2 is an alternate value to use with unbox_value_or.
-    template <typename T, typename Source, typename V1, typename V2> void TestUnboxImpl(Source const& object, V1 const& v1, V2 const& v2)
+    template <typename T, typename Source, typename V1, typename V2>
+    void TestUnboxImpl(Source const& object, V1 const& v1, V2 const& v2)
     {
         Source nothing;
         Errors wrong_type;
@@ -62,7 +63,8 @@ namespace
     // Box the source, then try to unbox it as a T. Should succeed with v1.
     // Unboxing nullptr or a non-T as T should fail;
     // v2 is an alternate value to use with unbox_value_or.
-    template <typename T, typename Source = T, typename V1 = T, typename V2 = T> void TestUnbox(Source&& source, V1 const& v1, V2 const& v2)
+    template <typename T, typename Source = T, typename V1 = T, typename V2 = T>
+    void TestUnbox(Source&& source, V1 const& v1, V2 const& v2)
     {
         // Do it once with an IInspectable.
         IInspectable object = box_value(std::forward<Source>(source));
@@ -138,7 +140,8 @@ TEST_CASE("Boxing")
     TestUnbox<bool>(true, false);
     TestUnboxIntegerType<char16_t>(L'Y', L'N');
     TestUnbox<guid>(
-        { 0x9b7a5590, 0x9262, 0x4c24, { 0xa6, 0x34, 0x18, 0xc7, 0xf9, 0x1e, 0x46, 0x05 } }, { 0x8f081f19, 0xfa9d, 0x43ed, { 0x95, 0x52, 0xa3, 0x02, 0x75, 0x53, 0xa1, 0x4f } });
+        { 0x9b7a5590, 0x9262, 0x4c24, { 0xa6, 0x34, 0x18, 0xc7, 0xf9, 0x1e, 0x46, 0x05 } },
+        { 0x8f081f19, 0xfa9d, 0x43ed, { 0x95, 0x52, 0xa3, 0x02, 0x75, 0x53, 0xa1, 0x4f } });
     TestUnbox<Point>({ 1, 2 }, { 2, 1 });
     TestUnbox<Size>({ 1, 2 }, { 2, 1 });
     TestUnbox<Rect>({ 1, 2, 3, 4 }, { 4, 3, 2, 1 });

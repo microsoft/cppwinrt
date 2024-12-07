@@ -41,7 +41,7 @@ namespace winrt::impl
         case 0: /* APTTYPE_STA */
         case 3: /* APTTYPE_MAINSTA */
             return true;
-        case 2: /* APTTYPE_NA */
+        case 2:                                                                          /* APTTYPE_NA */
             return type.second == 3 /* APTTYPEQUALIFIER_NA_ON_STA */ || type.second == 5 /* APTTYPEQUALIFIER_NA_ON_MAINSTA */;
         }
         return false;
@@ -74,7 +74,8 @@ namespace winrt::impl
         com_callback_args args{};
         args.data = handle.address();
 
-        auto result = context->ContextCallback(resume_apartment_callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr);
+        auto result = context->ContextCallback(
+            resume_apartment_callback, &args, guid_of<ICallbackWithNoReentrancyToApplicationSTA>(), 5, nullptr);
         if (result < 0)
         {
             // Resume the coroutine on the wrong apartment, but tell it why.
@@ -113,7 +114,8 @@ namespace winrt::impl
     [[nodiscard]] inline auto resume_apartment(resume_apartment_context const& context, coroutine_handle<> handle, int32_t* failure)
     {
         WINRT_ASSERT(context.valid());
-        if ((context.m_context == nullptr) || (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
+        if ((context.m_context == nullptr) ||
+            (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
         {
             return false;
         }
@@ -348,7 +350,10 @@ namespace winrt::impl
         // This might be related to upstream bug:
         // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99575
         timespan_awaiter(timespan_awaiter&& other) noexcept :
-            m_timer{ std::move(other.m_timer) }, m_duration{ std::move(other.m_duration) }, m_handle{ std::move(other.m_handle) }, m_state{ other.m_state.load() }
+            m_timer{ std::move(other.m_timer) },
+            m_duration{ std::move(other.m_duration) },
+            m_handle{ std::move(other.m_handle) },
+            m_state{ other.m_state.load() }
         {}
 #endif
 

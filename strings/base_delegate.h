@@ -40,7 +40,8 @@ namespace winrt::impl
         atomic_ref_count m_references{ 1 };
     };
 
-    template <typename T, typename H> struct implements_delegate : abi_t<T>, implements_delegate_base, H, update_module_lock
+    template <typename T, typename H>
+    struct implements_delegate : abi_t<T>, implements_delegate_base, H, update_module_lock
     {
         implements_delegate(H&& handler) :
             H(std::forward<H>(handler))
@@ -71,7 +72,8 @@ namespace winrt::impl
 
     template <typename T, typename H> T make_delegate(H&& handler)
     {
-        return { static_cast<void*>(static_cast<abi_t<T>*>(new delegate<T, H>(std::forward<H>(handler)))), take_ownership_from_abi };
+        return { static_cast<void*>(static_cast<abi_t<T>*>(new delegate<T, H>(std::forward<H>(handler)))),
+                 take_ownership_from_abi };
     }
 
     template <typename T> T make_agile_delegate(T const& delegate) noexcept
@@ -167,29 +169,17 @@ namespace winrt::impl
 
         template <typename F>
         delegate_base(F* handler) :
-            delegate_base(
-                [=](auto&&... args)
-                {
-                    return handler(args...);
-                })
+            delegate_base([=](auto&&... args) { return handler(args...); })
         {}
 
         template <typename O, typename M>
         delegate_base(O* object, M method) :
-            delegate_base(
-                [=](auto&&... args)
-                {
-                    return ((*object).*(method))(args...);
-                })
+            delegate_base([=](auto&&... args) { return ((*object).*(method))(args...); })
         {}
 
         template <typename O, typename M>
         delegate_base(com_ptr<O>&& object, M method) :
-            delegate_base(
-                [o = std::move(object), method](auto&&... args)
-                {
-                    return ((*o).*(method))(args...);
-                })
+            delegate_base([o = std::move(object), method](auto&&... args) { return ((*o).*(method))(args...); })
         {}
 
         template <typename O, typename LM>
@@ -209,11 +199,7 @@ namespace winrt::impl
 
         template <typename O, typename M>
         delegate_base(std::shared_ptr<O>&& object, M method) :
-            delegate_base(
-                [o = std::move(object), method](auto&&... args)
-                {
-                    return ((*o).*(method))(args...);
-                })
+            delegate_base([o = std::move(object), method](auto&&... args) { return ((*o).*(method))(args...); })
         {}
 
         template <typename O, typename LM>
@@ -239,7 +225,8 @@ namespace winrt::impl
     private:
         template <typename H> static delegate_base<R, Args...> make(H&& handler)
         {
-            return { static_cast<void*>(new variadic_delegate<H, R, Args...>(std::forward<H>(handler))), take_ownership_from_abi };
+            return { static_cast<void*>(new variadic_delegate<H, R, Args...>(std::forward<H>(handler))),
+                     take_ownership_from_abi };
         }
     };
 
@@ -255,7 +242,8 @@ WINRT_EXPORT namespace winrt
         using impl::delegate_base<void, Args...>::delegate_base;
     };
 
-    template <typename R, typename... Args> struct WINRT_IMPL_EMPTY_BASES delegate<R(Args...)> : impl::delegate_base<R, Args...>
+    template <typename R, typename... Args>
+    struct WINRT_IMPL_EMPTY_BASES delegate<R(Args...)> : impl::delegate_base<R, Args...>
     {
         using impl::delegate_base<R, Args...>::delegate_base;
     };

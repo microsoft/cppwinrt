@@ -1150,7 +1150,8 @@ TEST_CASE("array,PropertyValue")
 
     SECTION("consume,array,Inspectable")
     {
-        auto inspectable = PropertyValue::CreateInspectableArray({ Uri(L"http://one/"), Uri(L"http://two/"), Uri(L"http://three/") });
+        auto inspectable =
+            PropertyValue::CreateInspectableArray({ Uri(L"http://one/"), Uri(L"http://two/"), Uri(L"http://three/") });
         auto pv = inspectable.as<IPropertyValue>();
 
         com_array<Windows::Foundation::IInspectable> a;
@@ -1177,9 +1178,9 @@ TEST_CASE("array,PropertyValue")
 }
 
 //
-// Testing comparisons of array_view is tricky because we need to ensure that the array storage remains alive for the duration
-// of the test. Previously this was done with an initializer_list but the list went out of scope before the comparison was performed
-// leading to failures in some builds.
+// Testing comparisons of array_view is tricky because we need to ensure that the array storage remains alive for the
+// duration of the test. Previously this was done with an initializer_list but the list went out of scope before the
+// comparison was performed leading to failures in some builds.
 //
 
 struct compare_results

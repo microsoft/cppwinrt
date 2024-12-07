@@ -3,8 +3,8 @@
 
 //
 // These tests cover the production of the various async interfaces.
-// Tests ensure that the ABI surface lines up on the consumer and producer sides and this is mainly done simply by calling
-// the various interface methods.
+// Tests ensure that the ABI surface lines up on the consumer and producer sides and this is mainly done simply by
+// calling the various interface methods.
 //
 
 using namespace winrt;
@@ -92,7 +92,8 @@ TEST_CASE("AsyncAction")
 // IAsyncActionWithProgress
 //
 
-template <typename T> struct AsyncActionWithProgress : implements<AsyncActionWithProgress<T>, IAsyncActionWithProgress<T>>
+template <typename T>
+struct AsyncActionWithProgress : implements<AsyncActionWithProgress<T>, IAsyncActionWithProgress<T>>
 {
     AsyncActionProgressHandler<T> m_progress;
     AsyncActionWithProgressCompletedHandler<T> m_completed;
@@ -141,7 +142,8 @@ TEST_CASE("AsyncActionWithProgress_double")
         REQUIRE(args == 123);
     };
 
-    AsyncActionWithProgressCompletedHandler<double> completed = [&](const IAsyncActionWithProgress<double>& sender, const AsyncStatus args)
+    AsyncActionWithProgressCompletedHandler<double> completed =
+        [&](const IAsyncActionWithProgress<double>& sender, const AsyncStatus args)
     {
         REQUIRE(sender == action);
         REQUIRE(args == AsyncStatus::Completed);
@@ -160,9 +162,11 @@ TEST_CASE("AsyncActionWithProgress_double")
 
 TEST_CASE("produce_IAsyncActionWithProgress_TransferProgress")
 {
-    IAsyncActionWithProgress<TransferProgress> action = make<AsyncActionWithProgress<TransferProgress>>(TransferProgress{ 1, 2, 3, 4 });
+    IAsyncActionWithProgress<TransferProgress> action =
+        make<AsyncActionWithProgress<TransferProgress>>(TransferProgress{ 1, 2, 3, 4 });
 
-    AsyncActionProgressHandler<TransferProgress> progress = [&](const IAsyncActionWithProgress<TransferProgress>& sender, const TransferProgress& args)
+    AsyncActionProgressHandler<TransferProgress> progress =
+        [&](const IAsyncActionWithProgress<TransferProgress>& sender, const TransferProgress& args)
     {
         REQUIRE(sender == action);
         REQUIRE(args.BytesSent == 1);
@@ -171,7 +175,8 @@ TEST_CASE("produce_IAsyncActionWithProgress_TransferProgress")
         REQUIRE(args.TotalBytesToRetrieve == 4);
     };
 
-    AsyncActionWithProgressCompletedHandler<TransferProgress> completed = [&](const IAsyncActionWithProgress<TransferProgress>& sender, const AsyncStatus args)
+    AsyncActionWithProgressCompletedHandler<TransferProgress> completed =
+        [&](const IAsyncActionWithProgress<TransferProgress>& sender, const AsyncStatus args)
     {
         REQUIRE(sender == action);
         REQUIRE(args == AsyncStatus::Completed);
@@ -272,9 +277,11 @@ struct TestErrorDetails : implements<TestErrorDetails, IErrorDetails>
 
 TEST_CASE("produce_IAsyncOperation_ErrorDetails")
 {
-    IAsyncOperation<ErrorDetails> operation = make<AsyncOperation<ErrorDetails>>(make<TestErrorDetails>().as<ErrorDetails>());
+    IAsyncOperation<ErrorDetails> operation =
+        make<AsyncOperation<ErrorDetails>>(make<TestErrorDetails>().as<ErrorDetails>());
 
-    AsyncOperationCompletedHandler<ErrorDetails> completed = [&](const IAsyncOperation<ErrorDetails>& sender, const AsyncStatus args)
+    AsyncOperationCompletedHandler<ErrorDetails> completed =
+        [&](const IAsyncOperation<ErrorDetails>& sender, const AsyncStatus args)
     {
         REQUIRE(sender == operation);
         REQUIRE(args == AsyncStatus::Completed);
@@ -291,7 +298,8 @@ TEST_CASE("produce_IAsyncOperation_ErrorDetails")
 //
 
 template <typename TResult, typename TProgress>
-struct AsyncOperationWithProgress : implements<AsyncOperationWithProgress<TResult, TProgress>, IAsyncOperationWithProgress<TResult, TProgress>>
+struct AsyncOperationWithProgress
+    : implements<AsyncOperationWithProgress<TResult, TProgress>, IAsyncOperationWithProgress<TResult, TProgress>>
 {
     AsyncOperationProgressHandler<TResult, TProgress> m_progress;
     AsyncOperationWithProgressCompletedHandler<TResult, TProgress> m_completed;
@@ -334,15 +342,18 @@ struct AsyncOperationWithProgress : implements<AsyncOperationWithProgress<TResul
 
 TEST_CASE("produce_IAsyncOperationWithProgress_uint64_t_uint64_t")
 {
-    IAsyncOperationWithProgress<uint64_t, uint64_t> operation = make<AsyncOperationWithProgress<uint64_t, uint64_t>>(234, 123);
+    IAsyncOperationWithProgress<uint64_t, uint64_t> operation =
+        make<AsyncOperationWithProgress<uint64_t, uint64_t>>(234, 123);
 
-    AsyncOperationProgressHandler<uint64_t, uint64_t> progress = [&](const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, uint64_t args)
+    AsyncOperationProgressHandler<uint64_t, uint64_t> progress =
+        [&](const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, uint64_t args)
     {
         REQUIRE(sender == operation);
         REQUIRE(args == 123);
     };
 
-    AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> completed = [&](const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, const AsyncStatus args)
+    AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> completed =
+        [&](const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, const AsyncStatus args)
     {
         REQUIRE(sender == operation);
         REQUIRE(args == AsyncStatus::Completed);
@@ -377,8 +388,9 @@ struct TestDeploymentResult : implements<TestDeploymentResult, IDeploymentResult
 
 TEST_CASE("produce_IAsyncOperationWithProgress_DeploymentResult_DeploymentProgress")
 {
-    IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> operation = make<AsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>(
-        make<TestDeploymentResult>().as<DeploymentResult>(), DeploymentProgress{ DeploymentProgressState::Queued, 50 });
+    IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress> operation =
+        make<AsyncOperationWithProgress<DeploymentResult, DeploymentProgress>>(
+            make<TestDeploymentResult>().as<DeploymentResult>(), DeploymentProgress{ DeploymentProgressState::Queued, 50 });
 
     AsyncOperationProgressHandler<DeploymentResult, DeploymentProgress> progress =
         [&](const IAsyncOperationWithProgress<DeploymentResult, DeploymentProgress>& sender, const DeploymentProgress& args)

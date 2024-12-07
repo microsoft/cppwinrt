@@ -43,7 +43,8 @@ namespace winrt::impl
         }
     };
 
-    template <typename D> struct removed_values<D, std::enable_if_t<!std::is_trivially_destructible_v<typename container_type_t<D>::value_type>>>
+    template <typename D>
+    struct removed_values<D, std::enable_if_t<!std::is_trivially_destructible_v<typename container_type_t<D>::value_type>>>
     {
         container_type_t<D> m_value;
 
@@ -60,7 +61,8 @@ namespace winrt::impl
         {}
     };
 
-    template <typename T> struct removed_value<T, std::enable_if_t<std::is_move_constructible_v<T> && !std::is_trivially_destructible_v<T>>>
+    template <typename T>
+    struct removed_value<T, std::enable_if_t<std::is_move_constructible_v<T> && !std::is_trivially_destructible_v<T>>>
     {
         std::optional<T> m_value;
 
@@ -104,7 +106,8 @@ WINRT_EXPORT namespace winrt
         }
 
     protected:
-        template <typename InputIt, typename Size, typename OutputIt> auto copy_n(InputIt first, Size count, OutputIt result) const
+        template <typename InputIt, typename Size, typename OutputIt>
+        auto copy_n(InputIt first, Size count, OutputIt result) const
         {
             if constexpr (std::is_same_v<T, std::decay_t<decltype(*std::declval<D const>().get_container().begin())>> && !impl::is_key_value_pair<T>::value)
             {
@@ -124,7 +127,9 @@ WINRT_EXPORT namespace winrt
                         }
                         else
                         {
-                            return make<impl::key_value_pair<T>>(static_cast<D const&>(*this).unwrap_value(value.first), static_cast<D const&>(*this).unwrap_value(value.second));
+                            return make<impl::key_value_pair<T>>(
+                                static_cast<D const&>(*this).unwrap_value(value.first),
+                                static_cast<D const&>(*this).unwrap_value(value.second));
                         }
                     });
             }
@@ -198,7 +203,8 @@ WINRT_EXPORT namespace winrt
                 }
                 else
                 {
-                    return make<impl::key_value_pair<T>>(m_owner->unwrap_value(m_current->first), m_owner->unwrap_value(m_current->second));
+                    return make<impl::key_value_pair<T>>(
+                        m_owner->unwrap_value(m_current->first), m_owner->unwrap_value(m_current->second));
                 }
             }
 
@@ -232,7 +238,8 @@ WINRT_EXPORT namespace winrt
         };
     };
 
-    template <typename D, typename T, typename Version = impl::no_collection_version> struct vector_view_base : iterable_base<D, T, Version>
+    template <typename D, typename T, typename Version = impl::no_collection_version>
+    struct vector_view_base : iterable_base<D, T, Version>
     {
         T GetAt(uint32_t const index) const
         {
@@ -242,7 +249,8 @@ WINRT_EXPORT namespace winrt
                 throw hresult_out_of_bounds();
             }
 
-            return static_cast<D const&>(*this).unwrap_value(*std::next(static_cast<D const&>(*this).get_container().begin(), index));
+            return static_cast<D const&>(*this).unwrap_value(
+                *std::next(static_cast<D const&>(*this).get_container().begin(), index));
         }
 
         uint32_t Size() const noexcept
@@ -257,10 +265,7 @@ WINRT_EXPORT namespace winrt
             auto first = std::find_if(
                 static_cast<D const&>(*this).get_container().begin(),
                 static_cast<D const&>(*this).get_container().end(),
-                [&](auto&& match)
-                {
-                    return value == static_cast<D const&>(*this).unwrap_value(match);
-                });
+                [&](auto&& match) { return value == static_cast<D const&>(*this).unwrap_value(match); });
 
             index = static_cast<uint32_t>(first - static_cast<D const&>(*this).get_container().begin());
             return index < container_size();
@@ -282,7 +287,8 @@ WINRT_EXPORT namespace winrt
     private:
         uint32_t container_size() const noexcept
         {
-            return static_cast<uint32_t>(std::distance(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end()));
+            return static_cast<uint32_t>(std::distance(
+                static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end()));
         }
     };
 
@@ -318,7 +324,8 @@ WINRT_EXPORT namespace winrt
             }
 
             this->increment_version();
-            static_cast<D&>(*this).get_container().insert(static_cast<D const&>(*this).get_container().begin() + index, static_cast<D const&>(*this).wrap_value(value));
+            static_cast<D&>(*this).get_container().insert(
+                static_cast<D const&>(*this).get_container().begin() + index, static_cast<D const&>(*this).wrap_value(value));
         }
 
         void RemoveAt(uint32_t const index)
@@ -395,10 +402,7 @@ WINRT_EXPORT namespace winrt
                     first,
                     last,
                     std::back_inserter(container),
-                    [&](auto&& value)
-                    {
-                        return static_cast<D const&>(*this).wrap_value(value);
-                    });
+                    [&](auto&& value) { return static_cast<D const&>(*this).wrap_value(value); });
             }
         }
     };
@@ -513,7 +517,8 @@ WINRT_EXPORT namespace winrt
         bool HasKey(K const& key) const noexcept
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
-            return static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key)) != static_cast<D const&>(*this).get_container().end();
+            return static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key)) !=
+                   static_cast<D const&>(*this).get_container().end();
         }
 
         void Split(Windows::Foundation::Collections::IMapView<K, V>& first, Windows::Foundation::Collections::IMapView<K, V>& second) const noexcept
@@ -536,7 +541,8 @@ WINRT_EXPORT namespace winrt
 
             [[maybe_unused]] auto guard = static_cast<D&>(*this).acquire_exclusive();
             this->increment_version();
-            auto [itr, added] = static_cast<D&>(*this).get_container().emplace(static_cast<D const&>(*this).wrap_value(key), static_cast<D const&>(*this).wrap_value(value));
+            auto [itr, added] = static_cast<D&>(*this).get_container().emplace(
+                static_cast<D const&>(*this).wrap_value(key), static_cast<D const&>(*this).wrap_value(value));
             if (!added)
             {
                 oldValue.assign(itr->second);

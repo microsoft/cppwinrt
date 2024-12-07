@@ -2,8 +2,9 @@
 namespace winrt::impl
 {
     template <typename T, typename Container>
-    struct input_vector_view : implements<input_vector_view<T, Container>, non_agile, no_weak_ref, wfc::IVectorView<T>, wfc::IIterable<T>>,
-                               vector_view_base<input_vector_view<T, Container>, T>
+    struct input_vector_view
+        : implements<input_vector_view<T, Container>, non_agile, no_weak_ref, wfc::IVectorView<T>, wfc::IIterable<T>>,
+          vector_view_base<input_vector_view<T, Container>, T>
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
@@ -21,9 +22,10 @@ namespace winrt::impl
     };
 
     template <typename T, typename InputIt>
-    struct scoped_input_vector_view : input_scope,
-                                      implements<scoped_input_vector_view<T, InputIt>, non_agile, no_weak_ref, wfc::IVectorView<T>, wfc::IIterable<T>>,
-                                      vector_view_base<scoped_input_vector_view<T, InputIt>, T>
+    struct scoped_input_vector_view
+        : input_scope,
+          implements<scoped_input_vector_view<T, InputIt>, non_agile, no_weak_ref, wfc::IVectorView<T>, wfc::IIterable<T>>,
+          vector_view_base<scoped_input_vector_view<T, InputIt>, T>
     {
         void abi_enter() const
         {
@@ -79,7 +81,8 @@ WINRT_EXPORT namespace winrt::param
             attach_abi(m_pair.first, winrt::get_abi(values));
         }
 
-        template <typename Collection, std::enable_if_t<std::is_convertible_v<Collection, interface_type>, int> = 0> vector_view(Collection const& values) noexcept
+        template <typename Collection, std::enable_if_t<std::is_convertible_v<Collection, interface_type>, int> = 0>
+        vector_view(Collection const& values) noexcept
         {
             m_pair.first = values;
         }
@@ -153,7 +156,8 @@ WINRT_EXPORT namespace winrt::param
             attach_abi(m_interface, winrt::get_abi(values));
         }
 
-        template <typename Collection, std::enable_if_t<std::is_convertible_v<Collection, interface_type>, int> = 0> async_vector_view(Collection const& values) noexcept
+        template <typename Collection, std::enable_if_t<std::is_convertible_v<Collection, interface_type>, int> = 0>
+        async_vector_view(Collection const& values) noexcept
         {
             m_interface = values;
         }

@@ -112,11 +112,7 @@ TEST_CASE("TestAgileDelegate")
     using Windows::Foundation::IInspectable;
     using Windows::Foundation::IUnknown;
 
-    IUnknown object = Windows::UI::Xaml::CreateDefaultValueCallback(
-        []
-        {
-            return nullptr;
-        });
+    IUnknown object = Windows::UI::Xaml::CreateDefaultValueCallback([] { return nullptr; });
     com_ptr<IMarshal> marshal = object.as<IMarshal>();
     object = nullptr;
 

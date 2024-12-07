@@ -3,8 +3,8 @@
 #include "catch.hpp"
 #include <windows.h>
 
-// Defining WINRT_NO_MODULE_LOCK means that winrt::get_module_lock is not defined and calls to it are elided from C++/WinRT.
-// This is an optimization for apps (executables) that don't implement something like DllCanUnloadNow.
+// Defining WINRT_NO_MODULE_LOCK means that winrt::get_module_lock is not defined and calls to it are elided from
+// C++/WinRT. This is an optimization for apps (executables) that don't implement something like DllCanUnloadNow.
 
 #define WINRT_NO_MODULE_LOCK
 #include "winrt/Windows.Foundation.h"
@@ -57,10 +57,12 @@ TEST_CASE("module_lock_none")
 
     // Validates that test_component_base is pinned by virtue of it defining WINRT_NO_MODULE_LOCK.
 
-    auto can_unload = reinterpret_cast<HRESULT(__stdcall*)()>(GetProcAddress(LoadLibraryA("test_component_base.dll"), "DllCanUnloadNow"));
+    auto can_unload =
+        reinterpret_cast<HRESULT(__stdcall*)()>(GetProcAddress(LoadLibraryA("test_component_base.dll"), "DllCanUnloadNow"));
     REQUIRE(can_unload() == S_FALSE);
 
-    auto cannot_unload = reinterpret_cast<HRESULT(__stdcall*)()>(GetProcAddress(LoadLibraryA("test_component_derived.dll"), "DllCanUnloadNow"));
+    auto cannot_unload = reinterpret_cast<HRESULT(__stdcall*)()>(
+        GetProcAddress(LoadLibraryA("test_component_derived.dll"), "DllCanUnloadNow"));
     REQUIRE(cannot_unload() == S_OK);
 }
 

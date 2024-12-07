@@ -93,21 +93,9 @@ TEST_CASE("Variadic delegate - event")
     event<delegate<int>> e;
     REQUIRE(!e);
 
-    e.add(
-        [&](int value)
-        {
-            a = value + 1;
-        });
-    auto b_token = e.add(
-        [&](int value)
-        {
-            b = value + 2;
-        });
-    e.add(
-        [&](int value)
-        {
-            c = value + 3;
-        });
+    e.add([&](int value) { a = value + 1; });
+    auto b_token = e.add([&](int value) { b = value + 2; });
+    e.add([&](int value) { c = value + 3; });
 
     REQUIRE(e);
     e.remove(b_token);

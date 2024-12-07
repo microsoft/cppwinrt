@@ -46,9 +46,12 @@ namespace winrt::impl
         using type = tuple_cat_t<typename std::conditional<Condition<T>::value, std::tuple<T>, std::tuple<>>::type...>;
     };
 
-    template <template <typename> typename Condition, typename T> using tuple_if = typename tuple_if_base<Condition, T>::type;
+    template <template <typename> typename Condition, typename T>
+    using tuple_if = typename tuple_if_base<Condition, T>::type;
 
-    template <typename T> struct is_interface : std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, T>, is_classic_com_interface<T>>
+    template <typename T>
+    struct is_interface
+        : std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, T>, is_classic_com_interface<T>>
     {};
 
     template <typename T> struct is_marker : std::disjunction<std::is_base_of<marker, T>, std::is_void<T>>
@@ -67,7 +70,8 @@ namespace winrt::impl
     template <typename T> using uncloak = typename uncloak_base<T>::type;
 
     template <typename I>
-    struct is_cloaked : std::disjunction<std::is_same<Windows::Foundation::IInspectable, I>, std::negation<std::is_base_of<Windows::Foundation::IInspectable, I>>>
+    struct is_cloaked
+        : std::disjunction<std::is_same<Windows::Foundation::IInspectable, I>, std::negation<std::is_base_of<Windows::Foundation::IInspectable, I>>>
     {};
 
     template <typename I> struct is_cloaked<cloaked<I>> : std::true_type
@@ -101,7 +105,8 @@ namespace winrt::impl
         void* value;
     };
 
-    template <typename D, typename I, typename Enable> struct producer_convert : producer<D, typename default_interface<I>::type>
+    template <typename D, typename I, typename Enable>
+    struct producer_convert : producer<D, typename default_interface<I>::type>
     {
 #ifdef __clang__
         // This is sub-optimal in that it requires an AddRef and Release of the
@@ -132,7 +137,8 @@ namespace winrt::impl
     template <typename D, typename... T> struct producers_base<D, std::tuple<T...>> : producer_convert<D, T>...
     {};
 
-    template <typename D, typename... T> using producers = producers_base<D, tuple_if<is_interface, std::tuple<uncloak<T>...>>>;
+    template <typename D, typename... T>
+    using producers = producers_base<D, tuple_if<is_interface, std::tuple<uncloak<T>...>>>;
 
     template <typename D, typename... I> struct root_implements;
 
@@ -152,15 +158,18 @@ namespace winrt::impl
     {};
 
     template <typename First, typename... Rest>
-    struct nested_implements<First, Rest...> : std::conditional_t<is_implements_v<First>, impl::identity<First>, nested_implements<Rest...>>
+    struct nested_implements<First, Rest...>
+        : std::conditional_t<is_implements_v<First>, impl::identity<First>, nested_implements<Rest...>>
     {
         static_assert(!is_implements_v<First> || !std::disjunction_v<is_implements<Rest>...>, "Duplicate nested implements found");
     };
 
-    template <typename D, typename Dummy = std::void_t<>, typename... I> struct base_implements_impl : impl::identity<root_implements<D, I...>>
+    template <typename D, typename Dummy = std::void_t<>, typename... I>
+    struct base_implements_impl : impl::identity<root_implements<D, I...>>
     {};
 
-    template <typename D, typename... I> struct base_implements_impl<D, std::void_t<typename nested_implements<I...>::type>, I...> : nested_implements<I...>
+    template <typename D, typename... I>
+    struct base_implements_impl<D, std::void_t<typename nested_implements<I...>::type>, I...> : nested_implements<I...>
     {};
 
     template <typename D, typename... I> using base_implements = base_implements_impl<D, void, I...>;
@@ -180,10 +189,12 @@ namespace winrt::impl
     template <typename> struct has_static_lifetime : std::false_type
     {};
 
-    template <typename D, typename... I> struct has_static_lifetime<implements<D, I...>> : std::disjunction<std::is_same<static_lifetime, I>...>
+    template <typename D, typename... I>
+    struct has_static_lifetime<implements<D, I...>> : std::disjunction<std::is_same<static_lifetime, I>...>
     {};
 
-    template <typename D> inline constexpr bool has_static_lifetime_v = has_static_lifetime<typename D::implements_type>::value;
+    template <typename D>
+    inline constexpr bool has_static_lifetime_v = has_static_lifetime<typename D::implements_type>::value;
 
     template <typename T> void clear_abi(T*) noexcept
     {}
@@ -265,39 +276,46 @@ namespace winrt::impl
 
     template <typename, typename> struct interface_list_append_impl;
 
-    template <typename... T, typename... U> struct interface_list_append_impl<interface_list<T...>, interface_list<U...>>
+    template <typename... T, typename... U>
+    struct interface_list_append_impl<interface_list<T...>, interface_list<U...>>
     {
         using type = interface_list<T..., U...>;
     };
 
     template <template <typename> class, typename...> struct filter_impl;
 
-    template <template <typename> class Predicate, typename... T> using filter = typename filter_impl<Predicate, unwrap_implements_t<T>...>::type;
+    template <template <typename> class Predicate, typename... T>
+    using filter = typename filter_impl<Predicate, unwrap_implements_t<T>...>::type;
 
     template <template <typename> class Predicate> struct filter_impl<Predicate>
     {
         using type = interface_list<>;
     };
 
-    template <template <typename> class Predicate, typename T, typename... Rest> struct filter_impl<Predicate, T, Rest...>
+    template <template <typename> class Predicate, typename T, typename... Rest>
+    struct filter_impl<Predicate, T, Rest...>
     {
-        using type =
-            typename interface_list_append_impl<std::conditional_t<Predicate<T>::value, interface_list<winrt::impl::uncloak<T>>, interface_list<>>, typename filter_impl<Predicate, Rest...>::type>::type;
+        using type = typename interface_list_append_impl<
+            std::conditional_t<Predicate<T>::value, interface_list<winrt::impl::uncloak<T>>, interface_list<>>,
+            typename filter_impl<Predicate, Rest...>::type>::type;
     };
 
-    template <template <typename> class Predicate, typename... T, typename... Rest> struct filter_impl<Predicate, interface_list<T...>, Rest...>
+    template <template <typename> class Predicate, typename... T, typename... Rest>
+    struct filter_impl<Predicate, interface_list<T...>, Rest...>
     {
         using type = typename interface_list_append_impl<filter<Predicate, T...>, filter<Predicate, Rest...>>::type;
     };
 
-    template <template <typename> class Predicate, typename D, typename... I, typename... Rest> struct filter_impl<Predicate, winrt::implements<D, I...>, Rest...>
+    template <template <typename> class Predicate, typename D, typename... I, typename... Rest>
+    struct filter_impl<Predicate, winrt::implements<D, I...>, Rest...>
     {
         using type = typename interface_list_append_impl<filter<Predicate, I...>, filter<Predicate, Rest...>>::type;
     };
 
     template <typename T> using implemented_interfaces = filter<is_interface, typename T::implements_type>;
 
-    template <typename T> struct is_uncloaked_interface : std::conjunction<is_interface<T>, std::negation<winrt::impl::is_cloaked<T>>>
+    template <typename T>
+    struct is_uncloaked_interface : std::conjunction<is_interface<T>, std::negation<winrt::impl::is_cloaked<T>>>
     {};
     template <typename T> using uncloaked_interfaces = filter<is_uncloaked_interface, typename T::implements_type>;
 
@@ -480,11 +498,14 @@ namespace winrt::impl
     template <typename D, typename I> struct producer<D, I, std::enable_if_t<is_classic_com_interface<I>::value>> : I
     {
 #ifndef WINRT_IMPL_IUNKNOWN_DEFINED
-        static_assert(std::is_void_v<I> /* dependent_false */, "To implement classic COM interfaces, you must #include <unknwn.h> before including C++/WinRT headers.");
+        static_assert(
+            std::is_void_v<I> /* dependent_false */,
+            "To implement classic COM interfaces, you must #include <unknwn.h> before including C++/WinRT headers.");
 #endif
     };
 
-    template <typename D, typename I> struct producer_convert<D, I, std::enable_if_t<is_classic_com_interface<I>::value>> : producer<D, I>
+    template <typename D, typename I>
+    struct producer_convert<D, I, std::enable_if_t<is_classic_com_interface<I>::value>> : producer<D, I>
     {};
 
     struct INonDelegatingInspectable : Windows::Foundation::IUnknown
@@ -530,11 +551,13 @@ namespace winrt::impl
 
     template <bool Agile, bool UseModuleLock> struct weak_source_producer;
 
-    template <bool Agile, bool UseModuleLock> struct weak_source final : IWeakReferenceSource, module_lock_updater<UseModuleLock>
+    template <bool Agile, bool UseModuleLock>
+    struct weak_source final : IWeakReferenceSource, module_lock_updater<UseModuleLock>
     {
         weak_ref<Agile, UseModuleLock>* that() noexcept
         {
-            return static_cast<weak_ref<Agile, UseModuleLock>*>(reinterpret_cast<weak_source_producer<Agile, UseModuleLock>*>(this));
+            return static_cast<weak_ref<Agile, UseModuleLock>*>(
+                reinterpret_cast<weak_source_producer<Agile, UseModuleLock>*>(this));
         }
 
         int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final
@@ -573,7 +596,8 @@ namespace winrt::impl
         weak_source<Agile, UseModuleLock> m_source;
     };
 
-    template <bool Agile, bool UseModuleLock> struct weak_ref final : IWeakReference, weak_source_producer<Agile, UseModuleLock>
+    template <bool Agile, bool UseModuleLock>
+    struct weak_ref final : IWeakReference, weak_source_producer<Agile, UseModuleLock>
     {
         weak_ref(unknown_abi* object, uint32_t const strong) noexcept :
             m_object(object), m_strong(strong)
@@ -728,7 +752,8 @@ namespace winrt::impl
         template <typename, typename, typename> friend class produce_dispatch_to_overridable_base;
     };
 
-    template <typename D> struct WINRT_IMPL_EMPTY_BASES root_implements_composable_inner<D, true> : producer<D, INonDelegatingInspectable>
+    template <typename D>
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composable_inner<D, true> : producer<D, INonDelegatingInspectable>
     {
     protected:
         inspectable_abi* outer() noexcept
@@ -745,9 +770,10 @@ namespace winrt::impl
     };
 
     template <typename D, typename... I>
-    struct WINRT_IMPL_NOVTABLE root_implements : root_implements_composing_outer<std::disjunction_v<std::is_same<composing, I>...>>,
-                                                 root_implements_composable_inner<D, std::disjunction_v<std::is_same<composable, I>...>>,
-                                                 module_lock_updater<!std::disjunction_v<std::is_same<no_module_lock, I>...>>
+    struct WINRT_IMPL_NOVTABLE root_implements
+        : root_implements_composing_outer<std::disjunction_v<std::is_same<composing, I>...>>,
+          root_implements_composable_inner<D, std::disjunction_v<std::is_same<composable, I>...>>,
+          module_lock_updater<!std::disjunction_v<std::is_same<no_module_lock, I>...>>
     {
         using IInspectable = Windows::Foundation::IInspectable;
         using root_implements_type = root_implements;
@@ -1008,7 +1034,8 @@ namespace winrt::impl
 
                     uintptr_t const target = count_or_pointer - 1;
 
-                    if (m_references.compare_exchange_weak(count_or_pointer, target, std::memory_order_release, std::memory_order_relaxed))
+                    if (m_references.compare_exchange_weak(
+                            count_or_pointer, target, std::memory_order_release, std::memory_order_relaxed))
                     {
                         return static_cast<uint32_t>(target);
                     }
@@ -1056,7 +1083,8 @@ namespace winrt::impl
     private:
         class has_final_release
         {
-            template <typename U, typename = decltype(std::declval<U>().final_release(0))> static constexpr bool get_value(int)
+            template <typename U, typename = decltype(std::declval<U>().final_release(0))>
+            static constexpr bool get_value(int)
             {
                 return true;
             }
@@ -1147,7 +1175,9 @@ namespace winrt::impl
                     return decode_weak_ref(count_or_pointer)->get_source();
                 }
 
-                com_ptr<weak_ref_t> weak_ref(new (std::nothrow) weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer)), take_ownership_from_abi);
+                com_ptr<weak_ref_t> weak_ref(
+                    new (std::nothrow) weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer)),
+                    take_ownership_from_abi);
 
                 if (!weak_ref)
                 {
@@ -1158,7 +1188,8 @@ namespace winrt::impl
 
                 while (true)
                 {
-                    if (m_references.compare_exchange_weak(count_or_pointer, encoding, std::memory_order_acq_rel, std::memory_order_relaxed))
+                    if (m_references.compare_exchange_weak(
+                            count_or_pointer, encoding, std::memory_order_acq_rel, std::memory_order_relaxed))
                     {
                         impl::IWeakReferenceSource* result = weak_ref->get_source();
                         detach_abi(weak_ref);
@@ -1227,7 +1258,8 @@ namespace winrt::impl
 
     template <typename T> class has_initializer
     {
-        template <typename U, typename = decltype(std::declval<U>().InitializeComponent())> static constexpr bool get_value(int)
+        template <typename U, typename = decltype(std::declval<U>().InitializeComponent())>
+        static constexpr bool get_value(int)
         {
             return true;
         }
@@ -1254,7 +1286,8 @@ namespace winrt::impl
 
     inline com_ptr<IStaticLifetimeCollection> get_static_lifetime_map()
     {
-        auto const lifetime_factory = get_activation_factory<impl::IStaticLifetime>(L"Windows.ApplicationModel.Core.CoreApplication");
+        auto const lifetime_factory =
+            get_activation_factory<impl::IStaticLifetime>(L"Windows.ApplicationModel.Core.CoreApplication");
         Windows::Foundation::IUnknown collection;
         check_hresult(lifetime_factory->GetCollection(put_abi(collection)));
         return collection.as<IStaticLifetimeCollection>();
@@ -1324,17 +1357,20 @@ WINRT_EXPORT namespace winrt
         }
         else if constexpr (impl::has_composable<D>::value)
         {
-            impl::com_ref<I> result{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
+            impl::com_ref<I> result{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)),
+                                     take_ownership_from_abi };
             return result.template as<typename D::composable>();
         }
         else if constexpr (impl::has_class_type<D>::value)
         {
             static_assert(std::is_same_v<I, default_interface<typename D::class_type>>);
-            return typename D::class_type{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
+            return typename D::class_type{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)),
+                                           take_ownership_from_abi };
         }
         else
         {
-            return impl::com_ref<I>{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)), take_ownership_from_abi };
+            return impl::com_ref<I>{ to_abi<I>(impl::create_and_initialize<D>(std::forward<Args>(args)...)),
+                                     take_ownership_from_abi };
         }
     }
 
@@ -1368,7 +1404,8 @@ WINRT_EXPORT namespace winrt
         ((unregister(name_of<typename FactoryClasses::instance_type>())), ...);
     }
 
-    template <typename D, typename... I> struct implements : impl::producers<D, I...>, impl::base_implements<D, I...>::type
+    template <typename D, typename... I>
+    struct implements : impl::producers<D, I...>, impl::base_implements<D, I...>::type
     {
     protected:
         using base_type = typename impl::base_implements<D, I...>::type;

@@ -279,7 +279,8 @@ namespace ABI
     {
         namespace Foundation
         {
-            template <> struct __declspec(uuid("513ef3af-e784-5325-a91e-97c2b8111cf3")) IReference<UINT32> : IReference_impl<UINT32>
+            template <>
+            struct __declspec(uuid("513ef3af-e784-5325-a91e-97c2b8111cf3")) IReference<UINT32> : IReference_impl<UINT32>
             {
                 static const wchar_t* z_get_rc_name_impl()
                 {
@@ -314,7 +315,8 @@ namespace ABI
         namespace Foundation
         {
             template <>
-            struct __declspec(uuid("a9b18291-ce2a-5dae-8a23-b7f7388416db")) IReference<struct EventRegistrationToken> : IReference_impl<struct EventRegistrationToken>
+            struct __declspec(uuid("a9b18291-ce2a-5dae-8a23-b7f7388416db")) IReference<struct EventRegistrationToken>
+                : IReference_impl<struct EventRegistrationToken>
             {
                 static const wchar_t* z_get_rc_name_impl()
                 {
@@ -346,7 +348,8 @@ namespace ABI
     {
         namespace Foundation
         {
-            template <> struct __declspec(uuid("7d50f649-632c-51f9-849a-ee49428933ea")) IReference<GUID> : IReference_impl<GUID>
+            template <>
+            struct __declspec(uuid("7d50f649-632c-51f9-849a-ee49428933ea")) IReference<GUID> : IReference_impl<GUID>
             {
                 static const wchar_t* z_get_rc_name_impl()
                 {
@@ -378,7 +381,8 @@ namespace ABI
     {
         namespace Foundation
         {
-            template <> struct __declspec(uuid("12ecedac-1aee-5ba5-bd66-959a0fb2b1ff")) IEventHandler<int> : IEventHandler_impl<int>
+            template <>
+            struct __declspec(uuid("12ecedac-1aee-5ba5-bd66-959a0fb2b1ff")) IEventHandler<int> : IEventHandler_impl<int>
             {
                 static const wchar_t* z_get_rc_name_impl()
                 {
@@ -454,7 +458,8 @@ namespace ABI
         {
             namespace Collections
             {
-                template <> struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) IIterator<HSTRING> : IIterator_impl<HSTRING>
+                template <>
+                struct __declspec(uuid("8c304ebb-6615-50a4-8829-879ecd443236")) IIterator<HSTRING> : IIterator_impl<HSTRING>
                 {
                     static const wchar_t* z_get_rc_name_impl()
                     {
@@ -489,7 +494,8 @@ namespace ABI
         {
             namespace Collections
             {
-                template <> struct __declspec(uuid("e2fcc7c1-3bfc-5a0b-b2b0-72e769d1cb7e")) IIterable<HSTRING> : IIterable_impl<HSTRING>
+                template <>
+                struct __declspec(uuid("e2fcc7c1-3bfc-5a0b-b2b0-72e769d1cb7e")) IIterable<HSTRING> : IIterable_impl<HSTRING>
                 {
                     static const wchar_t* z_get_rc_name_impl()
                     {
@@ -524,7 +530,8 @@ namespace ABI
         {
             namespace Collections
             {
-                template <> struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) IVectorView<HSTRING> : IVectorView_impl<HSTRING>
+                template <>
+                struct __declspec(uuid("2f13c006-a03a-5f69-b090-75a43e33423e")) IVectorView<HSTRING> : IVectorView_impl<HSTRING>
                 {
                     static const wchar_t* z_get_rc_name_impl()
                     {
@@ -559,7 +566,8 @@ namespace ABI
         {
             namespace Collections
             {
-                template <> struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) IVector<HSTRING> : IVector_impl<HSTRING>
+                template <>
+                struct __declspec(uuid("98b9acc1-4b56-532e-ac73-03d5291cca90")) IVector<HSTRING> : IVector_impl<HSTRING>
                 {
                     static const wchar_t* z_get_rc_name_impl()
                     {
@@ -594,7 +602,9 @@ namespace ABI
         {
             namespace Collections
             {
-                template <> struct __declspec(uuid("60310303-49c5-52e6-abc6-a9b36eccc716")) IKeyValuePair<HSTRING, HSTRING> : IKeyValuePair_impl<HSTRING, HSTRING>
+                template <>
+                struct __declspec(uuid("60310303-49c5-52e6-abc6-a9b36eccc716")) IKeyValuePair<HSTRING, HSTRING>
+                    : IKeyValuePair_impl<HSTRING, HSTRING>
                 {
                     static const wchar_t* z_get_rc_name_impl()
                     {
@@ -703,7 +713,9 @@ namespace ABI
         {
             namespace Collections
             {
-                template <> struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) IMapView<HSTRING, HSTRING> : IMapView_impl<HSTRING, HSTRING>
+                template <>
+                struct __declspec(uuid("ac7f26f2-feb7-5b2a-8ac4-345bc62caede")) IMapView<HSTRING, HSTRING>
+                    : IMapView_impl<HSTRING, HSTRING>
                 {
                     static const wchar_t* z_get_rc_name_impl()
                     {
@@ -738,7 +750,9 @@ namespace ABI
         {
             namespace Collections
             {
-                template <> struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) IMap<HSTRING, HSTRING> : IMap_impl<HSTRING, HSTRING>
+                template <>
+                struct __declspec(uuid("f6d1f700-49c2-52ae-8154-826f9908773c")) IMap<HSTRING, HSTRING>
+                    : IMap_impl<HSTRING, HSTRING>
                 {
                     static const wchar_t* z_get_rc_name_impl()
                     {
@@ -772,7 +786,8 @@ namespace ABI
         namespace Foundation
         {
             template <>
-            struct __declspec(uuid("b79a741f-7fb5-50ae-9e99-911201ec3d41")) IAsyncOperationCompletedHandler<HSTRING> : IAsyncOperationCompletedHandler_impl<HSTRING>
+            struct __declspec(uuid("b79a741f-7fb5-50ae-9e99-911201ec3d41")) IAsyncOperationCompletedHandler<HSTRING>
+                : IAsyncOperationCompletedHandler_impl<HSTRING>
             {
                 static const wchar_t* z_get_rc_name_impl()
                 {
@@ -804,7 +819,9 @@ namespace ABI
     {
         namespace Foundation
         {
-            template <> struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) IAsyncOperation<HSTRING> : IAsyncOperation_impl<HSTRING>
+            template <>
+            struct __declspec(uuid("3e1fe603-f897-5263-b328-0806426b8a79")) IAsyncOperation<HSTRING>
+                : IAsyncOperation_impl<HSTRING>
             {
                 static const wchar_t* z_get_rc_name_impl()
                 {
@@ -1884,10 +1901,13 @@ typedef struct __FIReference_1_UINT32Vtbl
     (__RPC__in __FIReference_1_UINT32* This,
      /* [out] */ __RPC__out ULONG* iidCount,
      /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID** iids);
-    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)(__RPC__in __FIReference_1_UINT32* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIReference_1_UINT32* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
+    (__RPC__in __FIReference_1_UINT32* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIReference_1_UINT32* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(__RPC__in __FIReference_1_UINT32* This, /* [retval][out] */ __RPC__out unsigned int* value);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(
+        __RPC__in __FIReference_1_UINT32* This, /* [retval][out] */ __RPC__out unsigned int* value);
     END_INTERFACE
 } __FIReference_1_UINT32Vtbl;
 
@@ -1897,12 +1917,14 @@ interface __FIReference_1_UINT32
 };
 
 #ifdef COBJMACROS
-#define __FIReference_1_UINT32_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIReference_1_UINT32_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 #define __FIReference_1_UINT32_AddRef(This) ((This)->lpVtbl->AddRef(This))
 #define __FIReference_1_UINT32_Release(This) ((This)->lpVtbl->Release(This))
 
 #define __FIReference_1_UINT32_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
-#define __FIReference_1_UINT32_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __FIReference_1_UINT32_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 #define __FIReference_1_UINT32_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __FIReference_1_UINT32_get_Value(This, value) ((This)->lpVtbl->get_Value(This, value))
@@ -1935,10 +1957,14 @@ typedef struct __FIReference_1_EventRegistrationTokenVtbl
     (__RPC__in __FIReference_1_EventRegistrationToken* This,
      /* [out] */ __RPC__out ULONG* iidCount,
      /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID** iids);
-    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)(__RPC__in __FIReference_1_EventRegistrationToken* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIReference_1_EventRegistrationToken* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
+    (__RPC__in __FIReference_1_EventRegistrationToken* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIReference_1_EventRegistrationToken* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(__RPC__in __FIReference_1_EventRegistrationToken* This, /* [retval][out] */ __RPC__out struct EventRegistrationToken* value);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(
+        __RPC__in __FIReference_1_EventRegistrationToken* This,
+        /* [retval][out] */ __RPC__out struct EventRegistrationToken* value);
     END_INTERFACE
 } __FIReference_1_EventRegistrationTokenVtbl;
 
@@ -1948,13 +1974,17 @@ interface __FIReference_1_EventRegistrationToken
 };
 
 #ifdef COBJMACROS
-#define __FIReference_1_EventRegistrationToken_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIReference_1_EventRegistrationToken_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 #define __FIReference_1_EventRegistrationToken_AddRef(This) ((This)->lpVtbl->AddRef(This))
 #define __FIReference_1_EventRegistrationToken_Release(This) ((This)->lpVtbl->Release(This))
 
-#define __FIReference_1_EventRegistrationToken_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
-#define __FIReference_1_EventRegistrationToken_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
-#define __FIReference_1_EventRegistrationToken_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __FIReference_1_EventRegistrationToken_GetIids(This, iidCount, iids) \
+    ((This)->lpVtbl->GetIids(This, iidCount, iids))
+#define __FIReference_1_EventRegistrationToken_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __FIReference_1_EventRegistrationToken_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __FIReference_1_EventRegistrationToken_get_Value(This, value) ((This)->lpVtbl->get_Value(This, value))
 #endif /* COBJMACROS */
@@ -1984,10 +2014,13 @@ typedef struct __FIReference_1_GUIDVtbl
     (__RPC__in __FIReference_1_GUID* This,
      /* [out] */ __RPC__out ULONG* iidCount,
      /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID** iids);
-    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)(__RPC__in __FIReference_1_GUID* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIReference_1_GUID* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
+    (__RPC__in __FIReference_1_GUID* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIReference_1_GUID* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(__RPC__in __FIReference_1_GUID* This, /* [retval][out] */ __RPC__out GUID* value);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(
+        __RPC__in __FIReference_1_GUID* This, /* [retval][out] */ __RPC__out GUID* value);
     END_INTERFACE
 } __FIReference_1_GUIDVtbl;
 
@@ -1997,7 +2030,8 @@ interface __FIReference_1_GUID
 };
 
 #ifdef COBJMACROS
-#define __FIReference_1_GUID_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIReference_1_GUID_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 #define __FIReference_1_GUID_AddRef(This) ((This)->lpVtbl->AddRef(This))
 #define __FIReference_1_GUID_Release(This) ((This)->lpVtbl->Release(This))
 
@@ -2029,7 +2063,8 @@ typedef struct __FIEventHandler_1_intVtbl
     ULONG(STDMETHODCALLTYPE* AddRef)(__RPC__in __FIEventHandler_1_int* This);
     ULONG(STDMETHODCALLTYPE* Release)(__RPC__in __FIEventHandler_1_int* This);
 
-    HRESULT(STDMETHODCALLTYPE* Invoke)(__RPC__in __FIEventHandler_1_int* This, /* [in] */ __RPC__in_opt IInspectable* sender, /* [in] */ __RPC__in_opt int* e);
+    HRESULT(STDMETHODCALLTYPE* Invoke)
+    (__RPC__in __FIEventHandler_1_int* This, /* [in] */ __RPC__in_opt IInspectable* sender, /* [in] */ __RPC__in_opt int* e);
     END_INTERFACE
 } __FIEventHandler_1_intVtbl;
 
@@ -2039,7 +2074,8 @@ interface __FIEventHandler_1_int
 };
 
 #ifdef COBJMACROS
-#define __FIEventHandler_1_int_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIEventHandler_1_int_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 #define __FIEventHandler_1_int_AddRef(This) ((This)->lpVtbl->AddRef(This))
 #define __FIEventHandler_1_int_Release(This) ((This)->lpVtbl->Release(This))
 
@@ -2068,7 +2104,9 @@ typedef struct __FITypedEventHandler_2_Component__CEvents_intVtbl
     ULONG(STDMETHODCALLTYPE* Release)(__RPC__in __FITypedEventHandler_2_Component__CEvents_int* This);
 
     HRESULT(STDMETHODCALLTYPE* Invoke)
-    (__RPC__in __FITypedEventHandler_2_Component__CEvents_int* This, /* [in] */ __RPC__in_opt __x_ABI_CComponent_CIEvents* sender, /* [in] */ __RPC__in_opt int e);
+    (__RPC__in __FITypedEventHandler_2_Component__CEvents_int* This,
+     /* [in] */ __RPC__in_opt __x_ABI_CComponent_CIEvents* sender,
+     /* [in] */ __RPC__in_opt int e);
     END_INTERFACE
 } __FITypedEventHandler_2_Component__CEvents_intVtbl;
 
@@ -2078,7 +2116,8 @@ interface __FITypedEventHandler_2_Component__CEvents_int
 };
 
 #ifdef COBJMACROS
-#define __FITypedEventHandler_2_Component__CEvents_int_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FITypedEventHandler_2_Component__CEvents_int_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __FITypedEventHandler_2_Component__CEvents_int_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -2113,12 +2152,17 @@ typedef struct __FIIterator_1_HSTRINGVtbl
      /* [out] */ __RPC__out ULONG* iidCount,
      /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID** iids);
 
-    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)(__RPC__in __FIIterator_1_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIIterator_1_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
+    (__RPC__in __FIIterator_1_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIIterator_1_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Current)(__RPC__in __FIIterator_1_HSTRING* This, /* [retval][out] */ __RPC__out HSTRING* current);
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_HasCurrent)(__RPC__in __FIIterator_1_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
-    HRESULT(STDMETHODCALLTYPE* MoveNext)(__RPC__in __FIIterator_1_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Current)(
+        __RPC__in __FIIterator_1_HSTRING* This, /* [retval][out] */ __RPC__out HSTRING* current);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_HasCurrent)(
+        __RPC__in __FIIterator_1_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
+    HRESULT(STDMETHODCALLTYPE* MoveNext)
+    (__RPC__in __FIIterator_1_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
     HRESULT(STDMETHODCALLTYPE* GetMany)
     (__RPC__in __FIIterator_1_HSTRING* This,
      /* [in] */ unsigned int capacity,
@@ -2135,7 +2179,8 @@ interface __FIIterator_1_HSTRING
 
 #ifdef COBJMACROS
 
-#define __FIIterator_1_HSTRING_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIIterator_1_HSTRING_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __FIIterator_1_HSTRING_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -2143,7 +2188,8 @@ interface __FIIterator_1_HSTRING
 
 #define __FIIterator_1_HSTRING_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __FIIterator_1_HSTRING_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __FIIterator_1_HSTRING_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
 #define __FIIterator_1_HSTRING_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
@@ -2153,7 +2199,8 @@ interface __FIIterator_1_HSTRING
 
 #define __FIIterator_1_HSTRING_MoveNext(This, hasCurrent) ((This)->lpVtbl->MoveNext(This, hasCurrent))
 
-#define __FIIterator_1_HSTRING_GetMany(This, capacity, items, actual) ((This)->lpVtbl->GetMany(This, capacity, items, actual))
+#define __FIIterator_1_HSTRING_GetMany(This, capacity, items, actual) \
+    ((This)->lpVtbl->GetMany(This, capacity, items, actual))
 
 #endif /* COBJMACROS */
 
@@ -2186,11 +2233,14 @@ typedef struct __FIIterable_1_HSTRINGVtbl
      /* [out] */ __RPC__out ULONG* iidCount,
      /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID** iids);
 
-    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)(__RPC__in __FIIterable_1_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
+    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
+    (__RPC__in __FIIterable_1_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
 
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIIterable_1_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIIterable_1_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    HRESULT(STDMETHODCALLTYPE* First)(__RPC__in __FIIterable_1_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt __FIIterator_1_HSTRING** first);
+    HRESULT(STDMETHODCALLTYPE* First)
+    (__RPC__in __FIIterable_1_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt __FIIterator_1_HSTRING** first);
 
     END_INTERFACE
 } __FIIterable_1_HSTRINGVtbl;
@@ -2202,7 +2252,8 @@ interface __FIIterable_1_HSTRING
 
 #ifdef COBJMACROS
 
-#define __FIIterable_1_HSTRING_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIIterable_1_HSTRING_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __FIIterable_1_HSTRING_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -2210,7 +2261,8 @@ interface __FIIterable_1_HSTRING
 
 #define __FIIterable_1_HSTRING_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __FIIterable_1_HSTRING_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __FIIterable_1_HSTRING_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
 #define __FIIterable_1_HSTRING_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
@@ -2287,7 +2339,8 @@ interface __FIVectorView_1_HSTRING
 
 #ifdef COBJMACROS
 
-#define __FIVectorView_1_HSTRING_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIVectorView_1_HSTRING_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __FIVectorView_1_HSTRING_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -2295,7 +2348,8 @@ interface __FIVectorView_1_HSTRING
 
 #define __FIVectorView_1_HSTRING_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __FIVectorView_1_HSTRING_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __FIVectorView_1_HSTRING_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
 #define __FIVectorView_1_HSTRING_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
@@ -2305,7 +2359,8 @@ interface __FIVectorView_1_HSTRING
 
 #define __FIVectorView_1_HSTRING_IndexOf(This, item, index, found) ((This)->lpVtbl->IndexOf(This, item, index, found))
 
-#define __FIVectorView_1_HSTRING_GetMany(This, startIndex, capacity, items, actual) ((This)->lpVtbl->GetMany(This, startIndex, capacity, items, actual))
+#define __FIVectorView_1_HSTRING_GetMany(This, startIndex, capacity, items, actual) \
+    ((This)->lpVtbl->GetMany(This, startIndex, capacity, items, actual))
 
 #endif /* COBJMACROS */
 
@@ -2336,8 +2391,10 @@ typedef struct __FIVector_1_HSTRINGVtbl
      /* [out] */ __RPC__out ULONG* iidCount,
      /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID** iids);
 
-    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)(__RPC__in __FIVector_1_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIVector_1_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
+    (__RPC__in __FIVector_1_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIVector_1_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
     HRESULT(STDMETHODCALLTYPE* GetAt)
     (__RPC__in __FIVector_1_HSTRING* This,
@@ -2348,7 +2405,8 @@ typedef struct __FIVector_1_HSTRINGVtbl
         __RPC__in __FIVector_1_HSTRING* This,
         /* [retval][out] */ __RPC__out unsigned int* size);
 
-    HRESULT(STDMETHODCALLTYPE* GetView)(__RPC__in __FIVector_1_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt __FIVectorView_1_HSTRING** view);
+    HRESULT(STDMETHODCALLTYPE* GetView)
+    (__RPC__in __FIVector_1_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt __FIVectorView_1_HSTRING** view);
 
     HRESULT(STDMETHODCALLTYPE* IndexOf)
     (__RPC__in __FIVector_1_HSTRING* This,
@@ -2392,7 +2450,8 @@ interface __FIVector_1_HSTRING
 
 #ifdef COBJMACROS
 
-#define __FIVector_1_HSTRING_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIVector_1_HSTRING_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __FIVector_1_HSTRING_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -2424,7 +2483,8 @@ interface __FIVector_1_HSTRING
 
 #define __FIVector_1_HSTRING_Clear(This) ((This)->lpVtbl->Clear(This))
 
-#define __FIVector_1_HSTRING_GetMany(This, startIndex, capacity, items, actual) ((This)->lpVtbl->GetMany(This, startIndex, capacity, items, actual))
+#define __FIVector_1_HSTRING_GetMany(This, startIndex, capacity, items, actual) \
+    ((This)->lpVtbl->GetMany(This, startIndex, capacity, items, actual))
 
 #define __FIVector_1_HSTRING_ReplaceAll(This, count, value) ((This)->lpVtbl->ReplaceAll(This, count, value))
 
@@ -2455,11 +2515,15 @@ typedef struct __FIKeyValuePair_2_HSTRING_HSTRINGVtbl
     (__RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This,
      /* [out] */ __RPC__out ULONG* iidCount,
      /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID** iids);
-    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)(__RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
+    (__RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Key)(__RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out HSTRING* key);
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(__RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt HSTRING* value);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Key)(
+        __RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out HSTRING* key);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(
+        __RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt HSTRING* value);
     END_INTERFACE
 } __FIKeyValuePair_2_HSTRING_HSTRINGVtbl;
 
@@ -2469,7 +2533,8 @@ interface __FIKeyValuePair_2_HSTRING_HSTRING
 };
 
 #ifdef COBJMACROS
-#define __FIKeyValuePair_2_HSTRING_HSTRING_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIKeyValuePair_2_HSTRING_HSTRING_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __FIKeyValuePair_2_HSTRING_HSTRING_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -2477,9 +2542,11 @@ interface __FIKeyValuePair_2_HSTRING_HSTRING
 
 #define __FIKeyValuePair_2_HSTRING_HSTRING_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __FIKeyValuePair_2_HSTRING_HSTRING_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __FIKeyValuePair_2_HSTRING_HSTRING_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __FIKeyValuePair_2_HSTRING_HSTRING_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __FIKeyValuePair_2_HSTRING_HSTRING_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __FIKeyValuePair_2_HSTRING_HSTRING_get_Key(This, key) ((This)->lpVtbl->get_Key(This, key))
 
@@ -2514,12 +2581,16 @@ typedef struct __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRINGVtbl
 
     HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
     (__RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
     /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Current)(
-        __RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out __FIKeyValuePair_2_HSTRING_HSTRING** current);
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_HasCurrent)(__RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
-    HRESULT(STDMETHODCALLTYPE* MoveNext)(__RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
+        __RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This,
+        /* [retval][out] */ __RPC__out __FIKeyValuePair_2_HSTRING_HSTRING** current);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_HasCurrent)(
+        __RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
+    HRESULT(STDMETHODCALLTYPE* MoveNext)
+    (__RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
     HRESULT(STDMETHODCALLTYPE* GetMany)
     (__RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This,
      /* [in] */ unsigned int capacity,
@@ -2536,25 +2607,33 @@ interface __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING
 
 #ifdef COBJMACROS
 
-#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
 #define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_Release(This) ((This)->lpVtbl->Release(This))
 
-#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
+#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_GetIids(This, iidCount, iids) \
+    ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
-#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_get_Current(This, current) ((This)->lpVtbl->get_Current(This, current))
+#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_get_Current(This, current) \
+    ((This)->lpVtbl->get_Current(This, current))
 
-#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_get_HasCurrent(This, hasCurrent) ((This)->lpVtbl->get_HasCurrent(This, hasCurrent))
+#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_get_HasCurrent(This, hasCurrent) \
+    ((This)->lpVtbl->get_HasCurrent(This, hasCurrent))
 
-#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_MoveNext(This, hasCurrent) ((This)->lpVtbl->MoveNext(This, hasCurrent))
+#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_MoveNext(This, hasCurrent) \
+    ((This)->lpVtbl->MoveNext(This, hasCurrent))
 
-#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_GetMany(This, capacity, items, actual) ((This)->lpVtbl->GetMany(This, capacity, items, actual))
+#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_GetMany(This, capacity, items, actual) \
+    ((This)->lpVtbl->GetMany(This, capacity, items, actual))
 
 #endif /* COBJMACROS */
 
@@ -2590,10 +2669,12 @@ typedef struct __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRINGVtbl
     HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
     (__RPC__in __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
 
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
     HRESULT(STDMETHODCALLTYPE* First)
-    (__RPC__in __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING** first);
+    (__RPC__in __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING* This,
+     /* [retval][out] */ __RPC__deref_out_opt __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING** first);
 
     END_INTERFACE
 } __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRINGVtbl;
@@ -2605,17 +2686,21 @@ interface __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING
 
 #ifdef COBJMACROS
 
-#define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
 #define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_Release(This) ((This)->lpVtbl->Release(This))
 
-#define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
+#define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_GetIids(This, iidCount, iids) \
+    ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_First(This, first) ((This)->lpVtbl->First(This, first))
 
@@ -2649,15 +2734,19 @@ typedef struct __FIMapView_2_HSTRING_HSTRINGVtbl
      /* [out] */ __RPC__out ULONG* iidCount,
      /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID** iids);
 
-    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)(__RPC__in __FIMapView_2_HSTRING_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIMapView_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
+    (__RPC__in __FIMapView_2_HSTRING_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIMapView_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
     HRESULT(STDMETHODCALLTYPE* Lookup)
     (__RPC__in __FIMapView_2_HSTRING_HSTRING* This,
      /* [in] */ __RPC__in HSTRING key,
      /* [retval][out] */ __RPC__deref_out_opt HSTRING* value);
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(__RPC__in __FIMapView_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out unsigned int* size);
-    HRESULT(STDMETHODCALLTYPE* HasKey)(__RPC__in __FIMapView_2_HSTRING_HSTRING* This, /* [in] */ __RPC__in HSTRING key, /* [retval][out] */ __RPC__out boolean* found);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(
+        __RPC__in __FIMapView_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out unsigned int* size);
+    HRESULT(STDMETHODCALLTYPE* HasKey)
+    (__RPC__in __FIMapView_2_HSTRING_HSTRING* This, /* [in] */ __RPC__in HSTRING key, /* [retval][out] */ __RPC__out boolean* found);
     HRESULT(STDMETHODCALLTYPE* Split)
     (__RPC__in __FIMapView_2_HSTRING_HSTRING* This,
      /* [out] */ __RPC__deref_out_opt __FIMapView_2_HSTRING_HSTRING** firstPartition,
@@ -2671,18 +2760,21 @@ interface __FIMapView_2_HSTRING_HSTRING
 };
 
 #ifdef COBJMACROS
-#define __FIMapView_2_HSTRING_HSTRING_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIMapView_2_HSTRING_HSTRING_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 #define __FIMapView_2_HSTRING_HSTRING_AddRef(This) ((This)->lpVtbl->AddRef(This))
 #define __FIMapView_2_HSTRING_HSTRING_Release(This) ((This)->lpVtbl->Release(This))
 
 #define __FIMapView_2_HSTRING_HSTRING_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
-#define __FIMapView_2_HSTRING_HSTRING_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __FIMapView_2_HSTRING_HSTRING_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 #define __FIMapView_2_HSTRING_HSTRING_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __FIMapView_2_HSTRING_HSTRING_Lookup(This, key, value) ((This)->lpVtbl->Lookup(This, key, value))
 #define __FIMapView_2_HSTRING_HSTRING_get_Size(This, size) ((This)->lpVtbl->get_Size(This, size))
 #define __FIMapView_2_HSTRING_HSTRING_HasKey(This, key, found) ((This)->lpVtbl->HasKey(This, key, found))
-#define __FIMapView_2_HSTRING_HSTRING_Split(This, firstPartition, secondPartition) ((This)->lpVtbl->Split(This, firstPartition, secondPartition))
+#define __FIMapView_2_HSTRING_HSTRING_Split(This, firstPartition, secondPartition) \
+    ((This)->lpVtbl->Split(This, firstPartition, secondPartition))
 #endif /* COBJMACROS */
 
 #endif // ____FIMapView_2_HSTRING_HSTRING_INTERFACE_DEFINED__
@@ -2710,16 +2802,21 @@ typedef struct __FIMap_2_HSTRING_HSTRINGVtbl
     (__RPC__in __FIMap_2_HSTRING_HSTRING* This,
      /* [out] */ __RPC__out ULONG* iidCount,
      /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID** iids);
-    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)(__RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
+    (__RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
     HRESULT(STDMETHODCALLTYPE* Lookup)
     (__RPC__in __FIMap_2_HSTRING_HSTRING* This,
      /* [in] */ HSTRING key,
      /* [retval][out] */ __RPC__deref_out_opt HSTRING** value);
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(__RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out unsigned int* size);
-    HRESULT(STDMETHODCALLTYPE* HasKey)(__RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [in] */ HSTRING key, /* [retval][out] */ __RPC__out boolean* found);
-    HRESULT(STDMETHODCALLTYPE* GetView)(__RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt __FIMapView_2_HSTRING_HSTRING** view);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(
+        __RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out unsigned int* size);
+    HRESULT(STDMETHODCALLTYPE* HasKey)
+    (__RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [in] */ HSTRING key, /* [retval][out] */ __RPC__out boolean* found);
+    HRESULT(STDMETHODCALLTYPE* GetView)
+    (__RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt __FIMapView_2_HSTRING_HSTRING** view);
     HRESULT(STDMETHODCALLTYPE* Insert)
     (__RPC__in __FIMap_2_HSTRING_HSTRING* This,
      /* [in] */ HSTRING key,
@@ -2736,7 +2833,8 @@ interface __FIMap_2_HSTRING_HSTRING
 };
 
 #ifdef COBJMACROS
-#define __FIMap_2_HSTRING_HSTRING_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIMap_2_HSTRING_HSTRING_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __FIMap_2_HSTRING_HSTRING_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -2744,7 +2842,8 @@ interface __FIMap_2_HSTRING_HSTRING
 
 #define __FIMap_2_HSTRING_HSTRING_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __FIMap_2_HSTRING_HSTRING_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __FIMap_2_HSTRING_HSTRING_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
 #define __FIMap_2_HSTRING_HSTRING_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
@@ -2756,7 +2855,8 @@ interface __FIMap_2_HSTRING_HSTRING
 
 #define __FIMap_2_HSTRING_HSTRING_GetView(This, view) ((This)->lpVtbl->GetView(This, view))
 
-#define __FIMap_2_HSTRING_HSTRING_Insert(This, key, value, replaced) ((This)->lpVtbl->Insert(This, key, value, replaced))
+#define __FIMap_2_HSTRING_HSTRING_Insert(This, key, value, replaced) \
+    ((This)->lpVtbl->Insert(This, key, value, replaced))
 
 #define __FIMap_2_HSTRING_HSTRING_Remove(This, key) ((This)->lpVtbl->Remove(This, key))
 
@@ -2789,7 +2889,9 @@ typedef struct __FIAsyncOperationCompletedHandler_1_HSTRINGVtbl
     ULONG(STDMETHODCALLTYPE* Release)(__RPC__in __FIAsyncOperationCompletedHandler_1_HSTRING* This);
 
     HRESULT(STDMETHODCALLTYPE* Invoke)
-    (__RPC__in __FIAsyncOperationCompletedHandler_1_HSTRING* This, /* [in] */ __RPC__in_opt __FIAsyncOperation_1_HSTRING* asyncInfo, /* [in] */ AsyncStatus status);
+    (__RPC__in __FIAsyncOperationCompletedHandler_1_HSTRING* This,
+     /* [in] */ __RPC__in_opt __FIAsyncOperation_1_HSTRING* asyncInfo,
+     /* [in] */ AsyncStatus status);
     END_INTERFACE
 } __FIAsyncOperationCompletedHandler_1_HSTRINGVtbl;
 
@@ -2799,11 +2901,13 @@ interface __FIAsyncOperationCompletedHandler_1_HSTRING
 };
 
 #ifdef COBJMACROS
-#define __FIAsyncOperationCompletedHandler_1_HSTRING_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIAsyncOperationCompletedHandler_1_HSTRING_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 #define __FIAsyncOperationCompletedHandler_1_HSTRING_AddRef(This) ((This)->lpVtbl->AddRef(This))
 #define __FIAsyncOperationCompletedHandler_1_HSTRING_Release(This) ((This)->lpVtbl->Release(This))
 
-#define __FIAsyncOperationCompletedHandler_1_HSTRING_Invoke(This, asyncInfo, status) ((This)->lpVtbl->Invoke(This, asyncInfo, status))
+#define __FIAsyncOperationCompletedHandler_1_HSTRING_Invoke(This, asyncInfo, status) \
+    ((This)->lpVtbl->Invoke(This, asyncInfo, status))
 #endif /* COBJMACROS */
 
 #endif // ____FIAsyncOperationCompletedHandler_1_HSTRING_INTERFACE_DEFINED__
@@ -2831,13 +2935,19 @@ typedef struct __FIAsyncOperation_1_HSTRINGVtbl
     (__RPC__in __FIAsyncOperation_1_HSTRING* This,
      /* [out] */ __RPC__out ULONG* iidCount,
      /* [size_is][size_is][out] */ __RPC__deref_out_ecount_full_opt(*iidCount) IID** iids);
-    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)(__RPC__in __FIAsyncOperation_1_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
-    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)(__RPC__in __FIAsyncOperation_1_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
+    HRESULT(STDMETHODCALLTYPE* GetRuntimeClassName)
+    (__RPC__in __FIAsyncOperation_1_HSTRING* This, /* [out] */ __RPC__deref_out_opt HSTRING* className);
+    HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
+    (__RPC__in __FIAsyncOperation_1_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propput] */ HRESULT(STDMETHODCALLTYPE* put_Completed)(__RPC__in __FIAsyncOperation_1_HSTRING* This, /* [in] */ __RPC__in_opt __FIAsyncOperationCompletedHandler_1_HSTRING* handler);
+    /* [propput] */ HRESULT(STDMETHODCALLTYPE* put_Completed)(
+        __RPC__in __FIAsyncOperation_1_HSTRING* This,
+        /* [in] */ __RPC__in_opt __FIAsyncOperationCompletedHandler_1_HSTRING* handler);
     /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Completed)(
-        __RPC__in __FIAsyncOperation_1_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt __FIAsyncOperationCompletedHandler_1_HSTRING** handler);
-    HRESULT(STDMETHODCALLTYPE* GetResults)(__RPC__in __FIAsyncOperation_1_HSTRING* This, /* [retval][out] */ __RPC__out HSTRING* results);
+        __RPC__in __FIAsyncOperation_1_HSTRING* This,
+        /* [retval][out] */ __RPC__deref_out_opt __FIAsyncOperationCompletedHandler_1_HSTRING** handler);
+    HRESULT(STDMETHODCALLTYPE* GetResults)
+    (__RPC__in __FIAsyncOperation_1_HSTRING* This, /* [retval][out] */ __RPC__out HSTRING* results);
     END_INTERFACE
 } __FIAsyncOperation_1_HSTRINGVtbl;
 
@@ -2847,12 +2957,14 @@ interface __FIAsyncOperation_1_HSTRING
 };
 
 #ifdef COBJMACROS
-#define __FIAsyncOperation_1_HSTRING_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __FIAsyncOperation_1_HSTRING_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 #define __FIAsyncOperation_1_HSTRING_AddRef(This) ((This)->lpVtbl->AddRef(This))
 #define __FIAsyncOperation_1_HSTRING_Release(This) ((This)->lpVtbl->Release(This))
 
 #define __FIAsyncOperation_1_HSTRING_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
-#define __FIAsyncOperation_1_HSTRING_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __FIAsyncOperation_1_HSTRING_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 #define __FIAsyncOperation_1_HSTRING_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __FIAsyncOperation_1_HSTRING_put_Completed(This, handler) ((This)->lpVtbl->put_Completed(This, handler))
@@ -2984,7 +3096,8 @@ interface __x_ABI_CComponent_CIParameters
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CIParameters_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CIParameters_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CIParameters_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -2992,9 +3105,11 @@ interface __x_ABI_CComponent_CIParameters
 
 #define __x_ABI_CComponent_CIParameters_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComponent_CIParameters_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComponent_CIParameters_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __x_ABI_CComponent_CIParameters_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __x_ABI_CComponent_CIParameters_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __x_ABI_CComponent_CIParameters_SetInt32(This, value) ((This)->lpVtbl->SetInt32(This, value))
 
@@ -3014,29 +3129,41 @@ interface __x_ABI_CComponent_CIParameters
 
 #define __x_ABI_CComponent_CIParameters_OutObject(This, value) ((This)->lpVtbl->OutObject(This, value))
 
-#define __x_ABI_CComponent_CIParameters_SetInt32Array(This, count, value) ((This)->lpVtbl->SetInt32Array(This, count, value))
+#define __x_ABI_CComponent_CIParameters_SetInt32Array(This, count, value) \
+    ((This)->lpVtbl->SetInt32Array(This, count, value))
 
-#define __x_ABI_CComponent_CIParameters_GetInt32Array(This, count, value) ((This)->lpVtbl->GetInt32Array(This, count, value))
+#define __x_ABI_CComponent_CIParameters_GetInt32Array(This, count, value) \
+    ((This)->lpVtbl->GetInt32Array(This, count, value))
 
-#define __x_ABI_CComponent_CIParameters_OutInt32Array(This, count, value) ((This)->lpVtbl->OutInt32Array(This, count, value))
+#define __x_ABI_CComponent_CIParameters_OutInt32Array(This, count, value) \
+    ((This)->lpVtbl->OutInt32Array(This, count, value))
 
-#define __x_ABI_CComponent_CIParameters_CopyInt32Array(This, count, value) ((This)->lpVtbl->CopyInt32Array(This, count, value))
+#define __x_ABI_CComponent_CIParameters_CopyInt32Array(This, count, value) \
+    ((This)->lpVtbl->CopyInt32Array(This, count, value))
 
-#define __x_ABI_CComponent_CIParameters_SetStringArray(This, count, value) ((This)->lpVtbl->SetStringArray(This, count, value))
+#define __x_ABI_CComponent_CIParameters_SetStringArray(This, count, value) \
+    ((This)->lpVtbl->SetStringArray(This, count, value))
 
-#define __x_ABI_CComponent_CIParameters_GetStringArray(This, count, value) ((This)->lpVtbl->GetStringArray(This, count, value))
+#define __x_ABI_CComponent_CIParameters_GetStringArray(This, count, value) \
+    ((This)->lpVtbl->GetStringArray(This, count, value))
 
-#define __x_ABI_CComponent_CIParameters_OutStringArray(This, count, value) ((This)->lpVtbl->OutStringArray(This, count, value))
+#define __x_ABI_CComponent_CIParameters_OutStringArray(This, count, value) \
+    ((This)->lpVtbl->OutStringArray(This, count, value))
 
-#define __x_ABI_CComponent_CIParameters_CopyStringArray(This, count, value) ((This)->lpVtbl->CopyStringArray(This, count, value))
+#define __x_ABI_CComponent_CIParameters_CopyStringArray(This, count, value) \
+    ((This)->lpVtbl->CopyStringArray(This, count, value))
 
-#define __x_ABI_CComponent_CIParameters_SetObjectArray(This, count, value) ((This)->lpVtbl->SetObjectArray(This, count, value))
+#define __x_ABI_CComponent_CIParameters_SetObjectArray(This, count, value) \
+    ((This)->lpVtbl->SetObjectArray(This, count, value))
 
-#define __x_ABI_CComponent_CIParameters_GetObjectArray(This, count, value) ((This)->lpVtbl->GetObjectArray(This, count, value))
+#define __x_ABI_CComponent_CIParameters_GetObjectArray(This, count, value) \
+    ((This)->lpVtbl->GetObjectArray(This, count, value))
 
-#define __x_ABI_CComponent_CIParameters_OutObjectArray(This, count, value) ((This)->lpVtbl->OutObjectArray(This, count, value))
+#define __x_ABI_CComponent_CIParameters_OutObjectArray(This, count, value) \
+    ((This)->lpVtbl->OutObjectArray(This, count, value))
 
-#define __x_ABI_CComponent_CIParameters_CopyObjectArray(This, count, value) ((This)->lpVtbl->CopyObjectArray(This, count, value))
+#define __x_ABI_CComponent_CIParameters_CopyObjectArray(This, count, value) \
+    ((This)->lpVtbl->CopyObjectArray(This, count, value))
 
 #endif /* COBJMACROS */
 
@@ -3183,7 +3310,8 @@ interface __x_ABI_CComponent_CIStructures
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CIStructures_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CIStructures_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CIStructures_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -3191,9 +3319,11 @@ interface __x_ABI_CComponent_CIStructures
 
 #define __x_ABI_CComponent_CIStructures_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComponent_CIStructures_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComponent_CIStructures_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __x_ABI_CComponent_CIStructures_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __x_ABI_CComponent_CIStructures_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __x_ABI_CComponent_CIStructures_Set(This, value) ((This)->lpVtbl->Set(This, value))
 
@@ -3265,7 +3395,8 @@ interface __x_ABI_CComponent_CICustomDelegate
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CICustomDelegate_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CICustomDelegate_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CICustomDelegate_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -3311,7 +3442,8 @@ interface __x_ABI_CComponent_CIReturnDelegate
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CIReturnDelegate_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CIReturnDelegate_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CIReturnDelegate_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -3358,7 +3490,8 @@ interface __x_ABI_CComponent_CITwoArgDelegate
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CITwoArgDelegate_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CITwoArgDelegate_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CITwoArgDelegate_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -3406,13 +3539,15 @@ interface __x_ABI_CComponent_CITwoArgDelegateReturn
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CITwoArgDelegateReturn_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CITwoArgDelegateReturn_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CITwoArgDelegateReturn_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
 #define __x_ABI_CComponent_CITwoArgDelegateReturn_Release(This) ((This)->lpVtbl->Release(This))
 
-#define __x_ABI_CComponent_CITwoArgDelegateReturn_Invoke(This, sender, args, result) ((This)->lpVtbl->Invoke(This, sender, args, result))
+#define __x_ABI_CComponent_CITwoArgDelegateReturn_Invoke(This, sender, args, result) \
+    ((This)->lpVtbl->Invoke(This, sender, args, result))
 
 #endif /* COBJMACROS */
 
@@ -3476,7 +3611,8 @@ interface __x_ABI_CComponent_CIEventsStatics
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CIEventsStatics_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CIEventsStatics_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CIEventsStatics_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -3484,13 +3620,17 @@ interface __x_ABI_CComponent_CIEventsStatics
 
 #define __x_ABI_CComponent_CIEventsStatics_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComponent_CIEventsStatics_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComponent_CIEventsStatics_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __x_ABI_CComponent_CIEventsStatics_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __x_ABI_CComponent_CIEventsStatics_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
-#define __x_ABI_CComponent_CIEventsStatics_add_StaticEvent(This, handler, cookie) ((This)->lpVtbl->add_StaticEvent(This, handler, cookie))
+#define __x_ABI_CComponent_CIEventsStatics_add_StaticEvent(This, handler, cookie) \
+    ((This)->lpVtbl->add_StaticEvent(This, handler, cookie))
 
-#define __x_ABI_CComponent_CIEventsStatics_remove_StaticEvent(This, cookie) ((This)->lpVtbl->remove_StaticEvent(This, cookie))
+#define __x_ABI_CComponent_CIEventsStatics_remove_StaticEvent(This, cookie) \
+    ((This)->lpVtbl->remove_StaticEvent(This, cookie))
 
 #define __x_ABI_CComponent_CIEventsStatics_RaiseStaticEvent(This, value) ((This)->lpVtbl->RaiseStaticEvent(This, value))
 
@@ -3576,7 +3716,8 @@ interface __x_ABI_CComponent_CIEvents
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CIEvents_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CIEvents_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CIEvents_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -3584,23 +3725,27 @@ interface __x_ABI_CComponent_CIEvents
 
 #define __x_ABI_CComponent_CIEvents_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComponent_CIEvents_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComponent_CIEvents_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
 #define __x_ABI_CComponent_CIEvents_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
-#define __x_ABI_CComponent_CIEvents_add_SimpleEvent(This, handler, cookie) ((This)->lpVtbl->add_SimpleEvent(This, handler, cookie))
+#define __x_ABI_CComponent_CIEvents_add_SimpleEvent(This, handler, cookie) \
+    ((This)->lpVtbl->add_SimpleEvent(This, handler, cookie))
 
 #define __x_ABI_CComponent_CIEvents_remove_SimpleEvent(This, cookie) ((This)->lpVtbl->remove_SimpleEvent(This, cookie))
 
 #define __x_ABI_CComponent_CIEvents_RaiseSimpleEvent(This, value) ((This)->lpVtbl->RaiseSimpleEvent(This, value))
 
-#define __x_ABI_CComponent_CIEvents_add_TypedEvent(This, handler, cookie) ((This)->lpVtbl->add_TypedEvent(This, handler, cookie))
+#define __x_ABI_CComponent_CIEvents_add_TypedEvent(This, handler, cookie) \
+    ((This)->lpVtbl->add_TypedEvent(This, handler, cookie))
 
 #define __x_ABI_CComponent_CIEvents_remove_TypedEvent(This, cookie) ((This)->lpVtbl->remove_TypedEvent(This, cookie))
 
 #define __x_ABI_CComponent_CIEvents_RaiseTypedEvent(This, value) ((This)->lpVtbl->RaiseTypedEvent(This, value))
 
-#define __x_ABI_CComponent_CIEvents_add_CustomEvent(This, handler, cookie) ((This)->lpVtbl->add_CustomEvent(This, handler, cookie))
+#define __x_ABI_CComponent_CIEvents_add_CustomEvent(This, handler, cookie) \
+    ((This)->lpVtbl->add_CustomEvent(This, handler, cookie))
 
 #define __x_ABI_CComponent_CIEvents_remove_CustomEvent(This, cookie) ((This)->lpVtbl->remove_CustomEvent(This, cookie))
 
@@ -3683,7 +3828,8 @@ interface __x_ABI_CComponent_CIStatic
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CIStatic_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CIStatic_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CIStatic_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -3691,11 +3837,13 @@ interface __x_ABI_CComponent_CIStatic
 
 #define __x_ABI_CComponent_CIStatic_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComponent_CIStatic_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComponent_CIStatic_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
 #define __x_ABI_CComponent_CIStatic_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
-#define __x_ABI_CComponent_CIStatic_add_StaticEvent(This, handler, cookie) ((This)->lpVtbl->add_StaticEvent(This, handler, cookie))
+#define __x_ABI_CComponent_CIStatic_add_StaticEvent(This, handler, cookie) \
+    ((This)->lpVtbl->add_StaticEvent(This, handler, cookie))
 
 #define __x_ABI_CComponent_CIStatic_remove_StaticEvent(This, cookie) ((This)->lpVtbl->remove_StaticEvent(This, cookie))
 
@@ -3785,7 +3933,8 @@ interface __x_ABI_CComponent_CIErrors
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CIErrors_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CIErrors_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CIErrors_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -3793,7 +3942,8 @@ interface __x_ABI_CComponent_CIErrors
 
 #define __x_ABI_CComponent_CIErrors_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComponent_CIErrors_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComponent_CIErrors_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
 #define __x_ABI_CComponent_CIErrors_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
@@ -3928,7 +4078,8 @@ interface __x_ABI_CComponent_CIFastInput
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CIFastInput_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CIFastInput_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CIFastInput_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -3936,7 +4087,8 @@ interface __x_ABI_CComponent_CIFastInput
 
 #define __x_ABI_CComponent_CIFastInput_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComponent_CIFastInput_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComponent_CIFastInput_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
 #define __x_ABI_CComponent_CIFastInput_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
@@ -3958,9 +4110,11 @@ interface __x_ABI_CComponent_CIFastInput
 
 #define __x_ABI_CComponent_CIFastInput_IterableAsync(This, _in, _out) ((This)->lpVtbl->IterableAsync(This, _in, _out))
 
-#define __x_ABI_CComponent_CIFastInput_VectorViewAsync(This, _in, _out) ((This)->lpVtbl->VectorViewAsync(This, _in, _out))
+#define __x_ABI_CComponent_CIFastInput_VectorViewAsync(This, _in, _out) \
+    ((This)->lpVtbl->VectorViewAsync(This, _in, _out))
 
-#define __x_ABI_CComponent_CIFastInput_IterablePairAsync(This, _in, _out) ((This)->lpVtbl->IterablePairAsync(This, _in, _out))
+#define __x_ABI_CComponent_CIFastInput_IterablePairAsync(This, _in, _out) \
+    ((This)->lpVtbl->IterablePairAsync(This, _in, _out))
 
 #define __x_ABI_CComponent_CIFastInput_MapViewAsync(This, _in, _out) ((This)->lpVtbl->MapViewAsync(This, _in, _out))
 
@@ -4046,17 +4200,21 @@ interface __x_ABI_CComponent_CIFastInputVectorFactory
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CIFastInputVectorFactory_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CIFastInputVectorFactory_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CIFastInputVectorFactory_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
 #define __x_ABI_CComponent_CIFastInputVectorFactory_Release(This) ((This)->lpVtbl->Release(This))
 
-#define __x_ABI_CComponent_CIFastInputVectorFactory_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
+#define __x_ABI_CComponent_CIFastInputVectorFactory_GetIids(This, iidCount, iids) \
+    ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComponent_CIFastInputVectorFactory_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComponent_CIFastInputVectorFactory_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __x_ABI_CComponent_CIFastInputVectorFactory_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __x_ABI_CComponent_CIFastInputVectorFactory_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __x_ABI_CComponent_CIFastInputVectorFactory_Create(This, _in, _out) ((This)->lpVtbl->Create(This, _in, _out))
 
@@ -4134,17 +4292,21 @@ interface __x_ABI_CComponent_CIFastInputMapFactory
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CIFastInputMapFactory_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CIFastInputMapFactory_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CIFastInputMapFactory_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
 #define __x_ABI_CComponent_CIFastInputMapFactory_Release(This) ((This)->lpVtbl->Release(This))
 
-#define __x_ABI_CComponent_CIFastInputMapFactory_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
+#define __x_ABI_CComponent_CIFastInputMapFactory_GetIids(This, iidCount, iids) \
+    ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComponent_CIFastInputMapFactory_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComponent_CIFastInputMapFactory_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __x_ABI_CComponent_CIFastInputMapFactory_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __x_ABI_CComponent_CIFastInputMapFactory_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __x_ABI_CComponent_CIFastInputMapFactory_Create(This, _in, _out) ((This)->lpVtbl->Create(This, _in, _out))
 
@@ -4247,7 +4409,8 @@ interface __x_ABI_CComponent_CICustomBase
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComponent_CICustomBase_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComponent_CICustomBase_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComponent_CICustomBase_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -4255,11 +4418,14 @@ interface __x_ABI_CComponent_CICustomBase
 
 #define __x_ABI_CComponent_CICustomBase_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComponent_CICustomBase_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComponent_CICustomBase_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __x_ABI_CComponent_CICustomBase_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __x_ABI_CComponent_CICustomBase_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
-#define __x_ABI_CComponent_CICustomBase_CustomVirtualMethod(This, value) ((This)->lpVtbl->CustomVirtualMethod(This, value))
+#define __x_ABI_CComponent_CICustomBase_CustomVirtualMethod(This, value) \
+    ((This)->lpVtbl->CustomVirtualMethod(This, value))
 
 #endif /* COBJMACROS */
 

@@ -2,8 +2,9 @@
 namespace winrt::impl
 {
     template <typename K, typename V, typename Container>
-    struct input_map_view : implements<input_map_view<K, V, Container>, non_agile, no_weak_ref, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
-                            map_view_base<input_map_view<K, V, Container>, K, V>
+    struct input_map_view
+        : implements<input_map_view<K, V, Container>, non_agile, no_weak_ref, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+          map_view_base<input_map_view<K, V, Container>, K, V>
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
@@ -21,9 +22,10 @@ namespace winrt::impl
     };
 
     template <typename K, typename V, typename Container>
-    struct scoped_input_map_view : input_scope,
-                                   implements<scoped_input_map_view<K, V, Container>, non_agile, no_weak_ref, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
-                                   map_view_base<scoped_input_map_view<K, V, Container>, K, V>
+    struct scoped_input_map_view
+        : input_scope,
+          implements<scoped_input_map_view<K, V, Container>, non_agile, no_weak_ref, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+          map_view_base<scoped_input_map_view<K, V, Container>, K, V>
     {
         void abi_enter() const
         {
@@ -83,7 +85,8 @@ WINRT_EXPORT namespace winrt::param
             attach_abi(m_pair.first, winrt::get_abi(values));
         }
 
-        template <typename Collection, std::enable_if_t<std::is_convertible_v<Collection, interface_type>, int> = 0> map_view(Collection const& values) noexcept
+        template <typename Collection, std::enable_if_t<std::is_convertible_v<Collection, interface_type>, int> = 0>
+        map_view(Collection const& values) noexcept
         {
             m_pair.first = values;
         }
@@ -157,7 +160,8 @@ WINRT_EXPORT namespace winrt::param
             attach_abi(m_interface, winrt::get_abi(values));
         }
 
-        template <typename Collection, std::enable_if_t<std::is_convertible_v<Collection, interface_type>, int> = 0> async_map_view(Collection const& values) noexcept
+        template <typename Collection, std::enable_if_t<std::is_convertible_v<Collection, interface_type>, int> = 0>
+        async_map_view(Collection const& values) noexcept
         {
             m_interface = values;
         }

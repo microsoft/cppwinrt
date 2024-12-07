@@ -102,13 +102,16 @@ WINRT_EXPORT namespace winrt
             }
         }
 
-        template <typename T> bool wait_for(slim_mutex& x, std::chrono::high_resolution_clock::duration const timeout, T predicate)
+        template <typename T>
+        bool wait_for(slim_mutex& x, std::chrono::high_resolution_clock::duration const timeout, T predicate)
         {
             auto const until = std::chrono::high_resolution_clock::now() + timeout;
 
             while (!predicate())
             {
-                auto const milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(until - std::chrono::high_resolution_clock::now()).count();
+                auto const milliseconds =
+                    std::chrono::duration_cast<std::chrono::milliseconds>(until - std::chrono::high_resolution_clock::now())
+                        .count();
 
                 if (milliseconds <= 0)
                 {

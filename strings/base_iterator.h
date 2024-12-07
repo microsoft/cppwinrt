@@ -142,7 +142,8 @@ namespace winrt::impl
         static constexpr bool value = get_value<T>(0);
     };
 
-    template <typename T, std::enable_if_t<!has_GetAt<T>::value, int> = 0> auto get_begin_iterator(T const& collection) -> decltype(collection.First())
+    template <typename T, std::enable_if_t<!has_GetAt<T>::value, int> = 0>
+    auto get_begin_iterator(T const& collection) -> decltype(collection.First())
     {
         auto result = collection.First();
 
@@ -160,12 +161,14 @@ namespace winrt::impl
         return {};
     }
 
-    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0> fast_iterator<T> get_begin_iterator(T const& collection) noexcept
+    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
+    fast_iterator<T> get_begin_iterator(T const& collection) noexcept
     {
         return { collection, 0 };
     }
 
-    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0> fast_iterator<T> get_end_iterator(T const& collection)
+    template <typename T, std::enable_if_t<has_GetAt<T>::value, int> = 0>
+    fast_iterator<T> get_end_iterator(T const& collection)
     {
         return { collection, collection.Size() };
     }

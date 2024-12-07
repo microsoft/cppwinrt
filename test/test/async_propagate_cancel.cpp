@@ -152,9 +152,5 @@ TEST_CASE("async_propagate_cancel")
     Check(Operation);
     Check(OperationWithProgress);
     Check(DelayAction);
-    Check(
-        []
-        {
-            return ActionAction(10);
-        });
+    Check([] { return ActionAction(10); });
 }

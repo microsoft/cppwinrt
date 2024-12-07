@@ -585,7 +585,8 @@ interface __x_ABI_CComposable_CIBase
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComposable_CIBase_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComposable_CIBase_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComposable_CIBase_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -593,15 +594,18 @@ interface __x_ABI_CComposable_CIBase
 
 #define __x_ABI_CComposable_CIBase_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComposable_CIBase_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComposable_CIBase_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
 #define __x_ABI_CComposable_CIBase_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __x_ABI_CComposable_CIBase_VirtualMethod(This, value) ((This)->lpVtbl->VirtualMethod(This, value))
 
-#define __x_ABI_CComposable_CIBase_CallOverridableMethod(This, value) ((This)->lpVtbl->CallOverridableMethod(This, value))
+#define __x_ABI_CComposable_CIBase_CallOverridableMethod(This, value) \
+    ((This)->lpVtbl->CallOverridableMethod(This, value))
 
-#define __x_ABI_CComposable_CIBase_CallOverridableVirtualMethod(This, value) ((This)->lpVtbl->CallOverridableVirtualMethod(This, value))
+#define __x_ABI_CComposable_CIBase_CallOverridableVirtualMethod(This, value) \
+    ((This)->lpVtbl->CallOverridableVirtualMethod(This, value))
 
 #define __x_ABI_CComposable_CIBase_get_Name(This, value) ((This)->lpVtbl->get_Name(This, value))
 
@@ -668,7 +672,8 @@ interface __x_ABI_CComposable_CIBaseFactory
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComposable_CIBaseFactory_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComposable_CIBaseFactory_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComposable_CIBaseFactory_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -676,11 +681,14 @@ interface __x_ABI_CComposable_CIBaseFactory
 
 #define __x_ABI_CComposable_CIBaseFactory_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComposable_CIBaseFactory_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComposable_CIBaseFactory_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __x_ABI_CComposable_CIBaseFactory_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __x_ABI_CComposable_CIBaseFactory_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
-#define __x_ABI_CComposable_CIBaseFactory_CreateInstance(This, outer, inner, instance) ((This)->lpVtbl->CreateInstance(This, outer, inner, instance))
+#define __x_ABI_CComposable_CIBaseFactory_CreateInstance(This, outer, inner, instance) \
+    ((This)->lpVtbl->CreateInstance(This, outer, inner, instance))
 
 #define __x_ABI_CComposable_CIBaseFactory_CreateInstanceWithName(This, name, outer, inner, instance) \
     ((This)->lpVtbl->CreateInstanceWithName(This, name, outer, inner, instance))
@@ -743,21 +751,27 @@ interface __x_ABI_CComposable_CIBaseOverrides
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComposable_CIBaseOverrides_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComposable_CIBaseOverrides_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComposable_CIBaseOverrides_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
 #define __x_ABI_CComposable_CIBaseOverrides_Release(This) ((This)->lpVtbl->Release(This))
 
-#define __x_ABI_CComposable_CIBaseOverrides_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
+#define __x_ABI_CComposable_CIBaseOverrides_GetIids(This, iidCount, iids) \
+    ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComposable_CIBaseOverrides_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComposable_CIBaseOverrides_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __x_ABI_CComposable_CIBaseOverrides_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __x_ABI_CComposable_CIBaseOverrides_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
-#define __x_ABI_CComposable_CIBaseOverrides_OverridableMethod(This, value) ((This)->lpVtbl->OverridableMethod(This, value))
+#define __x_ABI_CComposable_CIBaseOverrides_OverridableMethod(This, value) \
+    ((This)->lpVtbl->OverridableMethod(This, value))
 
-#define __x_ABI_CComposable_CIBaseOverrides_OverridableVirtualMethod(This, value) ((This)->lpVtbl->OverridableVirtualMethod(This, value))
+#define __x_ABI_CComposable_CIBaseOverrides_OverridableVirtualMethod(This, value) \
+    ((This)->lpVtbl->OverridableVirtualMethod(This, value))
 
 #endif /* COBJMACROS */
 
@@ -811,7 +825,8 @@ interface __x_ABI_CComposable_CIDerived
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComposable_CIDerived_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComposable_CIDerived_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComposable_CIDerived_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
@@ -819,7 +834,8 @@ interface __x_ABI_CComposable_CIDerived
 
 #define __x_ABI_CComposable_CIDerived_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComposable_CIDerived_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComposable_CIDerived_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
 #define __x_ABI_CComposable_CIDerived_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
@@ -886,19 +902,24 @@ interface __x_ABI_CComposable_CIDerivedFactory
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComposable_CIDerivedFactory_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComposable_CIDerivedFactory_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComposable_CIDerivedFactory_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
 #define __x_ABI_CComposable_CIDerivedFactory_Release(This) ((This)->lpVtbl->Release(This))
 
-#define __x_ABI_CComposable_CIDerivedFactory_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
+#define __x_ABI_CComposable_CIDerivedFactory_GetIids(This, iidCount, iids) \
+    ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComposable_CIDerivedFactory_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComposable_CIDerivedFactory_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __x_ABI_CComposable_CIDerivedFactory_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __x_ABI_CComposable_CIDerivedFactory_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
-#define __x_ABI_CComposable_CIDerivedFactory_CreateInstance(This, outer, inner, instance) ((This)->lpVtbl->CreateInstance(This, outer, inner, instance))
+#define __x_ABI_CComposable_CIDerivedFactory_CreateInstance(This, outer, inner, instance) \
+    ((This)->lpVtbl->CreateInstance(This, outer, inner, instance))
 
 #define __x_ABI_CComposable_CIDerivedFactory_CreateInstanceWithName(This, name, outer, inner, instance) \
     ((This)->lpVtbl->CreateInstanceWithName(This, name, outer, inner, instance))
@@ -1030,17 +1051,21 @@ interface __x_ABI_CComposable_CITestStructCodeGen
 };
 
 #ifdef COBJMACROS
-#define __x_ABI_CComposable_CITestStructCodeGen_QueryInterface(This, riid, ppvObject) ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
+#define __x_ABI_CComposable_CITestStructCodeGen_QueryInterface(This, riid, ppvObject) \
+    ((This)->lpVtbl->QueryInterface(This, riid, ppvObject))
 
 #define __x_ABI_CComposable_CITestStructCodeGen_AddRef(This) ((This)->lpVtbl->AddRef(This))
 
 #define __x_ABI_CComposable_CITestStructCodeGen_Release(This) ((This)->lpVtbl->Release(This))
 
-#define __x_ABI_CComposable_CITestStructCodeGen_GetIids(This, iidCount, iids) ((This)->lpVtbl->GetIids(This, iidCount, iids))
+#define __x_ABI_CComposable_CITestStructCodeGen_GetIids(This, iidCount, iids) \
+    ((This)->lpVtbl->GetIids(This, iidCount, iids))
 
-#define __x_ABI_CComposable_CITestStructCodeGen_GetRuntimeClassName(This, className) ((This)->lpVtbl->GetRuntimeClassName(This, className))
+#define __x_ABI_CComposable_CITestStructCodeGen_GetRuntimeClassName(This, className) \
+    ((This)->lpVtbl->GetRuntimeClassName(This, className))
 
-#define __x_ABI_CComposable_CITestStructCodeGen_GetTrustLevel(This, trustLevel) ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
+#define __x_ABI_CComposable_CITestStructCodeGen_GetTrustLevel(This, trustLevel) \
+    ((This)->lpVtbl->GetTrustLevel(This, trustLevel))
 
 #define __x_ABI_CComposable_CITestStructCodeGen_Test1(This, a, b, result) ((This)->lpVtbl->Test1(This, a, b, result))
 

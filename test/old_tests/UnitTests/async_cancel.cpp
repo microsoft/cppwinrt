@@ -21,11 +21,7 @@ namespace
     {
         auto cancel = co_await get_cancellation_token();
 
-        cancel.callback(
-            []
-            {
-                REQUIRE(false);
-            });
+        cancel.callback([] { REQUIRE(false); });
 
         co_return;
     }
@@ -36,11 +32,7 @@ namespace
         auto cancel = co_await get_cancellation_token();
         REQUIRE(!signaled(callback));
 
-        cancel.callback(
-            [&]
-            {
-                SetEvent(callback.get());
-            });
+        cancel.callback([&] { SetEvent(callback.get()); });
 
         REQUIRE(signaled(callback));
         SetEvent(end.get());
@@ -51,11 +43,7 @@ namespace
         auto cancel = co_await get_cancellation_token();
         REQUIRE(!signaled(callback));
 
-        cancel.callback(
-            [&]
-            {
-                SetEvent(callback.get());
-            });
+        cancel.callback([&] { SetEvent(callback.get()); });
 
         REQUIRE(!signaled(callback));
         co_await resume_on_signal(end.get());
@@ -105,7 +93,9 @@ namespace
     struct foreign_canceled_action : foreign_canceled_async<foreign_canceled_action, IAsyncAction>
     {};
 
-    template <typename TResult> struct foreign_canceled_operation : foreign_canceled_async<foreign_canceled_operation<TResult>, IAsyncOperation<TResult>>
+    template <typename TResult>
+    struct foreign_canceled_operation
+        : foreign_canceled_async<foreign_canceled_operation<TResult>, IAsyncOperation<TResult>>
     {};
 } // namespace
 
@@ -174,10 +164,14 @@ TEST_CASE("async_cancel_use_status")
         REQUIRE_THROWS_AS(co_await make<foreign_canceled_operation<int32_t>>(), hresult_canceled);
 
         REQUIRE_THROWS_AS(co_await when_any(make<foreign_canceled_action>(), make<foreign_canceled_action>()), hresult_canceled);
-        REQUIRE_THROWS_AS(co_await when_any(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()), hresult_canceled);
+        REQUIRE_THROWS_AS(
+            co_await when_any(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()),
+            hresult_canceled);
 
         REQUIRE_THROWS_AS(co_await when_all(make<foreign_canceled_action>(), make<foreign_canceled_action>()), hresult_canceled);
-        REQUIRE_THROWS_AS(co_await when_all(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()), hresult_canceled);
+        REQUIRE_THROWS_AS(
+            co_await when_all(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()),
+            hresult_canceled);
 
         SetEvent(complete);
     }(complete.get());
@@ -188,8 +182,10 @@ TEST_CASE("async_cancel_use_status")
     REQUIRE_THROWS_AS(make<foreign_canceled_operation<int>>().get(), hresult_canceled);
 
     REQUIRE_THROWS_AS(when_any(make<foreign_canceled_action>(), make<foreign_canceled_action>()).get(), hresult_canceled);
-    REQUIRE_THROWS_AS(when_any(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()).get(), hresult_canceled);
+    REQUIRE_THROWS_AS(
+        when_any(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()).get(), hresult_canceled);
 
     REQUIRE_THROWS_AS(when_all(make<foreign_canceled_action>(), make<foreign_canceled_action>()).get(), hresult_canceled);
-    REQUIRE_THROWS_AS(when_all(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()).get(), hresult_canceled);
+    REQUIRE_THROWS_AS(
+        when_all(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()).get(), hresult_canceled);
 }

@@ -6,13 +6,16 @@ namespace winrt::impl
         template <typename I, typename... Args>
         static I CreateInstance(const Windows::Foundation::IInspectable& outer, Windows::Foundation::IInspectable& inner, Args&&... args)
         {
-            static_assert(std::is_base_of_v<Windows::Foundation::IInspectable, I>, "Requested interface must derive from winrt::Windows::Foundation::IInspectable");
+            static_assert(
+                std::is_base_of_v<Windows::Foundation::IInspectable, I>,
+                "Requested interface must derive from winrt::Windows::Foundation::IInspectable");
             inner = CreateInstanceImpl(outer, std::forward<Args>(args)...);
             return inner.as<I>();
         }
 
     private:
-        template <typename... Args> static Windows::Foundation::IInspectable CreateInstanceImpl(const Windows::Foundation::IInspectable& outer, Args&&... args)
+        template <typename... Args>
+        static Windows::Foundation::IInspectable CreateInstanceImpl(const Windows::Foundation::IInspectable& outer, Args&&... args)
         {
             // Very specific dance here. The return value must have a ref on the outer, while inner must have a ref count of 1.
             // Be sure not to make a delegating QueryInterface call because the controlling outer is not fully constructed yet.

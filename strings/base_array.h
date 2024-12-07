@@ -68,7 +68,8 @@ WINRT_EXPORT namespace winrt
         {}
 
         template <typename OtherType>
-        array_view(array_view<OtherType> const& other, std::enable_if_t<std::is_convertible_v<OtherType (*)[], T (*)[]>, int> = 0) noexcept :
+        array_view(array_view<OtherType> const& other, std::enable_if_t<std::is_convertible_v<OtherType (*)[], T (*)[]>, int> = 0) noexcept
+            :
             array_view(other.data(), other.size())
         {}
 
@@ -210,13 +211,17 @@ WINRT_EXPORT namespace winrt
     private:
         template <typename C> auto data(std::vector<C> const& value) noexcept
         {
-            static_assert(!std::is_same_v<C, bool>, "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
+            static_assert(
+                !std::is_same_v<C, bool>,
+                "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
             return value.data();
         }
 
         template <typename C> auto data(std::vector<C>& value) noexcept
         {
-            static_assert(!std::is_same_v<C, bool>, "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
+            static_assert(
+                !std::is_same_v<C, bool>,
+                "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
             return value.data();
         }
     };
@@ -264,7 +269,8 @@ WINRT_EXPORT namespace winrt
             std::uninitialized_fill_n(this->m_data, count, value);
         }
 
-        template <typename InIt, typename = std::void_t<typename std::iterator_traits<InIt>::difference_type>> com_array(InIt first, InIt last)
+        template <typename InIt, typename = std::void_t<typename std::iterator_traits<InIt>::difference_type>>
+        com_array(InIt first, InIt last)
         {
             alloc(static_cast<size_type>(std::distance(first, last)));
             std::uninitialized_copy(first, last, this->begin());
@@ -397,7 +403,8 @@ WINRT_EXPORT namespace winrt
 
     namespace impl
     {
-        template <typename T, typename U> inline constexpr bool array_comparable = std::is_same_v<std::remove_cv_t<T>, std::remove_cv_t<U>>;
+        template <typename T, typename U>
+        inline constexpr bool array_comparable = std::is_same_v<std::remove_cv_t<T>, std::remove_cv_t<U>>;
     }
 
     template <typename T, typename U, std::enable_if_t<impl::array_comparable<T, U>, int> = 0>

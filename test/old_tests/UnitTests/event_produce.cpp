@@ -44,7 +44,8 @@ struct MemberHandler
 MemberHandler handler_object;
 TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> member_delegate(&handler_object, &MemberHandler::handler);
 
-TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> lambda_delegate = [](const DisplayInformation& sender, const Windows::Foundation::IInspectable& args)
+TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> lambda_delegate =
+    [](const DisplayInformation& sender, const Windows::Foundation::IInspectable& args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == nullptr);

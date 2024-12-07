@@ -194,13 +194,7 @@ TEST_CASE("visit properties")
     };
 
     reflect::for_each_property<PropertyTests>(visitor);
-    std::sort(
-        props.begin(),
-        props.end(),
-        [](auto const& lhs, auto const& rhs)
-        {
-            return lhs->name() < rhs->name();
-        });
+    std::sort(props.begin(), props.end(), [](auto const& lhs, auto const& rhs) { return lhs->name() < rhs->name(); });
 
     checker(props);
 }

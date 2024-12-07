@@ -1,7 +1,9 @@
 
 WINRT_EXPORT namespace winrt
 {
-    hresult check_hresult(hresult const result, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current());
+    hresult check_hresult(
+        hresult const result,
+        winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current());
     hresult to_hresult() noexcept;
 
     template <typename D, typename I> D* get_self(I const& from) noexcept;
@@ -99,14 +101,17 @@ namespace winrt::impl
 #if !defined(__MINGW32__) && defined(__clang__) && !WINRT_IMPL_HAS_DECLSPEC_UUID
         static_assert(std::is_void_v<T> /* dependent_false */, "To use classic COM interfaces, you must compile with -fms-extensions.");
 #elif !defined(WINRT_IMPL_IUNKNOWN_DEFINED)
-        static_assert(std::is_void_v<T> /* dependent_false */, "To use classic COM interfaces, you must include <unknwn.h> before including C++/WinRT headers.");
+        static_assert(
+            std::is_void_v<T> /* dependent_false */,
+            "To use classic COM interfaces, you must include <unknwn.h> before including C++/WinRT headers.");
 #else // MSVC won't hit this struct, so we can safely assume everything that isn't Clang isn't supported
         static_assert(std::is_void_v<T> /* dependent_false */, "Classic COM interfaces are not supported with this compiler.");
 #endif
     };
 
     template <typename T>
-#if (defined(_MSC_VER) && !defined(__clang__)) || ((WINRT_IMPL_HAS_DECLSPEC_UUID || defined(__MINGW32__)) && defined(WINRT_IMPL_IUNKNOWN_DEFINED))
+#if (defined(_MSC_VER) && !defined(__clang__)) || \
+    ((WINRT_IMPL_HAS_DECLSPEC_UUID || defined(__MINGW32__)) && defined(WINRT_IMPL_IUNKNOWN_DEFINED))
     inline constexpr guid guid_v{ __uuidof(T) };
 #else
     inline constexpr guid guid_v = classic_com_guid_error<T>::value;
@@ -201,7 +206,8 @@ namespace winrt::impl
 
     template <typename D, typename I> struct produce;
 
-    template <typename D> struct produce<D, Windows::Foundation::IInspectable> : produce_base<D, Windows::Foundation::IInspectable>
+    template <typename D>
+    struct produce<D, Windows::Foundation::IInspectable> : produce_base<D, Windows::Foundation::IInspectable>
     {};
 
     template <typename T> struct wrapped_type
@@ -232,7 +238,8 @@ namespace winrt::impl
     };
 
     template <typename... List1, typename... List2, typename... Rest>
-    struct typelist_concat<winrt::impl::typelist<List1...>, winrt::impl::typelist<List2...>, Rest...> : typelist_concat<winrt::impl::typelist<List1..., List2...>, Rest...>
+    struct typelist_concat<winrt::impl::typelist<List1...>, winrt::impl::typelist<List2...>, Rest...>
+        : typelist_concat<winrt::impl::typelist<List1..., List2...>, Rest...>
     {};
 
     template <typename T> struct for_each;

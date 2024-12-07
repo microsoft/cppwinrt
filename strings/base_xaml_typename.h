@@ -120,7 +120,8 @@ WINRT_EXPORT namespace winrt
     template <typename T> inline Windows::UI::Xaml::Interop::TypeName xaml_typename()
     {
         static_assert(impl::has_category_v<T>, "T must be WinRT type.");
-        static const Windows::UI::Xaml::Interop::TypeName name{ hstring{ impl::xaml_typename_name<T>::value() }, impl::xaml_typename_kind<T>::value };
+        static const Windows::UI::Xaml::Interop::TypeName name{ hstring{ impl::xaml_typename_name<T>::value() },
+                                                                impl::xaml_typename_kind<T>::value };
         return name;
     }
 }

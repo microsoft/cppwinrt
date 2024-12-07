@@ -65,24 +65,9 @@ namespace
         values.Clear();
         compare(values, {});
 
-        test_invalidation(
-            values,
-            [&]
-            {
-                values.Clear();
-            });
-        test_invalidation(
-            values,
-            [&]
-            {
-                values.Remove(1);
-            });
-        test_invalidation(
-            values,
-            [&]
-            {
-                values.Insert(1, 10);
-            });
+        test_invalidation(values, [&] { values.Clear(); });
+        test_invalidation(values, [&] { values.Remove(1); });
+        test_invalidation(values, [&] { values.Insert(1, 10); });
     }
 } // namespace
 

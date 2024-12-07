@@ -38,7 +38,7 @@ namespace cppwinrt
         { "brackets", 0, 0 },        // Use angle brackets for #includes (defaults to quotes)
         { "fastabi", 0, 0 },         // Enable support for the Fast ABI
         { "ignore_velocity", 0, 0 }, // Ignore feature staging metadata and always include implementations
-        { "synchronous", 0, 0 },     // Instructs cppwinrt to run on a single thread to avoid file system issues in batch builds
+        { "synchronous", 0, 0 }, // Instructs cppwinrt to run on a single thread to avoid file system issues in batch builds
     };
 
     static void print_usage(writer& w)
@@ -208,13 +208,8 @@ Where <spec> is one or more of:
 
         for (auto file : settings.input)
         {
-            auto db = std::find_if(
-                c.databases().begin(),
-                c.databases().end(),
-                [&](auto&& db)
-                {
-                    return db.path() == file;
-                });
+            auto db =
+                std::find_if(c.databases().begin(), c.databases().end(), [&](auto&& db) { return db.path() == file; });
 
             for (auto&& type : db->TypeDef)
             {

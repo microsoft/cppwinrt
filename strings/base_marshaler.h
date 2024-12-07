@@ -39,7 +39,8 @@ namespace winrt::impl
                 return remaining;
             }
 
-            int32_t __stdcall GetUnmarshalClass(guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, guid* pCid) noexcept final
+            int32_t __stdcall GetUnmarshalClass(
+                guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, guid* pCid) noexcept final
             {
                 if (m_marshaler)
                 {
@@ -49,7 +50,8 @@ namespace winrt::impl
                 return error_bad_alloc;
             }
 
-            int32_t __stdcall GetMarshalSizeMax(guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, uint32_t* pSize) noexcept final
+            int32_t __stdcall GetMarshalSizeMax(
+                guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, uint32_t* pSize) noexcept final
             {
                 if (m_marshaler)
                 {
@@ -59,7 +61,8 @@ namespace winrt::impl
                 return error_bad_alloc;
             }
 
-            int32_t __stdcall MarshalInterface(void* pStm, guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags) noexcept final
+            int32_t __stdcall MarshalInterface(
+                void* pStm, guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags) noexcept final
             {
                 if (m_marshaler)
                 {

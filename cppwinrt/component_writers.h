@@ -153,7 +153,12 @@ void* __stdcall %_get_activation_factory([[maybe_unused]] std::wstring_view cons
 }
 )";
 
-        w.write(format, bind_each<write_component_include>(classes), settings.component_lib, settings.component_lib, bind_each<write_component_activation>(classes));
+        w.write(
+            format,
+            bind_each<write_component_include>(classes),
+            settings.component_lib,
+            settings.component_lib,
+            bind_each<write_component_activation>(classes));
 
         if (settings.component_lib != "winrt")
         {
@@ -252,7 +257,12 @@ catch (...) { return winrt::to_hresult(); }
         std::rotate(params.begin(), params.end() - 2, params.end());
         w.param_names = true;
 
-        w.write(format, get_name(method), bind<write_implementation_params>(signature), signature.return_signature(), bind<write_consume_args>(reordered_method));
+        w.write(
+            format,
+            get_name(method),
+            bind<write_implementation_params>(signature),
+            signature.return_signature(),
+            bind<write_consume_args>(reordered_method));
     }
 
     static void write_component_constructor_forwarder(writer& w, MethodDef const& method)
@@ -399,7 +409,15 @@ catch (...) { return winrt::to_hresult(); }
     }
 )";
 
-                        w.write(format, type_name, type_name, bind<write_consume_params>(signature), type_name, type_namespace, type_name, bind<write_consume_args>(signature));
+                        w.write(
+                            format,
+                            type_name,
+                            type_name,
+                            bind<write_consume_params>(signature),
+                            type_name,
+                            type_namespace,
+                            type_name,
+                            bind<write_consume_args>(signature));
                     }
                 }
             }
@@ -417,7 +435,15 @@ catch (...) { return winrt::to_hresult(); }
     }
 )";
 
-                    w.write(format, type_name, type_name, bind<write_consume_params>(signature), type_name, type_namespace, type_name, bind<write_consume_args>(signature));
+                    w.write(
+                        format,
+                        type_name,
+                        type_name,
+                        bind<write_consume_params>(signature),
+                        type_name,
+                        type_namespace,
+                        type_name,
+                        bind<write_consume_args>(signature));
                 }
             }
             else if (factory.statics)
@@ -867,13 +893,7 @@ namespace winrt::@::implementation
 
             std::string upper(type_name);
             std::transform(
-                upper.begin(),
-                upper.end(),
-                upper.begin(),
-                [](char c)
-                {
-                    return static_cast<char>(::toupper(c));
-                });
+                upper.begin(), upper.end(), upper.begin(), [](char c) { return static_cast<char>(::toupper(c)); });
 
             auto include_path = get_generated_component_filename(type);
 
@@ -940,7 +960,12 @@ namespace winrt::@::implementation
                     w.async_types = signature.is_async();
                     auto method_name = get_name(method);
 
-                    w.write("        static % %(%)%;\n", signature.return_signature(), method_name, bind<write_implementation_params>(signature), is_noexcept(method) ? " noexcept" : "");
+                    w.write(
+                        "        static % %(%)%;\n",
+                        signature.return_signature(),
+                        method_name,
+                        bind<write_implementation_params>(signature),
+                        is_noexcept(method) ? " noexcept" : "");
                 }
             }
         }
@@ -952,7 +977,8 @@ namespace winrt::@::implementation
                 continue;
             }
 
-            w.generic_param_stack.insert(w.generic_param_stack.end(), info.generic_param_stack.begin(), info.generic_param_stack.end());
+            w.generic_param_stack.insert(
+                w.generic_param_stack.end(), info.generic_param_stack.begin(), info.generic_param_stack.end());
 
             for (auto&& method : info.type.MethodList())
             {
@@ -960,7 +986,12 @@ namespace winrt::@::implementation
                 w.async_types = signature.is_async();
                 auto method_name = get_name(method);
 
-                w.write("        % %(%)%;\n", signature.return_signature(), method_name, bind<write_implementation_params>(signature), is_noexcept(method) ? " noexcept" : "");
+                w.write(
+                    "        % %(%)%;\n",
+                    signature.return_signature(),
+                    method_name,
+                    bind<write_implementation_params>(signature),
+                    is_noexcept(method) ? " noexcept" : "");
             }
 
             w.generic_param_stack.resize(w.generic_param_stack.size() - info.generic_param_stack.size());
@@ -1094,7 +1125,13 @@ namespace winrt::@::implementation
                     w.async_types = signature.is_async();
                     auto method_name = get_name(method);
 
-                    w.write(format, signature.return_signature(), type_name, method_name, bind<write_implementation_params>(signature), is_noexcept(method) ? " noexcept" : "");
+                    w.write(
+                        format,
+                        signature.return_signature(),
+                        type_name,
+                        method_name,
+                        bind<write_implementation_params>(signature),
+                        is_noexcept(method) ? " noexcept" : "");
                 }
             }
         }
@@ -1106,7 +1143,8 @@ namespace winrt::@::implementation
                 continue;
             }
 
-            w.generic_param_stack.insert(w.generic_param_stack.end(), info.generic_param_stack.begin(), info.generic_param_stack.end());
+            w.generic_param_stack.insert(
+                w.generic_param_stack.end(), info.generic_param_stack.begin(), info.generic_param_stack.end());
 
             for (auto&& method : info.type.MethodList())
             {
@@ -1120,7 +1158,13 @@ namespace winrt::@::implementation
                 w.async_types = signature.is_async();
                 auto method_name = get_name(method);
 
-                w.write(format, signature.return_signature(), type_name, method_name, bind<write_implementation_params>(signature), is_noexcept(method) ? " noexcept" : "");
+                w.write(
+                    format,
+                    signature.return_signature(),
+                    type_name,
+                    method_name,
+                    bind<write_implementation_params>(signature),
+                    is_noexcept(method) ? " noexcept" : "");
             }
 
             w.generic_param_stack.resize(w.generic_param_stack.size() - info.generic_param_stack.size());

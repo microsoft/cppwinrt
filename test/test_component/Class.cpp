@@ -73,7 +73,10 @@ namespace winrt::test_component::implementation
             throw hresult_error();
         }
     }
-    Class::Class(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& arg, int32_t, int32_t)
+    Class::Class(
+        Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& arg,
+        int32_t,
+        int32_t)
     {
         if (arg.First().Current().Key() != L"test")
         {
@@ -113,7 +116,8 @@ namespace winrt::test_component::implementation
     {
         return value.First().Current();
     }
-    hstring Class::InIterablePair(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& value)
+    hstring Class::InIterablePair(
+        Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& value)
     {
         return value.First().Current().Key();
     }
@@ -324,13 +328,7 @@ namespace winrt::test_component::implementation
         {
             int32_t counter{};
 
-            std::generate(
-                value.begin(),
-                value.end() - 1,
-                [&]
-                {
-                    return ++counter;
-                });
+            std::generate(value.begin(), value.end() - 1, [&] { return ++counter; });
         }
     }
 
@@ -342,13 +340,7 @@ namespace winrt::test_component::implementation
         {
             int32_t counter{};
 
-            std::generate(
-                value.begin(),
-                value.end() - 1,
-                [&]
-                {
-                    return hstring{ std::to_wstring(++counter) };
-                });
+            std::generate(value.begin(), value.end() - 1, [&] { return hstring{ std::to_wstring(++counter) }; });
         }
     }
 
@@ -360,13 +352,7 @@ namespace winrt::test_component::implementation
         {
             int32_t counter{};
 
-            std::generate(
-                value.begin(),
-                value.end() - 1,
-                [&]
-                {
-                    return make<Value>(++counter);
-                });
+            std::generate(value.begin(), value.end() - 1, [&] { return make<Value>(++counter); });
         }
     }
 
@@ -378,13 +364,7 @@ namespace winrt::test_component::implementation
         {
             int32_t counter{};
 
-            std::generate(
-                value.begin(),
-                value.end() - 1,
-                [&]
-                {
-                    return make<Value>(++counter);
-                });
+            std::generate(value.begin(), value.end() - 1, [&] { return make<Value>(++counter); });
         }
     }
 
@@ -399,10 +379,7 @@ namespace winrt::test_component::implementation
             std::generate(
                 value.begin(),
                 value.end() - 1,
-                [&]
-                {
-                    return Struct{ hstring{ std::to_wstring(++counter) }, hstring{ std::to_wstring(++counter) } };
-                });
+                [&] { return Struct{ hstring{ std::to_wstring(++counter) }, hstring{ std::to_wstring(++counter) } }; });
         }
     }
 

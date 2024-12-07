@@ -12,17 +12,9 @@ TEST_CASE("invalid_events")
     event<TypedEventHandler<int, int>> event;
     int counter{};
 
-    auto a = event.add(
-        [&](auto&&...)
-        {
-            counter += 1;
-        });
+    auto a = event.add([&](auto&&...) { counter += 1; });
 
-    auto b = event.add(
-        [&](auto&&...)
-        {
-            counter += 10;
-        });
+    auto b = event.add([&](auto&&...) { counter += 10; });
 
     REQUIRE(counter == 0);
     event(0, 0);

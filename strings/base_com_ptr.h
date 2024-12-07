@@ -27,7 +27,8 @@ namespace winrt::impl
         return (object->*method)(args..., guid_of<T>(), capture_decay{ result });
     }
 
-    template <typename T, typename O, typename M, typename... Args> int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&&... args);
+    template <typename T, typename O, typename M, typename... Args>
+    int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&&... args);
 } // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
@@ -323,7 +324,8 @@ WINRT_EXPORT namespace winrt
 
 namespace winrt::impl
 {
-    template <typename T, typename O, typename M, typename... Args> int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&&... args)
+    template <typename T, typename O, typename M, typename... Args>
+    int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&&... args)
     {
         return (object.get()->*(method))(args..., guid_of<T>(), capture_decay{ result });
     }

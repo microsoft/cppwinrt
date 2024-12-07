@@ -2,11 +2,13 @@
 WINRT_EXPORT namespace winrt
 {
     [[nodiscard]] inline auto resume_foreground(
-        Windows::System::DispatcherQueue const& dispatcher, Windows::System::DispatcherQueuePriority const priority = Windows::System::DispatcherQueuePriority::Normal) noexcept
+        Windows::System::DispatcherQueue const& dispatcher,
+        Windows::System::DispatcherQueuePriority const priority = Windows::System::DispatcherQueuePriority::Normal) noexcept
     {
         struct awaitable
         {
-            awaitable(Windows::System::DispatcherQueue const& dispatcher, Windows::System::DispatcherQueuePriority const priority) noexcept :
+            awaitable(Windows::System::DispatcherQueue const& dispatcher, Windows::System::DispatcherQueuePriority const priority) noexcept
+                :
                 m_dispatcher(dispatcher), m_priority(priority)
             {}
 

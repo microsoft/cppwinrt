@@ -51,17 +51,9 @@ TEST_CASE("disconnected,handler,1")
 {
     event<EventHandler<int>> source;
 
-    source.add(
-        [](auto...)
-        {
-            throw hresult_error(RPC_E_DISCONNECTED);
-        });
+    source.add([](auto...) { throw hresult_error(RPC_E_DISCONNECTED); });
 
-    auto token = source.add(
-        [](auto...)
-        {
-            throw hresult_error(E_INVALIDARG);
-        });
+    auto token = source.add([](auto...) { throw hresult_error(E_INVALIDARG); });
 
     // Should have two delegates
     REQUIRE(source);
@@ -87,11 +79,7 @@ TEST_CASE("disconnected,handler,2")
 {
     auto async = Action();
 
-    async.Completed(
-        [](auto&&...)
-        {
-            throw hresult_error(RPC_E_DISCONNECTED);
-        });
+    async.Completed([](auto&&...) { throw hresult_error(RPC_E_DISCONNECTED); });
 }
 
 TEST_CASE("disconnected,handler,3")
@@ -99,11 +87,7 @@ TEST_CASE("disconnected,handler,3")
     auto async = ActionProgress();
     handle signal{ CreateEventW(nullptr, true, false, nullptr) };
 
-    async.Progress(
-        [](auto&&...)
-        {
-            throw hresult_error(RPC_E_DISCONNECTED);
-        });
+    async.Progress([](auto&&...) { throw hresult_error(RPC_E_DISCONNECTED); });
 
     async.Completed(
         [&](auto&&...)
@@ -121,11 +105,7 @@ TEST_CASE("disconnected,handler,4")
 {
     auto async = Operation();
 
-    async.Completed(
-        [](auto&&...)
-        {
-            throw hresult_error(RPC_E_DISCONNECTED);
-        });
+    async.Completed([](auto&&...) { throw hresult_error(RPC_E_DISCONNECTED); });
 }
 
 TEST_CASE("disconnected,handler,5")
@@ -133,11 +113,7 @@ TEST_CASE("disconnected,handler,5")
     auto async = OperationProgress();
     handle signal{ CreateEventW(nullptr, true, false, nullptr) };
 
-    async.Progress(
-        [](auto&&...)
-        {
-            throw hresult_error(RPC_E_DISCONNECTED);
-        });
+    async.Progress([](auto&&...) { throw hresult_error(RPC_E_DISCONNECTED); });
 
     async.Completed(
         [&](auto&&...)
@@ -265,15 +241,7 @@ TEST_CASE("disconnected,action")
 
     agile_ref<IAsyncAction> action;
     InvokeInContext(
-        private_context.get(),
-        [&]()
-        {
-            action = make<non_agile_abandoned_action>(
-                [&]
-                {
-                    SetEvent(signal.get());
-                });
-        });
+        private_context.get(), [&]() { action = make<non_agile_abandoned_action>([&] { SetEvent(signal.get()); }); });
 
     auto result = [](IAsyncAction action) -> IAsyncAction
     {

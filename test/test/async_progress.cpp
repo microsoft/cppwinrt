@@ -85,11 +85,7 @@ namespace
 
         bool progress = false;
 
-        async.Progress(
-            [&](auto&&...)
-            {
-                REQUIRE(false);
-            });
+        async.Progress([&](auto&&...) { REQUIRE(false); });
 
         co_await async;
 

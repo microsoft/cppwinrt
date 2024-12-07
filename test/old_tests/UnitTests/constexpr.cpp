@@ -46,5 +46,6 @@ TEST_CASE("constexpr")
     check_terminated(winrt::name_of<winrt::IInspectable>());
     check_terminated(winrt::name_of<winrt::IActivationFactory>());
     check_terminated(winrt::name_of<winrt::IIterable<int>>());
-    check_terminated(winrt::name_of<winrt::IAsyncOperation<winrt::IIterable<winrt::IKeyValuePair<winrt::hstring, winrt::IVector<int>>>>>());
+    check_terminated(
+        winrt::name_of<winrt::IAsyncOperation<winrt::IIterable<winrt::IKeyValuePair<winrt::hstring, winrt::IVector<int>>>>>());
 }

@@ -1,7 +1,8 @@
 
 namespace winrt::impl
 {
-    template <typename T> struct reference : implements<reference<T>, Windows::Foundation::IReference<T>, Windows::Foundation::IPropertyValue>
+    template <typename T>
+    struct reference : implements<reference<T>, Windows::Foundation::IReference<T>, Windows::Foundation::IPropertyValue>
     {
         reference(T const& value) :
             m_value(value)
@@ -618,7 +619,8 @@ namespace winrt::impl
         }
     }
 
-    template <typename T, typename Ret = T, typename From, typename U> Ret unbox_value_type_or(From&& value, U&& default_value)
+    template <typename T, typename Ret = T, typename From, typename U>
+    Ret unbox_value_type_or(From&& value, U&& default_value)
     {
         if constexpr (std::is_enum_v<T>)
         {
@@ -663,7 +665,8 @@ namespace winrt::impl
         }
     }
 
-    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int>> auto try_as(From* ptr) noexcept
+    template <typename To, typename From, std::enable_if_t<!is_com_interface_v<To>, int>>
+    auto try_as(From* ptr) noexcept
     {
         using type = std::conditional_t<impl::is_com_interface_v<From>, Windows::Foundation::IUnknown, com_ptr<From>>;
         return unbox_value_type_or<To, std::optional<To>>(reinterpret_cast<type const&>(ptr), std::nullopt);
@@ -677,7 +680,8 @@ WINRT_EXPORT namespace winrt
         return Windows::Foundation::IReference<hstring>(*(hstring*)(&value));
     }
 
-    template <typename T, std::enable_if_t<!std::is_convertible_v<T, param::hstring>, int> = 0> Windows::Foundation::IInspectable box_value(T const& value)
+    template <typename T, std::enable_if_t<!std::is_convertible_v<T, param::hstring>, int> = 0>
+    Windows::Foundation::IInspectable box_value(T const& value)
     {
         if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>)
         {
@@ -715,7 +719,8 @@ WINRT_EXPORT namespace winrt
         return *(hstring*)(&default_value);
     }
 
-    template <typename T, std::enable_if_t<!std::is_same_v<T, hstring>, int> = 0> T unbox_value_or(Windows::Foundation::IInspectable const& value, T const& default_value)
+    template <typename T, std::enable_if_t<!std::is_same_v<T, hstring>, int> = 0>
+    T unbox_value_or(Windows::Foundation::IInspectable const& value, T const& default_value)
     {
         if (value)
         {

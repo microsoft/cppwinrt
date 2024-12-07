@@ -162,7 +162,8 @@ TEST_CASE("variadic_delegate")
     {
         int count{};
 
-        delegate<int, std::shared_ptr<int>, Windows::Foundation::IInspectable> d = [&](int const a, std::shared_ptr<int> const& b, Windows::Foundation::IInspectable const& c)
+        delegate<int, std::shared_ptr<int>, Windows::Foundation::IInspectable> d =
+            [&](int const a, std::shared_ptr<int> const& b, Windows::Foundation::IInspectable const& c)
         {
             count = a;
 
@@ -193,21 +194,9 @@ TEST_CASE("variadic_delegate")
         event<delegate<int>> e;
         REQUIRE(!e);
 
-        e.add(
-            [&](int value)
-            {
-                a = value + 1;
-            });
-        auto b_token = e.add(
-            [&](int value)
-            {
-                b = value + 2;
-            });
-        e.add(
-            [&](int value)
-            {
-                c = value + 3;
-            });
+        e.add([&](int value) { a = value + 1; });
+        auto b_token = e.add([&](int value) { b = value + 2; });
+        e.add([&](int value) { c = value + 3; });
 
         REQUIRE(e);
         e.remove(b_token);
