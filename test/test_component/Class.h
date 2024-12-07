@@ -37,23 +37,42 @@ namespace winrt::test_component::implementation
         }
 
         Class(Windows::Foundation::Collections::IIterable<hstring> const& arg, int32_t dummy1);
-        Class(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& arg, int32_t dummy1, int32_t dummy2);
+        Class(
+            Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& arg,
+            int32_t dummy1,
+            int32_t dummy2);
         Class(Windows::Foundation::Collections::IMap<hstring, hstring> const& arg, int32_t dummy1, int32_t dummy2, int32_t dummy3);
         Class(Windows::Foundation::Collections::IMapView<hstring, hstring> const& arg, int32_t dummy1, int32_t dummy2, int32_t dummy3, int32_t dummy4);
-        Class(Windows::Foundation::Collections::IVector<hstring> const& arg, int32_t dummy1, int32_t dummy2, int32_t dummy3, int32_t dummy4, int32_t dummy5);
-        Class(Windows::Foundation::Collections::IVectorView<hstring> const& arg, int32_t dummy1, int32_t dummy2, int32_t dummy3, int32_t dummy4, int32_t dummy5, int32_t dummy6);
+        Class(
+            Windows::Foundation::Collections::IVector<hstring> const& arg,
+            int32_t dummy1,
+            int32_t dummy2,
+            int32_t dummy3,
+            int32_t dummy4,
+            int32_t dummy5);
+        Class(
+            Windows::Foundation::Collections::IVectorView<hstring> const& arg,
+            int32_t dummy1,
+            int32_t dummy2,
+            int32_t dummy3,
+            int32_t dummy4,
+            int32_t dummy5,
+            int32_t dummy6);
 
         static hstring InIterable(Windows::Foundation::Collections::IIterable<hstring> const& value);
-        static hstring InIterablePair(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& value);
+        static hstring InIterablePair(
+            Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& value);
         static Windows::Foundation::IAsyncOperation<hstring> InAsyncIterable(Windows::Foundation::Collections::IIterable<hstring> value);
         static Windows::Foundation::IAsyncOperation<hstring> InAsyncIterablePair(
             Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> value);
         static hstring InMap(Windows::Foundation::Collections::IMap<hstring, hstring> const& value);
         static hstring InMapView(Windows::Foundation::Collections::IMapView<hstring, hstring> const& value);
-        static Windows::Foundation::IAsyncOperation<hstring> InAsyncMapView(Windows::Foundation::Collections::IMapView<hstring, hstring> value);
+        static Windows::Foundation::IAsyncOperation<hstring> InAsyncMapView(
+            Windows::Foundation::Collections::IMapView<hstring, hstring> value);
         static hstring InVector(Windows::Foundation::Collections::IVector<hstring> const& value);
         static hstring InVectorView(Windows::Foundation::Collections::IVectorView<hstring> const& value);
-        static Windows::Foundation::IAsyncOperation<hstring> InAsyncVectorView(Windows::Foundation::Collections::IVectorView<hstring> value);
+        static Windows::Foundation::IAsyncOperation<hstring> InAsyncVectorView(
+            Windows::Foundation::Collections::IVectorView<hstring> value);
 
         hstring InInt32(int32_t value);
         hstring InString(hstring const& value);
@@ -109,7 +128,8 @@ namespace winrt::test_component::implementation
         int32_t NoexceptInt32() noexcept;
         hstring NoexceptString() noexcept;
 
-        event_token DeferrableEvent(Windows::Foundation::TypedEventHandler<test_component::Class, test_component::DeferrableEventArgs> const& handler);
+        event_token DeferrableEvent(
+            Windows::Foundation::TypedEventHandler<test_component::Class, test_component::DeferrableEventArgs> const& handler);
         void DeferrableEvent(event_token const& token);
         Windows::Foundation::IAsyncOperation<int> RaiseDeferrableEventAsync();
 

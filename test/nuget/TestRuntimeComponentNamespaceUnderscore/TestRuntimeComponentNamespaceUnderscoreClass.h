@@ -4,7 +4,8 @@
 
 namespace winrt::TestRuntimeComponent_NamespaceUnderscore::implementation
 {
-    struct TestRuntimeComponentNamespaceUnderscoreClass : TestRuntimeComponentNamespaceUnderscoreClassT<TestRuntimeComponentNamespaceUnderscoreClass>
+    struct TestRuntimeComponentNamespaceUnderscoreClass
+        : TestRuntimeComponentNamespaceUnderscoreClassT<TestRuntimeComponentNamespaceUnderscoreClass>
     {
         TestRuntimeComponentNamespaceUnderscoreClass() = default;
 

@@ -5,7 +5,8 @@
 
 namespace winrt::test_component_derived::Nested::implementation
 {
-    struct HierarchyD : HierarchyDT<HierarchyD, test_component_derived::Nested::implementation::HierarchyC, IReferenceTrackerExtension>
+    struct HierarchyD
+        : HierarchyDT<HierarchyD, test_component_derived::Nested::implementation::HierarchyC, IReferenceTrackerExtension>
     {
         HierarchyD() = default;
 

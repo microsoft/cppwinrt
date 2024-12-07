@@ -15,7 +15,8 @@ namespace winrt::Component::implementation
         hstring VectorView(Windows::Foundation::Collections::IVectorView<hstring> const& in);
         hstring Vector(Windows::Foundation::Collections::IVector<hstring> const& in);
 
-        hstring IterablePair(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& in);
+        hstring IterablePair(
+            Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& in);
         hstring MapView(Windows::Foundation::Collections::IMapView<hstring, hstring> const& in);
         hstring Map(Windows::Foundation::Collections::IMap<hstring, hstring> const& in);
 

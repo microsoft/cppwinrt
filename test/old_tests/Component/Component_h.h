@@ -435,7 +435,8 @@ namespace ABI
             // This allows code which uses the mangled name for the parameterized interface to access the
             // correct parameterized interface specialization.
             typedef ITypedEventHandler<ABI::Component::Events*, int> __FITypedEventHandler_2_Component__CEvents_int_t;
-#define __FITypedEventHandler_2_Component__CEvents_int ABI::Windows::Foundation::__FITypedEventHandler_2_Component__CEvents_int_t
+#define __FITypedEventHandler_2_Component__CEvents_int \
+    ABI::Windows::Foundation::__FITypedEventHandler_2_Component__CEvents_int_t
             /* Foundation */ // namespace Foundation
         } // namespace Foundation
     } // namespace Windows
@@ -652,7 +653,8 @@ namespace ABI
                 // This allows code which uses the mangled name for the parameterized interface to access the
                 // correct parameterized interface specialization.
                 typedef IIterator<__FIKeyValuePair_2_HSTRING_HSTRING*> __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_t;
-#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING ABI::Windows::Foundation::Collections::__FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_t
+#define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING \
+    ABI::Windows::Foundation::Collections::__FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_t
                 /* Collections */ // namespace Collections
             } // namespace Collections
         } // namespace Foundation
@@ -689,7 +691,8 @@ namespace ABI
                 // This allows code which uses the mangled name for the parameterized interface to access the
                 // correct parameterized interface specialization.
                 typedef IIterable<__FIKeyValuePair_2_HSTRING_HSTRING*> __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_t;
-#define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING ABI::Windows::Foundation::Collections::__FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_t
+#define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING \
+    ABI::Windows::Foundation::Collections::__FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_t
                 /* Collections */ // namespace Collections
             } // namespace Collections
         } // namespace Foundation
@@ -798,7 +801,8 @@ namespace ABI
             // This allows code which uses the mangled name for the parameterized interface to access the
             // correct parameterized interface specialization.
             typedef IAsyncOperationCompletedHandler<HSTRING> __FIAsyncOperationCompletedHandler_1_HSTRING_t;
-#define __FIAsyncOperationCompletedHandler_1_HSTRING ABI::Windows::Foundation::__FIAsyncOperationCompletedHandler_1_HSTRING_t
+#define __FIAsyncOperationCompletedHandler_1_HSTRING \
+    ABI::Windows::Foundation::__FIAsyncOperationCompletedHandler_1_HSTRING_t
             /* Foundation */ // namespace Foundation
         } // namespace Foundation
     } // namespace Windows
@@ -1245,7 +1249,8 @@ EXTERN_C const IID IID___x_ABI_CComponent_CITwoArgDelegateReturn;
  */
 #if !defined(____x_ABI_CComponent_CIEventsStatics_INTERFACE_DEFINED__)
 #define ____x_ABI_CComponent_CIEventsStatics_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IEventsStatics[] = L"Component.IEventsStatics";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IEventsStatics[] =
+    L"Component.IEventsStatics";
 namespace ABI
 {
     namespace Component
@@ -1396,7 +1401,8 @@ extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_Componen
  */
 #ifndef RUNTIMECLASS_Component_NonCachedStatic_DEFINED
 #define RUNTIMECLASS_Component_NonCachedStatic_DEFINED
-extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_Component_NonCachedStatic[] = L"Component.NonCachedStatic";
+extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_Component_NonCachedStatic[] =
+    L"Component.NonCachedStatic";
 #endif
 
 namespace ABI
@@ -1587,7 +1593,8 @@ namespace ABI
  */
 #if !defined(____x_ABI_CComponent_CIFastInputVectorFactory_INTERFACE_DEFINED__)
 #define ____x_ABI_CComponent_CIFastInputVectorFactory_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IFastInputVectorFactory[] = L"Component.IFastInputVectorFactory";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IFastInputVectorFactory[] =
+    L"Component.IFastInputVectorFactory";
 namespace ABI
 {
     namespace Component
@@ -1625,7 +1632,8 @@ EXTERN_C const IID IID___x_ABI_CComponent_CIFastInputVectorFactory;
 
 #ifndef RUNTIMECLASS_Component_FastInputVector_DEFINED
 #define RUNTIMECLASS_Component_FastInputVector_DEFINED
-extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_Component_FastInputVector[] = L"Component.FastInputVector";
+extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_Component_FastInputVector[] =
+    L"Component.FastInputVector";
 #endif
 
 namespace ABI
@@ -1646,7 +1654,8 @@ namespace ABI
  */
 #if !defined(____x_ABI_CComponent_CIFastInputMapFactory_INTERFACE_DEFINED__)
 #define ____x_ABI_CComponent_CIFastInputMapFactory_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IFastInputMapFactory[] = L"Component.IFastInputMapFactory";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IFastInputMapFactory[] =
+    L"Component.IFastInputMapFactory";
 namespace ABI
 {
     namespace Component
@@ -3564,7 +3573,8 @@ EXTERN_C const IID IID___x_ABI_CComponent_CITwoArgDelegateReturn;
  */
 #if !defined(____x_ABI_CComponent_CIEventsStatics_INTERFACE_DEFINED__)
 #define ____x_ABI_CComponent_CIEventsStatics_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IEventsStatics[] = L"Component.IEventsStatics";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IEventsStatics[] =
+    L"Component.IEventsStatics";
 /* [object, exclusiveto, uuid("c5784dcd-8bed-444e-95f2-58f00878615f"), version] */
 typedef struct __x_ABI_CComponent_CIEventsStaticsVtbl
 {
@@ -3875,7 +3885,8 @@ extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_Componen
  */
 #ifndef RUNTIMECLASS_Component_NonCachedStatic_DEFINED
 #define RUNTIMECLASS_Component_NonCachedStatic_DEFINED
-extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_Component_NonCachedStatic[] = L"Component.NonCachedStatic";
+extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_Component_NonCachedStatic[] =
+    L"Component.NonCachedStatic";
 #endif
 
 /*
@@ -4159,7 +4170,8 @@ typedef interface __x_ABI_CWindows_CFoundation_CIClosable __x_ABI_CWindows_CFoun
  */
 #if !defined(____x_ABI_CComponent_CIFastInputVectorFactory_INTERFACE_DEFINED__)
 #define ____x_ABI_CComponent_CIFastInputVectorFactory_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IFastInputVectorFactory[] = L"Component.IFastInputVectorFactory";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IFastInputVectorFactory[] =
+    L"Component.IFastInputVectorFactory";
 /* [object, exclusiveto, uuid("bb649b98-7582-4970-8adc-e2a13aca24aa"), version] */
 typedef struct __x_ABI_CComponent_CIFastInputVectorFactoryVtbl
 {
@@ -4238,7 +4250,8 @@ EXTERN_C const IID IID___x_ABI_CComponent_CIFastInputVectorFactory;
 
 #ifndef RUNTIMECLASS_Component_FastInputVector_DEFINED
 #define RUNTIMECLASS_Component_FastInputVector_DEFINED
-extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_Component_FastInputVector[] = L"Component.FastInputVector";
+extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_Component_FastInputVector[] =
+    L"Component.FastInputVector";
 #endif
 
 /*
@@ -4251,7 +4264,8 @@ extern const __declspec(selectany) _Null_terminated_ WCHAR RuntimeClass_Componen
  */
 #if !defined(____x_ABI_CComponent_CIFastInputMapFactory_INTERFACE_DEFINED__)
 #define ____x_ABI_CComponent_CIFastInputMapFactory_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IFastInputMapFactory[] = L"Component.IFastInputMapFactory";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Component_IFastInputMapFactory[] =
+    L"Component.IFastInputMapFactory";
 /* [object, exclusiveto, uuid("26b63306-8ddc-4ddb-8612-a4ef8fbc3abd"), version] */
 typedef struct __x_ABI_CComponent_CIFastInputMapFactoryVtbl
 {

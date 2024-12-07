@@ -135,7 +135,9 @@ struct produce_IPropertyValue : winrt::implements<produce_IPropertyValue, winrt:
 
     void GetInspectableArray(winrt::com_array<winrt::Windows::Foundation::IInspectable>& value)
     {
-        value = { winrt::Windows::Foundation::Uri(L"http://one/"), winrt::Windows::Foundation::Uri(L"http://two/"), winrt::Windows::Foundation::Uri(L"http://three/") };
+        value = { winrt::Windows::Foundation::Uri(L"http://one/"),
+                  winrt::Windows::Foundation::Uri(L"http://two/"),
+                  winrt::Windows::Foundation::Uri(L"http://three/") };
     }
 
     void GetGuidArray(winrt::com_array<winrt::guid>&)

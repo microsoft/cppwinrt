@@ -262,7 +262,8 @@ EXTERN_C const IID IID___x_ABI_CComposable_CIBaseFactory;
  */
 #if !defined(____x_ABI_CComposable_CIBaseOverrides_INTERFACE_DEFINED__)
 #define ____x_ABI_CComposable_CIBaseOverrides_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_IBaseOverrides[] = L"Composable.IBaseOverrides";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_IBaseOverrides[] =
+    L"Composable.IBaseOverrides";
 namespace ABI
 {
     namespace Composable
@@ -326,7 +327,8 @@ EXTERN_C const IID IID___x_ABI_CComposable_CIDerived;
  */
 #if !defined(____x_ABI_CComposable_CIDerivedFactory_INTERFACE_DEFINED__)
 #define ____x_ABI_CComposable_CIDerivedFactory_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_IDerivedFactory[] = L"Composable.IDerivedFactory";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_IDerivedFactory[] =
+    L"Composable.IDerivedFactory";
 namespace ABI
 {
     namespace Composable
@@ -460,7 +462,8 @@ namespace ABI
  */
 #if !defined(____x_ABI_CComposable_CITestStructCodeGen_INTERFACE_DEFINED__)
 #define ____x_ABI_CComposable_CITestStructCodeGen_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_ITestStructCodeGen[] = L"Composable.ITestStructCodeGen";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_ITestStructCodeGen[] =
+    L"Composable.ITestStructCodeGen";
 namespace ABI
 {
     namespace Composable
@@ -708,7 +711,8 @@ EXTERN_C const IID IID___x_ABI_CComposable_CIBaseFactory;
  */
 #if !defined(____x_ABI_CComposable_CIBaseOverrides_INTERFACE_DEFINED__)
 #define ____x_ABI_CComposable_CIBaseOverrides_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_IBaseOverrides[] = L"Composable.IBaseOverrides";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_IBaseOverrides[] =
+    L"Composable.IBaseOverrides";
 /* [object, exclusiveto, uuid("A4DB9277-E6B7-4936-BF41-CDF042E278E2"), version] */
 typedef struct __x_ABI_CComposable_CIBaseOverridesVtbl
 {
@@ -854,7 +858,8 @@ EXTERN_C const IID IID___x_ABI_CComposable_CIDerived;
  */
 #if !defined(____x_ABI_CComposable_CIDerivedFactory_INTERFACE_DEFINED__)
 #define ____x_ABI_CComposable_CIDerivedFactory_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_IDerivedFactory[] = L"Composable.IDerivedFactory";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_IDerivedFactory[] =
+    L"Composable.IDerivedFactory";
 /* [object, exclusiveto, uuid("56dc2c28-edd1-4fa3-91e5-f63c3db47070"), version] */
 typedef struct __x_ABI_CComposable_CIDerivedFactoryVtbl
 {
@@ -1004,7 +1009,8 @@ struct __x_ABI_CComposable_CTestStructCodeGen
  */
 #if !defined(____x_ABI_CComposable_CITestStructCodeGen_INTERFACE_DEFINED__)
 #define ____x_ABI_CComposable_CITestStructCodeGen_INTERFACE_DEFINED__
-extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_ITestStructCodeGen[] = L"Composable.ITestStructCodeGen";
+extern const __declspec(selectany) _Null_terminated_ WCHAR InterfaceName_Composable_ITestStructCodeGen[] =
+    L"Composable.ITestStructCodeGen";
 /* [object, uuid("9849e7b1-e906-4d32-a696-5df471b1727d"), version] */
 typedef struct __x_ABI_CComposable_CITestStructCodeGenVtbl
 {
