@@ -3,7 +3,7 @@
 #include "string_view_compare.h"
 
 #ifdef _MSC_VER
-#pragma warning(disable:4471) // a forward declaration of an unscoped enumeration must have an underlying type
+#pragma warning(disable : 4471) // a forward declaration of an unscoped enumeration must have an underlying type
 #endif
 #include <Windows.Applicationmodel.Activation.h>
 
@@ -13,13 +13,13 @@ namespace winrt
 {
     using namespace Windows::Foundation;
     using namespace Windows::Foundation::Collections;
-}
+} // namespace winrt
 
 namespace midl
 {
     using namespace ABI::Windows::Foundation;
     using namespace ABI::Windows::Foundation::Collections;
-}
+} // namespace midl
 
 // These really should be static_assert but due to VC bugs we currently have to run them as runtime asserts.
 // These assertions just provide a degree of smoke testing against the MIDL-generated constants.
@@ -28,8 +28,7 @@ using winrt_container = winrt::IMapView<winrt::hstring, winrt::IInspectable>;
 using midl_container = midl::IMapView<HSTRING, ::IInspectable*>;
 
 void check_terminated(winrt::param::hstring const&)
-{
-}
+{}
 
 TEST_CASE("constexpr")
 {
@@ -47,5 +46,6 @@ TEST_CASE("constexpr")
     check_terminated(winrt::name_of<winrt::IInspectable>());
     check_terminated(winrt::name_of<winrt::IActivationFactory>());
     check_terminated(winrt::name_of<winrt::IIterable<int>>());
-    check_terminated(winrt::name_of<winrt::IAsyncOperation<winrt::IIterable<winrt::IKeyValuePair<winrt::hstring, winrt::IVector<int>>>>>());
+    check_terminated(
+        winrt::name_of<winrt::IAsyncOperation<winrt::IIterable<winrt::IKeyValuePair<winrt::hstring, winrt::IVector<int>>>>>());
 }

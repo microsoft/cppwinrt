@@ -48,20 +48,23 @@ TEST_CASE("IReference<TypeKind>")
 
 namespace
 {
-    template <typename T>
-    struct Test : implements<Test<T>, IReferenceArray<T>>
+    template <typename T> struct Test : implements<Test<T>, IReferenceArray<T>>
     {
         com_array<T> Value()
         {
             return com_array<T>{ m_value };
         }
 
-        Test(std::vector<T>&& value) : m_value(std::move(value)) {}
-        Test(std::vector<T> const& value) : m_value(value) {}
+        Test(std::vector<T>&& value) :
+            m_value(std::move(value))
+        {}
+        Test(std::vector<T> const& value) :
+            m_value(value)
+        {}
 
         std::vector<T> m_value;
     };
-}
+} // namespace
 
 TEST_CASE("IReferenceArray_consume")
 {

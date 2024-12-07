@@ -13,8 +13,8 @@ using namespace Windows::Media::Audio;
 
 struct test_Release : implements<test_Release, ILimiterEffectDefinition>
 {
-    uint32_t m_release { 0 };
-    uint32_t m_loudness { 0 };
+    uint32_t m_release{ 0 };
+    uint32_t m_loudness{ 0 };
 
     void Release(uint32_t value) noexcept
     {

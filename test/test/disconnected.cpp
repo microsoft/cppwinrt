@@ -45,21 +45,15 @@ namespace
         return type == APTTYPE_MTA;
     }
 #endif
-}
+} // namespace
 
 TEST_CASE("disconnected,handler,1")
 {
     event<EventHandler<int>> source;
 
-    source.add([](auto...)
-        {
-            throw hresult_error(RPC_E_DISCONNECTED);
-        });
+    source.add([](auto...) { throw hresult_error(RPC_E_DISCONNECTED); });
 
-    auto token = source.add([](auto...)
-        {
-            throw hresult_error(E_INVALIDARG);
-        });
+    auto token = source.add([](auto...) { throw hresult_error(E_INVALIDARG); });
 
     // Should have two delegates
     REQUIRE(source);
@@ -85,10 +79,7 @@ TEST_CASE("disconnected,handler,2")
 {
     auto async = Action();
 
-    async.Completed([](auto&&...)
-        {
-            throw hresult_error(RPC_E_DISCONNECTED);
-        });
+    async.Completed([](auto&&...) { throw hresult_error(RPC_E_DISCONNECTED); });
 }
 
 TEST_CASE("disconnected,handler,3")
@@ -96,12 +87,10 @@ TEST_CASE("disconnected,handler,3")
     auto async = ActionProgress();
     handle signal{ CreateEventW(nullptr, true, false, nullptr) };
 
-    async.Progress([](auto&&...)
-        {
-            throw hresult_error(RPC_E_DISCONNECTED);
-        });
+    async.Progress([](auto&&...) { throw hresult_error(RPC_E_DISCONNECTED); });
 
-    async.Completed([&](auto&&...)
+    async.Completed(
+        [&](auto&&...)
         {
             SetEvent(signal.get());
             throw hresult_error(RPC_E_DISCONNECTED);
@@ -116,10 +105,7 @@ TEST_CASE("disconnected,handler,4")
 {
     auto async = Operation();
 
-    async.Completed([](auto&&...)
-        {
-            throw hresult_error(RPC_E_DISCONNECTED);
-        });
+    async.Completed([](auto&&...) { throw hresult_error(RPC_E_DISCONNECTED); });
 }
 
 TEST_CASE("disconnected,handler,5")
@@ -127,12 +113,10 @@ TEST_CASE("disconnected,handler,5")
     auto async = OperationProgress();
     handle signal{ CreateEventW(nullptr, true, false, nullptr) };
 
-    async.Progress([](auto&&...)
-        {
-            throw hresult_error(RPC_E_DISCONNECTED);
-        });
+    async.Progress([](auto&&...) { throw hresult_error(RPC_E_DISCONNECTED); });
 
-    async.Completed([&](auto&&...)
+    async.Completed(
+        [&](auto&&...)
         {
             SetEvent(signal.get());
             throw hresult_error(RPC_E_DISCONNECTED);
@@ -146,7 +130,9 @@ TEST_CASE("disconnected,handler,5")
 // Custom action to simulate an out-of-process server that crashes before it can complete.
 struct non_agile_abandoned_action : implements<non_agile_abandoned_action, IAsyncAction, IAsyncInfo, non_agile>
 {
-    non_agile_abandoned_action(delegate<> disconnect) : m_disconnect(disconnect) {}
+    non_agile_abandoned_action(delegate<> disconnect) :
+        m_disconnect(disconnect)
+    {}
 
     static fire_and_forget final_release(std::unique_ptr<non_agile_abandoned_action> self)
     {
@@ -157,18 +143,34 @@ struct non_agile_abandoned_action : implements<non_agile_abandoned_action, IAsyn
         // Now we can destruct.
     }
 
-    void Completed(AsyncActionCompletedHandler const& handler) {
+    void Completed(AsyncActionCompletedHandler const& handler)
+    {
         m_handler = handler;
         m_disconnect();
     }
-    auto Completed() { return m_handler; }
-    void GetResults() {}
+    auto Completed()
+    {
+        return m_handler;
+    }
+    void GetResults()
+    {}
 
-    auto Id() { return 0U; }
-    auto Status() { return AsyncStatus::Completed; }
-    auto ErrorCode() { return hresult(0); }
-    void Cancel() {}
-    void Close() {}
+    auto Id()
+    {
+        return 0U;
+    }
+    auto Status()
+    {
+        return AsyncStatus::Completed;
+    }
+    auto ErrorCode()
+    {
+        return hresult(0);
+    }
+    void Cancel()
+    {}
+    void Close()
+    {}
 
     AsyncActionCompletedHandler m_handler;
     delegate<> m_disconnect;
@@ -182,33 +184,41 @@ struct non_agile_abandoned_action : implements<non_agile_abandoned_action, IAsyn
 #if !defined(__MINGW32__)
 namespace
 {
-    template<typename TLambda>
-    void InvokeInContext(IContextCallback* context, TLambda&& lambda)
+    template <typename TLambda> void InvokeInContext(IContextCallback* context, TLambda&& lambda)
     {
         ComCallData data;
         data.pUserDefined = &lambda;
-        check_hresult(context->ContextCallback([](ComCallData* data) -> HRESULT
+        check_hresult(context->ContextCallback(
+            [](ComCallData* data) -> HRESULT
             {
                 auto& lambda = *reinterpret_cast<TLambda*>(data->pUserDefined);
                 lambda();
                 return S_OK;
-            }, &data, IID_ICallbackWithNoReentrancyToApplicationSTA, 5, nullptr));
+            },
+            &data,
+            IID_ICallbackWithNoReentrancyToApplicationSTA,
+            5,
+            nullptr));
     }
 
     fire_and_forget disconnect_on_signal(com_ptr<IContextCallback> context, void* signal)
     {
         co_await resume_on_signal(signal);
-        InvokeInContext(context.get(), []()
+        InvokeInContext(
+            context.get(),
+            []()
             {
                 // This disconnects the IAsyncAction, simulating a server crash.
                 CoDisconnectContext(INFINITE);
             });
     }
-}
+} // namespace
 
 struct holds_hresult : public Catch::MatcherBase<hresult_error>
 {
-    holds_hresult(hresult value) : expected(value) {}
+    holds_hresult(hresult value) :
+        expected(value)
+    {}
 
     hresult expected;
 
@@ -230,15 +240,13 @@ TEST_CASE("disconnected,action")
     disconnect_on_signal(private_context, signal.get());
 
     agile_ref<IAsyncAction> action;
-    InvokeInContext(private_context.get(), [&]()
-        {
-            action = make<non_agile_abandoned_action>([&]{ SetEvent(signal.get()); });
-        });
+    InvokeInContext(
+        private_context.get(), [&]() { action = make<non_agile_abandoned_action>([&] { SetEvent(signal.get()); }); });
 
     auto result = [](IAsyncAction action) -> IAsyncAction
-        {
-            co_await action;
-        }(action.get());
+    {
+        co_await action;
+    }(action.get());
 
     REQUIRE_THROWS_MATCHES(result.get(), hresult_error, holds_hresult(RPC_E_DISCONNECTED));
 }
@@ -262,9 +270,12 @@ TEST_CASE("disconnected,double")
         auto controller = DispatcherQueueController::CreateOnDedicatedThread();
 
         agile_ref<IAsyncAction> action;
-        InvokeInContext(private_context.get(), [&]()
+        InvokeInContext(
+            private_context.get(),
+            [&]()
             {
-                action = make<non_agile_abandoned_action>([&]() -> fire_and_forget
+                action = make<non_agile_abandoned_action>(
+                    [&]() -> fire_and_forget
                     {
                         // Get off the DispatcherQueue thread.
                         co_await resume_background();
@@ -289,7 +300,6 @@ TEST_CASE("disconnected,double")
             REQUIRE(is_mta());
         }
         REQUIRE(FAILED(hr));
-
     }();
 
     test.get();

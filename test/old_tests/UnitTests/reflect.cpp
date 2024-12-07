@@ -80,14 +80,28 @@ namespace
         virtual void set_value(IInspectable const& target, IInspectable const& value) const = 0;
     };
 
-    template <typename MetaProperty>
-    struct PropertyQuery : IPropertyQuery
+    template <typename MetaProperty> struct PropertyQuery : IPropertyQuery
     {
-        std::wstring_view name() const noexcept override { return reflect::property_name_v<MetaProperty>; }
-        std::wstring_view value_name() const noexcept override { return name_of<reflect::property_value_t<MetaProperty>>(); }
-        std::wstring_view target_interface_name() const noexcept override { return name_of<reflect::property_target_t<MetaProperty>>(); }
-        bool is_readable() const noexcept override { return reflect::is_property_readable_v<MetaProperty>; }
-        bool is_writable() const noexcept override { return reflect::is_property_writable_v<MetaProperty>; }
+        std::wstring_view name() const noexcept override
+        {
+            return reflect::property_name_v<MetaProperty>;
+        }
+        std::wstring_view value_name() const noexcept override
+        {
+            return name_of<reflect::property_value_t<MetaProperty>>();
+        }
+        std::wstring_view target_interface_name() const noexcept override
+        {
+            return name_of<reflect::property_target_t<MetaProperty>>();
+        }
+        bool is_readable() const noexcept override
+        {
+            return reflect::is_property_readable_v<MetaProperty>;
+        }
+        bool is_writable() const noexcept override
+        {
+            return reflect::is_property_writable_v<MetaProperty>;
+        }
         Windows::Foundation::IInspectable get_value([[maybe_unused]] IInspectable const& target) const
         {
             if constexpr (reflect::is_property_readable_v<MetaProperty>)
@@ -130,7 +144,7 @@ namespace
             }
         }
     };
-}
+} // namespace
 
 TEST_CASE("visit properties")
 {
@@ -180,10 +194,7 @@ TEST_CASE("visit properties")
     };
 
     reflect::for_each_property<PropertyTests>(visitor);
-    std::sort(props.begin(), props.end(), [](auto const& lhs, auto const& rhs)
-    {
-        return lhs->name() < rhs->name();
-    });
+    std::sort(props.begin(), props.end(), [](auto const& lhs, auto const& rhs) { return lhs->name() < rhs->name(); });
 
     checker(props);
 }
@@ -195,7 +206,7 @@ TEST_CASE("find property")
     auto find_bool_prop = [&found, &name](auto prop)
     {
         using MetaProperty = decltype(prop);
-        if constexpr(reflect::is_property_readable_v<MetaProperty> && !reflect::is_property_writable_v<MetaProperty> && !reflect::is_property_static_v<MetaProperty>)
+        if constexpr (reflect::is_property_readable_v<MetaProperty> && !reflect::is_property_writable_v<MetaProperty> && !reflect::is_property_static_v<MetaProperty>)
         {
             REQUIRE(found == false);
             found = true;

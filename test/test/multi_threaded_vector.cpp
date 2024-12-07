@@ -36,28 +36,26 @@ namespace
     // That way, you can just step through the entire test and confirm that something bad happens
     // at each scenario.
 #if 1
-    template<typename T, typename Container>
+    template <typename T, typename Container>
     using custom_threaded_vector = winrt::impl::multi_threaded_vector<T, Container>;
 
-    template<typename Container>
+    template <typename Container>
     using custom_inspectable_observable_vector = winrt::impl::multi_threaded_inspectable_observable_vector<Container>;
 
-    template<typename T, typename Container>
+    template <typename T, typename Container>
     using custom_convertible_observable_vector = winrt::impl::multi_threaded_convertible_observable_vector<T, Container>;
 
 #else
-    template<typename T, typename Container>
-    using custom_threaded_vector = winrt::impl::input_vector<T, Container>;
+    template <typename T, typename Container> using custom_threaded_vector = winrt::impl::input_vector<T, Container>;
 
-    template<typename Container>
+    template <typename Container>
     using custom_inspectable_observable_vector = winrt::impl::inspectable_observable_vector<Container>;
 
-    template<typename T, typename Container>
+    template <typename T, typename Container>
     using custom_convertible_observable_vector = winrt::impl::convertible_observable_vector<T, Container>;
 #endif
 
-    template<VectorKind kind, typename Container>
-    auto make_threaded_vector(Container&& values)
+    template <VectorKind kind, typename Container> auto make_threaded_vector(Container&& values)
     {
         using T = typename Container::value_type;
         if constexpr (kind == VectorKind::IVector)
@@ -88,7 +86,7 @@ namespace
 
 #pragma region vector wrapper
     // Add more wrapper methods as necessary.
-    template<typename T, typename Allocator = std::allocator<T>>
+    template <typename T, typename Allocator = std::allocator<T>>
     struct concurrency_checked_vector : private std::vector<T, Allocator>, concurrency_guard
     {
         using inner = typename concurrency_checked_vector::vector;
@@ -99,7 +97,8 @@ namespace
         using reference = typename inner::reference;
         using const_reference = typename inner::const_reference;
         using iterator = concurrency_checked_random_access_iterator<concurrency_checked_vector, typename inner::iterator>;
-        using const_iterator = concurrency_checked_random_access_iterator<concurrency_checked_vector, typename inner::const_iterator, typename inner::iterator>;
+        using const_iterator =
+            concurrency_checked_random_access_iterator<concurrency_checked_vector, typename inner::const_iterator, typename inner::iterator>;
         using reverse_iterator = std::reverse_iterator<iterator>;
         using const_reverse_iterator = std::reverse_iterator<const_iterator>;
 
@@ -215,14 +214,14 @@ namespace
             return inner::clear();
         }
 
-        template<typename InputIt>
-        void assign(InputIt first, InputIt last)
+        template <typename InputIt> void assign(InputIt first, InputIt last)
         {
             auto guard = concurrency_guard::lock_nonconst();
             return inner::assign(first, last);
         }
 
-        void reserve(size_type capacity) {
+        void reserve(size_type capacity)
+        {
             auto guard = concurrency_guard::lock_nonconst();
             return inner::reserve(capacity);
         }
@@ -233,8 +232,7 @@ namespace
             inner::swap(other);
         }
 
-        template<typename Iterator>
-        decltype(auto) dereference_iterator(Iterator const& it) const
+        template <typename Iterator> decltype(auto) dereference_iterator(Iterator const& it) const
         {
             auto guard = concurrency_guard::lock_const();
             concurrency_guard::call_hook(collection_action::at);
@@ -255,8 +253,7 @@ namespace
     };
 #pragma endregion
 
-    template<typename T, VectorKind kind>
-    void test_vector_concurrency()
+    template <typename T, VectorKind kind> void test_vector_concurrency()
     {
         auto raw = concurrency_checked_vector<T>();
         auto hook = raw.hook;
@@ -272,133 +269,94 @@ namespace
         };
 
         // Verify that Append does not run concurrently with GetAt().
-        race(collection_action::push_back, [&]
-        {
-            v.Append(conditional_box<T>(42));
-        }, [&]
-        {
-            CHECK(conditional_unbox<T>(v.GetAt(3)) == 42);
-        });
+        race(
+            collection_action::push_back,
+            [&] { v.Append(conditional_box<T>(42)); },
+            [&] { CHECK(conditional_unbox<T>(v.GetAt(3)) == 42); });
 
         // Verify that Append does not run concurrently with Size().
-        race(collection_action::push_back, [&]
-        {
-            v.Append(conditional_box<T>(42));
-        }, [&]
-        {
-            CHECK(v.Size() == 4);
-        });
+        race(collection_action::push_back, [&] { v.Append(conditional_box<T>(42)); }, [&] { CHECK(v.Size() == 4); });
 
         // Verify that Append does not run concurrently with IndexOf().
-        race(collection_action::push_back, [&]
-        {
-            v.Append(conditional_box<T>(42));
-        }, [&]
-        {
-            uint32_t index;
-            bool found = v.IndexOf(conditional_box<T>(3), index);
-            if constexpr (std::is_same_v<T, int>)
+        race(
+            collection_action::push_back,
+            [&] { v.Append(conditional_box<T>(42)); },
+            [&]
             {
-                CHECK(found);
-                CHECK(index == 2);
-            }
-            else
-            {
-                // Boxed integers do not compare equal even if the values are the same.
-                CHECK(!found);
-            }
-        });
+                uint32_t index;
+                bool found = v.IndexOf(conditional_box<T>(3), index);
+                if constexpr (std::is_same_v<T, int>)
+                {
+                    CHECK(found);
+                    CHECK(index == 2);
+                }
+                else
+                {
+                    // Boxed integers do not compare equal even if the values are the same.
+                    CHECK(!found);
+                }
+            });
 
         // Verify that Append does not run concurrently with another Append().
-        race(collection_action::push_back, [&]
-        {
-            v.Append(conditional_box<T>(42));
-        }, [&]
-        {
-            v.Append(conditional_box<T>(43));
-        });
+        race(
+            collection_action::push_back,
+            [&] { v.Append(conditional_box<T>(42)); },
+            [&] { v.Append(conditional_box<T>(43)); });
 
         // Verify that Append does not run concurrently with ReplaceAll().
-        race(collection_action::push_back, [&]
-        {
-            v.Append(conditional_box<T>(42));
-        }, [&]
-        {
-            v.ReplaceAll({ conditional_box<T>(1), conditional_box<T>(2) });
-        });
+        race(
+            collection_action::push_back,
+            [&] { v.Append(conditional_box<T>(42)); },
+            [&] { v.ReplaceAll({ conditional_box<T>(1), conditional_box<T>(2) }); });
 
         // Verify that Append does not run concurrently with GetMany().
-        race(collection_action::push_back, [&]
-        {
-            v.Append(conditional_box<T>(42));
-        }, [&]
-        {
-            T values[10];
-            CHECK(v.GetMany(0, values) == 4);
-            CHECK(conditional_unbox<T>(values[0]) == 1);
-            CHECK(conditional_unbox<T>(values[1]) == 2);
-            CHECK(conditional_unbox<T>(values[2]) == 3);
-            CHECK(conditional_unbox<T>(values[3]) == 42);
-        });
+        race(
+            collection_action::push_back,
+            [&] { v.Append(conditional_box<T>(42)); },
+            [&]
+            {
+                T values[10];
+                CHECK(v.GetMany(0, values) == 4);
+                CHECK(conditional_unbox<T>(values[0]) == 1);
+                CHECK(conditional_unbox<T>(values[1]) == 2);
+                CHECK(conditional_unbox<T>(values[2]) == 3);
+                CHECK(conditional_unbox<T>(values[3]) == 42);
+            });
 
         // Verify that InsertAt does not run concurrently with GetAt().
-        race(collection_action::insert, [&]
-        {
-            v.InsertAt(1, conditional_box<T>(42));
-        }, [&]
-        {
-            CHECK(conditional_unbox<T>(v.GetAt(1)) == 42);
-        });
+        race(
+            collection_action::insert,
+            [&] { v.InsertAt(1, conditional_box<T>(42)); },
+            [&] { CHECK(conditional_unbox<T>(v.GetAt(1)) == 42); });
 
         // Verify that InsertAt does not run concurrently with Size().
-        race(collection_action::insert, [&]
-        {
-            v.InsertAt(1, conditional_box<T>(42));
-        }, [&]
-        {
-            CHECK(v.Size() == 4);
-        });
+        race(collection_action::insert, [&] { v.InsertAt(1, conditional_box<T>(42)); }, [&] { CHECK(v.Size() == 4); });
 
         // Verify that InsertAt does not run concurrently with GetMany().
-        race(collection_action::insert, [&]
-        {
-            v.InsertAt(1, conditional_box<T>(42));
-        }, [&]
-        {
-            T values[10];
-            CHECK(v.GetMany(0, values) == 4);
-            CHECK(conditional_unbox<T>(values[0]) == 1);
-            CHECK(conditional_unbox<T>(values[1]) == 42);
-            CHECK(conditional_unbox<T>(values[2]) == 2);
-            CHECK(conditional_unbox<T>(values[3]) == 3);
-        });
+        race(
+            collection_action::insert,
+            [&] { v.InsertAt(1, conditional_box<T>(42)); },
+            [&]
+            {
+                T values[10];
+                CHECK(v.GetMany(0, values) == 4);
+                CHECK(conditional_unbox<T>(values[0]) == 1);
+                CHECK(conditional_unbox<T>(values[1]) == 42);
+                CHECK(conditional_unbox<T>(values[2]) == 2);
+                CHECK(conditional_unbox<T>(values[3]) == 3);
+            });
 
         // Verify that RemoveAt does not run concurrently with GetAt().
-        race(collection_action::erase, [&]
-        {
-            v.RemoveAt(1);
-        }, [&]
-        {
-            CHECK(conditional_unbox<T>(v.GetAt(1)) == 3);
-        });
+        race(collection_action::erase, [&] { v.RemoveAt(1); }, [&] { CHECK(conditional_unbox<T>(v.GetAt(1)) == 3); });
 
         // Verify that RemoveAt does not run concurrently with Size().
-        race(collection_action::erase, [&]
-        {
-            v.RemoveAt(1);
-        }, [&]
-        {
-            CHECK(v.Size() == 2);
-        });
+        race(collection_action::erase, [&] { v.RemoveAt(1); }, [&] { CHECK(v.Size() == 2); });
 
         // Verify that SetAt does not run concurrently with GetAt().
-        race(collection_action::at, [&]
-        {
-            v.SetAt(1, conditional_box<T>(42));
-        }, [&]
-        {
-            CHECK(conditional_unbox<T>(v.GetAt(1)) == 42);
-        });
+        race(
+            collection_action::at,
+            [&] { v.SetAt(1, conditional_box<T>(42)); },
+            [&] { CHECK(conditional_unbox<T>(v.GetAt(1)) == 42); });
 
         // Iterator invalidation tests are a little different because we perform
         // the mutation from the foreground thread after the read operation
@@ -408,14 +366,14 @@ namespace
             // iterator use.
             decltype(v.First()) it;
             T t;
-            race(collection_action::at, [&]
-            {
-                it = v.First();
-                t = it.Current();
-            }, [&]
-            {
-                v.InsertAt(0, conditional_box<T>(42));
-            });
+            race(
+                collection_action::at,
+                [&]
+                {
+                    it = v.First();
+                    t = it.Current();
+                },
+                [&] { v.InsertAt(0, conditional_box<T>(42)); });
             CHECK(conditional_unbox<T>(t) == 1);
         }
 
@@ -426,14 +384,14 @@ namespace
             decltype(v.First()) it;
             T t1[1];
             T t2[1];
-            race(collection_action::at, [&]
-            {
-                it = v.First();
-                CHECK(it.GetMany(t1) == 1);
-            }, [&]
-            {
-                CHECK(it.GetMany(t2) == 1);
-            });
+            race(
+                collection_action::at,
+                [&]
+                {
+                    it = v.First();
+                    CHECK(it.GetMany(t1) == 1);
+                },
+                [&] { CHECK(it.GetMany(t2) == 1); });
             CHECK(conditional_unbox<T>(t1[0]) != conditional_unbox<T>(t2[0]));
         }
     }
@@ -442,7 +400,7 @@ namespace
     {
         auto v = make_threaded_vector<VectorKind::IVector>(concurrency_checked_vector<IInspectable>());
         v.Append(make<deadlock_object<IVector<IInspectable>>>(v));
-        auto task = [](auto v)-> IAsyncAction
+        auto task = [](auto v) -> IAsyncAction
         {
             co_await resume_background();
             v.RemoveAtEnd();
@@ -450,7 +408,7 @@ namespace
         auto status = task.wait_for(std::chrono::milliseconds(DEADLOCK_TIMEOUT));
         REQUIRE(status == AsyncStatus::Completed);
     }
-}
+} // namespace
 
 TEST_CASE("multi_threaded_vector")
 {

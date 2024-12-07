@@ -4,7 +4,7 @@
 // These tests do not attempt to test the FTM itself, but merely to confirm that the presence and
 // absence of the non_agile marker does indeed produce the correct responses from QueryInterface.
 // CoMarshalInterfaceXxxx is also used to exercise the code paths. Also, these tests confirm that
-// the weak reference object inherits the same agility as the source. Although much of this is 
+// the weak reference object inherits the same agility as the source. Although much of this is
 // tested elsewhere, it was helpful to have these tests as a set.
 
 using namespace winrt;
@@ -27,7 +27,7 @@ namespace
             return L"NonAgile";
         }
     };
-}
+} // namespace
 
 TEST_CASE("marshal agile")
 {
@@ -61,7 +61,8 @@ TEST_CASE("marshal agile weak-ref")
     WINRT_ASSERT(ref.as<IMarshal>());
 
     com_ptr<IStream> stream;
-    check_hresult(CoMarshalInterThreadInterfaceInStream(guid_of<impl::IWeakReference>(), reinterpret_cast<::IUnknown*>(get_abi(ref)), stream.put()));
+    check_hresult(CoMarshalInterThreadInterfaceInStream(
+        guid_of<impl::IWeakReference>(), reinterpret_cast<::IUnknown*>(get_abi(ref)), stream.put()));
     auto ref_copy = capture<impl::IWeakReference>(CoUnmarshalInterface, get_abi(stream));
 
     IStringable copy;

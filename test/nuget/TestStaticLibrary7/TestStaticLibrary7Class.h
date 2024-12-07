@@ -10,11 +10,10 @@ namespace winrt::TestRuntimeComponentCXLibrary::implementation
 
         Windows::UI::Xaml::Core::Direct::XamlDirect Test();
     };
-}
+} // namespace winrt::TestRuntimeComponentCXLibrary::implementation
 
 namespace winrt::TestRuntimeComponentCXLibrary::factory_implementation
 {
     struct TestStaticLibrary7Class : TestStaticLibrary7ClassT<TestStaticLibrary7Class, implementation::TestStaticLibrary7Class>
-    {
-    };
-}
+    {};
+} // namespace winrt::TestRuntimeComponentCXLibrary::factory_implementation

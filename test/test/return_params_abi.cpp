@@ -6,7 +6,7 @@ namespace winrt
 {
     using namespace Windows::Foundation;
     using namespace test_component;
-}
+} // namespace winrt
 
 using namespace winrt;
 
@@ -18,7 +18,7 @@ namespace
         copy_from_abi(object, raw);
         return object.as<IStringable>().ToString();
     }
-}
+} // namespace
 
 TEST_CASE("return_params_abi")
 {
@@ -79,7 +79,7 @@ TEST_CASE("return_params_abi")
     }
     {
         uint32_t length{ 0xCC };
-        auto raw{ reinterpret_cast<::IInspectable * *>(0xCC) };
+        auto raw{ reinterpret_cast<::IInspectable**>(0xCC) };
         REQUIRE(S_OK == abi->ReturnObjectArray(&length, &raw));
         com_array<winrt::IInspectable> value{ raw, length, take_ownership_from_abi };
         REQUIRE(value.size() == 3);
@@ -89,7 +89,7 @@ TEST_CASE("return_params_abi")
     }
     {
         uint32_t length{ 0xCC };
-        auto raw{ reinterpret_cast<ABI::Windows::Foundation::IStringable * *>(0xCC) };
+        auto raw{ reinterpret_cast<ABI::Windows::Foundation::IStringable**>(0xCC) };
         REQUIRE(S_OK == abi->ReturnStringableArray(&length, &raw));
         com_array<IStringable> value{ raw, length, take_ownership_from_abi };
         REQUIRE(value.size() == 3);
@@ -154,14 +154,14 @@ TEST_CASE("return_params_abi")
     }
     {
         uint32_t length{ 0xCC };
-        auto raw{ reinterpret_cast<::IInspectable * *>(0xCC) };
+        auto raw{ reinterpret_cast<::IInspectable**>(0xCC) };
         REQUIRE(E_INVALIDARG == abi->ReturnObjectArray(&length, &raw));
         REQUIRE(length == 0xCC);
         REQUIRE(raw == nullptr);
     }
     {
         uint32_t length{ 0xCC };
-        auto raw{ reinterpret_cast<ABI::Windows::Foundation::IStringable * *>(0xCC) };
+        auto raw{ reinterpret_cast<ABI::Windows::Foundation::IStringable**>(0xCC) };
         REQUIRE(E_INVALIDARG == abi->ReturnStringableArray(&length, &raw));
         REQUIRE(length == 0xCC);
         REQUIRE(raw == nullptr);

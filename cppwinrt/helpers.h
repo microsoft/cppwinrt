@@ -20,8 +20,7 @@ namespace cppwinrt
     struct method_signature
     {
         explicit method_signature(MethodDef const& method) :
-            m_method(method),
-            m_signature(method.Signature())
+            m_method(method), m_signature(method.Signature())
         {
             auto params = method.ParamList();
 
@@ -75,11 +74,11 @@ namespace cppwinrt
 
         bool is_async() const
         {
-            // WinRT parameter passing conventions include the notion that input parameters of collection types may be read
-            // or copied but should not be stored directly since this would lead to instability as the collection is shared
-            // by the caller and callee. The exception to this rule is property setters where the callee may simply store a
-            // reference to the collection. The collection thus becomes async in the sense that it is expected to remain
-            // valid beyond the duration of the call.
+            // WinRT parameter passing conventions include the notion that input parameters of collection types may be
+            // read or copied but should not be stored directly since this would lead to instability as the collection
+            // is shared by the caller and callee. The exception to this rule is property setters where the callee may
+            // simply store a reference to the collection. The collection thus becomes async in the sense that it is
+            // expected to remain valid beyond the duration of the call.
 
             if (is_put_overload(m_method))
             {
@@ -93,7 +92,8 @@ namespace cppwinrt
 
             bool async{};
 
-            call(m_signature.ReturnType().Type().Type(),
+            call(
+                m_signature.ReturnType().Type().Type(),
                 [&](coded_index<TypeDefOrRef> const& type)
                 {
                     auto const& [type_namespace, type_name] = get_type_namespace_and_name(type);
@@ -105,19 +105,16 @@ namespace cppwinrt
 
                     if (type_namespace == "Windows.Foundation")
                     {
-                        async =
-                            type_name == "IAsyncOperation`1" ||
-                            type_name == "IAsyncActionWithProgress`1" ||
-                            type_name == "IAsyncOperationWithProgress`2";
+                        async = type_name == "IAsyncOperation`1" || type_name == "IAsyncActionWithProgress`1" ||
+                                type_name == "IAsyncOperationWithProgress`2";
                     }
                 },
-                    [](auto&&) {});
+                [](auto&&) {});
 
             return async;
         }
 
     private:
-
         MethodDef m_method;
         MethodDefSig m_signature;
         std::vector<std::pair<Param, ParamSig const*>> m_params;
@@ -150,50 +147,45 @@ namespace cppwinrt
 
     namespace impl
     {
-        template <typename T, typename... Types>
-        struct variant_index;
+        template <typename T, typename... Types> struct variant_index;
 
-        template <typename T, typename First, typename... Types>
-        struct variant_index<T, First, Types...>
+        template <typename T, typename First, typename... Types> struct variant_index<T, First, Types...>
         {
             static constexpr bool found = std::is_same_v<T, First>;
-            static constexpr std::size_t value = std::conditional_t<found,
-                std::integral_constant<std::size_t, 0>,
-                variant_index<T, Types...>>::value + (found ? 0 : 1);
+            static constexpr std::size_t value =
+                std::conditional_t<found, std::integral_constant<std::size_t, 0>, variant_index<T, Types...>>::value +
+                (found ? 0 : 1);
         };
-    }
+    } // namespace impl
 
-    template <typename Variant, typename T>
-    struct variant_index;
+    template <typename Variant, typename T> struct variant_index;
 
     template <typename... Types, typename T>
     struct variant_index<std::variant<Types...>, T> : impl::variant_index<T, Types...>
-    {
-    };
+    {};
 
-    template <typename Variant, typename T>
-    constexpr std::size_t variant_index_v = variant_index<Variant, T>::value;
+    template <typename Variant, typename T> constexpr std::size_t variant_index_v = variant_index<Variant, T>::value;
 
-    template <typename T>
-    auto get_integer_attribute(FixedArgSig const& signature)
+    template <typename T> auto get_integer_attribute(FixedArgSig const& signature)
     {
         auto variant = std::get<ElemSig>(signature.value).value;
         switch (variant.index())
         {
-        case variant_index_v<decltype(variant), std::make_unsigned_t<T>>: return static_cast<T>(std::get<std::make_unsigned_t<T>>(variant));
-        case variant_index_v<decltype(variant), std::make_signed_t<T>>: return static_cast<T>(std::get<std::make_signed_t<T>>(variant));
-        default: return std::get<T>(variant); // Likely throws, but that's intentional
+        case variant_index_v<decltype(variant), std::make_unsigned_t<T>>:
+            return static_cast<T>(std::get<std::make_unsigned_t<T>>(variant));
+        case variant_index_v<decltype(variant), std::make_signed_t<T>>:
+            return static_cast<T>(std::get<std::make_signed_t<T>>(variant));
+        default:
+            return std::get<T>(variant); // Likely throws, but that's intentional
         }
     }
 
-    template <typename T>
-    auto get_attribute_value(FixedArgSig const& signature)
+    template <typename T> auto get_attribute_value(FixedArgSig const& signature)
     {
         return std::get<T>(std::get<ElemSig>(signature.value).value);
     }
 
-    template <typename T>
-    auto get_attribute_value(CustomAttribute const& attribute, uint32_t const arg)
+    template <typename T> auto get_attribute_value(CustomAttribute const& attribute, uint32_t const arg)
     {
         return get_attribute_value<T>(attribute.Value().FixedArgs()[arg]);
     }
@@ -244,7 +236,7 @@ namespace cppwinrt
 
     static bool has_fastabi(TypeDef const& type)
     {
-        return settings.fastabi&& has_attribute(type, "Windows.Foundation.Metadata", "FastAbiAttribute");
+        return settings.fastabi && has_attribute(type, "Windows.Foundation.Metadata", "FastAbiAttribute");
     }
 
     static bool is_always_disabled(TypeDef const& type)
@@ -303,17 +295,16 @@ namespace cppwinrt
         auto extends = derived.Extends();
         if (!extends)
         {
-            return{};
+            return {};
         }
 
-        auto const&[extends_namespace, extends_name] = get_type_namespace_and_name(extends);
+        auto const& [extends_namespace, extends_name] = get_type_namespace_and_name(extends);
         if (extends_name == "Object" && extends_namespace == "System")
         {
             return {};
         }
         return find_required(extends);
     };
-
 
     static auto get_bases(TypeDef const& type)
     {
@@ -360,19 +351,11 @@ namespace cppwinrt
 
         contract_version result{};
         result.version = get_integer_attribute<uint32_t>(args[1]);
-        call(std::get<ElemSig>(args[0].value).value,
-            [&](ElemSig::SystemType t)
-            {
-                result.name = t.name;
-            },
-            [&](std::string_view name)
-            {
-                result.name = name;
-            },
-            [](auto&&)
-            {
-                assert(false);
-            });
+        call(
+            std::get<ElemSig>(args[0].value).value,
+            [&](ElemSig::SystemType t) { result.name = t.name; },
+            [&](std::string_view name) { result.name = name; },
+            [](auto&&) { assert(false); });
 
         return result;
     }
@@ -433,10 +416,10 @@ namespace cppwinrt
 
                 if (!prev.contract_to.empty())
                 {
-                    auto itr = std::find_if(previous_contracts.begin(), previous_contracts.end(), [&](auto const& ver)
-                    {
-                        return ver.name == prev.contract_to;
-                    });
+                    auto itr = std::find_if(
+                        previous_contracts.begin(),
+                        previous_contracts.end(),
+                        [&](auto const& ver) { return ver.name == prev.contract_to; });
                     if (itr != previous_contracts.end())
                     {
                         *itr = previous_contracts.back();
@@ -512,10 +495,10 @@ namespace cppwinrt
         for (size_t size = result.previous_contracts.size() - 1; size; --size)
         {
             auto& last = result.previous_contracts[size];
-            auto itr = std::find_if(result.previous_contracts.begin(), result.previous_contracts.begin() + size, [&](auto const& prev)
-            {
-                return prev.contract_to == last.contract_from;
-            });
+            auto itr = std::find_if(
+                result.previous_contracts.begin(),
+                result.previous_contracts.begin() + size,
+                [&](auto const& prev) { return prev.contract_to == last.contract_from; });
             assert(itr != result.previous_contracts.end());
             std::swap(*itr, result.previous_contracts[size - 1]);
         }
@@ -545,10 +528,7 @@ namespace cppwinrt
 
     static interface_info* find(get_interfaces_t& interfaces, std::string_view const& name)
     {
-        auto pair = std::find_if(interfaces.begin(), interfaces.end(), [&](auto&& pair)
-        {
-            return pair.first == name;
-        });
+        auto pair = std::find_if(interfaces.begin(), interfaces.end(), [&](auto&& pair) { return pair.first == name; });
 
         if (pair == interfaces.end())
         {
@@ -570,7 +550,14 @@ namespace cppwinrt
         }
     }
 
-    static void get_interfaces_impl(writer& w, get_interfaces_t& result, bool defaulted, bool overridable, bool base, std::vector<std::vector<std::string>> const& generic_param_stack, std::pair<InterfaceImpl, InterfaceImpl>&& children)
+    static void get_interfaces_impl(
+        writer& w,
+        get_interfaces_t& result,
+        bool defaulted,
+        bool overridable,
+        bool base,
+        std::vector<std::vector<std::string>> const& generic_param_stack,
+        std::pair<InterfaceImpl, InterfaceImpl>&& children)
     {
         for (auto&& impl : children)
         {
@@ -605,40 +592,41 @@ namespace cppwinrt
 
             switch (type.type())
             {
-                case TypeDefOrRef::TypeDef:
+            case TypeDefOrRef::TypeDef:
+            {
+                info.type = type.TypeDef();
+                break;
+            }
+            case TypeDefOrRef::TypeRef:
+            {
+                info.type = find_required(type.TypeRef());
+                w.add_depends(info.type);
+                break;
+            }
+            case TypeDefOrRef::TypeSpec:
+            {
+                auto type_signature = type.TypeSpec().Signature();
+
+                std::vector<std::string> names;
+
+                for (auto&& arg : type_signature.GenericTypeInst().GenericArgs())
                 {
-                    info.type = type.TypeDef();
-                    break;
+                    names.push_back(w.write_temp("%", arg));
                 }
-                case TypeDefOrRef::TypeRef:
-                {
-                    info.type = find_required(type.TypeRef());
-                    w.add_depends(info.type);
-                    break;
-                }
-                case TypeDefOrRef::TypeSpec:
-                {
-                    auto type_signature = type.TypeSpec().Signature();
 
-                    std::vector<std::string> names;
+                info.generic_param_stack.push_back(std::move(names));
 
-                    for (auto&& arg : type_signature.GenericTypeInst().GenericArgs())
-                    {
-                        names.push_back(w.write_temp("%", arg));
-                    }
+                guard = w.push_generic_params(type_signature.GenericTypeInst());
+                auto signature = type_signature.GenericTypeInst();
+                info.type = find_required(signature.GenericType());
 
-                    info.generic_param_stack.push_back(std::move(names));
-
-                    guard = w.push_generic_params(type_signature.GenericTypeInst());
-                    auto signature = type_signature.GenericTypeInst();
-                    info.type = find_required(signature.GenericType());
-
-                    break;
-                }
+                break;
+            }
             }
 
             info.exclusive = has_attribute(info.type, "Windows.Foundation.Metadata", "ExclusiveToAttribute");
-            get_interfaces_impl(w, result, info.defaulted, info.overridable, base, info.generic_param_stack, info.type.InterfaceImpl());
+            get_interfaces_impl(
+                w, result, info.defaulted, info.overridable, base, info.generic_param_stack, info.type.InterfaceImpl());
             insert_or_assign(result, name, std::move(info));
         }
     };
@@ -670,10 +658,10 @@ namespace cppwinrt
                 auto introduced = get_initial_contract_version(pair.second.type);
                 pair.second.relative_version.second = introduced.version;
 
-                auto itr = std::find_if(history.previous_contracts.begin(), history.previous_contracts.end(), [&](previous_contract const& prev)
-                {
-                    return prev.contract_from == introduced.name;
-                });
+                auto itr = std::find_if(
+                    history.previous_contracts.begin(),
+                    history.previous_contracts.end(),
+                    [&](previous_contract const& prev) { return prev.contract_from == introduced.name; });
                 if (itr != history.previous_contracts.end())
                 {
                     pair.second.relative_version.first = static_cast<uint32_t>(itr - history.previous_contracts.begin());
@@ -686,52 +674,53 @@ namespace cppwinrt
             }
         }
 
-        std::partial_sort(result.begin(), result.begin() + count, result.end(), [](auto&& left_pair, auto&& right_pair)
-        {
-            auto& left = left_pair.second;
-            auto& right = right_pair.second;
-
-            // Sort by base before is_default because each base will have a default.
-            if (left.base != right.base)
+        std::partial_sort(
+            result.begin(),
+            result.begin() + count,
+            result.end(),
+            [](auto&& left_pair, auto&& right_pair)
             {
-                return !left.base;
-            }
+                auto& left = left_pair.second;
+                auto& right = right_pair.second;
 
-            if (left.is_default != right.is_default)
-            {
-                return left.is_default;
-            }
+                // Sort by base before is_default because each base will have a default.
+                if (left.base != right.base)
+                {
+                    return !left.base;
+                }
 
-            if (left.overridable != right.overridable)
-            {
-                return !left.overridable;
-            }
+                if (left.is_default != right.is_default)
+                {
+                    return left.is_default;
+                }
 
-            if (left.exclusive != right.exclusive)
-            {
-                return left.exclusive;
-            }
+                if (left.overridable != right.overridable)
+                {
+                    return !left.overridable;
+                }
 
-            auto left_enabled = is_always_enabled(left.type);
-            auto right_enabled = is_always_enabled(right.type);
+                if (left.exclusive != right.exclusive)
+                {
+                    return left.exclusive;
+                }
 
-            if (left_enabled != right_enabled)
-            {
-                return left_enabled;
-            }
+                auto left_enabled = is_always_enabled(left.type);
+                auto right_enabled = is_always_enabled(right.type);
 
-            if (left.relative_version != right.relative_version)
-            {
-                return left.relative_version < right.relative_version;
-            }
+                if (left_enabled != right_enabled)
+                {
+                    return left_enabled;
+                }
 
-            return left_pair.first < right_pair.first;
-        });
+                if (left.relative_version != right.relative_version)
+                {
+                    return left.relative_version < right.relative_version;
+                }
 
-        std::for_each_n(result.begin(), count, [](auto && pair)
-        {
-            pair.second.fastabi = true;
-        });
+                return left_pair.first < right_pair.first;
+            });
+
+        std::for_each_n(result.begin(), count, [](auto&& pair) { pair.second.fastabi = true; });
 
         return result;
     }
@@ -906,7 +895,8 @@ namespace cppwinrt
 
         param_category result{};
 
-        call(signature.Type(),
+        call(
+            signature.Type(),
             [&](ElementType type)
             {
                 if (type == ElementType::String)
@@ -963,14 +953,8 @@ namespace cppwinrt
                     return;
                 }
             },
-            [&](GenericTypeInstSig const&)
-            {
-                result = param_category::object_type;
-            },
-            [&](auto&&)
-            {
-                result = param_category::generic_type;
-            });
+            [&](GenericTypeInstSig const&) { result = param_category::object_type; },
+            [&](auto&&) { result = param_category::generic_type; });
 
         return result;
     }
@@ -979,14 +963,15 @@ namespace cppwinrt
     {
         bool object{};
 
-        call(signature.Type(),
+        call(
+            signature.Type(),
             [&](ElementType type)
-        {
-            if (type == ElementType::Object)
             {
-                object = true;
-            }
-        },
+                if (type == ElementType::Object)
+                {
+                    object = true;
+                }
+            },
             [](auto&&) {});
 
         return object;
@@ -996,10 +981,7 @@ namespace cppwinrt
     {
         auto methods = type.MethodList();
 
-        auto method = std::find_if(begin(methods), end(methods), [](auto&& method)
-        {
-            return method.Name() == "Invoke";
-        });
+        auto method = std::find_if(begin(methods), end(methods), [](auto&& method) { return method.Name() == "Invoke"; });
 
         if (method == end(methods))
         {
@@ -1067,7 +1049,7 @@ namespace cppwinrt
 
     static bool has_factory_members(writer& w, TypeDef const& type)
     {
-        for (auto&&[factory_name, factory] : get_factories(w, type))
+        for (auto&& [factory_name, factory] : get_factories(w, type))
         {
             if (!factory.type || !empty(factory.type.MethodList()))
             {
@@ -1080,7 +1062,7 @@ namespace cppwinrt
 
     static bool is_composable(writer& w, TypeDef const& type)
     {
-        for (auto&&[factory_name, factory] : get_factories(w, type))
+        for (auto&& [factory_name, factory] : get_factories(w, type))
         {
             if (factory.composable)
             {
@@ -1093,7 +1075,7 @@ namespace cppwinrt
 
     static bool has_composable_constructors(writer& w, TypeDef const& type)
     {
-        for (auto&&[interface_name, factory] : get_factories(w, type))
+        for (auto&& [interface_name, factory] : get_factories(w, type))
         {
             if (factory.composable && !empty(factory.type.MethodList()))
             {
@@ -1106,12 +1088,8 @@ namespace cppwinrt
 
     static bool has_projected_types(cache::namespace_members const& members)
     {
-        return
-            !members.interfaces.empty() ||
-            !members.classes.empty() ||
-            !members.enums.empty() ||
-            !members.structs.empty() ||
-            !members.delegates.empty();
+        return !members.interfaces.empty() || !members.classes.empty() || !members.enums.empty() ||
+               !members.structs.empty() || !members.delegates.empty();
     }
 
     static bool can_produce(TypeDef const& type, cache const& c)
@@ -1145,4 +1123,4 @@ namespace cppwinrt
 
         return settings.component_filter.includes(class_name);
     }
-}
+} // namespace cppwinrt

@@ -1,13 +1,14 @@
 
 namespace winrt::impl
 {
-    template <typename D>
-    struct composable_factory
+    template <typename D> struct composable_factory
     {
         template <typename I, typename... Args>
         static I CreateInstance(const Windows::Foundation::IInspectable& outer, Windows::Foundation::IInspectable& inner, Args&&... args)
         {
-            static_assert(std::is_base_of_v<Windows::Foundation::IInspectable, I>, "Requested interface must derive from winrt::Windows::Foundation::IInspectable");
+            static_assert(
+                std::is_base_of_v<Windows::Foundation::IInspectable, I>,
+                "Requested interface must derive from winrt::Windows::Foundation::IInspectable");
             inner = CreateInstanceImpl(outer, std::forward<Args>(args)...);
             return inner.as<I>();
         }
@@ -26,8 +27,7 @@ namespace winrt::impl
         }
     };
 
-    template <typename T, typename D, typename I>
-    class WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable_base
+    template <typename T, typename D, typename I> class WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable_base
     {
     protected:
         D& shim() noexcept
@@ -48,23 +48,21 @@ namespace winrt::impl
         }
     };
 
-    template <typename T, typename D, typename I>
-    struct produce_dispatch_to_overridable;
+    template <typename T, typename D, typename I> struct produce_dispatch_to_overridable;
 
-    template <typename D, typename... I>
-    class dispatch_to_overridable
+    template <typename D, typename... I> class dispatch_to_overridable
     {
         class wrapper : public produce_dispatch_to_overridable<wrapper, D, I>...
         {
             D& instance;
 
-            template <typename, typename, typename>
-            friend class produce_dispatch_to_overridable_base;
+            template <typename, typename, typename> friend class produce_dispatch_to_overridable_base;
 
-            template <typename, typename...>
-            friend class dispatch_to_overridable;
+            template <typename, typename...> friend class dispatch_to_overridable;
 
-            explicit wrapper(D& d) : instance(d) {}
+            explicit wrapper(D& d) :
+                instance(d)
+            {}
 
         public:
             wrapper(const wrapper&) = delete;
@@ -77,4 +75,4 @@ namespace winrt::impl
             return wrapper{ instance };
         }
     };
-}
+} // namespace winrt::impl

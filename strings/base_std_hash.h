@@ -30,11 +30,11 @@ namespace winrt::impl
             return std::hash<void*>{}(abi_value);
         }
     };
-}
+} // namespace winrt::impl
 
 namespace std
 {
-    template<> struct hash<winrt::hstring>
+    template <> struct hash<winrt::hstring>
     {
         size_t operator()(winrt::hstring const& value) const noexcept
         {
@@ -42,15 +42,18 @@ namespace std
         }
     };
 
-    template<> struct hash<winrt::Windows::Foundation::IUnknown> : winrt::impl::hash_base {};
-    template<> struct hash<winrt::Windows::Foundation::IInspectable> : winrt::impl::hash_base {};
-    template<> struct hash<winrt::Windows::Foundation::IActivationFactory> : winrt::impl::hash_base {};
-    
-    template<> struct hash<winrt::guid>
+    template <> struct hash<winrt::Windows::Foundation::IUnknown> : winrt::impl::hash_base
+    {};
+    template <> struct hash<winrt::Windows::Foundation::IInspectable> : winrt::impl::hash_base
+    {};
+    template <> struct hash<winrt::Windows::Foundation::IActivationFactory> : winrt::impl::hash_base
+    {};
+
+    template <> struct hash<winrt::guid>
     {
         size_t operator()(winrt::guid const& value) const noexcept
         {
             return winrt::impl::hash_data(&value, sizeof(value));
         }
     };
-}
+} // namespace std

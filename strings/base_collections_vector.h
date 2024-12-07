@@ -5,17 +5,21 @@ namespace winrt::impl
     using multi_threaded_vector = vector_impl<T, Container, multi_threaded_collection_base>;
 
     template <typename Container, typename ThreadingBase = single_threaded_collection_base>
-    struct inspectable_observable_vector :
-        observable_vector_base<inspectable_observable_vector<Container, ThreadingBase>, Windows::Foundation::IInspectable>,
-        implements<inspectable_observable_vector<Container, ThreadingBase>,
-        wfc::IObservableVector<Windows::Foundation::IInspectable>, wfc::IVector<Windows::Foundation::IInspectable>, wfc::IVectorView<Windows::Foundation::IInspectable>, wfc::IIterable<Windows::Foundation::IInspectable>>,
-        ThreadingBase
+    struct inspectable_observable_vector
+        : observable_vector_base<inspectable_observable_vector<Container, ThreadingBase>, Windows::Foundation::IInspectable>,
+          implements<
+              inspectable_observable_vector<Container, ThreadingBase>,
+              wfc::IObservableVector<Windows::Foundation::IInspectable>,
+              wfc::IVector<Windows::Foundation::IInspectable>,
+              wfc::IVectorView<Windows::Foundation::IInspectable>,
+              wfc::IIterable<Windows::Foundation::IInspectable>>,
+          ThreadingBase
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        explicit inspectable_observable_vector(Container&& values) : m_values(std::forward<Container>(values))
-        {
-        }
+        explicit inspectable_observable_vector(Container&& values) :
+            m_values(std::forward<Container>(values))
+        {}
 
         auto& get_container() noexcept
         {
@@ -27,24 +31,31 @@ namespace winrt::impl
             return m_values;
         }
 
-        using ThreadingBase::acquire_shared;
         using ThreadingBase::acquire_exclusive;
+        using ThreadingBase::acquire_shared;
 
     private:
-
         Container m_values;
     };
 
     template <typename Container>
-    using multi_threaded_inspectable_observable_vector = inspectable_observable_vector<Container, multi_threaded_collection_base>;
+    using multi_threaded_inspectable_observable_vector =
+        inspectable_observable_vector<Container, multi_threaded_collection_base>;
 
     template <typename T, typename Container, typename ThreadingBase = single_threaded_collection_base>
-    struct convertible_observable_vector :
-        observable_vector_base<convertible_observable_vector<T, Container, ThreadingBase>, T>,
-        implements<convertible_observable_vector<T, Container, ThreadingBase>,
-        wfc::IObservableVector<T>, wfc::IVector<T>, wfc::IVectorView<T>, wfc::IIterable<T>,
-        wfc::IObservableVector<Windows::Foundation::IInspectable>, wfc::IVector<Windows::Foundation::IInspectable>, wfc::IVectorView<Windows::Foundation::IInspectable>, wfc::IIterable<Windows::Foundation::IInspectable>>,
-        ThreadingBase
+    struct convertible_observable_vector
+        : observable_vector_base<convertible_observable_vector<T, Container, ThreadingBase>, T>,
+          implements<
+              convertible_observable_vector<T, Container, ThreadingBase>,
+              wfc::IObservableVector<T>,
+              wfc::IVector<T>,
+              wfc::IVectorView<T>,
+              wfc::IIterable<T>,
+              wfc::IObservableVector<Windows::Foundation::IInspectable>,
+              wfc::IVector<Windows::Foundation::IInspectable>,
+              wfc::IVectorView<Windows::Foundation::IInspectable>,
+              wfc::IIterable<Windows::Foundation::IInspectable>>,
+          ThreadingBase
     {
         static_assert(!std::is_same_v<T, Windows::Foundation::IInspectable>);
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
@@ -52,9 +63,9 @@ namespace winrt::impl
         using container_type = convertible_observable_vector<T, Container, ThreadingBase>;
         using base_type = observable_vector_base<convertible_observable_vector<T, Container, ThreadingBase>, T>;
 
-        explicit convertible_observable_vector(Container&& values) : m_values(std::forward<Container>(values))
-        {
-        }
+        explicit convertible_observable_vector(Container&& values) :
+            m_values(std::forward<Container>(values))
+        {}
 
         auto& get_container() noexcept
         {
@@ -66,8 +77,8 @@ namespace winrt::impl
             return m_values;
         }
 
-        using ThreadingBase::acquire_shared;
         using ThreadingBase::acquire_exclusive;
+        using ThreadingBase::acquire_shared;
 
         auto First()
         {
@@ -149,10 +160,11 @@ namespace winrt::impl
 
             uint32_t const actual = (std::min)(static_cast<uint32_t>(m_values.size() - startIndex), values.size());
 
-            std::transform(m_values.begin() + startIndex, m_values.begin() + startIndex + actual, values.begin(), [&](auto && value)
-                {
-                    return box_value(value);
-                });
+            std::transform(
+                m_values.begin() + startIndex,
+                m_values.begin() + startIndex + actual,
+                values.begin(),
+                [&](auto&& value) { return box_value(value); });
 
             return actual;
         }
@@ -205,10 +217,11 @@ namespace winrt::impl
             Container new_values;
             new_values.reserve(values.size());
 
-            std::transform(values.begin(), values.end(), std::back_inserter(new_values), [&](auto && value)
-                {
-                    return unbox_value<T>(value);
-                });
+            std::transform(
+                values.begin(),
+                values.end(),
+                std::back_inserter(new_values),
+                [&](auto&& value) { return unbox_value<T>(value); });
 
             base_type::ReplaceAll(std::move(new_values));
         }
@@ -217,17 +230,15 @@ namespace winrt::impl
 
         event_token VectorChanged(wfc::VectorChangedEventHandler<Windows::Foundation::IInspectable> const& handler)
         {
-            return base_type::VectorChanged([handler](auto && sender, auto && args)
-                {
-                    handler(sender.template try_as<wfc::IObservableVector<Windows::Foundation::IInspectable>>(), args);
-                });
+            return base_type::VectorChanged(
+                [handler](auto&& sender, auto&& args)
+                { handler(sender.template try_as<wfc::IObservableVector<Windows::Foundation::IInspectable>>(), args); });
         }
 
     private:
-
-        struct iterator :
-            impl::collection_version::iterator_type,
-            implements<iterator, Windows::Foundation::Collections::IIterator<Windows::Foundation::IInspectable>>
+        struct iterator
+            : impl::collection_version::iterator_type,
+              implements<iterator, Windows::Foundation::Collections::IIterator<Windows::Foundation::IInspectable>>
         {
             explicit iterator(container_type* const container) noexcept :
                 impl::collection_version::iterator_type(*container),
@@ -274,17 +285,14 @@ namespace winrt::impl
                 check_version(*m_owner);
                 uint32_t const actual = (std::min)(static_cast<uint32_t>(std::distance(m_current, m_end)), values.size());
 
-                std::transform(m_current, m_current + actual, values.begin(), [&](auto && value)
-                    {
-                        return box_value(value);
-                    });
+                std::transform(
+                    m_current, m_current + actual, values.begin(), [&](auto&& value) { return box_value(value); });
 
                 std::advance(m_current, actual);
                 return actual;
             }
 
         private:
-
             com_ptr<container_type> m_owner;
             decltype(m_owner->get_container().begin()) m_current;
             decltype(m_owner->get_container().end()) const m_end;
@@ -294,8 +302,9 @@ namespace winrt::impl
     };
 
     template <typename T, typename Container>
-    using multi_threaded_convertible_observable_vector = convertible_observable_vector<T, Container, multi_threaded_collection_base>;
-}
+    using multi_threaded_convertible_observable_vector =
+        convertible_observable_vector<T, Container, multi_threaded_collection_base>;
+} // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
@@ -312,7 +321,8 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename T, typename Allocator = std::allocator<T>>
-    Windows::Foundation::Collections::IObservableVector<T> single_threaded_observable_vector(std::vector<T, Allocator>&& values = {})
+    Windows::Foundation::Collections::IObservableVector<T> single_threaded_observable_vector(
+        std::vector<T, Allocator>&& values = {})
     {
         if constexpr (std::is_same_v<T, Windows::Foundation::IInspectable>)
         {
@@ -325,7 +335,8 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename T, typename Allocator = std::allocator<T>>
-    Windows::Foundation::Collections::IObservableVector<T> multi_threaded_observable_vector(std::vector<T, Allocator>&& values = {})
+    Windows::Foundation::Collections::IObservableVector<T> multi_threaded_observable_vector(
+        std::vector<T, Allocator>&& values = {})
     {
         if constexpr (std::is_same_v<T, Windows::Foundation::IInspectable>)
         {

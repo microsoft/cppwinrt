@@ -2,16 +2,13 @@
 #include <inspectable.h>
 
 struct DECLSPEC_UUID("5040a5f4-796a-42ff-9f06-be89137a518f") IBase : IUnknown
-{
-};
+{};
 
 struct DECLSPEC_UUID("529fed32-514f-4150-b1ba-15b47df700b7") IDerived : IBase
-{
-};
+{};
 
 struct DECLSPEC_UUID("b81fb2a2-eab4-488a-96a7-434873c2c20b") IMoreDerived : IDerived
-{
-};
+{};
 
 #ifdef __CRT_UUID_DECL
 __CRT_UUID_DECL(IBase, 0x5040a5f4, 0x796a, 0x42ff, 0x9f, 0x06, 0xbe, 0x89, 0x13, 0x7a, 0x51, 0x8f)
@@ -21,30 +18,27 @@ __CRT_UUID_DECL(IMoreDerived, 0xb81fb2a2, 0xeab4, 0x488a, 0x96, 0xa7, 0x43, 0x48
 
 namespace winrt
 {
-    template<> bool is_guid_of<IDerived>(guid const& id) noexcept
+    template <> bool is_guid_of<IDerived>(guid const& id) noexcept
     {
         return is_guid_of<IDerived, IBase>(id);
     }
 
-    template<> bool is_guid_of<IMoreDerived>(guid const& id) noexcept
+    template <> bool is_guid_of<IMoreDerived>(guid const& id) noexcept
     {
         return is_guid_of<IMoreDerived, IDerived, IBase>(id);
     }
-}
+} // namespace winrt
 
 using namespace winrt;
 
 struct MyBase : implements<MyBase, IBase>
-{
-};
+{};
 
 struct MyDerived : implements<MyDerived, IDerived>
-{
-};
+{};
 
 struct MyMoreDerived : implements<MyMoreDerived, IMoreDerived, Windows::Foundation::IInspectable>
-{
-};
+{};
 
 Windows::Foundation::IAsyncAction Async()
 {

@@ -29,7 +29,7 @@ struct TestSplashScreen : implements<TestSplashScreen, ISplashScreen>
         return {};
     }
 
-    event_token Dismissed(const TypedEventHandler<SplashScreen, Windows::Foundation::IInspectable> & handler)
+    event_token Dismissed(const TypedEventHandler<SplashScreen, Windows::Foundation::IInspectable>& handler)
     {
         return m_dismissed.add(handler);
     }
@@ -44,16 +44,21 @@ struct TestClipboardStatics : implements<TestClipboardStatics, IClipboardStatics
 {
     event<EventHandler<IInspectable>> m_contentChanged;
 
-    DataPackageView GetContent() const { return nullptr; }
-    void Flush() const {}
-    void Clear() const {}
+    DataPackageView GetContent() const
+    {
+        return nullptr;
+    }
+    void Flush() const
+    {}
+    void Clear() const
+    {}
 
-    void SetContent(const DataPackage &)
+    void SetContent(const DataPackage&)
     {
         m_contentChanged(*this, nullptr);
     }
 
-    event_token ContentChanged(const EventHandler<IInspectable> & handler)
+    event_token ContentChanged(const EventHandler<IInspectable>& handler)
     {
         return m_contentChanged.add(handler);
     }
@@ -72,22 +77,24 @@ struct TestClipboard
         return s_statics;
     }
 
-    static void SetContent(const DataPackage & content)
+    static void SetContent(const DataPackage& content)
     {
         GetStatics().SetContent(content);
     }
 
-    static event_token ContentChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & changeHandler)
+    static event_token ContentChanged(const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>& changeHandler)
     {
         return GetStatics().ContentChanged(changeHandler);
     }
 
-    using ContentChanged_revoker = impl::factory_event_revoker<IClipboardStatics, &impl::abi_t<Windows::ApplicationModel::DataTransfer::IClipboardStatics>::remove_ContentChanged>;
+    using ContentChanged_revoker =
+        impl::factory_event_revoker<IClipboardStatics, &impl::abi_t<Windows::ApplicationModel::DataTransfer::IClipboardStatics>::remove_ContentChanged>;
 
-    static ContentChanged_revoker ContentChanged(auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable> & changeHandler)
+    static ContentChanged_revoker ContentChanged(
+        auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>& changeHandler)
     {
         auto factory = GetStatics();
-        return{ factory, factory.ContentChanged(changeHandler) };
+        return { factory, factory.ContentChanged(changeHandler) };
     }
 
     static void ContentChanged(event_token token)
@@ -107,37 +114,33 @@ TEST_CASE("consuming instance events")
     uint32_t count = 0;
 
     SplashScreen::Dismissed_revoker // revoke type alias is present
-        revoker = s.Dismissed(auto_revoke, // auto_revoke value is required
-                              [&](auto && ...)
-                              {
-                                  ++count;
-                              });
+        revoker = s.Dismissed(
+            auto_revoke, // auto_revoke value is required
+            [&](auto&&...) { ++count; });
 
     REQUIRE(s.ImageLocation() == Rect{}); // fire event
-    REQUIRE(count == 1); // handler was called
+    REQUIRE(count == 1);                  // handler was called
 
     revoker.revoke();
     revoker.revoke(); // redundant revoke is harmless
 
     REQUIRE(s.ImageLocation() == Rect{}); // fire event
-    REQUIRE(count == 1); // count is unchanged so handler was not called
+    REQUIRE(count == 1);                  // count is unchanged so handler was not called
 
     {
         SplashScreen::Dismissed_revoker // revoke type alias is present
-            scoped = s.Dismissed(auto_revoke, // auto_revoke value is required
-                                  [&](auto && ...)
-        {
-            ++count;
-        });
+            scoped = s.Dismissed(
+                auto_revoke, // auto_revoke value is required
+                [&](auto&&...) { ++count; });
 
         REQUIRE(s.ImageLocation() == Rect{}); // fire event
-        REQUIRE(count == 2); // handler was called
+        REQUIRE(count == 2);                  // handler was called
 
         // destructor revokes automatically
     }
 
     REQUIRE(s.ImageLocation() == Rect{}); // fire event
-    REQUIRE(count == 2); // count is unchanged so handler was not called
+    REQUIRE(count == 2);                  // count is unchanged so handler was not called
 }
 
 //
@@ -149,11 +152,9 @@ TEST_CASE("consume factory events")
     uint32_t count = 0;
 
     Clipboard::ContentChanged_revoker // revoke type alias is present
-        revoker = TestClipboard::ContentChanged(auto_revoke, // auto_revoke value is required
-                                                [&](auto && ...)
-                                                {
-                                                    ++count;
-                                                });
+        revoker = TestClipboard::ContentChanged(
+            auto_revoke, // auto_revoke value is required
+            [&](auto&&...) { ++count; });
 
     TestClipboard::SetContent(nullptr);
 
@@ -167,18 +168,16 @@ TEST_CASE("consume factory events")
 
     {
         Clipboard::ContentChanged_revoker // revoke type alias is present
-            scoped = TestClipboard::ContentChanged(auto_revoke, // auto_revoke value is required
-                                                   [&](auto && ...)
-                                                   {
-                                                       ++count;
-                                                   });
+            scoped = TestClipboard::ContentChanged(
+                auto_revoke, // auto_revoke value is required
+                [&](auto&&...) { ++count; });
 
         TestClipboard::SetContent(nullptr); // fire event
-        REQUIRE(count == 2); // handler was called
+        REQUIRE(count == 2);                // handler was called
 
         // destructor revokes automatically
     }
 
     TestClipboard::SetContent(nullptr); // fire event
-    REQUIRE(count == 2); // count is unchanged so handler was not called
+    REQUIRE(count == 2);                // count is unchanged so handler was not called
 }

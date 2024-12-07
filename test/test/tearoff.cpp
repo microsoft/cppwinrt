@@ -20,8 +20,7 @@ namespace
         {
             persist(winrt::IUnknown const& object) :
                 m_object(object.as<::IUnknown>())
-            {
-            }
+            {}
 
             HRESULT __stdcall GetClassID(CLSID* result) noexcept final
             {
@@ -59,7 +58,6 @@ namespace
             }
 
         private:
-
             winrt::com_ptr<::IUnknown> m_object;
             std::atomic<uint32_t> m_references{ 1 };
         };
@@ -74,10 +72,8 @@ namespace
         struct stringable final : abi::IStringable
         {
             stringable(winrt::IInspectable const& object, winrt::hstring const& value) :
-                m_object(object.as<::IInspectable>()),
-                m_value(value)
-            {
-            }
+                m_object(object.as<::IInspectable>()), m_value(value)
+            {}
 
             HRESULT __stdcall ToString(HSTRING* result) noexcept final
             {
@@ -129,7 +125,6 @@ namespace
             }
 
         private:
-
             winrt::com_ptr<::IInspectable> m_object;
             winrt::hstring m_value;
             std::atomic<uint32_t> m_references{ 1 };
@@ -197,7 +192,7 @@ namespace
             return E_NOINTERFACE;
         }
     };
-}
+} // namespace
 
 TEST_CASE("tearoff")
 {

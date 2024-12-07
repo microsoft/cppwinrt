@@ -47,7 +47,7 @@ namespace
         static inline bool released;
         static inline bool destroyed;
     };
-}
+} // namespace
 
 TEST_CASE("final_release")
 {

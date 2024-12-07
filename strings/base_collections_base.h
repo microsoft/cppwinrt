@@ -1,6 +1,7 @@
 namespace winrt::impl
 {
-    struct nop_lock_guard {};
+    struct nop_lock_guard
+    {};
 
     struct single_threaded_collection_base
     {
@@ -19,24 +20,21 @@ namespace winrt::impl
     {
         [[nodiscard]] auto acquire_exclusive() const
         {
-            return slim_lock_guard{m_mutex};
+            return slim_lock_guard{ m_mutex };
         }
 
         [[nodiscard]] auto acquire_shared() const
         {
-            return slim_shared_lock_guard{m_mutex};
+            return slim_shared_lock_guard{ m_mutex };
         }
 
     private:
-
         mutable slim_mutex m_mutex;
     };
 
-    template <typename D>
-    using container_type_t = std::decay_t<decltype(std::declval<D>().get_container())>;
+    template <typename D> using container_type_t = std::decay_t<decltype(std::declval<D>().get_container())>;
 
-    template <typename D, typename = void>
-    struct removed_values
+    template <typename D, typename = void> struct removed_values
     {
         void assign(container_type_t<D>& value)
         {
@@ -56,12 +54,11 @@ namespace winrt::impl
         }
     };
 
-    template <typename T, typename = void>
-    struct removed_value
+    template <typename T, typename = void> struct removed_value
     {
         // Trivially destructible; okay to run destructor under lock
-        template <typename U>
-        void assign(U&&) {}
+        template <typename U> void assign(U&&)
+        {}
     };
 
     template <typename T>
@@ -69,27 +66,23 @@ namespace winrt::impl
     {
         std::optional<T> m_value;
 
-        template <typename U>
-        void assign(U&& value)
+        template <typename U> void assign(U&& value)
         {
             m_value.emplace(std::move(value));
         }
     };
-}
+} // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename D, typename T, typename Version = impl::no_collection_version>
-    struct iterable_base : Version
+    template <typename D, typename T, typename Version = impl::no_collection_version> struct iterable_base : Version
     {
-        template <typename U>
-        static constexpr auto const& wrap_value(U const& value) noexcept
+        template <typename U> static constexpr auto const& wrap_value(U const& value) noexcept
         {
             return value;
         }
 
-        template <typename U>
-        static constexpr auto const& unwrap_value(U const& value) noexcept
+        template <typename U> static constexpr auto const& unwrap_value(U const& value) noexcept
         {
             return value;
         }
@@ -113,8 +106,7 @@ WINRT_EXPORT namespace winrt
         }
 
     protected:
-
-        template<typename InputIt, typename Size, typename OutputIt>
+        template <typename InputIt, typename Size, typename OutputIt>
         auto copy_n(InputIt first, Size count, OutputIt result) const
         {
             if constexpr (std::is_same_v<T, std::decay_t<decltype(*std::declval<D const>().get_container().begin())>> && !impl::is_key_value_pair<T>::value)
@@ -123,22 +115,27 @@ WINRT_EXPORT namespace winrt
             }
             else
             {
-                return std::transform(first, std::next(first, count), result, [&](auto&& value)
-                {
-                    if constexpr (!impl::is_key_value_pair<T>::value)
+                return std::transform(
+                    first,
+                    std::next(first, count),
+                    result,
+                    [&](auto&& value)
                     {
-                        return static_cast<D const&>(*this).unwrap_value(value);
-                    }
-                    else
-                    {
-                        return make<impl::key_value_pair<T>>(static_cast<D const&>(*this).unwrap_value(value.first), static_cast<D const&>(*this).unwrap_value(value.second));
-                    }
-                });
+                        if constexpr (!impl::is_key_value_pair<T>::value)
+                        {
+                            return static_cast<D const&>(*this).unwrap_value(value);
+                        }
+                        else
+                        {
+                            return make<impl::key_value_pair<T>>(
+                                static_cast<D const&>(*this).unwrap_value(value.first),
+                                static_cast<D const&>(*this).unwrap_value(value.second));
+                        }
+                    });
             }
         }
 
     private:
-
         struct iterator : Version::iterator_type, implements<iterator, Windows::Foundation::Collections::IIterator<T>>
         {
             void abi_enter()
@@ -152,9 +149,7 @@ WINRT_EXPORT namespace winrt
             }
 
             explicit iterator(D* const owner) noexcept :
-                Version::iterator_type(*owner),
-                m_current(owner->get_container().begin()),
-                m_end(owner->get_container().end())
+                Version::iterator_type(*owner), m_current(owner->get_container().begin()), m_end(owner->get_container().end())
             {
                 m_owner.copy_from(owner);
             }
@@ -199,7 +194,6 @@ WINRT_EXPORT namespace winrt
             }
 
         private:
-
             T current_value_withlock() const
             {
                 WINRT_ASSERT(m_current != m_end);
@@ -209,7 +203,8 @@ WINRT_EXPORT namespace winrt
                 }
                 else
                 {
-                    return make<impl::key_value_pair<T>>(m_owner->unwrap_value(m_current->first), m_owner->unwrap_value(m_current->second));
+                    return make<impl::key_value_pair<T>>(
+                        m_owner->unwrap_value(m_current->first), m_owner->unwrap_value(m_current->second));
                 }
             }
 
@@ -254,7 +249,8 @@ WINRT_EXPORT namespace winrt
                 throw hresult_out_of_bounds();
             }
 
-            return static_cast<D const&>(*this).unwrap_value(*std::next(static_cast<D const&>(*this).get_container().begin(), index));
+            return static_cast<D const&>(*this).unwrap_value(
+                *std::next(static_cast<D const&>(*this).get_container().begin(), index));
         }
 
         uint32_t Size() const noexcept
@@ -266,10 +262,10 @@ WINRT_EXPORT namespace winrt
         bool IndexOf(T const& value, uint32_t& index) const noexcept
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
-            auto first = std::find_if(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end(), [&](auto&& match)
-            {
-                return value == static_cast<D const&>(*this).unwrap_value(match);
-            });
+            auto first = std::find_if(
+                static_cast<D const&>(*this).get_container().begin(),
+                static_cast<D const&>(*this).get_container().end(),
+                [&](auto&& match) { return value == static_cast<D const&>(*this).unwrap_value(match); });
 
             index = static_cast<uint32_t>(first - static_cast<D const&>(*this).get_container().begin());
             return index < container_size();
@@ -289,15 +285,14 @@ WINRT_EXPORT namespace winrt
         }
 
     private:
-
         uint32_t container_size() const noexcept
         {
-            return static_cast<uint32_t>(std::distance(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end()));
+            return static_cast<uint32_t>(std::distance(
+                static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end()));
         }
     };
 
-    template <typename D, typename T>
-    struct vector_base : vector_view_base<D, T, impl::collection_version>
+    template <typename D, typename T> struct vector_base : vector_view_base<D, T, impl::collection_version>
     {
         Windows::Foundation::Collections::IVectorView<T> GetView() const noexcept
         {
@@ -329,7 +324,8 @@ WINRT_EXPORT namespace winrt
             }
 
             this->increment_version();
-            static_cast<D&>(*this).get_container().insert(static_cast<D const&>(*this).get_container().begin() + index, static_cast<D const&>(*this).wrap_value(value));
+            static_cast<D&>(*this).get_container().insert(
+                static_cast<D const&>(*this).get_container().begin() + index, static_cast<D const&>(*this).wrap_value(value));
         }
 
         void RemoveAt(uint32_t const index)
@@ -390,9 +386,7 @@ WINRT_EXPORT namespace winrt
         }
 
     private:
-
-        template <typename InputIt>
-        void assign(InputIt first, InputIt last)
+        template <typename InputIt> void assign(InputIt first, InputIt last)
         {
             if constexpr (std::is_same_v<T, typename impl::container_type_t<D>::value_type>)
             {
@@ -404,16 +398,16 @@ WINRT_EXPORT namespace winrt
                 WINRT_ASSERT(container.empty());
                 container.reserve(std::distance(first, last));
 
-                std::transform(first, last, std::back_inserter(container), [&](auto&& value)
-                {
-                    return static_cast<D const&>(*this).wrap_value(value);
-                });
+                std::transform(
+                    first,
+                    last,
+                    std::back_inserter(container),
+                    [&](auto&& value) { return static_cast<D const&>(*this).wrap_value(value); });
             }
         }
     };
 
-    template <typename D, typename T>
-    struct observable_vector_base : vector_base<D, T>
+    template <typename D, typename T> struct observable_vector_base : vector_base<D, T>
     {
         event_token VectorChanged(Windows::Foundation::Collections::VectorChangedEventHandler<T> const& handler)
         {
@@ -468,23 +462,19 @@ WINRT_EXPORT namespace winrt
         }
 
     protected:
-
         void call_changed(Windows::Foundation::Collections::CollectionChange const change, uint32_t const index)
         {
             m_changed(static_cast<D const&>(*this), make<args>(change, index));
         }
 
     private:
-
         event<Windows::Foundation::Collections::VectorChangedEventHandler<T>> m_changed;
 
         struct args : implements<args, Windows::Foundation::Collections::IVectorChangedEventArgs>
         {
             args(Windows::Foundation::Collections::CollectionChange const change, uint32_t const index) noexcept :
-                m_change(change),
-                m_index(index)
-            {
-            }
+                m_change(change), m_index(index)
+            {}
 
             Windows::Foundation::Collections::CollectionChange CollectionChange() const noexcept
             {
@@ -497,7 +487,6 @@ WINRT_EXPORT namespace winrt
             }
 
         private:
-
             Windows::Foundation::Collections::CollectionChange const m_change;
             uint32_t const m_index;
         };
@@ -528,7 +517,8 @@ WINRT_EXPORT namespace winrt
         bool HasKey(K const& key) const noexcept
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
-            return static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key)) != static_cast<D const&>(*this).get_container().end();
+            return static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key)) !=
+                   static_cast<D const&>(*this).get_container().end();
         }
 
         void Split(Windows::Foundation::Collections::IMapView<K, V>& first, Windows::Foundation::Collections::IMapView<K, V>& second) const noexcept
@@ -538,8 +528,7 @@ WINRT_EXPORT namespace winrt
         }
     };
 
-    template <typename D, typename K, typename V>
-    struct map_base : map_view_base<D, K, V, impl::collection_version>
+    template <typename D, typename K, typename V> struct map_base : map_view_base<D, K, V, impl::collection_version>
     {
         Windows::Foundation::Collections::IMapView<K, V> GetView() const
         {
@@ -552,7 +541,8 @@ WINRT_EXPORT namespace winrt
 
             [[maybe_unused]] auto guard = static_cast<D&>(*this).acquire_exclusive();
             this->increment_version();
-            auto [itr, added] = static_cast<D&>(*this).get_container().emplace(static_cast<D const&>(*this).wrap_value(key), static_cast<D const&>(*this).wrap_value(value));
+            auto [itr, added] = static_cast<D&>(*this).get_container().emplace(
+                static_cast<D const&>(*this).wrap_value(key), static_cast<D const&>(*this).wrap_value(value));
             if (!added)
             {
                 oldValue.assign(itr->second);
@@ -587,8 +577,7 @@ WINRT_EXPORT namespace winrt
         }
     };
 
-    template <typename D, typename K, typename V>
-    struct observable_map_base : map_base<D, K, V>
+    template <typename D, typename K, typename V> struct observable_map_base : map_base<D, K, V>
     {
         event_token MapChanged(Windows::Foundation::Collections::MapChangedEventHandler<K, V> const& handler)
         {
@@ -620,23 +609,19 @@ WINRT_EXPORT namespace winrt
         }
 
     protected:
-
         void call_changed(Windows::Foundation::Collections::CollectionChange const change, K const& key)
         {
             m_changed(static_cast<D const&>(*this), make<args>(change, key));
         }
 
     private:
-
         event<Windows::Foundation::Collections::MapChangedEventHandler<K, V>> m_changed;
 
         struct args : implements<args, Windows::Foundation::Collections::IMapChangedEventArgs<K>>
         {
             args(Windows::Foundation::Collections::CollectionChange const change, K const& key) noexcept :
-                m_change(change),
-                m_key(key)
-            {
-            }
+                m_change(change), m_key(key)
+            {}
 
             Windows::Foundation::Collections::CollectionChange CollectionChange() const noexcept
             {
@@ -649,7 +634,6 @@ WINRT_EXPORT namespace winrt
             }
 
         private:
-
             Windows::Foundation::Collections::CollectionChange const m_change;
             K const m_key;
         };

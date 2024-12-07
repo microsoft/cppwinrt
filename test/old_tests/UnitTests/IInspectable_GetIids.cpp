@@ -13,17 +13,26 @@
 using namespace winrt;
 using namespace Windows::Foundation;
 
-struct Test_GetIids : implements<Test_GetIids,
-                                 non_agile,
-                                 Windows::Foundation::IStringable,
-                                 // todo: no GUID:
-                                 //abi_t<Windows::ApplicationModel::Store::LicenseChangedEventHandler>,
-                                 cloaked<Windows::Foundation::IClosable>>
+struct Test_GetIids : implements<
+                          Test_GetIids,
+                          non_agile,
+                          Windows::Foundation::IStringable,
+                          // todo: no GUID:
+                          // abi_t<Windows::ApplicationModel::Store::LicenseChangedEventHandler>,
+                          cloaked<Windows::Foundation::IClosable>>
 {
-    hstring ToString() { return{}; }
-    void Close() {}
-    HRESULT __stdcall get_DesignModeEnabled(bool * result) { *result = false; return S_OK; }
-    //HRESULT __stdcall Invoke() noexcept override { return S_OK; }
+    hstring ToString()
+    {
+        return {};
+    }
+    void Close()
+    {}
+    HRESULT __stdcall get_DesignModeEnabled(bool* result)
+    {
+        *result = false;
+        return S_OK;
+    }
+    // HRESULT __stdcall Invoke() noexcept override { return S_OK; }
 };
 
 TEST_CASE("Test_GetIids")

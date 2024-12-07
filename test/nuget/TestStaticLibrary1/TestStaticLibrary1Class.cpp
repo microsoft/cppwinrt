@@ -10,4 +10,4 @@ namespace winrt::TestApp::Library1::implementation
     {
         c.Test();
     }
-}
+} // namespace winrt::TestApp::Library1::implementation

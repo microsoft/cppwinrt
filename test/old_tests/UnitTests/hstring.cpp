@@ -352,7 +352,7 @@ TEST_CASE("hstring,accessors,get")
     REQUIRE(s.c_str() == WindowsGetStringRawBuffer(static_cast<HSTRING>(h), nullptr)); // pointers compare equal
 }
 
-static void test_hstring_put(void* * result)
+static void test_hstring_put(void** result)
 {
     hstring local{ L"abc" };
     *result = detach_abi(local);
@@ -450,8 +450,7 @@ TEST_CASE("hstring,embedded_null")
 // Comparisons
 //
 
-template <typename Left, typename Right>
-static void test_compare()
+template <typename Left, typename Right> static void test_compare()
 {
     REQUIRE(Left(L"abc") == Right(L"abc"));
     REQUIRE_FALSE(Left(L"abc") == Right(L"abcd"));
@@ -498,12 +497,12 @@ TEST_CASE("std::wstring,compare,hstring")
 
 TEST_CASE("hstring,compare,wchar_t const *")
 {
-    test_compare<hstring, wchar_t const *>();
+    test_compare<hstring, wchar_t const*>();
 }
 
 TEST_CASE("wchar_t const *,compare,hstring")
 {
-    test_compare<wchar_t const *, hstring>();
+    test_compare<wchar_t const*, hstring>();
 }
 
 TEST_CASE("hstring,compare,std::wstring_view")
@@ -520,7 +519,7 @@ TEST_CASE("hstring,map")
 {
     // Ensures that std::less<winrt::hstring> can be instantiated.
 
-    std::map<hstring, int> m{ { L"abc", 10 },{ L"def", 20 } };
+    std::map<hstring, int> m{ { L"abc", 10 }, { L"def", 20 } };
     REQUIRE(m[L"abc"] == 10);
     REQUIRE(m[L"def"] == 20);
 }
@@ -529,12 +528,12 @@ TEST_CASE("hstring,unordered_map")
 {
     // Ensures that std::hash<winrt::hstring> can be instantiated.
 
-    std::unordered_map<hstring, int> m{ { L"abc", 10 },{ L"def", 20 } };
+    std::unordered_map<hstring, int> m{ { L"abc", 10 }, { L"def", 20 } };
     REQUIRE(m[L"abc"] == 10);
     REQUIRE(m[L"def"] == 20);
 }
 
-static bool compare_hash(const std::wstring & value)
+static bool compare_hash(const std::wstring& value)
 {
     return std::hash<std::wstring>{}(value) == std::hash<winrt::hstring>{}(winrt::hstring(value));
 }

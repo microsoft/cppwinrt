@@ -13,11 +13,11 @@ namespace winrt::test_component_base::implementation
     }
     void HierarchyA::HierarchyA_Method()
     {
-        //test_component_base::HierarchyA a = *this;
-        //assert(a);
+        // test_component_base::HierarchyA a = *this;
+        // assert(a);
 
-        //test_component_base::IHierarchyA ia = *this;
-        //assert(a);
+        // test_component_base::IHierarchyA ia = *this;
+        // assert(a);
     }
     int HierarchyA::HierarchyA_Protected()
     {
@@ -25,4 +25,4 @@ namespace winrt::test_component_base::implementation
     }
 
     static_assert(!std::is_constructible_v<test_component_base::HierarchyA, int32_t, hstring const&>);
-}
+} // namespace winrt::test_component_base::implementation

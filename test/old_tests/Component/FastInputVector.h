@@ -4,9 +4,7 @@
 
 namespace winrt::Component::implementation
 {
-    struct FastInputVector :
-        FastInputVectorT<FastInputVector>,
-        vector_base<FastInputVector, hstring>
+    struct FastInputVector : FastInputVectorT<FastInputVector>, vector_base<FastInputVector, hstring>
     {
         FastInputVector(Windows::Foundation::Collections::IVectorView<hstring> const& in);
         void Close();
@@ -22,14 +20,12 @@ namespace winrt::Component::implementation
         }
 
     private:
-
         std::vector<hstring> m_container;
     };
-}
+} // namespace winrt::Component::implementation
 
 namespace winrt::Component::factory_implementation
 {
     struct FastInputVector : FastInputVectorT<FastInputVector, implementation::FastInputVector>
-    {
-    };
-}
+    {};
+} // namespace winrt::Component::factory_implementation

@@ -2,8 +2,7 @@
 
 namespace
 {
-    template<typename T>
-    void Verify(T const& otherValue)
+    template <typename T> void Verify(T const& otherValue)
     {
         T defaultValue{};
         winrt::com_array<T> ary{ otherValue, defaultValue };
@@ -30,7 +29,7 @@ namespace
         // Cannot use unbox_value_or with arrays because com_array is not copyable.
         // unbox = winrt::unbox_value_or(box, winrt::com_array<T>{});
     }
-}
+} // namespace
 TEST_CASE("box_array")
 {
     Verify<uint8_t>(42);
@@ -46,11 +45,11 @@ TEST_CASE("box_array")
     Verify<bool>(true);
     Verify<winrt::hstring>(L"42");
     Verify<winrt::Windows::Foundation::IInspectable>(winrt::Windows::Foundation::Uri{ L"https://www.microsoft.com/" });
-    Verify<winrt::guid>({ 1,2,3, {4,5,6,7,8,9,10,11} });
-    Verify<GUID>(winrt::guid{ 1,2,3, {4,5,6,7,8,9,10,11} });
+    Verify<winrt::guid>({ 1, 2, 3, { 4, 5, 6, 7, 8, 9, 10, 11 } });
+    Verify<GUID>(winrt::guid{ 1, 2, 3, { 4, 5, 6, 7, 8, 9, 10, 11 } });
     Verify<winrt::Windows::Foundation::DateTime>((winrt::Windows::Foundation::DateTime::max)());
     Verify<winrt::Windows::Foundation::TimeSpan>((winrt::Windows::Foundation::TimeSpan::max)());
-    Verify<winrt::Windows::Foundation::Point>({ 1,1 });
-    Verify<winrt::Windows::Foundation::Size>({ 1,1 });
-    Verify<winrt::Windows::Foundation::Rect>({ 1,1,1,1 });
+    Verify<winrt::Windows::Foundation::Point>({ 1, 1 });
+    Verify<winrt::Windows::Foundation::Size>({ 1, 1 });
+    Verify<winrt::Windows::Foundation::Rect>({ 1, 1, 1, 1 });
 }

@@ -34,7 +34,6 @@ auto get_error_info()
     return info.as<impl::IRestrictedErrorInfo>();
 }
 
-
 TEST_CASE("try_get_activation_factory")
 {
     // Try successfully

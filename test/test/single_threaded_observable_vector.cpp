@@ -12,10 +12,7 @@ TEST_CASE("single_threaded_observable_vector")
         IObservableVector<int> vector = single_threaded_observable_vector<int>();
         bool changed{};
 
-        vector.VectorChanged([&](auto && ...)
-            {
-                changed = vector.GetAt(0) == 123;
-            });
+        vector.VectorChanged([&](auto&&...) { changed = vector.GetAt(0) == 123; });
 
         vector.Append(123);
         REQUIRE(changed);
@@ -26,10 +23,7 @@ TEST_CASE("single_threaded_observable_vector")
         IObservableVector<IInspectable> vector = single_threaded_observable_vector<IInspectable>();
         bool changed{};
 
-        vector.VectorChanged([&](auto && ...)
-            {
-                changed = unbox_value<int>(vector.GetAt(0)) == 123;
-            });
+        vector.VectorChanged([&](auto&&...) { changed = unbox_value<int>(vector.GetAt(0)) == 123; });
 
         vector.Append(box_value(123));
         REQUIRE(changed);
@@ -42,13 +36,15 @@ TEST_CASE("single_threaded_observable_vector")
         bool changed_i{};
         bool changed_o{};
 
-        vector_i.VectorChanged([&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
+        vector_i.VectorChanged(
+            [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
             {
                 changed_i = sender.GetAt(0) == 123;
                 REQUIRE(sender == vector_i);
             });
 
-        vector_o.VectorChanged([&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
+        vector_o.VectorChanged(
+            [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
             {
                 changed_o = unbox_value<int>(sender.GetAt(0)) == 123;
                 REQUIRE(sender == vector_o);
@@ -66,15 +62,11 @@ TEST_CASE("single_threaded_observable_vector")
         int changed_i{};
         int changed_o{};
 
-        auto token_i = vector_i.VectorChanged([&](IObservableVector<int> const&, IVectorChangedEventArgs const&)
-            {
-                ++changed_i;
-            });
+        auto token_i =
+            vector_i.VectorChanged([&](IObservableVector<int> const&, IVectorChangedEventArgs const&) { ++changed_i; });
 
         auto token_o = vector_o.VectorChanged([&](IObservableVector<IInspectable> const&, IVectorChangedEventArgs const&)
-            {
-                ++changed_o;
-            });
+                                              { ++changed_o; });
 
         REQUIRE(changed_i == 0);
         REQUIRE(changed_o == 0);
@@ -119,7 +111,7 @@ TEST_CASE("single_threaded_observable_vector")
     {
         // Different iterator types over the same container.
 
-        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1,2 });
+        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1, 2 });
         IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
 
         IIterator<int> iterator_i = vector_i.First();
@@ -152,7 +144,7 @@ TEST_CASE("single_threaded_observable_vector")
     {
         // GetMany always needs a bit of extra testing.
 
-        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1,2 });
+        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1, 2 });
         IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
 
         IIterator<int> iterator_i = vector_i.First();
@@ -176,7 +168,7 @@ TEST_CASE("single_threaded_observable_vector")
     {
         // GetMany always needs a bit of extra testing (again).
 
-        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1,2 });
+        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1, 2 });
         IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
 
         IIterator<int> iterator_i = vector_i.First();
@@ -193,7 +185,7 @@ TEST_CASE("single_threaded_observable_vector")
     {
         // Iterator invalidation works across types.
 
-        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1,2 });
+        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1, 2 });
         IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
 
         IIterator<int> iterator_i = vector_i.First();
@@ -210,7 +202,7 @@ TEST_CASE("single_threaded_observable_vector")
     {
         // IndexOf forwarding.
 
-        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1,2 });
+        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1, 2 });
         IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
 
         uint32_t index{};
@@ -225,7 +217,7 @@ TEST_CASE("single_threaded_observable_vector")
     {
         // GetView forwarding.
 
-        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1,2 });
+        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1, 2 });
         IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
 
         REQUIRE(vector_i.GetView().GetAt(1) == 2);
@@ -234,7 +226,7 @@ TEST_CASE("single_threaded_observable_vector")
     {
         // SetAt forwarding.
 
-        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1,2 });
+        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1, 2 });
         IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
 
         REQUIRE(vector_i.GetAt(0) == 1);
@@ -253,7 +245,7 @@ TEST_CASE("single_threaded_observable_vector")
     {
         // InsertAt forwarding.
 
-        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1,4 });
+        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1, 4 });
         IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
 
         REQUIRE(vector_i.Size() == 2);
@@ -293,7 +285,7 @@ TEST_CASE("single_threaded_observable_vector")
     {
         // GetMany boxing.
 
-        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1,2,3,4,5 });
+        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1, 2, 3, 4, 5 });
         IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
 
         {
@@ -337,7 +329,7 @@ TEST_CASE("single_threaded_observable_vector")
     {
         // ReplaceAll boxing.
 
-        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1,2,3,4,5 });
+        IObservableVector<int> vector_i = single_threaded_observable_vector<int>({ 1, 2, 3, 4, 5 });
         IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
 
         {
@@ -350,13 +342,17 @@ TEST_CASE("single_threaded_observable_vector")
             bool changed_i{};
             bool changed_o{};
 
-            auto token_i = vector_i.VectorChanged(auto_revoke, [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
+            auto token_i = vector_i.VectorChanged(
+                auto_revoke,
+                [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
                 {
                     changed_i = sender.GetAt(0) == 123;
                     REQUIRE(sender == vector_i);
                 });
 
-            auto token_o = vector_o.VectorChanged(auto_revoke, [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
+            auto token_o = vector_o.VectorChanged(
+                auto_revoke,
+                [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
                 {
                     changed_o = unbox_value<int>(sender.GetAt(0)) == 123;
                     REQUIRE(sender == vector_o);
@@ -377,13 +373,17 @@ TEST_CASE("single_threaded_observable_vector")
             bool changed_i{};
             bool changed_o{};
 
-            auto token_i = vector_i.VectorChanged(auto_revoke, [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
+            auto token_i = vector_i.VectorChanged(
+                auto_revoke,
+                [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
                 {
                     changed_i = true;
                     REQUIRE(sender == vector_i);
                 });
 
-            auto token_o = vector_o.VectorChanged(auto_revoke, [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
+            auto token_o = vector_o.VectorChanged(
+                auto_revoke,
+                [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
                 {
                     changed_i = true;
                     REQUIRE(sender == vector_o);
@@ -413,13 +413,17 @@ TEST_CASE("single_threaded_observable_vector")
             bool changed_i{};
             bool changed_o{};
 
-            auto token_i = vector_i.VectorChanged(auto_revoke, [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
+            auto token_i = vector_i.VectorChanged(
+                auto_revoke,
+                [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
                 {
                     changed_i = sender.GetAt(0) == 123;
                     REQUIRE(sender == vector_i);
                 });
 
-            auto token_o = vector_o.VectorChanged(auto_revoke, [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
+            auto token_o = vector_o.VectorChanged(
+                auto_revoke,
+                [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
                 {
                     changed_o = unbox_value<int>(sender.GetAt(0)) == 123;
                     REQUIRE(sender == vector_o);
@@ -439,7 +443,7 @@ TEST_CASE("single_threaded_observable_vector")
     }
 
     {
-        IObservableVector<IVector<int>> vector_i = single_threaded_observable_vector<IVector<int>>({  });
+        IObservableVector<IVector<int>> vector_i = single_threaded_observable_vector<IVector<int>>({});
         IObservableVector<IInspectable> vector_o = vector_i.as<IObservableVector<IInspectable>>();
 
         // Verify that nulls are legal if the underlying type derives from IInspectable.

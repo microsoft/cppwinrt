@@ -55,12 +55,12 @@ namespace cppwinrt
 
             auto const fast_abi_size = get_fastabi_size(w, classes);
 
-            w.write(strings::base_fast_forward,
+            w.write(
+                strings::base_fast_forward,
                 fast_abi_size,
                 fast_abi_size,
                 bind<write_component_fast_abi_thunk>(),
                 bind<write_component_fast_abi_vtable>());
-
         }
         w.flush_to_file(settings.output_folder + "winrt/fast_forward.h");
     }
@@ -209,7 +209,7 @@ namespace cppwinrt
             {
                 auto wrap_format = wrap_ifdef(w, "__cpp_lib_format");
                 w.write_each<write_std_formatter>(members.interfaces);
-                w.write_each<write_std_formatter>(members.classes);   
+                w.write_each<write_std_formatter>(members.classes);
             }
         }
 
@@ -319,4 +319,4 @@ namespace cppwinrt
         write_component_cpp(w, type);
         w.flush_to_file(path);
     }
-}
+} // namespace cppwinrt

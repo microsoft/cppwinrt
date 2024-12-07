@@ -7,11 +7,10 @@ WINRT_EXPORT namespace winrt
     {
         struct awaitable
         {
-            awaitable(Windows::UI::Core::CoreDispatcher const& dispatcher, Windows::UI::Core::CoreDispatcherPriority const priority) noexcept :
-                m_dispatcher(dispatcher),
-                m_priority(priority)
-            {
-            }
+            awaitable(Windows::UI::Core::CoreDispatcher const& dispatcher, Windows::UI::Core::CoreDispatcherPriority const priority) noexcept
+                :
+                m_dispatcher(dispatcher), m_priority(priority)
+            {}
 
             bool await_ready() const noexcept
             {
@@ -19,19 +18,14 @@ WINRT_EXPORT namespace winrt
             }
 
             void await_resume() const noexcept
-            {
-            }
+            {}
 
             void await_suspend(impl::coroutine_handle<> handle) const
             {
-                m_dispatcher.RunAsync(m_priority, [handle]
-                    {
-                        handle();
-                    });
+                m_dispatcher.RunAsync(m_priority, [handle] { handle(); });
             }
 
         private:
-
             Windows::UI::Core::CoreDispatcher const& m_dispatcher;
             Windows::UI::Core::CoreDispatcherPriority const m_priority;
         };

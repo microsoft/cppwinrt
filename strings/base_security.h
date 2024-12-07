@@ -33,7 +33,8 @@ WINRT_EXPORT namespace winrt
         {
             struct impersonate_guard
             {
-                impersonate_guard(com_ptr<impl::IServerSecurity> const& server) : m_server(server)
+                impersonate_guard(com_ptr<impl::IServerSecurity> const& server) :
+                    m_server(server)
                 {
                     check_hresult(m_server->ImpersonateClient());
                 }
@@ -44,7 +45,6 @@ WINRT_EXPORT namespace winrt
                 }
 
             private:
-
                 com_ptr<impl::IServerSecurity> const& m_server;
             };
 
@@ -73,9 +73,9 @@ WINRT_EXPORT namespace winrt
         {
             struct guard
             {
-                guard(access_token&& previous) noexcept : m_previous(std::move(previous))
-                {
-                }
+                guard(access_token&& previous) noexcept :
+                    m_previous(std::move(previous))
+                {}
 
                 ~guard()
                 {
@@ -89,7 +89,6 @@ WINRT_EXPORT namespace winrt
                 }
 
             private:
-
                 access_token const m_previous;
             };
 

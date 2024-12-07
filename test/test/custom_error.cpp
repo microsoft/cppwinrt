@@ -7,8 +7,7 @@ namespace
 {
     // Some custom exception type unknown to C++/WinRT
     struct CustomError
-    {
-    };
+    {};
 
     struct Sample : implements<Sample, IStringable>
     {
@@ -57,7 +56,8 @@ namespace
 
     static bool s_loggerCalled = false;
 
-    static struct {
+    static struct
+    {
         uint32_t lineNumber;
         char const* fileName;
         char const* functionName;
@@ -65,19 +65,20 @@ namespace
         winrt::hresult result;
     } s_loggerArgs{};
 
-    void __stdcall logger(uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept
+    void __stdcall logger(
+        uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept
     {
         s_loggerArgs = {
-            /*.lineNumber =*/ lineNumber,
-            /*.fileName =*/ fileName,
-            /*.functionName =*/ functionName,
-            /*.returnAddress =*/ returnAddress,
-            /*.result =*/ result,
+            /*.lineNumber =*/lineNumber,
+            /*.fileName =*/fileName,
+            /*.functionName =*/functionName,
+            /*.returnAddress =*/returnAddress,
+            /*.result =*/result,
         };
         s_loggerCalled = true;
     }
 
-}
+} // namespace
 
 TEST_CASE("custom_error")
 {

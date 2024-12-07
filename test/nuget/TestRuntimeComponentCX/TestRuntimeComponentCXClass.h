@@ -2,11 +2,12 @@
 
 namespace TestRuntimeComponentCX
 {
-    public ref class TestRuntimeComponentCXClass sealed
+public
+    ref class TestRuntimeComponentCXClass sealed
     {
     public:
         TestRuntimeComponentCXClass();
 
         void Test();
     };
-}
+} // namespace TestRuntimeComponentCX

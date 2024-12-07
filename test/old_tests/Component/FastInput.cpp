@@ -8,8 +8,7 @@ namespace winrt::Component::implementation
 
     namespace
     {
-        template <typename T>
-        hstring concat(T const& in)
+        template <typename T> hstring concat(T const& in)
         {
             std::wstring out;
 
@@ -21,8 +20,7 @@ namespace winrt::Component::implementation
             return hstring(out);
         }
 
-        template <typename T>
-        hstring concat_pair(T const& in)
+        template <typename T> hstring concat_pair(T const& in)
         {
             std::map<hstring, hstring> ordered;
 
@@ -39,10 +37,9 @@ namespace winrt::Component::implementation
                 out += pair.second;
             }
 
-
             return hstring(out);
         }
-    }
+    } // namespace
 
     hstring FastInput::String(hstring const& in)
     {
@@ -175,4 +172,4 @@ namespace winrt::Component::implementation
         // If this points to a scoped container then this call should throw.
         m_iterable_pair.First();
     }
-}
+} // namespace winrt::Component::implementation

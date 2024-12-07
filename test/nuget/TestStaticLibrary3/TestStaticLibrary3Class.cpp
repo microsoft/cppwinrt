@@ -5,6 +5,5 @@
 namespace winrt::TestRuntimeComponent3::implementation
 {
     void TestStaticLibrary3Class::Test()
-    {
-    }
-}
+    {}
+} // namespace winrt::TestRuntimeComponent3::implementation

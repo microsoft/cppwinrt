@@ -9,10 +9,10 @@ namespace winrt::TestRuntimeComponent1::implementation
 
         void Test();
     };
-}
+} // namespace winrt::TestRuntimeComponent1::implementation
 namespace winrt::TestRuntimeComponent1::factory_implementation
 {
-    struct TestRuntimeComponent1Class : TestRuntimeComponent1ClassT<TestRuntimeComponent1Class, implementation::TestRuntimeComponent1Class>
-    {
-    };
-}
+    struct TestRuntimeComponent1Class
+        : TestRuntimeComponent1ClassT<TestRuntimeComponent1Class, implementation::TestRuntimeComponent1Class>
+    {};
+} // namespace winrt::TestRuntimeComponent1::factory_implementation
