@@ -50,3 +50,6 @@ Before submitting a PR to the cppwinrt repo we ask that you first run `clang-for
 There is a CI check in place that will fail the build for your PR if you have not run `clang-format`.
 `clang-format` will run automatically as part of `build_test_all.cmd`, so if you use that script this
 should happen automatically.
+
+If for some reason you would like to force formatting of every file in the repo then you can run `format_all_files.cmd` to
+do so.  This will take longer than `git clang-format` that will only format files that you have modified.

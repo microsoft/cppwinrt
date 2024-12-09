@@ -15,30 +15,8 @@ if "%target_version%"=="" set target_version=1.2.3.4
 call "%~dp0/find_clang_format.cmd"
 if %ERRORLEVEL% neq 0 exit /b %ERRORLEVEL%
 
-set DIRS=cppwinrt fast_fwd natvis prebuild scratch strings test vsix
-set EXTS=.cpp .h
-for %%d in (%DIRS%) do call :format_files %~dp0%%d
-goto :post_format
-
-:format_files
-    for %%e in (%EXTS%) do (
-        for /R %1 %%f in (*%%e) do call :run_clang_format "%%f"
-    )
-    goto :eof
-
-:run_clang_format
-    set filePath=%1
-    :: The test subfolder has obj directories with many redundant copies of generated cppwinrt headers.  The
-    :: cost of formatting these files is vastly higher than the cost of formatting the code that is checked in
-    :: to this repo.  Skip any file path with "obj" as a substring.
-    if not !filePath:obj!==!filePath! (
-        goto :eof
-    )
-    echo Formatting !filePath!
-    "%CLANG_FORMAT%" -style=file -i %1
-    goto :eof
-
-:post_format
+echo Running clang-format on all modified files...
+git clang-format origin/master --binary "%CLANG_FORMAT%" --style file -- cppwinrt/*.h cppwinrt/*.cpp fast_fwd/*.h fast_fwd/*.cpp natvis/*.h natvis/*.cpp prebuild/*.h prebuild/*.cpp scratch/*.h scratch/*.cpp strings/*.h strings/*.cpp test/*.h test/*.cpp vsix/*.h vsix/*.cpp
 
 :: NuGet restore all solutions before building
 if not exist ".\.nuget" mkdir ".\.nuget"

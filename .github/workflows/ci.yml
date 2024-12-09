@@ -39,8 +39,10 @@ jobs:
           if %ERRORLEVEL% neq 0 (
             echo ::error::This branch contains changes that have not been formatted with 'clang-format',
             echo NOTE:  To resolve this issue, you can run 'clang-format' in the following ways:
-            echo        * Run build_test_all.cmd which will run 'clang-format' on _all_ source files. This script is
-            echo          simpler to run, however there's a chance it may touch additional files you never changed due to you having
+            echo        * Run build_test_all.cmd which will run 'git clang-format' on all source files that have been modified
+            echo          in your branch.  
+            echo        * Run 'format_all_files.cmd' which will format _all_ source files. This script is
+            echo          simple to run, however there's a chance it may touch additional files you never changed due to you having
             echo          a mis-matched version of 'clang-format'. This may require you to manually revert changes made by
             echo          'clang-format' to the locations where you made no code changes.
             echo.
