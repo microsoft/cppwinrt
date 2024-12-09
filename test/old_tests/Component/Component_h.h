@@ -293,7 +293,7 @@ namespace ABI
             typedef IReference<UINT32> __FIReference_1_UINT32_t;
 #define __FIReference_1_UINT32 ABI::Windows::Foundation::__FIReference_1_UINT32_t
             /* Foundation */ // namespace Foundation
-        } /* Windows */
+        } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
 
@@ -329,7 +329,7 @@ namespace ABI
             typedef IReference<struct EventRegistrationToken> __FIReference_1_EventRegistrationToken_t;
 #define __FIReference_1_EventRegistrationToken ABI::Windows::Foundation::__FIReference_1_EventRegistrationToken_t
             /* Foundation */ // namespace Foundation
-        } /* Windows */
+        } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
 
@@ -362,7 +362,7 @@ namespace ABI
             typedef IReference<GUID> __FIReference_1_GUID_t;
 #define __FIReference_1_GUID ABI::Windows::Foundation::__FIReference_1_GUID_t
             /* Foundation */ // namespace Foundation
-        } /* Windows */
+        } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
 
@@ -395,7 +395,7 @@ namespace ABI
             typedef IEventHandler<int> __FIEventHandler_1_int_t;
 #define __FIEventHandler_1_int ABI::Windows::Foundation::__FIEventHandler_1_int_t
             /* Foundation */ // namespace Foundation
-        } /* Windows */
+        } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
 
@@ -438,7 +438,7 @@ namespace ABI
 #define __FITypedEventHandler_2_Component__CEvents_int \
     ABI::Windows::Foundation::__FITypedEventHandler_2_Component__CEvents_int_t
             /* Foundation */ // namespace Foundation
-        } /* Windows */
+        } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
 
@@ -473,7 +473,7 @@ namespace ABI
                 typedef IIterator<HSTRING> __FIIterator_1_HSTRING_t;
 #define __FIIterator_1_HSTRING ABI::Windows::Foundation::Collections::__FIIterator_1_HSTRING_t
                 /* Collections */ // namespace Collections
-            } /* Foundation */
+            } // namespace Collections
         } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
@@ -509,7 +509,7 @@ namespace ABI
                 typedef IIterable<HSTRING> __FIIterable_1_HSTRING_t;
 #define __FIIterable_1_HSTRING ABI::Windows::Foundation::Collections::__FIIterable_1_HSTRING_t
                 /* Collections */ // namespace Collections
-            } /* Foundation */
+            } // namespace Collections
         } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
@@ -545,7 +545,7 @@ namespace ABI
                 typedef IVectorView<HSTRING> __FIVectorView_1_HSTRING_t;
 #define __FIVectorView_1_HSTRING ABI::Windows::Foundation::Collections::__FIVectorView_1_HSTRING_t
                 /* Collections */ // namespace Collections
-            } /* Foundation */
+            } // namespace Collections
         } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
@@ -581,7 +581,7 @@ namespace ABI
                 typedef IVector<HSTRING> __FIVector_1_HSTRING_t;
 #define __FIVector_1_HSTRING ABI::Windows::Foundation::Collections::__FIVector_1_HSTRING_t
                 /* Collections */ // namespace Collections
-            } /* Foundation */
+            } // namespace Collections
         } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
@@ -618,7 +618,7 @@ namespace ABI
                 typedef IKeyValuePair<HSTRING, HSTRING> __FIKeyValuePair_2_HSTRING_HSTRING_t;
 #define __FIKeyValuePair_2_HSTRING_HSTRING ABI::Windows::Foundation::Collections::__FIKeyValuePair_2_HSTRING_HSTRING_t
                 /* Collections */ // namespace Collections
-            } /* Foundation */
+            } // namespace Collections
         } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
@@ -656,7 +656,7 @@ namespace ABI
 #define __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING \
     ABI::Windows::Foundation::Collections::__FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING_t
                 /* Collections */ // namespace Collections
-            } /* Foundation */
+            } // namespace Collections
         } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
@@ -694,7 +694,7 @@ namespace ABI
 #define __FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING \
     ABI::Windows::Foundation::Collections::__FIIterable_1___FIKeyValuePair_2_HSTRING_HSTRING_t
                 /* Collections */ // namespace Collections
-            } /* Foundation */
+            } // namespace Collections
         } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
@@ -731,7 +731,7 @@ namespace ABI
                 typedef IMapView<HSTRING, HSTRING> __FIMapView_2_HSTRING_HSTRING_t;
 #define __FIMapView_2_HSTRING_HSTRING ABI::Windows::Foundation::Collections::__FIMapView_2_HSTRING_HSTRING_t
                 /* Collections */ // namespace Collections
-            } /* Foundation */
+            } // namespace Collections
         } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
@@ -768,7 +768,7 @@ namespace ABI
                 typedef IMap<HSTRING, HSTRING> __FIMap_2_HSTRING_HSTRING_t;
 #define __FIMap_2_HSTRING_HSTRING ABI::Windows::Foundation::Collections::__FIMap_2_HSTRING_HSTRING_t
                 /* Collections */ // namespace Collections
-            } /* Foundation */
+            } // namespace Collections
         } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
@@ -804,7 +804,7 @@ namespace ABI
 #define __FIAsyncOperationCompletedHandler_1_HSTRING \
     ABI::Windows::Foundation::__FIAsyncOperationCompletedHandler_1_HSTRING_t
             /* Foundation */ // namespace Foundation
-        } /* Windows */
+        } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
 
@@ -838,7 +838,7 @@ namespace ABI
             typedef IAsyncOperation<HSTRING> __FIAsyncOperation_1_HSTRING_t;
 #define __FIAsyncOperation_1_HSTRING ABI::Windows::Foundation::__FIAsyncOperation_1_HSTRING_t
             /* Foundation */ // namespace Foundation
-        } /* Windows */
+        } // namespace Foundation
     } // namespace Windows
 } // namespace ABI
 
