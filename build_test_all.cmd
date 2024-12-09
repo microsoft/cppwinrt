@@ -27,6 +27,14 @@ goto :post_format
     goto :eof
 
 :run_clang_format
+    set filePath=%1
+    :: The test subfolder has obj directories with many redundant copies of generated cppwinrt headers.  The
+    :: cost of formatting these files is vastly higher than the cost of formatting the code that is checked in
+    :: to this repo.  Skip any file path with "obj" as a substring.
+    if not !filePath:obj!==!filePath! (
+        goto :eof
+    )
+    echo Formatting !filePath!
     "%CLANG_FORMAT%" -style=file -i %1
     goto :eof
 
