@@ -1,4 +1,6 @@
 
+// clang-format off
+
 __declspec(selectany) int32_t(__stdcall* winrt_to_hresult_handler)(void* address) noexcept {};
 __declspec(selectany) winrt::hstring(__stdcall* winrt_to_message_handler)(void* address) {};
 __declspec(selectany) void(__stdcall* winrt_throw_hresult_handler)(uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept {};
@@ -109,3 +111,5 @@ extern "C"
 }
 
 #undef WINRT_IMPL_LINK
+
+// clang-format on

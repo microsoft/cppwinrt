@@ -7,6 +7,51 @@ on:
       - master
 
 jobs:
+  check-formatting:
+    name: 'Check Formatting of Changes'
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Force a non-shallow checkout, so that clang-format can access source history to compare against
+          # See https://github.com/actions/checkout for more details.
+          fetch-depth: 0
+
+      - name: Find vcvars64.bat
+        run: |
+          $vcvars64 = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find VC\Auxiliary\Build\vcvars64.bat
+          if (!$vcvars64) { exit 1 }
+          Write-Host "Using vcvars64: ${vcvars64}"
+          Add-Content $env:GITHUB_ENV "vcvars64=$vcvars64"
+
+      - name: Check Formatting
+        shell: cmd
+        run: |
+          call "%vcvars64%"
+
+          call .\find_clang_format.cmd
+          if %ERRORLEVEL% neq 0 (
+            exit /b %ERRORLEVEL%
+          )
+
+          git clang-format origin/master --binary "%CLANG_FORMAT%" --style file -- cppwinrt/*.h cppwinrt/*.cpp fast_fwd/*.h fast_fwd/*.cpp natvis/*.h natvis/*.cpp prebuild/*.h prebuild/*.cpp scratch/*.h scratch/*.cpp strings/*.h strings/*.cpp test/*.h test/*.cpp vsix/*.h vsix/*.cpp
+
+          if %ERRORLEVEL% neq 0 (
+            echo ::error::This branch contains changes that have not been formatted with 'clang-format',
+            echo NOTE:  To resolve this issue, you can run 'clang-format' in the following ways:
+            echo        * Run build_test_all.cmd which will run 'clang-format' on _all_ source files. This script is
+            echo          simpler to run, however there's a chance it may touch additional files you never changed due to you having
+            echo          a mis-matched version of 'clang-format'. This may require you to manually revert changes made by
+            echo          'clang-format' to the locations where you made no code changes.
+            echo.
+            echo        For more information, please see https://github.com/microsoft/cppwinrt?tab=readme-ov-file#formatting
+            echo.
+            echo NOTE:  As an additional note, given that different versions of 'clang-format' may have different behaviors, this
+            echo        may be a false positive. If you believe that to be the case ^(e.g. none of the above resulted in modifications
+            echo        to the code you have changed^), please note this in your PR.
+            exit /b 1
+          )
+
   test-msvc-cppwinrt-build:
     name: '${{ matrix.compiler }}: Build (${{ matrix.arch }}, ${{ matrix.config }})'
     strategy:
