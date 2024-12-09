@@ -12,7 +12,7 @@ namespace
             return L"Object";
         }
     };
-}
+} // namespace
 
 TEST_CASE("agile_ref")
 {

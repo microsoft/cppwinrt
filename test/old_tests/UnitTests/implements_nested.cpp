@@ -14,10 +14,8 @@ struct nested_base : implements<nested_base, Windows::Foundation::IStringable>
 struct nested_derived : implements<nested_derived, Windows::Foundation::IClosable, nested_base>
 {
     void Close()
-    {
+    {}
 
-    }
-    
     hstring ToString() override
     {
         return L"nested_derived";
@@ -39,7 +37,8 @@ TEST_CASE("implements_nested")
 
         Windows::Foundation::IInspectable inspect = *obj;
         com_array<guid> actual_iids = get_interfaces(inspect);
-        com_array<guid> expected_iids{ guid_of<Windows::Foundation::IClosable>(), guid_of<Windows::Foundation::IStringable>() };
+        com_array<guid> expected_iids{ guid_of<Windows::Foundation::IClosable>(),
+                                       guid_of<Windows::Foundation::IStringable>() };
 
         auto guid_compare = [](guid const& lhs, guid const& rhs)
         {

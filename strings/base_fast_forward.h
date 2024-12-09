@@ -21,15 +21,14 @@ static_assert(WINRT_FAST_ABI_SIZE >= %);
 namespace winrt::impl
 {
     // Thunk definitions are in arch-specific assembly sources
-%
-    struct fast_abi_forwarder
+    % struct fast_abi_forwarder
     {
         struct guid
         {
             uint32_t Data1;
             uint16_t Data2;
             uint16_t Data3;
-            uint8_t  Data4[8];
+            uint8_t Data4[8];
             inline bool operator!=(guid const& right) const noexcept
             {
                 return memcmp(this, &right, sizeof(guid));
@@ -106,33 +105,25 @@ namespace winrt::impl
             return self->m_owner->GetTrustLevel(level);
         }
 
-        static inline void* const s_vtable[] =
-        {
-            QueryInterface,
-            AddRef,
-            Release,
-            GetIids,
-            GetRuntimeClassName,
-            GetTrustLevel,
-%        };
+        static inline void* const s_vtable[] = { QueryInterface,      AddRef,        Release, GetIids,
+                                                 GetRuntimeClassName, GetTrustLevel, % };
     };
 
     // Enforce assumptions made by thunk asm code
     static_assert(offsetof(fast_abi_forwarder, m_vfptr) == 0);
     static_assert(offsetof(fast_abi_forwarder, m_owner) == sizeof(fast_abi_forwarder::m_vfptr));
     static_assert(offsetof(fast_abi_forwarder, m_offset) == sizeof(fast_abi_forwarder::m_vfptr) + sizeof(fast_abi_forwarder::m_owner));
-}
+} // namespace winrt::impl
 
 namespace winrt
 {
-    template<typename TGuid>
-    auto make_fast_abi_forwarder(void* owner, TGuid const& guid, size_t offset)
+    template <typename TGuid> auto make_fast_abi_forwarder(void* owner, TGuid const& guid, size_t offset)
     {
         using ff_guid = impl::fast_abi_forwarder::guid;
         static_assert(sizeof(ff_guid) == sizeof(TGuid));
         return new impl::fast_abi_forwarder(owner, *reinterpret_cast<ff_guid const*>(&guid), offset);
     }
-}
+} // namespace winrt
 
 #undef WINRT_IMPL_STRING
 #undef WINRT_IMPL_STRING_1

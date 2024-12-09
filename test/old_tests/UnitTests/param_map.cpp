@@ -6,8 +6,7 @@ using namespace Windows::Foundation::Collections;
 
 namespace
 {
-    template <typename T>
-    auto make_copy(T const & param)
+    template <typename T> auto make_copy(T const& param)
     {
         typename T::interface_type copy;
         copy_from_abi(copy, get_abi(param));
@@ -50,14 +49,14 @@ namespace
 
     struct viewable
     {
-        IMap<int, int> view{ single_threaded_map<int, int>(std::map<int, int>{ { 1,10 },{ 2,20 },{ 3,30 } }) };
+        IMap<int, int> view{ single_threaded_map<int, int>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } }) };
 
         operator IMap<int, int>() const
         {
             return view;
         }
     };
-}
+} // namespace
 
 TEST_CASE("test_map")
 {
@@ -65,14 +64,14 @@ TEST_CASE("test_map")
     test_null_map(nullptr);
 
     // initializer_list
-    test_map({ { 1,10 },{ 2,20 },{ 3,30 } });
+    test_map({ { 1, 10 }, { 2, 20 }, { 3, 30 } });
 
     // std::map/unordered_map rvalue
-    test_map(std::map<int, int>{ { 1, 10 }, { 2,20 }, { 3,30 } });
-    test_map(std::unordered_map<int, int>{ { 1, 10 }, { 2,20 }, { 3,30 } });
+    test_map(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } });
+    test_map(std::unordered_map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } });
 
     // WinRT interface
-    IMap<int, int> view = single_threaded_map<int, int>(std::map<int, int>{ { 1, 10 }, { 2,20 }, { 3,30 } });
+    IMap<int, int> view = single_threaded_map<int, int>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } });
     test_map(view);
 
     // Convertible WinRT interface

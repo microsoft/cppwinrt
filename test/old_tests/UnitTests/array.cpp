@@ -64,8 +64,10 @@ TEST_CASE("array,SmsBinaryMessage")
 TEST_CASE("array,CreateInt32Array,GetInt32Array")
 {
     com_array<int> a;
-    PropertyValue::CreateInt32Array({ 1, 2, 3 }). // PassArray pattern
-        as<IPropertyValue>().GetInt32Array(a); // ReceiveArray pattern
+    PropertyValue::CreateInt32Array({ 1, 2, 3 })
+        . // PassArray pattern
+        as<IPropertyValue>()
+        .GetInt32Array(a); // ReceiveArray pattern
 
     REQUIRE(3 == a.size());
     REQUIRE(1 == a[0]);
@@ -78,7 +80,7 @@ TEST_CASE("array,CreateInt32Array,GetInt32Array")
 //
 TEST_CASE("array,DataReader")
 {
-    auto reader = CreateDataReader({1, 2, 3}).get();
+    auto reader = CreateDataReader({ 1, 2, 3 }).get();
 
     std::array<byte, 3> a;
     reader.ReadBytes(a); // FillArray pattern
@@ -165,7 +167,7 @@ TEST_CASE("array,EBO")
 
         std::vector<hstring> actual;
 
-        for (auto && item : items)
+        for (auto&& item : items)
         {
             actual.emplace_back(item.GetString());
         }
@@ -192,7 +194,7 @@ TEST_CASE("array,EBO")
 
         std::vector<hstring> actual;
 
-        for (auto && item : items)
+        for (auto&& item : items)
         {
             actual.emplace_back(item.GetString());
         }
@@ -227,7 +229,6 @@ TEST_CASE("array,[N]")
         REQUIRE(a[0] == 1);
         REQUIRE(a[1] == 20);
         REQUIRE(a[2] == 3);
-
     }
 
     SECTION("array_cref")
@@ -306,7 +307,6 @@ TEST_CASE("array,at")
         REQUIRE(a.at(0) == 1);
         REQUIRE(a.at(1) == 20);
         REQUIRE(a.at(2) == 3);
-
     }
 
     SECTION("array_cref")
@@ -346,7 +346,7 @@ TEST_CASE("array,at,throw")
             a.at(3);
             FAIL("Previous line should throw");
         }
-        catch (std::out_of_range const & e)
+        catch (std::out_of_range const& e)
         {
             REQUIRE(std::string("Invalid array subscript") == e.what());
         }
@@ -359,7 +359,7 @@ TEST_CASE("array,at,throw")
             test_array_ref_at_throw({ 1, 2, 3 });
             FAIL("Previous line should throw");
         }
-        catch (std::out_of_range const & e)
+        catch (std::out_of_range const& e)
         {
             REQUIRE(std::string("Invalid array subscript") == e.what());
         }
@@ -374,7 +374,7 @@ TEST_CASE("array,at,throw")
             a.at(5);
             FAIL("Previous line should throw");
         }
-        catch (std::out_of_range const & e)
+        catch (std::out_of_range const& e)
         {
             REQUIRE(std::string("Invalid array subscript") == e.what());
         }
@@ -466,7 +466,7 @@ TEST_CASE("array,data")
         array_view<int> a = v;
         REQUIRE(v.data() == a.data());
 
-        int * p = a.data();
+        int* p = a.data();
 
         p[1] = 20;
 
@@ -485,7 +485,7 @@ TEST_CASE("array,data")
         array_view<int const> a = v;
         REQUIRE(v.data() == a.data());
 
-        int const * p = a.data();
+        int const* p = a.data();
 
         REQUIRE(p[0] == 1);
         REQUIRE(p[1] == 2);
@@ -496,7 +496,7 @@ TEST_CASE("array,data")
     {
         com_array<int> a{ 1, 2, 3 };
 
-        int * p = a.data();
+        int* p = a.data();
 
         p[1] = 20;
 
@@ -512,7 +512,7 @@ TEST_CASE("array,data")
 
 static void test_array_cref(array_view<int const> const a)
 {
-    int const * p = a.data();
+    int const* p = a.data();
 
     REQUIRE(p[0] == 1);
     REQUIRE(p[1] == 2);
@@ -529,7 +529,7 @@ TEST_CASE("array,data,const")
         std::vector<int> v{ 1, 2, 3 };
         array_view<int> const a = v;
 
-        int const * p = a.data();
+        int const* p = a.data();
 
         REQUIRE(p[0] == 1);
         REQUIRE(p[1] == 2);
@@ -545,7 +545,7 @@ TEST_CASE("array,data,const")
     {
         com_array<int> const a{ 1, 2, 3 };
 
-        int const * p = a.data();
+        int const* p = a.data();
 
         REQUIRE(p[0] == 1);
         REQUIRE(p[1] == 2);
@@ -601,7 +601,6 @@ TEST_CASE("array,begin,end")
         REQUIRE(a[1] == 20);
         REQUIRE(a[2] == 30);
     }
-
 }
 
 //
@@ -724,7 +723,6 @@ TEST_CASE("array,rbegin,rend")
         REQUIRE(a[1] == 20);
         REQUIRE(a[2] == 30);
     }
-
 }
 
 //
@@ -809,7 +807,7 @@ TEST_CASE("array,crbegin,crend,const")
 TEST_CASE("array_view,range")
 {
     {
-        int v[] { 1, 2, 3 };
+        int v[]{ 1, 2, 3 };
         array_view<int> a(v, v + _countof(v));
         REQUIRE(a.data() == v);
         REQUIRE(a.size() == _countof(v));
@@ -1003,7 +1001,7 @@ TEST_CASE("com_array,count,value")
 //
 TEST_CASE("com_array,range")
 {
-    std::vector<int> v { 1, 2, 3 };
+    std::vector<int> v{ 1, 2, 3 };
     com_array<int> a(v.begin(), v.end());
     REQUIRE(3 == a.size());
     REQUIRE(a[0] == 1);
@@ -1042,7 +1040,7 @@ TEST_CASE("com_array,array")
 //
 TEST_CASE("com_array,C-style array")
 {
-    int v[3] { 1, 2, 3 };
+    int v[3]{ 1, 2, 3 };
     com_array<int> a(v);
     REQUIRE(3 == a.size());
     REQUIRE(a[0] == 1);
@@ -1055,7 +1053,7 @@ TEST_CASE("com_array,C-style array")
 //
 TEST_CASE("com_array,initializer_list")
 {
-    com_array<int> a { 1, 2, 3 };
+    com_array<int> a{ 1, 2, 3 };
     REQUIRE(3 == a.size());
     REQUIRE(a[0] == 1);
     REQUIRE(a[1] == 2);
@@ -1085,8 +1083,7 @@ TEST_CASE("com_array,move")
 
 bool operator==(Size left, Size right)
 {
-    return left.Width == right.Width &&
-           left.Height == right.Height;
+    return left.Width == right.Width && left.Height == right.Height;
 }
 
 TEST_CASE("array,PropertyValue")
@@ -1120,16 +1117,19 @@ TEST_CASE("array,PropertyValue")
 
     SECTION("consume,array,Size")
     {
-        auto inspectable = PropertyValue::CreateSizeArray({ { 1,1 },{ 2,2 },{ 3,3 } });
+        auto inspectable = PropertyValue::CreateSizeArray({ { 1, 1 }, { 2, 2 }, { 3, 3 } });
         auto pv = inspectable.as<IPropertyValue>();
 
         com_array<Size> a;
         pv.GetSizeArray(a);
 
         REQUIRE(3 == a.size());
-        REQUIRE(a[0].Width == 1); REQUIRE(a[0].Height == 1);
-        REQUIRE(a[1].Width == 2); REQUIRE(a[1].Height == 2);
-        REQUIRE(a[2].Width == 3); REQUIRE(a[2].Height == 3);
+        REQUIRE(a[0].Width == 1);
+        REQUIRE(a[0].Height == 1);
+        REQUIRE(a[1].Width == 2);
+        REQUIRE(a[1].Height == 2);
+        REQUIRE(a[2].Width == 3);
+        REQUIRE(a[2].Height == 3);
     }
 
     SECTION("produce,array,Size")
@@ -1140,14 +1140,18 @@ TEST_CASE("array,PropertyValue")
         pv.GetSizeArray(a);
 
         REQUIRE(3 == a.size());
-        REQUIRE(a[0].Width == 1); REQUIRE(a[0].Height == 1);
-        REQUIRE(a[1].Width == 2); REQUIRE(a[1].Height == 2);
-        REQUIRE(a[2].Width == 3); REQUIRE(a[2].Height == 3);
+        REQUIRE(a[0].Width == 1);
+        REQUIRE(a[0].Height == 1);
+        REQUIRE(a[1].Width == 2);
+        REQUIRE(a[1].Height == 2);
+        REQUIRE(a[2].Width == 3);
+        REQUIRE(a[2].Height == 3);
     }
 
     SECTION("consume,array,Inspectable")
     {
-        auto inspectable = PropertyValue::CreateInspectableArray({ Uri(L"http://one/"), Uri(L"http://two/"), Uri(L"http://three/") });
+        auto inspectable =
+            PropertyValue::CreateInspectableArray({ Uri(L"http://one/"), Uri(L"http://two/"), Uri(L"http://three/") });
         auto pv = inspectable.as<IPropertyValue>();
 
         com_array<Windows::Foundation::IInspectable> a;
@@ -1174,9 +1178,9 @@ TEST_CASE("array,PropertyValue")
 }
 
 //
-// Testing comparisons of array_view is tricky because we need to ensure that the array storage remains alive for the duration
-// of the test. Previously this was done with an initializer_list but the list went out of scope before the comparison was performed
-// leading to failures in some builds.
+// Testing comparisons of array_view is tricky because we need to ensure that the array storage remains alive for the
+// duration of the test. Previously this was done with an initializer_list but the list went out of scope before the
+// comparison was performed leading to failures in some builds.
 //
 
 struct compare_results
@@ -1189,30 +1193,14 @@ struct compare_results
     bool less_equal;
 };
 
-static compare_results compare_com_array(com_array<char> const & left, com_array<char> const & right)
+static compare_results compare_com_array(com_array<char> const& left, com_array<char> const& right)
 {
-    return
-    {
-        left == right,
-        left != right,
-        left > right,
-        left < right,
-        left >= right,
-        left <= right
-    };
+    return { left == right, left != right, left > right, left < right, left >= right, left <= right };
 }
 
 static compare_results compare_array_ref(array_view<char const> left, array_view<char const> right)
 {
-    return
-    {
-        left == right,
-        left != right,
-        left > right,
-        left < right,
-        left >= right,
-        left <= right
-    };
+    return { left == right, left != right, left > right, left < right, left >= right, left <= right };
 }
 
 TEST_CASE("com_array,compare,com_array")
@@ -1276,8 +1264,7 @@ TEST_CASE("array_view,compare,array_view")
 // Verify that class template argument deduction works for array_view.
 TEST_CASE("array_view,ctad")
 {
-#define REQUIRE_DEDUCED_AS(T, ...) \
-    static_assert(std::is_same_v<array_view<T>, decltype(array_view(__VA_ARGS__))>)
+#define REQUIRE_DEDUCED_AS(T, ...) static_assert(std::is_same_v<array_view<T>, decltype(array_view(__VA_ARGS__))>)
 
     uint8_t a[3]{};
     REQUIRE_DEDUCED_AS(uint8_t, &a[0], &a[0]);
@@ -1322,8 +1309,7 @@ TEST_CASE("com_array,construct")
 // Verify that class template argument deduction works for com_array.
 TEST_CASE("com_array,ctad")
 {
-#define REQUIRE_DEDUCED_AS(T, ...) \
-    static_assert(std::is_same_v<com_array<T>, decltype(com_array(__VA_ARGS__))>)
+#define REQUIRE_DEDUCED_AS(T, ...) static_assert(std::is_same_v<com_array<T>, decltype(com_array(__VA_ARGS__))>)
 
     REQUIRE_DEDUCED_AS(uint8_t, 3, uint8_t(5));
 

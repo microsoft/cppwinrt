@@ -55,7 +55,7 @@ namespace
     {
         return std::tie(lhs.Name, lhs.Kind) == std::tie(rhs.Name, rhs.Kind);
     }
-}
+} // namespace
 
 TEST_CASE("xaml_typename")
 {

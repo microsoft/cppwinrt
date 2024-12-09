@@ -1,10 +1,10 @@
 #pragma once
 
-// property_visualizer provides the visualization data model for leaf (non-WinRT object) 
+// property_visualizer provides the visualization data model for leaf (non-WinRT object)
 // nodes in the WinRT object graph, forwarding its implementation back to the expression
 // evaluator for external types.
-struct __declspec(uuid("87feab93-47a3-4f55-b48b-a29317fa52da"))
-property_visualizer : winrt::implements<property_visualizer, ::IUnknown>
+struct __declspec(uuid("87feab93-47a3-4f55-b48b-a29317fa52da")) property_visualizer
+    : winrt::implements<property_visualizer, ::IUnknown>
 {
     property_visualizer(
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression* pVisualizedExpression,
@@ -15,32 +15,26 @@ property_visualizer : winrt::implements<property_visualizer, ::IUnknown>
     }
 
     ~property_visualizer()
-    {
-    }
+    {}
 
     HRESULT GetChildren(
         _In_ UINT32 InitialRequestSize,
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmInspectionContext* pInspectionContext,
         _Out_ Microsoft::VisualStudio::Debugger::DkmArray<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pInitialChildren,
-        _Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext** ppEnumContext
-        );
+        _Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext** ppEnumContext);
 
     HRESULT GetItems(
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext* pEnumContext,
         _In_ UINT32 StartIndex,
         _In_ UINT32 Count,
-        _Out_ Microsoft::VisualStudio::Debugger::DkmArray<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pItems
-        );
+        _Out_ Microsoft::VisualStudio::Debugger::DkmArray<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pItems);
 
     HRESULT SetValueAsString(
         _In_ Microsoft::VisualStudio::Debugger::DkmString* pValue,
         _In_ UINT32 Timeout,
-        _Deref_out_opt_ Microsoft::VisualStudio::Debugger::DkmString** ppErrorText
-        );
+        _Deref_out_opt_ Microsoft::VisualStudio::Debugger::DkmString** ppErrorText);
 
-    HRESULT GetUnderlyingString(
-        _Deref_out_opt_ Microsoft::VisualStudio::Debugger::DkmString** ppStringValue
-        );
+    HRESULT GetUnderlyingString(_Deref_out_opt_ Microsoft::VisualStudio::Debugger::DkmString** ppStringValue);
 
 private:
     // The DkmVisualizedExpression created for this object.

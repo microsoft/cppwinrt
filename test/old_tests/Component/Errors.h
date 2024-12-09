@@ -16,11 +16,10 @@ namespace winrt::Component::implementation
         void std_invalid_argument();
         void std_exception();
     };
-}
+} // namespace winrt::Component::implementation
 
 namespace winrt::Component::factory_implementation
 {
     struct Errors : ErrorsT<Errors, implementation::Errors>
-    {
-    };
-}
+    {};
+} // namespace winrt::Component::factory_implementation

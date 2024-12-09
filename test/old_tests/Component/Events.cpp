@@ -49,7 +49,7 @@ namespace winrt::Component::implementation
     {
         m_custom(value);
     }
-}
+} // namespace winrt::Component::implementation
 
 namespace winrt::Component::factory_implementation
 {
@@ -121,4 +121,4 @@ namespace winrt::Component::factory_implementation
 
         return true;
     }
-}
+} // namespace winrt::Component::factory_implementation

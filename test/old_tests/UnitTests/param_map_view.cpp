@@ -6,8 +6,7 @@ using namespace Windows::Foundation::Collections;
 
 namespace
 {
-    template <typename T>
-    auto make_copy(T const & param)
+    template <typename T> auto make_copy(T const& param)
     {
         typename T::interface_type copy;
         copy_from_abi(copy, get_abi(param));
@@ -60,14 +59,14 @@ namespace
 
     struct viewable
     {
-        IMapView<int, int> view{ single_threaded_map<int, int>(std::map<int, int>{ { 1,10 },{ 2,20 },{ 3,30 } }).GetView() };
+        IMapView<int, int> view{ single_threaded_map<int, int>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } }).GetView() };
 
         operator IMapView<int, int>() const
         {
             return view;
         }
     };
-}
+} // namespace
 
 TEST_CASE("test_map_view")
 {
@@ -75,20 +74,20 @@ TEST_CASE("test_map_view")
     test_null_map_view(nullptr);
 
     // initializer_list
-    test_map_view({ { 1,10 },{ 2,20 },{ 3,30 } });
+    test_map_view({ { 1, 10 }, { 2, 20 }, { 3, 30 } });
 
     // std::map/unordered_map rvalue
-    test_map_view(std::map<int, int>{ { 1, 10 }, { 2,20 }, { 3,30 } });
-    test_map_view(std::unordered_map<int, int>{ { 1, 10 }, { 2,20 }, { 3,30 } });
+    test_map_view(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } });
+    test_map_view(std::unordered_map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } });
 
     // std::map/unordered_map lvalue
-    std::map<int, int> local_map{ { 1, 10 },{ 2,20 },{ 3,30 } };
+    std::map<int, int> local_map{ { 1, 10 }, { 2, 20 }, { 3, 30 } };
     test_map_view(local_map);
-    std::unordered_map<int, int> local_unordered_map{ { 1, 10 },{ 2,20 },{ 3,30 } };
+    std::unordered_map<int, int> local_unordered_map{ { 1, 10 }, { 2, 20 }, { 3, 30 } };
     test_map_view(local_unordered_map);
 
     // WinRT interface
-    IMapView<int, int> view = single_threaded_map<int, int>(std::map<int, int>{ { 1, 10 }, { 2,20 }, { 3,30 } }).GetView();
+    IMapView<int, int> view = single_threaded_map<int, int>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } }).GetView();
     test_map_view(view);
 
     // Convertible WinRT interface
@@ -97,8 +96,7 @@ TEST_CASE("test_map_view")
 
 TEST_CASE("test_map_view_scope")
 {
-    std::map<int, int> local{ { 1, 10 },{ 2,20 },{ 3,30 } };
+    std::map<int, int> local{ { 1, 10 }, { 2, 20 }, { 3, 30 } };
     IMapView<int, int> a = test_map_view_scope(local);
     REQUIRE_THROWS_AS(a.First(), hresult_illegal_method_call);
 }
-

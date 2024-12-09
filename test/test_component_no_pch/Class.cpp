@@ -6,4 +6,4 @@ namespace winrt::test_component_no_pch::implementation
     {
         throw hresult_not_implemented();
     }
-}
+} // namespace winrt::test_component_no_pch::implementation

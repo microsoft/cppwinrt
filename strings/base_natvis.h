@@ -9,7 +9,7 @@ namespace winrt::impl
 {
     struct natvis
     {
-        static auto __stdcall abi_val(void* object, wchar_t const * iid_str, int method)
+        static auto __stdcall abi_val(void* object, wchar_t const* iid_str, int method)
         {
             union variant
             {
@@ -28,8 +28,7 @@ namespace winrt::impl
                 guid g;
                 void* s;
                 uint8_t v[1024];
-            }
-            value;
+            } value;
             value.s = 0;
             guid iid;
             if (WINRT_IMPL_IIDFromString(iid_str, &iid) == 0)
@@ -66,7 +65,7 @@ namespace winrt::impl
                             // validate method pointer is executable
                             if ((WINRT_IMPL_VirtualQuery(vfunc, &info, sizeof(info)) != 0) && ((info.protect & 0xF0) != 0))
                             {
-                                typedef int32_t(__stdcall inspectable_abi:: * PropertyAccessor)(void*);
+                                typedef int32_t (__stdcall inspectable_abi::*PropertyAccessor)(void*);
                                 (pinsp->**(PropertyAccessor*)&vfunc)(&value);
                                 pinsp->Release();
                             }
@@ -82,15 +81,11 @@ namespace winrt::impl
             return abi_val(static_cast<unknown_abi*>(get_abi(*object)), iid_str, method);
         }
     };
-}
+} // namespace winrt::impl
 
-extern "C"
-__declspec(selectany)
-decltype(winrt::impl::natvis::abi_val) & WINRT_abi_val = winrt::impl::natvis::abi_val;
+extern "C" __declspec(selectany) decltype(winrt::impl::natvis::abi_val)& WINRT_abi_val = winrt::impl::natvis::abi_val;
 
-extern "C"
-__declspec(selectany)
-decltype(winrt::impl::natvis::get_val) & WINRT_get_val = winrt::impl::natvis::get_val;
+extern "C" __declspec(selectany) decltype(winrt::impl::natvis::get_val)& WINRT_get_val = winrt::impl::natvis::get_val;
 
 #ifdef _M_IX86
 #pragma comment(linker, "/include:_WINRT_abi_val")

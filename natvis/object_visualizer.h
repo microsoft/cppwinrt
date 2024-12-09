@@ -27,7 +27,7 @@ enum class ObjectType
 };
 
 // Metadata for resolving a runtime class property value
-struct PropertyData 
+struct PropertyData
 {
     std::wstring iid;
     int32_t index;
@@ -37,10 +37,10 @@ struct PropertyData
     std::wstring displayName;
 };
 
-// object_visualizer provides the visualization data model for WinRT objects, 
+// object_visualizer provides the visualization data model for WinRT objects,
 // both for root-level RAII IInspectables, and for nested ABI IInspectable properties.
-struct __declspec(uuid("c7da92da-3bc9-4312-8a93-46f480663980"))
-object_visualizer : winrt::implements<object_visualizer, ::IUnknown>
+struct __declspec(uuid("c7da92da-3bc9-4312-8a93-46f480663980")) object_visualizer
+    : winrt::implements<object_visualizer, ::IUnknown>
 {
     object_visualizer(Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression, ObjectType objectType)
     {
@@ -49,10 +49,12 @@ object_visualizer : winrt::implements<object_visualizer, ::IUnknown>
     }
 
     ~object_visualizer()
-    {
-    }
+    {}
 
-    static HRESULT CreateEvaluationResult(_In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression, _In_ ObjectType objectType, _Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResult** ppResultObject);
+    static HRESULT CreateEvaluationResult(
+        _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
+        _In_ ObjectType objectType,
+        _Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResult** ppResultObject);
 
     HRESULT CreateEvaluationResult(_Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResult** ppResultObject);
 
@@ -60,16 +62,14 @@ object_visualizer : winrt::implements<object_visualizer, ::IUnknown>
         _In_ UINT32 InitialRequestSize,
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmInspectionContext* pInspectionContext,
         _Out_ Microsoft::VisualStudio::Debugger::DkmArray<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pInitialChildren,
-        _Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext** ppEnumContext
-    );
+        _Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext** ppEnumContext);
 
     HRESULT GetItems(
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext* pEnumContext,
         _In_ UINT32 StartIndex,
         _In_ UINT32 Count,
-        _Out_ Microsoft::VisualStudio::Debugger::DkmArray<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pItems
-    );
+        _Out_ Microsoft::VisualStudio::Debugger::DkmArray<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pItems);
 
 private:
     void GetPropertyData();

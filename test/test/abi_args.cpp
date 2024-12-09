@@ -40,10 +40,10 @@ TEST_CASE("abi_args")
     // generic, in, array, struct
     {
         auto a = single_threaded_vector<Rational>();
-        a.ReplaceAll({ {1,1}, {2,2} });
+        a.ReplaceAll({ { 1, 1 }, { 2, 2 } });
         REQUIRE(a.Size() == 2);
-        REQUIRE(a.GetAt(0) == Rational{1, 1});
-        REQUIRE(a.GetAt(1) == Rational{2, 2});
+        REQUIRE(a.GetAt(0) == Rational{ 1, 1 });
+        REQUIRE(a.GetAt(1) == Rational{ 2, 2 });
     }
 
     // generic, in, array, fundamental
@@ -92,7 +92,7 @@ TEST_CASE("abi_args")
     // generic, out, array, struct
     {
         auto a = single_threaded_vector<Rational>();
-        a.ReplaceAll({ {1,1}, {2,2} });
+        a.ReplaceAll({ { 1, 1 }, { 2, 2 } });
         std::array<Rational, 2> b;
         a.GetMany(0, b);
         REQUIRE(b[0] == Rational{ 1, 1 });

@@ -8,19 +8,18 @@ namespace winrt::Composable::implementation
     struct Derived : DerivedT<Derived, Base>
     {
         Derived() = default;
-        explicit Derived(const hstring& name)
-            : base_type(name)
+        explicit Derived(const hstring& name) :
+            base_type(name)
         {}
 
         hstring VirtualMethod() override;
         hstring OverridableVirtualMethod() override;
         int32_t CallProtectedMethod();
     };
-}
+} // namespace winrt::Composable::implementation
 
 namespace winrt::Composable::factory_implementation
 {
     struct Derived : DerivedT<Derived, implementation::Derived>
-    {
-    };
-}
+    {};
+} // namespace winrt::Composable::factory_implementation

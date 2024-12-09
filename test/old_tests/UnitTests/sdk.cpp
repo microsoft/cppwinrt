@@ -1,6 +1,5 @@
 #include "pch.h"
 
-
 static_assert(sizeof(SLIST_ENTRY) == sizeof(winrt::impl::slist_entry));
 static_assert(std::alignment_of_v<SLIST_ENTRY> == std::alignment_of_v<winrt::impl::slist_entry>);
 

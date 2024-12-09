@@ -21,7 +21,8 @@ namespace
         // sure it's possible.
         [cancel = co_await get_cancellation_token(), &canceled]
         {
-            cancel.callback([&]
+            cancel.callback(
+                [&]
                 {
                     REQUIRE(!canceled);
                     canceled = true;
@@ -37,7 +38,8 @@ namespace
     {
         auto cancel = co_await get_cancellation_token();
 
-        cancel.callback([&]
+        cancel.callback(
+            [&]
             {
                 REQUIRE(!canceled);
                 canceled = true;
@@ -52,7 +54,8 @@ namespace
     {
         auto cancel = co_await get_cancellation_token();
 
-        cancel.callback([&]
+        cancel.callback(
+            [&]
             {
                 REQUIRE(!canceled);
                 canceled = true;
@@ -68,7 +71,8 @@ namespace
     {
         auto cancel = co_await get_cancellation_token();
 
-        cancel.callback([&]
+        cancel.callback(
+            [&]
             {
                 REQUIRE(!canceled);
                 canceled = true;
@@ -80,8 +84,7 @@ namespace
         co_return 1;
     }
 
-    template <typename F>
-    void Check(F make)
+    template <typename F> void Check(F make)
     {
         handle event{ CreateEvent(nullptr, true, false, nullptr) };
         bool canceled = false;
@@ -91,7 +94,7 @@ namespace
         SetEvent(event.get());
         REQUIRE_THROWS_AS(async.GetResults(), hresult_canceled);
     }
-}
+} // namespace
 
 #if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.

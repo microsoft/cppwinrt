@@ -15,10 +15,9 @@ namespace winrt::test_component::Velocity::implementation
         void IInterface1_Method();
         void IInterface2_Method();
     };
-}
+} // namespace winrt::test_component::Velocity::implementation
 namespace winrt::test_component::Velocity::factory_implementation
 {
     struct Class4 : Class4T<Class4, implementation::Class4>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component::Velocity::factory_implementation

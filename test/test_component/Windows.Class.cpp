@@ -12,4 +12,4 @@ namespace winrt::test_component::Windows::implementation
     {
         throw hresult_not_implemented();
     }
-}
+} // namespace winrt::test_component::Windows::implementation

@@ -9,15 +9,15 @@ using namespace Windows::Foundation;
 namespace
 {
     constexpr Point p1{};
-    constexpr Point p2{ 1,2 };
+    constexpr Point p2{ 1, 2 };
 
     constexpr Size s1{};
-    constexpr Size s2{ 3,4 };
+    constexpr Size s2{ 3, 4 };
 
     constexpr Rect r1{};
-    constexpr Rect r2{ 10,20,30,40 };
+    constexpr Rect r2{ 10, 20, 30, 40 };
     constexpr Rect r3{ p2, s2 };
-}
+} // namespace
 
 static_assert(p1.X == 0);
 static_assert(p1.Y == 0);
@@ -46,11 +46,11 @@ static_assert(r3.Y == 2);
 static_assert(r3.Width == 3);
 static_assert(r3.Height == 4);
 
-static_assert(p2 == Point{ 1,2 });
+static_assert(p2 == Point{ 1, 2 });
 static_assert(p1 != p2);
 
-static_assert(s2 == Size{ 3,4 });
+static_assert(s2 == Size{ 3, 4 });
 static_assert(s1 != s2);
 
-static_assert(r2 == Rect{ 10,20,30,40 });
+static_assert(r2 == Rect{ 10, 20, 30, 40 });
 static_assert(r2 != r3);

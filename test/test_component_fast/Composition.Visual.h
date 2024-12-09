@@ -13,7 +13,6 @@ namespace winrt::test_component_fast::Composition::implementation
         void ParentForTransform(Composition::Visual const& value);
 
     private:
-
         int32_t m_offset{};
     };
-}
+} // namespace winrt::test_component_fast::Composition::implementation

@@ -22,8 +22,7 @@ namespace cppwinrt
             m_synchronous = synchronous;
         }
 
-        template <typename T>
-        void add(T&& callback)
+        template <typename T> void add(T&& callback)
         {
             if (m_synchronous)
             {
@@ -51,8 +50,7 @@ namespace cppwinrt
         }
 
     private:
-
         std::vector<std::future<void>> m_tasks;
         bool m_synchronous{};
     };
-}
+} // namespace cppwinrt

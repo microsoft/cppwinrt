@@ -23,4 +23,4 @@ namespace winrt::Component::factory_implementation
 
         event<Windows::Foundation::EventHandler<int32_t>> m_static;
     };
-}
+} // namespace winrt::Component::factory_implementation

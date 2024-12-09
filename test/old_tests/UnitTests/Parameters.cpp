@@ -35,7 +35,7 @@ TEST_CASE("Parameters")
     }
 
     {
-        params.SetInt32Array({ 1,2,3 });
+        params.SetInt32Array({ 1, 2, 3 });
         REQUIRE(params.GetInt32Array() == com_array<int>{ 1, 2, 3 });
 
         com_array<int> value;
@@ -44,7 +44,7 @@ TEST_CASE("Parameters")
 
         std::array<int, 3> view;
         params.CopyInt32Array(view);
-        REQUIRE(view == std::array<int, 3>{1, 2, 3});
+        REQUIRE(view == std::array<int, 3>{ 1, 2, 3 });
     }
 
     {

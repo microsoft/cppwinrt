@@ -9,10 +9,9 @@ namespace winrt::test_component_fast::Composition::implementation
 
         SpriteVisual CreateSpriteVisual();
     };
-}
+} // namespace winrt::test_component_fast::Composition::implementation
 namespace winrt::test_component_fast::Composition::factory_implementation
 {
     struct Compositor : CompositorT<Compositor, implementation::Compositor>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component_fast::Composition::factory_implementation

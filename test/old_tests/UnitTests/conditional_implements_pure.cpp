@@ -23,12 +23,8 @@ namespace
     };
 
     template <bool Stringable, bool Closable>
-    struct Conditional : implements<Conditional<Stringable, Closable>,
-        void,
-        Base,
-        std::conditional_t<Stringable, IStringable, void>,
-        std::conditional_t<Closable, IClosable, void>,
-        void>
+    struct Conditional
+        : implements<Conditional<Stringable, Closable>, void, Base, std::conditional_t<Stringable, IStringable, void>, std::conditional_t<Closable, IClosable, void>, void>
     {
         hstring ToString()
         {
@@ -36,10 +32,9 @@ namespace
         }
 
         void Close()
-        {
-        }
+        {}
     };
-}
+} // namespace
 
 TEST_CASE("conditional_implements_pure")
 {

@@ -21,11 +21,10 @@ namespace winrt::Component::implementation
         WrapStructure m_value;
         std::vector<WrapStructure> m_array;
     };
-}
+} // namespace winrt::Component::implementation
 
 namespace winrt::Component::factory_implementation
 {
     struct Structures : StructuresT<Structures, implementation::Structures>
-    {
-    };
-}
+    {};
+} // namespace winrt::Component::factory_implementation

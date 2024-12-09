@@ -13,7 +13,7 @@ namespace
     {
         co_return L"hello";
     }
-}
+} // namespace
 
 TEST_CASE("coro_foundation")
 {

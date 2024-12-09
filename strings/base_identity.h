@@ -1,17 +1,14 @@
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename T>
-    using default_interface = typename impl::default_interface<T>::type;
+    template <typename T> using default_interface = typename impl::default_interface<T>::type;
 
-    template <typename T>
-    constexpr guid const& guid_of() noexcept
+    template <typename T> constexpr guid const& guid_of() noexcept
     {
         return impl::guid_v<default_interface<T>>;
     }
 
-    template <typename... T>
-    bool is_guid_of(guid const& id) noexcept
+    template <typename... T> bool is_guid_of(guid const& id) noexcept
     {
         return ((id == guid_of<T>()) || ...);
     }
@@ -25,20 +22,17 @@ namespace winrt::impl
         return { value[Index]... };
     }
 
-    template <typename T, size_t Size>
-    constexpr auto to_array(std::array<T, Size> const& value) noexcept
+    template <typename T, size_t Size> constexpr auto to_array(std::array<T, Size> const& value) noexcept
     {
         return value;
     }
 
-    template <size_t Size>
-    constexpr auto to_array(char const(&value)[Size]) noexcept
+    template <size_t Size> constexpr auto to_array(char const (&value)[Size]) noexcept
     {
         return to_array<Size - 1>(value, std::make_index_sequence<Size - 1>());
     }
 
-    template <size_t Size>
-    constexpr auto to_array(wchar_t const(&value)[Size]) noexcept
+    template <size_t Size> constexpr auto to_array(wchar_t const (&value)[Size]) noexcept
     {
         return to_array<Size - 1>(value, std::make_index_sequence<Size - 1>());
     }
@@ -60,13 +54,13 @@ namespace winrt::impl
     }
 
     template <typename T, size_t LeftSize, size_t RightSize>
-    constexpr auto concat(std::array<T, LeftSize> const& left, T const(&right)[RightSize]) noexcept
+    constexpr auto concat(std::array<T, LeftSize> const& left, T const (&right)[RightSize]) noexcept
     {
         return concat(left, to_array(right));
     }
 
     template <typename T, size_t LeftSize, size_t RightSize>
-    constexpr auto concat(T const(&left)[LeftSize], std::array<T, RightSize> const& right) noexcept
+    constexpr auto concat(T const (&left)[LeftSize], std::array<T, RightSize> const& right) noexcept
     {
         return concat(to_array(left), right);
     }
@@ -74,17 +68,16 @@ namespace winrt::impl
     template <typename T, size_t LeftSize>
     constexpr auto concat(std::array<T, LeftSize> const& left, T const right) noexcept
     {
-        return concat(left, std::array<T, 1>{right});
+        return concat(left, std::array<T, 1>{ right });
     }
 
     template <typename T, size_t RightSize>
     constexpr auto concat(T const left, std::array<T, RightSize> const& right) noexcept
     {
-        return concat(std::array<T, 1>{left}, right);
+        return concat(std::array<T, 1>{ left }, right);
     }
 
-    template <typename First, typename... Rest>
-    constexpr auto combine(First const& first, Rest const&... rest) noexcept
+    template <typename First, typename... Rest> constexpr auto combine(First const& first, Rest const&... rest) noexcept
     {
         if constexpr (sizeof...(rest) == 0)
         {
@@ -97,7 +90,11 @@ namespace winrt::impl
     }
 
     template <typename T, size_t LS, size_t RS, size_t... LI, size_t... RI>
-    constexpr std::array<T, LS + RS - 1> zconcat_base(std::array<T, LS> const& left, std::array<T, RS> const& right, std::index_sequence<LI...> const, std::index_sequence<RI...> const) noexcept
+    constexpr std::array<T, LS + RS - 1> zconcat_base(
+        std::array<T, LS> const& left,
+        std::array<T, RS> const& right,
+        std::index_sequence<LI...> const,
+        std::index_sequence<RI...> const) noexcept
     {
         return { left[LI]..., right[RI]..., T{} };
     }
@@ -109,19 +106,17 @@ namespace winrt::impl
     }
 
     template <typename T, size_t S, size_t... I>
-    constexpr std::array<T, S> to_zarray_base(T const(&value)[S], std::index_sequence<I...> const) noexcept
+    constexpr std::array<T, S> to_zarray_base(T const (&value)[S], std::index_sequence<I...> const) noexcept
     {
         return { value[I]... };
     }
 
-    template <typename T, size_t S>
-    constexpr auto to_zarray(T const(&value)[S]) noexcept
+    template <typename T, size_t S> constexpr auto to_zarray(T const (&value)[S]) noexcept
     {
         return to_zarray_base(value, std::make_index_sequence<S>());
     }
 
-    template <typename T, size_t S>
-    constexpr auto to_zarray(std::array<T, S> const& value) noexcept
+    template <typename T, size_t S> constexpr auto to_zarray(std::array<T, S> const& value) noexcept
     {
         return value;
     }
@@ -141,7 +136,10 @@ namespace winrt::impl
 
     constexpr std::array<uint8_t, 4> to_array(uint32_t value) noexcept
     {
-        return { static_cast<uint8_t>(value & 0x000000ff), static_cast<uint8_t>((value & 0x0000ff00) >> 8), static_cast<uint8_t>((value & 0x00ff0000) >> 16), static_cast<uint8_t>((value & 0xff000000) >> 24) };
+        return { static_cast<uint8_t>(value & 0x000000ff),
+                 static_cast<uint8_t>((value & 0x0000ff00) >> 8),
+                 static_cast<uint8_t>((value & 0x00ff0000) >> 16),
+                 static_cast<uint8_t>((value & 0xff000000) >> 24) };
     }
 
     constexpr std::array<uint8_t, 2> to_array(uint16_t value) noexcept
@@ -151,55 +149,63 @@ namespace winrt::impl
 
     constexpr auto to_array(guid const& value) noexcept
     {
-        return combine(to_array(value.Data1), to_array(value.Data2), to_array(value.Data3),
-            std::array<uint8_t, 8>{ value.Data4[0], value.Data4[1], value.Data4[2], value.Data4[3], value.Data4[4], value.Data4[5], value.Data4[6], value.Data4[7] });
+        return combine(
+            to_array(value.Data1),
+            to_array(value.Data2),
+            to_array(value.Data3),
+            std::array<uint8_t, 8>{ value.Data4[0],
+                                    value.Data4[1],
+                                    value.Data4[2],
+                                    value.Data4[3],
+                                    value.Data4[4],
+                                    value.Data4[5],
+                                    value.Data4[6],
+                                    value.Data4[7] });
     }
 
-    template <typename T>
-    constexpr T to_hex_digit(uint8_t value) noexcept
+    template <typename T> constexpr T to_hex_digit(uint8_t value) noexcept
     {
         value &= 0xF;
         return value < 10 ? static_cast<T>('0') + value : static_cast<T>('a') + (value - 10);
     }
 
-    template <typename T>
-    constexpr std::array<T, 2> uint8_to_hex(uint8_t const value) noexcept
+    template <typename T> constexpr std::array<T, 2> uint8_to_hex(uint8_t const value) noexcept
     {
         return { to_hex_digit<T>(value >> 4), to_hex_digit<T>(value & 0xF) };
     }
 
-    template <typename T>
-    constexpr auto uint16_to_hex(uint16_t value) noexcept
+    template <typename T> constexpr auto uint16_to_hex(uint16_t value) noexcept
     {
         return combine(uint8_to_hex<T>(static_cast<uint8_t>(value >> 8)), uint8_to_hex<T>(value & 0xFF));
     }
 
-    template <typename T>
-    constexpr auto uint32_to_hex(uint32_t const value) noexcept
+    template <typename T> constexpr auto uint32_to_hex(uint32_t const value) noexcept
     {
         return combine(uint16_to_hex<T>(value >> 16), uint16_to_hex<T>(value & 0xFFFF));
     }
 
-    template <typename T>
-    constexpr auto to_array(guid const& value) noexcept
+    template <typename T> constexpr auto to_array(guid const& value) noexcept
     {
-        return combine
-        (
-            std::array<T, 1>{'{'},
-            uint32_to_hex<T>(value.Data1), std::array<T, 1>{'-'},
-            uint16_to_hex<T>(value.Data2), std::array<T, 1>{'-'},
-            uint16_to_hex<T>(value.Data3), std::array<T, 1>{'-'},
-            uint16_to_hex<T>(value.Data4[0] << 8 | value.Data4[1]), std::array<T, 1>{'-'},
+        return combine(
+            std::array<T, 1>{ '{' },
+            uint32_to_hex<T>(value.Data1),
+            std::array<T, 1>{ '-' },
+            uint16_to_hex<T>(value.Data2),
+            std::array<T, 1>{ '-' },
+            uint16_to_hex<T>(value.Data3),
+            std::array<T, 1>{ '-' },
+            uint16_to_hex<T>(value.Data4[0] << 8 | value.Data4[1]),
+            std::array<T, 1>{ '-' },
             uint16_to_hex<T>(value.Data4[2] << 8 | value.Data4[3]),
             uint16_to_hex<T>(value.Data4[4] << 8 | value.Data4[5]),
             uint16_to_hex<T>(value.Data4[6] << 8 | value.Data4[7]),
-            std::array<T, 1>{'}'}
-        );
+            std::array<T, 1>{ '}' });
     }
 
     constexpr uint32_t to_guid(uint8_t a, uint8_t b, uint8_t c, uint8_t d) noexcept
     {
-        return (static_cast<uint32_t>(d) << 24) | (static_cast<uint32_t>(c) << 16) | (static_cast<uint32_t>(b) << 8) | static_cast<uint32_t>(a);
+        return (static_cast<uint32_t>(d) << 24) | (static_cast<uint32_t>(c) << 16) | (static_cast<uint32_t>(b) << 8) |
+               static_cast<uint32_t>(a);
     }
 
     constexpr uint16_t to_guid(uint8_t a, uint8_t b) noexcept
@@ -207,16 +213,12 @@ namespace winrt::impl
         return (static_cast<uint32_t>(b) << 8) | static_cast<uint32_t>(a);
     }
 
-    template <size_t Size>
-    constexpr guid to_guid(std::array<uint8_t, Size> const& arr) noexcept
+    template <size_t Size> constexpr guid to_guid(std::array<uint8_t, Size> const& arr) noexcept
     {
-        return
-        {
-            to_guid(arr[0], arr[1], arr[2], arr[3]),
-            to_guid(arr[4], arr[5]),
-            to_guid(arr[6], arr[7]),
-        { arr[8], arr[9], arr[10], arr[11], arr[12], arr[13], arr[14], arr[15] }
-        };
+        return { to_guid(arr[0], arr[1], arr[2], arr[3]),
+                 to_guid(arr[4], arr[5]),
+                 to_guid(arr[6], arr[7]),
+                 { arr[8], arr[9], arr[10], arr[11], arr[12], arr[13], arr[14], arr[15] } };
     }
 
     constexpr uint32_t endian_swap(uint32_t value) noexcept
@@ -252,7 +254,7 @@ namespace winrt::impl
 
     constexpr auto sha1_rotl(uint8_t bits, uint32_t word) noexcept
     {
-        return  (word << bits) | (word >> (32 - bits));
+        return (word << bits) | (word >> (32 - bits));
     }
 
     constexpr auto sha_ch(uint32_t x, uint32_t y, uint32_t z) noexcept
@@ -270,7 +272,8 @@ namespace winrt::impl
         return (x & y) ^ (x & z) ^ (y & z);
     }
 
-    constexpr std::array<uint32_t, 5> process_msg_block(uint8_t const* input, size_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
+    constexpr std::array<uint32_t, 5> process_msg_block(
+        uint8_t const* input, size_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
     {
         uint32_t const K[4] = { 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xCA62C1D6 };
         std::array<uint32_t, 80> W = {};
@@ -337,32 +340,37 @@ namespace winrt::impl
             A = temp;
         }
 
-        return { intermediate_hash[0] + A, intermediate_hash[1] + B, intermediate_hash[2] + C, intermediate_hash[3] + D, intermediate_hash[4] + E };
+        return { intermediate_hash[0] + A,
+                 intermediate_hash[1] + B,
+                 intermediate_hash[2] + C,
+                 intermediate_hash[3] + D,
+                 intermediate_hash[4] + E };
     }
 
     template <size_t Size>
-    constexpr std::array<uint32_t, 5> process_msg_block(std::array<uint8_t, Size> const& input, size_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
+    constexpr std::array<uint32_t, 5> process_msg_block(
+        std::array<uint8_t, Size> const& input, size_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
     {
         return process_msg_block(input.data(), start_pos, intermediate_hash);
     }
 
     constexpr std::array<uint8_t, 8> size_to_bytes(size_t size) noexcept
     {
-        return
-        {
-            static_cast<uint8_t>((size & 0xff00000000000000) >> 56),
-            static_cast<uint8_t>((size & 0x00ff000000000000) >> 48),
-            static_cast<uint8_t>((size & 0x0000ff0000000000) >> 40),
-            static_cast<uint8_t>((size & 0x000000ff00000000) >> 32),
-            static_cast<uint8_t>((size & 0x00000000ff000000) >> 24),
-            static_cast<uint8_t>((size & 0x0000000000ff0000) >> 16),
-            static_cast<uint8_t>((size & 0x000000000000ff00) >> 8),
-            static_cast<uint8_t>((size & 0x00000000000000ff) >> 0)
-        };
+        return { static_cast<uint8_t>((size & 0xff00000000000000) >> 56),
+                 static_cast<uint8_t>((size & 0x00ff000000000000) >> 48),
+                 static_cast<uint8_t>((size & 0x0000ff0000000000) >> 40),
+                 static_cast<uint8_t>((size & 0x000000ff00000000) >> 32),
+                 static_cast<uint8_t>((size & 0x00000000ff000000) >> 24),
+                 static_cast<uint8_t>((size & 0x0000000000ff0000) >> 16),
+                 static_cast<uint8_t>((size & 0x000000000000ff00) >> 8),
+                 static_cast<uint8_t>((size & 0x00000000000000ff) >> 0) };
     }
 
     template <size_t Size, size_t RemainingSize, size_t... Index>
-    constexpr std::array<uint8_t, RemainingSize + 1> make_remaining([[maybe_unused]] std::array<uint8_t, Size> const& input, [[maybe_unused]] size_t start_pos, std::index_sequence<Index...>) noexcept
+    constexpr std::array<uint8_t, RemainingSize + 1> make_remaining(
+        [[maybe_unused]] std::array<uint8_t, Size> const& input,
+        [[maybe_unused]] size_t start_pos,
+        std::index_sequence<Index...>) noexcept
     {
         return { input[Index + start_pos]..., 0x80 };
     }
@@ -387,7 +395,8 @@ namespace winrt::impl
     }
 
     template <size_t Size>
-    constexpr std::array<uint32_t, 5> finalize_remaining_buffer(std::array<uint8_t, Size> const& input, std::array<uint32_t, 5> const& intermediate_hash) noexcept
+    constexpr std::array<uint32_t, 5> finalize_remaining_buffer(
+        std::array<uint8_t, Size> const& input, std::array<uint32_t, 5> const& intermediate_hash) noexcept
     {
         if constexpr (Size == 64)
         {
@@ -410,8 +419,7 @@ namespace winrt::impl
         return get_result(intermediate_hash, std::make_index_sequence<20>{});
     }
 
-    template <size_t Size>
-    constexpr auto calculate_sha1(std::array<uint8_t, Size> const& input) noexcept
+    template <size_t Size> constexpr auto calculate_sha1(std::array<uint8_t, Size> const& input) noexcept
     {
         std::array<uint32_t, 5> intermediate_hash{ 0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0 };
         size_t i = 0;
@@ -426,10 +434,9 @@ namespace winrt::impl
         return get_result(intermediate_hash);
     }
 
-    template <size_t Size>
-    constexpr guid generate_guid(std::array<char, Size> const& value) noexcept
+    template <size_t Size> constexpr guid generate_guid(std::array<char, Size> const& value) noexcept
     {
-        guid namespace_guid = { 0xd57af411, 0x737b, 0xc042,{ 0xab, 0xae, 0x87, 0x8b, 0x1e, 0x16, 0xad, 0xee } };
+        guid namespace_guid = { 0xd57af411, 0x737b, 0xc042, { 0xab, 0xae, 0x87, 0x8b, 0x1e, 0x16, 0xad, 0xee } };
 
         auto buffer = combine(to_array(namespace_guid), char_to_byte_array(value, std::make_index_sequence<Size>()));
         auto hash = calculate_sha1(buffer);
@@ -438,39 +445,29 @@ namespace winrt::impl
         return set_named_guid_fields(little_endian_guid);
     }
 
-    template <typename TArg, typename... TRest>
-    struct arg_collection
+    template <typename TArg, typename... TRest> struct arg_collection
     {
         constexpr static auto data{ combine(to_array(signature<TArg>::data), ";", arg_collection<TRest...>::data) };
     };
 
-    template <typename TArg>
-    struct arg_collection<TArg>
+    template <typename TArg> struct arg_collection<TArg>
     {
         constexpr static auto data{ to_array(signature<TArg>::data) };
     };
 
-    template <typename T>
-    struct pinterface_guid
+    template <typename T> struct pinterface_guid
     {
 #ifdef _MSC_VER
-#pragma warning(suppress: 4307)
+#pragma warning(suppress : 4307)
 #endif
         static constexpr guid value{ generate_guid(signature<T>::data) };
     };
 
     template <typename T>
 #ifdef _MSC_VER
-#pragma warning(suppress: 4307)
+#pragma warning(suppress : 4307)
 #endif
-    inline constexpr auto name_v
-    {
-        combine
-        (
-            to_array<wchar_t>(guid_of<T>()),
-            std::array<wchar_t, 1>{ L'\0' }
-        )
-    };
+    inline constexpr auto name_v{ combine(to_array<wchar_t>(guid_of<T>()), std::array<wchar_t, 1>{ L'\0' }) };
 
     constexpr size_t to_utf8_size(wchar_t const value) noexcept
     {
@@ -508,8 +505,7 @@ namespace winrt::impl
         return 3;
     }
 
-    template <typename T>
-    constexpr size_t to_utf8_size() noexcept
+    template <typename T> constexpr size_t to_utf8_size() noexcept
     {
         auto input = to_array(name_v<T>);
         size_t length = 0;
@@ -522,8 +518,7 @@ namespace winrt::impl
         return length;
     }
 
-    template <typename T>
-    constexpr auto to_utf8() noexcept
+    template <typename T> constexpr auto to_utf8() noexcept
     {
         auto input = to_array(name_v<T>);
         std::array<char, to_utf8_size<T>()> output{};
@@ -537,11 +532,9 @@ namespace winrt::impl
         return output;
     }
 
-    template <typename T>
-    constexpr guid generic_guid_v{};
+    template <typename T> constexpr guid generic_guid_v{};
 
-    template <typename T>
-    constexpr auto& basic_signature_v = "";
+    template <typename T> constexpr auto& basic_signature_v = "";
 
     template <> inline constexpr auto& basic_signature_v<bool> = "b1";
     template <> inline constexpr auto& basic_signature_v<int8_t> = "i1";
@@ -557,7 +550,8 @@ namespace winrt::impl
     template <> inline constexpr auto& basic_signature_v<char16_t> = "c2";
     template <> inline constexpr auto& basic_signature_v<guid> = "g16";
     template <> inline constexpr auto& basic_signature_v<hstring> = "string";
-    template <> inline constexpr auto& basic_signature_v<Windows::Foundation::IInspectable> = "cinterface(IInspectable)";
+    template <>
+    inline constexpr auto& basic_signature_v<Windows::Foundation::IInspectable> = "cinterface(IInspectable)";
 
     template <> inline constexpr auto& name_v<bool> = L"Boolean";
     template <> inline constexpr auto& name_v<int8_t> = L"Int8";
@@ -580,85 +574,130 @@ namespace winrt::impl
     template <> inline constexpr auto& name_v<Windows::Foundation::DateTime> = L"Windows.Foundation.DateTime";
     template <> inline constexpr auto& name_v<IAgileObject> = L"IAgileObject";
 
-    template <> struct category<bool> { using type = basic_category; };
-    template <> struct category<int8_t> { using type = basic_category; };
-    template <> struct category<int16_t> { using type = basic_category; };
-    template <> struct category<int32_t> { using type = basic_category; };
-    template <> struct category<int64_t> { using type = basic_category; };
-    template <> struct category<uint8_t> { using type = basic_category; };
-    template <> struct category<uint16_t> { using type = basic_category; };
-    template <> struct category<uint32_t> { using type = basic_category; };
-    template <> struct category<uint64_t> { using type = basic_category; };
-    template <> struct category<float> { using type = basic_category; };
-    template <> struct category<double> { using type = basic_category; };
-    template <> struct category<char16_t> { using type = basic_category; };
-    template <> struct category<guid> { using type = basic_category; };
-    template <> struct category<hresult> { using type = struct_category<int32_t>; };
-    template <> struct category<event_token> { using type = struct_category<int64_t>; };
-    template <> struct category<Windows::Foundation::IInspectable> { using type = basic_category; };
-    template <> struct category<Windows::Foundation::TimeSpan> { using type = struct_category<int64_t>; };
-    template <> struct category<Windows::Foundation::DateTime> { using type = struct_category<int64_t>; };
+    template <> struct category<bool>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<int8_t>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<int16_t>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<int32_t>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<int64_t>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<uint8_t>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<uint16_t>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<uint32_t>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<uint64_t>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<float>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<double>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<char16_t>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<guid>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<hresult>
+    {
+        using type = struct_category<int32_t>;
+    };
+    template <> struct category<event_token>
+    {
+        using type = struct_category<int64_t>;
+    };
+    template <> struct category<Windows::Foundation::IInspectable>
+    {
+        using type = basic_category;
+    };
+    template <> struct category<Windows::Foundation::TimeSpan>
+    {
+        using type = struct_category<int64_t>;
+    };
+    template <> struct category<Windows::Foundation::DateTime>
+    {
+        using type = struct_category<int64_t>;
+    };
 
-    template <typename T>
-    struct category_signature<basic_category, T>
+    template <typename T> struct category_signature<basic_category, T>
     {
         constexpr static auto data{ to_array(basic_signature_v<T>) };
     };
 
-    template <typename T>
-    struct category_signature<enum_category, T>
+    template <typename T> struct category_signature<enum_category, T>
     {
         using enum_type = std::underlying_type_t<T>;
         constexpr static auto data{ combine("enum(", to_utf8<T>(), ";", signature<enum_type>::data, ")") };
     };
 
-    template <typename... Fields, typename T>
-    struct category_signature<struct_category<Fields...>, T>
+    template <typename... Fields, typename T> struct category_signature<struct_category<Fields...>, T>
     {
         constexpr static auto data{ combine("struct(", to_utf8<T>(), ";", arg_collection<Fields...>::data, ")") };
     };
 
-    template <typename T>
-    struct category_signature<class_category, T>
+    template <typename T> struct category_signature<class_category, T>
     {
         constexpr static auto data{ combine("rc(", to_utf8<T>(), ";", signature<winrt::default_interface<T>>::data, ")") };
     };
 
-    template <typename... Args, typename T>
-    struct category_signature<generic_category<Args...>, T>
+    template <typename... Args, typename T> struct category_signature<generic_category<Args...>, T>
     {
-        constexpr static auto data{ combine("pinterface(", to_array<char>(generic_guid_v<T>), ";", arg_collection<Args...>::data, ")") };
+        constexpr static auto data{ combine(
+            "pinterface(", to_array<char>(generic_guid_v<T>), ";", arg_collection<Args...>::data, ")") };
     };
 
-    template <typename T>
-    struct category_signature<interface_category, T>
+    template <typename T> struct category_signature<interface_category, T>
     {
         constexpr static auto data{ to_array<char>(guid_of<T>()) };
     };
 
-    template <typename T>
-    struct category_signature<delegate_category, T>
+    template <typename T> struct category_signature<delegate_category, T>
     {
         constexpr static auto data{ combine("delegate(", to_array<char>(guid_of<T>()), ")") };
     };
 
-    template <size_t Size>
-    constexpr std::wstring_view to_wstring_view(std::array<wchar_t, Size> const& value) noexcept
+    template <size_t Size> constexpr std::wstring_view to_wstring_view(std::array<wchar_t, Size> const& value) noexcept
     {
         return { value.data(), Size - 1 };
     }
 
-    template <size_t Size>
-    constexpr std::wstring_view to_wstring_view(wchar_t const (&value)[Size]) noexcept
+    template <size_t Size> constexpr std::wstring_view to_wstring_view(wchar_t const (&value)[Size]) noexcept
     {
         return { value, Size - 1 };
     }
-}
+} // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename T>
-    constexpr auto name_of() noexcept
+    template <typename T> constexpr auto name_of() noexcept
     {
         return impl::to_wstring_view(impl::name_v<T>);
     }

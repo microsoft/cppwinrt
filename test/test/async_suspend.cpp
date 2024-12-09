@@ -42,8 +42,7 @@ namespace
         co_await OperationWithProgress(event.get());
     }
 
-    template <typename F>
-    void Check(F make)
+    template <typename F> void Check(F make)
     {
         handle start{ CreateEvent(nullptr, true, false, nullptr) };
         handle completed{ CreateEvent(nullptr, true, false, nullptr) };
@@ -59,7 +58,8 @@ namespace
             REQUIRE_THROWS_AS(async.GetResults(), hresult_illegal_method_call);
         }
 
-        async.Completed([&](auto&& sender, AsyncStatus status)
+        async.Completed(
+            [&](auto&& sender, AsyncStatus status)
             {
                 REQUIRE(async == sender);
                 REQUIRE(status == AsyncStatus::Completed);
@@ -80,7 +80,7 @@ namespace
         REQUIRE(async.Status() == AsyncStatus::Completed);
         REQUIRE(async.ErrorCode() == S_OK);
     }
-}
+} // namespace
 
 TEST_CASE("async_suspend")
 {

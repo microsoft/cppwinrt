@@ -27,9 +27,7 @@ namespace
     struct Bar : implements<Bar, IClosable, Foo>
     {
         void Close()
-        {
-
-        }
+        {}
 
         weak_ref<Bar> get_weak_bar()
         {
@@ -41,7 +39,7 @@ namespace
             return implements_type::get_strong();
         }
     };
-}
+} // namespace
 
 TEST_CASE("weak_implements")
 {
@@ -110,7 +108,7 @@ TEST_CASE("as_implements_inheritance")
         com_ptr<Bar> bar2 = stringable.as<Bar>();
         REQUIRE(bar.get() == bar2.get());
     }
-    
+
     com_ptr<Foo> foo = bar.as<Foo>();
     REQUIRE(bar.get() == foo.get());
     {

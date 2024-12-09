@@ -9,7 +9,7 @@ using namespace winrt;
 
 TEST_CASE("handle, file")
 {
-    wchar_t path[1024] {};
+    wchar_t path[1024]{};
     REQUIRE(0 != GetModuleFileNameW(nullptr, path, _countof(path)));
 
     file_handle empty;
@@ -71,7 +71,7 @@ TEST_CASE("handle, get")
     REQUIRE(h == a.get());
 }
 
-static void test_put(HANDLE * value)
+static void test_put(HANDLE* value)
 {
     REQUIRE(value != nullptr);
     REQUIRE(*value == nullptr);

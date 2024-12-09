@@ -38,7 +38,8 @@ int32_t __stdcall WINRT_CanUnloadNow() noexcept
     return winrt_can_unload_now() ? 0 : 1;
 }
 
-int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept try
+int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept
+try
 {
     std::wstring_view const name{ *reinterpret_cast<winrt::hstring*>(&classId) };
     *factory = winrt_get_activation_factory(name);
@@ -49,9 +50,13 @@ int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noex
     }
 
 #ifdef _WRL_MODULE_H_
-    return ::Microsoft::WRL::Module<::Microsoft::WRL::InProc>::GetModule().GetActivationFactory(static_cast<HSTRING>(classId), reinterpret_cast<::IActivationFactory * *>(factory));
+    return ::Microsoft::WRL::Module<::Microsoft::WRL::InProc>::GetModule().GetActivationFactory(
+        static_cast<HSTRING>(classId), reinterpret_cast<::IActivationFactory**>(factory));
 #else
     return winrt::hresult_class_not_available(name).to_abi();
 #endif
 }
-catch (...) { return winrt::to_hresult(); }
+catch (...)
+{
+    return winrt::to_hresult();
+}

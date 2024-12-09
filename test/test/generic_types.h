@@ -15,17 +15,10 @@ namespace
 {
     constexpr bool equal(guid const& left, guid const& right) noexcept
     {
-        return left.Data1 == right.Data1 &&
-            left.Data2 == right.Data2 &&
-            left.Data3 == right.Data3 &&
-            left.Data4[0] == right.Data4[0] &&
-            left.Data4[1] == right.Data4[1] &&
-            left.Data4[2] == right.Data4[2] &&
-            left.Data4[3] == right.Data4[3] &&
-            left.Data4[4] == right.Data4[4] &&
-            left.Data4[5] == right.Data4[5] &&
-            left.Data4[6] == right.Data4[6] &&
-            left.Data4[7] == right.Data4[7];
+        return left.Data1 == right.Data1 && left.Data2 == right.Data2 && left.Data3 == right.Data3 &&
+               left.Data4[0] == right.Data4[0] && left.Data4[1] == right.Data4[1] && left.Data4[2] == right.Data4[2] &&
+               left.Data4[3] == right.Data4[3] && left.Data4[4] == right.Data4[4] && left.Data4[5] == right.Data4[5] &&
+               left.Data4[6] == right.Data4[6] && left.Data4[7] == right.Data4[7];
     }
 
     void test_guids()
@@ -112,4 +105,4 @@ namespace
         REQUIRE_EQUAL_GUID("0D82BD8D-FE62-5D67-A7B9-7886DD75BC4E", IVector<Uri>);
         REQUIRE_EQUAL_GUID("5DAFE591-86DC-59AA-BFDA-07F5D59FC708", IVector<AsyncActionCompletedHandler>);
     }
-}
+} // namespace

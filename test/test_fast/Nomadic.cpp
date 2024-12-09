@@ -11,7 +11,7 @@ hstring invoke_by_interface_vtable_offset(Nomadic const& nomadic, ptrdiff_t offs
     //       that IInspectable has 6 functions in total (including those inherited from IUnknown)
     auto insp = static_cast<::IInspectable*>(get_abi(nomadic));
     auto vtable = *reinterpret_cast<void***>(insp);
-    auto fn_ptr = static_cast<HRESULT(__stdcall *)(::IInspectable*, HSTRING*)>(vtable[6 + offset]);
+    auto fn_ptr = static_cast<HRESULT(__stdcall*)(::IInspectable*, HSTRING*)>(vtable[6 + offset]);
 
     HSTRING hstr;
     check_hresult(fn_ptr(insp, &hstr));

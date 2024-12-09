@@ -7,11 +7,10 @@ namespace winrt::Component::implementation
 
     FastInputVector::FastInputVector(IVectorView<hstring> const& in) :
         m_container(begin(in), end(in))
-    {
-    }
+    {}
 
     void FastInputVector::Close()
     {
         throw hresult_not_implemented();
     }
-}
+} // namespace winrt::Component::implementation

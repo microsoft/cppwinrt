@@ -22,7 +22,7 @@ namespace
     constexpr auto OverriddenBase_OverridableMethod{ L"OverriddenBase::OverridableMethod"sv };
     constexpr auto OverriddenBase_OverridableVirtualMethod{ L"OverriddenBase::OverridableVirtualMethod"sv };
     constexpr auto OverriddenBase_OverridableNoexceptMethod{ 1337 };
-}
+} // namespace
 
 TEST_CASE("Composable.Base")
 {
@@ -37,8 +37,7 @@ TEST_CASE("Composable.OverriddenBase")
 {
     {
         struct OverriddenBase : BaseT<OverriddenBase>
-        {
-        };
+        {};
         auto object = make<OverriddenBase>();
         REQUIRE(object.VirtualMethod() == Base_VirtualMethod);
         REQUIRE(object.CallOverridableMethod() == Base_OverridableMethod);
@@ -78,9 +77,12 @@ TEST_CASE("Composable.OverriddenBase")
         REQUIRE(object_self->CallProtectedMethod() == Base_ProtectedMethod);
     }
     {
-        const std::wstring OverridableMethodResult = std::wstring(OverriddenBase_OverridableMethod) + L"=>" + Base_OverridableMethod.data();
-        const std::wstring OverridableVirtualMethodResult = std::wstring(OverriddenBase_OverridableVirtualMethod) + L"=>" + Base_OverridableVirtualMethod.data();
-        const int32_t OverridableNoexceptMethodResult = OverriddenBase_OverridableNoexceptMethod + Base_OverridableNoexceptMethod;
+        const std::wstring OverridableMethodResult =
+            std::wstring(OverriddenBase_OverridableMethod) + L"=>" + Base_OverridableMethod.data();
+        const std::wstring OverridableVirtualMethodResult =
+            std::wstring(OverriddenBase_OverridableVirtualMethod) + L"=>" + Base_OverridableVirtualMethod.data();
+        const int32_t OverridableNoexceptMethodResult =
+            OverriddenBase_OverridableNoexceptMethod + Base_OverridableNoexceptMethod;
 
         struct OverriddenBase : BaseT<OverriddenBase>
         {
@@ -121,12 +123,17 @@ TEST_CASE("Composable.Derived")
 namespace
 {
     // Check for implicit conversions to base types/interfaces from unsealed projection types
-    void CallIBase(Composable::IBase const&) {}
-    void CallBase(Composable::Base const&) {}
-    void CallIDerived(Composable::IDerived const&) {}
-    void CallDerived(Composable::Derived const&) {}
+    void CallIBase(Composable::IBase const&)
+    {}
+    void CallBase(Composable::Base const&)
+    {}
+    void CallIDerived(Composable::IDerived const&)
+    {}
+    void CallDerived(Composable::Derived const&)
+    {}
 
-    struct Foo : Composable::BaseT<Foo> {};
+    struct Foo : Composable::BaseT<Foo>
+    {};
 
     void TestCalls(Foo const& obj)
     {
@@ -134,7 +141,8 @@ namespace
         CallBase(obj);
     }
 
-    struct Bar : Composable::DerivedT<Bar> {};
+    struct Bar : Composable::DerivedT<Bar>
+    {};
 
     void TestCalls(Bar const& obj)
     {
@@ -144,11 +152,13 @@ namespace
         CallDerived(obj);
     }
 
-    template <typename T, typename = void>
-    struct has_ProtectedMember : std::false_type { };
+    template <typename T, typename = void> struct has_ProtectedMember : std::false_type
+    {};
 
     template <typename T>
-    struct has_ProtectedMember<T, std::enable_if_t<std::is_member_function_pointer_v<decltype(&T::ProtectedMember)>>> : std::true_type { };
+    struct has_ProtectedMember<T, std::enable_if_t<std::is_member_function_pointer_v<decltype(&T::ProtectedMember)>>>
+        : std::true_type
+    {};
 
     // make sure we can't access protected members directly
     static_assert(!has_ProtectedMember<Composable::Base>::value);
@@ -161,7 +171,7 @@ namespace
     static_assert(!std::is_convertible_v<Composable::Derived, Composable::IBaseProtected>);
     static_assert(!std::is_convertible_v<Foo, Composable::IBaseProtected>);
     static_assert(!std::is_convertible_v<Bar, Composable::IBaseProtected>);
-}
+} // namespace
 
 TEST_CASE("Composable conversions")
 {

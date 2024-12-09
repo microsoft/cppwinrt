@@ -32,4 +32,4 @@ namespace winrt::test_component_fast::implementation
     {
         return L"SeventhMethod";
     }
-}
+} // namespace winrt::test_component_fast::implementation

@@ -13,4 +13,4 @@ namespace winrt::TestRuntimeComponentEmpty::implementation
     {
         return XamlDirect::GetDefault();
     }
-}
+} // namespace winrt::TestRuntimeComponentEmpty::implementation

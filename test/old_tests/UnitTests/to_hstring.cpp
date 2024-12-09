@@ -95,7 +95,7 @@ namespace
             REQUIRE(to_hstring(obj) == obj.ToString());
         }
     }
-}
+} // namespace
 
 TEST_CASE("to_hstring")
 {
@@ -107,7 +107,7 @@ TEST_CASE("to_hstring")
             setlocale(LC_ALL, "C");
         }
     } guard;
-    
+
     test_cases();
 
     // Set a locale with funky decimal and digit separators

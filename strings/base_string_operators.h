@@ -58,30 +58,90 @@ WINRT_EXPORT namespace winrt
     bool operator<(hstring const& left, std::nullptr_t) = delete;
 
     bool operator<(std::nullptr_t, hstring const& right) = delete;
-    inline bool operator!=(hstring const& left, hstring const& right) noexcept { return !(left == right); }
-    inline bool operator>(hstring const& left, hstring const& right) noexcept { return right < left; }
-    inline bool operator<=(hstring const& left, hstring const& right) noexcept { return !(right < left); }
-    inline bool operator>=(hstring const& left, hstring const& right) noexcept { return !(left < right); }
+    inline bool operator!=(hstring const& left, hstring const& right) noexcept
+    {
+        return !(left == right);
+    }
+    inline bool operator>(hstring const& left, hstring const& right) noexcept
+    {
+        return right < left;
+    }
+    inline bool operator<=(hstring const& left, hstring const& right) noexcept
+    {
+        return !(right < left);
+    }
+    inline bool operator>=(hstring const& left, hstring const& right) noexcept
+    {
+        return !(left < right);
+    }
 
-    inline bool operator!=(hstring const& left, std::wstring const& right) noexcept { return !(left == right); }
-    inline bool operator>(hstring const& left, std::wstring const& right) noexcept { return right < left; }
-    inline bool operator<=(hstring const& left, std::wstring const& right) noexcept { return !(right < left); }
-    inline bool operator>=(hstring const& left, std::wstring const& right) noexcept { return !(left < right); }
+    inline bool operator!=(hstring const& left, std::wstring const& right) noexcept
+    {
+        return !(left == right);
+    }
+    inline bool operator>(hstring const& left, std::wstring const& right) noexcept
+    {
+        return right < left;
+    }
+    inline bool operator<=(hstring const& left, std::wstring const& right) noexcept
+    {
+        return !(right < left);
+    }
+    inline bool operator>=(hstring const& left, std::wstring const& right) noexcept
+    {
+        return !(left < right);
+    }
 
-    inline bool operator!=(std::wstring const& left, hstring const& right) noexcept { return !(left == right); }
-    inline bool operator>(std::wstring const& left, hstring const& right) noexcept { return right < left; }
-    inline bool operator<=(std::wstring const& left, hstring const& right) noexcept { return !(right < left); }
-    inline bool operator>=(std::wstring const& left, hstring const& right) noexcept { return !(left < right); }
+    inline bool operator!=(std::wstring const& left, hstring const& right) noexcept
+    {
+        return !(left == right);
+    }
+    inline bool operator>(std::wstring const& left, hstring const& right) noexcept
+    {
+        return right < left;
+    }
+    inline bool operator<=(std::wstring const& left, hstring const& right) noexcept
+    {
+        return !(right < left);
+    }
+    inline bool operator>=(std::wstring const& left, hstring const& right) noexcept
+    {
+        return !(left < right);
+    }
 
-    inline bool operator!=(hstring const& left, wchar_t const* right) noexcept { return !(left == right); }
-    inline bool operator>(hstring const& left, wchar_t const* right) noexcept { return right < left; }
-    inline bool operator<=(hstring const& left, wchar_t const* right) noexcept { return !(right < left); }
-    inline bool operator>=(hstring const& left, wchar_t const* right) noexcept { return !(left < right); }
+    inline bool operator!=(hstring const& left, wchar_t const* right) noexcept
+    {
+        return !(left == right);
+    }
+    inline bool operator>(hstring const& left, wchar_t const* right) noexcept
+    {
+        return right < left;
+    }
+    inline bool operator<=(hstring const& left, wchar_t const* right) noexcept
+    {
+        return !(right < left);
+    }
+    inline bool operator>=(hstring const& left, wchar_t const* right) noexcept
+    {
+        return !(left < right);
+    }
 
-    inline bool operator!=(wchar_t const* left, hstring const& right) noexcept { return !(left == right); }
-    inline bool operator>(wchar_t const* left, hstring const& right) noexcept { return right < left; }
-    inline bool operator<=(wchar_t const* left, hstring const& right) noexcept { return !(right < left); }
-    inline bool operator>=(wchar_t const* left, hstring const& right) noexcept { return !(left < right); }
+    inline bool operator!=(wchar_t const* left, hstring const& right) noexcept
+    {
+        return !(left == right);
+    }
+    inline bool operator>(wchar_t const* left, hstring const& right) noexcept
+    {
+        return right < left;
+    }
+    inline bool operator<=(wchar_t const* left, hstring const& right) noexcept
+    {
+        return !(right < left);
+    }
+    inline bool operator>=(wchar_t const* left, hstring const& right) noexcept
+    {
+        return !(left < right);
+    }
 
     bool operator!=(hstring const& left, std::nullptr_t right) = delete;
     bool operator>(hstring const& left, std::nullptr_t right) = delete;
@@ -101,14 +161,14 @@ namespace winrt::impl
         auto size = static_cast<uint32_t>(left.size() + right.size());
         if (size == 0)
         {
-            return{};
+            return {};
         }
         hstring_builder text(size);
         memcpy_s(text.data(), left.size() * sizeof(wchar_t), left.data(), left.size() * sizeof(wchar_t));
         memcpy_s(text.data() + left.size(), right.size() * sizeof(wchar_t), right.data(), right.size() * sizeof(wchar_t));
         return text.to_hstring();
     }
-}
+} // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {

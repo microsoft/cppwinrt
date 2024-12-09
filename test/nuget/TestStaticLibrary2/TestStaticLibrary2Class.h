@@ -9,10 +9,9 @@ namespace winrt::TestRuntimeComponent2::implementation
 
         void Test();
     };
-}
+} // namespace winrt::TestRuntimeComponent2::implementation
 namespace winrt::TestRuntimeComponent2::factory_implementation
 {
     struct TestStaticLibrary2Class : TestStaticLibrary2ClassT<TestStaticLibrary2Class, implementation::TestStaticLibrary2Class>
-    {
-    };
-}
+    {};
+} // namespace winrt::TestRuntimeComponent2::factory_implementation

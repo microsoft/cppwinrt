@@ -14,7 +14,8 @@ namespace
         REQUIRE_THROWS_AS(check_hresult(0x80000018), hresult_illegal_delegate_assignment);
     }
 
-    static struct {
+    static struct
+    {
         uint32_t lineNumber;
         char const* fileName;
         char const* functionName;
@@ -22,7 +23,8 @@ namespace
         winrt::hresult result;
     } s_loggerArgs{};
 
-    void __stdcall logger(uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept
+    void __stdcall logger(
+        uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept
     {
         s_loggerArgs = {
             .lineNumber = lineNumber,
@@ -33,7 +35,7 @@ namespace
         };
         s_loggerCalled = true;
     }
-}
+} // namespace
 
 #if defined(_LIBCPP_VERSION) && _LIBCPP_VERSION < 170000
 // <source_location> not available in libc++ before LLVM 16

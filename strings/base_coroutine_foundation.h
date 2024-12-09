@@ -1,14 +1,11 @@
 
 namespace winrt::impl
 {
-    template <typename Async>
-    struct async_completed_handler;
+    template <typename Async> struct async_completed_handler;
 
-    template <typename Async>
-    using async_completed_handler_t = typename async_completed_handler<Async>::type;
+    template <typename Async> using async_completed_handler_t = typename async_completed_handler<Async>::type;
 
-    template <>
-    struct async_completed_handler<Windows::Foundation::IAsyncAction>
+    template <> struct async_completed_handler<Windows::Foundation::IAsyncAction>
     {
         using type = Windows::Foundation::AsyncActionCompletedHandler;
     };
@@ -19,8 +16,7 @@ namespace winrt::impl
         using type = Windows::Foundation::AsyncActionWithProgressCompletedHandler<TProgress>;
     };
 
-    template <typename TResult>
-    struct async_completed_handler<Windows::Foundation::IAsyncOperation<TResult>>
+    template <typename TResult> struct async_completed_handler<Windows::Foundation::IAsyncOperation<TResult>>
     {
         using type = Windows::Foundation::AsyncOperationCompletedHandler<TResult>;
     };
@@ -38,16 +34,14 @@ namespace winrt::impl
         WINRT_ASSERT(!is_sta_thread());
     }
 
-    template <typename T, typename H>
-    std::pair<T, H*> make_delegate_with_shared_state(H&& handler)
+    template <typename T, typename H> std::pair<T, H*> make_delegate_with_shared_state(H&& handler)
     {
         auto d = make_delegate<T, H>(std::forward<H>(handler));
         auto abi = reinterpret_cast<delegate<T, H>*>(get_abi(d));
         return { std::move(d), abi };
     }
 
-    template <typename Async>
-    auto wait_for_completed(Async const& async, uint32_t const timeout)
+    template <typename Async> auto wait_for_completed(Async const& async, uint32_t const timeout)
     {
         struct shared_type
         {
@@ -67,8 +61,7 @@ namespace winrt::impl
         return shared->status;
     }
 
-    template <typename Async>
-    auto wait_for(Async const& async, Windows::Foundation::TimeSpan const& timeout)
+    template <typename Async> auto wait_for(Async const& async, Windows::Foundation::TimeSpan const& timeout)
     {
         check_sta_blocking_wait();
         auto const milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(timeout).count();
@@ -84,8 +77,7 @@ namespace winrt::impl
         }
     }
 
-    template <typename Async>
-    auto wait_get(Async const& async)
+    template <typename Async> auto wait_get(Async const& async)
     {
         check_sta_blocking_wait();
 
@@ -99,23 +91,26 @@ namespace winrt::impl
         return async.GetResults();
     }
 
-    struct ignore_apartment_context {};
+    struct ignore_apartment_context
+    {};
 
-    template<bool preserve_context, typename Awaiter>
-    struct disconnect_aware_handler : private std::conditional_t<preserve_context, resume_apartment_context, ignore_apartment_context>
+    template <bool preserve_context, typename Awaiter>
+    struct disconnect_aware_handler
+        : private std::conditional_t<preserve_context, resume_apartment_context, ignore_apartment_context>
     {
-        disconnect_aware_handler(Awaiter* awaiter, coroutine_handle<> handle) noexcept
-            : m_awaiter(awaiter), m_handle(handle) { }
+        disconnect_aware_handler(Awaiter* awaiter, coroutine_handle<> handle) noexcept :
+            m_awaiter(awaiter), m_handle(handle)
+        {}
 
         disconnect_aware_handler(disconnect_aware_handler&& other) = default;
 
         ~disconnect_aware_handler()
         {
-            if (m_handle.value) Complete();
+            if (m_handle.value)
+                Complete();
         }
 
-        template<typename Async>
-        void operator()(Async&&, Windows::Foundation::AsyncStatus status)
+        template <typename Async> void operator()(Async&&, Windows::Foundation::AsyncStatus status)
         {
             m_awaiter.value->status = status;
             Complete();
@@ -153,8 +148,10 @@ namespace winrt::impl
     template <typename Async, bool preserve_context = true>
     struct await_adapter : cancellable_awaiter<await_adapter<Async, preserve_context>>
     {
-        template<typename T>
-        await_adapter(T&& async) : async(std::forward<T>(async)) { }
+        template <typename T>
+        await_adapter(T&& async) :
+            async(std::forward<T>(async))
+        {}
 
         std::conditional_t<preserve_context, Async const&, Async> async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
@@ -163,10 +160,8 @@ namespace winrt::impl
 
         void enable_cancellation(cancellable_promise* promise)
         {
-            promise->set_canceller([](void* parameter)
-            {
-                cancel_asynchronously(reinterpret_cast<await_adapter*>(parameter)->async);
-            }, this);
+            promise->set_canceller(
+                [](void* parameter) { cancel_asynchronously(reinterpret_cast<await_adapter*>(parameter)->async); }, this);
         }
 
         bool await_ready() const noexcept
@@ -174,8 +169,7 @@ namespace winrt::impl
             return false;
         }
 
-        template <typename T>
-        bool await_suspend(coroutine_handle<T> handle)
+        template <typename T> bool await_suspend(coroutine_handle<T> handle)
         {
             this->set_cancellable_promise_from_handle(handle);
             return register_completed_callback(handle);
@@ -208,14 +202,12 @@ namespace winrt::impl
                 async.Cancel();
             }
             catch (hresult_error const&)
-            {
-            }
+            {}
         }
     };
 #endif
 
-    template <typename D>
-    auto consume_Windows_Foundation_IAsyncAction<D>::get() const
+    template <typename D> auto consume_Windows_Foundation_IAsyncAction<D>::get() const
     {
         impl::wait_get(static_cast<Windows::Foundation::IAsyncAction const&>(static_cast<D const&>(*this)));
     }
@@ -225,45 +217,52 @@ namespace winrt::impl
         return impl::wait_for(static_cast<Windows::Foundation::IAsyncAction const&>(static_cast<D const&>(*this)), timeout);
     }
 
-    template <typename D, typename TResult>
-    auto consume_Windows_Foundation_IAsyncOperation<D, TResult>::get() const
+    template <typename D, typename TResult> auto consume_Windows_Foundation_IAsyncOperation<D, TResult>::get() const
     {
         return impl::wait_get(static_cast<Windows::Foundation::IAsyncOperation<TResult> const&>(static_cast<D const&>(*this)));
     }
     template <typename D, typename TResult>
     auto consume_Windows_Foundation_IAsyncOperation<D, TResult>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
     {
-        return impl::wait_for(static_cast<Windows::Foundation::IAsyncOperation<TResult> const&>(static_cast<D const&>(*this)), timeout);
+        return impl::wait_for(
+            static_cast<Windows::Foundation::IAsyncOperation<TResult> const&>(static_cast<D const&>(*this)), timeout);
     }
 
     template <typename D, typename TProgress>
     auto consume_Windows_Foundation_IAsyncActionWithProgress<D, TProgress>::get() const
     {
-        impl::wait_get(static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(static_cast<D const&>(*this)));
+        impl::wait_get(
+            static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(static_cast<D const&>(*this)));
     }
     template <typename D, typename TProgress>
     auto consume_Windows_Foundation_IAsyncActionWithProgress<D, TProgress>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
     {
-        return impl::wait_for(static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(static_cast<D const&>(*this)), timeout);
+        return impl::wait_for(
+            static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(static_cast<D const&>(*this)), timeout);
     }
 
     template <typename D, typename TResult, typename TProgress>
     auto consume_Windows_Foundation_IAsyncOperationWithProgress<D, TResult, TProgress>::get() const
     {
-        return impl::wait_get(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(static_cast<D const&>(*this)));
+        return impl::wait_get(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(
+            static_cast<D const&>(*this)));
     }
     template <typename D, typename TResult, typename TProgress>
-    auto consume_Windows_Foundation_IAsyncOperationWithProgress<D, TResult, TProgress>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
+    auto consume_Windows_Foundation_IAsyncOperationWithProgress<D, TResult, TProgress>::wait_for(
+        Windows::Foundation::TimeSpan const& timeout) const
     {
-        return impl::wait_for(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(static_cast<D const&>(*this)), timeout);
+        return impl::wait_for(
+            static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(
+                static_cast<D const&>(*this)),
+            timeout);
     }
-}
+} // namespace winrt::impl
 
 #ifdef WINRT_IMPL_COROUTINES
 WINRT_EXPORT namespace winrt
 {
-    template<typename Async, typename = std::enable_if_t<std::is_convertible_v<Async, winrt::Windows::Foundation::IAsyncInfo>>>
-    inline impl::await_adapter<std::decay_t<Async>, false> resume_agile(Async&& async)
+    template <typename Async, typename = std::enable_if_t<std::is_convertible_v<Async, winrt::Windows::Foundation::IAsyncInfo>>>
+    inline impl::await_adapter<std::decay_t<Async>, false> resume_agile(Async && async)
     {
         return { std::forward<Async>(async) };
     };
@@ -273,54 +272,56 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 {
     inline impl::await_adapter<IAsyncAction> operator co_await(IAsyncAction const& async)
     {
-        return{ async };
+        return { async };
     }
 
     template <typename TProgress>
     impl::await_adapter<IAsyncActionWithProgress<TProgress>> operator co_await(IAsyncActionWithProgress<TProgress> const& async)
     {
-        return{ async };
+        return { async };
     }
 
     template <typename TResult>
     impl::await_adapter<IAsyncOperation<TResult>> operator co_await(IAsyncOperation<TResult> const& async)
     {
-        return{ async };
+        return { async };
     }
 
     template <typename TResult, typename TProgress>
-    impl::await_adapter<IAsyncOperationWithProgress<TResult, TProgress>> operator co_await(IAsyncOperationWithProgress<TResult, TProgress> const& async)
+    impl::await_adapter<IAsyncOperationWithProgress<TResult, TProgress>> operator co_await(
+        IAsyncOperationWithProgress<TResult, TProgress> const& async)
     {
-        return{ async };
+        return { async };
     }
 }
 #endif
 
 WINRT_EXPORT namespace winrt
 {
-    struct get_progress_token_t {};
+    struct get_progress_token_t
+    {};
 
     inline get_progress_token_t get_progress_token() noexcept
     {
-        return{};
+        return {};
     }
 
-    struct get_cancellation_token_t {};
+    struct get_cancellation_token_t
+    {};
 
     inline get_cancellation_token_t get_cancellation_token() noexcept
     {
-        return{};
+        return {};
     }
 }
 
 namespace winrt::impl
 {
-    template <typename Promise>
-    struct cancellation_token
+    template <typename Promise> struct cancellation_token
     {
-        cancellation_token(Promise* promise) noexcept : m_promise(promise)
-        {
-        }
+        cancellation_token(Promise* promise) noexcept :
+            m_promise(promise)
+        {}
 
         bool await_ready() const noexcept
         {
@@ -328,8 +329,7 @@ namespace winrt::impl
         }
 
         void await_suspend(coroutine_handle<>) const noexcept
-        {
-        }
+        {}
 
         cancellation_token<Promise> await_resume() const noexcept
         {
@@ -352,17 +352,14 @@ namespace winrt::impl
         }
 
     private:
-
         Promise* m_promise;
     };
 
-    template <typename Promise, typename Progress>
-    struct progress_token
+    template <typename Promise, typename Progress> struct progress_token
     {
         progress_token(Promise* promise) noexcept :
             m_promise(promise)
-        {
-        }
+        {}
 
         bool await_ready() const noexcept
         {
@@ -370,8 +367,7 @@ namespace winrt::impl
         }
 
         void await_suspend(coroutine_handle<>) const noexcept
-        {
-        }
+        {}
 
         progress_token<Promise, Progress> await_resume() const noexcept
         {
@@ -383,15 +379,13 @@ namespace winrt::impl
             m_promise->set_progress(result);
         }
 
-        template<typename T>
-        void set_result(T&& value) const
+        template <typename T> void set_result(T&& value) const
         {
             static_assert(!std::is_same_v<Progress, void>, "Setting preliminary results requires IAsync...WithProgress");
             m_promise->return_value(std::forward<T>(value));
         }
 
     private:
-
         Promise* m_promise;
     };
 
@@ -498,8 +492,7 @@ namespace winrt::impl
         }
 
         void Close() const noexcept
-        {
-        }
+        {}
 
         auto GetResults()
         {
@@ -526,7 +519,6 @@ namespace winrt::impl
                 WINRT_ASSERT(status == AsyncStatus::Error || status == AsyncStatus::Canceled);
                 std::rethrow_exception(m_exception);
             }
-
         }
 
         AsyncInterface get_return_object() const noexcept
@@ -535,12 +527,10 @@ namespace winrt::impl
         }
 
         void get_return_value() const noexcept
-        {
-        }
+        {}
 
         void copy_return_value() const noexcept
-        {
-        }
+        {}
 
         void set_completed() noexcept
         {
@@ -568,7 +558,7 @@ namespace winrt::impl
 
         suspend_never initial_suspend() const noexcept
         {
-            return{};
+            return {};
         }
 
         struct final_suspend_awaiter
@@ -581,8 +571,7 @@ namespace winrt::impl
             }
 
             void await_resume() const noexcept
-            {
-            }
+            {}
 
             bool await_suspend(coroutine_handle<>) const noexcept
             {
@@ -606,7 +595,9 @@ namespace winrt::impl
         void unhandled_exception() noexcept
         {
             slim_lock_guard const guard(m_lock);
-            WINRT_ASSERT(m_status.load(std::memory_order_relaxed) == AsyncStatus::Started || m_status.load(std::memory_order_relaxed) == AsyncStatus::Canceled);
+            WINRT_ASSERT(
+                m_status.load(std::memory_order_relaxed) == AsyncStatus::Started ||
+                m_status.load(std::memory_order_relaxed) == AsyncStatus::Canceled);
             m_exception = std::current_exception();
 
             try
@@ -623,8 +614,7 @@ namespace winrt::impl
             }
         }
 
-        template <typename Expression>
-        Expression&& await_transform(Expression&& expression)
+        template <typename Expression> Expression&& await_transform(Expression&& expression)
         {
             if (Status() == AsyncStatus::Canceled)
             {
@@ -636,12 +626,12 @@ namespace winrt::impl
 
         cancellation_token<Derived> await_transform(get_cancellation_token_t) noexcept
         {
-            return{ static_cast<Derived*>(this) };
+            return { static_cast<Derived*>(this) };
         }
 
         progress_token<Derived, TProgress> await_transform(get_progress_token_t) noexcept
         {
-            return{ static_cast<Derived*>(this) };
+            return { static_cast<Derived*>(this) };
         }
 
         void cancellation_callback(winrt::delegate<>&& cancel) noexcept
@@ -664,12 +654,10 @@ namespace winrt::impl
 
 #if defined(_DEBUG) && !defined(WINRT_NO_MAKE_DETECTION)
         void use_make_function_to_create_this_object() final
-        {
-        }
+        {}
 #endif
 
     protected:
-
         void rethrow_if_failed(AsyncStatus status) const
         {
             if (status == AsyncStatus::Error || status == AsyncStatus::Canceled)
@@ -685,7 +673,7 @@ namespace winrt::impl
         std::atomic<AsyncStatus> m_status;
         bool m_completed_assigned{ false };
     };
-}
+} // namespace winrt::impl
 
 #ifdef __cpp_lib_coroutine
 namespace std
@@ -693,21 +681,20 @@ namespace std
 namespace std::experimental
 #endif
 {
-    template <typename... Args>
-    struct coroutine_traits<winrt::Windows::Foundation::IAsyncAction, Args...>
+    template <typename... Args> struct coroutine_traits<winrt::Windows::Foundation::IAsyncAction, Args...>
     {
         struct promise_type final : winrt::impl::promise_base<promise_type, winrt::Windows::Foundation::IAsyncAction>
         {
             void return_void() const noexcept
-            {
-            }
+            {}
         };
     };
 
     template <typename TProgress, typename... Args>
     struct coroutine_traits<winrt::Windows::Foundation::IAsyncActionWithProgress<TProgress>, Args...>
     {
-        struct promise_type final : winrt::impl::promise_base<promise_type, winrt::Windows::Foundation::IAsyncActionWithProgress<TProgress>, TProgress>
+        struct promise_type final
+            : winrt::impl::promise_base<promise_type, winrt::Windows::Foundation::IAsyncActionWithProgress<TProgress>, TProgress>
         {
             using ProgressHandler = winrt::Windows::Foundation::AsyncActionProgressHandler<TProgress>;
 
@@ -724,8 +711,7 @@ namespace std::experimental
             }
 
             void return_void() const noexcept
-            {
-            }
+            {}
 
             void set_progress(TProgress const& result)
             {
@@ -742,7 +728,8 @@ namespace std::experimental
     template <typename TResult, typename... Args>
     struct coroutine_traits<winrt::Windows::Foundation::IAsyncOperation<TResult>, Args...>
     {
-        struct promise_type final : winrt::impl::promise_base<promise_type, winrt::Windows::Foundation::IAsyncOperation<TResult>>
+        struct promise_type final
+            : winrt::impl::promise_base<promise_type, winrt::Windows::Foundation::IAsyncOperation<TResult>>
         {
             TResult get_return_value() noexcept
             {
@@ -771,8 +758,8 @@ namespace std::experimental
     template <typename TResult, typename TProgress, typename... Args>
     struct coroutine_traits<winrt::Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress>, Args...>
     {
-        struct promise_type final : winrt::impl::promise_base<promise_type,
-            winrt::Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress>, TProgress>
+        struct promise_type final
+            : winrt::impl::promise_base<promise_type, winrt::Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress>, TProgress>
         {
             using ProgressHandler = winrt::Windows::Foundation::AsyncOperationProgressHandler<TResult, TProgress>;
 
@@ -827,15 +814,13 @@ namespace std::experimental
 WINRT_EXPORT namespace winrt
 {
 #ifdef WINRT_IMPL_COROUTINES
-    template <typename... T>
-    Windows::Foundation::IAsyncAction when_all(T... async)
+    template <typename... T> Windows::Foundation::IAsyncAction when_all(T... async)
     {
         (void(co_await async), ...);
         co_return;
     }
 
-    template <typename T, typename... Rest>
-    T when_any(T const& first, Rest const& ... rest)
+    template <typename T, typename... Rest> T when_any(T const& first, Rest const&... rest)
     {
         static_assert(impl::has_category_v<T>, "T must be WinRT async type such as IAsyncAction or IAsyncOperation.");
         static_assert((std::is_same_v<T, Rest> && ...), "All when_any parameters must be the same type.");

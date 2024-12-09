@@ -36,8 +36,7 @@ namespace
         co_return 1;
     }
 
-    template <typename F>
-    void Check(F make)
+    template <typename F> void Check(F make)
     {
         try
         {
@@ -52,7 +51,8 @@ namespace
         handle completed{ CreateEvent(nullptr, true, false, nullptr) };
         auto async = make();
 
-        async.Completed([&](auto&& sender, AsyncStatus status)
+        async.Completed(
+            [&](auto&& sender, AsyncStatus status)
             {
                 REQUIRE(async == sender);
                 REQUIRE(status == AsyncStatus::Error);
@@ -75,7 +75,7 @@ namespace
             REQUIRE(e.message() == L"Async");
         }
     }
-}
+} // namespace
 
 #if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.

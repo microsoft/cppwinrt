@@ -6,7 +6,7 @@ namespace winrt
 {
     using namespace Windows::Foundation;
     using namespace test_component;
-}
+} // namespace winrt
 
 using namespace winrt;
 
@@ -18,7 +18,7 @@ namespace
         copy_from_abi(object, raw);
         return object.as<IStringable>().ToString();
     }
-}
+} // namespace
 
 TEST_CASE("out_params_abi")
 {
@@ -109,7 +109,7 @@ TEST_CASE("out_params_abi")
         REQUIRE(value[1].Second == L"20");
     }
     {
-        int32_t raw[4]{ 0xCC,0xCC, 0xCC, 0xCC };
+        int32_t raw[4]{ 0xCC, 0xCC, 0xCC, 0xCC };
         REQUIRE(S_OK == abi->RefInt32Array(_countof(raw), raw));
         REQUIRE(raw[0] == 1);
         REQUIRE(raw[1] == 2);
@@ -233,7 +233,7 @@ TEST_CASE("out_params_abi")
         REQUIRE(raw == nullptr);
     }
     {
-        int32_t raw[2]{ 0xCC,0xCC };
+        int32_t raw[2]{ 0xCC, 0xCC };
         REQUIRE(E_INVALIDARG == abi->RefInt32Array(_countof(raw), raw));
         REQUIRE(raw[0] == 0xCC);
         REQUIRE(raw[1] == 0xCC);

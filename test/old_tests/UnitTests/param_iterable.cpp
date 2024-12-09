@@ -7,8 +7,7 @@ using namespace Windows::Foundation::Collections;
 
 namespace
 {
-    template <typename T>
-    auto make_copy(T const & param)
+    template <typename T> auto make_copy(T const& param)
     {
         typename T::interface_type copy;
         copy_from_abi(copy, get_abi(param));
@@ -114,10 +113,11 @@ namespace
         std::array<IKeyValuePair<int, int>, 3> array;
         REQUIRE(3 == values.First().GetMany(array));
 
-        std::sort(array.begin(), array.end(), [](IKeyValuePair<int, int> const & left, IKeyValuePair<int, int> const & right)
-        {
-            return left.Key() < right.Key();
-        });
+        std::sort(
+            array.begin(),
+            array.end(),
+            [](IKeyValuePair<int, int> const& left, IKeyValuePair<int, int> const& right)
+            { return left.Key() < right.Key(); });
 
         REQUIRE(array[0].Key() == 1);
         REQUIRE(array[0].Value() == 10);
@@ -150,7 +150,7 @@ namespace
         REQUIRE(map[2] == 20);
         REQUIRE(map[3] == 30);
     }
-}
+} // namespace
 
 TEST_CASE("test_iterable")
 {
@@ -158,28 +158,28 @@ TEST_CASE("test_iterable")
     test_null_iterable(nullptr);
 
     // initializer_list
-    test_iterable({1,2,3});
+    test_iterable({ 1, 2, 3 });
 
     // std::vector rvalue
-    test_iterable(std::vector<int>{ 1,2,3 });
+    test_iterable(std::vector<int>{ 1, 2, 3 });
 
     // std::vector lvalue
     std::vector<int> local{ 1, 2, 3 };
     test_iterable(local);
 
     // any other range
-    std::list<int> list{1,2,3};
-    test_iterable({list.begin(), list.end()});
+    std::list<int> list{ 1, 2, 3 };
+    test_iterable({ list.begin(), list.end() });
 
     // WinRT interface
-    IIterable<int> iterable = single_threaded_vector<int>({ 1,2,3 });
+    IIterable<int> iterable = single_threaded_vector<int>({ 1, 2, 3 });
     test_iterable(iterable);
 
     // Convertible WinRT interface
-    test_iterable(single_threaded_vector<int>({ 1,2,3 }));
+    test_iterable(single_threaded_vector<int>({ 1, 2, 3 }));
 
     // Other internal implementations of IIterable
-    test_iterable(make<impl::input_vector_view<int, std::vector<int>>>(std::vector<int>{1,2,3}));
+    test_iterable(make<impl::input_vector_view<int, std::vector<int>>>(std::vector<int>{ 1, 2, 3 }));
     test_iterable(impl::make_scoped_input_vector_view<int>(local.begin(), local.end()).first);
 }
 
@@ -189,36 +189,37 @@ TEST_CASE("test_iterable_pair")
     test_null_iterable_pair(nullptr);
 
     // initializer_list
-    test_iterable_pair({{1,10}, {2,20}, {3,30}});
+    test_iterable_pair({ { 1, 10 }, { 2, 20 }, { 3, 30 } });
 
     // std::map/unordered_map rvalue
-    test_iterable_pair(std::map<int, int>{ { 1,10 },{ 2,20 },{ 3,30 } });
-    test_iterable_pair(std::unordered_map<int, int>{ { 1, 10 }, { 2,20 }, { 3,30 } });
+    test_iterable_pair(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } });
+    test_iterable_pair(std::unordered_map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } });
 
     // std::map/unordered_map lvalue
-    std::map<int, int> local_map{ { 1, 10 }, { 2,20 }, { 3,30 } };
+    std::map<int, int> local_map{ { 1, 10 }, { 2, 20 }, { 3, 30 } };
     test_iterable_pair(local_map);
-    std::unordered_map<int, int> local_unordered_map{ { 1, 10 },{ 2,20 },{ 3,30 } };
+    std::unordered_map<int, int> local_unordered_map{ { 1, 10 }, { 2, 20 }, { 3, 30 } };
     test_iterable_pair(local_unordered_map);
 
     // WinRT interface
-    IIterable<IKeyValuePair<int, int>> iterable = single_threaded_map<int, int>(std::map<int, int>{ { 1,10 },{ 2,20 },{ 3,30 } });
+    IIterable<IKeyValuePair<int, int>> iterable =
+        single_threaded_map<int, int>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } });
     test_iterable_pair(iterable);
 
     // Convertible WinRT interface
-    test_iterable_pair(single_threaded_map<int, int>(std::map<int, int>{ { 1,10 },{ 2,20 },{ 3,30 } }));
+    test_iterable_pair(single_threaded_map<int, int>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } }));
 
     // Other internal implementations of IIterable
-    test_iterable_pair(make<impl::input_map_view<int, int, std::map<int, int>>>(std::map<int, int>{ { 1, 10 }, { 2,20 }, { 3,30 }}));
+    test_iterable_pair(
+        make<impl::input_map_view<int, int, std::map<int, int>>>(std::map<int, int>{ { 1, 10 }, { 2, 20 }, { 3, 30 } }));
     test_iterable_pair(impl::make_scoped_input_map_view<int, int, std::map<int, int>>(local_map).first);
 }
 
 TEST_CASE("test_iterable_scope")
 {
-    IIterable<int> a = test_iterable_scope({1,2,3});
+    IIterable<int> a = test_iterable_scope({ 1, 2, 3 });
     REQUIRE_THROWS_AS(a.First(), hresult_illegal_method_call);
 
-    IIterable<IKeyValuePair<int, int>> b = test_iterable_pair_scope({ { 1, 10 },{ 2,20 },{ 3,30 }});
+    IIterable<IKeyValuePair<int, int>> b = test_iterable_pair_scope({ { 1, 10 }, { 2, 20 }, { 3, 30 } });
     REQUIRE_THROWS_AS(b.First(), hresult_illegal_method_call);
 }
-

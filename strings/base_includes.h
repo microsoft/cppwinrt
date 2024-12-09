@@ -53,12 +53,11 @@
 
 namespace winrt::impl
 {
-    template <typename T = void>
-    using coroutine_handle = std::coroutine_handle<T>;
+    template <typename T = void> using coroutine_handle = std::coroutine_handle<T>;
 
     using suspend_always = std::suspend_always;
     using suspend_never = std::suspend_never;
-}
+} // namespace winrt::impl
 
 #elif __has_include(<experimental/coroutine>)
 
@@ -66,12 +65,11 @@ namespace winrt::impl
 
 namespace winrt::impl
 {
-    template <typename T = void>
-    using coroutine_handle = std::experimental::coroutine_handle<T>;
+    template <typename T = void> using coroutine_handle = std::experimental::coroutine_handle<T>;
 
     using suspend_always = std::experimental::suspend_always;
     using suspend_never = std::experimental::suspend_never;
-}
+} // namespace winrt::impl
 
 #else
 #error C++/WinRT requires coroutine support, which is currently missing. Try enabling C++20 in your compiler.

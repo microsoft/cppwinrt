@@ -7,10 +7,9 @@ using namespace Windows::Graphics::Display;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 
-
 //
 // Each of the sections in this test case exercises a unique edge case presented by an existing delegate in the Windows SDK.
-// 
+//
 TEST_CASE("delegate,return")
 {
     //
@@ -22,7 +21,7 @@ TEST_CASE("delegate,return")
 
         bool expected = true;
 
-        PerceptionStartFaceAuthenticationHandler handler = [&] (IPerceptionFaceAuthenticationGroup const &)
+        PerceptionStartFaceAuthenticationHandler handler = [&](IPerceptionFaceAuthenticationGroup const&)
         {
             return expected;
         };
@@ -62,7 +61,10 @@ TEST_CASE("delegate,return")
         using namespace Windows::UI::Xaml::Controls;
 
         {
-            ListViewItemToKeyHandler handler = [] (Windows::Foundation::IInspectable const &) { return L"raw"; };
+            ListViewItemToKeyHandler handler = [](Windows::Foundation::IInspectable const&)
+            {
+                return L"raw";
+            };
 
             hstring result = handler(nullptr);
 
@@ -70,7 +72,7 @@ TEST_CASE("delegate,return")
         }
 
         {
-            ListViewItemToKeyHandler handler = [](Windows::Foundation::IInspectable const &)
+            ListViewItemToKeyHandler handler = [](Windows::Foundation::IInspectable const&)
             {
                 return hstring(L"hstring");
             };
@@ -89,7 +91,7 @@ TEST_CASE("delegate,return")
         using namespace Windows::Foundation;
         using namespace Windows::UI::Xaml::Controls;
 
-        ListViewKeyToItemHandler handler = [] (hstring const&)
+        ListViewKeyToItemHandler handler = [](hstring const&)
         {
             return nullptr;
         };
@@ -105,7 +107,7 @@ Windows::Foundation::IInspectable Handler()
 
 struct MemberHandler
 {
-    Uri m_uri { L"http://member/" };
+    Uri m_uri{ L"http://member/" };
 
     Windows::Foundation::IInspectable Handler()
     {
@@ -167,7 +169,7 @@ TEST_CASE("delegate,binding")
 // Delegates defined in the base library
 //
 
-static void AsyncActionCompletedHandler_Free(IAsyncAction const & sender, AsyncStatus args)
+static void AsyncActionCompletedHandler_Free(IAsyncAction const& sender, AsyncStatus args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == AsyncStatus::Completed);
@@ -175,7 +177,7 @@ static void AsyncActionCompletedHandler_Free(IAsyncAction const & sender, AsyncS
 
 struct AsyncActionCompletedHandler_Member
 {
-    void Handler(IAsyncAction const & sender, AsyncStatus args)
+    void Handler(IAsyncAction const& sender, AsyncStatus args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == AsyncStatus::Completed);
@@ -195,7 +197,7 @@ TEST_CASE("delegate,AsyncActionCompletedHandler")
 
     SECTION("lambda")
     {
-        AsyncActionCompletedHandler h = [] (IAsyncAction const & sender, AsyncStatus args)
+        AsyncActionCompletedHandler h = [](IAsyncAction const& sender, AsyncStatus args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == AsyncStatus::Completed);
@@ -213,12 +215,12 @@ TEST_CASE("delegate,AsyncActionCompletedHandler")
     SECTION("member function")
     {
         AsyncActionCompletedHandler_Member object;
-        AsyncActionCompletedHandler h { &object, &AsyncActionCompletedHandler_Member::Handler };
+        AsyncActionCompletedHandler h{ &object, &AsyncActionCompletedHandler_Member::Handler };
         h(nullptr, AsyncStatus::Completed);
     }
 }
 
-static void AsyncActionProgressHandler_Free(IAsyncActionWithProgress<double> const & sender, double args)
+static void AsyncActionProgressHandler_Free(IAsyncActionWithProgress<double> const& sender, double args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == 123.0);
@@ -226,7 +228,7 @@ static void AsyncActionProgressHandler_Free(IAsyncActionWithProgress<double> con
 
 struct AsyncActionProgressHandler_Member
 {
-    void Handler(IAsyncActionWithProgress<double> const & sender, double args)
+    void Handler(IAsyncActionWithProgress<double> const& sender, double args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == 123.0);
@@ -246,7 +248,7 @@ TEST_CASE("delegate,AsyncActionProgressHandler")
 
     SECTION("lambda")
     {
-        AsyncActionProgressHandler<double> h = [](IAsyncActionWithProgress<double> const & sender, double args)
+        AsyncActionProgressHandler<double> h = [](IAsyncActionWithProgress<double> const& sender, double args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == 123.0);
@@ -269,7 +271,7 @@ TEST_CASE("delegate,AsyncActionProgressHandler")
     }
 }
 
-static void AsyncActionWithProgressCompletedHandler_Free(const IAsyncActionWithProgress<double> & sender, const AsyncStatus args)
+static void AsyncActionWithProgressCompletedHandler_Free(const IAsyncActionWithProgress<double>& sender, const AsyncStatus args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == AsyncStatus::Completed);
@@ -277,7 +279,7 @@ static void AsyncActionWithProgressCompletedHandler_Free(const IAsyncActionWithP
 
 struct AsyncActionWithProgressCompletedHandler_Member
 {
-    void Handler(const IAsyncActionWithProgress<double> & sender, const AsyncStatus args)
+    void Handler(const IAsyncActionWithProgress<double>& sender, const AsyncStatus args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == AsyncStatus::Completed);
@@ -297,7 +299,8 @@ TEST_CASE("delegate,AsyncActionWithProgressCompletedHandler")
 
     SECTION("lambda")
     {
-        AsyncActionWithProgressCompletedHandler<double> h = [](const IAsyncActionWithProgress<double> & sender, const AsyncStatus args)
+        AsyncActionWithProgressCompletedHandler<double> h =
+            [](const IAsyncActionWithProgress<double>& sender, const AsyncStatus args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == AsyncStatus::Completed);
@@ -320,7 +323,7 @@ TEST_CASE("delegate,AsyncActionWithProgressCompletedHandler")
     }
 }
 
-static void AsyncOperationProgressHandler_Free(const IAsyncOperationWithProgress<uint64_t, uint64_t> & sender, uint64_t args)
+static void AsyncOperationProgressHandler_Free(const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, uint64_t args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == 123);
@@ -328,7 +331,7 @@ static void AsyncOperationProgressHandler_Free(const IAsyncOperationWithProgress
 
 struct AsyncOperationProgressHandler_Member
 {
-    void Handler(const IAsyncOperationWithProgress<uint64_t, uint64_t> & sender, uint64_t args)
+    void Handler(const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, uint64_t args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == 123);
@@ -348,7 +351,8 @@ TEST_CASE("delegate,AsyncOperationProgressHandler")
 
     SECTION("lambda")
     {
-        AsyncOperationProgressHandler<uint64_t, uint64_t> h = [](const IAsyncOperationWithProgress<uint64_t, uint64_t> & sender, uint64_t args)
+        AsyncOperationProgressHandler<uint64_t, uint64_t> h =
+            [](const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, uint64_t args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == 123);
@@ -371,7 +375,8 @@ TEST_CASE("delegate,AsyncOperationProgressHandler")
     }
 }
 
-static void AsyncOperationWithProgressCompletedHandler_Free(const IAsyncOperationWithProgress<uint64_t, uint64_t> & sender, const AsyncStatus args)
+static void AsyncOperationWithProgressCompletedHandler_Free(
+    const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, const AsyncStatus args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == AsyncStatus::Completed);
@@ -379,7 +384,7 @@ static void AsyncOperationWithProgressCompletedHandler_Free(const IAsyncOperatio
 
 struct AsyncOperationWithProgressCompletedHandler_Member
 {
-    void Handler(const IAsyncOperationWithProgress<uint64_t, uint64_t> & sender, const AsyncStatus args)
+    void Handler(const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, const AsyncStatus args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == AsyncStatus::Completed);
@@ -399,7 +404,8 @@ TEST_CASE("delegate,AsyncOperationWithProgressCompletedHandler")
 
     SECTION("lambda")
     {
-        AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> h = [](const IAsyncOperationWithProgress<uint64_t, uint64_t> & sender, const AsyncStatus args)
+        AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> h =
+            [](const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, const AsyncStatus args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == AsyncStatus::Completed);
@@ -417,12 +423,14 @@ TEST_CASE("delegate,AsyncOperationWithProgressCompletedHandler")
     SECTION("member function")
     {
         AsyncOperationWithProgressCompletedHandler_Member object;
-        AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> h{ &object, &AsyncOperationWithProgressCompletedHandler_Member::Handler };
+        AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> h{
+            &object, &AsyncOperationWithProgressCompletedHandler_Member::Handler
+        };
         h(nullptr, AsyncStatus::Completed);
     }
 }
 
-static void AsyncOperationCompletedHandler_Free(IAsyncOperation<bool> const & sender, const AsyncStatus args)
+static void AsyncOperationCompletedHandler_Free(IAsyncOperation<bool> const& sender, const AsyncStatus args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == AsyncStatus::Completed);
@@ -430,7 +438,7 @@ static void AsyncOperationCompletedHandler_Free(IAsyncOperation<bool> const & se
 
 struct AsyncOperationCompletedHandler_Member
 {
-    void Handler(IAsyncOperation<bool> const & sender, const AsyncStatus args)
+    void Handler(IAsyncOperation<bool> const& sender, const AsyncStatus args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == AsyncStatus::Completed);
@@ -450,7 +458,7 @@ TEST_CASE("delegate,AsyncOperationCompletedHandler")
 
     SECTION("lambda")
     {
-        AsyncOperationCompletedHandler<bool> h = [](IAsyncOperation<bool> const & sender, const AsyncStatus args)
+        AsyncOperationCompletedHandler<bool> h = [](IAsyncOperation<bool> const& sender, const AsyncStatus args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == AsyncStatus::Completed);
@@ -473,7 +481,7 @@ TEST_CASE("delegate,AsyncOperationCompletedHandler")
     }
 }
 
-static void EventHandler_Free(const Windows::Foundation::IInspectable & sender, const Windows::Foundation::IInspectable & args)
+static void EventHandler_Free(const Windows::Foundation::IInspectable& sender, const Windows::Foundation::IInspectable& args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == nullptr);
@@ -481,7 +489,7 @@ static void EventHandler_Free(const Windows::Foundation::IInspectable & sender, 
 
 struct EventHandler_Member
 {
-    void Handler(const Windows::Foundation::IInspectable & sender, const Windows::Foundation::IInspectable & args)
+    void Handler(const Windows::Foundation::IInspectable& sender, const Windows::Foundation::IInspectable& args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == nullptr);
@@ -501,7 +509,8 @@ TEST_CASE("delegate,EventHandler")
 
     SECTION("lambda")
     {
-        EventHandler<Windows::Foundation::IInspectable> h = [](const Windows::Foundation::IInspectable & sender, const Windows::Foundation::IInspectable & args)
+        EventHandler<Windows::Foundation::IInspectable> h =
+            [](const Windows::Foundation::IInspectable& sender, const Windows::Foundation::IInspectable& args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == nullptr);
@@ -524,7 +533,7 @@ TEST_CASE("delegate,EventHandler")
     }
 }
 
-static void TypedEventHandler_Free(const Windows::Foundation::IInspectable & sender, const Windows::Foundation::IInspectable & args)
+static void TypedEventHandler_Free(const Windows::Foundation::IInspectable& sender, const Windows::Foundation::IInspectable& args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == nullptr);
@@ -532,7 +541,7 @@ static void TypedEventHandler_Free(const Windows::Foundation::IInspectable & sen
 
 struct TypedEventHandler_Member
 {
-    void Handler(const Windows::Foundation::IInspectable & sender, const Windows::Foundation::IInspectable & args)
+    void Handler(const Windows::Foundation::IInspectable& sender, const Windows::Foundation::IInspectable& args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == nullptr);
@@ -552,7 +561,8 @@ TEST_CASE("delegate,TypedEventHandler")
 
     SECTION("lambda")
     {
-        TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> h = [](const DisplayInformation & sender, const Windows::Foundation::IInspectable & args)
+        TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> h =
+            [](const DisplayInformation& sender, const Windows::Foundation::IInspectable& args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == nullptr);
@@ -575,7 +585,8 @@ TEST_CASE("delegate,TypedEventHandler")
     }
 }
 
-static void VectorChangedEventHandler_Free(IObservableVector<Windows::Foundation::IInspectable> const & sender, IVectorChangedEventArgs const & args)
+static void VectorChangedEventHandler_Free(
+    IObservableVector<Windows::Foundation::IInspectable> const& sender, IVectorChangedEventArgs const& args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == nullptr);
@@ -583,7 +594,7 @@ static void VectorChangedEventHandler_Free(IObservableVector<Windows::Foundation
 
 struct VectorChangedEventHandler_Member
 {
-    void Handler(IObservableVector<Windows::Foundation::IInspectable> const & sender, IVectorChangedEventArgs const & args)
+    void Handler(IObservableVector<Windows::Foundation::IInspectable> const& sender, IVectorChangedEventArgs const& args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == nullptr);
@@ -603,7 +614,8 @@ TEST_CASE("delegate,VectorChangedEventHandler")
 
     SECTION("lambda")
     {
-        VectorChangedEventHandler<Windows::Foundation::IInspectable> h = [](IObservableVector<Windows::Foundation::IInspectable> const & sender, IVectorChangedEventArgs const & args)
+        VectorChangedEventHandler<Windows::Foundation::IInspectable> h =
+            [](IObservableVector<Windows::Foundation::IInspectable> const& sender, IVectorChangedEventArgs const& args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == nullptr);
@@ -626,7 +638,8 @@ TEST_CASE("delegate,VectorChangedEventHandler")
     }
 }
 
-static void MapChangedEventHandler_Free(IObservableMap<hstring, Windows::Foundation::IInspectable> const & sender, IMapChangedEventArgs<hstring> const & args)
+static void MapChangedEventHandler_Free(
+    IObservableMap<hstring, Windows::Foundation::IInspectable> const& sender, IMapChangedEventArgs<hstring> const& args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == nullptr);
@@ -634,7 +647,7 @@ static void MapChangedEventHandler_Free(IObservableMap<hstring, Windows::Foundat
 
 struct MapChangedEventHandler_Member
 {
-    void Handler(IObservableMap<hstring, Windows::Foundation::IInspectable> const & sender, IMapChangedEventArgs<hstring> const & args)
+    void Handler(IObservableMap<hstring, Windows::Foundation::IInspectable> const& sender, IMapChangedEventArgs<hstring> const& args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == nullptr);
@@ -654,7 +667,9 @@ TEST_CASE("delegate,MapChangedEventHandler")
 
     SECTION("lambda")
     {
-        MapChangedEventHandler<hstring, Windows::Foundation::IInspectable> h = [](IObservableMap<hstring, Windows::Foundation::IInspectable> const & sender, IMapChangedEventArgs<hstring> const & args)
+        MapChangedEventHandler<hstring, Windows::Foundation::IInspectable> h =
+            [](IObservableMap<hstring, Windows::Foundation::IInspectable> const& sender,
+               IMapChangedEventArgs<hstring> const& args)
         {
             REQUIRE(sender == nullptr);
             REQUIRE(args == nullptr);
@@ -680,8 +695,8 @@ TEST_CASE("delegate,MapChangedEventHandler")
 TEST_CASE("delegate,collection")
 {
     //
-    // Mostly a compilation test to ensure that we can create collections of delegates. This is a rare corner case that was 
-    // previously not working.
+    // Mostly a compilation test to ensure that we can create collections of delegates. This is a rare corner case that
+    // was previously not working.
     //
 
     IVector<EventHandler<int>> v = single_threaded_vector<EventHandler<int>>();

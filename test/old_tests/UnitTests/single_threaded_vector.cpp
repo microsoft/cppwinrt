@@ -7,18 +7,17 @@ using namespace Windows::Foundation::Collections;
 
 namespace
 {
-    void compare(IVector<int> const & left, std::vector<int> && right)
+    void compare(IVector<int> const& left, std::vector<int>&& right)
     {
         std::vector<int> copy(begin(left), end(left));
         REQUIRE(copy == right);
     }
 
-    template <typename Change>
-    void test_invalidation(IVector<int> const & values, Change change)
+    template <typename Change> void test_invalidation(IVector<int> const& values, Change change)
     {
         std::array<int, 3> array;
 
-        values.ReplaceAll({ 1,2,3 });
+        values.ReplaceAll({ 1, 2, 3 });
         IIterator<int> first = values.First();
         REQUIRE(first.HasCurrent());
         REQUIRE(first.Current() == 1);
@@ -33,7 +32,7 @@ namespace
         REQUIRE_THROWS_AS(first.GetMany(array), hresult_changed_state);
     }
 
-    void test_vector(IVector<int> const & values)
+    void test_vector(IVector<int> const& values)
     {
         compare(values, {});
 
@@ -49,7 +48,7 @@ namespace
         REQUIRE_THROWS_AS(values.InsertAt(1, 1), hresult_out_of_bounds);
         compare(values, {});
         values.InsertAt(0, 1);
-        compare(values, {1});
+        compare(values, { 1 });
         values.InsertAt(0, 2);
         compare(values, { 2, 1 });
         values.InsertAt(2, 0);
@@ -64,7 +63,7 @@ namespace
         compare(values, {});
 
         values.Append(1);
-        compare(values, {1});
+        compare(values, { 1 });
         values.Append(2);
         compare(values, { 1, 2 });
         values.Append(3);
@@ -75,14 +74,14 @@ namespace
         values.RemoveAtEnd();
         compare(values, { 1 });
         values.RemoveAtEnd();
-        compare(values, {  });
+        compare(values, {});
         REQUIRE_THROWS_AS(values.RemoveAtEnd(), hresult_out_of_bounds);
 
-        values.ReplaceAll({1,2,3,4});
-        compare(values, {1,2,3,4});
+        values.ReplaceAll({ 1, 2, 3, 4 });
+        compare(values, { 1, 2, 3, 4 });
 
         values.ReplaceAll({});
-        compare(values,{});
+        compare(values, {});
 
         test_invalidation(values, [&] { values.Clear(); });
         test_invalidation(values, [&] { values.SetAt(0, 0); });
@@ -92,7 +91,7 @@ namespace
         test_invalidation(values, [&] { values.RemoveAtEnd(); });
         test_invalidation(values, [&] { values.ReplaceAll({}); });
     }
-}
+} // namespace
 
 TEST_CASE("single_threaded_vector - construction")
 {
@@ -101,8 +100,8 @@ TEST_CASE("single_threaded_vector - construction")
     values = single_threaded_vector<int>();
     REQUIRE(values.Size() == 0);
 
-    values = single_threaded_vector<int>({ 1,2,3 });
-    compare(values, { 1,2,3 });
+    values = single_threaded_vector<int>({ 1, 2, 3 });
+    compare(values, { 1, 2, 3 });
 }
 
 TEST_CASE("test_single_threaded_vector")

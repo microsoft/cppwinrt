@@ -5,7 +5,7 @@ using namespace winrt::test_component;
 
 TEST_CASE("parent_includes")
 {
-    // Including "...Three.h" should include all (available) ancestors, skipping 
+    // Including "...Three.h" should include all (available) ancestors, skipping
     // any that are empty. In this case, "Three" and "Parent" are not empty while
     // the intermediate namespaces are empty.
 

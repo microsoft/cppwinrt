@@ -32,8 +32,7 @@ namespace cppwinrt
 
         explicit registry_key(HKEY handle) :
             handle(handle)
-        {
-        }
+        {}
 
         ~registry_key() noexcept
         {
@@ -44,8 +43,7 @@ namespace cppwinrt
         }
     };
 
-    template <typename T>
-    struct com_ptr
+    template <typename T> struct com_ptr
     {
         T* ptr{};
 
@@ -91,12 +89,9 @@ namespace cppwinrt
     {
         com_ptr<IStream> stream;
 
-        auto streamResult = SHCreateStreamOnFileW(
-            xml_path.c_str(),
-            STGM_READ, &stream.ptr);
-        if (xml_path_requirement == xml_requirement::optional &&
-            (streamResult == HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND) ||
-             streamResult == HRESULT_FROM_WIN32(ERROR_PATH_NOT_FOUND)))
+        auto streamResult = SHCreateStreamOnFileW(xml_path.c_str(), STGM_READ, &stream.ptr);
+        if (xml_path_requirement == xml_requirement::optional && (streamResult == HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND) ||
+                                                                  streamResult == HRESULT_FROM_WIN32(ERROR_PATH_NOT_FOUND)))
         {
             return;
         }
@@ -104,10 +99,7 @@ namespace cppwinrt
 
         com_ptr<IXmlReader> reader;
 
-        check_xml(CreateXmlReader(
-            __uuidof(IXmlReader),
-            reinterpret_cast<void**>(&reader.ptr),
-            nullptr));
+        check_xml(CreateXmlReader(__uuidof(IXmlReader), reinterpret_cast<void**>(&reader.ptr), nullptr));
 
         check_xml(reader->SetInput(stream.ptr));
         XmlNodeType node_type = XmlNodeType_None;
@@ -153,13 +145,13 @@ namespace cppwinrt
         HKEY key;
 
         if (0 != RegOpenKeyExW(
-            HKEY_LOCAL_MACHINE,
-            L"SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots",
-            0,
-            // https://task.ms/29349404 - The SDK sometimes stores the 64 bit location into KitsRoot10 which is wrong,
-            // this breaks 64-bit cppwinrt.exe, so work around this by forcing to use the WoW64 hive.
-            KEY_READ | KEY_WOW64_32KEY, 
-            &key))
+                     HKEY_LOCAL_MACHINE,
+                     L"SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots",
+                     0,
+                     // https://task.ms/29349404 - The SDK sometimes stores the 64 bit location into KitsRoot10 which is
+                     // wrong, this breaks 64-bit cppwinrt.exe, so work around this by forcing to use the WoW64 hive.
+                     KEY_READ | KEY_WOW64_32KEY,
+                     &key))
         {
             throw std::invalid_argument("Could not find the Windows SDK in the registry");
         }
@@ -173,26 +165,14 @@ namespace cppwinrt
 
         DWORD path_size = 0;
 
-        if (0 != RegQueryValueExW(
-            key.handle,
-            L"KitsRoot10",
-            nullptr,
-            nullptr,
-            nullptr,
-            &path_size))
+        if (0 != RegQueryValueExW(key.handle, L"KitsRoot10", nullptr, nullptr, nullptr, &path_size))
         {
             throw std::invalid_argument("Could not find the Windows SDK path in the registry");
         }
 
         std::wstring root((path_size / sizeof(wchar_t)) - 1, L'?');
 
-        RegQueryValueExW(
-            key.handle,
-            L"KitsRoot10",
-            nullptr,
-            nullptr,
-            reinterpret_cast<BYTE*>(root.data()),
-            &path_size);
+        RegQueryValueExW(key.handle, L"KitsRoot10", nullptr, nullptr, reinterpret_cast<BYTE*>(root.data()), &path_size);
 
         return root;
     }
@@ -258,7 +238,7 @@ namespace cppwinrt
             char* next_part = subkey.data();
             bool force_newer = false;
 
-            for (size_t i = 0; ; ++i)
+            for (size_t i = 0;; ++i)
             {
                 auto version_part = strtoul(next_part, &next_part, 10);
 
@@ -303,8 +283,7 @@ namespace cppwinrt
         throw std::invalid_argument(message);
     }
 
-    template <typename...T>
-    [[noreturn]] inline void throw_invalid(std::string message, T const&... args)
+    template <typename... T> [[noreturn]] inline void throw_invalid(std::string message, T const&... args)
     {
         (message.append(args), ...);
         throw std::invalid_argument(message);
@@ -314,7 +293,7 @@ namespace cppwinrt
     {
         static constexpr uint32_t no_min = 0;
         static constexpr uint32_t no_max = UINT_MAX;
-        
+
         std::string_view name;
         uint32_t min{ no_min };
         uint32_t max{ no_max };
@@ -325,7 +304,7 @@ namespace cppwinrt
     struct reader
     {
         template <typename C, typename V, size_t numOptions>
-        reader(C const argc, V const argv, const option(& options)[numOptions])
+        reader(C const argc, V const argv, const option (&options)[numOptions])
         {
 #ifdef _DEBUG
             {
@@ -410,8 +389,7 @@ namespace cppwinrt
             return result->second.front();
         }
 
-        template <typename F>
-        auto files(std::string_view const& name, F directory_filter) const
+        template <typename F> auto files(std::string_view const& name, F directory_filter) const
         {
             std::set<std::string> files;
 
@@ -449,12 +427,14 @@ namespace cppwinrt
 #if defined(_WIN32) || defined(_WIN64)
                     std::array<char, 260> local{};
 #ifdef _WIN64
-                    ExpandEnvironmentStringsA("%windir%\\System32\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
+                    ExpandEnvironmentStringsA(
+                        "%windir%\\System32\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
 #else
-                    ExpandEnvironmentStringsA("%windir%\\SysNative\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
+                    ExpandEnvironmentStringsA(
+                        "%windir%\\SysNative\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
 #endif
                     add_directory(local.data());
-#else /* defined(_WIN32) || defined(_WIN64) */
+#else  /* defined(_WIN32) || defined(_WIN64) */
                     throw_invalid("Spec '", path, "' not supported outside of Windows");
 #endif /* defined(_WIN32) || defined(_WIN64) */
                     continue;
@@ -466,7 +446,7 @@ namespace cppwinrt
                 {
 #if defined(_WIN32) || defined(_WIN64)
                     sdk_version = get_sdk_version();
-#else /* defined(_WIN32) || defined(_WIN64) */
+#else  /* defined(_WIN32) || defined(_WIN64) */
                     throw_invalid("Spec '", path, "' not supported outside of Windows");
 #endif /* defined(_WIN32) || defined(_WIN64) */
                 }
@@ -505,7 +485,7 @@ namespace cppwinrt
                         // Not all Extension SDKs include an SDKManifest.xml file; ignore those which do not (e.g. WindowsIoT).
                         add_files_from_xml(files, sdk_version, xml_path, sdk_path, xml_requirement::optional);
                     }
-#else /* defined(_WIN32) || defined(_WIN64) */
+#else  /* defined(_WIN32) || defined(_WIN64) */
                     throw_invalid("Spec '", path, "' not supported outside of Windows");
 #endif /* defined(_WIN32) || defined(_WIN64) */
 
@@ -520,18 +500,16 @@ namespace cppwinrt
 
         auto files(std::string_view const& name) const
         {
-            return files(name, [](auto&&) {return true; });
+            return files(name, [](auto&&) { return true; });
         }
 
     private:
-
         inline bool starts_with(std::string_view const& value, std::string_view const& match) noexcept
         {
             return 0 == value.compare(0, match.size(), match);
         }
 
-        template<typename O>
-        auto find(O const& options, std::string_view const& arg)
+        template <typename O> auto find(O const& options, std::string_view const& arg)
         {
             for (auto current = std::begin(options); current != std::end(options); ++current)
             {
@@ -546,8 +524,7 @@ namespace cppwinrt
 
         std::map<std::string_view, std::vector<std::string>> m_options;
 
-        template<typename O, typename L>
-        void extract_option(std::string_view arg, O const& options, L& last)
+        template <typename O, typename L> void extract_option(std::string_view arg, O const& options, L& last)
         {
             if (arg[0] == '-'
 #if defined(_WIN32) || defined(_WIN64)
@@ -580,12 +557,15 @@ namespace cppwinrt
             }
         }
 
-        template<typename O, typename L>
+        template <typename O, typename L>
         void extract_response_file(std::string_view const& arg, O const& options, L& last)
         {
             std::filesystem::path response_path{ std::string{ arg } };
             std::string extension = response_path.extension().generic_string();
-            std::transform(extension.begin(), extension.end(), extension.begin(),
+            std::transform(
+                extension.begin(),
+                extension.end(),
+                extension.begin(),
                 [](auto c) { return static_cast<unsigned char>(::tolower(c)); });
 
             // Check if misuse of @ prefix, so if directory or metadata file instead of response file.
@@ -699,4 +679,4 @@ namespace cppwinrt
             }
         }
     };
-}
+} // namespace cppwinrt

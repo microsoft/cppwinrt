@@ -8,24 +8,21 @@ namespace
     class some_exception : public std::runtime_error
     {
     public:
-        some_exception() noexcept
-            : runtime_error("some_exception")
-        {
-        }
+        some_exception() noexcept :
+            runtime_error("some_exception")
+        {}
     };
 
-    template<typename D>
-    struct InitializeT : implements<D, IStringable>
+    template <typename D> struct InitializeT : implements<D, IStringable>
     {
         bool& m_initialize_called;
 
-        InitializeT(bool& initialize_called) : m_initialize_called(initialize_called)
-        {
-        }
+        InitializeT(bool& initialize_called) :
+            m_initialize_called(initialize_called)
+        {}
 
         ~InitializeT()
-        {
-        }
+        {}
 
         void InitializeComponent()
         {
@@ -41,14 +38,15 @@ namespace
 
     struct Initialize : InitializeT<Initialize>
     {
-        Initialize(bool& initialize_called) : InitializeT(initialize_called)
-        {
-        }
+        Initialize(bool& initialize_called) :
+            InitializeT(initialize_called)
+        {}
     };
 
     struct ThrowingDerived : InitializeT<ThrowingDerived>
     {
-        ThrowingDerived(bool& initialize_called) : InitializeT(initialize_called)
+        ThrowingDerived(bool& initialize_called) :
+            InitializeT(initialize_called)
         {
             throw some_exception();
         }
@@ -56,16 +54,16 @@ namespace
 
     struct OverriddenInitialize : InitializeT<OverriddenInitialize>
     {
-        OverriddenInitialize(bool& initialize_called) : InitializeT(initialize_called)
-        {
-        }
+        OverriddenInitialize(bool& initialize_called) :
+            InitializeT(initialize_called)
+        {}
 
         void InitializeComponent()
         {
             m_initialize_called = true;
         }
     };
-}
+} // namespace
 
 TEST_CASE("initialize")
 {

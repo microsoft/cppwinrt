@@ -14,4 +14,4 @@ namespace winrt::TestRuntimeComponent3::implementation
         TestRuntimeComponentCSharpClass csharp{};
         csharp.Test();
     }
-}
+} // namespace winrt::TestRuntimeComponent3::implementation

@@ -11,11 +11,10 @@ namespace winrt::$safeprojectname$::implementation
         int32_t MyProperty();
         void MyProperty(int32_t value);
     };
-}
+} // namespace winrt::$safeprojectname$::implementation
 
 namespace winrt::$safeprojectname$::factory_implementation
 {
     struct Class : ClassT<Class, implementation::Class>
-    {
-    };
-}
+    {};
+} // namespace winrt::$safeprojectname$::factory_implementation

@@ -10,15 +10,11 @@ using namespace winrt;
 using namespace Windows::Foundation;
 using namespace FastForwarderTest;
 
-#define REQUIRE_STR_EQUAL(s1, s2) \
-    REQUIRE(std::wstring(s1).compare(std::wstring(s2)) == 0)
+#define REQUIRE_STR_EQUAL(s1, s2) REQUIRE(std::wstring(s1).compare(std::wstring(s2)) == 0)
 
-template<typename TForwarder, typename TOwner>
-auto make_fast_forwarder(TOwner const& owner, size_t offset)
+template <typename TForwarder, typename TOwner> auto make_fast_forwarder(TOwner const& owner, size_t offset)
 {
-    return TForwarder{
-        winrt::make_fast_abi_forwarder(get_abi(owner), guid_of<TForwarder>(), offset),
-        take_ownership_from_abi };
+    return TForwarder{ winrt::make_fast_abi_forwarder(get_abi(owner), guid_of<TForwarder>(), offset), take_ownership_from_abi };
 }
 
 static inline size_t s_instances = 0;
@@ -36,7 +32,7 @@ namespace winrt::FastForwarderTest::implementation
             --s_instances;
         }
 
-        // Interface1 
+        // Interface1
         bool BooleanProp()
         {
             return m_bool;
@@ -145,8 +141,25 @@ namespace winrt::FastForwarderTest::implementation
         }
 
         // Interface3
-        Struct BigMethod(bool arg1, char16_t arg2, int16_t arg3, int32_t arg4, int64_t arg5, uint8_t arg6, uint16_t arg7, uint32_t arg8, uint64_t arg9,
-            float arg10, double arg11, float arg12, double arg13, float arg14, double arg15, float arg16, double arg17, float arg18)
+        Struct BigMethod(
+            bool arg1,
+            char16_t arg2,
+            int16_t arg3,
+            int32_t arg4,
+            int64_t arg5,
+            uint8_t arg6,
+            uint16_t arg7,
+            uint32_t arg8,
+            uint64_t arg9,
+            float arg10,
+            double arg11,
+            float arg12,
+            double arg13,
+            float arg14,
+            double arg15,
+            float arg16,
+            double arg17,
+            float arg18)
         {
             REQUIRE(arg1 == true);
             REQUIRE(arg2 == L'2');
@@ -183,22 +196,20 @@ namespace winrt::FastForwarderTest::implementation
         winrt::guid m_guid;
         hstring m_string;
     };
-}
+} // namespace winrt::FastForwarderTest::implementation
 
 namespace winrt::FastForwarderTest::factory_implementation
 {
     struct Class : ClassT<Class, implementation::Class>
-    {
-    };
-}
+    {};
+} // namespace winrt::FastForwarderTest::factory_implementation
 
 namespace winrt::FastForwarderTest
 {
     Class::Class() :
         Class(make<FastForwarderTest::implementation::Class>())
-    {
-    }
-}
+    {}
+} // namespace winrt::FastForwarderTest
 
 TEST_CASE("MockUri")
 {
@@ -298,16 +309,32 @@ TEST_CASE("Interface3")
 
     Struct str = ifc3.BigMethod(
         // 9 integer args across registers and stack, all arches
-        true, L'2', 3, 4, 5, 6, 7, 8, 9,
+        true,
+        L'2',
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
         // 9 float args across registers and stack, all arches
-        0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0);
+        0.0,
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        7.0,
+        8.0);
     REQUIRE(str.Field1 == 1);
     REQUIRE(str.Field2 == 2);
 }
 
 // Note: There is no way (other than adding more parameters) for RoCreateFastForwarder
 // to know that the owner is a runtime class and not an interface, both of which
-// would return the same value for GetRuntimeClassName.  Thus, creating a forwarder 
+// would return the same value for GetRuntimeClassName.  Thus, creating a forwarder
 // from an interface is undefined (and unexpected by projections).
 TEST_CASE("QueryInterface")
 {

@@ -19,8 +19,7 @@ struct Capture : implements<Capture, ICapture, IStringable>
 
     Capture(int32_t value) :
         m_value{ value }
-    {
-    }
+    {}
 
     hstring ToString()
     {

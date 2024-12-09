@@ -16,24 +16,26 @@ IAsyncAction test_agile_ref()
 
     agile_ref<Uri> ref = object;
 
-    co_await ThreadPool::RunAsync([ref](auto && ...)
-    {
-        Uri object = ref.get();
+    co_await ThreadPool::RunAsync(
+        [ref](auto&&...)
+        {
+            Uri object = ref.get();
 
-        REQUIRE(object.ToString() == L"http://host/path");
-    });
+            REQUIRE(object.ToString() == L"http://host/path");
+        });
 
     //
     // Here's we're using the make_agile helper with generalized lambda capture to produce a
     // variable local to the lambda.
     //
 
-    co_await ThreadPool::RunAsync([ref = make_agile(object)](auto && ...)
-    {
-        Uri object = ref.get();
+    co_await ThreadPool::RunAsync(
+        [ref = make_agile(object)](auto&&...)
+        {
+            Uri object = ref.get();
 
-        REQUIRE(object.ToString() == L"http://host/path");
-    });
+            REQUIRE(object.ToString() == L"http://host/path");
+        });
 }
 
 #if defined(__clang__) && defined(_MSC_VER) && (defined(_M_IX86) || defined(__i386__))

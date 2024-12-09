@@ -13,10 +13,10 @@ namespace cppwinrt
 {
     settings_type settings;
 
-    struct usage_exception {};
+    struct usage_exception
+    {};
 
-    static constexpr option options[]
-    {
+    static constexpr option options[]{
         { "input", 0, option::no_max, "<spec>", "Windows metadata to include in projection" },
         { "reference", 0, option::no_max, "<spec>", "Windows metadata to reference from projection" },
         { "output", 0, 1, "<path>", "Location of generated projection and component templates" },
@@ -35,8 +35,8 @@ namespace cppwinrt
         { "library", 0, 1, "<prefix>", "Specify library prefix (defaults to winrt)" },
         { "filter" }, // One or more prefixes to include in input (same as -include)
         { "license", 0, 1, "[<path>]", "Generate license comment from template file" },
-        { "brackets", 0, 0 }, // Use angle brackets for #includes (defaults to quotes)
-        { "fastabi", 0, 0 }, // Enable support for the Fast ABI
+        { "brackets", 0, 0 },        // Use angle brackets for #includes (defaults to quotes)
+        { "fastabi", 0, 0 },         // Enable support for the Fast ABI
         { "ignore_velocity", 0, 0 }, // Ignore feature staging metadata and always include implementations
         { "synchronous", 0, 0 }, // Instructs cppwinrt to run on a single thread to avoid file system issues in batch builds
     };
@@ -50,7 +50,7 @@ namespace cppwinrt
 
         static auto printOption = [](writer& w, option const& opt)
         {
-            if(opt.desc.empty())
+            if (opt.desc.empty())
             {
                 return;
             }
@@ -72,12 +72,12 @@ Where <spec> is one or more of:
   path                Path to winmd file or recursively scanned folder
 )"
 #if defined(_WIN32) || defined(_WIN64)
-R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
+                      R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
   sdk[+]              Current version of Windows SDK [with extensions]
   10.0.12345.0[+]     Specific version of Windows SDK [with extensions]
 )"
 #endif
-        ;
+            ;
         w.write(format, CPPWINRT_VERSION_STRING, bind_each(printOption, options));
     }
 
@@ -100,17 +100,17 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
         settings.output_folder = canonical(output_folder).string();
         settings.output_folder += std::filesystem::path::preferred_separator;
 
-        for (auto && include : args.values("include"))
+        for (auto&& include : args.values("include"))
         {
             settings.include.insert(include);
         }
 
-        for (auto && include : args.values("filter"))
+        for (auto&& include : args.values("filter"))
         {
             settings.include.insert(include);
         }
 
-        for (auto && exclude : args.values("exclude"))
+        for (auto&& exclude : args.values("exclude"))
         {
             settings.exclude.insert(exclude);
         }
@@ -208,10 +208,8 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
         for (auto file : settings.input)
         {
-            auto db = std::find_if(c.databases().begin(), c.databases().end(), [&](auto&& db)
-            {
-                return db.path() == file;
-            });
+            auto db =
+                std::find_if(c.databases().begin(), c.databases().end(), [&](auto&& db) { return db.path() == file; });
 
             for (auto&& type : db->TypeDef)
             {
@@ -228,7 +226,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
         }
 
         settings.projection_filter = { include, {} };
-        
+
         settings.component_filter = { settings.include.empty() ? include : settings.include, settings.exclude };
     }
 
@@ -298,7 +296,11 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             }
 
             process_args(args);
-            cache c{ get_files_to_cache(), [](TypeDef const& type) { return type.Flags().WindowsRuntime(); } };
+            cache c{ get_files_to_cache(),
+                     [](TypeDef const& type)
+                     {
+                         return type.Flags().WindowsRuntime();
+                     } };
             remove_foundation_types(c);
             build_filters(c);
             settings.base = settings.base || (!settings.component && settings.projection_filter.empty());
@@ -348,7 +350,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             ixx.write(strings::base_includes);
             ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n\n");
 
-            for (auto&&[ns, members] : c.namespaces())
+            for (auto&& [ns, members] : c.namespaces())
             {
                 if (!has_projected_types(members) || !settings.projection_filter.includes(members))
                 {
@@ -357,13 +359,14 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
                 ixx.write("#include \"winrt/%.h\"\n", ns);
 
-                group.add([&, &ns = ns, &members = members]
-                {
-                    write_namespace_0_h(ns, members);
-                    write_namespace_1_h(ns, members);
-                    write_namespace_2_h(ns, members);
-                    write_namespace_h(c, ns, members);
-                });
+                group.add(
+                    [&, &ns = ns, &members = members]
+                    {
+                        write_namespace_0_h(ns, members);
+                        write_namespace_1_h(ns, members);
+                        write_namespace_2_h(ns, members);
+                        write_namespace_h(c, ns, members);
+                    });
             }
 
             if (settings.base)
@@ -376,7 +379,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             {
                 std::vector<TypeDef> classes;
 
-                for (auto&&[ns, members] : c.namespaces())
+                for (auto&& [ns, members] : c.namespaces())
                 {
                     for (auto&& type : members.classes)
                     {
@@ -422,7 +425,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
         w.flush_to_console(result == 0);
         return result;
     }
-}
+} // namespace cppwinrt
 
 int main(int const argc, char** argv)
 {

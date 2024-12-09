@@ -10,8 +10,7 @@ namespace winrt::test_component::implementation
     {
         Value(int32_t value) :
             m_value(value)
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -19,7 +18,6 @@ namespace winrt::test_component::implementation
         }
 
     private:
-
         int32_t m_value{};
     };
 
@@ -57,9 +55,12 @@ namespace winrt::test_component::implementation
     {
         switch (value)
         {
-        case Signed::First: return L"First";
-        case Signed::Second: return L"Second";
-        case Signed::Third: return L"Third";
+        case Signed::First:
+            return L"First";
+        case Signed::Second:
+            return L"Second";
+        case Signed::Third:
+            return L"Third";
         }
 
         throw hresult_invalid_argument();
@@ -72,7 +73,10 @@ namespace winrt::test_component::implementation
             throw hresult_error();
         }
     }
-    Class::Class(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& arg, int32_t, int32_t)
+    Class::Class(
+        Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& arg,
+        int32_t,
+        int32_t)
     {
         if (arg.First().Current().Key() != L"test")
         {
@@ -112,7 +116,8 @@ namespace winrt::test_component::implementation
     {
         return value.First().Current();
     }
-    hstring Class::InIterablePair(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& value)
+    hstring Class::InIterablePair(
+        Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& value)
     {
         return value.First().Current().Key();
     }
@@ -120,7 +125,8 @@ namespace winrt::test_component::implementation
     {
         co_return value.First().Current();
     }
-    Windows::Foundation::IAsyncOperation<hstring> Class::InAsyncIterablePair(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> value)
+    Windows::Foundation::IAsyncOperation<hstring> Class::InAsyncIterablePair(
+        Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> value)
     {
         co_return value.First().Current().Key();
     }
@@ -286,7 +292,7 @@ namespace winrt::test_component::implementation
 
     void Class::OutInt32Array(com_array<int32_t>& value)
     {
-        value = { 1,2,3 };
+        value = { 1, 2, 3 };
     }
 
     void Class::OutStringArray(com_array<hstring>& value)
@@ -322,10 +328,7 @@ namespace winrt::test_component::implementation
         {
             int32_t counter{};
 
-            std::generate(value.begin(), value.end() - 1, [&]
-                {
-                    return ++counter;
-                });
+            std::generate(value.begin(), value.end() - 1, [&] { return ++counter; });
         }
     }
 
@@ -337,10 +340,7 @@ namespace winrt::test_component::implementation
         {
             int32_t counter{};
 
-            std::generate(value.begin(), value.end() - 1, [&]
-                {
-                    return hstring{ std::to_wstring(++counter) };
-                });
+            std::generate(value.begin(), value.end() - 1, [&] { return hstring{ std::to_wstring(++counter) }; });
         }
     }
 
@@ -352,10 +352,7 @@ namespace winrt::test_component::implementation
         {
             int32_t counter{};
 
-            std::generate(value.begin(), value.end() - 1, [&]
-                {
-                    return make<Value>(++counter);
-                });
+            std::generate(value.begin(), value.end() - 1, [&] { return make<Value>(++counter); });
         }
     }
 
@@ -367,10 +364,7 @@ namespace winrt::test_component::implementation
         {
             int32_t counter{};
 
-            std::generate(value.begin(), value.end() - 1, [&]
-                {
-                    return make<Value>(++counter);
-                });
+            std::generate(value.begin(), value.end() - 1, [&] { return make<Value>(++counter); });
         }
     }
 
@@ -382,14 +376,10 @@ namespace winrt::test_component::implementation
         {
             int32_t counter{};
 
-            std::generate(value.begin(), value.end() - 1, [&]
-                {
-                    return Struct
-                    {
-                        hstring{ std::to_wstring(++counter) },
-                        hstring{ std::to_wstring(++counter) }
-                    };
-                });
+            std::generate(
+                value.begin(),
+                value.end() - 1,
+                [&] { return Struct{ hstring{ std::to_wstring(++counter) }, hstring{ std::to_wstring(++counter) } }; });
         }
     }
 
@@ -401,7 +391,10 @@ namespace winrt::test_component::implementation
         {
             Signed counter{ Signed::First };
 
-            std::generate(value.begin(), value.end() - 1, [&]
+            std::generate(
+                value.begin(),
+                value.end() - 1,
+                [&]
                 {
                     auto result = counter;
                     counter = static_cast<Signed>(static_cast<int32_t>(counter) + 1);
@@ -412,7 +405,7 @@ namespace winrt::test_component::implementation
 
     com_array<int32_t> Class::ReturnInt32Array()
     {
-        return { 1,2,3 };
+        return { 1, 2, 3 };
     }
 
     com_array<hstring> Class::ReturnStringArray()
@@ -441,8 +434,7 @@ namespace winrt::test_component::implementation
     }
 
     void Class::NoexceptVoid() noexcept
-    {
-    }
+    {}
 
     int32_t Class::NoexceptInt32() noexcept
     {
@@ -489,7 +481,6 @@ namespace winrt::test_component::implementation
             }
 
         private:
-
             ~Stringable()
             {
                 Destroyed = true;
@@ -515,11 +506,12 @@ namespace winrt::test_component::implementation
         }
         return pass;
     }
-}
+} // namespace winrt::test_component::implementation
 
 namespace
 {
-    void ValidateStaticEventAutoRevoke() {
+    void ValidateStaticEventAutoRevoke()
+    {
         auto x = winrt::test_component::Simple::StaticEvent(winrt::auto_revoke, [](auto&&, auto&&) {});
     }
-}
+} // namespace

@@ -43,11 +43,10 @@ namespace winrt::Component::implementation
         std::vector<hstring> m_string_array;
         std::vector<Windows::Foundation::IInspectable> m_object_array;
     };
-}
+} // namespace winrt::Component::implementation
 
 namespace winrt::Component::factory_implementation
 {
     struct Parameters : ParametersT<Parameters, implementation::Parameters>
-    {
-    };
-}
+    {};
+} // namespace winrt::Component::factory_implementation

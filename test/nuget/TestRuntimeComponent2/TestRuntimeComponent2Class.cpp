@@ -9,4 +9,4 @@ namespace winrt::TestRuntimeComponent2::implementation
         TestStaticLibrary2Class c{};
         c.Test();
     }
-}
+} // namespace winrt::TestRuntimeComponent2::implementation

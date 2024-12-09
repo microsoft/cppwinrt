@@ -48,7 +48,7 @@ namespace
         uintptr_t consumed = initial - approximate_stack_pointer();
         REQUIRE(consumed == 0);
     }
-}
+} // namespace
 TEST_CASE("await_completed_await")
 {
     SyncCompletion().get();

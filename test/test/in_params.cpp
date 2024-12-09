@@ -11,8 +11,7 @@ namespace
     {
         Value(int32_t value) :
             m_value(value)
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -20,10 +19,9 @@ namespace
         }
 
     private:
-
         int32_t m_value{};
     };
-}
+} // namespace
 
 TEST_CASE("in_params")
 {
@@ -37,21 +35,21 @@ TEST_CASE("in_params")
     REQUIRE(object.InStructRef({ L"1", L"2" }) == L"12ref");
     REQUIRE(object.InEnum(Signed::First) == L"First");
 
-    REQUIRE(object.InInt32Array({ 1,2 }) == L"12");
+    REQUIRE(object.InInt32Array({ 1, 2 }) == L"12");
     REQUIRE(object.InStringArray({ L"1", L"2" }) == L"12");
     REQUIRE(object.InObjectArray({ make<Value>(1), make<Value>(2) }) == L"12");
     REQUIRE(object.InStringableArray({ make<Value>(1), make<Value>(2) }) == L"12");
-    REQUIRE(object.InStructArray({ {L"1",L"2"}, {L"3",L"4"} }) == L"1234");
+    REQUIRE(object.InStructArray({ { L"1", L"2" }, { L"3", L"4" } }) == L"1234");
     REQUIRE(object.InEnumArray({ Signed::First, Signed::Second }) == L"FirstSecond");
 
     // Ensure 0-length arrays are passed as non-null pointers to the ABI,
     // in order to keep RPC happy.
-    REQUIRE(object.InInt32Array({ }) == L"");
-    REQUIRE(object.InStringArray({ }) == L"");
-    REQUIRE(object.InObjectArray({ }) == L"");
-    REQUIRE(object.InStringableArray({ }) == L"");
-    REQUIRE(object.InStructArray({ }) == L"");
-    REQUIRE(object.InEnumArray({ }) == L"");
+    REQUIRE(object.InInt32Array({}) == L"");
+    REQUIRE(object.InStringArray({}) == L"");
+    REQUIRE(object.InObjectArray({}) == L"");
+    REQUIRE(object.InStringableArray({}) == L"");
+    REQUIRE(object.InStructArray({}) == L"");
+    REQUIRE(object.InEnumArray({}) == L"");
 
     // params::hstring optimizations
     REQUIRE(object.InString(L"") == L"");

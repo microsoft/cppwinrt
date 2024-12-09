@@ -15,8 +15,7 @@ namespace concurrent_collections
         }
     }
 
-    template <typename T>
-    int conditional_unbox(T const& value)
+    template <typename T> int conditional_unbox(T const& value)
     {
         if constexpr (std::is_same_v<T, int>)
         {
@@ -45,7 +44,12 @@ namespace concurrent_collections
     // for the first time on the background thread.
     enum class collection_action
     {
-        none, push_back, insert, erase, at, lookup
+        none,
+        push_back,
+        insert,
+        erase,
+        at,
+        lookup
     };
 
     // All of our concurrency tests consists of starting an
@@ -80,7 +84,7 @@ namespace concurrent_collections
             }
         }
 
-        template<typename Background, typename Foreground>
+        template <typename Background, typename Foreground>
         void race(collection_action action, Background&& background, Foreground&& foreground)
         {
             race_action = action;
@@ -132,7 +136,7 @@ namespace concurrent_collections
 #pragma endregion
 
 #pragma region iterator wrapper
-    template<typename Container, typename Iterator, typename ConvertibleFrom = void>
+    template <typename Container, typename Iterator, typename ConvertibleFrom = void>
     struct concurrency_checked_random_access_iterator : Iterator
     {
         using container = Container;
@@ -148,17 +152,29 @@ namespace concurrent_collections
 
         container const* owner;
 
-        concurrency_checked_random_access_iterator() : owner(nullptr) {}
-        concurrency_checked_random_access_iterator(container const* c, iterator it) : iterator(it), owner(c) {}
+        concurrency_checked_random_access_iterator() :
+            owner(nullptr)
+        {}
+        concurrency_checked_random_access_iterator(container const* c, iterator it) :
+            iterator(it), owner(c)
+        {}
 
         // Implicit conversion from non-const iterator to const iterator.
-        concurrency_checked_random_access_iterator(concurrency_checked_random_access_iterator<container, ConvertibleFrom> other) : iterator(other.inner()), owner(other.owner) { }
+        concurrency_checked_random_access_iterator(concurrency_checked_random_access_iterator<container, ConvertibleFrom> other) :
+            iterator(other.inner()), owner(other.owner)
+        {}
 
         concurrency_checked_random_access_iterator(concurrency_checked_random_access_iterator const&) = default;
         concurrency_checked_random_access_iterator& operator=(concurrency_checked_random_access_iterator const&) = default;
 
-        iterator& inner() { return static_cast<iterator&>(*this); }
-        iterator const& inner() const { return static_cast<iterator const&>(*this); }
+        iterator& inner()
+        {
+            return static_cast<iterator&>(*this);
+        }
+        iterator const& inner() const
+        {
+            return static_cast<iterator const&>(*this);
+        }
 
         reference operator*() const
         {
@@ -229,7 +245,7 @@ namespace concurrent_collections
     };
 
     // "integer + iterator" must be defined as a free operator.
-    template<typename Container, typename Iterator, typename ConvertibleFrom = void>
+    template <typename Container, typename Iterator, typename ConvertibleFrom = void>
     concurrency_checked_random_access_iterator<Container, Iterator, ConvertibleFrom> operator+(
         typename concurrency_checked_random_access_iterator<Container, Iterator, ConvertibleFrom>::difference_type offset,
         concurrency_checked_random_access_iterator<Container, Iterator, ConvertibleFrom> it)
@@ -243,10 +259,8 @@ namespace concurrent_collections
     // to const iterator (triggering its instantiation), but then the constructor
     // is deleted by SFINAE, so the type is never actually created at runtime.
     // This specialization is necessary so that the garbage instantiation succeeds.
-    template<typename Container>
-    struct concurrency_checked_random_access_iterator<Container, void, void>
-    {
-    };
+    template <typename Container> struct concurrency_checked_random_access_iterator<Container, void, void>
+    {};
 #pragma endregion
 
     struct concurrency_guard
@@ -255,8 +269,8 @@ namespace concurrent_collections
         std::shared_ptr<collection_hook> hook = std::make_shared<collection_hook>();
 
         concurrency_guard() = default;
-        concurrency_guard(concurrency_guard const& other) noexcept
-            : hook(other.hook), m_lock(0)
+        concurrency_guard(concurrency_guard const& other) noexcept :
+            hook(other.hook), m_lock(0)
         {
             auto guard = other.lock_nonconst();
         }
@@ -270,7 +284,8 @@ namespace concurrent_collections
         {
             concurrency_guard const* owner;
 
-            const_access_guard(concurrency_guard const* v) : owner(v)
+            const_access_guard(concurrency_guard const* v) :
+                owner(v)
             {
                 CHECK(++owner->m_lock > 0);
             }
@@ -285,7 +300,8 @@ namespace concurrent_collections
         {
             concurrency_guard const* owner;
 
-            nonconst_access_guard(concurrency_guard const* v) : owner(v)
+            nonconst_access_guard(concurrency_guard const* v) :
+                owner(v)
             {
                 CHECK(--owner->m_lock == -1);
             }
@@ -314,12 +330,14 @@ namespace concurrent_collections
         std::atomic<int> mutable m_lock;
     };
 
-    template<typename Collection>
+    template <typename Collection>
     struct deadlock_object : winrt::implements<deadlock_object<Collection>, winrt::Windows::Foundation::IInspectable>
     {
         Collection collection;
 
-        deadlock_object(Collection c) : collection(c) {}
+        deadlock_object(Collection c) :
+            collection(c)
+        {}
 
         static void final_release(std::unique_ptr<deadlock_object> self)
         {
@@ -330,4 +348,4 @@ namespace concurrent_collections
         }
     };
 
-}
+} // namespace concurrent_collections

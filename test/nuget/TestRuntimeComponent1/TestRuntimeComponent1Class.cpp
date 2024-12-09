@@ -5,6 +5,5 @@
 namespace winrt::TestRuntimeComponent1::implementation
 {
     void TestRuntimeComponent1Class::Test()
-    {
-    }
-}
+    {}
+} // namespace winrt::TestRuntimeComponent1::implementation

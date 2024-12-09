@@ -5,6 +5,5 @@
 namespace winrt::test_component::Velocity::implementation
 {
     void Class1::Class1_Method()
-    {
-    }
-}
+    {}
+} // namespace winrt::test_component::Velocity::implementation

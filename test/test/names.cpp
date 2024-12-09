@@ -4,8 +4,7 @@ using namespace winrt;
 using namespace Windows::Foundation;
 
 void check_terminated(winrt::param::hstring const&)
-{
-}
+{}
 
 TEST_CASE("names")
 {

@@ -15,4 +15,4 @@ namespace winrt::$rootnamespace$::implementation
     {
         throw hresult_not_implemented();
     }
-}
+} // namespace winrt::$rootnamespace$::implementation

@@ -7,8 +7,7 @@ using namespace Windows::Foundation::Collections;
 
 namespace
 {
-    template <typename T>
-    auto make_copy(T const & param)
+    template <typename T> auto make_copy(T const& param)
     {
         typename T::interface_type copy;
         copy_from_abi(copy, get_abi(param));
@@ -76,14 +75,14 @@ namespace
 
     struct viewable
     {
-        IVector<int> view{ single_threaded_vector<int>({ 1,2,3 }) };
+        IVector<int> view{ single_threaded_vector<int>({ 1, 2, 3 }) };
 
         operator IVector<int>() const
         {
             return view;
         }
     };
-}
+} // namespace
 
 TEST_CASE("test_vector")
 {
@@ -91,13 +90,13 @@ TEST_CASE("test_vector")
     test_null_vector(nullptr);
 
     // initializer_list
-    test_vector({1,2,3});
+    test_vector({ 1, 2, 3 });
 
     // std::vector rvalue
-    test_vector(std::vector<int>{ 1,2,3 });
+    test_vector(std::vector<int>{ 1, 2, 3 });
 
     // WinRT interface
-    IVector<int> view = single_threaded_vector<int>({ 1,2,3 });
+    IVector<int> view = single_threaded_vector<int>({ 1, 2, 3 });
     test_vector(view);
 
     // Convertible WinRT interface
@@ -107,7 +106,6 @@ TEST_CASE("test_vector")
 TEST_CASE("test_vector_scope")
 {
     // No scoping is observed
-    IVector<int> a = test_vector_scope({ 1,2,3 });
+    IVector<int> a = test_vector_scope({ 1, 2, 3 });
     REQUIRE(a.Size() == 3);
 }
-

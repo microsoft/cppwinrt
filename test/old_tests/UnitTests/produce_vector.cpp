@@ -4,8 +4,8 @@
 
 //
 // These tests cover the production of the various vector-related interfaces.
-// Tests ensure that the ABI surface lines up on the consumer and producer sides and this is mainly done simply by calling
-// the various interface methods.
+// Tests ensure that the ABI surface lines up on the consumer and producer sides and this is mainly done simply by
+// calling the various interface methods.
 //
 
 using namespace winrt;
@@ -46,13 +46,14 @@ TEST_CASE("produce_IVector_int32_t")
     IObservableVector<int32_t> ov = v.as<IObservableVector<int32_t>>();
     int handlerCount = 0; // Tracks the number of times the handler is called.
 
-    event_token token = ov.VectorChanged([&](IObservableVector<int32_t> const & sender, IVectorChangedEventArgs const & args)
-    {
-        ++handlerCount;
-        REQUIRE(sender == ov);
-        REQUIRE(args.CollectionChange() == CollectionChange::ItemInserted);
-        REQUIRE(args.Index() == 0);
-    });
+    event_token token = ov.VectorChanged(
+        [&](IObservableVector<int32_t> const& sender, IVectorChangedEventArgs const& args)
+        {
+            ++handlerCount;
+            REQUIRE(sender == ov);
+            REQUIRE(args.CollectionChange() == CollectionChange::ItemInserted);
+            REQUIRE(args.Index() == 0);
+        });
 
     REQUIRE(handlerCount == 0);
     v.InsertAt(0, 0);
@@ -107,7 +108,7 @@ TEST_CASE("produce_IVector_array_int32_t")
     {
         // Exact number of values.
 
-        std::array<int32_t, 3> many {};
+        std::array<int32_t, 3> many{};
         REQUIRE(3 == v.GetMany(0, many));
         REQUIRE(many[0] == 1);
         REQUIRE(many[1] == 2);
@@ -161,7 +162,7 @@ TEST_CASE("produce_IVector_array_int32_t")
     }
 
     {
-        std::array<int32_t, 2> many { 10, 20 };
+        std::array<int32_t, 2> many{ 10, 20 };
         REQUIRE(v.Size() == 3);
         v.ReplaceAll(many);
         REQUIRE(v.Size() == 2);
@@ -386,22 +387,16 @@ uint32_t produce_Reference::s_references = 0;
 
 HttpProgress make_HttpProgress(const uint32_t seed)
 {
-    return
-    {
-        HttpProgressStage::SendingContent,
-        seed + 1,
-        make<produce_Reference>(seed + 2),
-        seed + 3,
-        make<produce_Reference>(seed + 4),
-        seed + 5
-    };
+    return { HttpProgressStage::SendingContent, seed + 1, make<produce_Reference>(seed + 2), seed + 3,
+             make<produce_Reference>(seed + 4), seed + 5 };
 }
 
 TEST_CASE("produce_IVector_HttpProgress")
 {
     REQUIRE(produce_Reference::s_references == 0);
 
-    IVector<HttpProgress> v = single_threaded_vector<HttpProgress>(std::vector<HttpProgress>{ make_HttpProgress(1), make_HttpProgress(2), make_HttpProgress(3) });
+    IVector<HttpProgress> v = single_threaded_vector<HttpProgress>(
+        std::vector<HttpProgress>{ make_HttpProgress(1), make_HttpProgress(2), make_HttpProgress(3) });
 
     REQUIRE(produce_Reference::s_references == 6);
 
@@ -468,7 +463,8 @@ TEST_CASE("produce_IVector_HttpProgress")
 
 TEST_CASE("produce_IVector_array_HttpProgress")
 {
-    IVector<HttpProgress> v = single_threaded_vector<HttpProgress>(std::vector<HttpProgress>{ make_HttpProgress(1), make_HttpProgress(2), make_HttpProgress(3) });
+    IVector<HttpProgress> v = single_threaded_vector<HttpProgress>(
+        std::vector<HttpProgress>{ make_HttpProgress(1), make_HttpProgress(2), make_HttpProgress(3) });
 
     {
         // Exact number of values.
@@ -523,7 +519,8 @@ TEST_CASE("produce_IVector_array_HttpProgress")
 
 TEST_CASE("produce_IVector_IIterable_HttpProgress")
 {
-    IVector<HttpProgress> v = single_threaded_vector<HttpProgress>(std::vector<HttpProgress>{ make_HttpProgress(1), make_HttpProgress(2), make_HttpProgress(3) });
+    IVector<HttpProgress> v = single_threaded_vector<HttpProgress>(
+        std::vector<HttpProgress>{ make_HttpProgress(1), make_HttpProgress(2), make_HttpProgress(3) });
 
     IIterable<HttpProgress> iterable = v;
 
@@ -559,7 +556,8 @@ TEST_CASE("produce_IVector_IIterable_HttpProgress")
 
 TEST_CASE("produce_IVector_JsonValue")
 {
-    IVector<JsonValue> v = single_threaded_vector<JsonValue>(std::vector<JsonValue>{ JsonValue::CreateNumberValue(1), JsonValue::CreateNumberValue(2), JsonValue::CreateNumberValue(3) });
+    IVector<JsonValue> v = single_threaded_vector<JsonValue>(std::vector<JsonValue>{
+        JsonValue::CreateNumberValue(1), JsonValue::CreateNumberValue(2), JsonValue::CreateNumberValue(3) });
 
     REQUIRE(v.GetAt(0).GetNumber() == JsonValue::CreateNumberValue(1).GetNumber());
     REQUIRE(v.GetAt(2).GetNumber() == JsonValue::CreateNumberValue(3).GetNumber());
@@ -610,7 +608,8 @@ TEST_CASE("produce_IVector_JsonValue")
 
 TEST_CASE("produce_IVector_array_JsonValue")
 {
-    IVector<JsonValue> v = single_threaded_vector<JsonValue>(std::vector<JsonValue>{ JsonValue::CreateNumberValue(1), JsonValue::CreateNumberValue(2), JsonValue::CreateNumberValue(3) });
+    IVector<JsonValue> v = single_threaded_vector<JsonValue>(std::vector<JsonValue>{
+        JsonValue::CreateNumberValue(1), JsonValue::CreateNumberValue(2), JsonValue::CreateNumberValue(3) });
 
     {
         // Exact number of values.
@@ -665,7 +664,8 @@ TEST_CASE("produce_IVector_array_JsonValue")
 
 TEST_CASE("produce_IVector_IIterable_JsonValue")
 {
-    IVector<JsonValue> v = single_threaded_vector<JsonValue>(std::vector<JsonValue>{ JsonValue::CreateNumberValue(1), JsonValue::CreateNumberValue(2), JsonValue::CreateNumberValue(3) });
+    IVector<JsonValue> v = single_threaded_vector<JsonValue>(std::vector<JsonValue>{
+        JsonValue::CreateNumberValue(1), JsonValue::CreateNumberValue(2), JsonValue::CreateNumberValue(3) });
 
     IIterable<JsonValue> iterable = v;
 

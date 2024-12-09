@@ -11,7 +11,7 @@ namespace
     {
         virtual int32_t __stdcall JustSayNo() noexcept = 0;
     };
-}
+} // namespace
 
 #ifdef __CRT_UUID_DECL
 #ifdef __GNUC__
@@ -55,7 +55,7 @@ namespace
             return 123;
         }
     };
-}
+} // namespace
 
 TEST_CASE("inspectable_interop")
 {

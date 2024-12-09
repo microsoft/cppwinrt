@@ -13,8 +13,7 @@ using namespace Windows;
 using namespace Windows::Foundation;
 
 struct Test_GetRuntimeClassName_NoOverride : implements<Test_GetRuntimeClassName_NoOverride, Windows::Foundation::IInspectable>
-{
-};
+{};
 
 struct Test_GetRuntimeClassName_Override : implements<Test_GetRuntimeClassName_Override, Windows::Foundation::IInspectable>
 {

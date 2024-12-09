@@ -36,4 +36,4 @@ namespace
             [[maybe_unused]] auto result = this->Width();
         }
     };
-}
+} // namespace

@@ -65,4 +65,3 @@ TEST_CASE("hash,map_identity")
     REQUIRE(s.find(nullptr) != s.find(uri2));
     REQUIRE(s.find(uri) != s.find(uri2));
 }
-

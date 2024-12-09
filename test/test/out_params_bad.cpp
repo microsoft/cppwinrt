@@ -13,8 +13,7 @@ namespace
         ULONG m_references{ 1 };
 
         virtual ~base_base()
-        {
-        }
+        {}
 
         HRESULT __stdcall QueryInterface(IID const& id, void** value)
         {
@@ -111,7 +110,7 @@ namespace
             return E_FAIL;
         }
     };
-}
+} // namespace
 
 using namespace winrt;
 using namespace Windows::Foundation;

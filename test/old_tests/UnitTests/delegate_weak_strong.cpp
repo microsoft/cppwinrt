@@ -21,20 +21,27 @@ namespace
         }
     };
 
-    template <typename Sender, typename Args>
-    struct Object : implements<Object<Sender, Args>, IInspectable>
+    template <typename Sender, typename Args> struct Object : implements<Object<Sender, Args>, IInspectable>
     {
         std::shared_ptr<Counters> m_counters;
 
-        Object(std::shared_ptr<Counters> const& counters) : m_counters(counters) {}
+        Object(std::shared_ptr<Counters> const& counters) :
+            m_counters(counters)
+        {}
 
         static auto make(std::shared_ptr<Counters> const& counters)
         {
             return make_self<Object>(counters);
         }
 
-        auto strong() { return this->get_strong(); }
-        auto weak() { return this->get_weak(); }
+        auto strong()
+        {
+            return this->get_strong();
+        }
+        auto weak()
+        {
+            return this->get_weak();
+        }
 
         ~Object()
         {
@@ -54,20 +61,27 @@ namespace
         }
     };
 
-    template <typename Sender, typename Args>
-    struct ObjectStd : std::enable_shared_from_this<ObjectStd<Sender, Args>>
+    template <typename Sender, typename Args> struct ObjectStd : std::enable_shared_from_this<ObjectStd<Sender, Args>>
     {
         std::shared_ptr<Counters> m_counters;
 
-        ObjectStd(std::shared_ptr<Counters> const& counters) : m_counters(counters) {}
+        ObjectStd(std::shared_ptr<Counters> const& counters) :
+            m_counters(counters)
+        {}
 
         static auto make(std::shared_ptr<Counters> const& counters)
         {
             return std::make_shared<ObjectStd>(counters);
         }
 
-        auto strong() { return this->shared_from_this(); }
-        auto weak() { return this->weak_from_this(); }
+        auto strong()
+        {
+            return this->shared_from_this();
+        }
+        auto weak()
+        {
+            return this->weak_from_this();
+        }
 
         ~ObjectStd()
         {
@@ -101,18 +115,19 @@ namespace
         }
     };
 
-    template <typename Recipient, typename Delegate>
-    void test_delegate_pattern()
+    template <typename Recipient, typename Delegate> void test_delegate_pattern()
     {
         auto counters = std::make_shared<Counters>();
         auto object = Recipient::make(counters);
 
-        Delegate strong{ object->strong(), &Recipient::StrongHandler};
+        Delegate strong{ object->strong(), &Recipient::StrongHandler };
         Delegate weak{ object->weak(), &Recipient::WeakHandler };
-        Delegate weak_lambda{ object->weak(),[counters](auto&&, auto&&) {
-            REQUIRE(!counters->destroyed);
-            ++counters->weak_lambda_count;
-        } };
+        Delegate weak_lambda{ object->weak(),
+                              [counters](auto&&, auto&&)
+                              {
+                                  REQUIRE(!counters->destroyed);
+                                  ++counters->weak_lambda_count;
+                              } };
 
         // All handlers are active at this point
         strong({}, {});
@@ -142,25 +157,22 @@ namespace
         REQUIRE(counters->is_count(2));
     }
 
-    template <typename Delegate, typename Sender, typename Args>
-    void test_delegate_winrt()
+    template <typename Delegate, typename Sender, typename Args> void test_delegate_winrt()
     {
         test_delegate_pattern<Object<Sender, Args>, Delegate>();
     }
 
-    template <typename Delegate, typename Sender, typename Args>
-    void test_delegate_std()
+    template <typename Delegate, typename Sender, typename Args> void test_delegate_std()
     {
         test_delegate_pattern<ObjectStd<Sender, Args>, Delegate>();
     }
 
-    template <typename Delegate, typename Sender, typename Args>
-    void test_delegate()
+    template <typename Delegate, typename Sender, typename Args> void test_delegate()
     {
         test_delegate_winrt<Delegate, Sender, Args>();
         test_delegate_std<Delegate, Sender, Args>();
     }
-}
+} // namespace
 
 TEST_CASE("delegate_weak_strong")
 {

@@ -20,7 +20,7 @@ namespace
 
         co_await queue;
     }
-}
+} // namespace
 
 TEST_CASE("coro_ui_core")
 {

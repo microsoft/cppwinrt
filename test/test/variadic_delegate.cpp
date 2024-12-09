@@ -26,9 +26,9 @@ namespace
     {
         int& m_count;
 
-        Object(int& count) : m_count(count)
-        {
-        }
+        Object(int& count) :
+            m_count(count)
+        {}
 
         void Callback()
         {
@@ -45,16 +45,16 @@ namespace
     {
         int& m_count;
 
-        ObjectStd(int& count) : m_count(count)
-        {
-        }
+        ObjectStd(int& count) :
+            m_count(count)
+        {}
 
         void Callback()
         {
             ++m_count;
         }
     };
-}
+} // namespace
 
 TEST_CASE("variadic_delegate")
 {
@@ -62,8 +62,14 @@ TEST_CASE("variadic_delegate")
     {
         int count{};
 
-        delegate<> up = [&] { ++count; };
-        delegate<> down = [&] { --count; };
+        delegate<> up = [&]
+        {
+            ++count;
+        };
+        delegate<> down = [&]
+        {
+            --count;
+        };
 
         REQUIRE(count == 0);
         up();
@@ -202,7 +208,10 @@ TEST_CASE("variadic_delegate")
 
     // Exception
     {
-        delegate<> d = [] { throw std::runtime_error("what"); };
+        delegate<> d = []
+        {
+            throw std::runtime_error("what");
+        };
         REQUIRE_THROWS_AS(d(), std::exception);
     }
 

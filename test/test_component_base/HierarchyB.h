@@ -13,10 +13,9 @@ namespace winrt::test_component_base::implementation
         void HierarchyB_Method();
         void HierarchyB_TestInnerProtected();
     };
-}
+} // namespace winrt::test_component_base::implementation
 namespace winrt::test_component_base::factory_implementation
 {
     struct HierarchyB : HierarchyBT<HierarchyB, implementation::HierarchyB>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component_base::factory_implementation

@@ -32,6 +32,7 @@ TEST_CASE("guid")
     REQUIRE_THROWS_AS(winrt::guid("xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"), std::invalid_argument);
 
     // Verify that you can constexpr-construct a guid from a GUID.
-    constexpr winrt::guid from_abi_guid = GUID{ 0x00112233, 0x4455, 0x6677, { 0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff } };
+    constexpr winrt::guid from_abi_guid =
+        GUID{ 0x00112233, 0x4455, 0x6677, { 0x88, 0x99, 0xaa, 0xbb, 0xcc, 0xdd, 0xee, 0xff } };
     STATIC_REQUIRE_GUID_EQUAL(from_abi_guid, expected);
 }

@@ -13,7 +13,7 @@ namespace
             return L"Stringable";
         }
     };
-}
+} // namespace
 
 TEST_CASE("module_lock_dll")
 {
@@ -35,14 +35,16 @@ TEST_CASE("module_lock_dll")
     REQUIRE(winrt::get_module_lock() == count);
 
     {
-        winrt::Windows::Foundation::EventHandler<int> delegate = [](auto&&...) {};
+        winrt::Windows::Foundation::EventHandler<int> delegate = [](auto&&...) {
+        };
         REQUIRE(winrt::get_module_lock() == count + 1);
     }
 
     REQUIRE(winrt::get_module_lock() == count);
 
     {
-        winrt::delegate<void()> delegate = [] {};
+        winrt::delegate<void()> delegate = [] {
+        };
         REQUIRE(winrt::get_module_lock() == count + 1);
     }
 

@@ -9,10 +9,9 @@ namespace winrt::test_component_folders::implementation
 
         void Method();
     };
-}
+} // namespace winrt::test_component_folders::implementation
 namespace winrt::test_component_folders::factory_implementation
 {
     struct Class : ClassT<Class, implementation::Class>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component_folders::factory_implementation

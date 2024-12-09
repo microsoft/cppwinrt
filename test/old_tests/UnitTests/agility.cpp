@@ -10,22 +10,31 @@ using namespace Windows::Foundation;
 
 struct TestAgile : implements<TestAgile, IClosable>
 {
-    bool & m_destroyed;
-    TestAgile(bool & destroyed) : m_destroyed(destroyed) { m_destroyed = false; }
-    ~TestAgile() { m_destroyed = true; }
+    bool& m_destroyed;
+    TestAgile(bool& destroyed) :
+        m_destroyed(destroyed)
+    {
+        m_destroyed = false;
+    }
+    ~TestAgile()
+    {
+        m_destroyed = true;
+    }
 
-    void Close() {}
+    void Close()
+    {}
 };
 
 struct TestNonAgile : implements<TestNonAgile, non_agile, IClosable>
 {
-    void Close() {}
+    void Close()
+    {}
 };
 
 TEST_CASE("TestAgile")
 {
-    using Windows::Foundation::IUnknown;
     using Windows::Foundation::IInspectable;
+    using Windows::Foundation::IUnknown;
 
     bool destroyed = false;
 
@@ -72,8 +81,8 @@ TEST_CASE("TestNonAgile")
 
 TEST_CASE("TestMarshalTearoffLifetime")
 {
-    using Windows::Foundation::IUnknown;
     using Windows::Foundation::IInspectable;
+    using Windows::Foundation::IUnknown;
 
     bool destroyed = false;
 
@@ -100,8 +109,8 @@ TEST_CASE("TestMarshalTearoffLifetime")
 
 TEST_CASE("TestAgileDelegate")
 {
-    using Windows::Foundation::IUnknown;
     using Windows::Foundation::IInspectable;
+    using Windows::Foundation::IUnknown;
 
     IUnknown object = Windows::UI::Xaml::CreateDefaultValueCallback([] { return nullptr; });
     com_ptr<IMarshal> marshal = object.as<IMarshal>();
@@ -119,8 +128,8 @@ TEST_CASE("TestAgileDelegate")
 
 TEST_CASE("TestAgileWeakReference")
 {
-    using Windows::Foundation::IUnknown;
     using Windows::Foundation::IInspectable;
+    using Windows::Foundation::IUnknown;
 
     bool destroyed = false;
     IClosable object = make<TestAgile>(destroyed);

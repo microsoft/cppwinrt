@@ -19,10 +19,9 @@ namespace winrt::test_component::implementation
 
         std::optional<int32_t> m_property;
     };
-}
+} // namespace winrt::test_component::implementation
 namespace winrt::test_component::factory_implementation
 {
     struct Optional : OptionalT<Optional, implementation::Optional>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component::factory_implementation

@@ -11,10 +11,9 @@ namespace winrt::test_component_fast::implementation
         hstring Method2();
         hstring Method3();
     };
-}
+} // namespace winrt::test_component_fast::implementation
 namespace winrt::test_component_fast::factory_implementation
 {
     struct Simple : SimpleT<Simple, implementation::Simple>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component_fast::factory_implementation

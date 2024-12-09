@@ -19,4 +19,4 @@ namespace winrt::test_component_fast::implementation
     {
         return L"Method3";
     }
-}
+} // namespace winrt::test_component_fast::implementation

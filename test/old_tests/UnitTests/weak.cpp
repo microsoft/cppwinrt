@@ -23,8 +23,7 @@ namespace
     };
 
     struct WeakClassicCom : implements<WeakClassicCom, ::IUnknown>
-    {
-    };
+    {};
 
     struct Factory : implements<Factory, IActivationFactory>
     {
@@ -76,7 +75,9 @@ namespace
     {
         winrt::weak_ref<WeakCreateWeakInDestructor>& weak_self;
 
-        WeakCreateWeakInDestructor(winrt::weak_ref<WeakCreateWeakInDestructor>& magic) : weak_self(magic) {}
+        WeakCreateWeakInDestructor(winrt::weak_ref<WeakCreateWeakInDestructor>& magic) :
+            weak_self(magic)
+        {}
 
         ~WeakCreateWeakInDestructor()
         {
@@ -104,9 +105,16 @@ namespace
         struct awaiter
         {
             impl::coroutine_handle<>& resume;
-            bool await_ready() { return false; }
-            void await_suspend(impl::coroutine_handle<> handle) { resume = handle; }
-            void await_resume() {}
+            bool await_ready()
+            {
+                return false;
+            }
+            void await_suspend(impl::coroutine_handle<> handle)
+            {
+                resume = handle;
+            }
+            void await_resume()
+            {}
         };
 
         co_await awaiter{ resume };
@@ -114,7 +122,7 @@ namespace
     }
 
 #endif
-}
+} // namespace
 
 TEST_CASE("weak,source")
 {
@@ -451,8 +459,9 @@ TEST_CASE("weak,assignment")
 #if !defined(__clang__) && !defined(__GNUC__)
     // Constructible from com_ptr<Derived> because com_ptr<Derived> is
     // implicitly convertible to com_ptr<Base>.
-    struct Derived : WeakWithSelfReference {};
-    weak_ref<WeakWithSelfReference> decay{ winrt::com_ptr<Derived>{nullptr} };
+    struct Derived : WeakWithSelfReference
+    {};
+    weak_ref<WeakWithSelfReference> decay{ winrt::com_ptr<Derived>{ nullptr } };
 #endif
 }
 

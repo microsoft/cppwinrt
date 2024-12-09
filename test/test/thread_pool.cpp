@@ -29,7 +29,8 @@ namespace
 
         for (uint32_t i = 0; i < iterations; ++i)
         {
-            results.push_back(queue.Async([&]
+            results.push_back(queue.Async(
+                [&]
                 {
                     auto value = counter + 1;
                     Sleep(10); // Induce thread pool to use more threads if available, also force race condition
@@ -44,7 +45,7 @@ namespace
 
         return counter;
     }
-}
+} // namespace
 
 TEST_CASE("thread_pool")
 {

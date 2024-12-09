@@ -7,4 +7,4 @@ namespace winrt::test_component_folders::implementation
     {
         throw hresult_not_implemented();
     }
-}
+} // namespace winrt::test_component_folders::implementation

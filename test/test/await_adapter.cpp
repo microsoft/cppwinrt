@@ -87,7 +87,7 @@ namespace
         // Previously this would hang because the signal never got raised.
         REQUIRE(WAIT_OBJECT_0 == WaitForSingleObject(signal.get(), INFINITE));
     }
-}
+} // namespace
 
 #if defined(__clang__) && defined(_MSC_VER) && (defined(_M_IX86) || defined(__i386__))
 // FIXME: Test is known to segfault on x86 when built with Clang.
@@ -126,7 +126,7 @@ namespace
         // We should be on the background thread now.
         REQUIRE(!is_sta());
     }
-}
+} // namespace
 
 TEST_CASE("await_adapter_agile")
 {
@@ -158,8 +158,7 @@ namespace
         // We should still be on the background thread.
         REQUIRE(!is_sta());
     }
-}
-
+} // namespace
 
 TEST_CASE("await_adapter_agile_variable")
 {

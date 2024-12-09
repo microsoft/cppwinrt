@@ -15,15 +15,15 @@ using namespace Windows::Foundation::Collections;
 
 namespace
 {
-    template<typename T>
-    IIterator<T> single_threaded_generator(std::vector<T>&& values = {})
+    template <typename T> IIterator<T> single_threaded_generator(std::vector<T>&& values = {})
     {
         // This iterator may only be advanced once, ensuring the GetMany complexity optimization
         // is actually enforced with this test.
 
         struct generator_container
         {
-            explicit generator_container(IIterator<T> const& first) : m_current(first)
+            explicit generator_container(IIterator<T> const& first) :
+                m_current(first)
             {
                 if (!m_current.HasCurrent())
                 {
@@ -31,8 +31,14 @@ namespace
                 }
             }
 
-            IIterator<T> begin() const { return m_current; }
-            IIterator<T> end() const { return nullptr; }
+            IIterator<T> begin() const
+            {
+                return m_current;
+            }
+            IIterator<T> end() const
+            {
+                return nullptr;
+            }
 
         private:
             IIterator<T> m_current;
@@ -40,9 +46,9 @@ namespace
 
         struct generator : implements<generator, IIterable<T>>, iterable_base<generator, T>
         {
-            explicit generator(IIterator<T> const& first) : m_container(first)
-            {
-            }
+            explicit generator(IIterator<T> const& first) :
+                m_container(first)
+            {}
 
             auto& get_container() noexcept
             {
@@ -61,13 +67,13 @@ namespace
         auto v = single_threaded_vector<T>(std::move(values));
         return make<generator>(v.First()).First();
     }
-}
+} // namespace
 
 TEST_CASE("GetMany")
 {
     // All
     {
-        auto v = single_threaded_vector<int>({ 1,2,3 });
+        auto v = single_threaded_vector<int>({ 1, 2, 3 });
         std::array<int, 3> buffer{ 0xCC, 0xCC, 0xCC };
         REQUIRE(3 == v.GetMany(0, buffer));
         REQUIRE(buffer[0] == 1);
@@ -75,7 +81,7 @@ TEST_CASE("GetMany")
         REQUIRE(buffer[2] == 3);
     }
     {
-        auto v = single_threaded_vector<int>({ 1,2,3 });
+        auto v = single_threaded_vector<int>({ 1, 2, 3 });
         std::array<int, 3> buffer{ 0xCC, 0xCC, 0xCC };
         REQUIRE(3 == v.First().GetMany(buffer));
         REQUIRE(buffer[0] == 1);
@@ -85,7 +91,7 @@ TEST_CASE("GetMany")
 
     // None
     {
-        auto v = single_threaded_vector<int>({ 1,2,3 });
+        auto v = single_threaded_vector<int>({ 1, 2, 3 });
         std::array<int, 3> buffer{ 0xCC, 0xCC, 0xCC };
         REQUIRE(0 == v.GetMany(3, buffer));
         REQUIRE(buffer[0] == 0xCC);
@@ -93,7 +99,7 @@ TEST_CASE("GetMany")
         REQUIRE(buffer[2] == 0xCC);
     }
     {
-        auto v = single_threaded_vector<int>({ 1,2,3,4 });
+        auto v = single_threaded_vector<int>({ 1, 2, 3, 4 });
         auto pos = v.First();
         std::array<int, 3> buffer{ 0xCC, 0xCC, 0xCC };
         REQUIRE(3 == pos.GetMany(buffer));
@@ -114,14 +120,14 @@ TEST_CASE("GetMany")
 
     // Less
     {
-        auto v = single_threaded_vector<int>({ 1,2,3 });
+        auto v = single_threaded_vector<int>({ 1, 2, 3 });
         std::array<int, 2> buffer{ 0xCC, 0xCC };
         REQUIRE(2 == v.GetMany(0, buffer));
         REQUIRE(buffer[0] == 1);
         REQUIRE(buffer[1] == 2);
     }
     {
-        auto v = single_threaded_vector<int>({ 1,2,3 });
+        auto v = single_threaded_vector<int>({ 1, 2, 3 });
         std::array<int, 2> buffer{ 0xCC, 0xCC };
         REQUIRE(2 == v.First().GetMany(buffer));
         REQUIRE(buffer[0] == 1);
@@ -130,7 +136,7 @@ TEST_CASE("GetMany")
 
     // More
     {
-        auto v = single_threaded_vector<int>({ 1,2,3 });
+        auto v = single_threaded_vector<int>({ 1, 2, 3 });
         std::array<int, 4> buffer{ 0xCC, 0xCC, 0xCC, 0xCC };
         REQUIRE(3 == v.GetMany(0, buffer));
         REQUIRE(buffer[0] == 1);
@@ -139,7 +145,7 @@ TEST_CASE("GetMany")
         REQUIRE(buffer[3] == 0xCC);
     }
     {
-        auto v = single_threaded_vector<int>({ 1,2,3 });
+        auto v = single_threaded_vector<int>({ 1, 2, 3 });
         std::array<int, 4> buffer{ 0xCC, 0xCC, 0xCC, 0xCC };
         REQUIRE(3 == v.First().GetMany(buffer));
         REQUIRE(buffer[0] == 1);
@@ -150,7 +156,7 @@ TEST_CASE("GetMany")
 
     // Offset
     {
-        auto v = single_threaded_vector<int>({ 1,2,3 });
+        auto v = single_threaded_vector<int>({ 1, 2, 3 });
         std::array<int, 4> buffer{ 0xCC, 0xCC, 0xCC, 0xCC };
         REQUIRE(2 == v.GetMany(1, buffer));
         REQUIRE(buffer[0] == 2);
@@ -163,7 +169,7 @@ TEST_CASE("GetMany")
 
     // All
     {
-        auto v = single_threaded_vector<hstring>({ L"1",L"2",L"3" });
+        auto v = single_threaded_vector<hstring>({ L"1", L"2", L"3" });
         std::array<hstring, 3> buffer{ L"old", L"old", L"old" };
         REQUIRE(3 == v.GetMany(0, buffer));
         REQUIRE(buffer[0] == L"1");
@@ -171,7 +177,7 @@ TEST_CASE("GetMany")
         REQUIRE(buffer[2] == L"3");
     }
     {
-        auto v = single_threaded_vector<hstring>({ L"1",L"2",L"3" });
+        auto v = single_threaded_vector<hstring>({ L"1", L"2", L"3" });
         std::array<hstring, 3> buffer{ L"old", L"old", L"old" };
         REQUIRE(3 == v.First().GetMany(buffer));
         REQUIRE(buffer[0] == L"1");
@@ -181,7 +187,7 @@ TEST_CASE("GetMany")
 
     // None
     {
-        auto v = single_threaded_vector<hstring>({ L"1",L"2",L"3" });
+        auto v = single_threaded_vector<hstring>({ L"1", L"2", L"3" });
         std::array<hstring, 3> buffer{ L"old", L"old", L"old" };
         REQUIRE(0 == v.GetMany(3, buffer));
         REQUIRE(buffer[0] == L"");
@@ -189,7 +195,7 @@ TEST_CASE("GetMany")
         REQUIRE(buffer[2] == L"");
     }
     {
-        auto v = single_threaded_vector<hstring>({ L"1",L"2",L"3",L"4" });
+        auto v = single_threaded_vector<hstring>({ L"1", L"2", L"3", L"4" });
         auto pos = v.First();
         std::array<hstring, 3> buffer{ L"old", L"old", L"old" };
         REQUIRE(3 == pos.GetMany(buffer));
@@ -210,14 +216,14 @@ TEST_CASE("GetMany")
 
     // Less
     {
-        auto v = single_threaded_vector<hstring>({ L"1",L"2",L"3" });
+        auto v = single_threaded_vector<hstring>({ L"1", L"2", L"3" });
         std::array<hstring, 2> buffer{ L"old", L"old" };
         REQUIRE(2 == v.GetMany(0, buffer));
         REQUIRE(buffer[0] == L"1");
         REQUIRE(buffer[1] == L"2");
     }
     {
-        auto v = single_threaded_vector<hstring>({ L"1",L"2",L"3" });
+        auto v = single_threaded_vector<hstring>({ L"1", L"2", L"3" });
         std::array<hstring, 2> buffer{ L"old", L"old" };
         REQUIRE(2 == v.First().GetMany(buffer));
         REQUIRE(buffer[0] == L"1");
@@ -226,7 +232,7 @@ TEST_CASE("GetMany")
 
     // More
     {
-        auto v = single_threaded_vector<hstring>({ L"1",L"2",L"3" });
+        auto v = single_threaded_vector<hstring>({ L"1", L"2", L"3" });
         std::array<hstring, 4> buffer{ L"old", L"old", L"old", L"old" };
         REQUIRE(3 == v.GetMany(0, buffer));
         REQUIRE(buffer[0] == L"1");
@@ -235,7 +241,7 @@ TEST_CASE("GetMany")
         REQUIRE(buffer[3] == L"");
     }
     {
-        auto v = single_threaded_vector<hstring>({ L"1",L"2",L"3" });
+        auto v = single_threaded_vector<hstring>({ L"1", L"2", L"3" });
         std::array<hstring, 4> buffer{ L"old", L"old", L"old", L"old" };
         REQUIRE(3 == v.First().GetMany(buffer));
         REQUIRE(buffer[0] == L"1");
@@ -246,7 +252,7 @@ TEST_CASE("GetMany")
 
     // Offset
     {
-        auto v = single_threaded_vector<hstring>({ L"1",L"2",L"3" });
+        auto v = single_threaded_vector<hstring>({ L"1", L"2", L"3" });
         std::array<hstring, 4> buffer{ L"old", L"old", L"old", L"old" };
         REQUIRE(2 == v.GetMany(1, buffer));
         REQUIRE(buffer[0] == L"2");
@@ -262,7 +268,7 @@ TEST_CASE("GetMany")
 
     // All
     {
-        IIterator<int> v = single_threaded_generator<int>({ 1,2,3 });
+        IIterator<int> v = single_threaded_generator<int>({ 1, 2, 3 });
         std::array<int, 3> buffer{ 0xCC, 0xCC, 0xCC };
         REQUIRE(3 == v.GetMany(buffer));
         REQUIRE(buffer[0] == 1);
@@ -272,7 +278,7 @@ TEST_CASE("GetMany")
 
     // None
     {
-        IIterator<int> v = single_threaded_generator<int>({ 1,2,3,4,5 });
+        IIterator<int> v = single_threaded_generator<int>({ 1, 2, 3, 4, 5 });
         std::array<int, 3> buffer{ 0xCC, 0xCC, 0xCC };
         REQUIRE(3 == v.GetMany(buffer));
         REQUIRE(buffer[0] == 1);
@@ -292,7 +298,7 @@ TEST_CASE("GetMany")
 
     // Less
     {
-        IIterator<int> v = single_threaded_generator<int>({ 1,2,3 });
+        IIterator<int> v = single_threaded_generator<int>({ 1, 2, 3 });
         std::array<int, 2> buffer{ 0xCC, 0xCC };
         REQUIRE(2 == v.GetMany(buffer));
         REQUIRE(buffer[0] == 1);
@@ -301,7 +307,7 @@ TEST_CASE("GetMany")
 
     // More
     {
-        IIterator<int> v = single_threaded_generator<int>({ 1,2,3 });
+        IIterator<int> v = single_threaded_generator<int>({ 1, 2, 3 });
         std::array<int, 4> buffer{ 0xCC, 0xCC, 0xCC, 0xCC };
         REQUIRE(3 == v.GetMany(buffer));
         REQUIRE(buffer[0] == 1);
@@ -314,7 +320,7 @@ TEST_CASE("GetMany")
 
     // All
     {
-        IIterator<hstring> v = single_threaded_generator<hstring>({ L"1",L"2",L"3" });
+        IIterator<hstring> v = single_threaded_generator<hstring>({ L"1", L"2", L"3" });
         std::array<hstring, 3> buffer{ L"old", L"old", L"old" };
         REQUIRE(3 == v.GetMany(buffer));
         REQUIRE(buffer[0] == L"1");
@@ -324,7 +330,7 @@ TEST_CASE("GetMany")
 
     // None
     {
-        IIterator<hstring> v = single_threaded_generator<hstring>({ L"1",L"2",L"3",L"4" });
+        IIterator<hstring> v = single_threaded_generator<hstring>({ L"1", L"2", L"3", L"4" });
         std::array<hstring, 3> buffer{ L"old", L"old", L"old" };
         REQUIRE(3 == v.GetMany(buffer));
         REQUIRE(buffer[0] == L"1");
@@ -344,7 +350,7 @@ TEST_CASE("GetMany")
 
     // Less
     {
-        IIterator<hstring> v = single_threaded_generator<hstring>({ L"1",L"2",L"3" });
+        IIterator<hstring> v = single_threaded_generator<hstring>({ L"1", L"2", L"3" });
         std::array<hstring, 2> buffer{ L"old", L"old" };
         REQUIRE(2 == v.GetMany(buffer));
         REQUIRE(buffer[0] == L"1");
@@ -353,7 +359,7 @@ TEST_CASE("GetMany")
 
     // More
     {
-        IIterator<hstring> v = single_threaded_generator<hstring>({ L"1",L"2",L"3" });
+        IIterator<hstring> v = single_threaded_generator<hstring>({ L"1", L"2", L"3" });
         std::array<hstring, 4> buffer{ L"old", L"old", L"old", L"old" };
         REQUIRE(3 == v.GetMany(buffer));
         REQUIRE(buffer[0] == L"1");

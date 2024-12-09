@@ -6,8 +6,8 @@ namespace winrt::Component::implementation
 {
     struct CustomBase : CustomBaseT<CustomBase>
     {
-        CustomBase()
-            : base_type(L"CustomBase")
+        CustomBase() :
+            base_type(L"CustomBase")
         {}
 
         virtual hstring CustomVirtualMethod();
@@ -20,11 +20,10 @@ namespace winrt::Component::implementation
             this->try_as<target>();
         }
     };
-}
+} // namespace winrt::Component::implementation
 
 namespace winrt::Component::factory_implementation
 {
     struct CustomBase : CustomBaseT<CustomBase, implementation::CustomBase>
-    {
-    };
-}
+    {};
+} // namespace winrt::Component::factory_implementation

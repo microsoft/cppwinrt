@@ -1,8 +1,7 @@
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename T>
-    struct com_ptr;
+    template <typename T> struct com_ptr;
 }
 
 namespace winrt::impl
@@ -11,57 +10,57 @@ namespace winrt::impl
     {
         void** result;
 
-        template <typename T>
-        operator T** ()
+        template <typename T> operator T**()
         {
             return reinterpret_cast<T**>(result);
         }
     };
 
-    template <typename T, typename F, typename...Args>
-    int32_t capture_to(void**result, F function, Args&& ...args)
+    template <typename T, typename F, typename... Args> int32_t capture_to(void** result, F function, Args&&... args)
     {
         return function(args..., guid_of<T>(), capture_decay{ result });
     }
 
-    template <typename T, typename O, typename M, typename...Args, std::enable_if_t<std::is_class_v<O> || std::is_union_v<O>, int> = 0>
-    int32_t capture_to(void** result, O* object, M method, Args&& ...args)
+    template <typename T, typename O, typename M, typename... Args, std::enable_if_t<std::is_class_v<O> || std::is_union_v<O>, int> = 0>
+    int32_t capture_to(void** result, O* object, M method, Args&&... args)
     {
         return (object->*method)(args..., guid_of<T>(), capture_decay{ result });
     }
 
-    template <typename T, typename O, typename M, typename...Args>
-    int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&& ...args);
-}
+    template <typename T, typename O, typename M, typename... Args>
+    int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&&... args);
+} // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename T>
-    struct com_ptr
+    template <typename T> struct com_ptr
     {
         using type = impl::abi_t<T>;
 
-        com_ptr(std::nullptr_t = nullptr) noexcept {}
+        com_ptr(std::nullptr_t = nullptr) noexcept
+        {}
 
-        com_ptr(void* ptr, take_ownership_from_abi_t) noexcept : m_ptr(static_cast<type*>(ptr))
-        {
-        }
+        com_ptr(void* ptr, take_ownership_from_abi_t) noexcept :
+            m_ptr(static_cast<type*>(ptr))
+        {}
 
-        com_ptr(com_ptr const& other) noexcept : m_ptr(other.m_ptr)
-        {
-            add_ref();
-        }
-
-        template <typename U>
-        com_ptr(com_ptr<U> const& other) noexcept : m_ptr(other.m_ptr)
+        com_ptr(com_ptr const& other) noexcept :
+            m_ptr(other.m_ptr)
         {
             add_ref();
         }
 
         template <typename U>
-        com_ptr(com_ptr<U>&& other) noexcept : m_ptr(std::exchange(other.m_ptr, {}))
+        com_ptr(com_ptr<U> const& other) noexcept :
+            m_ptr(other.m_ptr)
         {
+            add_ref();
         }
+
+        template <typename U>
+        com_ptr(com_ptr<U>&& other) noexcept :
+            m_ptr(std::exchange(other.m_ptr, {}))
+        {}
 
         ~com_ptr() noexcept
         {
@@ -71,7 +70,7 @@ WINRT_EXPORT namespace winrt
         com_ptr& operator=(com_ptr const& other) noexcept
         {
             copy_ref(other.m_ptr);
-            return*this;
+            return *this;
         }
 
         com_ptr& operator=(com_ptr&& other) noexcept
@@ -82,22 +81,20 @@ WINRT_EXPORT namespace winrt
                 m_ptr = std::exchange(other.m_ptr, {});
             }
 
-            return*this;
+            return *this;
         }
 
-        template <typename U>
-        com_ptr& operator=(com_ptr<U> const& other) noexcept
+        template <typename U> com_ptr& operator=(com_ptr<U> const& other) noexcept
         {
             copy_ref(other.m_ptr);
-            return*this;
+            return *this;
         }
 
-        template <typename U>
-        com_ptr& operator=(com_ptr<U>&& other) noexcept
+        template <typename U> com_ptr& operator=(com_ptr<U>&& other) noexcept
         {
             release_ref();
             m_ptr = std::exchange(other.m_ptr, {});
-            return*this;
+            return *this;
         }
 
         explicit operator bool() const noexcept
@@ -147,26 +144,22 @@ WINRT_EXPORT namespace winrt
             std::swap(left.m_ptr, right.m_ptr);
         }
 
-        template <typename To>
-        auto as() const
+        template <typename To> auto as() const
         {
             return impl::as<To>(m_ptr);
         }
 
-        template <typename To>
-        auto try_as() const noexcept
+        template <typename To> auto try_as() const noexcept
         {
             return impl::try_as<To>(m_ptr);
         }
 
-        template <typename To>
-        void as(To& to) const
+        template <typename To> void as(To& to) const
         {
             to = as<impl::wrapped_type_t<To>>();
         }
 
-        template <typename To>
-        bool try_as(To& to) const noexcept
+        template <typename To> bool try_as(To& to) const noexcept
         {
             if constexpr (impl::is_com_interface_v<To> || !std::is_same_v<To, impl::wrapped_type_t<To>>)
             {
@@ -197,20 +190,17 @@ WINRT_EXPORT namespace winrt
             *other = m_ptr;
         }
 
-        template <typename...Args>
-        bool try_capture(Args&&...args)
+        template <typename... Args> bool try_capture(Args&&... args)
         {
             return impl::capture_to<T>(put_void(), std::forward<Args>(args)...) >= 0;
         }
 
-        template <typename...Args>
-        void capture(Args&&...args)
+        template <typename... Args> void capture(Args&&... args)
         {
             check_hresult(impl::capture_to<T>(put_void(), std::forward<Args>(args)...));
         }
 
     private:
-
         void copy_ref(type* other) noexcept
         {
             if (m_ptr != other)
@@ -242,108 +232,91 @@ WINRT_EXPORT namespace winrt
             std::exchange(m_ptr, {})->Release();
         }
 
-        template <typename U>
-        friend struct com_ptr;
+        template <typename U> friend struct com_ptr;
 
         type* m_ptr{};
     };
 
-    template <typename T, typename...Args>
-    impl::com_ref<T> try_capture(Args&& ...args)
+    template <typename T, typename... Args> impl::com_ref<T> try_capture(Args && ... args)
     {
         void* result{};
         impl::capture_to<T>(&result, std::forward<Args>(args)...);
         return { result, take_ownership_from_abi };
     }
 
-    template <typename T, typename...Args>
-    impl::com_ref<T> capture(Args&& ...args)
+    template <typename T, typename... Args> impl::com_ref<T> capture(Args && ... args)
     {
         void* result{};
         check_hresult(impl::capture_to<T>(&result, std::forward<Args>(args)...));
         return { result, take_ownership_from_abi };
     }
 
-    template <typename T>
-    auto get_abi(com_ptr<T> const& object) noexcept
+    template <typename T> auto get_abi(com_ptr<T> const& object) noexcept
     {
         return object.get();
     }
 
-    template <typename T>
-    auto put_abi(com_ptr<T>& object) noexcept
+    template <typename T> auto put_abi(com_ptr<T> & object) noexcept
     {
         return object.put_void();
     }
 
-    template <typename T>
-    void attach_abi(com_ptr<T>& object, impl::abi_t<T>* value) noexcept
+    template <typename T> void attach_abi(com_ptr<T> & object, impl::abi_t<T> * value) noexcept
     {
         object.attach(value);
     }
 
-    template <typename T>
-    auto detach_abi(com_ptr<T>& object) noexcept
+    template <typename T> auto detach_abi(com_ptr<T> & object) noexcept
     {
         return object.detach();
     }
 
-    template <typename T>
-    bool operator==(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
+    template <typename T> bool operator==(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
     {
         return get_abi(left) == get_abi(right);
     }
 
-    template <typename T>
-    bool operator==(com_ptr<T> const& left, std::nullptr_t) noexcept
+    template <typename T> bool operator==(com_ptr<T> const& left, std::nullptr_t) noexcept
     {
         return get_abi(left) == nullptr;
     }
 
-    template <typename T>
-    bool operator==(std::nullptr_t, com_ptr<T> const& right) noexcept
+    template <typename T> bool operator==(std::nullptr_t, com_ptr<T> const& right) noexcept
     {
         return nullptr == get_abi(right);
     }
 
-    template <typename T>
-    bool operator!=(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
+    template <typename T> bool operator!=(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
     {
         return !(left == right);
     }
 
-    template <typename T>
-    bool operator!=(com_ptr<T> const& left, std::nullptr_t) noexcept
+    template <typename T> bool operator!=(com_ptr<T> const& left, std::nullptr_t) noexcept
     {
         return !(left == nullptr);
     }
 
-    template <typename T>
-    bool operator!=(std::nullptr_t, com_ptr<T> const& right) noexcept
+    template <typename T> bool operator!=(std::nullptr_t, com_ptr<T> const& right) noexcept
     {
         return !(nullptr == right);
     }
 
-    template <typename T>
-    bool operator<(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
+    template <typename T> bool operator<(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
     {
         return get_abi(left) < get_abi(right);
     }
 
-    template <typename T>
-    bool operator>(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
+    template <typename T> bool operator>(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
     {
         return right < left;
     }
 
-    template <typename T>
-    bool operator<=(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
+    template <typename T> bool operator<=(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
     {
         return !(right < left);
     }
 
-    template <typename T>
-    bool operator>=(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
+    template <typename T> bool operator>=(com_ptr<T> const& left, com_ptr<T> const& right) noexcept
     {
         return !(left < right);
     }
@@ -351,15 +324,14 @@ WINRT_EXPORT namespace winrt
 
 namespace winrt::impl
 {
-    template <typename T, typename O, typename M, typename...Args>
-    int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&& ...args)
+    template <typename T, typename O, typename M, typename... Args>
+    int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&&... args)
     {
         return (object.get()->*(method))(args..., guid_of<T>(), capture_decay{ result });
     }
-}
+} // namespace winrt::impl
 
-template <typename T>
-void** IID_PPV_ARGS_Helper(winrt::com_ptr<T>* ptr) noexcept
+template <typename T> void** IID_PPV_ARGS_Helper(winrt::com_ptr<T>* ptr) noexcept
 {
     return winrt::put_abi(*ptr);
 }

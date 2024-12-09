@@ -9,10 +9,9 @@ namespace winrt::test_component::Velocity::implementation
 
         void Class2_Method();
     };
-}
+} // namespace winrt::test_component::Velocity::implementation
 namespace winrt::test_component::Velocity::factory_implementation
 {
     struct Class2 : Class2T<Class2, implementation::Class2>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component::Velocity::factory_implementation

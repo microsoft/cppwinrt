@@ -7,4 +7,4 @@ namespace winrt::Component::implementation
     {
         return L"CustomBase";
     }
-}
+} // namespace winrt::Component::implementation

@@ -14,13 +14,13 @@ namespace
 
     hstring outer(param::hstring const& value)
     {
-        // This is a typical scenario in the projection where an instance method 
+        // This is a typical scenario in the projection where an instance method
         // calls a factory method. The param::hstring doesn't allow copy semantics
         // and we want to make sure this is efficient (and works).
 
         return inner(value);
     }
-}
+} // namespace
 
 TEST_CASE("param_hstring")
 {

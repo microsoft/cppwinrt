@@ -31,7 +31,7 @@ namespace
         *factory = detach_abi(make<custom_factory>());
         return 0;
     }
-}
+} // namespace
 
 TEST_CASE("custom_activation")
 {

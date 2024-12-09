@@ -12,7 +12,6 @@ namespace winrt::test_component_fast::Composition::implementation
         void StartAnimationGroup();
 
     protected:
-
         Composition::Compositor m_compositor{ nullptr };
     };
-}
+} // namespace winrt::test_component_fast::Composition::implementation

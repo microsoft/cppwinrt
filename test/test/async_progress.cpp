@@ -29,8 +29,7 @@ namespace
         co_return L"done";
     }
 
-    template <typename F>
-    IAsyncAction Check(F make)
+    template <typename F> IAsyncAction Check(F make)
     {
         // Event not set to allow Progress handler to be wired up.
         handle start{ CreateEvent(nullptr, true, false, nullptr) };
@@ -40,7 +39,8 @@ namespace
 
         bool progress = false;
 
-        async.Progress([&](auto&& sender, int value)
+        async.Progress(
+            [&](auto&& sender, int value)
             {
                 progress = true;
                 REQUIRE(async == sender);
@@ -75,8 +75,7 @@ namespace
         }
     }
 
-    template <typename F>
-    IAsyncAction TooLate(F make)
+    template <typename F> IAsyncAction TooLate(F make)
     {
         // Event initially set so that coroutine does not suspend.
         handle start{ CreateEvent(nullptr, true, true, nullptr) };
@@ -86,10 +85,7 @@ namespace
 
         bool progress = false;
 
-        async.Progress([&](auto&&...)
-            {
-                REQUIRE(false);
-            });
+        async.Progress([&](auto&&...) { REQUIRE(false); });
 
         co_await async;
 
@@ -97,7 +93,7 @@ namespace
         REQUIRE(async.Status() == AsyncStatus::Completed);
         REQUIRE(async.ErrorCode() == S_OK);
     }
-}
+} // namespace
 
 TEST_CASE("async_progress")
 {

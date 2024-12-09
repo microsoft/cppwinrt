@@ -3,28 +3,24 @@ namespace winrt::impl
 {
     namespace wfc = Windows::Foundation::Collections;
 
-    template <typename D, typename T>
-    auto consume_Windows_Foundation_Collections_IIterable<D, T>::begin() const
+    template <typename D, typename T> auto consume_Windows_Foundation_Collections_IIterable<D, T>::begin() const
     {
         return get_begin_iterator(static_cast<D const&>(*this));
     }
-    template <typename D, typename T>
-    auto consume_Windows_Foundation_Collections_IIterable<D, T>::end() const
+    template <typename D, typename T> auto consume_Windows_Foundation_Collections_IIterable<D, T>::end() const
     {
         return get_end_iterator(static_cast<D const&>(*this));
     }
 
-    template <typename T>
-    struct key_value_pair;
+    template <typename T> struct key_value_pair;
 
     template <typename K, typename V>
-    struct key_value_pair<wfc::IKeyValuePair<K, V>> : implements<key_value_pair<wfc::IKeyValuePair<K, V>>, wfc::IKeyValuePair<K, V>>
+    struct key_value_pair<wfc::IKeyValuePair<K, V>>
+        : implements<key_value_pair<wfc::IKeyValuePair<K, V>>, wfc::IKeyValuePair<K, V>>
     {
         key_value_pair(K key, V value) :
-            m_key(std::move(key)),
-            m_value(std::move(value))
-        {
-        }
+            m_key(std::move(key)), m_value(std::move(value))
+        {}
 
         K Key() const
         {
@@ -37,16 +33,15 @@ namespace winrt::impl
         }
 
     private:
-
         K const m_key;
         V const m_value;
     };
 
-    template <typename T>
-    struct is_key_value_pair : std::false_type {};
+    template <typename T> struct is_key_value_pair : std::false_type
+    {};
 
-    template <typename K, typename V>
-    struct is_key_value_pair<wfc::IKeyValuePair<K, V>> : std::true_type {};
+    template <typename K, typename V> struct is_key_value_pair<wfc::IKeyValuePair<K, V>> : std::true_type
+    {};
 
     struct input_scope
     {
@@ -64,7 +59,6 @@ namespace winrt::impl
         }
 
     private:
-
         bool m_invalid{};
     };
 
@@ -73,12 +67,10 @@ namespace winrt::impl
         struct iterator_type
         {
             iterator_type(no_collection_version const&) noexcept
-            {
-            }
+            {}
 
             void check_version(no_collection_version const&) const noexcept
-            {
-            }
+            {}
         };
     };
 
@@ -88,8 +80,7 @@ namespace winrt::impl
         {
             iterator_type(collection_version const& version) noexcept :
                 m_snapshot(version.get_version())
-            {
-            }
+            {}
 
             void check_version(collection_version const& version) const
             {
@@ -100,7 +91,6 @@ namespace winrt::impl
             }
 
         private:
-
             uint32_t const m_snapshot;
         };
 
@@ -115,12 +105,10 @@ namespace winrt::impl
         }
 
     private:
-
         std::atomic<uint32_t> m_version{};
     };
 
-    template <typename T>
-    struct range_container
+    template <typename T> struct range_container
     {
         T const first;
         T const last;
@@ -135,4 +123,4 @@ namespace winrt::impl
             return last;
         }
     };
-}
+} // namespace winrt::impl

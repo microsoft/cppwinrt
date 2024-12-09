@@ -6,11 +6,9 @@
 namespace ABI::Windows::Foundation
 {
     template <>
-    struct __declspec(uuid("12ECEDAC-1AEE-5BA5-BD66-959A0FB2B1FF"))
-        IEventHandler<int> : IEventHandler_impl<int>
-    {
-    };
-}
+    struct __declspec(uuid("12ECEDAC-1AEE-5BA5-BD66-959A0FB2B1FF")) IEventHandler<int> : IEventHandler_impl<int>
+    {};
+} // namespace ABI::Windows::Foundation
 
 using namespace winrt;
 using namespace Windows::Foundation;
@@ -22,9 +20,9 @@ namespace
     {
         int& result;
 
-        NonAgileDelegate(int& result) : result(result)
-        {
-        }
+        NonAgileDelegate(int& result) :
+            result(result)
+        {}
 
         HRESULT __stdcall Invoke(::IInspectable*, int value) override
         {
@@ -32,7 +30,8 @@ namespace
             return S_OK;
         }
 
-        HRESULT __stdcall GetUnmarshalClass(REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags, CLSID* pCid) noexcept final
+        HRESULT __stdcall GetUnmarshalClass(
+            REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags, CLSID* pCid) noexcept final
         {
             if (m_marshaler)
             {
@@ -42,7 +41,8 @@ namespace
             return E_OUTOFMEMORY;
         }
 
-        HRESULT __stdcall GetMarshalSizeMax(REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags, DWORD* pSize) noexcept final
+        HRESULT __stdcall GetMarshalSizeMax(
+            REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags, DWORD* pSize) noexcept final
         {
             if (m_marshaler)
             {
@@ -52,7 +52,8 @@ namespace
             return E_OUTOFMEMORY;
         }
 
-        HRESULT __stdcall MarshalInterface(IStream* pStm, REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags) noexcept final
+        HRESULT __stdcall MarshalInterface(
+            IStream* pStm, REFIID riid, void* pv, DWORD dwDestContext, void* pvDestContext, DWORD mshlflags) noexcept final
         {
             if (m_marshaler)
             {
@@ -94,7 +95,6 @@ namespace
         }
 
     private:
-
         static com_ptr<::IMarshal> get_marshaler() noexcept
         {
             com_ptr<::IUnknown> unknown;
@@ -109,9 +109,9 @@ namespace
     {
         int& result;
 
-        NonMarshalDelegate(int& result) : result(result)
-        {
-        }
+        NonMarshalDelegate(int& result) :
+            result(result)
+        {}
 
         HRESULT __stdcall Invoke(::IInspectable*, int value) override
         {
@@ -119,7 +119,7 @@ namespace
             return S_OK;
         }
     };
-}
+} // namespace
 
 TEST_CASE("Events")
 {
@@ -173,10 +173,7 @@ TEST_CASE("Events")
         Events events;
         int result = 0;
 
-        auto token = events.SimpleEvent([&result](auto&&, int value)
-        {
-            result = value;
-        });
+        auto token = events.SimpleEvent([&result](auto&&, int value) { result = value; });
 
         REQUIRE(result == 0);
         events.RaiseSimpleEvent(123);
@@ -193,10 +190,7 @@ TEST_CASE("Events")
         Events events;
         int result = 0;
 
-        auto revoker = events.SimpleEvent(auto_revoke, [&result](auto&&, int value)
-        {
-            result = value;
-        });
+        auto revoker = events.SimpleEvent(auto_revoke, [&result](auto&&, int value) { result = value; });
 
         REQUIRE(result == 0);
         events.RaiseSimpleEvent(123);
@@ -215,10 +209,7 @@ TEST_CASE("Events")
     {
         int result = 0;
 
-        auto token = Events::StaticEvent([&result](auto&&, int value)
-        {
-            result = value;
-        });
+        auto token = Events::StaticEvent([&result](auto&&, int value) { result = value; });
 
         REQUIRE(result == 0);
         Events::RaiseStaticEvent(123);
@@ -234,10 +225,7 @@ TEST_CASE("Events")
     {
         int result = 0;
 
-        auto revoker = Events::StaticEvent(auto_revoke, [&result](auto&&, int value)
-        {
-            result = value;
-        });
+        auto revoker = Events::StaticEvent(auto_revoke, [&result](auto&&, int value) { result = value; });
 
         REQUIRE(result == 0);
         Events::RaiseStaticEvent(123);
@@ -253,16 +241,16 @@ TEST_CASE("Events")
         REQUIRE(result == 123); // no change
     }
 
-
     {
         Events events;
         int result = 0;
 
-        events.TypedEvent([&](Events const& sender, int value)
-        {
-            REQUIRE(sender == events);
-            result = value;
-        });
+        events.TypedEvent(
+            [&](Events const& sender, int value)
+            {
+                REQUIRE(sender == events);
+                result = value;
+            });
 
         REQUIRE(result == 0);
         events.RaiseTypedEvent(123);
@@ -273,10 +261,7 @@ TEST_CASE("Events")
         Events events;
         int result = 0;
 
-        events.CustomEvent([&](int value)
-        {
-            result = value;
-        });
+        events.CustomEvent([&](int value) { result = value; });
 
         REQUIRE(result == 0);
         events.RaiseCustomEvent(123);
@@ -304,10 +289,7 @@ TEST_CASE("typed_event_revoker")
 {
     Events events;
     int result = 0;
-    event_revoker<IEvents> revoker = events.SimpleEvent(auto_revoke, [&result](auto&&, int value)
-    {
-        result = value;
-    });
+    event_revoker<IEvents> revoker = events.SimpleEvent(auto_revoke, [&result](auto&&, int value) { result = value; });
 
     REQUIRE(result == 0);
     events.RaiseSimpleEvent(123);
@@ -321,17 +303,13 @@ TEST_CASE("typed_event_revoker")
     REQUIRE(result == 123);
     events.RaiseSimpleEvent(321);
     REQUIRE(result == 123); // no change
-
 }
 
 TEST_CASE("static_event")
 {
     int result = 0;
 
-    auto token = Static::StaticEvent([&result](auto&&, int value)
-    {
-        result = value;
-    });
+    auto token = Static::StaticEvent([&result](auto&&, int value) { result = value; });
 
     REQUIRE(result == 0);
     Static::RaiseStaticEvent(123);
@@ -348,10 +326,7 @@ TEST_CASE("non_cached_static_event")
 {
     int result = 0;
 
-    auto token = NonCachedStatic::StaticEvent([&result](auto&&, int value)
-    {
-        result = value;
-    });
+    auto token = NonCachedStatic::StaticEvent([&result](auto&&, int value) { result = value; });
 
     REQUIRE(result == 0);
     NonCachedStatic::RaiseStaticEvent(123);

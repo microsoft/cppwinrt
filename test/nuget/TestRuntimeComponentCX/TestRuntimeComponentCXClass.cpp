@@ -6,12 +6,8 @@ using namespace Platform;
 namespace TestRuntimeComponentCX
 {
     TestRuntimeComponentCXClass::TestRuntimeComponentCXClass()
-    {
-    }
+    {}
 
     void TestRuntimeComponentCXClass::Test()
-    {
-    }
-}
-
-
+    {}
+} // namespace TestRuntimeComponentCX

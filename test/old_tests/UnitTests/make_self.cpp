@@ -71,6 +71,4 @@ TEST_CASE("make_self")
     REQUIRE(c->ToString() == L"Test derived");
     c->m_result = E_INVALIDARG;
     REQUIRE(c->Call() == E_INVALIDARG);
-
-
 }

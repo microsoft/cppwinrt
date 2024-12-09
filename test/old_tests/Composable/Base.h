@@ -7,15 +7,15 @@ namespace winrt::Composable::implementation
     struct Base : BaseT<Base>
     {
         Base() = default;
-        explicit Base(const hstring& name)
-            : m_name(name)
+        explicit Base(const hstring& name) :
+            m_name(name)
         {}
 
         virtual hstring VirtualMethod();
         hstring CallOverridableMethod();
         hstring CallOverridableVirtualMethod();
         int32_t CallOverridableNoexceptMethod() noexcept;
-        hstring OverridableMethod() ;
+        hstring OverridableMethod();
         virtual hstring OverridableVirtualMethod();
         int32_t OverridableNoexceptMethod() noexcept;
         int32_t ProtectedMethod();
@@ -25,11 +25,10 @@ namespace winrt::Composable::implementation
     private:
         hstring m_name;
     };
-}
+} // namespace winrt::Composable::implementation
 
 namespace winrt::Composable::factory_implementation
 {
     struct Base : BaseT<Base, implementation::Base>
-    {
-    };
-}
+    {};
+} // namespace winrt::Composable::factory_implementation

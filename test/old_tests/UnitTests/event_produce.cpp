@@ -33,7 +33,7 @@ check_invoke lambda_invoked;
 
 struct MemberHandler
 {
-    void handler(const DisplayInformation & sender, const Windows::Foundation::IInspectable & args)
+    void handler(const DisplayInformation& sender, const Windows::Foundation::IInspectable& args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == nullptr);
@@ -44,15 +44,15 @@ struct MemberHandler
 MemberHandler handler_object;
 TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> member_delegate(&handler_object, &MemberHandler::handler);
 
-TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> lambda_delegate = [](const DisplayInformation & sender, const Windows::Foundation::IInspectable & args)
+TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> lambda_delegate =
+    [](const DisplayInformation& sender, const Windows::Foundation::IInspectable& args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == nullptr);
     lambda_invoked.set_invoked();
 };
 
-template <typename T>
-void BasicTest()
+template <typename T> void BasicTest()
 {
     T test_event;
 
@@ -97,7 +97,7 @@ struct BlockingHandler
         Error
     };
 
-    void handler(const DisplayInformation &, const Windows::Foundation::IInspectable &)
+    void handler(const DisplayInformation&, const Windows::Foundation::IInspectable&)
     {
         m_state = Executing;
 
@@ -109,7 +109,7 @@ struct BlockingHandler
         {
             m_state = Error;
         }
-        else 
+        else
         {
             m_state = OK;
         }
@@ -133,7 +133,7 @@ struct BlockingHandler
     bool block_until_invoking()
     {
         DWORD wait_result = WaitForSingleObject(m_invoking.get(), max_sleep);
-     
+
         if (wait_result == WAIT_OBJECT_0)
         {
             return true;
@@ -171,8 +171,7 @@ event_token blocking_object2_token;
 TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> blocking_delegate1(&blocking_object1, &BlockingHandler::handler);
 TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> blocking_delegate2(&blocking_object2, &BlockingHandler::handler);
 
-template <typename T>
-void ConcurrentAddTest()
+template <typename T> void ConcurrentAddTest()
 {
     T test_event;
 
@@ -192,49 +191,52 @@ void ConcurrentAddTest()
 
     handle start_phase_two{ CreateEvent(nullptr, false, false, nullptr) };
 
-    auto invoke_single_handler = ThreadPool::RunAsync([&](auto && ...)
-    {
-        // Add the first handler then invoke. It will block.
-        blocking_object1_token = test_event.add(blocking_delegate1);
-        thread1_check_handler1_not_started = (blocking_object1.get_state() == BlockingHandler::NotStarted);
-        test_event(nullptr, nullptr);
-    });
+    auto invoke_single_handler = ThreadPool::RunAsync(
+        [&](auto&&...)
+        {
+            // Add the first handler then invoke. It will block.
+            blocking_object1_token = test_event.add(blocking_delegate1);
+            thread1_check_handler1_not_started = (blocking_object1.get_state() == BlockingHandler::NotStarted);
+            test_event(nullptr, nullptr);
+        });
 
-    auto invoke_two_handlers = ThreadPool::RunAsync([&](auto && ...)
-    {
-        // Add the second handler while the first handler is executing
-        thread2_check_handler1_block = blocking_object1.block_until_invoking();
+    auto invoke_two_handlers = ThreadPool::RunAsync(
+        [&](auto&&...)
+        {
+            // Add the second handler while the first handler is executing
+            thread2_check_handler1_block = blocking_object1.block_until_invoking();
 
-        blocking_object2_token = test_event.add(blocking_delegate2);
-        thread2_check_handler2_not_started = (blocking_object2.get_state() == BlockingHandler::NotStarted);
+            blocking_object2_token = test_event.add(blocking_delegate2);
+            thread2_check_handler2_not_started = (blocking_object2.get_state() == BlockingHandler::NotStarted);
 
-        thread2_check_handler1_finished = blocking_object1.finish_invoking();
+            thread2_check_handler1_finished = blocking_object1.finish_invoking();
 
-        // Make sure handler executed in thread 1 succeeded
-        thread2_check_handler1_ok = (blocking_object1.get_state() == BlockingHandler::OK);
+            // Make sure handler executed in thread 1 succeeded
+            thread2_check_handler1_ok = (blocking_object1.get_state() == BlockingHandler::OK);
 
-        blocking_object1.reset();
+            blocking_object1.reset();
 
-        SetEvent(start_phase_two.get());
+            SetEvent(start_phase_two.get());
 
-        // Invoke both handlers
-        test_event(nullptr, nullptr);
-    });
+            // Invoke both handlers
+            test_event(nullptr, nullptr);
+        });
 
-    auto finish_invoking = ThreadPool::RunAsync([&](auto && ...)
-    {
-        thread3_block_result = WaitForSingleObject(start_phase_two.get(), max_sleep);
+    auto finish_invoking = ThreadPool::RunAsync(
+        [&](auto&&...)
+        {
+            thread3_block_result = WaitForSingleObject(start_phase_two.get(), max_sleep);
 
-        thread3_check_handler1_block = blocking_object1.block_until_invoking();
-        thread3_check_handler1_finished = blocking_object1.finish_invoking();
+            thread3_check_handler1_block = blocking_object1.block_until_invoking();
+            thread3_check_handler1_finished = blocking_object1.finish_invoking();
 
-        thread3_check_handler2_block = blocking_object2.block_until_invoking();
-        thread3_check_handler2_finished = blocking_object2.finish_invoking();
+            thread3_check_handler2_block = blocking_object2.block_until_invoking();
+            thread3_check_handler2_finished = blocking_object2.finish_invoking();
 
-        // Make sure handlers executed in thread 2 succeeded
-        thread3_check_handler1_ok = (blocking_object1.get_state() == BlockingHandler::OK);
-        thread3_check_handler2_ok = (blocking_object2.get_state() == BlockingHandler::OK);
-    });
+            // Make sure handlers executed in thread 2 succeeded
+            thread3_check_handler1_ok = (blocking_object1.get_state() == BlockingHandler::OK);
+            thread3_check_handler2_ok = (blocking_object2.get_state() == BlockingHandler::OK);
+        });
 
     invoke_single_handler.get();
     invoke_two_handlers.get();
@@ -265,8 +267,7 @@ TEST_CASE("agile event, add an event when the event source is already being invo
     ConcurrentAddTest<event<TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable>>>();
 }
 
-template <typename T>
-void ConcurrentRemoveTest()
+template <typename T> void ConcurrentRemoveTest()
 {
     T test_event;
 
@@ -287,51 +288,54 @@ void ConcurrentRemoveTest()
 
     handle start_phase_two{ CreateEvent(nullptr, false, false, nullptr) };
 
-    auto invoke_two_handlers = ThreadPool::RunAsync([&](auto && ...)
-    {
-        // Add the first handler then invoke. It will block.
-        blocking_object1_token = test_event.add(blocking_delegate1);
-        blocking_object2_token = test_event.add(blocking_delegate2);
+    auto invoke_two_handlers = ThreadPool::RunAsync(
+        [&](auto&&...)
+        {
+            // Add the first handler then invoke. It will block.
+            blocking_object1_token = test_event.add(blocking_delegate1);
+            blocking_object2_token = test_event.add(blocking_delegate2);
 
-        thread1_check_handler1_not_started = (blocking_object1.get_state() == BlockingHandler::NotStarted);
-        thread1_check_handler2_not_started = (blocking_object2.get_state() == BlockingHandler::NotStarted);
+            thread1_check_handler1_not_started = (blocking_object1.get_state() == BlockingHandler::NotStarted);
+            thread1_check_handler2_not_started = (blocking_object2.get_state() == BlockingHandler::NotStarted);
 
-        test_event(nullptr, nullptr);
-    });
+            test_event(nullptr, nullptr);
+        });
 
-    auto invoke_single_handler = ThreadPool::RunAsync([&](auto && ...)
-    {
-        thread2_check_handler1_block = blocking_object1.block_until_invoking();
-        test_event.remove(blocking_object1_token);
-        thread2_check_handler1_finished = blocking_object1.finish_invoking();
+    auto invoke_single_handler = ThreadPool::RunAsync(
+        [&](auto&&...)
+        {
+            thread2_check_handler1_block = blocking_object1.block_until_invoking();
+            test_event.remove(blocking_object1_token);
+            thread2_check_handler1_finished = blocking_object1.finish_invoking();
 
-        thread2_check_handler2_block = blocking_object2.block_until_invoking();
-        thread2_check_handler2_finished = blocking_object2.finish_invoking();
+            thread2_check_handler2_block = blocking_object2.block_until_invoking();
+            thread2_check_handler2_finished = blocking_object2.finish_invoking();
 
-        // Make sure handlers executed in thread 1 succeeded
-        thread2_check_handler1_ok = (blocking_object1.get_state() == BlockingHandler::OK);
-        thread2_check_handler2_ok = (blocking_object2.get_state() == BlockingHandler::OK);
+            // Make sure handlers executed in thread 1 succeeded
+            thread2_check_handler1_ok = (blocking_object1.get_state() == BlockingHandler::OK);
+            thread2_check_handler2_ok = (blocking_object2.get_state() == BlockingHandler::OK);
 
-        blocking_object1.reset();
-        blocking_object2.reset();
+            blocking_object1.reset();
+            blocking_object2.reset();
 
-        SetEvent(start_phase_two.get());
+            SetEvent(start_phase_two.get());
 
-        // Invoke both handlers
-        test_event(nullptr, nullptr);
-    });
+            // Invoke both handlers
+            test_event(nullptr, nullptr);
+        });
 
-    auto finish_invoking = ThreadPool::RunAsync([&](auto && ...)
-    {
-        thread3_block_result = WaitForSingleObject(start_phase_two.get(), max_sleep);
+    auto finish_invoking = ThreadPool::RunAsync(
+        [&](auto&&...)
+        {
+            thread3_block_result = WaitForSingleObject(start_phase_two.get(), max_sleep);
 
-        thread3_check_handler2_block = blocking_object2.block_until_invoking();
-        thread3_check_handler2_finished = blocking_object2.finish_invoking();
+            thread3_check_handler2_block = blocking_object2.block_until_invoking();
+            thread3_check_handler2_finished = blocking_object2.finish_invoking();
 
-        // Make sure handler executed in thread 1 succeeded
-        thread3_check_handler1_not_started = (blocking_object1.get_state() == BlockingHandler::NotStarted);
-        thread3_check_handler2_ok = (blocking_object2.get_state() == BlockingHandler::OK);
-    });
+            // Make sure handler executed in thread 1 succeeded
+            thread3_check_handler1_not_started = (blocking_object1.get_state() == BlockingHandler::NotStarted);
+            thread3_check_handler2_ok = (blocking_object2.get_state() == BlockingHandler::OK);
+        });
 
     invoke_single_handler.get();
     invoke_two_handlers.get();

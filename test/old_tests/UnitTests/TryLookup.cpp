@@ -9,9 +9,9 @@ namespace
 {
     struct stringable : implements<stringable, IStringable>
     {
-        explicit stringable(hstring value) : m_value(std::move(value))
-        {
-        }
+        explicit stringable(hstring value) :
+            m_value(std::move(value))
+        {}
 
         hstring ToString() const
         {
@@ -20,7 +20,7 @@ namespace
 
         hstring const m_value;
     };
-}
+} // namespace
 
 TEST_CASE("TryLookup")
 {
@@ -94,10 +94,10 @@ TEST_CASE("TryLookup")
 TEST_CASE("TryRemove")
 {
     auto map = single_threaded_map<int, IStringable>(std::map<int, IStringable>{
-            { 123, nullptr },
-            { 124, make<stringable>(L"remove") },
-            { 125, make<stringable>(L"keep") },
-        });
+        { 123, nullptr },
+        { 124, make<stringable>(L"remove") },
+        { 125, make<stringable>(L"keep") },
+    });
 
     REQUIRE(map.TryRemove(122) == false);
     REQUIRE(map.TryRemove(123) == true);
@@ -114,15 +114,36 @@ TEST_CASE("TryLookup TryRemove error")
     struct error_map : implements<error_map, IMap<int, int>>
     {
         hresult code;
-        int Lookup(int) { throw_hresult(code); }
-        int32_t Size() { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
-        bool HasKey(int) { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
-        IMapView<int, int> GetView() { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
-        bool Insert(int, int) { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
-        void Remove(int) { throw_hresult(code); }
-        void Clear() { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+        int Lookup(int)
+        {
+            throw_hresult(code);
+        }
+        int32_t Size()
+        {
+            throw_hresult(E_UNEXPECTED);
+        } // shouldn't be called by the test
+        bool HasKey(int)
+        {
+            throw_hresult(E_UNEXPECTED);
+        } // shouldn't be called by the test
+        IMapView<int, int> GetView()
+        {
+            throw_hresult(E_UNEXPECTED);
+        } // shouldn't be called by the test
+        bool Insert(int, int)
+        {
+            throw_hresult(E_UNEXPECTED);
+        } // shouldn't be called by the test
+        void Remove(int)
+        {
+            throw_hresult(code);
+        }
+        void Clear()
+        {
+            throw_hresult(E_UNEXPECTED);
+        } // shouldn't be called by the test
     };
-    
+
     auto self = make_self<error_map>();
     IMap<int, int> map = *self;
 
@@ -142,5 +163,4 @@ TEST_CASE("TryLookup TryRemove error")
     self->code = E_FAIL;
     REQUIRE(!map.TryLookup(123));
     REQUIRE(!map.TryRemove(123));
-
 }

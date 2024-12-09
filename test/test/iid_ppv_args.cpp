@@ -23,7 +23,7 @@ namespace
         *object = winrt::detach_abi(winrt::make<Stringable>());
         return S_OK;
     }
-}
+} // namespace
 
 TEST_CASE("iid_ppv_args")
 {

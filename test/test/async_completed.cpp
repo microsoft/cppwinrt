@@ -42,23 +42,20 @@ namespace
         }
 
         void GetResults() const noexcept
-        {
-        }
+        {}
 
         void Cancel() const noexcept
-        {
-        }
+        {}
 
         void Close() const noexcept
-        {
-        }
+        {}
     };
 
     IAsyncAction TestCompleted()
     {
         co_await make<already_completed>();
     }
-}
+} // namespace
 
 TEST_CASE("async_completed")
 {

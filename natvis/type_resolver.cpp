@@ -13,8 +13,7 @@ static bool has_attribute(T const& row, std::string_view const& type_namespace, 
     return static_cast<bool>(get_attribute(row, type_namespace, type_name));
 }
 
-template <typename V, typename...C>
-static auto call(V&& variant, C&& ...call)
+template <typename V, typename... C> static auto call(V&& variant, C&&... call)
 {
     return std::visit(overloaded<C...>{ std::forward<C>(call)... }, std::forward<V>(variant));
 }
@@ -32,28 +31,25 @@ static guid get_guid(TypeDef const& type)
         throw_invalid("'Windows.Foundation.Metadata.GuidAttribute' attribute for type '", get_full_name(type), "' not found");
     }
     auto args = attribute.Value().FixedArgs();
-    return 
-    {
-        std::get<uint32_t>(std::get<ElemSig>(args[0].value).value),
-        std::get<uint16_t>(std::get<ElemSig>(args[1].value).value),
-        std::get<uint16_t>(std::get<ElemSig>(args[2].value).value),
-        {
-            std::get<uint8_t>(std::get<ElemSig>(args[3].value).value),
-            std::get<uint8_t>(std::get<ElemSig>(args[4].value).value),
-            std::get<uint8_t>(std::get<ElemSig>(args[5].value).value),
-            std::get<uint8_t>(std::get<ElemSig>(args[6].value).value),
-            std::get<uint8_t>(std::get<ElemSig>(args[7].value).value),
-            std::get<uint8_t>(std::get<ElemSig>(args[8].value).value),
-            std::get<uint8_t>(std::get<ElemSig>(args[9].value).value),
-            std::get<uint8_t>(std::get<ElemSig>(args[10].value).value)
-        }
-    };
+    return { std::get<uint32_t>(std::get<ElemSig>(args[0].value).value),
+             std::get<uint16_t>(std::get<ElemSig>(args[1].value).value),
+             std::get<uint16_t>(std::get<ElemSig>(args[2].value).value),
+             { std::get<uint8_t>(std::get<ElemSig>(args[3].value).value),
+               std::get<uint8_t>(std::get<ElemSig>(args[4].value).value),
+               std::get<uint8_t>(std::get<ElemSig>(args[5].value).value),
+               std::get<uint8_t>(std::get<ElemSig>(args[6].value).value),
+               std::get<uint8_t>(std::get<ElemSig>(args[7].value).value),
+               std::get<uint8_t>(std::get<ElemSig>(args[8].value).value),
+               std::get<uint8_t>(std::get<ElemSig>(args[9].value).value),
+               std::get<uint8_t>(std::get<ElemSig>(args[10].value).value) } };
 }
 
 static std::wstring format_guid(guid guid)
 {
     std::wstring guid_str(68, L'?');
-    int count = swprintf_s(guid_str.data(), guid_str.size() + 1,
+    int count = swprintf_s(
+        guid_str.data(),
+        guid_str.size() + 1,
         L"%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X",
         guid.Data1,
         guid.Data2,
@@ -93,7 +89,7 @@ struct signature_generator
             return get_signature(type.TypeDef());
         case TypeDefOrRef::TypeRef:
             return get_signature(type.TypeRef());
-        default: //case TypeDefOrRef::TypeSpec:
+        default: // case TypeDefOrRef::TypeSpec:
             return get_signature(type.TypeSpec().Signature().GenericTypeInst());
         }
     }
@@ -126,7 +122,9 @@ private:
     {
         auto guid = get_guid(type);
         std::string guid_str(70, '?');
-        int count = sprintf_s(guid_str.data(), guid_str.size() + 1,
+        int count = sprintf_s(
+            guid_str.data(),
+            guid_str.size() + 1,
             "{%08x-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x}",
             guid.Data1,
             guid.Data2,
@@ -151,7 +149,7 @@ private:
             return get_guid_signature(type.TypeDef());
         case TypeDefOrRef::TypeRef:
             return get_guid_signature(find_required(type.TypeRef()));
-        default: //case TypeDefOrRef::TypeSpec:
+        default: // case TypeDefOrRef::TypeSpec:
             return get_guid_signature(type.TypeSpec().Signature().GenericTypeInst().GenericType());
         }
     }
@@ -170,31 +168,46 @@ private:
 
     static std::string get_signature(TypeSig::value_type const& type)
     {
-        return call(type, [&](ElementType type) -> std::string
-        {
-            switch (type)
+        return call(
+            type,
+            [&](ElementType type) -> std::string
             {
-                case ElementType::Boolean: return "b1";
-                case ElementType::Char: return "c2";
-                case ElementType::I1: return "i1";
-                case ElementType::U1: return "u1";
-                case ElementType::I2: return "i2";
-                case ElementType::U2: return "u2";
-                case ElementType::I4: return "i4";
-                case ElementType::U4: return "u4";
-                case ElementType::I8: return "i8";
-                case ElementType::U8: return "u8";
-                case ElementType::R4: return "f4";
-                case ElementType::R8: return "f8";
-                case ElementType::String: return "string";
-                case ElementType::Object: return "cinterface(IInspectable)";
-                default: assert(false); return "";
-            }
-        },
-        [&](auto&& type)
-        {
-            return get_signature(type);
-        });
+                switch (type)
+                {
+                case ElementType::Boolean:
+                    return "b1";
+                case ElementType::Char:
+                    return "c2";
+                case ElementType::I1:
+                    return "i1";
+                case ElementType::U1:
+                    return "u1";
+                case ElementType::I2:
+                    return "i2";
+                case ElementType::U2:
+                    return "u2";
+                case ElementType::I4:
+                    return "i4";
+                case ElementType::U4:
+                    return "u4";
+                case ElementType::I8:
+                    return "i8";
+                case ElementType::U8:
+                    return "u8";
+                case ElementType::R4:
+                    return "f4";
+                case ElementType::R8:
+                    return "f8";
+                case ElementType::String:
+                    return "string";
+                case ElementType::Object:
+                    return "cinterface(IInspectable)";
+                default:
+                    assert(false);
+                    return "";
+                }
+            },
+            [&](auto&& type) { return get_signature(type); });
     }
 
     static std::string get_signature(TypeDef const& type)
@@ -209,7 +222,7 @@ private:
             return get_enum_signature(type);
         case category::struct_type:
             return get_struct_signature(type);
-        default: //case category::delegate_type: 
+        default: // case category::delegate_type:
             return "delegate(" + get_guid_signature(type) + ")";
         }
     }
@@ -268,7 +281,7 @@ static auto calculate_sha1(std::vector<uint8_t> const& input)
 
 static guid generate_guid(coded_index<TypeDefOrRef> const& type)
 {
-    constexpr guid namespace_guid = { 0xd57af411, 0x737b, 0xc042,{ 0xab, 0xae, 0x87, 0x8b, 0x1e, 0x16, 0xad, 0xee } };
+    constexpr guid namespace_guid = { 0xd57af411, 0x737b, 0xc042, { 0xab, 0xae, 0x87, 0x8b, 0x1e, 0x16, 0xad, 0xee } };
     constexpr auto namespace_bytes = winrt::impl::to_array(namespace_guid);
 
     std::vector<uint8_t> buffer{ namespace_bytes.begin(), namespace_bytes.end() };
@@ -291,8 +304,7 @@ std::pair<TypeDef, std::wstring> ResolveTypeInterface(DkmProcess* process, coded
         return {};
     }
 
-    auto guid = index.type() == TypeDefOrRef::TypeSpec ?
-        format_guid(generate_guid(index)) : format_guid(get_guid(type));
+    auto guid = index.type() == TypeDefOrRef::TypeSpec ? format_guid(generate_guid(index)) : format_guid(get_guid(type));
 
     auto type_guid = std::pair{ type, guid };
     _cache[index] = type_guid;

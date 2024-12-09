@@ -4,8 +4,8 @@
 
 //
 // These tests cover the production of the various map-related interfaces.
-// Tests ensure that the ABI surface lines up on the consumer and producer sides and this is mainly done simply by calling
-// the various interface methods.
+// Tests ensure that the ABI surface lines up on the consumer and producer sides and this is mainly done simply by
+// calling the various interface methods.
 //
 
 using namespace winrt;
@@ -14,14 +14,11 @@ using namespace Windows::Foundation::Collections;
 
 namespace
 {
-    template <typename K, typename V>
-    struct key_value_pair : implements<key_value_pair<K, V>, IKeyValuePair<K, V>>
+    template <typename K, typename V> struct key_value_pair : implements<key_value_pair<K, V>, IKeyValuePair<K, V>>
     {
         key_value_pair(K key, V value) :
-            m_key(std::move(key)),
-            m_value(std::move(value))
-        {
-        }
+            m_key(std::move(key)), m_value(std::move(value))
+        {}
 
         K Key() const
         {
@@ -34,11 +31,10 @@ namespace
         }
 
     private:
-
         K m_key;
         V m_value;
     };
-}
+} // namespace
 
 // This producer tests that IMap may be specialized with a value type key and hstring value.
 
@@ -49,13 +45,14 @@ TEST_CASE("produce_IMap_int32_t_hstring")
     IObservableMap<int32_t, hstring> om = m.as<IObservableMap<int32_t, hstring>>();
     int handlerCount = 0; // Tracks the number of times the handler is called.
 
-    event_token token = om.MapChanged([&](IObservableMap<int32_t, hstring> const & sender, IMapChangedEventArgs<int32_t> const & args)
-    {
-        ++handlerCount;
-        REQUIRE(sender == om);
-        REQUIRE(args.CollectionChange() == CollectionChange::ItemInserted);
-        REQUIRE(args.Key() == 1);
-    });
+    event_token token = om.MapChanged(
+        [&](IObservableMap<int32_t, hstring> const& sender, IMapChangedEventArgs<int32_t> const& args)
+        {
+            ++handlerCount;
+            REQUIRE(sender == om);
+            REQUIRE(args.CollectionChange() == CollectionChange::ItemInserted);
+            REQUIRE(args.Key() == 1);
+        });
 
     REQUIRE(handlerCount == 0);
     REQUIRE(!m.Insert(1, L"one"));
@@ -178,7 +175,7 @@ TEST_CASE("produce_IMap_hstring_int32_t")
     m.Remove(L"one"); // existing
     REQUIRE(m.Size() == 1);
     REQUIRE_THROWS_AS(m.Remove(L"three"), hresult_out_of_bounds); // not existing
-    REQUIRE(!m.TryRemove(L"three")); // not existing
+    REQUIRE(!m.TryRemove(L"three"));                              // not existing
     REQUIRE(m.Size() == 1);
 
     m.Clear();
