@@ -2,10 +2,9 @@
 
 namespace TestRuntimeComponentCXLibrary
 {
-public
-    ref class CxClass sealed
+    public ref class CxClass sealed
     {
     public:
-        CxClass(TestStaticLibrary7Class ^ c);
+        CxClass(TestStaticLibrary7Class^ c);
     };
-} // namespace TestRuntimeComponentCXLibrary
+}

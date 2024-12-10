@@ -4,7 +4,7 @@
 using namespace TestRuntimeComponentCXLibrary;
 using namespace Platform;
 
-CxClass::CxClass(TestStaticLibrary7Class ^ c)
+CxClass::CxClass(TestStaticLibrary7Class^ c)
 {
     c->Test();
 }

@@ -1,0 +1,5 @@
+_build/*
+
+**/CxClass.*
+test/old_tests/Component/Component_h.h
+test/old_tests/Composable/Composable_h.h
