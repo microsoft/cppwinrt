@@ -1,6 +1,4 @@
 @echo off
-setlocal
-setlocal EnableDelayedExpansion
 
 set target_platform=%1
 set target_configuration=%2
