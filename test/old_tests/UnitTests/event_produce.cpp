@@ -42,7 +42,8 @@ struct MemberHandler
 };
 
 MemberHandler handler_object;
-TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> member_delegate(&handler_object, &MemberHandler::handler);
+TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> member_delegate(&handler_object,
+                                                                                         &MemberHandler::handler);
 
 TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> lambda_delegate =
     [](const DisplayInformation& sender, const Windows::Foundation::IInspectable& args)
@@ -168,8 +169,10 @@ BlockingHandler blocking_object2;
 event_token blocking_object1_token;
 event_token blocking_object2_token;
 
-TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> blocking_delegate1(&blocking_object1, &BlockingHandler::handler);
-TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> blocking_delegate2(&blocking_object2, &BlockingHandler::handler);
+TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> blocking_delegate1(&blocking_object1,
+                                                                                            &BlockingHandler::handler);
+TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> blocking_delegate2(&blocking_object2,
+                                                                                            &BlockingHandler::handler);
 
 template <typename T> void ConcurrentAddTest()
 {

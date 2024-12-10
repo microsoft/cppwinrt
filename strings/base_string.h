@@ -674,20 +674,19 @@ WINRT_EXPORT namespace winrt
     {
         wchar_t buffer[40];
         //{00000000-0000-0000-0000-000000000000}
-        swprintf_s(
-            buffer,
-            L"{%08x-%04hx-%04hx-%02hhx%02hhx-%02hhx%02hhx%02hhx%02hhx%02hhx%02hhx}",
-            value.Data1,
-            value.Data2,
-            value.Data3,
-            value.Data4[0],
-            value.Data4[1],
-            value.Data4[2],
-            value.Data4[3],
-            value.Data4[4],
-            value.Data4[5],
-            value.Data4[6],
-            value.Data4[7]);
+        swprintf_s(buffer,
+                   L"{%08x-%04hx-%04hx-%02hhx%02hhx-%02hhx%02hhx%02hhx%02hhx%02hhx%02hhx}",
+                   value.Data1,
+                   value.Data2,
+                   value.Data3,
+                   value.Data4[0],
+                   value.Data4[1],
+                   value.Data4[2],
+                   value.Data4[3],
+                   value.Data4[4],
+                   value.Data4[5],
+                   value.Data4[6],
+                   value.Data4[7]);
         return hstring{ buffer };
     }
 
@@ -704,10 +703,9 @@ WINRT_EXPORT namespace winrt
         }
 
         impl::hstring_builder result(size);
-        WINRT_VERIFY_(
-            size,
-            WINRT_IMPL_MultiByteToWideChar(
-                65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), result.data(), size));
+        WINRT_VERIFY_(size,
+                      WINRT_IMPL_MultiByteToWideChar(
+                          65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), result.data(), size));
         return result.to_hstring();
     }
 

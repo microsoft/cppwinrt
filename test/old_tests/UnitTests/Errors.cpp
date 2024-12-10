@@ -87,7 +87,8 @@ TEST_CASE("Errors")
         E_CHANGED_STATE, L"A concurrent or interleaved operation changed the state of the object, invalidating this operation.");
     test_exception<hresult_illegal_method_call>(E_ILLEGAL_METHOD_CALL, L"A method was called at an unexpected time.");
     test_exception<hresult_illegal_state_change>(E_ILLEGAL_STATE_CHANGE, L"An illegal state change was requested.");
-    test_exception<hresult_illegal_delegate_assignment>(E_ILLEGAL_DELEGATE_ASSIGNMENT, L"A delegate was assigned when not allowed.");
+    test_exception<hresult_illegal_delegate_assignment>(E_ILLEGAL_DELEGATE_ASSIGNMENT,
+                                                        L"A delegate was assigned when not allowed.");
     test_exception<hresult_canceled>(HRESULT_FROM_WIN32(ERROR_CANCELLED), L"The operation was canceled by the user.");
 
     // Basic validation of init_apartment (from an MTA).

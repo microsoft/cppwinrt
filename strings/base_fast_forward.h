@@ -112,7 +112,8 @@ namespace winrt::impl
     // Enforce assumptions made by thunk asm code
     static_assert(offsetof(fast_abi_forwarder, m_vfptr) == 0);
     static_assert(offsetof(fast_abi_forwarder, m_owner) == sizeof(fast_abi_forwarder::m_vfptr));
-    static_assert(offsetof(fast_abi_forwarder, m_offset) == sizeof(fast_abi_forwarder::m_vfptr) + sizeof(fast_abi_forwarder::m_owner));
+    static_assert(offsetof(fast_abi_forwarder, m_offset) ==
+                  sizeof(fast_abi_forwarder::m_vfptr) + sizeof(fast_abi_forwarder::m_owner));
 } // namespace winrt::impl
 
 namespace winrt

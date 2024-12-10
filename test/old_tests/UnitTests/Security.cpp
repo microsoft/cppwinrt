@@ -12,13 +12,12 @@ namespace
         access_token token;
         check_bool(OpenProcessToken(GetCurrentProcess(), TOKEN_DUPLICATE, token.put()));
         access_token duplicate;
-        check_bool(DuplicateTokenEx(
-            token.get(),
-            TOKEN_ADJUST_PRIVILEGES | TOKEN_IMPERSONATE,
-            nullptr,
-            SecurityImpersonation,
-            TokenImpersonation,
-            duplicate.put()));
+        check_bool(DuplicateTokenEx(token.get(),
+                                    TOKEN_ADJUST_PRIVILEGES | TOKEN_IMPERSONATE,
+                                    nullptr,
+                                    SecurityImpersonation,
+                                    TokenImpersonation,
+                                    duplicate.put()));
 
         TOKEN_PRIVILEGES privileges{};
         privileges.PrivilegeCount = 1;

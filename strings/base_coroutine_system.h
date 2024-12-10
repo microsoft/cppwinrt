@@ -1,14 +1,14 @@
 
 WINRT_EXPORT namespace winrt
 {
-    [[nodiscard]] inline auto resume_foreground(
-        Windows::System::DispatcherQueue const& dispatcher,
-        Windows::System::DispatcherQueuePriority const priority = Windows::System::DispatcherQueuePriority::Normal) noexcept
+    [[nodiscard]] inline auto resume_foreground(Windows::System::DispatcherQueue const& dispatcher,
+                                                Windows::System::DispatcherQueuePriority const priority =
+                                                    Windows::System::DispatcherQueuePriority::Normal) noexcept
     {
         struct awaitable
         {
-            awaitable(Windows::System::DispatcherQueue const& dispatcher, Windows::System::DispatcherQueuePriority const priority) noexcept
-                :
+            awaitable(Windows::System::DispatcherQueue const& dispatcher,
+                      Windows::System::DispatcherQueuePriority const priority) noexcept :
                 m_dispatcher(dispatcher), m_priority(priority)
             {}
 
@@ -24,13 +24,12 @@ WINRT_EXPORT namespace winrt
 
             bool await_suspend(impl::coroutine_handle<> handle)
             {
-                return m_dispatcher.TryEnqueue(
-                    m_priority,
-                    [handle, this]
-                    {
-                        m_queued = true;
-                        handle();
-                    });
+                return m_dispatcher.TryEnqueue(m_priority,
+                                               [handle, this]
+                                               {
+                                                   m_queued = true;
+                                                   handle();
+                                               });
             }
 
         private:

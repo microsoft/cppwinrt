@@ -1915,8 +1915,8 @@ typedef struct __FIReference_1_UINT32Vtbl
     HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
     (__RPC__in __FIReference_1_UINT32* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(
-        __RPC__in __FIReference_1_UINT32* This, /* [retval][out] */ __RPC__out unsigned int* value);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(__RPC__in __FIReference_1_UINT32* This,
+                                                          /* [retval][out] */ __RPC__out unsigned int* value);
     END_INTERFACE
 } __FIReference_1_UINT32Vtbl;
 
@@ -1971,9 +1971,8 @@ typedef struct __FIReference_1_EventRegistrationTokenVtbl
     HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
     (__RPC__in __FIReference_1_EventRegistrationToken* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(
-        __RPC__in __FIReference_1_EventRegistrationToken* This,
-        /* [retval][out] */ __RPC__out struct EventRegistrationToken* value);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(__RPC__in __FIReference_1_EventRegistrationToken* This,
+                                                          /* [retval][out] */ __RPC__out struct EventRegistrationToken* value);
     END_INTERFACE
 } __FIReference_1_EventRegistrationTokenVtbl;
 
@@ -2028,8 +2027,8 @@ typedef struct __FIReference_1_GUIDVtbl
     HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
     (__RPC__in __FIReference_1_GUID* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(
-        __RPC__in __FIReference_1_GUID* This, /* [retval][out] */ __RPC__out GUID* value);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(__RPC__in __FIReference_1_GUID* This,
+                                                          /* [retval][out] */ __RPC__out GUID* value);
     END_INTERFACE
 } __FIReference_1_GUIDVtbl;
 
@@ -2166,10 +2165,10 @@ typedef struct __FIIterator_1_HSTRINGVtbl
     HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
     (__RPC__in __FIIterator_1_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Current)(
-        __RPC__in __FIIterator_1_HSTRING* This, /* [retval][out] */ __RPC__out HSTRING* current);
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_HasCurrent)(
-        __RPC__in __FIIterator_1_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Current)(__RPC__in __FIIterator_1_HSTRING* This,
+                                                            /* [retval][out] */ __RPC__out HSTRING* current);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_HasCurrent)(__RPC__in __FIIterator_1_HSTRING* This,
+                                                               /* [retval][out] */ __RPC__out boolean* hasCurrent);
     HRESULT(STDMETHODCALLTYPE* MoveNext)
     (__RPC__in __FIIterator_1_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
     HRESULT(STDMETHODCALLTYPE* GetMany)
@@ -2321,9 +2320,8 @@ typedef struct __FIVectorView_1_HSTRINGVtbl
      /* [in] */ unsigned int index,
      /* [retval][out] */ __RPC__out HSTRING* item);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(
-        __RPC__in __FIVectorView_1_HSTRING* This,
-        /* [retval][out] */ __RPC__out unsigned int* size);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(__RPC__in __FIVectorView_1_HSTRING* This,
+                                                         /* [retval][out] */ __RPC__out unsigned int* size);
 
     HRESULT(STDMETHODCALLTYPE* IndexOf)
     (__RPC__in __FIVectorView_1_HSTRING* This,
@@ -2410,9 +2408,8 @@ typedef struct __FIVector_1_HSTRINGVtbl
      /* [in] */ unsigned int index,
      /* [retval][out] */ __RPC__deref_out_opt HSTRING* item);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(
-        __RPC__in __FIVector_1_HSTRING* This,
-        /* [retval][out] */ __RPC__out unsigned int* size);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(__RPC__in __FIVector_1_HSTRING* This,
+                                                         /* [retval][out] */ __RPC__out unsigned int* size);
 
     HRESULT(STDMETHODCALLTYPE* GetView)
     (__RPC__in __FIVector_1_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt __FIVectorView_1_HSTRING** view);
@@ -2529,10 +2526,10 @@ typedef struct __FIKeyValuePair_2_HSTRING_HSTRINGVtbl
     HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
     (__RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Key)(
-        __RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out HSTRING* key);
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(
-        __RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__deref_out_opt HSTRING* value);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Key)(__RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This,
+                                                        /* [retval][out] */ __RPC__out HSTRING* key);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Value)(__RPC__in __FIKeyValuePair_2_HSTRING_HSTRING* This,
+                                                          /* [retval][out] */ __RPC__deref_out_opt HSTRING* value);
     END_INTERFACE
 } __FIKeyValuePair_2_HSTRING_HSTRINGVtbl;
 
@@ -2593,11 +2590,10 @@ typedef struct __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRINGVtbl
     HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
     (__RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [out] */ __RPC__out TrustLevel* trustLevel);
 
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Current)(
-        __RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This,
-        /* [retval][out] */ __RPC__out __FIKeyValuePair_2_HSTRING_HSTRING** current);
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_HasCurrent)(
-        __RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Current)(__RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This,
+                                                            /* [retval][out] */ __RPC__out __FIKeyValuePair_2_HSTRING_HSTRING** current);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_HasCurrent)(__RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This,
+                                                               /* [retval][out] */ __RPC__out boolean* hasCurrent);
     HRESULT(STDMETHODCALLTYPE* MoveNext)
     (__RPC__in __FIIterator_1___FIKeyValuePair_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out boolean* hasCurrent);
     HRESULT(STDMETHODCALLTYPE* GetMany)
@@ -2752,8 +2748,8 @@ typedef struct __FIMapView_2_HSTRING_HSTRINGVtbl
     (__RPC__in __FIMapView_2_HSTRING_HSTRING* This,
      /* [in] */ __RPC__in HSTRING key,
      /* [retval][out] */ __RPC__deref_out_opt HSTRING* value);
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(
-        __RPC__in __FIMapView_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out unsigned int* size);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(__RPC__in __FIMapView_2_HSTRING_HSTRING* This,
+                                                         /* [retval][out] */ __RPC__out unsigned int* size);
     HRESULT(STDMETHODCALLTYPE* HasKey)
     (__RPC__in __FIMapView_2_HSTRING_HSTRING* This, /* [in] */ __RPC__in HSTRING key, /* [retval][out] */ __RPC__out boolean* found);
     HRESULT(STDMETHODCALLTYPE* Split)
@@ -2820,8 +2816,8 @@ typedef struct __FIMap_2_HSTRING_HSTRINGVtbl
     (__RPC__in __FIMap_2_HSTRING_HSTRING* This,
      /* [in] */ HSTRING key,
      /* [retval][out] */ __RPC__deref_out_opt HSTRING** value);
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(
-        __RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [retval][out] */ __RPC__out unsigned int* size);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Size)(__RPC__in __FIMap_2_HSTRING_HSTRING* This,
+                                                         /* [retval][out] */ __RPC__out unsigned int* size);
     HRESULT(STDMETHODCALLTYPE* HasKey)
     (__RPC__in __FIMap_2_HSTRING_HSTRING* This, /* [in] */ HSTRING key, /* [retval][out] */ __RPC__out boolean* found);
     HRESULT(STDMETHODCALLTYPE* GetView)
@@ -3601,13 +3597,11 @@ typedef struct __x_ABI_CComponent_CIEventsStaticsVtbl
     HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
     (__RPC__in __x_ABI_CComponent_CIEventsStatics* This,
      /* [OUT ] */ __RPC__out TrustLevel* trustLevel);
-    /* [eventadd] */ HRESULT(STDMETHODCALLTYPE* add_StaticEvent)(
-        __x_ABI_CComponent_CIEventsStatics* This,
-        /* [in] */ __FIEventHandler_1_int* handler,
-        /* [retval, out] */ EventRegistrationToken* cookie);
-    /* [eventremove] */ HRESULT(STDMETHODCALLTYPE* remove_StaticEvent)(
-        __x_ABI_CComponent_CIEventsStatics* This,
-        /* [in] */ EventRegistrationToken cookie);
+    /* [eventadd] */ HRESULT(STDMETHODCALLTYPE* add_StaticEvent)(__x_ABI_CComponent_CIEventsStatics* This,
+                                                                 /* [in] */ __FIEventHandler_1_int* handler,
+                                                                 /* [retval, out] */ EventRegistrationToken* cookie);
+    /* [eventremove] */ HRESULT(STDMETHODCALLTYPE* remove_StaticEvent)(__x_ABI_CComponent_CIEventsStatics* This,
+                                                                       /* [in] */ EventRegistrationToken cookie);
     HRESULT(STDMETHODCALLTYPE* RaiseStaticEvent)
     (__x_ABI_CComponent_CIEventsStatics* This,
      /* [in] */ int value);
@@ -3686,33 +3680,27 @@ typedef struct __x_ABI_CComponent_CIEventsVtbl
     HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
     (__RPC__in __x_ABI_CComponent_CIEvents* This,
      /* [OUT ] */ __RPC__out TrustLevel* trustLevel);
-    /* [eventadd] */ HRESULT(STDMETHODCALLTYPE* add_SimpleEvent)(
-        __x_ABI_CComponent_CIEvents* This,
-        /* [in] */ __FIEventHandler_1_int* handler,
-        /* [retval, out] */ EventRegistrationToken* cookie);
-    /* [eventremove] */ HRESULT(STDMETHODCALLTYPE* remove_SimpleEvent)(
-        __x_ABI_CComponent_CIEvents* This,
-        /* [in] */ EventRegistrationToken cookie);
+    /* [eventadd] */ HRESULT(STDMETHODCALLTYPE* add_SimpleEvent)(__x_ABI_CComponent_CIEvents* This,
+                                                                 /* [in] */ __FIEventHandler_1_int* handler,
+                                                                 /* [retval, out] */ EventRegistrationToken* cookie);
+    /* [eventremove] */ HRESULT(STDMETHODCALLTYPE* remove_SimpleEvent)(__x_ABI_CComponent_CIEvents* This,
+                                                                       /* [in] */ EventRegistrationToken cookie);
     HRESULT(STDMETHODCALLTYPE* RaiseSimpleEvent)
     (__x_ABI_CComponent_CIEvents* This,
      /* [in] */ int value);
-    /* [eventadd] */ HRESULT(STDMETHODCALLTYPE* add_TypedEvent)(
-        __x_ABI_CComponent_CIEvents* This,
-        /* [in] */ __FITypedEventHandler_2_Component__CEvents_int* handler,
-        /* [retval, out] */ EventRegistrationToken* cookie);
-    /* [eventremove] */ HRESULT(STDMETHODCALLTYPE* remove_TypedEvent)(
-        __x_ABI_CComponent_CIEvents* This,
-        /* [in] */ EventRegistrationToken cookie);
+    /* [eventadd] */ HRESULT(STDMETHODCALLTYPE* add_TypedEvent)(__x_ABI_CComponent_CIEvents* This,
+                                                                /* [in] */ __FITypedEventHandler_2_Component__CEvents_int* handler,
+                                                                /* [retval, out] */ EventRegistrationToken* cookie);
+    /* [eventremove] */ HRESULT(STDMETHODCALLTYPE* remove_TypedEvent)(__x_ABI_CComponent_CIEvents* This,
+                                                                      /* [in] */ EventRegistrationToken cookie);
     HRESULT(STDMETHODCALLTYPE* RaiseTypedEvent)
     (__x_ABI_CComponent_CIEvents* This,
      /* [in] */ int value);
-    /* [eventadd] */ HRESULT(STDMETHODCALLTYPE* add_CustomEvent)(
-        __x_ABI_CComponent_CIEvents* This,
-        /* [in] */ __x_ABI_CComponent_CICustomDelegate* handler,
-        /* [retval, out] */ EventRegistrationToken* cookie);
-    /* [eventremove] */ HRESULT(STDMETHODCALLTYPE* remove_CustomEvent)(
-        __x_ABI_CComponent_CIEvents* This,
-        /* [in] */ EventRegistrationToken cookie);
+    /* [eventadd] */ HRESULT(STDMETHODCALLTYPE* add_CustomEvent)(__x_ABI_CComponent_CIEvents* This,
+                                                                 /* [in] */ __x_ABI_CComponent_CICustomDelegate* handler,
+                                                                 /* [retval, out] */ EventRegistrationToken* cookie);
+    /* [eventremove] */ HRESULT(STDMETHODCALLTYPE* remove_CustomEvent)(__x_ABI_CComponent_CIEvents* This,
+                                                                       /* [in] */ EventRegistrationToken cookie);
     HRESULT(STDMETHODCALLTYPE* RaiseCustomEvent)
     (__x_ABI_CComponent_CIEvents* This,
      /* [in] */ int value);
@@ -3818,13 +3806,11 @@ typedef struct __x_ABI_CComponent_CIStaticVtbl
     HRESULT(STDMETHODCALLTYPE* GetTrustLevel)
     (__RPC__in __x_ABI_CComponent_CIStatic* This,
      /* [OUT ] */ __RPC__out TrustLevel* trustLevel);
-    /* [eventadd] */ HRESULT(STDMETHODCALLTYPE* add_StaticEvent)(
-        __x_ABI_CComponent_CIStatic* This,
-        /* [in] */ __FIEventHandler_1_int* handler,
-        /* [retval, out] */ EventRegistrationToken* cookie);
-    /* [eventremove] */ HRESULT(STDMETHODCALLTYPE* remove_StaticEvent)(
-        __x_ABI_CComponent_CIStatic* This,
-        /* [in] */ EventRegistrationToken cookie);
+    /* [eventadd] */ HRESULT(STDMETHODCALLTYPE* add_StaticEvent)(__x_ABI_CComponent_CIStatic* This,
+                                                                 /* [in] */ __FIEventHandler_1_int* handler,
+                                                                 /* [retval, out] */ EventRegistrationToken* cookie);
+    /* [eventremove] */ HRESULT(STDMETHODCALLTYPE* remove_StaticEvent)(__x_ABI_CComponent_CIStatic* This,
+                                                                       /* [in] */ EventRegistrationToken cookie);
     HRESULT(STDMETHODCALLTYPE* RaiseStaticEvent)
     (__x_ABI_CComponent_CIStatic* This,
      /* [in] */ int value);

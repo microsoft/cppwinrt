@@ -113,11 +113,10 @@ namespace
         std::array<IKeyValuePair<int, int>, 3> array;
         REQUIRE(3 == values.First().GetMany(array));
 
-        std::sort(
-            array.begin(),
-            array.end(),
-            [](IKeyValuePair<int, int> const& left, IKeyValuePair<int, int> const& right)
-            { return left.Key() < right.Key(); });
+        std::sort(array.begin(),
+                  array.end(),
+                  [](IKeyValuePair<int, int> const& left, IKeyValuePair<int, int> const& right)
+                  { return left.Key() < right.Key(); });
 
         REQUIRE(array[0].Key() == 1);
         REQUIRE(array[0].Value() == 10);

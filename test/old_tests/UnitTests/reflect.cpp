@@ -206,7 +206,8 @@ TEST_CASE("find property")
     auto find_bool_prop = [&found, &name](auto prop)
     {
         using MetaProperty = decltype(prop);
-        if constexpr (reflect::is_property_readable_v<MetaProperty> && !reflect::is_property_writable_v<MetaProperty> && !reflect::is_property_static_v<MetaProperty>)
+        if constexpr (reflect::is_property_readable_v<MetaProperty> && !reflect::is_property_writable_v<MetaProperty> &&
+                      !reflect::is_property_static_v<MetaProperty>)
         {
             REQUIRE(found == false);
             found = true;

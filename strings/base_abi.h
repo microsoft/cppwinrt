@@ -45,8 +45,12 @@ namespace winrt::impl
     {
         virtual int32_t __stdcall GetUnmarshalClass(
             guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, guid* pCid) noexcept = 0;
-        virtual int32_t __stdcall GetMarshalSizeMax(
-            guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, uint32_t* pSize) noexcept = 0;
+        virtual int32_t __stdcall GetMarshalSizeMax(guid const& riid,
+                                                    void* pv,
+                                                    uint32_t dwDestContext,
+                                                    void* pvDestContext,
+                                                    uint32_t mshlflags,
+                                                    uint32_t* pSize) noexcept = 0;
         virtual int32_t __stdcall MarshalInterface(
             void* pStm, guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags) noexcept = 0;
         virtual int32_t __stdcall UnmarshalInterface(void* pStm, guid const& riid, void** ppv) noexcept = 0;
@@ -90,8 +94,10 @@ namespace winrt::impl
 
     struct WINRT_IMPL_NOVTABLE IRestrictedErrorInfo : unknown_abi
     {
-        virtual int32_t __stdcall GetErrorDetails(
-            bstr* description, int32_t* error, bstr* restrictedDescription, bstr* capabilitySid) noexcept = 0;
+        virtual int32_t __stdcall GetErrorDetails(bstr* description,
+                                                  int32_t* error,
+                                                  bstr* restrictedDescription,
+                                                  bstr* capabilitySid) noexcept = 0;
         virtual int32_t __stdcall GetReference(bstr* reference) noexcept = 0;
     };
 
@@ -116,12 +122,11 @@ namespace winrt::impl
 
     struct WINRT_IMPL_NOVTABLE IContextCallback : unknown_abi
     {
-        virtual int32_t __stdcall ContextCallback(
-            int32_t(__stdcall* callback)(com_callback_args*),
-            com_callback_args* args,
-            guid const& iid,
-            int method,
-            void* reserved) noexcept = 0;
+        virtual int32_t __stdcall ContextCallback(int32_t(__stdcall* callback)(com_callback_args*),
+                                                  com_callback_args* args,
+                                                  guid const& iid,
+                                                  int method,
+                                                  void* reserved) noexcept = 0;
     };
 
     struct WINRT_IMPL_NOVTABLE IServerSecurity : unknown_abi

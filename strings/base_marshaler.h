@@ -50,8 +50,12 @@ namespace winrt::impl
                 return error_bad_alloc;
             }
 
-            int32_t __stdcall GetMarshalSizeMax(
-                guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, uint32_t* pSize) noexcept final
+            int32_t __stdcall GetMarshalSizeMax(guid const& riid,
+                                                void* pv,
+                                                uint32_t dwDestContext,
+                                                void* pvDestContext,
+                                                uint32_t mshlflags,
+                                                uint32_t* pSize) noexcept final
             {
                 if (m_marshaler)
                 {

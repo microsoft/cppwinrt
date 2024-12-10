@@ -141,25 +141,24 @@ namespace winrt::FastForwarderTest::implementation
         }
 
         // Interface3
-        Struct BigMethod(
-            bool arg1,
-            char16_t arg2,
-            int16_t arg3,
-            int32_t arg4,
-            int64_t arg5,
-            uint8_t arg6,
-            uint16_t arg7,
-            uint32_t arg8,
-            uint64_t arg9,
-            float arg10,
-            double arg11,
-            float arg12,
-            double arg13,
-            float arg14,
-            double arg15,
-            float arg16,
-            double arg17,
-            float arg18)
+        Struct BigMethod(bool arg1,
+                         char16_t arg2,
+                         int16_t arg3,
+                         int32_t arg4,
+                         int64_t arg5,
+                         uint8_t arg6,
+                         uint16_t arg7,
+                         uint32_t arg8,
+                         uint64_t arg9,
+                         float arg10,
+                         double arg11,
+                         float arg12,
+                         double arg13,
+                         float arg14,
+                         double arg15,
+                         float arg16,
+                         double arg17,
+                         float arg18)
         {
             REQUIRE(arg1 == true);
             REQUIRE(arg2 == L'2');

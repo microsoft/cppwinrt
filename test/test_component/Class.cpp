@@ -73,10 +73,9 @@ namespace winrt::test_component::implementation
             throw hresult_error();
         }
     }
-    Class::Class(
-        Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& arg,
-        int32_t,
-        int32_t)
+    Class::Class(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& arg,
+                 int32_t,
+                 int32_t)
     {
         if (arg.First().Current().Key() != L"test")
         {
@@ -391,15 +390,14 @@ namespace winrt::test_component::implementation
         {
             Signed counter{ Signed::First };
 
-            std::generate(
-                value.begin(),
-                value.end() - 1,
-                [&]
-                {
-                    auto result = counter;
-                    counter = static_cast<Signed>(static_cast<int32_t>(counter) + 1);
-                    return result;
-                });
+            std::generate(value.begin(),
+                          value.end() - 1,
+                          [&]
+                          {
+                              auto result = counter;
+                              counter = static_cast<Signed>(static_cast<int32_t>(counter) + 1);
+                              return result;
+                          });
         }
     }
 

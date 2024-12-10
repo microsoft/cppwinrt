@@ -90,8 +90,8 @@ struct TestClipboard
     using ContentChanged_revoker =
         impl::factory_event_revoker<IClipboardStatics, &impl::abi_t<Windows::ApplicationModel::DataTransfer::IClipboardStatics>::remove_ContentChanged>;
 
-    static ContentChanged_revoker ContentChanged(
-        auto_revoke_t, const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>& changeHandler)
+    static ContentChanged_revoker ContentChanged(auto_revoke_t,
+                                                 const Windows::Foundation::EventHandler<Windows::Foundation::IInspectable>& changeHandler)
     {
         auto factory = GetStatics();
         return { factory, factory.ContentChanged(changeHandler) };
@@ -113,10 +113,9 @@ TEST_CASE("consuming instance events")
     ISplashScreen s = make<TestSplashScreen>();
     uint32_t count = 0;
 
-    SplashScreen::Dismissed_revoker // revoke type alias is present
-        revoker = s.Dismissed(
-            auto_revoke, // auto_revoke value is required
-            [&](auto&&...) { ++count; });
+    SplashScreen::Dismissed_revoker        // revoke type alias is present
+        revoker = s.Dismissed(auto_revoke, // auto_revoke value is required
+                              [&](auto&&...) { ++count; });
 
     REQUIRE(s.ImageLocation() == Rect{}); // fire event
     REQUIRE(count == 1);                  // handler was called
@@ -128,10 +127,9 @@ TEST_CASE("consuming instance events")
     REQUIRE(count == 1);                  // count is unchanged so handler was not called
 
     {
-        SplashScreen::Dismissed_revoker // revoke type alias is present
-            scoped = s.Dismissed(
-                auto_revoke, // auto_revoke value is required
-                [&](auto&&...) { ++count; });
+        SplashScreen::Dismissed_revoker       // revoke type alias is present
+            scoped = s.Dismissed(auto_revoke, // auto_revoke value is required
+                                 [&](auto&&...) { ++count; });
 
         REQUIRE(s.ImageLocation() == Rect{}); // fire event
         REQUIRE(count == 2);                  // handler was called
@@ -151,10 +149,9 @@ TEST_CASE("consume factory events")
 {
     uint32_t count = 0;
 
-    Clipboard::ContentChanged_revoker // revoke type alias is present
-        revoker = TestClipboard::ContentChanged(
-            auto_revoke, // auto_revoke value is required
-            [&](auto&&...) { ++count; });
+    Clipboard::ContentChanged_revoker                        // revoke type alias is present
+        revoker = TestClipboard::ContentChanged(auto_revoke, // auto_revoke value is required
+                                                [&](auto&&...) { ++count; });
 
     TestClipboard::SetContent(nullptr);
 
@@ -167,10 +164,9 @@ TEST_CASE("consume factory events")
     REQUIRE(count == 1); // count is unchanged so handler was not called
 
     {
-        Clipboard::ContentChanged_revoker // revoke type alias is present
-            scoped = TestClipboard::ContentChanged(
-                auto_revoke, // auto_revoke value is required
-                [&](auto&&...) { ++count; });
+        Clipboard::ContentChanged_revoker                       // revoke type alias is present
+            scoped = TestClipboard::ContentChanged(auto_revoke, // auto_revoke value is required
+                                                   [&](auto&&...) { ++count; });
 
         TestClipboard::SetContent(nullptr); // fire event
         REQUIRE(count == 2);                // handler was called

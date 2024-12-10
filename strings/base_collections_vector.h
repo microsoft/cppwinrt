@@ -7,12 +7,11 @@ namespace winrt::impl
     template <typename Container, typename ThreadingBase = single_threaded_collection_base>
     struct inspectable_observable_vector
         : observable_vector_base<inspectable_observable_vector<Container, ThreadingBase>, Windows::Foundation::IInspectable>,
-          implements<
-              inspectable_observable_vector<Container, ThreadingBase>,
-              wfc::IObservableVector<Windows::Foundation::IInspectable>,
-              wfc::IVector<Windows::Foundation::IInspectable>,
-              wfc::IVectorView<Windows::Foundation::IInspectable>,
-              wfc::IIterable<Windows::Foundation::IInspectable>>,
+          implements<inspectable_observable_vector<Container, ThreadingBase>,
+                     wfc::IObservableVector<Windows::Foundation::IInspectable>,
+                     wfc::IVector<Windows::Foundation::IInspectable>,
+                     wfc::IVectorView<Windows::Foundation::IInspectable>,
+                     wfc::IIterable<Windows::Foundation::IInspectable>>,
           ThreadingBase
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
@@ -45,16 +44,15 @@ namespace winrt::impl
     template <typename T, typename Container, typename ThreadingBase = single_threaded_collection_base>
     struct convertible_observable_vector
         : observable_vector_base<convertible_observable_vector<T, Container, ThreadingBase>, T>,
-          implements<
-              convertible_observable_vector<T, Container, ThreadingBase>,
-              wfc::IObservableVector<T>,
-              wfc::IVector<T>,
-              wfc::IVectorView<T>,
-              wfc::IIterable<T>,
-              wfc::IObservableVector<Windows::Foundation::IInspectable>,
-              wfc::IVector<Windows::Foundation::IInspectable>,
-              wfc::IVectorView<Windows::Foundation::IInspectable>,
-              wfc::IIterable<Windows::Foundation::IInspectable>>,
+          implements<convertible_observable_vector<T, Container, ThreadingBase>,
+                     wfc::IObservableVector<T>,
+                     wfc::IVector<T>,
+                     wfc::IVectorView<T>,
+                     wfc::IIterable<T>,
+                     wfc::IObservableVector<Windows::Foundation::IInspectable>,
+                     wfc::IVector<Windows::Foundation::IInspectable>,
+                     wfc::IVectorView<Windows::Foundation::IInspectable>,
+                     wfc::IIterable<Windows::Foundation::IInspectable>>,
           ThreadingBase
     {
         static_assert(!std::is_same_v<T, Windows::Foundation::IInspectable>);
@@ -160,11 +158,10 @@ namespace winrt::impl
 
             uint32_t const actual = (std::min)(static_cast<uint32_t>(m_values.size() - startIndex), values.size());
 
-            std::transform(
-                m_values.begin() + startIndex,
-                m_values.begin() + startIndex + actual,
-                values.begin(),
-                [&](auto&& value) { return box_value(value); });
+            std::transform(m_values.begin() + startIndex,
+                           m_values.begin() + startIndex + actual,
+                           values.begin(),
+                           [&](auto&& value) { return box_value(value); });
 
             return actual;
         }
@@ -217,11 +214,10 @@ namespace winrt::impl
             Container new_values;
             new_values.reserve(values.size());
 
-            std::transform(
-                values.begin(),
-                values.end(),
-                std::back_inserter(new_values),
-                [&](auto&& value) { return unbox_value<T>(value); });
+            std::transform(values.begin(),
+                           values.end(),
+                           std::back_inserter(new_values),
+                           [&](auto&& value) { return unbox_value<T>(value); });
 
             base_type::ReplaceAll(std::move(new_values));
         }

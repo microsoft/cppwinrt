@@ -5,7 +5,8 @@
 #include "winrt/Composable.h"
 
 static_assert(sizeof(ABI::Composable::TestStructCodeGen) == sizeof(winrt::Composable::TestStructCodeGen));
-static_assert(std::alignment_of_v<ABI::Composable::TestStructCodeGen> == std::alignment_of_v<winrt::Composable::TestStructCodeGen>);
+static_assert(std::alignment_of_v<ABI::Composable::TestStructCodeGen> ==
+              std::alignment_of_v<winrt::Composable::TestStructCodeGen>);
 
 namespace wrl = Microsoft::WRL;
 

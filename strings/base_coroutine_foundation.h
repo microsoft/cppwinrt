@@ -65,7 +65,8 @@ namespace winrt::impl
     {
         check_sta_blocking_wait();
         auto const milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(timeout).count();
-        WINRT_ASSERT((milliseconds >= 0) && (static_cast<uint64_t>(milliseconds) < 0xFFFFFFFFull)); // Within uint32_t range and not INFINITE
+        WINRT_ASSERT((milliseconds >= 0) &&
+                     (static_cast<uint64_t>(milliseconds) < 0xFFFFFFFFull)); // Within uint32_t range and not INFINITE
         return wait_for_completed(async, static_cast<uint32_t>(milliseconds));
     }
 
@@ -251,10 +252,9 @@ namespace winrt::impl
     auto consume_Windows_Foundation_IAsyncOperationWithProgress<D, TResult, TProgress>::wait_for(
         Windows::Foundation::TimeSpan const& timeout) const
     {
-        return impl::wait_for(
-            static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(
-                static_cast<D const&>(*this)),
-            timeout);
+        return impl::wait_for(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(
+                                  static_cast<D const&>(*this)),
+                              timeout);
     }
 } // namespace winrt::impl
 
@@ -595,9 +595,8 @@ namespace winrt::impl
         void unhandled_exception() noexcept
         {
             slim_lock_guard const guard(m_lock);
-            WINRT_ASSERT(
-                m_status.load(std::memory_order_relaxed) == AsyncStatus::Started ||
-                m_status.load(std::memory_order_relaxed) == AsyncStatus::Canceled);
+            WINRT_ASSERT(m_status.load(std::memory_order_relaxed) == AsyncStatus::Started ||
+                         m_status.load(std::memory_order_relaxed) == AsyncStatus::Canceled);
             m_exception = std::current_exception();
 
             try

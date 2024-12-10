@@ -42,7 +42,8 @@ struct PropertyData
 struct __declspec(uuid("c7da92da-3bc9-4312-8a93-46f480663980")) object_visualizer
     : winrt::implements<object_visualizer, ::IUnknown>
 {
-    object_visualizer(Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression, ObjectType objectType)
+    object_visualizer(Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
+                      ObjectType objectType)
     {
         m_pVisualizedExpression = make_com_ptr(pVisualizedExpression);
         m_objectType = objectType;
@@ -64,12 +65,12 @@ struct __declspec(uuid("c7da92da-3bc9-4312-8a93-46f480663980")) object_visualize
         _Out_ Microsoft::VisualStudio::Debugger::DkmArray<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pInitialChildren,
         _Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext** ppEnumContext);
 
-    HRESULT GetItems(
-        _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
-        _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext* pEnumContext,
-        _In_ UINT32 StartIndex,
-        _In_ UINT32 Count,
-        _Out_ Microsoft::VisualStudio::Debugger::DkmArray<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pItems);
+    HRESULT GetItems(_In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
+                     _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext* pEnumContext,
+                     _In_ UINT32 StartIndex,
+                     _In_ UINT32 Count,
+                     _Out_ Microsoft::VisualStudio::Debugger::DkmArray<
+                         Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pItems);
 
 private:
     void GetPropertyData();

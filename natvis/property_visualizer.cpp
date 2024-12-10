@@ -7,11 +7,10 @@ using namespace Microsoft::VisualStudio::Debugger::Evaluation;
 
 using namespace winmd::reader;
 
-HRESULT property_visualizer::GetChildren(
-    _In_ UINT32 InitialRequestSize,
-    _In_ DkmInspectionContext* pInspectionContext,
-    _Out_ DkmArray<DkmChildVisualizedExpression*>* pVisualizedInitialChildren,
-    _Deref_out_ DkmEvaluationResultEnumContext** ppEnumContext)
+HRESULT property_visualizer::GetChildren(_In_ UINT32 InitialRequestSize,
+                                         _In_ DkmInspectionContext* pInspectionContext,
+                                         _Out_ DkmArray<DkmChildVisualizedExpression*>* pVisualizedInitialChildren,
+                                         _Deref_out_ DkmEvaluationResultEnumContext** ppEnumContext)
 {
     // Forward this on to the EE.
     CAutoDkmArray<DkmEvaluationResult*> initialChildren;
@@ -37,17 +36,16 @@ HRESULT property_visualizer::GetChildren(
         IF_FAIL_RET(DkmPointerValueHome::Create(pCurrSuccessEvaluationResult->Address()->Value(), pPointerValueHome.put()));
 
         winrt::com_ptr<DkmChildVisualizedExpression> pChildVisualizedExpression;
-        IF_FAIL_RET(DkmChildVisualizedExpression::Create(
-            pInspectionContext,
-            pChildVisualizedExpression->Parent()->VisualizerId(),
-            pChildVisualizedExpression->Parent()->SourceId(),
-            pChildVisualizedExpression->Parent()->StackFrame(),
-            pPointerValueHome.get(),
-            pCurrEvaluationResult.get(),
-            m_pVisualizedExpression.get(), // (parent)
-            i,
-            this,
-            pChildVisualizedExpression.put()));
+        IF_FAIL_RET(DkmChildVisualizedExpression::Create(pInspectionContext,
+                                                         pChildVisualizedExpression->Parent()->VisualizerId(),
+                                                         pChildVisualizedExpression->Parent()->SourceId(),
+                                                         pChildVisualizedExpression->Parent()->StackFrame(),
+                                                         pPointerValueHome.get(),
+                                                         pCurrEvaluationResult.get(),
+                                                         m_pVisualizedExpression.get(), // (parent)
+                                                         i,
+                                                         this,
+                                                         pChildVisualizedExpression.put()));
 
         pVisualizedInitialChildren->Members[i] = pChildVisualizedExpression.detach();
     }
@@ -55,11 +53,10 @@ HRESULT property_visualizer::GetChildren(
     return S_OK;
 }
 
-HRESULT property_visualizer::GetItems(
-    _In_ DkmEvaluationResultEnumContext* pEnumContext,
-    _In_ UINT32 StartIndex,
-    _In_ UINT32 Count,
-    _Out_ DkmArray<DkmChildVisualizedExpression*>* pItems)
+HRESULT property_visualizer::GetItems(_In_ DkmEvaluationResultEnumContext* pEnumContext,
+                                      _In_ UINT32 StartIndex,
+                                      _In_ UINT32 Count,
+                                      _Out_ DkmArray<DkmChildVisualizedExpression*>* pItems)
 {
     // Forward this on to the EE.
     CAutoDkmArray<DkmEvaluationResult*> evaluationResults;
@@ -84,17 +81,16 @@ HRESULT property_visualizer::GetItems(
         IF_FAIL_RET(DkmPointerValueHome::Create(address ? address->Value() : 0, pPointerValueHome.put()));
 
         winrt::com_ptr<DkmChildVisualizedExpression> pChildVisualizedExpression;
-        IF_FAIL_RET(DkmChildVisualizedExpression::Create(
-            m_pVisualizedExpression->InspectionContext(),
-            m_pVisualizedExpression->Parent()->VisualizerId(),
-            m_pVisualizedExpression->Parent()->SourceId(),
-            m_pVisualizedExpression->Parent()->StackFrame(),
-            pPointerValueHome.get(),
-            pCurrEvaluationResult.get(),
-            m_pVisualizedExpression.get(), // (parent)
-            i,
-            this,
-            pChildVisualizedExpression.put()));
+        IF_FAIL_RET(DkmChildVisualizedExpression::Create(m_pVisualizedExpression->InspectionContext(),
+                                                         m_pVisualizedExpression->Parent()->VisualizerId(),
+                                                         m_pVisualizedExpression->Parent()->SourceId(),
+                                                         m_pVisualizedExpression->Parent()->StackFrame(),
+                                                         pPointerValueHome.get(),
+                                                         pCurrEvaluationResult.get(),
+                                                         m_pVisualizedExpression.get(), // (parent)
+                                                         i,
+                                                         this,
+                                                         pChildVisualizedExpression.put()));
 
         pItems->Members[i] = pChildVisualizedExpression.detach();
     }

@@ -69,7 +69,9 @@ namespace winrt::impl
         return 0;
     };
 
-    [[nodiscard]] inline bool resume_apartment_sync(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure)
+    [[nodiscard]] inline bool resume_apartment_sync(com_ptr<IContextCallback> const& context,
+                                                    coroutine_handle<> handle,
+                                                    int32_t* failure)
     {
         com_callback_args args{};
         args.data = handle.address();

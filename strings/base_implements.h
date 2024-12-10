@@ -70,8 +70,8 @@ namespace winrt::impl
     template <typename T> using uncloak = typename uncloak_base<T>::type;
 
     template <typename I>
-    struct is_cloaked
-        : std::disjunction<std::is_same<Windows::Foundation::IInspectable, I>, std::negation<std::is_base_of<Windows::Foundation::IInspectable, I>>>
+    struct is_cloaked : std::disjunction<std::is_same<Windows::Foundation::IInspectable, I>,
+                                         std::negation<std::is_base_of<Windows::Foundation::IInspectable, I>>>
     {};
 
     template <typename I> struct is_cloaked<cloaked<I>> : std::true_type
@@ -161,7 +161,8 @@ namespace winrt::impl
     struct nested_implements<First, Rest...>
         : std::conditional_t<is_implements_v<First>, impl::identity<First>, nested_implements<Rest...>>
     {
-        static_assert(!is_implements_v<First> || !std::disjunction_v<is_implements<Rest>...>, "Duplicate nested implements found");
+        static_assert(!is_implements_v<First> || !std::disjunction_v<is_implements<Rest>...>,
+                      "Duplicate nested implements found");
     };
 
     template <typename D, typename Dummy = std::void_t<>, typename... I>
@@ -295,9 +296,9 @@ namespace winrt::impl
     template <template <typename> class Predicate, typename T, typename... Rest>
     struct filter_impl<Predicate, T, Rest...>
     {
-        using type = typename interface_list_append_impl<
-            std::conditional_t<Predicate<T>::value, interface_list<winrt::impl::uncloak<T>>, interface_list<>>,
-            typename filter_impl<Predicate, Rest...>::type>::type;
+        using type =
+            typename interface_list_append_impl<std::conditional_t<Predicate<T>::value, interface_list<winrt::impl::uncloak<T>>, interface_list<>>,
+                                                typename filter_impl<Predicate, Rest...>::type>::type;
     };
 
     template <template <typename> class Predicate, typename... T, typename... Rest>
@@ -498,9 +499,8 @@ namespace winrt::impl
     template <typename D, typename I> struct producer<D, I, std::enable_if_t<is_classic_com_interface<I>::value>> : I
     {
 #ifndef WINRT_IMPL_IUNKNOWN_DEFINED
-        static_assert(
-            std::is_void_v<I> /* dependent_false */,
-            "To implement classic COM interfaces, you must #include <unknwn.h> before including C++/WinRT headers.");
+        static_assert(std::is_void_v<I> /* dependent_false */,
+                      "To implement classic COM interfaces, you must #include <unknwn.h> before including C++/WinRT headers.");
 #endif
     };
 
@@ -1175,9 +1175,9 @@ namespace winrt::impl
                     return decode_weak_ref(count_or_pointer)->get_source();
                 }
 
-                com_ptr<weak_ref_t> weak_ref(
-                    new (std::nothrow) weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer)),
-                    take_ownership_from_abi);
+                com_ptr<weak_ref_t> weak_ref(new (std::nothrow)
+                                                 weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer)),
+                                             take_ownership_from_abi);
 
                 if (!weak_ref)
                 {
@@ -1510,9 +1510,8 @@ WINRT_EXPORT namespace winrt
 
         hstring GetRuntimeClassName() const override
         {
-            static_assert(
-                std::is_base_of_v<implements_type, D>,
-                "Class must derive from implements<> or ClassT<> where the first template parameter is the derived class name, e.g. struct D : implements<D, ...>");
+            static_assert(std::is_base_of_v<implements_type, D>,
+                          "Class must derive from implements<> or ClassT<> where the first template parameter is the derived class name, e.g. struct D : implements<D, ...>");
             return impl::runtime_class_name<typename impl::implements_default_interface<D>::type>::get();
         }
 

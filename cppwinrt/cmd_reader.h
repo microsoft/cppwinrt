@@ -80,12 +80,11 @@ namespace cppwinrt
         optional
     };
 
-    inline void add_files_from_xml(
-        std::set<std::string>& files,
-        std::string const& sdk_version,
-        std::filesystem::path const& xml_path,
-        std::filesystem::path const& sdk_path,
-        xml_requirement xml_path_requirement)
+    inline void add_files_from_xml(std::set<std::string>& files,
+                                   std::string const& sdk_version,
+                                   std::filesystem::path const& xml_path,
+                                   std::filesystem::path const& sdk_path,
+                                   xml_requirement xml_path_requirement)
     {
         com_ptr<IStream> stream;
 
@@ -144,14 +143,13 @@ namespace cppwinrt
     {
         HKEY key;
 
-        if (0 != RegOpenKeyExW(
-                     HKEY_LOCAL_MACHINE,
-                     L"SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots",
-                     0,
-                     // https://task.ms/29349404 - The SDK sometimes stores the 64 bit location into KitsRoot10 which is
-                     // wrong, this breaks 64-bit cppwinrt.exe, so work around this by forcing to use the WoW64 hive.
-                     KEY_READ | KEY_WOW64_32KEY,
-                     &key))
+        if (0 != RegOpenKeyExW(HKEY_LOCAL_MACHINE,
+                               L"SOFTWARE\\Microsoft\\Windows Kits\\Installed Roots",
+                               0,
+                               // https://task.ms/29349404 - The SDK sometimes stores the 64 bit location into KitsRoot10 which is
+                               // wrong, this breaks 64-bit cppwinrt.exe, so work around this by forcing to use the WoW64 hive.
+                               KEY_READ | KEY_WOW64_32KEY,
+                               &key))
         {
             throw std::invalid_argument("Could not find the Windows SDK in the registry");
         }
@@ -562,11 +560,10 @@ namespace cppwinrt
         {
             std::filesystem::path response_path{ std::string{ arg } };
             std::string extension = response_path.extension().generic_string();
-            std::transform(
-                extension.begin(),
-                extension.end(),
-                extension.begin(),
-                [](auto c) { return static_cast<unsigned char>(::tolower(c)); });
+            std::transform(extension.begin(),
+                           extension.end(),
+                           extension.begin(),
+                           [](auto c) { return static_cast<unsigned char>(::tolower(c)); });
 
             // Check if misuse of @ prefix, so if directory or metadata file instead of response file.
             if (is_directory(response_path) || extension == ".winmd")

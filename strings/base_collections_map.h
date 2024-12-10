@@ -5,12 +5,11 @@ namespace winrt::impl
     using multi_threaded_map = map_impl<K, V, Container, multi_threaded_collection_base>;
 
     template <typename K, typename V, typename Container, typename ThreadingBase>
-    struct observable_map_impl : implements<
-                                     observable_map_impl<K, V, Container, ThreadingBase>,
-                                     wfc::IObservableMap<K, V>,
-                                     wfc::IMap<K, V>,
-                                     wfc::IMapView<K, V>,
-                                     wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+    struct observable_map_impl : implements<observable_map_impl<K, V, Container, ThreadingBase>,
+                                            wfc::IObservableMap<K, V>,
+                                            wfc::IMap<K, V>,
+                                            wfc::IMapView<K, V>,
+                                            wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
                                  observable_map_base<observable_map_impl<K, V, Container, ThreadingBase>, K, V>,
                                  ThreadingBase
     {

@@ -38,11 +38,10 @@ namespace winrt::impl
     }
 
     template <typename T, size_t LeftSize, size_t RightSize, size_t... LeftIndex, size_t... RightIndex>
-    constexpr std::array<T, LeftSize + RightSize> concat(
-        [[maybe_unused]] std::array<T, LeftSize> const& left,
-        [[maybe_unused]] std::array<T, RightSize> const& right,
-        std::index_sequence<LeftIndex...> const,
-        std::index_sequence<RightIndex...> const) noexcept
+    constexpr std::array<T, LeftSize + RightSize> concat([[maybe_unused]] std::array<T, LeftSize> const& left,
+                                                         [[maybe_unused]] std::array<T, RightSize> const& right,
+                                                         std::index_sequence<LeftIndex...> const,
+                                                         std::index_sequence<RightIndex...> const) noexcept
     {
         return { left[LeftIndex]..., right[RightIndex]... };
     }
@@ -90,11 +89,10 @@ namespace winrt::impl
     }
 
     template <typename T, size_t LS, size_t RS, size_t... LI, size_t... RI>
-    constexpr std::array<T, LS + RS - 1> zconcat_base(
-        std::array<T, LS> const& left,
-        std::array<T, RS> const& right,
-        std::index_sequence<LI...> const,
-        std::index_sequence<RI...> const) noexcept
+    constexpr std::array<T, LS + RS - 1> zconcat_base(std::array<T, LS> const& left,
+                                                      std::array<T, RS> const& right,
+                                                      std::index_sequence<LI...> const,
+                                                      std::index_sequence<RI...> const) noexcept
     {
         return { left[LI]..., right[RI]..., T{} };
     }
@@ -149,18 +147,17 @@ namespace winrt::impl
 
     constexpr auto to_array(guid const& value) noexcept
     {
-        return combine(
-            to_array(value.Data1),
-            to_array(value.Data2),
-            to_array(value.Data3),
-            std::array<uint8_t, 8>{ value.Data4[0],
-                                    value.Data4[1],
-                                    value.Data4[2],
-                                    value.Data4[3],
-                                    value.Data4[4],
-                                    value.Data4[5],
-                                    value.Data4[6],
-                                    value.Data4[7] });
+        return combine(to_array(value.Data1),
+                       to_array(value.Data2),
+                       to_array(value.Data3),
+                       std::array<uint8_t, 8>{ value.Data4[0],
+                                               value.Data4[1],
+                                               value.Data4[2],
+                                               value.Data4[3],
+                                               value.Data4[4],
+                                               value.Data4[5],
+                                               value.Data4[6],
+                                               value.Data4[7] });
     }
 
     template <typename T> constexpr T to_hex_digit(uint8_t value) noexcept
@@ -186,20 +183,19 @@ namespace winrt::impl
 
     template <typename T> constexpr auto to_array(guid const& value) noexcept
     {
-        return combine(
-            std::array<T, 1>{ '{' },
-            uint32_to_hex<T>(value.Data1),
-            std::array<T, 1>{ '-' },
-            uint16_to_hex<T>(value.Data2),
-            std::array<T, 1>{ '-' },
-            uint16_to_hex<T>(value.Data3),
-            std::array<T, 1>{ '-' },
-            uint16_to_hex<T>(value.Data4[0] << 8 | value.Data4[1]),
-            std::array<T, 1>{ '-' },
-            uint16_to_hex<T>(value.Data4[2] << 8 | value.Data4[3]),
-            uint16_to_hex<T>(value.Data4[4] << 8 | value.Data4[5]),
-            uint16_to_hex<T>(value.Data4[6] << 8 | value.Data4[7]),
-            std::array<T, 1>{ '}' });
+        return combine(std::array<T, 1>{ '{' },
+                       uint32_to_hex<T>(value.Data1),
+                       std::array<T, 1>{ '-' },
+                       uint16_to_hex<T>(value.Data2),
+                       std::array<T, 1>{ '-' },
+                       uint16_to_hex<T>(value.Data3),
+                       std::array<T, 1>{ '-' },
+                       uint16_to_hex<T>(value.Data4[0] << 8 | value.Data4[1]),
+                       std::array<T, 1>{ '-' },
+                       uint16_to_hex<T>(value.Data4[2] << 8 | value.Data4[3]),
+                       uint16_to_hex<T>(value.Data4[4] << 8 | value.Data4[5]),
+                       uint16_to_hex<T>(value.Data4[6] << 8 | value.Data4[7]),
+                       std::array<T, 1>{ '}' });
     }
 
     constexpr uint32_t to_guid(uint8_t a, uint8_t b, uint8_t c, uint8_t d) noexcept
@@ -247,7 +243,8 @@ namespace winrt::impl
     }
 
     template <typename T, size_t Size, size_t... Index>
-    constexpr std::array<uint8_t, Size> char_to_byte_array(std::array<T, Size> const& value, std::index_sequence<Index...> const) noexcept
+    constexpr std::array<uint8_t, Size> char_to_byte_array(std::array<T, Size> const& value,
+                                                           std::index_sequence<Index...> const) noexcept
     {
         return { static_cast<uint8_t>(value[Index])... };
     }
@@ -272,8 +269,9 @@ namespace winrt::impl
         return (x & y) ^ (x & z) ^ (y & z);
     }
 
-    constexpr std::array<uint32_t, 5> process_msg_block(
-        uint8_t const* input, size_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
+    constexpr std::array<uint32_t, 5> process_msg_block(uint8_t const* input,
+                                                        size_t start_pos,
+                                                        std::array<uint32_t, 5> const& intermediate_hash) noexcept
     {
         uint32_t const K[4] = { 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xCA62C1D6 };
         std::array<uint32_t, 80> W = {};
@@ -348,8 +346,9 @@ namespace winrt::impl
     }
 
     template <size_t Size>
-    constexpr std::array<uint32_t, 5> process_msg_block(
-        std::array<uint8_t, Size> const& input, size_t start_pos, std::array<uint32_t, 5> const& intermediate_hash) noexcept
+    constexpr std::array<uint32_t, 5> process_msg_block(std::array<uint8_t, Size> const& input,
+                                                        size_t start_pos,
+                                                        std::array<uint32_t, 5> const& intermediate_hash) noexcept
     {
         return process_msg_block(input.data(), start_pos, intermediate_hash);
     }
@@ -367,10 +366,9 @@ namespace winrt::impl
     }
 
     template <size_t Size, size_t RemainingSize, size_t... Index>
-    constexpr std::array<uint8_t, RemainingSize + 1> make_remaining(
-        [[maybe_unused]] std::array<uint8_t, Size> const& input,
-        [[maybe_unused]] size_t start_pos,
-        std::index_sequence<Index...>) noexcept
+    constexpr std::array<uint8_t, RemainingSize + 1> make_remaining([[maybe_unused]] std::array<uint8_t, Size> const& input,
+                                                                    [[maybe_unused]] size_t start_pos,
+                                                                    std::index_sequence<Index...>) noexcept
     {
         return { input[Index + start_pos]..., 0x80 };
     }
@@ -395,8 +393,8 @@ namespace winrt::impl
     }
 
     template <size_t Size>
-    constexpr std::array<uint32_t, 5> finalize_remaining_buffer(
-        std::array<uint8_t, Size> const& input, std::array<uint32_t, 5> const& intermediate_hash) noexcept
+    constexpr std::array<uint32_t, 5> finalize_remaining_buffer(std::array<uint8_t, Size> const& input,
+                                                                std::array<uint32_t, 5> const& intermediate_hash) noexcept
     {
         if constexpr (Size == 64)
         {
@@ -409,7 +407,8 @@ namespace winrt::impl
     }
 
     template <size_t... Index>
-    constexpr std::array<uint8_t, 20> get_result(std::array<uint32_t, 5> const& intermediate_hash, std::index_sequence<Index...>) noexcept
+    constexpr std::array<uint8_t, 20> get_result(std::array<uint32_t, 5> const& intermediate_hash,
+                                                 std::index_sequence<Index...>) noexcept
     {
         return { static_cast<uint8_t>(intermediate_hash[Index >> 2] >> (8 * (3 - (Index & 0x03))))... };
     }

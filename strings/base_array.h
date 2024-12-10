@@ -68,8 +68,8 @@ WINRT_EXPORT namespace winrt
         {}
 
         template <typename OtherType>
-        array_view(array_view<OtherType> const& other, std::enable_if_t<std::is_convertible_v<OtherType (*)[], T (*)[]>, int> = 0) noexcept
-            :
+        array_view(array_view<OtherType> const& other,
+                   std::enable_if_t<std::is_convertible_v<OtherType (*)[], T (*)[]>, int> = 0) noexcept :
             array_view(other.data(), other.size())
         {}
 
@@ -211,17 +211,15 @@ WINRT_EXPORT namespace winrt
     private:
         template <typename C> auto data(std::vector<C> const& value) noexcept
         {
-            static_assert(
-                !std::is_same_v<C, bool>,
-                "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
+            static_assert(!std::is_same_v<C, bool>,
+                          "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
             return value.data();
         }
 
         template <typename C> auto data(std::vector<C>& value) noexcept
         {
-            static_assert(
-                !std::is_same_v<C, bool>,
-                "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
+            static_assert(!std::is_same_v<C, bool>,
+                          "Cannot use std::vector<bool> as an array_view. Consider std::array or std::unique_ptr<bool[]>.");
             return value.data();
         }
     };

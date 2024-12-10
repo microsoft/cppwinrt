@@ -24,8 +24,11 @@ namespace
         winrt::hresult result;
     } s_loggerArgs{};
 
-    void __stdcall logger(
-        uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept
+    void __stdcall logger(uint32_t lineNumber,
+                          char const* fileName,
+                          char const* functionName,
+                          void* returnAddress,
+                          winrt::hresult const result) noexcept
     {
         s_loggerArgs = {
             .lineNumber = lineNumber,

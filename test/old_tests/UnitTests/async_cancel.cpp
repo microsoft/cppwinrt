@@ -164,14 +164,12 @@ TEST_CASE("async_cancel_use_status")
         REQUIRE_THROWS_AS(co_await make<foreign_canceled_operation<int32_t>>(), hresult_canceled);
 
         REQUIRE_THROWS_AS(co_await when_any(make<foreign_canceled_action>(), make<foreign_canceled_action>()), hresult_canceled);
-        REQUIRE_THROWS_AS(
-            co_await when_any(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()),
-            hresult_canceled);
+        REQUIRE_THROWS_AS(co_await when_any(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()),
+                          hresult_canceled);
 
         REQUIRE_THROWS_AS(co_await when_all(make<foreign_canceled_action>(), make<foreign_canceled_action>()), hresult_canceled);
-        REQUIRE_THROWS_AS(
-            co_await when_all(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()),
-            hresult_canceled);
+        REQUIRE_THROWS_AS(co_await when_all(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()),
+                          hresult_canceled);
 
         SetEvent(complete);
     }(complete.get());
@@ -182,10 +180,10 @@ TEST_CASE("async_cancel_use_status")
     REQUIRE_THROWS_AS(make<foreign_canceled_operation<int>>().get(), hresult_canceled);
 
     REQUIRE_THROWS_AS(when_any(make<foreign_canceled_action>(), make<foreign_canceled_action>()).get(), hresult_canceled);
-    REQUIRE_THROWS_AS(
-        when_any(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()).get(), hresult_canceled);
+    REQUIRE_THROWS_AS(when_any(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()).get(),
+                      hresult_canceled);
 
     REQUIRE_THROWS_AS(when_all(make<foreign_canceled_action>(), make<foreign_canceled_action>()).get(), hresult_canceled);
-    REQUIRE_THROWS_AS(
-        when_all(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()).get(), hresult_canceled);
+    REQUIRE_THROWS_AS(when_all(make<foreign_canceled_operation<int>>(), make<foreign_canceled_operation<int>>()).get(),
+                      hresult_canceled);
 }

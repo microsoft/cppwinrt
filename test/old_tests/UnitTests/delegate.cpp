@@ -375,8 +375,8 @@ TEST_CASE("delegate,AsyncOperationProgressHandler")
     }
 }
 
-static void AsyncOperationWithProgressCompletedHandler_Free(
-    const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender, const AsyncStatus args)
+static void AsyncOperationWithProgressCompletedHandler_Free(const IAsyncOperationWithProgress<uint64_t, uint64_t>& sender,
+                                                            const AsyncStatus args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == AsyncStatus::Completed);
@@ -585,8 +585,8 @@ TEST_CASE("delegate,TypedEventHandler")
     }
 }
 
-static void VectorChangedEventHandler_Free(
-    IObservableVector<Windows::Foundation::IInspectable> const& sender, IVectorChangedEventArgs const& args)
+static void VectorChangedEventHandler_Free(IObservableVector<Windows::Foundation::IInspectable> const& sender,
+                                           IVectorChangedEventArgs const& args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == nullptr);
@@ -638,8 +638,8 @@ TEST_CASE("delegate,VectorChangedEventHandler")
     }
 }
 
-static void MapChangedEventHandler_Free(
-    IObservableMap<hstring, Windows::Foundation::IInspectable> const& sender, IMapChangedEventArgs<hstring> const& args)
+static void MapChangedEventHandler_Free(IObservableMap<hstring, Windows::Foundation::IInspectable> const& sender,
+                                        IMapChangedEventArgs<hstring> const& args)
 {
     REQUIRE(sender == nullptr);
     REQUIRE(args == nullptr);
@@ -647,7 +647,8 @@ static void MapChangedEventHandler_Free(
 
 struct MapChangedEventHandler_Member
 {
-    void Handler(IObservableMap<hstring, Windows::Foundation::IInspectable> const& sender, IMapChangedEventArgs<hstring> const& args)
+    void Handler(IObservableMap<hstring, Windows::Foundation::IInspectable> const& sender,
+                 IMapChangedEventArgs<hstring> const& args)
     {
         REQUIRE(sender == nullptr);
         REQUIRE(args == nullptr);

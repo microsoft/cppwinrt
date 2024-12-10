@@ -49,7 +49,8 @@ TEST_CASE("enum_flags")
     REQUIRE(static_cast<uint32_t>(w) == static_cast<uint32_t>(m));
 
     w ^= (winrt_dow::Monday | winrt_dow::Tuesday | winrt_dow::Wednesday);
-    m ^= (midl_dow::AppointmentDaysOfWeek_Monday | midl_dow::AppointmentDaysOfWeek_Tuesday | midl_dow::AppointmentDaysOfWeek_Wednesday);
+    m ^= (midl_dow::AppointmentDaysOfWeek_Monday | midl_dow::AppointmentDaysOfWeek_Tuesday |
+          midl_dow::AppointmentDaysOfWeek_Wednesday);
 
     REQUIRE(static_cast<uint32_t>(w) == static_cast<uint32_t>(m));
 }

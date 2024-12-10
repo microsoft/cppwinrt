@@ -76,44 +76,38 @@ TEST_CASE("natvis, TimedTextRegion")
     textRegion.ZIndex(3);
 
     compare(textRegion.Name(), WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 0).s);
-    compare(
-        textRegion.Position(),
-        *(winrt::Windows::Media::Core::TimedTextPoint*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 2)
-             .v);
-    compare(
-        textRegion.Extent(),
-        *(winrt::Windows::Media::Core::TimedTextSize*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 4)
-             .v);
-    compare(
-        textRegion.Background(),
-        *(winrt::Windows::UI::Color*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 6).v);
-    compare(
-        textRegion.WritingMode(),
-        *(winrt::Windows::Media::Core::TimedTextWritingMode*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 8)
-             .v);
-    compare(
-        textRegion.DisplayAlignment(),
-        *(winrt::Windows::Media::Core::TimedTextDisplayAlignment*)WINRT_get_val(
-             &textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 10)
-             .v);
-    compare(
-        textRegion.LineHeight(),
-        *(winrt::Windows::Media::Core::TimedTextDouble*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 12)
-             .v);
+    compare(textRegion.Position(),
+            *(winrt::Windows::Media::Core::TimedTextPoint*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 2)
+                 .v);
+    compare(textRegion.Extent(),
+            *(winrt::Windows::Media::Core::TimedTextSize*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 4)
+                 .v);
+    compare(textRegion.Background(),
+            *(winrt::Windows::UI::Color*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 6).v);
+    compare(textRegion.WritingMode(),
+            *(winrt::Windows::Media::Core::TimedTextWritingMode*)WINRT_get_val(
+                 &textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 8)
+                 .v);
+    compare(textRegion.DisplayAlignment(),
+            *(winrt::Windows::Media::Core::TimedTextDisplayAlignment*)WINRT_get_val(
+                 &textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 10)
+                 .v);
+    compare(textRegion.LineHeight(),
+            *(winrt::Windows::Media::Core::TimedTextDouble*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 12)
+                 .v);
     compare(textRegion.IsOverflowClipped(), WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 14).b);
-    compare(
-        textRegion.Padding(),
-        *(winrt::Windows::Media::Core::TimedTextPadding*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 16)
-             .v);
-    compare(
-        textRegion.TextWrapping(),
-        *(winrt::Windows::Media::Core::TimedTextWrapping*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 18)
-             .v);
+    compare(textRegion.Padding(),
+            *(winrt::Windows::Media::Core::TimedTextPadding*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 16)
+                 .v);
+    compare(textRegion.TextWrapping(),
+            *(winrt::Windows::Media::Core::TimedTextWrapping*)WINRT_get_val(
+                 &textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 18)
+                 .v);
     compare(textRegion.ZIndex(), WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 20).i4);
-    compare(
-        textRegion.ScrollMode(),
-        *(winrt::Windows::Media::Core::TimedTextScrollMode*)WINRT_get_val(&textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 22)
-             .v);
+    compare(textRegion.ScrollMode(),
+            *(winrt::Windows::Media::Core::TimedTextScrollMode*)WINRT_get_val(
+                 &textRegion, L"{1ED0881F-8A06-4222-9F59-B21BF40124B4}", 22)
+                 .v);
 }
 
 TEST_CASE("natvis, StreamSocketInformation")
@@ -124,26 +118,23 @@ TEST_CASE("natvis, StreamSocketInformation")
     connect.get();
     auto ssi = socket.Information();
 
-    compare(
-        ssi.ServerCertificateErrorSeverity(),
-        *(winrt::Windows::Networking::Sockets::SocketSslErrorSeverity*)WINRT_get_val(
-             &ssi, L"{12C28452-4BDC-4EE4-976A-CF130E9D92E3}", 0)
-             .v);
+    compare(ssi.ServerCertificateErrorSeverity(),
+            *(winrt::Windows::Networking::Sockets::SocketSslErrorSeverity*)WINRT_get_val(
+                 &ssi, L"{12C28452-4BDC-4EE4-976A-CF130E9D92E3}", 0)
+                 .v);
     compare(ssi.LocalPort(), WINRT_get_val(&ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 1).s);
     compare(ssi.RemoteServiceName(), WINRT_get_val(&ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 4).s);
     compare(ssi.RemotePort(), WINRT_get_val(&ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 5).s);
-    compare(
-        ssi.RoundTripTimeStatistics(),
-        *(winrt::Windows::Networking::Sockets::RoundTripTimeStatistics*)WINRT_get_val(
-             &ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 6)
-             .v);
-    compare(
-        ssi.BandwidthStatistics(),
-        *(winrt::Windows::Networking::Sockets::BandwidthStatistics*)WINRT_get_val(&ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 7)
-             .v);
-    compare(
-        ssi.ProtectionLevel(),
-        *(winrt::Windows::Networking::Sockets::SocketProtectionLevel*)WINRT_get_val(
-             &ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 8)
-             .v);
+    compare(ssi.RoundTripTimeStatistics(),
+            *(winrt::Windows::Networking::Sockets::RoundTripTimeStatistics*)WINRT_get_val(
+                 &ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 6)
+                 .v);
+    compare(ssi.BandwidthStatistics(),
+            *(winrt::Windows::Networking::Sockets::BandwidthStatistics*)WINRT_get_val(
+                 &ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 7)
+                 .v);
+    compare(ssi.ProtectionLevel(),
+            *(winrt::Windows::Networking::Sockets::SocketProtectionLevel*)WINRT_get_val(
+                 &ssi, L"{3B80AE30-5E68-4205-88F0-DC85D2E25DED}", 8)
+                 .v);
 }

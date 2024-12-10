@@ -204,13 +204,12 @@ namespace
     fire_and_forget disconnect_on_signal(com_ptr<IContextCallback> context, void* signal)
     {
         co_await resume_on_signal(signal);
-        InvokeInContext(
-            context.get(),
-            []()
-            {
-                // This disconnects the IAsyncAction, simulating a server crash.
-                CoDisconnectContext(INFINITE);
-            });
+        InvokeInContext(context.get(),
+                        []()
+                        {
+                            // This disconnects the IAsyncAction, simulating a server crash.
+                            CoDisconnectContext(INFINITE);
+                        });
     }
 } // namespace
 
@@ -240,8 +239,8 @@ TEST_CASE("disconnected,action")
     disconnect_on_signal(private_context, signal.get());
 
     agile_ref<IAsyncAction> action;
-    InvokeInContext(
-        private_context.get(), [&]() { action = make<non_agile_abandoned_action>([&] { SetEvent(signal.get()); }); });
+    InvokeInContext(private_context.get(),
+                    [&]() { action = make<non_agile_abandoned_action>([&] { SetEvent(signal.get()); }); });
 
     auto result = [](IAsyncAction action) -> IAsyncAction
     {
@@ -270,21 +269,20 @@ TEST_CASE("disconnected,double")
         auto controller = DispatcherQueueController::CreateOnDedicatedThread();
 
         agile_ref<IAsyncAction> action;
-        InvokeInContext(
-            private_context.get(),
-            [&]()
-            {
-                action = make<non_agile_abandoned_action>(
-                    [&]() -> fire_and_forget
-                    {
-                        // Get off the DispatcherQueue thread.
-                        co_await resume_background();
-                        // Destroy the DispatcherQueue, so the co_await has nowhere to return to.
-                        co_await controller.ShutdownQueueAsync();
-                        // Now set the event to force the action to disconnect.
-                        SetEvent(signal.get());
-                    });
-            });
+        InvokeInContext(private_context.get(),
+                        [&]()
+                        {
+                            action = make<non_agile_abandoned_action>(
+                                [&]() -> fire_and_forget
+                                {
+                                    // Get off the DispatcherQueue thread.
+                                    co_await resume_background();
+                                    // Destroy the DispatcherQueue, so the co_await has nowhere to return to.
+                                    co_await controller.ShutdownQueueAsync();
+                                    // Now set the event to force the action to disconnect.
+                                    SetEvent(signal.get());
+                                });
+                        });
 
         // Go to our STA thread.
         co_await resume_foreground(controller.DispatcherQueue());

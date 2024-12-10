@@ -19,8 +19,9 @@ namespace winrt::impl
     using library_handle = handle_type<library_traits>;
 
     template <bool isSameInterfaceAsIActivationFactory>
-    WINRT_IMPL_NOINLINE hresult
-    get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
+    WINRT_IMPL_NOINLINE hresult get_runtime_activation_factory_impl(param::hstring const& name,
+                                                                    winrt::guid const& guid,
+                                                                    void** result) noexcept
     {
         if (winrt_activation_handler)
         {
@@ -334,8 +335,8 @@ namespace winrt::impl
                 // entry->next must be read before entry->clear() is called since the InterlockedCompareExchange
                 // inside clear() will allow another thread to add the entry back to the cache.
                 slist_entry* next = entry->next;
-                reinterpret_cast<factory_cache_entry_base*>(
-                    reinterpret_cast<uint8_t*>(entry) - offsetof(factory_cache_entry_base, m_next))
+                reinterpret_cast<factory_cache_entry_base*>(reinterpret_cast<uint8_t*>(entry) -
+                                                            offsetof(factory_cache_entry_base, m_next))
                     ->clear();
                 entry = next;
             }

@@ -20,7 +20,8 @@ TEST_CASE("cast_null_via_bases")
 // Test cast of null via requires
 TEST_CASE("cast_null_via_requires")
 {
-    static_assert(std::is_base_of<impl::require_one<ContainerVisual, IVisual>, ContainerVisual>::value, "Type relationship violated");
+    static_assert(std::is_base_of<impl::require_one<ContainerVisual, IVisual>, ContainerVisual>::value,
+                  "Type relationship violated");
     ContainerVisual derived(nullptr);
     const IVisual& base = derived;
     REQUIRE(!base);

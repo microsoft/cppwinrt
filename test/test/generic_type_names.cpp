@@ -19,83 +19,59 @@ TEST_CASE("generic_type_names")
     //
 
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.IStringable", IStringable);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.IAsyncActionWithProgress`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        IAsyncActionWithProgress<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
-        IAsyncOperationWithProgress<A, B>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.IAsyncOperation`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        IAsyncOperation<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.IReferenceArray`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        IReferenceArray<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.IReference`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        IReference<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.AsyncActionProgressHandler`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        AsyncActionProgressHandler<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.AsyncActionWithProgressCompletedHandler`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        AsyncActionWithProgressCompletedHandler<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.AsyncOperationCompletedHandler`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        AsyncOperationCompletedHandler<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.AsyncOperationProgressHandler`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
-        AsyncOperationProgressHandler<A, B>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.AsyncOperationWithProgressCompletedHandler`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
-        AsyncOperationWithProgressCompletedHandler<A, B>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.EventHandler`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        EventHandler<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.TypedEventHandler`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
-        TypedEventHandler<A, B>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.IAsyncActionWithProgress`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       IAsyncActionWithProgress<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
+                       IAsyncOperationWithProgress<A, B>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.IAsyncOperation`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       IAsyncOperation<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.IReferenceArray`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       IReferenceArray<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.IReference`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       IReference<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.AsyncActionProgressHandler`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       AsyncActionProgressHandler<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.AsyncActionWithProgressCompletedHandler`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       AsyncActionWithProgressCompletedHandler<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.AsyncOperationCompletedHandler`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       AsyncOperationCompletedHandler<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.AsyncOperationProgressHandler`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
+                       AsyncOperationProgressHandler<A, B>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.AsyncOperationWithProgressCompletedHandler`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
+                       AsyncOperationWithProgressCompletedHandler<A, B>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.EventHandler`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       EventHandler<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.TypedEventHandler`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
+                       TypedEventHandler<A, B>);
 
     //
     // Generated Windows.Foundation.Collections names
     //
 
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.IIterable`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        IIterable<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.IIterator`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        IIterator<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.IKeyValuePair`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
-        IKeyValuePair<A, B>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.IMapChangedEventArgs`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        IMapChangedEventArgs<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.IMapView`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
-        IMapView<A, B>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.IMap`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
-        IMap<A, B>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.IObservableMap`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
-        IObservableMap<A, B>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.IObservableVector`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        IObservableVector<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.IVectorView`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        IVectorView<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.IVector`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        IVector<A>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.MapChangedEventHandler`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
-        MapChangedEventHandler<A, B>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.VectorChangedEventHandler`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
-        VectorChangedEventHandler<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IIterable`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       IIterable<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IIterator`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       IIterator<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IKeyValuePair`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
+                       IKeyValuePair<A, B>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IMapChangedEventArgs`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       IMapChangedEventArgs<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IMapView`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
+                       IMapView<A, B>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IMap`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
+                       IMap<A, B>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IObservableMap`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
+                       IObservableMap<A, B>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IObservableVector`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       IObservableVector<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IVectorView`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       IVectorView<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IVector`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       IVector<A>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.MapChangedEventHandler`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Windows.Foundation.Collections.IKeyValuePair`2<String, Windows.Foundation.IAsyncOperationWithProgress`2<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>, Single>>>",
+                       MapChangedEventHandler<A, B>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.VectorChangedEventHandler`1<Windows.Foundation.Collections.IIterable`1<Windows.Foundation.IStringable>>",
+                       VectorChangedEventHandler<A>);
 
     //
     // Generated primitive names
@@ -138,7 +114,6 @@ TEST_CASE("generic_type_names")
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.IReference`1<Windows.Foundation.Point>", IReference<Point>);
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IVector`1<Object>", IVector<IInspectable>);
     REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IVector`1<Windows.Foundation.Uri>", IVector<Uri>);
-    REQUIRE_EQUAL_NAME(
-        L"Windows.Foundation.Collections.IVector`1<Windows.Foundation.AsyncActionCompletedHandler>",
-        IVector<AsyncActionCompletedHandler>);
+    REQUIRE_EQUAL_NAME(L"Windows.Foundation.Collections.IVector`1<Windows.Foundation.AsyncActionCompletedHandler>",
+                       IVector<AsyncActionCompletedHandler>);
 }

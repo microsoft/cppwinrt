@@ -13,13 +13,12 @@
 using namespace winrt;
 using namespace Windows::Foundation;
 
-struct Test_GetIids : implements<
-                          Test_GetIids,
-                          non_agile,
-                          Windows::Foundation::IStringable,
-                          // todo: no GUID:
-                          // abi_t<Windows::ApplicationModel::Store::LicenseChangedEventHandler>,
-                          cloaked<Windows::Foundation::IClosable>>
+struct Test_GetIids : implements<Test_GetIids,
+                                 non_agile,
+                                 Windows::Foundation::IStringable,
+                                 // todo: no GUID:
+                                 // abi_t<Windows::ApplicationModel::Store::LicenseChangedEventHandler>,
+                                 cloaked<Windows::Foundation::IClosable>>
 {
     hstring ToString()
     {

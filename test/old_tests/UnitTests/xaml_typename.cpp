@@ -47,7 +47,8 @@ static_assert(impl::xaml_typename_kind<Windows::Foundation::TimeSpan>::value == 
 static_assert(impl::xaml_typename_kind<Windows::Foundation::Point>::value == Windows::UI::Xaml::Interop::TypeKind::Metadata);
 static_assert(impl::xaml_typename_kind<Windows::Foundation::Size>::value == Windows::UI::Xaml::Interop::TypeKind::Metadata);
 static_assert(impl::xaml_typename_kind<Windows::Foundation::Rect>::value == Windows::UI::Xaml::Interop::TypeKind::Metadata);
-static_assert(impl::xaml_typename_kind<Windows::Foundation::IInspectable>::value == Windows::UI::Xaml::Interop::TypeKind::Metadata);
+static_assert(impl::xaml_typename_kind<Windows::Foundation::IInspectable>::value ==
+              Windows::UI::Xaml::Interop::TypeKind::Metadata);
 
 namespace
 {

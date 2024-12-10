@@ -416,10 +416,9 @@ namespace cppwinrt
 
                 if (!prev.contract_to.empty())
                 {
-                    auto itr = std::find_if(
-                        previous_contracts.begin(),
-                        previous_contracts.end(),
-                        [&](auto const& ver) { return ver.name == prev.contract_to; });
+                    auto itr = std::find_if(previous_contracts.begin(),
+                                            previous_contracts.end(),
+                                            [&](auto const& ver) { return ver.name == prev.contract_to; });
                     if (itr != previous_contracts.end())
                     {
                         *itr = previous_contracts.back();
@@ -495,10 +494,9 @@ namespace cppwinrt
         for (size_t size = result.previous_contracts.size() - 1; size; --size)
         {
             auto& last = result.previous_contracts[size];
-            auto itr = std::find_if(
-                result.previous_contracts.begin(),
-                result.previous_contracts.begin() + size,
-                [&](auto const& prev) { return prev.contract_to == last.contract_from; });
+            auto itr = std::find_if(result.previous_contracts.begin(),
+                                    result.previous_contracts.begin() + size,
+                                    [&](auto const& prev) { return prev.contract_to == last.contract_from; });
             assert(itr != result.previous_contracts.end());
             std::swap(*itr, result.previous_contracts[size - 1]);
         }
@@ -550,14 +548,13 @@ namespace cppwinrt
         }
     }
 
-    static void get_interfaces_impl(
-        writer& w,
-        get_interfaces_t& result,
-        bool defaulted,
-        bool overridable,
-        bool base,
-        std::vector<std::vector<std::string>> const& generic_param_stack,
-        std::pair<InterfaceImpl, InterfaceImpl>&& children)
+    static void get_interfaces_impl(writer& w,
+                                    get_interfaces_t& result,
+                                    bool defaulted,
+                                    bool overridable,
+                                    bool base,
+                                    std::vector<std::vector<std::string>> const& generic_param_stack,
+                                    std::pair<InterfaceImpl, InterfaceImpl>&& children)
     {
         for (auto&& impl : children)
         {
@@ -658,10 +655,10 @@ namespace cppwinrt
                 auto introduced = get_initial_contract_version(pair.second.type);
                 pair.second.relative_version.second = introduced.version;
 
-                auto itr = std::find_if(
-                    history.previous_contracts.begin(),
-                    history.previous_contracts.end(),
-                    [&](previous_contract const& prev) { return prev.contract_from == introduced.name; });
+                auto itr =
+                    std::find_if(history.previous_contracts.begin(),
+                                 history.previous_contracts.end(),
+                                 [&](previous_contract const& prev) { return prev.contract_from == introduced.name; });
                 if (itr != history.previous_contracts.end())
                 {
                     pair.second.relative_version.first = static_cast<uint32_t>(itr - history.previous_contracts.begin());
@@ -674,51 +671,50 @@ namespace cppwinrt
             }
         }
 
-        std::partial_sort(
-            result.begin(),
-            result.begin() + count,
-            result.end(),
-            [](auto&& left_pair, auto&& right_pair)
-            {
-                auto& left = left_pair.second;
-                auto& right = right_pair.second;
+        std::partial_sort(result.begin(),
+                          result.begin() + count,
+                          result.end(),
+                          [](auto&& left_pair, auto&& right_pair)
+                          {
+                              auto& left = left_pair.second;
+                              auto& right = right_pair.second;
 
-                // Sort by base before is_default because each base will have a default.
-                if (left.base != right.base)
-                {
-                    return !left.base;
-                }
+                              // Sort by base before is_default because each base will have a default.
+                              if (left.base != right.base)
+                              {
+                                  return !left.base;
+                              }
 
-                if (left.is_default != right.is_default)
-                {
-                    return left.is_default;
-                }
+                              if (left.is_default != right.is_default)
+                              {
+                                  return left.is_default;
+                              }
 
-                if (left.overridable != right.overridable)
-                {
-                    return !left.overridable;
-                }
+                              if (left.overridable != right.overridable)
+                              {
+                                  return !left.overridable;
+                              }
 
-                if (left.exclusive != right.exclusive)
-                {
-                    return left.exclusive;
-                }
+                              if (left.exclusive != right.exclusive)
+                              {
+                                  return left.exclusive;
+                              }
 
-                auto left_enabled = is_always_enabled(left.type);
-                auto right_enabled = is_always_enabled(right.type);
+                              auto left_enabled = is_always_enabled(left.type);
+                              auto right_enabled = is_always_enabled(right.type);
 
-                if (left_enabled != right_enabled)
-                {
-                    return left_enabled;
-                }
+                              if (left_enabled != right_enabled)
+                              {
+                                  return left_enabled;
+                              }
 
-                if (left.relative_version != right.relative_version)
-                {
-                    return left.relative_version < right.relative_version;
-                }
+                              if (left.relative_version != right.relative_version)
+                              {
+                                  return left.relative_version < right.relative_version;
+                              }
 
-                return left_pair.first < right_pair.first;
-            });
+                              return left_pair.first < right_pair.first;
+                          });
 
         std::for_each_n(result.begin(), count, [](auto&& pair) { pair.second.fastabi = true; });
 

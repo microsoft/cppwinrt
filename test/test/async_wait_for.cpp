@@ -71,14 +71,13 @@ namespace
     }
 
     template <typename T>
-    void check(
-        T const& no_suspend_ok,
-        T const& no_suspend_fail,
-        T const& delay_ok,
-        T const& delay_fail,
-        T const& no_suspend_cancel,
-        T const& delay_cancel,
-        T const& long_delay)
+    void check(T const& no_suspend_ok,
+               T const& no_suspend_fail,
+               T const& delay_ok,
+               T const& delay_fail,
+               T const& no_suspend_cancel,
+               T const& delay_cancel,
+               T const& long_delay)
     {
         REQUIRE(no_suspend_ok.wait_for(0s) == AsyncStatus::Completed);
         no_suspend_ok.get();
@@ -110,39 +109,35 @@ TEST_CASE("async_wait_for", "[.clang-crash]")
 TEST_CASE("async_wait_for")
 #endif
 {
-    check(
-        Action(0s, AsyncStatus::Completed),
-        Action(0s, AsyncStatus::Error),
-        Action(100ms, AsyncStatus::Completed),
-        Action(100ms, AsyncStatus::Error),
-        Action(0s, AsyncStatus::Canceled),
-        Action(100ms, AsyncStatus::Canceled),
-        Action(1h, AsyncStatus::Completed));
+    check(Action(0s, AsyncStatus::Completed),
+          Action(0s, AsyncStatus::Error),
+          Action(100ms, AsyncStatus::Completed),
+          Action(100ms, AsyncStatus::Error),
+          Action(0s, AsyncStatus::Canceled),
+          Action(100ms, AsyncStatus::Canceled),
+          Action(1h, AsyncStatus::Completed));
 
-    check(
-        ActionWithProgress(0s, AsyncStatus::Completed),
-        ActionWithProgress(0s, AsyncStatus::Error),
-        ActionWithProgress(100ms, AsyncStatus::Completed),
-        ActionWithProgress(100ms, AsyncStatus::Error),
-        ActionWithProgress(0s, AsyncStatus::Canceled),
-        ActionWithProgress(100ms, AsyncStatus::Canceled),
-        ActionWithProgress(1h, AsyncStatus::Completed));
+    check(ActionWithProgress(0s, AsyncStatus::Completed),
+          ActionWithProgress(0s, AsyncStatus::Error),
+          ActionWithProgress(100ms, AsyncStatus::Completed),
+          ActionWithProgress(100ms, AsyncStatus::Error),
+          ActionWithProgress(0s, AsyncStatus::Canceled),
+          ActionWithProgress(100ms, AsyncStatus::Canceled),
+          ActionWithProgress(1h, AsyncStatus::Completed));
 
-    check(
-        Operation(0s, AsyncStatus::Completed),
-        Operation(0s, AsyncStatus::Error),
-        Operation(100ms, AsyncStatus::Completed),
-        Operation(100ms, AsyncStatus::Error),
-        Operation(0s, AsyncStatus::Canceled),
-        Operation(100ms, AsyncStatus::Canceled),
-        Operation(1h, AsyncStatus::Completed));
+    check(Operation(0s, AsyncStatus::Completed),
+          Operation(0s, AsyncStatus::Error),
+          Operation(100ms, AsyncStatus::Completed),
+          Operation(100ms, AsyncStatus::Error),
+          Operation(0s, AsyncStatus::Canceled),
+          Operation(100ms, AsyncStatus::Canceled),
+          Operation(1h, AsyncStatus::Completed));
 
-    check(
-        OperationWithProgress(0s, AsyncStatus::Completed),
-        OperationWithProgress(0s, AsyncStatus::Error),
-        OperationWithProgress(100ms, AsyncStatus::Completed),
-        OperationWithProgress(100ms, AsyncStatus::Error),
-        OperationWithProgress(0s, AsyncStatus::Canceled),
-        OperationWithProgress(100ms, AsyncStatus::Canceled),
-        OperationWithProgress(1h, AsyncStatus::Completed));
+    check(OperationWithProgress(0s, AsyncStatus::Completed),
+          OperationWithProgress(0s, AsyncStatus::Error),
+          OperationWithProgress(100ms, AsyncStatus::Completed),
+          OperationWithProgress(100ms, AsyncStatus::Error),
+          OperationWithProgress(0s, AsyncStatus::Canceled),
+          OperationWithProgress(100ms, AsyncStatus::Canceled),
+          OperationWithProgress(1h, AsyncStatus::Completed));
 }

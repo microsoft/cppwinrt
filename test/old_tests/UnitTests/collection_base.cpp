@@ -15,24 +15,23 @@ namespace
 
     template <typename A, typename B> void test_associative(A const& container, std::initializer_list<B> expected)
     {
-        bool const equal = std::equal(
-            begin(container),
-            end(container),
-            begin(expected),
-            end(expected),
-            [](auto&& left, auto&& right) { return left.Key() == right.first && left.Value() == right.second; });
+        bool const equal = std::equal(begin(container),
+                                      end(container),
+                                      begin(expected),
+                                      end(expected),
+                                      [](auto&& left, auto&& right)
+                                      { return left.Key() == right.first && left.Value() == right.second; });
 
         REQUIRE(equal);
     }
 
     template <typename A, typename B> void test_stringable(A const& container, std::initializer_list<B> expected)
     {
-        bool const equal = std::equal(
-            begin(container),
-            end(container),
-            begin(expected),
-            end(expected),
-            [](auto&& left, auto&& right) { return left.ToString() == right.ToString(); });
+        bool const equal = std::equal(begin(container),
+                                      end(container),
+                                      begin(expected),
+                                      end(expected),
+                                      [](auto&& left, auto&& right) { return left.ToString() == right.ToString(); });
 
         REQUIRE(equal);
     }
@@ -40,23 +39,22 @@ namespace
     template <typename A, typename K, typename V>
     void test_associative_stringable(A const& container, std::map<K, V> const& expected)
     {
-        bool const equal = std::equal(
-            begin(container),
-            end(container),
-            begin(expected),
-            end(expected),
-            [](auto&& left, auto&& right)
-            {
-                auto left_key = left.Key();
-                auto right_key = right.first;
-                auto left_value = left.Value().ToString();
-                auto right_value = right.second.ToString();
+        bool const equal = std::equal(begin(container),
+                                      end(container),
+                                      begin(expected),
+                                      end(expected),
+                                      [](auto&& left, auto&& right)
+                                      {
+                                          auto left_key = left.Key();
+                                          auto right_key = right.first;
+                                          auto left_value = left.Value().ToString();
+                                          auto right_value = right.second.ToString();
 
-                REQUIRE(left_key == right_key);
-                REQUIRE(left_value == right_value);
+                                          REQUIRE(left_key == right_key);
+                                          REQUIRE(left_value == right_value);
 
-                return left_key == right_key && left_value == right_value;
-            });
+                                          return left_key == right_key && left_value == right_value;
+                                      });
 
         REQUIRE(equal);
     }
@@ -482,9 +480,12 @@ namespace
                                                                  { L"three", make<stringable>(L"three") } };
     };
 
-    struct agile_observable_map
-        : implements<agile_observable_map, IObservableMap<hstring, IStringable>, IMap<hstring, IStringable>, IMapView<hstring, IStringable>, IIterable<IKeyValuePair<hstring, IStringable>>>,
-          observable_map_base<agile_observable_map, hstring, IStringable>
+    struct agile_observable_map : implements<agile_observable_map,
+                                             IObservableMap<hstring, IStringable>,
+                                             IMap<hstring, IStringable>,
+                                             IMapView<hstring, IStringable>,
+                                             IIterable<IKeyValuePair<hstring, IStringable>>>,
+                                  observable_map_base<agile_observable_map, hstring, IStringable>
     {
         auto& get_container() const noexcept
         {

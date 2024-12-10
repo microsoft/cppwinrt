@@ -109,29 +109,29 @@ WINRT_EXPORT namespace winrt
         template <typename InputIt, typename Size, typename OutputIt>
         auto copy_n(InputIt first, Size count, OutputIt result) const
         {
-            if constexpr (std::is_same_v<T, std::decay_t<decltype(*std::declval<D const>().get_container().begin())>> && !impl::is_key_value_pair<T>::value)
+            if constexpr (std::is_same_v<T, std::decay_t<decltype(*std::declval<D const>().get_container().begin())>> &&
+                          !impl::is_key_value_pair<T>::value)
             {
                 std::copy_n(first, count, result);
             }
             else
             {
-                return std::transform(
-                    first,
-                    std::next(first, count),
-                    result,
-                    [&](auto&& value)
-                    {
-                        if constexpr (!impl::is_key_value_pair<T>::value)
-                        {
-                            return static_cast<D const&>(*this).unwrap_value(value);
-                        }
-                        else
-                        {
-                            return make<impl::key_value_pair<T>>(
-                                static_cast<D const&>(*this).unwrap_value(value.first),
-                                static_cast<D const&>(*this).unwrap_value(value.second));
-                        }
-                    });
+                return std::transform(first,
+                                      std::next(first, count),
+                                      result,
+                                      [&](auto&& value)
+                                      {
+                                          if constexpr (!impl::is_key_value_pair<T>::value)
+                                          {
+                                              return static_cast<D const&>(*this).unwrap_value(value);
+                                          }
+                                          else
+                                          {
+                                              return make<impl::key_value_pair<T>>(
+                                                  static_cast<D const&>(*this).unwrap_value(value.first),
+                                                  static_cast<D const&>(*this).unwrap_value(value.second));
+                                          }
+                                      });
             }
         }
 
@@ -203,8 +203,8 @@ WINRT_EXPORT namespace winrt
                 }
                 else
                 {
-                    return make<impl::key_value_pair<T>>(
-                        m_owner->unwrap_value(m_current->first), m_owner->unwrap_value(m_current->second));
+                    return make<impl::key_value_pair<T>>(m_owner->unwrap_value(m_current->first),
+                                                         m_owner->unwrap_value(m_current->second));
                 }
             }
 
@@ -262,10 +262,10 @@ WINRT_EXPORT namespace winrt
         bool IndexOf(T const& value, uint32_t& index) const noexcept
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
-            auto first = std::find_if(
-                static_cast<D const&>(*this).get_container().begin(),
-                static_cast<D const&>(*this).get_container().end(),
-                [&](auto&& match) { return value == static_cast<D const&>(*this).unwrap_value(match); });
+            auto first =
+                std::find_if(static_cast<D const&>(*this).get_container().begin(),
+                             static_cast<D const&>(*this).get_container().end(),
+                             [&](auto&& match) { return value == static_cast<D const&>(*this).unwrap_value(match); });
 
             index = static_cast<uint32_t>(first - static_cast<D const&>(*this).get_container().begin());
             return index < container_size();
@@ -287,8 +287,8 @@ WINRT_EXPORT namespace winrt
     private:
         uint32_t container_size() const noexcept
         {
-            return static_cast<uint32_t>(std::distance(
-                static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end()));
+            return static_cast<uint32_t>(std::distance(static_cast<D const&>(*this).get_container().begin(),
+                                                       static_cast<D const&>(*this).get_container().end()));
         }
     };
 
@@ -324,8 +324,8 @@ WINRT_EXPORT namespace winrt
             }
 
             this->increment_version();
-            static_cast<D&>(*this).get_container().insert(
-                static_cast<D const&>(*this).get_container().begin() + index, static_cast<D const&>(*this).wrap_value(value));
+            static_cast<D&>(*this).get_container().insert(static_cast<D const&>(*this).get_container().begin() + index,
+                                                          static_cast<D const&>(*this).wrap_value(value));
         }
 
         void RemoveAt(uint32_t const index)
@@ -398,11 +398,10 @@ WINRT_EXPORT namespace winrt
                 WINRT_ASSERT(container.empty());
                 container.reserve(std::distance(first, last));
 
-                std::transform(
-                    first,
-                    last,
-                    std::back_inserter(container),
-                    [&](auto&& value) { return static_cast<D const&>(*this).wrap_value(value); });
+                std::transform(first,
+                               last,
+                               std::back_inserter(container),
+                               [&](auto&& value) { return static_cast<D const&>(*this).wrap_value(value); });
             }
         }
     };
@@ -521,7 +520,8 @@ WINRT_EXPORT namespace winrt
                    static_cast<D const&>(*this).get_container().end();
         }
 
-        void Split(Windows::Foundation::Collections::IMapView<K, V>& first, Windows::Foundation::Collections::IMapView<K, V>& second) const noexcept
+        void Split(Windows::Foundation::Collections::IMapView<K, V>& first,
+                   Windows::Foundation::Collections::IMapView<K, V>& second) const noexcept
         {
             first = nullptr;
             second = nullptr;

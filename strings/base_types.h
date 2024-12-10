@@ -94,11 +94,10 @@ WINRT_EXPORT namespace winrt
                 throw std::invalid_argument("value is not a valid GUID string");
             }
 
-            return { impl::uint8_to_uint32(
-                         impl::hex_to_uint8(value[0], value[1]),
-                         impl::hex_to_uint8(value[2], value[3]),
-                         impl::hex_to_uint8(value[4], value[5]),
-                         impl::hex_to_uint8(value[6], value[7])),
+            return { impl::uint8_to_uint32(impl::hex_to_uint8(value[0], value[1]),
+                                           impl::hex_to_uint8(value[2], value[3]),
+                                           impl::hex_to_uint8(value[4], value[5]),
+                                           impl::hex_to_uint8(value[6], value[7])),
                      impl::uint8_to_uint16(impl::hex_to_uint8(value[9], value[10]), impl::hex_to_uint8(value[11], value[12])),
                      impl::uint8_to_uint16(impl::hex_to_uint8(value[14], value[15]), impl::hex_to_uint8(value[16], value[17])),
                      {

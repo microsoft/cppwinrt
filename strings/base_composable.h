@@ -4,11 +4,12 @@ namespace winrt::impl
     template <typename D> struct composable_factory
     {
         template <typename I, typename... Args>
-        static I CreateInstance(const Windows::Foundation::IInspectable& outer, Windows::Foundation::IInspectable& inner, Args&&... args)
+        static I CreateInstance(const Windows::Foundation::IInspectable& outer,
+                                Windows::Foundation::IInspectable& inner,
+                                Args&&... args)
         {
-            static_assert(
-                std::is_base_of_v<Windows::Foundation::IInspectable, I>,
-                "Requested interface must derive from winrt::Windows::Foundation::IInspectable");
+            static_assert(std::is_base_of_v<Windows::Foundation::IInspectable, I>,
+                          "Requested interface must derive from winrt::Windows::Foundation::IInspectable");
             inner = CreateInstanceImpl(outer, std::forward<Args>(args)...);
             return inner.as<I>();
         }

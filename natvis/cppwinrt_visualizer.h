@@ -19,18 +19,16 @@ struct cppwinrt_visualizer
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmInspectionContext* pInspectionContext,
         _Out_ Microsoft::VisualStudio::Debugger::DkmArray<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pInitialChildren,
         _Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext** ppEnumContext);
-    STDMETHOD(GetItems)(
-        _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
-        _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext* pEnumContext,
-        _In_ UINT32 StartIndex,
-        _In_ UINT32 Count,
-        _Out_ Microsoft::VisualStudio::Debugger::DkmArray<Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pItems);
-    STDMETHOD(SetValueAsString)(
-        _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
-        _In_ Microsoft::VisualStudio::Debugger::DkmString* pValue,
-        _In_ UINT32 Timeout,
-        _Deref_out_opt_ Microsoft::VisualStudio::Debugger::DkmString** ppErrorText);
-    STDMETHOD(GetUnderlyingString)(
-        _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
-        _Deref_out_opt_ Microsoft::VisualStudio::Debugger::DkmString** ppStringValue);
+    STDMETHOD(GetItems)(_In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
+                        _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResultEnumContext* pEnumContext,
+                        _In_ UINT32 StartIndex,
+                        _In_ UINT32 Count,
+                        _Out_ Microsoft::VisualStudio::Debugger::DkmArray<
+                            Microsoft::VisualStudio::Debugger::Evaluation::DkmChildVisualizedExpression*>* pItems);
+    STDMETHOD(SetValueAsString)(_In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
+                                _In_ Microsoft::VisualStudio::Debugger::DkmString* pValue,
+                                _In_ UINT32 Timeout,
+                                _Deref_out_opt_ Microsoft::VisualStudio::Debugger::DkmString** ppErrorText);
+    STDMETHOD(GetUnderlyingString)(_In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
+                                   _Deref_out_opt_ Microsoft::VisualStudio::Debugger::DkmString** ppStringValue);
 };

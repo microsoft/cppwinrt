@@ -37,27 +37,28 @@ namespace winrt::test_component::implementation
         }
 
         Class(Windows::Foundation::Collections::IIterable<hstring> const& arg, int32_t dummy1);
-        Class(
-            Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& arg,
-            int32_t dummy1,
-            int32_t dummy2);
+        Class(Windows::Foundation::Collections::IIterable<Windows::Foundation::Collections::IKeyValuePair<hstring, hstring>> const& arg,
+              int32_t dummy1,
+              int32_t dummy2);
         Class(Windows::Foundation::Collections::IMap<hstring, hstring> const& arg, int32_t dummy1, int32_t dummy2, int32_t dummy3);
-        Class(Windows::Foundation::Collections::IMapView<hstring, hstring> const& arg, int32_t dummy1, int32_t dummy2, int32_t dummy3, int32_t dummy4);
-        Class(
-            Windows::Foundation::Collections::IVector<hstring> const& arg,
-            int32_t dummy1,
-            int32_t dummy2,
-            int32_t dummy3,
-            int32_t dummy4,
-            int32_t dummy5);
-        Class(
-            Windows::Foundation::Collections::IVectorView<hstring> const& arg,
-            int32_t dummy1,
-            int32_t dummy2,
-            int32_t dummy3,
-            int32_t dummy4,
-            int32_t dummy5,
-            int32_t dummy6);
+        Class(Windows::Foundation::Collections::IMapView<hstring, hstring> const& arg,
+              int32_t dummy1,
+              int32_t dummy2,
+              int32_t dummy3,
+              int32_t dummy4);
+        Class(Windows::Foundation::Collections::IVector<hstring> const& arg,
+              int32_t dummy1,
+              int32_t dummy2,
+              int32_t dummy3,
+              int32_t dummy4,
+              int32_t dummy5);
+        Class(Windows::Foundation::Collections::IVectorView<hstring> const& arg,
+              int32_t dummy1,
+              int32_t dummy2,
+              int32_t dummy3,
+              int32_t dummy4,
+              int32_t dummy5,
+              int32_t dummy6);
 
         static hstring InIterable(Windows::Foundation::Collections::IIterable<hstring> const& value);
         static hstring InIterablePair(

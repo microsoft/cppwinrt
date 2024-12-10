@@ -3,7 +3,7 @@ Language: Cpp
 BasedOnStyle: Microsoft
 
 AccessModifierOffset: -4
-AlignAfterOpenBracket: AlwaysBreak
+AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: false
 AlignEscapedNewlines: DontAlign
 AlignOperands: true

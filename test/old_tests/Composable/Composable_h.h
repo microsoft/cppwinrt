@@ -575,9 +575,8 @@ typedef struct __x_ABI_CComposable_CIBaseVtbl
     HRESULT(STDMETHODCALLTYPE* CallOverridableVirtualMethod)
     (__x_ABI_CComposable_CIBase* This,
      /* [retval, out] */ HSTRING* value);
-    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Name)(
-        __x_ABI_CComposable_CIBase* This,
-        /* [retval, out] */ HSTRING* value);
+    /* [propget] */ HRESULT(STDMETHODCALLTYPE* get_Name)(__x_ABI_CComposable_CIBase* This,
+                                                         /* [retval, out] */ HSTRING* value);
     END_INTERFACE
 
 } __x_ABI_CComposable_CIBaseVtbl;

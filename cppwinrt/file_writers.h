@@ -55,12 +55,11 @@ namespace cppwinrt
 
             auto const fast_abi_size = get_fastabi_size(w, classes);
 
-            w.write(
-                strings::base_fast_forward,
-                fast_abi_size,
-                fast_abi_size,
-                bind<write_component_fast_abi_thunk>(),
-                bind<write_component_fast_abi_vtable>());
+            w.write(strings::base_fast_forward,
+                    fast_abi_size,
+                    fast_abi_size,
+                    bind<write_component_fast_abi_thunk>(),
+                    bind<write_component_fast_abi_vtable>());
         }
         w.flush_to_file(settings.output_folder + "winrt/fast_forward.h");
     }

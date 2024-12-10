@@ -342,21 +342,20 @@ TEST_CASE("single_threaded_observable_vector")
             bool changed_i{};
             bool changed_o{};
 
-            auto token_i = vector_i.VectorChanged(
-                auto_revoke,
-                [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
-                {
-                    changed_i = sender.GetAt(0) == 123;
-                    REQUIRE(sender == vector_i);
-                });
+            auto token_i = vector_i.VectorChanged(auto_revoke,
+                                                  [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
+                                                  {
+                                                      changed_i = sender.GetAt(0) == 123;
+                                                      REQUIRE(sender == vector_i);
+                                                  });
 
-            auto token_o = vector_o.VectorChanged(
-                auto_revoke,
-                [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
-                {
-                    changed_o = unbox_value<int>(sender.GetAt(0)) == 123;
-                    REQUIRE(sender == vector_o);
-                });
+            auto token_o =
+                vector_o.VectorChanged(auto_revoke,
+                                       [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
+                                       {
+                                           changed_o = unbox_value<int>(sender.GetAt(0)) == 123;
+                                           REQUIRE(sender == vector_o);
+                                       });
 
             vector_i.ReplaceAll({ 123 });
 
@@ -373,21 +372,20 @@ TEST_CASE("single_threaded_observable_vector")
             bool changed_i{};
             bool changed_o{};
 
-            auto token_i = vector_i.VectorChanged(
-                auto_revoke,
-                [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
-                {
-                    changed_i = true;
-                    REQUIRE(sender == vector_i);
-                });
+            auto token_i = vector_i.VectorChanged(auto_revoke,
+                                                  [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
+                                                  {
+                                                      changed_i = true;
+                                                      REQUIRE(sender == vector_i);
+                                                  });
 
-            auto token_o = vector_o.VectorChanged(
-                auto_revoke,
-                [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
-                {
-                    changed_i = true;
-                    REQUIRE(sender == vector_o);
-                });
+            auto token_o =
+                vector_o.VectorChanged(auto_revoke,
+                                       [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
+                                       {
+                                           changed_i = true;
+                                           REQUIRE(sender == vector_o);
+                                       });
 
             // Verify strong exception guarantee when replacing with non-integers.
             REQUIRE_THROWS_AS(vector_o.ReplaceAll({ box_value(42), nullptr }), hresult_no_interface);
@@ -413,21 +411,20 @@ TEST_CASE("single_threaded_observable_vector")
             bool changed_i{};
             bool changed_o{};
 
-            auto token_i = vector_i.VectorChanged(
-                auto_revoke,
-                [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
-                {
-                    changed_i = sender.GetAt(0) == 123;
-                    REQUIRE(sender == vector_i);
-                });
+            auto token_i = vector_i.VectorChanged(auto_revoke,
+                                                  [&](IObservableVector<int> const& sender, IVectorChangedEventArgs const&)
+                                                  {
+                                                      changed_i = sender.GetAt(0) == 123;
+                                                      REQUIRE(sender == vector_i);
+                                                  });
 
-            auto token_o = vector_o.VectorChanged(
-                auto_revoke,
-                [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
-                {
-                    changed_o = unbox_value<int>(sender.GetAt(0)) == 123;
-                    REQUIRE(sender == vector_o);
-                });
+            auto token_o =
+                vector_o.VectorChanged(auto_revoke,
+                                       [&](IObservableVector<IInspectable> const& sender, IVectorChangedEventArgs const&)
+                                       {
+                                           changed_o = unbox_value<int>(sender.GetAt(0)) == 123;
+                                           REQUIRE(sender == vector_o);
+                                       });
 
             vector_o.ReplaceAll({ box_value(123) });
 

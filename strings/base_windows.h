@@ -313,7 +313,8 @@ WINRT_EXPORT namespace winrt
         reinterpret_cast<T&>(value) = object;
     }
 
-    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, std::decay_t<T>> && !std::is_convertible_v<T, std::wstring_view>, int> = 0>
+    template <typename T,
+              std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, std::decay_t<T>> && !std::is_convertible_v<T, std::wstring_view>, int> = 0>
     auto detach_abi(T && object)
     {
         impl::abi_t<T> result{};

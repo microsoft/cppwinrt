@@ -121,7 +121,8 @@ TEST_CASE("FastInput")
         REQUIRE(fast.IterablePair(std::map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }) == L"AaBbCc");
         fast.UseIterablePair();
 
-        REQUIRE(fast.IterablePair(std::unordered_map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }) == L"AaBbCc");
+        REQUIRE(fast.IterablePair(std::unordered_map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }) ==
+                L"AaBbCc");
         fast.UseIterablePair();
 
         std::map<hstring, hstring> map{ { { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } } };
@@ -231,12 +232,12 @@ TEST_CASE("FastInput")
         REQUIRE(fast.IterablePairAsync({ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }).get() == L"AaBbCc");
         fast.UseIterablePair();
 
-        REQUIRE(fast.IterablePairAsync(std::map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }).get() == L"AaBbCc");
+        REQUIRE(fast.IterablePairAsync(std::map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }).get() ==
+                L"AaBbCc");
         fast.UseIterablePair();
 
-        REQUIRE(
-            fast.IterablePairAsync(std::unordered_map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } })
-                .get() == L"AaBbCc");
+        REQUIRE(fast.IterablePairAsync(std::unordered_map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } })
+                    .get() == L"AaBbCc");
         fast.UseIterablePair();
 
         IMap<hstring, hstring> convertible = single_threaded_map<hstring, hstring>(
@@ -256,7 +257,8 @@ TEST_CASE("FastInput")
         REQUIRE(fast.MapViewAsync({ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }).get() == L"AaBbCc");
         fast.UseIterablePair();
 
-        REQUIRE(fast.MapViewAsync(std::map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }).get() == L"AaBbCc");
+        REQUIRE(fast.MapViewAsync(std::map<hstring, hstring>{ { L"A", L"a" }, { L"B", L"b" }, { L"C", L"c" } }).get() ==
+                L"AaBbCc");
         fast.UseIterablePair();
 
         REQUIRE(

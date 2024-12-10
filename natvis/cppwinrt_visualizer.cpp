@@ -129,10 +129,9 @@ TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
         type = db->find(typeName);
         if (!type)
         {
-            NatvisDiagnostic(
-                process,
-                std::wstring(L"Could not find metadata for ") + std::wstring(typeName.begin(), typeName.end()),
-                NatvisDiagnosticLevel::Error);
+            NatvisDiagnostic(process,
+                             std::wstring(L"Could not find metadata for ") + std::wstring(typeName.begin(), typeName.end()),
+                             NatvisDiagnosticLevel::Error);
         }
     }
     return type;
@@ -177,8 +176,8 @@ cppwinrt_visualizer::cppwinrt_visualizer()
 
     // Log an event for telemetry purposes when the visualizer is brought online
     com_ptr<DkmString> eventName;
-    if SUCCEEDED (DkmString::Create(
-                      DkmSourceString(L"vs/vc/diagnostics/cppwinrtvisualizer/objectconstructed"), eventName.put()))
+    if SUCCEEDED (DkmString::Create(DkmSourceString(L"vs/vc/diagnostics/cppwinrtvisualizer/objectconstructed"),
+                                    eventName.put()))
     {
         com_ptr<DkmTelemetryEvent> error;
         if SUCCEEDED (DkmTelemetryEvent::Create(eventName.get(), nullptr, nullptr, error.put()))
@@ -195,8 +194,8 @@ cppwinrt_visualizer::~cppwinrt_visualizer()
     db.reset();
 }
 
-HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
-    _In_ DkmVisualizedExpression* pVisualizedExpression, _Deref_out_ DkmEvaluationResult** ppResultObject)
+HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(_In_ DkmVisualizedExpression* pVisualizedExpression,
+                                                          _Deref_out_ DkmEvaluationResult** ppResultObject)
 {
     try
     {
@@ -215,7 +214,8 @@ HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
             objectType = ObjectType::Projection;
         }
         // Visualize nested object properties via raw ABI pointers
-        else if ((wcscmp(bstrTypeName, L"winrt::impl::IInspectable") == 0) || (wcscmp(bstrTypeName, L"winrt::impl::inspectable_abi") == 0))
+        else if ((wcscmp(bstrTypeName, L"winrt::impl::IInspectable") == 0) ||
+                 (wcscmp(bstrTypeName, L"winrt::impl::inspectable_abi") == 0))
         {
             objectType = ObjectType::Abi;
         }
@@ -232,8 +232,9 @@ HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
         else
         {
             // unrecognized type
-            NatvisDiagnostic(
-                pVisualizedExpression, std::wstring(L"Unrecognized type: ") + (LPWSTR)bstrTypeName, NatvisDiagnosticLevel::Error);
+            NatvisDiagnostic(pVisualizedExpression,
+                             std::wstring(L"Unrecognized type: ") + (LPWSTR)bstrTypeName,
+                             NatvisDiagnosticLevel::Error);
             return S_OK;
         }
 
@@ -244,19 +245,17 @@ HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
     catch (...)
     {
         // If something goes wrong, just fail to display object/property.  Don't take down VS.
-        NatvisDiagnostic(
-            pVisualizedExpression,
-            L"Exception in cppwinrt_visualizer::EvaluateVisualizedExpression",
-            NatvisDiagnosticLevel::Error,
-            to_hresult());
+        NatvisDiagnostic(pVisualizedExpression,
+                         L"Exception in cppwinrt_visualizer::EvaluateVisualizedExpression",
+                         NatvisDiagnosticLevel::Error,
+                         to_hresult());
         return E_FAIL;
     }
 }
 
-HRESULT cppwinrt_visualizer::UseDefaultEvaluationBehavior(
-    _In_ DkmVisualizedExpression* /*pVisualizedExpression*/,
-    _Out_ bool* pUseDefaultEvaluationBehavior,
-    _Deref_out_opt_ DkmEvaluationResult** ppDefaultEvaluationResult)
+HRESULT cppwinrt_visualizer::UseDefaultEvaluationBehavior(_In_ DkmVisualizedExpression* /*pVisualizedExpression*/,
+                                                          _Out_ bool* pUseDefaultEvaluationBehavior,
+                                                          _Deref_out_opt_ DkmEvaluationResult** ppDefaultEvaluationResult)
 {
     *pUseDefaultEvaluationBehavior = false;
     *ppDefaultEvaluationResult = nullptr;
@@ -264,12 +263,11 @@ HRESULT cppwinrt_visualizer::UseDefaultEvaluationBehavior(
     return S_OK;
 }
 
-HRESULT cppwinrt_visualizer::GetChildren(
-    _In_ DkmVisualizedExpression* pVisualizedExpression,
-    _In_ UINT32 InitialRequestSize,
-    _In_ DkmInspectionContext* pInspectionContext,
-    _Out_ DkmArray<DkmChildVisualizedExpression*>* pInitialChildren,
-    _Deref_out_ DkmEvaluationResultEnumContext** ppEnumContext)
+HRESULT cppwinrt_visualizer::GetChildren(_In_ DkmVisualizedExpression* pVisualizedExpression,
+                                         _In_ UINT32 InitialRequestSize,
+                                         _In_ DkmInspectionContext* pInspectionContext,
+                                         _Out_ DkmArray<DkmChildVisualizedExpression*>* pInitialChildren,
+                                         _Deref_out_ DkmEvaluationResultEnumContext** ppEnumContext)
 {
     try
     {
@@ -295,18 +293,19 @@ HRESULT cppwinrt_visualizer::GetChildren(
     catch (...)
     {
         // If something goes wrong, just fail to display object/property.  Don't take down VS.
-        NatvisDiagnostic(
-            pVisualizedExpression, L"Exception in cppwinrt_visualizer::GetChildren", NatvisDiagnosticLevel::Error, to_hresult());
+        NatvisDiagnostic(pVisualizedExpression,
+                         L"Exception in cppwinrt_visualizer::GetChildren",
+                         NatvisDiagnosticLevel::Error,
+                         to_hresult());
         return E_FAIL;
     }
 }
 
-HRESULT cppwinrt_visualizer::GetItems(
-    _In_ DkmVisualizedExpression* pVisualizedExpression,
-    _In_ DkmEvaluationResultEnumContext* pEnumContext,
-    _In_ UINT32 StartIndex,
-    _In_ UINT32 Count,
-    _Out_ DkmArray<DkmChildVisualizedExpression*>* pItems)
+HRESULT cppwinrt_visualizer::GetItems(_In_ DkmVisualizedExpression* pVisualizedExpression,
+                                      _In_ DkmEvaluationResultEnumContext* pEnumContext,
+                                      _In_ UINT32 StartIndex,
+                                      _In_ UINT32 Count,
+                                      _Out_ DkmArray<DkmChildVisualizedExpression*>* pItems)
 {
     try
     {
@@ -337,8 +336,10 @@ HRESULT cppwinrt_visualizer::GetItems(
     }
 }
 
-HRESULT cppwinrt_visualizer::SetValueAsString(
-    _In_ DkmVisualizedExpression* pVisualizedExpression, _In_ DkmString* pValue, _In_ UINT32 Timeout, _Deref_out_opt_ DkmString** ppErrorText)
+HRESULT cppwinrt_visualizer::SetValueAsString(_In_ DkmVisualizedExpression* pVisualizedExpression,
+                                              _In_ DkmString* pValue,
+                                              _In_ UINT32 Timeout,
+                                              _Deref_out_opt_ DkmString** ppErrorText)
 {
     try
     {
@@ -354,13 +355,16 @@ HRESULT cppwinrt_visualizer::SetValueAsString(
     catch (...)
     {
         // If something goes wrong, just fail to update object/property.  Don't take down VS.
-        NatvisDiagnostic(
-            pVisualizedExpression, L"Exception in cppwinrt_visualizer::SetValueAsString", NatvisDiagnosticLevel::Error, to_hresult());
+        NatvisDiagnostic(pVisualizedExpression,
+                         L"Exception in cppwinrt_visualizer::SetValueAsString",
+                         NatvisDiagnosticLevel::Error,
+                         to_hresult());
         return E_FAIL;
     }
 }
 
-HRESULT cppwinrt_visualizer::GetUnderlyingString(_In_ DkmVisualizedExpression* pVisualizedExpression, _Deref_out_opt_ DkmString** ppStringValue)
+HRESULT cppwinrt_visualizer::GetUnderlyingString(_In_ DkmVisualizedExpression* pVisualizedExpression,
+                                                 _Deref_out_opt_ DkmString** ppStringValue)
 {
     try
     {
@@ -376,11 +380,10 @@ HRESULT cppwinrt_visualizer::GetUnderlyingString(_In_ DkmVisualizedExpression* p
     catch (...)
     {
         // If something goes wrong, just fail to display object/property.  Don't take down VS.
-        NatvisDiagnostic(
-            pVisualizedExpression->RuntimeInstance()->Process(),
-            L"Exception in cppwinrt_visualizer::GetUnderlyingString",
-            NatvisDiagnosticLevel::Error,
-            to_hresult());
+        NatvisDiagnostic(pVisualizedExpression->RuntimeInstance()->Process(),
+                         L"Exception in cppwinrt_visualizer::GetUnderlyingString",
+                         NatvisDiagnosticLevel::Error,
+                         to_hresult());
         return E_FAIL;
     }
 }
