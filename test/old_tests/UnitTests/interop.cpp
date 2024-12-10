@@ -7,17 +7,22 @@ using namespace Windows::Foundation;
 
 namespace
 {
-    struct IClassicComInterface : ::IUnknown {};
+    struct IClassicComInterface : ::IUnknown
+    {};
 
-    struct ClassicCom : implements<ClassicCom, IClassicComInterface> {};
+    struct ClassicCom : implements<ClassicCom, IClassicComInterface>
+    {};
 
     struct Stringable : implements<Stringable, IStringable>
     {
-        Stringable(std::wstring_view const& value = L"Stringable") : m_value(value)
-        {
-        }
+        Stringable(std::wstring_view const& value = L"Stringable") :
+            m_value(value)
+        {}
 
-        hstring ToString() { return m_value; }
+        hstring ToString()
+        {
+            return m_value;
+        }
 
         hstring m_value;
     };
@@ -28,21 +33,22 @@ namespace
         return get_unknown(object)->Release();
     }
 
-    template <typename T>
-    uint32_t get_ref_count(T* object)
+    template <typename T> uint32_t get_ref_count(T* object)
     {
         object->AddRef();
         return object->Release();
     }
 
-    template <typename T>
-    uint32_t get_ref_count(com_ptr<T> const& object)
+    template <typename T> uint32_t get_ref_count(com_ptr<T> const& object)
     {
         return get_ref_count(object.get());
     }
-}
+} // namespace
 
-template <> inline constexpr winrt::guid winrt::impl::guid_v<IClassicComInterface>{ 0xc136bb75, 0xbc03, 0x41a6, { 0xa5, 0xdc, 0x5e, 0xfa, 0x67, 0x92, 0x4e, 0xbf } };
+template <>
+inline constexpr winrt::guid winrt::impl::guid_v<IClassicComInterface>{
+    0xc136bb75, 0xbc03, 0x41a6, { 0xa5, 0xdc, 0x5e, 0xfa, 0x67, 0x92, 0x4e, 0xbf }
+};
 
 TEST_CASE("interop")
 {

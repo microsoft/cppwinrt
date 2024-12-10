@@ -19,23 +19,22 @@ using namespace Windows::UI::Xaml::Controls;
 
 struct Movable
 {
-    Movable(Movable const &) = delete;
-    Movable & operator=(Movable const &) = delete;
+    Movable(Movable const&) = delete;
+    Movable& operator=(Movable const&) = delete;
 
     int Value = 0;
 
     Movable(int value) :
         Value(value)
-    {
-    }
+    {}
 
-    Movable(Movable && other) :
+    Movable(Movable&& other) :
         Value(other.Value)
     {
         other.Value = 0;
     }
 
-    Movable & operator=(Movable && other)
+    Movable& operator=(Movable&& other)
     {
         Value = other.Value;
         other.Value = 0;
@@ -50,7 +49,7 @@ TEST_CASE("delegate,lambda,AsyncActionCompletedHandler")
 {
     Movable movable = 1;
 
-    AsyncActionCompletedHandler h = [capture = std::move(movable)](auto && ...)
+    AsyncActionCompletedHandler h = [capture = std::move(movable)](auto&&...)
     {
         REQUIRE(capture.Value == 1);
     };
@@ -64,7 +63,7 @@ TEST_CASE("delegate,lambda,AsyncActionProgressHandler")
 {
     Movable movable = 1;
 
-    AsyncActionProgressHandler<double> h = [capture = std::move(movable)](auto && ...)
+    AsyncActionProgressHandler<double> h = [capture = std::move(movable)](auto&&...)
     {
         REQUIRE(capture.Value == 1);
     };
@@ -78,7 +77,7 @@ TEST_CASE("delegate,lambda,AsyncActionWithProgressCompletedHandler")
 {
     Movable movable = 1;
 
-    AsyncActionWithProgressCompletedHandler<double> h = [capture = std::move(movable)](auto && ...)
+    AsyncActionWithProgressCompletedHandler<double> h = [capture = std::move(movable)](auto&&...)
     {
         REQUIRE(capture.Value == 1);
     };
@@ -92,7 +91,7 @@ TEST_CASE("delegate,lambda,AsyncOperationProgressHandler")
 {
     Movable movable = 1;
 
-    AsyncOperationProgressHandler<uint64_t, uint64_t> h = [capture = std::move(movable)](auto && ...)
+    AsyncOperationProgressHandler<uint64_t, uint64_t> h = [capture = std::move(movable)](auto&&...)
     {
         REQUIRE(capture.Value == 1);
     };
@@ -106,7 +105,7 @@ TEST_CASE("delegate,lambda,AsyncOperationWithProgressCompletedHandler")
 {
     Movable movable = 1;
 
-    AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> h = [capture = std::move(movable)](auto && ...)
+    AsyncOperationWithProgressCompletedHandler<uint64_t, uint64_t> h = [capture = std::move(movable)](auto&&...)
     {
         REQUIRE(capture.Value == 1);
     };
@@ -120,7 +119,7 @@ TEST_CASE("delegate,lambda,AsyncOperationCompletedHandler")
 {
     Movable movable = 1;
 
-    AsyncOperationCompletedHandler<bool> h = [capture = std::move(movable)](auto && ...)
+    AsyncOperationCompletedHandler<bool> h = [capture = std::move(movable)](auto&&...)
     {
         REQUIRE(capture.Value == 1);
     };
@@ -134,7 +133,7 @@ TEST_CASE("delegate,lambda,EventHandler")
 {
     Movable movable = 1;
 
-    EventHandler<Windows::Foundation::IInspectable> h = [capture = std::move(movable)](auto && ...)
+    EventHandler<Windows::Foundation::IInspectable> h = [capture = std::move(movable)](auto&&...)
     {
         REQUIRE(capture.Value == 1);
     };
@@ -148,7 +147,7 @@ TEST_CASE("delegate,lambda,TypedEventHandler")
 {
     Movable movable = 1;
 
-    TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> h = [capture = std::move(movable)](auto && ...)
+    TypedEventHandler<DisplayInformation, Windows::Foundation::IInspectable> h = [capture = std::move(movable)](auto&&...)
     {
         REQUIRE(capture.Value == 1);
     };
@@ -162,7 +161,7 @@ TEST_CASE("delegate,lambda,VectorChangedEventHandler")
 {
     Movable movable = 1;
 
-    VectorChangedEventHandler<Windows::Foundation::IInspectable> h = [capture = std::move(movable)](auto && ...)
+    VectorChangedEventHandler<Windows::Foundation::IInspectable> h = [capture = std::move(movable)](auto&&...)
     {
         REQUIRE(capture.Value == 1);
     };
@@ -176,7 +175,7 @@ TEST_CASE("delegate,lambda,MapChangedEventHandler")
 {
     Movable movable = 1;
 
-    MapChangedEventHandler<hstring, hstring> h = [capture = std::move(movable)](auto && ...)
+    MapChangedEventHandler<hstring, hstring> h = [capture = std::move(movable)](auto&&...)
     {
         REQUIRE(capture.Value == 1);
     };
@@ -190,7 +189,7 @@ TEST_CASE("delegate,lambda,ListViewItemToKeyHandler")
 {
     Movable movable = 1;
 
-    ListViewItemToKeyHandler h = [capture = std::move(movable)](auto && ...)
+    ListViewItemToKeyHandler h = [capture = std::move(movable)](auto&&...)
     {
         REQUIRE(capture.Value == 1);
         return L"value";

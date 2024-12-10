@@ -4,19 +4,21 @@ WINRT_EXPORT namespace winrt::param
     struct hstring
     {
 #ifdef _MSC_VER
-#pragma warning(suppress: 26495)
+#pragma warning(suppress : 26495)
 #endif
-        hstring() noexcept : m_handle(nullptr) {}
+        hstring() noexcept :
+            m_handle(nullptr)
+        {}
         hstring(hstring const& values) = delete;
         hstring& operator=(hstring const& values) = delete;
         hstring(std::nullptr_t) = delete;
 
 #ifdef _MSC_VER
-#pragma warning(suppress: 26495)
+#pragma warning(suppress : 26495)
 #endif
-        hstring(winrt::hstring const& value) noexcept : m_handle(get_abi(value))
-        {
-        }
+        hstring(winrt::hstring const& value) noexcept :
+            m_handle(get_abi(value))
+        {}
 
         hstring(std::wstring_view const& value) noexcept
         {
@@ -67,6 +69,5 @@ WINRT_EXPORT namespace winrt::param
 
 namespace winrt::impl
 {
-    template <typename T>
-    using param_type = std::conditional_t<std::is_same_v<T, hstring>, param::hstring, T>;
+    template <typename T> using param_type = std::conditional_t<std::is_same_v<T, hstring>, param::hstring, T>;
 }

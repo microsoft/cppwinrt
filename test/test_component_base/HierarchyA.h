@@ -12,10 +12,9 @@ namespace winrt::test_component_base::implementation
         void HierarchyA_Method();
         int HierarchyA_Protected();
     };
-}
+} // namespace winrt::test_component_base::implementation
 namespace winrt::test_component_base::factory_implementation
 {
     struct HierarchyA : HierarchyAT<HierarchyA, implementation::HierarchyA>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component_base::factory_implementation

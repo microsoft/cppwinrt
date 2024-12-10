@@ -27,8 +27,8 @@ public:
         write_response_file(input);
     }
 
-    template<size_t numOptions>
-    reader create_reader(size_t const argc, const char* argv[], const option(&options)[numOptions])
+    template <size_t numOptions>
+    reader create_reader(size_t const argc, const char* argv[], const option (&options)[numOptions])
     {
         return reader{ argc, argv, options };
     }
@@ -41,15 +41,9 @@ public:
 
 TEST_CASE("cmd_reader")
 {
-    static constexpr option options[]
-    {
-        { "input", 1 },
-        { "reference", 0 },
-        { "output", 0, 1 },
-        { "component", 0, 1 },
-        { "filter", 0 },
-        { "name", 0, 1 },
-        { "verbose", 0, 0 },
+    static constexpr option options[]{
+        { "input", 1 },  { "reference", 0 }, { "output", 0, 1 },  { "component", 0, 1 },
+        { "filter", 0 }, { "name", 0, 1 },   { "verbose", 0, 0 },
     };
 
     // input and output
@@ -130,7 +124,8 @@ TEST_CASE("cmd_reader")
         std::string file_name_out(R"(C:\)");
         std::string input_str("-in ");
 
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 500; i++)
+        {
             file_name_in.append(R"(dirname\)");
             file_name_out.append(R"(dirname\)");
         }

@@ -8,11 +8,10 @@ using namespace Windows::Foundation;
 struct Stringable : implements<Stringable, IStringable>
 {
     hstring m_value;
-    bool * m_destroyed = nullptr;
+    bool* m_destroyed = nullptr;
 
-    Stringable(std::wstring_view value, bool * destroyed = nullptr) :
-        m_value(value),
-        m_destroyed(destroyed)
+    Stringable(std::wstring_view value, bool* destroyed = nullptr) :
+        m_value(value), m_destroyed(destroyed)
     {
         if (m_destroyed)
         {
@@ -45,7 +44,7 @@ TEST_CASE("com_ptr, ::IUnknown")
 
     REQUIRE(!destroyed);
 
-    com_ptr<::IUnknown> a; // default ctor
+    com_ptr<::IUnknown> a;           // default ctor
     com_ptr<::IUnknown> b = nullptr; // nullptr_t ctor
 
     REQUIRE(S_OK == get_unknown(stringable)->QueryInterface(b.put())); // attach
@@ -54,8 +53,8 @@ TEST_CASE("com_ptr, ::IUnknown")
     b = nullptr;
 
     com_ptr<::IUnknown> d = std::move(c); // move ctor
-    c = std::move(d); // move assign
-    d = c; // copy assign, AddRef
+    c = std::move(d);                     // move assign
+    d = c;                                // copy assign, AddRef
 
     stringable = c.as<IStringable>();
 
@@ -81,7 +80,7 @@ TEST_CASE("com_ptr, Windows::Foundation::IUnknown")
 
     REQUIRE(!destroyed);
 
-    com_ptr<Windows::Foundation::IUnknown> a; // default ctor
+    com_ptr<Windows::Foundation::IUnknown> a;           // default ctor
     com_ptr<Windows::Foundation::IUnknown> b = nullptr; // nullptr_t ctor
 
     REQUIRE(S_OK == get_unknown(stringable)->QueryInterface(guid_of<Windows::Foundation::IUnknown>(), b.put_void())); // attach
@@ -90,8 +89,8 @@ TEST_CASE("com_ptr, Windows::Foundation::IUnknown")
     b = nullptr;
 
     com_ptr<Windows::Foundation::IUnknown> d = std::move(c); // move ctor
-    c = std::move(d); // move assign
-    d = c; // copy assign, AddRef
+    c = std::move(d);                                        // move assign
+    d = c;                                                   // copy assign, AddRef
 
     stringable = c.as<IStringable>();
 
@@ -119,7 +118,10 @@ TEST_CASE("com_ptr,duck typing")
     struct CanRelease
     {
         bool releaseCalled = false;
-        void Release() { releaseCalled = true; }
+        void Release()
+        {
+            releaseCalled = true;
+        }
     } canRelease;
     com_ptr<CanRelease>{ &canRelease, take_ownership_from_abi };
     REQUIRE(canRelease.releaseCalled);
@@ -129,7 +131,10 @@ TEST_CASE("com_ptr,duck typing")
     struct CanAddRef : CanRelease
     {
         bool addrefCalled = false;
-        void AddRef() { addrefCalled = true; }
+        void AddRef()
+        {
+            addrefCalled = true;
+        }
     } canAddRef;
     com_ptr<CanAddRef> addrefTest{ &canAddRef, take_ownership_from_abi };
     auto copy = addrefTest;
@@ -179,7 +184,7 @@ TEST_CASE("convertible")
     a = nullptr;
     b = nullptr;
 
-    a = stringable; // convertible copy assign
+    a = stringable;            // convertible copy assign
     b = std::move(stringable); // convertible move assign
 
     REQUIRE(a);
@@ -300,7 +305,7 @@ TEST_CASE("com_ptr, convertible copy ctor assign")
 {
     com_ptr<::IInspectable> a = test_make_inspectable();
     REQUIRE(a);
-    
+
     com_ptr<::IUnknown> b = a; // convertible copy ctor
     REQUIRE(b);
 
@@ -333,8 +338,8 @@ TEST_CASE("com_ptr, swap")
     REQUIRE(b);
     REQUIRE(a != b);
 
-    ::IInspectable * ga = get_abi(a);
-    ::IInspectable * gb = get_abi(b);
+    ::IInspectable* ga = get_abi(a);
+    ::IInspectable* gb = get_abi(b);
 
     swap(a, b);
 

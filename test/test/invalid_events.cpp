@@ -12,22 +12,16 @@ TEST_CASE("invalid_events")
     event<TypedEventHandler<int, int>> event;
     int counter{};
 
-    auto a = event.add([&](auto && ...)
-        {
-            counter += 1;
-        });
+    auto a = event.add([&](auto&&...) { counter += 1; });
 
-    auto b = event.add([&](auto && ...)
-        {
-            counter += 10;
-        });
+    auto b = event.add([&](auto&&...) { counter += 10; });
 
     REQUIRE(counter == 0);
     event(0, 0);
     REQUIRE(counter == 11);
 
     // Remove invalid token (with two valids)
-    event.remove(event_token {1});
+    event.remove(event_token{ 1 });
 
     counter = 0;
     event(0, 0);
@@ -41,7 +35,7 @@ TEST_CASE("invalid_events")
     REQUIRE(counter == 1);
 
     // Remove invalid token (with one valid)
-    event.remove(event_token {1});
+    event.remove(event_token{ 1 });
 
     counter = 0;
     event(0, 0);
@@ -55,7 +49,7 @@ TEST_CASE("invalid_events")
     REQUIRE(counter == 0);
 
     // Remove invalid token (with no valids)
-    event.remove(event_token {1});
+    event.remove(event_token{ 1 });
 
     counter = 0;
     event(0, 0);

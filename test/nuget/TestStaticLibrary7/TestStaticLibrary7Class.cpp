@@ -11,4 +11,4 @@ namespace winrt::TestRuntimeComponentCXLibrary::implementation
     {
         return XamlDirect::GetDefault();
     }
-}
+} // namespace winrt::TestRuntimeComponentCXLibrary::implementation

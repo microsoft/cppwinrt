@@ -3,5 +3,4 @@
 using namespace winrt;
 
 int main()
-{
-}
+{}

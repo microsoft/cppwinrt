@@ -10,10 +10,9 @@ namespace winrt::test_component::Windows::implementation
         static void StaticMethod(winrt::test_component::Windows::Struct const& param);
         void Method(winrt::Windows::Foundation::Uri const& param);
     };
-}
+} // namespace winrt::test_component::Windows::implementation
 namespace winrt::test_component::Windows::factory_implementation
 {
     struct Class : ClassT<Class, implementation::Class>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component::Windows::factory_implementation

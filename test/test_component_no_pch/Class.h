@@ -9,10 +9,9 @@ namespace winrt::test_component_no_pch::implementation
 
         void Method();
     };
-}
+} // namespace winrt::test_component_no_pch::implementation
 namespace winrt::test_component_no_pch::factory_implementation
 {
     struct Class : ClassT<Class, implementation::Class>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component_no_pch::factory_implementation

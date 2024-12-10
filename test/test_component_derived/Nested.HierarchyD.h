@@ -5,17 +5,17 @@
 
 namespace winrt::test_component_derived::Nested::implementation
 {
-    struct HierarchyD : HierarchyDT<HierarchyD, test_component_derived::Nested::implementation::HierarchyC, IReferenceTrackerExtension>
+    struct HierarchyD
+        : HierarchyDT<HierarchyD, test_component_derived::Nested::implementation::HierarchyC, IReferenceTrackerExtension>
     {
         HierarchyD() = default;
 
         HierarchyD(hstring const& name);
         void HierarchyD_Method();
     };
-}
+} // namespace winrt::test_component_derived::Nested::implementation
 namespace winrt::test_component_derived::Nested::factory_implementation
 {
     struct HierarchyD : HierarchyDT<HierarchyD, implementation::HierarchyD>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component_derived::Nested::factory_implementation

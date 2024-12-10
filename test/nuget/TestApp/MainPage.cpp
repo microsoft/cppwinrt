@@ -59,4 +59,4 @@ namespace winrt::TestApp::implementation
     {
         myButton().Content(box_value(L"Clicked"));
     }
-}
+} // namespace winrt::TestApp::implementation

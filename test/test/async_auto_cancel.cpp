@@ -58,15 +58,15 @@ namespace
         REQUIRE(false);
     }
 
-    template <typename F>
-    void Check(F make)
+    template <typename F> void Check(F make)
     {
         handle start{ CreateEvent(nullptr, true, false, nullptr) };
         handle completed{ CreateEvent(nullptr, true, false, nullptr) };
         auto async = make(start.get());
         REQUIRE(async.Status() == AsyncStatus::Started);
 
-        async.Completed([&](auto&& sender, AsyncStatus status)
+        async.Completed(
+            [&](auto&& sender, AsyncStatus status)
             {
                 REQUIRE(async == sender);
                 REQUIRE(status == AsyncStatus::Canceled);
@@ -81,7 +81,7 @@ namespace
         REQUIRE(async.ErrorCode() == HRESULT_FROM_WIN32(ERROR_CANCELLED));
         REQUIRE_THROWS_AS(async.GetResults(), hresult_canceled);
     }
-}
+} // namespace
 
 #if defined(__clang__) && defined(_MSC_VER)
 // FIXME: Test is known to segfault when built with Clang.

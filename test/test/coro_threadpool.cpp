@@ -12,7 +12,7 @@ namespace
     {
         co_await resume_background();
     }
-}
+} // namespace
 
 TEST_CASE("coro_base")
 {

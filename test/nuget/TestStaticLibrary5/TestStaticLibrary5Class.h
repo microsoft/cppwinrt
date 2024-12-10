@@ -10,11 +10,10 @@ namespace winrt::TestRuntimeComponentEmpty::implementation
 
         Windows::UI::Xaml::Core::Direct::XamlDirect Test();
     };
-}
+} // namespace winrt::TestRuntimeComponentEmpty::implementation
 
 namespace winrt::TestRuntimeComponentEmpty::factory_implementation
 {
     struct TestStaticLibrary5Class : TestStaticLibrary5ClassT<TestStaticLibrary5Class, implementation::TestStaticLibrary5Class>
-    {
-    };
-}
+    {};
+} // namespace winrt::TestRuntimeComponentEmpty::factory_implementation

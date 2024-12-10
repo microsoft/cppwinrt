@@ -31,7 +31,7 @@ namespace winrt
 
         return lock{};
     }
-}
+} // namespace winrt
 
 #include "winrt/Windows.Foundation.h"
 
@@ -44,7 +44,7 @@ namespace
             return L"CustomStringable";
         }
     };
-}
+} // namespace
 
 TEST_CASE("module_lock_custom")
 {
@@ -61,7 +61,12 @@ TEST_CASE("module_lock_custom")
 
 int main(int const argc, char** argv)
 {
-    std::set_terminate([] { reportFatal("Abnormal termination"); ExitProcess(1); });
+    std::set_terminate(
+        []
+        {
+            reportFatal("Abnormal termination");
+            ExitProcess(1);
+        });
     _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
     (void)_CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
     _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);

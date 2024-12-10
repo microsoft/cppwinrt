@@ -17,4 +17,4 @@ namespace winrt::Composable::implementation
     {
         return ProtectedMethod();
     }
-}
+} // namespace winrt::Composable::implementation

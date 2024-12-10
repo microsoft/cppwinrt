@@ -6,8 +6,8 @@ using namespace Windows::Foundation;
 
 //
 // These tests cover the behaviour of the 'as' and 'try_as' members that provide the
-// projection's access to IUnknown's QueryInterface virtual function. Both the 
-// projected IUnknown (value type) and the com_ptr class template provide both 'as' 
+// projection's access to IUnknown's QueryInterface virtual function. Both the
+// projected IUnknown (value type) and the com_ptr class template provide both 'as'
 // and 'try_as' and while those types are different, these two methods should behave
 // the same way.
 //

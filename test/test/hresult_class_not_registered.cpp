@@ -7,11 +7,11 @@ namespace
 {
     IAsyncAction Async()
     {
-        // This is just a simple way of testing all of the ABI and projection 
+        // This is just a simple way of testing all of the ABI and projection
         // error propagation in one go.
         throw hresult_class_not_registered(L"test message");
     }
-}
+} // namespace
 TEST_CASE("hresult_class_not_registered")
 {
     REQUIRE(hresult_class_not_registered().message() == L"Class not registered");

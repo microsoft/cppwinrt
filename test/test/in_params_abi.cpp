@@ -6,7 +6,7 @@ namespace winrt
 {
     using namespace Windows::Foundation;
     using namespace test_component;
-}
+} // namespace winrt
 
 using namespace winrt;
 
@@ -16,8 +16,7 @@ namespace
     {
         Value(int32_t value) :
             m_value(value)
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -25,10 +24,9 @@ namespace
         }
 
     private:
-
         int32_t m_value{};
     };
-}
+} // namespace
 
 TEST_CASE("in_params_abi")
 {
@@ -66,7 +64,7 @@ TEST_CASE("in_params_abi")
         REQUIRE(S_OK == WindowsDeleteString(result));
     }
     {
-        Struct input{ L"1",L"2" };
+        Struct input{ L"1", L"2" };
         auto& raw = reinterpret_cast<ABI::test_component::Struct&>(input);
         HSTRING result{};
         REQUIRE(S_OK == abi->InStruct(raw, &result));
@@ -74,7 +72,7 @@ TEST_CASE("in_params_abi")
         REQUIRE(S_OK == WindowsDeleteString(result));
     }
     {
-        Struct input{ L"1",L"2" };
+        Struct input{ L"1", L"2" };
         auto& raw = reinterpret_cast<ABI::test_component::Struct&>(input);
         HSTRING result{};
         REQUIRE(S_OK == abi->InStructRef(&raw, &result));
@@ -82,7 +80,7 @@ TEST_CASE("in_params_abi")
         REQUIRE(S_OK == WindowsDeleteString(result));
     }
     {
-        std::array<int32_t, 2> input{ 1,2 };
+        std::array<int32_t, 2> input{ 1, 2 };
         HSTRING result{};
         REQUIRE(S_OK == abi->InInt32Array(static_cast<uint32_t>(input.size()), input.data(), &result));
         REQUIRE(WindowsGetStringRawBuffer(result, nullptr) == L"12"sv);
@@ -122,7 +120,7 @@ TEST_CASE("in_params_abi")
         input[1]->Release();
     }
     {
-        std::array<Struct, 2> input{ Struct{L"1",L"2"}, Struct{L"3",L"4"} };
+        std::array<Struct, 2> input{ Struct{ L"1", L"2" }, Struct{ L"3", L"4" } };
         auto raw = reinterpret_cast<ABI::test_component::Struct*>(input.data());
         HSTRING result{};
         REQUIRE(S_OK == abi->InStructArray(static_cast<uint32_t>(input.size()), raw, &result));

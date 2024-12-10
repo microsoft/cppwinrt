@@ -12,16 +12,10 @@ TEST_CASE("event_clear")
     event<TypedEventHandler<int, int>> event;
     int counter{};
 
-    auto a = event.add([&](auto && ...)
-        {
-            counter += 1;
-        });
+    auto a = event.add([&](auto&&...) { counter += 1; });
     (void)a;
 
-    auto b = event.add([&](auto && ...)
-        {
-            counter += 10;
-        });
+    auto b = event.add([&](auto&&...) { counter += 10; });
     (void)b;
 
     REQUIRE(counter == 0);

@@ -56,11 +56,10 @@ TEST_CASE("range_for,IVectorView")
 
 TEST_CASE("range_for,IIterable,IKeyValuePair")
 {
-    std::map<int, hstring> values
-    {
-        { 1, L"one"},
-        { 2, L"two"},
-        { 3, L"three"},
+    std::map<int, hstring> values{
+        { 1, L"one" },
+        { 2, L"two" },
+        { 3, L"three" },
     };
 
     IIterable<IKeyValuePair<int32_t, hstring>> c = single_threaded_map<int32_t, hstring>(std::map<int, hstring>(values));
@@ -91,8 +90,7 @@ TEST_CASE("range_for,IIterable,IKeyValuePair")
 
 TEST_CASE("range_for,IMap")
 {
-    std::map<int, hstring> values
-    {
+    std::map<int, hstring> values{
         { 1, L"one" },
         { 2, L"two" },
         { 3, L"three" },
@@ -121,8 +119,7 @@ TEST_CASE("range_for,IMap")
 
 TEST_CASE("range_for,IMapView")
 {
-    std::map<int, hstring> values
-    {
+    std::map<int, hstring> values{
         { 1, L"one" },
         { 2, L"two" },
         { 3, L"three" },
@@ -148,4 +145,3 @@ TEST_CASE("range_for,IMapView")
 
     REQUIRE(result == values);
 }
-

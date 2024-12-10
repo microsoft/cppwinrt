@@ -21,8 +21,7 @@ struct Capture : implements<Capture, ICapture>
 
     Capture(int32_t value) :
         m_value{ value }
-    {
-    }
+    {}
 
     int32_t __stdcall GetValue() noexcept override
     {

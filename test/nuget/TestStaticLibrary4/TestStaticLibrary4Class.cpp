@@ -13,4 +13,4 @@ namespace winrt::TestApp::Library4::implementation
     {
         return XamlDirect::GetDefault();
     }
-}
+} // namespace winrt::TestApp::Library4::implementation

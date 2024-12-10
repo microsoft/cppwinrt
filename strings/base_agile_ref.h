@@ -1,7 +1,7 @@
 
 WINRT_EXPORT namespace winrt
 {
-#if defined (WINRT_NO_MODULE_LOCK)
+#if defined(WINRT_NO_MODULE_LOCK)
 
     // Defining WINRT_NO_MODULE_LOCK is appropriate for apps (executables) or pinned DLLs (that don't support unloading)
     // and can thus avoid the synchronization overhead imposed by the default module lock.
@@ -29,7 +29,7 @@ WINRT_EXPORT namespace winrt
         return lock{};
     }
 
-#elif defined (WINRT_CUSTOM_MODULE_LOCK)
+#elif defined(WINRT_CUSTOM_MODULE_LOCK)
 
     // When WINRT_CUSTOM_MODULE_LOCK is defined, you must provide an implementation of winrt::get_module_lock()
     // that returns an object that implements operator++ and operator--.
@@ -49,11 +49,9 @@ WINRT_EXPORT namespace winrt
 
 namespace winrt::impl
 {
-    template<bool UseModuleLock>
-    struct module_lock_updater;
+    template <bool UseModuleLock> struct module_lock_updater;
 
-    template<>
-    struct module_lock_updater<true>
+    template <> struct module_lock_updater<true>
     {
         module_lock_updater() noexcept
         {
@@ -66,8 +64,8 @@ namespace winrt::impl
         }
     };
 
-    template<>
-    struct module_lock_updater<false> {};
+    template <> struct module_lock_updater<false>
+    {};
 
     using update_module_lock = module_lock_updater<true>;
 
@@ -80,14 +78,14 @@ namespace winrt::impl
     {
         return WINRT_IMPL_RoGetAgileReference(0, iid, object, reference);
     }
-}
+} // namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename T>
-    struct agile_ref
+    template <typename T> struct agile_ref
     {
-        agile_ref(std::nullptr_t = nullptr) noexcept {}
+        agile_ref(std::nullptr_t = nullptr) noexcept
+        {}
 
         agile_ref(impl::com_ref<T> const& object)
         {
@@ -115,14 +113,12 @@ WINRT_EXPORT namespace winrt
         }
 
     private:
-
         com_ptr<impl::IAgileReference> m_ref;
     };
 
-    template<typename T> agile_ref(T const&)->agile_ref<impl::wrapped_type_t<T>>;
+    template <typename T> agile_ref(T const&) -> agile_ref<impl::wrapped_type_t<T>>;
 
-    template <typename T>
-    agile_ref<impl::wrapped_type_t<T>> make_agile(T const& object)
+    template <typename T> agile_ref<impl::wrapped_type_t<T>> make_agile(T const& object)
     {
         return object;
     }

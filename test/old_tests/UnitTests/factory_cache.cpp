@@ -14,7 +14,7 @@ namespace
         auto map = collection.as<Windows::Foundation::Collections::IMap<hstring, Windows::Foundation::IInspectable>>();
         map.Clear();
     }
-}
+} // namespace
 
 TEST_CASE("factory_cache")
 {
