@@ -37,8 +37,7 @@ namespace
         co_await OperationWithProgress();
     }
 
-    template <typename T>
-    void Check(T const& async)
+    template <typename T> void Check(T const& async)
     {
         REQUIRE(async.Status() == AsyncStatus::Completed);
         REQUIRE(async.ErrorCode() == 0);
@@ -49,17 +48,18 @@ namespace
 
         bool completed = false;
 
-        async.Completed([&](auto&& sender, AsyncStatus status)
-        {
-            completed = true;
-            REQUIRE(async == sender);
-            REQUIRE(status == AsyncStatus::Completed);
-        });
+        async.Completed(
+            [&](auto&& sender, AsyncStatus status)
+            {
+                completed = true;
+                REQUIRE(async == sender);
+                REQUIRE(status == AsyncStatus::Completed);
+            });
 
         REQUIRE(completed);
 
         // May only assign Completed handler once.
-        REQUIRE_THROWS_AS(async.Completed([&](auto && ...) {}), hresult_illegal_delegate_assignment);
+        REQUIRE_THROWS_AS(async.Completed([&](auto&&...) {}), hresult_illegal_delegate_assignment);
 
         // Close does nothing.
         async.Close();
@@ -68,7 +68,7 @@ namespace
         async.Cancel();
         REQUIRE(async.Status() == AsyncStatus::Completed);
     }
-}
+} // namespace
 
 TEST_CASE("async_no_suspend")
 {

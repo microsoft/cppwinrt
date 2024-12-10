@@ -11,10 +11,12 @@ namespace cppwinrt
         return 0 == value.compare(0, match.size(), match);
     }
 
-    template <typename...T> struct visit_overload : T... { using T::operator()...; };
+    template <typename... T> struct visit_overload : T...
+    {
+        using T::operator()...;
+    };
 
-    template <typename V, typename...C>
-    auto call(V&& variant, C&&...call)
+    template <typename V, typename... C> auto call(V&& variant, C&&... call)
     {
         return std::visit(visit_overload<C...>{ std::forward<C>(call)... }, std::forward<V>(variant));
     }
@@ -25,16 +27,12 @@ namespace cppwinrt
         std::string_view name_space;
 
         explicit type_name(TypeDef const& type) :
-            name(type.TypeName()),
-            name_space(type.TypeNamespace())
-        {
-        }
+            name(type.TypeName()), name_space(type.TypeNamespace())
+        {}
 
         explicit type_name(TypeRef const& type) :
-            name(type.TypeName()),
-            name_space(type.TypeNamespace())
-        {
-        }
+            name(type.TypeName()), name_space(type.TypeNamespace())
+        {}
 
         explicit type_name(coded_index<TypeDefOrRef> const& type)
         {
@@ -74,8 +72,7 @@ namespace cppwinrt
         return name.substr(0, name.rfind('`'));
     }
 
-    template <typename First, typename...Rest>
-    auto get_impl_name(First const& first, Rest const&... rest)
+    template <typename First, typename... Rest> auto get_impl_name(First const& first, Rest const&... rest)
     {
         std::string result;
 
@@ -94,13 +91,41 @@ namespace cppwinrt
 
     static bool transform_special_numeric_type(std::string_view& name)
     {
-        if (name == "Matrix3x2") { name = "float3x2"; return true; }
-        else if (name == "Matrix4x4") { name = "float4x4"; return true; }
-        else if (name == "Plane") { name = "plane"; return true; }
-        else if (name == "Quaternion") { name = "quaternion"; return true; }
-        else if (name == "Vector2") { name = "float2"; return true; }
-        else if (name == "Vector3") { name = "float3"; return true; }
-        else if (name == "Vector4") { name = "float4"; return true; }
+        if (name == "Matrix3x2")
+        {
+            name = "float3x2";
+            return true;
+        }
+        else if (name == "Matrix4x4")
+        {
+            name = "float4x4";
+            return true;
+        }
+        else if (name == "Plane")
+        {
+            name = "plane";
+            return true;
+        }
+        else if (name == "Quaternion")
+        {
+            name = "quaternion";
+            return true;
+        }
+        else if (name == "Vector2")
+        {
+            name = "float2";
+            return true;
+        }
+        else if (name == "Vector3")
+        {
+            name = "float3";
+            return true;
+        }
+        else if (name == "Vector4")
+        {
+            name = "float4";
+            return true;
+        }
         return false;
     }
 
@@ -127,8 +152,8 @@ namespace cppwinrt
 
         struct generic_param_guard
         {
-            explicit generic_param_guard(writer* arg = nullptr)
-                : owner(arg)
+            explicit generic_param_guard(writer* arg = nullptr) :
+                owner(arg)
             {}
 
             ~generic_param_guard()
@@ -139,8 +164,8 @@ namespace cppwinrt
                 }
             }
 
-            generic_param_guard(generic_param_guard&& other)
-                : owner(other.owner)
+            generic_param_guard(generic_param_guard&& other) :
+                owner(other.owner)
             {
                 other.owner = nullptr;
             }
@@ -155,16 +180,14 @@ namespace cppwinrt
             writer* owner;
         };
 
-        template<typename T>
-        struct member_value_guard
+        template <typename T> struct member_value_guard
         {
             writer* const owner;
-            T writer::* const member;
+            T writer::*const member;
             T const previous;
-            explicit member_value_guard(writer* arg, T writer::* ptr, T value) :
+            explicit member_value_guard(writer* arg, T writer::*ptr, T value) :
                 owner(arg), member(ptr), previous(std::exchange(owner->*member, value))
-            {
-            }
+            {}
 
             ~member_value_guard()
             {
@@ -173,7 +196,6 @@ namespace cppwinrt
 
             member_value_guard(member_value_guard const&) = delete;
             member_value_guard& operator=(member_value_guard const&) = delete;
-
         };
 
         void add_depends(TypeDef const& type)
@@ -337,13 +359,34 @@ namespace cppwinrt
             {
                 if (ns == "Windows.Foundation.Numerics")
                 {
-                    if (name == "Matrix3x2") { name = "float3x2"; }
-                    else if (name == "Matrix4x4") { name = "float4x4"; }
-                    else if (name == "Plane") { name = "plane"; }
-                    else if (name == "Quaternion") { name = "quaternion"; }
-                    else if (name == "Vector2") { name = "float2"; }
-                    else if (name == "Vector3") { name = "float3"; }
-                    else if (name == "Vector4") { name = "float4"; }
+                    if (name == "Matrix3x2")
+                    {
+                        name = "float3x2";
+                    }
+                    else if (name == "Matrix4x4")
+                    {
+                        name = "float4x4";
+                    }
+                    else if (name == "Plane")
+                    {
+                        name = "plane";
+                    }
+                    else if (name == "Quaternion")
+                    {
+                        name = "quaternion";
+                    }
+                    else if (name == "Vector2")
+                    {
+                        name = "float2";
+                    }
+                    else if (name == "Vector3")
+                    {
+                        name = "float3";
+                    }
+                    else if (name == "Vector4")
+                    {
+                        name = "float4";
+                    }
 
                     write("winrt::@::%", ns, name);
                 }
@@ -396,7 +439,7 @@ namespace cppwinrt
             else
             {
                 auto generic_type = type.GenericType();
-                auto[ns, name] = get_type_namespace_and_name(generic_type);
+                auto [ns, name] = get_type_namespace_and_name(generic_type);
                 name.remove_suffix(name.size() - name.rfind('`'));
                 add_depends(find_required(generic_type));
 
@@ -468,21 +511,58 @@ namespace cppwinrt
 
         void write(TypeSig::value_type const& type)
         {
-            call(type,
+            call(
+                type,
                 [&](ElementType type)
                 {
-                    if (type == ElementType::Boolean) { write("bool"); }
-                    else if (type == ElementType::Char) { write("char16_t"); }
-                    else if (type == ElementType::I1) { write("int8_t"); }
-                    else if (type == ElementType::U1) { write("uint8_t"); }
-                    else if (type == ElementType::I2) { write("int16_t"); }
-                    else if (type == ElementType::U2) { write("uint16_t"); }
-                    else if (type == ElementType::I4) { write("int32_t"); }
-                    else if (type == ElementType::U4) { write("uint32_t"); }
-                    else if (type == ElementType::I8) { write("int64_t"); }
-                    else if (type == ElementType::U8) { write("uint64_t"); }
-                    else if (type == ElementType::R4) { write("float"); }
-                    else if (type == ElementType::R8) { write("double"); }
+                    if (type == ElementType::Boolean)
+                    {
+                        write("bool");
+                    }
+                    else if (type == ElementType::Char)
+                    {
+                        write("char16_t");
+                    }
+                    else if (type == ElementType::I1)
+                    {
+                        write("int8_t");
+                    }
+                    else if (type == ElementType::U1)
+                    {
+                        write("uint8_t");
+                    }
+                    else if (type == ElementType::I2)
+                    {
+                        write("int16_t");
+                    }
+                    else if (type == ElementType::U2)
+                    {
+                        write("uint16_t");
+                    }
+                    else if (type == ElementType::I4)
+                    {
+                        write("int32_t");
+                    }
+                    else if (type == ElementType::U4)
+                    {
+                        write("uint32_t");
+                    }
+                    else if (type == ElementType::I8)
+                    {
+                        write("int64_t");
+                    }
+                    else if (type == ElementType::U8)
+                    {
+                        write("uint64_t");
+                    }
+                    else if (type == ElementType::R4)
+                    {
+                        write("float");
+                    }
+                    else if (type == ElementType::R8)
+                    {
+                        write("double");
+                    }
                     else if (type == ElementType::String)
                     {
                         if (abi_types)
@@ -514,14 +594,8 @@ namespace cppwinrt
                         assert(false);
                     }
                 },
-                [&](GenericTypeIndex var)
-                {
-                    write(generic_param_stack.back()[var.index]);
-                },
-                    [&](auto&& type)
-                {
-                    write(type);
-                });
+                [&](GenericTypeIndex var) { write(generic_param_stack.back()[var.index]); },
+                [&](auto&& type) { write(type); });
         }
 
         void write(TypeSig const& signature)
@@ -558,10 +632,7 @@ namespace cppwinrt
             auto format = R"(#include %winrt/%.h%
 )";
 
-            write(format,
-                settings.brackets ? '<' : '\"',
-                include,
-                settings.brackets ? '>' : '\"');
+            write(format, settings.brackets ? '<' : '\"', include, settings.brackets ? '>' : '\"');
         }
 
         void write_depends(std::string_view const& ns, char impl = 0)
@@ -597,4 +668,4 @@ namespace cppwinrt
             flush_to_file(filename);
         }
     };
-}
+} // namespace cppwinrt

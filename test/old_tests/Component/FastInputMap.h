@@ -4,9 +4,7 @@
 
 namespace winrt::Component::implementation
 {
-    struct FastInputMap :
-        FastInputMapT<FastInputMap>,
-        map_base<FastInputMap, hstring, hstring>
+    struct FastInputMap : FastInputMapT<FastInputMap>, map_base<FastInputMap, hstring, hstring>
     {
         FastInputMap(Windows::Foundation::Collections::IMapView<hstring, hstring> const& in);
         void Close();
@@ -22,14 +20,12 @@ namespace winrt::Component::implementation
         }
 
     private:
-
         std::map<hstring, hstring> m_container;
     };
-}
+} // namespace winrt::Component::implementation
 
 namespace winrt::Component::factory_implementation
 {
     struct FastInputMap : FastInputMapT<FastInputMap, implementation::FastInputMap>
-    {
-    };
-}
+    {};
+} // namespace winrt::Component::factory_implementation

@@ -14,7 +14,7 @@ namespace
             return L"Stringable";
         }
     };
-}
+} // namespace
 
 TEST_CASE("return_params")
 {

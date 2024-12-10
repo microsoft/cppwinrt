@@ -17,7 +17,10 @@ struct CommaStruct : suspend_never
     CommaStruct operator,(CommaStruct) = delete;
 
     // Awaiting the object just returns itself.
-    auto await_resume() const { return *this; }
+    auto await_resume() const
+    {
+        return *this;
+    }
 };
 
 task<void> ppl(bool& done)

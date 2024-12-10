@@ -12,8 +12,7 @@ namespace
     {
         Iterable(IIterable<IInspectable> const& values) :
             m_values(values)
-        {
-        }
+        {}
 
         IBindableIterator First() const
         {
@@ -21,15 +20,13 @@ namespace
         }
 
     private:
-
         IIterable<IInspectable> const m_values;
 
         struct Iterator : implements<Iterator, IBindableIterator>
         {
             explicit Iterator(IIterator<IInspectable> const& iterator) noexcept :
                 m_iterator(iterator)
-            {
-            }
+            {}
 
             auto Current() const
             {
@@ -47,11 +44,10 @@ namespace
             }
 
         private:
-
             IIterator<IInspectable> m_iterator;
         };
     };
-}
+} // namespace
 
 TEST_CASE("Bindable")
 {

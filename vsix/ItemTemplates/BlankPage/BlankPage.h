@@ -6,11 +6,11 @@ namespace winrt::$rootnamespace$::implementation
 {
     struct $safeitemname$ : $safeitemname$T<$safeitemname$>
     {
-        $safeitemname$() 
+        $safeitemname$()
         {
             // Xaml objects should not call InitializeComponent during construction.
-            // If a Xaml object needs to access a Xaml property during initialization, it should override InitializeComponent.
-            // See https://github.com/microsoft/cppwinrt/tree/master/nuget#initializecomponent
+            // If a Xaml object needs to access a Xaml property during initialization, it should override
+            // InitializeComponent. See https://github.com/microsoft/cppwinrt/tree/master/nuget#initializecomponent
         }
 
         int32_t MyProperty();
@@ -18,11 +18,10 @@ namespace winrt::$rootnamespace$::implementation
 
         void ClickHandler(Windows::Foundation::IInspectable const& sender, Windows::UI::Xaml::RoutedEventArgs const& args);
     };
-}
+} // namespace winrt::$rootnamespace$::implementation
 
 namespace winrt::$rootnamespace$::factory_implementation
 {
     struct $safeitemname$ : $safeitemname$T<$safeitemname$, implementation::$safeitemname$>
-    {
-    };
-}
+    {};
+} // namespace winrt::$rootnamespace$::factory_implementation

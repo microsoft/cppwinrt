@@ -13,4 +13,4 @@ namespace winrt::$safeprojectname$::implementation
     {
         throw hresult_not_implemented();
     }
-}
+} // namespace winrt::$safeprojectname$::implementation

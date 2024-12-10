@@ -15,8 +15,7 @@ namespace
         }
 
         void Close()
-        {
-        }
+        {}
     };
 
     // This is to ensure that com_ptr knows how to QueryInterface an object that doesn't inherit from IUnknown.
@@ -28,7 +27,7 @@ namespace
         }
     };
     static_assert(!std::is_base_of_v<::IUnknown, Stringable_non_agile>);
-}
+} // namespace
 
 TEST_CASE("as<T>")
 {

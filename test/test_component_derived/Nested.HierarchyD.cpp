@@ -36,4 +36,4 @@ namespace winrt::test_component_derived::Nested::implementation
         assert(HierarchyA_Protected() == 42);
         HierarchyB_TestInnerProtected();
     }
-}
+} // namespace winrt::test_component_derived::Nested::implementation

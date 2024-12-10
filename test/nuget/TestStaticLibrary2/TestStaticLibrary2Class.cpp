@@ -11,4 +11,4 @@ namespace winrt::TestRuntimeComponent2::implementation
         TestRuntimeComponent3Class c{};
         c.Test();
     }
-}
+} // namespace winrt::TestRuntimeComponent2::implementation

@@ -37,13 +37,12 @@ namespace
         }
     }
 
-    template <typename F>
-    void Check(F make)
+    template <typename F> void Check(F make)
     {
         REQUIRE(make(true).get() == L"rvalue");
         REQUIRE(make(false).get() == L"lvalue");
     }
-}
+} // namespace
 
 TEST_CASE("async_return")
 {

@@ -3,8 +3,8 @@
 
 //
 // These tests cover the production of the three core interfaces namely IUnknown, IInspectable, and IActivationFactory.
-// Tests ensure that the ABI surface lines up on the consumer and producer sides and this is mainly done simply by calling
-// the various interface methods.
+// Tests ensure that the ABI surface lines up on the consumer and producer sides and this is mainly done simply by
+// calling the various interface methods.
 //
 
 using namespace winrt;
@@ -16,9 +16,16 @@ using namespace Windows::Foundation;
 
 struct produce_IUnknown : implements<produce_IUnknown, ::IUnknown>
 {
-    bool & m_destroyed;
-    produce_IUnknown(bool & destroyed) : m_destroyed(destroyed) { m_destroyed = false; }
-    ~produce_IUnknown() { m_destroyed = true; }
+    bool& m_destroyed;
+    produce_IUnknown(bool& destroyed) :
+        m_destroyed(destroyed)
+    {
+        m_destroyed = false;
+    }
+    ~produce_IUnknown()
+    {
+        m_destroyed = true;
+    }
 };
 
 TEST_CASE("produce_IUnknown")
@@ -44,7 +51,7 @@ TEST_CASE("produce_IUnknown")
         // C++/WinRT won't let you call AddRef and Release so we confirm they work
         // by retrieving a raw pointer to IUnknown here.
 
-        ::IUnknown * raw = get_abi(p);
+        ::IUnknown* raw = get_abi(p);
         raw->AddRef();
         raw->Release();
     }
@@ -58,9 +65,16 @@ TEST_CASE("produce_IUnknown")
 
 struct produce_IUnknown_ABI : implements<produce_IUnknown_ABI, ::IUnknown>
 {
-    bool & m_destroyed;
-    produce_IUnknown_ABI(bool & destroyed) : m_destroyed(destroyed) { m_destroyed = false; }
-    ~produce_IUnknown_ABI() { m_destroyed = true; }
+    bool& m_destroyed;
+    produce_IUnknown_ABI(bool& destroyed) :
+        m_destroyed(destroyed)
+    {
+        m_destroyed = false;
+    }
+    ~produce_IUnknown_ABI()
+    {
+        m_destroyed = true;
+    }
 };
 
 TEST_CASE("produce_IUnknown_ABI")
@@ -79,9 +93,16 @@ TEST_CASE("produce_IUnknown_ABI")
 
 struct produce_IInspectable : implements<produce_IInspectable, Windows::Foundation::IInspectable>
 {
-    bool & m_destroyed;
-    produce_IInspectable(bool & destroyed) : m_destroyed(destroyed) { m_destroyed = false; }
-    ~produce_IInspectable() { m_destroyed = true; }
+    bool& m_destroyed;
+    produce_IInspectable(bool& destroyed) :
+        m_destroyed(destroyed)
+    {
+        m_destroyed = false;
+    }
+    ~produce_IInspectable()
+    {
+        m_destroyed = true;
+    }
 };
 
 TEST_CASE("produce_IInspectable")
@@ -118,11 +139,12 @@ TEST_CASE("produce_IInspectable")
 
 // RuntimeClassName may optionally be implemented with the projection.
 
-struct produce_IInspectable_No_RuntimeClassName : implements<produce_IInspectable_No_RuntimeClassName, Windows::Foundation::IInspectable>
-{
-};
+struct produce_IInspectable_No_RuntimeClassName
+    : implements<produce_IInspectable_No_RuntimeClassName, Windows::Foundation::IInspectable>
+{};
 
-struct produce_IInspectable_RuntimeClassName : implements<produce_IInspectable_RuntimeClassName, Windows::Foundation::IInspectable>
+struct produce_IInspectable_RuntimeClassName
+    : implements<produce_IInspectable_RuntimeClassName, Windows::Foundation::IInspectable>
 {
     hstring GetRuntimeClassName()
     {
@@ -159,7 +181,10 @@ namespace
 struct produce_IActivationFactory : implements<produce_IActivationFactory, IActivationFactory>
 {
     produce_IActivationFactory() = default;
-    ~produce_IActivationFactory() { factory_destroyed = true; }
+    ~produce_IActivationFactory()
+    {
+        factory_destroyed = true;
+    }
 
     Windows::Foundation::IInspectable ActivateInstance()
     {

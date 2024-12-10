@@ -8,11 +8,10 @@ namespace winrt::TestRuntimeComponentNamespace::implementation
     {
         TestNamespace() = default;
     };
-}
+} // namespace winrt::TestRuntimeComponentNamespace::implementation
 
 namespace winrt::TestRuntimeComponentNamespace::factory_implementation
 {
     struct TestNamespace : TestNamespaceT<TestNamespace, implementation::TestNamespace>
-    {
-    };
-}
+    {};
+} // namespace winrt::TestRuntimeComponentNamespace::factory_implementation

@@ -13,8 +13,7 @@ using namespace Windows;
 using namespace Windows::Foundation;
 
 struct Test_GetTrustLevel_NoOverride : implements<Test_GetTrustLevel_NoOverride, Windows::Foundation::IInspectable>
-{
-};
+{};
 
 struct Test_GetTrustLevel_Override : implements<Test_GetTrustLevel_Override, Windows::Foundation::IInspectable>
 {

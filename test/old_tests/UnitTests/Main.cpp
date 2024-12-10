@@ -8,12 +8,17 @@
 
 #include "catch.hpp"
 
-int main(int argc, char * argv[])
+int main(int argc, char* argv[])
 {
     using namespace winrt;
 
     init_apartment();
-    std::set_terminate([]{ reportFatal("Abnormal termination"); ExitProcess(1); });
+    std::set_terminate(
+        []
+        {
+            reportFatal("Abnormal termination");
+            ExitProcess(1);
+        });
     _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
     (void)_CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
     _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);

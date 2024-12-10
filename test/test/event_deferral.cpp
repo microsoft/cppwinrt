@@ -113,7 +113,7 @@ namespace
         REQUIRE(counter == 2);
         seq.wait_for_state(3); // make sure second handler is finished
     }
-}
+} // namespace
 
 TEST_CASE("event_deferral")
 {
@@ -122,5 +122,3 @@ TEST_CASE("event_deferral")
     TestTakenDeferral().get();
     TestTwoDeferrals().get();
 }
-
-

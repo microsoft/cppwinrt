@@ -10,10 +10,9 @@ namespace winrt::test_component_derived::Nested::implementation
         HierarchyC(hstring const& name);
         void HierarchyC_Method();
     };
-}
+} // namespace winrt::test_component_derived::Nested::implementation
 namespace winrt::test_component_derived::Nested::factory_implementation
 {
     struct HierarchyC : HierarchyCT<HierarchyC, implementation::HierarchyC>
-    {
-    };
-}
+    {};
+} // namespace winrt::test_component_derived::Nested::factory_implementation

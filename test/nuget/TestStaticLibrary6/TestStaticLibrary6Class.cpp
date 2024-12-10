@@ -13,4 +13,4 @@ namespace winrt::TestRuntimeComponentEmpty::SubNamespace1::implementation
     {
         return XamlDirect::GetDefault();
     }
-}
+} // namespace winrt::TestRuntimeComponentEmpty::SubNamespace1::implementation

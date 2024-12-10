@@ -26,14 +26,20 @@ namespace
             m_state = state;
         }
     };
-}
+} // namespace
 
 TEST_CASE("Variadic delegate - zero arguments")
 {
     int count{};
 
-    delegate<> up = [&] { ++count; };
-    delegate<> down = [&] { --count; };
+    delegate<> up = [&]
+    {
+        ++count;
+    };
+    delegate<> down = [&]
+    {
+        --count;
+    };
 
     REQUIRE(count == 0);
     up();
@@ -52,24 +58,24 @@ TEST_CASE("Variadic delegate - mixed arguments")
 
     delegate<int, std::shared_ptr<int>, ::IUnknown*, Windows::Foundation::IInspectable> d =
         [&](int const a, std::shared_ptr<int> const& b, ::IUnknown* c, Windows::Foundation::IInspectable const& d)
+    {
+        count = a;
+
+        if (b)
         {
-            count = a;
+            count += *b;
+        }
 
-            if (b)
-            {
-                count += *b;
-            }
+        if (c)
+        {
+            ++count;
+        }
 
-            if (c)
-            {
-                ++count;
-            }
-
-            if (d)
-            {
-                ++count;
-            }
-        };
+        if (d)
+        {
+            ++count;
+        }
+    };
 
     d(5, nullptr, nullptr, Object());
     REQUIRE(count == 6);
@@ -101,7 +107,10 @@ TEST_CASE("Variadic delegate - event")
 
 TEST_CASE("Variadic delegate - exception")
 {
-    delegate<> d = [] { throw std::runtime_error("what"); };
+    delegate<> d = []
+    {
+        throw std::runtime_error("what");
+    };
     REQUIRE_THROWS_AS(d(), std::exception);
 }
 

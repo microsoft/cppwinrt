@@ -11,8 +11,7 @@ namespace
     struct Simple : implements<Simple, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -39,8 +38,7 @@ namespace
     struct OnlyEnter : implements<OnlyEnter, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -61,8 +59,7 @@ namespace
     struct Throwing : implements<Throwing, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -88,8 +85,7 @@ namespace
     struct NestedGuard : implements<NestedGuard, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -113,13 +109,11 @@ namespace
             }
 
         private:
-
             NestedGuard& m_that;
         };
     };
 
-    template <typename T>
-    struct CountGuard
+    template <typename T> struct CountGuard
     {
         CountGuard(T& that) :
             m_that(that)
@@ -133,7 +127,6 @@ namespace
         }
 
     private:
-
         T& m_that;
     };
 
@@ -143,8 +136,7 @@ namespace
     struct GuardAlias : implements<GuardAlias, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -157,8 +149,7 @@ namespace
         using abi_guard = CountGuard<GuardAlias>;
     };
 
-    template <typename T>
-    struct ThrowGuard
+    template <typename T> struct ThrowGuard
     {
         ThrowGuard(T&)
         {
@@ -172,8 +163,7 @@ namespace
     struct ThrowAlias : implements<ThrowAlias, IClosable, IStringable>
     {
         void Close()
-        {
-        }
+        {}
 
         hstring ToString()
         {
@@ -182,7 +172,7 @@ namespace
 
         using abi_guard = ThrowGuard<ThrowAlias>;
     };
-}
+} // namespace
 
 TEST_CASE("abi_guard")
 {

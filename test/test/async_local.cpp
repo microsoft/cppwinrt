@@ -46,15 +46,15 @@ namespace
         co_return 1;
     }
 
-    template <typename F>
-    void Check(F make)
+    template <typename F> void Check(F make)
     {
         handle start{ CreateEvent(nullptr, true, false, nullptr) };
         handle completed{ CreateEvent(nullptr, true, false, nullptr) };
         bool destroyed = false;
         auto async = make(start.get(), destroyed);
 
-        async.Completed([&](auto&&...)
+        async.Completed(
+            [&](auto&&...)
             {
                 REQUIRE(destroyed);
                 SetEvent(completed.get());
@@ -63,7 +63,7 @@ namespace
         SetEvent(start.get());
         REQUIRE(WaitForSingleObject(completed.get(), 1000) == WAIT_OBJECT_0);
     }
-}
+} // namespace
 
 TEST_CASE("async_local")
 {

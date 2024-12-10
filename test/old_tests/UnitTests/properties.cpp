@@ -32,7 +32,7 @@ namespace
 
         hstring m_value;
     };
-}
+} // namespace
 
 TEST_CASE("properties")
 {

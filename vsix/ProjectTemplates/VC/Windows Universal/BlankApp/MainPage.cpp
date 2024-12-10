@@ -21,4 +21,4 @@ namespace winrt::$safeprojectname$::implementation
     {
         myButton().Content(box_value(L"Clicked"));
     }
-}
+} // namespace winrt::$safeprojectname$::implementation

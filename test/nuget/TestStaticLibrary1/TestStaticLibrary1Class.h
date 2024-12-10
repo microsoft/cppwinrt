@@ -9,10 +9,9 @@ namespace winrt::TestApp::Library1::implementation
 
         void Test(TestApp::Library4::TestStaticLibrary4Class const& c);
     };
-}
+} // namespace winrt::TestApp::Library1::implementation
 namespace winrt::TestApp::Library1::factory_implementation
 {
     struct TestStaticLibrary1Class : TestStaticLibrary1ClassT<TestStaticLibrary1Class, implementation::TestStaticLibrary1Class>
-    {
-    };
-}
+    {};
+} // namespace winrt::TestApp::Library1::factory_implementation

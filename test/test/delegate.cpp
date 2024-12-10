@@ -7,7 +7,10 @@ TEST_CASE("delegate")
     // <>
     {
         bool invoked = false;
-        delegate<> d = [&] {invoked = true; };
+        delegate<> d = [&]
+        {
+            invoked = true;
+        };
         d();
         REQUIRE(invoked);
     }
@@ -15,7 +18,10 @@ TEST_CASE("delegate")
     // <int>
     {
         int result = 0;
-        delegate<int> d = [&](int a) {result = a; };
+        delegate<int> d = [&](int a)
+        {
+            result = a;
+        };
         d(123);
         REQUIRE(result == 123);
     }
@@ -23,15 +29,21 @@ TEST_CASE("delegate")
     // <int,int>
     {
         int result = 0;
-        delegate<int, int> d = [&](int a, int b) {result = a + b; };
-        d(4,5);
+        delegate<int, int> d = [&](int a, int b)
+        {
+            result = a + b;
+        };
+        d(4, 5);
         REQUIRE(result == 9);
     }
 
     // void()
     {
         bool invoked = false;
-        delegate<void()> d = [&] {invoked = true; };
+        delegate<void()> d = [&]
+        {
+            invoked = true;
+        };
         d();
         REQUIRE(invoked);
     }
@@ -39,7 +51,10 @@ TEST_CASE("delegate")
     // void(int)
     {
         int result = 0;
-        delegate<void(int)> d = [&](int a) {result = a; };
+        delegate<void(int)> d = [&](int a)
+        {
+            result = a;
+        };
         d(123);
         REQUIRE(result == 123);
     }
@@ -47,26 +62,38 @@ TEST_CASE("delegate")
     // void(int,int)
     {
         int result = 0;
-        delegate<void(int,int)> d = [&](int a, int b) {result = a + b; };
+        delegate<void(int, int)> d = [&](int a, int b)
+        {
+            result = a + b;
+        };
         d(4, 5);
         REQUIRE(result == 9);
     }
 
     // int()
     {
-        delegate<int()> d = [] { return 123; };
+        delegate<int()> d = []
+        {
+            return 123;
+        };
         REQUIRE(d() == 123);
     }
 
     // int(int)
     {
-        delegate<int(int)> d = [](int a) {return a; };
+        delegate<int(int)> d = [](int a)
+        {
+            return a;
+        };
         REQUIRE(d(123) == 123);
     }
 
     // int(int,int)
     {
-        delegate<int(int, int)> d = [](int a, int b) {return a + b; };
+        delegate<int(int, int)> d = [](int a, int b)
+        {
+            return a + b;
+        };
         REQUIRE(d(4, 5) == 9);
     }
 
@@ -74,7 +101,10 @@ TEST_CASE("delegate")
     {
         struct S
         {
-            static void Invoke(int* p) { *p = 123; }
+            static void Invoke(int* p)
+            {
+                *p = 123;
+            }
         };
         int value = 0;
         delegate<void(int*)> d = &S::Invoke;
@@ -86,7 +116,10 @@ TEST_CASE("delegate")
     {
         struct S
         {
-            void Invoke(int* p) { *p = 123; }
+            void Invoke(int* p)
+            {
+                *p = 123;
+            }
         } s;
         delegate<void(int*)> d{ &s, &S::Invoke };
         int value = 0;
@@ -98,7 +131,10 @@ TEST_CASE("delegate")
     {
         struct S
         {
-            static int Value() { return 123; }
+            static int Value()
+            {
+                return 123;
+            }
         };
         delegate<int()> d = &S::Value;
         REQUIRE(d() == 123);
@@ -108,7 +144,10 @@ TEST_CASE("delegate")
     {
         struct S
         {
-            int Value() { return 123; }
+            int Value()
+            {
+                return 123;
+            }
         } s;
         delegate<int()> d{ &s, &S::Value };
         REQUIRE(d() == 123);
