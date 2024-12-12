@@ -1137,7 +1137,8 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const [_winrt_casted_result, _winrt_cast_result_code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
+            winrt::hresult _winrt_cast_result_code;
+            auto const _winrt_casted_result = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this), _winrt_cast_result_code);
             check_hresult(_winrt_cast_result_code);
             auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
             _winrt_abi_type->%(%);
@@ -1156,7 +1157,8 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const [_winrt_casted_result, _winrt_cast_result_code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
+            winrt::hresult _winrt_cast_result_code;
+            auto const _winrt_casted_result = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this), _winrt_cast_result_code);
             check_hresult(_winrt_cast_result_code);
             auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
             WINRT_VERIFY_(0, _winrt_abi_type->%(%));
@@ -1176,7 +1178,8 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const [_winrt_casted_result, _winrt_cast_result_code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
+            winrt::hresult _winrt_cast_result_code;
+            auto const _winrt_casted_result = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this), _winrt_cast_result_code);
             check_hresult(_winrt_cast_result_code);
             auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
             check_hresult(_winrt_abi_type->%(%));

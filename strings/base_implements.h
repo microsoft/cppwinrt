@@ -794,7 +794,7 @@ namespace winrt::impl
         }
 
         template <typename To, typename From>
-        friend auto winrt::impl::try_as_with_reason(From ptr) noexcept;
+        friend auto winrt::impl::try_as_with_reason(From ptr, hresult& code) noexcept;
 
     protected:
         static constexpr bool is_composing = true;
@@ -802,9 +802,9 @@ namespace winrt::impl
 
     private:
         template <typename Qi>
-        auto try_as_with_reason() const noexcept
+        auto try_as_with_reason(hresult& code) const noexcept
         {
-            return m_inner.try_as_with_reason<Qi>();
+            return m_inner.try_as_with_reason<Qi>(code);
         }
     };
 
