@@ -4,7 +4,10 @@
 #define NOMINMAX
 
 #include <windows.h>
+#pragma warning(push)
+#pragma warning(disable : 4471)
 #include <vsdebugeng.h>
+#pragma warning(pop)
 #include <vsdebugeng.templates.h>
 #include <Dia2.h>
 #include "base_includes.h"

@@ -671,7 +671,7 @@ HRESULT object_visualizer::GetItems(
 
     auto pParent = pVisualizedExpression;
     auto childCount = std::min(m_propertyData.size() - StartIndex, (size_t)Count);
-    for(auto i = 0; i < childCount; ++i)
+    for(size_t i = 0; i < childCount; ++i)
     {
         auto& prop = m_propertyData[i + (size_t)StartIndex];
         com_ptr<DkmChildVisualizedExpression> pPropertyVisualized;
