@@ -12,7 +12,7 @@ using namespace winrt;
 using namespace winmd::reader;
 
 std::vector<std::string> db_files;
-std::unique_ptr<cache> db;
+std::unique_ptr<cache> db_cache;
 
 void MetadataDiagnostic(DkmProcess* process, std::wstring const& status, std::filesystem::path const& path)
 {
@@ -105,7 +105,7 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
 
             if (std::find(db_files.begin(), db_files.end(), path_string) == db_files.end())
             {
-                db->add_database(path_string, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); });
+                db_cache->add_database(path_string, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); });
                 db_files.push_back(path_string);
             }
         }
@@ -120,12 +120,12 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
 
 TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
 {
-    auto type = db->find(typeName);
+    auto type = db_cache->find(typeName);
     if (!type)
     {
         auto processPath = process->Path()->Value();
         LoadMetadata(process, processPath, typeName);
-        type = db->find(typeName);
+        type = db_cache->find(typeName);
         if (!type)
         {
             NatvisDiagnostic(process,
@@ -137,7 +137,7 @@ TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
 
 TypeDef FindType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
 {
-    auto type = db->find(typeNamespace, typeName);
+    auto type = db_cache->find(typeNamespace, typeName);
     if (!type)
     {
         std::string fullName(typeNamespace);
@@ -165,7 +165,7 @@ cppwinrt_visualizer::cppwinrt_visualizer()
                 db_files.push_back(file.path().string());
             }
         }
-        db.reset(new cache(db_files, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); }));
+        db_cache.reset(new cache(db_files, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); }));
     }
     catch (...)
     {
@@ -188,7 +188,7 @@ cppwinrt_visualizer::~cppwinrt_visualizer()
 {
     ClearTypeResolver();
     db_files.clear();
-    db.reset();
+    db_cache.reset();
 }
 
 HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
