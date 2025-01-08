@@ -164,6 +164,11 @@ namespace
             *result = nullptr;
             return E_NOINTERFACE;
         }
+
+        std::vector<winrt::guid> get_iids_tearoff() const noexcept final
+        {
+            return {winrt::guid_of<IPersist>()};
+        }
     };
 
     struct RuntimeType : winrt::implements<RuntimeType, winrt::IClosable>
@@ -196,6 +201,11 @@ namespace
             *result = nullptr;
             return E_NOINTERFACE;
         }
+
+        std::vector<winrt::guid> get_iids_tearoff() const noexcept final
+        {
+            return {winrt::guid_of<winrt::IStringable>()};
+        }
     };
 }
 
@@ -214,6 +224,11 @@ TEST_CASE("tearoff")
         GUID result;
         REQUIRE(S_OK == persist->GetClassID(&result));
         REQUIRE(winrt::is_guid_of<IPersist>(result));
+
+        winrt::com_array<winrt::guid> iids = winrt::get_interfaces(closable);
+        REQUIRE(iids.size() == 2);
+        REQUIRE(std::find(iids.begin(), iids.end(), winrt::guid_of<winrt::IClosable>()) != iids.end());
+        REQUIRE(std::find(iids.begin(), iids.end(), winrt::guid_of<IPersist>()) != iids.end());
 
         // query_interface_tearoff happily ignores any other queries.
         REQUIRE(closable.try_as<winrt::IActivationFactory>() == nullptr);
@@ -248,6 +263,11 @@ TEST_CASE("tearoff")
         // IStringable is implemented as a tearoff.
         winrt::IStringable stringable = closable.as<winrt::IStringable>();
         REQUIRE(stringable.ToString() == L"ToString");
+
+        winrt::com_array<winrt::guid> iids = winrt::get_interfaces(closable);
+        REQUIRE(iids.size() == 2);
+        REQUIRE(std::find(iids.begin(), iids.end(), winrt::guid_of<winrt::IClosable>()) != iids.end());
+        REQUIRE(std::find(iids.begin(), iids.end(), winrt::guid_of<winrt::IStringable>()) != iids.end());
 
         // Calling an IInspectable function on the tearoff forwards to the object.
         REQUIRE(winrt::get_class_name(stringable) == L"RuntimeClassName");

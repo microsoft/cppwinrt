@@ -912,6 +912,11 @@ namespace winrt::impl
             return error_no_interface;
         }
 
+        virtual std::vector<guid> get_iids_tearoff() const noexcept
+        {
+            return {};
+        }
+
         root_implements() noexcept
         {
         }
@@ -1021,7 +1026,8 @@ namespace winrt::impl
         int32_t __stdcall NonDelegatingGetIids(uint32_t* count, guid** array) noexcept
         {
             auto const& local_iids = static_cast<D*>(this)->get_local_iids();
-            uint32_t const& local_count = local_iids.first;
+            auto tearoff_iids = get_iids_tearoff();
+            auto local_count = local_iids.first + tearoff_iids.size();
             if constexpr (root_implements_type::is_composing)
             {
                 if (local_count > 0)
@@ -1033,8 +1039,10 @@ namespace winrt::impl
                     {
                         return error_bad_alloc;
                     }
-                    *array = std::copy(local_iids.second, local_iids.second + local_count, *array);
-                    std::copy(inner_iids.cbegin(), inner_iids.cend(), *array);
+                    auto _array = *array;
+                    _array = std::copy(local_iids.second, local_iids.second + local_iids.first, _array);
+                    _array = std::copy(tearoff_iids.cbegin(), tearoff_iids.cend(), _array);
+                    std::copy(inner_iids.cbegin(), inner_iids.cend(), _array);
                 }
                 else
                 {
@@ -1051,7 +1059,9 @@ namespace winrt::impl
                     {
                         return error_bad_alloc;
                     }
-                    std::copy(local_iids.second, local_iids.second + local_count, *array);
+                    auto _array = *array;
+                    _array = std::copy(local_iids.second, local_iids.second + local_iids.first, _array);
+                    std::copy(tearoff_iids.cbegin(), tearoff_iids.cend(), _array);
                 }
                 else
                 {

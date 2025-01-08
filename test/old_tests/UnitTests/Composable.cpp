@@ -1,12 +1,14 @@
 #include "pch.h"
 #include "catch.hpp"
 #include "winrt/Composable.h"
+#include <windows.foundation.h>
 
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Composable;
 
 using namespace std::string_view_literals;
+using hstring = ::winrt::hstring;
 
 namespace
 {
@@ -167,4 +169,118 @@ TEST_CASE("Composable conversions")
 {
     TestCalls(*make_self<Foo>());
     TestCalls(*make_self<Bar>());
+}
+
+namespace
+{
+    // Creates an implementation of IStringable as a tearoff.
+    HRESULT make_stringable(winrt::Windows::Foundation::IInspectable const& object, hstring const& value, void** result) noexcept
+    {
+        struct stringable final : ABI::Windows::Foundation::IStringable
+        {
+            stringable(winrt::Windows::Foundation::IInspectable const& object, hstring const& value) :
+                m_object(object.as<::IInspectable>()),
+                m_value(value)
+            {
+            }
+
+            HRESULT __stdcall ToString(HSTRING* result) noexcept final
+            {
+                return WindowsDuplicateString(static_cast<HSTRING>(get_abi(m_value)), result);
+            }
+
+            HRESULT __stdcall QueryInterface(GUID const& id, void** result) noexcept final
+            {
+                if (is_guid_of<IStringable>(id))
+                {
+                    *result = static_cast<ABI::Windows::Foundation::IStringable*>(this);
+                    AddRef();
+                    return S_OK;
+                }
+
+                return m_object->QueryInterface(id, result);
+            }
+
+            ULONG __stdcall AddRef() noexcept final
+            {
+                return 1 + m_references.fetch_add(1, std::memory_order_relaxed);
+            }
+
+            ULONG __stdcall Release() noexcept final
+            {
+                uint32_t const remaining = m_references.fetch_sub(1, std::memory_order_relaxed) - 1;
+
+                if (remaining == 0)
+                {
+                    delete this;
+                }
+
+                return remaining;
+            }
+
+            HRESULT __stdcall GetIids(ULONG* count, GUID** iids) noexcept final
+            {
+                return m_object->GetIids(count, iids);
+            }
+
+            HRESULT __stdcall GetRuntimeClassName(HSTRING* result) noexcept final
+            {
+                return m_object->GetRuntimeClassName(result);
+            }
+
+            HRESULT __stdcall GetTrustLevel(::TrustLevel* result) noexcept final
+            {
+                return m_object->GetTrustLevel(result);
+            }
+
+        private:
+
+            com_ptr<::IInspectable> m_object;
+            hstring m_value;
+            std::atomic<uint32_t> m_references{ 1 };
+        };
+
+        *result = new (std::nothrow) stringable(object, value);
+        return *result ? S_OK : E_OUTOFMEMORY;
+    }
+}
+
+TEST_CASE("Composable tearoff")
+{
+    struct Tearoff : DerivedT<Tearoff, IClosable>
+    {
+        void Close()
+        {
+        }
+
+        int32_t query_interface_tearoff(winrt::guid const& id, void** result) const noexcept final
+        {
+            if (is_guid_of<IStringable>(id))
+            {
+                return make_stringable(*this, L"ToString", result);
+            }
+
+            *result = nullptr;
+            return E_NOINTERFACE;
+        }
+
+        std::vector<winrt::guid> get_iids_tearoff() const noexcept final
+        {
+            return {winrt::guid_of<IStringable>()};
+        }
+    };
+
+    auto object = make<Tearoff>();
+    auto ifaces = get_interfaces(object);
+
+    REQUIRE(object.as<IClosable>());
+    REQUIRE(object.as<IStringable>());
+    // IBaseOverrides is repeated twice for some reason, so actual size is 7 but there are only 6 unique interfaces
+    REQUIRE(ifaces.size() >= 6);
+    REQUIRE(std::find(ifaces.begin(), ifaces.end(), winrt::guid_of<Base>()) != ifaces.end());
+    REQUIRE(std::find(ifaces.begin(), ifaces.end(), winrt::guid_of<IBaseProtected>()) != ifaces.end());
+    REQUIRE(std::find(ifaces.begin(), ifaces.end(), winrt::guid_of<IBaseOverrides>()) != ifaces.end());
+    REQUIRE(std::find(ifaces.begin(), ifaces.end(), winrt::guid_of<Derived>()) != ifaces.end());
+    REQUIRE(std::find(ifaces.begin(), ifaces.end(), winrt::guid_of<IClosable>()) != ifaces.end());
+    REQUIRE(std::find(ifaces.begin(), ifaces.end(), winrt::guid_of<IStringable>()) != ifaces.end());
 }
