@@ -168,3 +168,19 @@ TEST_CASE("Composable conversions")
     TestCalls(*make_self<Foo>());
     TestCalls(*make_self<Bar>());
 }
+
+TEST_CASE("Composable get_interfaces")
+{
+    struct Foo : Composable::BaseT<Foo, IStringable> {
+        hstring ToString() const { return L"Foo"; }
+    };
+
+    auto obj = make<Foo>();
+    auto iids = winrt::get_interfaces(obj);
+    // BaseOverrides IID gets repeated twice. There are only 4 unique interfaces.
+    REQUIRE(iids.size() == 5);
+    REQUIRE(std::find(iids.begin(), iids.end(), guid_of<IBase>()) != iids.end());
+    REQUIRE(std::find(iids.begin(), iids.end(), guid_of<IBaseProtected>()) != iids.end());
+    REQUIRE(std::find(iids.begin(), iids.end(), guid_of<IBaseOverrides>()) != iids.end());
+    REQUIRE(std::find(iids.begin(), iids.end(), guid_of<IStringable>()) != iids.end());
+}
