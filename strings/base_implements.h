@@ -1033,8 +1033,8 @@ namespace winrt::impl
                     {
                         return error_bad_alloc;
                     }
-                    *array = std::copy(local_iids.second, local_iids.second + local_count, *array);
-                    std::copy(inner_iids.cbegin(), inner_iids.cend(), *array);
+                    auto next = std::copy(local_iids.second, local_iids.second + local_count, *array);
+                    std::copy(inner_iids.cbegin(), inner_iids.cend(), next);
                 }
                 else
                 {
