@@ -32,8 +32,10 @@ extends:
       enabled: false
     
     globalSdl:
+      asyncSdl:
+        enabled: true
       tsa:
-        enabled: false
+        enabled: true
 
     stages:
     - stage: build
