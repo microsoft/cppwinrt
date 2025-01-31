@@ -1356,8 +1356,8 @@ void EvaluateNextVectorElement(
 
 size_t EvaluateVectorPseudoProperties(
     _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pParent,
-    _In_ DkmPointerValueHome* pObject,
-    _In_ ObjectType objectType,
+    _In_ DkmPointerValueHome* /*pObject*/,
+    _In_ ObjectType /*objectType*/,
     size_t StartIndex,
     size_t Count,
     _Inout_ VectorPropertyData& propertyData,
