@@ -196,7 +196,7 @@ TypeSig ResolveGenericTypePart(DkmProcess* process, iter& it, sent const& end)
     
     TypeDef type = FindSimpleType(process, partName);
     auto tickPos = partName.rfind('`');
-    if (tickPos == std::string_view::basic_string_view::npos)
+    if (tickPos == partName.npos)
     {
         return TypeSig{ type.coded_index<TypeDefOrRef>() };
     }
