@@ -185,6 +185,7 @@ TypeSig ResolveGenericTypePart(DkmProcess* process, iter& it, sent const& end)
         {"Single", ElementType::R4},
         {"Double", ElementType::R8},
         {"String", ElementType::String},
+        {"Char16", ElementType::Char},
         {"Object", ElementType::Object}
     };
     std::string_view partName = *it;
