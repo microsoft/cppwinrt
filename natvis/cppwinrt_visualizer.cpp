@@ -15,6 +15,34 @@ namespace
 {
     std::vector<std::string> db_files;
     std::unique_ptr<cache> db_cache;
+    coded_index<TypeDefOrRef> guid_TypeRef{};
+}
+
+coded_index<TypeDefOrRef> FindGuidType()
+{
+    if (!guid_TypeRef)
+    {
+        // There is no definitive TypeDef for System.Guid. But there are a variety of TypeRefs scattered about
+        // This one should be relatively quick to find
+        auto pv = db_cache->find("Windows.Foundation", "PropertyValue");
+        for (auto&& method : pv.MethodList())
+        {
+            if (method.Name() == "CreateGuid")
+            {
+                auto const& sig = method.Signature();
+                auto const& params = sig.Params();
+                if (params.first != params.second)
+                {
+                    auto const& type = params.first->Type().Type();
+                    if (std::holds_alternative<coded_index<TypeDefOrRef>>(type))
+                    {
+                        guid_TypeRef = std::get<coded_index<TypeDefOrRef>>(type);
+                    }
+                }
+            }
+        }
+    }
+    return guid_TypeRef;
 }
 
 void MetadataDiagnostic(DkmProcess* process, std::wstring const& status, std::filesystem::path const& path)
@@ -194,6 +222,11 @@ TypeSig ResolveGenericTypePart(DkmProcess* process, iter& it, sent const& end)
     {
         return TypeSig{ basic_type_pos->second };
     }
+
+    if (partName == "Guid")
+    {
+        return TypeSig{ FindGuidType() };
+    }
     
     TypeDef type = FindSimpleType(process, partName);
     auto tickPos = partName.rfind('`');
@@ -271,6 +304,7 @@ cppwinrt_visualizer::cppwinrt_visualizer()
 cppwinrt_visualizer::~cppwinrt_visualizer()
 {
     ClearTypeResolver();
+    guid_TypeRef = {};
     db_files.clear();
     db_cache.reset();
 }
