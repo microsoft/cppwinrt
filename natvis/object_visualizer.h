@@ -20,6 +20,11 @@ enum class PropertyCategory
     Class,
 };
 
+inline constexpr bool IsBuiltIn(PropertyCategory value) noexcept
+{
+    return PropertyCategory::Bool <= value && value < PropertyCategory::Value;
+}
+
 enum class ObjectType
 {
     Abi,
