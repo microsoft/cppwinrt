@@ -24,20 +24,20 @@ coded_index<TypeDefOrRef> FindGuidType()
     {
         // There is no definitive TypeDef for System.Guid. But there are a variety of TypeRefs scattered about
         // This one should be relatively quick to find
-        auto pv = db_cache->find("Windows.Foundation", "PropertyValue");
+        auto pv = db_cache->find("Windows.Foundation", "IPropertyValue");
         for (auto&& method : pv.MethodList())
         {
-            if (method.Name() == "CreateGuid")
+            if (method.Name() == "GetGuid")
             {
                 auto const& sig = method.Signature();
-                auto const& params = sig.Params();
-                if (params.first != params.second)
+                auto const& type = sig.ReturnType().Type().Type();
+                XLANG_ASSERT(std::holds_alternative<coded_index<TypeDefOrRef>>(type));
+                if (std::holds_alternative<coded_index<TypeDefOrRef>>(type))
                 {
-                    auto const& type = params.first->Type().Type();
-                    if (std::holds_alternative<coded_index<TypeDefOrRef>>(type))
-                    {
-                        guid_TypeRef = std::get<coded_index<TypeDefOrRef>>(type);
-                    }
+                    guid_TypeRef = std::get<coded_index<TypeDefOrRef>>(type);
+                    XLANG_ASSERT(guid_TypeRef.type() == TypeDefOrRef::TypeRef);
+                    XLANG_ASSERT(guid_TypeRef.TypeRef().TypeNamespace() == "System");
+                    XLANG_ASSERT(guid_TypeRef.TypeRef().TypeName() == "Guid");
                 }
             }
         }
