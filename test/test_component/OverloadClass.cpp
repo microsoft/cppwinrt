@@ -8,15 +8,15 @@ namespace winrt::test_component::implementation
     {
         throw hresult_not_implemented();
     }
-    void OverloadClass::Overload(int a)
+    void OverloadClass::Overload(int /*a*/)
     {
         throw hresult_not_implemented();
     }
-    void OverloadClass::Overload(int a, int b)
+    void OverloadClass::Overload(int /*a*/, int /*b*/)
     {
         throw hresult_not_implemented();
     }
-    void OverloadClass::Overload(int a, int b, int c)
+    void OverloadClass::Overload(int /*a*/, int /*b*/, int /*c*/)
     {
         throw hresult_not_implemented();
     }
