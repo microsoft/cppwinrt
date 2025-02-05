@@ -243,7 +243,7 @@ namespace Component
         HRESULT Create([in] Windows.Foundation.Collections.IVectorView<HSTRING>* _in, [out, retval] FastInputVector** _out);
     };
 
-    midl_pragma warning(disable: 4066)
+    midl_pragma warning(disable: 4066) // A member name has been qualified with an interface name because name collisions occurred across interface members on a runtime class.
 
     [version(1.0), activatable(IFastInputVectorFactory, 1.0)]
     runtimeclass FastInputVector

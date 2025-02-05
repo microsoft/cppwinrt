@@ -6,7 +6,7 @@ namespace winrt::impl
     {
 #ifdef _MSC_VER
 #pragma warning(push)
-#pragma warning(disable: 4702)
+#pragma warning(disable: 4702) // Compiler bug causing spurious "unreachable code" warnings
 #endif
         template <typename I, typename... Args>
         static I CreateInstance(const Windows::Foundation::IInspectable& outer, Windows::Foundation::IInspectable& inner, Args&&... args)

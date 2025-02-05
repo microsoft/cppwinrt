@@ -1392,7 +1392,7 @@ WINRT_EXPORT namespace winrt
 {
 #ifdef _MSC_VER
 #pragma warning(push)
-#pragma warning(disable: 4702)
+#pragma warning(disable: 4702) // Compiler bug causing spurious "unreachable code" warnings
 #endif
     template <typename D, typename... Args>
     auto make(Args&&... args)
