@@ -4,6 +4,10 @@ namespace winrt::impl
     template <typename D>
     struct composable_factory
     {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4702) // Compiler bug causing spurious "unreachable code" warnings
+#endif
         template <typename I, typename... Args>
         static I CreateInstance(const Windows::Foundation::IInspectable& outer, Windows::Foundation::IInspectable& inner, Args&&... args)
         {
@@ -11,6 +15,9 @@ namespace winrt::impl
             inner = CreateInstanceImpl(outer, std::forward<Args>(args)...);
             return inner.as<I>();
         }
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
     private:
         template <typename... Args>

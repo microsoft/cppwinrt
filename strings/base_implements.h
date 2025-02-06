@@ -1390,6 +1390,10 @@ namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4702) // Compiler bug causing spurious "unreachable code" warnings
+#endif
     template <typename D, typename... Args>
     auto make(Args&&... args)
     {
@@ -1443,6 +1447,9 @@ WINRT_EXPORT namespace winrt
             return { impl::create_and_initialize<D>(std::forward<Args>(args)...), take_ownership_from_abi };
         }
     }
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
     template <typename... FactoryClasses>
     inline void clear_factory_static_lifetime()
