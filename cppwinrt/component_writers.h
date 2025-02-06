@@ -176,7 +176,7 @@ int32_t __stdcall WINRT_CanUnloadNow() noexcept
 {
 #ifdef _WRL_MODULE_H_
 #ifdef _MSC_VER
-#pragma warning(disable: 4324) // structure was padded due to alignment specifier
+#pragma warning(suppress: 4324) // structure was padded due to alignment specifier
 #endif
     if (!::Microsoft::WRL::Module<::Microsoft::WRL::InProc>::GetModule().Terminate())
     {
