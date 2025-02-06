@@ -71,10 +71,12 @@ namespace winrt::impl
 
     using update_module_lock = module_lock_updater<true>;
 
+#ifdef WINRT_REG_FREE
     inline void* load_library(wchar_t const* library) noexcept
     {
         return WINRT_IMPL_LoadLibraryExW(library, nullptr, 0x00001000 /* LOAD_LIBRARY_SEARCH_DEFAULT_DIRS */);
     }
+#endif // WINRT_REG_FREE
 
     inline hresult get_agile_reference(winrt::guid const& iid, void* object, void** reference) noexcept
     {
