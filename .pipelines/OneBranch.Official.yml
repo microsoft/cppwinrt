@@ -36,6 +36,10 @@ extends:
         enabled: true
       tsa:
         enabled: true
+      codeql:
+        compiled: 
+          enabled: true
+        tsaEnabled: true
 
     stages:
     - stage: build
