@@ -32,8 +32,14 @@ extends:
       enabled: false
     
     globalSdl:
+      asyncSdl:
+        enabled: true
       tsa:
-        enabled: false
+        enabled: true
+      codeql:
+        compiled: 
+          enabled: true
+        tsaEnabled: true
 
     stages:
     - stage: build
