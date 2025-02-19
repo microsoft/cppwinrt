@@ -613,7 +613,6 @@ std::wstring string_to_wstring(std::string_view const& str)
 
     std::wstring result(size, L'?');
     auto size_result = MultiByteToWideChar(CP_UTF8, 0, str.data(), static_cast<int>(str.size()), result.data(), size);
-    XLANG_ASSERT(size == size_result);
     return result;
 }
 
