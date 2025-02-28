@@ -25,11 +25,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - id: setup-llvm
-        name: Set up LLVM (MSVC)
-        uses: ./.github/actions/setup-llvm-msvc
-        if: matrix.compiler == 'clang-cl'
-
       - name: Download nuget
         run: |
           mkdir ".\.nuget"
