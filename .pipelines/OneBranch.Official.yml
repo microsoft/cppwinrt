@@ -32,6 +32,7 @@ extends:
       enabled: false
     
     globalSdl:
+      isNativeCode: true
       asyncSdl:
         enabled: true
       tsa:
@@ -40,8 +41,6 @@ extends:
         compiled: 
           enabled: true
         tsaEnabled: true
-      isNativeCode:
-        enabled: true
       prefast:
         enabled: true
 
