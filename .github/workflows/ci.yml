@@ -44,7 +44,7 @@ jobs:
           $target_version = "1.2.3.4"
           $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
           if ("${{ matrix.compiler }}" -eq "clang-cl") {
-            $props += ",Clang=1,PlatformToolset=LLVM_v143,LLVMInstallDir=${{ steps.setup-llvm.outputs.llvm-path }}"
+            $props += ",Clang=1,PlatformToolset=ClangCl"
           }
           Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:$props"
 
