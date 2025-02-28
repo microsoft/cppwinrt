@@ -32,9 +32,12 @@ extends:
       product: 'build_tools'
     
     globalSdl:
+      isNativeCode: true
       tsa:
         enabled: false
       sbom:
+        enabled: true
+      prefast:
         enabled: true
 
     stages:
