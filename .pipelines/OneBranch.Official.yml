@@ -40,6 +40,10 @@ extends:
         compiled: 
           enabled: true
         tsaEnabled: true
+      isNativeCode:
+        enabled: true
+      prefast:
+        enabled: true
 
     stages:
     - stage: build

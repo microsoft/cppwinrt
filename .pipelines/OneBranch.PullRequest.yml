@@ -36,6 +36,10 @@ extends:
         enabled: false
       sbom:
         enabled: true
+      isNativeCode:
+        enabled: true
+      prefast:
+        enabled: true
 
     stages:
     - stage: build
