@@ -88,48 +88,6 @@ extends:
                 artifactName: 'drop_build_x86'
                 targetPath: '$(Build.SourcesDirectory)/x86'
 
-            - task: CopyFiles@2
-              displayName: 'Stage compiler vpack contents'
-              inputs:
-                SourceFolder: $(Build.SourcesDirectory)/x86/cppwinrt
-                Contents: |
-                  cppwinrt.exe
-                  cppwinrt.pdb
-                TargetFolder: $(ob_outputDirectory)
-            
-        - job: MSBuild_vpack
-          pool:
-            type: windows
-          variables:
-            ob_outputDirectory: '$(Build.SourcesDirectory)\out'
-
-            ob_createvpack_enabled: true
-            ob_createvpack_packagename: CppWinRT.MSBuild
-            ob_createvpack_owneralias: cpp4uwpt
-            ob_createvpack_description: C++/WinRT MSBuild
-            ob_createvpack_provData: true
-            ob_createvpack_versionAs: parts
-            ob_createvpack_majorVer: $(MajorVersion)
-            ob_createvpack_minorVer: $(MinorVersion)
-            ob_createvpack_patchVer: $(PatchVersion)
-            ob_createvpack_metadata: $(Build.SourceBranchName).$(Build.BuildNumber).$(Build.SourceVersion)
-            ob_createvpack_verbose: true
-            ob_createvpack_target: $(OSBuildToolsRoot)\cppwinrt
-
-          steps:
-            - task: UseDotNet@2
-              continueOnError: true
-              inputs: 
-                packageType: 'runtime'
-                version: '6.x'
-                performMultiLevelLookup: true
-
-            - task: DownloadPipelineArtifact@2
-              displayName: 'Download x86 artifacts'
-              inputs:
-                artifactName: 'drop_build_x86'
-                targetPath: '$(Build.SourcesDirectory)/x86'
-
             - task: DownloadPipelineArtifact@2
               displayName: 'Download x64 artifacts'
               inputs:
@@ -141,6 +99,15 @@ extends:
               inputs:
                 artifactName: 'drop_build_arm64'
                 targetPath: '$(Build.SourcesDirectory)/arm64'
+
+            - task: CopyFiles@2
+              displayName: 'Stage compiler vpack contents'
+              inputs:
+                SourceFolder: $(Build.SourcesDirectory)/x86/cppwinrt
+                Contents: |
+                  cppwinrt.exe
+                  cppwinrt.pdb
+                TargetFolder: $(ob_outputDirectory)
               
             - task: CmdLine@2
               displayName: 'Stage MSBuild vpack contents'
@@ -160,7 +127,7 @@ extends:
                   echo d | xcopy $(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib  build\native\lib\amd64
                   echo d | xcopy $(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib  build\native\lib\x64
                   echo d | xcopy $(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib  build\native\lib\arm64
-
+            
     - stage: NuGet
       dependsOn: build
       jobs:
