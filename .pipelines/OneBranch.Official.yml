@@ -121,8 +121,6 @@ extends:
               inputs:
                 script: |
                   set TargetDir=$(ob_outputDirectory)
-                  rd /s /q %TargetDir% >nul 2>&1
-                  md %TargetDir%
                   cd %TargetDir%
 
                   copy $(Build.SourcesDirectory)\vsix\Microsoft.Cpp.CppWinRT.props
