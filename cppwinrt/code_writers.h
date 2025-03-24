@@ -1137,7 +1137,8 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const [_winrt_casted_result, _winrt_cast_result_code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
+            winrt::hresult _winrt_cast_result_code;
+            auto const _winrt_casted_result = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this), _winrt_cast_result_code);
             check_hresult(_winrt_cast_result_code);
             auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
             _winrt_abi_type->%(%);
@@ -1156,7 +1157,8 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const [_winrt_casted_result, _winrt_cast_result_code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
+            winrt::hresult _winrt_cast_result_code;
+            auto const _winrt_casted_result = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this), _winrt_cast_result_code);
             check_hresult(_winrt_cast_result_code);
             auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
             WINRT_VERIFY_(0, _winrt_abi_type->%(%));
@@ -1176,7 +1178,8 @@ namespace cppwinrt
     {%
         if constexpr (!std::is_same_v<D, %>)
         {
-            auto const [_winrt_casted_result, _winrt_cast_result_code] = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this));
+            winrt::hresult _winrt_cast_result_code;
+            auto const _winrt_casted_result = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this), _winrt_cast_result_code);
             check_hresult(_winrt_cast_result_code);
             auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
             check_hresult(_winrt_abi_type->%(%));
@@ -2150,6 +2153,10 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 w.write("\n        friend impl::consume_t<D, %>;", name);
                 w.write("\n        friend impl::require_one<D, %>;", name);
             }
+            else if (info.overridable)
+            {
+                w.write("\n        friend impl::produce<D, %>;", name);
+            }
         }
     }
 
@@ -2275,13 +2282,13 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_class_override_usings(writer& w, get_interfaces_t const& required_interfaces)
     {
-        std::map<std::string_view, std::set<std::string>> method_usage;
+        std::map<std::string_view, std::map<std::string, interface_info>> method_usage;
 
-        for (auto&& [interface_name, info] : required_interfaces)
+        for (auto&& interface_desc : required_interfaces)
         {
-            for (auto&& method : info.type.MethodList())
+            for (auto&& method : interface_desc.second.type.MethodList())
             {
-                method_usage[get_name(method)].insert(interface_name);
+                method_usage[get_name(method)].insert(interface_desc);
             }
         }
 
@@ -2292,9 +2299,11 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 continue;
             }
 
-            for (auto&& interface_name : interfaces)
+            for (auto&& [interface_name, info] : interfaces)
             {
-                w.write("        using impl::consume_t<D, %>::%;\n",
+                w.write(info.overridable
+                        ? "        using %T<D>::%;\n"
+                        : "        using impl::consume_t<D, %>::%;\n",
                     interface_name,
                     method_name);
             }

@@ -11,8 +11,39 @@ using namespace std::filesystem;
 using namespace winrt;
 using namespace winmd::reader;
 
-std::vector<std::string> db_files;
-std::unique_ptr<cache> db;
+namespace
+{
+    std::vector<std::string> db_files;
+    std::unique_ptr<cache> db_cache;
+    coded_index<TypeDefOrRef> guid_TypeRef{};
+}
+
+coded_index<TypeDefOrRef> FindGuidType()
+{
+    if (!guid_TypeRef)
+    {
+        // There is no definitive TypeDef for System.Guid. But there are a variety of TypeRefs scattered about
+        // This one should be relatively quick to find
+        auto pv = db_cache->find("Windows.Foundation", "IPropertyValue");
+        for (auto&& method : pv.MethodList())
+        {
+            if (method.Name() == "GetGuid")
+            {
+                auto const& sig = method.Signature();
+                auto const& type = sig.ReturnType().Type().Type();
+                XLANG_ASSERT(std::holds_alternative<coded_index<TypeDefOrRef>>(type));
+                if (std::holds_alternative<coded_index<TypeDefOrRef>>(type))
+                {
+                    guid_TypeRef = std::get<coded_index<TypeDefOrRef>>(type);
+                    XLANG_ASSERT(guid_TypeRef.type() == TypeDefOrRef::TypeRef);
+                    XLANG_ASSERT(guid_TypeRef.TypeRef().TypeNamespace() == "System");
+                    XLANG_ASSERT(guid_TypeRef.TypeRef().TypeName() == "Guid");
+                }
+            }
+        }
+    }
+    return guid_TypeRef;
+}
 
 void MetadataDiagnostic(DkmProcess* process, std::wstring const& status, std::filesystem::path const& path)
 {
@@ -105,7 +136,7 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
 
             if (std::find(db_files.begin(), db_files.end(), path_string) == db_files.end())
             {
-                db->add_database(path_string, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); });
+                db_cache->add_database(path_string, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); });
                 db_files.push_back(path_string);
             }
         }
@@ -118,14 +149,15 @@ void LoadMetadata(DkmProcess* process, WCHAR const* processPath, std::string_vie
     } 
 }
 
-TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
+TypeDef FindSimpleType(DkmProcess* process, std::string_view const& typeName)
 {
-    auto type = db->find(typeName);
+    XLANG_ASSERT(typeName.find('<') == std::string_view::npos);
+    auto type = db_cache->find(typeName);
     if (!type)
     {
         auto processPath = process->Path()->Value();
         LoadMetadata(process, processPath, typeName);
-        type = db->find(typeName);
+        type = db_cache->find(typeName);
         if (!type)
         {
             NatvisDiagnostic(process,
@@ -135,17 +167,102 @@ TypeDef FindType(DkmProcess* process, std::string_view const& typeName)
     return type;
 }
 
-TypeDef FindType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
+TypeDef FindSimpleType(DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName)
 {
-    auto type = db->find(typeNamespace, typeName);
+    XLANG_ASSERT(typeName.find('<') == std::string_view::npos);
+    auto type = db_cache->find(typeNamespace, typeName);
     if (!type)
     {
         std::string fullName(typeNamespace);
         fullName.append(".");
         fullName.append(typeName);
-        FindType(process, fullName);
+        FindSimpleType(process, fullName);
     }
     return type;
+}
+
+std::vector<std::string> ParseTypeName(std::string_view name)
+{
+    DWORD count;
+    HSTRING* parts;
+    auto wide_name = winrt::to_hstring(name);
+    winrt::check_hresult(::RoParseTypeName(static_cast<HSTRING>(get_abi(wide_name)), &count, &parts));
+
+    winrt::com_array<winrt::hstring> wide_parts{ parts, count, winrt::take_ownership_from_abi };
+    std::vector<std::string> result;
+    for (auto&& part : wide_parts)
+    {
+        result.push_back(winrt::to_string(part));
+    }
+    return result;
+}
+
+template <std::input_iterator iter, std::sentinel_for<iter> sent>
+TypeSig ResolveGenericTypePart(DkmProcess* process, iter& it, sent const& end)
+{
+    constexpr std::pair<std::string_view, ElementType> elementNames[] = {
+        {"Boolean", ElementType::Boolean},
+        {"Int8", ElementType::I1},
+        {"Int16", ElementType::I2},
+        {"Int32", ElementType::I4},
+        {"Int64", ElementType::I8},
+        {"UInt8", ElementType::U1},
+        {"UInt16", ElementType::U2},
+        {"UInt32", ElementType::U4},
+        {"UInt64", ElementType::U8},
+        {"Single", ElementType::R4},
+        {"Double", ElementType::R8},
+        {"String", ElementType::String},
+        {"Char16", ElementType::Char},
+        {"Object", ElementType::Object}
+    };
+    std::string_view partName = *it;
+    auto basic_type_pos = std::find_if(std::begin(elementNames), std::end(elementNames), [&partName](auto&& elem) { return elem.first == partName; });
+    if (basic_type_pos != std::end(elementNames))
+    {
+        return TypeSig{ basic_type_pos->second };
+    }
+
+    if (partName == "Guid")
+    {
+        return TypeSig{ FindGuidType() };
+    }
+    
+    TypeDef type = FindSimpleType(process, partName);
+    auto tickPos = partName.rfind('`');
+    if (tickPos == partName.npos)
+    {
+        return TypeSig{ type.coded_index<TypeDefOrRef>() };
+    }
+
+    int paramCount = 0;
+    std::from_chars(partName.data() + tickPos + 1, partName.data() + partName.size(), paramCount);
+    std::vector<TypeSig> genericArgs;
+    for (int i = 0; i < paramCount; ++i)
+    {
+        genericArgs.push_back(ResolveGenericTypePart(process, ++it, end));
+    }
+    return TypeSig{ GenericTypeInstSig{ type.coded_index<TypeDefOrRef>(), std::move(genericArgs) } };
+}
+
+TypeSig ResolveGenericType(DkmProcess* process, std::string_view genericName)
+{
+    auto parts = ParseTypeName(genericName);
+    auto begin = parts.begin();
+    return ResolveGenericTypePart(process, begin, parts.end());
+}
+
+TypeSig FindType(DkmProcess* process, std::string_view const& typeName)
+{
+    auto paramIndex = typeName.find('<');
+    if (paramIndex == std::string_view::npos)
+    {
+        return TypeSig{ FindSimpleType(process, typeName).coded_index<TypeDefOrRef>() };
+    }
+    else
+    {
+        return ResolveGenericType(process, typeName);
+    }
 }
 
 cppwinrt_visualizer::cppwinrt_visualizer()
@@ -165,7 +282,7 @@ cppwinrt_visualizer::cppwinrt_visualizer()
                 db_files.push_back(file.path().string());
             }
         }
-        db.reset(new cache(db_files, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); }));
+        db_cache.reset(new cache(db_files, [](TypeDef const& type) { return type.Flags().WindowsRuntime(); }));
     }
     catch (...)
     {
@@ -187,13 +304,14 @@ cppwinrt_visualizer::cppwinrt_visualizer()
 cppwinrt_visualizer::~cppwinrt_visualizer()
 {
     ClearTypeResolver();
+    guid_TypeRef = {};
     db_files.clear();
-    db.reset();
+    db_cache.reset();
 }
 
 HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
     _In_ DkmVisualizedExpression* pVisualizedExpression,
-    _Deref_out_ DkmEvaluationResult** ppResultObject
+    _COM_Outptr_result_maybenull_ DkmEvaluationResult** ppResultObject
 )
 {
     try
@@ -233,6 +351,7 @@ HRESULT cppwinrt_visualizer::EvaluateVisualizedExpression(
             // unrecognized type
             NatvisDiagnostic(pVisualizedExpression, 
                 std::wstring(L"Unrecognized type: ") + (LPWSTR)bstrTypeName,  NatvisDiagnosticLevel::Error);
+            *ppResultObject = nullptr;
             return S_OK;
         }
 

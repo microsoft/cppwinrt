@@ -794,7 +794,7 @@ namespace winrt::impl
         }
 
         template <typename To, typename From>
-        friend auto winrt::impl::try_as_with_reason(From ptr) noexcept;
+        friend auto winrt::impl::try_as_with_reason(From ptr, hresult& code) noexcept;
 
     protected:
         static constexpr bool is_composing = true;
@@ -802,9 +802,9 @@ namespace winrt::impl
 
     private:
         template <typename Qi>
-        auto try_as_with_reason() const noexcept
+        auto try_as_with_reason(hresult& code) const noexcept
         {
-            return m_inner.try_as_with_reason<Qi>();
+            return m_inner.try_as_with_reason<Qi>(code);
         }
     };
 
@@ -1033,8 +1033,8 @@ namespace winrt::impl
                     {
                         return error_bad_alloc;
                     }
-                    *array = std::copy(local_iids.second, local_iids.second + local_count, *array);
-                    std::copy(inner_iids.cbegin(), inner_iids.cend(), *array);
+                    auto next = std::copy(local_iids.second, local_iids.second + local_count, *array);
+                    std::copy(inner_iids.cbegin(), inner_iids.cend(), next);
                 }
                 else
                 {
@@ -1390,6 +1390,10 @@ namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4702) // Compiler bug causing spurious "unreachable code" warnings
+#endif
     template <typename D, typename... Args>
     auto make(Args&&... args)
     {
@@ -1443,6 +1447,9 @@ WINRT_EXPORT namespace winrt
             return { impl::create_and_initialize<D>(std::forward<Args>(args)...), take_ownership_from_abi };
         }
     }
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
     template <typename... FactoryClasses>
     inline void clear_factory_static_lifetime()

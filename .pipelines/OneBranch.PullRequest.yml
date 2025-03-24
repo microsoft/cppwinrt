@@ -31,10 +31,17 @@ extends:
       name: 'windows_undocked'
       product: 'build_tools'
     
+    featureFlags:
+      WindowsHostVersion:
+        Version: 2022
+    
     globalSdl:
+      isNativeCode: true
       tsa:
         enabled: false
       sbom:
+        enabled: true
+      prefast:
         enabled: true
 
     stages:
