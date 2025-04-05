@@ -18,8 +18,11 @@ namespace winrt::impl
 
     using library_handle = handle_type<library_traits>;
 
-    template <bool isSameInterfaceAsIActivationFactory>
-    WINRT_IMPL_NOINLINE hresult get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
+    // This function pointer will be null unless one or more translation units in a binary define WINRT_REG_FREE before
+    // including winrt/base.h.  If that is defined then the overall binary will support regfree COM activation.
+    inline hresult(*reg_free_factory_getter)(param::hstring const&, guid const&, void**) = nullptr;
+
+    WINRT_IMPL_NOINLINE inline hresult get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
     {
         if (winrt_activation_handler)
         {
@@ -30,15 +33,8 @@ namespace winrt::impl
 
         if (hr == impl::error_not_initialized)
         {
-            auto usage = reinterpret_cast<int32_t(__stdcall*)(void** cookie) noexcept>(WINRT_IMPL_GetProcAddress(load_library(L"combase.dll"), "CoIncrementMTAUsage"));
-
-            if (!usage)
-            {
-                return hr;
-            }
-
             void* cookie;
-            usage(&cookie);
+            WINRT_IMPL_CoIncrementMTAUsage(&cookie);
             hr = WINRT_IMPL_RoGetActivationFactory(*(void**)(&name), guid, result);
         }
 
@@ -47,6 +43,21 @@ namespace winrt::impl
             return 0;
         }
 
+        // If the class is not registered, and regfree support is enabled, give that a chance to make the activation succeed.
+        // We should not attempt to fallback to regfree for error codes besides class not registered.  If the activation is out
+        // of process then we could have RPC error codes.  It would be bad if a class that should only ever be used out of proc
+        // is erroneously activated inproc.
+        if ((hr == error_class_not_registered) && reg_free_factory_getter)
+        {
+            return reg_free_factory_getter(name, guid, result);
+        }
+
+        return hr;
+    }
+
+#ifdef WINRT_REG_FREE
+    WINRT_IMPL_NOINLINE inline hresult reg_free_get_activation_factory(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
+    {
         com_ptr<IErrorInfo> error_info;
         WINRT_IMPL_GetErrorInfo(0, error_info.put_void());
 
@@ -79,13 +90,7 @@ namespace winrt::impl
                 continue;
             }
 
-            if constexpr (isSameInterfaceAsIActivationFactory)
-            {
-                *result = library_factory.detach();
-                library.detach();
-                return 0;
-            }
-            else if (0 == library_factory.as(guid, result))
+            if (0 == library_factory.as(guid, result))
             {
                 library.detach();
                 return 0;
@@ -93,13 +98,31 @@ namespace winrt::impl
         }
 
         WINRT_IMPL_SetErrorInfo(0, error_info.get());
-        return hr;
+        return error_class_not_registered;
     }
+
+    // This file has been compiled by a translation unit with WINRT_REG_FREE defined.  Fill in the reg_free_factory_getter function
+    // pointer so that regfree behavior is activated.
+    inline unsigned int reg_free_init = []() {
+        reg_free_factory_getter = reg_free_get_activation_factory;
+        return 0U;
+    }();
+
+    // This pragma is used to detect if the translation unit containing regfree usage is being linked with another translation
+    // unit that declared WINRT_NEVER_REG_FREE.
+#pragma detect_mismatch("WINRT_REG_FREE", "enabled")
+#endif // WINRT_REG_FREE
+
+#ifdef WINRT_NEVER_REG_FREE
+    // This pragma is used to ensure that a binary will never have winrt regfree logic enabled.  Defining WINRT_NEVER_REG_FREE will
+    // cause this pragma to break linkage if any translation units in the same binary defined WINRT_REG_FREE.
+#pragma detect_mismatch("WINRT_REG_FREE", "never")
+#endif // WINRT_NEVER_REG_FREE
 
     template <typename Interface>
     hresult get_runtime_activation_factory(param::hstring const& name, void** result) noexcept
     {
-        return get_runtime_activation_factory_impl<std::is_same_v<Interface, Windows::Foundation::IActivationFactory>>(name, guid_of<Interface>(), result);
+        return get_runtime_activation_factory_impl(name, guid_of<Interface>(), result);
     }
 }
 
