@@ -148,7 +148,7 @@ struct non_agile_abandoned_action : implements<non_agile_abandoned_action, IAsyn
 {
     non_agile_abandoned_action(delegate<> disconnect) : m_disconnect(disconnect) {}
 
-    static fire_and_forget final_release(std::unique_ptr<non_agile_abandoned_action> self)
+    static fire_and_forget final_release(std::unique_ptr<non_agile_abandoned_action> /*self*/)
     {
         // The C++/WinRT m_handler is agile but not context-aware,
         // so we need to make sure to release it from the context it

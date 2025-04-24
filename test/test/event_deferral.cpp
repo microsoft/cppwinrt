@@ -38,7 +38,7 @@ namespace
         // This exercises the short-circuit logic in deferrable_event_args.
         auto NoDeferralHandler()
         {
-            return [=](Class const& sender, DeferrableEventArgs const& args)
+            return [=, this](Class const& sender, DeferrableEventArgs const& args)
             {
                 REQUIRE(sender == c);
                 args.IncrementCounter();
@@ -50,7 +50,7 @@ namespace
         // deferrable_event_args.
         auto PointlessDeferralHandler()
         {
-            return [=](Class const& sender, DeferrableEventArgs const& args)
+            return [=, this](Class const& sender, DeferrableEventArgs const& args)
             {
                 REQUIRE(sender == c);
                 auto deferral = args.GetDeferral();
@@ -61,7 +61,7 @@ namespace
 
         auto TakeDeferralHandler(int startState, int finishState)
         {
-            return [=](Class sender, DeferrableEventArgs args) -> fire_and_forget
+            return [=, this](Class sender, DeferrableEventArgs args) -> fire_and_forget
             {
                 REQUIRE(sender == c);
                 auto deferral = args.GetDeferral();

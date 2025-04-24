@@ -10,16 +10,6 @@ namespace winrt
 
 using namespace winrt;
 
-namespace
-{
-    hstring to_hstring(::IInspectable* raw)
-    {
-        winrt::IInspectable object;
-        copy_from_abi(object, raw);
-        return object.as<IStringable>().ToString();
-    }
-}
-
 TEST_CASE("return_params_abi")
 {
     Class object;
