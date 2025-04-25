@@ -257,14 +257,7 @@ namespace winrt::impl
         }
 
     private:
-#ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wunused-private-field"
-#endif
-        size_t& m_count; // Field is unused when WINRT_NO_MODULE_LOCK is defined.
-#ifdef __clang__
-#pragma clang diagnostic pop
-#endif
+        [[maybe_unused]] size_t& m_count; // Field is unused when WINRT_NO_MODULE_LOCK is defined.
     };
 
     struct factory_cache_entry_base
