@@ -65,7 +65,7 @@ namespace
             {
                 // Captures will go out of scope after the first co_await call.  Copy anything needed after that point.
                 const auto startStateCopy = startState;
-                const auto finsihStateCopy = finishState;
+                const auto finishStateCopy = finishState;
 
                 REQUIRE(sender == c);
                 auto deferral = args.GetDeferral();
@@ -73,7 +73,7 @@ namespace
                 wait_for_state(startStateCopy);
                 args.IncrementCounter();
                 deferral.Complete();
-                go_to_state(finsihStateCopy);
+                go_to_state(finishStateCopy);
             };
         }
     };
