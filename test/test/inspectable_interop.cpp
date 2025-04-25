@@ -42,10 +42,17 @@ namespace
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Woverloaded-virtual"
 #endif
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+#endif
         Windows::Foundation::TrustLevel GetTrustLevel() const noexcept
         {
             return Windows::Foundation::TrustLevel::PartialTrust;
         }
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 #ifdef __GNUC__
 #pragma GCC diagnostic pop
 #endif

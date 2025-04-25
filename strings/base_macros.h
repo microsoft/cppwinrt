@@ -61,8 +61,12 @@
 #define WINRT_IMPL_NOVTABLE
 #endif
 
-#if defined(__clang__) && __has_attribute(__lto_visibility_public__)
+#if defined(__clang__) && defined(__has_attribute)
+#if __has_attribute(__lto_visibility_public__)
 #define WINRT_IMPL_PUBLIC __attribute__((lto_visibility_public))
+#else
+#define WINRT_IMPL_PUBLIC
+#endif // __has_attribute(__lto_visibility_public__)
 #else
 #define WINRT_IMPL_PUBLIC
 #endif

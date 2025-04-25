@@ -93,6 +93,9 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -O3 -flto -fwhole-program-vtables</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -114,6 +117,9 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -flto -fwhole-program-vtables</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -133,6 +139,9 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -flto -fwhole-program-vtables</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +161,9 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -flto -fwhole-program-vtables</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -173,6 +185,9 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -O3 -flto -fwhole-program-vtables</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -196,6 +211,9 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -O3 -flto -fwhole-program-vtables</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -217,6 +235,7 @@
   <ItemGroup>
     <ClCompile Include="array_span.cpp" />
     <ClCompile Include="await_completed.cpp" />
+    <ClCompile Include="clang_only.cpp" />
     <ClCompile Include="custom_error.cpp" />
     <ClCompile Include="format.cpp" />
     <ClCompile Include="hstring.cpp" />

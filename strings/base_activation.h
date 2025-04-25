@@ -257,8 +257,7 @@ namespace winrt::impl
         }
 
     private:
-
-        size_t& m_count;
+        [[maybe_unused]] size_t& m_count; // Field is unused when WINRT_NO_MODULE_LOCK is defined.
     };
 
     struct factory_cache_entry_base

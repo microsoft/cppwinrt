@@ -754,7 +754,7 @@ catch (...) { return winrt::to_hresult(); }
         using implements_type = typename %_base::implements_type;
         using implements_type::implements_type;
         %%
-        hstring GetRuntimeClassName() const
+        hstring GetRuntimeClassName() const override
         {
             return L"%.%";
         }
