@@ -10,6 +10,23 @@ namespace winrt
 
 using namespace winrt;
 
+namespace
+{
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wunused-function"
+#endif
+    hstring to_hstring(::IInspectable* raw)
+    {
+        winrt::IInspectable object;
+        copy_from_abi(object, raw);
+        return object.as<IStringable>().ToString();
+    }
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
+}
+
 TEST_CASE("return_params_abi")
 {
     Class object;
