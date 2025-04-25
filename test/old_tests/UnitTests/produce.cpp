@@ -124,10 +124,17 @@ struct produce_IInspectable_No_RuntimeClassName : implements<produce_IInspectabl
 
 struct produce_IInspectable_RuntimeClassName : implements<produce_IInspectable_RuntimeClassName, Windows::Foundation::IInspectable>
 {
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+#endif
     hstring GetRuntimeClassName()
     {
         return L"produce_IInspectable_RuntimeClassName";
     }
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 };
 
 TEST_CASE("produce_IInspectable_RuntimeClassName")
