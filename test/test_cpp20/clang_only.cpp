@@ -7,20 +7,15 @@ using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Storage::Pickers;
 
-// winrt::fire_and_forget PickImage()
-// {
-//     FileOpenPicker picker{};
-//     picker.ViewMode(PickerViewMode::Thumbnail);
-//     picker.FileTypeFilter().Append(L".png"); // <--- crash occurred here
-// }
-
-TEST_CASE("clang_library")
+TEST_CASE("clang_lto_visibility")
 {
-    // PickImage();
-
+    // A previous bug report (https://github.com/microsoft/cppwinrt/pull/1482) represented a problem when some linker
+    // options (-O3 -flto -fwhole-program-vtables) were used with cppwinrt generated code.  The lack of public annotation
+    // caused methods to be removed from the binary, leading to a crash.  This test case aims to be a regression test for
+    // that problem.
     FileOpenPicker picker{};
     picker.ViewMode(PickerViewMode::Thumbnail);
-    picker.FileTypeFilter().Append(L".png"); // <--- crash occurred here
+    picker.FileTypeFilter().Append(L".png"); // This line would trigger the crash.
 
     REQUIRE(true);
 }
