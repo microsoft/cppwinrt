@@ -1868,7 +1868,7 @@ namespace cppwinrt
             {
                 auto param_name = param.Name();
 
-                w.write("\n                if (%) *% = detach_abi(winrt_impl_%);", param_name, param_name, param_name);
+                w.write("\n            if (%) *% = detach_abi(winrt_impl_%);", param_name, param_name, param_name);
             }
         }
     }
