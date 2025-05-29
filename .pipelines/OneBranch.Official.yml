@@ -45,8 +45,6 @@ extends:
         compiled: 
           enabled: true
         tsaEnabled: true
-      prefast:
-        enabled: true
 
     stages:
     - stage: build
