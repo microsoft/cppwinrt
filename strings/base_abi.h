@@ -8,6 +8,7 @@ namespace winrt::impl
             virtual int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept = 0;
             virtual uint32_t __stdcall AddRef() noexcept = 0;
             virtual uint32_t __stdcall Release() noexcept = 0;
+            virtual ~type() noexcept = default;
         };
     };
 
