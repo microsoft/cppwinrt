@@ -763,7 +763,7 @@ namespace cppwinrt
         {
             auto format = R"(    template <> struct abi<%>
     {
-        struct WINRT_IMPL_NOVTABLE type : inspectable_abi
+        struct WINRT_IMPL_ABI_DECL type : inspectable_abi
         {
 )";
 
@@ -773,7 +773,7 @@ namespace cppwinrt
         {
             auto format = R"(    template <%> struct abi<%>
     {
-        struct WINRT_IMPL_NOVTABLE type : inspectable_abi
+        struct WINRT_IMPL_ABI_DECL type : inspectable_abi
         {
 )";
 
@@ -814,7 +814,7 @@ namespace cppwinrt
     {
         auto format = R"(    template <%> struct abi<%>
     {
-        struct WINRT_IMPL_NOVTABLE type : unknown_abi
+        struct WINRT_IMPL_ABI_DECL type : unknown_abi
         {
             virtual int32_t __stdcall Invoke(%) noexcept = 0;
         };
@@ -1868,7 +1868,7 @@ namespace cppwinrt
             {
                 auto param_name = param.Name();
 
-                w.write("\n                if (%) *% = detach_abi(winrt_impl_%);", param_name, param_name, param_name);
+                w.write("\n            if (%) *% = detach_abi(winrt_impl_%);", param_name, param_name, param_name);
             }
         }
     }

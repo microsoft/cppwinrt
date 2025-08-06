@@ -14,7 +14,7 @@ namespace
     constexpr auto Base_OverridableMethod{ L"Base::OverridableMethod"sv };
     constexpr auto Base_OverridableVirtualMethod{ L"Base::OverridableVirtualMethod"sv };
     constexpr auto Base_OverridableNoexceptMethod{ 42 };
-    constexpr auto Base_ProtectedMethod{ 0xDEADBEEF };
+    constexpr auto Base_ProtectedMethod{ static_cast<int32_t>(0xDEADBEEF) };
 
     constexpr auto Derived_VirtualMethod{ L"Derived::VirtualMethod"sv };
     constexpr auto Derived_OverridableVirtualMethod{ L"Derived::OverridableVirtualMethod"sv };

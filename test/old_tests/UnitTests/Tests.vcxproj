@@ -206,6 +206,8 @@
       <MinimalRebuild>false</MinimalRebuild>
       <CompileAsWinRT>false</CompileAsWinRT>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -225,6 +227,8 @@
       <MinimalRebuild>false</MinimalRebuild>
       <CompileAsWinRT>false</CompileAsWinRT>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -244,6 +248,8 @@
       <MinimalRebuild>false</MinimalRebuild>
       <CompileAsWinRT>false</CompileAsWinRT>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -261,6 +267,8 @@
       <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(OutputPath);..\Composable\Generated Files;..\Component\Generated Files;..\Composable;..\Reflection\Generated Files;..\..\;</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -280,6 +288,8 @@
       <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(OutputPath);..\Composable\Generated Files;..\Component\Generated Files;..\Composable;..\Reflection\Generated Files;..\..\;</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
     </ClCompile>
     <Link>
@@ -299,6 +309,8 @@
       <PreprocessorDefinitions>_HAS_AUTO_PTR_ETC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(OutputPath);..\Composable\Generated Files;..\Component\Generated Files;..\Composable;..\Reflection\Generated Files;..\..\;</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <DisableSpecificWarnings>4100;4297;4458</DisableSpecificWarnings>
     </ClCompile>
     <Link>

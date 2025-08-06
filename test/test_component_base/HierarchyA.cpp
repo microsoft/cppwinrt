@@ -3,11 +3,11 @@
 
 namespace winrt::test_component_base::implementation
 {
-    HierarchyA::HierarchyA(hstring const& name)
+    HierarchyA::HierarchyA(hstring const& /*name*/)
     {
         throw hresult_not_implemented();
     }
-    HierarchyA::HierarchyA(int32_t dummy, hstring const& name)
+    HierarchyA::HierarchyA(int32_t /*dummy*/, hstring const& /*name*/)
     {
         throw hresult_not_implemented();
     }

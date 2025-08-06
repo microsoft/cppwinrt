@@ -92,6 +92,8 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT_DIAGNOSTICS;NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -113,6 +115,8 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT_DIAGNOSTICS;NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,6 +136,8 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT_DIAGNOSTICS;NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -151,6 +157,8 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT_DIAGNOSTICS;NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -172,6 +180,8 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT_DIAGNOSTICS;NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -195,6 +205,8 @@
       <AdditionalIncludeDirectories>$(OutputPath);Generated Files;..\;</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WINRT_DIAGNOSTICS;NOMINMAX;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

@@ -114,6 +114,8 @@
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -150,6 +152,8 @@
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -199,6 +203,8 @@
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
@@ -237,6 +243,8 @@
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -277,6 +285,8 @@
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -330,6 +340,8 @@
       <AdditionalIncludeDirectories>.;$(OutputPath);Generated Files</AdditionalIncludeDirectories>
       <AdditionalOptions>/Zc:threadSafeInit- /we4640 %(AdditionalOptions)</AdditionalOptions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
