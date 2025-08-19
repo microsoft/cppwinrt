@@ -385,3 +385,27 @@ TEST_CASE("com_ptr, compare")
     REQUIRE(!(nullptr != c));
     REQUIRE(!(c != nullptr));
 }
+
+TEST_CASE("com_ptr, calls")
+{
+    hstring test_string;
+
+    // here com_ptr<Stringable>::type == Stringable
+    const wchar_t * grettings = L"Hello world!";
+    com_ptr<Stringable> impl = make_self<Stringable>(grettings);
+
+    // -> calls the projection
+    REQUIRE_NOTHROW(test_string = impl->ToString());
+    REQUIRE(grettings == test_string);
+
+    // here com_ptr<IStringable>::type == abi_t<IStringable>
+    com_ptr<IStringable> str(detach_abi(impl.as<IStringable>()), take_ownership_from_abi);
+
+    // -> calls the abi
+    REQUIRE(0 == str->ToString(put_abi(test_string)));
+    REQUIRE(grettings == test_string);
+
+    // * calls the projection
+    REQUIRE_NOTHROW(test_string = (*str).ToString());
+    REQUIRE(grettings == test_string);
+}
