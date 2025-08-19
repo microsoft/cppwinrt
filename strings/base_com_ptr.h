@@ -112,7 +112,10 @@ WINRT_EXPORT namespace winrt
 
         T& operator*() const noexcept
         {
-            return *m_ptr;
+            if constexpr (std::is_same_v<T, type>)
+                return *const_cast<T*>(m_ptr);
+            else
+                return *reinterpret_cast<T*>(const_cast<com_ptr*>(this));
         }
 
         type* get() const noexcept
