@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
   <RunConfiguration>
-    <MaxCpuCount>1</MaxCpuCount>
     <ResultsDirectory>.\TestResults</ResultsDirectory><!-- Path relative to solution directory -->
     <TestSessionTimeout>60000</TestSessionTimeout><!-- Milliseconds -->
     <ForceListContent>true</ForceListContent>
-
   </RunConfiguration>
 
   <!-- Adapter Specific sections -->

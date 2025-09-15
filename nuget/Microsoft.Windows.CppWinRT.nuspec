@@ -20,7 +20,6 @@
     <file src="$cppwinrt_exe$" target="bin"/>
     <file src="$cppwinrt_fast_fwd_x86$" target="build\native\lib\win32"/>
     <file src="$cppwinrt_fast_fwd_x64$" target="build\native\lib\x64"/>
-    <file src="$cppwinrt_fast_fwd_arm$" target="build\native\lib\arm"/>
     <file src="$cppwinrt_fast_fwd_arm64$" target="build\native\lib\arm64"/>
     <file src="Microsoft.Windows.CppWinRT.props" target="build\native"/>
     <file src="Microsoft.Windows.CppWinRT.targets" target="build\native"/>

@@ -1,0 +1,8 @@
+{
+    "instanceUrl": "https://microsoft.visualstudio.com",
+    "projectName": "os",
+    "areaPath": "OS\\Windows Client and Services\\WinPD\\DEEP-Developer Experience, Ecosystem and Partnerships\\AmUse- App Metadata and User Setup Experience\\Projections\\Cppwinrt",
+    "notificationAliases": [ "cpp4uwpt@microsoft.com" ],
+    "ignoreBranchName": true,
+    "codebaseName": "cppwinrt"
+}

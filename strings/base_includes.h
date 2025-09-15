@@ -7,6 +7,7 @@
 #include <chrono>
 #include <cstddef>
 #include <cstring>
+#include <exception>
 #include <iterator>
 #include <map>
 #include <memory>

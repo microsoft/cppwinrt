@@ -6,7 +6,7 @@ using namespace Windows::Foundation;
 namespace
 {
     //
-    // This implemenetation uses the simplest abi_enter and abi_exit methods
+    // This implementation uses the simplest abi_enter and abi_exit methods
     //
     struct Simple : implements<Simple, IClosable, IStringable>
     {
@@ -34,7 +34,7 @@ namespace
     };
 
     //
-    // This implemenetation uses the abi_enter but omits the abi_exit method
+    // This implementation uses the abi_enter but omits the abi_exit method
     //
     struct OnlyEnter : implements<OnlyEnter, IClosable, IStringable>
     {
@@ -56,7 +56,7 @@ namespace
     };
 
     //
-    // This implemenetation throws from the abi_enter method
+    // This implementation throws from the abi_enter method
     //
     struct Throwing : implements<Throwing, IClosable, IStringable>
     {
@@ -83,7 +83,7 @@ namespace
     };
 
     //
-    // This implemenetation provides a nested abi_guard
+    // This implementation provides a nested abi_guard
     //
     struct NestedGuard : implements<NestedGuard, IClosable, IStringable>
     {
@@ -138,7 +138,7 @@ namespace
     };
 
     //
-    // This implemenetation use an abi_guard type alias
+    // This implementation use an abi_guard type alias
     //
     struct GuardAlias : implements<GuardAlias, IClosable, IStringable>
     {
@@ -167,7 +167,7 @@ namespace
     };
 
     //
-    // This implemenetation use an abi_guard type alias that thows
+    // This implementation use an abi_guard type alias that throws
     //
     struct ThrowAlias : implements<ThrowAlias, IClosable, IStringable>
     {

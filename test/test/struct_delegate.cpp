@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "winrt/test_component.delegates.h"
+#include "winrt/test_component.Delegates.h"
 
 using namespace winrt;
 using namespace test_component;

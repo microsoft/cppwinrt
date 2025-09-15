@@ -4,7 +4,10 @@
 #define NOMINMAX
 
 #include <windows.h>
+#pragma warning(push)
+#pragma warning(disable : 4471)
 #include <vsdebugeng.h>
+#pragma warning(pop)
 #include <vsdebugeng.templates.h>
 #include <Dia2.h>
 #include "base_includes.h"
@@ -40,6 +43,7 @@
 #include <variant>
 #include <cmd_reader.h>
 #include <winmd_reader.h>
+#include <rometadataresolution.h>
 
 #ifndef IF_FAIL_RET
 #define IF_FAIL_RET(expr) { HRESULT _hr = (expr); if(FAILED(_hr)) { return(_hr); } }
@@ -88,8 +92,9 @@ inline bool starts_with(std::string_view const& value, std::string_view const& m
     return 0 == value.compare(0, match.size(), match);
 }
 
-winmd::reader::TypeDef FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
-winmd::reader::TypeDef FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName);
+winmd::reader::TypeDef FindSimpleType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
+winmd::reader::TypeDef FindSimpleType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeNamespace, std::string_view const& typeName);
+winmd::reader::TypeSig FindType(Microsoft::VisualStudio::Debugger::DkmProcess* process, std::string_view const& typeName);
 
 inline winmd::reader::TypeDef ResolveType(Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::coded_index<winmd::reader::TypeDefOrRef> index) noexcept
 {
@@ -98,13 +103,13 @@ inline winmd::reader::TypeDef ResolveType(Microsoft::VisualStudio::Debugger::Dkm
     case winmd::reader::TypeDefOrRef::TypeDef:
         return index.TypeDef();
     case winmd::reader::TypeDefOrRef::TypeRef:
-        return FindType(process, index.TypeRef().TypeNamespace(), index.TypeRef().TypeName());
+        return FindSimpleType(process, index.TypeRef().TypeNamespace(), index.TypeRef().TypeName());
     default: //case TypeDefOrRef::TypeSpec:
         return winmd::reader::find_required(index.TypeSpec().Signature().
             GenericTypeInst().GenericType().TypeRef());
     }
 }
 
-std::pair<winmd::reader::TypeDef, std::wstring> ResolveTypeInterface(Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::coded_index<winmd::reader::TypeDefOrRef> index);
+std::pair<winmd::reader::TypeDef, std::wstring> ResolveTypeInterface(Microsoft::VisualStudio::Debugger::DkmProcess* process, winmd::reader::TypeSig const& typeSig);
 
 void ClearTypeResolver();

@@ -17,7 +17,7 @@ using namespace Windows::Security::Cryptography::Certificates;
 //
 // This is a helper to create a data reader for use in testing arrays.
 //
-static IAsyncOperation<IDataReader> CreateDataReader(std::initializer_list<byte> values)
+static IAsyncOperation<IDataReader> CreateDataReader(std::initializer_list<byte> /*values*/)
 {
     InMemoryRandomAccessStream stream;
     DataWriter writer(stream);

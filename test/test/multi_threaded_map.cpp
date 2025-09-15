@@ -90,7 +90,7 @@ namespace
         using const_reverse_iterator = std::reverse_iterator<const_iterator>;
         using node_type = typename inner::node_type;
 
-        mapped_type& operator[](const key_type& key)
+        mapped_type& operator[](const key_type& /*key*/)
         {
             auto guard = concurrency_guard::lock_nonconst();
             concurrency_guard::call_hook(collection_action::at);

@@ -10,7 +10,7 @@ using namespace Windows::Web::Http;
 //
 // This first test ensures that structures with HSTRING fields are projected correctly.
 // In this case, a suitable interface is provided by the Windows SDK to simplify testing.
-// IControlTemplate provides the necessary methods for excercising input and output 
+// IControlTemplate provides the necessary methods for exercising input and output 
 // patterns for code generation.
 //
 
@@ -47,7 +47,7 @@ TEST_CASE("struct, TypeName")
 //
 // This second test ensures that structures with IReference<T> fields are projected correctly.
 // In this case, a suitable interface is not available in the Windows SDK so we hand-roll the 
-// the necessary intput and output patterms for code generation. We also rely on a custom 
+// the necessary input and output patterns for code generation. We also rely on a custom 
 // implementation of IReference<T> so that we can additionally check that the object is 
 // destroyed correctly. 
 //

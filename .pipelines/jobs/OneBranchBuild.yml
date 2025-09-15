@@ -20,8 +20,6 @@ jobs:
         BuildPlatform: 'x86'
       x64:
         BuildPlatform: 'x64'
-      arm:
-        BuildPlatform: 'arm'
       arm64:
         BuildPlatform: 'arm64'
 
@@ -33,6 +31,10 @@ jobs:
     ${{ if eq(parameters.OfficialBuild, 'false') }}:
       ob_sdl_codeSignValidation_excludes: '-|**\*.exe;-|**\*.dll' 
 
+    ob_sdl_prefast_enabled: true
+    ob_sdl_prefast_runDuring: 'Build'
+    ob_sdl_checkCompliantCompilerWarnings: true
+    
     ob_symbolsPublishing_enabled: ${{ parameters.OfficialBuild }}
     ob_symbolsPublishing_symbolsFolder: '$(ob_outputDirectory)'
     ob_symbolsPublishing_searchPattern: '**\*.pdb'
@@ -51,6 +53,8 @@ jobs:
       inputs:
         command: 'restore'
         restoreSolution: '$(Build.SourcesDirectory)\cppwinrt.sln'
+        feedsToUse: config
+        nugetConfigPath: NuGet.config
 
     - task: VSBuild@1
       displayName: Build fast_fwd
@@ -72,6 +76,8 @@ jobs:
       inputs:
         command: 'restore'
         restoreSolution: '$(Build.SourcesDirectory)\natvis\cppwinrtvisualizer.sln'
+        feedsToUse: config
+        nugetConfigPath: NuGet.config
         
     - task: VSBuild@1
       displayName: Build Component visualizer
