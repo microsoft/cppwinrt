@@ -8,7 +8,7 @@ struct cppwinrt_visualizer : winrt::implements<cppwinrt_visualizer,
 
     STDMETHOD(EvaluateVisualizedExpression)(
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,
-        _Deref_out_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResult** ppResultObject
+        _COM_Outptr_result_maybenull_ Microsoft::VisualStudio::Debugger::Evaluation::DkmEvaluationResult** ppResultObject
         );
     STDMETHOD(UseDefaultEvaluationBehavior)(
         _In_ Microsoft::VisualStudio::Debugger::Evaluation::DkmVisualizedExpression* pVisualizedExpression,

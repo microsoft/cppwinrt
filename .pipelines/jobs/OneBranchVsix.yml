@@ -36,6 +36,10 @@ jobs:
     ob_symbolsPublishing_symbolsFolder: '$(ob_outputDirectory)'
     ob_symbolsPublishing_searchPattern: '**\*.pdb'
     ob_symbolsPublishing_indexSources: true
+
+    ob_sdl_prefast_enabled: true
+    ob_sdl_prefast_runDuring: 'Build'
+    ob_sdl_checkCompliantCompilerWarnings: true
     
   steps:
     - task: UseDotNet@2
@@ -56,6 +60,8 @@ jobs:
       inputs:
         command: 'restore'
         restoreSolution: '$(Build.SourcesDirectory)\vsix\vsix.sln'
+        feedsToUse: config
+        nugetConfigPath: NuGet.config
 
     - task: DownloadPipelineArtifact@2
       displayName: 'Download x86 binaries'
@@ -68,12 +74,6 @@ jobs:
       inputs:
         artifactName: 'drop_build_x64'
         targetPath: '$(Build.SourcesDirectory)\x64'
-
-    - task: DownloadPipelineArtifact@2
-      displayName: 'Download arm binaries'
-      inputs:
-        artifactName: 'drop_build_arm'
-        targetPath: '$(Build.SourcesDirectory)\arm'
 
     - task: DownloadPipelineArtifact@2
       displayName: 'Download arm64 binaries'
@@ -108,8 +108,8 @@ jobs:
       inputs:
         command: sign
         signing_profile: external_distribution
-        files_to_sign: '**/Microsoft.Windows.CppWinRT.*.dll'
-        search_root: '$(Agent.TempDirectory)\$(VsixFilename)'
+        files_to_sign: '**\*.dll'
+        search_root: '$(Agent.TempDirectory)'
     
     - task: ArchiveFiles@2
       displayName: 'Repack signed VSIX contents'

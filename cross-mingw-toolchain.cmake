@@ -1,5 +1,5 @@
 # This is a cmake-toolchain(5) file that can be used to cross-build
-# cppwinrt.exe fron Linux or other operating systems using a mingw-w64 cross
+# cppwinrt.exe from Linux or other operating systems using a mingw-w64 cross
 # toolchain. This should work with both GCC-based and llvm-mingw toolchains.
 #
 # Example usage with external toolchain:

@@ -19,7 +19,6 @@ call .nuget\nuget.exe restore test\nuget\NugetTest.sln
 rem Build fast forwarder libs or all arches
 call msbuild /m /p:Configuration=%target_configuration%,Platform=x86,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
 call msbuild /m /p:Configuration=%target_configuration%,Platform=x64,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
-call msbuild /m /p:Configuration=%target_configuration%,Platform=arm,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
 call msbuild /m /p:Configuration=%target_configuration%,Platform=arm64,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
 
 rem Build cppwinrt.exe for x86 only
@@ -31,7 +30,7 @@ call msbuild /p:Configuration=%target_configuration%,Platform=x86,Deployment=%ta
 call msbuild /p:Configuration=%target_configuration%,Platform=arm64,Deployment=%target_deployment%,CppWinRTBuildVersion=%target_version% natvis\cppwinrtvisualizer.sln
 
 rem Build nuget 
-.nuget\nuget.exe pack nuget\Microsoft.Windows.CppWinRT.nuspec -NonInteractive -OutputDirectory %this_dir%_build -Properties Configuration=%target_configuration%;cppwinrt_exe=%this_dir%_build\x86\%target_configuration%\cppwinrt.exe;cppwinrt_fast_fwd_x86=%this_dir%_build\x86\%target_configuration%\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=%this_dir%_build\x64\%target_configuration%\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=%this_dir%_build\arm\%target_configuration%\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=%this_dir%_build\arm64\%target_configuration%\cppwinrt_fast_forwarder.lib  -version %target_version% -Verbosity Detailed
+.nuget\nuget.exe pack nuget\Microsoft.Windows.CppWinRT.nuspec -NonInteractive -OutputDirectory %this_dir%_build -Properties Configuration=%target_configuration%;cppwinrt_exe=%this_dir%_build\x86\%target_configuration%\cppwinrt.exe;cppwinrt_fast_fwd_x86=%this_dir%_build\x86\%target_configuration%\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=%this_dir%_build\x64\%target_configuration%\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=%this_dir%_build\arm64\%target_configuration%\cppwinrt_fast_forwarder.lib  -version %target_version% -Verbosity Detailed
 
 rem Build vsix
 call msbuild /restore /p:Configuration=%target_configuration%,Platform="Any CPU",Deployment=%target_deployment%,CppWinRTVersion=%target_version%,NatvisDirx86=%this_dir%natvis\x86\%target_configuration%\%target_deployment%,NatvisDirx64=%this_dir%natvis\x64\%target_configuration%\%target_deployment%,NatvisDirarm64=%this_dir%natvis\arm64\%target_configuration%\%target_deployment%,NupkgDir=%this_dir%_build vsix\vsix.sln

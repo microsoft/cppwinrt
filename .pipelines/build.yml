@@ -31,8 +31,6 @@ jobs:
         buildPlatform: 'x86'
       x64:
         buildPlatform: 'x64'
-      arm:
-        buildPlatform: 'arm'
       arm64:
         buildPlatform: 'arm64'
 
@@ -49,6 +47,10 @@ jobs:
 
   - task: NuGetCommand@2
     displayName: NuGet restore
+    inputs:
+      command: 'restore'
+      feedsToUse: config
+      nugetConfigPath: NuGet.config
 
   - task: CmdLine@2
     displayName: Build Tools
@@ -166,12 +168,6 @@ jobs:
       downloadPath: $(Build.SourcesDirectory)\x64
 
   - task: DownloadPipelineArtifact@1
-    displayName: Download arm Artifacts
-    inputs:
-      artifactName: $(BuildConfiguration)_arm
-      downloadPath: $(Build.SourcesDirectory)\arm
-
-  - task: DownloadPipelineArtifact@1
     displayName: Download arm64 Artifacts
     inputs:
       artifactName: $(BuildConfiguration)_arm64
@@ -258,7 +254,7 @@ jobs:
   - task: CmdLine@2
     displayName: Stage MSBuild vpack
     inputs:
-      script: "set TargetDir=$(Build.SourcesDirectory)\\msbuild\nrd /s /q %TargetDir% >nul 2>&1\nmd %TargetDir%\ncd %TargetDir%\n\ncopy $(Build.SourcesDirectory)\\vsix\\Microsoft.Cpp.CppWinRT.props\ncopy $(Build.SourcesDirectory)\\nuget\\Microsoft.Windows.CppWinRT.props Microsoft.Cpp.CppWinRTEnabled.props \ncopy $(Build.SourcesDirectory)\\nuget\\Microsoft.Windows.CppWinRT.targets Microsoft.Cpp.CppWinRTEnabled.targets\ncopy $(Build.SourcesDirectory)\\nuget\\CppWinrtRules.Project.xml CppWinrtRules.Project.xml\necho d | xcopy $(Build.SourcesDirectory)\\x86\\cppwinrt_fast_forwarder.lib build\\native\\lib\\i386\necho d | xcopy $(Build.SourcesDirectory)\\x86\\cppwinrt_fast_forwarder.lib build\\native\\lib\\Win32\necho d | xcopy $(Build.SourcesDirectory)\\x64\\cppwinrt_fast_forwarder.lib  build\\native\\lib\\amd64\necho d | xcopy $(Build.SourcesDirectory)\\x64\\cppwinrt_fast_forwarder.lib  build\\native\\lib\\x64\necho d | xcopy $(Build.SourcesDirectory)\\arm\\cppwinrt_fast_forwarder.lib  build\\native\\lib\\arm\necho d | xcopy $(Build.SourcesDirectory)\\arm64\\cppwinrt_fast_forwarder.lib  build\\native\\lib\\arm64\n"
+      script: "set TargetDir=$(Build.SourcesDirectory)\\msbuild\nrd /s /q %TargetDir% >nul 2>&1\nmd %TargetDir%\ncd %TargetDir%\n\ncopy $(Build.SourcesDirectory)\\vsix\\Microsoft.Cpp.CppWinRT.props\ncopy $(Build.SourcesDirectory)\\nuget\\Microsoft.Windows.CppWinRT.props Microsoft.Cpp.CppWinRTEnabled.props \ncopy $(Build.SourcesDirectory)\\nuget\\Microsoft.Windows.CppWinRT.targets Microsoft.Cpp.CppWinRTEnabled.targets\ncopy $(Build.SourcesDirectory)\\nuget\\CppWinrtRules.Project.xml CppWinrtRules.Project.xml\necho d | xcopy $(Build.SourcesDirectory)\\x86\\cppwinrt_fast_forwarder.lib build\\native\\lib\\i386\necho d | xcopy $(Build.SourcesDirectory)\\x86\\cppwinrt_fast_forwarder.lib build\\native\\lib\\Win32\necho d | xcopy $(Build.SourcesDirectory)\\x64\\cppwinrt_fast_forwarder.lib  build\\native\\lib\\amd64\necho d | xcopy $(Build.SourcesDirectory)\\x64\\cppwinrt_fast_forwarder.lib  build\\native\\lib\\x64\necho d | xcopy $(Build.SourcesDirectory)\\arm64\\cppwinrt_fast_forwarder.lib  build\\native\\lib\\arm64\n"
       failOnStderr: true
 
   - task: PkgESVPack@12
@@ -322,6 +318,10 @@ jobs:
 
   - task: NuGetCommand@2
     displayName: NuGet restore
+    inputs:
+      command: 'restore'
+      feedsToUse: config
+      nugetConfigPath: NuGet.config
 
   - task: DownloadPipelineArtifact@1
     displayName: Download x86 Artifacts
@@ -334,12 +334,6 @@ jobs:
     inputs:
       artifactName: $(BuildConfiguration)_x64
       downloadPath: $(Build.SourcesDirectory)\x64
-
-  - task: DownloadPipelineArtifact@1
-    displayName: Download arm Artifacts
-    inputs:
-      artifactName: $(BuildConfiguration)_arm
-      downloadPath: $(Build.SourcesDirectory)\arm
 
   - task: DownloadPipelineArtifact@1
     displayName: Download arm64 Artifacts
@@ -422,7 +416,7 @@ jobs:
       command: pack
       searchPatternPack: nuget/Microsoft.Windows.CppWinRT.nuspec
       versioningScheme: byBuildNumber
-      buildProperties: 'cppwinrt_exe=$(Build.ArtifactStagingDirectory)\x86\cppwinrt.exe;cppwinrt_fast_fwd_x86=$(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=$(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm=$(Build.SourcesDirectory)\arm\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=$(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib '
+      buildProperties: 'target_version=$(Build.BuildNumber);cppwinrt_exe=$(Build.ArtifactStagingDirectory)\x86\cppwinrt.exe;cppwinrt_fast_fwd_x86=$(Build.SourcesDirectory)\x86\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_x64=$(Build.SourcesDirectory)\x64\cppwinrt_fast_forwarder.lib;cppwinrt_fast_fwd_arm64=$(Build.SourcesDirectory)\arm64\cppwinrt_fast_forwarder.lib '
 
   - task: ComponentGovernanceComponentDetection@0
     displayName: Component Detection

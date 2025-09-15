@@ -55,15 +55,23 @@ TEST_CASE("custom_error_logger")
     const auto fileNameSv = std::string_view(s_loggerArgs.fileName);
     REQUIRE(!fileNameSv.empty());
     REQUIRE(fileNameSv.find("custom_error.cpp") != std::string::npos);
+#ifdef _DEBUG
     const auto functionNameSv = std::string_view(s_loggerArgs.functionName);
     REQUIRE(!functionNameSv.empty());
     // Every compiler has a slightly different naming approach for this function, and even the same
     // compiler can change its mind over time.  Instead of matching the entire function name just
     // match against the part we care about.
     REQUIRE((functionNameSv.find("FailOnLine15") != std::string_view::npos));
+#else
+    REQUIRE(s_loggerArgs.functionName == nullptr);
+#endif // _DEBUG
 
     REQUIRE(s_loggerArgs.returnAddress);
     REQUIRE(s_loggerArgs.result == static_cast<int32_t>(0x80000018)); // E_ILLEGAL_DELEGATE_ASSIGNMENT)
+
+    // Remove global handler
+    winrt_throw_hresult_handler = nullptr;
+    s_loggerCalled = false;
 }
 
 #if defined(_LIBCPP_VERSION) && _LIBCPP_VERSION < 170000

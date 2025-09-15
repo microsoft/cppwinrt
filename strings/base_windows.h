@@ -131,6 +131,30 @@ namespace winrt::impl
         ptr->QueryInterface(guid_of<To>(), &result);
         return wrap_as_result<To>(result);
     }
+
+    template <typename To, typename From, std::enable_if_t<is_com_interface_v<To>, int> = 0>
+    com_ref<To> try_as_with_reason(From* ptr, hresult& code) noexcept
+    {
+#ifdef WINRT_DIAGNOSTICS
+        get_diagnostics_info().add_query<To>();
+#endif
+
+        if (!ptr)
+        {
+            code = 0;
+            return nullptr;
+        }
+
+        void* result{};
+        code = ptr->QueryInterface(guid_of<To>(), &result);
+        return wrap_as_result<To>(result);
+    }
+
+    template <typename To, typename From>
+    auto try_as_with_reason(From ptr, hresult& code) noexcept
+    {
+        return ptr->template try_as_with_reason<To>(code);
+    }
 }
 
 WINRT_EXPORT namespace winrt::Windows::Foundation
@@ -203,6 +227,12 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
         auto try_as() const noexcept
         {
             return impl::try_as<To>(m_ptr);
+        }
+
+        template <typename To>
+        auto try_as_with_reason(hresult& code) const noexcept
+        {
+            return impl::try_as_with_reason<To>(m_ptr, code);
         }
 
         template <typename To>

@@ -11,7 +11,15 @@ hstring invoke_by_interface_vtable_offset(Nomadic const& nomadic, ptrdiff_t offs
     //       that IInspectable has 6 functions in total (including those inherited from IUnknown)
     auto insp = static_cast<::IInspectable*>(get_abi(nomadic));
     auto vtable = *reinterpret_cast<void***>(insp);
+
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmicrosoft-cast"
+#endif
     auto fn_ptr = static_cast<HRESULT(__stdcall *)(::IInspectable*, HSTRING*)>(vtable[6 + offset]);
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
     HSTRING hstr;
     check_hresult(fn_ptr(insp, &hstr));

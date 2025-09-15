@@ -7,6 +7,12 @@ using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
 using namespace Component;
 
+
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wself-assign-overloaded"
+#pragma clang diagnostic ignored "-Wself-move"
+#endif
+
 namespace
 {
     struct Type : implements<Type, IStringable>

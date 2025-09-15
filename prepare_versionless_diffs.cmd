@@ -12,7 +12,6 @@ if /I "%target_platform%" equ "all" (
   )
   call %0 x86 !target_configuration!
   call %0 x64 !target_configuration!
-  call %0 arm !target_configuration!
   call %0 arm64 !target_configuration!
   goto :eof
 )

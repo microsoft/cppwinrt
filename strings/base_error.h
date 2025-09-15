@@ -78,103 +78,6 @@ namespace winrt::impl
     {
         return ((int32_t)((x) | 0x10000000));
     }
-
-    struct error_info_fallback final : IErrorInfo, IRestrictedErrorInfo, update_module_lock
-    {
-        error_info_fallback(int32_t code, void* message) noexcept :
-            m_code(code),
-            m_message(message ? *reinterpret_cast<winrt::hstring*>(&message) : message_from_hresult(code))
-        {
-        }
-
-        int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final
-        {
-            if (is_guid_of<IRestrictedErrorInfo>(id) || is_guid_of<Windows::Foundation::IUnknown>(id) || is_guid_of<IAgileObject>(id))
-            {
-                *object = static_cast<IRestrictedErrorInfo*>(this);
-                AddRef();
-                return 0;
-            }
-
-            if (is_guid_of<IErrorInfo>(id))
-            {
-                *object = static_cast<IErrorInfo*>(this);
-                AddRef();
-                return 0;
-            }
-
-            *object = nullptr;
-            return error_no_interface;
-        }
-
-        uint32_t __stdcall AddRef() noexcept final
-        {
-            return ++m_references;
-        }
-
-        uint32_t __stdcall Release() noexcept final
-        {
-            auto const remaining = --m_references;
-
-            if (remaining == 0)
-            {
-                delete this;
-            }
-
-            return remaining;
-        }
-
-        int32_t __stdcall GetGUID(guid* value) noexcept final
-        {
-            *value = {};
-            return 0;
-        }
-
-        int32_t __stdcall GetSource(bstr* value) noexcept final
-        {
-            *value = nullptr;
-            return 0;
-        }
-
-        int32_t __stdcall GetDescription(bstr* value) noexcept final
-        {
-            *value = WINRT_IMPL_SysAllocString(m_message.c_str());
-            return *value ? error_ok : error_bad_alloc;
-        }
-
-        int32_t __stdcall GetHelpFile(bstr* value) noexcept final
-        {
-            *value = nullptr;
-            return 0;
-        }
-
-        int32_t __stdcall GetHelpContext(uint32_t* value) noexcept final
-        {
-            *value = 0;
-            return 0;
-        }
-
-        int32_t __stdcall GetErrorDetails(bstr* fallback, int32_t* error, bstr* message, bstr* capability) noexcept final
-        {
-            *fallback = nullptr;
-            *error = m_code;
-            *capability = nullptr;
-            *message = WINRT_IMPL_SysAllocString(m_message.c_str());
-            return *message ? error_ok : error_bad_alloc;
-        }
-
-        int32_t __stdcall GetReference(bstr* value) noexcept final
-        {
-            *value = nullptr;
-            return 0;
-        }
-
-    private:
-
-        hresult const m_code;
-        hstring const m_message;
-        atomic_ref_count m_references{ 1 };
-    };
 }
 
 WINRT_EXPORT namespace winrt
@@ -204,21 +107,21 @@ WINRT_EXPORT namespace winrt
             return *this;
         }
 
-        explicit hresult_error(hresult const code WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : m_code(verify_error(code))
+        explicit hresult_error(hresult const code, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : m_code(verify_error(code))
         {
-            originate(code, nullptr WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            originate(code, nullptr, sourceInformation);
         }
 
-        explicit hresult_error(hresult const code, avoid_originate_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : m_code(verify_error(code))
+        explicit hresult_error(hresult const code, avoid_originate_t, [[maybe_unused]] winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : m_code(verify_error(code))
         {
         }
 
-        hresult_error(hresult const code, param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : m_code(verify_error(code))
+        hresult_error(hresult const code, param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : m_code(verify_error(code))
         {
-            originate(code, get_abi(message) WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            originate(code, get_abi(message), sourceInformation);
         }
 
-        hresult_error(hresult const code, take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : m_code(verify_error(code))
+        hresult_error(hresult const code, take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : m_code(verify_error(code))
         {
             com_ptr<impl::IErrorInfo> info;
             WINRT_IMPL_GetErrorInfo(0, info.put_void());
@@ -248,7 +151,7 @@ WINRT_EXPORT namespace winrt
                     message = impl::trim_hresult_message(legacy.get(), WINRT_IMPL_SysStringLen(legacy.get()));
                 }
 
-                originate(code, get_abi(message) WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+                originate(code, get_abi(message), sourceInformation);
             }
         }
 
@@ -303,7 +206,7 @@ WINRT_EXPORT namespace winrt
 
     private:
 
-        void originate(hresult const code, void* message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept
+        void originate(hresult const code, void* message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept
         {
             WINRT_VERIFY(WINRT_IMPL_RoOriginateLanguageException(code, message, nullptr));
 
@@ -312,17 +215,13 @@ WINRT_EXPORT namespace winrt
             // information is available on the caller who generated the error.
             if (winrt_throw_hresult_handler)
             {
-#ifdef WINRT_SOURCE_LOCATION_ACTIVE
                 winrt_throw_hresult_handler(sourceInformation.line(), sourceInformation.file_name(), sourceInformation.function_name(), WINRT_IMPL_RETURNADDRESS(), code);
-#else
-                winrt_throw_hresult_handler(0, nullptr, nullptr, WINRT_IMPL_RETURNADDRESS(), code);
-#endif
             }
 
             com_ptr<impl::IErrorInfo> info;
-            WINRT_VERIFY_(0, WINRT_IMPL_GetErrorInfo(0, info.put_void()));
-            WINRT_VERIFY(info.try_as(m_info));
-        }  
+            WINRT_IMPL_GetErrorInfo(0, info.put_void());
+            info.try_as(m_info);
+        }
 
         static hresult verify_error(hresult const code) noexcept
         {
@@ -348,119 +247,115 @@ WINRT_EXPORT namespace winrt
 
     struct hresult_access_denied : hresult_error
     {
-        hresult_access_denied(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_access_denied WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_access_denied(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_access_denied, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_access_denied(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_access_denied, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_access_denied(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_access_denied, sourceInformation) {}
+        hresult_access_denied(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_access_denied, message, sourceInformation) {}
+        hresult_access_denied(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_access_denied, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_wrong_thread : hresult_error
     {
-        hresult_wrong_thread(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_wrong_thread WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_wrong_thread(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_wrong_thread, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_wrong_thread(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_wrong_thread, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_wrong_thread(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_wrong_thread, sourceInformation) {}
+        hresult_wrong_thread(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_wrong_thread, message, sourceInformation) {}
+        hresult_wrong_thread(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_wrong_thread, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_not_implemented : hresult_error
     {
-        hresult_not_implemented(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_not_implemented WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_not_implemented(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_not_implemented, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_not_implemented(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_not_implemented, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_not_implemented(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_not_implemented, sourceInformation) {}
+        hresult_not_implemented(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_not_implemented, message, sourceInformation) {}
+        hresult_not_implemented(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_not_implemented, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_invalid_argument : hresult_error
     {
-        hresult_invalid_argument(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_invalid_argument WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_invalid_argument(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_invalid_argument, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_invalid_argument(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_invalid_argument, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_invalid_argument(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_invalid_argument, sourceInformation) {}
+        hresult_invalid_argument(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_invalid_argument, message, sourceInformation) {}
+        hresult_invalid_argument(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_invalid_argument, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_out_of_bounds : hresult_error
     {
-        hresult_out_of_bounds(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_out_of_bounds WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_out_of_bounds(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_out_of_bounds, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_out_of_bounds(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_out_of_bounds, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_out_of_bounds(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_out_of_bounds, sourceInformation) {}
+        hresult_out_of_bounds(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_out_of_bounds, message, sourceInformation) {}
+        hresult_out_of_bounds(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_out_of_bounds, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_no_interface : hresult_error
     {
-        hresult_no_interface(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_no_interface WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_no_interface(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_no_interface, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_no_interface(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_no_interface, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_no_interface(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_no_interface, sourceInformation) {}
+        hresult_no_interface(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_no_interface, message, sourceInformation) {}
+        hresult_no_interface(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_no_interface, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_class_not_available : hresult_error
     {
-        hresult_class_not_available(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_class_not_available WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_class_not_available(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_class_not_available, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_class_not_available(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_class_not_available, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_class_not_available(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_class_not_available, sourceInformation) {}
+        hresult_class_not_available(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_class_not_available, message, sourceInformation) {}
+        hresult_class_not_available(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_class_not_available, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_class_not_registered : hresult_error
     {
-        hresult_class_not_registered(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_class_not_registered WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_class_not_registered(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_class_not_registered, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_class_not_registered(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_class_not_registered, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_class_not_registered(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_class_not_registered, sourceInformation) {}
+        hresult_class_not_registered(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_class_not_registered, message, sourceInformation) {}
+        hresult_class_not_registered(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_class_not_registered, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_changed_state : hresult_error
     {
-        hresult_changed_state(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_changed_state WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_changed_state(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_changed_state, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_changed_state(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_changed_state, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_changed_state(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_changed_state, sourceInformation) {}
+        hresult_changed_state(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_changed_state, message, sourceInformation) {}
+        hresult_changed_state(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_changed_state, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_illegal_method_call : hresult_error
     {
-        hresult_illegal_method_call(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_illegal_method_call WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_illegal_method_call(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_illegal_method_call, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_illegal_method_call(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_illegal_method_call, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_illegal_method_call(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_illegal_method_call, sourceInformation) {}
+        hresult_illegal_method_call(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_illegal_method_call, message, sourceInformation) {}
+        hresult_illegal_method_call(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_illegal_method_call, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_illegal_state_change : hresult_error
     {
-        hresult_illegal_state_change(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_illegal_state_change WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_illegal_state_change(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_illegal_state_change, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_illegal_state_change(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_illegal_state_change, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_illegal_state_change(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_illegal_state_change, sourceInformation) {}
+        hresult_illegal_state_change(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_illegal_state_change, message, sourceInformation) {}
+        hresult_illegal_state_change(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_illegal_state_change, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_illegal_delegate_assignment : hresult_error
     {
-        hresult_illegal_delegate_assignment(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_illegal_delegate_assignment WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_illegal_delegate_assignment(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_illegal_delegate_assignment, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_illegal_delegate_assignment(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_illegal_delegate_assignment, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_illegal_delegate_assignment(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_illegal_delegate_assignment, sourceInformation) {}
+        hresult_illegal_delegate_assignment(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_illegal_delegate_assignment, message, sourceInformation) {}
+        hresult_illegal_delegate_assignment(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_illegal_delegate_assignment, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct hresult_canceled : hresult_error
     {
-        hresult_canceled(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_canceled WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_canceled(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_canceled, message WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        hresult_canceled(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) noexcept : hresult_error(impl::error_canceled, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
+        hresult_canceled(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_canceled, sourceInformation) {}
+        hresult_canceled(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_canceled, message, sourceInformation) {}
+        hresult_canceled(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_canceled, take_ownership_from_abi, sourceInformation) {}
     };
 
     struct non_originating_hresult_canceled : hresult_error
     {
-        non_originating_hresult_canceled(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_canceled, hresult_error::avoid_originate WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        non_originating_hresult_canceled(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) = delete;
-        non_originating_hresult_canceled(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) = delete;
+        non_originating_hresult_canceled(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_canceled, hresult_error::avoid_originate, sourceInformation) {}
+        non_originating_hresult_canceled(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) = delete;
+        non_originating_hresult_canceled(take_ownership_from_abi_t , winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) = delete;
 
     };
 
     struct non_originating_hresult_out_of_bounds : hresult_error
     {
-        non_originating_hresult_out_of_bounds(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM) noexcept : hresult_error(impl::error_out_of_bounds, hresult_error::avoid_originate WINRT_IMPL_SOURCE_LOCATION_FORWARD) {}
-        non_originating_hresult_out_of_bounds(param::hstring const& message WINRT_IMPL_SOURCE_LOCATION_ARGS) = delete;
-        non_originating_hresult_out_of_bounds(take_ownership_from_abi_t WINRT_IMPL_SOURCE_LOCATION_ARGS) = delete;
+        non_originating_hresult_out_of_bounds(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_out_of_bounds, hresult_error::avoid_originate, sourceInformation) {}
+        non_originating_hresult_out_of_bounds(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) = delete;
+        non_originating_hresult_out_of_bounds(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) = delete;
     };
 
-    [[noreturn]] inline WINRT_IMPL_NOINLINE void throw_hresult(hresult const result WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    [[noreturn]] inline WINRT_IMPL_NOINLINE void throw_hresult(hresult const result, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
     {
         if (winrt_throw_hresult_handler)
         {
-#ifdef WINRT_SOURCE_LOCATION_ACTIVE
             winrt_throw_hresult_handler(sourceInformation.line(), sourceInformation.file_name(), sourceInformation.function_name(), WINRT_IMPL_RETURNADDRESS(), result);
-#else
-            winrt_throw_hresult_handler(0, nullptr, nullptr, WINRT_IMPL_RETURNADDRESS(), result);
-#endif
         }
 
         if (result == impl::error_bad_alloc)
@@ -470,70 +365,70 @@ WINRT_EXPORT namespace winrt
 
         if (result == impl::error_access_denied)
         {
-            throw hresult_access_denied(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_access_denied(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_wrong_thread)
         {
-            throw hresult_wrong_thread(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_wrong_thread(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_not_implemented)
         {
-            throw hresult_not_implemented(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_not_implemented(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_invalid_argument)
         {
-            throw hresult_invalid_argument(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_invalid_argument(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_out_of_bounds)
         {
-            throw hresult_out_of_bounds(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_out_of_bounds(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_no_interface)
         {
-            throw hresult_no_interface(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_no_interface(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_class_not_available)
         {
-            throw hresult_class_not_available(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_class_not_available(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_class_not_registered)
         {
-            throw hresult_class_not_registered(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_class_not_registered(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_changed_state)
         {
-            throw hresult_changed_state(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_changed_state(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_illegal_method_call)
         {
-            throw hresult_illegal_method_call(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_illegal_method_call(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_illegal_state_change)
         {
-            throw hresult_illegal_state_change(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_illegal_state_change(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_illegal_delegate_assignment)
         {
-            throw hresult_illegal_delegate_assignment(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_illegal_delegate_assignment(take_ownership_from_abi, sourceInformation);
         }
 
         if (result == impl::error_canceled)
         {
-            throw hresult_canceled(take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw hresult_canceled(take_ownership_from_abi, sourceInformation);
         }
 
-        throw hresult_error(result, take_ownership_from_abi WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+        throw hresult_error(result, take_ownership_from_abi, sourceInformation);
     }
 
     inline WINRT_IMPL_NOINLINE hresult to_hresult() noexcept
@@ -594,55 +489,55 @@ WINRT_EXPORT namespace winrt
         }
     }
 
-    [[noreturn]] inline void throw_last_error(WINRT_IMPL_SOURCE_LOCATION_ARGS_SINGLE_PARAM)
+    [[noreturn]] inline void throw_last_error(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
     {
-        throw_hresult(impl::hresult_from_win32(WINRT_IMPL_GetLastError()) WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+        throw_hresult(impl::hresult_from_win32(WINRT_IMPL_GetLastError()), sourceInformation);
     }
 
-    inline hresult check_hresult(hresult const result WINRT_IMPL_SOURCE_LOCATION_ARGS_NO_DEFAULT)
+    inline hresult check_hresult(hresult const result, winrt::impl::slim_source_location const& sourceInformation)
     {
         if (result < 0)
         {
-            throw_hresult(result WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw_hresult(result, sourceInformation);
         }
         return result;
     }
 
     template<typename T>
-    void check_nt(T result WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    void check_nt(T result, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
     {
         if (result != 0)
         {
-            throw_hresult(impl::hresult_from_nt(result) WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw_hresult(impl::hresult_from_nt(result), sourceInformation);
         }
     }
 
     template<typename T>
-    void check_win32(T result WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    void check_win32(T result, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
     {
         if (result != 0)
         {
-            throw_hresult(impl::hresult_from_win32(result) WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            throw_hresult(impl::hresult_from_win32(result), sourceInformation);
         }
     }
 
     template<typename T>
-    T check_bool(T result WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    T check_bool(T result, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
     {
         if (!result)
         {
-            winrt::throw_last_error(WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM);
+            winrt::throw_last_error(sourceInformation);
         }
         
         return result;
     }
 
     template<typename T>
-    T* check_pointer(T* pointer WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    T* check_pointer(T* pointer, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
     {
         if (!pointer)
         {
-            throw_last_error(WINRT_IMPL_SOURCE_LOCATION_FORWARD_SINGLE_PARAM);
+            throw_last_error(sourceInformation);
         }
 
         return pointer;
@@ -657,11 +552,11 @@ WINRT_EXPORT namespace winrt
 
 namespace winrt::impl
 {
-    inline hresult check_hresult_allow_bounds(hresult const result WINRT_IMPL_SOURCE_LOCATION_ARGS)
+    inline hresult check_hresult_allow_bounds(hresult const result, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())
     {
         if (result != impl::error_out_of_bounds && result != impl::error_fail && result != impl::error_file_not_found)
         {
-            check_hresult(result WINRT_IMPL_SOURCE_LOCATION_FORWARD);
+            check_hresult(result, sourceInformation);
         }
         return result;
     }

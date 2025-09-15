@@ -122,7 +122,7 @@ TEST_CASE("cmd_reader")
         REQUIRE_FALSE(args.exists("verbose"));
     }
 
-    // response file #4: really really long path
+    // response file #4: really, really, long path
     {
         const char* argv[] = { "progname", "@respfile.txt" };
         const size_t argc = _countof(argv);

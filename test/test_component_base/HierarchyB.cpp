@@ -1,9 +1,11 @@
 #include "pch.h"
 #include "HierarchyB.h"
 
+#pragma warning(disable: 4702)
+
 namespace winrt::test_component_base::implementation
 {
-    HierarchyB::HierarchyB(hstring const& name)
+    HierarchyB::HierarchyB(hstring const& /*name*/)
     {
         throw hresult_not_implemented();
     }
