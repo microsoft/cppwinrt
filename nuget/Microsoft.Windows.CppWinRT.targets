@@ -354,7 +354,7 @@ Copyright (C) Microsoft Corporation. All rights reserved.
             Returns="@(CppWinRTMdMergeMetadataDirectories);@(CppWinRTMdMergeInputs)">
         <ItemGroup>
             <_MdMergeInputs Remove="@(_MdMergeInputs)"/>
-            <_MdMergeInputs Include="@(Midl)" Condition="'%(Midl.ExcludedFromBuild)' != 'true'">
+            <_MdMergeInputs Include="@(Midl)" Condition="'%(Midl.ExcludedFromBuild)' != 'true' and '$(CppWinRTModernIDL)' != 'false'">
                 <WinMDPath>%(Midl.OutputDirectory)%(Midl.MetadataFileName)</WinMDPath>
                 <MdMergeOutputFile>$(CppWinRTProjectWinMD)</MdMergeOutputFile>
             </_MdMergeInputs>
