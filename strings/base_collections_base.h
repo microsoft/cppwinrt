@@ -506,6 +506,18 @@ WINRT_EXPORT namespace winrt
     template <typename D, typename K, typename V, bool avoid_bounds_error_origination = false, typename Version = impl::no_collection_version>
     struct map_view_base : iterable_base<D, Windows::Foundation::Collections::IKeyValuePair<K, V>, Version>
     {
+        V TryLookup(K const& key) const
+        {
+            [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
+            auto pair = static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key));
+
+            if (pair == static_cast<D const&>(*this).get_container().end())
+            {
+                return nullptr;
+            }
+
+            return static_cast<D const&>(*this).unwrap_value(pair->second);
+        }
         V Lookup(K const& key) const
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();

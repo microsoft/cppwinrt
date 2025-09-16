@@ -1875,21 +1875,26 @@ namespace cppwinrt
 
     static void write_produce_upcall_LOOKUP(writer& w, std::string_view const& upcall, method_signature const& method_signature)
     {
-        if (method_signature.return_signature())
+        // assert if (method_signature.return_signature())
         {
             auto name = method_signature.return_param_name();
 
-            w.write("*% = detach_from<%>(%(%));",
-                name,
+            w.write("auto out_param_val = detach_from<%>(%(%));",
+                //name,
                 method_signature.return_signature(),
                 upcall,
                 bind<write_produce_args>(method_signature));
-        }
-        else
-        {
-            w.write("%(%);",
-                upcall,
-                bind<write_produce_args>(method_signature));
+            w.write(R"(
+                if (out_param_val) 
+                {
+                    *% = out_param_val;
+                }
+                else 
+                {
+                    return impl::error_out_of_bounds; 
+                }
+)", 
+                name);
         }
 
         for (auto&& [param, param_signature] : method_signature.params())
@@ -1939,7 +1944,14 @@ namespace cppwinrt
             format = R"(        int32_t __stdcall %(%) noexcept final try
         {
 %            typename D::abi_guard guard(this->shim());// hello world
-            % 
+            if constexpr (impl::has_try_lookup_v<D>)
+            {
+                %
+            }
+            else
+            {
+                %
+            }
             return 0;
         }
         catch (...) { return to_hresult(); }
@@ -1947,8 +1959,9 @@ namespace cppwinrt
             w.write(format,
                 get_abi_name(method),
                 bind<write_produce_params>(signature),
-                bind<write_produce_cleanup>(signature),
-                bind<write_produce_upcall_LOOKUP>(upcall, signature));
+                bind<write_produce_cleanup>(signature), // clear_abi
+                bind<write_produce_upcall_LOOKUP>(upcall, signature),
+                bind<write_produce_upcall>(upcall, signature));
         }
         else
         {
