@@ -1873,6 +1873,36 @@ namespace cppwinrt
         }
     }
 
+    static void write_produce_upcall_LOOKUP(writer& w, std::string_view const& upcall, method_signature const& method_signature)
+    {
+        if (method_signature.return_signature())
+        {
+            auto name = method_signature.return_param_name();
+
+            w.write("*% = detach_from<%>(%(%));",
+                name,
+                method_signature.return_signature(),
+                upcall,
+                bind<write_produce_args>(method_signature));
+        }
+        else
+        {
+            w.write("%(%);",
+                upcall,
+                bind<write_produce_args>(method_signature));
+        }
+
+        for (auto&& [param, param_signature] : method_signature.params())
+        {
+            if (param.Flags().Out() && !param_signature->Type().is_szarray() && is_object(param_signature->Type()))
+            {
+                auto param_name = param.Name();
+
+                w.write("\n            if (%) *% = detach_abi(winrt_impl_%);", param_name, param_name, param_name);
+            }
+        }
+    }
+
     static void write_produce_method(writer& w, MethodDef const& method)
     {
         std::string_view format;
@@ -1902,13 +1932,32 @@ namespace cppwinrt
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
         std::string upcall = "this->shim().";
-        upcall += get_name(method);
-
-        w.write(format,
-            get_abi_name(method),
-            bind<write_produce_params>(signature),
-            bind<write_produce_cleanup>(signature),
-            bind<write_produce_upcall>(upcall, signature));
+        auto name = get_name(method);
+        upcall += name;
+        if (name == "Lookup")
+        {
+            format = R"(        int32_t __stdcall %(%) noexcept final try
+        {
+%            typename D::abi_guard guard(this->shim());// hello world
+            % 
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+)";
+            w.write(format,
+                get_abi_name(method),
+                bind<write_produce_params>(signature),
+                bind<write_produce_cleanup>(signature),
+                bind<write_produce_upcall_LOOKUP>(upcall, signature));
+        }
+        else
+        {
+            w.write(format,
+                get_abi_name(method),
+                bind<write_produce_params>(signature),
+                bind<write_produce_cleanup>(signature),
+                bind<write_produce_upcall>(upcall, signature));
+        }
     }
 
     static void write_fast_produce_methods(writer& w, TypeDef const& default_interface)
