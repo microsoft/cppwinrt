@@ -1873,27 +1873,24 @@ namespace cppwinrt
         }
     }
 
-    static void write_produce_upcall_LOOKUP(writer& w, std::string_view const& upcall, method_signature const& method_signature)
+    static void write_produce_upcall_TryLookup(writer& w, std::string_view const& upcall, method_signature const& method_signature)
     {
-        // assert if (method_signature.return_signature())
-        {
-            auto name = method_signature.return_param_name();
+        auto name = method_signature.return_param_name();
 
-            w.write("auto out_param_val = %(%);",
-                upcall,
-                bind<write_produce_args>(method_signature));
-            w.write(R"(
-                if (out_param_val) 
-                {
-                    *% = detach_from<%>(std::move(*out_param_val));
-                }
-                else 
-                {
-                    return impl::error_out_of_bounds; 
-                }
+        w.write("auto out_param_val = %(%);",
+            upcall,
+            bind<write_produce_args>(method_signature));
+        w.write(R"(
+            if (out_param_val) 
+            {
+                *% = detach_from<%>(std::move(*out_param_val));
+            }
+            else 
+            {
+                return impl::error_out_of_bounds; 
+            }
 )", 
-                name, method_signature.return_signature());
-        }
+            name, method_signature.return_signature());
 
         for (auto&& [param, param_signature] : method_signature.params())
         {
@@ -1939,11 +1936,13 @@ namespace cppwinrt
         upcall += name;
         if (name == "Lookup")
         {
+            // Special-case Lookup to look for a TryLookup here, to avoid a throw/originate
+            // and add a small performance improvement.
             std::string tryLookupUpCall = "this->shim().TryLookup";
             format = R"(        int32_t __stdcall %(%) noexcept final try
         {
-%            typename D::abi_guard guard(this->shim());// hello world
-            if constexpr (has_try_lookup_v<D>)
+%            typename D::abi_guard guard(this->shim());
+            if constexpr (has_try_lookup_v<D, K>)
             {
                 %
             }
@@ -1959,7 +1958,7 @@ namespace cppwinrt
                 get_abi_name(method),
                 bind<write_produce_params>(signature),
                 bind<write_produce_cleanup>(signature), // clear_abi
-                bind<write_produce_upcall_LOOKUP>(tryLookupUpCall, signature),
+                bind<write_produce_upcall_TryLookup>(tryLookupUpCall, signature),
                 bind<write_produce_upcall>(upcall, signature));
         }
         else
