@@ -12,7 +12,9 @@ namespace winrt::impl
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        explicit observable_map_impl(Container&& values) : m_values(std::forward<Container>(values)) {}
+        explicit observable_map_impl(Container&& values) : m_values(std::forward<Container>(values))
+        {
+        }
 
         auto& get_container() noexcept
         {
@@ -46,7 +48,7 @@ WINRT_EXPORT namespace winrt
     {
         return make<impl::input_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{});
     }
-    
+
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
     Windows::Foundation::Collections::IMap<K, V> single_threaded_map(std::map<K, V, Compare, Allocator>&& values)
     {

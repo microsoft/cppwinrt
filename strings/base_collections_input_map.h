@@ -9,7 +9,9 @@ namespace winrt::impl
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
-        explicit map_impl(Container&& values) : m_values(std::forward<Container>(values)) {}
+        explicit map_impl(Container&& values) : m_values(std::forward<Container>(values))
+        {
+        }
 
         auto& get_container() noexcept
         {
