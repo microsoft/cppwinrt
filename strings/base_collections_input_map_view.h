@@ -1,10 +1,10 @@
 
 namespace winrt::impl
 {
-    template <typename K, typename V, typename Container, bool avoid_bounds_error_origination = false>
+    template <typename K, typename V, typename Container>
     struct input_map_view :
-        implements<input_map_view<K, V, Container, avoid_bounds_error_origination>, non_agile, no_weak_ref, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
-        map_view_base<input_map_view<K, V, Container, avoid_bounds_error_origination>, K, V, avoid_bounds_error_origination>
+        implements<input_map_view<K, V, Container>, non_agile, no_weak_ref, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+        map_view_base<input_map_view<K, V, Container>, K, V>
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
 
@@ -22,11 +22,11 @@ namespace winrt::impl
         Container const m_values;
     };
 
-    template <typename K, typename V, typename Container, bool avoid_bounds_error_origination = false>
+    template <typename K, typename V, typename Container>
     struct scoped_input_map_view :
         input_scope,
-        implements<scoped_input_map_view<K, V, Container, avoid_bounds_error_origination>, non_agile, no_weak_ref, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
-        map_view_base<scoped_input_map_view<K, V, Container, avoid_bounds_error_origination>, K, V, avoid_bounds_error_origination>
+        implements<scoped_input_map_view<K, V, Container>, non_agile, no_weak_ref, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+        map_view_base<scoped_input_map_view<K, V, Container>, K, V>
     {
         void abi_enter() const
         {
@@ -53,18 +53,18 @@ namespace winrt::impl
         Container const& m_values;
     };
 
-    template <typename K, typename V, typename Container, bool avoid_bounds_error_origination = false>
+    template <typename K, typename V, typename Container>
     auto make_input_map_view(Container&& values)
     {
-        return make<input_map_view<K, V, Container, avoid_bounds_error_origination>>(std::forward<Container>(values));
+        return make<input_map_view<K, V, Container>>(std::forward<Container>(values));
     }
 
-    template <typename K, typename V, typename Container, bool avoid_bounds_error_origination = false>
+    template <typename K, typename V, typename Container>
     auto make_scoped_input_map_view(Container const& values)
     {
         using interface_type = wfc::IMapView<K, V>;
         std::pair<interface_type, input_scope*> result;
-        auto ptr = new scoped_input_map_view<K, V, Container, avoid_bounds_error_origination>(values);
+        auto ptr = new scoped_input_map_view<K, V, Container>(values);
         *put_abi(result.first) = to_abi<interface_type>(ptr);
         result.second = ptr;
         return result;

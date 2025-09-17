@@ -1,10 +1,10 @@
 
 namespace winrt::impl
 {
-    template <typename K, typename V, typename Container, typename ThreadingBase, bool avoid_bounds_error_origination = false>
+    template <typename K, typename V, typename Container, typename ThreadingBase>
     struct map_impl :
-        implements<map_impl<K, V, Container, ThreadingBase, avoid_bounds_error_origination>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
-        map_base<map_impl<K, V, Container, ThreadingBase, avoid_bounds_error_origination>, K, V, avoid_bounds_error_origination>,
+        implements<map_impl<K, V, Container, ThreadingBase>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+        map_base<map_impl<K, V, Container, ThreadingBase>, K, V>,
         ThreadingBase
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
@@ -29,13 +29,13 @@ namespace winrt::impl
         Container m_values;
     };
 
-    template <typename K, typename V, typename Container, bool avoid_bounds_error_origination = false>
-    using input_map = map_impl<K, V, Container, single_threaded_collection_base, avoid_bounds_error_origination>;
+    template <typename K, typename V, typename Container>
+    using input_map = map_impl<K, V, Container, single_threaded_collection_base>;
 
-    template <typename K, typename V, typename Container, bool avoid_bounds_error_origination = false>
+    template <typename K, typename V, typename Container>
     auto make_input_map(Container&& values)
     {
-        return make<input_map<K, V, Container, avoid_bounds_error_origination>>(std::forward<Container>(values));
+        return make<input_map<K, V, Container>>(std::forward<Container>(values));
     }
 }
 

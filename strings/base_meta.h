@@ -298,4 +298,13 @@ namespace winrt::impl
             return (func(Types{}) || ...);
         }
     };
+
+    template <typename, typename = std::void_t<>>
+    struct has_try_lookup : std::false_type {};
+
+    template <typename T>
+    struct has_try_lookup<T, decltype(T().TryLookup())> : std::true_type{};
+
+    template <typename T>
+    inline constexpr bool has_try_lookup_v = has_try_lookup<T>::value;
 }

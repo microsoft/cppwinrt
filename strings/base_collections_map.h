@@ -1,13 +1,13 @@
 
 namespace winrt::impl
 {
-    template <typename K, typename V, typename Container, bool avoid_bounds_error_origination = false>
-    using multi_threaded_map = map_impl<K, V, Container, multi_threaded_collection_base, avoid_bounds_error_origination>;
+    template <typename K, typename V, typename Container>
+    using multi_threaded_map = map_impl<K, V, Container, multi_threaded_collection_base>;
 
-    template <typename K, typename V, typename Container, typename ThreadingBase, bool avoid_bounds_error_origination>
+    template <typename K, typename V, typename Container, typename ThreadingBase>
     struct observable_map_impl :
-        implements<observable_map_impl<K, V, Container, ThreadingBase, avoid_bounds_error_origination>, wfc::IObservableMap<K, V>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
-        observable_map_base<observable_map_impl<K, V, Container, ThreadingBase, avoid_bounds_error_origination>, K, V, avoid_bounds_error_origination>,
+        implements<observable_map_impl<K, V, Container, ThreadingBase>, wfc::IObservableMap<K, V>, wfc::IMap<K, V>, wfc::IMapView<K, V>, wfc::IIterable<wfc::IKeyValuePair<K, V>>>,
+        observable_map_base<observable_map_impl<K, V, Container, ThreadingBase>, K, V>,
         ThreadingBase
     {
         static_assert(std::is_same_v<Container, std::remove_reference_t<Container>>, "Must be constructed with rvalue.");
@@ -32,11 +32,11 @@ namespace winrt::impl
         Container m_values;
     };
 
-    template <typename K, typename V, typename Container, bool avoid_bounds_error_origination = false>
-    using observable_map = observable_map_impl<K, V, Container, single_threaded_collection_base, avoid_bounds_error_origination>;
+    template <typename K, typename V, typename Container>
+    using observable_map = observable_map_impl<K, V, Container, single_threaded_collection_base>;
 
-    template <typename K, typename V, typename Container, bool avoid_bounds_error_origination = false>
-    using multi_threaded_observable_map = observable_map_impl<K, V, Container, multi_threaded_collection_base, avoid_bounds_error_origination>;
+    template <typename K, typename V, typename Container>
+    using multi_threaded_observable_map = observable_map_impl<K, V, Container, multi_threaded_collection_base>;
 }
 
 WINRT_EXPORT namespace winrt
@@ -48,21 +48,9 @@ WINRT_EXPORT namespace winrt
     }
     
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> single_threaded_map_avoid_originate()
-    {
-        return make<impl::input_map<K, V, std::map<K, V, Compare, Allocator>, true /*avoid_bounds_error_origination*/>>(std::map<K, V, Compare, Allocator>{});
-    }
-
-    template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
     Windows::Foundation::Collections::IMap<K, V> single_threaded_map(std::map<K, V, Compare, Allocator>&& values)
     {
         return make<impl::input_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values));
-    }
-    
-    template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> single_threaded_map_avoid_originate(std::map<K, V, Compare, Allocator>&& values)
-    {
-        return make<impl::input_map<K, V, std::map<K, V, Compare, Allocator>, true /*avoid_bounds_error_origination*/>>(std::move(values));
     }
 
     template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
@@ -70,23 +58,11 @@ WINRT_EXPORT namespace winrt
     {
         return make<impl::input_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values));
     }
-    
-    template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> single_threaded_map_avoid_originate(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values)
-    {
-        return make<impl::input_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>, true /*avoid_bounds_error_origination*/>>(std::move(values));
-    }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
     Windows::Foundation::Collections::IMap<K, V> multi_threaded_map()
     {
         return make<impl::multi_threaded_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{});
-    }
-    
-    template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> multi_threaded_map_avoid_originate()
-    {
-        return make<impl::multi_threaded_map<K, V, std::map<K, V, Compare, Allocator>, true /*avoid_bounds_error_origination*/>>(std::map<K, V, Compare, Allocator>{});
     }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
@@ -94,23 +70,11 @@ WINRT_EXPORT namespace winrt
     {
         return make<impl::multi_threaded_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values));
     }
-    
-    template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> multi_threaded_map_avoid_originate(std::map<K, V, Compare, Allocator>&& values)
-    {
-        return make<impl::multi_threaded_map<K, V, std::map<K, V, Compare, Allocator>, true /*avoid_bounds_error_origination*/>>(std::move(values));
-    }
 
     template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
     Windows::Foundation::Collections::IMap<K, V> multi_threaded_map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values)
     {
         return make<impl::multi_threaded_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values));
-    }
-    
-    template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IMap<K, V> multi_threaded_map_avoid_originate(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values)
-    {
-        return make<impl::multi_threaded_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>, true /*avoid_bounds_error_origination*/>>(std::move(values));
     }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
@@ -118,23 +82,11 @@ WINRT_EXPORT namespace winrt
     {
         return make<impl::observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{});
     }
-    
-    template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> single_threaded_observable_map_avoid_originate()
-    {
-        return make<impl::observable_map<K, V, std::map<K, V, Compare, Allocator>, true /*avoid_bounds_error_origination*/>>(std::map<K, V, Compare, Allocator>{});
-    }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
     Windows::Foundation::Collections::IObservableMap<K, V> single_threaded_observable_map(std::map<K, V, Compare, Allocator>&& values)
     {
         return make<impl::observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values));
-    }
-    
-    template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> single_threaded_observable_map_avoid_originate(std::map<K, V, Compare, Allocator>&& values)
-    {
-        return make<impl::observable_map<K, V, std::map<K, V, Compare, Allocator>, true /*avoid_bounds_error_origination*/>>(std::move(values));
     }
 
     template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
@@ -142,23 +94,11 @@ WINRT_EXPORT namespace winrt
     {
         return make<impl::observable_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values));
     }
-    
-    template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> single_threaded_observable_map_avoid_originate(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values)
-    {
-        return make<impl::observable_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>, true /*avoid_bounds_error_origination*/>>(std::move(values));
-    }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
     Windows::Foundation::Collections::IObservableMap<K, V> multi_threaded_observable_map()
     {
         return make<impl::multi_threaded_observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::map<K, V, Compare, Allocator>{});
-    }
-    
-    template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> multi_threaded_observable_map_avoid_originate()
-    {
-        return make<impl::multi_threaded_observable_map<K, V, std::map<K, V, Compare, Allocator>, true /*avoid_bounds_error_origination*/>>(std::map<K, V, Compare, Allocator>{});
     }
 
     template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
@@ -166,23 +106,11 @@ WINRT_EXPORT namespace winrt
     {
         return make<impl::multi_threaded_observable_map<K, V, std::map<K, V, Compare, Allocator>>>(std::move(values));
     }
-    
-    template <typename K, typename V, typename Compare = std::less<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> multi_threaded_observable_map_avoid_originate(std::map<K, V, Compare, Allocator>&& values)
-    {
-        return make<impl::multi_threaded_observable_map<K, V, std::map<K, V, Compare, Allocator>, true /*avoid_bounds_error_origination*/>>(std::move(values));
-    }
 
     template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
     Windows::Foundation::Collections::IObservableMap<K, V> multi_threaded_observable_map(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values)
     {
         return make<impl::multi_threaded_observable_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>>>(std::move(values));
-    }
-
-    template <typename K, typename V, typename Hash = std::hash<K>, typename KeyEqual = std::equal_to<K>, typename Allocator = std::allocator<std::pair<K const, V>>>
-    Windows::Foundation::Collections::IObservableMap<K, V> multi_threaded_observable_map_avoid_originate(std::unordered_map<K, V, Hash, KeyEqual, Allocator>&& values)
-    {
-        return make<impl::multi_threaded_observable_map<K, V, std::unordered_map<K, V, Hash, KeyEqual, Allocator>, true /*avoid_bounds_error_origination*/>>(std::move(values));
     }
 }
 

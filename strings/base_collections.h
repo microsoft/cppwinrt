@@ -48,27 +48,6 @@ namespace winrt::impl
     template <typename K, typename V>
     struct is_key_value_pair<wfc::IKeyValuePair<K, V>> : std::true_type {};
 
-
-    struct TryLookupable : impl::marker {};
-    template <typename, typename = std::void_t<>>
-    struct has_try_lookup : std::false_type {};
-
-    template <typename T>
-    struct has_try_lookup<T, decltype(T().TryLookup())> : std::true_type{};
-
-    template <typename T>
-    inline constexpr bool has_try_lookup_v = has_try_lookup<T>::value;
-
-    //template<typename T> class component_has_TryLookup {
-    //    template<typename> static std::false_type test(...);
-    //    template<typename U> static auto test(int)
-    //        -> decltype(std::declval<U>().TryLookup(
-    //            std::declval<SomeType*>()), std::true_type());
-    //public:
-    //    static constexpr bool value
-    //        = std::is_same<decltype(test<T>(0)), std::true_type>::value;
-    //};
-
     struct input_scope
     {
         void invalidate_scope() noexcept
