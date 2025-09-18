@@ -576,7 +576,7 @@ WINRT_EXPORT namespace winrt
 
             return !added;
         }
-        // todo also create a tryremove?
+
         void Remove(K const& key)
         {
             typename impl::container_type_t<D>::node_type removedNode;

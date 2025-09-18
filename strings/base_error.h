@@ -341,7 +341,6 @@ WINRT_EXPORT namespace winrt
         non_originating_hresult_canceled(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_canceled, hresult_error::avoid_originate, sourceInformation) {}
         non_originating_hresult_canceled(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) = delete;
         non_originating_hresult_canceled(take_ownership_from_abi_t , winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) = delete;
-
     };
 
     [[noreturn]] inline WINRT_IMPL_NOINLINE void throw_hresult(hresult const result, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current())

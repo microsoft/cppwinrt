@@ -1881,14 +1881,14 @@ namespace cppwinrt
             upcall,
             bind<write_produce_args>(method_signature));
         w.write(R"(
-            if (out_param_val) 
-            {
-                *% = detach_from<%>(std::move(*out_param_val));
-            }
-            else 
-            {
-                return impl::error_out_of_bounds; 
-            }
+                if (out_param_val) 
+                {
+                    *% = detach_from<%>(std::move(*out_param_val));
+                }
+                else 
+                {
+                    return impl::error_out_of_bounds; 
+                }
 )", 
             name, method_signature.return_signature());
 

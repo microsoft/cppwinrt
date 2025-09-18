@@ -302,7 +302,7 @@ namespace winrt::impl
     template <typename D, typename K>
     struct has_try_lookup
     {
-        template <typename U, typename = decltype(std::declval<U>().TryLookup(K{}))> static constexpr bool get_value(int) { return true; }
+        template <typename U, typename = decltype(std::declval<U>().TryLookup(std::declval<K>()))> static constexpr bool get_value(int) { return true; }
         template <typename> static constexpr bool get_value(...) { return false; }
 
     public:
