@@ -507,7 +507,7 @@ WINRT_EXPORT namespace winrt
     struct map_view_base : iterable_base<D, Windows::Foundation::Collections::IKeyValuePair<K, V>, Version>
     {
         // specialization of Lookup that avoids throwing the hresult
-        std::optional<V> TryLookup(K const& key) const
+        std::optional<V> TryLookup(K const& key, trylookup_from_abi_t) const
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
             auto pair = static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key));

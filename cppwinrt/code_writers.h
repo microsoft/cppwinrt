@@ -1877,7 +1877,7 @@ namespace cppwinrt
     {
         auto name = method_signature.return_param_name();
 
-        w.write("auto out_param_val = %(%);",
+        w.write("auto out_param_val = %(%, trylookup_from_abi);",
             upcall,
             bind<write_produce_args>(method_signature));
         w.write(R"(
@@ -1942,7 +1942,7 @@ namespace cppwinrt
             format = R"(        int32_t __stdcall %(%) noexcept final try
         {
 %            typename D::abi_guard guard(this->shim());
-            if constexpr (has_try_lookup_v<D, K>)
+            if constexpr (has_TryLookup_v<D, K>)
             {
                 %
             }
