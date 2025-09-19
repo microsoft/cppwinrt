@@ -187,6 +187,4 @@ TEST_CASE("trylookup_from_abi specialization")
     REQUIRE_THROWS_AS(map.TryLookup(123), hresult_wrong_thread);
     // regular lookup should throw the same error
     REQUIRE_THROWS_AS(map.Lookup(123), hresult_wrong_thread);
-
-
 }

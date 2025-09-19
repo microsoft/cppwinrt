@@ -490,7 +490,7 @@ namespace winrt::impl
                     m_status.store(AsyncStatus::Canceled, std::memory_order_relaxed);
                     if (cancellable_promise::avoid_cancel_origination_enabled())
                     {
-                        m_exception = std::make_exception_ptr(non_originating_hresult_canceled());
+                        m_exception = std::make_exception_ptr(hresult_canceled(hresult_error::avoid_originate));
                     }
                     else
                     {
@@ -628,10 +628,6 @@ namespace winrt::impl
             {
                 m_status.store(AsyncStatus::Canceled, std::memory_order_relaxed);
             }
-            catch (non_originating_hresult_canceled const&)
-            {
-                m_status.store(AsyncStatus::Canceled, std::memory_order_relaxed);
-            }
             catch (...)
             {
                 m_status.store(AsyncStatus::Error, std::memory_order_relaxed);
@@ -645,7 +641,7 @@ namespace winrt::impl
             {
                 if (cancellable_promise::avoid_cancel_origination_enabled())
                 {
-                    throw winrt::non_originating_hresult_canceled();
+                    throw winrt::hresult_canceled(hresult_error::avoid_originate);
                 }
                 else
                 {
