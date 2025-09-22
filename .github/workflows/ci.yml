@@ -23,7 +23,7 @@ jobs:
             config: Release
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Download nuget
         run: |
@@ -102,18 +102,18 @@ jobs:
             config: Release
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Fetch cppwinrt executables
         if: matrix.arch != 'arm64'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
 
       - name: Fetch x86 cppwinrt executables (arm64 only)
         if: matrix.arch == 'arm64'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: msvc-build-${{ matrix.compiler}}-x86-Release-bin
           path: _build/x86/Release/
@@ -250,7 +250,7 @@ jobs:
       CMAKE_COLOR_DIAGNOSTICS: 1
       CLICOLOR_FORCE: 1
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Install cross compiler
         run: |
@@ -283,7 +283,7 @@ jobs:
         Deployment: [Component, Standalone]
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Download nuget
         run: |
@@ -323,10 +323,10 @@ jobs:
         config: [Release]
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Fetch cppwinrt executables
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
@@ -368,7 +368,7 @@ jobs:
     name: Build nuget package with MSVC
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Package
         run: |
