@@ -1881,7 +1881,7 @@ namespace cppwinrt
             upcall,
             bind<write_produce_args>(method_signature));
         w.write(R"(
-                if (out_param_val) 
+                if (out_param_val.has_value()) 
                 {
                     *% = detach_from<%>(std::move(*out_param_val));
                 }
@@ -1934,6 +1934,7 @@ namespace cppwinrt
         std::string upcall = "this->shim().";
         auto name = get_name(method);
         upcall += name;
+        // if (type_name == "Windows.Foundation.Collections.IMapView`2")
         if (name == "Lookup")
         {
             // Special-case Lookup to look for a TryLookup here, to avoid a throw/originate

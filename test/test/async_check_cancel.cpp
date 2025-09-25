@@ -133,7 +133,7 @@ namespace
         winrt_throw_hresult_handler = exceptionLogger;
 
         auto cancel = co_await get_cancellation_token();
-        cancel.avoid_cancel_origination(true);
+        cancel.originate_on_cancel(false);
 
         co_await resume_on_signal(event);
 

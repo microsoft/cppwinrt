@@ -13,7 +13,6 @@
     <ExecutionMode>Single</ExecutionMode>
     <FilenameFilter>(?i:Test)</FilenameFilter><!-- Regex filter -->
     <ForceListContent>true</ForceListContent>
-    <CombinedTimeout>30000</CombinedTimeout><!-- 30s in Milliseconds -->
     <DebugBreak>on</DebugBreak>
     <IncludeHidden>true</IncludeHidden>
     <Logging>Verbose</Logging>

@@ -188,3 +188,58 @@ TEST_CASE("trylookup_from_abi specialization")
     // regular lookup should throw the same error
     REQUIRE_THROWS_AS(map.Lookup(123), hresult_wrong_thread);
 }
+
+TEST_CASE("trylookup_from_abi specialization with IInspectable")
+{
+    // A map that throws a specific error, used to verify various edge cases.
+    // and implements tryLookup, to take advantage of an optimization to avoid a throw. 
+    struct map_with_try_lookup : implements<map_with_try_lookup, IMapView<int, IInspectable>>
+    {
+        hresult codeToThrow{ S_OK };
+        bool shouldThrowOnTryLookup{ false };
+        bool returnNullptr{ false };
+        std::optional<IInspectable> TryLookup(int, trylookup_from_abi_t)
+        {
+            if (returnNullptr)
+            {
+                return { nullptr };
+            }
+            else if (shouldThrowOnTryLookup)
+            { 
+                throw_hresult(codeToThrow); 
+            }
+            else
+            {
+                return { std::nullopt };
+            }
+        }
+        IInspectable Lookup(int) { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+        int32_t Size() { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+        bool HasKey(int) { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+        void Split(IMapView<int, IInspectable>&, IMapView<int, IInspectable>&) { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+    };
+
+    auto self = make_self<map_with_try_lookup>();
+    IMapView<int, IInspectable> map = *self;
+
+    // Ensure that we return a value on nullptr, a nullptr is a valid IInspectable in the Map
+    self->returnNullptr = true;
+    REQUIRE(map.TryLookup(123) == IInspectable{nullptr});
+    REQUIRE(map.Lookup(123) == IInspectable{nullptr});
+    
+    // Make sure that we use the TryLookup specialization, and don't throw an unexpected exception.
+    self->shouldThrowOnTryLookup = false;
+    self->returnNullptr = false;
+    REQUIRE(map.TryLookup(123) == IInspectable{nullptr});
+    // make sure regular lookup stll throws bounds
+    REQUIRE_THROWS_AS(map.Lookup(123), hresult_out_of_bounds);
+
+    // Simulate a non-agile map that is being accessed from the wrong thread.
+    // "Try" operations should throw rather than erroneously report "not found".
+    // Because they didn't even try. The operation never got off the ground.
+    self->shouldThrowOnTryLookup = true;
+    self->codeToThrow = RPC_E_WRONG_THREAD;
+    REQUIRE_THROWS_AS(map.TryLookup(123), hresult_wrong_thread);
+    // regular lookup should throw the same error
+    REQUIRE_THROWS_AS(map.Lookup(123), hresult_wrong_thread);
+}

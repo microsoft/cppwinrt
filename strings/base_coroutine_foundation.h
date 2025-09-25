@@ -351,9 +351,9 @@ namespace winrt::impl
             return m_promise->enable_cancellation_propagation(value);
         }
 
-        bool avoid_cancel_origination(bool value = true) const noexcept
+        bool originate_on_cancel(bool value = true) const noexcept
         {
-            return m_promise->enable_avoid_cancel_origination(value);
+            return m_promise->originate_on_cancel(value);
         }
     private:
 
@@ -488,13 +488,13 @@ namespace winrt::impl
                 if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Started)
                 {
                     m_status.store(AsyncStatus::Canceled, std::memory_order_relaxed);
-                    if (cancellable_promise::avoid_cancel_origination_enabled())
+                    if (cancellable_promise::originate_on_cancel())
                     {
-                        m_exception = std::make_exception_ptr(hresult_canceled(hresult_error::avoid_originate));
+                        m_exception = std::make_exception_ptr(hresult_canceled());
                     }
                     else
                     {
-                        m_exception = std::make_exception_ptr(hresult_canceled());
+                        m_exception = std::make_exception_ptr(hresult_canceled(hresult_error::no_originate));
                     }
                     cancel = std::move(m_cancel);
                 }
@@ -639,13 +639,13 @@ namespace winrt::impl
         {
             if (Status() == AsyncStatus::Canceled)
             {
-                if (cancellable_promise::avoid_cancel_origination_enabled())
+                if (cancellable_promise::originate_on_cancel())
                 {
-                    throw winrt::hresult_canceled(hresult_error::avoid_originate);
+                    throw winrt::hresult_canceled();
                 }
                 else
                 {
-                    throw winrt::hresult_canceled();
+                    throw winrt::hresult_canceled(hresult_error::no_originate);
                 }
             }
 
