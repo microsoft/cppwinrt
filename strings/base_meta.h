@@ -308,9 +308,7 @@ namespace winrt::impl
     {
         template <typename U, typename = decltype(std::declval<U>().TryLookup(std::declval<K>(), trylookup_from_abi))> static constexpr bool get_value(int) { return true; }
         template <typename> static constexpr bool get_value(...) { return false; }
-
     public:
-
         static constexpr bool value = get_value<D>(0);
     };
 

@@ -1903,7 +1903,7 @@ namespace cppwinrt
         }
     }
 
-    static void write_produce_method(writer& w, MethodDef const& method)
+    static void write_produce_method(writer& w, MethodDef const& method, TypeDef const& type)
     {
         std::string_view format;
 
@@ -1934,11 +1934,12 @@ namespace cppwinrt
         std::string upcall = "this->shim().";
         auto name = get_name(method);
         upcall += name;
-        // if (type_name == "Windows.Foundation.Collections.IMapView`2")
-        if (name == "Lookup")
+
+        auto typeName = type.TypeName();
+        if (((typeName == "IMapView`2") || (typeName == "IMap`2"))
+            && (name == "Lookup"))
         {
-            // Special-case Lookup to look for a TryLookup here, to avoid a throw/originate
-            // and add a small performance improvement.
+            // Special-case IMap*::Lookup to look for a TryLookup here, to avoid extranous throw/originates
             std::string tryLookupUpCall = "this->shim().TryLookup";
             format = R"(        int32_t __stdcall %(%) noexcept final try
         {
@@ -2012,7 +2013,7 @@ namespace cppwinrt
                 break;
             }
 
-            w.write_each<write_produce_method>(info.type.MethodList());
+            w.write_each<write_produce_method>(info.type.MethodList(), info.type);
         }
     }
 
@@ -2034,7 +2035,7 @@ namespace cppwinrt
             bind<write_comma_generic_typenames>(generics),
             type,
             type,
-            bind_each<write_produce_method>(type.MethodList()),
+            bind_each<write_produce_method>(type.MethodList(), type),
             bind<write_fast_produce_methods>(type));
     }
 

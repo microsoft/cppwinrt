@@ -112,7 +112,7 @@ WINRT_EXPORT namespace winrt
             originate(code, nullptr, sourceInformation);
         }
 
-        explicit hresult_error(hresult const code, no_originate_t, [[maybe_unused]] winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : m_code(verify_error(code))
+        explicit hresult_error(hresult const code, no_originate_t) noexcept : m_code(verify_error(code))
         {
         }
 

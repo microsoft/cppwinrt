@@ -514,10 +514,10 @@ WINRT_EXPORT namespace winrt
 
             if (pair == static_cast<D const&>(*this).get_container().end())
             {
-                return { std::nullopt };
+                return std::nullopt;
             }
 
-            return { static_cast<D const&>(*this).unwrap_value(pair->second) };
+            return static_cast<D const&>(*this).unwrap_value(pair->second);
         }
 
         V Lookup(K const& key) const
