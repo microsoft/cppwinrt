@@ -84,6 +84,9 @@ WINRT_EXPORT namespace winrt
 {
     struct hresult_error
     {
+        struct no_originate_t {};
+        static constexpr no_originate_t no_originate{};
+
         using from_abi_t = take_ownership_from_abi_t;
         static constexpr auto from_abi{ take_ownership_from_abi };
 
@@ -107,6 +110,10 @@ WINRT_EXPORT namespace winrt
         explicit hresult_error(hresult const code, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : m_code(verify_error(code))
         {
             originate(code, nullptr, sourceInformation);
+        }
+
+        explicit hresult_error(hresult const code, no_originate_t) noexcept : m_code(verify_error(code))
+        {
         }
 
         hresult_error(hresult const code, param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : m_code(verify_error(code))
@@ -325,6 +332,7 @@ WINRT_EXPORT namespace winrt
     struct hresult_canceled : hresult_error
     {
         hresult_canceled(winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_canceled, sourceInformation) {}
+        hresult_canceled(hresult_error::no_originate_t) noexcept : hresult_error(impl::error_canceled, hresult_error::no_originate) {}
         hresult_canceled(param::hstring const& message, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_canceled, message, sourceInformation) {}
         hresult_canceled(take_ownership_from_abi_t, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current()) noexcept : hresult_error(impl::error_canceled, take_ownership_from_abi, sourceInformation) {}
     };

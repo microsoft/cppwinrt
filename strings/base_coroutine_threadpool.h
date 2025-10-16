@@ -180,12 +180,23 @@ WINRT_EXPORT namespace winrt
             return m_propagate_cancellation;
         }
 
+        bool originate_on_cancel(bool value = true) noexcept
+        {
+            return std::exchange(m_originate_on_cancel, value);
+        }
+
+        bool should_originate_on_cancel() const noexcept
+        {
+            return m_originate_on_cancel;
+        }
+
     private:
         static inline auto const cancelling_ptr = reinterpret_cast<canceller_t>(1);
 
         std::atomic<canceller_t> m_canceller{ nullptr };
         void* m_context{ nullptr };
         bool m_propagate_cancellation{ false };
+        bool m_originate_on_cancel{ true }; // By default, will call RoOriginateError before throwing a cancel error code.
     };
 
     template <typename Derived>

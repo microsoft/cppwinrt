@@ -34,3 +34,8 @@ a dev command prompt at the root of the repo _after_ following the above build i
 * Run `build_prior_projection.cmd` in the dev command prompt as well
 * Run `prepare_versionless_diffs.cmd` which removes version stamps on both current and prior projection
 * Use a directory-level differencing tool to compare `_build\$(arch)\$(flavor)\winrt` and `_reference\$(arch)\$(flavor)\winrt`
+
+## Testing
+This repository uses the [Catch2](https://github.com/catchorg/Catch2) testing framework.
+- From a Visual Studio command line, you should run `build_tests_all.cmd` to build and run the tests. To Debug the tests, you can debug the associated `_build\$(arch)\$(flavor)\<test>.exe` under the debugger of your choice.
+- Optionally, you can install the [Catch2Adapter](https://marketplace.visualstudio.com/items?itemName=JohnnyHendriks.ext01) to run the tests from Visual Studio.

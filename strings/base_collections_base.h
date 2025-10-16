@@ -506,6 +506,20 @@ WINRT_EXPORT namespace winrt
     template <typename D, typename K, typename V, typename Version = impl::no_collection_version>
     struct map_view_base : iterable_base<D, Windows::Foundation::Collections::IKeyValuePair<K, V>, Version>
     {
+        // specialization of Lookup that avoids throwing the hresult
+        std::optional<V> TryLookup(K const& key, trylookup_from_abi_t) const
+        {
+            [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
+            auto pair = static_cast<D const&>(*this).get_container().find(static_cast<D const&>(*this).wrap_value(key));
+
+            if (pair == static_cast<D const&>(*this).get_container().end())
+            {
+                return std::nullopt;
+            }
+
+            return static_cast<D const&>(*this).unwrap_value(pair->second);
+        }
+
         V Lookup(K const& key) const
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
@@ -536,6 +550,7 @@ WINRT_EXPORT namespace winrt
             first = nullptr;
             second = nullptr;
         }
+
     };
 
     template <typename D, typename K, typename V>

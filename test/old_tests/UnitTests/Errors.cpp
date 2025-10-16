@@ -233,6 +233,7 @@ TEST_CASE("Errors")
 
     // Make sure trimming works.
     hresult_error e(E_FAIL, L":) is \u263A \n \t ");
+    auto x = e.message();
     REQUIRE(e.message() == L":) is \u263A");
 
     // Make sure delegates propagate correctly.
