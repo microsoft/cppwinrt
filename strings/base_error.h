@@ -430,15 +430,18 @@ WINRT_EXPORT namespace winrt
         }
         catch (std::out_of_range const& e)
         {
-            return hresult_out_of_bounds(to_hstring(e.what())).to_abi();
+            auto hr = hresult_out_of_bounds(to_hstring(e.what()));
+            return hr.to_abi();
         }
         catch (std::invalid_argument const& e)
         {
-            return hresult_invalid_argument(to_hstring(e.what())).to_abi();
+            auto hr = hresult_invalid_argument(to_hstring(e.what()));
+            return hr.to_abi();
         }
         catch (std::exception const& e)
         {
-            return hresult_error(impl::error_fail, to_hstring(e.what())).to_abi();
+            auto hr = hresult_error(impl::error_fail, to_hstring(e.what()));
+            return hr.to_abi();
         }
     }
 
