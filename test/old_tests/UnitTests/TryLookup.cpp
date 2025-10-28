@@ -189,6 +189,32 @@ TEST_CASE("trylookup_from_abi specialization")
     REQUIRE_THROWS_AS(map.Lookup(123), hresult_wrong_thread);
 }
 
+TEST_CASE("trylookup_from_abi NOT opt-in, no special tag")
+{
+    // Makes sure that an existing TryLookup method is not called without the trylookup_from_abi_t tag.
+    struct map_without_try_lookup : implements<map_without_try_lookup, IMapView<int, int>>
+    {
+        hresult codeToThrow{ S_OK };
+        std::optional<int> TryLookup(int) // notice no trylookup_from_abi_t, so no opt-in
+        {
+            // throw an unexpectd hresult, this should not be called. 
+            throw_hresult(RPC_E_WRONG_THREAD);
+        }
+        int Lookup(int) { return 42; } // Behave as if the item was found
+
+        int32_t Size() { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+        bool HasKey(int) { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+        void Split(IMapView<int, int>&, IMapView<int, int>&) { throw_hresult(E_UNEXPECTED); } // shouldn't be called by the test
+    };
+
+    auto self = make_self<map_without_try_lookup>();
+    IMapView<int, int> map = *self;
+
+    // Make sure that we don't use the TryLookup specialization, we use the Successful Lookup
+    REQUIRE(map.TryLookup(123).value() == 42);
+    REQUIRE(map.Lookup(123) == 42);
+}
+
 TEST_CASE("trylookup_from_abi specialization with IInspectable")
 {
     // A map that throws a specific error, used to verify various edge cases.
