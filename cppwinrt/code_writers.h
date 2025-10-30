@@ -1873,7 +1873,37 @@ namespace cppwinrt
         }
     }
 
-    static void write_produce_method(writer& w, MethodDef const& method)
+    static void write_produce_upcall_TryLookup(writer& w, std::string_view const& upcall, method_signature const& method_signature)
+    {
+        auto name = method_signature.return_param_name();
+
+        w.write("auto out_param_val = %(%, trylookup_from_abi);",
+            upcall,
+            bind<write_produce_args>(method_signature));
+        w.write(R"(
+                if (out_param_val.has_value()) 
+                {
+                    *% = detach_from<%>(std::move(*out_param_val));
+                }
+                else 
+                {
+                    return impl::error_out_of_bounds; 
+                }
+)", 
+            name, method_signature.return_signature());
+
+        for (auto&& [param, param_signature] : method_signature.params())
+        {
+            if (param.Flags().Out() && !param_signature->Type().is_szarray() && is_object(param_signature->Type()))
+            {
+                auto param_name = param.Name();
+
+                w.write("\n            if (%) *% = detach_abi(winrt_impl_%);", param_name, param_name, param_name);
+            }
+        }
+    }
+
+    static void write_produce_method(writer& w, MethodDef const& method, TypeDef const& type)
     {
         std::string_view format;
 
@@ -1902,13 +1932,45 @@ namespace cppwinrt
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
         std::string upcall = "this->shim().";
-        upcall += get_name(method);
+        auto name = get_name(method);
+        upcall += name;
 
-        w.write(format,
-            get_abi_name(method),
-            bind<write_produce_params>(signature),
-            bind<write_produce_cleanup>(signature),
-            bind<write_produce_upcall>(upcall, signature));
+        auto typeName = type.TypeName();
+        if (((typeName == "IMapView`2") || (typeName == "IMap`2"))
+            && (name == "Lookup"))
+        {
+            // Special-case IMap*::Lookup to look for a TryLookup here, to avoid extranous throw/originates
+            std::string tryLookupUpCall = "this->shim().TryLookup";
+            format = R"(        int32_t __stdcall %(%) noexcept final try
+        {
+%            typename D::abi_guard guard(this->shim());
+            if constexpr (has_TryLookup_v<D, K>)
+            {
+                %
+            }
+            else
+            {
+                %
+            }
+            return 0;
+        }
+        catch (...) { return to_hresult(); }
+)";
+            w.write(format,
+                get_abi_name(method),
+                bind<write_produce_params>(signature),
+                bind<write_produce_cleanup>(signature), // clear_abi
+                bind<write_produce_upcall_TryLookup>(tryLookupUpCall, signature),
+                bind<write_produce_upcall>(upcall, signature));
+        }
+        else
+        {
+            w.write(format,
+                get_abi_name(method),
+                bind<write_produce_params>(signature),
+                bind<write_produce_cleanup>(signature),
+                bind<write_produce_upcall>(upcall, signature));
+        }
     }
 
     static void write_fast_produce_methods(writer& w, TypeDef const& default_interface)
@@ -1951,7 +2013,7 @@ namespace cppwinrt
                 break;
             }
 
-            w.write_each<write_produce_method>(info.type.MethodList());
+            w.write_each<write_produce_method>(info.type.MethodList(), info.type);
         }
     }
 
@@ -1973,7 +2035,7 @@ namespace cppwinrt
             bind<write_comma_generic_typenames>(generics),
             type,
             type,
-            bind_each<write_produce_method>(type.MethodList()),
+            bind_each<write_produce_method>(type.MethodList(), type),
             bind<write_fast_produce_methods>(type));
     }
 
