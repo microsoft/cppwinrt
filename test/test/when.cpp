@@ -5,13 +5,7 @@ using namespace concurrency;
 using namespace winrt;
 using namespace Windows::Foundation;
 
-#ifdef __cpp_lib_coroutine
-using std::suspend_never;
-#else
-using std::experimental::suspend_never;
-#endif
-
-struct CommaStruct : suspend_never
+struct CommaStruct : std::suspend_never
 {
     // If the comma operator is invoked, we will get a build failure.
     CommaStruct operator,(CommaStruct) = delete;

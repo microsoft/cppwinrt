@@ -1,7 +1,7 @@
 
+#ifdef WINRT_IMPL_COROUTINES
 WINRT_EXPORT namespace winrt
 {
-#ifdef WINRT_IMPL_COROUTINES
     template<typename D>
     struct deferrable_event_args
     {
@@ -22,9 +22,9 @@ WINRT_EXPORT namespace winrt
 
         [[nodiscard]] Windows::Foundation::IAsyncAction wait_for_deferrals()
         {
-            struct awaitable : impl::suspend_always
+            struct awaitable : std::suspend_always
             {
-                bool await_suspend(coroutine_handle handle)
+                bool await_suspend(std::coroutine_handle<> handle)
                 {
                     return m_deferrable.await_suspend(handle);
                 }
@@ -37,11 +37,9 @@ WINRT_EXPORT namespace winrt
 
     private:
 
-        using coroutine_handle = impl::coroutine_handle<>;
-
         void one_deferral_completed()
         {
-            coroutine_handle resume = nullptr;
+            std::coroutine_handle<> resume = nullptr;
             {
                 slim_lock_guard const guard(m_lock);
 
@@ -62,7 +60,7 @@ WINRT_EXPORT namespace winrt
             }
         }
 
-        bool await_suspend(coroutine_handle handle) noexcept
+        bool await_suspend(std::coroutine_handle<> handle) noexcept
         {
             slim_lock_guard const guard(m_lock);
             m_handle = handle;
@@ -71,7 +69,7 @@ WINRT_EXPORT namespace winrt
 
         slim_mutex m_lock;
         int32_t m_outstanding_deferrals = 0;
-        coroutine_handle m_handle = nullptr;
+        std::coroutine_handle<> m_handle = nullptr;
     };
-#endif
 }
+#endif

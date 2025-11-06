@@ -23,7 +23,7 @@
 #pragma warning(disable : 4268)
 #endif
 
-#if defined(__cpp_lib_coroutine) || defined(__cpp_coroutines) || defined(_RESUMABLE_FUNCTIONS_SUPPORTED)
+#if defined(__cpp_lib_coroutine)
 #define WINRT_IMPL_COROUTINES
 #endif
 
