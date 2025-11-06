@@ -60,7 +60,7 @@ private:
 
 TEST_CASE("get")
 {
-    auto acs = winrt::make_self<async_completion_source<int>>();
+    auto acs = winrt::make_self<async_completion_source<uint32_t>>();
 
     std::thread worker([acs]
     {
@@ -70,5 +70,5 @@ TEST_CASE("get")
 
     worker.detach();
 
-    REQUIRE(acs.as<IAsyncOperation<int>>().get() == 0xDEADBEEF);
+    REQUIRE(acs.as<IAsyncOperation<uint32_t>>().get() == 0xDEADBEEF);
 }
