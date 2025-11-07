@@ -10,6 +10,10 @@ WINRT_EXPORT namespace winrt
     struct take_ownership_from_abi_t {};
     inline constexpr take_ownership_from_abi_t take_ownership_from_abi{};
 
+    // Map implementations can implement TryLookup with trylookup_from_abi_t as an optimization
+    struct trylookup_from_abi_t {};
+    inline constexpr trylookup_from_abi_t trylookup_from_abi{};
+
     template <typename T>
     struct com_ptr;
 
@@ -298,4 +302,16 @@ namespace winrt::impl
             return (func(Types{}) || ...);
         }
     };
+
+    template <typename D, typename K>
+    struct has_TryLookup
+    {
+        template <typename U, typename = decltype(std::declval<U>().TryLookup(std::declval<K>(), trylookup_from_abi))> static constexpr bool get_value(int) { return true; }
+        template <typename> static constexpr bool get_value(...) { return false; }
+    public:
+        static constexpr bool value = get_value<D>(0);
+    };
+
+    template <typename D, typename K>
+    inline constexpr bool has_TryLookup_v = has_TryLookup<D, K>::value;
 }
