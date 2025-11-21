@@ -23,7 +23,7 @@ jobs:
             config: Release
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Download nuget
         run: |
@@ -102,7 +102,7 @@ jobs:
             config: Release
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Fetch cppwinrt executables
         if: matrix.arch != 'arm64'
@@ -250,7 +250,7 @@ jobs:
       CMAKE_COLOR_DIAGNOSTICS: 1
       CLICOLOR_FORCE: 1
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Install cross compiler
         run: |
@@ -283,7 +283,7 @@ jobs:
         Deployment: [Component, Standalone]
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Download nuget
         run: |
@@ -323,7 +323,7 @@ jobs:
         config: [Release]
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Fetch cppwinrt executables
         uses: actions/download-artifact@v6
@@ -368,7 +368,7 @@ jobs:
     name: Build nuget package with MSVC
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Package
         run: |
