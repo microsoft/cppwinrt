@@ -106,14 +106,14 @@ jobs:
 
       - name: Fetch cppwinrt executables
         if: matrix.arch != 'arm64'
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
 
       - name: Fetch x86 cppwinrt executables (arm64 only)
         if: matrix.arch == 'arm64'
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: msvc-build-${{ matrix.compiler}}-x86-Release-bin
           path: _build/x86/Release/
@@ -326,7 +326,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Fetch cppwinrt executables
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
