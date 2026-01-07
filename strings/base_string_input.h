@@ -18,9 +18,9 @@ WINRT_EXPORT namespace winrt::param
         {
         }
 
-        hstring(std::wstring_view const& value) noexcept
+        hstring(wchar_t const* const value, size_t size) noexcept
         {
-            create_string_reference(value.data(), value.size());
+            create_string_reference(value, size);
         }
 
         hstring(std::wstring const& value) noexcept
