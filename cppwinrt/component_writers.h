@@ -149,9 +149,9 @@ bool __stdcall %_can_unload_now() noexcept
     return true;
 }
 
-void* __stdcall %_get_activation_factory([[maybe_unused]] std::wstring_view const& name)
+void* __stdcall %_get_activation_factory([[maybe_unused]] winrt::hstring const& name)
 {
-    auto requal = [](std::wstring_view const& left, std::wstring_view const& right) noexcept
+    auto requal = [](winrt::hstring const& left, winrt::hstring const& right) noexcept
     {
         return std::equal(left.rbegin(), left.rend(), right.rbegin(), right.rend());
     };
@@ -189,7 +189,7 @@ int32_t __stdcall WINRT_CanUnloadNow() noexcept
 
 int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept try
 {
-    std::wstring_view const name{ *reinterpret_cast<winrt::hstring*>(&classId) };
+    winrt::hstring& const name{ *reinterpret_cast<winrt::hstring*>(&classId) };
     *factory = %_get_activation_factory(name);
 
     if (*factory)
