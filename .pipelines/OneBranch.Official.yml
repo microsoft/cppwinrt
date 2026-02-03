@@ -45,8 +45,6 @@ extends:
         compiled: 
           enabled: true
         tsaEnabled: true
-      prefast:
-        enabled: true
 
     stages:
     - stage: build
@@ -59,6 +57,8 @@ extends:
           BuildConfiguration: $(BuildConfiguration)
           BuildVersion: $(BuildVersion)
           OfficialBuild: true
+          ob_sdl_prefast_enabled: true
+          ob_sdl_prefast_runDuring: "Guardian" # Enabling PreFast only for build stage
 
     - stage: vpack
       dependsOn: build
