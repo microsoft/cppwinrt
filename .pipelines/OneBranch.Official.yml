@@ -48,9 +48,6 @@ extends:
 
     stages:
     - stage: build
-      pool:
-        type: windows
-
       jobs:
       - template: .pipelines/jobs/OneBranchBuild.yml@self
         parameters:
