@@ -72,4 +72,4 @@ jobs:
         displayName: 'Publish NuGet package'
         inputs:
           command: 'custom'
-          arguments: 'push $(ob_outputDirectory)\packages\Microsoft.Windows.CppWinRT.$(PackageVersion).nupkg -NonInteractive -Source https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json -ApiKey VSTS'
+          arguments: 'push $(ob_outputDirectory)\packages\Microsoft.Windows.CppWinRT.$(PackageVersion).nupkg -NonInteractive -Source https://microsoft.pkgs.visualstudio.com/_packaging/CppWinRT/nuget/v3/index.json -ApiKey VSTS -SkipDuplicate'
