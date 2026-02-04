@@ -41,8 +41,6 @@ extends:
         enabled: false
       sbom:
         enabled: true
-      prefast:
-        enabled: true
 
     stages:
     - stage: build
