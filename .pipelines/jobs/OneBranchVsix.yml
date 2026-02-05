@@ -27,6 +27,11 @@ jobs:
         VsixFilename: Microsoft.Windows.CppWinRT
   
   variables:
+    ${{ if eq(parameters.OfficialBuild, true) }}:
+      PackageVersion: ${{ parameters.BuildVersion }}
+    ${{ else }}:
+      PackageVersion: ${{ parameters.BuildVersion }}-unofficial
+
     ob_outputDirectory: $(Build.SourcesDirectory)\out
     ob_artifactSuffix: $(VsVersion)_$(Deployment)
 
@@ -91,7 +96,7 @@ jobs:
       displayName: Build VSIX
       inputs:
         solution: $(Build.SourcesDirectory)\vsix\vsix.sln
-        msbuildArgs: /t:vsix_$(VsVersion) /m /p:CppWinRTVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true,Deployment=$(Deployment),NatvisDirx86=$(Build.SourcesDirectory)\x86\$(Deployment)\,NatvisDirx64=$(Build.SourcesDirectory)\x64\$(Deployment)\,NatvisDirarm64=$(Build.SourcesDirectory)\arm64\$(Deployment)\,NupkgDir=$(Pipeline.Workspace)\nuget\packages /bl:$(ob_outputDirectory)\output.binlog
+        msbuildArgs: /t:vsix_$(VsVersion) /m /p:CppWinRTVersion=$(PackageVersion),clean_intermediate_files=true,Deployment=$(Deployment),NatvisDirx86=$(Build.SourcesDirectory)\x86\$(Deployment)\,NatvisDirx64=$(Build.SourcesDirectory)\x64\$(Deployment)\,NatvisDirarm64=$(Build.SourcesDirectory)\arm64\$(Deployment)\,NupkgDir=$(Pipeline.Workspace)\nuget\packages /bl:$(ob_outputDirectory)\output.binlog
         platform: 'Any CPU'
         configuration: ${{ parameters.BuildConfiguration }}
 
