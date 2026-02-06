@@ -2,7 +2,7 @@
 parameters:
   - name: BuildConfiguration
     type: string
-  - name: BuildVersion
+  - name: NugetPackageVersion
     type: string
   - name: OfficialBuild
     type: boolean
@@ -15,10 +15,7 @@ jobs:
     
     variables:
       ob_outputDirectory: '$(Build.SourcesDirectory)\out'
-      ${{ if eq(parameters.OfficialBuild, true) }}:
-        PackageVersion: ${{ parameters.BuildVersion }}
-      ${{ else }}:
-        PackageVersion: ${{ parameters.BuildVersion }}-unofficial
+      PackageVersion: ${{ parameters.NugetPackageVersion }}
 
       ob_sdl_prefast_enabled: true
       ob_sdl_prefast_runDuring: 'Guardian'

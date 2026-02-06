@@ -6,6 +6,8 @@ parameters: # parameters are shown up in ADO UI in a build queue time
 
 variables:
 - template: variables/version.yml
+  parameters:
+    OfficialBuild: true
 - template: variables/OneBranchVariables.yml
   parameters:
     debug: ${{ parameters.debug }}
@@ -133,7 +135,7 @@ extends:
       - template: .pipelines/jobs/OneBranchNuGet.yml@self
         parameters:
           BuildConfiguration: $(BuildConfiguration)
-          BuildVersion: $(BuildVersion)
+          NugetPackageVersion: $(NugetPackageVersion)
           OfficialBuild: true
 
     - stage: Test
@@ -151,4 +153,5 @@ extends:
         parameters:
           BuildConfiguration: $(BuildConfiguration)
           BuildVersion: $(BuildVersion)
+          NugetPackageVersion: $(NugetPackageVersion)
           OfficialBuild: true

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <Target Name="GetCppWinRTVersion" Outputs="$(CppWinRTVersion)" />
+  <Target Name="GetNugetPackageVersion" Outputs="$(NugetPackageVersion)" />
   <Target Name="PrepareBuild" BeforeTargets="PrepareForBuild">
     <Error Condition="'$(CppWinRTVersion)' == ''" Text="The project must be supplied with a CppWinRTVersion property value" />
+    <Error Condition="'$(NugetPackageVersion)' == ''" Text="The project must be supplied with a NugetPackageVersion property value" />
     <Error Condition="'$(NatvisDirx86)' == ''" Text="The project must be supplied with a NatvisDirx86 property value" />
     <Error Condition="'$(NatvisDirx64)' == ''" Text="The project must be supplied with a NatvisDirx64 property value" />
     <Error Condition="'$(NupkgDir)' == ''" Text="The project must be supplied with a NupkgDir property value" />

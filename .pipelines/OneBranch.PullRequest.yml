@@ -57,6 +57,7 @@ extends:
         parameters:
           BuildConfiguration: $(BuildConfiguration)
           BuildVersion: $(BuildVersion)
+          NugetPackageVersion: $(NugetPackageVersion)
 
     - stage: Test
       dependsOn: build
@@ -73,3 +74,4 @@ extends:
         parameters:
           BuildConfiguration: $(BuildConfiguration)
           BuildVersion: $(BuildVersion)
+          NugetPackageVersion: $(NugetPackageVersion)
