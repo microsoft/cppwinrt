@@ -56,7 +56,6 @@ extends:
       - template: .pipelines/jobs/OneBranchNuGet.yml@self
         parameters:
           BuildConfiguration: $(BuildConfiguration)
-          BuildVersion: $(BuildVersion)
           NugetPackageVersion: $(NugetPackageVersion)
 
     - stage: Test
