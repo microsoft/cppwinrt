@@ -29,7 +29,7 @@
     <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:WizardData/ns:packages/@repositoryId" Value="$(NugetRepositoryId)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
 
     <!-- Update Packages section with actual NuGet package version to restore -->
-    <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:WizardData/ns:packages/ns:package/@version" Value="$(CppWinRTVersion)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
+    <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:WizardData/ns:packages/ns:package/@version" Value="$(NugetPackageVersion)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
     
     <!-- Update the Package GUID in the Name and Description metadata -->
     <XmlPoke XmlInputPath="%(StagedTemplates.Identity)" Query="/ns:VSTemplate/ns:TemplateData/ns:Name/@Package" Value="$(PackageGuidString)" Namespaces="&lt;Namespace Prefix='ns' Uri='http://schemas.microsoft.com/developer/vstemplate/2005' /&gt;" />
