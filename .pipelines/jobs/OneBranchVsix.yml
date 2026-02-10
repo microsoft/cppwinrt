@@ -114,7 +114,7 @@ jobs:
         command: sign
         signing_profile: external_distribution
         files_to_sign: '**\*.dll'
-        search_root: '$(Agent.TempDirectory)'
+        search_root: '$(Agent.TempDirectory)\$(VsixFilename)'
     
     - task: ArchiveFiles@2
       displayName: 'Repack signed VSIX contents'
