@@ -35,7 +35,7 @@
     <Asset Type="DebuggerEngineExtension" Path="CppWinrtVisualizer.vsdconfig" />
     <Asset Type="Microsoft.VisualStudio.ItemTemplate" Path="ItemTemplates" />
     <Asset Type="Microsoft.VisualStudio.ProjectTemplate" Path="ProjectTemplates" />
-    <Asset Type="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" Source="File" Path="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetCppWinRTVersion|.nupkg" VsixSubPath="Packages" />
+    <Asset Type="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetNugetPackageVersion|.nupkg" Source="File" Path="Microsoft.Windows.CppWinRT.|%CurrentProject%;GetNugetPackageVersion|.nupkg" VsixSubPath="Packages" />
   </Assets>
   <Prerequisites>
     <Prerequisite Id="Microsoft.VisualStudio.Component.VC.CoreBuildTools" Version="[17.0,18.0)" DisplayName="CppWinRT" />
