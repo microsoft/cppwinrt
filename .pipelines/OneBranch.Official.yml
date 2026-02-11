@@ -134,6 +134,7 @@ extends:
       jobs:
       - template: .pipelines/jobs/OneBranchNuGet.yml@self
         parameters:
+          BuildConfiguration: $(BuildConfiguration)
           NugetPackageVersion: $(NugetPackageVersion)
           OfficialBuild: true
 
