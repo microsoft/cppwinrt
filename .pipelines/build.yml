@@ -457,7 +457,7 @@ jobs:
   - task: VSBuild@1
     displayName: Build Component VSIXes
     inputs:
-      solution: vsix/vsix.sln
+      solution: vsix/vsix.slnx
       msbuildArgs: /p:Deployment=Component,CppWinRTVersion=$(Build.BuildNumber),NatvisDirx86=$(Build.ArtifactStagingDirectory)\x86\Component\,NatvisDirx64=$(Build.ArtifactStagingDirectory)\x64\Component\,NatvisDirarm64=$(Build.ArtifactStagingDirectory)\arm64\Component\,NupkgDir=$(Build.ArtifactStagingDirectory) /restore
       platform: Any CPU
       configuration: Release
@@ -518,7 +518,7 @@ jobs:
   - task: VSBuild@1
     displayName: Build Standalone VSIXes
     inputs:
-      solution: vsix/vsix.sln
+      solution: vsix/vsix.slnx
       msbuildArgs: /p:Deployment=Standalone,CppWinRTVersion=$(Build.BuildNumber),NatvisDirx86=$(Build.ArtifactStagingDirectory)\x86\Standalone\,NatvisDirx64=$(Build.ArtifactStagingDirectory)\x64\Standalone\,NatvisDirarm64=$(Build.ArtifactStagingDirectory)\arm64\Standalone\,NupkgDir=$(Build.ArtifactStagingDirectory) /restore
       platform: x86
       configuration: Release

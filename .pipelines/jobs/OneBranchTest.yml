@@ -80,10 +80,10 @@ jobs:
         flattenFolders: true
 
     - task: NuGetCommand@2
-      displayName: NuGet restore cppwinrt.sln
+      displayName: NuGet restore cppwinrt.slnx
       inputs:
         command: 'restore'
-        restoreSolution: '$(Build.SourcesDirectory)\cppwinrt.sln'
+        restoreSolution: '$(Build.SourcesDirectory)\cppwinrt.slnx'
         feedsToUse: config
         nugetConfigPath: NuGet.config
 
@@ -93,12 +93,12 @@ jobs:
         targetType: inline
         script: |
           # Hack-ish: We already have a built exe, so we want to avoid rebuilding cppwinrt
-          mv cppwinrt.sln cppwinrt.sln.orig
-          Get-Content cppwinrt.sln.orig |
+          mv cppwinrt.slnx cppwinrt.slnx.orig
+          Get-Content cppwinrt.slnx.orig |
             Where-Object { -not $_.Contains("{D613FB39-5035-4043-91E2-BAB323908AF4} = {D613FB39-5035-4043-91E2-BAB323908AF4}") } |
-            Set-Content cppwinrt.sln
+            Set-Content cppwinrt.slnx
           "Modified contents"
-          Get-Content cppwinrt.sln
+          Get-Content cppwinrt.slnx
       
     - task: CmdLine@2
       displayName: Run cppwinrt to build projection
@@ -108,7 +108,7 @@ jobs:
     - task: VSBuild@1
       displayName: Build test
       inputs:
-        solution: $(Build.SourcesDirectory)\cppwinrt.sln
+        solution: $(Build.SourcesDirectory)\cppwinrt.slnx
         msbuildArgs: /t:test\$(TestProject) /m /p:CppWinRTBuildVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true /bl:$(ob_outputDirectory)\output.binlog
         platform: $(BuildPlatform)
         configuration: ${{ parameters.BuildConfiguration }}

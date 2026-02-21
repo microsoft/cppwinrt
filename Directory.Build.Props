@@ -3,7 +3,7 @@
   <!-- Set common MSBuild properties and item metadata for CppWinRT tool and tests -->
 
   <PropertyGroup>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v145</PlatformToolset>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
@@ -13,19 +13,19 @@
 
     Compile with Visual C++:
 
-        msbuild /m /p:Configuration=Debug,Platform=x64 cppwinrt.sln
+        msbuild /m /p:Configuration=Debug,Platform=x64 cppwinrt.slnx
 
     Compile with Clang:
 
-        msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1 cppwinrt.sln
+        msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1 cppwinrt.slnx
 
     Optionally add /t:<project> to only build a given a solution project:
 
-        msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1 cppwinrt.sln /t:cppwinrt
+        msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1 cppwinrt.slnx /t:cppwinrt
 
     If you have deployed the LLVM toolset elsewhere, add its path to the configuration:
 
-        msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1,LLVMToolsVersion=17.0.5,LLVMInstallDir=C:\llvm cppwinrt.sln
+        msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1,LLVMToolsVersion=17.0.5,LLVMInstallDir=C:\llvm cppwinrt.slnx
   -->
 
   <PropertyGroup Condition="'$(Clang)'=='1'">

@@ -1,0 +1,37 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path="../../nuget/Microsoft.Windows.CppWinRT.props" />
+    <File Path="../../nuget/Microsoft.Windows.CppWinRT.targets" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Build.targets" />
+  </Folder>
+  <Project Path="ConsoleApplication1/ConsoleApplication1.vcxproj" />
+  <Project Path="TestApp/TestApp.vcxproj">
+    <Deploy />
+  </Project>
+  <Project Path="TestProxyStub/TestProxyStub.vcxproj" />
+  <Project Path="TestRuntimeComponent1/TestRuntimeComponent1.vcxproj" />
+  <Project Path="TestRuntimeComponent2/TestRuntimeComponent2.vcxproj" />
+  <Project Path="TestRuntimeComponent3/TestRuntimeComponent3.vcxproj" />
+  <Project Path="TestRuntimeComponentCSharp/TestRuntimeComponentCSharp.csproj">
+    <Platform Solution="*|ARM64" Project="ARM64" />
+    <Platform Solution="*|x64" Project="x64" />
+    <Platform Solution="*|x86" Project="x86" />
+  </Project>
+  <Project Path="TestRuntimeComponentCX/TestRuntimeComponentCX.vcxproj" />
+  <Project Path="TestRuntimeComponentCXReferencingWinRTStaticLibrary/TestRuntimeComponentCXReferencingWinRTStaticLibrary.vcxproj" />
+  <Project Path="TestRuntimeComponentEmpty/TestRuntimeComponentEmpty.vcxproj" />
+  <Project Path="TestRuntimeComponentNamespaceUnderscore/TestRuntimeComponentNamespaceUnderscore.vcxproj" />
+  <Project Path="TestStaticLibrary1/TestStaticLibrary1.vcxproj" />
+  <Project Path="TestStaticLibrary2/TestStaticLibrary2.vcxproj" />
+  <Project Path="TestStaticLibrary3/TestStaticLibrary3.vcxproj" />
+  <Project Path="TestStaticLibrary4/TestStaticLibrary4.vcxproj" />
+  <Project Path="TestStaticLibrary5/TestStaticLibrary5.vcxproj" />
+  <Project Path="TestStaticLibrary6/TestStaticLibrary6.vcxproj" />
+  <Project Path="TestStaticLibrary7/TestStaticLibrary7.vcxproj" />
+</Solution>

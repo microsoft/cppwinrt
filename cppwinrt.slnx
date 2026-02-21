@@ -1,0 +1,94 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/Solution Items/">
+    <File Path="build_nuget.cmd" />
+    <File Path="build_prior_projection.cmd" />
+    <File Path="build_projection.cmd" />
+    <File Path="build_test_all.cmd" />
+    <File Path="build_vsix.cmd" />
+    <File Path="compile_tests.cmd" />
+    <File Path="prepare_versionless_diffs.cmd" />
+    <File Path="README.md" />
+    <File Path="run_tests.cmd" />
+  </Folder>
+  <Folder Name="/test/">
+    <Project Path="test/test/test.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+      <BuildDependency Project="test/test_component/test_component.vcxproj" />
+      <BuildDependency Project="test/test_component_no_pch/test_component_no_pch.vcxproj" />
+    </Project>
+    <Project Path="test/test_component/test_component.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+    </Project>
+    <Project Path="test/test_component_base/test_component_base.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+      <BuildDependency Project="test/test_component/test_component.vcxproj" />
+    </Project>
+    <Project Path="test/test_component_derived/test_component_derived.vcxproj">
+      <BuildDependency Project="test/test_component_base/test_component_base.vcxproj" />
+    </Project>
+    <Project Path="test/test_component_fast/test_component_fast.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+      <BuildDependency Project="test/test_component/test_component.vcxproj" />
+    </Project>
+    <Project Path="test/test_component_folders/test_component_folders.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+      <BuildDependency Project="test/test_component/test_component.vcxproj" />
+    </Project>
+    <Project Path="test/test_component_no_pch/test_component_no_pch.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+      <BuildDependency Project="test/test_component/test_component.vcxproj" />
+    </Project>
+    <Project Path="test/test_cpp20/test_cpp20.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+      <BuildDependency Project="test/test_component/test_component.vcxproj" />
+    </Project>
+    <Project Path="test/test_cpp20_no_sourcelocation/test_cpp20_no_sourcelocation.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+      <BuildDependency Project="test/test_component/test_component.vcxproj" />
+    </Project>
+    <Project Path="test/test_fast/test_fast.vcxproj">
+      <BuildDependency Project="test/test_component_fast/test_component_fast.vcxproj" />
+    </Project>
+    <Project Path="test/test_fast_fwd/test_fast_fwd.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+      <BuildDependency Project="test/test_component_fast/test_component_fast.vcxproj" />
+    </Project>
+    <Project Path="test/test_module_lock_custom/test_module_lock_custom.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+      <BuildDependency Project="test/test_component/test_component.vcxproj" />
+    </Project>
+    <Project Path="test/test_module_lock_none/test_module_lock_none.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+      <BuildDependency Project="test/test_component_base/test_component_base.vcxproj" />
+      <BuildDependency Project="test/test_component_derived/test_component_derived.vcxproj" />
+    </Project>
+    <Project Path="test/test_slow/test_slow.vcxproj">
+      <BuildDependency Project="test/test_component_fast/test_component_fast.vcxproj" />
+    </Project>
+  </Folder>
+  <Folder Name="/test/old_tests/">
+    <Project Path="test/old_tests/Component/Component.vcxproj">
+      <BuildDependency Project="test/old_tests/Composable/Composable.vcxproj" />
+    </Project>
+    <Project Path="test/old_tests/Composable/Composable.vcxproj">
+      <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+      <BuildDependency Project="test/test_component/test_component.vcxproj" />
+    </Project>
+    <Project Path="test/old_tests/UnitTests/Tests.vcxproj">
+      <BuildDependency Project="test/old_tests/Component/Component.vcxproj" />
+    </Project>
+  </Folder>
+  <Project Path="cppwinrt/cppwinrt.vcxproj">
+    <BuildDependency Project="prebuild/prebuild.vcxproj" />
+  </Project>
+  <Project Path="fast_fwd/fast_fwd.vcxproj" />
+  <Project Path="prebuild/prebuild.vcxproj" />
+  <Project Path="scratch/scratch.vcxproj">
+    <BuildDependency Project="cppwinrt/cppwinrt.vcxproj" />
+  </Project>
+</Solution>

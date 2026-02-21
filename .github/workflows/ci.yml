@@ -50,20 +50,20 @@ jobs:
 
       - name: Restore nuget packages
         run: |
-          cmd /c "$env:VSDevCmd" "&" nuget restore cppwinrt.sln
+          cmd /c "$env:VSDevCmd" "&" nuget restore cppwinrt.slnx
 
       - name: Build fast_fwd
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.sln /t:fast_fwd
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.slnx /t:fast_fwd
 
       - name: Build x86 prebuild tool
         if: matrix.arch == 'arm64'
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" /p:Platform=x86 cppwinrt.sln /t:cppwinrt
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" /p:Platform=x86 cppwinrt.slnx /t:cppwinrt
 
       - name: Build cppwinrt
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.sln /t:cppwinrt
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.slnx /t:cppwinrt
 
       - name: Upload built executables
         uses: actions/upload-artifact@v6
@@ -143,15 +143,15 @@ jobs:
 
       - name: Restore nuget packages
         run: |
-          cmd /c "$env:VSDevCmd" "&" nuget restore cppwinrt.sln
+          cmd /c "$env:VSDevCmd" "&" nuget restore cppwinrt.slnx
 
       - name: Remove cppwinrt dependency from all test projects
         run: |
           # HACK: We already have a built exe, so we want to avoid rebuilding cppwinrt
-          mv cppwinrt.sln cppwinrt.sln.orig
-          Get-Content cppwinrt.sln.orig |
+          mv cppwinrt.slnx cppwinrt.slnx.orig
+          Get-Content cppwinrt.slnx.orig |
             Where-Object { -not $_.Contains("{D613FB39-5035-4043-91E2-BAB323908AF4} = {D613FB39-5035-4043-91E2-BAB323908AF4}") } |
-            Set-Content cppwinrt.sln
+            Set-Content cppwinrt.slnx
 
       - name: Patch catch.hpp to make it build with ANSI colour
         run: |
@@ -181,7 +181,7 @@ jobs:
             $test_proj = "old_tests\test_old"
           }
 
-          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor /p:TestsUseAnsiColor=1 "$env:msbuild_config_props" cppwinrt.sln /t:test\$test_proj
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor /p:TestsUseAnsiColor=1 "$env:msbuild_config_props" cppwinrt.slnx /t:test\$test_proj
 
       - name: Run tests in '${{ matrix.test_exe }}' one by one
         if: matrix.compiler == 'clang-cl'
@@ -306,11 +306,11 @@ jobs:
 
       - name: Restore nuget packages
         run: |
-          cmd /c "$env:VSDevCmd" "&" nuget restore natvis\cppwinrtvisualizer.sln
+          cmd /c "$env:VSDevCmd" "&" nuget restore natvis\cppwinrtvisualizer.slnx
 
       - name: Build natvis
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" /p:Deployment=${{ matrix.Deployment }} natvis\cppwinrtvisualizer.sln
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" /p:Deployment=${{ matrix.Deployment }} natvis\cppwinrtvisualizer.slnx
 
   build-msvc-nuget-test:
     name: 'Build nuget test (${{ matrix.arch }})'
@@ -352,7 +352,7 @@ jobs:
 
       - name: Restore nuget packages
         run: |
-          cmd /c "$env:VSDevCmd" "&" nuget restore test\nuget\NugetTest.sln
+          cmd /c "$env:VSDevCmd" "&" nuget restore test\nuget\NugetTest.slnx
 
       - name: Run cppwinrt to build projection
         run: |
@@ -362,7 +362,7 @@ jobs:
       
       - name: Run nuget test
         run: |
-          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" test\nuget\NugetTest.sln
+          cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" test\nuget\NugetTest.slnx
 
   build-nuget:
     name: Build nuget package with MSVC
@@ -375,7 +375,7 @@ jobs:
           $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
           if (!$VSDevCmd) { exit 1 }
           echo "Using VSDevCmd: ${VSDevCmd}"
-          cmd /c "${VSDevCmd}" "&" nuget.exe restore cppwinrt.sln
+          cmd /c "${VSDevCmd}" "&" nuget.exe restore cppwinrt.slnx
           cmd /c "${VSDevCmd}" "&" build_nuget.cmd
           if (!(Test-Path "*.nupkg")) {
             echo "::error::Output nuget package not found!"

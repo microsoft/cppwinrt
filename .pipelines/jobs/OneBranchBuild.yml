@@ -49,17 +49,17 @@ jobs:
         performMultiLevelLookup: true
 
     - task: NuGetCommand@2
-      displayName: NuGet restore cppwinrt.sln
+      displayName: NuGet restore cppwinrt.slnx
       inputs:
         command: 'restore'
-        restoreSolution: '$(Build.SourcesDirectory)\cppwinrt.sln'
+        restoreSolution: '$(Build.SourcesDirectory)\cppwinrt.slnx'
         feedsToUse: config
         nugetConfigPath: NuGet.config
 
     - task: VSBuild@1
       displayName: Build fast_fwd
       inputs:
-        solution: $(Build.SourcesDirectory)\cppwinrt.sln
+        solution: $(Build.SourcesDirectory)\cppwinrt.slnx
         msbuildArgs: /t:fast_fwd /m /p:CppWinRTBuildVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true
         platform: $(BuildPlatform)
         configuration: ${{ parameters.BuildConfiguration }}
@@ -72,10 +72,10 @@ jobs:
         TargetFolder: $(StagingFolder)
 
     - task: NuGetCommand@2
-      displayName: NuGet restore cppwinrtvisualizer.sln
+      displayName: NuGet restore cppwinrtvisualizer.slnx
       inputs:
         command: 'restore'
-        restoreSolution: '$(Build.SourcesDirectory)\natvis\cppwinrtvisualizer.sln'
+        restoreSolution: '$(Build.SourcesDirectory)\natvis\cppwinrtvisualizer.slnx'
         feedsToUse: config
         nugetConfigPath: NuGet.config
         
@@ -83,7 +83,7 @@ jobs:
       displayName: Build Component visualizer
       condition: or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64'))
       inputs:
-        solution: $(Build.SourcesDirectory)\natvis\cppwinrtvisualizer.sln
+        solution: $(Build.SourcesDirectory)\natvis\cppwinrtvisualizer.slnx
         msbuildArgs: /m /p:Deployment=Component,CppWinRTBuildVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true
         platform: $(BuildPlatform)
         configuration: ${{ parameters.BuildConfiguration }}
@@ -92,7 +92,7 @@ jobs:
       displayName: Build Standalone visualizer
       condition: or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'), eq(variables['BuildPlatform'], 'arm64'))
       inputs:
-        solution: $(Build.SourcesDirectory)\natvis\cppwinrtvisualizer.sln
+        solution: $(Build.SourcesDirectory)\natvis\cppwinrtvisualizer.slnx
         msbuildArgs: /m /p:Deployment=Standalone,CppWinRTBuildVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true
         platform: $(BuildPlatform)
         configuration: ${{ parameters.BuildConfiguration }}
@@ -123,7 +123,7 @@ jobs:
       displayName: Build cppwinrt
       condition: or(eq(variables['BuildPlatform'], 'x86'), eq(variables['BuildPlatform'], 'x64'))
       inputs:
-        solution: $(Build.SourcesDirectory)\cppwinrt.sln
+        solution: $(Build.SourcesDirectory)\cppwinrt.slnx
         msbuildArgs: /t:cppwinrt /m /p:CppWinRTBuildVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true
         platform: $(BuildPlatform)
         configuration: ${{ parameters.BuildConfiguration }}

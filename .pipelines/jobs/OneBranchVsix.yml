@@ -61,7 +61,7 @@ jobs:
       displayName: NuGet restore
       inputs:
         command: 'restore'
-        restoreSolution: '$(Build.SourcesDirectory)\vsix\vsix.sln'
+        restoreSolution: '$(Build.SourcesDirectory)\vsix\vsix.slnx'
         feedsToUse: config
         nugetConfigPath: NuGet.config
 
@@ -92,7 +92,7 @@ jobs:
     - task: VSBuild@1
       displayName: Build VSIX
       inputs:
-        solution: $(Build.SourcesDirectory)\vsix\vsix.sln
+        solution: $(Build.SourcesDirectory)\vsix\vsix.slnx
         msbuildArgs: /t:vsix_$(VsVersion) /m /p:CppWinRTVersion=${{ parameters.BuildVersion }},NugetPackageVersion=${{ parameters.NugetPackageVersion }},clean_intermediate_files=true,Deployment=$(Deployment),NatvisDirx86=$(Build.SourcesDirectory)\x86\$(Deployment)\,NatvisDirx64=$(Build.SourcesDirectory)\x64\$(Deployment)\,NatvisDirarm64=$(Build.SourcesDirectory)\arm64\$(Deployment)\,NupkgDir=$(Pipeline.Workspace)\nuget\packages /bl:$(ob_outputDirectory)\output.binlog
         platform: 'Any CPU'
         configuration: ${{ parameters.BuildConfiguration }}

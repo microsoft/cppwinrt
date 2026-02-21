@@ -1,0 +1,8 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="Dev16/vsix.Dev16.csproj" />
+  <Project Path="Dev17/vsix.Dev17.csproj" />
+</Solution>

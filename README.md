@@ -16,12 +16,12 @@ Don't build C++/WinRT yourself - just download the latest version here: https://
 If you really want to build it yourself, the simplest way to do so is to run the `build_test_all.cmd` script in the root directory. Developers needing to work on the C++/WinRT compiler itself should go through the following steps to arrive at an efficient inner loop:
 
 * Open a dev command prompt pointing at the root of the repo.
-* Open the `cppwinrt.sln` solution.
+* Open the `cppwinrt.slnx` solution.
 * Choose a configuration (x64, x86, Release, Debug) and build projects as needed.
 
 If you are working on an ARM64 specific issue from an x64 or x86 host, you will need to instead:
 
-* Open the `cppwinrt.sln` solution
+* Open the `cppwinrt.slnx` solution
 * Build the x86 version of the "cppwinrt" project first
 * Switch to your preferred configuration and build the test binaries and run them in your test environment
 
