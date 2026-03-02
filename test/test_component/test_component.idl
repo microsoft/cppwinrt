@@ -402,4 +402,43 @@ namespace test_component
         [deprecated("OldStaticMethod is deprecated for testing.", deprecate, 1)]
         static void OldStaticMethod();
     }
+
+    [deprecated("RemovedEnum has been removed.", remove, 2)]
+    enum RemovedEnum
+    {
+        Alpha = 0,
+        Beta = 1
+    };
+
+    enum PartiallyRemovedEnum
+    {
+        Visible = 0,
+        [deprecated("Hidden value has been removed.", remove, 2)]
+        Hidden = 1,
+        AlsoVisible = 2
+    };
+
+    delegate void RemovedDelegate();
+
+    runtimeclass RemovedClass
+    {
+        RemovedClass();
+        void ActiveMethod();
+        [deprecated("RemovedMethod has been removed.", remove, 2)]
+        void RemovedMethod();
+        static void ActiveStaticMethod();
+        [deprecated("RemovedStaticMethod has been removed.", remove, 2)]
+        static void RemovedStaticMethod();
+    }
+
+    // Interface with mix of normal, deprecated, and removed methods for vtable testing
+    interface IVtableTest
+    {
+        void NormalMethod();
+        [deprecated("DeprecatedMethod is deprecated.", deprecate, 1)]
+        void DeprecatedMethod();
+        [deprecated("RemovedMethod is gone.", remove, 2)]
+        void RemovedMethod();
+        void AnotherNormalMethod();
+    }
 }
