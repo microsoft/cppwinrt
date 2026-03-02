@@ -224,6 +224,7 @@
     <ClCompile Include="abi_guard.cpp" />
     <ClCompile Include="agile_ref.cpp" />
     <ClCompile Include="agility.cpp" />
+    <ClCompile Include="deprecated.cpp" />
     <ClCompile Include="async_auto_cancel.cpp" />
     <ClCompile Include="async_cancel_callback.cpp" />
     <ClCompile Include="async_check_cancel.cpp" />

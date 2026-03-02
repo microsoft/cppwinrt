@@ -242,6 +242,19 @@ namespace cppwinrt
         return is_remove_overload(method) || has_attribute(method, "Windows.Foundation.Metadata", "NoExceptionAttribute");
     }
 
+    template <typename T>
+    bool is_deprecated(T const& row)
+    {
+        return has_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute");
+    }
+
+    template <typename T>
+    auto get_deprecated_message(T const& row)
+    {
+        auto attr = get_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute");
+        return get_attribute_value<std::string_view>(attr, 0);
+    }
+
     static bool has_fastabi(TypeDef const& type)
     {
         return settings.fastabi&& has_attribute(type, "Windows.Foundation.Metadata", "FastAbiAttribute");

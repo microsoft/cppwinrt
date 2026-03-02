@@ -381,4 +381,25 @@ namespace test_component
         [overridable] interface test_component.IOverloadClassOverrides;
         [overridable] interface test_component.IOverloadClassOverrides2;
     }
+
+    [deprecated("DeprecatedEnum is deprecated for testing.", deprecate, 1)]
+    enum DeprecatedEnum
+    {
+        First = 0,
+        Second = 1,
+        Third = 2
+    };
+
+    delegate void DeprecatedDelegate();
+
+    runtimeclass DeprecatedClass
+    {
+        DeprecatedClass();
+        void Method();
+        [deprecated("OldMethod is deprecated for testing.", deprecate, 1)]
+        void OldMethod();
+        static void StaticMethod();
+        [deprecated("OldStaticMethod is deprecated for testing.", deprecate, 1)]
+        static void OldStaticMethod();
+    }
 }

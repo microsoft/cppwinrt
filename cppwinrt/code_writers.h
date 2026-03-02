@@ -195,26 +195,82 @@ namespace cppwinrt
         return { w, write_close_namespace };
     }
 
-    static void write_enum_field(writer& w, Field const& field)
+    template <typename T>
+    static void write_deprecated_impl(writer& w, T const& row)
     {
-        auto format = R"(        % = %,
-)";
+        if (auto attr = get_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute"))
+        {
+            auto message = get_attribute_value<std::string_view>(attr, 0);
+            w.write("[[deprecated(\"%\")]] ", message);
+        }
+    }
 
+    static void write_deprecated_method(writer& w, MethodDef const& method)
+    {
+        write_deprecated_impl(w, method);
+    }
+
+    static void write_deprecated_field(writer& w, Field const& field)
+    {
+        write_deprecated_impl(w, field);
+    }
+
+    static void write_deprecated_redeclaration(writer& w, TypeDef const& type)
+    {
+        if (auto attr = get_attribute(type, "Windows.Foundation.Metadata", "DeprecatedAttribute"))
+        {
+            auto message = get_attribute_value<std::string_view>(attr, 0);
+            w.write("    struct [[deprecated(\"%\")]] %;\n", message, type.TypeName());
+        }
+    }
+
+    static void write_enum_field(writer& w, Field const& field, bool parent_deprecated, std::string_view parent_deprecated_message)
+    {
         if (auto constant = field.Constant())
         {
-            w.write(format, field.Name(), *constant);
+            if (is_deprecated(field))
+            {
+                w.write("        % % = %,\n", field.Name(), bind<write_deprecated_field>(field), *constant);
+            }
+            else if (parent_deprecated)
+            {
+                w.write("        % [[deprecated(\"%\")]] = %,\n", field.Name(), parent_deprecated_message, *constant);
+            }
+            else
+            {
+                auto format = R"(        % = %,
+)";
+                w.write(format, field.Name(), *constant);
+            }
         }
     }
 
     static void write_enum(writer& w, TypeDef const& type)
     {
+        bool type_deprecated = is_deprecated(type);
+        std::string_view deprecated_message;
+        if (type_deprecated)
+        {
+            deprecated_message = get_deprecated_message(type);
+        }
+
         auto format = R"(    enum class % : %
     {
 %    };
 )";
 
         auto fields = type.FieldList();
-        w.write(format, type.TypeName(), fields.first.Signature().Type(), bind_each<write_enum_field>(fields));
+
+        w.write(format,
+            type.TypeName(),
+            fields.first.Signature().Type(),
+            [&](writer& w)
+            {
+                for (auto&& field : fields)
+                {
+                    write_enum_field(w, field, type_deprecated, deprecated_message);
+                }
+            });
     }
 
     static void write_enum_operators(writer& w, TypeDef const& type)
@@ -990,7 +1046,8 @@ namespace cppwinrt
         auto method_name = get_name(method);
         auto type = method.Parent();
 
-        w.write("        %auto %(%) const%;\n",
+        w.write("        %%auto %(%) const%;\n",
+            bind<write_deprecated_method>(method),
             is_get_overload(method) ? "[[nodiscard]] " : "",
             method_name,
             bind<write_consume_params>(signature),
@@ -999,7 +1056,7 @@ namespace cppwinrt
         if (is_add_overload(method))
         {
             auto format = R"(        using %_revoker = impl::event_revoker<%, &impl::abi_t<%>::remove_%>;
-        [[nodiscard]] auto %(auto_revoke_t, %) const;
+        %[[nodiscard]] auto %(auto_revoke_t, %) const;
 )";
 
             w.write(format,
@@ -1007,6 +1064,7 @@ namespace cppwinrt
                 type,
                 type,
                 method_name,
+                bind<write_deprecated_method>(method),
                 method_name,
                 bind<write_consume_params>(signature));
         }
@@ -3103,7 +3161,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                     {
                         method_signature signature{ method };
 
-                        w.write("        %%(%);\n",
+                        w.write("        %%%(%);\n",
+                            bind<write_deprecated_method>(method),
                             signature.params().size() == 1 ? "explicit " : "",
                             type_name,
                             bind<write_consume_params>(signature));
@@ -3118,7 +3177,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                     auto& params = signature.params();
                     params.resize(params.size() - 2);
 
-                    w.write("        %%(%);\n",
+                    w.write("        %%%(%);\n",
+                        bind<write_deprecated_method>(method),
                         signature.params().size() == 1 ? "explicit " : "",
                         type_name,
                         bind<write_consume_params>(signature));
@@ -3195,7 +3255,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
             if (is_opt_type)
             {
-                w.write("        %static % %(%);\n",
+                w.write("        %%static % %(%);\n",
+                    bind<write_deprecated_method>(method),
                     is_get_overload(method) ? "[[nodiscard]] " : "",
                     signature.return_signature(),
                     method_name,
@@ -3203,7 +3264,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             }
             else
             {
-                w.write("        %static auto %(%);\n",
+                w.write("        %%static auto %(%);\n",
+                    bind<write_deprecated_method>(method),
                     is_get_overload(method) ? "[[nodiscard]] " : "",
                     method_name,
                     bind<write_consume_params>(signature));
@@ -3223,18 +3285,20 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
                 if (is_opt_type)
                 {
-                    auto format = R"(        [[nodiscard]] static %_revoker %(auto_revoke_t, %);
+                    auto format = R"(        %[[nodiscard]] static %_revoker %(auto_revoke_t, %);
 )";
                     w.write(format,
+                        bind<write_deprecated_method>(method),
                         method_name,
                         method_name,
                         bind<write_consume_params>(signature));
                 }
                 else
                 {
-                    auto format = R"(        [[nodiscard]] static auto %(auto_revoke_t, %);
+                    auto format = R"(        %[[nodiscard]] static auto %(auto_revoke_t, %);
 )";
                     w.write(format,
+                        bind<write_deprecated_method>(method),
                         method_name,
                         bind<write_consume_params>(signature));
                 }
