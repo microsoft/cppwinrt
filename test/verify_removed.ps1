@@ -104,6 +104,162 @@ if ($consumeSection) {
     }
 }
 
+Write-Host "`n=== IRemovedClass: property-level removal ===" -ForegroundColor Cyan
+
+# ABI vtable must preserve ALL property accessors (normal + removed)
+Assert-Contains $h0 "virtual int32_t __stdcall get_NormalProp(void**) noexcept = 0;" `
+    "IRemovedClass ABI vtable has get_NormalProp (preserved)"
+Assert-Contains $h0 "virtual int32_t __stdcall get_RemovedProp(void**) noexcept = 0;" `
+    "IRemovedClass ABI vtable has get_RemovedProp (preserved)"
+
+# Consume struct: normal prop present, removed prop hidden
+$consumeSection = (Get-Content $h0 -Raw) -match 'struct consume_test_component_IRemovedClass\s*\{([^}]+)\}'
+if ($consumeSection) {
+    $body = $Matches[1]
+    if ($body -match "NormalProp") {
+        Write-Host "  PASS: IRemovedClass consume has NormalProp" -ForegroundColor Green
+        $script:passed++
+    } else {
+        Write-Host "  FAIL: IRemovedClass consume missing NormalProp" -ForegroundColor Red
+        $script:failed++
+    }
+    if ($body -notmatch "RemovedProp") {
+        Write-Host "  PASS: IRemovedClass consume does NOT have RemovedProp" -ForegroundColor Green
+        $script:passed++
+    } else {
+        Write-Host "  FAIL: IRemovedClass consume still has RemovedProp" -ForegroundColor Red
+        $script:failed++
+    }
+}
+
+Write-Host "`n=== IRemovedClass: read-write property removal ===" -ForegroundColor Cyan
+
+# ABI: both writable props preserved
+Assert-Contains $h0 "virtual int32_t __stdcall get_WritableRemovedProp(void**) noexcept = 0;" `
+    "IRemovedClass ABI vtable has get_WritableRemovedProp (preserved)"
+Assert-Contains $h0 "virtual int32_t __stdcall put_WritableRemovedProp(void*) noexcept = 0;" `
+    "IRemovedClass ABI vtable has put_WritableRemovedProp (preserved)"
+
+# Consume struct: normal writable prop present, removed writable prop hidden
+$consumeSection = (Get-Content $h0 -Raw) -match 'struct consume_test_component_IRemovedClass\s*\{([^}]+)\}'
+if ($consumeSection) {
+    $body = $Matches[1]
+    if ($body -match "WritableProp") {
+        Write-Host "  PASS: IRemovedClass consume has WritableProp" -ForegroundColor Green
+        $script:passed++
+    } else {
+        Write-Host "  FAIL: IRemovedClass consume missing WritableProp" -ForegroundColor Red
+        $script:failed++
+    }
+    if ($body -notmatch "WritableRemovedProp") {
+        Write-Host "  PASS: IRemovedClass consume does NOT have WritableRemovedProp" -ForegroundColor Green
+        $script:passed++
+    } else {
+        Write-Host "  FAIL: IRemovedClass consume still has WritableRemovedProp" -ForegroundColor Red
+        $script:failed++
+    }
+}
+
+Write-Host "`n=== IRemovedClass: event-level removal ===" -ForegroundColor Cyan
+
+# ABI: both events preserved
+Assert-Contains $h0 "virtual int32_t __stdcall add_RemovedEvent(void*, winrt::event_token*) noexcept = 0;" `
+    "IRemovedClass ABI vtable has add_RemovedEvent (preserved)"
+Assert-Contains $h0 "virtual int32_t __stdcall remove_RemovedEvent(winrt::event_token) noexcept = 0;" `
+    "IRemovedClass ABI vtable has remove_RemovedEvent (preserved)"
+
+# Consume struct: normal event present, removed event hidden
+$consumeSection = (Get-Content $h0 -Raw) -match 'struct consume_test_component_IRemovedClass\s*\{([^}]+)\}'
+if ($consumeSection) {
+    $body = $Matches[1]
+    if ($body -match "NormalEvent") {
+        Write-Host "  PASS: IRemovedClass consume has NormalEvent" -ForegroundColor Green
+        $script:passed++
+    } else {
+        Write-Host "  FAIL: IRemovedClass consume missing NormalEvent" -ForegroundColor Red
+        $script:failed++
+    }
+    if ($body -notmatch "RemovedEvent") {
+        Write-Host "  PASS: IRemovedClass consume does NOT have RemovedEvent" -ForegroundColor Green
+        $script:passed++
+    } else {
+        Write-Host "  FAIL: IRemovedClass consume still has RemovedEvent" -ForegroundColor Red
+        $script:failed++
+    }
+}
+
+Write-Host "`n=== IRemovedClassStatics: static property removal ===" -ForegroundColor Cyan
+
+# ABI: both static props preserved
+Assert-Contains $h0 "virtual int32_t __stdcall get_StaticRemovedProp(void**) noexcept = 0;" `
+    "IRemovedClassStatics ABI vtable has get_StaticRemovedProp (preserved)"
+
+# Consume struct
+$consumeSection = (Get-Content $h0 -Raw) -match 'struct consume_test_component_IRemovedClassStatics\s*\{([^}]+)\}'
+if ($consumeSection) {
+    $body = $Matches[1]
+    if ($body -match "StaticProp") {
+        Write-Host "  PASS: IRemovedClassStatics consume has StaticProp" -ForegroundColor Green
+        $script:passed++
+    } else {
+        Write-Host "  FAIL: IRemovedClassStatics consume missing StaticProp" -ForegroundColor Red
+        $script:failed++
+    }
+    if ($body -notmatch "StaticRemovedProp") {
+        Write-Host "  PASS: IRemovedClassStatics consume does NOT have StaticRemovedProp" -ForegroundColor Green
+        $script:passed++
+    } else {
+        Write-Host "  FAIL: IRemovedClassStatics consume still has StaticRemovedProp" -ForegroundColor Red
+        $script:failed++
+    }
+}
+
+Write-Host "`n=== IRemovedClassFactory: constructor removal ===" -ForegroundColor Cyan
+
+# ABI: removed constructor factory method preserved
+Assert-Contains $h0 "virtual int32_t __stdcall CreateInstance(void*, void**) noexcept = 0;" `
+    "IRemovedClassFactory ABI vtable has CreateInstance (preserved)"
+
+# Consume struct should be empty (removed constructor hidden)
+$consumeSection = (Get-Content $h0 -Raw) -match 'struct consume_test_component_IRemovedClassFactory\s*\{([^}]+)\}'
+if ($consumeSection) {
+    $body = $Matches[1].Trim()
+    if ($body -eq "") {
+        Write-Host "  PASS: IRemovedClassFactory consume is empty (removed constructor hidden)" -ForegroundColor Green
+        $script:passed++
+    } else {
+        Write-Host "  FAIL: IRemovedClassFactory consume is not empty: $body" -ForegroundColor Red
+        $script:failed++
+    }
+} else {
+    Write-Host "  PASS: IRemovedClassFactory consume section not found or empty" -ForegroundColor Green
+    $script:passed++
+}
+
+Write-Host "`n=== IDeprecatedClass: deprecated property annotations ===" -ForegroundColor Cyan
+
+Assert-Contains $h0 '[[deprecated("DeprecatedProp is deprecated.")]] [[nodiscard]] auto DeprecatedProp() const;' `
+    "DeprecatedProp has [[deprecated]] annotation"
+Assert-Contains $h0 '[[deprecated("WritableDeprecatedProp is deprecated.")]] [[nodiscard]] auto WritableDeprecatedProp() const;' `
+    "WritableDeprecatedProp getter has [[deprecated]] annotation"
+Assert-Contains $h0 '[[deprecated("WritableDeprecatedProp is deprecated.")]] auto WritableDeprecatedProp(param::hstring const& value) const;' `
+    "WritableDeprecatedProp setter has [[deprecated]] annotation"
+
+Write-Host "`n=== IDeprecatedClass: deprecated event annotations ===" -ForegroundColor Cyan
+
+Assert-Contains $h0 '[[deprecated("DeprecatedEvent is deprecated.")]] auto DeprecatedEvent(winrt::Windows::Foundation::EventHandler<winrt::Windows::Foundation::IInspectable> const& handler) const;' `
+    "DeprecatedEvent add has [[deprecated]] annotation"
+
+Write-Host "`n=== IDeprecatedClassStatics: deprecated static property annotations ===" -ForegroundColor Cyan
+
+Assert-Contains $h0 '[[deprecated("StaticDeprecatedProp is deprecated.")]] [[nodiscard]] auto StaticDeprecatedProp() const;' `
+    "StaticDeprecatedProp has [[deprecated]] annotation"
+
+Write-Host "`n=== IDeprecatedClassFactory: deprecated constructor annotations ===" -ForegroundColor Cyan
+
+Assert-Contains $h0 '[[deprecated("Use default constructor instead.")]] auto CreateInstance(param::hstring const& name) const;' `
+    "Deprecated constructor factory has [[deprecated]] annotation"
+
 Write-Host "`n=== PartiallyRemovedEnum: field-level removal ===" -ForegroundColor Cyan
 
 # Enum definitions are in the .0.h file

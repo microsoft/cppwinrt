@@ -401,6 +401,30 @@ namespace test_component
         static void StaticMethod();
         [deprecated("OldStaticMethod is deprecated for testing.", deprecate, 1)]
         static void OldStaticMethod();
+
+        // Properties: normal and deprecated
+        String NormalProp{ get; };
+        [deprecated("DeprecatedProp is deprecated.", deprecate, 1)]
+        String DeprecatedProp{ get; };
+
+        // Read-write properties: normal and deprecated
+        String WritableProp;
+        [deprecated("WritableDeprecatedProp is deprecated.", deprecate, 1)]
+        String WritableDeprecatedProp;
+
+        // Events: normal and deprecated
+        event Windows.Foundation.EventHandler<Object> NormalEvent;
+        [deprecated("DeprecatedEvent is deprecated.", deprecate, 1)]
+        event Windows.Foundation.EventHandler<Object> DeprecatedEvent;
+
+        // Static properties: normal and deprecated
+        static String StaticProp{ get; };
+        [deprecated("StaticDeprecatedProp is deprecated.", deprecate, 1)]
+        static String StaticDeprecatedProp{ get; };
+
+        // Constructor overload: deprecated
+        [deprecated("Use default constructor instead.", deprecate, 1)]
+        DeprecatedClass(String name);
     }
 
     [deprecated("RemovedEnum has been removed.", remove, 2)]
@@ -429,6 +453,30 @@ namespace test_component
         static void ActiveStaticMethod();
         [deprecated("RemovedStaticMethod has been removed.", remove, 2)]
         static void RemovedStaticMethod();
+
+        // Properties: normal and removed
+        String NormalProp{ get; };
+        [deprecated("RemovedProp has been removed.", remove, 2)]
+        String RemovedProp{ get; };
+
+        // Read-write properties: normal and removed
+        String WritableProp;
+        [deprecated("WritableRemovedProp has been removed.", remove, 2)]
+        String WritableRemovedProp;
+
+        // Events: normal and removed
+        event Windows.Foundation.EventHandler<Object> NormalEvent;
+        [deprecated("RemovedEvent has been removed.", remove, 2)]
+        event Windows.Foundation.EventHandler<Object> RemovedEvent;
+
+        // Static properties: normal and removed
+        static String StaticProp{ get; };
+        [deprecated("StaticRemovedProp has been removed.", remove, 2)]
+        static String StaticRemovedProp{ get; };
+
+        // Constructor overload: removed
+        [deprecated("Removed constructor.", remove, 2)]
+        RemovedClass(String name);
     }
 
     // Interface with mix of normal, deprecated, and removed methods for vtable testing
