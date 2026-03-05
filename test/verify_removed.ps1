@@ -4,9 +4,11 @@
 # 2. User-facing consume structs exclude removed methods
 # 3. Deprecated methods remain visible with [[deprecated]]
 # 4. Normal methods are present in both ABI and consume
+# 5. Component generation (-component) skips fully removed classes
 
 param(
-    [string]$GeneratedDir = "test\test_component\Generated Files\winrt"
+    [string]$GeneratedDir = "test\test_component\Generated Files\winrt",
+    [string]$ComponentDir = "test\test_component\Generated Files"
 )
 
 $ErrorActionPreference = "Stop"
@@ -271,6 +273,54 @@ Write-Host "`n=== RemovedEnum: fully removed enum ===" -ForegroundColor Cyan
 
 # RemovedEnum should NOT have its enum class definition (entire type removed)
 Assert-NotContains $h0 "enum class RemovedEnum" "RemovedEnum type definition is excluded"
+
+Write-Host "`n=== FullyRemovedClass: component generation exclusion ===" -ForegroundColor Cyan
+
+# Fully removed class should not have a usable class definition in the main header
+$mainH = Join-Path $GeneratedDir "test_component.h"
+Assert-NotContains $mainH "struct FullyRemovedClass :" `
+    "FullyRemovedClass has no user-visible class definition"
+
+# Component generation checks: module.g.cpp should NOT reference fully removed classes
+$moduleGCpp = Join-Path $ComponentDir "module.g.cpp"
+if (Test-Path $moduleGCpp) {
+    Assert-NotContains $moduleGCpp "FullyRemovedClass" `
+        "module.g.cpp does NOT reference FullyRemovedClass"
+
+    # Verify non-removed classes ARE still present
+    Assert-Contains $moduleGCpp "RemovedClass" `
+        "module.g.cpp still references RemovedClass (has removed members, but class itself is not removed)"
+} else {
+    Write-Host "  SKIP: module.g.cpp not found (component mode not run)" -ForegroundColor Yellow
+}
+
+# Component stubs should NOT be generated for fully removed classes
+$removedStubH = Join-Path $ComponentDir "FullyRemovedClass.g.h"
+$removedStubCpp = Join-Path $ComponentDir "FullyRemovedClass.g.cpp"
+if (!(Test-Path $removedStubH)) {
+    Write-Host "  PASS: FullyRemovedClass.g.h was NOT generated" -ForegroundColor Green
+    $script:passed++
+} else {
+    Write-Host "  FAIL: FullyRemovedClass.g.h should NOT be generated for a fully removed class" -ForegroundColor Red
+    $script:failed++
+}
+if (!(Test-Path $removedStubCpp)) {
+    Write-Host "  PASS: FullyRemovedClass.g.cpp was NOT generated" -ForegroundColor Green
+    $script:passed++
+} else {
+    Write-Host "  FAIL: FullyRemovedClass.g.cpp should NOT be generated for a fully removed class" -ForegroundColor Red
+    $script:failed++
+}
+
+# Non-removed classes with removed members should STILL get stubs
+$removedClassStub = Join-Path $ComponentDir "RemovedClass.g.h"
+if (Test-Path $removedClassStub) {
+    Write-Host "  PASS: RemovedClass.g.h IS generated (class not removed, only some members)" -ForegroundColor Green
+    $script:passed++
+} else {
+    Write-Host "  FAIL: RemovedClass.g.h should be generated (class itself is not removed)" -ForegroundColor Red
+    $script:failed++
+}
 
 Write-Host "`n=== Summary ===" -ForegroundColor Cyan
 Write-Host "Passed: $($script:passed)" -ForegroundColor Green

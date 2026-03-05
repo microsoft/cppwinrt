@@ -394,6 +394,10 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
                     for (auto&& type : classes)
                     {
+                        if (is_removed(type))
+                        {
+                            continue;
+                        }
                         write_component_g_h(type);
                         write_component_g_cpp(type);
                         write_component_h(type);

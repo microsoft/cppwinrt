@@ -479,6 +479,15 @@ namespace test_component
         RemovedClass(String name);
     }
 
+    // Entirely removed class — component stubs and module.g.cpp should NOT reference this
+    [deprecated("FullyRemovedClass has been removed.", remove, 2)]
+    [default_interface]
+    runtimeclass FullyRemovedClass
+    {
+        FullyRemovedClass();
+        void DoSomething();
+    }
+
     // Interface with mix of normal, deprecated, and removed methods for vtable testing
     interface IVtableTest
     {

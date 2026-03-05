@@ -71,7 +71,7 @@ namespace cppwinrt
 
     static void write_component_include(writer& w, TypeDef const& type)
     {
-        if (!has_factory_members(w, type) || is_always_disabled(type))
+        if (!has_factory_members(w, type) || is_always_disabled(type) || is_removed(type))
         {
             return;
         }
@@ -94,7 +94,7 @@ namespace cppwinrt
 
     static void write_component_activation(writer& w, TypeDef const& type)
     {
-        if (!has_factory_members(w, type) || is_always_disabled(type))
+        if (!has_factory_members(w, type) || is_always_disabled(type) || is_removed(type))
         {
             return;
         }
