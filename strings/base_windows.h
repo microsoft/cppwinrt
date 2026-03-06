@@ -451,3 +451,60 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
         IInspectable(void* ptr, take_ownership_from_abi_t) noexcept : IUnknown(ptr, take_ownership_from_abi) {}
     };
 }
+
+WINRT_EXPORT namespace winrt::impl
+{
+    template <typename Base, typename Derive, typename MemberPointer, typename ...Args>
+    void consume_noexcept_remove_overload(Derive const* d, MemberPointer mptr, Args&&... args) noexcept
+    {
+        if constexpr (!std::is_same_v<Derive, Base>)
+        {
+            winrt::hresult _winrt_cast_result_code;
+            auto const _winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, _winrt_cast_result_code);
+            check_hresult(_winrt_cast_result_code);
+            auto const _winrt_abi_type = *(abi_t<Base>**)&_winrt_casted_result;
+            (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
+        }
+        else
+        {
+            auto const _winrt_abi_type = *(abi_t<Base>**)d;
+            (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
+        }
+    }
+
+    template <typename Base, typename Derive, typename MemberPointer, typename ...Args>
+    void consume_noexcept(Derive const* d, MemberPointer mptr, Args&&... args) noexcept
+    {
+        if constexpr (!std::is_same_v<Derive, Base>)
+        {
+            winrt::hresult _winrt_cast_result_code;
+            auto const _winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, _winrt_cast_result_code);
+            check_hresult(_winrt_cast_result_code);
+            auto const _winrt_abi_type = *(abi_t<Base>**)&_winrt_casted_result;
+            WINRT_VERIFY_(0, (_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+        }
+        else
+        {
+            auto const _winrt_abi_type = *(abi_t<Base>**)d;
+            WINRT_VERIFY_(0, (_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+        }
+    }
+
+    template <typename Base, typename Derive, typename MemberPointer, typename ...Args>
+    void consume_general(Derive const* d, MemberPointer mptr, Args&&... args)
+    {
+        if constexpr (!std::is_same_v<Derive, Base>)
+        {
+            winrt::hresult _winrt_cast_result_code;
+            auto const _winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, _winrt_cast_result_code);
+            check_hresult(_winrt_cast_result_code);
+            auto const _winrt_abi_type = *(abi_t<Base>**)&_winrt_casted_result;
+            check_hresult((_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+        }
+        else
+        {
+            auto const _winrt_abi_type = *(abi_t<Base>**)d;
+            check_hresult((_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+        }
+    }
+}
