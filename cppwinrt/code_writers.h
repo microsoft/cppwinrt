@@ -619,9 +619,14 @@ namespace cppwinrt
         }
     }
 
-    static void write_abi_args(writer& w, method_signature const& method_signature)
+    static void write_abi_args(writer& w, method_signature const& method_signature, bool start_comma)
     {
         separator s{ w };
+
+        if (start_comma)
+        {
+            s();
+        }
 
         for (auto&& [param, param_signature] : method_signature.params())
         {
@@ -1135,19 +1140,7 @@ namespace cppwinrt
                 // immediately while preserving the error code and local variables.
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        if constexpr (!std::is_same_v<D, %>)
-        {
-            winrt::hresult _winrt_cast_result_code;
-            auto const _winrt_casted_result = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this), _winrt_cast_result_code);
-            check_hresult(_winrt_cast_result_code);
-            auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
-            _winrt_abi_type->%(%);
-        }
-        else
-        {
-            auto const _winrt_abi_type = *(abi_t<%>**)this;
-            _winrt_abi_type->%(%);
-        }%
+        consume_noexcept_remove_overload<%, D>(static_cast<D const*>(this), &abi_t<%>::%%);%
     }
 )";
             }
@@ -1155,19 +1148,7 @@ namespace cppwinrt
             {
                 format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
-        if constexpr (!std::is_same_v<D, %>)
-        {
-            winrt::hresult _winrt_cast_result_code;
-            auto const _winrt_casted_result = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this), _winrt_cast_result_code);
-            check_hresult(_winrt_cast_result_code);
-            auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
-            WINRT_VERIFY_(0, _winrt_abi_type->%(%));
-        }
-        else
-        {
-            auto const _winrt_abi_type = *(abi_t<%>**)this;
-            WINRT_VERIFY_(0, _winrt_abi_type->%(%));
-        }%
+        consume_noexcept<%, D>(static_cast<D const*>(this), &abi_t<%>::%%);%
     }
 )";
             }
@@ -1176,19 +1157,7 @@ namespace cppwinrt
         {
             format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
     {%
-        if constexpr (!std::is_same_v<D, %>)
-        {
-            winrt::hresult _winrt_cast_result_code;
-            auto const _winrt_casted_result = impl::try_as_with_reason<%, D const*>(static_cast<D const*>(this), _winrt_cast_result_code);
-            check_hresult(_winrt_cast_result_code);
-            auto const _winrt_abi_type = *(abi_t<%>**)&_winrt_casted_result;
-            check_hresult(_winrt_abi_type->%(%));
-        }
-        else
-        {
-            auto const _winrt_abi_type = *(abi_t<%>**)this;
-            check_hresult(_winrt_abi_type->%(%));
-        }%
+        consume_general<%, D>(static_cast<D const*>(this), &abi_t<%>::%%);%
     }
 )";
         }
@@ -1202,12 +1171,8 @@ namespace cppwinrt
             bind<write_consume_return_type>(signature, false),
             type,
             type,
-            type,
             get_abi_name(method),
-            bind<write_abi_args>(signature),
-            type,
-            get_abi_name(method),
-            bind<write_abi_args>(signature),
+            bind<write_abi_args>(signature, true),
             bind<write_consume_return_statement>(signature));
 
         if (is_add_overload(method))
@@ -2750,7 +2715,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 bind<write_consume_return_type>(signature, true),
                 type_name,
                 bind_list(", ", generics),
-                bind<write_abi_args>(signature),
+                bind<write_abi_args>(signature, false),
                 bind<write_consume_return_statement>(signature));
         }
         else
@@ -2822,7 +2787,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 bind<write_consume_params>(signature),
                 bind<write_consume_return_type>(signature, true),
                 type_name,
-                bind<write_abi_args>(signature),
+                bind<write_abi_args>(signature, false),
                 bind<write_consume_return_statement>(signature));
         }
     }
