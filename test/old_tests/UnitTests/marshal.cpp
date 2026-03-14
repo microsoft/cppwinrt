@@ -2,7 +2,7 @@
 #include "catch.hpp"
 
 // These tests do not attempt to test the FTM itself, but merely to confirm that the presence and
-// absence of the non_agile marker does indeed produce the correct reponses from QueryInterface.
+// absence of the non_agile marker does indeed produce the correct responses from QueryInterface.
 // CoMarshalInterfaceXxxx is also used to exercise the code paths. Also, these tests confirm that
 // the weak reference object inherits the same agility as the source. Although much of this is 
 // tested elsewhere, it was helpful to have these tests as a set.

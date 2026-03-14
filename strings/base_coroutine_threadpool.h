@@ -66,23 +66,14 @@ namespace winrt::impl
     {
         resume_apartment_context() = default;
         resume_apartment_context(std::nullptr_t) : m_context(nullptr), m_context_type(-1) {}
-        resume_apartment_context(resume_apartment_context const&) = default;
-        resume_apartment_context(resume_apartment_context&& other) noexcept :
-            m_context(std::move(other.m_context)), m_context_type(std::exchange(other.m_context_type, -1)) {}
-        resume_apartment_context& operator=(resume_apartment_context const&) = default;
-        resume_apartment_context& operator=(resume_apartment_context&& other) noexcept
-        {
-            m_context = std::move(other.m_context);
-            m_context_type = std::exchange(other.m_context_type, -1);
-            return *this;
-        }
+
         bool valid() const noexcept
         {
-            return m_context_type >= 0;
+            return m_context_type.value >= 0;
         }
 
         com_ptr<IContextCallback> m_context = try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext);
-        int32_t m_context_type = get_apartment_type().first;
+        movable_primitive<int32_t, -1> m_context_type = get_apartment_type().first;
     };
 
     inline int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
@@ -91,7 +82,7 @@ namespace winrt::impl
         return 0;
     };
 
-    inline void resume_apartment_sync(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure)
+    [[nodiscard]] inline bool resume_apartment_sync(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure)
     {
         com_callback_args args{};
         args.data = handle.address();
@@ -101,8 +92,9 @@ namespace winrt::impl
         {
             // Resume the coroutine on the wrong apartment, but tell it why.
             *failure = result;
-            handle();
+            return false;
         }
+        return true;
     }
 
     struct threadpool_resume
@@ -117,7 +109,10 @@ namespace winrt::impl
     inline void __stdcall fallback_submit_threadpool_callback(void*, void* p) noexcept
     {
         std::unique_ptr<threadpool_resume> state{ static_cast<threadpool_resume*>(p) };
-        resume_apartment_sync(state->m_context, state->m_handle, state->m_failure);
+        if (!resume_apartment_sync(state->m_context, state->m_handle, state->m_failure))
+        {
+            state->m_handle.resume();
+        }
     }
 
     inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure)
@@ -127,46 +122,28 @@ namespace winrt::impl
         state.release();
     }
 
-    inline auto resume_apartment(resume_apartment_context const& context, coroutine_handle<> handle, int32_t* failure)
+    [[nodiscard]] inline auto resume_apartment(resume_apartment_context const& context, coroutine_handle<> handle, int32_t* failure)
     {
         WINRT_ASSERT(context.valid());
         if ((context.m_context == nullptr) || (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
         {
-            handle();
+            return false;
         }
-        else if (context.m_context_type == 1 /* APTTYPE_MTA */)
+        else if (context.m_context_type.value == 1 /* APTTYPE_MTA */)
         {
             resume_background(handle);
+            return true;
         }
         else if (is_sta_thread())
         {
             resume_apartment_on_threadpool(context.m_context, handle, failure);
+            return true;
         }
         else
         {
-            resume_apartment_sync(context.m_context, handle, failure);
+            return resume_apartment_sync(context.m_context, handle, failure);
         }
     }
-
-    template <typename T>
-    class awaiter_finder
-    {
-        template <typename> static constexpr bool find_awaitable_member(...) { return false; }
-        template <typename> static constexpr bool find_co_await_member(...) { return false; }
-        template <typename> static constexpr bool find_co_await_free(...) { return false; }
-
-#ifdef WINRT_IMPL_COROUTINES
-        template <typename U, typename = decltype(std::declval<U>().await_ready())> static constexpr bool find_awaitable_member(int) { return true; }
-        template <typename U, typename = decltype(std::declval<U>().operator co_await())> static constexpr bool find_co_await_member(int) { return true; }
-        template <typename U, typename = decltype(operator co_await(std::declval<U>()))> static constexpr bool find_co_await_free(int) { return true; }
-#endif
-
-    public:
-
-        static constexpr bool has_awaitable_member = find_awaitable_member<T>(0);
-        static constexpr bool has_co_await_member = find_co_await_member<T&&>(0);
-        static constexpr bool has_co_await_free = find_co_await_free<T&&>(0);
-    };
 }
 
 WINRT_EXPORT namespace winrt
@@ -207,19 +184,42 @@ WINRT_EXPORT namespace winrt
             }
         }
 
+        bool enable_cancellation_propagation(bool value) noexcept
+        {
+            return std::exchange(m_propagate_cancellation, value);
+        }
+
+        bool cancellation_propagation_enabled() const noexcept
+        {
+            return m_propagate_cancellation;
+        }
+
+        bool originate_on_cancel(bool value = true) noexcept
+        {
+            return std::exchange(m_originate_on_cancel, value);
+        }
+
+        bool should_originate_on_cancel() const noexcept
+        {
+            return m_originate_on_cancel;
+        }
+
     private:
         static inline auto const cancelling_ptr = reinterpret_cast<canceller_t>(1);
 
         std::atomic<canceller_t> m_canceller{ nullptr };
         void* m_context{ nullptr };
+        bool m_propagate_cancellation{ false };
+        bool m_originate_on_cancel{ true }; // By default, will call RoOriginateError before throwing a cancel error code.
     };
 
-    struct enable_await_cancellation
+    template <typename Derived>
+    struct cancellable_awaiter
     {
-        enable_await_cancellation() noexcept = default;
-        enable_await_cancellation(enable_await_cancellation const&) = default;
+        cancellable_awaiter() noexcept = default;
+        cancellable_awaiter(cancellable_awaiter const&) = default;
 
-        ~enable_await_cancellation()
+        ~cancellable_awaiter()
         {
             if (m_promise)
             {
@@ -227,86 +227,29 @@ WINRT_EXPORT namespace winrt
             }
         }
 
-        void operator=(enable_await_cancellation const&) = delete;
+        void operator=(cancellable_awaiter const&) = delete;
 
-        void set_cancellable_promise(cancellable_promise* promise) noexcept
+    protected:
+        template <typename T>
+        void set_cancellable_promise_from_handle(impl::coroutine_handle<T> const& handle)
         {
-            m_promise = promise;
+            if constexpr (std::is_base_of_v<cancellable_promise, T>)
+            {
+                set_cancellable_promise(&handle.promise());
+            }
         }
 
     private:
+        void set_cancellable_promise(cancellable_promise* promise)
+        {
+            if (promise->cancellation_propagation_enabled())
+            {
+                m_promise = promise;
+                static_cast<Derived*>(this)->enable_cancellation(m_promise);
+            }
+        }
 
         cancellable_promise* m_promise = nullptr;
-    };
-}
-
-namespace winrt::impl
-{
-    template <typename T>
-    decltype(auto) get_awaiter(T&& value) noexcept
-    {
-#ifdef WINRT_IMPL_COROUTINES
-        if constexpr (awaiter_finder<T>::has_co_await_member)
-        {
-            static_assert(!awaiter_finder<T>::has_co_await_free, "Ambiguous operator co_await (as both member and free function).");
-            return static_cast<T&&>(value).operator co_await();
-        }
-        else if constexpr (awaiter_finder<T>::has_co_await_free)
-        {
-            return operator co_await(static_cast<T&&>(value));
-        }
-        else
-        {
-            static_assert(awaiter_finder<T>::has_awaitable_member, "Not an awaitable type");
-            return static_cast<T&&>(value);
-        }
-#else
-        return static_cast<T&&>(value);
-#endif
-    }
-
-    template <typename T>
-    struct notify_awaiter
-    {
-        decltype(get_awaiter(std::declval<T&&>())) awaitable;
-
-        notify_awaiter(T&& awaitable_arg, [[maybe_unused]] cancellable_promise* promise = nullptr) : awaitable(get_awaiter(static_cast<T&&>(awaitable_arg)))
-        {
-            if constexpr (std::is_convertible_v<std::remove_reference_t<decltype(awaitable)>&, enable_await_cancellation&>)
-            {
-                if (promise)
-                {
-                    static_cast<enable_await_cancellation&>(awaitable).set_cancellable_promise(promise);
-                    awaitable.enable_cancellation(promise);
-                }
-            }
-        }
-
-        bool await_ready()
-        {
-            if (winrt_suspend_handler)
-            {
-                winrt_suspend_handler(this);
-            }
-
-            return awaitable.await_ready();
-        }
-
-        template <typename U>
-        auto await_suspend(coroutine_handle<U> handle)
-        {
-            return awaitable.await_suspend(handle);
-        }
-
-        decltype(auto) await_resume()
-        {
-            if (winrt_resume_handler)
-            {
-                winrt_resume_handler(this);
-            }
-
-            return awaitable.await_resume();
-        }
     };
 }
 
@@ -394,7 +337,7 @@ namespace winrt::impl
 {
     struct apartment_awaiter
     {
-        apartment_context context; // make a copy because resuming may destruct the original
+        apartment_context const& context;
         int32_t failure = 0;
 
         bool await_ready() const noexcept
@@ -407,10 +350,231 @@ namespace winrt::impl
             check_hresult(failure);
         }
 
-        void await_suspend(impl::coroutine_handle<> handle)
+        bool await_suspend(impl::coroutine_handle<> handle)
         {
-            impl::resume_apartment(context.context, handle, &failure);
+            auto context_copy = context;
+            return impl::resume_apartment(context_copy.context, handle, &failure);
         }
+    };
+
+    struct timespan_awaiter : cancellable_awaiter<timespan_awaiter>
+    {
+        explicit timespan_awaiter(Windows::Foundation::TimeSpan duration) noexcept :
+            m_duration(duration)
+        {
+        }
+
+#if defined(__GNUC__) && !defined(__clang__)
+        // HACK: GCC seems to require a move when calling operator co_await
+        // on the return value of resume_after.
+        // This might be related to upstream bug:
+        // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99575
+        timespan_awaiter(timespan_awaiter &&other) noexcept :
+            m_timer{std::move(other.m_timer)},
+            m_duration{std::move(other.m_duration)},
+            m_handle{std::move(other.m_handle)},
+            m_state{other.m_state.load()}
+        {}
+#endif
+
+        void enable_cancellation(cancellable_promise* promise)
+        {
+            promise->set_canceller([](void* context)
+            {
+                auto that = static_cast<timespan_awaiter*>(context);
+                if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
+                {
+                    that->fire_immediately();
+                }
+            }, this);
+        }
+
+        bool await_ready() const noexcept
+        {
+            return m_duration.count() <= 0;
+        }
+
+        template <typename T>
+        void await_suspend(impl::coroutine_handle<T> handle)
+        {
+            set_cancellable_promise_from_handle(handle);
+
+            m_handle = handle;
+            create_threadpool_timer();
+        }
+
+        void await_resume()
+        {
+            if (m_state.exchange(state::idle, std::memory_order_relaxed) == state::canceled)
+            {
+                throw hresult_canceled();
+            }
+        }
+
+    private:
+        void create_threadpool_timer()
+        {
+            m_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr)));
+            int64_t relative_count = -m_duration.count();
+            WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &relative_count, 0, 0);
+
+            state expected = state::idle;
+            if (!m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
+            {
+                fire_immediately();
+            }
+        }
+
+        void fire_immediately() noexcept
+        {
+            if (WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), nullptr, 0, 0))
+            {
+                int64_t now = 0;
+                WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &now, 0, 0);
+            }
+        }
+
+        static void __stdcall callback(void*, void* context, void*) noexcept
+        {
+            auto that = reinterpret_cast<timespan_awaiter*>(context);
+            that->m_handle();
+        }
+
+        struct timer_traits
+        {
+            using type = impl::ptp_timer;
+
+            static void close(type value) noexcept
+            {
+                WINRT_IMPL_CloseThreadpoolTimer(value);
+            }
+
+            static constexpr type invalid() noexcept
+            {
+                return nullptr;
+            }
+        };
+
+        enum class state { idle, pending, canceled };
+
+        handle_type<timer_traits> m_timer;
+        Windows::Foundation::TimeSpan m_duration;
+        impl::coroutine_handle<> m_handle;
+        std::atomic<state> m_state{ state::idle };
+    };
+
+    struct signal_awaiter : cancellable_awaiter<signal_awaiter>
+    {
+        signal_awaiter(void* handle, Windows::Foundation::TimeSpan timeout) noexcept :
+            m_timeout(timeout),
+            m_handle(handle)
+        {}
+
+#if defined(__GNUC__) && !defined(__clang__)
+        // HACK: GCC seems to require a move when calling operator co_await
+        // on the return value of resume_on_signal.
+        // This might be related to upstream bug:
+        // https://gcc.gnu.org/bugzilla/show_bug.cgi?id=99575
+        signal_awaiter(signal_awaiter &&other) noexcept :
+            m_wait{std::move(other.m_wait)},
+            m_timeout{std::move(other.m_timeout)},
+            m_handle{std::move(other.m_handle)},
+            m_result{std::move(other.m_result)},
+            m_resume{std::move(other.m_resume)},
+            m_state{other.m_state.load()}
+        {}
+#endif
+
+        void enable_cancellation(cancellable_promise* promise)
+        {
+            promise->set_canceller([](void* context)
+            {
+                auto that = static_cast<signal_awaiter*>(context);
+                if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
+                {
+                    that->fire_immediately();
+                }
+            }, this);
+        }
+
+        bool await_ready() const noexcept
+        {
+            return WINRT_IMPL_WaitForSingleObject(m_handle, 0) == 0;
+        }
+
+        template <typename T>
+        void await_suspend(impl::coroutine_handle<T> resume)
+        {
+            set_cancellable_promise_from_handle(resume);
+
+            m_resume = resume;
+            create_threadpool_wait();
+        }
+
+        bool await_resume()
+        {
+            if (m_state.exchange(state::idle, std::memory_order_relaxed) == state::canceled)
+            {
+                throw hresult_canceled();
+            }
+            return m_result == 0;
+        }
+
+    private:
+
+        void create_threadpool_wait()
+        {
+            m_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
+            int64_t relative_count = -m_timeout.count();
+            int64_t* file_time = relative_count != 0 ? &relative_count : nullptr;
+            WINRT_IMPL_SetThreadpoolWait(m_wait.get(), m_handle, file_time);
+
+            state expected = state::idle;
+            if (!m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
+            {
+                fire_immediately();
+            }
+        }
+
+        void fire_immediately() noexcept
+        {
+            if (WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), nullptr, nullptr, nullptr))
+            {
+                int64_t now = 0;
+                WINRT_IMPL_SetThreadpoolWait(m_wait.get(), WINRT_IMPL_GetCurrentProcess(), &now);
+            }
+        }
+
+        static void __stdcall callback(void*, void* context, void*, uint32_t result) noexcept
+        {
+            auto that = static_cast<signal_awaiter*>(context);
+            that->m_result = result;
+            that->m_resume();
+        }
+
+        struct wait_traits
+        {
+            using type = impl::ptp_wait;
+
+            static void close(type value) noexcept
+            {
+                WINRT_IMPL_CloseThreadpoolWait(value);
+            }
+
+            static constexpr type invalid() noexcept
+            {
+                return nullptr;
+            }
+        };
+
+        enum class state { idle, pending, canceled };
+
+        handle_type<wait_traits> m_wait;
+        Windows::Foundation::TimeSpan m_timeout;
+        void* m_handle;
+        uint32_t m_result{};
+        impl::coroutine_handle<> m_resume{ nullptr };
+        std::atomic<state> m_state{ state::idle };
     };
 }
 
@@ -423,213 +587,21 @@ WINRT_EXPORT namespace winrt
     }
 #endif
 
-    [[nodiscard]] inline auto resume_after(Windows::Foundation::TimeSpan duration) noexcept
+    [[nodiscard]] inline impl::timespan_awaiter resume_after(Windows::Foundation::TimeSpan duration) noexcept
     {
-        struct awaitable : enable_await_cancellation
-        {
-            explicit awaitable(Windows::Foundation::TimeSpan duration) noexcept :
-                m_duration(duration)
-            {
-            }
-
-            void enable_cancellation(cancellable_promise* promise)
-            {
-                promise->set_canceller([](void* context)
-                {
-                    auto that = static_cast<awaitable*>(context);
-                    if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
-                    {
-                        that->fire_immediately();
-                    }
-                }, this);
-            }
-
-            bool await_ready() const noexcept
-            {
-                return m_duration.count() <= 0;
-            }
-
-            void await_suspend(impl::coroutine_handle<> handle)
-            {
-                m_handle = handle;
-                m_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr)));
-                int64_t relative_count = -m_duration.count();
-                WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &relative_count, 0, 0);
-
-                state expected = state::idle;
-                if (!m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
-                {
-                    fire_immediately();
-                }
-            }
-
-            void await_resume()
-            {
-                if (m_state.exchange(state::idle, std::memory_order_relaxed) == state::canceled)
-                {
-                    throw hresult_canceled();
-                }
-            }
-
-        private:
-
-            static int32_t __stdcall fallback_SetThreadpoolTimerEx(winrt::impl::ptp_timer, void*, uint32_t, uint32_t) noexcept
-            {
-                return 0; // pretend timer has already triggered and a callback is on its way
-            }
-
-            void fire_immediately() noexcept
-            {
-                static int32_t(__stdcall* handler)(winrt::impl::ptp_timer, void*, uint32_t, uint32_t) noexcept;
-                impl::load_runtime_function(L"kernel32.dll", "SetThreadpoolTimerEx", handler, fallback_SetThreadpoolTimerEx);
-
-                if (handler(m_timer.get(), nullptr, 0, 0))
-                {
-                    int64_t now = 0;
-                    WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &now, 0, 0);
-                }
-            }
-
-            static void __stdcall callback(void*, void* context, void*) noexcept
-            {
-                auto that = reinterpret_cast<awaitable*>(context);
-                that->m_handle();
-            }
-
-            struct timer_traits
-            {
-                using type = impl::ptp_timer;
-
-                static void close(type value) noexcept
-                {
-                    WINRT_IMPL_CloseThreadpoolTimer(value);
-                }
-
-                static constexpr type invalid() noexcept
-                {
-                    return nullptr;
-                }
-            };
-
-            enum class state { idle, pending, canceled };
-
-            handle_type<timer_traits> m_timer;
-            Windows::Foundation::TimeSpan m_duration;
-            impl::coroutine_handle<> m_handle;
-            std::atomic<state> m_state{ state::idle };
-        };
-
-        return awaitable{ duration };
+        return impl::timespan_awaiter{ duration };
     }
 
 #ifdef WINRT_IMPL_COROUTINES
-    inline auto operator co_await(Windows::Foundation::TimeSpan duration)
+    inline impl::timespan_awaiter operator co_await(Windows::Foundation::TimeSpan duration)
     {
         return resume_after(duration);
     }
 #endif
 
-    [[nodiscard]] inline auto resume_on_signal(void* handle, Windows::Foundation::TimeSpan timeout = {}) noexcept
+    [[nodiscard]] inline impl::signal_awaiter resume_on_signal(void* handle, Windows::Foundation::TimeSpan timeout = {}) noexcept
     {
-        struct awaitable : enable_await_cancellation
-        {
-            awaitable(void* handle, Windows::Foundation::TimeSpan timeout) noexcept :
-                m_timeout(timeout),
-                m_handle(handle)
-            {}
-
-            void enable_cancellation(cancellable_promise* promise)
-            {
-                promise->set_canceller([](void* context)
-                {
-                    auto that = static_cast<awaitable*>(context);
-                    if (that->m_state.exchange(state::canceled, std::memory_order_acquire) == state::pending)
-                    {
-                        that->fire_immediately();
-                    }
-                }, this);
-            }
-
-            bool await_ready() const noexcept
-            {
-                return WINRT_IMPL_WaitForSingleObject(m_handle, 0) == 0;
-            }
-
-            void await_suspend(impl::coroutine_handle<> resume)
-            {
-                m_resume = resume;
-                m_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
-                int64_t relative_count = -m_timeout.count();
-                int64_t* file_time = relative_count != 0 ? &relative_count : nullptr;
-                WINRT_IMPL_SetThreadpoolWait(m_wait.get(), m_handle, file_time);
-
-                state expected = state::idle;
-                if (!m_state.compare_exchange_strong(expected, state::pending, std::memory_order_release))
-                {
-                    fire_immediately();
-                }
-            }
-
-            bool await_resume()
-            {
-                if (m_state.exchange(state::idle, std::memory_order_relaxed) == state::canceled)
-                {
-                    throw hresult_canceled();
-                }
-                return m_result == 0;
-            }
-
-        private:
-            static int32_t __stdcall fallback_SetThreadpoolWaitEx(winrt::impl::ptp_wait, void*, void*, void*) noexcept
-            {
-                return 0; // pretend wait has already triggered and a callback is on its way
-            }
-
-            void fire_immediately() noexcept
-            {
-                static int32_t(__stdcall* handler)(winrt::impl::ptp_wait, void*, void*, void*) noexcept;
-                impl::load_runtime_function(L"kernel32.dll", "SetThreadpoolWaitEx", handler, fallback_SetThreadpoolWaitEx);
-
-                if (handler(m_wait.get(), nullptr, nullptr, nullptr))
-                {
-                    int64_t now = 0;
-                    WINRT_IMPL_SetThreadpoolWait(m_wait.get(), WINRT_IMPL_GetCurrentProcess(), &now);
-                }
-            }
-
-            static void __stdcall callback(void*, void* context, void*, uint32_t result) noexcept
-            {
-                auto that = static_cast<awaitable*>(context);
-                that->m_result = result;
-                that->m_resume();
-            }
-
-            struct wait_traits
-            {
-                using type = impl::ptp_wait;
-
-                static void close(type value) noexcept
-                {
-                    WINRT_IMPL_CloseThreadpoolWait(value);
-                }
-
-                static constexpr type invalid() noexcept
-                {
-                    return nullptr;
-                }
-            };
-
-            enum class state { idle, pending, canceled };
-
-            handle_type<wait_traits> m_wait;
-            Windows::Foundation::TimeSpan m_timeout;
-            void* m_handle;
-            uint32_t m_result{};
-            impl::coroutine_handle<> m_resume{ nullptr };
-            std::atomic<state> m_state{ state::idle };
-        };
-
-        return awaitable{ handle, timeout };
+        return impl::signal_awaiter{ handle, timeout };
     }
 
     struct thread_pool
@@ -742,23 +714,12 @@ namespace std::experimental
 
             suspend_never final_suspend() const noexcept
             {
-                if (winrt_suspend_handler)
-                {
-                    winrt_suspend_handler(this);
-                }
-
                 return{};
             }
 
             void unhandled_exception() const noexcept
             {
                 winrt::terminate();
-            }
-
-            template <typename Expression>
-            auto await_transform(Expression&& expression)
-            {
-                return winrt::impl::notify_awaiter<Expression>{ static_cast<Expression&&>(expression) };
             }
         };
     };

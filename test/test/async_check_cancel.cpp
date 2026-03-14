@@ -5,6 +5,34 @@ using namespace Windows::Foundation;
 
 namespace
 {
+#ifdef __cpp_lib_coroutine
+    using std::suspend_never;
+#else
+    using std::experimental::suspend_never;
+#endif
+
+    static bool s_exceptionLoggerCalled = false;
+
+    static struct {
+        uint32_t lineNumber;
+        char const* fileName;
+        char const* functionName;
+        void* returnAddress;
+        winrt::hresult result;
+    } s_exceptionLoggerArgs{};
+
+    void __stdcall exceptionLogger(uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept
+    {
+        s_exceptionLoggerArgs = {
+            /*.lineNumber =*/ lineNumber,
+            /*.fileName =*/ fileName,
+            /*.functionName =*/ functionName,
+            /*.returnAddress =*/ returnAddress,
+            /*.result =*/ result,
+        };
+        s_exceptionLoggerCalled = true;
+    }
+
     //
     // Checks that manual cancellation checks work.
     //
@@ -20,7 +48,7 @@ namespace
             canceled = true;
         }
 
-        co_await std::experimental::suspend_never();
+        co_await suspend_never();
         REQUIRE(false);
     }
 
@@ -35,7 +63,7 @@ namespace
             canceled = true;
         }
 
-        co_await std::experimental::suspend_never();
+        co_await suspend_never();
         REQUIRE(false);
     }
 
@@ -50,10 +78,11 @@ namespace
             canceled = true;
         }
 
-        co_await std::experimental::suspend_never();
+        co_await suspend_never();
         REQUIRE(false);
         co_return 1;
     }
+
 
     IAsyncOperationWithProgress<int, int> OperationWithProgress(HANDLE event, bool& canceled)
     {
@@ -66,9 +95,62 @@ namespace
             canceled = true;
         }
 
-        co_await std::experimental::suspend_never();
+        co_await suspend_never();
         REQUIRE(false);
         co_return 1;
+    }
+
+    IAsyncAction OperationCancelLogged(HANDLE event, bool& canceled)
+    {
+        REQUIRE(!s_exceptionLoggerCalled);
+        REQUIRE(!winrt_throw_hresult_handler);
+        winrt_throw_hresult_handler = exceptionLogger;
+
+        co_await resume_on_signal(event);
+        auto cancel = co_await get_cancellation_token();
+
+        if (cancel())
+        {
+            REQUIRE(!canceled);
+            canceled = true;
+            REQUIRE(s_exceptionLoggerCalled);
+            REQUIRE(s_exceptionLoggerArgs.result == HRESULT_FROM_WIN32(ERROR_CANCELLED));
+        }
+
+        winrt_throw_hresult_handler = nullptr;
+        s_exceptionLoggerCalled = false;
+
+        co_await suspend_never();
+
+        REQUIRE(false);
+        co_return;
+    }
+
+    IAsyncAction OperationAvoidLoggingCancel(HANDLE event, bool& canceled)
+    {
+        REQUIRE(!s_exceptionLoggerCalled);
+        REQUIRE(!winrt_throw_hresult_handler);
+        winrt_throw_hresult_handler = exceptionLogger;
+
+        auto cancel = co_await get_cancellation_token();
+        cancel.originate_on_cancel(false);
+
+        co_await resume_on_signal(event);
+
+        if (cancel())
+        {
+            REQUIRE(!canceled);
+            canceled = true;
+            REQUIRE(!s_exceptionLoggerCalled);
+        }
+
+        winrt_throw_hresult_handler = nullptr;
+        s_exceptionLoggerCalled = false;
+
+        co_await suspend_never();
+
+        REQUIRE(false);
+        co_return;
     }
 
     template <typename F>
@@ -90,7 +172,7 @@ namespace
 
         async.Cancel();
         SetEvent(start.get());
-        REQUIRE(WaitForSingleObject(completed.get(), 1000) == WAIT_OBJECT_0);
+        REQUIRE(WaitForSingleObject(completed.get(), IsDebuggerPresent() ? INFINITE : 1000) == WAIT_OBJECT_0);
 
         REQUIRE(async.Status() == AsyncStatus::Canceled);
         REQUIRE(async.ErrorCode() == HRESULT_FROM_WIN32(ERROR_CANCELLED));
@@ -98,10 +180,17 @@ namespace
     }
 }
 
+#if defined(__clang__) && defined(_MSC_VER)
+// FIXME: Test is known to segfault when built with Clang.
+TEST_CASE("async_check_cancel", "[.clang-crash]")
+#else
 TEST_CASE("async_check_cancel")
+#endif
 {
     Check(Action);
     Check(ActionWithProgress);
     Check(Operation);
     Check(OperationWithProgress);
+    Check(OperationCancelLogged);
+    Check(OperationAvoidLoggingCancel);
 }

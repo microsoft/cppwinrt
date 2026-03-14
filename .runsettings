@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+  <RunConfiguration>
+    <ResultsDirectory>.\TestResults</ResultsDirectory><!-- Path relative to solution directory -->
+    <TestSessionTimeout>60000</TestSessionTimeout><!-- Milliseconds -->
+    <ForceListContent>true</ForceListContent>
+  </RunConfiguration>
+
+  <!-- Adapter Specific sections -->
+
+  <!-- Catch2 adapter -->
+  <Catch2Adapter>
+    <ExecutionMode>Single</ExecutionMode>
+    <FilenameFilter>(?i:Test)</FilenameFilter><!-- Regex filter -->
+    <ForceListContent>true</ForceListContent>
+    <DebugBreak>on</DebugBreak>
+    <IncludeHidden>true</IncludeHidden>
+    <Logging>Verbose</Logging>
+    <MessageFormat>AdditionalInfo</MessageFormat>
+    <StackTraceFormat>ShortInfo</StackTraceFormat>
+    <StackTracePointReplacement>,</StackTracePointReplacement>
+    <TestCaseTimeout>20000</TestCaseTimeout><!-- 20s in Milliseconds -->
+  </Catch2Adapter>
+</RunSettings>

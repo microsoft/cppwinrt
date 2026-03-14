@@ -44,8 +44,8 @@
       <Link>%(Filename)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="$(NupkgDir)\Microsoft.Windows.CppWinRT.$(CppWinRTVersion).nupkg">
-      <Link>Packages\Microsoft.Windows.CppWinRT.$(CppWinRTVersion).nupkg</Link>
+    <Content Include="$(NupkgDir)\Microsoft.Windows.CppWinRT.$(NugetPackageVersion).nupkg">
+      <Link>Packages\Microsoft.Windows.CppWinRT.$(NugetPackageVersion).nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="$(VSIXRootDir)..\natvis\cppwinrt.natvis">
@@ -62,6 +62,10 @@
     </Content>
     <Content Include="$(NatvisDirx64)\cppwinrtvisualizer.dll">
       <Link>x64\%(Filename)%(Extension)</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+    <Content Include="$(NatvisDirarm64)\cppwinrtvisualizer.dll">
+      <Link>arm64\%(Filename)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <None Include="$(Deployment)\source.extension.vsixmanifest">
@@ -83,10 +87,10 @@
     <Folder Include="x64\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.SDK" Version="17.0.0-previews-4-31709-430" ExcludeAssets="runtime">
+    <PackageReference Include="Microsoft.VisualStudio.SDK" ExcludeAssets="runtime">
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.0.4207-preview4">
+    <PackageReference Include="Microsoft.VSSDK.BuildTools">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -163,6 +167,9 @@
       <Generator>
       </Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <Import Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />

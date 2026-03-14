@@ -3,7 +3,7 @@
 
 namespace
 {
-    struct __declspec(uuid("52bb7805-e46e-46f9-8508-86606d2f6bc1")) IClassic : ::IUnknown
+    struct DECLSPEC_UUID("52bb7805-e46e-46f9-8508-86606d2f6bc1") IClassic : ::IUnknown
     {
     };
 
@@ -11,6 +11,17 @@ namespace
     {
     };
 }
+
+#ifdef __CRT_UUID_DECL
+#ifdef __GNUC__
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
+#endif
+__CRT_UUID_DECL(IClassic, 0x52bb7805, 0xe46e, 0x46f9, 0x85, 0x08, 0x86, 0x60, 0x6d, 0x2f, 0x6b, 0xc1);
+#ifdef __GNUC__
+#pragma GCC diagnostic pop
+#endif
+#endif
 
 TEST_CASE("com_ref agile_ref")
 {

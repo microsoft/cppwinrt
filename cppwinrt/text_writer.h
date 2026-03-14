@@ -6,6 +6,7 @@
 #include <sstream>
 #include <string>
 #include <string_view>
+#include <vector>
 
 namespace cppwinrt
 {
@@ -103,22 +104,32 @@ namespace cppwinrt
             f(*static_cast<T*>(this));
         }
 
-        void write(int32_t const value)
+        void write(int const value)
         {
             write(std::to_string(value));
         }
 
-        void write(uint32_t const value)
+        void write(unsigned int const value)
         {
             write(std::to_string(value));
         }
 
-        void write(int64_t const value)
+        void write(signed long const value)
         {
             write(std::to_string(value));
         }
 
-        void write(uint64_t const value)
+        void write(unsigned long const value)
+        {
+            write(std::to_string(value));
+        }
+
+        void write(signed long long const value)
+        {
+            write(std::to_string(value));
+        }
+
+        void write(unsigned long long const value)
         {
             write(std::to_string(value));
         }
@@ -127,7 +138,16 @@ namespace cppwinrt
         void write_printf(char const* format, Args const&... args)
         {
             char buffer[128];
+#if defined(_WIN32) || defined(_WIN64)
             size_t const size = sprintf_s(buffer, format, args...);
+#else
+            size_t size = snprintf(buffer, sizeof(buffer), format, args...);
+            if (size > sizeof(buffer) - 1)
+            {
+                fprintf(stderr, "\n*** WARNING: writer_base::write_printf -- buffer too small\n");
+                size = sizeof(buffer) - 1;
+            }
+#endif
             write(std::string_view{ buffer, size });
         }
 
@@ -461,7 +481,7 @@ namespace cppwinrt
     {
         return [&](auto& writer)
         {
-            bool first{ true };
+            bool first = true;
 
             for (auto&& item : list)
             {
@@ -484,7 +504,7 @@ namespace cppwinrt
     {
         return [&](auto& writer)
         {
-            bool first{ true };
+            bool first = true;
 
             for (auto&& item : list)
             {

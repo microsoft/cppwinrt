@@ -163,6 +163,13 @@ namespace test_component
         static void StaticMethodWithAsyncReturn();
     }
 
+    // This class declares that it implements another interface but under the covers it actually does
+    // not.  This allows us to test the behavior when QI's that should not fail, do fail.
+    runtimeclass LiesAboutInheritance : Windows.Foundation.IStringable
+    {
+        void StubMethod();
+    }
+
     namespace Structs
     {
         struct All
@@ -326,5 +333,52 @@ namespace test_component
         }
 
         delegate void Delegate();
+    }
+
+    [exclusiveto(test_component.OverloadClass)]
+    [version(1), uuid(EF902013-00F3-4549-9032-49E86D536C07)]
+    interface IOverloadClass : IInspectable
+    {
+        HRESULT Overload();
+    }
+
+    [exclusiveto(test_component.OverloadClass)]
+    [version(1), uuid(DFDFFB61-EA72-4977-B1A7-3F0D2C32BB58)]
+    interface IOverloadClassFactory : IInspectable
+    {
+        HRESULT CreateInstance([in] IInspectable* baseInterface, [out] IInspectable** innerInterface, [out][retval] test_component.OverloadClass** value);
+    }
+
+    [exclusiveto(test_component.OverloadClass)]
+    [version(1), uuid(32510F72-9229-4C69-95BD-DE7B8189C85C)]
+    interface IOverloadClassOverrides : IInspectable
+    {
+        [overload("Overload")] HRESULT OverloadWithOne(int a);
+    }
+
+    [exclusiveto(test_component.OverloadClass)]
+    [version(1), uuid(50205BCE-FAD3-4C66-801F-17AAD007B26C)]
+    interface IOverloadClassOverrides2 : IInspectable
+    {
+        [overload("Overload")] HRESULT OverloadWithTwo(int a, int b);
+    }
+
+    [exclusiveto(test_component.OverloadClass)]
+    [version(1), uuid(6EDD1A3F-2616-45B7-9731-F84DA9CCECA1)]
+    interface IOverloadClassProtected : IInspectable
+    {
+        [overload("Overload")] HRESULT OverloadWithThree(int a, int b, int c);
+    }
+
+    [composable(test_component.IOverloadClassFactory, public, 1)]
+    [marshaling_behavior(agile)]
+    [threading(both)]
+    [version(1)]
+    runtimeclass OverloadClass
+    {
+        [default] interface test_component.IOverloadClass;
+        [protected] interface test_component.IOverloadClassProtected;
+        [overridable] interface test_component.IOverloadClassOverrides;
+        [overridable] interface test_component.IOverloadClassOverrides2;
     }
 }

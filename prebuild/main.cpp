@@ -19,9 +19,11 @@ int main(int const argc, char** argv)
     strings_h.write(R"(
 #pragma once
 namespace cppwinrt::strings {
+extern "C++" {
 )");
 
     strings_cpp.write(R"(
+#include "strings.h"
 namespace cppwinrt::strings {
 )");
 
@@ -41,7 +43,7 @@ namespace cppwinrt::strings {
         strings_h.write(R"(extern char const %[%];
 )",
             name.string(),
-            static_cast<uint64_t>(view.size()));
+            static_cast<uint64_t>(view.size() + 1));
 
         strings_cpp.write(R"(extern char const %[] = R"xyz()xyz"
 )",
@@ -49,7 +51,7 @@ namespace cppwinrt::strings {
 
         std::string_view remainder = view;
 
-        while (remainder.size())
+        while (!remainder.empty())
         {
             auto const size = std::min(size_t{ 16'000 }, remainder.size());
             auto const chunk = remainder.substr(0, size);
@@ -65,6 +67,7 @@ namespace cppwinrt::strings {
     }
 
     strings_h.write(R"(
+}
 }
 )");
 

@@ -20,13 +20,18 @@ enum class PropertyCategory
     Class,
 };
 
+inline constexpr bool IsBuiltIn(PropertyCategory value) noexcept
+{
+    return PropertyCategory::Bool <= value && value < PropertyCategory::Value;
+}
+
 enum class ObjectType
 {
     Abi,
     Projection,
 };
 
-// Metatdata for resolving a runtime class property value
+// Metadata for resolving a runtime class property value
 struct PropertyData 
 {
     std::wstring iid;

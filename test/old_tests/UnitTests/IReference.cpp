@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "catch.hpp"
 
+#ifdef _MSC_VER
 #pragma warning(disable:4471) // a forward declaration of an unscoped enumeration must have an underlying type
+#endif
 #include <windows.foundation.h>
 
 using namespace winrt;

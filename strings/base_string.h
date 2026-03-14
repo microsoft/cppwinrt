@@ -16,7 +16,7 @@ namespace winrt::impl
 
         uint32_t operator++() noexcept
         {
-            return m_count.fetch_add(1, std::memory_order_relaxed) + 1;
+            return static_cast<uint32_t>(m_count.fetch_add(1, std::memory_order_relaxed) + 1);
         }
 
         uint32_t operator--() noexcept
@@ -32,12 +32,12 @@ namespace winrt::impl
                 abort();
             }
 
-            return remaining;
+            return static_cast<uint32_t>(remaining);
         }
 
         operator uint32_t() const noexcept
         {
-            return m_count;
+            return static_cast<uint32_t>(m_count);
         }
 
     private:
@@ -488,11 +488,23 @@ namespace winrt::impl
 
         T const& object;
 
+#if !defined(__GNUC__) || defined(__clang__)
         template <typename R>
         operator R const& () const noexcept
         {
             return reinterpret_cast<R const&>(object);
         }
+#else
+        // HACK: GCC does not handle template deduction of const T& conversion
+        // function according to CWG issue 976. To make this compile on GCC,
+        // we have to intentionally drop the const qualifier.
+        // Ref: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=61663
+        template <typename R>
+        operator R& () const noexcept
+        {
+            return const_cast<R&>(reinterpret_cast<R const&>(object));
+        }
+#endif
     };
 
     template <typename T>
@@ -550,10 +562,44 @@ namespace winrt::impl
         auto end = std::copy(std::begin(temp), result.ptr, buffer);
         return hstring{ std::wstring_view{ buffer, static_cast<std::size_t>(end - buffer)} };
     }
+
+#if __cpp_lib_format >= 202207L
+    template <typename... Args>
+    inline hstring base_format(Args&&... args)
+    {
+        // don't forward because an object could be moved-from, causing issues
+        // for the second format call.
+        // not forwarding lets us take both rvalues and lvalues but pass them
+        // further down as an lvalue ref. some types can only be formatted
+        // when non-const (e.g. ranges::filter_view) so taking a const reference
+        // as parameter wouldn't work for all scenarios.
+        auto const size = std::formatted_size(args...);
+        WINRT_ASSERT(size < INT_MAX);
+        auto const size32 = static_cast<int32_t>(size);
+
+        hstring_builder builder(size32);
+        WINRT_VERIFY_(size32, std::format_to_n(builder.data(), size32, args...).size);
+        return builder.to_hstring();
+    }
+#endif
 }
 
 WINRT_EXPORT namespace winrt
 {
+#if __cpp_lib_format >= 202207L
+    template <typename... Args>
+    inline hstring format(std::wformat_string<Args&...> const fmt, Args&&... args)
+    {
+        return impl::base_format(fmt, args...);
+    }
+
+    template <typename... Args>
+    inline hstring format(std::locale const& loc, std::wformat_string<Args&...> const fmt, Args&&... args)
+    {
+        return impl::base_format(loc, fmt, args...);
+    }
+#endif
+
     inline bool embedded_null(hstring const& value) noexcept
     {
         return std::any_of(value.begin(), value.end(), [](auto item)
@@ -602,6 +648,7 @@ WINRT_EXPORT namespace winrt
         return impl::hstring_convert(value);
     }
 
+#if !defined(_LIBCPP_VERSION) || _LIBCPP_VERSION >= 14000
     inline hstring to_hstring(float value)
     {
         return impl::hstring_convert(value);
@@ -611,6 +658,7 @@ WINRT_EXPORT namespace winrt
     {
         return impl::hstring_convert(value);
     }
+#endif
 
     inline hstring to_hstring(char16_t value)
     {

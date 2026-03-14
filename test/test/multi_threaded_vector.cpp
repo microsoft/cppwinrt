@@ -81,7 +81,7 @@ namespace
             }
             else
             {
-                return vector.as<IObservableVector<IInspectable>>();
+                return vector.template as<IObservableVector<IInspectable>>();
             }
         }
     }

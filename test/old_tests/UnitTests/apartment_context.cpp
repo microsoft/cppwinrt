@@ -35,6 +35,11 @@ namespace
         context2 = nullptr;
         REQUIRE(!context2);
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wself-assign-overloaded"
+#pragma clang diagnostic ignored "-Wself-move"
+#endif
         // Self-copy-assignment
         context = context;
         REQUIRE(context);
@@ -42,9 +47,17 @@ namespace
         // Self-move-assignment
         context = std::move(context);
         REQUIRE(context);
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
         co_await context;
     }
+
+// Not yet buildable on mingw-w64. The lambda needs to have __stdcall
+// specified on it but there is a Clang crash bug blocking this:
+// https://github.com/llvm/llvm-project/issues/58366
+#if !defined(__MINGW32__)
 
     template<typename TLambda>
     void InvokeInContext(IContextCallback* context, TLambda&& lambda)
@@ -69,6 +82,10 @@ namespace
         return context;
     }
 
+#endif
+
+// Exclude on mingw-w64 to suppress `-Wunused-function`
+#if !defined(__MINGW32__)
     bool is_nta_on_mta()
     {
         APTTYPE type;
@@ -76,6 +93,7 @@ namespace
         check_hresult(CoGetApartmentType(&type, &qualifier));
         return (type == APTTYPE_NA) && (qualifier == APTTYPEQUALIFIER_NA_ON_MTA || qualifier == APTTYPEQUALIFIER_NA_ON_IMPLICIT_MTA);
     }
+#endif
 
     bool is_mta()
     {
@@ -90,6 +108,10 @@ namespace
         return (hr == RPC_E_SERVER_DIED_DNE) || (hr == RPC_E_DISCONNECTED);
     }
 
+// Not yet buildable on mingw-w64.
+// Missing __uuidof(IContextCallback).
+#if !defined(__MINGW32__)
+
     IAsyncAction TestNeutralApartmentContext()
     {
         auto controller = DispatcherQueueController::CreateOnDedicatedThread();
@@ -101,6 +123,8 @@ namespace
 
         REQUIRE(is_nta_on_mta());
     }
+
+#endif
 
     IAsyncAction TestStaToStaApartmentContext()
     {
@@ -245,17 +269,28 @@ TEST_CASE("apartment_context coverage")
     Async().get();
 }
 
+// Not yet buildable on mingw-w64.
+// Missing __uuidof(IContextCallback).
+#if !defined(__MINGW32__)
+
 TEST_CASE("apartment_context nta")
 {
     TestNeutralApartmentContext().get();
 }
+
+#endif
 
 TEST_CASE("apartment_context sta")
 {
     TestStaToStaApartmentContext().get();
 }
 
+#if defined(__clang__) && defined(_MSC_VER) && (defined(_M_IX86) || defined(__i386__))
+// FIXME: Test is known to segfault on x86 when built with Clang.
+TEST_CASE("apartment_context disconnected", "[.clang-crash]")
+#else
 TEST_CASE("apartment_context disconnected")
+#endif
 {
     TestDisconnectedApartmentContext().get();
 }

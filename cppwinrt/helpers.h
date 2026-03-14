@@ -127,7 +127,7 @@ namespace cppwinrt
     struct separator
     {
         writer& w;
-        bool first{ true };
+        bool first = true;
 
         void operator()()
         {
@@ -527,6 +527,7 @@ namespace cppwinrt
     {
         TypeDef type;
         bool is_default{};
+        bool is_protected{};
         bool defaulted{};
         bool overridable{};
         bool base{};
@@ -577,6 +578,7 @@ namespace cppwinrt
             auto type = impl.Interface();
             auto name = w.write_temp("%", type);
             info.is_default = has_attribute(impl, "Windows.Foundation.Metadata", "DefaultAttribute");
+            info.is_protected = has_attribute(impl, "Windows.Foundation.Metadata", "ProtectedAttribute");
             info.defaulted = !base && (defaulted || info.is_default);
 
             {

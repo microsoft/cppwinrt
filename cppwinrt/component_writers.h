@@ -27,7 +27,7 @@ namespace cppwinrt
             }
         }
 
-        bool first{ true };
+        bool first = true;
 
         for (auto&& name : interfaces)
         {
@@ -45,7 +45,7 @@ namespace cppwinrt
 
     static void write_component_class_base(writer& w, TypeDef const& type)
     {
-        bool first{ true };
+        bool first = true;
 
         for (auto&& base : get_bases(type))
         {
@@ -175,6 +175,9 @@ void* __stdcall %_get_activation_factory([[maybe_unused]] std::wstring_view cons
 int32_t __stdcall WINRT_CanUnloadNow() noexcept
 {
 #ifdef _WRL_MODULE_H_
+#ifdef _MSC_VER
+#pragma warning(suppress: 4324) // structure was padded due to alignment specifier
+#endif
     if (!::Microsoft::WRL::Module<::Microsoft::WRL::InProc>::GetModule().Terminate())
     {
         return 1;
@@ -195,6 +198,7 @@ int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noex
     }
 
 #ifdef _WRL_MODULE_H_
+#pragma warning(suppress: 4324) // structure was padded due to alignment specifier
     return ::Microsoft::WRL::Module<::Microsoft::WRL::InProc>::GetModule().GetActivationFactory(static_cast<HSTRING>(classId), reinterpret_cast<::IActivationFactory**>(factory));
 #else
     return winrt::hresult_class_not_available(name).to_abi();
@@ -289,7 +293,7 @@ catch (...) { return winrt::to_hresult(); }
             bind<write_consume_args>(signature));
     }
 
-    void write_component_static_forwarder(writer& w, MethodDef const& method)
+    static void write_component_static_forwarder(writer& w, MethodDef const& method)
     {
         auto format = R"(        auto %(%)
         {
@@ -518,7 +522,7 @@ catch (...) { return winrt::to_hresult(); }
 
                     if (is_add_overload(method))
                     {
-                        auto format = R"(    auto %::%(auto_revoke_t, %)
+                        auto format = R"(    %::%_revoker %::%(auto_revoke_t, %)
     {
         auto f = make<winrt::@::factory_implementation::%>().as<%>();
         return %::%_revoker{ f, f.%(%) };
@@ -526,6 +530,8 @@ catch (...) { return winrt::to_hresult(); }
 )";
 
                         w.write(format,
+                            type_name,
+                            method_name,
                             type_name,
                             method_name,
                             bind<write_consume_params>(signature),
@@ -641,8 +647,8 @@ catch (...) { return winrt::to_hresult(); }
         {
             if (!info.base && info.is_default)
             {
-                auto methods = info.type.MethodList();
-                offset += methods.second - methods.first;
+                auto [first, second] = info.type.MethodList();
+                offset += second - first;
                 break;
             }
         }
@@ -741,14 +747,14 @@ catch (...) { return winrt::to_hresult(); }
             auto format = R"(namespace winrt::@::implementation
 {
     template <typename D%, typename... I>
-    struct __declspec(empty_bases) %_base : implements<D, @::%%%, %I...>%%%
+    struct WINRT_IMPL_EMPTY_BASES %_base : implements<D, @::%%%, %I...>%%%%
     {
         using base_type = %_base;
         using class_type = @::%;
         using implements_type = typename %_base::implements_type;
         using implements_type::implements_type;
-        %
-        hstring GetRuntimeClassName() const
+        %%
+        hstring GetRuntimeClassName() const override
         {
             return L"%.%";
         }
@@ -762,6 +768,8 @@ catch (...) { return winrt::to_hresult(); }
             std::string base_type_argument;
             std::string no_module_lock;
             std::string external_requires;
+            std::string external_protected_requires;
+            std::string friends;
 
             if (base_type)
             {
@@ -772,7 +780,9 @@ catch (...) { return winrt::to_hresult(); }
                     composable_base_name = w.write_temp("using composable_base = %;", base_type);
                     auto base_interfaces = get_interfaces(w, base_type);
                     uint32_t base_interfaces_count{};
+                    uint32_t protected_base_interfaces_count{};
                     external_requires = ",\n        impl::require<D";
+                    external_protected_requires = ",\n        protected impl::require<D";
 
                     for (auto&&[name, info] : base_interfaces)
                     {
@@ -781,9 +791,25 @@ catch (...) { return winrt::to_hresult(); }
                             continue;
                         }
 
-                        ++base_interfaces_count;
-                        external_requires += ", ";
-                        external_requires += name;
+                        if (info.is_protected || info.overridable)
+                        {
+                            ++protected_base_interfaces_count;
+                            external_protected_requires += ", ";
+                            external_protected_requires += name;
+
+                            friends += "\n        friend impl::consume_t<D, ";
+                            friends += name;
+                            friends += ">;";
+                            friends += "\n        friend impl::require_one<D, ";
+                            friends += name;
+                            friends += ">;";
+                        }
+                        else
+                        {
+                            ++base_interfaces_count;
+                            external_requires += ", ";
+                            external_requires += name;
+                        }
                     }
 
                     if (base_interfaces_count)
@@ -793,6 +819,15 @@ catch (...) { return winrt::to_hresult(); }
                     else
                     {
                         external_requires.clear();
+                    }
+
+                    if (protected_base_interfaces_count)
+                    {
+                        external_protected_requires += '>';
+                    }
+                    else
+                    {
+                        external_protected_requires.clear();
                     }
                 }
                 else
@@ -814,6 +849,7 @@ catch (...) { return winrt::to_hresult(); }
                 base_type_argument,
                 no_module_lock,
                 external_requires,
+                external_protected_requires,
                 bind<write_component_class_base>(type),
                 bind<write_component_override_defaults>(type),
                 type_name,
@@ -821,6 +857,7 @@ catch (...) { return winrt::to_hresult(); }
                 type_name,
                 type_name,
                 composable_base_name,
+                friends,
                 type_namespace,
                 type_name,
                 bind<write_component_class_override_constructors>(type),
@@ -834,7 +871,7 @@ catch (...) { return winrt::to_hresult(); }
             auto format = R"(namespace winrt::@::factory_implementation
 {
     template <typename D, typename T, typename... I>
-    struct __declspec(empty_bases) %T : implements<D, winrt::Windows::Foundation::IActivationFactory%, I...>
+    struct WINRT_IMPL_EMPTY_BASES %T : implements<D, winrt::Windows::Foundation::IActivationFactory%, I...>
     {
         using instance_type = @::%;
 

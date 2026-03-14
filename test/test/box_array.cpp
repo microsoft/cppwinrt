@@ -8,17 +8,17 @@ namespace
         T defaultValue{};
         winrt::com_array<T> ary{ otherValue, defaultValue };
         auto box = winrt::box_value(ary);
-        winrt::com_array<T> unbox = box.try_as<winrt::com_array<T>>().value();
+        winrt::com_array<T> unbox = box.template try_as<winrt::com_array<T>>().value();
         REQUIRE(unbox.size() == 2);
         REQUIRE(unbox.at(0) == otherValue);
         REQUIRE(unbox.at(1) == defaultValue);
-        unbox = box.as<winrt::com_array<T>>();
+        unbox = box.template as<winrt::com_array<T>>();
         REQUIRE(unbox.size() == 2);
         REQUIRE(unbox.at(0) == otherValue);
         REQUIRE(unbox.at(1) == defaultValue);
         if constexpr (!std::is_same_v<T, GUID>)
         {
-            unbox = box.as<winrt::optional<winrt::com_array<T>>>().Value();
+            unbox = box.template as<winrt::optional<winrt::com_array<T>>>().Value();
             REQUIRE(unbox.size() == 2);
             REQUIRE(unbox.at(0) == otherValue);
             REQUIRE(unbox.at(1) == defaultValue);

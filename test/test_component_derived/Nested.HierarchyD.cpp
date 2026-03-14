@@ -3,7 +3,7 @@
 
 namespace winrt::test_component_derived::Nested::implementation
 {
-    HierarchyD::HierarchyD(hstring const& name)
+    HierarchyD::HierarchyD(hstring const& /*name*/)
     {
         throw hresult_not_implemented();
     }
@@ -32,5 +32,8 @@ namespace winrt::test_component_derived::Nested::implementation
 
         test_component_base::IHierarchyA ia = *this;
         assert(ia);
+
+        assert(HierarchyA_Protected() == 42);
+        HierarchyB_TestInnerProtected();
     }
 }

@@ -1,3 +1,4 @@
+#include <crtdbg.h>
 #define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
 #include <windows.h>
@@ -56,14 +57,31 @@ TEST_CASE("module_lock_none")
 
     // Validates that test_component_base is pinned by virtue of it defining WINRT_NO_MODULE_LOCK.
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wcast-function-type-mismatch"
+#endif
     auto can_unload = reinterpret_cast<HRESULT(__stdcall*)()>(GetProcAddress(LoadLibraryA("test_component_base.dll"), "DllCanUnloadNow"));
     REQUIRE(can_unload() == S_FALSE);
 
     auto cannot_unload = reinterpret_cast<HRESULT(__stdcall*)()>(GetProcAddress(LoadLibraryA("test_component_derived.dll"), "DllCanUnloadNow"));
     REQUIRE(cannot_unload() == S_OK);
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 }
 
 int main(int const argc, char** argv)
 {
+    std::set_terminate([] { reportFatal("Abnormal termination"); ExitProcess(1); });
+    _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
+    (void)_CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
+    _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);
+    (void)_CrtSetReportFile(_CRT_ERROR, _CRTDBG_FILE_STDERR);
     return Catch::Session().run(argc, argv);
+}
+
+CATCH_TRANSLATE_EXCEPTION(winrt::hresult_error const& e)
+{
+    return to_string(e.message());
 }

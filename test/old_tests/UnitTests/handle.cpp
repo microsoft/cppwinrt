@@ -76,7 +76,7 @@ static void test_put(HANDLE * value)
     REQUIRE(value != nullptr);
     REQUIRE(*value == nullptr);
 
-    *value = CreateEvent(nullptr, true, true, nullptr);;
+    *value = CreateEvent(nullptr, true, true, nullptr);
 }
 
 TEST_CASE("handle, put")

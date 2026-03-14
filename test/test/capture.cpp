@@ -3,11 +3,15 @@
 using namespace winrt;
 using namespace Windows::Foundation;
 
-struct __declspec(uuid("5fb96f8d-409c-42a9-99a7-8a95c1459dbd")) ICapture : ::IUnknown
+struct DECLSPEC_UUID("5fb96f8d-409c-42a9-99a7-8a95c1459dbd") ICapture : ::IUnknown
 {
     virtual int32_t __stdcall GetValue() noexcept = 0;
     virtual int32_t __stdcall CreateMemberCapture(int32_t value, GUID const& iid, void** object) noexcept = 0;
 };
+
+#ifdef __CRT_UUID_DECL
+__CRT_UUID_DECL(ICapture, 0x5fb96f8d, 0x409c, 0x42a9, 0x99, 0xa7, 0x8a, 0x95, 0xc1, 0x45, 0x9d, 0xbd)
+#endif
 
 struct Capture : implements<Capture, ICapture, IStringable>
 {

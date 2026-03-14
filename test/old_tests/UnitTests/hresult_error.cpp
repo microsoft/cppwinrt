@@ -1,6 +1,11 @@
 #include "pch.h"
 #include "catch.hpp"
 
+// Missing in mingw-w64
+#ifndef E_BOUNDS
+#define E_BOUNDS ((HRESULT)0x8000000B)
+#endif
+
 extern "C" BOOL __stdcall RoOriginateLanguageException(HRESULT error, void* message, void* languageException);
 
 using namespace winrt;
@@ -23,7 +28,7 @@ TEST_CASE("hresult,S_FALSE")
     try
     {
         check_hresult(S_FALSE);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const & e)
     {
@@ -40,7 +45,7 @@ TEST_CASE("hresult,init_apartment")
     try
     {
         init_apartment(apartment_type::single_threaded);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const & e)
     {
@@ -55,7 +60,7 @@ TEST_CASE("hresult,restricted,consuming")
     try
     {
         Uri uri(L"BAD");
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_invalid_argument const & e) // catching specific exception type
     {
@@ -66,7 +71,7 @@ TEST_CASE("hresult,restricted,consuming")
     try
     {
         Uri uri(L"BAD");
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const & e) // catching generic exception type
     {
@@ -477,7 +482,9 @@ TEST_CASE("hresult, exception")
     }
 }
 
+#ifdef _MSC_VER
 #pragma warning(disable: 4702)  // unreachable code
+#endif
 TEST_CASE("hresult, throw_last_error")
 {
     SetLastError(ERROR_CANCELLED);
@@ -497,11 +504,11 @@ TEST_CASE("hresult, std abi support")
     {
         EventHandler<int> handler = [](auto&& ...)
         {
-            throw std::exception("std__exception");
+            throw std::runtime_error("std__exception");
         };
 
         handler(nullptr, 0);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_error const& e)
     {
@@ -517,7 +524,7 @@ TEST_CASE("hresult, std abi support")
         };
 
         handler(nullptr, 0);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (std::bad_alloc const&)
     {
@@ -531,7 +538,7 @@ TEST_CASE("hresult, std abi support")
         };
 
         handler(nullptr, 0);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_out_of_bounds const& e)
     {
@@ -547,7 +554,7 @@ TEST_CASE("hresult, std abi support")
         };
 
         handler(nullptr, 0);
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_invalid_argument const& e)
     {

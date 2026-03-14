@@ -20,7 +20,7 @@ TEST_CASE("hresult_class_not_registered")
     try
     {
         Async().get();
-        FAIL(L"Previous line should throw");
+        FAIL("Previous line should throw");
     }
     catch (hresult_class_not_registered const& e)
     {

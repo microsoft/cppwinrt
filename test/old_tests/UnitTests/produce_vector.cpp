@@ -5,7 +5,7 @@
 //
 // These tests cover the production of the various vector-related interfaces.
 // Tests ensure that the ABI surface lines up on the consumer and producer sides and this is mainly done simply by calling
-// the various inteface methods.
+// the various interface methods.
 //
 
 using namespace winrt;

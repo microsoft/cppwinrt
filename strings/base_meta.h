@@ -1,7 +1,7 @@
 
 WINRT_EXPORT namespace winrt
 {
-    hresult check_hresult(hresult const result);
+    hresult check_hresult(hresult const result, winrt::impl::slim_source_location const& sourceInformation = winrt::impl::slim_source_location::current());
     hresult to_hresult() noexcept;
 
     template <typename D, typename I>
@@ -10,8 +10,15 @@ WINRT_EXPORT namespace winrt
     struct take_ownership_from_abi_t {};
     inline constexpr take_ownership_from_abi_t take_ownership_from_abi{};
 
+    // Map implementations can implement TryLookup with trylookup_from_abi_t as an optimization
+    struct trylookup_from_abi_t {};
+    inline constexpr trylookup_from_abi_t trylookup_from_abi{};
+
     template <typename T>
     struct com_ptr;
+
+    template <typename D, typename I>
+    D* get_self(com_ptr<I> const& from) noexcept;
 
     namespace param
     {
@@ -118,16 +125,22 @@ namespace winrt::impl
     };
 
     template <typename T>
-#if defined(__clang__)
-#if __has_declspec_attribute(uuid)
-    inline const guid guid_v{ __uuidof(T) };
-#else
-    inline constexpr guid guid_v{};
+    struct classic_com_guid_error
+    {
+#if !defined(__MINGW32__) && defined(__clang__) && !WINRT_IMPL_HAS_DECLSPEC_UUID
+        static_assert(std::is_void_v<T> /* dependent_false */, "To use classic COM interfaces, you must compile with -fms-extensions.");
+#elif !defined(WINRT_IMPL_IUNKNOWN_DEFINED)
+        static_assert(std::is_void_v<T> /* dependent_false */, "To use classic COM interfaces, you must include <unknwn.h> before including C++/WinRT headers.");
+#else // MSVC won't hit this struct, so we can safely assume everything that isn't Clang isn't supported
+        static_assert(std::is_void_v<T> /* dependent_false */, "Classic COM interfaces are not supported with this compiler.");
 #endif
-#elif defined(_MSC_VER)
+    };
+
+    template <typename T>
+#if (defined(_MSC_VER) && !defined(__clang__)) || ((WINRT_IMPL_HAS_DECLSPEC_UUID || defined(__MINGW32__)) && defined(WINRT_IMPL_IUNKNOWN_DEFINED))
     inline constexpr guid guid_v{ __uuidof(T) };
 #else
-    inline constexpr guid guid_v{};
+    inline constexpr guid guid_v = classic_com_guid_error<T>::value;
 #endif
 
     template <typename T>
@@ -155,7 +168,7 @@ namespace winrt::impl
     };
 
     template <typename D, typename... I>
-    struct __declspec(empty_bases) require : require_one<D, I>...
+    struct WINRT_IMPL_EMPTY_BASES require : require_one<D, I>...
     {};
 
     template <typename D, typename I>
@@ -168,7 +181,7 @@ namespace winrt::impl
     };
 
     template <typename D, typename... I>
-    struct __declspec(empty_bases) base : base_one<D, I>...
+    struct WINRT_IMPL_EMPTY_BASES base : base_one<D, I>...
     {};
 
     template <typename T>
@@ -183,6 +196,25 @@ namespace winrt::impl
             return {};
         }
     }
+
+    template<typename T, auto empty_value = T{}>
+    struct movable_primitive
+    {
+        T value = empty_value;
+        movable_primitive() = default;
+        movable_primitive(T const& init) : value(init) {}
+        movable_primitive(movable_primitive const&) = default;
+        movable_primitive(movable_primitive&& other) :
+            value(other.detach()) {}
+        movable_primitive& operator=(movable_primitive const&) = default;
+        movable_primitive& operator=(movable_primitive&& other)
+        {
+            value = other.detach();
+            return *this;
+        }
+
+        T detach() { return std::exchange(value, empty_value); }
+    };
 
     template <typename T, typename Enable = void>
     struct arg
@@ -270,4 +302,16 @@ namespace winrt::impl
             return (func(Types{}) || ...);
         }
     };
+
+    template <typename D, typename K>
+    struct has_TryLookup
+    {
+        template <typename U, typename = decltype(std::declval<U>().TryLookup(std::declval<K>(), trylookup_from_abi))> static constexpr bool get_value(int) { return true; }
+        template <typename> static constexpr bool get_value(...) { return false; }
+    public:
+        static constexpr bool value = get_value<D>(0);
+    };
+
+    template <typename D, typename K>
+    inline constexpr bool has_TryLookup_v = has_TryLookup<D, K>::value;
 }

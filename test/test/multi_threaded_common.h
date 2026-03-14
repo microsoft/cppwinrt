@@ -149,11 +149,10 @@ namespace concurrent_collections
         container const* owner;
 
         concurrency_checked_random_access_iterator() : owner(nullptr) {}
-        concurrency_checked_random_access_iterator(container const* c, iterator it) : owner(c), iterator(it) {}
+        concurrency_checked_random_access_iterator(container const* c, iterator it) : iterator(it), owner(c) {}
 
         // Implicit conversion from non-const iterator to const iterator.
-        template<typename = std::enable_if_t<!std::is_same_v<ConvertibleFrom, void>>>
-        concurrency_checked_random_access_iterator(concurrency_checked_random_access_iterator<container, ConvertibleFrom> other) : owner(other.owner), iterator(other.inner()) { }
+        concurrency_checked_random_access_iterator(concurrency_checked_random_access_iterator<container, ConvertibleFrom> other) : iterator(other.inner()), owner(other.owner) { }
 
         concurrency_checked_random_access_iterator(concurrency_checked_random_access_iterator const&) = default;
         concurrency_checked_random_access_iterator& operator=(concurrency_checked_random_access_iterator const&) = default;
@@ -257,7 +256,7 @@ namespace concurrent_collections
 
         concurrency_guard() = default;
         concurrency_guard(concurrency_guard const& other) noexcept
-            : m_lock(0), hook(other.hook)
+            : hook(other.hook), m_lock(0)
         {
             auto guard = other.lock_nonconst();
         }

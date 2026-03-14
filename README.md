@@ -1,5 +1,3 @@
-[![Build status](https://dev.azure.com/microsoft/Dart/_apis/build/status/cppwinrt%20internal%20build)](https://dev.azure.com/microsoft/Dart/_build/latest?definitionId=31784)
-
 # The C++/WinRT language projection
 
 C++/WinRT is an entirely standard C++ language projection for Windows Runtime (WinRT) APIs, implemented as a header-file-based library, and designed to provide you with first-class access to the modern Windows API. With C++/WinRT, you can author and consume Windows Runtime APIs using any standards-compliant C++17 compiler.
@@ -13,24 +11,31 @@ C++/WinRT is an entirely standard C++ language projection for Windows Runtime (W
 
 Don't build C++/WinRT yourself - just download the latest version here: https://aka.ms/cppwinrt/nuget
 
+## Working on the compiler
+
 If you really want to build it yourself, the simplest way to do so is to run the `build_test_all.cmd` script in the root directory. Developers needing to work on the C++/WinRT compiler itself should go through the following steps to arrive at an efficient inner loop:
 
 * Open a dev command prompt pointing at the root of the repo.
 * Open the `cppwinrt.sln` solution.
-* Build the x64 Release configuration of the `prebuild` and `cppwinrt` projects only. Do not attempt to build anything else just yet.
-* Run `build_projection.cmd` in the dev command prompt.
-* Switch to the x64 Debug configuration in Visual Studio and build all projects as needed.
+* Choose a configuration (x64, x86, Release, Debug) and build projects as needed.
 
-# Contributing
+If you are working on an ARM64 specific issue from an x64 or x86 host, you will need to instead:
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+* Open the `cppwinrt.sln` solution
+* Build the x86 version of the "cppwinrt" project first
+* Switch to your preferred configuration and build the test binaries and run them in your test environment
 
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+## Comparing Outputs
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+Comparing the output of the prior release and your current changes will help show the impact of any updates. Starting from
+a dev command prompt at the root of the repo _after_ following the above build instructions:
+
+* Run `build_projection.cmd` in the dev command prompt
+* Run `build_prior_projection.cmd` in the dev command prompt as well
+* Run `prepare_versionless_diffs.cmd` which removes version stamps on both current and prior projection
+* Use a directory-level differencing tool to compare `_build\$(arch)\$(flavor)\winrt` and `_reference\$(arch)\$(flavor)\winrt`
+
+## Testing
+This repository uses the [Catch2](https://github.com/catchorg/Catch2) testing framework.
+- From a Visual Studio command line, you should run `build_tests_all.cmd` to build and run the tests. To Debug the tests, you can debug the associated `_build\$(arch)\$(flavor)\<test>.exe` under the debugger of your choice.
+- Optionally, you can install the [Catch2Adapter](https://marketplace.visualstudio.com/items?itemName=JohnnyHendriks.ext01) to run the tests from Visual Studio.

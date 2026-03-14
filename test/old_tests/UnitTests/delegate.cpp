@@ -680,7 +680,7 @@ TEST_CASE("delegate,MapChangedEventHandler")
 TEST_CASE("delegate,collection")
 {
     //
-    // Mostly a compiliation test to ensure that we can create collections of delegates. This is a rare corner case that was 
+    // Mostly a compilation test to ensure that we can create collections of delegates. This is a rare corner case that was 
     // previously not working.
     //
 

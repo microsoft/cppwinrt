@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "catch.hpp"
+#include <list>
 
 using namespace winrt;
 using namespace Windows::Foundation::Collections;

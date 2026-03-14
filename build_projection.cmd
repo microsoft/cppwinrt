@@ -12,7 +12,6 @@ if /I "%target_platform%" equ "all" (
   )
   call %0 x86 !target_configuration!
   call %0 x64 !target_configuration!
-  call %0 arm !target_configuration!
   call %0 arm64 !target_configuration!
   goto :eof
 )
@@ -27,6 +26,13 @@ if "%target_configuration%"=="" (
  set target_configuration=Debug
 )
 
+set cppwinrt_exe=%~p0\_build\x64\Release\cppwinrt.exe
+
+if not exist "%cppwinrt_exe%" (
+ echo Remember to build the "prebuild" and then "cppwinrt" projects for Release x64 first
+ goto :eof
+)
+
 echo Building projection into %target_platform% %target_configuration%
-%~p0\_build\x64\Release\cppwinrt.exe -in local -out %~p0\_build\%target_platform%\%target_configuration% -verbose
+%cppwinrt_exe% -in local -out %~p0\_build\%target_platform%\%target_configuration% -verbose
 echo.

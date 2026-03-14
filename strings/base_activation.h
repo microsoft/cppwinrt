@@ -18,13 +18,6 @@ namespace winrt::impl
 
     using library_handle = handle_type<library_traits>;
 
-    inline int32_t __stdcall fallback_RoGetActivationFactory(void*, guid const&, void** factory) noexcept
-    {
-        *factory = nullptr;
-        return error_class_not_available;
-    }
-
-
     template <bool isSameInterfaceAsIActivationFactory>
     WINRT_IMPL_NOINLINE hresult get_runtime_activation_factory_impl(param::hstring const& name, winrt::guid const& guid, void** result) noexcept
     {
@@ -33,13 +26,11 @@ namespace winrt::impl
             return winrt_activation_handler(*(void**)(&name), guid, result);
         }
 
-        static int32_t(__stdcall * handler)(void* classId, winrt::guid const& iid, void** factory) noexcept;
-        impl::load_runtime_function(L"combase.dll", "RoGetActivationFactory", handler, fallback_RoGetActivationFactory);
-        hresult hr = handler(*(void**)(&name), guid, result);
+        hresult hr = WINRT_IMPL_RoGetActivationFactory(*(void**)(&name), guid, result);
 
         if (hr == impl::error_not_initialized)
         {
-            auto usage = reinterpret_cast<int32_t(__stdcall*)(void** cookie) noexcept>(WINRT_IMPL_GetProcAddress(WINRT_IMPL_LoadLibraryW(L"combase.dll"), "CoIncrementMTAUsage"));
+            auto usage = reinterpret_cast<int32_t(__stdcall*)(void** cookie) noexcept>(WINRT_IMPL_GetProcAddress(load_library(L"combase.dll"), "CoIncrementMTAUsage"));
 
             if (!usage)
             {
@@ -48,7 +39,7 @@ namespace winrt::impl
 
             void* cookie;
             usage(&cookie);
-            hr = handler(*(void**)(&name), guid, result);
+            hr = WINRT_IMPL_RoGetActivationFactory(*(void**)(&name), guid, result);
         }
 
         if (hr == 0)
@@ -66,7 +57,7 @@ namespace winrt::impl
         {
             path.resize(count);
             path += L".dll";
-            library_handle library(WINRT_IMPL_LoadLibraryW(path.c_str()));
+            library_handle library(load_library(path.c_str()));
             path.resize(path.size() - 4);
 
             if (!library)
@@ -128,8 +119,8 @@ WINRT_EXPORT namespace winrt
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
-#if defined _M_ARM
-#define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER (__dmb(_ARM_BARRIER_ISH));
+#if defined(__GNUC__) && defined(__aarch64__)
+#define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER __asm__ __volatile__ ("dmb ish");
 #elif defined _M_ARM64
 #define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER (__dmb(_ARM64_BARRIER_ISH));
 #endif
@@ -142,8 +133,12 @@ namespace winrt::impl
         int32_t const result = *target;
         _ReadWriteBarrier();
         return result;
-#elif defined _M_ARM || defined _M_ARM64
+#elif defined _M_ARM64
+#if defined(__GNUC__)
+        int32_t const result = *target;
+#else
         int32_t const result = __iso_volatile_load32(reinterpret_cast<int32_t const volatile*>(target));
+#endif
         WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER
         return result;
 #else
@@ -159,7 +154,11 @@ namespace winrt::impl
         _ReadWriteBarrier();
         return result;
 #elif defined _M_ARM64
+#if defined(__GNUC__)
+        int64_t const result = *target;
+#else
         int64_t const result = __iso_volatile_load64(target);
+#endif
         WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER
         return result;
 #else
@@ -186,8 +185,10 @@ namespace winrt::impl
 
 #ifdef _WIN64
     inline constexpr uint32_t memory_allocation_alignment{ 16 };
+#ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable:4324) // structure was padded due to alignment specifier
+#endif
     struct alignas(16) slist_entry
     {
         slist_entry* next;
@@ -207,7 +208,9 @@ namespace winrt::impl
             uint64_t reserved4 : 60;
         } reserved2;
     };
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 #else
     inline constexpr uint32_t memory_allocation_alignment{ 8 };
     struct slist_entry
@@ -254,8 +257,7 @@ namespace winrt::impl
         }
 
     private:
-
-        size_t& m_count;
+        [[maybe_unused]] size_t& m_count; // Field is unused when WINRT_NO_MODULE_LOCK is defined.
     };
 
     struct factory_cache_entry_base
@@ -281,7 +283,12 @@ namespace winrt::impl
             object_and_count current_value{ pointer_value, 0 };
 
 #if defined _WIN64
-            if (1 == _InterlockedCompareExchange128((int64_t*)this, 0, 0, (int64_t*)&current_value))
+#if defined(__GNUC__)
+            bool exchanged = __sync_bool_compare_and_swap((__int128*)this, *(__int128*)&current_value, (__int128)0);
+#else
+            bool exchanged = 1 == _InterlockedCompareExchange128((int64_t*)this, 0, 0, (int64_t*)&current_value);
+#endif
+            if (exchanged)
             {
                 pointer_value->Release();
             }
@@ -298,7 +305,7 @@ namespace winrt::impl
 
     static_assert(std::is_standard_layout_v<factory_cache_entry_base>);
 
-#if !defined _M_IX86 && !defined _M_X64 && !defined _M_ARM && !defined _M_ARM64
+#if !defined _M_IX86 && !defined _M_X64 && !defined _M_ARM64
 #error Unsupported architecture: verify that zero-initialization of SLIST_HEADER is still safe
 #endif
 

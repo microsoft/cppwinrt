@@ -9,6 +9,7 @@ namespace winrt::$rootnamespace$::implementation
         $safeitemname$() 
         {
             // Xaml objects should not call InitializeComponent during construction.
+            // If a Xaml object needs to access a Xaml property during initialization, it should override InitializeComponent.
             // See https://github.com/microsoft/cppwinrt/tree/master/nuget#initializecomponent
         }
 

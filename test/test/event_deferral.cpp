@@ -38,7 +38,7 @@ namespace
         // This exercises the short-circuit logic in deferrable_event_args.
         auto NoDeferralHandler()
         {
-            return [=](Class const& sender, DeferrableEventArgs const& args)
+            return [this](Class const& sender, DeferrableEventArgs const& args)
             {
                 REQUIRE(sender == c);
                 args.IncrementCounter();
@@ -50,7 +50,7 @@ namespace
         // deferrable_event_args.
         auto PointlessDeferralHandler()
         {
-            return [=](Class const& sender, DeferrableEventArgs const& args)
+            return [this](Class const& sender, DeferrableEventArgs const& args)
             {
                 REQUIRE(sender == c);
                 auto deferral = args.GetDeferral();
@@ -61,15 +61,19 @@ namespace
 
         auto TakeDeferralHandler(int startState, int finishState)
         {
-            return [=](Class sender, DeferrableEventArgs args) -> fire_and_forget
+            return [this, startState, finishState](Class sender, DeferrableEventArgs args) -> fire_and_forget
             {
+                // Captures will go out of scope after the first co_await call.  Copy anything needed after that point.
+                const auto startStateCopy = startState;
+                const auto finishStateCopy = finishState;
+
                 REQUIRE(sender == c);
                 auto deferral = args.GetDeferral();
                 co_await resume_background();
-                wait_for_state(startState);
+                wait_for_state(startStateCopy);
                 args.IncrementCounter();
                 deferral.Complete();
-                go_to_state(finishState);
+                go_to_state(finishStateCopy);
             };
         }
     };

@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="5.4.7" />
+    <PackageVersion Include="Microsoft.VisualStudio.SDK" Version="17.3.32804.24" />
+    <PackageVersion Include="Microsoft.VSSDK.BuildTools" Version="17.3.2093" />
+    <PackageVersion Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageVersion Include="System.Text.Json" Version="6.0.10" />
+  </ItemGroup>
+</Project>

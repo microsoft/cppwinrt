@@ -1,3 +1,4 @@
+#include <crtdbg.h>
 #define CATCH_CONFIG_RUNNER
 #include "catch.hpp"
 
@@ -60,5 +61,10 @@ TEST_CASE("module_lock_custom")
 
 int main(int const argc, char** argv)
 {
+    std::set_terminate([] { reportFatal("Abnormal termination"); ExitProcess(1); });
+    _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_FILE);
+    (void)_CrtSetReportFile(_CRT_ASSERT, _CRTDBG_FILE_STDERR);
+    _CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_FILE);
+    (void)_CrtSetReportFile(_CRT_ERROR, _CRTDBG_FILE_STDERR);
     return Catch::Session().run(argc, argv);
 }

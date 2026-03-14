@@ -14,6 +14,7 @@ namespace winrt::Composable::implementation
 
         hstring VirtualMethod() override;
         hstring OverridableVirtualMethod() override;
+        int32_t CallProtectedMethod();
     };
 }
 

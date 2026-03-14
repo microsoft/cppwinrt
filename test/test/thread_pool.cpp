@@ -53,7 +53,7 @@ TEST_CASE("thread_pool")
     uint32_t const stable_counter = test(test_iterations, 1, 1);
     uint32_t const unstable_counter = test(test_iterations, 10, 10);
 
-    // This is determinstic since the queue is single-threaded.
+    // This is deterministic since the queue is single-threaded.
     REQUIRE(stable_counter == test_iterations);
 
     // This is unlikely to fail since the pool is multi-threaded.

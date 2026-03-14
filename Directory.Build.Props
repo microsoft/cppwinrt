@@ -3,9 +3,7 @@
   <!-- Set common MSBuild properties and item metadata for CppWinRT tool and tests -->
 
   <PropertyGroup>
-    <PlatformToolset Condition="'$(PlatformToolset)'=='' and '$(VisualStudioVersion)' == '15.0'">v141</PlatformToolset>
-    <PlatformToolset Condition="'$(PlatformToolset)'=='' and '$(VisualStudioVersion)' == '16.0'">v142</PlatformToolset>
-    <PlatformToolset Condition="'$(PlatformToolset)'==''">v143</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformMinVersion>10.0.18362.0</WindowsTargetPlatformMinVersion>
   </PropertyGroup>
@@ -24,11 +22,18 @@
     Optionally add /t:<project> to only build a given a solution project:
 
         msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1 cppwinrt.sln /t:cppwinrt
+
+    If you have deployed the LLVM toolset elsewhere, add its path to the configuration:
+
+        msbuild /m /p:Configuration=Debug,Platform=x64,Clang=1,LLVMToolsVersion=17.0.5,LLVMInstallDir=C:\llvm cppwinrt.sln
   -->
 
   <PropertyGroup Condition="'$(Clang)'=='1'">
-    <CLToolExe>clang-cl.exe</CLToolExe>
-    <CLToolPath>C:\Program Files\LLVM\bin</CLToolPath>
+    <PlatformToolset>ClangCL</PlatformToolset>
+    <!-- The experimental coroutines aren't supported under Clang -->
+    <CppWinRTLanguageStandard>20</CppWinRTLanguageStandard>
+    <!-- Disable vcpkg autolink because it's not compatible with lld-link -->
+    <VcpkgAutoLink>false</VcpkgAutoLink>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -36,13 +41,15 @@
     <CppWinRTPlatform>$(Platform)</CppWinRTPlatform>
     <CppWinRTPlatform Condition="'$(Platform)'=='Win32'">x86</CppWinRTPlatform>
     <OutDir>$(SolutionDir)_build\$(CppWinRTPlatform)\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)_build\$(CppWinRTPlatform)\$(Configuration)\temp\$(MSBuildProjectName)\</IntDir>
     <CppWinRTDir>$(OutDir)</CppWinRTDir>
-    <CppWinRTDir Condition="'$(Platform)'=='ARM' or '$(Platform)'=='ARM64'">$(SolutionDir)_build\x86\$(Configuration)\</CppWinRTDir>
+    <CppWinRTDir Condition="'$(Platform)'=='ARM64'">$(SolutionDir)_build\x86\$(Configuration)\</CppWinRTDir>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
     <ClCompile>
       <WarningLevel>Level4</WarningLevel>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard Condition="'$(CppWinRTLanguageStandard)'=='' Or '$(CppWinRTLanguageStandard)'=='17'">stdcpp17</LanguageStandard>
@@ -51,10 +58,11 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PreprocessorDefinitions>CPPWINRT_VERSION_STRING="$(CppWinRTBuildVersion)";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(TestsUseAnsiColor)'=='1'">CATCH_CONFIG_COLOUR_ANSI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/bigobj</AdditionalOptions>
       <AdditionalOptions Condition="'$(CppWinRTLanguageStandard)'==''">/await %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalOptions Condition="'$(Clang)'=='1'">-Wno-unused-command-line-argument -fno-delayed-template-parsing -Xclang -fcoroutines-ts -mcx16</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Clang)'=='1'">-Wno-unused-command-line-argument -fno-delayed-template-parsing -mcx16</AdditionalOptions>
     </ClCompile>
     <Link>
       <AdditionalDependencies>onecore.lib</AdditionalDependencies>

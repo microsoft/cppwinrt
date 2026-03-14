@@ -41,6 +41,11 @@ namespace winrt::Composable::implementation
         return 42;
     }
 
+    int32_t Base::ProtectedMethod()
+    {
+        return static_cast<int32_t>(0xDEADBEEF);
+    }
+
     hstring Base::Name() const
     {
         return m_name;

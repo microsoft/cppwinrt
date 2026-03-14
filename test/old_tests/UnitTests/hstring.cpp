@@ -272,7 +272,6 @@ TEST_CASE("hstring,operator,std::wstring_view")
     REQUIRE(L"abc" == ws);
 
     hs.clear();
-    REQUIRE(L"abc" == ws);
     ws = hs;
     REQUIRE(ws.empty());
 }

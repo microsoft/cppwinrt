@@ -5,11 +5,11 @@ using namespace Windows::Foundation;
 
 namespace
 {
-    class some_exception : public std::exception
+    class some_exception : public std::runtime_error
     {
     public:
         some_exception() noexcept
-            : exception("some_exception", 1)
+            : runtime_error("some_exception")
         {
         }
     };

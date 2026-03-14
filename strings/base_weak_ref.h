@@ -23,8 +23,11 @@ WINRT_EXPORT namespace winrt
             {
                 impl::com_ref<default_interface<T>> temp;
                 m_ref->Resolve(guid_of<T>(), put_abi(temp));
-                void* result = get_self<T>(temp);
-                detach_abi(temp);
+                void* result = nullptr;
+                if (temp) {
+                    result = get_self<T>(temp);
+                    detach_abi(temp);
+                }
                 return impl::com_ref<T>{ result, take_ownership_from_abi };
             }
             else

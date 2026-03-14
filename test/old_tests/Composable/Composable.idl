@@ -39,10 +39,17 @@ namespace Composable
         HRESULT OverridableVirtualMethod([out, retval] HSTRING* value);
         [noexcept2] HRESULT OverridableNoexceptMethod([out, retval] int* value);
     };
+
+    [version(1.0), uuid(6EA77EAE-56BC-419D-AE70-211C1A631496), exclusiveto(Base)]
+    interface IBaseProtected : IInspectable
+    {
+        HRESULT ProtectedMethod([out, retval] int* value);
+    };
     
     [version(1.0), uuid(5f3996e1-3cf7-4716-9a3d-11eb5d32caff), exclusiveto(Derived)]
     interface IDerived : IInspectable
     {
+        HRESULT CallProtectedMethod([out, retval] int* value);
     };
 
     [version(1.0), uuid(56dc2c28-edd1-4fa3-91e5-f63c3db47070), exclusiveto(Derived)]
@@ -60,6 +67,7 @@ namespace Composable
     {
         [default] interface IBase;
         [overridable] interface Composable.IBaseOverrides;
+        [protected] interface Composable.IBaseProtected;
     };
 
     [composable(Composable.IDerivedFactory, public, 1.0)]

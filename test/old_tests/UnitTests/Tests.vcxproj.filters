@@ -88,6 +88,7 @@
     <ClCompile Include="conditional_implements_pure.cpp" />
     <ClCompile Include="capture.cpp" />
     <ClCompile Include="com_ref.cpp" />
+    <ClCompile Include="streams.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="catch.hpp" />

@@ -42,7 +42,8 @@ namespace winrt::impl
     std::pair<T, H*> make_delegate_with_shared_state(H&& handler)
     {
         auto d = make_delegate<T, H>(std::forward<H>(handler));
-        return { std::move(d), reinterpret_cast<delegate<T, H>*>(get_abi(d)) };
+        auto abi = reinterpret_cast<delegate<T, H>*>(get_abi(d));
+        return { std::move(d), abi };
     }
 
     template <typename Async>
@@ -98,58 +99,67 @@ namespace winrt::impl
         return async.GetResults();
     }
 
-    template<typename Awaiter>
-    struct disconnect_aware_handler
+    struct ignore_apartment_context {};
+
+    template<bool preserve_context, typename Awaiter>
+    struct disconnect_aware_handler : private std::conditional_t<preserve_context, resume_apartment_context, ignore_apartment_context>
     {
         disconnect_aware_handler(Awaiter* awaiter, coroutine_handle<> handle) noexcept
             : m_awaiter(awaiter), m_handle(handle) { }
 
-        disconnect_aware_handler(disconnect_aware_handler&& other) noexcept
-            : m_context(std::move(other.m_context))
-            , m_awaiter(std::exchange(other.m_awaiter, {}))
-            , m_handle(std::exchange(other.m_handle, {})) { }
+        disconnect_aware_handler(disconnect_aware_handler&& other) = default;
 
         ~disconnect_aware_handler()
         {
-            if (m_handle) Complete();
+            if (m_handle.value) Complete();
         }
 
         template<typename Async>
         void operator()(Async&&, Windows::Foundation::AsyncStatus status)
         {
-            m_awaiter->status = status;
+            m_awaiter.value->status = status;
             Complete();
         }
 
     private:
-        resume_apartment_context m_context;
-        Awaiter* m_awaiter;
-        coroutine_handle<> m_handle;
+        movable_primitive<Awaiter*> m_awaiter;
+        movable_primitive<coroutine_handle<>, nullptr> m_handle;
 
         void Complete()
         {
-            if (m_awaiter->suspending.exchange(false, std::memory_order_release))
+            if (m_awaiter.value->suspending.exchange(false, std::memory_order_release))
             {
-                m_handle = nullptr; // resumption deferred to await_suspend
+                m_handle.value = nullptr; // resumption deferred to await_suspend
             }
             else
             {
-                resume_apartment(m_context, std::exchange(m_handle, {}), &m_awaiter->failure);
+                auto handle = m_handle.detach();
+                if constexpr (preserve_context)
+                {
+                    if (!resume_apartment(*this, handle, &m_awaiter.value->failure))
+                    {
+                        handle.resume();
+                    }
+                }
+                else
+                {
+                    handle.resume();
+                }
             }
-
         }
     };
 
 #ifdef WINRT_IMPL_COROUTINES
-    template <typename Async>
-    struct await_adapter : enable_await_cancellation
+    template <typename Async, bool preserve_context = true>
+    struct await_adapter : cancellable_awaiter<await_adapter<Async, preserve_context>>
     {
-        await_adapter(Async const& async) : async(async) { }
+        template<typename T>
+        await_adapter(T&& async) : async(std::forward<T>(async)) { }
 
-        Async const& async;
+        std::conditional_t<preserve_context, Async const&, Async> async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
         int32_t failure = 0;
-        std::atomic<bool> suspending{ true };
+        std::atomic<bool> suspending = true;
 
         void enable_cancellation(cancellable_promise* promise)
         {
@@ -164,18 +174,11 @@ namespace winrt::impl
             return false;
         }
 
-        auto await_suspend(coroutine_handle<> handle)
+        template <typename T>
+        bool await_suspend(coroutine_handle<T> handle)
         {
-            auto extend_lifetime = async;
-            async.Completed(disconnect_aware_handler(this, handle));
-#ifdef _RESUMABLE_FUNCTIONS_SUPPORTED
-            if (!suspending.exchange(false, std::memory_order_acquire))
-            {
-                handle.resume();
-            }
-#else
-            return suspending.exchange(false, std::memory_order_acquire);
-#endif
+            this->set_cancellable_promise_from_handle(handle);
+            return register_completed_callback(handle);
         }
 
         auto await_resume() const
@@ -186,6 +189,17 @@ namespace winrt::impl
         }
 
     private:
+        bool register_completed_callback(coroutine_handle<> handle)
+        {
+            if constexpr (!preserve_context)
+            {
+                // Ensure that the illegal delegate assignment propagates properly.
+                suspending.store(true, std::memory_order_relaxed);
+            }
+            async.Completed(disconnect_aware_handler<preserve_context, await_adapter>(this, handle));
+            return suspending.exchange(false, std::memory_order_acquire);
+        }
+
         static fire_and_forget cancel_asynchronously(Async async)
         {
             co_await winrt::resume_background();
@@ -246,6 +260,15 @@ namespace winrt::impl
 }
 
 #ifdef WINRT_IMPL_COROUTINES
+WINRT_EXPORT namespace winrt
+{
+    template<typename Async, typename = std::enable_if_t<std::is_convertible_v<Async, winrt::Windows::Foundation::IAsyncInfo>>>
+    inline impl::await_adapter<std::decay_t<Async>, false> resume_agile(Async&& async)
+    {
+        return { std::forward<Async>(async) };
+    };
+}
+
 WINRT_EXPORT namespace winrt::Windows::Foundation
 {
     inline impl::await_adapter<IAsyncAction> operator co_await(IAsyncAction const& async)
@@ -328,6 +351,10 @@ namespace winrt::impl
             return m_promise->enable_cancellation_propagation(value);
         }
 
+        bool originate_on_cancel(bool value = true) const noexcept
+        {
+            return m_promise->originate_on_cancel(value);
+        }
     private:
 
         Promise* m_promise;
@@ -373,7 +400,7 @@ namespace winrt::impl
     };
 
     template <typename Derived, typename AsyncInterface, typename TProgress = void>
-    struct promise_base : implements<Derived, AsyncInterface, Windows::Foundation::IAsyncInfo>
+    struct promise_base : implements<Derived, AsyncInterface, Windows::Foundation::IAsyncInfo>, cancellable_promise
     {
         using AsyncStatus = Windows::Foundation::AsyncStatus;
 
@@ -414,7 +441,7 @@ namespace winrt::impl
 
             if (handler)
             {
-                invoke(handler, *this, status);
+                winrt::impl::invoke(handler, *this, status);
             }
         }
 
@@ -461,7 +488,14 @@ namespace winrt::impl
                 if (m_status.load(std::memory_order_relaxed) == AsyncStatus::Started)
                 {
                     m_status.store(AsyncStatus::Canceled, std::memory_order_relaxed);
-                    m_exception = std::make_exception_ptr(hresult_canceled());
+                    if (cancellable_promise::originate_on_cancel())
+                    {
+                        m_exception = std::make_exception_ptr(hresult_canceled());
+                    }
+                    else
+                    {
+                        m_exception = std::make_exception_ptr(hresult_canceled(hresult_error::no_originate));
+                    }
                     cancel = std::move(m_cancel);
                 }
             }
@@ -471,7 +505,7 @@ namespace winrt::impl
                 cancel();
             }
 
-            m_cancellable.cancel();
+            cancellable_promise::cancel();
         }
 
         void Close() const noexcept
@@ -539,7 +573,7 @@ namespace winrt::impl
 
             if (handler)
             {
-                invoke(handler, *this, status);
+                winrt::impl::invoke(handler, *this, status);
             }
         }
 
@@ -577,11 +611,6 @@ namespace winrt::impl
 
         auto final_suspend() noexcept
         {
-            if (winrt_suspend_handler)
-            {
-                winrt_suspend_handler(this);
-            }
-
             return final_suspend_awaiter{ this };
         }
 
@@ -606,14 +635,21 @@ namespace winrt::impl
         }
 
         template <typename Expression>
-        auto await_transform(Expression&& expression)
+        Expression&& await_transform(Expression&& expression)
         {
             if (Status() == AsyncStatus::Canceled)
             {
-                throw winrt::hresult_canceled();
+                if (cancellable_promise::originate_on_cancel())
+                {
+                    throw winrt::hresult_canceled();
+                }
+                else
+                {
+                    throw winrt::hresult_canceled(hresult_error::no_originate);
+                }
             }
 
-            return notify_awaiter<Expression>{ static_cast<Expression&&>(expression), m_propagate_cancellation ? &m_cancellable : nullptr };
+            return std::forward<Expression>(expression);
         }
 
         cancellation_token<Derived> await_transform(get_cancellation_token_t) noexcept
@@ -644,11 +680,6 @@ namespace winrt::impl
             }
         }
 
-        bool enable_cancellation_propagation(bool value) noexcept
-        {
-            return std::exchange(m_propagate_cancellation, value);
-        }
-
 #if defined(_DEBUG) && !defined(WINRT_NO_MAKE_DETECTION)
         void use_make_function_to_create_this_object() final
         {
@@ -669,10 +700,8 @@ namespace winrt::impl
         slim_mutex m_lock;
         async_completed_handler_t<AsyncInterface> m_completed;
         winrt::delegate<> m_cancel;
-        cancellable_promise m_cancellable;
         std::atomic<AsyncStatus> m_status;
         bool m_completed_assigned{ false };
-        bool m_propagate_cancellation{ false };
     };
 }
 

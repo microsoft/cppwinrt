@@ -134,7 +134,7 @@ TEST_CASE("out_params")
         REQUIRE(value[3] == nullptr);
     }
     {
-        std::array<Struct, 3> value{ {L"First", L"Second"} };
+        std::array<Struct, 3> value{ { { L"First" }, { L"Second"} } };
         object.RefStructArray(value);
         REQUIRE(value[0].First == L"1");
         REQUIRE(value[0].Second == L"2");
@@ -260,7 +260,7 @@ TEST_CASE("out_params")
         REQUIRE(value[3] == nullptr);
     }
     {
-        std::array<Struct, 3> value{ {L"First", L"Second"} };
+        std::array<Struct, 3> value{ { { L"First" }, { L"Second"} } };
         REQUIRE_THROWS_AS(object.RefStructArray(value), hresult_invalid_argument);
         REQUIRE(value[0].First == L"");
         REQUIRE(value[0].Second == L"");

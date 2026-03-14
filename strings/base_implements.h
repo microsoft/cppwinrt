@@ -110,10 +110,25 @@ namespace winrt::impl
     template <typename D, typename I, typename Enable>
     struct producer_convert : producer<D, typename default_interface<I>::type>
     {
+#ifdef __clang__
+        // This is sub-optimal in that it requires an AddRef and Release of the
+        // implementation type for every conversion, but it works around an
+        // issue where Clang ignores the conversion of producer_ref<I> const
+        // to I&& (an rvalue ref that cannot bind a const rvalue).
+        // See CWG rev. 110 active issue 2077, "Overload resolution and invalid
+        // rvalue-reference initialization"
+        operator I() const noexcept
+        {
+            I result{ nullptr };
+            copy_from_abi(result, (produce<D, typename default_interface<I>::type>*)this);
+            return result;
+        }
+#else
         operator producer_ref<I> const() const noexcept
         {
             return { (produce<D, typename default_interface<I>::type>*)this };
         }
+#endif
 
         operator producer_vtable<I> const() const noexcept
         {
@@ -225,6 +240,12 @@ WINRT_EXPORT namespace winrt
     D* get_self(I const& from) noexcept
     {
         return &static_cast<impl::produce<D, default_interface<I>>*>(get_abi(from))->shim();
+    }
+
+    template <typename D, typename I>
+    D* get_self(com_ptr<I> const& from) noexcept
+    {
+        return static_cast<D*>(static_cast<impl::producer<D, I>*>(from.get()));
     }
 
     template <typename D, typename I>
@@ -340,7 +361,9 @@ namespace winrt::impl
     template <typename ... T>
     struct uncloaked_iids<interface_list<T...>>
     {
+#ifdef _MSC_VER
 #pragma warning(suppress: 4307)
+#endif
         static constexpr std::array<guid, sizeof...(T)> value{ winrt::guid_of<T>() ... };
     };
 
@@ -749,7 +772,7 @@ namespace winrt::impl
     };
 
     template <bool>
-    struct __declspec(empty_bases) root_implements_composing_outer
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer
     {
     protected:
         static constexpr bool is_composing = false;
@@ -757,7 +780,7 @@ namespace winrt::impl
     };
 
     template <>
-    struct __declspec(empty_bases) root_implements_composing_outer<true>
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composing_outer<true>
     {
         template <typename Qi>
         auto try_as() const noexcept
@@ -769,23 +792,34 @@ namespace winrt::impl
         {
             return m_inner.operator bool();
         }
+
+        template <typename To, typename From>
+        friend auto winrt::impl::try_as_with_reason(From ptr, hresult& code) noexcept;
+
     protected:
         static constexpr bool is_composing = true;
         Windows::Foundation::IInspectable m_inner;
+
+    private:
+        template <typename Qi>
+        auto try_as_with_reason(hresult& code) const noexcept
+        {
+            return m_inner.try_as_with_reason<Qi>(code);
+        }
     };
 
     template <typename D, bool>
-    struct __declspec(empty_bases) root_implements_composable_inner
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composable_inner
     {
     protected:
-        static constexpr inspectable_abi* outer() noexcept { return nullptr; }
+        static inspectable_abi* outer() noexcept { return nullptr; }
 
         template <typename, typename, typename>
         friend class produce_dispatch_to_overridable_base;
     };
 
     template <typename D>
-    struct __declspec(empty_bases) root_implements_composable_inner<D, true> : producer<D, INonDelegatingInspectable>
+    struct WINRT_IMPL_EMPTY_BASES root_implements_composable_inner<D, true> : producer<D, INonDelegatingInspectable>
     {
     protected:
         inspectable_abi* outer() noexcept { return m_outer; }
@@ -800,7 +834,7 @@ namespace winrt::impl
     };
 
     template <typename D, typename... I>
-    struct __declspec(novtable) root_implements
+    struct WINRT_IMPL_NOVTABLE root_implements
         : root_implements_composing_outer<std::disjunction_v<std::is_same<composing, I>...>>
         , root_implements_composable_inner<D, std::disjunction_v<std::is_same<composable, I>...>>
         , module_lock_updater<!std::disjunction_v<std::is_same<no_module_lock, I>...>>
@@ -999,8 +1033,8 @@ namespace winrt::impl
                     {
                         return error_bad_alloc;
                     }
-                    *array = std::copy(local_iids.second, local_iids.second + local_count, *array);
-                    std::copy(inner_iids.cbegin(), inner_iids.cend(), *array);
+                    auto next = std::copy(local_iids.second, local_iids.second + local_count, *array);
+                    std::copy(inner_iids.cbegin(), inner_iids.cend(), next);
                 }
                 else
                 {
@@ -1133,19 +1167,16 @@ namespace winrt::impl
                 return 0;
             }
 
-            if constexpr (is_agile::value)
-            {
-                if (is_guid_of<IAgileObject>(id))
-                {
-                    *object = get_unknown();
-                    AddRef();
-                    return 0;
-                }
+            return query_interface_common(id, object);
+        }
 
-                if (is_guid_of<IMarshal>(id))
-                {
-                    return make_marshaler(get_unknown(), object);
-                }
+        WINRT_IMPL_NOINLINE int32_t query_interface_common(guid const& id, void** object) noexcept
+        {
+            if (is_guid_of<Windows::Foundation::IUnknown>(id))
+            {
+                *object = get_unknown();
+                AddRef();
+                return 0;
             }
 
             if constexpr (is_inspectable::value)
@@ -1158,19 +1189,27 @@ namespace winrt::impl
                 }
             }
 
-            if (is_guid_of<Windows::Foundation::IUnknown>(id))
-            {
-                *object = get_unknown();
-                AddRef();
-                return 0;
-            }
-
             if constexpr (is_weak_ref_source::value)
             {
                 if (is_guid_of<impl::IWeakReferenceSource>(id))
                 {
                     *object = make_weak_ref();
                     return *object ? error_ok : error_bad_alloc;
+                }
+            }
+            
+            if constexpr (is_agile::value)
+            {
+                if (is_guid_of<impl::IAgileObject>(id))
+                {
+                    *object = get_unknown();
+                    AddRef();
+                    return 0;
+                }
+
+                if (is_guid_of<IMarshal>(id))
+                {
+                    return make_marshaler(get_unknown(), object);
                 }
             }
 
@@ -1188,8 +1227,7 @@ namespace winrt::impl
                     return decode_weak_ref(count_or_pointer)->get_source();
                 }
 
-                com_ptr<weak_ref_t> weak_ref;
-                *weak_ref.put() = new (std::nothrow) weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer));
+                com_ptr<weak_ref_t> weak_ref(new (std::nothrow) weak_ref_t(get_unknown(), static_cast<uint32_t>(count_or_pointer)), take_ownership_from_abi);
 
                 if (!weak_ref)
                 {
@@ -1198,7 +1236,7 @@ namespace winrt::impl
 
                 uintptr_t const encoding = encode_weak_ref(weak_ref.get());
 
-                for (;;)
+                while (true)
                 {
                     if (m_references.compare_exchange_weak(count_or_pointer, encoding, std::memory_order_acq_rel, std::memory_order_relaxed))
                     {
@@ -1352,6 +1390,10 @@ namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable: 4702) // Compiler bug causing spurious "unreachable code" warnings
+#endif
     template <typename D, typename... Args>
     auto make(Args&&... args)
     {
@@ -1405,6 +1447,9 @@ WINRT_EXPORT namespace winrt
             return { impl::create_and_initialize<D>(std::forward<Args>(args)...), take_ownership_from_abi };
         }
     }
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
 
     template <typename... FactoryClasses>
     inline void clear_factory_static_lifetime()
@@ -1462,6 +1507,10 @@ WINRT_EXPORT namespace winrt
             return result;
         }
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Winconsistent-missing-override"
+#endif
         impl::hresult_type __stdcall QueryInterface(impl::guid_type const& id, void** object) noexcept
         {
             return root_implements_type::QueryInterface(reinterpret_cast<guid const&>(id), object);
@@ -1493,6 +1542,9 @@ WINRT_EXPORT namespace winrt
         {
             return root_implements_type::abi_GetTrustLevel(reinterpret_cast<Windows::Foundation::TrustLevel*>(value));
         }
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
         void* find_interface(guid const& id) const noexcept override
         {

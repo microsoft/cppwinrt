@@ -4,6 +4,22 @@
 #define WINRT_IMPL_STRING_1(expression) #expression
 #define WINRT_IMPL_STRING(expression) WINRT_IMPL_STRING_1(expression)
 
+#if defined(_MSC_VER)
+#define WINRT_IMPL_FF_NOVTABLE __declspec(novtable)
+#else
+#define WINRT_IMPL_FF_NOVTABLE
+#endif
+
+#if defined(__clang__) && defined(__has_attribute)
+#if __has_attribute(__lto_visibility_public__)
+#define WINRT_IMPL_FF_PUBLIC __attribute__((lto_visibility_public))
+#else
+#define WINRT_IMPL_FF_PUBLIC
+#endif // __has_attribute(__lto_visibility_public__)
+#else
+#define WINRT_IMPL_FF_PUBLIC
+#endif
+
 #if !defined(WINRT_FAST_ABI_SIZE)
 #define WINRT_FAST_ABI_SIZE %
 #endif
@@ -30,7 +46,7 @@ namespace winrt::impl
             }
         };
 
-        struct __declspec(novtable) inspectable
+        struct WINRT_IMPL_FF_NOVTABLE WINRT_IMPL_FF_PUBLIC inspectable
         {
             virtual int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept = 0;
             virtual uint32_t __stdcall AddRef() noexcept = 0;
@@ -47,7 +63,7 @@ namespace winrt::impl
         std::atomic<uint32_t> m_references{ 1 };
 
         fast_abi_forwarder(void* owner, guid const& iid, std::size_t offset) noexcept :
-            m_vfptr(s_vtable), m_owner(static_cast<inspectable*>(owner)), m_iid(iid), m_offset(offset)
+            m_vfptr(s_vtable), m_owner(static_cast<inspectable*>(owner)), m_offset(offset), m_iid(iid)
         {
             m_owner->AddRef();
         }
@@ -100,6 +116,11 @@ namespace winrt::impl
             return self->m_owner->GetTrustLevel(level);
         }
 
+
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wmicrosoft-cast"
+#endif
         static inline void* const s_vtable[] =
         {
             QueryInterface,
@@ -109,6 +130,9 @@ namespace winrt::impl
             GetRuntimeClassName,
             GetTrustLevel,
 %        };
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
     };
 
     // Enforce assumptions made by thunk asm code
@@ -130,3 +154,5 @@ namespace winrt
 
 #undef WINRT_IMPL_STRING
 #undef WINRT_IMPL_STRING_1
+#undef WINRT_IMPL_FF_NOVTABLE
+#undef WINRT_IMPL_FF_PUBLIC

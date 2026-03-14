@@ -41,19 +41,19 @@ namespace
             REQUIRE(unbox_value_or<T>(wrong_type, v2) == v2);
         }
 
-        REQUIRE(object.as<T>() == v1);
-        REQUIRE(object.try_as<T>() == v1);
-        REQUIRE(nothing.try_as<T>() == std::nullopt);
+        REQUIRE(object.template as<T>() == v1);
+        REQUIRE(object.template try_as<T>() == v1);
+        REQUIRE(nothing.template try_as<T>() == std::nullopt);
         REQUIRE(wrong_type.try_as<T>() == std::nullopt);
 
         T result{ v2 };
-        object.as<T>(result);
+        object.template as<T>(result);
         REQUIRE(result == v1);
 
         result = v1;
         REQUIRE(v1 != empty<T>()); // Test must pass a v1 that is not equal to the empty value.
 
-        REQUIRE(!nothing.try_as<T>(result));
+        REQUIRE(!nothing.template try_as<T>(result));
         REQUIRE(result == empty<T>()); // try_as explicitly empties the result on failure
 
         result = v1;

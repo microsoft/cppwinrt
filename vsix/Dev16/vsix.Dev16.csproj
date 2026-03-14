@@ -41,8 +41,8 @@
       <Link>%(Filename)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="$(NupkgDir)\Microsoft.Windows.CppWinRT.$(CppWinRTVersion).nupkg">
-      <Link>Packages\Microsoft.Windows.CppWinRT.$(CppWinRTVersion).nupkg</Link>
+    <Content Include="$(NupkgDir)\Microsoft.Windows.CppWinRT.$(NugetPackageVersion).nupkg">
+      <Link>Packages\Microsoft.Windows.CppWinRT.$(NugetPackageVersion).nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="$(VSIXRootDir)..\natvis\cppwinrt.natvis">
@@ -61,7 +61,11 @@
       <Link>x64\%(Filename)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <None Include="$(Deployment)\source.extension.vsixmanifest">
+	<Content Include="$(NatvisDirarm64)\cppwinrtvisualizer.dll">
+      <Link>arm64\%(Filename)%(Extension)</Link>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
+	<None Include="$(Deployment)\source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
@@ -80,14 +84,15 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.SDK" ExcludeAssets="runtime">
-      <Version>16.10.31321.278</Version>
+      <VersionOverride>16.10.31321.278</VersionOverride>
       <IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VSSDK.BuildTools">
-      <Version>17.0.1619-preview1</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(VSIXRootDir)Resources\VSPackage.resx">

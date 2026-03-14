@@ -17,7 +17,7 @@ using namespace Windows::Security::Cryptography::Certificates;
 //
 // This is a helper to create a data reader for use in testing arrays.
 //
-static IAsyncOperation<IDataReader> CreateDataReader(std::initializer_list<byte> values)
+static IAsyncOperation<IDataReader> CreateDataReader(std::initializer_list<byte> /*values*/)
 {
     InMemoryRandomAccessStream stream;
     DataWriter writer(stream);
@@ -344,7 +344,7 @@ TEST_CASE("array,at,throw")
         try
         {
             a.at(3);
-            FAIL(L"Previous line should throw");
+            FAIL("Previous line should throw");
         }
         catch (std::out_of_range const & e)
         {
@@ -357,7 +357,7 @@ TEST_CASE("array,at,throw")
         try
         {
             test_array_ref_at_throw({ 1, 2, 3 });
-            FAIL(L"Previous line should throw");
+            FAIL("Previous line should throw");
         }
         catch (std::out_of_range const & e)
         {
@@ -372,7 +372,7 @@ TEST_CASE("array,at,throw")
         try
         {
             a.at(5);
-            FAIL(L"Previous line should throw");
+            FAIL("Previous line should throw");
         }
         catch (std::out_of_range const & e)
         {
@@ -941,13 +941,20 @@ TEST_CASE("array_view,cv array_view")
         array_view<volatile int> a2 = a;
         REQUIRE(a2.data() == a.data());
         REQUIRE(a2.size() == 3);
+        // For libc++ as of LLVM 15, std::equal is unable to compare between
+        // volatile and non-volatile elements of ranges.
+        // https://github.com/llvm/llvm-project/issues/59021
+#if !defined(_LIBCPP_VERSION) || _LIBCPP_VERSION >= 160000
         REQUIRE(a2 == a);
+#endif
     }
     {
         array_view<const volatile int> a2 = a;
         REQUIRE(a2.data() == a.data());
         REQUIRE(a2.size() == 3);
+#if !defined(_LIBCPP_VERSION) || _LIBCPP_VERSION >= 160000
         REQUIRE(a2 == a);
+#endif
     }
 }
 

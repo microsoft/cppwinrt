@@ -18,10 +18,17 @@ struct Test_GetRuntimeClassName_NoOverride : implements<Test_GetRuntimeClassName
 
 struct Test_GetRuntimeClassName_Override : implements<Test_GetRuntimeClassName_Override, Windows::Foundation::IInspectable>
 {
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Woverloaded-virtual"
+#endif
     hstring GetRuntimeClassName()
     {
         return L"GetRuntimeClassName";
     }
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 };
 
 TEST_CASE("Test_GetRuntimeClassName_NoOverride")
