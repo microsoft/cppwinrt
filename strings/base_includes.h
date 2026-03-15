@@ -49,6 +49,4 @@
 
 #ifdef __cpp_lib_coroutine
 #include <coroutine>
-#else
-#error C++/WinRT requires coroutine support, which is currently missing. Try enabling C++20 in your compiler or adding '/await:strict' to your C++17 build.
 #endif
