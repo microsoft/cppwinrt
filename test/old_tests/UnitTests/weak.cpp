@@ -99,13 +99,13 @@ namespace
 
     // Returns an IAsyncAction that has not completed.
     // Call the resume() handle to complete it.
-    winrt::Windows::Foundation::IAsyncAction SuspendAction(impl::coroutine_handle<>& resume)
+    winrt::Windows::Foundation::IAsyncAction SuspendAction(std::coroutine_handle<>& resume)
     {
         struct awaiter
         {
-            impl::coroutine_handle<>& resume;
+            std::coroutine_handle<>& resume;
             bool await_ready() { return false; }
-            void await_suspend(impl::coroutine_handle<> handle) { resume = handle; }
+            void await_suspend(std::coroutine_handle<> handle) { resume = handle; }
             void await_resume() {}
         };
 
@@ -516,7 +516,7 @@ TEST_CASE("weak,coroutine")
 
     // Start a coroutine but don't complete it yet.
     // Confirm that weak references resolve.
-    impl::coroutine_handle<> resume;
+    std::coroutine_handle<> resume;
     weak = winrt::weak_ref(SuspendAction(resume));
     REQUIRE(weak.get() != nullptr);
     // Now complete the coroutine. Confirm that weak references no longer resolve.
