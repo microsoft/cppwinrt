@@ -11,7 +11,7 @@ namespace cppwinrt
             auto wrap_file_guard = wrap_open_file_guard(w, "BASE");
 
             w.write(strings::base_includes);
-            w.write("#include \"shared.h\"\n");
+            w.write_root_include("shared");
             w.write(strings::base_macros);
             w.write(strings::base_types);
             w.write(strings::base_extern);

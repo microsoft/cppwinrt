@@ -1028,9 +1028,8 @@ namespace cppwinrt
         auto method_name = get_name(method);
         auto type = method.Parent();
 
-        w.write("        %% %(%) const%;\n",
+        w.write("        %auto %(%) const%;\n",
             is_get_overload(method) ? "[[nodiscard]] " : "",
-            signature.return_signature(),
             method_name,
             bind<write_consume_params>(signature),
             is_noexcept(method) ? " noexcept" : "");
@@ -1172,7 +1171,7 @@ namespace cppwinrt
                 // The `noexcept` versions will crash if check_hresult throws but that is no different than previous
                 // behavior where it would not check the cast result and nullptr crash.  At least the exception will terminate
                 // immediately while preserving the error code and local variables.
-                format = R"(    template <typename D%> % consume_%<D%>::%(%) const noexcept
+                format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
         consume_noexcept_remove_overload<%, D>(static_cast<D const*>(this), &abi_t<%>::%%);%
     }
@@ -1180,7 +1179,7 @@ namespace cppwinrt
             }
             else
             {
-                format = R"(    template <typename D%> % consume_%<D%>::%(%) const noexcept
+                format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
     {%
         consume_noexcept<%, D>(static_cast<D const*>(this), &abi_t<%>::%%);%
     }
@@ -1189,7 +1188,7 @@ namespace cppwinrt
         }
         else
         {
-            format = R"(    template <typename D%> % consume_%<D%>::%(%) const
+            format = R"(    template <typename D%> auto consume_%<D%>::%(%) const
     {%
         consume_general<%, D>(static_cast<D const*>(this), &abi_t<%>::%%);%
     }
@@ -1198,7 +1197,6 @@ namespace cppwinrt
 
         w.write(format,
             bind<write_comma_generic_typenames>(generics),
-            signature.return_signature(),
             type_impl_name,
             bind<write_comma_generic_types>(generics),
             method_name,
@@ -1236,14 +1234,13 @@ namespace cppwinrt
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
 
-        std::string_view format = R"(    inline % %::%(%) const%
+        std::string_view format = R"(    inline auto %::%(%) const%
     {
         return static_cast<% const&>(*this).%(%);
     }
 )";
 
         w.write(format,
-            signature.return_signature(),
             class_type.TypeName(),
             method_name,
             bind<write_consume_params>(signature),
@@ -2088,7 +2085,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_interface_override_method(writer& w, MethodDef const& method, std::string_view const& interface_name)
     {
-        auto format = R"(    template <typename D> % %T<D>::%(%) const%
+        auto format = R"(    template <typename D> auto %T<D>::%(%) const%
     {
         return shim().template try_as<%>().%(%);
     }
@@ -2098,7 +2095,6 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         auto method_name = get_name(method);
 
         w.write(format,
-            signature.return_signature(),
             interface_name,
             method_name,
             bind<write_consume_params>(signature),
@@ -2852,7 +2848,6 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
     struct write_structs_result
     {
         bool promote = false;
-        bool has_reference_field = false;
     };
 
     static write_structs_result write_structs(writer& w, std::vector<TypeDef> const& types)
@@ -2967,11 +2962,6 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 if (!result.promote && !starts_with(field.second, cpp_namespace))
                 {
                     result.promote = true;
-                }
-
-                if (!result.has_reference_field && starts_with(field.second, "winrt::Windows::Foundation::IReference<"))
-                {
-                    result.has_reference_field = true;
                 }
             }
         }

@@ -346,7 +346,8 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             writer ixx;
             write_preamble(ixx);
             ixx.write("export module winrt;\n");
-            ixx.write("export import :base;\n");
+            ixx.write("export ");
+            ixx.write_import("base");
 
             for (auto&&[ns, members] : c.namespaces())
             {
@@ -355,7 +356,8 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
                     continue;
                 }
 
-                ixx.write("export import :%;\n", ns);
+                ixx.write("export ");
+                ixx.write_import(ns);
 
                 group.add([&, &ns = ns, &members = members]
                 {

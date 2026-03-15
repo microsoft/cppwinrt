@@ -410,7 +410,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
             return false;
         }
 
-        return true;//left.Value() == right.Value();
+        return left.Value() == right.Value();
     }
 
     template <typename T>
