@@ -1172,7 +1172,7 @@ namespace cppwinrt
                 // The `noexcept` versions will crash if check_hresult throws but that is no different than previous
                 // behavior where it would not check the cast result and nullptr crash.  At least the exception will terminate
                 // immediately while preserving the error code and local variables.
-                format = R"(    template <typename D%> auto consume_%<D%>::%(%) const noexcept
+                format = R"(    template <typename D%> % consume_%<D%>::%(%) const noexcept
     {%
         consume_noexcept_remove_overload<%, D>(static_cast<D const*>(this), &abi_t<%>::%%);%
     }
@@ -3513,30 +3513,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         if (namespace_name == "Windows.Foundation")
         {
             w.write(strings::base_reference_produce_1);
-            //TODO: figure out why compiler ICEs w.write(strings::base_stringable_format_1);
-        }
-    }
-
-    static void write_namespace_special_includes(writer& w, std::string_view const& namespace_name)
-    {
-        if (namespace_name == "Windows.Foundation")
-        {
-            w.write("#include <chrono>\n");
-            w.write("#include <coroutine>\n");
-            w.write("#include <optional>\n");
-        }
-        else if (namespace_name == "Windows.Foundation.Collections")
-        {
-            w.write("#include <algorithm>\n");
-            w.write("#include <iterator>\n");
-            w.write("#include <map>\n");
-            w.write("#include <optional>\n");
-            w.write("#include <unordered_map>\n");
-            w.write("#include <utility>\n");
-        }
-        else if (namespace_name == "Windows.UI.Xaml.Interop")
-        {
-            w.write("#include <string_view>\n");
+            w.write(strings::base_stringable_format_1);
         }
     }
 }

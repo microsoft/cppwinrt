@@ -355,7 +355,6 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
                     continue;
                 }
 
-                ixx.write("import :%.two;\n", ns);
                 ixx.write("export import :%;\n", ns);
 
                 group.add([&, &ns = ns, &members = members]
@@ -368,6 +367,8 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             }
 
             ixx.flush_to_file(settings.output_folder + "winrt/ixx/winrt.ixx");
+
+            write_shared_h();
 
             if (settings.base)
             {

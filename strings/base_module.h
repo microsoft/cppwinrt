@@ -5,5 +5,6 @@
 // to make use of it.
 #include <Unknwn.h>
 
-export module winrt:base;
 #define WINRT_EXPORT export
+
+export module winrt:base;

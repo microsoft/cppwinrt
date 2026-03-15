@@ -53,7 +53,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard Condition="'$(CppWinRTLanguageStandard)'=='' Or '$(CppWinRTLanguageStandard)'=='17'">stdcpp17</LanguageStandard>
-      <LanguageStandard Condition="'$(CppWinRTLanguageStandard)'=='20'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(CppWinRTLanguageStandard)'=='20'">stdcpp20</LanguageStandard>
       <LanguageStandard Condition="'$(CppWinRTLanguageStandard)'=='latest'">stdcpplatest</LanguageStandard>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>

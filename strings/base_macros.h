@@ -1,30 +1,10 @@
 
-#ifdef _DEBUG
-
-#define WINRT_ASSERT _ASSERTE
-#define WINRT_VERIFY WINRT_ASSERT
-#define WINRT_VERIFY_(result, expression) WINRT_ASSERT(result == expression)
-
-#else
-
-#define WINRT_ASSERT(expression) ((void)0)
-#define WINRT_VERIFY(expression) (void)(expression)
-#define WINRT_VERIFY_(result, expression) (void)(expression)
-
-#endif
-
-#define WINRT_IMPL_SHIM(...) (*(abi_t<__VA_ARGS__>**)&static_cast<__VA_ARGS__ const&>(static_cast<D const&>(*this)))
-
 #ifdef _MSC_VER
 // Note: this is a workaround for a false-positive warning produced by the Visual C++ 15.9 compiler.
 #pragma warning(disable : 5046)
 
 // Note: this is a workaround for a false-positive warning produced by the Visual C++ 16.3 compiler.
 #pragma warning(disable : 4268)
-#endif
-
-#if defined(__cpp_lib_coroutine)
-#define WINRT_IMPL_COROUTINES
 #endif
 
 #ifndef WINRT_EXPORT
@@ -50,30 +30,6 @@
 #else
 #define WINRT_IMPL_NOINLINE
 #endif
-
-#if defined(_MSC_VER)
-#define WINRT_IMPL_EMPTY_BASES __declspec(empty_bases)
-#else
-#define WINRT_IMPL_EMPTY_BASES
-#endif
-
-#if defined(_MSC_VER)
-#define WINRT_IMPL_NOVTABLE __declspec(novtable)
-#else
-#define WINRT_IMPL_NOVTABLE
-#endif
-
-#if defined(__clang__) && defined(__has_attribute)
-#if __has_attribute(__lto_visibility_public__)
-#define WINRT_IMPL_PUBLIC __attribute__((lto_visibility_public))
-#else
-#define WINRT_IMPL_PUBLIC
-#endif // __has_attribute(__lto_visibility_public__)
-#else
-#define WINRT_IMPL_PUBLIC
-#endif
-
-#define WINRT_IMPL_ABI_DECL WINRT_IMPL_NOVTABLE WINRT_IMPL_PUBLIC
 
 #if defined(__clang__)
 #define WINRT_IMPL_HAS_DECLSPEC_UUID __has_declspec_attribute(uuid)

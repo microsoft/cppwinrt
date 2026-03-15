@@ -11,6 +11,7 @@ namespace cppwinrt
             auto wrap_file_guard = wrap_open_file_guard(w, "BASE");
 
             w.write(strings::base_includes);
+            w.write("#include \"shared.h\"\n");
             w.write(strings::base_macros);
             w.write(strings::base_types);
             w.write(strings::base_extern);
@@ -46,12 +47,21 @@ namespace cppwinrt
         w.flush_to_file(settings.output_folder + "winrt/base.h");
     }
 
+    static void write_shared_h()
+    {
+        writer w;
+        write_preamble(w);
+        w.write(strings::base_shared);
+        w.flush_to_file(settings.output_folder + "winrt/shared.h");
+    }
+
     static void write_base_ixx()
     {
         writer ixx;
         write_preamble(ixx);
         ixx.write("module;\n");
         ixx.write(strings::base_includes);
+        ixx.write_root_include("shared");
         ixx.write(strings::base_module);
         ixx.write_root_include("base");
         ixx.flush_to_file(settings.output_folder + "winrt/ixx/base.ixx");
@@ -76,28 +86,15 @@ namespace cppwinrt
         w.flush_to_file(settings.output_folder + "winrt/fast_forward.h");
     }
 
-    static void write_namespace_ixx(cache const& c, writer const& header_writer, std::string_view const& ns, char import_impl, char impl = 0, bool import_foundation = false)
+    static void write_namespace_ixx(cache const& c, writer const& header_writer, std::string_view const& ns, char import_impl, char impl = 0)
     {
         writer w;
         w.type_namespace = ns;
         write_preamble(w);
         w.write("module;\n");
-        if (impl == '2')
-        {
-            // for comparison of DateTime and TimeSpan,
-            // since those are aliases to std::chrono types
-            // TODO: only include when required? <chrono> is quite heavy
-            w.write("#include <chrono>\n");
-        }
-        w.write("#include <cstdint>\n");
-        if (!impl)
-        {
-            // for std::hash specializations
-            // TODO: guard behind WINRT_LEAN_AND_MEAN
-            w.write("#include <functional>\n");
-        }
-        // TODO: pass impl here so that we can only define the includes required for each specific impl
-        write_namespace_special_includes(w, ns);
+        w.write_root_include("shared");
+        w.write("#define WINRT_EXPORT export\n");
+        w.write("#define WINRT_IMPL_MODULES\n");
         if (impl)
         {
             w.write("export module winrt:%.%;\n", ns, module_friendly_impl(impl));
@@ -106,6 +103,8 @@ namespace cppwinrt
         {
             w.write("export module winrt:%;\n", ns);
         }
+
+        w.write("import std;\n");
 
         w.write_import("base");
         if (!impl)
@@ -118,29 +117,10 @@ namespace cppwinrt
             w.write_import(depends.first, import_impl);
         }
 
-        if (import_foundation)
-        {
-            // if we are writing structs that use IReference<T>, we need the
-            // full Windows.Foundation module to get the comparison operator
-            // fully defined (the forward declaration in Windows.Foundation.one
-            // does not suffice, due to it being a template).
-            w.write_import("Windows.Foundation");
-            // TODO: this needed once compiler bug fixed? operator is forward declared in w.f.1
-        }
-
         if (impl != '0')
         {
-            w.write("export import :%.%;\n", ns, module_friendly_impl(impl ? impl - 1 : '2'));
-        }
-
-        w.write("#define WINRT_EXPORT export\n");
-        if (impl != '0')
-        {
-            w.write("#define WINRT_IMPL_MODULES\n");
-        }
-        if (!impl)
-        {
-            w.write(strings::base_macros);
+            w.write("export ");
+            w.write_import(ns, impl ? impl - 1 : '2');
         }
 
         w.write_depends(ns, impl);
@@ -266,7 +246,7 @@ namespace cppwinrt
         w.write("#endif\n");
         w.save_header('2');
 
-        write_namespace_ixx({}, w, ns, impl, '2', structs_info.has_reference_field);
+        write_namespace_ixx({}, w, ns, impl, '2');
     }
 
     static void write_namespace_h(cache const& c, std::string_view const& ns, cache::namespace_members const& members)
@@ -299,11 +279,11 @@ namespace cppwinrt
                 w.write_each<write_std_hash>(members.interfaces);
                 w.write_each<write_std_hash>(members.classes);
             }
-            /*TODO: figure out why compiler ICEs {
+            {
                 auto wrap_format = wrap_ifdef(w, "__cpp_lib_format");
                 w.write_each<write_std_formatter>(members.interfaces);
                 w.write_each<write_std_formatter>(members.classes);   
-            }*/
+            }
         }
 
         write_namespace_special(w, ns);
