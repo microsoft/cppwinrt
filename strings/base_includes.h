@@ -49,6 +49,6 @@
 
 #ifdef __cpp_lib_coroutine
 #include <coroutine>
-#else
-#error C++/WinRT requires coroutine support, which is currently missing. Try enabling C++20 in your compiler or adding '/await:strict' to your C++17 build.
+#elif defined(_RESUMABLE_FUNCTIONS_SUPPORTED)
+#error "C++/WinRT no longer supports pre-standardization coroutines. If you use co_await, switch to /await:strict or upgrade to C++20. If you do not, remove /await from the compiler flags."
 #endif
