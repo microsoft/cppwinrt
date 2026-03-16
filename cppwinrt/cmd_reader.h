@@ -5,6 +5,7 @@
 #include <limits>
 #include <climits>
 #include <cstdint>
+#include <cctype>
 #include <string>
 #include <string_view>
 #include <map>

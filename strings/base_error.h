@@ -45,7 +45,7 @@ namespace winrt::impl
     {
         wchar_t const* back = message + size - 1;
 
-        while (size&& std::iswspace(*back))
+        while (size && std::iswspace(*back))
         {
             --size;
             --back;

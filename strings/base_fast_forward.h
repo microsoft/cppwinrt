@@ -1,5 +1,7 @@
 #include <cstddef>
 #include <atomic>
+#include <cstdint>
+#include <cstring>
 
 #define WINRT_IMPL_STRING_1(expression) #expression
 #define WINRT_IMPL_STRING(expression) WINRT_IMPL_STRING_1(expression)
