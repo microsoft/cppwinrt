@@ -396,6 +396,7 @@ namespace winrt::impl
         return factory.call(callback);
     }
 
+    WINRT_EXPORT
     template <typename CastType, typename Class, typename Interface = Windows::Foundation::IActivationFactory, typename F>
     auto call_factory_cast(F&& callback)
     {

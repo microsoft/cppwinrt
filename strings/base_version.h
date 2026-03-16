@@ -4,6 +4,9 @@ extern "C"
 __declspec(selectany)
 char const * const WINRT_version = "C++/WinRT version:" CPPWINRT_VERSION;
 
+WINRT_EXPORT
+constexpr char const WINRT_version_number[] = CPPWINRT_VERSION;
+
 #ifdef _M_IX86
 #pragma comment(linker, "/include:_WINRT_version")
 #else

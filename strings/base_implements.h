@@ -190,10 +190,12 @@ namespace winrt::impl
     template <typename D>
     inline constexpr bool has_static_lifetime_v = has_static_lifetime<typename D::implements_type>::value;
 
+    WINRT_EXPORT
     template <typename T>
     void clear_abi(T*) noexcept
     {}
 
+    WINRT_EXPORT
     template <typename T>
     void clear_abi(T** value) noexcept
     {
@@ -1250,6 +1252,7 @@ namespace winrt::impl
         }
     }
 
+    WINRT_EXPORT
     template <typename T>
     auto detach_from(T&& object) noexcept
     {

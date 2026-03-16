@@ -457,6 +457,7 @@ namespace winrt::impl
         static constexpr guid value{ generate_guid(signature<T>::data) };
     };
 
+    WINRT_EXPORT
     template <typename T>
 #ifdef __clang__
     inline static const auto name_v

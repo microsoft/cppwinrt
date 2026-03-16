@@ -48,6 +48,8 @@
     <CppWinRTDir>$(CmakeOutDir)\</CppWinRTDir>
     <CppWinRTDir Condition="'$(Platform)'=='ARM' or '$(Platform)'=='ARM64'">$(SolutionDir)_build\x86\$(Configuration)\</CppWinRTDir>
     <OutDir>$(CmakeOutDir)\</OutDir>
+    <!--Set a value to prevent SDK's uap.props from setting it and pointing to the wrong headers-->
+    <CppWinRT_IncludePath>PreventSdkUapPropsAssignment</CppWinRT_IncludePath>
   </PropertyGroup>
 
   <ItemDefinitionGroup>

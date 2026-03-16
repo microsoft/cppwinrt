@@ -23,6 +23,7 @@ namespace winrt::impl
         };
     };
 
+    WINRT_EXPORT
     using inspectable_abi = abi_t<Windows::Foundation::IInspectable>;
 
     template <> struct abi<Windows::Foundation::IActivationFactory>

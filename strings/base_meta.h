@@ -54,42 +54,49 @@ namespace winrt::impl
         using type = T;
     };
 
+    WINRT_EXPORT
     template <typename T, typename Enable = void>
     struct abi
     {
         using type = T;
     };
 
-    template <typename T>
+    WINRT_EXPORT
+    template<typename T>
     struct abi<T, std::enable_if_t<std::is_enum_v<T>>>
     {
         using type = std::underlying_type_t<T>;
     };
 
-    template <typename T>
+    WINRT_EXPORT
+    template<typename T>
     using abi_t = typename abi<T>::type;
 
+    WINRT_EXPORT
     template <typename T>
     struct consume;
 
-    template <typename D, typename I = D>
+    WINRT_EXPORT
+    template<typename D, typename I = D>
     using consume_t = typename consume<I>::template type<D>;
 
     template <typename T, typename H>
     struct delegate;
 
+    WINRT_EXPORT
     template <typename T, typename = std::void_t<>>
     struct default_interface
     {
         using type = T;
     };
 
-    struct basic_category;
-    struct interface_category;
-    struct delegate_category;
-    struct enum_category;
-    struct class_category;
+    WINRT_EXPORT struct basic_category;
+    WINRT_EXPORT struct interface_category;
+    WINRT_EXPORT struct delegate_category;
+    WINRT_EXPORT struct enum_category;
+    WINRT_EXPORT struct class_category;
 
+    WINRT_EXPORT
     template <typename T>
     struct category
     {
@@ -117,6 +124,7 @@ namespace winrt::impl
         static constexpr auto data{ category_signature<category_t<T>, T>::data };
     };
 
+    WINRT_EXPORT
     template <typename T>
 #if defined(__clang__)
 #if __has_declspec_attribute(uuid)
@@ -202,13 +210,16 @@ namespace winrt::impl
     template <typename T>
     using arg_out = arg_in<T>*;
 
-    template <typename D, typename I, typename Enable = void>
+    WINRT_EXPORT
+    template<typename D, typename I, typename Enable = void>
     struct produce_base;
 
-    template <typename D, typename I>
+    WINRT_EXPORT
+    template<typename D, typename I>
     struct produce;
 
-    template <typename D>
+    WINRT_EXPORT
+    template<typename D>
     struct produce<D, Windows::Foundation::IInspectable> : produce_base<D, Windows::Foundation::IInspectable>
     {
     };
