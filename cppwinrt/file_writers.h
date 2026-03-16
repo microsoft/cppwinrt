@@ -6,7 +6,6 @@ namespace cppwinrt
     {
         writer w;
         write_preamble(w);
-        w.write(strings::base_version_odr, CPPWINRT_VERSION_STRING);
         {
             auto wrap_file_guard = wrap_open_file_guard(w, "BASE");
 
@@ -18,6 +17,7 @@ namespace cppwinrt
                 w.write(strings::base_std_includes);
                 w.write(strings::base_numerics);
             }
+            write_version_assert(w);
             w.write(strings::base_macros);
             w.write(strings::base_types);
             w.write(strings::base_extern);
@@ -48,7 +48,6 @@ namespace cppwinrt
             w.write(strings::base_iterator);
             w.write(strings::base_coroutine_threadpool);
             w.write(strings::base_natvis);
-            w.write(strings::base_version);
         }
         w.flush_to_file(settings.output_folder + "winrt/base.h");
     }
@@ -58,6 +57,8 @@ namespace cppwinrt
         writer w;
         write_preamble(w);
         w.write(strings::base_shared);
+        w.write(strings::base_version_odr, CPPWINRT_VERSION_STRING);
+        w.write(strings::base_version);
         w.flush_to_file(settings.output_folder + "winrt/shared.h");
     }
 
@@ -310,10 +311,10 @@ namespace cppwinrt
         w.swap();
         write_preamble(w);
         write_open_file_guard(w, ns);
+        write_version_assert(w);
         
         {
             auto wrap_modules_guard = wrap_ifndef(w, "WINRT_IMPL_MODULES");
-            write_version_assert(w);
             write_parent_depends(w, c, ns);
 
             for (auto&& depends : w.depends)

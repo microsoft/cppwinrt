@@ -37,7 +37,6 @@ namespace cppwinrt
 
     static void write_version_assert(writer& w)
     {
-        w.write_root_include("base");
         auto format = R"(static_assert(winrt::check_version(CPPWINRT_VERSION, "%"), "Mismatched C++/WinRT headers.");
 #define CPPWINRT_VERSION "%"
 )";
