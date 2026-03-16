@@ -311,10 +311,10 @@ namespace cppwinrt
         w.swap();
         write_preamble(w);
         write_open_file_guard(w, ns);
-        write_version_assert(w);
         
         {
             auto wrap_modules_guard = wrap_ifndef(w, "WINRT_IMPL_MODULES");
+            w.write_root_include("base");
             write_parent_depends(w, c, ns);
 
             for (auto&& depends : w.depends)
@@ -324,6 +324,7 @@ namespace cppwinrt
 
             w.write_depends(w.type_namespace, '2');
         }
+        write_version_assert(w);
         w.save_header();
 
         write_namespace_ixx(c, w, ns, '2');
