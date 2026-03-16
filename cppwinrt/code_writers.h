@@ -123,6 +123,16 @@ namespace cppwinrt
         return { w, write_endif };
     }
 
+    [[nodiscard]] static finish_with wrap_ifndef(writer& w, std::string_view macro)
+    {
+        auto format = R"(#ifndef %
+)";
+
+        w.write(format, macro);
+
+        return { w, write_endif };
+    }
+
     static void write_parent_depends(writer& w, cache const& c, std::string_view const& type_namespace)
     {
         auto pos = type_namespace.rfind('.');

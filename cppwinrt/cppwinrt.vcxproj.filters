@@ -106,9 +106,6 @@
     <ClInclude Include="..\strings\base_meta.h">
       <Filter>strings</Filter>
     </ClInclude>
-    <ClInclude Include="..\strings\base_module.h">
-      <Filter>strings</Filter>
-    </ClInclude>
     <ClInclude Include="..\strings\base_natvis.h">
       <Filter>strings</Filter>
     </ClInclude>
@@ -160,9 +157,6 @@
     <ClInclude Include="cmd_reader.h" />
     <ClInclude Include="task_group.h" />
     <ClInclude Include="text_writer.h" />
-    <ClInclude Include="..\strings\base_includes.h">
-      <Filter>strings</Filter>
-    </ClInclude>
     <ClInclude Include="..\strings\base_iterator.h">
       <Filter>strings</Filter>
     </ClInclude>
@@ -181,9 +175,6 @@
     <ClInclude Include="..\strings\base_coroutine_system.h">
       <Filter>strings</Filter>
     </ClInclude>
-    <ClInclude Include="..\strings\base_coroutine_system_winui.h">
-      <Filter>strings</Filter>
-    </ClInclude>
     <ClInclude Include="..\strings\base_xaml_component_connector_winui.h">
       <Filter>strings</Filter>
     </ClInclude>
@@ -191,6 +182,15 @@
       <Filter>strings</Filter>
     </ClInclude>
     <ClInclude Include="..\strings\base_shared.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_global_fragment.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_numerics.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\strings\base_std_includes.h">
       <Filter>strings</Filter>
     </ClInclude>
   </ItemGroup>

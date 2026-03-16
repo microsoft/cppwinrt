@@ -10,8 +10,14 @@ namespace cppwinrt
         {
             auto wrap_file_guard = wrap_open_file_guard(w, "BASE");
 
-            w.write(strings::base_includes);
-            w.write_root_include("shared");
+            {
+                // ifdef out things that are handled by the module
+                auto wrap_modules_guard = wrap_ifndef(w, "WINRT_IMPL_MODULES");
+                w.write(strings::base_global_fragment);
+                w.write_root_include("shared");
+                w.write(strings::base_std_includes);
+                w.write(strings::base_numerics);
+            }
             w.write(strings::base_macros);
             w.write(strings::base_types);
             w.write(strings::base_extern);
@@ -60,9 +66,20 @@ namespace cppwinrt
         writer ixx;
         write_preamble(ixx);
         ixx.write("module;\n");
-        ixx.write(strings::base_includes);
+        ixx.write("#define WINRT_IMPL_MODULES\n");
+        ixx.write(strings::base_global_fragment);
         ixx.write_root_include("shared");
-        ixx.write(strings::base_module);
+        // Since modules don't result in global symbol pollution,
+        // we can always enable the classic COM support.
+        // Users will have to include headers declaring these interfaces
+        // to make use of it.
+        ixx.write("#include <Unknwn.h>\n");
+        ixx.write("export module winrt:base;\n");
+        // windowsnumerics.impl imports std headers.
+        // include-then-import is the prefered order for mixing headers and modules
+        // so we have to put it before the import.
+        ixx.write(strings::base_numerics);
+        ixx.write("import std;\n");
         ixx.write_root_include("base");
         ixx.flush_to_file(settings.output_folder + "winrt/ixx/base.ixx");
     }
@@ -92,9 +109,8 @@ namespace cppwinrt
         w.type_namespace = ns;
         write_preamble(w);
         w.write("module;\n");
-        w.write_root_include("shared");
-        w.write("#define WINRT_EXPORT export\n");
         w.write("#define WINRT_IMPL_MODULES\n");
+        w.write_root_include("shared");
         if (impl)
         {
             w.write("export module winrt:%.%;\n", ns, module_friendly_impl(impl));
@@ -202,14 +218,15 @@ namespace cppwinrt
         write_preamble(w);
         write_open_file_guard(w, ns, '1');
 
-        w.write("#ifndef WINRT_IMPL_MODULES\n");
-        for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, '0');
-        }
+            auto wrap_modules_guard = wrap_ifndef(w, "WINRT_IMPL_MODULES");
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first, '0');
+            }
 
-        w.write_depends(w.type_namespace, '0');
-        w.write("#endif\n");
+            w.write_depends(w.type_namespace, '0');
+        }
         w.save_header('1');
 
         write_namespace_ixx({}, w, ns, '0', '1');
@@ -236,14 +253,15 @@ namespace cppwinrt
 
         char const impl = structs_info.promote ? '2' : '1';
 
-        w.write("#ifndef WINRT_IMPL_MODULES\n");
-        for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, impl);
-        }
+            auto wrap_modules_guard = wrap_ifndef(w, "WINRT_IMPL_MODULES");
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first, impl);
+            }
 
-        w.write_depends(w.type_namespace, '1');
-        w.write("#endif\n");
+            w.write_depends(w.type_namespace, '1');
+        }
         w.save_header('2');
 
         write_namespace_ixx({}, w, ns, impl, '2');
@@ -292,17 +310,19 @@ namespace cppwinrt
         w.swap();
         write_preamble(w);
         write_open_file_guard(w, ns);
-        w.write("#ifndef WINRT_IMPL_MODULES\n");
-        write_version_assert(w);
-        write_parent_depends(w, c, ns);
-
-        for (auto&& depends : w.depends)
+        
         {
-            w.write_depends(depends.first, '2');
-        }
+            auto wrap_modules_guard = wrap_ifndef(w, "WINRT_IMPL_MODULES");
+            write_version_assert(w);
+            write_parent_depends(w, c, ns);
 
-        w.write_depends(w.type_namespace, '2');
-        w.write("#endif\n");
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first, '2');
+            }
+
+            w.write_depends(w.type_namespace, '2');
+        }
         w.save_header();
 
         write_namespace_ixx(c, w, ns, '2');

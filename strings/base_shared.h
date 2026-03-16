@@ -1,4 +1,8 @@
+#pragma once
+
+#if __has_include(<version>)
 #include <version>
+#endif
 
 #ifdef _DEBUG
 
@@ -45,3 +49,9 @@
 #endif
 
 #define WINRT_IMPL_ABI_DECL WINRT_IMPL_NOVTABLE WINRT_IMPL_PUBLIC
+
+#ifdef WINRT_IMPL_MODULES
+#define WINRT_EXPORT export
+#else
+#define WINRT_EXPORT
+#endif
