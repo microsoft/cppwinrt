@@ -48,31 +48,7 @@
 #endif
 
 #ifdef __cpp_lib_coroutine
-
 #include <coroutine>
-
-namespace winrt::impl
-{
-    template <typename T = void>
-    using coroutine_handle = std::coroutine_handle<T>;
-
-    using suspend_always = std::suspend_always;
-    using suspend_never = std::suspend_never;
-}
-
-#elif __has_include(<experimental/coroutine>)
-
-#include <experimental/coroutine>
-
-namespace winrt::impl
-{
-    template <typename T = void>
-    using coroutine_handle = std::experimental::coroutine_handle<T>;
-
-    using suspend_always = std::experimental::suspend_always;
-    using suspend_never = std::experimental::suspend_never;
-}
-
-#else
-#error C++/WinRT requires coroutine support, which is currently missing. Try enabling C++20 in your compiler.
+#elif defined(_RESUMABLE_FUNCTIONS_SUPPORTED)
+#error "C++/WinRT no longer supports pre-standardization coroutines. If you use co_await, switch to /await:strict or upgrade to C++20. If you do not, remove /await from the compiler flags."
 #endif

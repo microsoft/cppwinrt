@@ -1,6 +1,7 @@
 
 namespace winrt::impl
 {
+#ifdef WINRT_IMPL_COROUTINES
     inline auto submit_threadpool_callback(void(__stdcall* callback)(void*, void* context), void* context)
     {
         if (!WINRT_IMPL_TrySubmitThreadpoolCallback(callback, context, nullptr))
@@ -11,13 +12,14 @@ namespace winrt::impl
 
     inline void __stdcall resume_background_callback(void*, void* context) noexcept
     {
-        coroutine_handle<>::from_address(context)();
+        std::coroutine_handle<>::from_address(context)();
     };
 
-    inline auto resume_background(coroutine_handle<> handle)
+    inline auto resume_background(std::coroutine_handle<> handle)
     {
         submit_threadpool_callback(resume_background_callback, handle.address());
     }
+#endif
 
     inline std::pair<int32_t, int32_t> get_apartment_type() noexcept
     {
@@ -48,6 +50,7 @@ namespace winrt::impl
         return false;
     }
 
+#ifdef WINRT_IMPL_COROUTINES
     struct resume_apartment_context
     {
         resume_apartment_context() = default;
@@ -64,11 +67,11 @@ namespace winrt::impl
 
     inline int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
     {
-        coroutine_handle<>::from_address(args->data)();
+        std::coroutine_handle<>::from_address(args->data)();
         return 0;
     };
 
-    [[nodiscard]] inline bool resume_apartment_sync(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure)
+    [[nodiscard]] inline bool resume_apartment_sync(com_ptr<IContextCallback> const& context, std::coroutine_handle<> handle, int32_t* failure)
     {
         com_callback_args args{};
         args.data = handle.address();
@@ -85,10 +88,10 @@ namespace winrt::impl
 
     struct threadpool_resume
     {
-        threadpool_resume(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure) :
+        threadpool_resume(com_ptr<IContextCallback> const& context, std::coroutine_handle<> handle, int32_t* failure) :
             m_context(context), m_handle(handle), m_failure(failure) { }
         com_ptr<IContextCallback> m_context;
-        coroutine_handle<> m_handle;
+        std::coroutine_handle<> m_handle;
         int32_t* m_failure;
     };
 
@@ -101,14 +104,14 @@ namespace winrt::impl
         }
     }
 
-    inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, coroutine_handle<> handle, int32_t* failure)
+    inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, std::coroutine_handle<> handle, int32_t* failure)
     {
         auto state = std::make_unique<threadpool_resume>(context, handle, failure);
         submit_threadpool_callback(fallback_submit_threadpool_callback, state.get());
         state.release();
     }
 
-    [[nodiscard]] inline auto resume_apartment(resume_apartment_context const& context, coroutine_handle<> handle, int32_t* failure)
+    [[nodiscard]] inline auto resume_apartment(resume_apartment_context const& context, std::coroutine_handle<> handle, int32_t* failure)
     {
         WINRT_ASSERT(context.valid());
         if ((context.m_context == nullptr) || (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
@@ -130,8 +133,10 @@ namespace winrt::impl
             return resume_apartment_sync(context.m_context, handle, failure);
         }
     }
+#endif
 }
 
+#ifdef WINRT_IMPL_COROUTINES
 WINRT_EXPORT namespace winrt
 {
     struct cancellable_promise
@@ -217,7 +222,7 @@ WINRT_EXPORT namespace winrt
 
     protected:
         template <typename T>
-        void set_cancellable_promise_from_handle(impl::coroutine_handle<T> const& handle)
+        void set_cancellable_promise_from_handle(std::coroutine_handle<T> const& handle)
         {
             if constexpr (std::is_base_of_v<cancellable_promise, T>)
             {
@@ -237,10 +242,7 @@ WINRT_EXPORT namespace winrt
 
         cancellable_promise* m_promise = nullptr;
     };
-}
 
-WINRT_EXPORT namespace winrt
-{
     [[nodiscard]] inline auto resume_background() noexcept
     {
         struct awaitable
@@ -254,7 +256,7 @@ WINRT_EXPORT namespace winrt
             {
             }
 
-            void await_suspend(impl::coroutine_handle<> handle) const
+            void await_suspend(std::coroutine_handle<> handle) const
             {
                 impl::resume_background(handle);
             }
@@ -281,7 +283,7 @@ WINRT_EXPORT namespace winrt
             {
             }
 
-            void await_suspend(impl::coroutine_handle<> resume)
+            void await_suspend(std::coroutine_handle<> resume)
             {
                 m_resume = resume;
 
@@ -301,7 +303,7 @@ WINRT_EXPORT namespace winrt
             }
 
             T const& m_context;
-            impl::coroutine_handle<> m_resume{ nullptr };
+            std::coroutine_handle<> m_resume{ nullptr };
         };
 
         return awaitable{ context };
@@ -336,7 +338,7 @@ namespace winrt::impl
             check_hresult(failure);
         }
 
-        bool await_suspend(impl::coroutine_handle<> handle)
+        bool await_suspend(std::coroutine_handle<> handle)
         {
             auto context_copy = context;
             return impl::resume_apartment(context_copy.context, handle, &failure);
@@ -381,7 +383,7 @@ namespace winrt::impl
         }
 
         template <typename T>
-        void await_suspend(impl::coroutine_handle<T> handle)
+        void await_suspend(std::coroutine_handle<T> handle)
         {
             set_cancellable_promise_from_handle(handle);
 
@@ -445,7 +447,7 @@ namespace winrt::impl
 
         handle_type<timer_traits> m_timer;
         Windows::Foundation::TimeSpan m_duration;
-        impl::coroutine_handle<> m_handle;
+        std::coroutine_handle<> m_handle;
         std::atomic<state> m_state{ state::idle };
     };
 
@@ -489,7 +491,7 @@ namespace winrt::impl
         }
 
         template <typename T>
-        void await_suspend(impl::coroutine_handle<T> resume)
+        void await_suspend(std::coroutine_handle<T> resume)
         {
             set_cancellable_promise_from_handle(resume);
 
@@ -559,31 +561,27 @@ namespace winrt::impl
         Windows::Foundation::TimeSpan m_timeout;
         void* m_handle;
         uint32_t m_result{};
-        impl::coroutine_handle<> m_resume{ nullptr };
+        std::coroutine_handle<> m_resume{ nullptr };
         std::atomic<state> m_state{ state::idle };
     };
 }
 
 WINRT_EXPORT namespace winrt
 {
-#ifdef WINRT_IMPL_COROUTINES
     inline impl::apartment_awaiter operator co_await(apartment_context const& context)
     {
         return{ context };
     }
-#endif
 
     [[nodiscard]] inline impl::timespan_awaiter resume_after(Windows::Foundation::TimeSpan duration) noexcept
     {
         return impl::timespan_awaiter{ duration };
     }
 
-#ifdef WINRT_IMPL_COROUTINES
     inline impl::timespan_awaiter operator co_await(Windows::Foundation::TimeSpan duration)
     {
         return resume_after(duration);
     }
-#endif
 
     [[nodiscard]] inline impl::signal_awaiter resume_on_signal(void* handle, Windows::Foundation::TimeSpan timeout = {}) noexcept
     {
@@ -613,7 +611,7 @@ WINRT_EXPORT namespace winrt
         {
         }
 
-        void await_suspend(impl::coroutine_handle<> handle)
+        void await_suspend(std::coroutine_handle<> handle)
         {
             if (!WINRT_IMPL_TrySubmitThreadpoolCallback(callback, handle.address(), &m_environment))
             {
@@ -625,7 +623,7 @@ WINRT_EXPORT namespace winrt
 
         static void __stdcall callback(void*, void* context) noexcept
         {
-            impl::coroutine_handle<>::from_address(context)();
+            std::coroutine_handle<>::from_address(context)();
         }
 
         struct pool_traits
@@ -673,11 +671,7 @@ WINRT_EXPORT namespace winrt
     struct fire_and_forget {};
 }
 
-#ifdef __cpp_lib_coroutine
 namespace std
-#else
-namespace std::experimental
-#endif
 {
     template <typename... Args>
     struct coroutine_traits<winrt::fire_and_forget, Args...>
@@ -693,12 +687,12 @@ namespace std::experimental
             {
             }
 
-            suspend_never initial_suspend() const noexcept
+            std::suspend_never initial_suspend() const noexcept
             {
                 return{};
             }
 
-            suspend_never final_suspend() const noexcept
+            std::suspend_never final_suspend() const noexcept
             {
                 return{};
             }
@@ -710,3 +704,4 @@ namespace std::experimental
         };
     };
 }
+#endif
