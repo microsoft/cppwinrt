@@ -5,21 +5,21 @@ namespace winrt::impl
     {
         atomic_ref_count() noexcept = default;
 
-        explicit atomic_ref_count(uint32_t count) noexcept : m_count(count)
+        explicit atomic_ref_count(std::uint32_t count) noexcept : m_count(count)
         {
         }
 
-        uint32_t operator=(uint32_t count) noexcept
+        std::uint32_t operator=(std::uint32_t count) noexcept
         {
             return m_count = count;
         }
 
-        uint32_t operator++() noexcept
+        std::uint32_t operator++() noexcept
         {
-            return static_cast<uint32_t>(m_count.fetch_add(1, std::memory_order_relaxed) + 1);
+            return static_cast<std::uint32_t>(m_count.fetch_add(1, std::memory_order_relaxed) + 1);
         }
 
-        uint32_t operator--() noexcept
+        std::uint32_t operator--() noexcept
         {
             auto const remaining = m_count.fetch_sub(1, std::memory_order_release) - 1;
 
@@ -29,30 +29,30 @@ namespace winrt::impl
             }
             else if (remaining < 0)
             {
-                abort();
+                std::abort();
             }
 
-            return static_cast<uint32_t>(remaining);
+            return static_cast<std::uint32_t>(remaining);
         }
 
-        operator uint32_t() const noexcept
+        operator std::uint32_t() const noexcept
         {
-            return static_cast<uint32_t>(m_count);
+            return static_cast<std::uint32_t>(m_count);
         }
 
     private:
 
-        std::atomic<int32_t> m_count;
+        std::atomic<std::int32_t> m_count;
     };
 
-    constexpr uint32_t hstring_reference_flag{ 1 };
+    constexpr std::uint32_t hstring_reference_flag{ 1 };
 
     struct hstring_header
     {
-        uint32_t flags;
-        uint32_t length;
-        uint32_t padding1;
-        uint32_t padding2;
+        std::uint32_t flags;
+        std::uint32_t length;
+        std::uint32_t padding1;
+        std::uint32_t padding2;
         wchar_t const* ptr;
     };
 
@@ -72,12 +72,12 @@ namespace winrt::impl
         }
     }
 
-    inline shared_hstring_header* precreate_hstring_on_heap(uint32_t length)
+    inline shared_hstring_header* precreate_hstring_on_heap(std::uint32_t length)
     {
         WINRT_ASSERT(length != 0);
-        uint64_t bytes_required = static_cast<uint64_t>(sizeof(shared_hstring_header)) + static_cast<uint64_t>(sizeof(wchar_t)) * static_cast<uint64_t>(length);
+        std::uint64_t bytes_required = static_cast<std::uint64_t>(sizeof(shared_hstring_header)) + static_cast<std::uint64_t>(sizeof(wchar_t)) * static_cast<std::uint64_t>(length);
 
-        if (bytes_required > UINT_MAX)
+        if (bytes_required > (std::numeric_limits<std::uint32_t>::max)())
         {
             throw std::invalid_argument("length");
         }
@@ -97,7 +97,7 @@ namespace winrt::impl
         return header;
     }
 
-    inline hstring_header* create_hstring_on_heap(wchar_t const* value, uint32_t length)
+    inline hstring_header* create_hstring_on_heap(wchar_t const* value, std::uint32_t length)
     {
         if (!length)
         {
@@ -105,18 +105,18 @@ namespace winrt::impl
         }
 
         auto header = precreate_hstring_on_heap(length);
-        memcpy_s(header->buffer, sizeof(wchar_t) * length, value, sizeof(wchar_t) * length);
+        std::memcpy(header->buffer, value, sizeof(wchar_t) * length);
         return header;
     }
 
-    inline void create_hstring_on_stack(hstring_header& header, wchar_t const* value, uint32_t length) noexcept
+    inline void create_hstring_on_stack(hstring_header& header, wchar_t const* value, std::uint32_t length) noexcept
     {
         WINRT_ASSERT(value);
         WINRT_ASSERT(length != 0);
 
         if (value[length] != 0)
         {
-            abort();
+            std::abort();
         }
 
         header.flags = hstring_reference_flag;
@@ -162,7 +162,7 @@ WINRT_EXPORT namespace winrt
     struct hstring
     {
         using value_type = wchar_t;
-        using size_type = uint32_t;
+        using size_type = std::uint32_t;
         using const_reference = value_type const&;
         using pointer = value_type*;
         using const_pointer = value_type const*;
@@ -191,7 +191,7 @@ WINRT_EXPORT namespace winrt
         hstring& operator=(std::nullptr_t) = delete;
 
         hstring(std::initializer_list<wchar_t> value) :
-            hstring(value.begin(), static_cast<uint32_t>(value.size()))
+            hstring(value.begin(), static_cast<std::uint32_t>(value.size()))
         {}
 
         hstring(wchar_t const* value) :
@@ -428,12 +428,12 @@ WINRT_EXPORT namespace winrt
 
     inline void* detach_abi(std::wstring_view const& value)
     {
-        return impl::create_hstring_on_heap(value.data(), static_cast<uint32_t>(value.size()));
+        return impl::create_hstring_on_heap(value.data(), static_cast<std::uint32_t>(value.size()));
     }
 
     inline void* detach_abi(wchar_t const* const value)
     {
-        return impl::create_hstring_on_heap(value, static_cast<uint32_t>(wcslen(value)));
+        return impl::create_hstring_on_heap(value, static_cast<std::uint32_t>(std::wcslen(value)));
     }
 }
 
@@ -459,7 +459,7 @@ namespace winrt::impl
         hstring_builder(hstring_builder const&) = delete;
         hstring_builder& operator=(hstring_builder const&) = delete;
 
-        explicit hstring_builder(uint32_t const size) :
+        explicit hstring_builder(std::uint32_t const size) :
             m_handle(impl::precreate_hstring_on_heap(size))
         {
         }
@@ -574,8 +574,8 @@ namespace winrt::impl
         // when non-const (e.g. ranges::filter_view) so taking a const reference
         // as parameter wouldn't work for all scenarios.
         auto const size = std::formatted_size(args...);
-        WINRT_ASSERT(size < INT_MAX);
-        auto const size32 = static_cast<int32_t>(size);
+        WINRT_ASSERT(size < static_cast<std::size_t>((std::numeric_limits<std::int32_t>::max)()));
+        auto const size32 = static_cast<std::int32_t>(size);
 
         hstring_builder builder(size32);
         WINRT_VERIFY_(size32, std::format_to_n(builder.data(), size32, args...).size);
@@ -608,42 +608,42 @@ WINRT_EXPORT namespace winrt
             });
     }
 
-    inline hstring to_hstring(uint8_t value)
+    inline hstring to_hstring(std::uint8_t value)
     {
         return impl::hstring_convert(value);
     }
 
-    inline hstring to_hstring(int8_t value)
+    inline hstring to_hstring(std::int8_t value)
     {
         return impl::hstring_convert(value);
     }
 
-    inline hstring to_hstring(uint16_t value)
+    inline hstring to_hstring(std::uint16_t value)
     {
         return impl::hstring_convert(value);
     }
 
-    inline hstring to_hstring(int16_t value)
+    inline hstring to_hstring(std::int16_t value)
     {
         return impl::hstring_convert(value);
     }
 
-    inline hstring to_hstring(uint32_t value)
+    inline hstring to_hstring(std::uint32_t value)
     {
         return impl::hstring_convert(value);
     }
 
-    inline hstring to_hstring(int32_t value)
+    inline hstring to_hstring(std::int32_t value)
     {
         return impl::hstring_convert(value);
     }
 
-    inline hstring to_hstring(uint64_t value)
+    inline hstring to_hstring(std::uint64_t value)
     {
         return impl::hstring_convert(value);
     }
 
-    inline hstring to_hstring(int64_t value)
+    inline hstring to_hstring(std::int64_t value)
     {
         return impl::hstring_convert(value);
     }
@@ -688,7 +688,7 @@ WINRT_EXPORT namespace winrt
     {
         wchar_t buffer[40];
         //{00000000-0000-0000-0000-000000000000}
-        swprintf_s(buffer, L"{%08x-%04hx-%04hx-%02hhx%02hhx-%02hhx%02hhx%02hhx%02hhx%02hhx%02hhx}",
+        std::swprintf(buffer, std::size(buffer), L"{%08x-%04hx-%04hx-%02hhx%02hhx-%02hhx%02hhx%02hhx%02hhx%02hhx%02hhx}",
             value.Data1, value.Data2, value.Data3, value.Data4[0], value.Data4[1],
             value.Data4[2], value.Data4[3], value.Data4[4], value.Data4[5], value.Data4[6], value.Data4[7]);
         return hstring{ buffer };
@@ -698,7 +698,7 @@ WINRT_EXPORT namespace winrt
     hstring to_hstring(T const& value)
     {
         std::string_view const view(value);
-        int const size = WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), nullptr, 0);
+        int const size = WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<std::int32_t>(view.size()), nullptr, 0);
 
         if (size == 0)
         {
@@ -706,13 +706,13 @@ WINRT_EXPORT namespace winrt
         }
 
         impl::hstring_builder result(size);
-        WINRT_VERIFY_(size, WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<int32_t>(view.size()), result.data(), size));
+        WINRT_VERIFY_(size, WINRT_IMPL_MultiByteToWideChar(65001 /*CP_UTF8*/, 0, view.data(), static_cast<std::int32_t>(view.size()), result.data(), size));
         return result.to_hstring();
     }
 
     inline std::string to_string(std::wstring_view value)
     {
-        int const size = WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<int32_t>(value.size()), nullptr, 0, nullptr, nullptr);
+        int const size = WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<std::int32_t>(value.size()), nullptr, 0, nullptr, nullptr);
 
         if (size == 0)
         {
@@ -720,7 +720,7 @@ WINRT_EXPORT namespace winrt
         }
 
         std::string result(size, '?');
-        WINRT_VERIFY_(size, WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<int32_t>(value.size()), result.data(), size, nullptr, nullptr));
+        WINRT_VERIFY_(size, WINRT_IMPL_WideCharToMultiByte(65001 /*CP_UTF8*/, 0, value.data(), static_cast<std::int32_t>(value.size()), result.data(), size, nullptr, nullptr));
         return result;
     }
 }

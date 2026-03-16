@@ -21,10 +21,10 @@ namespace winrt::impl
     }
 #endif
 
-    inline std::pair<int32_t, int32_t> get_apartment_type() noexcept
+    inline std::pair<std::int32_t, std::int32_t> get_apartment_type() noexcept
     {
-        int32_t aptType;
-        int32_t aptTypeQualifier;
+        std::int32_t aptType;
+        std::int32_t aptTypeQualifier;
         if (0 == WINRT_IMPL_CoGetApartmentType(&aptType, &aptTypeQualifier))
         {
             return { aptType, aptTypeQualifier };
@@ -62,16 +62,16 @@ namespace winrt::impl
         }
 
         com_ptr<IContextCallback> m_context = try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext);
-        movable_primitive<int32_t, -1> m_context_type = get_apartment_type().first;
+        movable_primitive<std::int32_t, -1> m_context_type = get_apartment_type().first;
     };
 
-    inline int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
+    inline std::int32_t __stdcall resume_apartment_callback(com_callback_args* args) noexcept
     {
         std::coroutine_handle<>::from_address(args->data)();
         return 0;
     };
 
-    [[nodiscard]] inline bool resume_apartment_sync(com_ptr<IContextCallback> const& context, std::coroutine_handle<> handle, int32_t* failure)
+    [[nodiscard]] inline bool resume_apartment_sync(com_ptr<IContextCallback> const& context, std::coroutine_handle<> handle, std::int32_t* failure)
     {
         com_callback_args args{};
         args.data = handle.address();
@@ -88,11 +88,11 @@ namespace winrt::impl
 
     struct threadpool_resume
     {
-        threadpool_resume(com_ptr<IContextCallback> const& context, std::coroutine_handle<> handle, int32_t* failure) :
+        threadpool_resume(com_ptr<IContextCallback> const& context, std::coroutine_handle<> handle, std::int32_t* failure) :
             m_context(context), m_handle(handle), m_failure(failure) { }
         com_ptr<IContextCallback> m_context;
         std::coroutine_handle<> m_handle;
-        int32_t* m_failure;
+        std::int32_t* m_failure;
     };
 
     inline void __stdcall fallback_submit_threadpool_callback(void*, void* p) noexcept
@@ -104,14 +104,14 @@ namespace winrt::impl
         }
     }
 
-    inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, std::coroutine_handle<> handle, int32_t* failure)
+    inline void resume_apartment_on_threadpool(com_ptr<IContextCallback> const& context, std::coroutine_handle<> handle, std::int32_t* failure)
     {
         auto state = std::make_unique<threadpool_resume>(context, handle, failure);
         submit_threadpool_callback(fallback_submit_threadpool_callback, state.get());
         state.release();
     }
 
-    [[nodiscard]] inline auto resume_apartment(resume_apartment_context const& context, std::coroutine_handle<> handle, int32_t* failure)
+    [[nodiscard]] inline auto resume_apartment(resume_apartment_context const& context, std::coroutine_handle<> handle, std::int32_t* failure)
     {
         WINRT_ASSERT(context.valid());
         if ((context.m_context == nullptr) || (context.m_context == try_capture<IContextCallback>(WINRT_IMPL_CoGetObjectContext)))
@@ -326,7 +326,7 @@ namespace winrt::impl
     struct apartment_awaiter
     {
         apartment_context const& context;
-        int32_t failure = 0;
+        std::int32_t failure = 0;
 
         bool await_ready() const noexcept
         {
@@ -403,7 +403,7 @@ namespace winrt::impl
         void create_threadpool_timer()
         {
             m_timer.attach(check_pointer(WINRT_IMPL_CreateThreadpoolTimer(callback, this, nullptr)));
-            int64_t relative_count = -m_duration.count();
+            std::int64_t relative_count = -m_duration.count();
             WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &relative_count, 0, 0);
 
             state expected = state::idle;
@@ -417,7 +417,7 @@ namespace winrt::impl
         {
             if (WINRT_IMPL_SetThreadpoolTimerEx(m_timer.get(), nullptr, 0, 0))
             {
-                int64_t now = 0;
+                std::int64_t now = 0;
                 WINRT_IMPL_SetThreadpoolTimer(m_timer.get(), &now, 0, 0);
             }
         }
@@ -513,8 +513,8 @@ namespace winrt::impl
         void create_threadpool_wait()
         {
             m_wait.attach(check_pointer(WINRT_IMPL_CreateThreadpoolWait(callback, this, nullptr)));
-            int64_t relative_count = -m_timeout.count();
-            int64_t* file_time = relative_count != 0 ? &relative_count : nullptr;
+            std::int64_t relative_count = -m_timeout.count();
+            std::int64_t* file_time = relative_count != 0 ? &relative_count : nullptr;
             WINRT_IMPL_SetThreadpoolWait(m_wait.get(), m_handle, file_time);
 
             state expected = state::idle;
@@ -528,12 +528,12 @@ namespace winrt::impl
         {
             if (WINRT_IMPL_SetThreadpoolWaitEx(m_wait.get(), nullptr, nullptr, nullptr))
             {
-                int64_t now = 0;
+                std::int64_t now = 0;
                 WINRT_IMPL_SetThreadpoolWait(m_wait.get(), WINRT_IMPL_GetCurrentProcess(), &now);
             }
         }
 
-        static void __stdcall callback(void*, void* context, void*, uint32_t result) noexcept
+        static void __stdcall callback(void*, void* context, void*, std::uint32_t result) noexcept
         {
             auto that = static_cast<signal_awaiter*>(context);
             that->m_result = result;
@@ -560,7 +560,7 @@ namespace winrt::impl
         handle_type<wait_traits> m_wait;
         Windows::Foundation::TimeSpan m_timeout;
         void* m_handle;
-        uint32_t m_result{};
+        std::uint32_t m_result{};
         std::coroutine_handle<> m_resume{ nullptr };
         std::atomic<state> m_state{ state::idle };
     };
@@ -596,7 +596,7 @@ WINRT_EXPORT namespace winrt
             m_environment.Pool = m_pool.get();
         }
 
-        void thread_limits(uint32_t const high, uint32_t const low)
+        void thread_limits(std::uint32_t const high, std::uint32_t const low)
         {
             WINRT_IMPL_SetThreadpoolThreadMaximum(m_pool.get(), high);
             check_bool(WINRT_IMPL_SetThreadpoolThreadMinimum(m_pool.get(), low));
@@ -643,7 +643,7 @@ WINRT_EXPORT namespace winrt
 
         struct environment // TP_CALLBACK_ENVIRON
         {
-            uint32_t Version{ 3 };
+            std::uint32_t Version{ 3 };
             void* Pool{};
             void* CleanupGroup{};
             void* CleanupGroupCancelCallback{};
@@ -652,16 +652,16 @@ WINRT_EXPORT namespace winrt
             void* FinalizationCallback{};
             union
             {
-                uint32_t Flags{};
+                std::uint32_t Flags{};
                 struct
                 {
-                    uint32_t LongFunction : 1;
-                    uint32_t Persistent : 1;
-                    uint32_t Private : 30;
+                    std::uint32_t LongFunction : 1;
+                    std::uint32_t Persistent : 1;
+                    std::uint32_t Private : 30;
                 } s;
             } u;
-            int32_t CallbackPriority{ 1 };
-            uint32_t Size{ sizeof(environment) };
+            std::int32_t CallbackPriority{ 1 };
+            std::uint32_t Size{ sizeof(environment) };
         };
 
         handle_type<pool_traits> m_pool;

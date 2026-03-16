@@ -66,7 +66,7 @@ namespace cppwinrt
 #if defined(_DEBUG)
             if (debug_trace)
             {
-                ::printf("%.*s", static_cast<int>(value.size()), value.data());
+                std::printf("%.*s", static_cast<int>(value.size()), value.data());
             }
 #endif
         }
@@ -78,7 +78,7 @@ namespace cppwinrt
 #if defined(_DEBUG)
             if (debug_trace)
             {
-                ::printf("%c", value);
+                std::printf("%c", value);
             }
 #endif
         }
@@ -139,12 +139,12 @@ namespace cppwinrt
         {
             char buffer[128];
 #if defined(_WIN32) || defined(_WIN64)
-            size_t const size = sprintf_s(buffer, format, args...);
+            std::size_t const size = sprintf_s(buffer, format, args...);
 #else
-            size_t size = snprintf(buffer, sizeof(buffer), format, args...);
+            std::size_t size = std::snprintf(buffer, sizeof(buffer), format, args...);
             if (size > sizeof(buffer) - 1)
             {
-                fprintf(stderr, "\n*** WARNING: writer_base::write_printf -- buffer too small\n");
+                std::fprintf(stderr, "\n*** WARNING: writer_base::write_printf -- buffer too small\n");
                 size = sizeof(buffer) - 1;
             }
 #endif
@@ -167,8 +167,8 @@ namespace cppwinrt
 
         void flush_to_console(bool to_stdout = true) noexcept
         {
-            fprintf(to_stdout ? stdout : stderr, "%.*s", static_cast<int>(m_first.size()), m_first.data());
-            fprintf(to_stdout ? stdout : stderr, "%.*s", static_cast<int>(m_second.size()), m_second.data());
+            std::fprintf(to_stdout ? stdout : stderr, "%.*s", static_cast<int>(m_first.size()), m_first.data());
+            std::fprintf(to_stdout ? stdout : stderr, "%.*s", static_cast<int>(m_second.size()), m_second.data());
             m_first.clear();
             m_second.clear();
         }
@@ -243,9 +243,9 @@ namespace cppwinrt
 
     private:
 
-        static constexpr uint32_t count_placeholders(std::string_view const& format) noexcept
+        static constexpr std::uint32_t count_placeholders(std::string_view const& format) noexcept
         {
-            uint32_t count{};
+            std::uint32_t count{};
             bool escape{};
 
             for (auto c : format)
@@ -332,7 +332,7 @@ namespace cppwinrt
     {
         struct indent_guard
         {
-            indent_guard(indented_writer_base<T>& w, int32_t offset = 1) noexcept : m_writer(w), m_offset(offset)
+            indent_guard(indented_writer_base<T>& w, std::int32_t offset = 1) noexcept : m_writer(w), m_offset(offset)
             {
                 m_writer.m_indent += m_offset;
             }
@@ -344,13 +344,13 @@ namespace cppwinrt
 
         private:
             indented_writer_base<T>& m_writer;
-            int32_t m_offset{};
+            std::int32_t m_offset{};
         };
 
 
         void write_indent()
         {
-            for (int32_t i = 0; i < m_indent; i++)
+            for (std::int32_t i = 0; i < m_indent; i++)
             {
                 writer_base<T>::write_impl("    ");
             }
@@ -418,7 +418,7 @@ namespace cppwinrt
             return result;
         }
 
-        int32_t m_indent{};
+        std::int32_t m_indent{};
     };
 
 

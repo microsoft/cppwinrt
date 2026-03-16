@@ -5,7 +5,7 @@ WINRT_EXPORT namespace winrt
     struct array_view
     {
         using value_type = T;
-        using size_type = uint32_t;
+        using size_type = std::uint32_t;
         using reference = value_type&;
         using const_reference = value_type const&;
         using pointer = value_type*;
@@ -32,11 +32,11 @@ WINRT_EXPORT namespace winrt
         {}
 
 #ifdef __cpp_lib_span
-        template <typename C, size_t extent>
+        template <typename C, std::size_t extent>
         array_view(std::span<C, extent> span) noexcept :
             array_view(span.data(), static_cast<size_type>(span.size())) 
         {
-            WINRT_ASSERT(span.size() <= UINT_MAX);
+            WINRT_ASSERT(span.size() <= (std::numeric_limits<size_type>::max)());
         }
 
         operator std::span<T>() const noexcept
@@ -62,12 +62,12 @@ WINRT_EXPORT namespace winrt
         {
         }
 
-        template <typename C, size_t N>
+        template <typename C, std::size_t N>
         array_view(std::array<C, N>& value) noexcept :
             array_view(value.data(), static_cast<size_type>(value.size()))
         {}
 
-        template <typename C, size_t N>
+        template <typename C, std::size_t N>
         array_view(std::array<C, N> const& value) noexcept :
             array_view(value.data(), static_cast<size_type>(value.size()))
         {}
@@ -231,15 +231,15 @@ WINRT_EXPORT namespace winrt
         }
     };
 
-    template <typename C, size_t N> array_view(C(&value)[N]) -> array_view<C>;
+    template <typename C, std::size_t N> array_view(C(&value)[N]) -> array_view<C>;
     template <typename C> array_view(std::vector<C>& value) -> array_view<C>;
     template <typename C> array_view(std::vector<C> const& value) -> array_view<C const>;
-    template <typename C, size_t N> array_view(std::array<C, N>& value) -> array_view<C>;
-    template <typename C, size_t N> array_view(std::array<C, N> const& value) -> array_view<C const>;
+    template <typename C, std::size_t N> array_view(std::array<C, N>& value) -> array_view<C>;
+    template <typename C, std::size_t N> array_view(std::array<C, N> const& value) -> array_view<C const>;
 
 #ifdef __cpp_lib_span
-    template <typename C, size_t extent> array_view(std::span<C, extent>& value) -> array_view<C>;
-    template <typename C, size_t extent> array_view(std::span<C, extent> const& value) -> array_view<C const>;
+    template <typename C, std::size_t extent> array_view(std::span<C, extent>& value) -> array_view<C>;
+    template <typename C, std::size_t extent> array_view(std::span<C, extent> const& value) -> array_view<C const>;
 #endif
 
     template <typename T>
@@ -265,7 +265,7 @@ WINRT_EXPORT namespace winrt
             com_array(count, value_type())
         {}
 
-        com_array(void* ptr, uint32_t const count, take_ownership_from_abi_t) noexcept :
+        com_array(void* ptr, std::uint32_t const count, take_ownership_from_abi_t) noexcept :
             array_view<T>(static_cast<value_type*>(ptr), static_cast<value_type*>(ptr) + count)
         {
         }
@@ -288,21 +288,21 @@ WINRT_EXPORT namespace winrt
             com_array(value.begin(), value.end())
         {}
 
-        template <typename U, size_t N>
+        template <typename U, std::size_t N>
         explicit com_array(std::array<U, N> const& value) :
             com_array(value.begin(), value.end())
         {}
 
 #ifdef __cpp_lib_span
-        template <typename U, size_t extent>
+        template <typename U, std::size_t extent>
         explicit com_array(std::span<U, extent> span) noexcept : 
             com_array(span.data(), span.data() + span.size()) 
         {
-            WINRT_ASSERT(span.size() <= UINT_MAX);
+            WINRT_ASSERT(span.size() <= (std::numeric_limits<size_type>::max)());
         }
 #endif
 
-        template <typename U, size_t N>
+        template <typename U, std::size_t N>
         explicit com_array(U const(&value)[N]) :
             com_array(value, value + N)
         {}
@@ -374,17 +374,17 @@ WINRT_EXPORT namespace winrt
             }
         }
 
-        std::pair<uint32_t, impl::arg_out<T>> detach_abi() noexcept
+        std::pair<std::uint32_t, impl::arg_out<T>> detach_abi() noexcept
         {
 #ifdef _MSC_VER
             // https://github.com/microsoft/cppwinrt/pull/1165
-            std::pair<uint32_t, impl::arg_out<T>> result;
-            memset(&result, 0, sizeof(result));
+            std::pair<std::uint32_t, impl::arg_out<T>> result;
+            std::memset(&result, 0, sizeof(result));
             result.first = this->size();
             result.second = *reinterpret_cast<impl::arg_out<T>*>(this);
-            memset(this, 0, sizeof(com_array<T>));
+            std::memset(this, 0, sizeof(com_array<T>));
 #else
-            std::pair<uint32_t, impl::arg_out<T>> result(this->size(), *reinterpret_cast<impl::arg_out<T>*>(this));
+            std::pair<std::uint32_t, impl::arg_out<T>> result(this->size(), *reinterpret_cast<impl::arg_out<T>*>(this));
             this->m_data = nullptr;
             this->m_size = 0;
 #endif
@@ -392,19 +392,19 @@ WINRT_EXPORT namespace winrt
         }
 
         template <typename U>
-        friend std::pair<uint32_t, impl::arg_out<U>> detach_abi(com_array<U>& object) noexcept;
+        friend std::pair<std::uint32_t, impl::arg_out<U>> detach_abi(com_array<U>& object) noexcept;
     };
 
-    template <typename C> com_array(uint32_t, C const&) -> com_array<std::decay_t<C>>;
+    template <typename C> com_array(std::uint32_t, C const&) -> com_array<std::decay_t<C>>;
     template <typename InIt, typename = std::void_t<typename std::iterator_traits<InIt>::difference_type>>
     com_array(InIt, InIt) -> com_array<std::decay_t<typename std::iterator_traits<InIt>::value_type>>;
     template <typename C> com_array(std::vector<C> const&) -> com_array<std::decay_t<C>>;
-    template <size_t N, typename C> com_array(std::array<C, N> const&) -> com_array<std::decay_t<C>>;
-    template <size_t N, typename C> com_array(C const(&)[N]) -> com_array<std::decay_t<C>>;
+    template <std::size_t N, typename C> com_array(std::array<C, N> const&) -> com_array<std::decay_t<C>>;
+    template <std::size_t N, typename C> com_array(C const(&)[N]) -> com_array<std::decay_t<C>>;
     template <typename C> com_array(std::initializer_list<C>) -> com_array<std::decay_t<C>>;
 
 #ifdef __cpp_lib_span
-    template <typename C, size_t extent> com_array(std::span<C, extent> const& value) -> com_array<std::decay_t<C>>;
+    template <typename C, std::size_t extent> com_array(std::span<C, extent> const& value) -> com_array<std::decay_t<C>>;
 #endif
 
 
@@ -471,7 +471,7 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename T>
-    std::pair<uint32_t, impl::arg_out<T>> detach_abi(com_array<T>& object) noexcept
+    std::pair<std::uint32_t, impl::arg_out<T>> detach_abi(com_array<T>& object) noexcept
     {
         return object.detach_abi();
     }
@@ -496,10 +496,10 @@ namespace winrt::impl
         ~array_size_proxy() noexcept
         {
             WINRT_ASSERT(m_value.data() || (!m_value.data() && m_size == 0));
-            *reinterpret_cast<uint32_t*>(reinterpret_cast<uintptr_t*>(&m_value) + 1) = m_size;
+            *reinterpret_cast<std::uint32_t*>(reinterpret_cast<std::uintptr_t*>(&m_value) + 1) = m_size;
         }
 
-        operator uint32_t*() noexcept
+        operator std::uint32_t*() noexcept
         {
             return &m_size;
         }
@@ -512,7 +512,7 @@ namespace winrt::impl
     private:
 
         com_array<T>& m_value;
-        uint32_t m_size{ 0 };
+        std::uint32_t m_size{ 0 };
     };
 
     template<typename T>
@@ -524,7 +524,7 @@ namespace winrt::impl
     template <typename T>
     struct com_array_proxy
     {
-        com_array_proxy(uint32_t* size, winrt::impl::arg_out<T>* value) noexcept : m_size(size), m_value(value)
+        com_array_proxy(std::uint32_t* size, winrt::impl::arg_out<T>* value) noexcept : m_size(size), m_value(value)
         {}
 
         ~com_array_proxy() noexcept
@@ -545,7 +545,7 @@ namespace winrt::impl
 
     private:
 
-        uint32_t* m_size;
+        std::uint32_t* m_size;
         arg_out<T>* m_value;
         com_array<T> m_temp;
     };
@@ -554,7 +554,7 @@ namespace winrt::impl
 WINRT_EXPORT namespace winrt
 {
     template <typename T>
-    auto detach_abi(uint32_t* __valueSize, impl::arg_out<T>* value) noexcept
+    auto detach_abi(std::uint32_t* __valueSize, impl::arg_out<T>* value) noexcept
     {
         return impl::com_array_proxy<T>(__valueSize, value);
     }

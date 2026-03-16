@@ -3,17 +3,17 @@ WINRT_EXPORT namespace winrt
 {
     struct file_time
     {
-        uint64_t value{};
+        std::uint64_t value{};
 
         file_time() noexcept = default;
 
-        constexpr explicit file_time(uint64_t const value) noexcept : value(value)
+        constexpr explicit file_time(std::uint64_t const value) noexcept : value(value)
         {
         }
 
 #ifdef _FILETIME_
         constexpr file_time(FILETIME const& value) noexcept
-            : value(value.dwLowDateTime | (static_cast<uint64_t>(value.dwHighDateTime) << 32))
+            : value(value.dwLowDateTime | (static_cast<std::uint64_t>(value.dwHighDateTime) << 32))
         {
         }
 
@@ -26,7 +26,7 @@ WINRT_EXPORT namespace winrt
 
     struct clock
     {
-        using rep = int64_t;
+        using rep = std::int64_t;
         using period = impl::filetime_period;
         using duration = Windows::Foundation::TimeSpan;
         using time_point = Windows::Foundation::DateTime;
@@ -52,7 +52,7 @@ WINRT_EXPORT namespace winrt
 
         static file_time to_file_time(time_point const& time) noexcept
         {
-            return file_time{ static_cast<uint64_t>(time.time_since_epoch().count()) };
+            return file_time{ static_cast<std::uint64_t>(time.time_since_epoch().count()) };
         }
 
         static time_point from_file_time(file_time const& time) noexcept

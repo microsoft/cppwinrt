@@ -47,7 +47,7 @@ namespace winrt::impl
     }
 
     template <typename Async>
-    auto wait_for_completed(Async const& async, uint32_t const timeout)
+    auto wait_for_completed(Async const& async, std::uint32_t const timeout)
     {
         struct shared_type
         {
@@ -72,8 +72,8 @@ namespace winrt::impl
     {
         check_sta_blocking_wait();
         auto const milliseconds = std::chrono::duration_cast<std::chrono::milliseconds>(timeout).count();
-        WINRT_ASSERT((milliseconds >= 0) && (static_cast<uint64_t>(milliseconds) < 0xFFFFFFFFull)); // Within uint32_t range and not INFINITE
-        return wait_for_completed(async, static_cast<uint32_t>(milliseconds));
+        WINRT_ASSERT((milliseconds >= 0) && (static_cast<std::uint64_t>(milliseconds) < 0xFFFFFFFFull)); // Within std::uint32_t range and not INFINITE
+        return wait_for_completed(async, static_cast<std::uint32_t>(milliseconds));
     }
 
     inline void check_status_canceled(Windows::Foundation::AsyncStatus status)
@@ -158,7 +158,7 @@ namespace winrt::impl
 
         std::conditional_t<preserve_context, Async const&, Async> async;
         Windows::Foundation::AsyncStatus status = Windows::Foundation::AsyncStatus::Started;
-        int32_t failure = 0;
+        std::int32_t failure = 0;
         std::atomic<bool> suspending = true;
 
         void enable_cancellation(cancellable_promise* promise)
@@ -405,7 +405,7 @@ namespace winrt::impl
 
         unsigned long __stdcall Release() noexcept
         {
-            uint32_t const remaining = this->subtract_reference();
+            std::uint32_t const remaining = this->subtract_reference();
 
             if (remaining == 0)
             {
@@ -450,7 +450,7 @@ namespace winrt::impl
             return m_completed;
         }
 
-        uint32_t Id() const noexcept
+        std::uint32_t Id() const noexcept
         {
             return 1;
         }
@@ -597,7 +597,7 @@ namespace winrt::impl
             bool await_suspend(std::coroutine_handle<>) const noexcept
             {
                 promise->set_completed();
-                uint32_t const remaining = promise->subtract_reference();
+                std::uint32_t const remaining = promise->subtract_reference();
 
                 if (remaining == 0)
                 {

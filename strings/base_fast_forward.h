@@ -36,31 +36,31 @@ namespace winrt::impl
     {
         struct guid
         {
-            uint32_t Data1;
-            uint16_t Data2;
-            uint16_t Data3;
-            uint8_t  Data4[8];
+            std::uint32_t Data1;
+            std::uint16_t Data2;
+            std::uint16_t Data3;
+            std::uint8_t  Data4[8];
             inline bool operator!=(guid const& right) const noexcept
             {
-                return memcmp(this, &right, sizeof(guid));
+                return std::memcmp(this, &right, sizeof(guid));
             }
         };
 
         struct WINRT_IMPL_FF_NOVTABLE WINRT_IMPL_FF_PUBLIC inspectable
         {
-            virtual int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept = 0;
-            virtual uint32_t __stdcall AddRef() noexcept = 0;
-            virtual uint32_t __stdcall Release() noexcept = 0;
-            virtual int32_t __stdcall GetIids(uint32_t* count, guid** ids) noexcept = 0;
-            virtual int32_t __stdcall GetRuntimeClassName(void** name) noexcept = 0;
-            virtual int32_t __stdcall GetTrustLevel(uint32_t* level) noexcept = 0;
+            virtual std::int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept = 0;
+            virtual std::uint32_t __stdcall AddRef() noexcept = 0;
+            virtual std::uint32_t __stdcall Release() noexcept = 0;
+            virtual std::int32_t __stdcall GetIids(std::uint32_t* count, guid** ids) noexcept = 0;
+            virtual std::int32_t __stdcall GetRuntimeClassName(void** name) noexcept = 0;
+            virtual std::int32_t __stdcall GetTrustLevel(std::uint32_t* level) noexcept = 0;
         };
 
         void* const* m_vfptr;
         inspectable* m_owner;
         std::size_t m_offset;
         guid m_iid;
-        std::atomic<uint32_t> m_references{ 1 };
+        std::atomic<std::uint32_t> m_references{ 1 };
 
         fast_abi_forwarder(void* owner, guid const& iid, std::size_t offset) noexcept :
             m_vfptr(s_vtable), m_owner(static_cast<inspectable*>(owner)), m_offset(offset), m_iid(iid)
@@ -73,7 +73,7 @@ namespace winrt::impl
             m_owner->Release();
         }
 
-        static int32_t __stdcall QueryInterface(fast_abi_forwarder* self, guid const& iid, void** object) noexcept
+        static std::int32_t __stdcall QueryInterface(fast_abi_forwarder* self, guid const& iid, void** object) noexcept
         {
             if (iid != self->m_iid)
             {
@@ -85,14 +85,14 @@ namespace winrt::impl
         }
 
         // Note: COM interfaces use stdcall, not thiscall, ('this' gets no special treatment), permitting static implementations
-        static uint32_t __stdcall AddRef(fast_abi_forwarder* self) noexcept
+        static std::uint32_t __stdcall AddRef(fast_abi_forwarder* self) noexcept
         {
             return 1 + self->m_references.fetch_add(1, std::memory_order_relaxed);
         }
 
-        static uint32_t __stdcall Release(fast_abi_forwarder* self) noexcept
+        static std::uint32_t __stdcall Release(fast_abi_forwarder* self) noexcept
         {
-            uint32_t const remaining = self->m_references.fetch_sub(1, std::memory_order_release) - 1;
+            std::uint32_t const remaining = self->m_references.fetch_sub(1, std::memory_order_release) - 1;
             if (remaining == 0)
             {
                 std::atomic_thread_fence(std::memory_order_acquire);
@@ -101,17 +101,17 @@ namespace winrt::impl
             return remaining;
         }
 
-        static uint32_t __stdcall GetIids(fast_abi_forwarder* self, uint32_t* count, guid** iids) noexcept
+        static std::uint32_t __stdcall GetIids(fast_abi_forwarder* self, std::uint32_t* count, guid** iids) noexcept
         {
             return self->m_owner->GetIids(count, iids);
         }
 
-        static uint32_t __stdcall GetRuntimeClassName(fast_abi_forwarder* self, void** name) noexcept
+        static std::uint32_t __stdcall GetRuntimeClassName(fast_abi_forwarder* self, void** name) noexcept
         {
             return self->m_owner->GetRuntimeClassName(name);
         }
 
-        static uint32_t __stdcall GetTrustLevel(fast_abi_forwarder* self, uint32_t* level) noexcept
+        static std::uint32_t __stdcall GetTrustLevel(fast_abi_forwarder* self, std::uint32_t* level) noexcept
         {
             return self->m_owner->GetTrustLevel(level);
         }
@@ -144,7 +144,7 @@ namespace winrt::impl
 namespace winrt
 {
     template<typename TGuid>
-    auto make_fast_abi_forwarder(void* owner, TGuid const& guid, size_t offset)
+    auto make_fast_abi_forwarder(void* owner, TGuid const& guid, std::size_t offset)
     {
         using ff_guid = impl::fast_abi_forwarder::guid;
         static_assert(sizeof(ff_guid) == sizeof(TGuid));

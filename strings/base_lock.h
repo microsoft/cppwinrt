@@ -117,7 +117,7 @@ WINRT_EXPORT namespace winrt
                     return false;
                 }
 
-                if (!WINRT_IMPL_SleepConditionVariableSRW(&m_cv, x.get(), static_cast<uint32_t>(milliseconds), 0))
+                if (!WINRT_IMPL_SleepConditionVariableSRW(&m_cv, x.get(), static_cast<std::uint32_t>(milliseconds), 0))
                 {
                     return predicate();
                 }

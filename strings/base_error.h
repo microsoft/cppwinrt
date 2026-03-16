@@ -41,11 +41,11 @@ namespace winrt::impl
 
     using bstr_handle = handle_type<bstr_traits>;
 
-    inline hstring trim_hresult_message(wchar_t const* const message, uint32_t size) noexcept
+    inline hstring trim_hresult_message(wchar_t const* const message, std::uint32_t size) noexcept
     {
         wchar_t const* back = message + size - 1;
 
-        while (size&& iswspace(*back))
+        while (size&& std::iswspace(*back))
         {
             --size;
             --back;
@@ -58,7 +58,7 @@ namespace winrt::impl
     {
         handle_type<impl::heap_traits> message;
 
-        uint32_t const size = WINRT_IMPL_FormatMessageW(0x00001300, // FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS
+        std::uint32_t const size = WINRT_IMPL_FormatMessageW(0x00001300, // FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS
             nullptr,
             code,
             0x00000400, // MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT)
@@ -69,14 +69,14 @@ namespace winrt::impl
         return trim_hresult_message(message.get(), size);
     }
 
-    constexpr int32_t hresult_from_win32(uint32_t const x) noexcept
+    constexpr std::int32_t hresult_from_win32(std::uint32_t const x) noexcept
     {
-        return (int32_t)(x) <= 0 ? (int32_t)(x) : (int32_t)(((x) & 0x0000FFFF) | (7 << 16) | 0x80000000);
+        return (std::int32_t)(x) <= 0 ? (std::int32_t)(x) : (std::int32_t)(((x) & 0x0000FFFF) | (7 << 16) | 0x80000000);
     }
 
-    constexpr int32_t hresult_from_nt(uint32_t const x) noexcept
+    constexpr std::int32_t hresult_from_nt(std::uint32_t const x) noexcept
     {
-        return ((int32_t)((x) | 0x10000000));
+        return ((std::int32_t)((x) | 0x10000000));
     }
 }
 
@@ -164,7 +164,7 @@ WINRT_EXPORT namespace winrt
         {
             if (m_info)
             {
-                int32_t code{};
+                std::int32_t code{};
                 impl::bstr_handle fallback;
                 impl::bstr_handle message;
                 impl::bstr_handle unused;
@@ -236,7 +236,7 @@ WINRT_EXPORT namespace winrt
 #endif
 
         impl::bstr_handle m_debug_reference;
-        uint32_t m_debug_magic{ 0xAABBCCDD };
+        std::uint32_t m_debug_magic{ 0xAABBCCDD };
         hresult m_code{ impl::error_fail };
         com_ptr<impl::IRestrictedErrorInfo> m_info;
 
@@ -471,7 +471,7 @@ WINRT_EXPORT namespace winrt
         }
         catch (...)
         {
-            abort();
+            std::abort();
         }
     }
 
@@ -532,7 +532,7 @@ WINRT_EXPORT namespace winrt
     [[noreturn]] inline void terminate() noexcept
     {
         WINRT_IMPL_RoFailFastWithErrorContext(to_hresult());
-        abort();
+        std::abort();
     }
 }
 

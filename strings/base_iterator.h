@@ -7,13 +7,13 @@ namespace winrt::impl
         using iterator_concept = std::random_access_iterator_tag;
         using iterator_category = std::input_iterator_tag;
         using value_type = decltype(std::declval<T>().GetAt(0));
-        using difference_type = ptrdiff_t;
+        using difference_type = std::ptrdiff_t;
         using pointer = void;
         using reference = value_type;
 
         fast_iterator() noexcept = default;
 
-        fast_iterator(T const& collection, uint32_t const index) noexcept :
+        fast_iterator(T const& collection, std::uint32_t const index) noexcept :
             m_collection(&collection),
             m_index(index)
         {}
@@ -46,7 +46,7 @@ namespace winrt::impl
 
         fast_iterator& operator+=(difference_type n) noexcept
         {
-            m_index += static_cast<uint32_t>(n);
+            m_index += static_cast<std::uint32_t>(n);
             return *this;
         }
 
@@ -78,7 +78,7 @@ namespace winrt::impl
 
         reference operator[](difference_type n) const
         {
-            return m_collection->GetAt(m_index + static_cast<uint32_t>(n));
+            return m_collection->GetAt(m_index + static_cast<std::uint32_t>(n));
         }
 
         bool operator==(fast_iterator const& other) const noexcept
@@ -127,7 +127,7 @@ namespace winrt::impl
     private:
 
         T const* m_collection = nullptr;
-        uint32_t m_index = 0;
+        std::uint32_t m_index = 0;
     };
 
     template <typename T>
