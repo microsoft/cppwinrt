@@ -314,7 +314,7 @@ namespace cppwinrt
     struct option
     {
         static constexpr std::uint32_t no_min = 0;
-        static constexpr std::uint32_t no_max = std::numeric_limits<std::uint32_t>::max();
+        static constexpr std::uint32_t no_max = (std::numeric_limits<std::uint32_t>::max)();
         
         std::string_view name;
         std::uint32_t min{ no_min };

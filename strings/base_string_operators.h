@@ -104,8 +104,8 @@ namespace winrt::impl
             return{};
         }
         hstring_builder text(size);
-        std::memcpy(text.data(), left.data(), left.size() * sizeof(wchar_t));
-        std::memcpy(text.data() + left.size(), right.data(), right.size() * sizeof(wchar_t));
+        std::copy_n(left.data(), left.size(), text.data());
+        std::copy_n(right.data(), right.size(), text.data() + left.size());
         return text.to_hstring();
     }
 }

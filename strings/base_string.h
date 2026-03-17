@@ -105,7 +105,7 @@ namespace winrt::impl
         }
 
         auto header = precreate_hstring_on_heap(length);
-        std::memcpy(header->buffer, value, sizeof(wchar_t) * length);
+        std::copy_n(value, length, header->buffer);
         return header;
     }
 
