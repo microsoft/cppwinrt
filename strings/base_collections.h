@@ -101,10 +101,10 @@ namespace winrt::impl
 
         private:
 
-            uint32_t const m_snapshot;
+            std::uint32_t const m_snapshot;
         };
 
-        uint32_t get_version() const noexcept
+        std::uint32_t get_version() const noexcept
         {
             return m_version;
         }
@@ -116,7 +116,7 @@ namespace winrt::impl
 
     private:
 
-        std::atomic<uint32_t> m_version{};
+        std::atomic<std::uint32_t> m_version{};
     };
 
     template <typename T>

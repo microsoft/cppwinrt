@@ -10,12 +10,12 @@ WINRT_EXPORT namespace winrt
     {
         struct lock
         {
-            constexpr uint32_t operator++() noexcept
+            constexpr std::uint32_t operator++() noexcept
             {
                 return 1;
             }
 
-            constexpr uint32_t operator--() noexcept
+            constexpr std::uint32_t operator--() noexcept
             {
                 return 0;
             }

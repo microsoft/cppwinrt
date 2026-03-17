@@ -90,12 +90,12 @@ namespace winrt::impl
             return result{ this };
         }
 
-        auto GetAt(uint32_t const index) const
+        auto GetAt(std::uint32_t const index) const
         {
             struct result
             {
                 base_type const* container;
-                uint32_t const index;
+                std::uint32_t const index;
 
                 operator T() const
                 {
@@ -113,7 +113,7 @@ namespace winrt::impl
 
         using base_type::IndexOf;
 
-        bool IndexOf(Windows::Foundation::IInspectable const& value, uint32_t& index) const
+        bool IndexOf(Windows::Foundation::IInspectable const& value, std::uint32_t& index) const
         {
             if constexpr (is_com_interface_v<T>)
             {
@@ -139,7 +139,7 @@ namespace winrt::impl
 
         using base_type::GetMany;
 
-        uint32_t GetMany(uint32_t const startIndex, array_view<Windows::Foundation::IInspectable> values) const
+        std::uint32_t GetMany(std::uint32_t const startIndex, array_view<Windows::Foundation::IInspectable> values) const
         {
             [[maybe_unused]] auto guard = this->acquire_shared();
             if (startIndex >= m_values.size())
@@ -147,7 +147,7 @@ namespace winrt::impl
                 return 0;
             }
 
-            uint32_t const actual = (std::min)(static_cast<uint32_t>(m_values.size() - startIndex), values.size());
+            std::uint32_t const actual = (std::min)(static_cast<std::uint32_t>(m_values.size() - startIndex), values.size());
 
             std::transform(m_values.begin() + startIndex, m_values.begin() + startIndex + actual, values.begin(), [&](auto && value)
                 {
@@ -179,14 +179,14 @@ namespace winrt::impl
 
         using base_type::SetAt;
 
-        void SetAt(uint32_t const index, Windows::Foundation::IInspectable const& value)
+        void SetAt(std::uint32_t const index, Windows::Foundation::IInspectable const& value)
         {
             SetAt(index, unbox_value<T>(value));
         }
 
         using base_type::InsertAt;
 
-        void InsertAt(uint32_t const index, Windows::Foundation::IInspectable const& value)
+        void InsertAt(std::uint32_t const index, Windows::Foundation::IInspectable const& value)
         {
             InsertAt(index, unbox_value<T>(value));
         }
@@ -268,11 +268,11 @@ namespace winrt::impl
                 return m_current != m_end;
             }
 
-            uint32_t GetMany(array_view<Windows::Foundation::IInspectable> values)
+            std::uint32_t GetMany(array_view<Windows::Foundation::IInspectable> values)
             {
                 [[maybe_unused]] auto guard = m_owner->acquire_exclusive();
                 check_version(*m_owner);
-                uint32_t const actual = (std::min)(static_cast<uint32_t>(std::distance(m_current, m_end)), values.size());
+                std::uint32_t const actual = (std::min)(static_cast<std::uint32_t>(std::distance(m_current, m_end)), values.size());
 
                 std::transform(m_current, m_current + actual, values.begin(), [&](auto && value)
                     {

@@ -5,6 +5,7 @@
 #include <limits>
 #include <climits>
 #include <cstdint>
+#include <cctype>
 #include <string>
 #include <string_view>
 #include <map>
@@ -203,7 +204,7 @@ namespace cppwinrt
 
         while (true)
         {
-            DWORD actual_size = GetModuleFileNameA(nullptr, path.data(), 1 + static_cast<uint32_t>(path.size()));
+            DWORD actual_size = GetModuleFileNameA(nullptr, path.data(), 1 + static_cast<std::uint32_t>(path.size()));
 
             if (actual_size < 1 + path.size())
             {
@@ -237,12 +238,12 @@ namespace cppwinrt
         }
 
         auto key = open_sdk();
-        uint32_t index{};
+        std::uint32_t index{};
         std::array<char, 100> subkey;
         std::array<unsigned long, 4> version_parts{};
         std::string result;
 
-        while (0 == RegEnumKeyA(key.handle, index++, subkey.data(), static_cast<uint32_t>(subkey.size())))
+        while (0 == RegEnumKeyA(key.handle, index++, subkey.data(), static_cast<std::uint32_t>(subkey.size())))
         {
             if (!std::regex_match(subkey.data(), match, rx))
             {
@@ -258,7 +259,7 @@ namespace cppwinrt
             char* next_part = subkey.data();
             bool force_newer = false;
 
-            for (size_t i = 0; ; ++i)
+            for (std::size_t i = 0; ; ++i)
             {
                 auto version_part = strtoul(next_part, &next_part, 10);
 
@@ -312,19 +313,19 @@ namespace cppwinrt
 
     struct option
     {
-        static constexpr uint32_t no_min = 0;
-        static constexpr uint32_t no_max = UINT_MAX;
+        static constexpr std::uint32_t no_min = 0;
+        static constexpr std::uint32_t no_max = (std::numeric_limits<std::uint32_t>::max)();
         
         std::string_view name;
-        uint32_t min{ no_min };
-        uint32_t max{ no_max };
+        std::uint32_t min{ no_min };
+        std::uint32_t max{ no_max };
         std::string_view arg{};
         std::string_view desc{};
     };
 
     struct reader
     {
-        template <typename C, typename V, size_t numOptions>
+        template <typename C, typename V, std::size_t numOptions>
         reader(C const argc, V const argv, const option(& options)[numOptions])
         {
 #ifdef _DEBUG
@@ -449,9 +450,9 @@ namespace cppwinrt
 #if defined(_WIN32) || defined(_WIN64)
                     std::array<char, 260> local{};
 #ifdef _WIN64
-                    ExpandEnvironmentStringsA("%windir%\\System32\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
+                    ExpandEnvironmentStringsA("%windir%\\System32\\WinMetadata", local.data(), static_cast<std::uint32_t>(local.size()));
 #else
-                    ExpandEnvironmentStringsA("%windir%\\SysNative\\WinMetadata", local.data(), static_cast<uint32_t>(local.size()));
+                    ExpandEnvironmentStringsA("%windir%\\SysNative\\WinMetadata", local.data(), static_cast<std::uint32_t>(local.size()));
 #endif
                     add_directory(local.data());
 #else /* defined(_WIN32) || defined(_WIN64) */
@@ -586,7 +587,7 @@ namespace cppwinrt
             std::filesystem::path response_path{ std::string{ arg } };
             std::string extension = response_path.extension().generic_string();
             std::transform(extension.begin(), extension.end(), extension.begin(),
-                [](auto c) { return static_cast<unsigned char>(::tolower(c)); });
+                [](auto c) { return static_cast<unsigned char>(std::tolower(c)); });
 
             // Check if misuse of @ prefix, so if directory or metadata file instead of response file.
             if (is_directory(response_path) || extension == ".winmd")
@@ -597,12 +598,12 @@ namespace cppwinrt
             std::ifstream response_file(absolute(response_path));
             while (getline(response_file, line_buf))
             {
-                size_t argc = 0;
+                std::size_t argc = 0;
                 std::vector<std::string> argv;
 
                 parse_command_line(line_buf.data(), argv, &argc);
 
-                for (size_t i = 0; i < argc; i++)
+                for (std::size_t i = 0; i < argc; i++)
                 {
                     extract_option(argv[i], options, last);
                 }
@@ -610,7 +611,7 @@ namespace cppwinrt
         }
 
         template <typename Character>
-        static void parse_command_line(Character* cmdstart, std::vector<std::string>& argv, size_t* argument_count)
+        static void parse_command_line(Character* cmdstart, std::vector<std::string>& argv, std::size_t* argument_count)
         {
 
             std::string arg;

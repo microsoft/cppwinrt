@@ -6,12 +6,12 @@ namespace winrt::impl
     struct factory_diagnostics_info
     {
         bool is_agile{ true };
-        uint32_t requests{ 0 };
+        std::uint32_t requests{ 0 };
     };
 
     struct diagnostics_info
     {
-        std::map<std::wstring_view, uint32_t> queries;
+        std::map<std::wstring_view, std::uint32_t> queries;
         std::map<std::wstring_view, factory_diagnostics_info> factories;
     };
 
@@ -163,7 +163,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
     {
         IUnknown() noexcept = default;
         IUnknown(std::nullptr_t) noexcept {}
-        void* operator new(size_t) = delete;
+        void* operator new(std::size_t) = delete;
 
         IUnknown(void* ptr, take_ownership_from_abi_t) noexcept : m_ptr(static_cast<impl::unknown_abi*>(ptr))
         {

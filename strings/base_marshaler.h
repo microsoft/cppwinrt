@@ -1,7 +1,7 @@
 
 namespace winrt::impl
 {
-    inline int32_t make_marshaler(unknown_abi* outer, void** result) noexcept
+    inline std::int32_t make_marshaler(unknown_abi* outer, void** result) noexcept
     {
         struct marshaler final : IMarshal
         {
@@ -10,7 +10,7 @@ namespace winrt::impl
                 m_object.copy_from(object);
             }
 
-            int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final
+            std::int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept final
             {
                 if (is_guid_of<IMarshal>(id))
                 {
@@ -22,12 +22,12 @@ namespace winrt::impl
                 return m_object->QueryInterface(id, object);
             }
 
-            uint32_t __stdcall AddRef() noexcept final
+            std::uint32_t __stdcall AddRef() noexcept final
             {
                 return ++m_references;
             }
 
-            uint32_t __stdcall Release() noexcept final
+            std::uint32_t __stdcall Release() noexcept final
             {
                 auto const remaining = --m_references;
 
@@ -39,7 +39,7 @@ namespace winrt::impl
                 return remaining;
             }
 
-            int32_t __stdcall GetUnmarshalClass(guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, guid* pCid) noexcept final
+            std::int32_t __stdcall GetUnmarshalClass(guid const& riid, void* pv, std::uint32_t dwDestContext, void* pvDestContext, std::uint32_t mshlflags, guid* pCid) noexcept final
             {
                 if (m_marshaler)
                 {
@@ -49,7 +49,7 @@ namespace winrt::impl
                 return error_bad_alloc;
             }
 
-            int32_t __stdcall GetMarshalSizeMax(guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, uint32_t* pSize) noexcept final
+            std::int32_t __stdcall GetMarshalSizeMax(guid const& riid, void* pv, std::uint32_t dwDestContext, void* pvDestContext, std::uint32_t mshlflags, std::uint32_t* pSize) noexcept final
             {
                 if (m_marshaler)
                 {
@@ -59,7 +59,7 @@ namespace winrt::impl
                 return error_bad_alloc;
             }
 
-            int32_t __stdcall MarshalInterface(void* pStm, guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags) noexcept final
+            std::int32_t __stdcall MarshalInterface(void* pStm, guid const& riid, void* pv, std::uint32_t dwDestContext, void* pvDestContext, std::uint32_t mshlflags) noexcept final
             {
                 if (m_marshaler)
                 {
@@ -69,7 +69,7 @@ namespace winrt::impl
                 return error_bad_alloc;
             }
 
-            int32_t __stdcall UnmarshalInterface(void* pStm, guid const& riid, void** ppv) noexcept final
+            std::int32_t __stdcall UnmarshalInterface(void* pStm, guid const& riid, void** ppv) noexcept final
             {
                 if (m_marshaler)
                 {
@@ -80,7 +80,7 @@ namespace winrt::impl
                 return error_bad_alloc;
             }
 
-            int32_t __stdcall ReleaseMarshalData(void* pStm) noexcept final
+            std::int32_t __stdcall ReleaseMarshalData(void* pStm) noexcept final
             {
                 if (m_marshaler)
                 {
@@ -90,7 +90,7 @@ namespace winrt::impl
                 return error_bad_alloc;
             }
 
-            int32_t __stdcall DisconnectObject(uint32_t dwReserved) noexcept final
+            std::int32_t __stdcall DisconnectObject(std::uint32_t dwReserved) noexcept final
             {
                 if (m_marshaler)
                 {
