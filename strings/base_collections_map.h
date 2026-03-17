@@ -120,11 +120,11 @@ namespace std
 {
     template<typename K, typename V>
     struct tuple_size<winrt::Windows::Foundation::Collections::IKeyValuePair<K, V>>
-        : integral_constant<size_t, 2>
+        : integral_constant<std::size_t, 2>
     {
     };
 
-    template<size_t Idx, typename K, typename V>
+    template<std::size_t Idx, typename K, typename V>
     struct tuple_element<Idx, winrt::Windows::Foundation::Collections::IKeyValuePair<K, V>>
     {
         static_assert(Idx < 2, "key-value pair index out of bounds");
@@ -134,7 +134,7 @@ namespace std
 
 namespace winrt::Windows::Foundation::Collections
 {
-    template<size_t Idx, typename K, typename V>
+    template<std::size_t Idx, typename K, typename V>
     std::tuple_element_t<Idx, IKeyValuePair<K, V>> get(IKeyValuePair<K, V> const& kvp)
     {
         static_assert(Idx < 2, "key-value pair index out of bounds");

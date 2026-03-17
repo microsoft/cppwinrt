@@ -23,39 +23,39 @@ namespace winrt::impl
             return std::is_arithmetic_v<T> || std::is_enum_v<T>;
         }
 
-        uint8_t GetUInt8() const
+        std::uint8_t GetUInt8() const
         {
-            return to_scalar<uint8_t>();
+            return to_scalar<std::uint8_t>();
         }
 
-        int16_t GetInt16() const
+        std::int16_t GetInt16() const
         {
-            return to_scalar<int16_t>();
+            return to_scalar<std::int16_t>();
         }
 
-        uint16_t GetUInt16() const
+        std::uint16_t GetUInt16() const
         {
-            return to_scalar<uint16_t>();
+            return to_scalar<std::uint16_t>();
         }
 
-        int32_t GetInt32() const
+        std::int32_t GetInt32() const
         {
-            return to_scalar<int32_t>();
+            return to_scalar<std::int32_t>();
         }
 
-        uint32_t GetUInt32() const
+        std::uint32_t GetUInt32() const
         {
-            return to_scalar<uint32_t>();
+            return to_scalar<std::uint32_t>();
         }
 
-        int64_t GetInt64() const
+        std::int64_t GetInt64() const
         {
-            return to_scalar<int64_t>();
+            return to_scalar<std::int64_t>();
         }
 
-        uint64_t GetUInt64() const
+        std::uint64_t GetUInt64() const
         {
-            return to_scalar<uint64_t>();
+            return to_scalar<std::uint64_t>();
         }
 
         float GetSingle() { throw hresult_not_implemented(); }
@@ -69,13 +69,13 @@ namespace winrt::impl
         Windows::Foundation::Point GetPoint() { throw hresult_not_implemented(); }
         Windows::Foundation::Size GetSize() { throw hresult_not_implemented(); }
         Windows::Foundation::Rect GetRect() { throw hresult_not_implemented(); }
-        void GetUInt8Array(com_array<uint8_t> &) { throw hresult_not_implemented(); }
-        void GetInt16Array(com_array<int16_t> &) { throw hresult_not_implemented(); }
-        void GetUInt16Array(com_array<uint16_t> &) { throw hresult_not_implemented(); }
-        void GetInt32Array(com_array<int32_t> &) { throw hresult_not_implemented(); }
-        void GetUInt32Array(com_array<uint32_t> &) { throw hresult_not_implemented(); }
-        void GetInt64Array(com_array<int64_t> &) { throw hresult_not_implemented(); }
-        void GetUInt64Array(com_array<uint64_t> &) { throw hresult_not_implemented(); }
+        void GetUInt8Array(com_array<std::uint8_t> &) { throw hresult_not_implemented(); }
+        void GetInt16Array(com_array<std::int16_t> &) { throw hresult_not_implemented(); }
+        void GetUInt16Array(com_array<std::uint16_t> &) { throw hresult_not_implemented(); }
+        void GetInt32Array(com_array<std::int32_t> &) { throw hresult_not_implemented(); }
+        void GetUInt32Array(com_array<std::uint32_t> &) { throw hresult_not_implemented(); }
+        void GetInt64Array(com_array<std::int64_t> &) { throw hresult_not_implemented(); }
+        void GetUInt64Array(com_array<std::uint64_t> &) { throw hresult_not_implemented(); }
         void GetSingleArray(com_array<float> &) { throw hresult_not_implemented(); }
         void GetDoubleArray(com_array<double> &) { throw hresult_not_implemented(); }
         void GetChar16Array(com_array<char16_t> &) { throw hresult_not_implemented(); }
@@ -115,52 +115,52 @@ namespace winrt::impl
     };
 
     template <>
-    struct reference_traits<uint8_t>
+    struct reference_traits<std::uint8_t>
     {
-        static auto make(uint8_t value) { return Windows::Foundation::PropertyValue::CreateUInt8(value); }
-        using itf = Windows::Foundation::IReference<uint8_t>;
+        static auto make(std::uint8_t value) { return Windows::Foundation::PropertyValue::CreateUInt8(value); }
+        using itf = Windows::Foundation::IReference<std::uint8_t>;
     };
 
     template <>
-    struct reference_traits<uint16_t>
+    struct reference_traits<std::uint16_t>
     {
-        static auto make(uint16_t value) { return Windows::Foundation::PropertyValue::CreateUInt16(value); }
-        using itf = Windows::Foundation::IReference<uint16_t>;
+        static auto make(std::uint16_t value) { return Windows::Foundation::PropertyValue::CreateUInt16(value); }
+        using itf = Windows::Foundation::IReference<std::uint16_t>;
     };
 
     template <>
-    struct reference_traits<int16_t>
+    struct reference_traits<std::int16_t>
     {
-        static auto make(int16_t value) { return Windows::Foundation::PropertyValue::CreateInt16(value); }
-        using itf = Windows::Foundation::IReference<int16_t>;
+        static auto make(std::int16_t value) { return Windows::Foundation::PropertyValue::CreateInt16(value); }
+        using itf = Windows::Foundation::IReference<std::int16_t>;
     };
 
     template <>
-    struct reference_traits<uint32_t>
+    struct reference_traits<std::uint32_t>
     {
-        static auto make(uint32_t value) { return Windows::Foundation::PropertyValue::CreateUInt32(value); }
-        using itf = Windows::Foundation::IReference<uint32_t>;
+        static auto make(std::uint32_t value) { return Windows::Foundation::PropertyValue::CreateUInt32(value); }
+        using itf = Windows::Foundation::IReference<std::uint32_t>;
     };
 
     template <>
-    struct reference_traits<int32_t>
+    struct reference_traits<std::int32_t>
     {
-        static auto make(int32_t value) { return Windows::Foundation::PropertyValue::CreateInt32(value); }
-        using itf = Windows::Foundation::IReference<int32_t>;
+        static auto make(std::int32_t value) { return Windows::Foundation::PropertyValue::CreateInt32(value); }
+        using itf = Windows::Foundation::IReference<std::int32_t>;
     };
 
     template <>
-    struct reference_traits<uint64_t>
+    struct reference_traits<std::uint64_t>
     {
-        static auto make(uint64_t value) { return Windows::Foundation::PropertyValue::CreateUInt64(value); }
-        using itf = Windows::Foundation::IReference<uint64_t>;
+        static auto make(std::uint64_t value) { return Windows::Foundation::PropertyValue::CreateUInt64(value); }
+        using itf = Windows::Foundation::IReference<std::uint64_t>;
     };
 
     template <>
-    struct reference_traits<int64_t>
+    struct reference_traits<std::int64_t>
     {
-        static auto make(int64_t value) { return Windows::Foundation::PropertyValue::CreateInt64(value); }
-        using itf = Windows::Foundation::IReference<int64_t>;
+        static auto make(std::int64_t value) { return Windows::Foundation::PropertyValue::CreateInt64(value); }
+        using itf = Windows::Foundation::IReference<std::int64_t>;
     };
 
     template <>
@@ -255,52 +255,52 @@ namespace winrt::impl
     };
 
     template <>
-    struct reference_traits<com_array<uint8_t>>
+    struct reference_traits<com_array<std::uint8_t>>
     {
-        static auto make(array_view<uint8_t const> const& value) { return Windows::Foundation::PropertyValue::CreateUInt8Array(value); }
-        using itf = Windows::Foundation::IReferenceArray<uint8_t>;
+        static auto make(array_view<std::uint8_t const> const& value) { return Windows::Foundation::PropertyValue::CreateUInt8Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<std::uint8_t>;
     };
 
     template <>
-    struct reference_traits<com_array<int16_t>>
+    struct reference_traits<com_array<std::int16_t>>
     {
-        static auto make(array_view<int16_t const> const& value) { return Windows::Foundation::PropertyValue::CreateInt16Array(value); }
-        using itf = Windows::Foundation::IReferenceArray<int16_t>;
+        static auto make(array_view<std::int16_t const> const& value) { return Windows::Foundation::PropertyValue::CreateInt16Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<std::int16_t>;
     };
 
     template <>
-    struct reference_traits<com_array<uint16_t>>
+    struct reference_traits<com_array<std::uint16_t>>
     {
-        static auto make(array_view<uint16_t const> const& value) { return Windows::Foundation::PropertyValue::CreateUInt16Array(value); }
-        using itf = Windows::Foundation::IReferenceArray<uint16_t>;
+        static auto make(array_view<std::uint16_t const> const& value) { return Windows::Foundation::PropertyValue::CreateUInt16Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<std::uint16_t>;
     };
 
     template <>
-    struct reference_traits<com_array<int32_t>>
+    struct reference_traits<com_array<std::int32_t>>
     {
-        static auto make(array_view<int32_t const> const& value) { return Windows::Foundation::PropertyValue::CreateInt32Array(value); }
-        using itf = Windows::Foundation::IReferenceArray<int32_t>;
+        static auto make(array_view<std::int32_t const> const& value) { return Windows::Foundation::PropertyValue::CreateInt32Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<std::int32_t>;
     };
 
     template <>
-    struct reference_traits<com_array<uint32_t>>
+    struct reference_traits<com_array<std::uint32_t>>
     {
-        static auto make(com_array<uint32_t> const& value) { return Windows::Foundation::PropertyValue::CreateUInt32Array(value); }
-        using itf = Windows::Foundation::IReferenceArray<uint32_t>;
+        static auto make(com_array<std::uint32_t> const& value) { return Windows::Foundation::PropertyValue::CreateUInt32Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<std::uint32_t>;
     };
 
     template <>
-    struct reference_traits<com_array<int64_t>>
+    struct reference_traits<com_array<std::int64_t>>
     {
-        static auto make(array_view<int64_t const> const& value) { return Windows::Foundation::PropertyValue::CreateInt64Array(value); }
-        using itf = Windows::Foundation::IReferenceArray<int64_t>;
+        static auto make(array_view<std::int64_t const> const& value) { return Windows::Foundation::PropertyValue::CreateInt64Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<std::int64_t>;
     };
 
     template <>
-    struct reference_traits<com_array<uint64_t>>
+    struct reference_traits<com_array<std::uint64_t>>
     {
-        static auto make(array_view<uint64_t const> const& value) { return Windows::Foundation::PropertyValue::CreateUInt64Array(value); }
-        using itf = Windows::Foundation::IReferenceArray<uint64_t>;
+        static auto make(array_view<std::uint64_t const> const& value) { return Windows::Foundation::PropertyValue::CreateUInt64Array(value); }
+        using itf = Windows::Foundation::IReferenceArray<std::uint64_t>;
     };
 
     template <>
