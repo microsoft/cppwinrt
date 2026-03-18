@@ -172,7 +172,7 @@ void* __stdcall %_get_activation_factory([[maybe_unused]] std::wstring_view cons
         }
 
         format = R"(
-int32_t __stdcall WINRT_CanUnloadNow() noexcept
+std::int32_t __stdcall WINRT_CanUnloadNow() noexcept
 {
 #ifdef _WRL_MODULE_H_
 #ifdef _MSC_VER
@@ -187,7 +187,7 @@ int32_t __stdcall WINRT_CanUnloadNow() noexcept
     return %_can_unload_now() ? 0 : 1;
 }
 
-int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept try
+std::int32_t __stdcall WINRT_GetActivationFactory(void* classId, void** factory) noexcept try
 {
     std::wstring_view const name{ *reinterpret_cast<winrt::hstring*>(&classId) };
     *factory = %_get_activation_factory(name);
@@ -640,7 +640,7 @@ catch (...) { return winrt::to_hresult(); }
             }
 )";
 
-        size_t offset = get_bases(type).size();
+        std::size_t offset = get_bases(type).size();
         auto interfaces = get_interfaces(w, type);
 
         for (auto&& [name, info] : interfaces)
@@ -685,7 +685,7 @@ catch (...) { return winrt::to_hresult(); }
         if (has_base)
         {
             auto format = R"(
-        int32_t query_interface_tearoff(guid const& id, void** result) const noexcept override
+        std::int32_t query_interface_tearoff(guid const& id, void** result) const noexcept override
         {%
             return B::query_interface_tearoff(id, result);
         }
@@ -701,7 +701,7 @@ catch (...) { return winrt::to_hresult(); }
             }
 
             auto format = R"(
-        int32_t query_interface_tearoff(guid const& id, void** result) const noexcept override
+        std::int32_t query_interface_tearoff(guid const& id, void** result) const noexcept override
         {%
             return impl::error_no_interface;
         }
@@ -779,8 +779,8 @@ catch (...) { return winrt::to_hresult(); }
                 {
                     composable_base_name = w.write_temp("using composable_base = %;", base_type);
                     auto base_interfaces = get_interfaces(w, base_type);
-                    uint32_t base_interfaces_count{};
-                    uint32_t protected_base_interfaces_count{};
+                    std::uint32_t base_interfaces_count{};
+                    std::uint32_t protected_base_interfaces_count{};
                     external_requires = ",\n        impl::require<D";
                     external_protected_requires = ",\n        protected impl::require<D";
 
@@ -913,7 +913,7 @@ namespace winrt::@::implementation
 )";
 
             std::string upper(type_name);
-            std::transform(upper.begin(), upper.end(), upper.begin(), [](char c) {return static_cast<char>(::toupper(c)); });
+            std::transform(upper.begin(), upper.end(), upper.begin(), [](char c) {return static_cast<char>(std::toupper(c)); });
 
             auto include_path = get_generated_component_filename(type);
 
@@ -1240,7 +1240,7 @@ namespace winrt::@::implementation
 
     static void write_component_fast_abi_thunk(writer& w)
     {
-        for (uint32_t slot = 6; slot < 1024; ++slot)
+        for (std::uint32_t slot = 6; slot < 1024; ++slot)
         {
             auto format = R"(    extern "C" void __stdcall winrt_ff_thunk%();
 )";
@@ -1251,7 +1251,7 @@ namespace winrt::@::implementation
 
     static void write_component_fast_abi_vtable(writer& w)
     {
-        for (uint32_t slot = 6; slot < 1024; ++slot)
+        for (std::uint32_t slot = 6; slot < 1024; ++slot)
         {
             auto format = R"(
 #if WINRT_FAST_ABI_SIZE > %

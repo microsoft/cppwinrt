@@ -31,7 +31,7 @@ namespace cppwinrt
                 ++params.first;
             }
 
-            for (uint32_t i{}; i != size(m_signature.Params()); ++i)
+            for (std::uint32_t i{}; i != size(m_signature.Params()); ++i)
             {
                 m_params.emplace_back(params.first + i, &m_signature.Params().first[i]);
             }
@@ -193,7 +193,7 @@ namespace cppwinrt
     }
 
     template <typename T>
-    auto get_attribute_value(CustomAttribute const& attribute, uint32_t const arg)
+    auto get_attribute_value(CustomAttribute const& attribute, std::uint32_t const arg)
     {
         return get_attribute_value<T>(attribute.Value().FixedArgs()[arg]);
     }
@@ -330,15 +330,15 @@ namespace cppwinrt
     struct contract_version
     {
         std::string_view name;
-        uint32_t version;
+        std::uint32_t version;
     };
 
     struct previous_contract
     {
         std::string_view contract_from;
         std::string_view contract_to;
-        uint32_t version_low;
-        uint32_t version_high;
+        std::uint32_t version_low;
+        std::uint32_t version_high;
     };
 
     struct contract_history
@@ -359,7 +359,7 @@ namespace cppwinrt
         assert(args.size() == 2);
 
         contract_version result{};
-        result.version = get_integer_attribute<uint32_t>(args[1]);
+        result.version = get_integer_attribute<std::uint32_t>(args[1]);
         call(std::get<ElemSig>(args[0].value).value,
             [&](ElemSig::SystemType t)
             {
@@ -388,8 +388,8 @@ namespace cppwinrt
 
         previous_contract result{};
         result.contract_from = get_attribute_value<std::string_view>(args[0]);
-        result.version_low = get_integer_attribute<uint32_t>(args[1]);
-        result.version_high = get_integer_attribute<uint32_t>(args[2]);
+        result.version_low = get_integer_attribute<std::uint32_t>(args[1]);
+        result.version_high = get_integer_attribute<std::uint32_t>(args[2]);
         if (args.size() == 4)
         {
             result.contract_to = get_attribute_value<std::string_view>(args[3]);
@@ -452,7 +452,7 @@ namespace cppwinrt
                 // is not a contract version
                 if (current_contract.name.empty())
                 {
-                    current_contract.version = get_attribute_value<uint32_t>(attribute, 0);
+                    current_contract.version = get_attribute_value<std::uint32_t>(attribute, 0);
                 }
             }
         }
@@ -509,7 +509,7 @@ namespace cppwinrt
         }
         assert(result.previous_contracts.back().contract_to == result.current_contract.name);
 
-        for (size_t size = result.previous_contracts.size() - 1; size; --size)
+        for (std::size_t size = result.previous_contracts.size() - 1; size; --size)
         {
             auto& last = result.previous_contracts[size];
             auto itr = std::find_if(result.previous_contracts.begin(), result.previous_contracts.begin() + size, [&](auto const& prev)
@@ -537,7 +537,7 @@ namespace cppwinrt
         // in relative to the contract history of the class. E.g. if a class goes from contract 'A' to 'B' to 'C',
         // 'relativeContract' would be '0' for an interface introduced in contract 'A', '1' for an interface introduced
         // in contract 'B', etc. This is only set/valid for 'fastabi' interfaces
-        std::pair<uint32_t, uint32_t> relative_version{};
+        std::pair<std::uint32_t, std::uint32_t> relative_version{};
         std::vector<std::vector<std::string>> generic_param_stack{};
     };
 
@@ -660,7 +660,7 @@ namespace cppwinrt
         }
 
         auto history = get_contract_history(type);
-        size_t count = 0;
+        std::size_t count = 0;
         for (auto& pair : result)
         {
             if (pair.second.exclusive && !pair.second.base && !pair.second.overridable)
@@ -676,12 +676,12 @@ namespace cppwinrt
                 });
                 if (itr != history.previous_contracts.end())
                 {
-                    pair.second.relative_version.first = static_cast<uint32_t>(itr - history.previous_contracts.begin());
+                    pair.second.relative_version.first = static_cast<std::uint32_t>(itr - history.previous_contracts.begin());
                 }
                 else
                 {
                     assert(history.current_contract.name == introduced.name);
-                    pair.second.relative_version.first = static_cast<uint32_t>(history.previous_contracts.size());
+                    pair.second.relative_version.first = static_cast<std::uint32_t>(history.previous_contracts.size());
                 }
             }
         }
@@ -863,7 +863,7 @@ namespace cppwinrt
                 {
                     if (auto visibility = std::get_if<ElemSig::EnumValue>(&std::get<ElemSig>(arg.value).value))
                     {
-                        info.visible = std::get<int32_t>(visibility->value) == 2;
+                        info.visible = std::get<std::int32_t>(visibility->value) == 2;
                         break;
                     }
                 }

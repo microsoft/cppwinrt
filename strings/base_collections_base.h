@@ -191,7 +191,7 @@ WINRT_EXPORT namespace winrt
                 return m_current != m_end;
             }
 
-            uint32_t GetMany(array_view<T> values)
+            std::uint32_t GetMany(array_view<T> values)
             {
                 [[maybe_unused]] auto guard = m_owner->acquire_exclusive();
                 this->check_version(*m_owner);
@@ -213,15 +213,15 @@ WINRT_EXPORT namespace winrt
                 }
             }
 
-            uint32_t GetMany(array_view<T> values, std::random_access_iterator_tag)
+            std::uint32_t GetMany(array_view<T> values, std::random_access_iterator_tag)
             {
-                uint32_t const actual = (std::min)(static_cast<uint32_t>(m_end - m_current), values.size());
+                std::uint32_t const actual = (std::min)(static_cast<std::uint32_t>(m_end - m_current), values.size());
                 m_owner->copy_n(m_current, actual, values.begin());
                 m_current += actual;
                 return actual;
             }
 
-            uint32_t GetMany(array_view<T> values, std::input_iterator_tag)
+            std::uint32_t GetMany(array_view<T> values, std::input_iterator_tag)
             {
                 auto output = values.begin();
 
@@ -232,7 +232,7 @@ WINRT_EXPORT namespace winrt
                     ++m_current;
                 }
 
-                return static_cast<uint32_t>(output - values.begin());
+                return static_cast<std::uint32_t>(output - values.begin());
             }
 
             using iterator_type = decltype(std::declval<D>().get_container().begin());
@@ -246,7 +246,7 @@ WINRT_EXPORT namespace winrt
     template <typename D, typename T, typename Version = impl::no_collection_version>
     struct vector_view_base : iterable_base<D, T, Version>
     {
-        T GetAt(uint32_t const index) const
+        T GetAt(std::uint32_t const index) const
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
             if (index >= container_size())
@@ -257,13 +257,13 @@ WINRT_EXPORT namespace winrt
             return static_cast<D const&>(*this).unwrap_value(*std::next(static_cast<D const&>(*this).get_container().begin(), index));
         }
 
-        uint32_t Size() const noexcept
+        std::uint32_t Size() const noexcept
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
             return container_size();
         }
 
-        bool IndexOf(T const& value, uint32_t& index) const noexcept
+        bool IndexOf(T const& value, std::uint32_t& index) const noexcept
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
             auto first = std::find_if(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end(), [&](auto&& match)
@@ -271,11 +271,11 @@ WINRT_EXPORT namespace winrt
                 return value == static_cast<D const&>(*this).unwrap_value(match);
             });
 
-            index = static_cast<uint32_t>(first - static_cast<D const&>(*this).get_container().begin());
+            index = static_cast<std::uint32_t>(first - static_cast<D const&>(*this).get_container().begin());
             return index < container_size();
         }
 
-        uint32_t GetMany(uint32_t const startIndex, array_view<T> values) const
+        std::uint32_t GetMany(std::uint32_t const startIndex, array_view<T> values) const
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
             if (startIndex >= container_size())
@@ -283,16 +283,16 @@ WINRT_EXPORT namespace winrt
                 return 0;
             }
 
-            uint32_t const actual = (std::min)(container_size() - startIndex, values.size());
+            std::uint32_t const actual = (std::min)(container_size() - startIndex, values.size());
             this->copy_n(static_cast<D const&>(*this).get_container().begin() + startIndex, actual, values.begin());
             return actual;
         }
 
     private:
 
-        uint32_t container_size() const noexcept
+        std::uint32_t container_size() const noexcept
         {
-            return static_cast<uint32_t>(std::distance(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end()));
+            return static_cast<std::uint32_t>(std::distance(static_cast<D const&>(*this).get_container().begin(), static_cast<D const&>(*this).get_container().end()));
         }
     };
 
@@ -304,7 +304,7 @@ WINRT_EXPORT namespace winrt
             return static_cast<D const&>(*this);
         }
 
-        void SetAt(uint32_t const index, T const& value)
+        void SetAt(std::uint32_t const index, T const& value)
         {
             impl::removed_value<typename impl::container_type_t<D>::value_type> oldValue;
 
@@ -320,7 +320,7 @@ WINRT_EXPORT namespace winrt
             pos = static_cast<D const&>(*this).wrap_value(value);
         }
 
-        void InsertAt(uint32_t const index, T const& value)
+        void InsertAt(std::uint32_t const index, T const& value)
         {
             [[maybe_unused]] auto guard = static_cast<D&>(*this).acquire_exclusive();
             if (index > static_cast<D const&>(*this).get_container().size())
@@ -332,7 +332,7 @@ WINRT_EXPORT namespace winrt
             static_cast<D&>(*this).get_container().insert(static_cast<D const&>(*this).get_container().begin() + index, static_cast<D const&>(*this).wrap_value(value));
         }
 
-        void RemoveAt(uint32_t const index)
+        void RemoveAt(std::uint32_t const index)
         {
             impl::removed_value<typename impl::container_type_t<D>::value_type> removedValue;
 
@@ -425,19 +425,19 @@ WINRT_EXPORT namespace winrt
             m_changed.remove(cookie);
         }
 
-        void SetAt(uint32_t const index, T const& value)
+        void SetAt(std::uint32_t const index, T const& value)
         {
             vector_base<D, T>::SetAt(index, value);
             call_changed(Windows::Foundation::Collections::CollectionChange::ItemChanged, index);
         }
 
-        void InsertAt(uint32_t const index, T const& value)
+        void InsertAt(std::uint32_t const index, T const& value)
         {
             vector_base<D, T>::InsertAt(index, value);
             call_changed(Windows::Foundation::Collections::CollectionChange::ItemInserted, index);
         }
 
-        void RemoveAt(uint32_t const index)
+        void RemoveAt(std::uint32_t const index)
         {
             vector_base<D, T>::RemoveAt(index);
             call_changed(Windows::Foundation::Collections::CollectionChange::ItemRemoved, index);
@@ -469,7 +469,7 @@ WINRT_EXPORT namespace winrt
 
     protected:
 
-        void call_changed(Windows::Foundation::Collections::CollectionChange const change, uint32_t const index)
+        void call_changed(Windows::Foundation::Collections::CollectionChange const change, std::uint32_t const index)
         {
             m_changed(static_cast<D const&>(*this), make<args>(change, index));
         }
@@ -480,7 +480,7 @@ WINRT_EXPORT namespace winrt
 
         struct args : implements<args, Windows::Foundation::Collections::IVectorChangedEventArgs>
         {
-            args(Windows::Foundation::Collections::CollectionChange const change, uint32_t const index) noexcept :
+            args(Windows::Foundation::Collections::CollectionChange const change, std::uint32_t const index) noexcept :
                 m_change(change),
                 m_index(index)
             {
@@ -491,7 +491,7 @@ WINRT_EXPORT namespace winrt
                 return m_change;
             }
 
-            uint32_t Index() const noexcept
+            std::uint32_t Index() const noexcept
             {
                 return m_index;
             }
@@ -499,7 +499,7 @@ WINRT_EXPORT namespace winrt
         private:
 
             Windows::Foundation::Collections::CollectionChange const m_change;
-            uint32_t const m_index;
+            std::uint32_t const m_index;
         };
     };
 
@@ -533,10 +533,10 @@ WINRT_EXPORT namespace winrt
             return static_cast<D const&>(*this).unwrap_value(pair->second);
         }
 
-        uint32_t Size() const noexcept
+        std::uint32_t Size() const noexcept
         {
             [[maybe_unused]] auto guard = static_cast<D const&>(*this).acquire_shared();
-            return static_cast<uint32_t>(static_cast<D const&>(*this).get_container().size());
+            return static_cast<std::uint32_t>(static_cast<D const&>(*this).get_container().size());
         }
 
         bool HasKey(K const& key) const noexcept

@@ -18,7 +18,7 @@ WINRT_EXPORT namespace winrt
 
             if (!WINRT_IMPL_OpenThreadToken(WINRT_IMPL_GetCurrentThread(), 0x0004 /*TOKEN_IMPERSONATE*/, 1, token.put()))
             {
-                uint32_t const error = WINRT_IMPL_GetLastError();
+                std::uint32_t const error = WINRT_IMPL_GetLastError();
 
                 if (error != 1008 /*ERROR_NO_TOKEN*/)
                 {

@@ -5,9 +5,14 @@
 #include <charconv>
 #include <chrono>
 #include <cstddef>
+#include <cstdint>
+#include <cstdlib>
 #include <cstring>
+#include <cwchar>
+#include <cwctype>
 #include <exception>
 #include <iterator>
+#include <limits>
 #include <map>
 #include <memory>
 #include <optional>

@@ -98,14 +98,14 @@ namespace winrt::impl
 {
     inline hstring concat_hstring(std::wstring_view const& left, std::wstring_view const& right)
     {
-        auto size = static_cast<uint32_t>(left.size() + right.size());
+        auto size = static_cast<std::uint32_t>(left.size() + right.size());
         if (size == 0)
         {
             return{};
         }
         hstring_builder text(size);
-        memcpy_s(text.data(), left.size() * sizeof(wchar_t), left.data(), left.size() * sizeof(wchar_t));
-        memcpy_s(text.data() + left.size(), right.size() * sizeof(wchar_t), right.data(), right.size() * sizeof(wchar_t));
+        std::copy_n(left.data(), left.size(), text.data());
+        std::copy_n(right.data(), right.size(), text.data() + left.size());
         return text.to_hstring();
     }
 }

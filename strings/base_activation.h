@@ -30,7 +30,7 @@ namespace winrt::impl
 
         if (hr == impl::error_not_initialized)
         {
-            auto usage = reinterpret_cast<int32_t(__stdcall*)(void** cookie) noexcept>(WINRT_IMPL_GetProcAddress(load_library(L"combase.dll"), "CoIncrementMTAUsage"));
+            auto usage = reinterpret_cast<std::int32_t(__stdcall*)(void** cookie) noexcept>(WINRT_IMPL_GetProcAddress(load_library(L"combase.dll"), "CoIncrementMTAUsage"));
 
             if (!usage)
             {
@@ -65,7 +65,7 @@ namespace winrt::impl
                 continue;
             }
 
-            auto library_call = reinterpret_cast<int32_t(__stdcall*)(void* classId, void** factory)>(WINRT_IMPL_GetProcAddress(library.get(), "DllGetActivationFactory"));
+            auto library_call = reinterpret_cast<std::int32_t(__stdcall*)(void* classId, void** factory)>(WINRT_IMPL_GetProcAddress(library.get(), "DllGetActivationFactory"));
 
             if (!library_call)
             {
@@ -127,17 +127,17 @@ WINRT_EXPORT namespace winrt
 
 namespace winrt::impl
 {
-    inline int32_t interlocked_read_32(int32_t const volatile* target) noexcept
+    inline std::int32_t interlocked_read_32(std::int32_t const volatile* target) noexcept
     {
 #if defined _M_IX86 || defined _M_X64
-        int32_t const result = *target;
+        std::int32_t const result = *target;
         _ReadWriteBarrier();
         return result;
 #elif defined _M_ARM64
 #if defined(__GNUC__)
-        int32_t const result = *target;
+        std::int32_t const result = *target;
 #else
-        int32_t const result = __iso_volatile_load32(reinterpret_cast<int32_t const volatile*>(target));
+        std::int32_t const result = __iso_volatile_load32(reinterpret_cast<std::int32_t const volatile*>(target));
 #endif
         WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER
         return result;
@@ -147,17 +147,17 @@ namespace winrt::impl
     }
 
 #if defined _WIN64
-    inline int64_t interlocked_read_64(int64_t const volatile* target) noexcept
+    inline std::int64_t interlocked_read_64(std::int64_t const volatile* target) noexcept
     {
 #if defined _M_X64
-        int64_t const result = *target;
+        std::int64_t const result = *target;
         _ReadWriteBarrier();
         return result;
 #elif defined _M_ARM64
 #if defined(__GNUC__)
-        int64_t const result = *target;
+        std::int64_t const result = *target;
 #else
-        int64_t const result = __iso_volatile_load64(target);
+        std::int64_t const result = __iso_volatile_load64(target);
 #endif
         WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER
         return result;
@@ -177,14 +177,14 @@ namespace winrt::impl
     T* interlocked_read_pointer(T* const volatile* target) noexcept
     {
 #ifdef _WIN64
-        return (T*)interlocked_read_64((int64_t*)target);
+        return (T*)interlocked_read_64((std::int64_t*)target);
 #else
-        return (T*)interlocked_read_32((int32_t*)target);
+        return (T*)interlocked_read_32((std::int32_t*)target);
 #endif
     }
 
 #ifdef _WIN64
-    inline constexpr uint32_t memory_allocation_alignment{ 16 };
+    inline constexpr std::uint32_t memory_allocation_alignment{ 16 };
 #ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable:4324) // structure was padded due to alignment specifier
@@ -197,34 +197,34 @@ namespace winrt::impl
     {
         struct
         {
-            uint64_t reserved1;
-            uint64_t reserved2;
+            std::uint64_t reserved1;
+            std::uint64_t reserved2;
         } reserved1;
         struct
         {
-            uint64_t reserved1 : 16;
-            uint64_t reserved2 : 48;
-            uint64_t reserved3 : 4;
-            uint64_t reserved4 : 60;
+            std::uint64_t reserved1 : 16;
+            std::uint64_t reserved2 : 48;
+            std::uint64_t reserved3 : 4;
+            std::uint64_t reserved4 : 60;
         } reserved2;
     };
 #ifdef _MSC_VER
 #pragma warning(pop)
 #endif
 #else
-    inline constexpr uint32_t memory_allocation_alignment{ 8 };
+    inline constexpr std::uint32_t memory_allocation_alignment{ 8 };
     struct slist_entry
     {
         slist_entry* next;
     };
     union slist_header
     {
-        uint64_t reserved1;
+        std::uint64_t reserved1;
         struct
         {
             slist_entry reserved1;
-            uint16_t reserved2;
-            uint16_t reserved3;
+            std::uint16_t reserved2;
+            std::uint16_t reserved3;
         } reserved2;
     };
 #endif
@@ -234,11 +234,11 @@ namespace winrt::impl
         factory_count_guard(factory_count_guard const&) = delete;
         factory_count_guard& operator=(factory_count_guard const&) = delete;
 
-        explicit factory_count_guard(size_t& count) noexcept : m_count(count)
+        explicit factory_count_guard(std::size_t& count) noexcept : m_count(count)
         {
 #ifndef WINRT_NO_MODULE_LOCK
 #ifdef _WIN64
-            _InterlockedIncrement64((int64_t*)&m_count);
+            _InterlockedIncrement64((std::int64_t*)&m_count);
 #else
             _InterlockedIncrement((long*)&m_count);
 #endif
@@ -249,7 +249,7 @@ namespace winrt::impl
         {
 #ifndef WINRT_NO_MODULE_LOCK
 #ifdef _WIN64
-            _InterlockedDecrement64((int64_t*)&m_count);
+            _InterlockedDecrement64((std::int64_t*)&m_count);
 #else
             _InterlockedDecrement((long*)&m_count);
 #endif
@@ -257,7 +257,7 @@ namespace winrt::impl
         }
 
     private:
-        [[maybe_unused]] size_t& m_count; // Field is unused when WINRT_NO_MODULE_LOCK is defined.
+        [[maybe_unused]] std::size_t& m_count; // Field is unused when WINRT_NO_MODULE_LOCK is defined.
     };
 
     struct factory_cache_entry_base
@@ -265,7 +265,7 @@ namespace winrt::impl
         struct alignas(sizeof(void*) * 2) object_and_count
         {
             unknown_abi* object;
-            size_t count;
+            std::size_t count;
         };
 
         object_and_count m_value;
@@ -286,16 +286,16 @@ namespace winrt::impl
 #if defined(__GNUC__)
             bool exchanged = __sync_bool_compare_and_swap((__int128*)this, *(__int128*)&current_value, (__int128)0);
 #else
-            bool exchanged = 1 == _InterlockedCompareExchange128((int64_t*)this, 0, 0, (int64_t*)&current_value);
+            bool exchanged = 1 == _InterlockedCompareExchange128((std::int64_t*)this, 0, 0, (std::int64_t*)&current_value);
 #endif
             if (exchanged)
             {
                 pointer_value->Release();
             }
 #else
-            int64_t const result = _InterlockedCompareExchange64((int64_t*)this, 0, *(int64_t*)&current_value);
+            std::int64_t const result = _InterlockedCompareExchange64((std::int64_t*)this, 0, *(std::int64_t*)&current_value);
 
-            if (result == *(int64_t*)&current_value)
+            if (result == *(std::int64_t*)&current_value)
             {
                 pointer_value->Release();
             }
@@ -330,7 +330,7 @@ namespace winrt::impl
                 // entry->next must be read before entry->clear() is called since the InterlockedCompareExchange
                 // inside clear() will allow another thread to add the entry back to the cache.
                 slist_entry* next = entry->next;
-                reinterpret_cast<factory_cache_entry_base*>(reinterpret_cast<uint8_t*>(entry) - offsetof(factory_cache_entry_base, m_next))->clear();
+                reinterpret_cast<factory_cache_entry_base*>(reinterpret_cast<std::uint8_t*>(entry) - offsetof(factory_cache_entry_base, m_next))->clear();
                 entry = next;
             }
         }
@@ -443,7 +443,7 @@ namespace winrt::impl
 
     template <typename D> struct produce<D, Windows::Foundation::IActivationFactory> : produce_base<D, Windows::Foundation::IActivationFactory>
     {
-        int32_t __stdcall ActivateInstance(void** instance) noexcept final try
+        std::int32_t __stdcall ActivateInstance(void** instance) noexcept final try
         {
             *instance = nullptr;
             typename D::abi_guard guard(this->shim());
@@ -456,7 +456,7 @@ namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
-    enum class apartment_type : int32_t
+    enum class apartment_type : std::int32_t
     {
         multi_threaded = 0,
         single_threaded = 2,
@@ -464,7 +464,7 @@ WINRT_EXPORT namespace winrt
 
     inline void init_apartment(apartment_type const type = apartment_type::multi_threaded)
     {
-        hresult const result = WINRT_IMPL_CoInitializeEx(nullptr, static_cast<uint32_t>(type));
+        hresult const result = WINRT_IMPL_CoInitializeEx(nullptr, static_cast<std::uint32_t>(type));
 
         if (result < 0)
         {
@@ -519,13 +519,13 @@ WINRT_EXPORT namespace winrt
     }
 
     template <typename Interface>
-    auto try_create_instance(guid const& clsid, uint32_t context = 0x1 /*CLSCTX_INPROC_SERVER*/, void* outer = nullptr)
+    auto try_create_instance(guid const& clsid, std::uint32_t context = 0x1 /*CLSCTX_INPROC_SERVER*/, void* outer = nullptr)
     {
         return try_capture<Interface>(WINRT_IMPL_CoCreateInstance, clsid, outer, context);
     }
 
     template <typename Interface>
-    auto create_instance(guid const& clsid, uint32_t context = 0x1 /*CLSCTX_INPROC_SERVER*/, void* outer = nullptr)
+    auto create_instance(guid const& clsid, std::uint32_t context = 0x1 /*CLSCTX_INPROC_SERVER*/, void* outer = nullptr)
     {
         return capture<Interface>(WINRT_IMPL_CoCreateInstance, clsid, outer, context);
     }
