@@ -181,6 +181,7 @@ namespace concurrent_collections
 
         concurrency_checked_random_access_iterator& operator++(int)
         {
+            owner->call_hook(collection_action::advance);
             auto prev = *this;
             ++inner();
             return prev;
@@ -188,12 +189,14 @@ namespace concurrent_collections
 
         concurrency_checked_random_access_iterator& operator--()
         {
+            owner->call_hook(collection_action::advance);
             --inner();
             return *this;
         }
 
         concurrency_checked_random_access_iterator& operator--(int)
         {
+            owner->call_hook(collection_action::advance);
             auto prev = *this;
             --inner();
             return prev;
@@ -201,6 +204,7 @@ namespace concurrent_collections
 
         concurrency_checked_random_access_iterator& operator+=(difference_type offset)
         {
+            owner->call_hook(collection_action::advance);
             inner() += offset;
             return *this;
         }
@@ -212,6 +216,7 @@ namespace concurrent_collections
 
         concurrency_checked_random_access_iterator& operator-=(difference_type offset)
         {
+            owner->call_hook(collection_action::advance);
             inner() -= offset;
             return *this;
         }
