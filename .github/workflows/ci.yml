@@ -41,7 +41,7 @@ jobs:
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
-          $target_version = "1.2.3.4"
+          $target_version = "999.999.999.999"
           $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
           if ("${{ matrix.compiler }}" -eq "clang-cl") {
             $props += ",Clang=1,PlatformToolset=ClangCl"
@@ -134,7 +134,7 @@ jobs:
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
-          $target_version = "1.2.3.4"
+          $target_version = "999.999.999.999"
           $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
           if ("${{ matrix.compiler }}" -eq "clang-cl") {
             $props += ",Clang=1,PlatformToolset=ClangCl"
@@ -301,7 +301,7 @@ jobs:
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
-          $target_version = "1.2.3.4"
+          $target_version = "999.999.999.999"
           Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
 
       - name: Restore nuget packages
@@ -347,7 +347,7 @@ jobs:
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
-          $target_version = "1.2.3.4"
+          $target_version = "999.999.999.999"
           Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
 
       - name: Restore nuget packages
