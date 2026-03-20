@@ -204,7 +204,7 @@
       <AdditionalDependencies>windowsapp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>cppwinrt -in sdk -out "$(ProjectDir)Generated Files" -ref sdk -verbose</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in sdk -out "$(ProjectDir)Generated Files" -ref sdk -verbose</Command>
     </PreBuildEvent>
     <PostBuildEvent>
       <Command>copy /Y "$(ProjectDir)..\..\natvis\cppwinrt.natvis" "$(OutDir)"</Command>
