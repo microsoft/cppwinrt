@@ -30,7 +30,7 @@
 
   <PropertyGroup Condition="'$(Clang)'=='1'">
     <PlatformToolset>ClangCL</PlatformToolset>
-    <!-- The experimental coroutines aren't supported under Clang -->
+    <!-- No coroutines in C++17 mode under Clang -->
     <CppWinRTLanguageStandard>20</CppWinRTLanguageStandard>
     <!-- Disable vcpkg autolink because it's not compatible with lld-link -->
     <VcpkgAutoLink>false</VcpkgAutoLink>
@@ -60,7 +60,7 @@
       <PreprocessorDefinitions Condition="'$(TestsUseAnsiColor)'=='1'">CATCH_CONFIG_COLOUR_ANSI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalOptions>/bigobj</AdditionalOptions>
-      <AdditionalOptions Condition="'$(CppWinRTLanguageStandard)'==''">/await %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalOptions Condition="'$(CppWinRTLanguageStandard)'=='' And '$(CppWinRTUseCoroutines)'==''">/await:strict %(AdditionalOptions)</AdditionalOptions>
       <AdditionalOptions Condition="'$(Clang)'=='1'">-Wno-unused-command-line-argument -fno-delayed-template-parsing -mcx16</AdditionalOptions>
     </ClCompile>
     <Link>

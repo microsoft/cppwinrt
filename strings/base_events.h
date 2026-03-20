@@ -3,7 +3,7 @@ WINRT_EXPORT namespace winrt
 {
     struct event_token
     {
-        int64_t value{};
+        std::int64_t value{};
 
         explicit operator bool() const noexcept
         {
@@ -22,7 +22,7 @@ WINRT_EXPORT namespace winrt
     template <typename I>
     struct event_revoker
     {
-        using method_type = int32_t(__stdcall impl::abi_t<I>::*)(winrt::event_token);
+        using method_type = std::int32_t(__stdcall impl::abi_t<I>::*)(winrt::event_token);
 
         event_revoker() noexcept = default;
         event_revoker(event_revoker const&) = delete;
@@ -77,7 +77,7 @@ WINRT_EXPORT namespace winrt
     template <typename I>
     struct factory_event_revoker
     {
-        using method_type = int32_t(__stdcall impl::abi_t<I>::*)(winrt::event_token);
+        using method_type = std::int32_t(__stdcall impl::abi_t<I>::*)(winrt::event_token);
 
         factory_event_revoker() noexcept = default;
         factory_event_revoker(factory_event_revoker const&) = delete;
@@ -267,7 +267,7 @@ namespace winrt::impl
         using pointer = value_type*;
         using iterator = value_type*;
 
-        explicit event_array(uint32_t const count) noexcept : m_size(count)
+        explicit event_array(std::uint32_t const count) noexcept : m_size(count)
         {
             std::uninitialized_fill_n(data(), count, value_type());
         }
@@ -306,7 +306,7 @@ namespace winrt::impl
             return data() + m_size;
         }
 
-        uint32_t size() const noexcept
+        std::uint32_t size() const noexcept
         {
             return m_size;
         }
@@ -324,11 +324,11 @@ namespace winrt::impl
         }
 
         atomic_ref_count m_references{ 1 };
-        uint32_t m_size{ 0 };
+        std::uint32_t m_size{ 0 };
     };
 
     template <typename T>
-    com_ptr<event_array<T>> make_event_array(uint32_t const capacity)
+    com_ptr<event_array<T>> make_event_array(std::uint32_t const capacity)
     {
         void* raw = ::operator new(sizeof(event_array<T>) + (sizeof(T)* capacity));
 #ifdef _MSC_VER
@@ -339,12 +339,12 @@ namespace winrt::impl
 
     WINRT_IMPL_NOINLINE inline bool report_failed_invoke()
     {
-        int32_t const code = to_hresult();
+        std::int32_t const code = to_hresult();
         WINRT_IMPL_RoTransformError(code, 0, nullptr);
 
-        if (code == static_cast<int32_t>(0x80010108) || // RPC_E_DISCONNECTED
-            code == static_cast<int32_t>(0x800706BA) || // HRESULT_FROM_WIN32(RPC_S_SERVER_UNAVAILABLE)
-            code == static_cast<int32_t>(0x89020001))   // JSCRIPT_E_CANTEXECUTE
+        if (code == static_cast<std::int32_t>(0x80010108) || // RPC_E_DISCONNECTED
+            code == static_cast<std::int32_t>(0x800706BA) || // HRESULT_FROM_WIN32(RPC_S_SERVER_UNAVAILABLE)
+            code == static_cast<std::int32_t>(0x89020001))   // JSCRIPT_E_CANTEXECUTE
         {
             return false;
         }
@@ -402,7 +402,7 @@ WINRT_EXPORT namespace winrt
                     return;
                 }
 
-                uint32_t available_slots = m_targets->size() - 1;
+                std::uint32_t available_slots = m_targets->size() - 1;
                 delegate_array new_targets;
                 bool removed = false;
 
@@ -516,7 +516,7 @@ WINRT_EXPORT namespace winrt
 
         event_token get_token(delegate_type const& delegate) const noexcept
         {
-            return event_token{ reinterpret_cast<int64_t>(WINRT_IMPL_EncodePointer(get_abi(delegate))) };
+            return event_token{ reinterpret_cast<std::int64_t>(WINRT_IMPL_EncodePointer(get_abi(delegate))) };
         }
 
         using delegate_array = com_ptr<impl::event_array<delegate_type>>;

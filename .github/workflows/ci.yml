@@ -66,7 +66,7 @@ jobs:
           cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" cppwinrt.sln /t:cppwinrt
 
       - name: Upload built executables
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: |
@@ -92,7 +92,7 @@ jobs:
         compiler: [MSVC, clang-cl]
         arch: [x86, x64, arm64]
         config: [Debug, Release]
-        test_exe: [test, test_cpp20, test_cpp20_no_sourcelocation, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
+        test_exe: [test, test_nocoro, test_cpp20, test_cpp20_no_sourcelocation, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
         exclude:
           - arch: arm64
             config: Debug
@@ -106,14 +106,14 @@ jobs:
 
       - name: Fetch cppwinrt executables
         if: matrix.arch != 'arm64'
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
 
       - name: Fetch x86 cppwinrt executables (arm64 only)
         if: matrix.arch == 'arm64'
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: msvc-build-${{ matrix.compiler}}-x86-Release-bin
           path: _build/x86/Release/
@@ -230,7 +230,7 @@ jobs:
 
       - name: Upload arm64 test executables
         if: matrix.arch == 'arm64'
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: msvc-tests-${{ matrix.test_exe }}-${{ matrix.compiler }}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: |
@@ -269,7 +269,7 @@ jobs:
           cmake --build build/cross_x64/ --target install -j2
 
       - name: Upload cppwinrt.exe
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: cross-build-${{ matrix.arch }}-bin
           path: install/bin/cppwinrt.exe
@@ -326,7 +326,7 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Fetch cppwinrt executables
-        uses: actions/download-artifact@v7
+        uses: actions/download-artifact@v8
         with:
           name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
@@ -383,7 +383,7 @@ jobs:
           }
 
       - name: Upload nuget package artifact
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: package
           path: "*.nupkg"

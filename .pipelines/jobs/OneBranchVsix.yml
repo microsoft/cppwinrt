@@ -3,6 +3,8 @@ parameters:
     type: string
   - name: BuildVersion
     type: string
+  - name: NugetPackageVersion
+    type: string
   - name: OfficialBuild
     type: boolean
     default: false
@@ -91,7 +93,7 @@ jobs:
       displayName: Build VSIX
       inputs:
         solution: $(Build.SourcesDirectory)\vsix\vsix.sln
-        msbuildArgs: /t:vsix_$(VsVersion) /m /p:CppWinRTVersion=${{ parameters.BuildVersion }},clean_intermediate_files=true,Deployment=$(Deployment),NatvisDirx86=$(Build.SourcesDirectory)\x86\$(Deployment)\,NatvisDirx64=$(Build.SourcesDirectory)\x64\$(Deployment)\,NatvisDirarm64=$(Build.SourcesDirectory)\arm64\$(Deployment)\,NupkgDir=$(Pipeline.Workspace)\nuget\packages /bl:$(ob_outputDirectory)\output.binlog
+        msbuildArgs: /t:vsix_$(VsVersion) /m /p:CppWinRTVersion=${{ parameters.BuildVersion }},NugetPackageVersion=${{ parameters.NugetPackageVersion }},clean_intermediate_files=true,Deployment=$(Deployment),NatvisDirx86=$(Build.SourcesDirectory)\x86\$(Deployment)\,NatvisDirx64=$(Build.SourcesDirectory)\x64\$(Deployment)\,NatvisDirarm64=$(Build.SourcesDirectory)\arm64\$(Deployment)\,NupkgDir=$(Pipeline.Workspace)\nuget\packages /bl:$(ob_outputDirectory)\output.binlog
         platform: 'Any CPU'
         configuration: ${{ parameters.BuildConfiguration }}
 
@@ -109,7 +111,7 @@ jobs:
         command: sign
         signing_profile: external_distribution
         files_to_sign: '**\*.dll'
-        search_root: '$(Agent.TempDirectory)'
+        search_root: '$(Agent.TempDirectory)\$(VsixFilename)'
     
     - task: ArchiveFiles@2
       displayName: 'Repack signed VSIX contents'
