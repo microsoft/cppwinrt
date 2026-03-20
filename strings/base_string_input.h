@@ -30,7 +30,7 @@ WINRT_EXPORT namespace winrt::param
 
         hstring(wchar_t const* const value) noexcept
         {
-            create_string_reference(value, wcslen(value));
+            create_string_reference(value, std::wcslen(value));
         }
 
         operator winrt::hstring const&() const noexcept
@@ -39,10 +39,10 @@ WINRT_EXPORT namespace winrt::param
         }
 
     private:
-        void create_string_reference(wchar_t const* const data, size_t size) noexcept
+        void create_string_reference(wchar_t const* const data, std::size_t size) noexcept
         {
-            WINRT_ASSERT(size < UINT_MAX);
-            auto size32 = static_cast<uint32_t>(size);
+            WINRT_ASSERT(size < (std::numeric_limits<std::uint32_t>::max)());
+            auto size32 = static_cast<std::uint32_t>(size);
 
             if (size32 == 0)
             {

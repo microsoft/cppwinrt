@@ -66,42 +66,42 @@ namespace winrt::impl
         static constexpr Windows::UI::Xaml::Interop::TypeKind value = Windows::UI::Xaml::Interop::TypeKind::Primitive;
     };
     template<>
-    struct xaml_typename_kind<uint8_t>
+    struct xaml_typename_kind<std::uint8_t>
     {
         static constexpr Windows::UI::Xaml::Interop::TypeKind value = Windows::UI::Xaml::Interop::TypeKind::Primitive;
     };
     template<>
-    struct xaml_typename_kind<int8_t>
+    struct xaml_typename_kind<std::int8_t>
     {
         static constexpr Windows::UI::Xaml::Interop::TypeKind value = Windows::UI::Xaml::Interop::TypeKind::Primitive;
     };
     template<>
-    struct xaml_typename_kind<uint16_t>
+    struct xaml_typename_kind<std::uint16_t>
     {
         static constexpr Windows::UI::Xaml::Interop::TypeKind value = Windows::UI::Xaml::Interop::TypeKind::Primitive;
     };
     template<>
-    struct xaml_typename_kind<int16_t>
+    struct xaml_typename_kind<std::int16_t>
     {
         static constexpr Windows::UI::Xaml::Interop::TypeKind value = Windows::UI::Xaml::Interop::TypeKind::Primitive;
     };
     template<>
-    struct xaml_typename_kind<uint32_t>
+    struct xaml_typename_kind<std::uint32_t>
     {
         static constexpr Windows::UI::Xaml::Interop::TypeKind value = Windows::UI::Xaml::Interop::TypeKind::Primitive;
     };
     template<>
-    struct xaml_typename_kind<int32_t>
+    struct xaml_typename_kind<std::int32_t>
     {
         static constexpr Windows::UI::Xaml::Interop::TypeKind value = Windows::UI::Xaml::Interop::TypeKind::Primitive;
     };
     template<>
-    struct xaml_typename_kind<uint64_t>
+    struct xaml_typename_kind<std::uint64_t>
     {
         static constexpr Windows::UI::Xaml::Interop::TypeKind value = Windows::UI::Xaml::Interop::TypeKind::Primitive;
     };
     template<>
-    struct xaml_typename_kind<int64_t>
+    struct xaml_typename_kind<std::int64_t>
     {
         static constexpr Windows::UI::Xaml::Interop::TypeKind value = Windows::UI::Xaml::Interop::TypeKind::Primitive;
     };

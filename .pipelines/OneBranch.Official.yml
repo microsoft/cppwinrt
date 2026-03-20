@@ -6,6 +6,8 @@ parameters: # parameters are shown up in ADO UI in a build queue time
 
 variables:
 - template: variables/version.yml
+  parameters:
+    OfficialBuild: true
 - template: variables/OneBranchVariables.yml
   parameters:
     debug: ${{ parameters.debug }}
@@ -45,14 +47,9 @@ extends:
         compiled: 
           enabled: true
         tsaEnabled: true
-      prefast:
-        enabled: true
 
     stages:
     - stage: build
-      pool:
-        type: windows
-
       jobs:
       - template: .pipelines/jobs/OneBranchBuild.yml@self
         parameters:
@@ -68,7 +65,6 @@ extends:
             type: windows
           variables:
             ob_outputDirectory: '$(Build.SourcesDirectory)\out'
-
             ob_createvpack_enabled: true
             ob_createvpack_packagename: CppWinRT.Compiler
             ob_createvpack_owneralias: cpp4uwpt
@@ -139,7 +135,7 @@ extends:
       - template: .pipelines/jobs/OneBranchNuGet.yml@self
         parameters:
           BuildConfiguration: $(BuildConfiguration)
-          BuildVersion: $(BuildVersion)
+          NugetPackageVersion: $(NugetPackageVersion)
           OfficialBuild: true
 
     - stage: Test
@@ -157,4 +153,5 @@ extends:
         parameters:
           BuildConfiguration: $(BuildConfiguration)
           BuildVersion: $(BuildVersion)
+          NugetPackageVersion: $(NugetPackageVersion)
           OfficialBuild: true

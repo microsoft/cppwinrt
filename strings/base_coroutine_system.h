@@ -1,4 +1,5 @@
 
+#ifdef WINRT_IMPL_COROUTINES
 WINRT_EXPORT namespace winrt
 {
     [[nodiscard]] inline auto resume_foreground(
@@ -23,7 +24,7 @@ WINRT_EXPORT namespace winrt
                 return m_queued;
             }
 
-            bool await_suspend(impl::coroutine_handle<> handle)
+            bool await_suspend(std::coroutine_handle<> handle)
             {
                 return m_dispatcher.TryEnqueue(m_priority, [handle, this]
                     {
@@ -41,10 +42,9 @@ WINRT_EXPORT namespace winrt
         return awaitable{ dispatcher, priority };
     };
 
-#ifdef WINRT_IMPL_COROUTINES
     inline auto operator co_await(Windows::System::DispatcherQueue const& dispatcher)
     {
         return resume_foreground(dispatcher);
     }
-#endif
 }
+#endif

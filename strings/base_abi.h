@@ -5,9 +5,9 @@ namespace winrt::impl
     {
         struct WINRT_IMPL_ABI_DECL type
         {
-            virtual int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept = 0;
-            virtual uint32_t __stdcall AddRef() noexcept = 0;
-            virtual uint32_t __stdcall Release() noexcept = 0;
+            virtual std::int32_t __stdcall QueryInterface(guid const& id, void** object) noexcept = 0;
+            virtual std::uint32_t __stdcall AddRef() noexcept = 0;
+            virtual std::uint32_t __stdcall Release() noexcept = 0;
         };
     };
 
@@ -17,9 +17,9 @@ namespace winrt::impl
     {
         struct WINRT_IMPL_ABI_DECL type : unknown_abi
         {
-            virtual int32_t __stdcall GetIids(uint32_t* count, guid** ids) noexcept = 0;
-            virtual int32_t __stdcall GetRuntimeClassName(void** name) noexcept = 0;
-            virtual int32_t __stdcall GetTrustLevel(Windows::Foundation::TrustLevel* level) noexcept = 0;
+            virtual std::int32_t __stdcall GetIids(std::uint32_t* count, guid** ids) noexcept = 0;
+            virtual std::int32_t __stdcall GetRuntimeClassName(void** name) noexcept = 0;
+            virtual std::int32_t __stdcall GetTrustLevel(Windows::Foundation::TrustLevel* level) noexcept = 0;
         };
     };
 
@@ -29,7 +29,7 @@ namespace winrt::impl
     {
         struct WINRT_IMPL_ABI_DECL type : inspectable_abi
         {
-            virtual int32_t __stdcall ActivateInstance(void** instance) noexcept = 0;
+            virtual std::int32_t __stdcall ActivateInstance(void** instance) noexcept = 0;
         };
     };
 
@@ -37,109 +37,109 @@ namespace winrt::impl
 
     struct WINRT_IMPL_ABI_DECL IAgileReference : unknown_abi
     {
-        virtual int32_t __stdcall Resolve(guid const& id, void** object) noexcept = 0;
+        virtual std::int32_t __stdcall Resolve(guid const& id, void** object) noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL IMarshal : unknown_abi
     {
-        virtual int32_t __stdcall GetUnmarshalClass(guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, guid* pCid) noexcept = 0;
-        virtual int32_t __stdcall GetMarshalSizeMax(guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags, uint32_t* pSize) noexcept = 0;
-        virtual int32_t __stdcall MarshalInterface(void* pStm, guid const& riid, void* pv, uint32_t dwDestContext, void* pvDestContext, uint32_t mshlflags) noexcept = 0;
-        virtual int32_t __stdcall UnmarshalInterface(void* pStm, guid const& riid, void** ppv) noexcept = 0;
-        virtual int32_t __stdcall ReleaseMarshalData(void* pStm) noexcept = 0;
-        virtual int32_t __stdcall DisconnectObject(uint32_t dwReserved) noexcept = 0;
+        virtual std::int32_t __stdcall GetUnmarshalClass(guid const& riid, void* pv, std::uint32_t dwDestContext, void* pvDestContext, std::uint32_t mshlflags, guid* pCid) noexcept = 0;
+        virtual std::int32_t __stdcall GetMarshalSizeMax(guid const& riid, void* pv, std::uint32_t dwDestContext, void* pvDestContext, std::uint32_t mshlflags, std::uint32_t* pSize) noexcept = 0;
+        virtual std::int32_t __stdcall MarshalInterface(void* pStm, guid const& riid, void* pv, std::uint32_t dwDestContext, void* pvDestContext, std::uint32_t mshlflags) noexcept = 0;
+        virtual std::int32_t __stdcall UnmarshalInterface(void* pStm, guid const& riid, void** ppv) noexcept = 0;
+        virtual std::int32_t __stdcall ReleaseMarshalData(void* pStm) noexcept = 0;
+        virtual std::int32_t __stdcall DisconnectObject(std::uint32_t dwReserved) noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL IGlobalInterfaceTable : unknown_abi
     {
-        virtual int32_t __stdcall RegisterInterfaceInGlobal(void* object, guid const& iid, uint32_t* cookie) noexcept = 0;
-        virtual int32_t __stdcall RevokeInterfaceFromGlobal(uint32_t cookie) noexcept = 0;
-        virtual int32_t __stdcall GetInterfaceFromGlobal(uint32_t cookie, guid const& iid, void** object) noexcept = 0;
+        virtual std::int32_t __stdcall RegisterInterfaceInGlobal(void* object, guid const& iid, std::uint32_t* cookie) noexcept = 0;
+        virtual std::int32_t __stdcall RevokeInterfaceFromGlobal(std::uint32_t cookie) noexcept = 0;
+        virtual std::int32_t __stdcall GetInterfaceFromGlobal(std::uint32_t cookie, guid const& iid, void** object) noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL IStaticLifetime : inspectable_abi
     {
-        virtual int32_t __stdcall unused() noexcept = 0;
-        virtual int32_t __stdcall GetCollection(void** value) noexcept = 0;
+        virtual std::int32_t __stdcall unused() noexcept = 0;
+        virtual std::int32_t __stdcall GetCollection(void** value) noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL IStaticLifetimeCollection : inspectable_abi
     {
-        virtual int32_t __stdcall Lookup(void*, void**) noexcept = 0;
-        virtual int32_t __stdcall unused() noexcept = 0;
-        virtual int32_t __stdcall unused2() noexcept = 0;
-        virtual int32_t __stdcall unused3() noexcept = 0;
-        virtual int32_t __stdcall Insert(void*, void*, bool*) noexcept = 0;
-        virtual int32_t __stdcall Remove(void*) noexcept = 0;
-        virtual int32_t __stdcall unused4() noexcept = 0;
+        virtual std::int32_t __stdcall Lookup(void*, void**) noexcept = 0;
+        virtual std::int32_t __stdcall unused() noexcept = 0;
+        virtual std::int32_t __stdcall unused2() noexcept = 0;
+        virtual std::int32_t __stdcall unused3() noexcept = 0;
+        virtual std::int32_t __stdcall Insert(void*, void*, bool*) noexcept = 0;
+        virtual std::int32_t __stdcall Remove(void*) noexcept = 0;
+        virtual std::int32_t __stdcall unused4() noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL IWeakReference : unknown_abi
     {
-        virtual int32_t __stdcall Resolve(guid const& iid, void** objectReference) noexcept = 0;
+        virtual std::int32_t __stdcall Resolve(guid const& iid, void** objectReference) noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL IWeakReferenceSource : unknown_abi
     {
-        virtual int32_t __stdcall GetWeakReference(IWeakReference** weakReference) noexcept = 0;
+        virtual std::int32_t __stdcall GetWeakReference(IWeakReference** weakReference) noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL IRestrictedErrorInfo : unknown_abi
     {
-        virtual int32_t __stdcall GetErrorDetails(bstr* description, int32_t* error, bstr* restrictedDescription, bstr* capabilitySid) noexcept = 0;
-        virtual int32_t __stdcall GetReference(bstr* reference) noexcept = 0;
+        virtual std::int32_t __stdcall GetErrorDetails(bstr* description, std::int32_t* error, bstr* restrictedDescription, bstr* capabilitySid) noexcept = 0;
+        virtual std::int32_t __stdcall GetReference(bstr* reference) noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL IErrorInfo : unknown_abi
     {
-        virtual int32_t __stdcall GetGUID(guid* value) noexcept = 0;
-        virtual int32_t __stdcall GetSource(bstr* value) noexcept = 0;
-        virtual int32_t __stdcall GetDescription(bstr* value) noexcept = 0;
-        virtual int32_t __stdcall GetHelpFile(bstr* value) noexcept = 0;
-        virtual int32_t __stdcall GetHelpContext(uint32_t* value) noexcept = 0;
+        virtual std::int32_t __stdcall GetGUID(guid* value) noexcept = 0;
+        virtual std::int32_t __stdcall GetSource(bstr* value) noexcept = 0;
+        virtual std::int32_t __stdcall GetDescription(bstr* value) noexcept = 0;
+        virtual std::int32_t __stdcall GetHelpFile(bstr* value) noexcept = 0;
+        virtual std::int32_t __stdcall GetHelpContext(std::uint32_t* value) noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL ILanguageExceptionErrorInfo2 : unknown_abi
     {
-        virtual int32_t __stdcall GetLanguageException(void** exception) noexcept = 0;
-        virtual int32_t __stdcall GetPreviousLanguageExceptionErrorInfo(ILanguageExceptionErrorInfo2** previous) noexcept = 0;
-        virtual int32_t __stdcall CapturePropagationContext(void* exception) noexcept = 0;
-        virtual int32_t __stdcall GetPropagationContextHead(ILanguageExceptionErrorInfo2** head) noexcept = 0;
+        virtual std::int32_t __stdcall GetLanguageException(void** exception) noexcept = 0;
+        virtual std::int32_t __stdcall GetPreviousLanguageExceptionErrorInfo(ILanguageExceptionErrorInfo2** previous) noexcept = 0;
+        virtual std::int32_t __stdcall CapturePropagationContext(void* exception) noexcept = 0;
+        virtual std::int32_t __stdcall GetPropagationContextHead(ILanguageExceptionErrorInfo2** head) noexcept = 0;
     };
 
     struct ICallbackWithNoReentrancyToApplicationSTA;
 
     struct WINRT_IMPL_ABI_DECL IContextCallback : unknown_abi
     {
-        virtual int32_t __stdcall ContextCallback(int32_t(__stdcall* callback)(com_callback_args*), com_callback_args* args, guid const& iid, int method, void* reserved) noexcept = 0;
+        virtual std::int32_t __stdcall ContextCallback(std::int32_t(__stdcall* callback)(com_callback_args*), com_callback_args* args, guid const& iid, int method, void* reserved) noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL IServerSecurity : unknown_abi
     {
-        virtual int32_t __stdcall QueryBlanket(uint32_t*, uint32_t*, wchar_t**, uint32_t*, uint32_t*, void**, uint32_t*) noexcept = 0;
-        virtual int32_t __stdcall ImpersonateClient() noexcept = 0;
-        virtual int32_t __stdcall RevertToSelf() noexcept = 0;
-        virtual int32_t __stdcall IsImpersonating() noexcept = 0;
+        virtual std::int32_t __stdcall QueryBlanket(std::uint32_t*, std::uint32_t*, wchar_t**, std::uint32_t*, std::uint32_t*, void**, std::uint32_t*) noexcept = 0;
+        virtual std::int32_t __stdcall ImpersonateClient() noexcept = 0;
+        virtual std::int32_t __stdcall RevertToSelf() noexcept = 0;
+        virtual std::int32_t __stdcall IsImpersonating() noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL IBufferByteAccess : unknown_abi
     {
-        virtual int32_t __stdcall Buffer(uint8_t** value) noexcept = 0;
+        virtual std::int32_t __stdcall Buffer(std::uint8_t** value) noexcept = 0;
     };
 
     struct WINRT_IMPL_ABI_DECL IMemoryBufferByteAccess : unknown_abi
     {
-        virtual int32_t __stdcall GetBuffer(uint8_t** value, uint32_t* capacity) noexcept = 0;
+        virtual std::int32_t __stdcall GetBuffer(std::uint8_t** value, std::uint32_t* capacity) noexcept = 0;
     };
 
     template <> struct abi<Windows::Foundation::TimeSpan>
     {
-        using type = int64_t;
+        using type = std::int64_t;
     };
 
     template <> struct abi<Windows::Foundation::DateTime>
     {
-        using type = int64_t;
+        using type = std::int64_t;
     };
 
     template <> inline constexpr guid guid_v<Windows::Foundation::IUnknown>{ 0x00000000, 0x0000, 0x0000, { 0xC0,0x00,0x00,0x00,0x00,0x00,0x00,0x46 } };

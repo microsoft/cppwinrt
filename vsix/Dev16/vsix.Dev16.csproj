@@ -41,8 +41,8 @@
       <Link>%(Filename)%(Extension)</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="$(NupkgDir)\Microsoft.Windows.CppWinRT.$(CppWinRTVersion).nupkg">
-      <Link>Packages\Microsoft.Windows.CppWinRT.$(CppWinRTVersion).nupkg</Link>
+    <Content Include="$(NupkgDir)\Microsoft.Windows.CppWinRT.$(NugetPackageVersion).nupkg">
+      <Link>Packages\Microsoft.Windows.CppWinRT.$(NugetPackageVersion).nupkg</Link>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="$(VSIXRootDir)..\natvis\cppwinrt.natvis">
