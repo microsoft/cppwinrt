@@ -38,4 +38,7 @@ call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platfor
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:test\test_module_lock_none
 call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:test\old_tests\test_old
 
+call .nuget\nuget.exe restore test\test_natvis\packages.config -PackagesDirectory test\test_natvis\packages
+call msbuild /m /p:Configuration=%target_configuration%,Platform=%target_platform%,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:test\test_natvis
+
 call run_tests.cmd %target_platform% %target_configuration%

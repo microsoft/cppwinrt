@@ -2,6 +2,7 @@
 #include <variant>
 #include "object_visualizer.h"
 #include "property_visualizer.h"
+#include "natvis_category_data.h"
 
 using namespace Microsoft::VisualStudio::Debugger;
 using namespace Microsoft::VisualStudio::Debugger::Evaluation;
@@ -11,29 +12,6 @@ using namespace winmd::reader;
 
 #define IID_IInspectable L"AF86E2E0-B12D-4C6A-9C5A-D7AA65101E90"
 #define IID_IStringable  L"96369F54-8EB6-48F0-ABCE-C1B211E627C3"
-
-constexpr struct
-{
-    PCWSTR propField;
-    PCWSTR displayType;
-}
-g_categoryData[] = 
-{
-    { L"b", L"bool" },
-    { L"c", L"wchar_t" },
-    { L"i1", L"int8_t" },
-    { L"u1", L"uint8_t" },
-    { L"i2", L"int16_t" },
-    { L"u2", L"uint16_t" },
-    { L"i4", L"int32_t" },
-    { L"u4", L"uint32_t" },
-    { L"i8", L"int64_t" },
-    { L"u8", L"uint64_t" },
-    { L"r4", L"float" },
-    { L"r8", L"double" },
-    { L"s,sh", L"winrt::hstring" },
-    { L"g", L"winrt::guid" },
-};
 
 NatvisDiagnosticLevel GetNatvisDiagnosticLevel()
 {

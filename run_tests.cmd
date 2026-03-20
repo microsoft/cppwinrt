@@ -17,6 +17,7 @@ call :run_test test_slow
 call :run_test test_old
 call :run_test test_module_lock_custom
 call :run_test test_module_lock_none
+call :run_test test_natvis
 goto :eof
 
 :run_test
