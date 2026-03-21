@@ -509,9 +509,10 @@ namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
-    inline Windows::Foundation::IInspectable box_value(hstring value)
+    template <typename T, std::enable_if_t<std::is_convertible_v<T, hstring>, int> = 0>
+    Windows::Foundation::IInspectable box_value(T&& value)
     {
-        return Windows::Foundation::IReference<hstring>(std::move(value));
+        return Windows::Foundation::IReference<hstring>(hstring(std::forward<T>(value)));
     }
 
     template <typename T, std::enable_if_t<!std::is_convertible_v<T, hstring>, int> = 0>
