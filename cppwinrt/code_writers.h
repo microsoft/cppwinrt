@@ -2861,6 +2861,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static write_structs_result write_structs(writer& w, std::vector<TypeDef> const& types)
     {
+        write_structs_result result{};
+
         auto format = R"(    struct %
     {
 %    };
@@ -2876,7 +2878,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
         if (types.empty())
         {
-            return {};
+            return result;
         }
 
         struct complex_struct
@@ -2942,7 +2944,6 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             }
         }
 
-        write_structs_result result;
         auto cpp_namespace = w.write_temp("@", w.type_namespace);
 
         for (auto&& type : structs)
@@ -2963,7 +2964,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
             for (auto&& field : type.fields)
             {
-                if (field.second.find(':') == std::string::npos)
+                if (field.second.find(':') == std::string::npos || starts_with(field.second, "std::"))
                 {
                     continue;
                 }
