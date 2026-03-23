@@ -93,19 +93,23 @@ TEST_CASE("typedeventhandler")
     REQUIRE(sum == 3);
 }
 
+#if !(defined(_M_IX86) && !defined(_M_X64) && defined(__clang__))
+// Clang 20 target x86 generates incorrect code for this test.
+// In observed_sender ctor (#1), this = X; in assignment operator (#2), this = X+16 (bytes).
+// FIXME: Enable the test after Clang is fixed
 TEST_CASE("observablevector_vectorchanged")
 {
     IObservableVector<int> vector = single_threaded_observable_vector<int>();
 
     int called{};
-    IObservableVector<int> observed_sender{ nullptr };
+    IObservableVector<int> observed_sender{ nullptr }; // #1
     CollectionChange change{};
     uint32_t index{};
 
     auto token = vector.VectorChanged([&](this auto, IObservableVector<int> sender, IVectorChangedEventArgs args)
         {
             ++called;
-            observed_sender = sender;
+            observed_sender = sender; // #2
             change = args.CollectionChange();
             index = args.Index();
         });
@@ -119,5 +123,7 @@ TEST_CASE("observablevector_vectorchanged")
 
     vector.VectorChanged(token);
 }
+
+#endif
 
 #endif
