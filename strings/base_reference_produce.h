@@ -23,37 +23,37 @@ namespace winrt::impl
             return std::is_arithmetic_v<T> || std::is_enum_v<T>;
         }
 
-        std::uint8_t GetUInt8() const
+std::uint8_t GetUInt8() const
         {
             return to_scalar<std::uint8_t>();
         }
 
-        std::int16_t GetInt16() const
+std::int16_t GetInt16() const
         {
             return to_scalar<std::int16_t>();
         }
 
-        std::uint16_t GetUInt16() const
+std::uint16_t GetUInt16() const
         {
             return to_scalar<std::uint16_t>();
         }
 
-        std::int32_t GetInt32() const
+std::int32_t GetInt32() const
         {
             return to_scalar<std::int32_t>();
         }
 
-        std::uint32_t GetUInt32() const
+std::uint32_t GetUInt32() const
         {
             return to_scalar<std::uint32_t>();
         }
 
-        std::int64_t GetInt64() const
+std::int64_t GetInt64() const
         {
             return to_scalar<std::int64_t>();
         }
 
-        std::uint64_t GetUInt64() const
+std::uint64_t GetUInt64() const
         {
             return to_scalar<std::uint64_t>();
         }
@@ -509,13 +509,13 @@ namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename T, std::enable_if_t<std::is_convertible_v<T, hstring>, int> = 0>
+    template <typename T, std::enable_if_t<std::is_constructible_v<hstring, T>, int> = 0>
     Windows::Foundation::IInspectable box_value(T&& value)
     {
         return Windows::Foundation::IReference<hstring>(hstring(std::forward<T>(value)));
     }
 
-    template <typename T, std::enable_if_t<!std::is_convertible_v<T, hstring>, int> = 0>
+    template <typename T, std::enable_if_t<!std::is_constructible_v<hstring, T>, int> = 0>
     Windows::Foundation::IInspectable box_value(T const& value)
     {
         if constexpr (std::is_base_of_v<Windows::Foundation::IInspectable, T>)
