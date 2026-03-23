@@ -23,37 +23,37 @@ namespace winrt::impl
             return std::is_arithmetic_v<T> || std::is_enum_v<T>;
         }
 
-std::uint8_t GetUInt8() const
+        std::uint8_t GetUInt8() const
         {
             return to_scalar<std::uint8_t>();
         }
 
-std::int16_t GetInt16() const
+        std::int16_t GetInt16() const
         {
             return to_scalar<std::int16_t>();
         }
 
-std::uint16_t GetUInt16() const
+        std::uint16_t GetUInt16() const
         {
             return to_scalar<std::uint16_t>();
         }
 
-std::int32_t GetInt32() const
+        std::int32_t GetInt32() const
         {
             return to_scalar<std::int32_t>();
         }
 
-std::uint32_t GetUInt32() const
+        std::uint32_t GetUInt32() const
         {
             return to_scalar<std::uint32_t>();
         }
 
-std::int64_t GetInt64() const
+        std::int64_t GetInt64() const
         {
             return to_scalar<std::int64_t>();
         }
 
-std::uint64_t GetUInt64() const
+        std::uint64_t GetUInt64() const
         {
             return to_scalar<std::uint64_t>();
         }
