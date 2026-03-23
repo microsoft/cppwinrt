@@ -6,7 +6,7 @@ set target_version=%2
 set target_deployment=%3
 
 if "%target_configuration%"=="" set target_configuration=Release
-if "%target_version%"=="" set target_version=1.2.3.4
+if "%target_version%"=="" set target_version=999.999.999.999
 if "%target_deployment%"=="" set target_deployment=Standalone
 
 if not exist ".\.nuget" mkdir ".\.nuget"

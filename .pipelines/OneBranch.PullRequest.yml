@@ -10,7 +10,7 @@ variables:
   parameters:
     debug: ${{ parameters.debug }}
 
-name: PullRequest_2.0.$(date:yyMMdd)$(rev:.r)
+name: PullRequest_3.0.$(date:yyMMdd)$(rev:.r)
 
 trigger: none 
 

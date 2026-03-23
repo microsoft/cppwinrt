@@ -1,7 +1,7 @@
 rem @echo off
 
 set target_version=%1
-if "%target_version%"=="" set target_version=3.0.0.0
+if "%target_version%"=="" set target_version=999.999.999.999
 
 call msbuild /m /p:Configuration=Release,Platform=x86,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
 call msbuild /m /p:Configuration=Release,Platform=x64,CppWinRTBuildVersion=%target_version% cppwinrt.sln /t:fast_fwd
