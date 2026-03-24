@@ -1,3 +1,5 @@
+cmake_minimum_required(VERSION 3.28)
+
 set(CMAKE_CXX_STANDARD 20)
 
 file(GLOB TEST_SRCS
@@ -18,14 +20,6 @@ foreach(TEST_SRCS_EXCLUDE_ITEM IN LISTS BROKEN_TESTS)
 endforeach()
 
 add_executable(test_cppmodules main.cpp ${TEST_SRCS})
-
-target_compile_definitions(test_cppmodules PRIVATE WINRT_NO_SOURCE_LOCATION)
-
-target_precompile_headers(test_cppmodules PRIVATE pch.h)
-set_source_files_properties(
-    main.cpp
-    PROPERTIES SKIP_PRECOMPILE_HEADERS true
-)
 
 add_dependencies(test_cppmodules build-cppwinrt-projection)
 
