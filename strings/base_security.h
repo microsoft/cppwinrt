@@ -93,7 +93,7 @@ namespace winrt::impl
 
 WINRT_EXPORT namespace winrt
 {
-    auto access_token::operator()() const
+    inline auto access_token::operator()() const
     {
         return impl::access_token_guard(impersonate());
     }
