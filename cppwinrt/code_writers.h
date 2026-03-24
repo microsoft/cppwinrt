@@ -37,7 +37,6 @@ namespace cppwinrt
 
     static void write_version_assert(writer& w)
     {
-        w.write_root_include("base");
         auto format = R"(static_assert(winrt::check_version(CPPWINRT_VERSION, "%"), "Mismatched C++/WinRT headers.");
 #define CPPWINRT_VERSION "%"
 )";
@@ -123,6 +122,16 @@ namespace cppwinrt
         return { w, write_endif };
     }
 
+    [[nodiscard]] static finish_with wrap_ifndef(writer& w, std::string_view macro)
+    {
+        auto format = R"(#ifndef %
+)";
+
+        w.write(format, macro);
+
+        return { w, write_endif };
+    }
+
     static void write_parent_depends(writer& w, cache const& c, std::string_view const& type_namespace)
     {
         auto pos = type_namespace.rfind('.');
@@ -142,6 +151,28 @@ namespace cppwinrt
         else
         {
             write_parent_depends(w, c, parent);
+        }
+    }
+
+    static void write_parent_imports(writer& w, cache const& c, std::string_view const& type_namespace)
+    {
+        auto pos = type_namespace.rfind('.');
+
+        if (pos == std::string::npos)
+        {
+            return;
+        }
+
+        auto parent = type_namespace.substr(0, pos);
+        auto found = c.namespaces().find(parent);
+
+        if (found != c.namespaces().end() && has_projected_types(found->second))
+        {
+            w.write_import(parent);
+        }
+        else
+        {
+            write_parent_imports(w, c, parent);
         }
     }
 
@@ -313,11 +344,22 @@ namespace cppwinrt
             return;
         }
 
-        if (type_name == "Windows.Foundation.DateTime" ||
-            type_name == "Windows.Foundation.TimeSpan")
+        if (type_name.name_space == "Windows.Foundation")
         {
-            // Don't forward declare these since they're not structs.
-            return;
+            if (type_name.name == "DateTime" ||
+                type_name.name == "TimeSpan")
+            {
+                // Don't forward declare these since they're not structs.
+                return;
+            }
+
+            if (type_name.name == "Point" ||
+                type_name.name == "Rect" ||
+                type_name.name == "Size")
+            {
+                // Don't forward declare these since they're already defined in base.h.
+                return;
+            }
         }
 
         if (type_name.name_space == "Windows.Foundation.Numerics")
@@ -2812,8 +2854,15 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         }
     }
 
-    static bool write_structs(writer& w, std::vector<TypeDef> const& types)
+    struct write_structs_result
     {
+        bool promote = false;
+    };
+
+    static write_structs_result write_structs(writer& w, std::vector<TypeDef> const& types)
+    {
+        write_structs_result result{};
+
         auto format = R"(    struct %
     {
 %    };
@@ -2829,7 +2878,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
         if (types.empty())
         {
-            return false;
+            return result;
         }
 
         struct complex_struct
@@ -2895,7 +2944,6 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             }
         }
 
-        bool promote = false;
         auto cpp_namespace = w.write_temp("@", w.type_namespace);
 
         for (auto&& type : structs)
@@ -2921,14 +2969,14 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                     continue;
                 }
 
-                if (!starts_with(field.second, cpp_namespace))
+                if (!result.promote && !starts_with(field.second, cpp_namespace))
                 {
-                    promote = true;
+                    result.promote = true;
                 }
             }
         }
 
-        return promote;
+        return result;
     }
 
     static void write_class_requires(writer& w, TypeDef const& type)

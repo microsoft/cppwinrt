@@ -10,7 +10,10 @@
 #pragma warning(pop)
 #include <vsdebugeng.templates.h>
 #include <Dia2.h>
-#include "base_includes.h"
+#include "base_global_fragment.h"
+#include "base_shared.h"
+#include "base_std_includes.h"
+#include "base_numerics.h"
 #include "base_macros.h"
 #include "base_types.h"
 #include "base_extern.h"
