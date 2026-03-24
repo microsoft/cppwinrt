@@ -14,7 +14,6 @@ namespace
     // Just some quick tests to make sure that coroutines compile and work with C++20 modules.
     // Taken from async_throw in test
     //
-    // TODO: make a new project for this
 
     IAsyncAction Action()
     {
