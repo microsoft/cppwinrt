@@ -10,6 +10,7 @@ if "%target_configuration%"=="" set target_configuration=Debug
 
 call :run_test test
 call :run_test test_nocoro
+call :run_test test_cppmodules
 call :run_test test_cpp20
 call :run_test test_cpp20_no_sourcelocation
 call :run_test test_fast

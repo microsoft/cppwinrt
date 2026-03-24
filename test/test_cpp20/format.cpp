@@ -1,9 +1,7 @@
+#include "pch.h"
+
 #ifdef __cpp_lib_format
 #include <format>
-
-#include "catch.hpp"
-
-import winrt;
 
 struct stringable : winrt::implements<stringable, winrt::Windows::Foundation::IStringable>
 {

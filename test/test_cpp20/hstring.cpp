@@ -1,6 +1,4 @@
-#include "catch.hpp"
-
-import winrt;
+#include "pch.h"
 
 TEST_CASE("hstring")
 {

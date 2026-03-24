@@ -28,9 +28,9 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{5FF6CD6C-515A-4D55-97B6-62AD9BCB77EA}</ProjectGuid>
+    <ProjectGuid>{4A135922-BE13-4FEC-8280-69028D1CB28D}</ProjectGuid>
     <RootNamespace>unittests</RootNamespace>
-    <ProjectName>test_cpp20</ProjectName>
+    <ProjectName>test_cppmodules</ProjectName>
     <CppWinRTLanguageStandard>20</CppWinRTLanguageStandard>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -96,6 +96,8 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -O3 -flto -fwhole-program-vtables</AdditionalOptions>
+      <BuildStlModules>true</BuildStlModules>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -120,6 +122,8 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -flto -fwhole-program-vtables</AdditionalOptions>
+      <BuildStlModules>true</BuildStlModules>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -142,6 +146,8 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -flto -fwhole-program-vtables</AdditionalOptions>
+      <BuildStlModules>true</BuildStlModules>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -164,6 +170,8 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -flto -fwhole-program-vtables</AdditionalOptions>
+      <BuildStlModules>true</BuildStlModules>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -188,6 +196,8 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -O3 -flto -fwhole-program-vtables</AdditionalOptions>
+      <BuildStlModules>true</BuildStlModules>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -214,6 +224,8 @@
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions Condition="'$(Clang)'=='1'">%(AdditionalOptions) -O3 -flto -fwhole-program-vtables</AdditionalOptions>
+      <BuildStlModules>true</BuildStlModules>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -230,22 +242,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="array_span.cpp" />
-    <ClCompile Include="await_completed.cpp" />
-    <ClCompile Include="clang_only.cpp" />
-    <ClCompile Include="custom_error.cpp" />
-    <ClCompile Include="format.cpp" />
-    <ClCompile Include="hstring.cpp" />
-    <ClCompile Include="main.cpp">
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="ranges.cpp" />
+    <ClCompile Include="$(CppWinRTDir)winrt\ixx\*.ixx" />
+    <ClCompile Include="async.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

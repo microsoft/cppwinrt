@@ -21,6 +21,10 @@ jobs:
         TestExe: 'test_nocoro'
         TestProject: 'test_nocoro'
         BuildPlatform: 'x86'
+      test_cppmodules.x86:
+        TestExe: 'test_cppmodules'
+        TestProject: 'test_cppmodules'
+        BuildPlatform: 'x86'
       test_cpp20.x86:
         TestExe: 'test_cpp20'
         TestProject: 'test_cpp20'

@@ -1,10 +1,8 @@
+#include "pch.h"
+
 #ifdef __cpp_lib_ranges
 #include <algorithm>
 #include <ranges>
-
-#include "catch.hpp"
-
-import winrt;
 
 TEST_CASE("ranges")
 {
