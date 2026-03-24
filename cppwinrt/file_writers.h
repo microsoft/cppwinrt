@@ -13,7 +13,7 @@ namespace cppwinrt
                 // ifdef out things that are handled by the module
                 auto wrap_modules_guard = wrap_ifndef(w, "WINRT_IMPL_MODULES");
                 w.write(strings::base_global_fragment);
-                w.write_root_include("shared");
+                w.write("#include \"./shared.h\"\n");
                 w.write(strings::base_std_includes);
                 w.write(strings::base_numerics);
             }
