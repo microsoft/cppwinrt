@@ -1,9 +1,8 @@
-// catch.hpp must come before 'import winrt' to avoid redefinition of std types.
-// The catch header pulls in standard library headers textually; placing it first
-// ensures those headers are already included before the module import.
+// All #include directives must come before module imports to avoid
+// redefinition conflicts with types already in the module.
 #include "catch.hpp"
-#include <coroutine>
 
+import std;
 import winrt;
 
 using namespace winrt;

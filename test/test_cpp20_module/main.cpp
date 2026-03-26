@@ -1,11 +1,11 @@
 #include <crtdbg.h>
-#include <cstdlib>
 
 #define CATCH_CONFIG_RUNNER
 #define CATCH_CONFIG_WINDOWS_SEH
 
 #include "catch.hpp"
 
+import std;
 import winrt;
 
 using namespace winrt;
