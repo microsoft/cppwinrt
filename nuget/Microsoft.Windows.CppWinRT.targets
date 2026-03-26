@@ -878,6 +878,25 @@ $(XamlMetaDataProviderPch)
         </PropertyGroup>
     </Target>
 
+    <!--
+      C++20 Module Support
+      When CppWinRTModule is true, the generated winrt.ixx is added as a module interface unit.
+      Consumer source files should use 'import winrt;' instead of #include directives.
+      Requires C++20 or later language standard.
+    -->
+    <Target Name="CppWinRTAddModuleSource"
+            AfterTargets="CppWinRTMakeProjections"
+            BeforeTargets="ClCompile"
+            Condition="'$(CppWinRTModule)' == 'true'">
+        <Message Text="C++/WinRT: Adding winrt.ixx module interface unit" Importance="$(CppWinRTVerbosity)" />
+        <ItemGroup>
+            <ClCompile Include="$(GeneratedFilesDir)winrt\winrt.ixx">
+                <PrecompiledHeader>NotUsing</PrecompiledHeader>
+                <PreprocessorDefinitions>WINRT_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            </ClCompile>
+        </ItemGroup>
+    </Target>
+
     <!--Append any additional item metadata after all default and project settings have been applied-->
     <ItemDefinitionGroup>
         <ClCompile>

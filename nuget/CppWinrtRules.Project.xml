@@ -86,4 +86,9 @@
                 Description="Enables the /await:strict compiler option"
                 Category="General" />
 
+  <BoolProperty Name="CppWinRTModule"
+                DisplayName="C++20 Module"
+                Description="Compiles the generated winrt.ixx as a C++20 named module. Requires C++20 or later language standard. When enabled, consumer source files should use 'import winrt;' instead of #include directives for C++/WinRT headers."
+                Category="General" />
+
 </Rule>

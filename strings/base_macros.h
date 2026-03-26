@@ -35,6 +35,8 @@
 #define _WINDOWS_NUMERICS_NAMESPACE_ winrt::Windows::Foundation::Numerics
 #define _WINDOWS_NUMERICS_BEGIN_NAMESPACE_ WINRT_EXPORT namespace winrt::Windows::Foundation::Numerics
 #define _WINDOWS_NUMERICS_END_NAMESPACE_
+// The include in the purview of a module is intentional: we need to export the numerics types.
+#pragma warning(suppress: 5244)
 #include <windowsnumerics.impl.h>
 #undef _WINDOWS_NUMERICS_NAMESPACE_
 #undef _WINDOWS_NUMERICS_BEGIN_NAMESPACE_
