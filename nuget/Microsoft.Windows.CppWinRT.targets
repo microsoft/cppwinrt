@@ -895,6 +895,13 @@ $(XamlMetaDataProviderPch)
                 <PreprocessorDefinitions>WINRT_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
             </ClCompile>
         </ItemGroup>
+        <!-- When both CppWinRTModule and BuildStlModules are enabled, define WINRT_IMPORT_STD
+             so that base.h uses 'import std;' instead of individual standard library #includes. -->
+        <ItemGroup Condition="'@(ClCompile->AnyHaveMetadataValue('BuildStlModules','true'))' == 'true'">
+            <ClCompile>
+                <PreprocessorDefinitions>WINRT_IMPORT_STD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            </ClCompile>
+        </ItemGroup>
     </Target>
 
     <!--Append any additional item metadata after all default and project settings have been applied-->
