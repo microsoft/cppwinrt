@@ -237,7 +237,7 @@ namespace
         {
             // MoveNext vs Remove
             bool moved = false;
-            race(collection_action::at, [&]
+            race(collection_action::advance, [&]
             {
                 try
                 {
@@ -273,7 +273,7 @@ namespace
         {
             // MoveNext vs Insert
             bool moved = false;
-            race(collection_action::at, [&]
+            race(collection_action::advance, [&]
             {
                 try
                 {

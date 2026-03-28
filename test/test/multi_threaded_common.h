@@ -45,7 +45,7 @@ namespace concurrent_collections
     // for the first time on the background thread.
     enum class collection_action
     {
-        none, push_back, insert, erase, at, lookup
+        none, push_back, insert, erase, at, lookup, advance
     };
 
     // All of our concurrency tests consists of starting an
@@ -165,16 +165,23 @@ namespace concurrent_collections
             return owner->dereference_iterator(inner());
         }
 
-        // inherited: pointer operator->() const;
+        pointer operator->() const
+        {
+            auto guard = owner->lock_const();
+            owner->call_hook(collection_action::at);
+            return iterator::operator->();
+        }
 
         concurrency_checked_random_access_iterator& operator++()
         {
+            owner->call_hook(collection_action::advance);
             ++inner();
             return *this;
         }
 
         concurrency_checked_random_access_iterator& operator++(int)
         {
+            owner->call_hook(collection_action::advance);
             auto prev = *this;
             ++inner();
             return prev;
@@ -182,12 +189,14 @@ namespace concurrent_collections
 
         concurrency_checked_random_access_iterator& operator--()
         {
+            owner->call_hook(collection_action::advance);
             --inner();
             return *this;
         }
 
         concurrency_checked_random_access_iterator& operator--(int)
         {
+            owner->call_hook(collection_action::advance);
             auto prev = *this;
             --inner();
             return prev;
@@ -195,6 +204,7 @@ namespace concurrent_collections
 
         concurrency_checked_random_access_iterator& operator+=(difference_type offset)
         {
+            owner->call_hook(collection_action::advance);
             inner() += offset;
             return *this;
         }
@@ -206,6 +216,7 @@ namespace concurrent_collections
 
         concurrency_checked_random_access_iterator& operator-=(difference_type offset)
         {
+            owner->call_hook(collection_action::advance);
             inner() -= offset;
             return *this;
         }
