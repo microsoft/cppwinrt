@@ -125,11 +125,11 @@ namespace winrt::impl
         {
             if constexpr (std::is_void_v<R>)
             {
-                (*this)(args...);
+                static_cast<H&>(*this)(args...);
             }
             else
             {
-                return (*this)(args...);
+                return static_cast<H&>(*this)(args...);
             }
         }
 
