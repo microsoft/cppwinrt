@@ -2916,7 +2916,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
             for (auto&& field : type.fields)
             {
-                if (field.second.find(':') == std::string::npos)
+                if (field.second.find(':') == std::string::npos || starts_with(field.second, "std::"))
                 {
                     continue;
                 }
