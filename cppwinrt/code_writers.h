@@ -37,7 +37,19 @@ namespace cppwinrt
 
     static void write_version_assert(writer& w)
     {
+        // When WINRT_IMPL_SKIP_INCLUDES is defined, base.h is already available
+        // from the imported winrt module. However, macros don't cross module
+        // boundaries, so we include a lightweight header with just the macros.
+        auto format_guard = R"(#ifdef WINRT_IMPL_SKIP_INCLUDES
+#include "winrt/base_macros.h"
+#else
+)";
+        auto format_end = R"(#endif
+)";
+        w.write(format_guard);
         w.write_root_include("base");
+        w.write(format_end);
+
         auto format = R"(static_assert(winrt::check_version(CPPWINRT_VERSION, "%"), "Mismatched C++/WinRT headers.");
 #define CPPWINRT_VERSION "%"
 )";
@@ -137,7 +149,7 @@ namespace cppwinrt
 
         if (found != c.namespaces().end() && has_projected_types(found->second))
         {
-            w.write_root_include(parent);
+            w.write_root_include_guarded(parent);
         }
         else
         {

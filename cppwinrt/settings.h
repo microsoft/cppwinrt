@@ -31,6 +31,8 @@ namespace cppwinrt
 
         bool fastabi{};
         std::map<winmd::reader::TypeDef, winmd::reader::TypeDef> fastabi_cache;
+
+        bool component_module{}; // Generate component files using 'import winrt;' instead of #include
     };
 
     extern settings_type settings;

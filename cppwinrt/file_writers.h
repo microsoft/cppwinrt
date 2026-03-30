@@ -46,6 +46,57 @@ namespace cppwinrt
         w.flush_to_file(settings.output_folder + "winrt/base.h");
     }
 
+    // Lightweight header containing only the preprocessor macros needed by
+    // generated namespace headers. Used when WINRT_IMPL_SKIP_INCLUDES is
+    // defined (i.e., consuming component headers after 'import winrt;').
+    // Macros don't cross module boundaries, so this provides the macros
+    // that base.h would normally supply.
+    static void write_base_macros_h()
+    {
+        writer w;
+        write_preamble(w);
+        w.write(R"(#pragma once
+
+// This header provides the preprocessor macros needed by generated C++/WinRT
+// headers when the full base.h is not #included (e.g., when using 'import winrt;').
+// Macros are not exported across C++20 module boundaries, so this lightweight
+// header must be included textually.
+
+#ifndef CPPWINRT_VERSION
+#define CPPWINRT_VERSION "%"
+#endif
+
+#ifndef WINRT_EXPORT
+#define WINRT_EXPORT
+#endif
+
+#if defined(_MSC_VER)
+#define WINRT_IMPL_EMPTY_BASES __declspec(empty_bases)
+#else
+#define WINRT_IMPL_EMPTY_BASES
+#endif
+
+#if defined(_MSC_VER)
+#define WINRT_IMPL_NOVTABLE __declspec(novtable)
+#else
+#define WINRT_IMPL_NOVTABLE
+#endif
+
+#if defined(__clang__) && defined(__has_attribute)
+#if __has_attribute(__lto_visibility_public__)
+#define WINRT_IMPL_PUBLIC __attribute__((lto_visibility_public))
+#else
+#define WINRT_IMPL_PUBLIC
+#endif
+#else
+#define WINRT_IMPL_PUBLIC
+#endif
+
+#define WINRT_IMPL_ABI_DECL WINRT_IMPL_NOVTABLE WINRT_IMPL_PUBLIC
+)", CPPWINRT_VERSION_STRING);
+        w.flush_to_file(settings.output_folder + "winrt/base_macros.h");
+    }
+
     static void write_fast_forward_h(std::vector<TypeDef> const& classes)
     {
         writer w;
@@ -139,7 +190,7 @@ namespace cppwinrt
 
         for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, '0');
+            w.write_depends_guarded(depends.first, '0');
         }
 
         w.write_depends(w.type_namespace, '0');
@@ -169,7 +220,7 @@ namespace cppwinrt
 
         for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, impl);
+            w.write_depends_guarded(depends.first, impl);
         }
 
         w.write_depends(w.type_namespace, '1');
@@ -224,7 +275,7 @@ namespace cppwinrt
 
         for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, '2');
+            w.write_depends_guarded(depends.first, '2');
         }
 
         w.write_depends(w.type_namespace, '2');
@@ -250,9 +301,22 @@ namespace cppwinrt
         write_preamble(w);
         write_include_guard(w);
 
-        for (auto&& depends : w.depends)
+        if (settings.component_module)
         {
-            w.write_depends(depends.first);
+            // In module mode, both SDK and component types are available from
+            // 'import winrt;' (the component projection is folded into the
+            // winrt.ixx module). Only macros need a textual include since
+            // they don't cross module boundaries.
+            w.write("#include \"winrt/base_macros.h\"\n");
+            w.write("import std;\n");
+            w.write("import winrt;\n");
+        }
+        else
+        {
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first);
+            }
         }
 
         auto filename = settings.output_folder + get_generated_component_filename(type) + ".g.h";

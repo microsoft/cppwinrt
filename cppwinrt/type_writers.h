@@ -564,6 +564,19 @@ namespace cppwinrt
                 settings.brackets ? '>' : '\"');
         }
 
+        void write_root_include_guarded(std::string_view const& include)
+        {
+            auto format = R"(#ifndef WINRT_IMPL_SKIP_INCLUDES
+#include %winrt/%.h%
+#endif
+)";
+
+            write(format,
+                settings.brackets ? '<' : '\"',
+                include,
+                settings.brackets ? '>' : '\"');
+        }
+
         void write_depends(std::string_view const& ns, char impl = 0)
         {
             if (impl)
@@ -573,6 +586,18 @@ namespace cppwinrt
             else
             {
                 write_root_include(ns);
+            }
+        }
+
+        void write_depends_guarded(std::string_view const& ns, char impl = 0)
+        {
+            if (impl)
+            {
+                write_root_include_guarded(write_temp("impl/%.%", ns, impl));
+            }
+            else
+            {
+                write_root_include_guarded(ns);
             }
         }
 

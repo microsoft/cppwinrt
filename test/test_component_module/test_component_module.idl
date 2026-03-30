@@ -1,0 +1,14 @@
+import "Windows.Foundation.Numerics.idl";
+
+namespace test_component_module
+{
+    runtimeclass Toaster
+    {
+        Toaster();
+        Toaster(String name);
+        String Name{ get; set; };
+        Windows.Foundation.IAsyncAction ToastAsync();
+
+        static Toaster CreateDefault();
+    }
+}

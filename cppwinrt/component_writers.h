@@ -136,7 +136,14 @@ namespace cppwinrt
 
     static void write_module_g_cpp(writer& w, std::vector<TypeDef> const& classes)
     {
-        w.write_root_include("base");
+        if (settings.component_module)
+        {
+            w.write("import std;\nimport winrt;\n");
+        }
+        else
+        {
+            w.write_root_include("base");
+        }
         auto format = R"(%
 bool __stdcall %_can_unload_now() noexcept
 {
@@ -393,6 +400,14 @@ catch (...) { return winrt::to_hresult(); }
         }
 
         if (!settings.component_opt)
+        {
+            return;
+        }
+
+        // In module mode, the constructor/static definitions are already exported
+        // from the winrt module (via the namespace header folded into winrt.ixx).
+        // Only the winrt_make_* factory function above is needed.
+        if (settings.component_module)
         {
             return;
         }
