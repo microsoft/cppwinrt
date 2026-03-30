@@ -8,9 +8,10 @@ them, and the interactions between the various moving pieces.
 
 - [File Generation Pipeline](#file-generation-pipeline)
 - [winrt.ixx Generation](#winrtixx-generation)
-- [The Global Module Fragment Problem](#the-global-module-fragment-problem)
+- [Split Standard Library Includes](#split-standard-library-includes)
 - [base_macros.h: Why Macros Need Special Handling](#base_macrosh-why-macros-need-special-handling)
 - [WINRT_IMPL_SKIP_INCLUDES: Guarded Cross-Namespace Includes](#winrt_impl_skip_includes-guarded-cross-namespace-includes)
+- [WINRT_EXPORT on Extern Handlers](#winrt_export-on-extern-handlers)
 - [The -module Flag: Component Code Generation](#the--module-flag-component-code-generation)
 - [The Combined-ixx Approach](#the-combined-ixx-approach)
 - [The windowsnumerics.impl.h Warning](#the-windowsnumericsh-warning)
@@ -49,9 +50,8 @@ The ixx is built by writing directly to a `writer ixx` object:
 writer ixx;
 write_preamble(ixx);
 ixx.write("module;\n");                           // global module fragment
-ixx.write("#define WINRT_IMPL_GLOBAL_MODULE_FRAGMENT\n");
-ixx.write(strings::base_includes);                // standard library #includes
-ixx.write("#undef WINRT_IMPL_GLOBAL_MODULE_FRAGMENT\n");
+ixx.write(strings::base_includes);                // platform includes (intrin.h, version, directxmath)
+ixx.write(strings::base_std_includes);            // standard library #includes
 ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n\n");
 
 for (auto ns : namespaces)
@@ -61,46 +61,51 @@ ixx.flush_to_file("winrt/winrt.ixx");
 ```
 
 Key points:
-- `strings::base_includes` is the *literal content* of `base_includes.h` (embedded
-  at compile time by the prebuild step). It's not an `#include` directive — it's
-  the raw text of the standard library includes.
-- `WINRT_EXPORT` is defined as `export` inside the module purview. Every namespace
-  declaration in the generated headers uses `WINRT_EXPORT namespace winrt::...` so
-  types are properly exported.
-- The namespace headers are `#include`d inside the module purview, making all their
-  content (types, template specializations) part of the module.
+- `strings::base_includes` contains platform-specific headers (`<intrin.h>`,
+  `<version>`, `<directxmath.h>`) — NOT standard library headers.
+- `strings::base_std_includes` contains all standard library `#include`
+  directives (`<algorithm>`, `<string>`, etc.). These are always written
+  as raw `#include`s in the global module fragment where `import` is prohibited.
+- `WINRT_EXPORT` is defined as `export` inside the module purview.
+- The namespace headers are `#include`d inside the module purview, making all
+  their content (types, template specializations) part of the module.
 
-## The Global Module Fragment Problem
+## Split Standard Library Includes
 
-**Problem**: The C++ standard prohibits `import` declarations in the global module
-fragment (the section between `module;` and `export module winrt;`).
+**Problem**: The C++ standard prohibits `import` declarations in the global
+module fragment (the section between `module;` and `export module winrt;`).
+The ixx needs raw `#include` directives there, but `base.h` consumers may
+want `import std;` instead.
 
-**Context**: `base_includes.h` conditionally emits `import std;` when
-`WINRT_IMPORT_STD` is defined. If this triggers in the global module fragment,
-compilation fails.
+**Solution**: The standard library includes are split into a separate file:
 
-**Solution**: The ixx writer wraps the base_includes content with a guard macro:
+| File | Content | Used by |
+|------|---------|--------|
+| `strings/base_includes.h` | Platform headers: `<intrin.h>`, `<version>`, `<directxmath.h>` | Both ixx and base.h |
+| `strings/base_std_includes.h` | Standard library: `<algorithm>`, `<string>`, `<coroutine>`, etc. | ixx (always), base.h (conditional) |
+
+In `write_base_h()`, the std includes are written conditionally:
 
 ```cpp
-ixx.write("#define WINRT_IMPL_GLOBAL_MODULE_FRAGMENT\n");
-ixx.write(strings::base_includes);    // import std; is suppressed
-ixx.write("#undef WINRT_IMPL_GLOBAL_MODULE_FRAGMENT\n");
-```
-
-Inside `base_includes.h`:
-```cpp
-#if defined(__cpp_lib_modules) && defined(WINRT_IMPORT_STD) \
-    && !defined(WINRT_IMPL_GLOBAL_MODULE_FRAGMENT)
+w.write(strings::base_includes);        // platform includes (always)
+w.write(R"(
+#if defined(__cpp_lib_modules) && defined(WINRT_IMPORT_STD)
 import std;
 #else
-// ... individual #include directives
-#endif
+)");
+w.write(strings::base_std_includes);    // std includes (fallback)
+w.write(R"(#endif
+)");
 ```
 
-The three-way condition ensures `import std;` only fires when:
-1. The compiler supports it (`__cpp_lib_modules`)
-2. The user/build opted in (`WINRT_IMPORT_STD`)
-3. We're not in the global module fragment (`!WINRT_IMPL_GLOBAL_MODULE_FRAGMENT`)
+In the ixx writer, both are written unconditionally as raw includes:
+
+```cpp
+ixx.write(strings::base_includes);      // platform
+ixx.write(strings::base_std_includes);  // std (always #include in GMF)
+```
+
+This eliminates the need for any guard macros like `WINRT_IMPL_GLOBAL_MODULE_FRAGMENT`.
 
 ## base_macros.h: Why Macros Need Special Handling
 
@@ -117,7 +122,8 @@ preprocessor definitions needed by generated code. It's safe to `#include`
 alongside `import winrt;` because it has no type declarations that could
 conflict with module-exported symbols.
 
-**Generated by**: `write_base_macros_h()` in `file_writers.h`
+**Generated by**: `write_base_macros_h()` in `file_writers.h`, using content from
+`strings/base_module_macros.h`
 
 **Used by**: `.g.h` files in module mode:
 ```cpp
@@ -160,6 +166,26 @@ needed for component authoring (the component types are in the module). It
 remains useful for the scenario of consuming a component's projection header
 separately after `import winrt;`, should MSVC add support for cross-module
 template specialization in the future.
+
+## WINRT_EXPORT on Extern Handlers
+
+**Source**: `strings/base_extern.h`
+
+The global function pointer variables used for error handling customization
+(`winrt_to_hresult_handler`, `winrt_to_message_handler`,
+`winrt_throw_hresult_handler`, `winrt_activation_handler`) are prefixed with
+`WINRT_EXPORT`:
+
+```cpp
+WINRT_EXPORT __declspec(selectany) std::int32_t(__stdcall* winrt_to_hresult_handler)(...) noexcept {};
+WINRT_EXPORT __declspec(selectany) winrt::hstring(__stdcall* winrt_to_message_handler)(...) {};
+// etc.
+```
+
+This ensures correct linkage when mixing modules and non-modules translation
+units in the same DLL/EXE. Without `WINRT_EXPORT`, the module-compiled TUs
+and the header-compiled TUs would see these as separate symbols, leading to
+one side's customizations being invisible to the other.
 
 ## The -module Flag: Component Code Generation
 
@@ -247,14 +273,21 @@ matching the approach from the sylveon fork.
 
 ## import std Integration
 
-**Source**: `base_includes.h`
+**Source**: `strings/base_includes.h`, `strings/base_std_includes.h`,
+`file_writers.h` (`write_base_h`)
 
-The standard library `#include` directives in `base_includes.h` are conditionally
-replaced with `import std;`. The conditions are:
+The standard library includes are split into two files:
+
+- **`strings/base_includes.h`**: Platform headers (`<intrin.h>`, `<version>`,
+  `<directxmath.h>`). Always written as `#include`.
+- **`strings/base_std_includes.h`**: Standard library headers (`<algorithm>`,
+  `<string>`, `<coroutine>`, etc.).
+
+In `write_base_h()`, the std includes are conditional:
 
 ```cpp
-#if defined(__cpp_lib_modules) && defined(WINRT_IMPORT_STD) \
-    && !defined(WINRT_IMPL_GLOBAL_MODULE_FRAGMENT)
+// In generated base.h:
+#if defined(__cpp_lib_modules) && defined(WINRT_IMPORT_STD)
 import std;
 #else
 #include <algorithm>
@@ -262,6 +295,9 @@ import std;
 ... // 25+ individual includes
 #endif
 ```
+
+In the ixx global module fragment, both files are written as raw `#include`s
+with no conditional — `import` is not permitted there.
 
 `WINRT_IMPORT_STD` is:
 - Defined automatically by NuGet targets when `CppWinRTModule=true` and
@@ -286,8 +322,11 @@ would break existing users whose build systems don't compile the std module.
 | `component_writers.h` | Component template writers: `write_module_g_cpp`, `write_component_g_cpp` |
 | `code_writers.h` | Low-level writers: `write_version_assert`, `write_parent_depends`, `write_open_file_guard` |
 | `type_writers.h` | Writer class: `write_root_include`, `write_root_include_guarded`, `write_depends`, `write_depends_guarded` |
-| `strings/base_includes.h` | Standard library includes / `import std;` conditional |
-| `strings/base_macros.h` | `WINRT_EXPORT`, `windowsnumerics.impl.h` suppress |
+| `strings/base_includes.h` | Platform includes (`<intrin.h>`, `<version>`, `<directxmath.h>`) |
+| `strings/base_std_includes.h` | Standard library includes (`<algorithm>`, `<string>`, `<coroutine>`, etc.) |
+| `strings/base_macros.h` | `WINRT_EXPORT` definition, `windowsnumerics.impl.h` suppress |
+| `strings/base_module_macros.h` | Lightweight macros for module consumers (`WINRT_EXPORT`, `WINRT_IMPL_EMPTY_BASES`, etc.) |
+| `strings/base_extern.h` | `WINRT_EXPORT`-decorated extern handler variables |
 
 ### Key NuGet targets
 
@@ -309,12 +348,11 @@ User sets CppWinRTModule=true + BuildStlModules=true
     ▼
 winrt.ixx compilation:
     module;
-    #define WINRT_IMPL_GLOBAL_MODULE_FRAGMENT  ← blocks import std;
-    <base_includes content>                     ← falls through to #include path
-    #undef WINRT_IMPL_GLOBAL_MODULE_FRAGMENT
+    <intrin.h, version, directxmath.h>         ← platform includes (base_includes)
+    <algorithm, array, string, coroutine, ...> ← std library includes (base_std_includes)
     export module winrt;
     #define WINRT_EXPORT export
-    #include "winrt/base.h"                    ← WINRT_IMPORT_STD not checked (pragma once)
+    #include "winrt/base.h"                    ← base.h (import std; not checked, pragma once)
     #include "winrt/Windows.Foundation.h"      ← SDK types + specializations
     ...
     #include "winrt/MyComponent.h"             ← component specializations in purview

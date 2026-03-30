@@ -76,7 +76,7 @@ The NuGet targets automatically:
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
 | `CppWinRTModule` | bool | `false` | Enable C++20 module mode. Adds `winrt.ixx` to compilation, folds component projections into the module, and passes `-module` to cppwinrt.exe for component generation. |
-| `BuildStlModules` | ClCompile metadata | `false` | Enables building `std.ixx`/`std.compat.ixx` so `import std;` works. Set inside `<ItemDefinitionGroup><ClCompile>`. |
+| `BuildStlModules` | ClCompile metadata | `false` | Enables building `std.ixx`/`std.compat.ixx` so `import std;` works. Set inside `<ItemDefinitionGroup><ClCompile>`. This is the same project property set by "Build ISO C++23 Standard Library Modules" (https://learn.microsoft.com/en-us/cpp/build/reference/c-cpp-prop-page?view=msvc-180#cc-language-properties)|
 
 When `CppWinRTModule=true`, the NuGet targets also automatically:
 - Define `WINRT_IMPORT_STD` as a preprocessor definition when `BuildStlModules`
@@ -205,10 +205,8 @@ These are used by the code generator and should not be set directly by users:
 
 | Macro | Purpose |
 |-------|---------|
-| `WINRT_IMPL_GLOBAL_MODULE_FRAGMENT` | Set by the generated `winrt.ixx` around the `base_includes` content in the global module fragment (before `export module winrt;`). Prevents `import std;` from being emitted in the global module fragment where `import` declarations are not permitted by the C++ standard. |
-| `WINRT_IMPL_IMPORT_STD` | Internal flag set when `WINRT_IMPORT_STD`, `__cpp_lib_modules`, and not-in-global-fragment conditions are all met. Guards the `#include` fallback path. |
 | `WINRT_IMPL_SKIP_INCLUDES` | When defined, generated namespace headers skip their cross-namespace `#include` dependencies (e.g., `#include "winrt/base.h"`, `#include "winrt/impl/Windows.Foundation.2.h"`). Used when those dependencies are already available from the `winrt` module. The component's own impl headers are never skipped. |
-| `WINRT_EXPORT` | Expands to `export` inside `winrt.ixx` (module purview), empty in header mode. Used on namespace declarations so types are properly exported from the module. Defined in `base_macros.h` (as empty) for use in generated component files that operate alongside the module. |
+| `WINRT_EXPORT` | Expands to `export` inside `winrt.ixx` (module purview), empty in header mode. Used on namespace declarations so types are properly exported from the module. Also applied to `winrt_to_hresult_handler` and related extern handler variables in `base_extern.h` for correct linkage when mixing modules and non-modules code in the same binary. Defined in `base_macros.h` (as empty) for use in generated component files that operate alongside the module. |
 | `WINRT_IMPL_EMPTY_BASES` | MSVC `__declspec(empty_bases)` optimization. Defined in both `base.h` and `base_macros.h`. |
 | `WINRT_IMPL_ABI_DECL` | Combines `WINRT_IMPL_NOVTABLE` and `WINRT_IMPL_PUBLIC` for ABI interface declarations. |
 | `CPPWINRT_VERSION` | Version string for header compatibility checking. Defined in `base.h` and `base_macros.h`. |
@@ -238,10 +236,8 @@ winrt/
 
 ```
 module;                                     ← Global module fragment
-#define WINRT_IMPL_GLOBAL_MODULE_FRAGMENT
-<standard library includes>                 ← Raw #includes (import not allowed here)
-<directxmath.h, intrin.h>                   ← Platform headers
-#undef WINRT_IMPL_GLOBAL_MODULE_FRAGMENT
+<intrin.h, version, directxmath.h>           ← Platform includes (base_includes)
+<algorithm, array, atomic, ...>              ← Standard library includes (base_std_includes)
 
 export module winrt;                        ← Module purview begins
 #define WINRT_EXPORT export

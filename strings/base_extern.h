@@ -1,8 +1,8 @@
 
-__declspec(selectany) std::int32_t(__stdcall* winrt_to_hresult_handler)(void* address) noexcept {};
-__declspec(selectany) winrt::hstring(__stdcall* winrt_to_message_handler)(void* address) {};
-__declspec(selectany) void(__stdcall* winrt_throw_hresult_handler)(std::uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept {};
-__declspec(selectany) std::int32_t(__stdcall* winrt_activation_handler)(void* classId, winrt::guid const& iid, void** factory) noexcept {};
+WINRT_EXPORT __declspec(selectany) std::int32_t(__stdcall* winrt_to_hresult_handler)(void* address) noexcept {};
+WINRT_EXPORT __declspec(selectany) winrt::hstring(__stdcall* winrt_to_message_handler)(void* address) {};
+WINRT_EXPORT __declspec(selectany) void(__stdcall* winrt_throw_hresult_handler)(std::uint32_t lineNumber, char const* fileName, char const* functionName, void* returnAddress, winrt::hresult const result) noexcept {};
+WINRT_EXPORT __declspec(selectany) std::int32_t(__stdcall* winrt_activation_handler)(void* classId, winrt::guid const& iid, void** factory) noexcept {};
 
 #if defined(_MSC_VER)
 #ifdef _M_HYBRID

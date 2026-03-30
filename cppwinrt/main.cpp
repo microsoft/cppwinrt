@@ -353,11 +353,8 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             writer ixx;
             write_preamble(ixx);
             ixx.write("module;\n");
-            // In the global module fragment, 'import' is not allowed.
-            // Suppress the 'import std;' path in base_includes so we get raw #includes.
-            ixx.write("#define WINRT_IMPL_GLOBAL_MODULE_FRAGMENT\n");
             ixx.write(strings::base_includes);
-            ixx.write("#undef WINRT_IMPL_GLOBAL_MODULE_FRAGMENT\n");
+            ixx.write(strings::base_std_includes);
             ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n\n");
 
             for (auto&&[ns, members] : c.namespaces())
