@@ -1,12 +1,5 @@
-#ifdef WINRT_TEST_MODULES
-#include <catch.hpp>
-#include <Windows.h>
-import std;
-import winrt;
-#else
 #include "pch.h"
 #include "winrt/Windows.System.h"
-#endif
 
 using namespace std::literals;
 using namespace winrt;

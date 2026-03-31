@@ -128,7 +128,6 @@
   <ItemGroup>
     <ClCompile Include="$(OutDir)winrt\winrt.ixx" />
     <ClCompile Include="..\old_tests\UnitTests\Security.cpp" />
-    <ClCompile Include="..\test\await_adapter.cpp" />
     <ClCompile Include="..\test\coro_threadpool.cpp" />
     <ClCompile Include="async.cpp" />
     <ClCompile Include="interop.cpp" />
