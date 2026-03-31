@@ -1,13 +1,5 @@
-#ifndef WINRT_TEST_MODULES
 #include "pch.h"
-#endif
 #include "catch.hpp"
-
-#ifdef WINRT_TEST_MODULES
-#include <Windows.h>
-import std;
-import winrt;
-#endif
 
 using namespace winrt;
 using namespace Windows::Foundation;

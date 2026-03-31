@@ -1,6 +1,6 @@
 // All #include directives must come before module imports to avoid
 // redefinition conflicts with types already in the module.
-#include "catch.hpp"
+#include "pch.h"
 
 import std;
 import winrt;

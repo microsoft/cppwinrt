@@ -1,5 +1,4 @@
-#include "catch.hpp"
-#include <winerror.h>
+#include "pch.h"
 
 import std;
 import winrt;
