@@ -19,6 +19,7 @@ import std;
             w.write(strings::base_std_includes);
             w.write(R"(#endif
 )");
+            w.write(strings::base_module_macros);
             w.write(strings::base_macros);
             w.write(strings::base_types);
             w.write(strings::base_extern);

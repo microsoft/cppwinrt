@@ -27,10 +27,6 @@
 #define WINRT_IMPL_COROUTINES
 #endif
 
-#ifndef WINRT_EXPORT
-#define WINRT_EXPORT
-#endif
-
 #ifdef WINRT_IMPL_NUMERICS
 #define _WINDOWS_NUMERICS_NAMESPACE_ winrt::Windows::Foundation::Numerics
 #define _WINDOWS_NUMERICS_BEGIN_NAMESPACE_ WINRT_EXPORT namespace winrt::Windows::Foundation::Numerics
@@ -50,30 +46,6 @@
 #else
 #define WINRT_IMPL_NOINLINE
 #endif
-
-#if defined(_MSC_VER)
-#define WINRT_IMPL_EMPTY_BASES __declspec(empty_bases)
-#else
-#define WINRT_IMPL_EMPTY_BASES
-#endif
-
-#if defined(_MSC_VER)
-#define WINRT_IMPL_NOVTABLE __declspec(novtable)
-#else
-#define WINRT_IMPL_NOVTABLE
-#endif
-
-#if defined(__clang__) && defined(__has_attribute)
-#if __has_attribute(__lto_visibility_public__)
-#define WINRT_IMPL_PUBLIC __attribute__((lto_visibility_public))
-#else
-#define WINRT_IMPL_PUBLIC
-#endif // __has_attribute(__lto_visibility_public__)
-#else
-#define WINRT_IMPL_PUBLIC
-#endif
-
-#define WINRT_IMPL_ABI_DECL WINRT_IMPL_NOVTABLE WINRT_IMPL_PUBLIC
 
 #if defined(__clang__)
 #define WINRT_IMPL_HAS_DECLSPEC_UUID __has_declspec_attribute(uuid)
