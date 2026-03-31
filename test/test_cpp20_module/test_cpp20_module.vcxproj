@@ -99,7 +99,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(OutputPath);..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX;WINRT_LEAN_AND_MEAN;WINRT_IMPORT_STD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;WINRT_LEAN_AND_MEAN;WINRT_IMPORT_STD;WINRT_TEST_MODULES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <BuildStlModules>true</BuildStlModules>
     </ClCompile>
@@ -127,6 +127,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="$(OutDir)winrt\winrt.ixx" />
+    <ClCompile Include="..\old_tests\UnitTests\Security.cpp" />
+    <ClCompile Include="..\test\await_adapter.cpp" />
+    <ClCompile Include="..\test\coro_threadpool.cpp" />
     <ClCompile Include="async.cpp" />
     <ClCompile Include="interop.cpp" />
     <ClCompile Include="main.cpp" />

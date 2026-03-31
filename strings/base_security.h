@@ -69,31 +69,38 @@ WINRT_EXPORT namespace winrt
             check_bool(WINRT_IMPL_SetThreadToken(nullptr, get()));
         }
 
-        auto operator()() const
-        {
-            struct guard
-            {
-                guard(access_token&& previous) noexcept : m_previous(std::move(previous))
-                {
-                }
-
-                ~guard()
-                {
-                    m_previous.revert();
-                }
-
-                guard(guard const&)
-                {
-                    // A Visual C++ compiler bug (550631) requires the copy constructor even though it is never called.
-                    WINRT_ASSERT(false);
-                }
-
-            private:
-
-                access_token const m_previous;
-            };
-
-            return guard(impersonate());
-        }
+        auto operator()() const;
     };
+}
+
+WINRT_EXPORT namespace winrt
+{
+    struct access_token_guard
+    {
+        access_token_guard(handle&& previous) noexcept : m_previous(std::move(previous))
+        {
+        }
+
+        ~access_token_guard()
+        {
+            check_bool(WINRT_IMPL_SetThreadToken(nullptr, m_previous.get()));
+        }
+
+        access_token_guard(access_token_guard const&)
+        {
+            // A Visual C++ compiler bug (550631) requires the copy constructor even though it is never called.
+            WINRT_ASSERT(false);
+        }
+
+    private:
+        // Work around modules bug that claims access_token is undefined/incomplete here.
+        handle m_previous;
+    };
+
+    inline auto access_token::operator()() const
+    {
+        auto previous = thread();
+        check_bool(WINRT_IMPL_SetThreadToken(nullptr, get()));
+        return access_token_guard(std::move(previous));
+    }
 }
