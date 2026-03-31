@@ -316,21 +316,31 @@ the component projection generation.
    headers must come before `import std;` and `import winrt;` to avoid
    redefinition errors.
 
-3. **No PCH with modules**: Module interface units cannot use precompiled
-   headers. Component source files using `import winrt;` should set
-   `<PrecompiledHeader>NotUsing</PrecompiledHeader>`.
+3. **PCH compatibility**: The module interface unit (`winrt.ixx`) cannot use a
+   precompiled header. Regular source files that `import winrt;` CAN use a PCH,
+   but the PCH must not include any `winrt/` headers (e.g., `winrt/base.h`,
+   `winrt/Windows.Foundation.h`) since those types come from the module. A PCH
+   containing third-party headers, Windows SDK headers, or other project headers
+   is fine.
 
 4. **WINRT_LEAN_AND_MEAN for consumers**: Pure consumer apps (no component
    authoring) should define `WINRT_LEAN_AND_MEAN` to avoid pulling `<ostream>`
    and `produce<>` templates into the module. Component authors should NOT
    define it since they need `produce<>`.
 
-5. **Cross-module template specialization**: MSVC does not currently support
-   specializing module-imported class templates from textual `#include` code.
-   The combined-ixx approach (folding component headers into `winrt.ixx`)
-   works around this by keeping specializations within the module purview.
-   If you need to include a component's projection header separately (outside
-   the module), this will fail with:
+5. **Cross-module template specialization**: Component projection headers
+   (`.0.h` files) specialize templates like `winrt::impl::category`,
+   `winrt::impl::abi`, `winrt::impl::guid_v`, etc. These templates are in the
+   `winrt::impl` namespace, which is currently not exported from the module
+   (it uses module linkage). When a textual `#include` of a component header
+   tries to specialize these after `import winrt;`, the primary templates are
+   not visible:
    ```
    error C3856: 'category': symbol is not a class template
    ```
+   The combined-ixx approach (folding component headers into `winrt.ixx`)
+   works around this by keeping specializations within the module purview,
+   where the `impl` templates are directly visible. A future improvement could
+   export the specific `impl` templates that need external specialization,
+   which would allow component headers to be included separately after
+   `import winrt;` without folding them into the module.
