@@ -12,6 +12,7 @@
 #include <Dia2.h>
 #include "base_includes.h"
 #include "base_std_includes.h"
+#include "base_module_macros.h"
 #include "base_macros.h"
 #include "base_types.h"
 #include "base_extern.h"
