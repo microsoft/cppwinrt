@@ -9,9 +9,14 @@ developer experience.
 
 ## Quick Start
 
-### Pure SDK consumption (app that calls WinRT APIs)
+### Consuming the platform projection (app that calls WinRT APIs)
 
-Set these MSBuild properties in your `.vcxproj`:
+In Visual Studio, set the following in your project property pages:
+- **C/C++ > General > C++ Language Standard**: `ISO C++20` or `Preview`
+- **C/C++ > General > Build ISO C++23 Standard Library Modules**: `Yes`
+- **C++/WinRT > General > C++20 Module**: `true`
+
+Or equivalently, set these MSBuild properties in your `.vcxproj`:
 
 ```xml
 <PropertyGroup Label="Globals">
@@ -49,7 +54,7 @@ Same project properties as above, then in your implementation files:
 
 ```cpp
 // MyComponent.cpp
-import std;
+#include "pch.h"          // PCH is fine — just don't include winrt/ headers in it
 import winrt;
 #include "MyComponent.h"     // includes MyComponent.g.h
 #include "MyComponent.g.cpp" // factory function only in module mode
@@ -57,19 +62,20 @@ import winrt;
 
 The NuGet targets automatically:
 1. Pass `-module` to cppwinrt.exe so generated `.g.h`/`.g.cpp` files use
-   `import winrt;` instead of `#include` directives
-2. Fold the component's projection headers into `winrt.ixx` so template
-   specializations occur within the module purview
+   `import winrt;` instead of `#include` directives for platform types
+2. Generate component projection headers with `WINRT_IMPL_SKIP_INCLUDES` so
+   they skip platform `#include` directives already available from the module
 3. Define `WINRT_IMPORT_STD` when `BuildStlModules` is enabled
 
 ## Requirements
 
-- **Visual Studio 2026** (v145 toolset) or later — the v180 MSBuild targets
-  support `import std;` with C++20. Earlier toolsets (v143) require C++23 for
-  `import std;` support.
+- **Visual Studio 2022** (v143 toolset) or later for `import winrt;`
 - **C++20 or later** language standard (`/std:c++20` or `/std:c++latest`)
-- **`BuildStlModules=true`** in `<ItemDefinitionGroup><ClCompile>` to enable
-  the standard library module compilation
+- For `import std;` alongside `import winrt;`:
+  - **v143 toolset**: requires `/std:c++latest` (C++23 mode) + `BuildStlModules=true`
+  - **v145 toolset** (VS 2026): works with `/std:c++20` + `BuildStlModules=true`
+- **`BuildStlModules=true`** (optional) in `<ItemDefinitionGroup><ClCompile>`
+  to enable the standard library module compilation for `import std;`
 
 ## MSBuild Properties
 
@@ -89,7 +95,7 @@ When `CppWinRTModule=true`, the NuGet targets also automatically:
 
 | Option | Description |
 |--------|-------------|
-| `-module` | Generate component files (`.g.h`, `.g.cpp`, `module.g.cpp`) using `import winrt;` instead of `#include` directives. The `.g.h` files emit `import std;`, `import winrt;`, and `#include "winrt/base_macros.h"`. The `.g.cpp` files emit only the `winrt_make_*` factory function (constructor/static optimizations are omitted since those definitions come from the module). |
+| `-module` | Generate component files (`.g.h`, `.g.cpp`, `module.g.cpp`) using `import winrt;` instead of `#include` directives for platform projection types. The `.g.h` files emit `import winrt;`, include the component's own projection headers with `WINRT_IMPL_SKIP_INCLUDES`, and `#include "winrt/base_macros.h"` for macros. The `.g.cpp` files emit only the `winrt_make_*` factory function (constructor/static optimizations are omitted since those definitions come from the component's projection header included after `import winrt;`). `import std;` is conditional on `WINRT_IMPORT_STD`. PCH includes are preserved. |
 
 ### Other commonly used options
 
@@ -128,7 +134,7 @@ import winrt;           // C++/WinRT module
 // Your code here...
 ```
 
-### Consumer app (SDK types only)
+### Consumer app (platform types only)
 
 ```cpp
 import std;
@@ -220,7 +226,7 @@ winrt/
 ├── base.h              # Core C++/WinRT library (types, helpers, COM support)
 ├── base_macros.h       # Lightweight macro-only header for module consumers
 ├── winrt.ixx           # C++20 module interface unit
-├── Windows.Foundation.h        # SDK namespace header (consume definitions)
+├── Windows.Foundation.h        # Platform namespace header (consume definitions)
 ├── impl/
 │   ├── Windows.Foundation.0.h  # Forward decls, enums, ABI, consume structs
 │   ├── Windows.Foundation.1.h  # Interface definitions
@@ -236,50 +242,44 @@ winrt/
 
 ```
 module;                                     ← Global module fragment
-<intrin.h, version, directxmath.h>           ← Platform includes (base_includes)
-<algorithm, array, atomic, ...>              ← Standard library includes (base_std_includes)
+<intrin.h, version, directxmath.h>          ← Platform includes (base_includes)
+<algorithm, array, atomic, ...>             ← Standard library includes (base_std_includes)
 
 export module winrt;                        ← Module purview begins
 #define WINRT_EXPORT export
 
-#include "winrt/Windows.Foundation.h"       ← SDK namespace headers
+#include "winrt/Windows.Foundation.h"       ← Platform namespace headers
 #include "winrt/Windows.Foundation.Collections.h"
-...                                         ← (all SDK namespaces)
-#include "winrt/MyComponent.h"              ← Component headers (appended by build)
+...                                         ← (all platform namespaces)
 ```
 
-### Why component headers are folded into winrt.ixx
+The `winrt::impl` namespace is exported alongside `winrt`, so component
+projection headers can specialize `impl` templates (like `category`, `abi`,
+`guid_v`) after `import winrt;` without needing to be folded into the ixx.
 
-The component's `.0.h` impl headers contain explicit template specializations:
+### How component projection works with modules
 
-```cpp
-// In test_component.0.h:
-template <> struct category<winrt::test_component::IToaster>
-    { using type = interface_category; };
-template <> struct abi<winrt::test_component::IToaster>
-    { struct type : inspectable_abi { ... }; };
-template <> inline constexpr guid guid_v<winrt::test_component::IToaster>{ ... };
-```
+The `winrt::impl` namespace is exported from the module, which means the
+primary templates (`category`, `abi`, `guid_v`, `name_v`, `default_interface`,
+`consume`) are visible to external code. Component projection headers
+(`.0.h` files) specialize these templates for the component's types.
 
-These specialize primary templates (`category`, `abi`, `guid_v`) defined in
-`base.h`. If these specializations occur in textual code that imported the
-primary templates from a module, MSVC currently reports:
-
-```
-error C3856: 'category': symbol is not a class template
-```
-
-By folding the component headers into `winrt.ixx`, the specializations happen
-inside the same module purview as the primary templates, avoiding this issue
-entirely.
+When a component's `.g.h` does `import winrt;` and then includes the
+component's projection header with `WINRT_IMPL_SKIP_INCLUDES`:
+- Platform projection dependencies (`base.h`, `Windows.Foundation.h`, etc.) are
+  skipped — they're already available from the module
+- The component's own impl headers are included normally — they contain
+  the template specializations that register the component's types
+- The specializations succeed because the primary templates are exported
+  from the module and visible to the textual include
 
 ### Generated file differences in module mode (`-module` flag)
 
 | File | Header mode | Module mode (`-module`) |
 |------|-------------|------------------------|
-| `Toaster.g.h` | `#include "winrt/test_component.h"` | `#include "winrt/base_macros.h"` + `import std;` + `import winrt;` |
-| `Toaster.g.cpp` | `winrt_make_*` + constructor/static overrides | `winrt_make_*` only (constructors come from module) |
-| `module.g.cpp` | `#include "pch.h"` + `#include "winrt/base.h"` | `import std;` + `import winrt;` |
+| `Toaster.g.h` | `#include "winrt/test_component.h"` | `#include "winrt/base_macros.h"` + `import winrt;` + component headers with `WINRT_IMPL_SKIP_INCLUDES` |
+| `Toaster.g.cpp` | `winrt_make_*` + constructor/static overrides | `winrt_make_*` only (constructors come from projection header) |
+| `module.g.cpp` | `#include "pch.h"` + `#include "winrt/base.h"` | `#include "pch.h"` + `import winrt;` (`import std;` conditional on `WINRT_IMPORT_STD`) |
 
 ### base_macros.h
 
@@ -295,22 +295,19 @@ definitions — no type/function declarations that could conflict with the modul
 The `CppWinRTAddModuleSource` target in `Microsoft.Windows.CppWinRT.targets`
 performs these steps when `CppWinRTModule=true`:
 
-1. **Scans** `$(GeneratedFilesDir)winrt/` for namespace headers (`.h` files)
-   that are not already listed in `winrt.ixx`
-2. **Appends** `#include` directives for those headers to the end of `winrt.ixx`
-   (this folds component projection headers into the module)
-3. **Adds** `winrt.ixx` as a `ClCompile` item with `PrecompiledHeader=NotUsing`
-4. **Defines** `WINRT_IMPORT_STD` when `BuildStlModules=true` is detected
-
-The `-module` flag is automatically appended to `$(CppWinRTParameters)` when
-`CppWinRTModule=true`, so it flows to all cppwinrt.exe invocations including
-the component projection generation.
+1. **Adds** `winrt.ixx` as a `ClCompile` item with `PrecompiledHeader=NotUsing`
+2. **Defines** `WINRT_IMPORT_STD` when `BuildStlModules=true` is detected
+3. **Passes** `-module` to cppwinrt.exe via `$(CppWinRTParameters)` so
+   component generation emits `import winrt;` in `.g.h` and `module.g.cpp`
 
 ## Known Limitations
 
-1. **Toolset requirement**: The v145 toolset (VS 2026) or later is needed for
-   `import std;` with C++20. Earlier toolsets define `__cpp_lib_modules` but
-   their MSBuild targets only enable `StdModulesSupported` for C++23+.
+1. **`import std;` requires C++23 or later on v143**: The v143 toolset (VS 2022)
+   enables `StdModulesSupported` only when the language standard is C++23 or
+   `/std:c++latest` (`CppLanguageStandardNumber >= 23`). The v145 toolset
+   (VS 2026) relaxes this to C++20. On v143 with `/std:c++20`, `import std;`
+   is not available — use `import winrt;` with textual `#include`s for standard
+   library types.
 
 2. **Include ordering**: Standard library `#include` directives and third-party
    headers must come before `import std;` and `import winrt;` to avoid
@@ -323,24 +320,23 @@ the component projection generation.
    containing third-party headers, Windows SDK headers, or other project headers
    is fine.
 
-4. **WINRT_LEAN_AND_MEAN for consumers**: Pure consumer apps (no component
+4. **Standard library headers not included transitively**: When using traditional
+   `#include "winrt/base.h"`, you implicitly get standard library headers like
+   `<string>`, `<vector>`, `<coroutine>`, etc. With `import winrt;`, these are
+   NOT automatically available. You must either:
+   - `import std;` (if your toolset/language standard supports it), or
+   - Explicitly `#include` the standard library headers you need, or
+   - Include them in your PCH
+
+5. **WINRT_LEAN_AND_MEAN for consumers**: Pure consumer apps (no component
    authoring) should define `WINRT_LEAN_AND_MEAN` to avoid pulling `<ostream>`
    and `produce<>` templates into the module. Component authors should NOT
    define it since they need `produce<>`.
 
-5. **Cross-module template specialization**: Component projection headers
-   (`.0.h` files) specialize templates like `winrt::impl::category`,
-   `winrt::impl::abi`, `winrt::impl::guid_v`, etc. These templates are in the
-   `winrt::impl` namespace, which is currently not exported from the module
-   (it uses module linkage). When a textual `#include` of a component header
-   tries to specialize these after `import winrt;`, the primary templates are
-   not visible:
-   ```
-   error C3856: 'category': symbol is not a class template
-   ```
-   The combined-ixx approach (folding component headers into `winrt.ixx`)
-   works around this by keeping specializations within the module purview,
-   where the `impl` templates are directly visible. A future improvement could
-   export the specific `impl` templates that need external specialization,
-   which would allow component headers to be included separately after
-   `import winrt;` without folding them into the module.
+6. **Exported `winrt::impl` namespace**: The `winrt::impl` namespace is exported
+   from the module so that component projection headers can specialize `impl`
+   templates (`category`, `abi`, `guid_v`, etc.) after `import winrt;`. This
+   means component headers can be `#include`d separately without being folded
+   into `winrt.ixx`. The `WINRT_IMPL_SKIP_INCLUDES` macro is used by generated
+   `.g.h` files to skip platform `#include` dependencies that are already available
+   from the module.

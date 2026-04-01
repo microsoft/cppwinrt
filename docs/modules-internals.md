@@ -200,8 +200,8 @@ generated component files:
 
 | Header mode | Module mode |
 |-------------|-------------|
-| `#include "pch.h"` | (omitted — pch cleared) |
-| `#include "winrt/base.h"` | `import std;` + `import winrt;` |
+| `#include "pch.h"` | `#include "pch.h"` (preserved) |
+| `#include "winrt/base.h"` | `#ifdef WINRT_IMPORT_STD` / `import std;` / `#endif` + `import winrt;` |
 
 ### Toaster.g.h (component base template)
 
@@ -209,7 +209,7 @@ generated component files:
 
 | Header mode | Module mode |
 |-------------|-------------|
-| `#include "winrt/test_component.h"` etc. | `#include "winrt/base_macros.h"` + `import std;` + `import winrt;` |
+| `#include "winrt/test_component.h"` etc. | `#include "winrt/base_macros.h"` + conditional `import std;` + `import winrt;` + `#define WINRT_IMPL_SKIP_INCLUDES` + component headers |
 
 ### Toaster.g.cpp (factory + optional optimized constructors)
 
@@ -220,33 +220,27 @@ generated component files:
 | `winrt_make_*` + constructor/static overrides | `winrt_make_*` only |
 
 In module mode, the constructor and static method definitions are omitted from
-`.g.cpp` because they're already exported from the `winrt` module (via the
-component's namespace header folded into `winrt.ixx`). The `winrt_make_*`
+`.g.cpp` because they're already available from the component's projection
+header (included by the `.g.h` after `import winrt;`). The `winrt_make_*`
 factory function is always emitted since it's needed by `module.g.cpp` for
 activation lookup.
 
-## The Combined-ixx Approach
+## Exported `winrt::impl` Namespace
 
-**The key insight**: MSVC cannot specialize module-imported class templates from
-textual `#include` code. The component's `.0.h` files specialize templates like
-`category<>`, `abi<>`, `guid_v<>` from `winrt::impl` namespace.
+**The key insight**: Component projection headers (`.0.h` files) specialize
+templates like `category<>`, `abi<>`, `guid_v<>` from `winrt::impl` namespace.
+For these specializations to work after `import winrt;`, the primary templates
+must be exported from the module.
 
-**The solution**: Append the component's namespace header includes to the end of
-`winrt.ixx`, so the specializations happen inside the module purview:
+**The solution**: All `namespace winrt::impl` blocks in the `strings/base_*.h`
+files and the generated namespace headers use `WINRT_EXPORT namespace winrt::impl`.
+In module mode, `WINRT_EXPORT` expands to `export`, making the `impl` templates
+part of the module's public interface. In header mode, `WINRT_EXPORT` is empty,
+so there's no change to the existing behavior.
 
-```
-export module winrt;
-#define WINRT_EXPORT export
-
-#include "winrt/Windows.Foundation.h"
-...
-#include "winrt/Windows.Web.UI.Interop.h"
-#include "winrt/test_component.h"          ← appended by build system
-```
-
-This is done by the NuGet targets (`CppWinRTAddModuleSource`) or manually in
-the project's CustomBuildStep. The target scans `$(GeneratedFilesDir)winrt/` for
-`.h` files not already in `winrt.ixx` and appends them.
+This allows component projection headers to be `#include`d separately after
+`import winrt;` — they can specialize the exported `impl` templates without
+needing to be folded into `winrt.ixx`.
 
 ## The windowsnumerics.impl.h Warning
 
@@ -332,7 +326,7 @@ would break existing users whose build systems don't compile the std module.
 
 | Target | File | Role |
 |--------|------|------|
-| `CppWinRTAddModuleSource` | `Microsoft.Windows.CppWinRT.targets` | Folds component headers into ixx, adds ixx to compilation, defines `WINRT_IMPORT_STD` |
+| `CppWinRTAddModuleSource` | `Microsoft.Windows.CppWinRT.targets` | Adds ixx to compilation, defines `WINRT_IMPORT_STD` |
 | `CppWinRTMakeProjections` | `Microsoft.Windows.CppWinRT.targets` | Orchestrates platform/reference/component projection generation |
 | `CppWinRTMakeComponentProjection` | `Microsoft.Windows.CppWinRT.targets` | Runs cppwinrt.exe for component stubs (passes `-module` via `CppWinRTParameters`) |
 
@@ -343,7 +337,6 @@ User sets CppWinRTModule=true + BuildStlModules=true
     │
     ├── NuGet targets define WINRT_IMPORT_STD on all ClCompile items
     ├── NuGet targets pass -module to cppwinrt.exe
-    ├── NuGet targets append component headers to winrt.ixx
     │
     ▼
 winrt.ixx compilation:
@@ -352,22 +345,27 @@ winrt.ixx compilation:
     <algorithm, array, string, coroutine, ...> ← std library includes (base_std_includes)
     export module winrt;
     #define WINRT_EXPORT export
-    #include "winrt/base.h"                    ← base.h (import std; not checked, pragma once)
+    #include "winrt/base.h"                    ← base.h (pragma once)
     #include "winrt/Windows.Foundation.h"      ← SDK types + specializations
-    ...
-    #include "winrt/MyComponent.h"             ← component specializations in purview
+    ...                                        ← winrt::impl is exported
 
 Consumer .cpp compilation:
-    import std;                                ← std module (compiled by BuildStlModules)
-    import winrt;                              ← winrt module (SDK + component types)
-    #include "Toaster.h"
-    └── #include "Toaster.g.h"
-        └── #include "winrt/base_macros.h"     ← macros only (WINRT_EXPORT etc.)
-        └── import std;                        ← harmless duplicate
-        └── import winrt;                      ← harmless duplicate
+    #include "pch.h"                           ← PCH (no winrt/ headers)
+    import std;                                ← std module (optional, needs BuildStlModules)
+    import winrt;                              ← winrt module (SDK types + exported impl)
+
+Component .g.h:
+    #include "winrt/base_macros.h"             ← macros only (WINRT_EXPORT etc.)
+    #ifdef WINRT_IMPORT_STD
+    import std;                                ← conditional on WINRT_IMPORT_STD
+    #endif
+    import winrt;                              ← SDK types + exported impl templates
+    #define WINRT_IMPL_SKIP_INCLUDES           ← skip SDK #include deps
+    #include "winrt/MyComponent.h"             ← component projection (specializes impl)
 
 module.g.cpp compilation:
-    import std;                                ← from -module code gen
+    #include "pch.h"                           ← PCH preserved
+    #ifdef WINRT_IMPORT_STD / import std;      ← conditional
     import winrt;                              ← from -module code gen
     void* winrt_make_MyComponent_Toaster()     ← factory function
     bool __stdcall ..._can_unload_now()        ← DLL entry points

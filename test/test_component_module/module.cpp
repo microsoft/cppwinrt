@@ -1,4 +1,8 @@
+#include "pch.h"
+
+#ifdef WINRT_IMPORT_STD
 import std;
+#endif
 import winrt;
 
 bool __stdcall test_module_can_unload_now() noexcept;

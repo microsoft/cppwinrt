@@ -99,7 +99,7 @@
     <ClCompile>
       <AdditionalIncludeDirectories>.;$(ProjectDir)Generated Files;$(SolutionDir)test\test_module_winrt\Generated Files;Generated Files</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <BuildStlModules>true</BuildStlModules>
       <AdditionalModuleDependencies>$(IntDir)..\test_module_winrt\winrt.ixx.ifc;%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
@@ -117,12 +117,10 @@
     </Midl>
     <CustomBuildStep>
       <Command>
-      $(CppWinRTDir)cppwinrt -in local -out "$(ProjectDir)Generated Files" -verbose
-      $(CppWinRTDir)cppwinrt -input $(OutputPath)test_component_module.winmd -out "$(ProjectDir)Generated Files" -ref sdk -verbose
       $(CppWinRTDir)cppwinrt -input $(OutputPath)test_component_module.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component_module -ref sdk -verbose -prefix -opt -lib test_module -overwrite -name test_component_module -module
       </Command>
       <Message>Projecting Windows and component metadata</Message>
-      <Outputs>$(OutputPath)\winrt\base.h;Generated Files\module.g.cpp</Outputs>
+      <Outputs>Generated Files\module.g.cpp</Outputs>
       <Inputs>$(CppWinRTDir)cppwinrt.exe;$(OutputPath)test_component_module.winmd</Inputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
@@ -145,6 +143,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Toaster.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
     <ClCompile Include="module.cpp" />

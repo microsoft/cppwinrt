@@ -175,12 +175,6 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             settings.component_ignore_velocity = args.exists("ignore_velocity");
             settings.component_module = args.exists("module");
 
-            if (settings.component_module)
-            {
-                // Module mode disables the PCH include in generated files
-                settings.component_pch.clear();
-            }
-
             if (settings.component_pch == ".")
             {
                 settings.component_pch.clear();
