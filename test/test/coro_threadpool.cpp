@@ -1,5 +1,6 @@
 // Intentionally not using pch...
 #include <catch.hpp>
+#include <coroutine>
 
 #ifdef WINRT_TEST_MODULES
 import winrt;

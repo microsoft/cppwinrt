@@ -1,6 +1,5 @@
 #include "pch.h"
 
-import std;
 import winrt;
 
 using namespace winrt;

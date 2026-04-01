@@ -2,7 +2,6 @@
 // redefinition conflicts with types already in the module.
 #include "pch.h"
 
-import std;
 import winrt;
 
 using namespace winrt;

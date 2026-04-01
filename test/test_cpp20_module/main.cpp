@@ -5,7 +5,6 @@
 
 #include "catch.hpp"
 
-import std;
 import winrt;
 
 using namespace winrt;
