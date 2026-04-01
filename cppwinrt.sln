@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 18
-VisualStudioVersion = 18.6.11620.209 main
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cppwinrt", "cppwinrt\cppwinrt.vcxproj", "{D613FB39-5035-4043-91E2-BAB323908AF4}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -137,7 +137,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_component_module", "test\test_component_module\test_component_module.vcxproj", "{E1D3004A-7F92-4C2B-B25A-3D3A29E316A1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F39B6BA2-3E78-4A01-BF72-D52C39AC3D8C} = {F39B6BA2-3E78-4A01-BF72-D52C39AC3D8C}
-		{D613FB39-5035-4043-91E2-BAB323908AF4} = {D613FB39-5035-4043-91E2-BAB323908AF4}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D15C8430-A7CD-4616-BD84-243B26A9F1C2}"
