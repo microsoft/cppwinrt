@@ -114,7 +114,7 @@ typedef struct _GUID GUID;
 #define WINRT_IMPL_BUILTIN_FUNCTION nullptr
 #endif
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     // This struct is intended to be highly similar to std::source_location.  The key difference is
     // that function_name is NOT included.  Function names do not fold to identical strings and can

@@ -281,13 +281,18 @@ import std;
 
         if (settings.component_module)
         {
-            // In module mode, both SDK and component types are available from
-            // 'import winrt;' (the component projection is folded into the
-            // winrt.ixx module). Only macros need a textual include since
-            // they don't cross module boundaries.
+            // In module mode, SDK types and exported impl templates come from
+            // 'import winrt;'. Component-specific types come from the component's
+            // own projection headers, included with WINRT_IMPL_SKIP_INCLUDES to
+            // skip SDK dependencies that are already in the module.
             w.write("#include \"winrt/base_macros.h\"\n");
             w.write("import std;\n");
             w.write("import winrt;\n");
+            w.write("#define WINRT_IMPL_SKIP_INCLUDES\n");
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first);
+            }
         }
         else
         {

@@ -178,7 +178,7 @@ namespace cppwinrt
 
     [[nodiscard]] static finish_with wrap_impl_namespace(writer& w)
     {
-        auto format = R"(namespace winrt::impl
+        auto format = R"(WINRT_EXPORT namespace winrt::impl
 {
 )";
 

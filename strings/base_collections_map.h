@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename K, typename V, typename Container>
     using multi_threaded_map = map_impl<K, V, Container, multi_threaded_collection_base>;
