@@ -138,7 +138,7 @@ namespace cppwinrt
     {
         if (settings.component_module)
         {
-            w.write("import std;\nimport winrt;\n");
+            w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\nimport winrt;\n");
         }
         else
         {

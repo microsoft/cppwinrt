@@ -286,7 +286,7 @@ import std;
             // own projection headers, included with WINRT_IMPL_SKIP_INCLUDES to
             // skip SDK dependencies that are already in the module.
             w.write("#include \"winrt/base_macros.h\"\n");
-            w.write("import std;\n");
+            w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\n");
             w.write("import winrt;\n");
             w.write("#define WINRT_IMPL_SKIP_INCLUDES\n");
             for (auto&& depends : w.depends)
