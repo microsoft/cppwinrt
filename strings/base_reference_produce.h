@@ -541,8 +541,8 @@ WINRT_EXPORT namespace winrt
         }
     }
 
-    template <typename T = hstring, typename D, std::enable_if_t<std::is_same_v<T, hstring> && std::is_constructible_v<hstring, D const&>, int> = 0>
-    hstring unbox_value_or(Windows::Foundation::IInspectable const& value, D const& default_value)
+    template <typename T = hstring, typename D, std::enable_if_t<std::is_same_v<T, hstring> && std::is_constructible_v<hstring, D>, int> = 0>
+    hstring unbox_value_or(Windows::Foundation::IInspectable const& value, D&& default_value)
     {
         if (value)
         {
@@ -552,7 +552,7 @@ WINRT_EXPORT namespace winrt
             }
         }
 
-        return hstring(default_value);
+        return hstring(std::forward<D>(default_value));
     }
 
     template <typename T, std::enable_if_t<!std::is_same_v<T, hstring>, int> = 0>
