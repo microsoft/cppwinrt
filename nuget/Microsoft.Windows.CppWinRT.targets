@@ -890,16 +890,6 @@ $(XamlMetaDataProviderPch)
             BeforeTargets="ClCompile"
             Condition="'$(CppWinRTModule)' == 'true'">
         <Message Text="C++/WinRT: Adding winrt.ixx module interface unit" Importance="$(CppWinRTVerbosity)" />
-        <!-- Fold component and reference projection headers into winrt.ixx so that
-             template specializations (category, abi, guid, etc.) occur within the
-             module purview alongside the primary template definitions. -->
-        <ItemGroup>
-            <_CppWinRTModuleHeaders Include="$(GeneratedFilesDir)winrt\*.h" Exclude="$(GeneratedFilesDir)winrt\base.h;$(GeneratedFilesDir)winrt\base_macros.h;$(GeneratedFilesDir)winrt\fast_forward.h" />
-            <_CppWinRTIxxExistingIncludes Include="$([System.IO.File]::ReadAllText('$(GeneratedFilesDir)winrt\winrt.ixx'))" />
-        </ItemGroup>
-        <Exec Condition="'@(_CppWinRTModuleHeaders)' != ''"
-              Command="for %%f in (@(_CppWinRTModuleHeaders->'&quot;%(FileName)%(Extension)&quot;', ' ')) do @(findstr /c:&quot;%%~f&quot; &quot;$(GeneratedFilesDir)winrt\winrt.ixx&quot; >nul 2>nul || echo #include &quot;winrt/%%~f&quot;>> &quot;$(GeneratedFilesDir)winrt\winrt.ixx&quot;)"
-              IgnoreExitCode="true" />
         <ItemGroup>
             <ClCompile Include="$(GeneratedFilesDir)winrt\winrt.ixx">
                 <PrecompiledHeader>NotUsing</PrecompiledHeader>
