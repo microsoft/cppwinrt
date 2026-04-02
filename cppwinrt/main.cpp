@@ -349,7 +349,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             ixx.write("module;\n");
             ixx.write(strings::base_includes);
             ixx.write(strings::base_std_includes);
-            ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n\n");
+            ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n#define WINRT_IMPL_INCLUDES_HANDLED\n\n");
 
             for (auto&&[ns, members] : c.namespaces())
             {

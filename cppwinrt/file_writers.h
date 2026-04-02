@@ -10,6 +10,9 @@ namespace cppwinrt
         {
             auto wrap_file_guard = wrap_open_file_guard(w, "BASE");
 
+            w.write(R"(
+#ifndef WINRT_IMPL_INCLUDES_HANDLED
+)");
             w.write(strings::base_includes);
             w.write(R"(
 #if defined(__cpp_lib_modules) && defined(WINRT_IMPORT_STD)
@@ -18,8 +21,9 @@ import std;
 )");
             w.write(strings::base_std_includes);
             w.write(R"(#endif
+#endif
 )");
-            w.write(strings::base_module_macros);
+            w.write_root_include("base_macros");
             w.write(strings::base_macros);
             w.write(strings::base_types);
             w.write(strings::base_extern);
