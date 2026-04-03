@@ -28,41 +28,40 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{F39B6BA2-3E78-4A01-BF72-D52C39AC3D8C}</ProjectGuid>
-    <RootNamespace>test_module_winrt</RootNamespace>
-    <ProjectName>test_module_winrt</ProjectName>
-    <CppWinRTLanguageStandard>20</CppWinRTLanguageStandard>
+    <ProjectGuid>{C8D4E5F6-7A8B-4C9D-BE0F-1A2B3C4D5E6F}</ProjectGuid>
+    <RootNamespace>test_cpp23_module</RootNamespace>
+    <ProjectName>test_cpp23_module</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
@@ -92,23 +91,24 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <!--
-    This project builds the winrt C++20 module from the SDK projection.
-    It produces:
-      - winrt.ixx.ifc  (module interface, consumed via /reference by other projects)
-      - winrt.ixx.obj  (module object, linked by other projects)
-    The PreBuildEvent runs cppwinrt.exe to generate the projection headers
-    and winrt.ixx into the shared output directory.
+    C++23 module consumer test.
+    Uses /std:c++latest with WINRT_IMPORT_STD to exercise import std alongside import winrt.
+    Consumes the winrt module from test_cpp23_module_winrt.
+    Shares test source files with test_cpp20_module via relative paths.
   -->
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(ProjectDir)Generated Files;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(SolutionDir)test\test_cpp23_module_winrt\Generated Files;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>NOMINMAX;WINRT_LEAN_AND_MEAN;WINRT_IMPORT_STD;WINRT_TEST_MODULES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <BuildStlModules>true</BuildStlModules>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
+      <AdditionalModuleDependencies>$(IntDir)..\test_cpp23_module_winrt\winrt.ixx.ifc;%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
-    <PreBuildEvent>
-      <Command>$(CppWinRTDir)cppwinrt -in sdk -out "$(ProjectDir)Generated Files" -verbose</Command>
-      <Message>Generating C++/WinRT SDK projection</Message>
-    </PreBuildEvent>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalDependencies>$(IntDir)..\test_cpp23_module_winrt\winrt.ixx.obj;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
@@ -123,9 +123,27 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="$(ProjectDir)Generated Files\winrt\winrt.ixx" />
+    <!-- Share test sources from test_cpp20_module -->
+    <ClCompile Include="..\test\coro_threadpool.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\test_cpp20_module\async.cpp" />
+    <ClCompile Include="..\test_cpp20_module\interop.cpp" />
+    <ClCompile Include="..\test_cpp20_module\main.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\test_cpp20_module\pch.cpp">
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\test_cpp20_module\pch.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

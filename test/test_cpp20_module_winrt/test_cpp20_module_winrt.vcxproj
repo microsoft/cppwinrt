@@ -28,41 +28,41 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{E1D3004A-7F92-4C2B-B25A-3D3A29E316A1}</ProjectGuid>
-    <RootNamespace>test_component_module</RootNamespace>
-    <ProjectName>test_component_module</ProjectName>
+    <ProjectGuid>{F39B6BA2-3E78-4A01-BF72-D52C39AC3D8C}</ProjectGuid>
+    <RootNamespace>test_cpp20_module_winrt</RootNamespace>
+    <ProjectName>test_cpp20_module_winrt</ProjectName>
     <CppWinRTLanguageStandard>20</CppWinRTLanguageStandard>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
@@ -91,38 +91,24 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <!-- CustomBuildStep runs after MIDL to generate projection and component stubs -->
-  <PropertyGroup>
-    <CustomBuildAfterTargets>Midl</CustomBuildAfterTargets>
-  </PropertyGroup>
+  <!--
+    This project builds the winrt C++20 module from the SDK projection.
+    It produces:
+      - winrt.ixx.ifc  (module interface, consumed via /reference by other projects)
+      - winrt.ixx.obj  (module object, linked by other projects)
+    The PreBuildEvent runs cppwinrt.exe to generate the projection headers
+    and winrt.ixx into the shared output directory.
+  -->
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>.;$(ProjectDir)Generated Files;$(SolutionDir)test\test_cpp20_module_winrt\Generated Files;Generated Files</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(ProjectDir)Generated Files;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <BuildStlModules>true</BuildStlModules>
-      <AdditionalModuleDependencies>$(IntDir)..\test_cpp20_module_winrt\winrt.ixx.ifc;%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
-    <Link>
-      <ModuleDefinitionFile>exports.def</ModuleDefinitionFile>
-      <AdditionalDependencies>$(IntDir)..\test_cpp20_module_winrt\winrt.ixx.obj;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-    <Midl>
-      <EnableWindowsRuntime>true</EnableWindowsRuntime>
-      <MetadataFileName>$(OutputPath)test_component_module.winmd</MetadataFileName>
-      <HeaderFileName>$(OutputPath)test_component_module.h</HeaderFileName>
-      <AdditionalOptions>/nomidl %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalMetadataDirectories>C:\Windows\System32\WinMetadata</AdditionalMetadataDirectories>
-      <PrependWithABINamepsace>true</PrependWithABINamepsace>
-    </Midl>
-    <CustomBuildStep>
-      <Command>
-      $(CppWinRTDir)cppwinrt -input $(OutputPath)test_component_module.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component_module -ref sdk -verbose -prefix -opt -lib test_module -overwrite -name test_component_module -module
-      </Command>
-      <Message>Projecting Windows and component metadata</Message>
-      <Outputs>Generated Files\module.g.cpp</Outputs>
-      <Inputs>$(CppWinRTDir)cppwinrt.exe;$(OutputPath)test_component_module.winmd</Inputs>
-    </CustomBuildStep>
+    <PreBuildEvent>
+      <Command>$(CppWinRTDir)cppwinrt -in sdk -out "$(ProjectDir)Generated Files" -verbose</Command>
+      <Message>Generating C++/WinRT SDK projection</Message>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
@@ -137,33 +123,9 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
-    <Link>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-    </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="pch.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Toaster.cpp" />
-    <ClCompile Include="Generated Files\module.g.cpp" />
-    <ClCompile Include="module.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Toaster.h" />
-    <ClInclude Include="pch.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="exports.def" />
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="test_component_module.idl" />
+    <ClCompile Include="$(ProjectDir)Generated Files\winrt\winrt.ixx" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,5 +1,5 @@
 ---
-applyTo: "strings/**,cppwinrt/**,nuget/**,test/test_module_winrt/**,test/test_cpp20_module/**,test/test_component_module/**"
+applyTo: "strings/**,cppwinrt/**,nuget/**,test/test_cpp20_module_winrt/**,test/test_cpp23_module_winrt/**,test/test_cpp20_module/**,test/test_component_module/**"
 ---
 
 # C++20 Module Code Generation
