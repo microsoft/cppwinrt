@@ -14,6 +14,8 @@ char const * const WINRT_version = "C++/WinRT version:" CPPWINRT_VERSION;
 #pragma detect_mismatch("C++/WinRT version", CPPWINRT_VERSION)
 #endif
 
+#include <cstddef>
+
 WINRT_EXPORT namespace winrt
 {
     template <std::size_t BaseSize, std::size_t ComponentSize>
