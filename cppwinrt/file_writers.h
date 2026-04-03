@@ -20,8 +20,8 @@ import std;
 #else
 )");
             w.write(strings::base_std_includes);
-            w.write(R"(#endif
-#endif
+            w.write(R"(#endif // __cpp_lib_modules && WINRT_IMPORT_STD
+#endif // WINRT_IMPL_INCLUDES_HANDLED
 )");
             w.write_root_include("base_macros");
             w.write(strings::base_macros);
