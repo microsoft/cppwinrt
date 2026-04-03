@@ -70,6 +70,8 @@ C++/WinRT behavior can be customized with these project properties:
 | CppWinRTOptimized | true \| *false | Enables component projection [optimization features](https://kennykerr.ca/2019/06/07/cppwinrt-optimizing-components/) |
 | CppWinRTGenerateWindowsMetadata | true \| *false | Indicates whether this project produces Windows Metadata |
 | CppWinRTEnableDefaultPrivateFalse | true \| *false | Indicates whether this project uses C++/WinRT optimized default for copying binaries to the output directory |
+| CppWinRTModuleBuild | true \| *false | Generates the platform projection and compiles winrt.ixx as a C++20 module. See [C++20 Modules](#c20-modules) |
+| CppWinRTModuleConsume | true \| *false | Consumes a pre-built winrt module from a ProjectReference. See [C++20 Modules](#c20-modules) |
 \*Default value
 
 To customize common C++/WinRT project properties: 
@@ -131,6 +133,48 @@ void DerivedPage::InitializeComponent()
     MyBaseButton().Content(box_value(L"Click"));
 }
 ```
+
+## C++20 Modules
+
+C++/WinRT can generate a C++20 named module (`winrt.ixx`) that allows consumers to write `import winrt;` instead of `#include` directives. This can significantly improve build throughput in multi-project solutions.
+
+Two properties control module support:
+
+- **`CppWinRTModuleBuild=true`** — Generates the platform projection and compiles `winrt.ixx`. Set this on a dedicated static library project (the "module builder"). Other projects reference it to share the pre-built module. Can also be set on a standalone app project for single-project scenarios.
+
+- **`CppWinRTModuleConsume=true`** — Consumes a pre-built winrt module via `ProjectReference` to a builder project. The NuGet targets automatically resolve the module IFC, OBJ, and include paths. Skips regenerating the platform projection.
+
+Both properties define `WINRT_MODULE` so generated component `.g.h` files use `import winrt;`.
+
+### Quick example (multi-project)
+
+**Builder project** (static library, no source files needed):
+
+In Visual Studio, set **C++/WinRT > Build C++20 Module** to `Yes`, or:
+```xml
+<CppWinRTModuleBuild>true</CppWinRTModuleBuild>
+```
+
+**Consumer project** (app or component DLL):
+
+In Visual Studio, set **C++/WinRT > Consume C++20 Module** to `Yes` and add a Project Reference to the builder, or:
+```xml
+<CppWinRTModuleConsume>true</CppWinRTModuleConsume>
+<!-- ProjectReference to the builder project -->
+```
+
+```cpp
+// main.cpp
+import winrt;
+using namespace winrt::Windows::Foundation;
+```
+
+### Requirements
+- C++20 or later (**C++ Language Standard** set to `ISO C++20` or later in the IDE)
+- `import std;` is optional and orthogonal — enable **Build ISO C++23 Standard Library Modules** in the IDE if desired
+- On v143 (VS 2022), `import std;` requires **C++ Language Standard** set to `Preview (/std:c++latest)`; on v145 (VS 2026), `ISO C++20` suffices
+
+For full documentation including component authoring, source file patterns, preprocessor macros, and architecture details, see [docs/modules.md](https://github.com/Microsoft/cppwinrt/blob/master/docs/modules.md) (also included in this NuGet package under the `docs` folder).
 
 ## Troubleshooting
 

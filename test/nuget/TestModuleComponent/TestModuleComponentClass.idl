@@ -1,0 +1,9 @@
+namespace TestModuleComponent
+{
+    [default_interface]
+    runtimeclass TestModuleComponentClass
+    {
+        TestModuleComponentClass();
+        void Test();
+    }
+}

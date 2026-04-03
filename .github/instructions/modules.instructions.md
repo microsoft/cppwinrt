@@ -1,5 +1,5 @@
 ---
-applyTo: "strings/**,cppwinrt/**,nuget/**,test/test_cpp20_module_winrt/**,test/test_cpp23_module_winrt/**,test/test_cpp20_module/**,test/test_component_module/**"
+applyTo: "strings/**,cppwinrt/**,nuget/**,test/test_cpp20_module_winrt/**,test/test_cpp23_module_winrt/**,test/test_cpp20_module/**,test/test_component_module/**,test/nuget/TestModule*/**"
 ---
 
 # C++20 Module Code Generation
@@ -17,25 +17,27 @@ normal headers:
 4. `base_module_macros.h` is the single source of truth for macros shared between
    module and header modes. Don't duplicate definitions — use `#ifndef` guards.
 
-## Module-Aware Code Generation (-module flag)
+## Module-Aware Component Code Generation (WINRT_MODULE macro)
 
-When `settings.component_module` is true:
+Generated component files use `#ifdef WINRT_MODULE` guards to support both
+module and header modes. No special cppwinrt.exe flag is needed — the
+`WINRT_MODULE` preprocessor macro is set at the project level by the NuGet
+targets (or manually for non-NuGet projects).
 
 ### module.g.cpp
 - Keeps `#include "pch.h"` (PCH is compatible with modules)
-- Replaces `#include "winrt/base.h"` with `import winrt;`
-- `import std;` is conditional: `#ifdef WINRT_IMPORT_STD`
+- `#ifdef WINRT_MODULE`: uses `import winrt;` (and conditional `import std;`)
+- `#else`: uses `#include "winrt/base.h"`
 
 ### .g.h (component base template)
-- Emits `#include "winrt/base_macros.h"` for macros
-- Emits conditional `import std;` + unconditional `import winrt;`
-- Emits `#define WINRT_IMPL_SKIP_INCLUDES` then includes component's own headers
-- Does NOT include platform namespace headers (they come from the module)
+- `#ifdef WINRT_MODULE`: emits `#include "winrt/base_macros.h"` for macros,
+  conditional `import std;`, `import winrt;`, `#define WINRT_IMPL_SKIP_INCLUDES`
+- Always includes component's own headers (which skip SDK deps via the guard)
 
 ### .g.cpp (factory + optimized constructors)
-- In module mode, emits ONLY the `winrt_make_*` factory function
-- Constructor/static overrides are omitted (they come from the component's
-  projection header, which is included by the .g.h after import winrt)
+- Always emits the `winrt_make_*` factory function
+- Constructor/static overrides are guarded by `#ifndef WINRT_MODULE`
+  (they come from the projection header via the module in module mode)
 
 ## WINRT_IMPL_SKIP_INCLUDES
 
@@ -64,3 +66,27 @@ Generated namespace headers guard cross-namespace `#include` dependencies with:
 
 All module test projects use v143 toolset. `import std;` requires `BuildStlModules=true`
 and either v145 toolset or `/std:c++latest` on v143.
+
+## NuGet Module Integration (test/nuget/)
+
+The NuGet targets split module support into two properties:
+
+- `CppWinRTModuleBuild=true` — Project generates the SDK projection and compiles
+  winrt.ixx. Exports IFC/OBJ/include paths via `CppWinRTGetModuleOutputs` target.
+- `CppWinRTModuleConsume=true` — Project consumes a pre-built module from a
+  `ProjectReference` to a builder. `CppWinRTResolveModuleReferences` target
+  resolves paths via `MSBuild` task calling `CppWinRTGetModuleOutputs` on refs.
+
+Both properties define `WINRT_MODULE` so generated component files use `import winrt;`.
+`CppWinRTModuleConsume` auto-sets `CppWinRTEnablePlatformProjection=false`.
+
+### NuGet Module Test Projects
+
+- `test/nuget/TestModuleBuilder` — StaticLib, `CppWinRTModuleBuild=true`. Builds
+  the shared winrt module. No source files — NuGet targets add winrt.ixx.
+- `test/nuget/TestModuleConsumerApp` — Console app, `CppWinRTModuleConsume=true`.
+  References TestModuleBuilder. Uses `import std; import winrt;`.
+- `test/nuget/TestModuleComponent` — DLL with IDL, `CppWinRTModuleConsume=true`.
+  References TestModuleBuilder. Component .g.h files use `import winrt;`.
+- `test/nuget/TestModuleSingleProject` — Console app, `CppWinRTModuleBuild=true`.
+  Builds and consumes module in one project (no separate builder).

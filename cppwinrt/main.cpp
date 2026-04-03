@@ -39,7 +39,6 @@ namespace cppwinrt
         { "fastabi", 0, 0 }, // Enable support for the Fast ABI
         { "ignore_velocity", 0, 0 }, // Ignore feature staging metadata and always include implementations
         { "synchronous", 0, 0 }, // Instructs cppwinrt to run on a single thread to avoid file system issues in batch builds
-        { "module", 0, 0, {}, "Generate component files using 'import winrt;' instead of #include" },
     };
 
     static void print_usage(writer& w)
@@ -173,7 +172,6 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             settings.component_lib = args.value("library", "winrt");
             settings.component_opt = args.exists("optimize");
             settings.component_ignore_velocity = args.exists("ignore_velocity");
-            settings.component_module = args.exists("module");
 
             if (settings.component_pch == ".")
             {

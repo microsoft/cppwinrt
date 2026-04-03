@@ -98,7 +98,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>.;$(ProjectDir)Generated Files;$(SolutionDir)test\test_cpp20_module_winrt\Generated Files;Generated Files</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;WINRT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <BuildStlModules>true</BuildStlModules>
       <AdditionalModuleDependencies>$(IntDir)..\test_cpp20_module_winrt\winrt.ixx.ifc;%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
@@ -117,7 +117,7 @@
     </Midl>
     <CustomBuildStep>
       <Command>
-      $(CppWinRTDir)cppwinrt -input $(OutputPath)test_component_module.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component_module -ref sdk -verbose -prefix -opt -lib test_module -overwrite -name test_component_module -module
+      $(CppWinRTDir)cppwinrt -input $(OutputPath)test_component_module.winmd -comp "$(ProjectDir)Generated Files" -out "$(ProjectDir)Generated Files" -include test_component_module -ref sdk -verbose -prefix -opt -lib test_module -overwrite -name test_component_module
       </Command>
       <Message>Projecting Windows and component metadata</Message>
       <Outputs>Generated Files\module.g.cpp</Outputs>

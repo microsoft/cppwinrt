@@ -136,14 +136,11 @@ namespace cppwinrt
 
     static void write_module_g_cpp(writer& w, std::vector<TypeDef> const& classes)
     {
-        if (settings.component_module)
-        {
-            w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\nimport winrt;\n");
-        }
-        else
-        {
-            w.write_root_include("base");
-        }
+        w.write("#ifdef WINRT_MODULE\n");
+        w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\nimport winrt;\n");
+        w.write("#else\n");
+        w.write_root_include("base");
+        w.write("#endif\n");
         auto format = R"(%
 bool __stdcall %_can_unload_now() noexcept
 {
@@ -404,17 +401,14 @@ catch (...) { return winrt::to_hresult(); }
             return;
         }
 
-        // In module mode, the constructor/static definitions are already exported
+        // In module mode, the constructor/static definitions are already available
         // from the winrt module (via the namespace header folded into winrt.ixx).
-        // Only the winrt_make_* factory function above is needed.
-        if (settings.component_module)
+        // Guard them so they're only emitted in header mode.
         {
-            return;
-        }
+            auto wrap_type = wrap_type_namespace(w, type_namespace);
+            w.write("#ifndef WINRT_MODULE\n");
 
-        auto wrap_type = wrap_type_namespace(w, type_namespace);
-
-        for (auto&&[factory_name, factory] : get_factories(w, type))
+            for (auto&&[factory_name, factory] : get_factories(w, type))
         {
             if (factory.type && is_always_disabled(factory.type))
             {
@@ -560,6 +554,9 @@ catch (...) { return winrt::to_hresult(); }
                     }
                 }
             }
+        }
+
+            w.write("#endif\n");
         }
     }
 

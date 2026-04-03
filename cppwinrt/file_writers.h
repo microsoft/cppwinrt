@@ -283,27 +283,19 @@ import std;
         write_preamble(w);
         write_include_guard(w);
 
-        if (settings.component_module)
+        // In module mode (WINRT_MODULE defined), SDK types and exported impl
+        // templates come from 'import winrt;'. Component-specific types come
+        // from the component's own projection headers, included with
+        // WINRT_IMPL_SKIP_INCLUDES to skip SDK dependencies already in the module.
+        w.write("#ifdef WINRT_MODULE\n");
+        w.write("#include \"winrt/base_macros.h\"\n");
+        w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\n");
+        w.write("import winrt;\n");
+        w.write("#define WINRT_IMPL_SKIP_INCLUDES\n");
+        w.write("#endif\n");
+        for (auto&& depends : w.depends)
         {
-            // In module mode, SDK types and exported impl templates come from
-            // 'import winrt;'. Component-specific types come from the component's
-            // own projection headers, included with WINRT_IMPL_SKIP_INCLUDES to
-            // skip SDK dependencies that are already in the module.
-            w.write("#include \"winrt/base_macros.h\"\n");
-            w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\n");
-            w.write("import winrt;\n");
-            w.write("#define WINRT_IMPL_SKIP_INCLUDES\n");
-            for (auto&& depends : w.depends)
-            {
-                w.write_depends(depends.first);
-            }
-        }
-        else
-        {
-            for (auto&& depends : w.depends)
-            {
-                w.write_depends(depends.first);
-            }
+            w.write_depends(depends.first);
         }
 
         auto filename = settings.output_folder + get_generated_component_filename(type) + ".g.h";

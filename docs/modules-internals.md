@@ -187,43 +187,73 @@ units in the same DLL/EXE. Without `WINRT_EXPORT`, the module-compiled TUs
 and the header-compiled TUs would see these as separate symbols, leading to
 one side's customizations being invisible to the other.
 
-## The -module Flag: Component Code Generation
+## The WINRT_MODULE Macro: Component Code Generation
 
-**Source**: `settings.h` (`component_module`), `main.cpp` (arg parsing)
+**Source**: `component_writers.h` (`write_module_g_cpp`, `write_component_g_cpp`),
+`file_writers.h` (`write_component_g_h`)
 
-When `-module` is passed to cppwinrt.exe, the following changes apply to
-generated component files:
+Module-aware component code generation is controlled entirely by the
+`WINRT_MODULE` preprocessor macro, defined at the project level (by the NuGet
+targets or manually). The code generator always emits both code paths with
+`#ifdef WINRT_MODULE` guards — no special cppwinrt.exe flags are needed.
 
 ### module.g.cpp
 
 **Source**: `write_module_g_cpp()` in `component_writers.h`
 
-| Header mode | Module mode |
-|-------------|-------------|
-| `#include "pch.h"` | `#include "pch.h"` (preserved) |
-| `#include "winrt/base.h"` | `#ifdef WINRT_IMPORT_STD` / `import std;` / `#endif` + `import winrt;` |
+The generated code uses `#ifdef WINRT_MODULE` to select between import and include:
+
+```cpp
+#ifdef WINRT_MODULE
+#ifdef WINRT_IMPORT_STD
+import std;
+#endif
+import winrt;
+#else
+#include "winrt/base.h"
+#endif
+```
 
 ### Toaster.g.h (component base template)
 
 **Source**: `write_component_g_h()` in `file_writers.h`
 
-| Header mode | Module mode |
-|-------------|-------------|
-| `#include "winrt/test_component.h"` etc. | `#include "winrt/base_macros.h"` + conditional `import std;` + `import winrt;` + `#define WINRT_IMPL_SKIP_INCLUDES` + component headers |
+```cpp
+#ifdef WINRT_MODULE
+#include "winrt/base_macros.h"
+#ifdef WINRT_IMPORT_STD
+import std;
+#endif
+import winrt;
+#define WINRT_IMPL_SKIP_INCLUDES
+#endif
+#include "winrt/test_component.h"  // always emitted
+```
+
+When `WINRT_MODULE` is defined, `WINRT_IMPL_SKIP_INCLUDES` causes the component
+headers to skip cross-namespace platform `#include` deps (already in the module).
+When not defined, the headers pull in `base.h` transitively as normal.
 
 ### Toaster.g.cpp (factory + optional optimized constructors)
 
 **Source**: `write_component_g_cpp()` in `component_writers.h`
 
-| Header mode | Module mode |
-|-------------|-------------|
-| `winrt_make_*` + constructor/static overrides | `winrt_make_*` only |
+```cpp
+void* winrt_make_MyComponent_Toaster() { ... }  // always emitted
 
-In module mode, the constructor and static method definitions are omitted from
-`.g.cpp` because they're already available from the component's projection
-header (included by the `.g.h` after `import winrt;`). The `winrt_make_*`
-factory function is always emitted since it's needed by `module.g.cpp` for
-activation lookup.
+WINRT_EXPORT namespace winrt::MyComponent
+{
+#ifndef WINRT_MODULE
+    Toaster::Toaster() : Toaster(make<impl::Toaster>()) {}
+    // ... other constructors/statics
+#endif
+}
+```
+
+The constructor/static overrides are guarded by `#ifndef WINRT_MODULE` because
+they're already available from the component's projection header (included by
+the `.g.h` after `import winrt;`). The `winrt_make_*` factory function is
+always emitted since it's needed by `module.g.cpp` for activation lookup.
 
 ## Exported `winrt::impl` Namespace
 
@@ -294,7 +324,8 @@ In the ixx global module fragment, both files are written as raw `#include`s
 with no conditional — `import` is not permitted there.
 
 `WINRT_IMPORT_STD` is:
-- Defined automatically by NuGet targets when `CppWinRTModule=true` and
+- Defined automatically by NuGet targets when `CppWinRTModuleBuild` or
+  `CppWinRTModuleConsume` is true and
   `BuildStlModules=true`
 - Can be defined manually by users as a preprocessor definition
 
@@ -311,7 +342,6 @@ would break existing users whose build systems don't compile the std module.
 | File | Responsibility |
 |------|---------------|
 | `main.cpp` | CLI parsing, ixx generation, orchestration |
-| `settings.h` | `component_module` flag storage |
 | `file_writers.h` | File-level writers: `write_base_h`, `write_base_macros_h`, `write_component_g_h`, `write_namespace_h` |
 | `component_writers.h` | Component template writers: `write_module_g_cpp`, `write_component_g_cpp` |
 | `code_writers.h` | Low-level writers: `write_version_assert`, `write_parent_depends`, `write_open_file_guard` |
@@ -326,17 +356,19 @@ would break existing users whose build systems don't compile the std module.
 
 | Target | File | Role |
 |--------|------|------|
-| `CppWinRTAddModuleSource` | `Microsoft.Windows.CppWinRT.targets` | Adds ixx to compilation, defines `WINRT_IMPORT_STD` |
+| `CppWinRTBuildModule` | `Microsoft.Windows.CppWinRT.targets` | Adds ixx to compilation, defines `WINRT_MODULE` and `WINRT_IMPORT_STD` |
+| `CppWinRTGetModuleOutputs` | `Microsoft.Windows.CppWinRT.targets` | Exports IFC/OBJ/GeneratedFilesDir for consuming projects |
+| `CppWinRTResolveModuleReferences` | `Microsoft.Windows.CppWinRT.targets` | Resolves IFC/OBJ from ProjectReferences, defines `WINRT_MODULE` and `WINRT_IMPORT_STD` |
 | `CppWinRTMakeProjections` | `Microsoft.Windows.CppWinRT.targets` | Orchestrates platform/reference/component projection generation |
-| `CppWinRTMakeComponentProjection` | `Microsoft.Windows.CppWinRT.targets` | Runs cppwinrt.exe for component stubs (passes `-module` via `CppWinRTParameters`) |
+| `CppWinRTMakeComponentProjection` | `Microsoft.Windows.CppWinRT.targets` | Runs cppwinrt.exe for component stubs |
 
 ### Macro flow diagram
 
 ```
-User sets CppWinRTModule=true + BuildStlModules=true
+User sets CppWinRTModuleBuild=true (or CppWinRTModuleConsume=true) + BuildStlModules=true
     │
+    ├── NuGet targets define WINRT_MODULE on all ClCompile items
     ├── NuGet targets define WINRT_IMPORT_STD on all ClCompile items
-    ├── NuGet targets pass -module to cppwinrt.exe
     │
     ▼
 winrt.ixx compilation:
@@ -354,7 +386,7 @@ Consumer .cpp compilation:
     import std;                                ← std module (optional, needs BuildStlModules)
     import winrt;                              ← winrt module (SDK types + exported impl)
 
-Component .g.h:
+Component .g.h (WINRT_MODULE defined by NuGet targets):
     #include "winrt/base_macros.h"             ← macros only (WINRT_EXPORT etc.)
     #ifdef WINRT_IMPORT_STD
     import std;                                ← conditional on WINRT_IMPORT_STD

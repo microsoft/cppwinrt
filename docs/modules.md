@@ -11,30 +11,122 @@ developer experience.
 
 ### Consuming the platform projection (app that calls WinRT APIs)
 
-In Visual Studio, set the following in your project property pages:
-- **C/C++ > General > C++ Language Standard**: `ISO C++20` or `Preview`
-- **C/C++ > General > Build ISO C++23 Standard Library Modules**: `Yes`
-- **C++/WinRT > General > C++20 Module**: `true`
+C++/WinRT module support uses two properties that separate building the module
+from consuming it:
 
-Or equivalently, set these MSBuild properties in your `.vcxproj`:
+- **`CppWinRTModuleBuild`** — Generate the platform projection and compile
+  `winrt.ixx` as a C++20 module interface unit. Set this on one project in your
+  solution (typically a dedicated static library). Other projects reference this
+  one to share the pre-built module.
+
+- **`CppWinRTModuleConsume`** — Consume a pre-built winrt module from a
+  `ProjectReference` that sets `CppWinRTModuleBuild`. The NuGet targets
+  automatically resolve the module IFC, OBJ, and include paths.
+
+For a single-project scenario (no shared builder), just set `CppWinRTModuleBuild`
+on your project — it builds and consumes the module in-place.
+
+#### Multi-project setup (recommended for solutions with multiple consumers)
+
+**Builder project** (static library, no source files needed):
+
+In Visual Studio:
+- Right-click project > **Properties**
+- **Configuration Properties > General > Configuration Type**: `Static Library (.lib)`
+- **Configuration Properties > C/C++ > General > C++ Language Standard**: `ISO C++20 (/std:c++20)` or later
+- **Configuration Properties > C++/WinRT > General > Build C++20 Module**: `Yes`
+
+Or equivalently in your `.vcxproj`:
 
 ```xml
 <PropertyGroup Label="Globals">
-    <CppWinRTModule>true</CppWinRTModule>
+    <CppWinRTModuleBuild>true</CppWinRTModuleBuild>
 </PropertyGroup>
 
 <ItemDefinitionGroup>
     <ClCompile>
-        <BuildStlModules>true</BuildStlModules>
         <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
 </ItemDefinitionGroup>
 ```
 
+**Consumer project** (app or component):
+
+In Visual Studio:
+- Right-click project > **Properties**
+- **Configuration Properties > C/C++ > General > C++ Language Standard**: `ISO C++20 (/std:c++20)` or later
+- **Configuration Properties > C++/WinRT > General > Consume C++20 Module**: `Yes`
+- Add a **Project Reference** to the builder project
+
+Or equivalently in your `.vcxproj`:
+
+```xml
+<PropertyGroup Label="Globals">
+    <CppWinRTModuleConsume>true</CppWinRTModuleConsume>
+</PropertyGroup>
+
+<ItemDefinitionGroup>
+    <ClCompile>
+        <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+</ItemDefinitionGroup>
+
+<ItemGroup>
+    <ProjectReference Include="..\ModuleBuilder\ModuleBuilder.vcxproj" />
+</ItemGroup>
+```
+
+#### Single-project setup
+
+In Visual Studio:
+- Right-click project > **Properties**
+- **Configuration Properties > C/C++ > General > C++ Language Standard**: `ISO C++20 (/std:c++20)` or later
+- **Configuration Properties > C++/WinRT > General > Build C++20 Module**: `Yes`
+
+Or equivalently in your `.vcxproj`:
+
+```xml
+<PropertyGroup Label="Globals">
+    <CppWinRTModuleBuild>true</CppWinRTModuleBuild>
+</PropertyGroup>
+
+<ItemDefinitionGroup>
+    <ClCompile>
+        <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+</ItemDefinitionGroup>
+```
+
+#### Optionally enabling `import std;`
+
+`import winrt;` works independently of `import std;`. If you also want to use
+`import std;`, enable it separately:
+
+In Visual Studio:
+- **Configuration Properties > C/C++ > General > Build ISO C++23 Standard Library Modules**: `Yes`
+
+Or in your `.vcxproj`:
+
+```xml
+<ItemDefinitionGroup>
+    <ClCompile>
+        <BuildStlModules>true</BuildStlModules>
+    </ClCompile>
+</ItemDefinitionGroup>
+```
+
+> **Note**: On the v143 toolset (VS 2022), `import std;` requires
+> `/std:c++latest` — set **C++ Language Standard** to `Preview` in the IDE.
+> On the v145 toolset (VS 2026), `import std;` works with `/std:c++20`.
+
+When `BuildStlModules` is enabled, the NuGet targets automatically define
+`WINRT_IMPORT_STD` so that `base.h` uses `import std;` instead of individual
+standard library `#include` directives.
+
 Then in your source files:
 
 ```cpp
-import std;
+import std;    // optional — only if BuildStlModules is enabled
 import winrt;
 
 using namespace winrt;
@@ -48,9 +140,14 @@ int main()
 }
 ```
 
+If you don't enable `import std;`, you'll need to `#include` standard library
+headers you use (e.g., `<string>`, `<vector>`) or include them in your PCH.
+
 ### Component authoring (DLL with IDL)
 
-Same project properties as above, then in your implementation files:
+Same C++/WinRT module properties as above (`CppWinRTModuleConsume=true` with a
+`ProjectReference` to a builder, or `CppWinRTModuleBuild=true` for
+single-project), then in your implementation files:
 
 ```cpp
 // MyComponent.cpp
@@ -61,43 +158,42 @@ import winrt;
 ```
 
 The NuGet targets automatically:
-1. Pass `-module` to cppwinrt.exe so generated `.g.h`/`.g.cpp` files use
+1. Define `WINRT_MODULE` so generated `.g.h`/`.g.cpp` files use
    `import winrt;` instead of `#include` directives for platform types
-2. Generate component projection headers with `WINRT_IMPL_SKIP_INCLUDES` so
-   they skip platform `#include` directives already available from the module
-3. Define `WINRT_IMPORT_STD` when `BuildStlModules` is enabled
+2. Define `WINRT_IMPORT_STD` when `BuildStlModules` is enabled
+3. Resolve the module IFC, OBJ, and include paths from the builder project
+   (when `CppWinRTModuleConsume` is used)
 
 ## Requirements
 
-- **Visual Studio 2022** (v143 toolset) or later for `import winrt;`
+- **Visual Studio 2022** (v143 toolset) or later
 - **C++20 or later** language standard (`/std:c++20` or `/std:c++latest`)
-- For `import std;` alongside `import winrt;`:
-  - **v143 toolset**: requires `/std:c++latest` (C++23 mode) + `BuildStlModules=true`
+- For `import std;` (optional, orthogonal to `import winrt;`):
+  - **v143 toolset**: requires `/std:c++latest` + `BuildStlModules=true`
   - **v145 toolset** (VS 2026): works with `/std:c++20` + `BuildStlModules=true`
-- **`BuildStlModules=true`** (optional) in `<ItemDefinitionGroup><ClCompile>`
-  to enable the standard library module compilation for `import std;`
+- **`BuildStlModules=true`** (optional) in `<ClCompile>` metadata enables the
+  standard library module compilation. This is the "Build ISO C++23 Standard
+  Library Modules" property in the Visual Studio IDE. Note: on v143, the STL
+  modules infrastructure (`StdModulesSupported`) is only active when the language
+  standard is C++23 or later, so setting this property with `/std:c++20` on v143
+  has no effect.
 
 ## MSBuild Properties
 
 | Property | Type | Default | Description |
 |----------|------|---------|-------------|
-| `CppWinRTModule` | bool | `false` | Enable C++20 module mode. Adds `winrt.ixx` to compilation, folds component projections into the module, and passes `-module` to cppwinrt.exe for component generation. |
-| `BuildStlModules` | ClCompile metadata | `false` | Enables building `std.ixx`/`std.compat.ixx` so `import std;` works. Set inside `<ItemDefinitionGroup><ClCompile>`. This is the same project property set by "Build ISO C++23 Standard Library Modules" (https://learn.microsoft.com/en-us/cpp/build/reference/c-cpp-prop-page?view=msvc-180#cc-language-properties)|
+| `CppWinRTModuleBuild` | bool | `false` | Generate the platform projection and compile `winrt.ixx` as a C++20 module interface unit. The compiled module IFC and OBJ are exported for consumption by projects that set `CppWinRTModuleConsume`. Defines `WINRT_MODULE` for generated component code. |
+| `CppWinRTModuleConsume` | bool | `false` | Consume a pre-built winrt module from a `ProjectReference` that sets `CppWinRTModuleBuild`. Automatically resolves the IFC (for `AdditionalModuleDependencies`), OBJ (for linker `AdditionalDependencies`), and the builder's `GeneratedFilesDir` (for `AdditionalIncludeDirectories`). Skips regenerating the platform projection by default. Defines `WINRT_MODULE` for generated component code. |
+| `BuildStlModules` | ClCompile metadata | `false` | Enables building `std.ixx`/`std.compat.ixx` so `import std;` works. This is orthogonal to `import winrt;` — you can use `import winrt;` without `import std;`. Set via **C/C++ > General > Build ISO C++23 Standard Library Modules** in the IDE, or `<BuildStlModules>true</BuildStlModules>` in `<ClCompile>` metadata. On v143, the underlying `StdModulesSupported` infrastructure requires `/std:c++latest`; on v145, `/std:c++20` suffices. |
 
-When `CppWinRTModule=true`, the NuGet targets also automatically:
+When `CppWinRTModuleBuild` or `CppWinRTModuleConsume` is true, the NuGet targets also automatically:
+- Define `WINRT_MODULE` so generated component files (`.g.h`, `.g.cpp`,
+  `module.g.cpp`) use `import winrt;` instead of `#include` directives
 - Define `WINRT_IMPORT_STD` as a preprocessor definition when `BuildStlModules`
   is enabled, so `base.h` uses `import std;` instead of individual `#include`s
-- Define `WINRT_LEAN_AND_MEAN` on the `winrt.ixx` compilation unit
+- Define `WINRT_LEAN_AND_MEAN` on the `winrt.ixx` compilation unit (builder only)
 
 ## cppwinrt.exe Command-Line Options
-
-### Module-related options
-
-| Option | Description |
-|--------|-------------|
-| `-module` | Generate component files (`.g.h`, `.g.cpp`, `module.g.cpp`) using `import winrt;` instead of `#include` directives for platform projection types. The `.g.h` files emit `import winrt;`, include the component's own projection headers with `WINRT_IMPL_SKIP_INCLUDES`, and `#include "winrt/base_macros.h"` for macros. The `.g.cpp` files emit only the `winrt_make_*` factory function (constructor/static optimizations are omitted since those definitions come from the component's projection header included after `import winrt;`). `import std;` is conditional on `WINRT_IMPORT_STD`. PCH includes are preserved. |
-
-### Other commonly used options
 
 | Option | Description |
 |--------|-------------|
@@ -202,8 +298,9 @@ namespace winrt::MyComponent::factory_implementation
 
 | Macro | Purpose |
 |-------|---------|
-| `WINRT_IMPORT_STD` | When defined alongside `__cpp_lib_modules`, causes `base.h` to emit `import std;` instead of individual standard library `#include` directives. Automatically defined by the NuGet targets when both `CppWinRTModule` and `BuildStlModules` are enabled. |
+| `WINRT_IMPORT_STD` | When defined alongside `__cpp_lib_modules`, causes `base.h` to emit `import std;` instead of individual standard library `#include` directives. Automatically defined by the NuGet targets when `BuildStlModules` is enabled alongside `CppWinRTModuleBuild` or `CppWinRTModuleConsume`. |
 | `WINRT_LEAN_AND_MEAN` | Suppresses `#include <ostream>` and `std::hash`/`std::formatter` specializations from generated headers. Reduces header weight. |
+| `WINRT_MODULE` | When defined, generated component files (`.g.h`, `.g.cpp`, `module.g.cpp`) use `import winrt;` instead of `#include` directives for platform types. Automatically defined by the NuGet targets when `CppWinRTModuleBuild` or `CppWinRTModuleConsume` is set. Can also be defined manually for non-NuGet projects. |
 
 ### Internal implementation macros
 
@@ -273,13 +370,16 @@ component's projection header with `WINRT_IMPL_SKIP_INCLUDES`:
 - The specializations succeed because the primary templates are exported
   from the module and visible to the textual include
 
-### Generated file differences in module mode (`-module` flag)
+### Generated file differences when `WINRT_MODULE` is defined
 
-| File | Header mode | Module mode (`-module`) |
-|------|-------------|------------------------|
-| `Toaster.g.h` | `#include "winrt/test_component.h"` | `#include "winrt/base_macros.h"` + `import winrt;` + component headers with `WINRT_IMPL_SKIP_INCLUDES` |
-| `Toaster.g.cpp` | `winrt_make_*` + constructor/static overrides | `winrt_make_*` only (constructors come from projection header) |
-| `module.g.cpp` | `#include "pch.h"` + `#include "winrt/base.h"` | `#include "pch.h"` + `import winrt;` (`import std;` conditional on `WINRT_IMPORT_STD`) |
+Generated component files contain `#ifdef WINRT_MODULE` guards. The code generator
+always emits both paths — the preprocessor selects at compile time:
+
+| File | Without `WINRT_MODULE` | With `WINRT_MODULE` |
+|------|------------------------|---------------------|
+| `Toaster.g.h` | `#include "winrt/test_component.h"` (pulls in `base.h` transitively) | `#include "winrt/base_macros.h"` + `import winrt;` + `WINRT_IMPL_SKIP_INCLUDES` + component headers |
+| `Toaster.g.cpp` | `winrt_make_*` + constructor/static overrides | `winrt_make_*` only (constructors guarded by `#ifndef WINRT_MODULE`) |
+| `module.g.cpp` | `#include "winrt/base.h"` | `import winrt;` (`import std;` conditional on `WINRT_IMPORT_STD`) |
 
 ### base_macros.h
 
@@ -292,12 +392,31 @@ definitions — no type/function declarations that could conflict with the modul
 
 ## NuGet Targets Integration
 
-The `CppWinRTAddModuleSource` target in `Microsoft.Windows.CppWinRT.targets`
-performs these steps when `CppWinRTModule=true`:
+### CppWinRTBuildModule target
+
+Runs when `CppWinRTModuleBuild=true`. After the platform projection is generated:
 
 1. **Adds** `winrt.ixx` as a `ClCompile` item with `PrecompiledHeader=NotUsing`
-2. **Defines** `WINRT_IMPORT_STD` when `BuildStlModules=true` is detected
-3. **Passes** `-module` to cppwinrt.exe via `$(CppWinRTParameters)` so
+2. **Defines** `WINRT_MODULE` so generated component files use `import winrt;`
+3. **Defines** `WINRT_IMPORT_STD` when `BuildStlModules=true` is detected
+
+### CppWinRTGetModuleOutputs target
+
+Defined in every project that imports CppWinRT.targets, but only returns data
+when `CppWinRTModuleBuild=true`. Returns the IFC, OBJ, and GeneratedFilesDir
+paths. Called by consuming projects via the `MSBuild` task on `ProjectReference`
+items.
+
+### CppWinRTResolveModuleReferences target
+
+Runs when `CppWinRTModuleConsume=true`. After `ResolveProjectReferences`:
+
+1. **Calls** `CppWinRTGetModuleOutputs` on each `ProjectReference`
+2. **Adds** the resolved IFC to `AdditionalModuleDependencies`
+3. **Adds** the resolved OBJ to linker `AdditionalDependencies`
+4. **Adds** the builder's `GeneratedFilesDir` to `AdditionalIncludeDirectories`
+5. **Defines** `WINRT_IMPORT_STD` when `BuildStlModules=true` is detected
+6. **Errors** if no project references with `CppWinRTModuleBuild` are found
    component generation emits `import winrt;` in `.g.h` and `module.g.cpp`
 
 ## Known Limitations
