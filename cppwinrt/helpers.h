@@ -242,6 +242,39 @@ namespace cppwinrt
         return is_remove_overload(method) || has_attribute(method, "Windows.Foundation.Metadata", "NoExceptionAttribute");
     }
 
+    template <typename T>
+    bool is_deprecated(T const& row)
+    {
+        return has_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute");
+    }
+
+    template <typename T>
+    auto get_deprecated_message(T const& row)
+    {
+        auto attr = get_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute");
+        return get_attribute_value<std::string_view>(attr, 0);
+    }
+
+    template <typename T>
+    bool is_removed(T const& row)
+    {
+        auto attr = get_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute");
+        if (!attr)
+        {
+            return false;
+        }
+        auto args = attr.Value().FixedArgs();
+        if (args.size() >= 2)
+        {
+            // DeprecationType enum: Deprecate=0, Remove=1
+            auto val = std::get<ElemSig>(args[1].value);
+            auto enum_val = std::get<ElemSig::EnumValue>(val.value);
+            // Compare the underlying integer value (1 == Remove)
+            return std::visit([](auto v) -> bool { return static_cast<int32_t>(v) == 1; }, enum_val.value);
+        }
+        return false;
+    }
+
     static bool has_fastabi(TypeDef const& type)
     {
         return settings.fastabi&& has_attribute(type, "Windows.Foundation.Metadata", "FastAbiAttribute");

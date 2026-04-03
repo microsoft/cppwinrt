@@ -181,6 +181,10 @@ namespace cppwinrt
         writer w;
         w.type_namespace = ns;
 
+        // Suppress C4996 (deprecated) in internal projection implementation code.
+        // The deprecated redeclarations below (outside the suppression) trigger warnings in user code.
+        w.write("#pragma warning(push)\n#pragma warning(disable: 4996)\n");
+
         {
             auto wrap_impl = wrap_impl_namespace(w);
             w.write_each<write_consume_definitions>(members.interfaces);
@@ -211,6 +215,16 @@ namespace cppwinrt
                 w.write_each<write_std_formatter>(members.interfaces);
                 w.write_each<write_std_formatter>(members.classes);   
             }
+        }
+
+        w.write("#pragma warning(pop)\n");
+
+        {
+            auto wrap_type = wrap_type_namespace(w, ns);
+            w.write_each<write_deprecated_redeclaration>(members.interfaces);
+            w.write_each<write_deprecated_redeclaration>(members.classes);
+            w.write_each<write_deprecated_redeclaration>(members.delegates);
+            w.write_each<write_deprecated_redeclaration>(members.structs);
         }
 
         write_namespace_special(w, ns);

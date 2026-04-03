@@ -195,26 +195,97 @@ namespace cppwinrt
         return { w, write_close_namespace };
     }
 
-    static void write_enum_field(writer& w, Field const& field)
+    template <typename T>
+    static void write_deprecated_impl(writer& w, T const& row)
     {
-        auto format = R"(        % = %,
-)";
+        if (auto attr = get_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute"))
+        {
+            auto message = get_attribute_value<std::string_view>(attr, 0);
+            w.write("[[deprecated(\"%\")]] ", message);
+        }
+    }
+
+    static void write_deprecated_method(writer& w, MethodDef const& method)
+    {
+        write_deprecated_impl(w, method);
+    }
+
+    static void write_deprecated_field(writer& w, Field const& field)
+    {
+        write_deprecated_impl(w, field);
+    }
+
+    static void write_deprecated_redeclaration(writer& w, TypeDef const& type)
+    {
+        if (is_removed(type))
+        {
+            return;
+        }
+
+        if (auto attr = get_attribute(type, "Windows.Foundation.Metadata", "DeprecatedAttribute"))
+        {
+            auto message = get_attribute_value<std::string_view>(attr, 0);
+            w.write("    struct [[deprecated(\"%\")]] %;\n", message, type.TypeName());
+        }
+    }
+
+    static void write_enum_field(writer& w, Field const& field, bool parent_deprecated, std::string_view parent_deprecated_message)
+    {
+        if (is_removed(field))
+        {
+            return;
+        }
 
         if (auto constant = field.Constant())
         {
-            w.write(format, field.Name(), *constant);
+            if (is_deprecated(field))
+            {
+                w.write("        % % = %,\n", field.Name(), bind<write_deprecated_field>(field), *constant);
+            }
+            else if (parent_deprecated)
+            {
+                w.write("        % [[deprecated(\"%\")]] = %,\n", field.Name(), parent_deprecated_message, *constant);
+            }
+            else
+            {
+                auto format = R"(        % = %,
+)";
+                w.write(format, field.Name(), *constant);
+            }
         }
     }
 
     static void write_enum(writer& w, TypeDef const& type)
     {
+        if (is_removed(type))
+        {
+            return;
+        }
+
+        bool type_deprecated = is_deprecated(type);
+        std::string_view deprecated_message;
+        if (type_deprecated)
+        {
+            deprecated_message = get_deprecated_message(type);
+        }
+
         auto format = R"(    enum class % : %
     {
 %    };
 )";
 
         auto fields = type.FieldList();
-        w.write(format, type.TypeName(), fields.first.Signature().Type(), bind_each<write_enum_field>(fields));
+
+        w.write(format,
+            type.TypeName(),
+            fields.first.Signature().Type(),
+            [&](writer& w)
+            {
+                for (auto&& field : fields)
+                {
+                    write_enum_field(w, field, type_deprecated, deprecated_message);
+                }
+            });
     }
 
     static void write_enum_operators(writer& w, TypeDef const& type)
@@ -306,6 +377,7 @@ namespace cppwinrt
 
         if (get_category(type) == category::enum_type)
         {
+            if (is_removed(type)) return;
             auto format = R"(    enum class % : %;
 )";
 
@@ -392,6 +464,7 @@ namespace cppwinrt
 
     static void write_category(writer& w, TypeDef const& type, std::string_view const& category)
     {
+        if (is_removed(type)) return;
         auto generics = type.GenericParam();
 
         if (empty(generics))
@@ -433,6 +506,7 @@ namespace cppwinrt
 
     static void write_name(writer& w, TypeDef const& type)
     {
+        if (is_removed(type)) return;
         type_name type_name(type);
         auto generics = type.GenericParam();
 
@@ -459,6 +533,7 @@ namespace cppwinrt
 
     static void write_guid(writer& w, TypeDef const& type)
     {
+        if (is_removed(type)) return;
         auto attribute = get_attribute(type, "Windows.Foundation.Metadata", "GuidAttribute");
 
         if (!attribute)
@@ -498,6 +573,7 @@ namespace cppwinrt
 
     static void write_default_interface(writer& w, TypeDef const& type)
     {
+        if (is_removed(type)) return;
         if (auto default_interface = get_default_interface(type))
         {
             auto format = R"(    template <> struct default_interface<%>{ using type = %; };
@@ -508,6 +584,7 @@ namespace cppwinrt
 
     static void write_struct_category(writer& w, TypeDef const& type)
     {
+        if (is_removed(type)) return;
         auto format = R"(    template <> struct category<%>{ using type = struct_category<%>; };
 )";
 
@@ -990,12 +1067,18 @@ namespace cppwinrt
 
     static void write_consume_declaration(writer& w, MethodDef const& method)
     {
+        if (is_removed(method))
+        {
+            return;
+        }
+
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
         auto method_name = get_name(method);
         auto type = method.Parent();
 
-        w.write("        %auto %(%) const%;\n",
+        w.write("        %%auto %(%) const%;\n",
+            bind<write_deprecated_method>(method),
             is_get_overload(method) ? "[[nodiscard]] " : "",
             method_name,
             bind<write_consume_params>(signature),
@@ -1004,7 +1087,7 @@ namespace cppwinrt
         if (is_add_overload(method))
         {
             auto format = R"(        using %_revoker = impl::event_revoker<%, &impl::abi_t<%>::remove_%>;
-        [[nodiscard]] auto %(auto_revoke_t, %) const;
+        %[[nodiscard]] auto %(auto_revoke_t, %) const;
 )";
 
             w.write(format,
@@ -1012,6 +1095,7 @@ namespace cppwinrt
                 type,
                 type,
                 method_name,
+                bind<write_deprecated_method>(method),
                 method_name,
                 bind<write_consume_params>(signature));
         }
@@ -1123,6 +1207,11 @@ namespace cppwinrt
 
     static void write_consume_definition(writer& w, TypeDef const& type, MethodDef const& method, std::pair<GenericParam, GenericParam> const& generics, std::string_view const& type_impl_name)
     {
+        if (is_removed(method))
+        {
+            return;
+        }
+
         auto method_name = get_name(method);
         method_signature signature{ method };
         auto async_types_guard = w.push_async_types(signature.is_async());
@@ -2544,6 +2633,11 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_delegate(writer& w, TypeDef const& type)
     {
+        if (is_removed(type))
+        {
+            return;
+        }
+
         auto generics = type.GenericParam();
         auto guard{ w.push_generic_params(generics) };
         auto type_name = type.TypeName();
@@ -2592,6 +2686,11 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_delegate_implementation(writer& w, TypeDef const& type)
     {
+        if (is_removed(type))
+        {
+            return;
+        }
+
         auto format = R"(    template <typename H%> struct delegate<%, H> final : implements_delegate<%, H>
     {
         delegate(H&& handler) : implements_delegate<%, H>(std::forward<H>(handler)) {}
@@ -2621,6 +2720,11 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_delegate_definition(writer& w, TypeDef const& type)
     {
+        if (is_removed(type))
+        {
+            return;
+        }
+
         auto generics = type.GenericParam();
         auto guard{ w.push_generic_params(generics) };
         auto type_name = type.TypeName();
@@ -2859,7 +2963,10 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
         for (auto&& type : types)
         {
-            structs.emplace_back(w, type);
+            if (!is_removed(type))
+            {
+                structs.emplace_back(w, type);
+            }
         }
 
         auto depends = [](writer& w, complex_struct const& left, complex_struct const& right)
@@ -3066,9 +3173,15 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 {
                     for (auto&& method : factory.type.MethodList())
                     {
+                        if (is_removed(method))
+                        {
+                            continue;
+                        }
+
                         method_signature signature{ method };
 
-                        w.write("        %%(%);\n",
+                        w.write("        %%%(%);\n",
+                            bind<write_deprecated_method>(method),
                             signature.params().size() == 1 ? "explicit " : "",
                             type_name,
                             bind<write_consume_params>(signature));
@@ -3079,11 +3192,17 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             {
                 for (auto&& method : factory.type.MethodList())
                 {
+                    if (is_removed(method))
+                    {
+                        continue;
+                    }
+
                     method_signature signature{ method };
                     auto& params = signature.params();
                     params.resize(params.size() - 2);
 
-                    w.write("        %%(%);\n",
+                    w.write("        %%%(%);\n",
+                        bind<write_deprecated_method>(method),
                         signature.params().size() == 1 ? "explicit " : "",
                         type_name,
                         bind<write_consume_params>(signature));
@@ -3094,6 +3213,11 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_constructor_definition(writer& w, MethodDef const& method, TypeDef const& type, TypeDef const& factory)
     {
+        if (is_removed(method))
+        {
+            return;
+        }
+
         auto type_name = type.TypeName();
         method_signature signature{ method };
 
@@ -3113,6 +3237,11 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_composable_constructor_definition(writer& w, MethodDef const& method, TypeDef const& type, TypeDef const& factory)
     {
+        if (is_removed(method))
+        {
+            return;
+        }
+
         auto type_name = type.TypeName();
         method_signature signature{ method };
         auto& params = signature.params();
@@ -3154,13 +3283,18 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
         for (auto&& method : factory.second.type.MethodList())
         {
-            method_signature signature{ method };
-            auto method_name = get_name(method);
+            if (is_removed(method))
+            {
+                continue;
+            }
+
+            method_signature signature{ method };            auto method_name = get_name(method);
             auto async_types_guard = w.push_async_types(signature.is_async());
 
             if (is_opt_type)
             {
-                w.write("        %static % %(%);\n",
+                w.write("        %%static % %(%);\n",
+                    bind<write_deprecated_method>(method),
                     is_get_overload(method) ? "[[nodiscard]] " : "",
                     signature.return_signature(),
                     method_name,
@@ -3168,7 +3302,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             }
             else
             {
-                w.write("        %static auto %(%);\n",
+                w.write("        %%static auto %(%);\n",
+                    bind<write_deprecated_method>(method),
                     is_get_overload(method) ? "[[nodiscard]] " : "",
                     method_name,
                     bind<write_consume_params>(signature));
@@ -3188,18 +3323,20 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
                 if (is_opt_type)
                 {
-                    auto format = R"(        [[nodiscard]] static %_revoker %(auto_revoke_t, %);
+                    auto format = R"(        %[[nodiscard]] static %_revoker %(auto_revoke_t, %);
 )";
                     w.write(format,
+                        bind<write_deprecated_method>(method),
                         method_name,
                         method_name,
                         bind<write_consume_params>(signature));
                 }
                 else
                 {
-                    auto format = R"(        [[nodiscard]] static auto %(auto_revoke_t, %);
+                    auto format = R"(        %[[nodiscard]] static auto %(auto_revoke_t, %);
 )";
                     w.write(format,
+                        bind<write_deprecated_method>(method),
                         method_name,
                         bind<write_consume_params>(signature));
                 }
@@ -3209,6 +3346,11 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_static_definitions(writer& w, MethodDef const& method, TypeDef const& type, TypeDef const& factory)
     {
+        if (is_removed(method))
+        {
+            return;
+        }
+
         auto type_name = type.TypeName();
         method_signature signature{ method };
         auto method_name = get_name(method);
@@ -3253,6 +3395,11 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_class_definitions(writer& w, TypeDef const& type)
     {
+        if (is_removed(type))
+        {
+            return;
+        }
+
         if (settings.component_opt && settings.component_filter.includes(type))
         {
             return;
@@ -3377,6 +3524,11 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
 
     static void write_class(writer& w, TypeDef const& type)
     {
+        if (is_removed(type))
+        {
+            return;
+        }
+
         if (auto default_interface = get_default_interface(type))
         {
             if (has_fastabi(type))
