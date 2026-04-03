@@ -2616,7 +2616,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             type,
             bind<write_abi_params>(signature),
             bind<write_produce_cleanup>(signature),
-            bind<write_produce_upcall>("(*this)", signature));
+            bind<write_produce_upcall>("static_cast<H&>(*this)", signature));
     }
 
     static void write_delegate_definition(writer& w, TypeDef const& type)
