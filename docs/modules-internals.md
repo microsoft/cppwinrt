@@ -135,37 +135,53 @@ import winrt;
 
 ## WINRT_IMPL_SKIP_INCLUDES: Guarded Cross-Namespace Includes
 
-**Problem**: When consuming component headers after `import winrt;`, the
-component's namespace header chain includes SDK headers (e.g.,
-`#include "winrt/impl/Windows.Foundation.2.h"`) that would conflict with
-the module-imported versions.
+**Problem**: Inside generated `.g.h` files, after `import winrt;`, the
+component's own projection headers are included. Those headers have
+cross-namespace `#include` deps for platform SDK types (e.g.,
+`Windows.Foundation`) that are already available from the module. Re-including
+platform headers works (MSVC handles the re-declarations gracefully), but
+skipping them in this narrow scope avoids redundant processing.
 
-**Solution**: Generated namespace headers wrap their cross-namespace `#include`
-dependencies with `#ifndef WINRT_IMPL_SKIP_INCLUDES` guards:
+**Solution**: Generated `.g.h` files set `WINRT_IMPL_SKIP_INCLUDES` locally
+(under `#ifdef WINRT_MODULE`) before including the component's own headers.
+Generated namespace headers wrap their cross-namespace deps with guards:
 
 ```cpp
 // In generated Windows.Foundation.h:
 #ifndef WINRT_IMPL_SKIP_INCLUDES
 #include "winrt/base.h"
 #endif
-// ... (base.h include guarded, cross-namespace deps guarded)
+// ... (cross-namespace deps guarded)
 #include "winrt/impl/Windows.Foundation.2.h"   // self-namespace: NOT guarded
 ```
 
+**Critical scoping**: `WINRT_IMPL_SKIP_INCLUDES` is NOT defined project-wide.
+It is only defined locally inside `.g.h` files. This ensures that consumer
+source files can `#include <winrt/MyComponent.Widgets.h>` after `import winrt;`
+and the cross-namespace deps between component namespaces resolve normally.
+
+**WINRT_MODULE vs WINRT_IMPL_SKIP_INCLUDES in the version assert**: The version
+assert at the top of every namespace header checks `WINRT_BUILD_MODULE`,
+`WINRT_MODULE`, or `WINRT_IMPL_SKIP_INCLUDES` to decide whether to skip
+`#include "base.h"` and use `base_macros.h` instead. This three-way check
+covers: (a) inside winrt.ixx, (b) consumer source files, (c) inside .g.h files.
+
+**WINRT_BUILD_MODULE in winrt.ixx**: The ixx defines `WINRT_BUILD_MODULE`
+and `#undef`s `WINRT_IMPL_SKIP_INCLUDES` in its global module fragment. This
+ensures the version assert uses `base_macros.h` (since base.h is already
+explicitly included), but cross-namespace deps are included normally so
+namespace headers can reference each other's types inside the ixx.
+
 **Implementation**: `write_root_include_guarded()` in `type_writers.h` wraps the
-`#include` with the guard. Used by:
-- `write_version_assert()` for `base.h` include
+`#include` with `#ifndef WINRT_IMPL_SKIP_INCLUDES`. Used by:
 - `write_depends_guarded()` for cross-namespace impl includes
 - `write_parent_depends()` for parent namespace includes
 
+`write_version_assert()` in `code_writers.h` checks `WINRT_BUILD_MODULE ||
+WINRT_MODULE || WINRT_IMPL_SKIP_INCLUDES` for the base.h skip.
+
 The component's own impl headers are always included (via `write_depends()`,
 unguarded) since they contain the component-specific type definitions.
-
-**Note**: With the combined-ixx approach, `WINRT_IMPL_SKIP_INCLUDES` is not
-needed for component authoring (the component types are in the module). It
-remains useful for the scenario of consuming a component's projection header
-separately after `import winrt;`, should MSVC add support for cross-module
-template specialization in the future.
 
 ## WINRT_EXPORT on Extern Handlers
 

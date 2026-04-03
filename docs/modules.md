@@ -300,15 +300,16 @@ namespace winrt::MyComponent::factory_implementation
 |-------|---------|
 | `WINRT_IMPORT_STD` | When defined alongside `__cpp_lib_modules`, causes `base.h` to emit `import std;` instead of individual standard library `#include` directives. Automatically defined by the NuGet targets when `BuildStlModules` is enabled alongside `CppWinRTModuleBuild` or `CppWinRTModuleConsume`. |
 | `WINRT_LEAN_AND_MEAN` | Suppresses `#include <ostream>` and `std::hash`/`std::formatter` specializations from generated headers. Reduces header weight. |
-| `WINRT_MODULE` | When defined, generated component files (`.g.h`, `.g.cpp`, `module.g.cpp`) use `import winrt;` instead of `#include` directives for platform types. Automatically defined by the NuGet targets when `CppWinRTModuleBuild` or `CppWinRTModuleConsume` is set. Can also be defined manually for non-NuGet projects. |
+| `WINRT_MODULE` | When defined (project-wide), generated component files (`.g.h`, `.g.cpp`, `module.g.cpp`) use `import winrt;` instead of `#include` directives for platform types. Also causes generated namespace headers to skip `#include "base.h"` in their version assert (using `base_macros.h` instead), since base.h types are available from the module. Automatically defined by the NuGet targets when `CppWinRTModuleBuild` or `CppWinRTModuleConsume` is set. Can also be defined manually for non-NuGet projects. Does NOT suppress cross-namespace `#include` deps between component namespaces — only `WINRT_IMPL_SKIP_INCLUDES` (set locally in `.g.h` files) does that. |
 
 ### Internal implementation macros
 
 These are used by the code generator and should not be set directly by users:
 
 | Macro | Purpose |
-|-------|---------|
-| `WINRT_IMPL_SKIP_INCLUDES` | When defined, generated namespace headers skip their cross-namespace `#include` dependencies (e.g., `#include "winrt/base.h"`, `#include "winrt/impl/Windows.Foundation.2.h"`). Used when those dependencies are already available from the `winrt` module. The component's own impl headers are never skipped. |
+|-------|--------|
+| `WINRT_BUILD_MODULE` | Defined by cppwinrt in the winrt.ixx global module fragment. Tells namespace headers to use `base_macros.h` instead of `#include "base.h"` (since base.h is already included explicitly in the ixx). Also `#undef`s `WINRT_IMPL_SKIP_INCLUDES` so cross-namespace deps are included normally inside the ixx. |
+| `WINRT_IMPL_SKIP_INCLUDES` | When defined, generated namespace headers skip their cross-namespace `#include` dependencies (e.g., `#include "winrt/impl/Windows.Foundation.2.h"`). Set locally inside generated `.g.h` files under `#ifdef WINRT_MODULE` — NOT defined project-wide. This ensures component-to-component cross-namespace deps still work while platform SDK deps (available from the module) are skipped in the narrow .g.h scope. |
 | `WINRT_EXPORT` | Expands to `export` inside `winrt.ixx` (module purview), empty in header mode. Used on namespace declarations so types are properly exported from the module. Also applied to `winrt_to_hresult_handler` and related extern handler variables in `base_extern.h` for correct linkage when mixing modules and non-modules code in the same binary. Defined in `base_macros.h` (as empty) for use in generated component files that operate alongside the module. |
 | `WINRT_IMPL_EMPTY_BASES` | MSVC `__declspec(empty_bases)` optimization. Defined in both `base.h` and `base_macros.h`. |
 | `WINRT_IMPL_ABI_DECL` | Combines `WINRT_IMPL_NOVTABLE` and `WINRT_IMPL_PUBLIC` for ABI interface declarations. |
@@ -339,11 +340,14 @@ winrt/
 
 ```
 module;                                     ← Global module fragment
+#define WINRT_BUILD_MODULE                  ← Defined here, controls header behavior
+#undef WINRT_IMPL_SKIP_INCLUDES            ← Ensure cross-namespace deps work inside ixx
 <intrin.h, version, directxmath.h>          ← Platform includes (base_includes)
 <algorithm, array, atomic, ...>             ← Standard library includes (base_std_includes)
 
 export module winrt;                        ← Module purview begins
 #define WINRT_EXPORT export
+#include "winrt/base.h"                     ← Core library (explicit include)
 
 #include "winrt/Windows.Foundation.h"       ← Platform namespace headers
 #include "winrt/Windows.Foundation.Collections.h"
@@ -354,21 +358,33 @@ The `winrt::impl` namespace is exported alongside `winrt`, so component
 projection headers can specialize `impl` templates (like `category`, `abi`,
 `guid_v`) after `import winrt;` without needing to be folded into the ixx.
 
-### How component projection works with modules
+### How component and reference projection headers work with modules
 
 The `winrt::impl` namespace is exported from the module, which means the
 primary templates (`category`, `abi`, `guid_v`, `name_v`, `default_interface`,
 `consume`) are visible to external code. Component projection headers
 (`.0.h` files) specialize these templates for the component's types.
 
-When a component's `.g.h` does `import winrt;` and then includes the
-component's projection header with `WINRT_IMPL_SKIP_INCLUDES`:
-- Platform projection dependencies (`base.h`, `Windows.Foundation.h`, etc.) are
-  skipped — they're already available from the module
-- The component's own impl headers are included normally — they contain
-  the template specializations that register the component's types
-- The specializations succeed because the primary templates are exported
-  from the module and visible to the textual include
+**Consumer experience**: After `import winrt;`, consumers can textually `#include`
+reference and component projection headers. `WINRT_MODULE` (defined project-wide
+by the NuGet targets) tells each namespace header to skip `#include "base.h"`
+and use `base_macros.h` instead — base.h types are already available from the
+module. Cross-namespace `#include` deps between component namespaces are NOT
+skipped, so multi-namespace components work correctly:
+
+```cpp
+import winrt;                                     // platform types from module
+#include <winrt/MyComponent.h>                    // root component namespace
+#include <winrt/MyComponent.Widgets.h>            // sub-namespace — works!
+
+auto widget = component.CreateWidget();           // returns MyComponent.Widgets.Widget
+auto name = widget.Name();                        // calls method on cross-namespace type
+```
+
+Inside generated `.g.h` files, `WINRT_IMPL_SKIP_INCLUDES` is set locally (under
+`#ifdef WINRT_MODULE`) to skip platform SDK deps that are already in the module.
+This is scoped to just the `.g.h` — it does not affect other headers included
+by consumer source files.
 
 ### Generated file differences when `WINRT_MODULE` is defined
 
@@ -456,6 +472,6 @@ Runs when `CppWinRTModuleConsume=true`. After `ResolveProjectReferences`:
    from the module so that component projection headers can specialize `impl`
    templates (`category`, `abi`, `guid_v`, etc.) after `import winrt;`. This
    means component headers can be `#include`d separately without being folded
-   into `winrt.ixx`. The `WINRT_IMPL_SKIP_INCLUDES` macro is used by generated
-   `.g.h` files to skip platform `#include` dependencies that are already available
-   from the module.
+   into `winrt.ixx`. Inside generated `.g.h` files, `WINRT_IMPL_SKIP_INCLUDES`
+   is set locally to skip platform `#include` dependencies that come from the
+   module. Cross-namespace deps between component namespaces are not affected.

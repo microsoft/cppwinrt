@@ -287,11 +287,13 @@ import std;
         // templates come from 'import winrt;'. Component-specific types come
         // from the component's own projection headers, included with
         // WINRT_IMPL_SKIP_INCLUDES to skip SDK dependencies already in the module.
+        // WINRT_IMPL_SKIP_INCLUDES may already be defined project-wide by the
+        // NuGet targets, so use #ifndef to avoid redefinition warnings.
         w.write("#ifdef WINRT_MODULE\n");
         w.write("#include \"winrt/base_macros.h\"\n");
         w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\n");
         w.write("import winrt;\n");
-        w.write("#define WINRT_IMPL_SKIP_INCLUDES\n");
+        w.write("#ifndef WINRT_IMPL_SKIP_INCLUDES\n#define WINRT_IMPL_SKIP_INCLUDES\n#endif\n");
         w.write("#endif\n");
         for (auto&& depends : w.depends)
         {

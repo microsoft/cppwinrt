@@ -98,10 +98,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="TestModuleComponentClass.h" />
+    <ClInclude Include="TestModuleComponentWidget.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestModuleComponentClass.cpp" />
+    <ClCompile Include="TestModuleComponentWidget.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -112,6 +114,9 @@
   </ItemGroup>
   <ItemGroup>
     <Midl Include="TestModuleComponentClass.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+    <Midl Include="TestModuleComponentWidget.idl">
       <SubType>Designer</SubType>
     </Midl>
   </ItemGroup>

@@ -1,3 +1,5 @@
+import "TestModuleComponentWidget.idl";
+
 namespace TestModuleComponent
 {
     [default_interface]
@@ -5,5 +7,6 @@ namespace TestModuleComponent
     {
         TestModuleComponentClass();
         void Test();
+        TestModuleComponent.Widgets.Widget CreateWidget();
     }
 }

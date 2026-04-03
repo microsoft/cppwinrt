@@ -31,28 +31,53 @@ targets (or manually for non-NuGet projects).
 
 ### .g.h (component base template)
 - `#ifdef WINRT_MODULE`: emits `#include "winrt/base_macros.h"` for macros,
-  conditional `import std;`, `import winrt;`, `#define WINRT_IMPL_SKIP_INCLUDES`
-- Always includes component's own headers (which skip SDK deps via the guard)
+  conditional `import std;`, `import winrt;`, locally sets `WINRT_IMPL_SKIP_INCLUDES`
+- Always includes component's own headers (platform SDK deps skipped by the
+  local `WINRT_IMPL_SKIP_INCLUDES`, but cross-namespace component deps are NOT)
 
 ### .g.cpp (factory + optimized constructors)
 - Always emits the `winrt_make_*` factory function
 - Constructor/static overrides are guarded by `#ifndef WINRT_MODULE`
   (they come from the projection header via the module in module mode)
 
+## Macro Scoping
+
+Three macros with distinct scopes control module behavior:
+
+- `WINRT_BUILD_MODULE` — Defined by cppwinrt inside winrt.ixx's global module
+  fragment. Controls base.h skip in version assert. Also `#undef`s
+  `WINRT_IMPL_SKIP_INCLUDES` so cross-namespace deps work inside the ixx.
+  Never set by users or NuGet targets.
+- `WINRT_MODULE` — Defined project-wide by NuGet targets. Controls .g.h/.g.cpp
+  behavior AND version assert base.h skip. Does NOT suppress cross-namespace
+  deps between component namespaces.
+- `WINRT_IMPL_SKIP_INCLUDES` — Set locally inside .g.h files only (under
+  `#ifdef WINRT_MODULE`). Suppresses cross-namespace platform SDK deps that
+  are already in the module. NOT defined project-wide.
+
 ## WINRT_IMPL_SKIP_INCLUDES
 
 Generated namespace headers guard cross-namespace `#include` dependencies with:
 ```cpp
 #ifndef WINRT_IMPL_SKIP_INCLUDES
+#include "winrt/impl/OtherNamespace.0.h"
+#endif
+```
+
+The version assert at the top of each namespace header checks all three macros:
+```cpp
+#if defined(WINRT_BUILD_MODULE) || defined(WINRT_MODULE) || defined(WINRT_IMPL_SKIP_INCLUDES)
+#include "winrt/base_macros.h"
+#else
 #include "winrt/base.h"
 #endif
 ```
 
-- Cross-namespace dependencies (other namespaces' impl headers): GUARDED
-  (`write_depends_guarded` / `write_root_include_guarded`)
+- Cross-namespace dependencies (other namespaces' impl headers): GUARDED by
+  `WINRT_IMPL_SKIP_INCLUDES` (`write_depends_guarded` / `write_root_include_guarded`)
 - Self-namespace dependencies (own impl headers): NOT guarded
   (`write_depends` / `write_root_include`)
-- base.h include in version assert: GUARDED with base_macros.h fallback
+- base.h include in version assert: GUARDED by all three macros
 
 ## Test Project Architecture
 

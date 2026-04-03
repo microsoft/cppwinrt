@@ -1,0 +1,10 @@
+namespace TestModuleComponent.Widgets
+{
+    [default_interface]
+    runtimeclass Widget
+    {
+        Widget();
+        Widget(String name);
+        String Name{ get; };
+    }
+}

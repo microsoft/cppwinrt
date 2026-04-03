@@ -37,10 +37,12 @@ namespace cppwinrt
 
     static void write_version_assert(writer& w)
     {
-        // When WINRT_IMPL_SKIP_INCLUDES is defined, base.h is already available
-        // from the imported winrt module. However, macros don't cross module
-        // boundaries, so we include a lightweight header with just the macros.
-        auto format_guard = R"(#ifdef WINRT_IMPL_SKIP_INCLUDES
+        // When building the module (WINRT_BUILD_MODULE, inside winrt.ixx) or
+        // consuming the module (WINRT_MODULE, project-wide), base.h types are
+        // already available. Macros don't cross module boundaries, so include
+        // base_macros.h for the version check and other macros.
+        // WINRT_IMPL_SKIP_INCLUDES also triggers this (used locally in .g.h files).
+        auto format_guard = R"(#if defined(WINRT_BUILD_MODULE) || defined(WINRT_MODULE) || defined(WINRT_IMPL_SKIP_INCLUDES)
 #include "winrt/base_macros.h"
 #else
 )";

@@ -7,6 +7,7 @@ namespace winrt::TestModuleComponent::implementation
     {
         TestModuleComponentClass() = default;
         void Test();
+        winrt::TestModuleComponent::Widgets::Widget CreateWidget();
     };
 }
 namespace winrt::TestModuleComponent::factory_implementation

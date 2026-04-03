@@ -344,10 +344,11 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             group.synchronous(args.exists("synchronous"));
             writer ixx;
             write_preamble(ixx);
-            ixx.write("module;\n");
+            ixx.write("module;\n#define WINRT_BUILD_MODULE\n#undef WINRT_IMPL_SKIP_INCLUDES\n");
             ixx.write(strings::base_includes);
             ixx.write(strings::base_std_includes);
             ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n#define WINRT_IMPL_INCLUDES_HANDLED\n\n");
+            ixx.write("#include \"winrt/base.h\"\n\n");
 
             for (auto&&[ns, members] : c.namespaces())
             {
