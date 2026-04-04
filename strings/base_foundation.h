@@ -100,7 +100,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
     }
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <> inline constexpr auto& name_v<Windows::Foundation::Point> = L"Windows.Foundation.Point";
     template <> inline constexpr auto& name_v<Windows::Foundation::Size> = L"Windows.Foundation.Size";

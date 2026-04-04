@@ -17,6 +17,9 @@ For any IDL file contained in the project, C++/WinRT creates component (producin
 In addition, C++/WinRT generates templates and skeleton implementations for each runtime class, under the Generated Files directory.
   
 ========================================================================
+For C++20 module support (import winrt;), see docs/modules.md in this package,
+or visit: https://github.com/Microsoft/cppwinrt/blob/master/docs/modules.md
+========================================================================
 For more information, visit:
 https://github.com/Microsoft/cppwinrt/tree/master/nuget
 ========================================================================

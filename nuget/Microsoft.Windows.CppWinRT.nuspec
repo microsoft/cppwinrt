@@ -25,5 +25,6 @@
     <file src="Microsoft.Windows.CppWinRT.targets" target="build\native"/>
     <file src="CppWinrtRules.Project.xml" target="build\native"/>
     <file src="readme.txt"/>
+    <file src="..\docs\modules.md" target="docs"/>
   </files>
 </package>

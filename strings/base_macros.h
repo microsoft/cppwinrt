@@ -27,14 +27,12 @@
 #define WINRT_IMPL_COROUTINES
 #endif
 
-#ifndef WINRT_EXPORT
-#define WINRT_EXPORT
-#endif
-
 #ifdef WINRT_IMPL_NUMERICS
 #define _WINDOWS_NUMERICS_NAMESPACE_ winrt::Windows::Foundation::Numerics
 #define _WINDOWS_NUMERICS_BEGIN_NAMESPACE_ WINRT_EXPORT namespace winrt::Windows::Foundation::Numerics
 #define _WINDOWS_NUMERICS_END_NAMESPACE_
+// The include in the purview of a module is intentional: we need to export the numerics types.
+#pragma warning(suppress: 5244)
 #include <windowsnumerics.impl.h>
 #undef _WINDOWS_NUMERICS_NAMESPACE_
 #undef _WINDOWS_NUMERICS_BEGIN_NAMESPACE_
@@ -48,30 +46,6 @@
 #else
 #define WINRT_IMPL_NOINLINE
 #endif
-
-#if defined(_MSC_VER)
-#define WINRT_IMPL_EMPTY_BASES __declspec(empty_bases)
-#else
-#define WINRT_IMPL_EMPTY_BASES
-#endif
-
-#if defined(_MSC_VER)
-#define WINRT_IMPL_NOVTABLE __declspec(novtable)
-#else
-#define WINRT_IMPL_NOVTABLE
-#endif
-
-#if defined(__clang__) && defined(__has_attribute)
-#if __has_attribute(__lto_visibility_public__)
-#define WINRT_IMPL_PUBLIC __attribute__((lto_visibility_public))
-#else
-#define WINRT_IMPL_PUBLIC
-#endif // __has_attribute(__lto_visibility_public__)
-#else
-#define WINRT_IMPL_PUBLIC
-#endif
-
-#define WINRT_IMPL_ABI_DECL WINRT_IMPL_NOVTABLE WINRT_IMPL_PUBLIC
 
 #if defined(__clang__)
 #define WINRT_IMPL_HAS_DECLSPEC_UUID __has_declspec_attribute(uuid)
@@ -140,7 +114,7 @@ typedef struct _GUID GUID;
 #define WINRT_IMPL_BUILTIN_FUNCTION nullptr
 #endif
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     // This struct is intended to be highly similar to std::source_location.  The key difference is
     // that function_name is NOT included.  Function names do not fold to identical strings and can

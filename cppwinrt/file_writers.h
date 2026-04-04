@@ -10,7 +10,20 @@ namespace cppwinrt
         {
             auto wrap_file_guard = wrap_open_file_guard(w, "BASE");
 
+            w.write(R"(
+#ifndef WINRT_IMPL_INCLUDES_HANDLED
+)");
             w.write(strings::base_includes);
+            w.write(R"(
+#if defined(__cpp_lib_modules) && defined(WINRT_IMPORT_STD)
+import std;
+#else
+)");
+            w.write(strings::base_std_includes);
+            w.write(R"(#endif // __cpp_lib_modules && WINRT_IMPORT_STD
+#endif // WINRT_IMPL_INCLUDES_HANDLED
+)");
+            w.write_root_include("base_macros");
             w.write(strings::base_macros);
             w.write(strings::base_types);
             w.write(strings::base_extern);
@@ -44,6 +57,26 @@ namespace cppwinrt
             w.write(strings::base_version);
         }
         w.flush_to_file(settings.output_folder + "winrt/base.h");
+    }
+
+    // Lightweight header containing only the preprocessor macros needed by
+    // generated namespace headers. Used when WINRT_MODULE or WINRT_BUILD_MODULE
+    // is defined (i.e., consuming or building the winrt module). Macros don't
+    // cross module boundaries, so this provides the macros that base.h would
+    // normally supply.
+    static void write_base_macros_h()
+    {
+        writer w;
+        write_preamble(w);
+        auto format = R"(#pragma once
+
+#ifndef CPPWINRT_VERSION
+#define CPPWINRT_VERSION "%"
+#endif
+)";
+        w.write(format, CPPWINRT_VERSION_STRING);
+        w.write(strings::base_module_macros);
+        w.flush_to_file(settings.output_folder + "winrt/base_macros.h");
     }
 
     static void write_fast_forward_h(std::vector<TypeDef> const& classes)
@@ -139,7 +172,7 @@ namespace cppwinrt
 
         for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, '0');
+            w.write_depends_guarded(depends.first, '0');
         }
 
         w.write_depends(w.type_namespace, '0');
@@ -169,7 +202,7 @@ namespace cppwinrt
 
         for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, impl);
+            w.write_depends_guarded(depends.first, impl);
         }
 
         w.write_depends(w.type_namespace, '1');
@@ -224,7 +257,7 @@ namespace cppwinrt
 
         for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, '2');
+            w.write_depends_guarded(depends.first, '2');
         }
 
         w.write_depends(w.type_namespace, '2');
@@ -250,6 +283,19 @@ namespace cppwinrt
         write_preamble(w);
         write_include_guard(w);
 
+        // In module mode (WINRT_MODULE defined), SDK types and exported impl
+        // templates come from 'import winrt;'. Component-specific types come
+        // from the component's own projection headers. The version assert in
+        // each header includes winrt_module_namespaces.h (when WINRT_MODULE is
+        // defined), which provides per-namespace WINRT_MODULE_NS_* macros.
+        // Cross-namespace deps use these per-namespace guards: platform deps
+        // (in the module) are skipped, component deps (not in the module) are
+        // included normally.
+        w.write("#ifdef WINRT_MODULE\n");
+        w.write("#include \"winrt/base_macros.h\"\n");
+        w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\n");
+        w.write("import winrt;\n");
+        w.write("#endif\n");
         for (auto&& depends : w.depends)
         {
             w.write_depends(depends.first);
