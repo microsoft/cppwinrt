@@ -344,7 +344,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             group.synchronous(args.exists("synchronous"));
             writer ixx;
             write_preamble(ixx);
-            ixx.write("module;\n#define WINRT_BUILD_MODULE\n#undef WINRT_IMPL_SKIP_INCLUDES\n");
+            ixx.write("module;\n#define WINRT_BUILD_MODULE\n");
             ixx.write(strings::base_includes);
             ixx.write(strings::base_std_includes);
             ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n#define WINRT_IMPL_INCLUDES_HANDLED\n\n");
@@ -373,6 +373,31 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
                 write_base_h();
                 write_base_macros_h();
                 ixx.flush_to_file(settings.output_folder + "winrt/winrt.ixx");
+
+                // Generate a companion header that declares which namespaces are
+                // in the module. Consumer projects include this (via WINRT_MODULE)
+                // so that cross-namespace #include guards can precisely skip only
+                // namespaces available from the module, while still including
+                // component and other non-module namespace deps.
+                // Only generated alongside the ixx (not for component projections
+                // which may also set -base but shouldn't produce module metadata).
+                if (!settings.component)
+                {
+                    writer module_ns;
+                    write_preamble(module_ns);
+                    module_ns.write("#pragma once\n");
+                    for (auto&&[ns, members] : c.namespaces())
+                    {
+                        if (!has_projected_types(members) || !settings.projection_filter.includes(members))
+                        {
+                            continue;
+                        }
+                        std::string ns_macro{ ns };
+                        std::replace(ns_macro.begin(), ns_macro.end(), '.', '_');
+                        module_ns.write("#define WINRT_MODULE_NS_%\n", ns_macro);
+                    }
+                    module_ns.flush_to_file(settings.output_folder + "winrt/winrt_module_namespaces.h");
+                }
             }
 
             if (settings.component)

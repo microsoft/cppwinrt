@@ -2,11 +2,19 @@ import "TestModuleComponentWidget.idl";
 
 namespace TestModuleComponent
 {
+    struct WidgetInfo
+    {
+        TestModuleComponent.Widgets.WidgetSize Size;
+        String Description;
+    };
+
     [default_interface]
     runtimeclass TestModuleComponentClass
     {
         TestModuleComponentClass();
         void Test();
         TestModuleComponent.Widgets.Widget CreateWidget();
+        WidgetInfo GetWidgetInfo();
+        Windows.Foundation.Uri GetUri();
     }
 }

@@ -8,6 +8,8 @@ namespace winrt::TestModuleComponent::implementation
         TestModuleComponentClass() = default;
         void Test();
         winrt::TestModuleComponent::Widgets::Widget CreateWidget();
+        winrt::TestModuleComponent::WidgetInfo GetWidgetInfo();
+        winrt::Windows::Foundation::Uri GetUri();
     };
 }
 namespace winrt::TestModuleComponent::factory_implementation

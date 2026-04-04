@@ -897,11 +897,12 @@ $(XamlMetaDataProviderPch)
             </ClCompile>
         </ItemGroup>
         <!-- Define WINRT_MODULE so generated component files (.g.h, .g.cpp) use
-             import winrt; instead of #include, and so reference projection headers
-             skip base.h (types come from the module). Cross-namespace component deps
-             are NOT suppressed — only WINRT_IMPL_SKIP_INCLUDES (set locally in .g.h)
-             does that. winrt.ixx defines WINRT_BUILD_MODULE in its global module
-             fragment for its own needs. -->
+             import winrt;. When WINRT_MODULE is defined, namespace headers include
+             winrt_module_namespaces.h which declares per-namespace WINRT_MODULE_NS_*
+             macros. Cross-namespace deps are guarded by these per-namespace macros,
+             precisely skipping only namespaces in the module while including
+             component and other non-module deps normally.
+             winrt.ixx defines WINRT_BUILD_MODULE in its global module fragment. -->
         <ItemGroup>
             <ClCompile>
                 <PreprocessorDefinitions>WINRT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -972,7 +973,7 @@ $(XamlMetaDataProviderPch)
         </ItemGroup>
 
         <!-- Define WINRT_MODULE so generated component files (.g.h, .g.cpp) use
-             import winrt;, and so reference projection headers skip base.h. -->
+             import winrt;, and so namespace headers use per-namespace guards. -->
         <ItemGroup>
             <ClCompile>
                 <PreprocessorDefinitions>WINRT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>

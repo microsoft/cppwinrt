@@ -41,10 +41,17 @@ namespace cppwinrt
         // consuming the module (WINRT_MODULE, project-wide), base.h types are
         // already available. Macros don't cross module boundaries, so include
         // base_macros.h for the version check and other macros.
-        // WINRT_IMPL_SKIP_INCLUDES also triggers this (used locally in .g.h files).
-        auto format_guard = R"(#if defined(WINRT_BUILD_MODULE) || defined(WINRT_MODULE) || defined(WINRT_IMPL_SKIP_INCLUDES)
+        // When WINRT_MODULE is defined, also include winrt_module_namespaces.h
+        // which declares per-namespace macros (WINRT_MODULE_NS_*) so that
+        // cross-namespace #include guards can precisely skip only the namespaces
+        // that are in the module.
+        auto format_guard = R"(#if defined(WINRT_BUILD_MODULE) || defined(WINRT_MODULE)
 #include "winrt/base_macros.h"
-#else
+#endif
+#if defined(WINRT_MODULE) && !defined(WINRT_BUILD_MODULE)
+#include "winrt/winrt_module_namespaces.h"
+#endif
+#if !defined(WINRT_BUILD_MODULE) && !defined(WINRT_MODULE)
 )";
         auto format_end = R"(#endif
 )";
