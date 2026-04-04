@@ -60,10 +60,10 @@ import std;
     }
 
     // Lightweight header containing only the preprocessor macros needed by
-    // generated namespace headers. Used when WINRT_IMPL_SKIP_INCLUDES is
-    // defined (i.e., consuming component headers after 'import winrt;').
-    // Macros don't cross module boundaries, so this provides the macros
-    // that base.h would normally supply.
+    // generated namespace headers. Used when WINRT_MODULE or WINRT_BUILD_MODULE
+    // is defined (i.e., consuming or building the winrt module). Macros don't
+    // cross module boundaries, so this provides the macros that base.h would
+    // normally supply.
     static void write_base_macros_h()
     {
         writer w;

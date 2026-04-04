@@ -2,16 +2,15 @@
 // The component projection header is included AFTER importing winrt,
 // which tests the interaction between module-imported base types and
 // #include-based component projection headers.
+// WINRT_MODULE (defined project-wide) causes namespace headers to use
+// per-namespace WINRT_MODULE_NS_* guards so platform deps are skipped
+// while component deps are included normally.
 #include "catch.hpp"
 #include <winerror.h>
 
 import std;
 import winrt;
 
-// When consuming component headers alongside 'import winrt;', define
-// WINRT_IMPL_SKIP_INCLUDES to skip #include directives for base.h and SDK
-// headers that are already available from the module.
-#define WINRT_IMPL_SKIP_INCLUDES
 #include "winrt/test_component_module.h"
 
 using namespace winrt;
