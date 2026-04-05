@@ -3157,11 +3157,12 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             method_signature signature{ method };
             auto method_name = get_name(method);
             auto async_types_guard = w.push_async_types(signature.is_async());
+            auto is_event = is_add_overload(method);
 
             if (is_opt_type)
             {
                 w.write("        %static % %(%);\n",
-                    is_get_overload(method) ? "[[nodiscard]] " : "",
+                    is_get_overload(method) || is_event ? "[[nodiscard]] " : "",
                     signature.return_signature(),
                     method_name,
                     bind<write_consume_params>(signature));
@@ -3169,12 +3170,12 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             else
             {
                 w.write("        %static auto %(%);\n",
-                    is_get_overload(method) ? "[[nodiscard]] " : "",
+                    is_get_overload(method) || is_event ? "[[nodiscard]] " : "",
                     method_name,
                     bind<write_consume_params>(signature));
             }
 
-            if (is_add_overload(method))
+            if (is_event)
             {
                 {
                     auto format = R"(        using %_revoker = impl::factory_event_revoker<%, &impl::abi_t<%>::remove_%>;
