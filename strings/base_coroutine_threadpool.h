@@ -133,6 +133,18 @@ namespace winrt::impl
             return resume_apartment_sync(context.m_context, handle, failure);
         }
     }
+
+    using canceller_t = void(*)(void*);
+
+    struct unique_cancellation_lock
+    {
+        std::atomic<canceller_t>& m_canceller;
+
+        ~unique_cancellation_lock()
+        {
+            m_canceller.store(nullptr, std::memory_order_release);
+        }
+    };
 #endif
 }
 
@@ -141,9 +153,7 @@ WINRT_EXPORT namespace winrt
 {
     struct cancellable_promise
     {
-        using canceller_t = void(*)(void*);
-
-        void set_canceller(canceller_t canceller, void* context)
+        void set_canceller(impl::canceller_t canceller, void* context)
         {
             m_context = context;
             m_canceller.store(canceller, std::memory_order_release);
@@ -160,14 +170,7 @@ WINRT_EXPORT namespace winrt
         void cancel()
         {
             auto canceller = m_canceller.exchange(cancelling_ptr, std::memory_order_acquire);
-            struct unique_cancellation_lock
-            {
-                cancellable_promise* promise;
-                ~unique_cancellation_lock()
-                {
-                    promise->m_canceller.store(nullptr, std::memory_order_release);
-                }
-            } lock{ this };
+            impl::unique_cancellation_lock lock{ m_canceller };
 
             if ((canceller != nullptr) && (canceller != cancelling_ptr))
             {
@@ -196,9 +199,9 @@ WINRT_EXPORT namespace winrt
         }
 
     private:
-        static inline auto const cancelling_ptr = reinterpret_cast<canceller_t>(1);
+        static inline auto const cancelling_ptr = reinterpret_cast<impl::canceller_t>(1);
 
-        std::atomic<canceller_t> m_canceller{ nullptr };
+        std::atomic<impl::canceller_t> m_canceller{ nullptr };
         void* m_context{ nullptr };
         bool m_propagate_cancellation{ false };
         bool m_originate_on_cancel{ true }; // By default, will call RoOriginateError before throwing a cancel error code.
