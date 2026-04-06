@@ -194,6 +194,12 @@ Used by:
 This prevents component projections (which may also use `-base`) from generating
 a stale version that would mask the module builder's file on the include path.
 
+**Module namespace filtering** (`-module_filter`): When specified, only matching
+namespaces are included in `winrt.ixx` and `winrt_module_namespaces.h`. All
+namespace headers are still generated for textual inclusion. This is implemented
+via `settings.ixx_filter` (built from `-module_filter` args in `build_filters`).
+The NuGet property `CppWinRTModuleFilter` passes this to cppwinrt.exe.
+
 The component's own impl headers are always included (via `write_depends()`,
 unguarded) since they contain the component-specific type definitions.
 

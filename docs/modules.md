@@ -184,6 +184,7 @@ The NuGet targets automatically:
 |----------|------|---------|-------------|
 | `CppWinRTModuleBuild` | bool | `false` | Generate the platform projection and compile `winrt.ixx` as a C++20 module interface unit. The compiled module IFC and OBJ are exported for consumption by projects that set `CppWinRTModuleConsume`. Defines `WINRT_MODULE` for generated component code. |
 | `CppWinRTModuleConsume` | bool | `false` | Consume a pre-built winrt module from a `ProjectReference` that sets `CppWinRTModuleBuild`. Automatically resolves the IFC (for `AdditionalModuleDependencies`), OBJ (for linker `AdditionalDependencies`), and the builder's `GeneratedFilesDir` (for `AdditionalIncludeDirectories`). Skips regenerating the platform projection by default. Defines `WINRT_MODULE` for generated component code. |
+| `CppWinRTModuleFilter` | string | (empty) | Space-separated namespace prefixes to include in the winrt module. When set, only matching namespaces are compiled into `winrt.ixx` and listed in `winrt_module_namespaces.h`. All namespace headers are still generated for textual inclusion. Example: `Windows.Foundation Windows.Storage` would include only those namespace families in the module. Passed as `-module_filter` to cppwinrt.exe. |
 | `BuildStlModules` | ClCompile metadata | `false` | Enables building `std.ixx`/`std.compat.ixx` so `import std;` works. This is orthogonal to `import winrt;` — you can use `import winrt;` without `import std;`. Set via **C/C++ > General > Build ISO C++23 Standard Library Modules** in the IDE, or `<BuildStlModules>true</BuildStlModules>` in `<ClCompile>` metadata. On v143, the underlying `StdModulesSupported` infrastructure requires `/std:c++latest`; on v145, `/std:c++20` suffices. |
 
 When `CppWinRTModuleBuild` or `CppWinRTModuleConsume` is true, the NuGet targets also automatically:
@@ -210,6 +211,7 @@ When `CppWinRTModuleBuild` or `CppWinRTModuleConsume` is true, the NuGet targets
 | `-fastabi` | Enable Fast ABI support |
 | `-verbose` | Show detailed progress information |
 | `-overwrite` | Overwrite generated component files |
+| `-module_filter <prefix>` | Filter which namespaces are included in `winrt.ixx`. Can be specified multiple times. All namespace headers are still generated; only the module contents and `winrt_module_namespaces.h` are filtered. Example: `-module_filter Windows.Foundation` includes `Windows.Foundation` and all sub-namespaces. |
 
 ## Source File Patterns
 

@@ -654,6 +654,7 @@ $(XamlMetaDataProviderPch)
         <PropertyGroup>
             <_CppwinrtParameters>$(CppWinRTCommandVerbosity) $(CppWinRTParameters)</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtInputs->'-in &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>
+            <_CppwinrtParameters Condition="'$(CppWinRTModuleFilter)' != ''">$(_CppwinrtParameters) -module_filter $(CppWinRTModuleFilter)</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) -out &quot;$(GeneratedFilesDir).&quot;</_CppwinrtParameters>
         </PropertyGroup>
 

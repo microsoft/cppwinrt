@@ -39,6 +39,7 @@ namespace cppwinrt
         { "fastabi", 0, 0 }, // Enable support for the Fast ABI
         { "ignore_velocity", 0, 0 }, // Ignore feature staging metadata and always include implementations
         { "synchronous", 0, 0 }, // Instructs cppwinrt to run on a single thread to avoid file system issues in batch builds
+        { "module_filter", 0, option::no_max, "<prefix>", "Filter which namespaces are included in winrt.ixx (headers are still generated for all)" },
     };
 
     static void print_usage(writer& w)
@@ -113,6 +114,11 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
         for (auto && exclude : args.values("exclude"))
         {
             settings.exclude.insert(exclude);
+        }
+
+        for (auto && ns : args.values("module_filter"))
+        {
+            settings.module_filter_include.insert(ns);
         }
 
         if (settings.license)
@@ -199,6 +205,14 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
     static void build_filters(cache const& c)
     {
+        // Build ixx_filter from -module-filter args.
+        // This allows filtering which namespaces go into winrt.ixx
+        // without affecting which headers are generated.
+        if (!settings.module_filter_include.empty())
+        {
+            settings.ixx_filter = { settings.module_filter_include, {} };
+        }
+
         if (settings.reference.empty())
         {
             return;
@@ -357,6 +371,23 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
                     continue;
                 }
 
+                // When -include/-exclude is specified, further filter which
+                // namespaces go into the ixx and winrt_module_namespaces.h.
+                // Headers are still generated for all namespaces (so consumers
+                // can #include them), but only filtered namespaces are in the module.
+                if (!settings.ixx_filter.empty() && !settings.ixx_filter.includes(members))
+                {
+                    // Still generate the headers, just don't add to ixx
+                    group.add([&, &ns = ns, &members = members]
+                    {
+                        write_namespace_0_h(ns, members);
+                        write_namespace_1_h(ns, members);
+                        write_namespace_2_h(ns, members);
+                        write_namespace_h(c, ns, members);
+                    });
+                    continue;
+                }
+
                 ixx.write("#include \"winrt/%.h\"\n", ns);
 
                 group.add([&, &ns = ns, &members = members]
@@ -389,6 +420,10 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
                     for (auto&&[ns, members] : c.namespaces())
                     {
                         if (!has_projected_types(members) || !settings.projection_filter.includes(members))
+                        {
+                            continue;
+                        }
+                        if (!settings.ixx_filter.empty() && !settings.ixx_filter.includes(members))
                         {
                             continue;
                         }

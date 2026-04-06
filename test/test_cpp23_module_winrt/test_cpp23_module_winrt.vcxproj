@@ -104,7 +104,7 @@
       <PreprocessorDefinitions>WINRT_IMPORT_STD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <PreBuildEvent>
-      <Command>$(CppWinRTDir)cppwinrt -in sdk -out "$(ProjectDir)Generated Files" -verbose</Command>
+      <Command>$(CppWinRTDir)cppwinrt -in sdk -out "$(ProjectDir)Generated Files" -module_filter Windows.Foundation -verbose</Command>
       <Message>Generating C++/WinRT SDK projection</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>

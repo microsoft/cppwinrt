@@ -71,8 +71,7 @@ C++/WinRT behavior can be customized with these project properties:
 | CppWinRTGenerateWindowsMetadata | true \| *false | Indicates whether this project produces Windows Metadata |
 | CppWinRTEnableDefaultPrivateFalse | true \| *false | Indicates whether this project uses C++/WinRT optimized default for copying binaries to the output directory |
 | CppWinRTModuleBuild | true \| *false | Generates the platform projection and compiles winrt.ixx as a C++20 module. See [C++20 Modules](#c20-modules) |
-| CppWinRTModuleConsume | true \| *false | Consumes a pre-built winrt module from a ProjectReference. See [C++20 Modules](#c20-modules) |
-\*Default value
+| CppWinRTModuleConsume | true \| *false | Consumes a pre-built winrt module from a ProjectReference. See [C++20 Modules](#c20-modules) || CppWinRTModuleFilter | *empty | Namespace prefixes to include in the module (e.g. `Windows.Foundation`). When empty, all platform namespaces are included. |\*Default value
 
 To customize common C++/WinRT project properties: 
 * right-click the project node

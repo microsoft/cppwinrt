@@ -28,6 +28,8 @@ namespace cppwinrt
 
         winmd::reader::filter projection_filter;
         winmd::reader::filter component_filter;
+        winmd::reader::filter ixx_filter; // Filters which namespaces go into winrt.ixx (from -module-filter)
+        std::set<std::string> module_filter_include; // Raw -module-filter values
 
         bool fastabi{};
         std::map<winmd::reader::TypeDef, winmd::reader::TypeDef> fastabi_cache;
