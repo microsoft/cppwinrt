@@ -39,6 +39,7 @@ namespace cppwinrt
         { "fastabi", 0, 0 }, // Enable support for the Fast ABI
         { "ignore_velocity", 0, 0 }, // Ignore feature staging metadata and always include implementations
         { "synchronous", 0, 0 }, // Instructs cppwinrt to run on a single thread to avoid file system issues in batch builds
+        { "module_filter", 0, option::no_max, "<prefix>", "Filter which namespaces are included in winrt.ixx (headers are still generated for all)" },
     };
 
     static void print_usage(writer& w)
@@ -113,6 +114,11 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
         for (auto && exclude : args.values("exclude"))
         {
             settings.exclude.insert(exclude);
+        }
+
+        for (auto && ns : args.values("module_filter"))
+        {
+            settings.module_filter_include.insert(ns);
         }
 
         if (settings.license)
@@ -199,6 +205,14 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
     static void build_filters(cache const& c)
     {
+        // Build ixx_filter from -module-filter args.
+        // This allows filtering which namespaces go into winrt.ixx
+        // without affecting which headers are generated.
+        if (!settings.module_filter_include.empty())
+        {
+            settings.ixx_filter = { settings.module_filter_include, {} };
+        }
+
         if (settings.reference.empty())
         {
             return;
@@ -344,14 +358,33 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             group.synchronous(args.exists("synchronous"));
             writer ixx;
             write_preamble(ixx);
-            ixx.write("module;\n");
+            ixx.write("module;\n#define WINRT_BUILD_MODULE\n");
             ixx.write(strings::base_includes);
-            ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n\n");
+            ixx.write(strings::base_std_includes);
+            ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n#define WINRT_IMPL_INCLUDES_HANDLED\n\n");
+            ixx.write("#include \"winrt/base.h\"\n\n");
 
             for (auto&&[ns, members] : c.namespaces())
             {
                 if (!has_projected_types(members) || !settings.projection_filter.includes(members))
                 {
+                    continue;
+                }
+
+                // When -include/-exclude is specified, further filter which
+                // namespaces go into the ixx and winrt_module_namespaces.h.
+                // Headers are still generated for all namespaces (so consumers
+                // can #include them), but only filtered namespaces are in the module.
+                if (!settings.ixx_filter.empty() && !settings.ixx_filter.includes(members))
+                {
+                    // Still generate the headers, just don't add to ixx
+                    group.add([&, &ns = ns, &members = members]
+                    {
+                        write_namespace_0_h(ns, members);
+                        write_namespace_1_h(ns, members);
+                        write_namespace_2_h(ns, members);
+                        write_namespace_h(c, ns, members);
+                    });
                     continue;
                 }
 
@@ -369,7 +402,37 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             if (settings.base)
             {
                 write_base_h();
+                write_base_macros_h();
                 ixx.flush_to_file(settings.output_folder + "winrt/winrt.ixx");
+
+                // Generate a companion header that declares which namespaces are
+                // in the module. Consumer projects include this (via WINRT_MODULE)
+                // so that cross-namespace #include guards can precisely skip only
+                // namespaces available from the module, while still including
+                // component and other non-module namespace deps.
+                // Only generated alongside the ixx (not for component projections
+                // which may also set -base but shouldn't produce module metadata).
+                if (!settings.component)
+                {
+                    writer module_ns;
+                    write_preamble(module_ns);
+                    module_ns.write("#pragma once\n");
+                    for (auto&&[ns, members] : c.namespaces())
+                    {
+                        if (!has_projected_types(members) || !settings.projection_filter.includes(members))
+                        {
+                            continue;
+                        }
+                        if (!settings.ixx_filter.empty() && !settings.ixx_filter.includes(members))
+                        {
+                            continue;
+                        }
+                        std::string ns_macro{ ns };
+                        std::replace(ns_macro.begin(), ns_macro.end(), '.', '_');
+                        module_ns.write("#define WINRT_MODULE_NS_%\n", ns_macro);
+                    }
+                    module_ns.flush_to_file(settings.output_folder + "winrt/winrt_module_namespaces.h");
+                }
             }
 
             if (settings.component)

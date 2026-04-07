@@ -92,7 +92,7 @@ jobs:
         compiler: [MSVC, clang-cl]
         arch: [x86, x64, arm64]
         config: [Debug, Release]
-        test_exe: [test, test_nocoro, test_cpp20, test_cpp20_no_sourcelocation, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
+        test_exe: [test, test_nocoro, test_cpp20, test_cpp20_no_sourcelocation, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none, test_cpp20_module]
         exclude:
           - arch: arm64
             config: Debug
@@ -100,6 +100,9 @@ jobs:
             arch: arm64
           - compiler: clang-cl
             config: Release
+          # Module tests require MSVC (clang-cl doesn't support C++20 modules)
+          - test_exe: test_cpp20_module
+            compiler: clang-cl
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v6
@@ -363,6 +366,30 @@ jobs:
       - name: Run nuget test
         run: |
           cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" test\nuget\NugetTest.sln
+
+      - name: Run module consumer app
+        if: matrix.arch == 'x64'
+        run: |
+          $target_configuration = "${{ matrix.config }}"
+          $platform_dir = "x64"
+          $app = "test\nuget\bin\$target_configuration\$platform_dir\TestModuleConsumerApp\TestModuleConsumerApp.exe"
+          if (Test-Path $app) {
+            & $app
+          } else {
+            echo "::warning::TestModuleConsumerApp not found at $app"
+          }
+
+      - name: Run module single-project app
+        if: matrix.arch == 'x64'
+        run: |
+          $target_configuration = "${{ matrix.config }}"
+          $platform_dir = "x64"
+          $app = "test\nuget\bin\$target_configuration\$platform_dir\TestModuleSingleProject\TestModuleSingleProject.exe"
+          if (Test-Path $app) {
+            & $app
+          } else {
+            echo "::warning::TestModuleSingleProject not found at $app"
+          }
 
   build-nuget:
     name: Build nuget package with MSVC

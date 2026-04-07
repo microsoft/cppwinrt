@@ -564,6 +564,37 @@ namespace cppwinrt
                 settings.brackets ? '>' : '\"');
         }
 
+        void write_root_include_guarded(std::string_view const& include)
+        {
+            // Extract the namespace from the include path. The include is either
+            // "NS" (for main headers) or "impl/NS.N" (for impl headers).
+            // The per-namespace guard macro is WINRT_MODULE_NS_<ns_with_underscores>.
+            std::string ns_part;
+            if (include.size() > 5 && include.substr(0, 5) == "impl/")
+            {
+                auto remainder = include.substr(5); // skip "impl/"
+                auto dot = remainder.rfind('.');
+                ns_part = std::string(remainder.substr(0, dot));
+            }
+            else
+            {
+                ns_part = std::string(include);
+            }
+            std::string ns_macro = ns_part;
+            std::replace(ns_macro.begin(), ns_macro.end(), '.', '_');
+
+            auto format = R"(#ifndef WINRT_MODULE_NS_%
+#include %winrt/%.h%
+#endif
+)";
+
+            write(format,
+                ns_macro,
+                settings.brackets ? '<' : '\"',
+                include,
+                settings.brackets ? '>' : '\"');
+        }
+
         void write_depends(std::string_view const& ns, char impl = 0)
         {
             if (impl)
@@ -573,6 +604,18 @@ namespace cppwinrt
             else
             {
                 write_root_include(ns);
+            }
+        }
+
+        void write_depends_guarded(std::string_view const& ns, char impl = 0)
+        {
+            if (impl)
+            {
+                write_root_include_guarded(write_temp("impl/%.%", ns, impl));
+            }
+            else
+            {
+                write_root_include_guarded(ns);
             }
         }
 
