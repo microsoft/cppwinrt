@@ -98,6 +98,18 @@ The version assert at the top of each namespace header:
 All module test projects use v143 toolset. `import std;` requires `BuildStlModules=true`
 and either v145 toolset or `/std:c++latest` on v143.
 
+## Module Namespace Filtering (-module_filter)
+
+The `-module_filter` cppwinrt.exe arg controls which namespaces go into
+`winrt.ixx` and `winrt_module_namespaces.h`. All namespace headers are still
+generated for textual inclusion — only the module contents are filtered.
+
+- NuGet property: `CppWinRTModuleFilter` (space-separated prefixes)
+- cppwinrt.exe arg: `-module_filter <prefix>` (can be repeated)
+- Implementation: `settings.ixx_filter` in `main.cpp`/`settings.h`
+- The repo test builders use `-module_filter Windows.Foundation` to speed up
+  the inner loop (5 namespaces instead of 339).
+
 ## NuGet Module Integration (test/nuget/)
 
 The NuGet targets split module support into two properties:
