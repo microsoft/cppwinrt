@@ -2,6 +2,7 @@
 
 using namespace winrt;
 using namespace Windows::Foundation;
+using namespace Windows::Storage;
 
 template<typename TResult>
 struct async_completion_source : implements<async_completion_source<TResult>, IAsyncOperation<TResult>, IAsyncInfo>
@@ -71,4 +72,36 @@ TEST_CASE("get")
     worker.detach();
 
     REQUIRE(acs.as<IAsyncOperation<uint32_t>>().get() == 0xDEADBEEF);
+}
+
+TEST_CASE("get_only_safe_from_non_presenting_sta")
+{
+    // Call a real WinRT async operation from an STA thread.
+    // This is the scenario the new API is designed for: an STA that is not
+    // presenting UI, where a synchronous blocking wait is safe.
+    std::exception_ptr failure{};
+    std::thread sta_thread([&failure]
+    {
+        try
+        {
+            winrt::init_apartment(winrt::apartment_type::single_threaded);
+
+            auto content = PathIO::ReadTextAsync(L"C:\\Windows\\win.ini").get_only_safe_from_non_presenting_sta();
+
+            REQUIRE(content.size() > 0);
+
+            winrt::uninit_apartment();
+        }
+        catch (...)
+        {
+            failure = std::current_exception();
+        }
+    });
+
+    sta_thread.join();
+
+    if (failure)
+    {
+        std::rethrow_exception(failure);
+    }
 }

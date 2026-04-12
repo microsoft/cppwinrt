@@ -1433,24 +1433,28 @@ namespace cppwinrt
         else if (type_name == "Windows.Foundation.IAsyncAction")
         {
             w.write(R"(        auto get() const;
+        auto get_only_safe_from_non_presenting_sta() const;
         auto wait_for(Windows::Foundation::TimeSpan const& timeout) const;
 )");
         }
         else if (type_name == "Windows.Foundation.IAsyncOperation`1")
         {
             w.write(R"(        auto get() const;
+        auto get_only_safe_from_non_presenting_sta() const;
         auto wait_for(Windows::Foundation::TimeSpan const& timeout) const;
 )");
         }
         else if (type_name == "Windows.Foundation.IAsyncActionWithProgress`1")
         {
             w.write(R"(        auto get() const;
+        auto get_only_safe_from_non_presenting_sta() const;
         auto wait_for(Windows::Foundation::TimeSpan const& timeout) const;
 )");
         }
         else if (type_name == "Windows.Foundation.IAsyncOperationWithProgress`2")
         {
             w.write(R"(        auto get() const;
+        auto get_only_safe_from_non_presenting_sta() const;
         auto wait_for(Windows::Foundation::TimeSpan const& timeout) const;
 )");
         }
