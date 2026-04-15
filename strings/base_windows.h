@@ -452,7 +452,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
     };
 }
 
-WINRT_EXPORT namespace winrt::impl
+namespace winrt::impl
 {
     template <typename Base, typename Derive, typename MemberPointer, typename ...Args>
     void consume_noexcept_remove_overload(Derive const* d, MemberPointer mptr, Args&&... args) noexcept
