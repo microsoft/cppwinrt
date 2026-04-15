@@ -123,6 +123,17 @@ namespace cppwinrt
         return { w, write_endif };
     }
 
+    static void write_pragma_warning_pop(writer& w)
+    {
+        w.write("#pragma warning(pop)\n");
+    }
+
+    [[nodiscard]] static finish_with wrap_suppress_deprecation_warnings(writer& w)
+    {
+        w.write("#pragma warning(push)\n#pragma warning(disable: 4996)\n");
+        return { w, write_pragma_warning_pop };
+    }
+
     static void write_parent_depends(writer& w, cache const& c, std::string_view const& type_namespace)
     {
         auto pos = type_namespace.rfind('.');
