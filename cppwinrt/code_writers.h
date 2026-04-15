@@ -248,7 +248,7 @@ namespace cppwinrt
         }
 
         bool type_deprecated = is_deprecated(type);
-        std::string_view deprecated_message;
+        std::string deprecated_message;
         if (type_deprecated)
         {
             deprecated_message = get_deprecated_message(type);
