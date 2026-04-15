@@ -8,17 +8,17 @@ namespace winrt::impl
 
     struct implements_delegate_base
     {
-        WINRT_IMPL_NOINLINE uint32_t increment_reference() noexcept
+        WINRT_IMPL_NOINLINE std::uint32_t increment_reference() noexcept
         {
             return ++m_references;
         }
 
-        WINRT_IMPL_NOINLINE uint32_t decrement_reference() noexcept
+        WINRT_IMPL_NOINLINE std::uint32_t decrement_reference() noexcept
         {
             return --m_references;
         }
 
-        WINRT_IMPL_NOINLINE uint32_t query_interface(guid const& id, void** result, unknown_abi* derivedAbiPtr, guid const& derivedId) noexcept
+        WINRT_IMPL_NOINLINE std::uint32_t query_interface(guid const& id, void** result, unknown_abi* derivedAbiPtr, guid const& derivedId) noexcept
         {
             if (id == derivedId || is_guid_of<Windows::Foundation::IUnknown>(id) || is_guid_of<IAgileObject>(id))
             {
@@ -47,17 +47,17 @@ namespace winrt::impl
         {
         }
 
-        int32_t __stdcall QueryInterface(guid const& id, void** result) noexcept final
+        std::int32_t __stdcall QueryInterface(guid const& id, void** result) noexcept final
         {
             return query_interface(id, result, static_cast<abi_t<T>*>(this), guid_of<T>());
         }
 
-        uint32_t __stdcall AddRef() noexcept final
+        std::uint32_t __stdcall AddRef() noexcept final
         {
             return increment_reference();
         }
 
-        uint32_t __stdcall Release() noexcept final
+        std::uint32_t __stdcall Release() noexcept final
         {
             auto const remaining = decrement_reference();
 
@@ -133,17 +133,17 @@ namespace winrt::impl
             }
         }
 
-        int32_t __stdcall QueryInterface(guid const& id, void** result) noexcept final
+        std::int32_t __stdcall QueryInterface(guid const& id, void** result) noexcept final
         {
             return query_interface(id, result, static_cast<unknown_abi*>(this), guid_of<Windows::Foundation::IUnknown>());
         }
 
-        uint32_t __stdcall AddRef() noexcept final
+        std::uint32_t __stdcall AddRef() noexcept final
         {
             return increment_reference();
         }
 
-        uint32_t __stdcall Release() noexcept final
+        std::uint32_t __stdcall Release() noexcept final
         {
             auto const remaining = decrement_reference();
 

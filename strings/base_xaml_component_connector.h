@@ -17,7 +17,7 @@ WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Markup
             D::InitializeComponent();
         }
 
-        void Connect(int32_t connectionId, winrt::Windows::Foundation::IInspectable const& target)
+        void Connect(std::int32_t connectionId, winrt::Windows::Foundation::IInspectable const& target)
         {
             if constexpr (m_has_connectable_base)
             {
@@ -30,7 +30,7 @@ WINRT_EXPORT namespace winrt::Windows::UI::Xaml::Markup
             D::Connect(connectionId, target);
         }
 
-        auto GetBindingConnector(int32_t connectionId, winrt::Windows::Foundation::IInspectable const& target)
+        auto GetBindingConnector(std::int32_t connectionId, winrt::Windows::Foundation::IInspectable const& target)
         {
             if constexpr (m_has_connectable_base)
             {

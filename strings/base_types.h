@@ -14,25 +14,25 @@ namespace winrt::impl
 
     struct com_callback_args
     {
-        uint32_t reserved1;
-        uint32_t reserved2;
+        std::uint32_t reserved1;
+        std::uint32_t reserved2;
         void* data;
     };
 
     template <typename T>
-    constexpr uint8_t hex_to_uint(T const c)
+    constexpr std::uint8_t hex_to_uint(T const c)
     {
         if (c >= '0' && c <= '9')
         {
-            return static_cast<uint8_t>(c - '0');
+            return static_cast<std::uint8_t>(c - '0');
         }
         else if (c >= 'A' && c <= 'F')
         {
-            return static_cast<uint8_t>(10 + c - 'A');
+            return static_cast<std::uint8_t>(10 + c - 'A');
         }
         else if (c >= 'a' && c <= 'f')
         {
-            return static_cast<uint8_t>(10 + c - 'a');
+            return static_cast<std::uint8_t>(10 + c - 'a');
         }
         else 
         {
@@ -41,20 +41,20 @@ namespace winrt::impl
     }
 
     template <typename T>
-    constexpr uint8_t hex_to_uint8(T const a, T const b)
+    constexpr std::uint8_t hex_to_uint8(T const a, T const b)
     {
         return (hex_to_uint(a) << 4) | hex_to_uint(b);
     }
 
-    constexpr uint16_t uint8_to_uint16(uint8_t a, uint8_t b)
+    constexpr std::uint16_t uint8_to_uint16(std::uint8_t a, std::uint8_t b)
     {
-        return (static_cast<uint16_t>(a) << 8) | static_cast<uint16_t>(b);
+        return (static_cast<std::uint16_t>(a) << 8) | static_cast<std::uint16_t>(b);
     }
 
-    constexpr uint32_t uint8_to_uint32(uint8_t a, uint8_t b, uint8_t c, uint8_t d)
+    constexpr std::uint32_t uint8_to_uint32(std::uint8_t a, std::uint8_t b, std::uint8_t c, std::uint8_t d)
     {
-        return (static_cast<uint32_t>(uint8_to_uint16(a, b)) << 16) |
-                static_cast<uint32_t>(uint8_to_uint16(c, d));
+        return (static_cast<std::uint32_t>(uint8_to_uint16(a, b)) << 16) |
+                static_cast<std::uint32_t>(uint8_to_uint16(c, d));
     }
 }
 
@@ -66,15 +66,15 @@ WINRT_EXPORT namespace winrt
 
     struct hresult
     {
-        int32_t value{};
+        std::int32_t value{};
 
         constexpr hresult() noexcept = default;
 
-        constexpr hresult(int32_t const value) noexcept : value(value)
+        constexpr hresult(std::int32_t const value) noexcept : value(value)
         {
         }
 
-        constexpr operator int32_t() const noexcept
+        constexpr operator std::int32_t() const noexcept
         {
             return value;
         }
@@ -133,14 +133,14 @@ WINRT_EXPORT namespace winrt
 
     public:
 
-        uint32_t Data1;
-        uint16_t Data2;
-        uint16_t Data3;
-        uint8_t  Data4[8];
+        std::uint32_t Data1;
+        std::uint16_t Data2;
+        std::uint16_t Data3;
+        std::uint8_t  Data4[8];
 
         guid() noexcept = default;
 
-        constexpr guid(uint32_t const Data1, uint16_t const Data2, uint16_t const Data3, std::array<uint8_t, 8> const& Data4) noexcept :
+        constexpr guid(std::uint32_t const Data1, std::uint16_t const Data2, std::uint16_t const Data3, std::array<std::uint8_t, 8> const& Data4) noexcept :
             Data1(Data1),
             Data2(Data2),
             Data3(Data3),
@@ -178,7 +178,7 @@ WINRT_EXPORT namespace winrt
 
     inline bool operator==(guid const& left, guid const& right) noexcept
     {
-        return !memcmp(&left, &right, sizeof(left));
+        return !std::memcmp(&left, &right, sizeof(left));
     }
 
     inline bool operator!=(guid const& left, guid const& right) noexcept
@@ -188,13 +188,13 @@ WINRT_EXPORT namespace winrt
 
     inline bool operator<(guid const& left, guid const& right) noexcept
     {
-        return memcmp(&left, &right, sizeof(left)) < 0;
+        return std::memcmp(&left, &right, sizeof(left)) < 0;
     }
 }
 
 WINRT_EXPORT namespace winrt::Windows::Foundation
 {
-    enum class TrustLevel : int32_t
+    enum class TrustLevel : std::int32_t
     {
         BaseTrust,
         PartialTrust,
@@ -204,7 +204,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
     struct IUnknown;
     struct IInspectable;
     struct IActivationFactory;
-    using TimeSpan = std::chrono::duration<int64_t, impl::filetime_period>;
+    using TimeSpan = std::chrono::duration<std::int64_t, impl::filetime_period>;
     using DateTime = std::chrono::time_point<clock, TimeSpan>;
 }
 
@@ -215,8 +215,8 @@ namespace winrt::impl
     using count_type = unsigned long;
     using guid_type = GUID;
 #else
-    using hresult_type = int32_t;
-    using count_type = uint32_t;
+    using hresult_type = std::int32_t;
+    using count_type = std::uint32_t;
     using guid_type = guid;
 #endif
 

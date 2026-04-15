@@ -232,12 +232,12 @@ namespace cppwinrt
             return member_value_guard(this, &writer::delegate_types, value);
         }
 
-        void write_value(int32_t value)
+        void write_value(std::int32_t value)
         {
             write_printf("%d", value);
         }
 
-        void write_value(uint32_t value)
+        void write_value(std::uint32_t value)
         {
             write_printf("%#0x", value);
         }
@@ -309,7 +309,7 @@ namespace cppwinrt
                 {
                     if ((name == "DateTime" || name == "TimeSpan") && ns == "Windows.Foundation")
                     {
-                        write("int64_t");
+                        write("std::int64_t");
                     }
                     else if ((name == "Point" || name == "Size" || name == "Rect") && ns == "Windows.Foundation")
                     {
@@ -473,14 +473,14 @@ namespace cppwinrt
                 {
                     if (type == ElementType::Boolean) { write("bool"); }
                     else if (type == ElementType::Char) { write("char16_t"); }
-                    else if (type == ElementType::I1) { write("int8_t"); }
-                    else if (type == ElementType::U1) { write("uint8_t"); }
-                    else if (type == ElementType::I2) { write("int16_t"); }
-                    else if (type == ElementType::U2) { write("uint16_t"); }
-                    else if (type == ElementType::I4) { write("int32_t"); }
-                    else if (type == ElementType::U4) { write("uint32_t"); }
-                    else if (type == ElementType::I8) { write("int64_t"); }
-                    else if (type == ElementType::U8) { write("uint64_t"); }
+                    else if (type == ElementType::I1) { write("std::int8_t"); }
+                    else if (type == ElementType::U1) { write("std::uint8_t"); }
+                    else if (type == ElementType::I2) { write("std::int16_t"); }
+                    else if (type == ElementType::U2) { write("std::uint16_t"); }
+                    else if (type == ElementType::I4) { write("std::int32_t"); }
+                    else if (type == ElementType::U4) { write("std::uint32_t"); }
+                    else if (type == ElementType::I8) { write("std::int64_t"); }
+                    else if (type == ElementType::U8) { write("std::uint64_t"); }
                     else if (type == ElementType::R4) { write("float"); }
                     else if (type == ElementType::R8) { write("double"); }
                     else if (type == ElementType::String)

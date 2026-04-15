@@ -105,6 +105,7 @@ set(SKIP_LARGE_PCH FALSE CACHE BOOL "Skip building large precompiled headers.")
 
 
 add_subdirectory(test)
+add_subdirectory(test_nocoro)
 add_subdirectory(test_cpp20)
 add_subdirectory(test_cpp20_no_sourcelocation)
 

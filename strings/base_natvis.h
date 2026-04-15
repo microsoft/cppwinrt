@@ -15,19 +15,19 @@ namespace winrt::impl
             {
                 bool b;
                 wchar_t c;
-                int8_t i1;
-                int16_t i2;
-                int32_t i4;
-                int64_t i8;
-                uint8_t u1;
-                uint16_t u2;
-                uint32_t u4;
-                uint64_t u8;
+                std::int8_t i1;
+                std::int16_t i2;
+                std::int32_t i4;
+                std::int64_t i8;
+                std::uint8_t u1;
+                std::uint16_t u2;
+                std::uint32_t u4;
+                std::uint64_t u8;
                 float r4;
                 double r8;
                 guid g;
                 void* s;
-                uint8_t v[1024];
+                std::uint8_t v[1024];
             }
             value;
             value.s = 0;
@@ -38,16 +38,16 @@ namespace winrt::impl
                 {
                     void* base_address;
                     void* allocation_base;
-                    uint32_t allocation_protect;
+                    std::uint32_t allocation_protect;
 #ifdef _WIN64
-                    uint32_t __alignment1;
+                    std::uint32_t __alignment1;
 #endif
-                    uintptr_t region_size;
-                    uint32_t state;
-                    uint32_t protect;
-                    uint32_t type;
+                    std::uintptr_t region_size;
+                    std::uint32_t state;
+                    std::uint32_t protect;
+                    std::uint32_t type;
 #ifdef _WIN64
-                    uint32_t __alignment2;
+                    std::uint32_t __alignment2;
 #endif
                 };
                 memory_basic_information info;
@@ -66,7 +66,7 @@ namespace winrt::impl
                             // validate method pointer is executable
                             if ((WINRT_IMPL_VirtualQuery(vfunc, &info, sizeof(info)) != 0) && ((info.protect & 0xF0) != 0))
                             {
-                                typedef int32_t(__stdcall inspectable_abi:: * PropertyAccessor)(void*);
+                                typedef std::int32_t(__stdcall inspectable_abi:: * PropertyAccessor)(void*);
                                 (pinsp->**(PropertyAccessor*)&vfunc)(&value);
                                 pinsp->Release();
                             }

@@ -16,7 +16,7 @@ char const * const WINRT_version = "C++/WinRT version:" CPPWINRT_VERSION;
 
 WINRT_EXPORT namespace winrt
 {
-    template <size_t BaseSize, size_t ComponentSize>
+    template <std::size_t BaseSize, std::size_t ComponentSize>
     constexpr bool check_version(char const(&base)[BaseSize], char const(&component)[ComponentSize]) noexcept
     {
         if constexpr (BaseSize != ComponentSize)
@@ -24,7 +24,7 @@ WINRT_EXPORT namespace winrt
             return false;
         }
 
-        for (size_t i = 0; i != BaseSize - 1; ++i)
+        for (std::size_t i = 0; i != BaseSize - 1; ++i)
         {
             if (base[i] != component[i])
             {

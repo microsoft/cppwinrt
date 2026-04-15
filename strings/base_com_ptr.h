@@ -19,19 +19,19 @@ namespace winrt::impl
     };
 
     template <typename T, typename F, typename...Args>
-    int32_t capture_to(void**result, F function, Args&& ...args)
+    std::int32_t capture_to(void**result, F function, Args&& ...args)
     {
         return function(args..., guid_of<T>(), capture_decay{ result });
     }
 
     template <typename T, typename O, typename M, typename...Args, std::enable_if_t<std::is_class_v<O> || std::is_union_v<O>, int> = 0>
-    int32_t capture_to(void** result, O* object, M method, Args&& ...args)
+    std::int32_t capture_to(void** result, O* object, M method, Args&& ...args)
     {
         return (object->*method)(args..., guid_of<T>(), capture_decay{ result });
     }
 
     template <typename T, typename O, typename M, typename...Args>
-    int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&& ...args);
+    std::int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&& ...args);
 }
 
 WINRT_EXPORT namespace winrt
@@ -352,7 +352,7 @@ WINRT_EXPORT namespace winrt
 namespace winrt::impl
 {
     template <typename T, typename O, typename M, typename...Args>
-    int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&& ...args)
+    std::int32_t capture_to(void** result, com_ptr<O> const& object, M method, Args&& ...args)
     {
         return (object.get()->*(method))(args..., guid_of<T>(), capture_decay{ result });
     }
