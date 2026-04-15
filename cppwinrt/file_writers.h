@@ -181,51 +181,45 @@ namespace cppwinrt
         writer w;
         w.type_namespace = ns;
 
-        // Suppress C4996 (deprecated) in internal projection implementation code.
-        // The deprecated redeclarations below (outside the suppression) trigger warnings in user code.
+        // Internal projection implementation code.
+        // Deprecation warnings (C4996) are suppressed via #pragma warning(push/disable)
+        // written in the preamble, covering both the included headers and this section.
+        // The [[deprecated]] attributes on forward declarations in .0.h headers trigger
+        // warnings only in user code (after the #pragma warning(pop) below).
         {
-            auto wrap_deprecation = wrap_suppress_deprecation_warnings(w);
-
-            {
-                auto wrap_impl = wrap_impl_namespace(w);
-                w.write_each<write_consume_definitions>(members.interfaces);
-                w.param_names = true;
-                w.write_each<write_delegate_implementation>(members.delegates);
-                w.write_each<write_produce>(members.interfaces, c);
-                w.write_each<write_dispatch_overridable>(members.classes);
-            }
-            {
-                auto wrap_type = wrap_type_namespace(w, ns);
-                w.write_each<write_enum_operators>(members.enums);
-                w.write_each<write_class_definitions>(members.classes);
-                w.write_each<write_fast_class_base_definitions>(members.classes);
-                w.write_each<write_delegate_definition>(members.delegates);
-                w.write_each<write_interface_override_methods>(members.classes);
-                w.write_each<write_class_override>(members.classes);
-            }
-            {
-                auto wrap_std = wrap_std_namespace(w);
-
-                {
-                    auto wrap_lean = wrap_lean_and_mean(w);
-                    w.write_each<write_std_hash>(members.interfaces);
-                    w.write_each<write_std_hash>(members.classes);
-                }
-                {
-                    auto wrap_format = wrap_ifdef(w, "__cpp_lib_format");
-                    w.write_each<write_std_formatter>(members.interfaces);
-                    w.write_each<write_std_formatter>(members.classes);   
-                }
-            }
+            auto wrap_impl = wrap_impl_namespace(w);
+            w.write_each<write_consume_definitions>(members.interfaces);
+            w.param_names = true;
+            w.write_each<write_delegate_implementation>(members.delegates);
+            w.write_each<write_produce>(members.interfaces, c);
+            w.write_each<write_dispatch_overridable>(members.classes);
         }
-
         {
             auto wrap_type = wrap_type_namespace(w, ns);
-            w.write_each<write_deprecated_redeclaration>(members.interfaces);
-            w.write_each<write_deprecated_redeclaration>(members.classes);
-            w.write_each<write_deprecated_redeclaration>(members.delegates);
-            w.write_each<write_deprecated_redeclaration>(members.structs);
+            w.write_each<write_enum_operators>(members.enums);
+            w.write_each<write_class_definitions>(members.classes);
+            w.write_each<write_fast_class_base_definitions>(members.classes);
+            w.write_each<write_delegate_definition>(members.delegates);
+            w.write_each<write_interface_override_methods>(members.classes);
+            w.write_each<write_class_override>(members.classes);
         }
+        {
+            auto wrap_std = wrap_std_namespace(w);
+
+            {
+                auto wrap_lean = wrap_lean_and_mean(w);
+                w.write_each<write_std_hash>(members.interfaces);
+                w.write_each<write_std_hash>(members.classes);
+            }
+            {
+                auto wrap_format = wrap_ifdef(w, "__cpp_lib_format");
+                w.write_each<write_std_formatter>(members.interfaces);
+                w.write_each<write_std_formatter>(members.classes);   
+            }
+        }
+
+        // End deprecation suppression - user code after this gets deprecation warnings.
+        w.write("#pragma warning(pop)\n");
 
         write_namespace_special(w, ns);
 
@@ -234,6 +228,11 @@ namespace cppwinrt
         write_preamble(w);
         write_open_file_guard(w, ns);
         write_version_assert(w);
+
+        // Suppress C4996 (deprecated) for included headers and internal implementation code.
+        // The pop is written in the body section above.
+        w.write("#pragma warning(push)\n#pragma warning(disable: 4996)\n");
+
         write_parent_depends(w, c, ns);
 
         for (auto&& depends : w.depends)

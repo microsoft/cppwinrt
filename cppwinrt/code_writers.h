@@ -123,17 +123,6 @@ namespace cppwinrt
         return { w, write_endif };
     }
 
-    static void write_pragma_warning_pop(writer& w)
-    {
-        w.write("#pragma warning(pop)\n");
-    }
-
-    [[nodiscard]] static finish_with wrap_suppress_deprecation_warnings(writer& w)
-    {
-        w.write("#pragma warning(push)\n#pragma warning(disable: 4996)\n");
-        return { w, write_pragma_warning_pop };
-    }
-
     static void write_parent_depends(writer& w, cache const& c, std::string_view const& type_namespace)
     {
         auto pos = type_namespace.rfind('.');
@@ -209,10 +198,9 @@ namespace cppwinrt
     template <typename T>
     static void write_deprecated_impl(writer& w, T const& row)
     {
-        if (auto attr = get_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute"))
+        if (is_deprecated(row))
         {
-            auto message = get_attribute_value<std::string_view>(attr, 0);
-            w.write("[[deprecated(\"%\")]] ", message);
+            w.write("[[deprecated(\"%\")]] ", get_deprecated_message(row));
         }
     }
 
@@ -224,20 +212,6 @@ namespace cppwinrt
     static void write_deprecated_field(writer& w, Field const& field)
     {
         write_deprecated_impl(w, field);
-    }
-
-    static void write_deprecated_redeclaration(writer& w, TypeDef const& type)
-    {
-        if (is_removed(type))
-        {
-            return;
-        }
-
-        if (auto attr = get_attribute(type, "Windows.Foundation.Metadata", "DeprecatedAttribute"))
-        {
-            auto message = get_attribute_value<std::string_view>(attr, 0);
-            w.write("    struct [[deprecated(\"%\")]] %;\n", message, type.TypeName());
-        }
     }
 
     static void write_enum_field(writer& w, Field const& field, bool parent_deprecated, std::string_view parent_deprecated_message)
@@ -422,6 +396,12 @@ namespace cppwinrt
 
         if (empty(generics))
         {
+            if (!is_removed(type) && is_deprecated(type))
+            {
+                w.write("    struct [[deprecated(\"%\")]] %;\n", get_deprecated_message(type), type_name.name);
+                return;
+            }
+
             auto format = R"(    struct %;
 )";
 

@@ -248,11 +248,30 @@ namespace cppwinrt
         return has_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute");
     }
 
+    inline std::string escape_cpp_string_literal(std::string_view input)
+    {
+        std::string result;
+        result.reserve(input.size());
+        for (char c : input)
+        {
+            switch (c)
+            {
+            case '\\': result += "\\\\"; break;
+            case '"': result += "\\\""; break;
+            case '\n': result += "\\n"; break;
+            case '\r': result += "\\r"; break;
+            case '\t': result += "\\t"; break;
+            default: result += c; break;
+            }
+        }
+        return result;
+    }
+
     template <typename T>
     auto get_deprecated_message(T const& row)
     {
         auto attr = get_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute");
-        return get_attribute_value<std::string_view>(attr, 0);
+        return escape_cpp_string_literal(get_attribute_value<std::string_view>(attr, 0));
     }
 
     template <typename T>
