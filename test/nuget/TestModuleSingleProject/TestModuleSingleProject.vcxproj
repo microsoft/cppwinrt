@@ -101,6 +101,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="include_test.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="readme.txt">

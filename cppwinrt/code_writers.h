@@ -37,21 +37,28 @@ namespace cppwinrt
 
     static void write_version_assert(writer& w)
     {
-        // When building the module (WINRT_BUILD_MODULE, inside winrt.ixx) or
-        // consuming the module (WINRT_MODULE, project-wide), base.h types are
-        // already available. Macros don't cross module boundaries, so include
-        // base_macros.h for the version check and other macros.
-        // When WINRT_MODULE is defined, also include winrt_module_namespaces.h
-        // which declares per-namespace macros (WINRT_MODULE_NS_*) so that
-        // cross-namespace #include guards can precisely skip only the namespaces
-        // that are in the module.
-        auto format_guard = R"(#if defined(WINRT_BUILD_MODULE) || defined(WINRT_MODULE)
+        // WINRT_BUILD_MODULE — defined in winrt.ixx's global module fragment.
+        //   base.h types are compiled into the module; only need base_macros.h
+        //   for preprocessor macros that don't cross module boundaries.
+        //
+        // WINRT_MODULE_IMPORTED — defined per-TU after 'import winrt;' is done
+        //   (e.g. by generated .g.h files). Types come from the module import;
+        //   need base_macros.h for macros AND winrt_module_namespaces.h to skip
+        //   cross-namespace #includes for namespaces already in the module.
+        //
+        // Neither — traditional header mode; include full base.h.
+        //
+        // Note: WINRT_MODULE is a project-level macro that controls whether
+        // .g.h/.g.cpp files use 'import winrt;' vs '#include'. It does NOT
+        // control header behavior here — a TU with WINRT_MODULE defined but
+        // no 'import winrt;' should still get base.h via normal #include.
+        auto format_guard = R"(#if defined(WINRT_BUILD_MODULE) || defined(WINRT_MODULE_IMPORTED)
 #include "winrt/base_macros.h"
 #endif
-#if defined(WINRT_MODULE) && !defined(WINRT_BUILD_MODULE)
+#if defined(WINRT_MODULE_IMPORTED) && !defined(WINRT_BUILD_MODULE)
 #include "winrt/winrt_module_namespaces.h"
 #endif
-#if !defined(WINRT_BUILD_MODULE) && !defined(WINRT_MODULE)
+#if !defined(WINRT_BUILD_MODULE) && !defined(WINRT_MODULE_IMPORTED)
 )";
         auto format_end = R"(#endif
 )";

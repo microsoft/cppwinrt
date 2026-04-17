@@ -138,6 +138,7 @@ namespace cppwinrt
     {
         w.write("#ifdef WINRT_MODULE\n");
         w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\nimport winrt;\n");
+        w.write("#define WINRT_MODULE_IMPORTED\n");
         w.write("#else\n");
         w.write_root_include("base");
         w.write("#endif\n");

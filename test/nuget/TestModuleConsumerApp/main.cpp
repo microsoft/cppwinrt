@@ -1,6 +1,12 @@
 import std;
 import winrt;
 
+// After importing the module, define WINRT_MODULE_IMPORTED so that
+// subsequently-included namespace headers skip base.h (which would
+// conflict with 'import std;' via transitive platform header includes).
+#define WINRT_MODULE_IMPORTED
+#include <winrt/winrt_module_namespaces.h>
+
 // Include just the root component namespace header — NOT the Widgets namespace.
 // CreateWidget() returns a Widgets::Widget, but we can call it and hold the
 // result without including the Widgets header, as long as we don't call

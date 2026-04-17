@@ -164,11 +164,14 @@ Generated namespace headers use per-namespace guards for cross-namespace deps:
 #include "winrt/impl/TestModuleComponent.2.h"          // self-namespace: never guarded
 ```
 
-When `WINRT_MODULE` is defined, the version assert at the top of each namespace
-header includes `winrt_module_namespaces.h`, making the `WINRT_MODULE_NS_*`
-macros available for the guards. When `WINRT_BUILD_MODULE` is defined (inside
-winrt.ixx), `winrt_module_namespaces.h` is NOT included, so all cross-namespace
-deps resolve normally — the ixx needs them to build the module.
+When `WINRT_MODULE_IMPORTED` is defined (per-TU, after `import winrt;` has been
+done), the version assert at the top of each namespace header includes
+`winrt_module_namespaces.h`, making the `WINRT_MODULE_NS_*` macros available for
+the guards. When `WINRT_BUILD_MODULE` is defined (inside winrt.ixx),
+`winrt_module_namespaces.h` is NOT included, so all cross-namespace deps resolve
+normally — the ixx needs them to build the module. When neither macro is defined
+(even if `WINRT_MODULE` is set project-wide), namespace headers fall back to
+traditional `#include "winrt/base.h"` behavior.
 
 **Implementation**: `write_root_include_guarded()` in `type_writers.h` extracts
 the namespace from the include path and emits `#ifndef WINRT_MODULE_NS_<ns>`.
@@ -178,16 +181,19 @@ Used by:
 
 `write_version_assert()` in `code_writers.h`:
 ```cpp
-#if defined(WINRT_BUILD_MODULE) || defined(WINRT_MODULE)
+#if defined(WINRT_BUILD_MODULE) || defined(WINRT_MODULE_IMPORTED)
 #include "winrt/base_macros.h"
 #endif
-#if defined(WINRT_MODULE) && !defined(WINRT_BUILD_MODULE)
+#if defined(WINRT_MODULE_IMPORTED) && !defined(WINRT_BUILD_MODULE)
 #include "winrt/winrt_module_namespaces.h"
 #endif
-#if !defined(WINRT_BUILD_MODULE) && !defined(WINRT_MODULE)
+#if !defined(WINRT_BUILD_MODULE) && !defined(WINRT_MODULE_IMPORTED)
 #include "winrt/base.h"
 #endif
 ```
+
+Note: `WINRT_MODULE` (project-level) does NOT trigger header-level changes.
+Only `WINRT_MODULE_IMPORTED` (TU-level, set after `import winrt;`) does.
 
 **winrt_module_namespaces.h generation**: In `main.cpp`, emitted alongside
 `winrt.ixx` when `settings.base` is true and `settings.component` is false.
@@ -237,7 +243,9 @@ targets or manually). The code generator always emits both code paths with
 
 **Source**: `write_module_g_cpp()` in `component_writers.h`
 
-The generated code uses `#ifdef WINRT_MODULE` to select between import and include:
+The generated code uses `#ifdef WINRT_MODULE` to select between import and include,
+and defines `WINRT_MODULE_IMPORTED` after the import so that subsequently-included
+namespace headers know types are available from the module:
 
 ```cpp
 #ifdef WINRT_MODULE
@@ -245,6 +253,7 @@ The generated code uses `#ifdef WINRT_MODULE` to select between import and inclu
 import std;
 #endif
 import winrt;
+#define WINRT_MODULE_IMPORTED
 #else
 #include "winrt/base.h"
 #endif
@@ -261,15 +270,19 @@ import winrt;
 import std;
 #endif
 import winrt;
+#define WINRT_MODULE_IMPORTED
+#include "winrt/winrt_module_namespaces.h"
 #endif
 #include "winrt/test_component.h"  // always emitted
 ```
 
-When `WINRT_MODULE` is defined, the version assert in each included header
-pulls in `winrt_module_namespaces.h`, which provides per-namespace
-`WINRT_MODULE_NS_*` macros. Platform namespace deps are skipped by these
-guards; component cross-namespace deps are included normally.
-When `WINRT_MODULE` is not defined, the headers pull in `base.h` transitively.
+When `WINRT_MODULE` is defined, the `.g.h` does `import winrt;` and then defines
+`WINRT_MODULE_IMPORTED`. This TU-level macro tells subsequently-included namespace
+headers to use `base_macros.h` instead of `base.h` and to consult
+`winrt_module_namespaces.h` for per-namespace `WINRT_MODULE_NS_*` guards. Platform
+namespace deps are skipped by these guards; component cross-namespace deps are
+included normally. When `WINRT_MODULE` is not defined, the headers pull in `base.h`
+transitively.
 
 ### Toaster.g.cpp (factory + optional optimized constructors)
 

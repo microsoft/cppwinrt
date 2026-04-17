@@ -569,6 +569,10 @@ namespace cppwinrt
             // Extract the namespace from the include path. The include is either
             // "NS" (for main headers) or "impl/NS.N" (for impl headers).
             // The per-namespace guard macro is WINRT_MODULE_NS_<ns_with_underscores>.
+            // When a namespace is in the module, its headers are skipped to avoid
+            // redeclaration errors (enums, name_v specializations) that MSVC can't
+            // merge even with extern "C++" wrapping. Headers for namespaces NOT
+            // in the module are always included.
             std::string ns_part;
             if (include.size() > 5 && include.substr(0, 5) == "impl/")
             {

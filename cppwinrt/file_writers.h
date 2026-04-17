@@ -285,16 +285,16 @@ import std;
 
         // In module mode (WINRT_MODULE defined), SDK types and exported impl
         // templates come from 'import winrt;'. Component-specific types come
-        // from the component's own projection headers. The version assert in
-        // each header includes winrt_module_namespaces.h (when WINRT_MODULE is
-        // defined), which provides per-namespace WINRT_MODULE_NS_* macros.
-        // Cross-namespace deps use these per-namespace guards: platform deps
-        // (in the module) are skipped, component deps (not in the module) are
-        // included normally.
+        // from the component's own projection headers.
+        // After importing the module, define WINRT_MODULE_IMPORTED so that
+        // namespace headers included later (for component deps) know to skip
+        // cross-namespace deps already available from the module.
         w.write("#ifdef WINRT_MODULE\n");
         w.write("#include \"winrt/base_macros.h\"\n");
         w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\n");
         w.write("import winrt;\n");
+        w.write("#define WINRT_MODULE_IMPORTED\n");
+        w.write("#include \"winrt/winrt_module_namespaces.h\"\n");
         w.write("#endif\n");
         for (auto&& depends : w.depends)
         {
