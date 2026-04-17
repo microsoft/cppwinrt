@@ -860,7 +860,7 @@ WINRT_EXPORT namespace winrt
 
             void operator()(T const& sender, Windows::Foundation::AsyncStatus operation_status) noexcept
             {
-                auto sender_abi = *(impl::unknown_abi**)&sender;
+                auto sender_abi = static_cast<impl::unknown_abi*>(*impl::abi_cast(sender));
 
                 if (nullptr == _InterlockedCompareExchangePointer(impl::abi_cast(result), sender_abi, nullptr))
                 {
