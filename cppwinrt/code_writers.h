@@ -362,7 +362,10 @@ namespace cppwinrt
 
         if (get_category(type) == category::enum_type)
         {
-            if (is_removed(type)) return;
+            if (is_removed(type))
+            {
+                return;
+            }
             auto format = R"(    enum class % : %;
 )";
 
@@ -455,7 +458,10 @@ namespace cppwinrt
 
     static void write_category(writer& w, TypeDef const& type, std::string_view const& category)
     {
-        if (is_removed(type)) return;
+        if (is_removed(type))
+        {
+            return;
+        }
         auto generics = type.GenericParam();
 
         if (empty(generics))
@@ -497,7 +503,10 @@ namespace cppwinrt
 
     static void write_name(writer& w, TypeDef const& type)
     {
-        if (is_removed(type)) return;
+        if (is_removed(type))
+        {
+            return;
+        }
         type_name type_name(type);
         auto generics = type.GenericParam();
 
@@ -524,7 +533,10 @@ namespace cppwinrt
 
     static void write_guid(writer& w, TypeDef const& type)
     {
-        if (is_removed(type)) return;
+        if (is_removed(type))
+        {
+            return;
+        }
         auto attribute = get_attribute(type, "Windows.Foundation.Metadata", "GuidAttribute");
 
         if (!attribute)
@@ -564,7 +576,10 @@ namespace cppwinrt
 
     static void write_default_interface(writer& w, TypeDef const& type)
     {
-        if (is_removed(type)) return;
+        if (is_removed(type))
+        {
+            return;
+        }
         if (auto default_interface = get_default_interface(type))
         {
             auto format = R"(    template <> struct default_interface<%>{ using type = %; };
@@ -575,7 +590,10 @@ namespace cppwinrt
 
     static void write_struct_category(writer& w, TypeDef const& type)
     {
-        if (is_removed(type)) return;
+        if (is_removed(type))
+        {
+            return;
+        }
         auto format = R"(    template <> struct category<%>{ using type = struct_category<%>; };
 )";
 
@@ -3279,7 +3297,8 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
                 continue;
             }
 
-            method_signature signature{ method };            auto method_name = get_name(method);
+            method_signature signature{ method };
+            auto method_name = get_name(method);
             auto async_types_guard = w.push_async_types(signature.is_async());
 
             if (is_opt_type)

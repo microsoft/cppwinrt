@@ -290,7 +290,7 @@ namespace cppwinrt
         if (args.size() >= 2)
         {
             // DeprecationType enum: Deprecate=0, Remove=1
-            return get_integer_attribute<int32_t>(args[1]) == 1;
+            return get_integer_attribute<std::int32_t>(args[1]) == 1;
         }
         return false;
     }
