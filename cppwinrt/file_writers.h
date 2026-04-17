@@ -175,7 +175,7 @@ import std;
             w.write_depends_guarded(depends.first, '0');
         }
 
-        w.write_depends(w.type_namespace, '0');
+        w.write_depends_guarded(w.type_namespace, '0');
         w.save_header('1');
     }
 
@@ -205,7 +205,7 @@ import std;
             w.write_depends_guarded(depends.first, impl);
         }
 
-        w.write_depends(w.type_namespace, '1');
+        w.write_depends_guarded(w.type_namespace, '1');
         w.save_header('2');
     }
 
@@ -248,10 +248,18 @@ import std;
 
         write_namespace_special(w, ns);
 
+        // Close the self-namespace body guard opened after the module guard (after swap).
+        {
+            std::string ns_macro{ ns };
+            std::replace(ns_macro.begin(), ns_macro.end(), '.', '_');
+            w.write("#endif // !WINRT_MODULE_NS_% (body guard)\n", ns_macro);
+        }
+
         write_close_file_guard(w);
         w.swap();
         write_preamble(w);
         write_open_file_guard(w, ns);
+        write_module_guard(w);
         write_version_assert(w);
         write_parent_depends(w, c, ns);
 
@@ -260,7 +268,19 @@ import std;
             w.write_depends_guarded(depends.first, '2');
         }
 
-        w.write_depends(w.type_namespace, '2');
+        w.write_depends_guarded(w.type_namespace, '2');
+
+        // When this namespace is in the module and WINRT_MODULE is defined,
+        // the module guard already auto-imported the module, making all types
+        // available. Guard the entire body (consume definitions, class
+        // definitions, produce implementations, etc.) to avoid redefining
+        // types already exported from the module.
+        {
+            std::string ns_macro{ ns };
+            std::replace(ns_macro.begin(), ns_macro.end(), '.', '_');
+            w.write("#ifndef WINRT_MODULE_NS_% // Skip body if namespace is in the module.\n", ns_macro);
+        }
+
         w.save_header();
     }
 
@@ -283,19 +303,10 @@ import std;
         write_preamble(w);
         write_include_guard(w);
 
-        // In module mode (WINRT_MODULE defined), SDK types and exported impl
-        // templates come from 'import winrt;'. Component-specific types come
-        // from the component's own projection headers.
-        // After importing the module, define WINRT_MODULE_IMPORTED so that
-        // namespace headers included later (for component deps) know to skip
-        // cross-namespace deps already available from the module.
-        w.write("#ifdef WINRT_MODULE\n");
-        w.write("#include \"winrt/base_macros.h\"\n");
-        w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\n");
-        w.write("import winrt;\n");
-        w.write("#define WINRT_MODULE_IMPORTED\n");
-        w.write("#include \"winrt/winrt_module_namespaces.h\"\n");
-        w.write("#endif\n");
+        // Component .g.h includes the component's own namespace headers, which
+        // contain a module guard that handles base.h / import winrt; resolution
+        // and loads winrt_module_namespaces.h. No WINRT_MODULE-specific logic
+        // is needed here — the namespace headers take care of it.
         for (auto&& depends : w.depends)
         {
             w.write_depends(depends.first);

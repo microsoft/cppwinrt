@@ -566,13 +566,11 @@ namespace cppwinrt
 
         void write_root_include_guarded(std::string_view const& include)
         {
-            // Extract the namespace from the include path. The include is either
-            // "NS" (for main headers) or "impl/NS.N" (for impl headers).
-            // The per-namespace guard macro is WINRT_MODULE_NS_<ns_with_underscores>.
-            // When a namespace is in the module, its headers are skipped to avoid
-            // redeclaration errors (enums, name_v specializations) that MSVC can't
-            // merge even with extern "C++" wrapping. Headers for namespaces NOT
-            // in the module are always included.
+            // Guard cross-namespace and self-namespace #includes with per-namespace
+            // macros from winrt_module_namespaces.h. When a namespace is in the
+            // winrt module, its headers are skipped — those types are already
+            // available via 'import winrt;'. Headers for namespaces NOT in the
+            // module are always included.
             std::string ns_part;
             if (include.size() > 5 && include.substr(0, 5) == "impl/")
             {
@@ -587,16 +585,17 @@ namespace cppwinrt
             std::string ns_macro = ns_part;
             std::replace(ns_macro.begin(), ns_macro.end(), '.', '_');
 
-            auto format = R"(#ifndef WINRT_MODULE_NS_%
+            auto format = R"(#ifndef WINRT_MODULE_NS_% // Skip if namespace is in the module.
 #include %winrt/%.h%
-#endif
+#endif // !WINRT_MODULE_NS_%
 )";
 
             write(format,
                 ns_macro,
                 settings.brackets ? '<' : '\"',
                 include,
-                settings.brackets ? '>' : '\"');
+                settings.brackets ? '>' : '\"',
+                ns_macro);
         }
 
         void write_depends(std::string_view const& ns, char impl = 0)

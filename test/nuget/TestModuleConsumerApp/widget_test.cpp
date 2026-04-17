@@ -1,11 +1,6 @@
 import std;
 import winrt;
 
-// After importing the module, define WINRT_MODULE_IMPORTED so that
-// subsequently-included namespace headers skip base.h.
-#define WINRT_MODULE_IMPORTED
-#include <winrt/winrt_module_namespaces.h>
-
 // This TU includes BOTH component namespace headers so it can call methods
 // on the Widget type returned by CreateWidget().
 #include <winrt/TestModuleComponent.h>

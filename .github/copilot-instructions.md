@@ -55,7 +55,7 @@ When modifying strings/*.h files:
 
 - `text_writer.h` — Base writer with `%` placeholder substitution
 - `type_writers.h` — The `writer` class with `write_root_include`, `write_depends`, etc.
-- `code_writers.h` — High-level writers: `write_version_assert`, `write_open_file_guard`, etc.
+- `code_writers.h` — High-level writers: `write_module_guard`, `write_version_assert`, `write_open_file_guard`, etc.
 - `file_writers.h` — File-level orchestration: `write_base_h`, `write_namespace_h`, etc.
 - `component_writers.h` — Component stub generation: `write_module_g_cpp`, `write_component_g_h`, etc.
 

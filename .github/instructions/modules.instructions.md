@@ -30,12 +30,12 @@ targets (or manually for non-NuGet projects).
 - `#else`: uses `#include "winrt/base.h"`
 
 ### .g.h (component base template)
-- `#ifdef WINRT_MODULE`: emits `#include "winrt/base_macros.h"` for macros,
-  conditional `import std;`, `import winrt;`, then `#define WINRT_MODULE_IMPORTED`
-  and `#include "winrt/winrt_module_namespaces.h"`.
-- Always includes component's own headers. Platform deps are skipped by
-  per-namespace `WINRT_MODULE_NS_*` guards; component cross-namespace deps
-  are included normally.
+- Always includes component's own namespace headers. The module guard inside
+  each namespace header auto-imports the winrt module (guarded by
+  `WINRT_MODULE_IMPORTED`) and loads `winrt_module_namespaces.h`. No
+  WINRT_MODULE-specific logic is needed in the .g.h itself.
+- Platform deps are skipped by per-namespace `WINRT_MODULE_NS_*` guards;
+  component cross-namespace deps are included normally.
 
 ### .g.cpp (factory + optimized constructors)
 - Always emits the `winrt_make_*` factory function
@@ -44,23 +44,21 @@ targets (or manually for non-NuGet projects).
 
 ## Macro Scoping
 
-Three macros and one set of per-namespace macros control behavior:
+Two project-level macros, one internal guard, and per-namespace macros:
 
 - `WINRT_BUILD_MODULE` — Defined by cppwinrt inside winrt.ixx's global module
-  fragment. Controls base.h skip in version assert. Does NOT include
+  fragment. Controls base.h skip in the module guard. Does NOT include
   `winrt_module_namespaces.h` (inside the ixx, all deps must resolve).
   Never set by users or NuGet targets.
-- `WINRT_MODULE` — Defined project-wide by NuGet targets. Controls .g.h/.g.cpp
-  behavior: whether to use `import winrt;` vs `#include`. Does NOT control
-  namespace header behavior — a TU with `WINRT_MODULE` defined can still
-  `#include` namespace headers normally if it hasn't imported the module.
-- `WINRT_MODULE_IMPORTED` — Defined per-TU after `import winrt;` is done
-  (e.g. by generated .g.h files and module.g.cpp). Controls version assert
-  header skipping and triggers `winrt_module_namespaces.h` inclusion for
-  per-namespace guards. This is the TU-level signal that all winrt types
-  (base.h and namespace headers folded into the module) are already available
-  via the module import, so namespace headers should skip `#include "base.h"`
-  and use per-namespace guards to avoid re-including cross-namespace deps.
+- `WINRT_MODULE` — Defined project-wide by NuGet targets. Triggers auto-import
+  of the winrt module inside namespace headers (via the module guard). Also
+  controls .g.h/.g.cpp behavior: whether to use `import winrt;` vs `#include`.
+  When a namespace header is `#include`'d with `WINRT_MODULE` defined, the
+  module guard automatically does `import winrt;`, loads
+  `winrt_module_namespaces.h`, and defines `WINRT_MODULE_IMPORTED`.
+- `WINRT_MODULE_IMPORTED` — Internal per-TU guard defined by the module guard
+  after the first `import winrt;`. Prevents redundant imports when multiple
+  namespace headers are included in the same TU. Not meant to be set by users.
 - `WINRT_MODULE_NS_*` — Per-namespace macros (e.g. `WINRT_MODULE_NS_Windows_Foundation`)
   defined in the generated `winrt_module_namespaces.h`. Each cross-namespace
   `#include` dep is guarded by `#ifndef WINRT_MODULE_NS_<namespace>`. Only
@@ -75,15 +73,18 @@ Generated namespace headers use per-namespace guards for cross-namespace deps:
 #endif
 ```
 
-The version assert at the top of each namespace header:
+The module guard at the top of each namespace header:
 ```cpp
-#if defined(WINRT_BUILD_MODULE) || defined(WINRT_MODULE_IMPORTED)
+#if defined(WINRT_BUILD_MODULE)
 #include "winrt/base_macros.h"
-#endif
-#if defined(WINRT_MODULE_IMPORTED) && !defined(WINRT_BUILD_MODULE)
+#elif defined(WINRT_MODULE)
+#include "winrt/base_macros.h"
 #include "winrt/winrt_module_namespaces.h"
+#ifndef WINRT_MODULE_IMPORTED
+#define WINRT_MODULE_IMPORTED
+import winrt;
 #endif
-#if !defined(WINRT_BUILD_MODULE) && !defined(WINRT_MODULE_IMPORTED)
+#else
 #include "winrt/base.h"
 #endif
 ```
@@ -92,7 +93,7 @@ The version assert at the top of each namespace header:
   (`write_depends_guarded` / `write_root_include_guarded`)
 - Self-namespace dependencies: NOT guarded
   (`write_depends` / `write_root_include`)
-- base.h include: GUARDED by `WINRT_BUILD_MODULE || WINRT_MODULE_IMPORTED`
+- base.h include: Skipped by `WINRT_BUILD_MODULE` or `WINRT_MODULE` (module guard)
 
 ## Test Project Architecture
 

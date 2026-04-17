@@ -164,14 +164,14 @@ Generated namespace headers use per-namespace guards for cross-namespace deps:
 #include "winrt/impl/TestModuleComponent.2.h"          // self-namespace: never guarded
 ```
 
-When `WINRT_MODULE_IMPORTED` is defined (per-TU, after `import winrt;` has been
-done), the version assert at the top of each namespace header includes
-`winrt_module_namespaces.h`, making the `WINRT_MODULE_NS_*` macros available for
-the guards. When `WINRT_BUILD_MODULE` is defined (inside winrt.ixx),
+When `WINRT_MODULE` is defined (project-wide), the module guard at the top of
+each namespace header auto-imports the winrt module (guarded by
+`WINRT_MODULE_IMPORTED` so it only happens once per TU), and includes
+`winrt_module_namespaces.h` to make `WINRT_MODULE_NS_*` macros available for
+cross-namespace guards. When `WINRT_BUILD_MODULE` is defined (inside winrt.ixx),
 `winrt_module_namespaces.h` is NOT included, so all cross-namespace deps resolve
-normally — the ixx needs them to build the module. When neither macro is defined
-(even if `WINRT_MODULE` is set project-wide), namespace headers fall back to
-traditional `#include "winrt/base.h"` behavior.
+normally — the ixx needs them to build the module. When neither macro is defined,
+namespace headers use traditional `#include "winrt/base.h"` behavior.
 
 **Implementation**: `write_root_include_guarded()` in `type_writers.h` extracts
 the namespace from the include path and emits `#ifndef WINRT_MODULE_NS_<ns>`.
@@ -179,21 +179,21 @@ Used by:
 - `write_depends_guarded()` for cross-namespace impl includes
 - `write_parent_depends()` for parent namespace includes
 
-`write_version_assert()` in `code_writers.h`:
+`write_module_guard()` and `write_version_assert()` in `code_writers.h`:
 ```cpp
-#if defined(WINRT_BUILD_MODULE) || defined(WINRT_MODULE_IMPORTED)
+#if defined(WINRT_BUILD_MODULE)
 #include "winrt/base_macros.h"
-#endif
-#if defined(WINRT_MODULE_IMPORTED) && !defined(WINRT_BUILD_MODULE)
+#elif defined(WINRT_MODULE)
+#include "winrt/base_macros.h"
 #include "winrt/winrt_module_namespaces.h"
+#ifndef WINRT_MODULE_IMPORTED
+#define WINRT_MODULE_IMPORTED
+import winrt;
 #endif
-#if !defined(WINRT_BUILD_MODULE) && !defined(WINRT_MODULE_IMPORTED)
+#else
 #include "winrt/base.h"
 #endif
 ```
-
-Note: `WINRT_MODULE` (project-level) does NOT trigger header-level changes.
-Only `WINRT_MODULE_IMPORTED` (TU-level, set after `import winrt;`) does.
 
 **winrt_module_namespaces.h generation**: In `main.cpp`, emitted alongside
 `winrt.ixx` when `settings.base` is true and `settings.component` is false.
@@ -243,9 +243,7 @@ targets or manually). The code generator always emits both code paths with
 
 **Source**: `write_module_g_cpp()` in `component_writers.h`
 
-The generated code uses `#ifdef WINRT_MODULE` to select between import and include,
-and defines `WINRT_MODULE_IMPORTED` after the import so that subsequently-included
-namespace headers know types are available from the module:
+The generated code uses `#ifdef WINRT_MODULE` to select between import and include:
 
 ```cpp
 #ifdef WINRT_MODULE
@@ -253,7 +251,6 @@ namespace headers know types are available from the module:
 import std;
 #endif
 import winrt;
-#define WINRT_MODULE_IMPORTED
 #else
 #include "winrt/base.h"
 #endif
@@ -264,25 +261,16 @@ import winrt;
 **Source**: `write_component_g_h()` in `file_writers.h`
 
 ```cpp
-#ifdef WINRT_MODULE
-#include "winrt/base_macros.h"
-#ifdef WINRT_IMPORT_STD
-import std;
-#endif
-import winrt;
-#define WINRT_MODULE_IMPORTED
-#include "winrt/winrt_module_namespaces.h"
-#endif
 #include "winrt/test_component.h"  // always emitted
 ```
 
-When `WINRT_MODULE` is defined, the `.g.h` does `import winrt;` and then defines
-`WINRT_MODULE_IMPORTED`. This TU-level macro tells subsequently-included namespace
-headers to use `base_macros.h` instead of `base.h` and to consult
-`winrt_module_namespaces.h` for per-namespace `WINRT_MODULE_NS_*` guards. Platform
-namespace deps are skipped by these guards; component cross-namespace deps are
-included normally. When `WINRT_MODULE` is not defined, the headers pull in `base.h`
-transitively.
+The `.g.h` simply includes the component's own namespace headers. No
+`WINRT_MODULE`-specific logic is needed in the `.g.h` itself — the module
+guard inside each namespace header handles base type resolution, auto-importing
+the winrt module when `WINRT_MODULE` is defined. Platform namespace deps are
+skipped by `WINRT_MODULE_NS_*` guards; component cross-namespace deps are
+included normally. When `WINRT_MODULE` is not defined, the headers pull in
+`base.h` transitively.
 
 ### Toaster.g.cpp (factory + optional optimized constructors)
 
@@ -394,7 +382,7 @@ would break existing users whose build systems don't compile the std module.
 | `main.cpp` | CLI parsing, ixx generation, orchestration |
 | `file_writers.h` | File-level writers: `write_base_h`, `write_base_macros_h`, `write_component_g_h`, `write_namespace_h` |
 | `component_writers.h` | Component template writers: `write_module_g_cpp`, `write_component_g_cpp` |
-| `code_writers.h` | Low-level writers: `write_version_assert`, `write_parent_depends`, `write_open_file_guard` |
+| `code_writers.h` | Low-level writers: `write_module_guard`, `write_version_assert`, `write_parent_depends`, `write_open_file_guard` |
 | `type_writers.h` | Writer class: `write_root_include`, `write_root_include_guarded`, `write_depends`, `write_depends_guarded` |
 | `strings/base_includes.h` | Platform includes (`<intrin.h>`, `<version>`, `<directxmath.h>`) |
 | `strings/base_std_includes.h` | Standard library includes (`<algorithm>`, `<string>`, `<coroutine>`, etc.) |
@@ -438,17 +426,13 @@ Consumer .cpp compilation (WINRT_MODULE defined by NuGet targets):
     import std;                                ← std module (optional, needs BuildStlModules)
     import winrt;                              ← winrt module (SDK types + exported impl)
     #include "winrt/MyComponent.h"             ← reference projection header
-      → version assert includes winrt_module_namespaces.h (via WINRT_MODULE)
+      → module guard includes winrt_module_namespaces.h (via WINRT_MODULE)
       → platform deps guarded by WINRT_MODULE_NS_* (skipped)
       → component cross-namespace deps NOT guarded (included normally)
 
 Component .g.h (WINRT_MODULE defined by NuGet targets):
-    #include "winrt/base_macros.h"             ← macros only (WINRT_EXPORT etc.)
-    #ifdef WINRT_IMPORT_STD
-    import std;                                ← conditional on WINRT_IMPORT_STD
-    #endif
-    import winrt;                              ← SDK types + exported impl templates
     #include "winrt/MyComponent.h"             ← component projection (specializes impl)
+      → module guard auto-imports winrt, loads winrt_module_namespaces.h
       → platform deps skipped by WINRT_MODULE_NS_* guards
       → cross-namespace component deps included normally
 

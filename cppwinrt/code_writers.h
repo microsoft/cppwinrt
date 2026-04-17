@@ -35,37 +35,45 @@ namespace cppwinrt
         }
     }
 
-    static void write_version_assert(writer& w)
+    // Emits the module guard at the top of each main namespace header.
+    // This three-way preprocessor block determines how base types are resolved:
+    //
+    // 1. WINRT_BUILD_MODULE — Inside winrt.ixx. base.h is already #included in
+    //    the global module fragment; only need base_macros.h for preprocessor
+    //    macros (which don't cross module boundaries).
+    //
+    // 2. WINRT_MODULE — Project has a winrt module available. Auto-import it
+    //    (guarded by WINRT_MODULE_IMPORTED so it happens at most once per TU),
+    //    and load winrt_module_namespaces.h for per-namespace include guards.
+    //
+    // 3. Neither — Traditional header mode. Include full base.h.
+    static void write_module_guard(writer& w)
     {
-        // WINRT_BUILD_MODULE — defined in winrt.ixx's global module fragment.
-        //   base.h types are compiled into the module; only need base_macros.h
-        //   for preprocessor macros that don't cross module boundaries.
-        //
-        // WINRT_MODULE_IMPORTED — defined per-TU after 'import winrt;' is done
-        //   (e.g. by generated .g.h files). Types come from the module import;
-        //   need base_macros.h for macros AND winrt_module_namespaces.h to skip
-        //   cross-namespace #includes for namespaces already in the module.
-        //
-        // Neither — traditional header mode; include full base.h.
-        //
-        // Note: WINRT_MODULE is a project-level macro that controls whether
-        // .g.h/.g.cpp files use 'import winrt;' vs '#include'. It does NOT
-        // control header behavior here — a TU with WINRT_MODULE defined but
-        // no 'import winrt;' should still get base.h via normal #include.
-        auto format_guard = R"(#if defined(WINRT_BUILD_MODULE) || defined(WINRT_MODULE_IMPORTED)
+        auto format = R"(// Module guard: determines how base types are resolved for this header.
+#if defined(WINRT_BUILD_MODULE)
+// Building winrt.ixx — base.h is already included in the module.
 #include "winrt/base_macros.h"
-#endif
-#if defined(WINRT_MODULE_IMPORTED) && !defined(WINRT_BUILD_MODULE)
+#elif defined(WINRT_MODULE)
+// A pre-built winrt module is available. Import it (once per TU) and load
+// per-namespace guards so cross-namespace deps already in the module are skipped.
+#include "winrt/base_macros.h"
 #include "winrt/winrt_module_namespaces.h"
-#endif
-#if !defined(WINRT_BUILD_MODULE) && !defined(WINRT_MODULE_IMPORTED)
+#ifndef WINRT_MODULE_IMPORTED
+#define WINRT_MODULE_IMPORTED
+import winrt;
+#endif // !WINRT_MODULE_IMPORTED
+#else
+// Traditional header mode — pull in the full base library via #include.
 )";
-        auto format_end = R"(#endif
+        auto format_end = R"(#endif // WINRT_BUILD_MODULE / WINRT_MODULE / header mode
 )";
-        w.write(format_guard);
+        w.write(format);
         w.write_root_include("base");
         w.write(format_end);
+    }
 
+    static void write_version_assert(writer& w)
+    {
         auto format = R"(static_assert(winrt::check_version(CPPWINRT_VERSION, "%"), "Mismatched C++/WinRT headers.");
 #define CPPWINRT_VERSION "%"
 )";
