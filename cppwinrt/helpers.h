@@ -271,6 +271,10 @@ namespace cppwinrt
     auto get_deprecated_message(T const& row)
     {
         auto attr = get_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute");
+        if (!attr)
+        {
+            return std::string{};
+        }
         return escape_cpp_string_literal(get_attribute_value<std::string_view>(attr, 0));
     }
 
@@ -286,10 +290,7 @@ namespace cppwinrt
         if (args.size() >= 2)
         {
             // DeprecationType enum: Deprecate=0, Remove=1
-            auto val = std::get<ElemSig>(args[1].value);
-            auto enum_val = std::get<ElemSig::EnumValue>(val.value);
-            // Compare the underlying integer value (1 == Remove)
-            return std::visit([](auto v) -> bool { return static_cast<int32_t>(v) == 1; }, enum_val.value);
+            return get_integer_attribute<int32_t>(args[1]) == 1;
         }
         return false;
     }
