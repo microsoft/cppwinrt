@@ -862,7 +862,7 @@ WINRT_EXPORT namespace winrt
             {
                 auto sender_abi = *(impl::unknown_abi**)&sender;
 
-                if (nullptr == _InterlockedCompareExchangePointer(reinterpret_cast<void**>(&result), sender_abi, nullptr))
+                if (nullptr == _InterlockedCompareExchangePointer(impl::abi_cast(result), sender_abi, nullptr))
                 {
                     sender_abi->AddRef();
                     status = operation_status;

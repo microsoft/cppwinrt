@@ -294,6 +294,15 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
     };
 }
 
+namespace winrt::impl
+{
+    template<typename T>
+    void** abi_cast(T const& object) noexcept
+    {
+        return reinterpret_cast<void**>(const_cast<T*>(&object));
+    }
+}
+
 WINRT_EXPORT namespace winrt
 {
     template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
@@ -335,13 +344,13 @@ WINRT_EXPORT namespace winrt
 
     inline void* get_abi(Windows::Foundation::IUnknown const& object) noexcept
     {
-        return *(void**)(&object);
+        return *impl::abi_cast(object);
     }
 
     inline void** put_abi(Windows::Foundation::IUnknown& object) noexcept
     {
         object = nullptr;
-        return reinterpret_cast<void**>(&object);
+        return impl::abi_cast(object);
     }
 
     inline void attach_abi(Windows::Foundation::IUnknown& object, void* value) noexcept
@@ -353,14 +362,14 @@ WINRT_EXPORT namespace winrt
     inline void* detach_abi(Windows::Foundation::IUnknown& object) noexcept
     {
         void* temp = get_abi(object);
-        *reinterpret_cast<void**>(&object) = nullptr;
+        *impl::abi_cast(object) = nullptr;
         return temp;
     }
 
     inline void* detach_abi(Windows::Foundation::IUnknown&& object) noexcept
     {
         void* temp = get_abi(object);
-        *reinterpret_cast<void**>(&object) = nullptr;
+        *impl::abi_cast(object) = nullptr;
         return temp;
     }
 
@@ -459,16 +468,16 @@ WINRT_EXPORT namespace winrt::impl
     {
         if constexpr (!std::is_same_v<Derive, Base>)
         {
-            winrt::hresult _winrt_cast_result_code;
-            auto const _winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, _winrt_cast_result_code);
-            check_hresult(_winrt_cast_result_code);
-            auto const _winrt_abi_type = *(abi_t<Base>**)&_winrt_casted_result;
-            (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
+            winrt::hresult winrt_cast_result_code;
+            auto const winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, winrt_cast_result_code);
+            check_hresult(winrt_cast_result_code);
+            auto const winrt_abi_type = *(abi_t<Base>**)&winrt_casted_result;
+            (winrt_abi_type->*mptr)(std::forward<Args>(args)...);
         }
         else
         {
-            auto const _winrt_abi_type = *(abi_t<Base>**)d;
-            (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
+            auto const winrt_abi_type = *abi_t_abi_cast(static_cast<Base const*>(d));
+            (winrt_abi_type->*mptr)(std::forward<Args>(args)...);
         }
     }
 
@@ -477,16 +486,16 @@ WINRT_EXPORT namespace winrt::impl
     {
         if constexpr (!std::is_same_v<Derive, Base>)
         {
-            winrt::hresult _winrt_cast_result_code;
-            auto const _winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, _winrt_cast_result_code);
-            check_hresult(_winrt_cast_result_code);
-            auto const _winrt_abi_type = *(abi_t<Base>**)&_winrt_casted_result;
-            WINRT_VERIFY_(0, (_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+            winrt::hresult winrt_cast_result_code;
+            auto const winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, winrt_cast_result_code);
+            check_hresult(winrt_cast_result_code);
+            auto const winrt_abi_type = *(abi_t<Base>**)&winrt_casted_result;
+            WINRT_VERIFY_(0, (winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
         else
         {
-            auto const _winrt_abi_type = *(abi_t<Base>**)d;
-            WINRT_VERIFY_(0, (_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+            auto const winrt_abi_type = *abi_t_abi_cast(static_cast<Base const*>(d));
+            WINRT_VERIFY_(0, (winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
     }
 
@@ -495,16 +504,16 @@ WINRT_EXPORT namespace winrt::impl
     {
         if constexpr (!std::is_same_v<Derive, Base>)
         {
-            winrt::hresult _winrt_cast_result_code;
-            auto const _winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, _winrt_cast_result_code);
-            check_hresult(_winrt_cast_result_code);
-            auto const _winrt_abi_type = *(abi_t<Base>**)&_winrt_casted_result;
-            check_hresult((_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+            winrt::hresult winrt_cast_result_code;
+            auto const winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, winrt_cast_result_code);
+            check_hresult(winrt_cast_result_code);
+            auto const winrt_abi_type = *(abi_t<Base>**)&winrt_casted_result;
+            check_hresult((winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
         else
         {
-            auto const _winrt_abi_type = *(abi_t<Base>**)d;
-            check_hresult((_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+            auto const winrt_abi_type = *abi_t_abi_cast(static_cast<Base const*>(d));
+            check_hresult((winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
     }
 }

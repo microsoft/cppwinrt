@@ -440,15 +440,17 @@ WINRT_EXPORT namespace winrt
     template <typename T>
     auto get_abi(array_view<T> object) noexcept
     {
-        auto data = object.size() ? object.data() : (T*)alignof(T);
+        using U = std::remove_const_t<T>;
+
+        auto data = object.size() ? const_cast<U*>(object.data()) : reinterpret_cast<U*>(alignof(U));
 
         if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, T>)
         {
-            return (void**)data;
+            return reinterpret_cast<void**>(data);
         }
         else
         {
-            return reinterpret_cast<impl::arg_out<std::remove_const_t<T>>>(const_cast<std::remove_const_t<T>*>(data));
+            return reinterpret_cast<impl::arg_out<U>>(data);
         }
     }
 
