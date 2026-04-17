@@ -290,7 +290,9 @@ namespace cppwinrt
         if (args.size() >= 2)
         {
             // DeprecationType enum: Deprecate=0, Remove=1
-            return get_integer_attribute<std::int32_t>(args[1]) == 1;
+            auto val = std::get<ElemSig>(args[1].value);
+            auto enum_val = std::get<ElemSig::EnumValue>(val.value);
+            return std::visit([](auto v) -> bool { return static_cast<std::int32_t>(v) == 1; }, enum_val.value);
         }
         return false;
     }
