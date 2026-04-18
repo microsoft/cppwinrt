@@ -122,6 +122,7 @@ TEST_CASE("module_guid")
 // ---- Format (C++20) ----
 
 #ifdef __cpp_lib_format
+#include <format>
 TEST_CASE("module_format")
 {
     hstring str = L"World";

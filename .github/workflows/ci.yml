@@ -376,7 +376,8 @@ jobs:
           if (Test-Path $app) {
             & $app
           } else {
-            echo "::warning::TestModuleConsumerApp not found at $app"
+            echo "::error::TestModuleConsumerApp not found at $app"
+            exit 1
           }
 
       - name: Run module single-project app
@@ -388,7 +389,8 @@ jobs:
           if (Test-Path $app) {
             & $app
           } else {
-            echo "::warning::TestModuleSingleProject not found at $app"
+            echo "::error::TestModuleSingleProject not found at $app"
+            exit 1
           }
 
   build-nuget:
