@@ -7,7 +7,7 @@
     <CppWinRTModuleConsume>true</CppWinRTModuleConsume>
     <MinimalCoreWin>true</MinimalCoreWin>
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{A1B2C3D4-AAAA-BBBB-CCCC-DDDDEEEE0000}</ProjectGuid>
+    <ProjectGuid>{30AD425E-3B12-4352-82F9-28463C908D80}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TestModuleComponent</RootNamespace>
   </PropertyGroup>

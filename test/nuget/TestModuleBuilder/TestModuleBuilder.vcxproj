@@ -8,7 +8,7 @@
     <CppWinRTModuleFilter>Windows.Foundation</CppWinRTModuleFilter>
     <MinimalCoreWin>true</MinimalCoreWin>
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{A1B2C3D4-1111-2222-3333-444455556666}</ProjectGuid>
+    <ProjectGuid>{BB1AB6C1-515E-4976-9796-641FE0779675}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TestModuleBuilder</RootNamespace>
   </PropertyGroup>
