@@ -36,38 +36,42 @@ namespace cppwinrt
     }
 
     // Emits the module guard at the top of each main namespace header.
-    // This three-way preprocessor block determines how base types are resolved:
+    // The behavior depends on whether THIS namespace is in the module:
     //
-    // 1. WINRT_BUILD_MODULE — Inside winrt.ixx. base.h is already #included in
-    //    the global module fragment; only need base_macros.h for preprocessor
-    //    macros (which don't cross module boundaries).
+    // 1. WINRT_BUILD_MODULE — Inside winrt.ixx. base.h is in the module purview;
+    //    only need base_macros.h for preprocessor macros.
     //
-    // 2. WINRT_MODULE — Project has a winrt module available. Auto-import it
-    //    (guarded by WINRT_MODULE_IMPORTED so it happens at most once per TU),
-    //    and load winrt_module_namespaces.h for per-namespace include guards.
+    // 2. WINRT_MODULE set, self NOT in module — This is a component or reference
+    //    namespace header. The TU must have already done 'import winrt;'.
+    //    Use base_macros.h only; cross-dep guards skip module namespaces.
     //
-    // 3. Neither — Traditional header mode. Include full base.h.
-    static void write_module_guard(writer& w)
+    // 3. WINRT_MODULE set, self IS in module — This namespace header is being
+    //    #included directly by a TU that hasn't imported the module. Use
+    //    traditional base.h behavior; cross-dep guards are bypassed.
+    //
+    // 4. No WINRT_MODULE — Traditional header mode. Include full base.h.
+    static void write_module_guard(writer& w, std::string_view const& ns)
     {
+        std::string ns_macro{ ns };
+        std::replace(ns_macro.begin(), ns_macro.end(), '.', '_');
+
         auto format = R"(// Module guard: determines how base types are resolved for this header.
-#if defined(WINRT_BUILD_MODULE)
-// Building winrt.ixx — base.h is already included in the module.
-#include "winrt/base_macros.h"
-#elif defined(WINRT_MODULE)
-// A pre-built winrt module is available. Import it (once per TU) and load
-// per-namespace guards so cross-namespace deps already in the module are skipped.
-#include "winrt/base_macros.h"
+#if defined(WINRT_MODULE) && !defined(WINRT_BUILD_MODULE)
 #include "winrt/winrt_module_namespaces.h"
-#ifndef WINRT_MODULE_IMPORTED
-#define WINRT_MODULE_IMPORTED
-import winrt;
-#endif // !WINRT_MODULE_IMPORTED
+#endif
+#if defined(WINRT_BUILD_MODULE)
+// Building winrt.ixx — base.h is in the module purview; only need macros here.
+#include "winrt/base_macros.h"
+#elif defined(WINRT_MODULE) && !defined(WINRT_MODULE_NS_%)
+// This namespace is NOT in the module. The TU must have already imported winrt.
+#include "winrt/base_macros.h"
 #else
-// Traditional header mode — pull in the full base library via #include.
+// Traditional header mode, OR this namespace IS in the module and is being
+// #included directly (not via import). Include full base.h.
 )";
         auto format_end = R"(#endif // WINRT_BUILD_MODULE / WINRT_MODULE / header mode
 )";
-        w.write(format);
+        w.write(format, ns_macro);
         w.write_root_include("base");
         w.write(format_end);
     }

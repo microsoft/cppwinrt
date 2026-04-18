@@ -566,36 +566,45 @@ namespace cppwinrt
 
         void write_root_include_guarded(std::string_view const& include)
         {
-            // Guard cross-namespace and self-namespace #includes with per-namespace
-            // macros from winrt_module_namespaces.h. When a namespace is in the
-            // winrt module, its headers are skipped — those types are already
-            // available via 'import winrt;'. Headers for namespaces NOT in the
-            // module are always included.
-            std::string ns_part;
+            // Guard cross-namespace #includes with per-namespace macros from
+            // winrt_module_namespaces.h. The compound guard has two clauses:
+            //
+            //  1. !WINRT_MODULE_NS_<dep> — dep is NOT in the module → always include.
+            //  2.  WINRT_MODULE_NS_<self> — self IS in the module → traditional mode,
+            //      include everything (TU hasn't imported the module).
+            //
+            // When both clauses are false (dep IS in module, self is NOT), the
+            // include is skipped — those types come from 'import winrt;'.
+            // When WINRT_MODULE is not defined, neither macro exists, so clause 1
+            // is true and the include always happens (traditional behavior).
+            std::string dep_ns;
             if (include.size() > 5 && include.substr(0, 5) == "impl/")
             {
-                auto remainder = include.substr(5); // skip "impl/"
+                auto remainder = include.substr(5);
                 auto dot = remainder.rfind('.');
-                ns_part = std::string(remainder.substr(0, dot));
+                dep_ns = std::string(remainder.substr(0, dot));
             }
             else
             {
-                ns_part = std::string(include);
+                dep_ns = std::string(include);
             }
-            std::string ns_macro = ns_part;
-            std::replace(ns_macro.begin(), ns_macro.end(), '.', '_');
+            std::string dep_macro = dep_ns;
+            std::replace(dep_macro.begin(), dep_macro.end(), '.', '_');
 
-            auto format = R"(#ifndef WINRT_MODULE_NS_% // Skip if namespace is in the module.
+            std::string self_macro{ type_namespace };
+            std::replace(self_macro.begin(), self_macro.end(), '.', '_');
+
+            auto format = R"(#if !defined(WINRT_MODULE_NS_%) || defined(WINRT_MODULE_NS_%)
 #include %winrt/%.h%
-#endif // !WINRT_MODULE_NS_%
+#endif
 )";
 
             write(format,
-                ns_macro,
+                dep_macro,
+                self_macro,
                 settings.brackets ? '<' : '\"',
                 include,
-                settings.brackets ? '>' : '\"',
-                ns_macro);
+                settings.brackets ? '>' : '\"');
         }
 
         void write_depends(std::string_view const& ns, char impl = 0)

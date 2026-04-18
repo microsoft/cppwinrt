@@ -93,15 +93,15 @@
   <PropertyGroup Label="UserMacros" />
   <!--
     Common settings for all configurations.
-    Disables PCH since module consumers should use 'import winrt;' instead of header includes.
-    The WINRT_LEAN_AND_MEAN define avoids pulling <ostream> into the module.
+    Tests C++20 module consumption without import std — STL types come from
+    textual includes (PCH or direct). The WINRT_LEAN_AND_MEAN define avoids
+    pulling <ostream> into the module. For import std testing, see test_cpp23_module.
   -->
   <ItemDefinitionGroup>
     <ClCompile>
       <AdditionalIncludeDirectories>$(SolutionDir)test\test_cpp20_module_winrt\Generated Files;..\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NOMINMAX;WINRT_LEAN_AND_MEAN;WINRT_IMPORT_STD;WINRT_MODULE;WINRT_TEST_MODULES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;WINRT_LEAN_AND_MEAN;WINRT_MODULE;WINRT_TEST_MODULES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <BuildStlModules>true</BuildStlModules>
       <AdditionalModuleDependencies>$(IntDir)..\test_cpp20_module_winrt\winrt.ixx.ifc;%(AdditionalModuleDependencies)</AdditionalModuleDependencies>
     </ClCompile>
     <Link>

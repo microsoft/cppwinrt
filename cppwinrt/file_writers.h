@@ -14,14 +14,8 @@ namespace cppwinrt
 #ifndef WINRT_IMPL_INCLUDES_HANDLED
 )");
             w.write(strings::base_includes);
-            w.write(R"(
-#if defined(__cpp_lib_modules) && defined(WINRT_IMPORT_STD)
-import std;
-#else
-)");
             w.write(strings::base_std_includes);
-            w.write(R"(#endif // __cpp_lib_modules && WINRT_IMPORT_STD
-#endif // WINRT_IMPL_INCLUDES_HANDLED
+            w.write(R"(#endif // WINRT_IMPL_INCLUDES_HANDLED
 )");
             w.write_root_include("base_macros");
             w.write(strings::base_macros);
@@ -175,7 +169,7 @@ import std;
             w.write_depends_guarded(depends.first, '0');
         }
 
-        w.write_depends_guarded(w.type_namespace, '0');
+        w.write_depends(w.type_namespace, '0');
         w.save_header('1');
     }
 
@@ -205,7 +199,7 @@ import std;
             w.write_depends_guarded(depends.first, impl);
         }
 
-        w.write_depends_guarded(w.type_namespace, '1');
+        w.write_depends(w.type_namespace, '1');
         w.save_header('2');
     }
 
@@ -248,18 +242,11 @@ import std;
 
         write_namespace_special(w, ns);
 
-        // Close the self-namespace body guard opened after the module guard (after swap).
-        {
-            std::string ns_macro{ ns };
-            std::replace(ns_macro.begin(), ns_macro.end(), '.', '_');
-            w.write("#endif // !WINRT_MODULE_NS_% (body guard)\n", ns_macro);
-        }
-
         write_close_file_guard(w);
         w.swap();
         write_preamble(w);
         write_open_file_guard(w, ns);
-        write_module_guard(w);
+        write_module_guard(w, ns);
         write_version_assert(w);
         write_parent_depends(w, c, ns);
 
@@ -268,18 +255,7 @@ import std;
             w.write_depends_guarded(depends.first, '2');
         }
 
-        w.write_depends_guarded(w.type_namespace, '2');
-
-        // When this namespace is in the module and WINRT_MODULE is defined,
-        // the module guard already auto-imported the module, making all types
-        // available. Guard the entire body (consume definitions, class
-        // definitions, produce implementations, etc.) to avoid redefining
-        // types already exported from the module.
-        {
-            std::string ns_macro{ ns };
-            std::replace(ns_macro.begin(), ns_macro.end(), '.', '_');
-            w.write("#ifndef WINRT_MODULE_NS_% // Skip body if namespace is in the module.\n", ns_macro);
-        }
+        w.write_depends(w.type_namespace, '2');
 
         w.save_header();
     }
@@ -303,10 +279,15 @@ import std;
         write_preamble(w);
         write_include_guard(w);
 
-        // Component .g.h includes the component's own namespace headers, which
-        // contain a module guard that handles base.h / import winrt; resolution
-        // and loads winrt_module_namespaces.h. No WINRT_MODULE-specific logic
-        // is needed here — the namespace headers take care of it.
+        // In module mode (WINRT_MODULE defined), the component's namespace
+        // headers expect 'import winrt;' to have already occurred in the TU.
+        // The module guard inside those headers will use base_macros.h only
+        // and skip cross-namespace deps that are in the module.
+        w.write("#ifdef WINRT_MODULE\n");
+        w.write("#include \"winrt/base_macros.h\"\n");
+        w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\n");
+        w.write("import winrt;\n");
+        w.write("#endif\n");
         for (auto&& depends : w.depends)
         {
             w.write_depends(depends.first);

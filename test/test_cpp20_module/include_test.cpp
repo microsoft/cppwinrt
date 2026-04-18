@@ -1,20 +1,10 @@
-// Regression test: Verify that a plain #include of a winrt namespace header
-// works correctly when WINRT_MODULE is defined project-wide but this TU does
-// NOT import the winrt module. This validates that WINRT_MODULE (project-level)
-// doesn't break traditional header inclusion — only WINRT_MODULE_IMPORTED
-// (TU-level, set after 'import winrt;') triggers module-aware header behavior.
+// Regression test: Verify that #include of a winrt namespace header works
+// correctly when WINRT_MODULE is defined project-wide, even without importing
+// the winrt module in this TU. Since Windows.Foundation IS in the module, the
+// module guard falls through to traditional base.h inclusion, and cross-dep
+// guards are bypassed (WINRT_MODULE_NS_<self> is defined).
 //
-// This file intentionally does NOT use the PCH (which would pull in catch.hpp
-// etc.) because it needs to verify headers work standalone.
-
-// WINRT_MODULE is already defined project-wide by the vcxproj preprocessor
-// definitions. We do NOT do 'import winrt;' here.
-
-// This TU uses traditional #include mode, so base.h must use textual STL
-// includes rather than 'import std;'. Undefine WINRT_IMPORT_STD to ensure
-// base.h falls back to #include directives (the std module IFC may not be
-// usable in a TU that isn't importing the winrt module).
-#undef WINRT_IMPORT_STD
+// This TU does NOT use the PCH and does NOT do any 'import' statements.
 
 #include <winrt/Windows.Foundation.h>
 

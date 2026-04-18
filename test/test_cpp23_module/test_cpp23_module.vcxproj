@@ -134,6 +134,9 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\test_cpp20_module\async.cpp" />
+    <ClCompile Include="..\test_cpp20_module\include_test.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="..\test_cpp20_module\interop.cpp" />
     <ClCompile Include="..\test_cpp20_module\main.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>

@@ -1,18 +1,7 @@
-// Regression test: Verify that a plain #include of a winrt namespace header
-// works correctly when WINRT_MODULE is defined project-wide (by the NuGet
-// CppWinRTModuleBuild property in a single-project scenario) but this TU
-// does NOT import the winrt module.
-//
-// This validates the WINRT_MODULE vs WINRT_MODULE_IMPORTED decoupling:
-// WINRT_MODULE alone should not break traditional header inclusion.
-
-// WINRT_MODULE is defined project-wide by the NuGet targets.
-// We do NOT do 'import winrt;' here.
-
-// This TU uses traditional #include mode, so base.h must use textual STL
-// includes rather than 'import std;'. Undefine WINRT_IMPORT_STD to avoid
-// conflicts between 'import std;' and subsequent STL #includes.
-#undef WINRT_IMPORT_STD
+// Regression test: Verify that #include of a winrt namespace header works
+// correctly when WINRT_MODULE is defined project-wide, even without importing
+// the winrt module in this TU. Since Windows.Foundation IS in the module, the
+// module guard falls through to traditional base.h inclusion.
 
 #include <winrt/Windows.Foundation.h>
 

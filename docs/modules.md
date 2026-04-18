@@ -120,8 +120,8 @@ Or in your `.vcxproj`:
 > On the v145 toolset (VS 2026), `import std;` works with `/std:c++20`.
 
 When `BuildStlModules` is enabled, the NuGet targets automatically define
-`WINRT_IMPORT_STD` so that `base.h` uses `import std;` instead of individual
-standard library `#include` directives.
+`WINRT_IMPORT_STD` so that `winrt.ixx`, generated `.g.h`, and `module.g.cpp`
+files use `import std;` instead of relying on textual standard library includes.
 
 Then in your source files:
 
@@ -191,7 +191,7 @@ When `CppWinRTModuleBuild` or `CppWinRTModuleConsume` is true, the NuGet targets
 - Define `WINRT_MODULE` so generated component files (`.g.h`, `.g.cpp`,
   `module.g.cpp`) use `import winrt;` instead of `#include` directives
 - Define `WINRT_IMPORT_STD` as a preprocessor definition when `BuildStlModules`
-  is enabled, so `base.h` uses `import std;` instead of individual `#include`s
+  is enabled, so `winrt.ixx` and generated component files use `import std;`
 - Define `WINRT_LEAN_AND_MEAN` on the `winrt.ixx` compilation unit (builder only)
 
 ## cppwinrt.exe Command-Line Options
@@ -300,7 +300,7 @@ namespace winrt::MyComponent::factory_implementation
 
 | Macro | Purpose |
 |-------|---------|
-| `WINRT_IMPORT_STD` | When defined alongside `__cpp_lib_modules`, causes `base.h` to emit `import std;` instead of individual standard library `#include` directives. Automatically defined by the NuGet targets when `BuildStlModules` is enabled alongside `CppWinRTModuleBuild` or `CppWinRTModuleConsume`. |
+| `WINRT_IMPORT_STD` | When defined, causes `winrt.ixx` (module purview), generated `.g.h`, and `module.g.cpp` files to emit `import std;`. Does NOT affect `base.h` — textual STL `#include`s in base.h cannot safely coexist with `import std;` because platform headers (`<intrin.h>`) transitively include STL headers first. Automatically defined by the NuGet targets when `BuildStlModules` is enabled alongside `CppWinRTModuleBuild` or `CppWinRTModuleConsume`. |
 | `WINRT_LEAN_AND_MEAN` | Suppresses `#include <ostream>` and `std::hash`/`std::formatter` specializations from generated headers. Reduces header weight. |
 | `WINRT_MODULE` | When defined (project-wide), namespace headers auto-import the winrt module (via a guarded `import winrt;` in the module guard) instead of `#include`-ing `base.h`. Generated component files (`.g.cpp`, `module.g.cpp`) also use `import winrt;` instead of `#include` directives for platform types. Generated `.g.h` files rely on the module guard in the namespace headers they include. This means any `#include <winrt/Namespace.h>` in the project automatically gets types from the module without additional boilerplate. Automatically defined by the NuGet targets when `CppWinRTModuleBuild` or `CppWinRTModuleConsume` is set. Can also be defined manually for non-NuGet projects. |
 

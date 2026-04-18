@@ -82,21 +82,14 @@ want `import std;` instead.
 | File | Content | Used by |
 |------|---------|--------|
 | `strings/base_includes.h` | Platform headers: `<intrin.h>`, `<version>`, `<directxmath.h>` | Both ixx and base.h |
-| `strings/base_std_includes.h` | Standard library: `<algorithm>`, `<string>`, `<coroutine>`, etc. | ixx (always), base.h (conditional) |
+| `strings/base_std_includes.h` | Standard library: `<algorithm>`, `<string>`, `<coroutine>`, etc. | ixx (GMF), base.h (always) |
 
-In `write_base_h()`, the std includes are written conditionally:
-
-```cpp
-w.write(strings::base_includes);        // platform includes (always)
-w.write(R"(
-#if defined(__cpp_lib_modules) && defined(WINRT_IMPORT_STD)
-import std;
-#else
-)");
-w.write(strings::base_std_includes);    // std includes (fallback)
-w.write(R"(#endif
-)");
-```
+In `write_base_h()`, both platform and STL includes are always written textually.
+`import std;` is NOT used in base.h because platform headers (`<intrin.h>`) 
+transitively include STL headers, making a subsequent `import std;` unsafe.
+Instead, `import std;` is emitted directly in `winrt.ixx` (module purview),
+generated `.g.h`, and `module.g.cpp` — places where it can be safely ordered
+before any textual includes.
 
 In the ixx writer, both are written unconditionally as raw includes:
 
@@ -345,33 +338,30 @@ The standard library includes are split into two files:
 - **`strings/base_std_includes.h`**: Standard library headers (`<algorithm>`,
   `<string>`, `<coroutine>`, etc.).
 
-In `write_base_h()`, the std includes are conditional:
+In `write_base_h()`, STL includes are always textual:
 
 ```cpp
 // In generated base.h:
-#if defined(__cpp_lib_modules) && defined(WINRT_IMPORT_STD)
-import std;
-#else
-#include <algorithm>
-#include <array>
-... // 25+ individual includes
+#ifndef WINRT_IMPL_INCLUDES_HANDLED
+<intrin.h, version, directxmath.h>         // platform includes
+<algorithm, array, string, coroutine, ...> // STL includes (always textual)
 #endif
 ```
 
-In the ixx global module fragment, both files are written as raw `#include`s
-with no conditional — `import` is not permitted there.
+`import std;` is NOT placed in base.h. Platform headers (`<intrin.h>`) transitively
+include STL headers, making a subsequent `import std;` in the same header unsafe.
+Instead, `import std;` is emitted in specific TU-level locations where it can be
+safely ordered before any textual includes:
+
+- **`winrt.ixx`** — in the module purview, after the global module fragment
+  (which has the textual STL/platform includes), conditional on `WINRT_IMPORT_STD`
+- **`module.g.cpp`** — before `import winrt;`, conditional on `WINRT_IMPORT_STD`
+- **`.g.h`** — before `import winrt;`, conditional on `WINRT_IMPORT_STD`
 
 `WINRT_IMPORT_STD` is:
 - Defined automatically by NuGet targets when `CppWinRTModuleBuild` or
-  `CppWinRTModuleConsume` is true and
-  `BuildStlModules=true`
+  `CppWinRTModuleConsume` is true and `BuildStlModules=true`
 - Can be defined manually by users as a preprocessor definition
-
-`__cpp_lib_modules` is defined in `<version>` by MSVC when the STL supports
-modules. However, it does NOT guarantee `import std;` will work — that also
-requires the build system to compile `std.ixx` (controlled by `BuildStlModules`).
-This is why `WINRT_IMPORT_STD` is a separate opt-in: `__cpp_lib_modules` alone
-would break existing users whose build systems don't compile the std module.
 
 ## Code Paths Reference
 

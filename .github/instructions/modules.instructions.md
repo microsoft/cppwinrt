@@ -44,56 +44,56 @@ targets (or manually for non-NuGet projects).
 
 ## Macro Scoping
 
-Two project-level macros, one internal guard, and per-namespace macros:
+Two project-level macros and per-namespace macros control behavior:
 
 - `WINRT_BUILD_MODULE` — Defined by cppwinrt inside winrt.ixx's global module
-  fragment. Controls base.h skip in the module guard. Does NOT include
+  fragment. Tells the module guard to use `base_macros.h` only. Does NOT include
   `winrt_module_namespaces.h` (inside the ixx, all deps must resolve).
   Never set by users or NuGet targets.
-- `WINRT_MODULE` — Defined project-wide by NuGet targets. Triggers auto-import
-  of the winrt module inside namespace headers (via the module guard). Also
-  controls .g.h/.g.cpp behavior: whether to use `import winrt;` vs `#include`.
-  When a namespace header is `#include`'d with `WINRT_MODULE` defined, the
-  module guard automatically does `import winrt;`, loads
-  `winrt_module_namespaces.h`, and defines `WINRT_MODULE_IMPORTED`.
-- `WINRT_MODULE_IMPORTED` — Internal per-TU guard defined by the module guard
-  after the first `import winrt;`. Prevents redundant imports when multiple
-  namespace headers are included in the same TU. Not meant to be set by users.
+- `WINRT_MODULE` — Defined project-wide by NuGet targets. Activates the
+  boundary-based module guard in namespace headers. Also controls .g.h/.g.cpp
+  behavior: whether to use `import winrt;` vs `#include`. The module guard
+  checks `WINRT_MODULE_NS_<self>` to decide: if the header's own namespace is
+  in the module, traditional `#include "base.h"` is used; if not, the TU must
+  have already imported winrt, and `base_macros.h` is used instead.
+- `WINRT_IMPORT_STD` — Defined project-wide by NuGet targets when
+  `BuildStlModules` is enabled. Enables `import std;` in winrt.ixx (module
+  purview), `.g.h`, and `module.g.cpp`. Does NOT affect base.h — `import std;`
+  inside base.h is unsafe because platform headers transitively include STL
+  headers first.
 - `WINRT_MODULE_NS_*` — Per-namespace macros (e.g. `WINRT_MODULE_NS_Windows_Foundation`)
-  defined in the generated `winrt_module_namespaces.h`. Each cross-namespace
-  `#include` dep is guarded by `#ifndef WINRT_MODULE_NS_<namespace>`. Only
-  namespaces in the module are skipped; component and other deps always resolve.
+  defined in the generated `winrt_module_namespaces.h`. Cross-namespace deps
+  use compound guards: `!defined(NS_dep) || defined(NS_self)`.
+  This skips module deps only when the including header is NOT itself in the module.
 
 ## Per-Namespace Include Guards
 
-Generated namespace headers use per-namespace guards for cross-namespace deps:
+Generated namespace headers use compound guards for cross-namespace deps:
 ```cpp
-#ifndef WINRT_MODULE_NS_Windows_Foundation
-#include "winrt/impl/Windows.Foundation.0.h"
+#if !defined(WINRT_MODULE_NS_Windows_Foundation_Collections) || defined(WINRT_MODULE_NS_Windows_Foundation)
+#include "winrt/impl/Windows.Foundation.Collections.2.h"
 #endif
 ```
 
-The module guard at the top of each namespace header:
+The module guard at the top of each namespace header (e.g. Windows.Foundation):
 ```cpp
+#if defined(WINRT_MODULE) && !defined(WINRT_BUILD_MODULE)
+#include "winrt/winrt_module_namespaces.h"
+#endif
 #if defined(WINRT_BUILD_MODULE)
 #include "winrt/base_macros.h"
-#elif defined(WINRT_MODULE)
+#elif defined(WINRT_MODULE) && !defined(WINRT_MODULE_NS_Windows_Foundation)
 #include "winrt/base_macros.h"
-#include "winrt/winrt_module_namespaces.h"
-#ifndef WINRT_MODULE_IMPORTED
-#define WINRT_MODULE_IMPORTED
-import winrt;
-#endif
 #else
 #include "winrt/base.h"
 #endif
 ```
 
-- Cross-namespace dependencies: GUARDED by `WINRT_MODULE_NS_*`
+- Cross-namespace dependencies: GUARDED by compound `WINRT_MODULE_NS_*` condition
   (`write_depends_guarded` / `write_root_include_guarded`)
 - Self-namespace dependencies: NOT guarded
   (`write_depends` / `write_root_include`)
-- base.h include: Skipped by `WINRT_BUILD_MODULE` or `WINRT_MODULE` (module guard)
+- base.h include: Skipped when `WINRT_BUILD_MODULE` or when namespace not in module
 
 ## Test Project Architecture
 
