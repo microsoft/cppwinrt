@@ -8,6 +8,8 @@ namespace test_component_module
         Toaster(String name);
         String Name{ get; set; };
         Windows.Foundation.IAsyncAction ToastAsync();
+        // Cross-namespace dep: exercises guarded includes in .g.h
+        void ApplySettings(Windows.Foundation.Collections.IMapView<String, String> settings);
 
         static Toaster CreateDefault();
     }

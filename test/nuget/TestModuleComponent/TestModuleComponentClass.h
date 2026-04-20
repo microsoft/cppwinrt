@@ -10,6 +10,7 @@ namespace winrt::TestModuleComponent::implementation
         winrt::TestModuleComponent::Widgets::Widget CreateWidget();
         winrt::TestModuleComponent::WidgetInfo GetWidgetInfo();
         winrt::Windows::Foundation::Uri GetUri();
+        void ApplySettings(winrt::Windows::Foundation::Collections::IMapView<winrt::hstring, winrt::hstring> const&) {}
     };
 }
 namespace winrt::TestModuleComponent::factory_implementation

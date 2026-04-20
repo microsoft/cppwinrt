@@ -594,6 +594,13 @@ namespace cppwinrt
             std::string self_macro{ type_namespace };
             std::replace(self_macro.begin(), self_macro.end(), '.', '_');
 
+            // If dep == self, the guard is a tautology — just include directly.
+            if (dep_macro == self_macro)
+            {
+                write_root_include(include);
+                return;
+            }
+
             auto format = R"(#if !defined(WINRT_MODULE_NS_%) || defined(WINRT_MODULE_NS_%)
 #include %winrt/%.h%
 #endif

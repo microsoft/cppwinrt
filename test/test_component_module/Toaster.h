@@ -16,6 +16,11 @@ namespace winrt::test_component_module::implementation
             co_return;
         }
 
+        void ApplySettings(Windows::Foundation::Collections::IMapView<hstring, hstring> const&)
+        {
+            // Stub — exercises cross-namespace module dep in .g.h
+        }
+
         static test_component_module::Toaster CreateDefault()
         {
             return make<Toaster>(L"Default Toaster");

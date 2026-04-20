@@ -279,10 +279,16 @@ namespace cppwinrt
         write_preamble(w);
         write_include_guard(w);
 
-        // In module mode (WINRT_MODULE defined), the component's namespace
-        // headers expect 'import winrt;' to have already occurred in the TU.
-        // The module guard inside those headers will use base_macros.h only
-        // and skip cross-namespace deps that are in the module.
+        // Set type_namespace AFTER add_depends/write_component_g_h so that
+        // the self-namespace is included in w.depends (add_depends skips
+        // entries matching type_namespace). The compound guard in
+        // write_depends_guarded uses type_namespace as the "self" namespace.
+        w.type_namespace = type.TypeNamespace();
+
+        // In module mode (WINRT_MODULE defined), 'import winrt;' makes all
+        // module namespace types available. Component namespace headers that
+        // depend on module namespaces must use guarded includes so that
+        // module deps are skipped (they're already available via import).
         w.write("#ifdef WINRT_MODULE\n");
         w.write("#include \"winrt/base_macros.h\"\n");
         w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\n");
@@ -290,7 +296,7 @@ namespace cppwinrt
         w.write("#endif\n");
         for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first);
+            w.write_depends_guarded(depends.first);
         }
 
         auto filename = settings.output_folder + get_generated_component_filename(type) + ".g.h";
