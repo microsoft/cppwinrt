@@ -30,11 +30,12 @@ targets (or manually for non-NuGet projects).
 - `#else`: uses `#include "winrt/base.h"`
 
 ### .g.h (component base template)
+- `#ifdef WINRT_MODULE`: emits `#include "winrt/base_macros.h"` for macros,
+  conditional `import std;`, then `import winrt;`.
 - Always includes component's own namespace headers. The module guard inside
-  each namespace header auto-imports the winrt module (guarded by
-  `WINRT_MODULE_IMPORTED`) and loads `winrt_module_namespaces.h`. No
-  WINRT_MODULE-specific logic is needed in the .g.h itself.
-- Platform deps are skipped by per-namespace `WINRT_MODULE_NS_*` guards;
+  each header determines whether to use `base_macros.h` (namespace not in
+  module) or `base.h` (namespace in module / traditional mode).
+- Platform deps are skipped by compound `WINRT_MODULE_NS_*` guards;
   component cross-namespace deps are included normally.
 
 ### .g.cpp (factory + optimized constructors)
@@ -44,7 +45,8 @@ targets (or manually for non-NuGet projects).
 
 ## Macro Scoping
 
-Two project-level macros and per-namespace macros control behavior:
+Two project-level macros, per-namespace macros, and an internal linkage
+macro control behavior:
 
 - `WINRT_BUILD_MODULE` — Defined by cppwinrt inside winrt.ixx's global module
   fragment. Tells the module guard to use `base_macros.h` only. Does NOT include
@@ -61,10 +63,29 @@ Two project-level macros and per-namespace macros control behavior:
   purview), `.g.h`, and `module.g.cpp`. Does NOT affect base.h — `import std;`
   inside base.h is unsafe because platform headers transitively include STL
   headers first.
+- `WINRT_IMPL_EXTERN_CXX` — Defined as `extern "C++"` in the winrt.ixx
+  module purview. Empty in header mode (via `base_module_macros.h`). Applied
+  to `namespace std` blocks so specializations (std::hash, coroutine_traits)
+  get external C++ linkage in the module, allowing include-before-import
+  scenarios to work. Also used on selectany variables in base_extern.h.
 - `WINRT_MODULE_NS_*` — Per-namespace macros (e.g. `WINRT_MODULE_NS_Windows_Foundation`)
   defined in the generated `winrt_module_namespaces.h`. Cross-namespace deps
   use compound guards: `!defined(NS_dep) || defined(NS_self)`.
   This skips module deps only when the including header is NOT itself in the module.
+
+## extern "C++" Wrapping
+
+The winrt.ixx module purview wraps all `#include` directives in an
+`extern "C++"` block. This is critical for include/import coexistence:
+
+- 3rd-party headers (e.g., WIL's cppwinrt.h) may `#include` winrt headers
+  before the TU does `import winrt;`. The `extern "C++"` gives declarations
+  external linkage so MSVC can merge the textually-included declarations with
+  the module-exported declarations without redefinition errors.
+- `namespace std` specializations (std::hash, coroutine_traits) must also have
+  `extern "C++"` linkage in the module via `WINRT_IMPL_EXTERN_CXX`.
+- In header mode, `WINRT_IMPL_EXTERN_CXX` is empty, so there's no change to
+  existing non-module behavior.
 
 ## Per-Namespace Include Guards
 

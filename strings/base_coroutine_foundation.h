@@ -704,7 +704,7 @@ WINRT_EXPORT namespace winrt::impl
     };
 }
 
-namespace std
+WINRT_IMPL_EXTERN_CXX namespace std
 {
     template <typename... Args>
     struct coroutine_traits<winrt::Windows::Foundation::IAsyncAction, Args...>

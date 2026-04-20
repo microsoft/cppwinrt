@@ -671,7 +671,7 @@ WINRT_EXPORT namespace winrt
     struct fire_and_forget {};
 }
 
-namespace std
+WINRT_IMPL_EXTERN_CXX namespace std
 {
     template <typename... Args>
     struct coroutine_traits<winrt::fire_and_forget, Args...>

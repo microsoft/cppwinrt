@@ -158,31 +158,35 @@ Generated namespace headers use per-namespace guards for cross-namespace deps:
 ```
 
 When `WINRT_MODULE` is defined (project-wide), the module guard at the top of
-each namespace header auto-imports the winrt module (guarded by
-`WINRT_MODULE_IMPORTED` so it only happens once per TU), and includes
-`winrt_module_namespaces.h` to make `WINRT_MODULE_NS_*` macros available for
-cross-namespace guards. When `WINRT_BUILD_MODULE` is defined (inside winrt.ixx),
-`winrt_module_namespaces.h` is NOT included, so all cross-namespace deps resolve
-normally — the ixx needs them to build the module. When neither macro is defined,
-namespace headers use traditional `#include "winrt/base.h"` behavior.
+each namespace header checks whether the header's own namespace is in the module
+(via `WINRT_MODULE_NS_<self>`). If the namespace is NOT in the module (component
+headers), only `base_macros.h` is included — the TU must have already done
+`import winrt;`. If the namespace IS in the module, the header falls through to
+traditional `#include "winrt/base.h"` behavior, enabling include-before-import
+scenarios (e.g., 3rd-party headers that include winrt headers). When
+`WINRT_BUILD_MODULE` is defined (inside winrt.ixx), `winrt_module_namespaces.h`
+is NOT included, so all cross-namespace deps resolve normally.
 
-**Implementation**: `write_root_include_guarded()` in `type_writers.h` extracts
-the namespace from the include path and emits `#ifndef WINRT_MODULE_NS_<ns>`.
+The `extern "C++"` wrapping in the ixx module purview gives all declarations
+external C++ linkage, allowing MSVC to merge textually-included declarations
+with module-exported declarations without redefinition errors.
+
+**Implementation**: `write_root_include_guarded()` in `type_writers.h` emits a
+compound guard: `#if !defined(WINRT_MODULE_NS_<dep>) || defined(WINRT_MODULE_NS_<self>)`.
+This skips module deps only when the including header is NOT itself in the module.
 Used by:
 - `write_depends_guarded()` for cross-namespace impl includes
 - `write_parent_depends()` for parent namespace includes
 
 `write_module_guard()` and `write_version_assert()` in `code_writers.h`:
 ```cpp
+#if defined(WINRT_MODULE) && !defined(WINRT_BUILD_MODULE)
+#include "winrt/winrt_module_namespaces.h"
+#endif
 #if defined(WINRT_BUILD_MODULE)
 #include "winrt/base_macros.h"
-#elif defined(WINRT_MODULE)
+#elif defined(WINRT_MODULE) && !defined(WINRT_MODULE_NS_<self>)
 #include "winrt/base_macros.h"
-#include "winrt/winrt_module_namespaces.h"
-#ifndef WINRT_MODULE_IMPORTED
-#define WINRT_MODULE_IMPORTED
-import winrt;
-#endif
 #else
 #include "winrt/base.h"
 #endif

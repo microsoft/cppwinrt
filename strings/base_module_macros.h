@@ -8,6 +8,10 @@
 #define WINRT_EXPORT
 #endif
 
+#ifndef WINRT_IMPL_EXTERN_CXX
+#define WINRT_IMPL_EXTERN_CXX
+#endif
+
 #if defined(_MSC_VER)
 #define WINRT_IMPL_EMPTY_BASES __declspec(empty_bases)
 #else

@@ -217,7 +217,7 @@ namespace cppwinrt
 
     [[nodiscard]] static finish_with wrap_std_namespace(writer& w)
     {
-        w.write(R"(namespace std
+        w.write(R"(WINRT_IMPL_EXTERN_CXX namespace std
 {
 )");
 

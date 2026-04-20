@@ -361,8 +361,9 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             ixx.write("module;\n#define WINRT_BUILD_MODULE\n");
             ixx.write(strings::base_includes);
             ixx.write(strings::base_std_includes);
-            ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n#define WINRT_IMPL_INCLUDES_HANDLED\n\n");
+            ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n#define WINRT_IMPL_EXTERN_CXX extern \"C++\"\n#define WINRT_IMPL_INCLUDES_HANDLED\n\n");
             ixx.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\n\n");
+            ixx.write("extern \"C++\" {\n");
             ixx.write("#include \"winrt/base.h\"\n\n");
 
             for (auto&&[ns, members] : c.namespaces())
@@ -404,6 +405,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             {
                 write_base_h();
                 write_base_macros_h();
+                ixx.write("} // extern \"C++\"\n");
                 ixx.flush_to_file(settings.output_folder + "winrt/winrt.ixx");
 
                 // Generate a companion header that declares which namespaces are
