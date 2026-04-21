@@ -1,4 +1,5 @@
 import "Windows.Foundation.Numerics.idl";
+import "Windows.UI.Xaml.idl";
 
 namespace test_component_module
 {
@@ -12,5 +13,12 @@ namespace test_component_module
         void ApplySettings(Windows.Foundation.Collections.IMapView<String, String> settings);
 
         static Toaster CreateDefault();
+    }
+
+    // Inherits from DependencyObject (Windows.UI.Xaml) to test that
+    // cross-namespace base class deps are properly guarded.
+    unsealed runtimeclass CustomDependencyObject : Windows.UI.Xaml.DependencyObject
+    {
+        CustomDependencyObject();
     }
 }

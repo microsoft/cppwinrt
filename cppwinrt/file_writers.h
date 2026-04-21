@@ -291,6 +291,7 @@ namespace cppwinrt
         // module deps are skipped (they're already available via import).
         w.write("#ifdef WINRT_MODULE\n");
         w.write("#include \"winrt/base_macros.h\"\n");
+        w.write("#include \"winrt/winrt_module_namespaces.h\"\n");
         w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\n");
         w.write("import winrt;\n");
         w.write("#endif\n");

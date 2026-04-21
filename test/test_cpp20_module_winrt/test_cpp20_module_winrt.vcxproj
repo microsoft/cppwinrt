@@ -105,8 +105,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <PreBuildEvent>
-      <Command>$(CppWinRTDir)cppwinrt -in sdk -out "$(ProjectDir)Generated Files" -module_filter Windows.Foundation -verbose</Command>
-      <Message>Generating C++/WinRT SDK projection (filtered: Windows.Foundation)</Message>
+      <Command>$(CppWinRTDir)cppwinrt -in sdk -out "$(ProjectDir)Generated Files" -module_filter Windows.Foundation -module_filter Windows.UI.Xaml -verbose</Command>
+      <Message>Generating C++/WinRT SDK projection (filtered: Windows.Foundation, Windows.UI.Xaml)</Message>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">

@@ -152,6 +152,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Toaster.cpp" />
+    <ClCompile Include="CustomDependencyObject.cpp" />
     <ClCompile Include="Generated Files\module.g.cpp" />
     <ClCompile Include="module.cpp" />
   </ItemGroup>
