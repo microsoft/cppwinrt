@@ -6,11 +6,18 @@ namespace cppwinrt
     {
         writer w;
         write_preamble(w);
-        w.write(strings::base_version_odr, CPPWINRT_VERSION_STRING);
         {
             auto wrap_file_guard = wrap_open_file_guard(w, "BASE");
 
-            w.write(strings::base_includes);
+            {
+                // ifdef out things that are handled by the module
+                auto wrap_modules_guard = wrap_ifndef(w, "WINRT_IMPL_MODULES");
+                w.write(strings::base_global_fragment);
+                w.write("#include \"./shared.h\"\n");
+                w.write(strings::base_std_includes);
+                w.write(strings::base_numerics);
+            }
+            write_version_assert(w);
             w.write(strings::base_macros);
             w.write(strings::base_types);
             w.write(strings::base_extern);
@@ -41,9 +48,41 @@ namespace cppwinrt
             w.write(strings::base_iterator);
             w.write(strings::base_coroutine_threadpool);
             w.write(strings::base_natvis);
-            w.write(strings::base_version);
         }
         w.flush_to_file(settings.output_folder + "winrt/base.h");
+    }
+
+    static void write_shared_h()
+    {
+        writer w;
+        write_preamble(w);
+        w.write(strings::base_shared);
+        w.write(strings::base_version_odr, CPPWINRT_VERSION_STRING);
+        w.write(strings::base_version);
+        w.flush_to_file(settings.output_folder + "winrt/shared.h");
+    }
+
+    static void write_base_ixx()
+    {
+        writer ixx;
+        write_preamble(ixx);
+        ixx.write("module;\n");
+        ixx.write("#define WINRT_IMPL_MODULES\n");
+        ixx.write(strings::base_global_fragment);
+        ixx.write_root_include("shared");
+        // Since modules don't result in global symbol pollution,
+        // we can always enable the classic COM support.
+        // Users will have to include headers declaring these interfaces
+        // to make use of it.
+        ixx.write("#include <Unknwn.h>\n");
+        ixx.write("export module winrt:base;\n");
+        // windowsnumerics.impl imports std headers.
+        // include-then-import is the prefered order for mixing headers and modules
+        // so we have to put it before the import.
+        ixx.write(strings::base_numerics);
+        ixx.write("import std;\n");
+        ixx.write_root_include("base");
+        ixx.flush_to_file(settings.output_folder + "winrt/ixx/base.ixx");
     }
 
     static void write_fast_forward_h(std::vector<TypeDef> const& classes)
@@ -63,6 +102,47 @@ namespace cppwinrt
 
         }
         w.flush_to_file(settings.output_folder + "winrt/fast_forward.h");
+    }
+
+    static void write_namespace_ixx(cache const& c, writer const& header_writer, std::string_view const& ns, char import_impl, char impl = 0)
+    {
+        writer w;
+        w.type_namespace = ns;
+        write_preamble(w);
+        w.write("module;\n");
+        w.write("#define WINRT_IMPL_MODULES\n");
+        w.write_root_include("shared");
+        if (impl)
+        {
+            w.write("export module winrt:%.%;\n", ns, module_friendly_impl(impl));
+        }
+        else
+        {
+            w.write("export module winrt:%;\n", ns);
+        }
+
+        w.write("import std;\n");
+
+        w.write_import("base");
+        if (!impl)
+        {
+            write_parent_imports(w, c, ns);
+        }
+
+        for (auto&& depends : header_writer.depends)
+        {
+            w.write_import(depends.first, import_impl);
+        }
+
+        if (impl != '0')
+        {
+            w.write("export ");
+            w.write_import(ns, impl ? impl - 1 : '2');
+        }
+
+        w.write_depends(ns, impl);
+
+        w.save_module(impl);
     }
 
     static void write_namespace_0_h(std::string_view const& ns, cache::namespace_members const& members)
@@ -119,6 +199,8 @@ namespace cppwinrt
         }
 
         w.save_header('0');
+
+        write_namespace_ixx({}, {}, ns, 0, '0');
     }
 
     static void write_namespace_1_h(std::string_view const& ns, cache::namespace_members const& members)
@@ -137,13 +219,18 @@ namespace cppwinrt
         write_preamble(w);
         write_open_file_guard(w, ns, '1');
 
-        for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, '0');
-        }
+            auto wrap_modules_guard = wrap_ifndef(w, "WINRT_IMPL_MODULES");
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first, '0');
+            }
 
-        w.write_depends(w.type_namespace, '0');
+            w.write_depends(w.type_namespace, '0');
+        }
         w.save_header('1');
+
+        write_namespace_ixx({}, w, ns, '0', '1');
     }
 
     static void write_namespace_2_h(std::string_view const& ns, cache::namespace_members const& members)
@@ -151,11 +238,11 @@ namespace cppwinrt
         writer w;
         w.type_namespace = ns;
 
-        bool promote;
+        write_structs_result structs_info;
         {
             auto wrap_type = wrap_type_namespace(w, ns);
             w.write_each<write_delegate>(members.delegates);
-            promote = write_structs(w, members.structs);
+            structs_info = write_structs(w, members.structs);
             w.write_each<write_class>(members.classes);
             w.write_each<write_interface_override>(members.classes);
         }
@@ -165,15 +252,20 @@ namespace cppwinrt
         write_preamble(w);
         write_open_file_guard(w, ns, '2');
 
-        char const impl = promote ? '2' : '1';
+        char const impl = structs_info.promote ? '2' : '1';
 
-        for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, impl);
-        }
+            auto wrap_modules_guard = wrap_ifndef(w, "WINRT_IMPL_MODULES");
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first, impl);
+            }
 
-        w.write_depends(w.type_namespace, '1');
+            w.write_depends(w.type_namespace, '1');
+        }
         w.save_header('2');
+
+        write_namespace_ixx({}, w, ns, impl, '2');
     }
 
     static void write_namespace_h(cache const& c, std::string_view const& ns, cache::namespace_members const& members)
@@ -219,16 +311,23 @@ namespace cppwinrt
         w.swap();
         write_preamble(w);
         write_open_file_guard(w, ns);
-        write_version_assert(w);
-        write_parent_depends(w, c, ns);
-
-        for (auto&& depends : w.depends)
+        
         {
-            w.write_depends(depends.first, '2');
-        }
+            auto wrap_modules_guard = wrap_ifndef(w, "WINRT_IMPL_MODULES");
+            w.write_root_include("base");
+            write_parent_depends(w, c, ns);
 
-        w.write_depends(w.type_namespace, '2');
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first, '2');
+            }
+
+            w.write_depends(w.type_namespace, '2');
+        }
+        write_version_assert(w);
         w.save_header();
+
+        write_namespace_ixx(c, w, ns, '2');
     }
 
     static void write_module_g_cpp(std::vector<TypeDef> const& classes)

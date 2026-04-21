@@ -10,7 +10,7 @@ using namespace Windows::Data::Json;
 //
 // This is a helper to create a data reader for use in testing arrays.
 //
-static IAsyncOperation<IDataReader> CreateDataReader(std::initializer_list<byte> /*values*/)
+static IAsyncOperation<IDataReader> CreateDataReader(std::initializer_list<std::uint8_t> /*values*/)
 {
     InMemoryRandomAccessStream stream;
     DataWriter writer(stream);
@@ -32,8 +32,8 @@ TEST_CASE("array,DataReader,std::span")
 {
     auto reader = CreateDataReader({ 1, 2, 3 }).get();
 
-    std::array<byte, 3> a{};
-    std::span<byte> sp(a);
+    std::array<std::uint8_t, 3> a{};
+    std::span<std::uint8_t> sp(a);
     reader.ReadBytes(sp); // FillArray pattern
 
     REQUIRE(a.size() == 3);
@@ -49,7 +49,7 @@ TEST_CASE("array,DataReader,std::span,direct")
 {
     auto reader = CreateDataReader({ 1, 2, 3 }).get();
 
-    std::array<byte, 3> a{};
+    std::array<std::uint8_t, 3> a{};
     reader.ReadBytes(a); // FillArray pattern
 
     REQUIRE(a.size() == 3);

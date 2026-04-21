@@ -97,6 +97,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
         path output_folder = args.value("output", ".");
         create_directories(output_folder / "winrt/impl");
+        create_directories(output_folder / "winrt/ixx");
         settings.output_folder = canonical(output_folder).string();
         settings.output_folder += std::filesystem::path::preferred_separator;
 
@@ -344,9 +345,9 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             group.synchronous(args.exists("synchronous"));
             writer ixx;
             write_preamble(ixx);
-            ixx.write("module;\n");
-            ixx.write(strings::base_includes);
-            ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n\n");
+            ixx.write("export module winrt;\n");
+            ixx.write("export ");
+            ixx.write_import("base");
 
             for (auto&&[ns, members] : c.namespaces())
             {
@@ -355,7 +356,8 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
                     continue;
                 }
 
-                ixx.write("#include \"winrt/%.h\"\n", ns);
+                ixx.write("export ");
+                ixx.write_import(ns);
 
                 group.add([&, &ns = ns, &members = members]
                 {
@@ -366,10 +368,14 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
                 });
             }
 
+            ixx.flush_to_file(settings.output_folder + "winrt/ixx/winrt.ixx");
+
+            write_shared_h();
+
             if (settings.base)
             {
                 write_base_h();
-                ixx.flush_to_file(settings.output_folder + "winrt/winrt.ixx");
+                write_base_ixx();
             }
 
             if (settings.component)
