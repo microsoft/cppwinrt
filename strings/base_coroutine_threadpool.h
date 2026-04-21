@@ -705,6 +705,56 @@ namespace std
     };
 }
 
+namespace winrt::impl
+{
+    struct dispatched_handler_state
+    {
+        std::coroutine_handle<> handle{};
+        bool orphaned{};
+    };
+
+    struct dispatcher_handler
+    {
+        dispatched_handler_state* m_state{};
+
+        dispatcher_handler(dispatched_handler_state* s) : m_state(s) {}
+        dispatcher_handler(dispatcher_handler&& o) noexcept : m_state(std::exchange(o.m_state, {})) {}
+
+        ~dispatcher_handler()
+        {
+            if (m_state && m_state->handle)
+            {
+                m_state->orphaned = true;
+                Complete();
+            }
+        }
+
+        void operator()()
+        {
+            Complete();
+        }
+
+        void Complete()
+        {
+            auto state = std::exchange(m_state, nullptr);
+            std::exchange(state->handle, {}).resume();
+        }
+    };
+
+    struct dispatcher_state_guard
+    {
+        impl::dispatched_handler_state* m_state{};
+
+        ~dispatcher_state_guard()
+        {
+            if (m_state)
+            {
+                m_state->handle = nullptr;
+            }
+        }
+    };
+}
+
 WINRT_EXPORT namespace winrt
 {
     template <typename Dispatcher>
