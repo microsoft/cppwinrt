@@ -17,12 +17,8 @@ jobs:
         toolchain:
           - image: windows-2025
             platform_toolset: v143
-            vswhere_version: "[17.0,18.0)"
-            vswhere_prerelease: "false"
           - image: windows-2025-vs2026
             platform_toolset: v145
-            vswhere_version: "[18.0,19.0)"
-            vswhere_prerelease: "true"
         exclude:
           - arch: arm64
             config: Debug
@@ -41,12 +37,7 @@ jobs:
 
       - name: Find VsDevCmd.bat
         run: |
-          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere"
-          $vswhereArgs = @("-latest", "-products", "*", "-requires", "Microsoft.Component.MSBuild", "-version", "${{ matrix.toolchain.vswhere_version }}", "-find", "Common7\tools\VSDevCmd.bat")
-          if ("${{ matrix.toolchain.vswhere_prerelease }}" -eq "true") {
-            $vswhereArgs += "-prerelease"
-          }
-          $VSDevCmd = & $vswhere @vswhereArgs
+          $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
           if (!$VSDevCmd) { exit 1 }
           echo "Using VSDevCmd: ${VSDevCmd}"
           Add-Content $env:GITHUB_ENV "VSDevCmd=$VSDevCmd"
@@ -112,12 +103,8 @@ jobs:
         toolchain:
           - image: windows-2025
             platform_toolset: v143
-            vswhere_version: "[17.0,18.0)"
-            vswhere_prerelease: "false"
           - image: windows-2025-vs2026
             platform_toolset: v145
-            vswhere_version: "[18.0,19.0)"
-            vswhere_prerelease: "true"
         exclude:
           - arch: arm64
             config: Debug
@@ -150,12 +137,7 @@ jobs:
 
       - name: Find VsDevCmd.bat
         run: |
-          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere"
-          $vswhereArgs = @("-latest", "-products", "*", "-requires", "Microsoft.Component.MSBuild", "-version", "${{ matrix.toolchain.vswhere_version }}", "-find", "Common7\tools\VSDevCmd.bat")
-          if ("${{ matrix.toolchain.vswhere_prerelease }}" -eq "true") {
-            $vswhereArgs += "-prerelease"
-          }
-          $VSDevCmd = & $vswhere @vswhereArgs
+          $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
           if (!$VSDevCmd) { exit 1 }
           echo "Using VSDevCmd: ${VSDevCmd}"
           Add-Content $env:GITHUB_ENV "VSDevCmd=$VSDevCmd"
@@ -356,12 +338,8 @@ jobs:
         toolchain:
           - image: windows-2025
             platform_toolset: v143
-            vswhere_version: "[17.0,18.0)"
-            vswhere_prerelease: "false"
           - image: windows-2025-vs2026
             platform_toolset: v145
-            vswhere_version: "[18.0,19.0)"
-            vswhere_prerelease: "true"
     runs-on: ${{ matrix.toolchain.image }}
     steps:
       - uses: actions/checkout@v6
@@ -379,12 +357,7 @@ jobs:
 
       - name: Find VsDevCmd.bat
         run: |
-          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere"
-          $vswhereArgs = @("-latest", "-products", "*", "-requires", "Microsoft.Component.MSBuild", "-version", "${{ matrix.toolchain.vswhere_version }}", "-find", "Common7\tools\VSDevCmd.bat")
-          if ("${{ matrix.toolchain.vswhere_prerelease }}" -eq "true") {
-            $vswhereArgs += "-prerelease"
-          }
-          $VSDevCmd = & $vswhere @vswhereArgs
+          $VSDevCmd = & "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere" -latest -find Common7\tools\VSDevCmd.bat
           if (!$VSDevCmd) { exit 1 }
           echo "Using VSDevCmd: ${VSDevCmd}"
           Add-Content $env:GITHUB_ENV "VSDevCmd=$VSDevCmd"
