@@ -86,4 +86,19 @@
                 Description="Enables the /await:strict compiler option"
                 Category="General" />
 
+  <BoolProperty Name="CppWinRTModuleBuild"
+                DisplayName="Build C++20 Module"
+                Description="Generates and compiles the winrt.ixx C++20 module interface unit in this project. The compiled module (IFC/OBJ) is automatically shared with projects that set CppWinRTModuleConsume and reference this project. Requires C++20 or later language standard."
+                Category="General" />
+
+  <BoolProperty Name="CppWinRTModuleConsume"
+                DisplayName="Consume C++20 Module"
+                Description="Consumes a pre-built winrt module from a project reference that sets CppWinRTModuleBuild. The module IFC, OBJ, and include paths are resolved automatically. Consumer source files should use 'import winrt;' instead of #include directives for C++/WinRT headers."
+                Category="General" />
+
+  <StringProperty Name="CppWinRTModuleFilter"
+                  DisplayName="Module Namespace Filter"
+                  Description="Space-separated namespace prefixes to include in the winrt module (e.g. 'Windows.Foundation Windows.Storage'). When empty, all platform namespaces are included. All namespace headers are still generated for textual inclusion; only the module contents are filtered."
+                  Category="General" />
+
 </Rule>

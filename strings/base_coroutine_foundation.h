@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename Async>
     struct async_completed_handler;
@@ -312,7 +312,7 @@ WINRT_EXPORT namespace winrt
     }
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename Promise>
     struct cancellation_token
@@ -704,7 +704,7 @@ namespace winrt::impl
     };
 }
 
-namespace std
+WINRT_IMPL_EXTERN_CXX namespace std
 {
     template <typename... Args>
     struct coroutine_traits<winrt::Windows::Foundation::IAsyncAction, Args...>

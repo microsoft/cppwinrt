@@ -65,7 +65,7 @@ WINRT_EXPORT namespace winrt::param
     }
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename T>
     using param_type = std::conditional_t<std::is_same_v<T, hstring>, param::hstring, T>;

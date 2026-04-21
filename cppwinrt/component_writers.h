@@ -136,7 +136,11 @@ namespace cppwinrt
 
     static void write_module_g_cpp(writer& w, std::vector<TypeDef> const& classes)
     {
+        w.write("#ifdef WINRT_MODULE\n");
+        w.write("#ifdef WINRT_IMPORT_STD\nimport std;\n#endif\nimport winrt;\n");
+        w.write("#else\n");
         w.write_root_include("base");
+        w.write("#endif\n");
         auto format = R"(%
 bool __stdcall %_can_unload_now() noexcept
 {
@@ -397,9 +401,14 @@ catch (...) { return winrt::to_hresult(); }
             return;
         }
 
-        auto wrap_type = wrap_type_namespace(w, type_namespace);
+        // In module mode, the constructor/static definitions are already available
+        // from the winrt module (via the namespace header folded into winrt.ixx).
+        // Guard them so they're only emitted in header mode.
+        {
+            auto wrap_type = wrap_type_namespace(w, type_namespace);
+            w.write("#ifndef WINRT_MODULE\n");
 
-        for (auto&&[factory_name, factory] : get_factories(w, type))
+            for (auto&&[factory_name, factory] : get_factories(w, type))
         {
             if (factory.type && is_always_disabled(factory.type))
             {
@@ -545,6 +554,9 @@ catch (...) { return winrt::to_hresult(); }
                     }
                 }
             }
+        }
+
+            w.write("#endif\n");
         }
     }
 

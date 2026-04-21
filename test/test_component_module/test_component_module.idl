@@ -1,0 +1,24 @@
+import "Windows.Foundation.Numerics.idl";
+import "Windows.UI.Xaml.idl";
+
+namespace test_component_module
+{
+    runtimeclass Toaster
+    {
+        Toaster();
+        Toaster(String name);
+        String Name{ get; set; };
+        Windows.Foundation.IAsyncAction ToastAsync();
+        // Cross-namespace dep: exercises guarded includes in .g.h
+        void ApplySettings(Windows.Foundation.Collections.IMapView<String, String> settings);
+
+        static Toaster CreateDefault();
+    }
+
+    // Inherits from DependencyObject (Windows.UI.Xaml) to test that
+    // cross-namespace base class deps are properly guarded.
+    unsealed runtimeclass CustomDependencyObject : Windows.UI.Xaml.DependencyObject
+    {
+        CustomDependencyObject();
+    }
+}

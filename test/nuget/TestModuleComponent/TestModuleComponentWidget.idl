@@ -1,0 +1,17 @@
+namespace TestModuleComponent.Widgets
+{
+    struct WidgetSize
+    {
+        Single Width;
+        Single Height;
+    };
+
+    [default_interface]
+    runtimeclass Widget
+    {
+        Widget();
+        Widget(String name);
+        String Name{ get; };
+        WidgetSize Size{ get; };
+    }
+}

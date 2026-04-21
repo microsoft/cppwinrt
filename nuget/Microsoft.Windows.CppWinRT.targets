@@ -26,6 +26,8 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))..\..\</CppWinRTPackageDir>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))</CppWinRTPackageDir>
         <CppWinRTParameters Condition="'$(CppWinRTFastAbi)'=='true'">$(CppWinRTParameters) -fastabi</CppWinRTParameters>
+        <!-- When consuming a pre-built module, skip regenerating the platform projection (it's in the module) -->
+        <CppWinRTEnablePlatformProjection Condition="'$(CppWinRTModuleConsume)'=='true' and '$(CppWinRTModuleBuild)'!='true' and '$(CppWinRTEnablePlatformProjection)' == ''">false</CppWinRTEnablePlatformProjection>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)bin\"</CppWinRTPath>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)"</CppWinRTPath>
         <!-- By default enable C++/WinRT to include target platform winmds if we didn't override sdk references and the C++ Project system isn't already adding them -->
@@ -652,6 +654,7 @@ $(XamlMetaDataProviderPch)
         <PropertyGroup>
             <_CppwinrtParameters>$(CppWinRTCommandVerbosity) $(CppWinRTParameters)</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtInputs->'-in &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>
+            <_CppwinrtParameters Condition="'$(CppWinRTModuleFilter)' != ''">$(_CppwinrtParameters) -module_filter $(CppWinRTModuleFilter)</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) -out &quot;$(GeneratedFilesDir).&quot;</_CppwinrtParameters>
         </PropertyGroup>
 
@@ -876,6 +879,114 @@ $(XamlMetaDataProviderPch)
             <CppWinRTMetadataAssembly></CppWinRTMetadataAssembly>
             <XamlLocalAssembly>$(CppWinRTProjectWinMD)</XamlLocalAssembly>
         </PropertyGroup>
+    </Target>
+
+    <!--
+      C++20 Module Support — Builder
+      When CppWinRTModuleBuild is true, the generated winrt.ixx is compiled as a module
+      interface unit in this project. The produced IFC and OBJ are shared with consumers
+      via CppWinRTGetModuleOutputs.
+    -->
+    <Target Name="CppWinRTBuildModule"
+            AfterTargets="CppWinRTMakeProjections"
+            BeforeTargets="ClCompile"
+            Condition="'$(CppWinRTModuleBuild)' == 'true'">
+        <Message Text="C++/WinRT: Adding winrt.ixx module interface unit (builder)" Importance="$(CppWinRTVerbosity)" />
+        <ItemGroup>
+            <ClCompile Include="$(GeneratedFilesDir)winrt\winrt.ixx">
+                <PrecompiledHeader>NotUsing</PrecompiledHeader>
+            </ClCompile>
+        </ItemGroup>
+        <!-- Define WINRT_MODULE so generated component files (.g.h, .g.cpp) use
+             import winrt;. When WINRT_MODULE is defined, namespace headers include
+             winrt_module_namespaces.h which declares per-namespace WINRT_MODULE_NS_*
+             macros. Cross-namespace deps are guarded by these per-namespace macros,
+             precisely skipping only namespaces in the module while including
+             component and other non-module deps normally.
+             winrt.ixx defines WINRT_BUILD_MODULE in its global module fragment. -->
+        <ItemGroup>
+            <ClCompile>
+                <PreprocessorDefinitions>WINRT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            </ClCompile>
+        </ItemGroup>
+        <!-- When BuildStlModules is enabled, define WINRT_IMPORT_STD so that base.h
+             uses 'import std;' instead of individual standard library #includes. -->
+        <ItemGroup Condition="'@(ClCompile->AnyHaveMetadataValue('BuildStlModules','true'))' == 'true'">
+            <ClCompile>
+                <PreprocessorDefinitions>WINRT_IMPORT_STD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            </ClCompile>
+        </ItemGroup>
+    </Target>
+
+    <!--
+      C++20 Module Support — Builder Output Export
+      Called by consuming projects via MSBuild task on ProjectReference items.
+      Returns the IFC, OBJ, and GeneratedFilesDir paths so consumers can resolve them
+      without hardcoded paths.
+    -->
+    <Target Name="CppWinRTGetModuleOutputs"
+            Returns="@(CppWinRTModuleOutput)"
+            Condition="'$(CppWinRTModuleBuild)' == 'true'">
+        <ItemGroup>
+            <CppWinRTModuleOutput Include="$(GeneratedFilesDir)winrt\winrt.ixx">
+                <ModuleIfc>$(IntDir)winrt.ixx.ifc</ModuleIfc>
+                <ModuleObj>$(IntDir)winrt.ixx.obj</ModuleObj>
+                <ModuleGeneratedFilesDir>$(GeneratedFilesDir)</ModuleGeneratedFilesDir>
+            </CppWinRTModuleOutput>
+        </ItemGroup>
+    </Target>
+
+    <!--
+      C++20 Module Support — Consumer
+      When CppWinRTModuleConsume is true, resolves pre-built module IFC/OBJ from project
+      references that set CppWinRTModuleBuild=true. Injects the IFC into
+      AdditionalModuleDependencies, the OBJ into linker AdditionalDependencies, and the
+      builder's GeneratedFilesDir into AdditionalIncludeDirectories.
+    -->
+    <Target Name="CppWinRTResolveModuleReferences"
+            AfterTargets="CppWinRTMakeProjections"
+            BeforeTargets="ClCompile"
+            Condition="'$(CppWinRTModuleConsume)' == 'true'"
+            DependsOnTargets="ResolveProjectReferences">
+
+        <MSBuild Projects="@(ProjectReference)"
+                 Targets="CppWinRTGetModuleOutputs"
+                 SkipNonexistentTargets="true"
+                 BuildInParallel="false">
+            <Output TaskParameter="TargetOutputs" ItemName="_CppWinRTResolvedModuleRefs" />
+        </MSBuild>
+
+        <Message Text="C++/WinRT: Resolved module IFC: @(_CppWinRTResolvedModuleRefs->'%(ModuleIfc)')" Importance="$(CppWinRTVerbosity)" />
+        <Message Text="C++/WinRT: Resolved module OBJ: @(_CppWinRTResolvedModuleRefs->'%(ModuleObj)')" Importance="$(CppWinRTVerbosity)" />
+        <Message Text="C++/WinRT: Resolved module includes: @(_CppWinRTResolvedModuleRefs->'%(ModuleGeneratedFilesDir)')" Importance="$(CppWinRTVerbosity)" />
+
+        <Error Condition="'@(_CppWinRTResolvedModuleRefs)' == ''"
+               Text="CppWinRTModuleConsume is true but no project references with CppWinRTModuleBuild=true were found. Add a ProjectReference to a project that sets CppWinRTModuleBuild=true." />
+
+        <ItemGroup>
+            <ClCompile>
+                <AdditionalModuleDependencies>@(_CppWinRTResolvedModuleRefs->'%(ModuleIfc)', ';');%(ClCompile.AdditionalModuleDependencies)</AdditionalModuleDependencies>
+                <AdditionalIncludeDirectories>@(_CppWinRTResolvedModuleRefs->'%(ModuleGeneratedFilesDir)', ';');%(ClCompile.AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+            </ClCompile>
+            <Link>
+                <AdditionalDependencies>@(_CppWinRTResolvedModuleRefs->'%(ModuleObj)', ';');%(Link.AdditionalDependencies)</AdditionalDependencies>
+            </Link>
+        </ItemGroup>
+
+        <!-- Define WINRT_MODULE so generated component files (.g.h, .g.cpp) use
+             import winrt;, and so namespace headers use per-namespace guards. -->
+        <ItemGroup>
+            <ClCompile>
+                <PreprocessorDefinitions>WINRT_MODULE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            </ClCompile>
+        </ItemGroup>
+
+        <!-- When BuildStlModules is enabled, define WINRT_IMPORT_STD for consumers too -->
+        <ItemGroup Condition="'@(ClCompile->AnyHaveMetadataValue('BuildStlModules','true'))' == 'true'">
+            <ClCompile>
+                <PreprocessorDefinitions>WINRT_IMPORT_STD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+            </ClCompile>
+        </ItemGroup>
     </Target>
 
     <!--Append any additional item metadata after all default and project settings have been applied-->

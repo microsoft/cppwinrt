@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
 #ifdef WINRT_IMPL_COROUTINES
     inline auto submit_threadpool_callback(void(__stdcall* callback)(void*, void* context), void* context)
@@ -321,7 +321,7 @@ WINRT_EXPORT namespace winrt
     };
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     struct apartment_awaiter
     {
@@ -671,7 +671,7 @@ WINRT_EXPORT namespace winrt
     struct fire_and_forget {};
 }
 
-namespace std
+WINRT_IMPL_EXTERN_CXX namespace std
 {
     template <typename... Args>
     struct coroutine_traits<winrt::fire_and_forget, Args...>

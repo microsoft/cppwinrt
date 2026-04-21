@@ -564,6 +564,56 @@ namespace cppwinrt
                 settings.brackets ? '>' : '\"');
         }
 
+        void write_root_include_guarded(std::string_view const& include)
+        {
+            // Guard cross-namespace #includes with per-namespace macros from
+            // winrt_module_namespaces.h. The compound guard has two clauses:
+            //
+            //  1. !WINRT_MODULE_NS_<dep> — dep is NOT in the module → always include.
+            //  2.  WINRT_MODULE_NS_<self> — self IS in the module → traditional mode,
+            //      include everything (TU hasn't imported the module).
+            //
+            // When both clauses are false (dep IS in module, self is NOT), the
+            // include is skipped — those types come from 'import winrt;'.
+            // When WINRT_MODULE is not defined, neither macro exists, so clause 1
+            // is true and the include always happens (traditional behavior).
+            std::string dep_ns;
+            if (include.size() > 5 && include.substr(0, 5) == "impl/")
+            {
+                auto remainder = include.substr(5);
+                auto dot = remainder.rfind('.');
+                dep_ns = std::string(remainder.substr(0, dot));
+            }
+            else
+            {
+                dep_ns = std::string(include);
+            }
+            std::string dep_macro = dep_ns;
+            std::replace(dep_macro.begin(), dep_macro.end(), '.', '_');
+
+            std::string self_macro{ type_namespace };
+            std::replace(self_macro.begin(), self_macro.end(), '.', '_');
+
+            // If dep == self, the guard is a tautology — just include directly.
+            if (dep_macro == self_macro)
+            {
+                write_root_include(include);
+                return;
+            }
+
+            auto format = R"(#if !defined(WINRT_MODULE_NS_%) || defined(WINRT_MODULE_NS_%)
+#include %winrt/%.h%
+#endif
+)";
+
+            write(format,
+                dep_macro,
+                self_macro,
+                settings.brackets ? '<' : '\"',
+                include,
+                settings.brackets ? '>' : '\"');
+        }
+
         void write_depends(std::string_view const& ns, char impl = 0)
         {
             if (impl)
@@ -573,6 +623,18 @@ namespace cppwinrt
             else
             {
                 write_root_include(ns);
+            }
+        }
+
+        void write_depends_guarded(std::string_view const& ns, char impl = 0)
+        {
+            if (impl)
+            {
+                write_root_include_guarded(write_temp("impl/%.%", ns, impl));
+            }
+            else
+            {
+                write_root_include_guarded(ns);
             }
         }
 

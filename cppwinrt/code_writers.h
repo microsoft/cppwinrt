@@ -35,9 +35,49 @@ namespace cppwinrt
         }
     }
 
+    // Emits the module guard at the top of each main namespace header.
+    // The behavior depends on whether THIS namespace is in the module:
+    //
+    // 1. WINRT_BUILD_MODULE — Inside winrt.ixx. base.h is in the module purview;
+    //    only need base_macros.h for preprocessor macros.
+    //
+    // 2. WINRT_MODULE set, self NOT in module — This is a component or reference
+    //    namespace header. The TU must have already done 'import winrt;'.
+    //    Use base_macros.h only; cross-dep guards skip module namespaces.
+    //
+    // 3. WINRT_MODULE set, self IS in module — This namespace header is being
+    //    #included directly by a TU that hasn't imported the module. Use
+    //    traditional base.h behavior; cross-dep guards are bypassed.
+    //
+    // 4. No WINRT_MODULE — Traditional header mode. Include full base.h.
+    static void write_module_guard(writer& w, std::string_view const& ns)
+    {
+        std::string ns_macro{ ns };
+        std::replace(ns_macro.begin(), ns_macro.end(), '.', '_');
+
+        auto format = R"(// Module guard: determines how base types are resolved for this header.
+#if defined(WINRT_MODULE) && !defined(WINRT_BUILD_MODULE)
+#include "winrt/winrt_module_namespaces.h"
+#endif
+#if defined(WINRT_BUILD_MODULE)
+// Building winrt.ixx — base.h is in the module purview; only need macros here.
+#include "winrt/base_macros.h"
+#elif defined(WINRT_MODULE) && !defined(WINRT_MODULE_NS_%)
+// This namespace is NOT in the module. The TU must have already imported winrt.
+#include "winrt/base_macros.h"
+#else
+// Traditional header mode, OR this namespace IS in the module and is being
+// #included directly (not via import). Include full base.h.
+)";
+        auto format_end = R"(#endif // WINRT_BUILD_MODULE / WINRT_MODULE / header mode
+)";
+        w.write(format, ns_macro);
+        w.write_root_include("base");
+        w.write(format_end);
+    }
+
     static void write_version_assert(writer& w)
     {
-        w.write_root_include("base");
         auto format = R"(static_assert(winrt::check_version(CPPWINRT_VERSION, "%"), "Mismatched C++/WinRT headers.");
 #define CPPWINRT_VERSION "%"
 )";
@@ -137,7 +177,7 @@ namespace cppwinrt
 
         if (found != c.namespaces().end() && has_projected_types(found->second))
         {
-            w.write_root_include(parent);
+            w.write_root_include_guarded(parent);
         }
         else
         {
@@ -166,7 +206,7 @@ namespace cppwinrt
 
     [[nodiscard]] static finish_with wrap_impl_namespace(writer& w)
     {
-        auto format = R"(namespace winrt::impl
+        auto format = R"(WINRT_EXPORT namespace winrt::impl
 {
 )";
 
@@ -177,7 +217,7 @@ namespace cppwinrt
 
     [[nodiscard]] static finish_with wrap_std_namespace(writer& w)
     {
-        w.write(R"(namespace std
+        w.write(R"(WINRT_IMPL_EXTERN_CXX namespace std
 {
 )");
 

@@ -1,8 +1,13 @@
 // Intentionally not using pch...
-#include "catch.hpp"
+#include <catch.hpp>
+#include <coroutine>
 
+#ifdef WINRT_TEST_MODULES
+import winrt;
+#else
 // Only need winrt/base.h for coroutine thread pool support.
 #include "winrt/base.h"
+#endif
 
 using namespace winrt;
 
