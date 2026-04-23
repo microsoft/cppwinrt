@@ -288,7 +288,7 @@ namespace cppwinrt
             w.write("#include \"winrt/module.h\"\n");
             for (auto&& depends : w.depends)
             {
-                w.write("import %;\n", depends.first);
+                w.write("import winrt.%;\n", depends.first);
             }
             w.write("#else\n");
         }
@@ -431,7 +431,7 @@ namespace cppwinrt
 #endif
 
 // <windowsnumerics.impl.h> pulls in large, hard-to-control legacy headers. In header builds we keep the
-// existing behavior, but in module builds it's provided by the winrt.numerics module.
+// existing behavior, but in module builds it's provided by the winrt_numerics module.
 #if !(defined(WINRT_IMPL_BUILD_MODULE) || defined(WINRT_IMPORT_MODULE))
 
 #ifdef WINRT_IMPL_NUMERICS
@@ -517,10 +517,10 @@ typedef struct _GUID GUID;
 #undef GetCurrentTime
 #endif
 
-export module winrt.base;
+export module winrt_base;
 
 import std;
-export import winrt.numerics;
+export import winrt_numerics;
 
 #if __has_include(<windowsnumerics.impl.h>)
 #define WINRT_IMPL_NUMERICS
@@ -529,7 +529,7 @@ export import winrt.numerics;
 #include "winrt/base.h"
 )";
         w.write(format);
-        w.flush_to_file(settings.output_folder + "winrt/winrt.base.ixx");
+        w.flush_to_file(settings.output_folder + "winrt/winrt_base.ixx");
     }
 
     static void write_numerics_ixx()
@@ -537,7 +537,7 @@ export import winrt.numerics;
         writer w;
         write_module_preamble(w);
         auto format = R"(
-export module winrt.numerics;
+export module winrt_numerics;
 
 #if __has_include(<windowsnumerics.impl.h>)
 #ifdef _MSC_VER
@@ -560,7 +560,7 @@ export module winrt.numerics;
 #endif
 )";
         w.write(format);
-        w.flush_to_file(settings.output_folder + "winrt/winrt.numerics.ixx");
+        w.flush_to_file(settings.output_folder + "winrt/winrt_numerics.ixx");
     }
 
     static void write_namespace_ixx(
@@ -572,18 +572,18 @@ export module winrt.numerics;
         write_module_preamble(w);
 
         // Module declaration
-        w.write("export module %;\n\n", ns);
+        w.write("export module winrt.%;\n\n", ns);
 
         // Import std and base
         w.write("import std;\n");
-        w.write("export import winrt.base;\n");
+        w.write("export import winrt_base;\n");
 
         // Import dependency namespace modules
         for (auto& dep : deps)
         {
             if (projected_namespaces.count(dep))
             {
-                w.write("import %;\n", dep);
+                w.write("import winrt.%;\n", dep);
             }
         }
 
@@ -609,18 +609,18 @@ export module winrt.numerics;
         write_module_preamble(w);
 
         // Module declaration (owner namespace)
-        w.write("export module %;\n\n", owner);
+        w.write("export module winrt.%;\n\n", owner);
 
         // Import std and base
         w.write("import std;\n");
-        w.write("export import winrt.base;\n");
+        w.write("export import winrt_base;\n");
 
         // Import external dependency modules (outside the SCC)
         for (auto& dep : external_deps)
         {
             if (projected_namespaces.count(dep))
             {
-                w.write("import %;\n", dep);
+                w.write("import winrt.%;\n", dep);
             }
         }
 
@@ -673,10 +673,10 @@ export module winrt.numerics;
         writer w;
         write_preamble(w);
         w.write("\n// NOTE: This module does not define declarations of its own.\n");
-        w.write("// It re-exports all declarations from the '%' module. This is used to break cycles in the\n", owner);
+        w.write("// It re-exports all declarations from the 'winrt.%' module. This is used to break cycles in the\n", owner);
         w.write("// WinRT namespace module dependency graph (SCC owner consolidation).\n\n");
-        w.write("export module %;\n", ns);
-        w.write("export import %;\n", owner);
+        w.write("export module winrt.%;\n", ns);
+        w.write("export import winrt.%;\n", owner);
         w.flush_to_file(settings.output_folder + "winrt/" + std::string(ns) + ".ixx");
     }
 }
