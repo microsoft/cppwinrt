@@ -376,7 +376,7 @@ WINRT_EXPORT namespace winrt
 
         std::pair<std::uint32_t, impl::arg_out<T>> detach_abi() noexcept
         {
-#ifdef _MSC_VER
+#if defined(_MSC_VER) && !defined(__clang__)
             // https://github.com/microsoft/cppwinrt/pull/1165
             std::pair<std::uint32_t, impl::arg_out<T>> result;
             std::memset(&result, 0, sizeof(result));
