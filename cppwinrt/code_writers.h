@@ -41,14 +41,14 @@ namespace cppwinrt
     }
 
     // When modules are enabled, wraps a block of #include directives in
-    // #ifndef WINRT_MODULE ... #endif so that in module builds (where
-    // WINRT_MODULE is defined in the global module fragment), textual
+    // #ifndef WINRT_IMPL_BUILD_MODULE ... #endif so that in module builds (where
+    // WINRT_IMPL_BUILD_MODULE is defined in the global module fragment), textual
     // includes are suppressed — dependencies come via import instead.
     [[nodiscard]] static finish_with wrap_module_aware_includes_guard(writer& w, bool modules_enabled)
     {
         if (modules_enabled)
         {
-            w.write("#ifndef WINRT_MODULE\n");
+            w.write("#ifndef WINRT_IMPL_BUILD_MODULE\n");
             return { w, write_endif };
         }
         else

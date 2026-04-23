@@ -238,14 +238,14 @@ namespace cppwinrt
         write_close_file_guard(w);
         if (settings.modules)
         {
-            w.write("#endif\n"); // WINRT_CONSUME_MODULE
+            w.write("#endif\n"); // WINRT_IMPORT_MODULE
         }
         w.swap();
         write_preamble(w);
         write_open_file_guard(w, ns);
         if (settings.modules)
         {
-            w.write("#ifndef WINRT_CONSUME_MODULE\n\n");
+            w.write("#ifndef WINRT_IMPORT_MODULE\n\n");
         }
         {
             auto wrap_includes = wrap_module_aware_includes_guard(w, settings.modules);
@@ -284,7 +284,7 @@ namespace cppwinrt
 
         if (settings.modules)
         {
-            w.write("#ifdef WINRT_CONSUME_MODULE\n");
+            w.write("#ifdef WINRT_IMPORT_MODULE\n");
             w.write("#include \"winrt/module.h\"\n");
             for (auto&& depends : w.depends)
             {
@@ -374,7 +374,7 @@ namespace cppwinrt
     {
         write_preamble(w);
         w.write("module;\n");
-        w.write("#define WINRT_MODULE\n");
+        w.write("#define WINRT_IMPL_BUILD_MODULE\n");
         auto format = R"(#include <intrin.h>
 #include <cstddef>
 #include <version>
@@ -423,7 +423,7 @@ namespace cppwinrt
 #endif
 
 #ifndef WINRT_EXPORT
-#ifdef WINRT_MODULE
+#ifdef WINRT_IMPL_BUILD_MODULE
 #define WINRT_EXPORT export extern "C++"
 #else
 #define WINRT_EXPORT
@@ -432,7 +432,7 @@ namespace cppwinrt
 
 // <windowsnumerics.impl.h> pulls in large, hard-to-control legacy headers. In header builds we keep the
 // existing behavior, but in module builds it's provided by the winrt.numerics module.
-#if !(defined(WINRT_MODULE) || defined(WINRT_CONSUME_MODULE))
+#if !(defined(WINRT_IMPL_BUILD_MODULE) || defined(WINRT_IMPORT_MODULE))
 
 #ifdef WINRT_IMPL_NUMERICS
 #define _WINDOWS_NUMERICS_NAMESPACE_ winrt::Windows::Foundation::Numerics
