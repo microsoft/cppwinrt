@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     using ptp_io = struct tp_io*;
     using ptp_timer = struct tp_timer*;
@@ -208,7 +208,7 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
     using DateTime = std::chrono::time_point<clock, TimeSpan>;
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
 #ifdef WINRT_IMPL_IUNKNOWN_DEFINED
     using hresult_type = long;

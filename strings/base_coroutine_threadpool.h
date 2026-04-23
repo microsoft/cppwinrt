@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
 #ifdef WINRT_IMPL_COROUTINES
     inline auto submit_threadpool_callback(void(__stdcall* callback)(void*, void* context), void* context)
@@ -321,7 +321,7 @@ WINRT_EXPORT namespace winrt
     };
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     struct apartment_awaiter
     {

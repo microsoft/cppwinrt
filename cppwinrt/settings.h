@@ -31,6 +31,8 @@ namespace cppwinrt
 
         bool fastabi{};
         std::map<winmd::reader::TypeDef, winmd::reader::TypeDef> fastabi_cache;
+
+        bool modules{}; // Generate per-namespace C++20 module interface units (.ixx)
     };
 
     extern settings_type settings;

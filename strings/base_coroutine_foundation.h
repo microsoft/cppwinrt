@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename Async>
     struct async_completed_handler;
@@ -312,7 +312,7 @@ WINRT_EXPORT namespace winrt
     }
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename Promise>
     struct cancellation_token

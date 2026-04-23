@@ -130,7 +130,7 @@ WINRT_EXPORT namespace winrt
     };
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename I, auto Method>
     struct event_revoker

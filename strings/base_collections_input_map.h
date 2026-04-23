@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename K, typename V, typename Container, typename ThreadingBase>
     struct map_impl :
