@@ -490,6 +490,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             if (settings.base)
             {
                 write_base_h();
+                write_module_h();
             }
 
             if (settings.component)
@@ -524,30 +525,11 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
             group.get();
 
-            if (settings.modules)
-            {
-                fprintf(stderr, "module namespaces: %zu\n", projected_namespaces.size());
-                for (auto& ns : projected_namespaces)
-                {
-                    auto it = ns_deps_map.find(ns);
-                    size_t ndeps = (it != ns_deps_map.end()) ? it->second.size() : 0;
-                    fprintf(stderr, "  ns: %s (%zu deps)\n", ns.c_str(), ndeps);
-                    if (it != ns_deps_map.end())
-                    {
-                        for (auto& dep : it->second)
-                        {
-                            fprintf(stderr, "    dep: %s\n", dep.c_str());
-                        }
-                    }
-                }
-            }
-
             // Generate per-namespace module interface files (v2)
             if (settings.modules && (settings.base || settings.component))
             {
                 if (settings.base)
                 {
-                    write_module_h();
                     write_numerics_ixx();
                     write_base_ixx();
                 }

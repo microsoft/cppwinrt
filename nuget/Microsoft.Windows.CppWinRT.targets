@@ -26,9 +26,10 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))..\..\</CppWinRTPackageDir>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))</CppWinRTPackageDir>
         <CppWinRTParameters Condition="'$(CppWinRTFastAbi)'=='true'">$(CppWinRTParameters) -fastabi</CppWinRTParameters>
-        <CppWinRTParameters Condition="'$(CppWinRTBuildModule)'=='true'">$(CppWinRTParameters) -modules</CppWinRTParameters>
-        <CppWinRTParameters Condition="'$(CppWinRTModuleInclude)' != ''">$(CppWinRTParameters) -module_include $(CppWinRTModuleInclude.Replace(';', ' '))</CppWinRTParameters>
-        <CppWinRTParameters Condition="'$(CppWinRTModuleExclude)' != ''">$(CppWinRTParameters) -module_exclude $(CppWinRTModuleExclude.Replace(';', ' '))</CppWinRTParameters>
+        <!-- Module args are kept separate so they can be selectively applied to platform vs component projections -->
+        <CppWinRTCommandModules Condition="'$(CppWinRTBuildModule)'=='true'">-modules</CppWinRTCommandModules>
+        <CppWinRTCommandModuleFilter Condition="'$(CppWinRTModuleInclude)' != ''">-module_include $(CppWinRTModuleInclude.Replace(';', ' '))</CppWinRTCommandModuleFilter>
+        <CppWinRTCommandModuleFilter Condition="'$(CppWinRTModuleExclude)' != ''">$(CppWinRTCommandModuleFilter) -module_exclude $(CppWinRTModuleExclude.Replace(';', ' '))</CppWinRTCommandModuleFilter>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)bin\"</CppWinRTPath>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)"</CppWinRTPath>
         <!-- By default enable C++/WinRT to include target platform winmds if we didn't override sdk references and the C++ Project system isn't already adding them -->
@@ -654,6 +655,9 @@ $(XamlMetaDataProviderPch)
         </ItemGroup>
         <PropertyGroup>
             <_CppwinrtParameters>$(CppWinRTCommandVerbosity) $(CppWinRTParameters)</_CppwinrtParameters>
+            <!-- Builders: pass -modules + filter to platform projection for .ixx generation.
+                 Consumers: don't pass -modules to platform projection (just generate headers + module.h). -->
+            <_CppwinrtParameters Condition="'$(CppWinRTConsumeModule)'!='true'">$(_CppwinrtParameters) $(CppWinRTCommandModules) $(CppWinRTCommandModuleFilter)</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtInputs->'-in &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) -out &quot;$(GeneratedFilesDir).&quot;</_CppwinrtParameters>
         </PropertyGroup>
@@ -841,7 +845,7 @@ $(XamlMetaDataProviderPch)
             <_CppwinrtCompRefs Include="@(CppWinRTPlatformWinMDReferences)"/>
         </ItemGroup>
         <PropertyGroup>
-            <_CppwinrtParameters>$(CppWinRTCommandVerbosity) $(CppWinRTParameters) -overwrite -name $(RootNamespace) $(CppWinRTCommandPrecompiledHeader) $(CppWinRTCommandUsePrefixes) -comp &quot;$(GeneratedFilesDir)sources&quot;</_CppwinrtParameters>
+            <_CppwinrtParameters>$(CppWinRTCommandVerbosity) $(CppWinRTParameters) $(CppWinRTCommandModules) -overwrite -name $(RootNamespace) $(CppWinRTCommandPrecompiledHeader) $(CppWinRTCommandUsePrefixes) -comp &quot;$(GeneratedFilesDir)sources&quot;</_CppwinrtParameters>
             <_CppwinrtParameters Condition="'$(CppWinRTOptimized)'=='true'">$(_CppwinrtParameters) -opt</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtCompInputs->'-in &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtCompRefs->'-ref &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>
@@ -912,6 +916,7 @@ $(XamlMetaDataProviderPch)
             Condition="'$(CppWinRTBuildModule)'=='true'"
             DependsOnTargets="CppWinRTMakeProjections"
             BeforeTargets="FixupCLCompileOptions">
+        <!-- Apply module builder paths to the .ixx items -->
         <ItemGroup>
             <ClCompile Include="$(GeneratedFilesDir)winrt\*.ixx">
                 <CompileAs>CompileAsCppModule</CompileAs>
@@ -922,6 +927,49 @@ $(XamlMetaDataProviderPch)
                 <PrecompiledHeader>NotUsing</PrecompiledHeader>
             </ClCompile>
         </ItemGroup>
+    </Target>
+
+    <!--
+      When CppWinRTBuildModule is true, export the generated files directory and IFC output
+      directory so that consuming projects can resolve them via ProjectReference.
+      The IFC files are written to IntDir by MSBuild's module build system.
+    -->
+    <Target Name="CppWinRTGetModuleOutputs"
+            Condition="'$(CppWinRTBuildModule)'=='true'"
+            Returns="@(CppWinRTModuleOutputs)">
+        <ItemGroup>
+            <CppWinRTModuleOutputs Include="$(MSBuildProjectFullPath)">
+                <CppWinRTModuleGeneratedFilesDir>$(GeneratedFilesDir)</CppWinRTModuleGeneratedFilesDir>
+                <CppWinRTModuleIfcDir>$(IntDir)</CppWinRTModuleIfcDir>
+                <CppWinRTModuleLibDir>$(OutDir)</CppWinRTModuleLibDir>
+            </CppWinRTModuleOutputs>
+        </ItemGroup>
+    </Target>
+
+    <!--
+      When CppWinRTConsumeModule is true, resolve the module builder's outputs from
+      ProjectReference items and configure include paths + IFC search directories.
+      This allows consuming projects to use 'import winrt_base;' etc. without
+      building the platform modules themselves.
+    -->
+    <Target Name="CppWinRTResolveModuleReferences"
+            Condition="'$(CppWinRTConsumeModule)'=='true'"
+            DependsOnTargets="ResolveProjectReferences"
+            BeforeTargets="CppWinRTMakeProjections;CppWinRTAddModuleInterfaces;ClCompile">
+        <!-- Call the builder's export target to get paths -->
+        <MSBuild Projects="@(ProjectReference)"
+                 Targets="CppWinRTGetModuleOutputs"
+                 SkipNonexistentTargets="true"
+                 BuildInParallel="false">
+            <Output TaskParameter="TargetOutputs" ItemName="_CppWinRTResolvedModuleRefs" />
+        </MSBuild>
+
+        <Message Text="C++/WinRT: Resolved module GenDir: @(_CppWinRTResolvedModuleRefs->'%(CppWinRTModuleGeneratedFilesDir)')" Importance="$(CppWinRTVerbosity)" />
+        <Message Text="C++/WinRT: Resolved module IfcDir: @(_CppWinRTResolvedModuleRefs->'%(CppWinRTModuleIfcDir)')" Importance="$(CppWinRTVerbosity)" />
+
+        <PropertyGroup Condition="'@(_CppWinRTResolvedModuleRefs)' != ''">
+            <CppWinRTModuleBMIDirs>@(_CppWinRTResolvedModuleRefs->'%(CppWinRTModuleIfcDir)')</CppWinRTModuleBMIDirs>
+        </PropertyGroup>
     </Target>
 
 </Project>

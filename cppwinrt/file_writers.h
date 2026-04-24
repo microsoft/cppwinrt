@@ -11,7 +11,7 @@ namespace cppwinrt
             auto wrap_file_guard = wrap_open_file_guard(w, "BASE");
 
             {
-                auto wrap_includes = wrap_module_aware_includes_guard(w, settings.modules);
+                auto wrap_includes = wrap_module_aware_includes_guard(w, true);
                 w.write(strings::base_includes);
             }
             w.write(strings::base_macros);
@@ -150,7 +150,7 @@ namespace cppwinrt
         write_open_file_guard(w, ns, '1');
 
         {
-            auto wrap_includes = wrap_module_aware_includes_guard(w, settings.modules);
+            auto wrap_includes = wrap_module_aware_includes_guard(w, true);
             for (auto&& depends : w.depends)
             {
                 w.write_depends(depends.first, '0');
@@ -184,7 +184,7 @@ namespace cppwinrt
         char const impl = promote ? '2' : '1';
 
         {
-            auto wrap_includes = wrap_module_aware_includes_guard(w, settings.modules);
+            auto wrap_includes = wrap_module_aware_includes_guard(w, true);
             for (auto&& depends : w.depends)
             {
                 w.write_depends(depends.first, impl);
@@ -236,19 +236,13 @@ namespace cppwinrt
         write_namespace_special(w, ns);
 
         write_close_file_guard(w);
-        if (settings.modules)
-        {
-            w.write("#endif\n"); // WINRT_IMPORT_MODULE
-        }
+        w.write("#endif\n"); // WINRT_IMPORT_MODULE
         w.swap();
         write_preamble(w);
         write_open_file_guard(w, ns);
-        if (settings.modules)
+        w.write("#ifndef WINRT_IMPORT_MODULE\n\n");
         {
-            w.write("#ifndef WINRT_IMPORT_MODULE\n\n");
-        }
-        {
-            auto wrap_includes = wrap_module_aware_includes_guard(w, settings.modules);
+            auto wrap_includes = wrap_module_aware_includes_guard(w, true);
             write_version_assert(w);
             write_parent_depends(w, c, ns);
 
@@ -282,26 +276,20 @@ namespace cppwinrt
         write_preamble(w);
         write_include_guard(w);
 
-        if (settings.modules)
+        w.write("#ifdef WINRT_IMPORT_MODULE\n");
+        w.write("#include \"winrt/module.h\"\n");
+        for (auto&& depends : w.depends)
         {
-            w.write("#ifdef WINRT_IMPORT_MODULE\n");
-            w.write("#include \"winrt/module.h\"\n");
-            for (auto&& depends : w.depends)
-            {
-                w.write("import winrt.%;\n", depends.first);
-            }
-            w.write("#else\n");
+            w.write("import winrt.%;\n", depends.first);
         }
+        w.write("#else\n");
 
         for (auto&& depends : w.depends)
         {
             w.write_depends(depends.first);
         }
 
-        if (settings.modules)
-        {
-            w.write("#endif\n");
-        }
+        w.write("#endif\n");
 
         auto filename = settings.output_folder + get_generated_component_filename(type) + ".g.h";
         path folder = filename;
@@ -365,11 +353,9 @@ namespace cppwinrt
         writer w;
         write_pch(w);
 
-        if (settings.modules)
+        // The .g.h handles its own imports, but the implementation .h
+        // needs the types available in scope, so we import them here.
         {
-            // Emit module-aware preamble for the component stub.
-            // The .g.h handles its own imports, but the implementation .h
-            // needs the types available in scope, so we import them here.
             writer dep_scanner;
             dep_scanner.add_depends(type);
             write_component_g_h(dep_scanner, type);
