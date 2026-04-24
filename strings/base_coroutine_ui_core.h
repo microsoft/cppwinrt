@@ -1,48 +1,13 @@
 
 #ifdef WINRT_IMPL_COROUTINES
-WINRT_EXPORT namespace winrt
+namespace winrt
 {
-    [[nodiscard]] inline auto resume_foreground(
-        Windows::UI::Core::CoreDispatcher const& dispatcher,
-        Windows::UI::Core::CoreDispatcherPriority const priority = Windows::UI::Core::CoreDispatcherPriority::Normal) noexcept
+    template <>
+    struct dispatcher_traits<Windows::UI::Core::CoreDispatcher>
     {
-        struct awaitable
-        {
-            awaitable(Windows::UI::Core::CoreDispatcher const& dispatcher, Windows::UI::Core::CoreDispatcherPriority const priority) noexcept :
-                m_dispatcher(dispatcher),
-                m_priority(priority)
-            {
-            }
-
-            bool await_ready() const noexcept
-            {
-                return false;
-            }
-
-            void await_resume() const noexcept
-            {
-            }
-
-            void await_suspend(std::coroutine_handle<> handle) const
-            {
-                m_dispatcher.RunAsync(m_priority, [handle]
-                    {
-                        handle();
-                    });
-            }
-
-        private:
-
-            Windows::UI::Core::CoreDispatcher const& m_dispatcher;
-            Windows::UI::Core::CoreDispatcherPriority const m_priority;
-        };
-
-        return awaitable{ dispatcher, priority };
+        using Priority = Windows::UI::Core::CoreDispatcherPriority;
+        using Handler = Windows::UI::Core::DispatchedHandler;
+        using Scheduler = decltype([](auto const& d, auto const& p, auto const& h) { d.RunAsync(p, h); });
     };
-
-    inline auto operator co_await(Windows::UI::Core::CoreDispatcher const& dispatcher)
-    {
-        return resume_foreground(dispatcher);
-    }
 }
 #endif

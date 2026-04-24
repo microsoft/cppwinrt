@@ -246,4 +246,5 @@ namespace winrt::impl
     inline constexpr hresult error_bad_alloc{ static_cast<hresult>(0x8007000E) }; // E_OUTOFMEMORY
     inline constexpr hresult error_not_initialized{ static_cast<hresult>(0x800401F0) }; // CO_E_NOTINITIALIZED
     inline constexpr hresult error_file_not_found{ static_cast<hresult>(0x80070002) }; // HRESULT_FROM_WIN32(ERROR_FILE_NOT_FOUND)
+    inline constexpr hresult error_no_task_queue{ static_cast<hresult>(0x800701AB) }; // HRESULT_FROM_WIN32(ERROR_NO_TASK_QUEUE)
 }
