@@ -242,6 +242,61 @@ namespace cppwinrt
         return is_remove_overload(method) || has_attribute(method, "Windows.Foundation.Metadata", "NoExceptionAttribute");
     }
 
+    template <typename T>
+    bool is_deprecated(T const& row)
+    {
+        return has_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute");
+    }
+
+    inline std::string escape_cpp_string_literal(std::string_view input)
+    {
+        std::string result;
+        result.reserve(input.size());
+        for (char c : input)
+        {
+            switch (c)
+            {
+            case '\\': result += "\\\\"; break;
+            case '"': result += "\\\""; break;
+            case '\n': result += "\\n"; break;
+            case '\r': result += "\\r"; break;
+            case '\t': result += "\\t"; break;
+            default: result += c; break;
+            }
+        }
+        return result;
+    }
+
+    template <typename T>
+    auto get_deprecated_message(T const& row)
+    {
+        auto attr = get_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute");
+        if (!attr)
+        {
+            return std::string{};
+        }
+        return escape_cpp_string_literal(get_attribute_value<std::string_view>(attr, 0));
+    }
+
+    template <typename T>
+    bool is_removed(T const& row)
+    {
+        auto attr = get_attribute(row, "Windows.Foundation.Metadata", "DeprecatedAttribute");
+        if (!attr)
+        {
+            return false;
+        }
+        auto args = attr.Value().FixedArgs();
+        if (args.size() >= 2)
+        {
+            // DeprecationType enum: Deprecate=0, Remove=1
+            auto val = std::get<ElemSig>(args[1].value);
+            auto enum_val = std::get<ElemSig::EnumValue>(val.value);
+            return std::visit([](auto v) -> bool { return static_cast<std::int32_t>(v) == 1; }, enum_val.value);
+        }
+        return false;
+    }
+
     static bool has_fastabi(TypeDef const& type)
     {
         return settings.fastabi&& has_attribute(type, "Windows.Foundation.Metadata", "FastAbiAttribute");

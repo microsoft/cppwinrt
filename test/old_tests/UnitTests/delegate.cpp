@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "catch.hpp"
 
+#pragma warning(disable: 4996) // deprecated APIs used intentionally in tests
+
 using namespace winrt;
 using namespace Windows;
 using namespace Windows::Graphics::Display;
