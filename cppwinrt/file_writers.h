@@ -570,7 +570,7 @@ export module winrt_numerics;
     static void write_namespace_ixx(
         std::string_view const& ns,
         std::set<std::string> const& deps,
-        std::set<std::string> const& projected_namespaces)
+        std::set<std::string> const& module_namespaces)
     {
         writer w;
         write_module_preamble(w);
@@ -585,7 +585,7 @@ export module winrt_numerics;
         // Import dependency namespace modules
         for (auto& dep : deps)
         {
-            if (projected_namespaces.count(dep))
+            if (module_namespaces.count(dep) || module_namespaces.empty())
             {
                 w.write("import winrt.%;\n", dep);
             }
@@ -607,7 +607,7 @@ export module winrt_numerics;
         std::string_view const& owner,
         std::vector<std::string> const& scc_members,
         std::set<std::string> const& external_deps,
-        std::set<std::string> const& projected_namespaces)
+        std::set<std::string> const& module_namespaces)
     {
         writer w;
         write_module_preamble(w);
@@ -622,7 +622,7 @@ export module winrt_numerics;
         // Import external dependency modules (outside the SCC)
         for (auto& dep : external_deps)
         {
-            if (projected_namespaces.count(dep))
+            if (module_namespaces.count(dep) || module_namespaces.empty())
             {
                 w.write("import winrt.%;\n", dep);
             }

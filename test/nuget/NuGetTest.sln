@@ -47,6 +47,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplication1", "Cons
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestProxyStub", "TestProxyStub\TestProxyStub.vcxproj", "{98E28FC8-2EB7-4544-9B6A-941462C6D3E2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestModuleApp", "TestModuleApp\TestModuleApp.vcxproj", "{F3A7B9C1-2D4E-5F6A-8B0C-1D2E3F4A5B6C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -279,6 +281,14 @@ Global
 		{98E28FC8-2EB7-4544-9B6A-941462C6D3E2}.Release|x64.Build.0 = Release|x64
 		{98E28FC8-2EB7-4544-9B6A-941462C6D3E2}.Release|x86.ActiveCfg = Release|Win32
 		{98E28FC8-2EB7-4544-9B6A-941462C6D3E2}.Release|x86.Build.0 = Release|Win32
+		{F3A7B9C1-2D4E-5F6A-8B0C-1D2E3F4A5B6C}.Debug|ARM64.ActiveCfg = Debug|x64
+		{F3A7B9C1-2D4E-5F6A-8B0C-1D2E3F4A5B6C}.Debug|x64.ActiveCfg = Debug|x64
+		{F3A7B9C1-2D4E-5F6A-8B0C-1D2E3F4A5B6C}.Debug|x64.Build.0 = Debug|x64
+		{F3A7B9C1-2D4E-5F6A-8B0C-1D2E3F4A5B6C}.Debug|x86.ActiveCfg = Debug|x64
+		{F3A7B9C1-2D4E-5F6A-8B0C-1D2E3F4A5B6C}.Release|ARM64.ActiveCfg = Release|x64
+		{F3A7B9C1-2D4E-5F6A-8B0C-1D2E3F4A5B6C}.Release|x64.ActiveCfg = Release|x64
+		{F3A7B9C1-2D4E-5F6A-8B0C-1D2E3F4A5B6C}.Release|x64.Build.0 = Release|x64
+		{F3A7B9C1-2D4E-5F6A-8B0C-1D2E3F4A5B6C}.Release|x86.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -26,6 +26,9 @@ Copyright (C) Microsoft Corporation. All rights reserved.
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))..\..\</CppWinRTPackageDir>
         <CppWinRTPackageDir Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPackageDir)'==''">$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)))</CppWinRTPackageDir>
         <CppWinRTParameters Condition="'$(CppWinRTFastAbi)'=='true'">$(CppWinRTParameters) -fastabi</CppWinRTParameters>
+        <CppWinRTParameters Condition="'$(CppWinRTBuildModule)'=='true'">$(CppWinRTParameters) -modules</CppWinRTParameters>
+        <CppWinRTParameters Condition="'$(CppWinRTModuleInclude)' != ''">$(CppWinRTParameters) -module_include $(CppWinRTModuleInclude.Replace(';', ' '))</CppWinRTParameters>
+        <CppWinRTParameters Condition="'$(CppWinRTModuleExclude)' != ''">$(CppWinRTParameters) -module_exclude $(CppWinRTModuleExclude.Replace(';', ' '))</CppWinRTParameters>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' == 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)bin\"</CppWinRTPath>
         <CppWinRTPath Condition="'$(CppWinRTPackage)' != 'true' and '$(CppWinRTPath)'==''">"$(CppWinRTPackageDir)"</CppWinRTPath>
         <!-- By default enable C++/WinRT to include target platform winmds if we didn't override sdk references and the C++ Project system isn't already adding them -->
@@ -810,6 +813,9 @@ $(XamlMetaDataProviderPch)
             <CppWinRTPrecompiledHeader Condition="'$(CppWinRTPrecompiledHeader)' == '' and '%(CLCompile.PrecompiledHeader)' != 'NotUsing'">$(_PCH)</CppWinRTPrecompiledHeader>
             <CppWinRTPrecompiledHeader Condition="'$(CppWinRTPrecompiledHeader)' == '' and '%(CLCompile.PrecompiledHeader)' == 'NotUsing'">.</CppWinRTPrecompiledHeader>
         </PropertyGroup>
+        <PropertyGroup Condition="'$(CppWinRTBuildModule)' == 'true'">
+            <CppWinRTPrecompiledHeader>.</CppWinRTPrecompiledHeader>
+        </PropertyGroup>
         <PropertyGroup>
             <CppWinRTCommandUsePrefixes Condition="'$(CppWinRTUsePrefixes)' == 'true'">-prefix</CppWinRTCommandUsePrefixes>
             <CppWinRTCommandPrecompiledHeader Condition="'$(CppWinRTPrecompiledHeader)' != ''">-pch $(CppWinRTPrecompiledHeader)</CppWinRTCommandPrecompiledHeader>
@@ -894,5 +900,28 @@ $(XamlMetaDataProviderPch)
             <AdditionalDependencies Condition="'$(CppWinRTFastAbi)'=='true'">%(AdditionalDependencies);$(CppWinRTPackageDir)build\native\lib\$(Platform)\cppwinrt_fast_forwarder.lib</AdditionalDependencies>
         </Link>
     </ItemDefinitionGroup>
+
+    <!--
+      When CppWinRTBuildModule is true, discover generated .ixx module interface units
+      and add them as ClCompile items for the C++ module build system to compile.
+      BeforeTargets="FixupCLCompileOptions" ensures items are added before the module
+      dependency scanner processes them. Generated .cpp files also have PCH disabled
+      since they reference types via module imports.
+    -->
+    <Target Name="CppWinRTAddModuleInterfaces"
+            Condition="'$(CppWinRTBuildModule)'=='true'"
+            DependsOnTargets="CppWinRTMakeProjections"
+            BeforeTargets="FixupCLCompileOptions">
+        <ItemGroup>
+            <ClCompile Include="$(GeneratedFilesDir)winrt\*.ixx">
+                <CompileAs>CompileAsCppModule</CompileAs>
+                <ModulesSupported>true</ModulesSupported>
+                <PrecompiledHeader>NotUsing</PrecompiledHeader>
+            </ClCompile>
+            <ClCompile Update="$(GeneratedFilesDir)**\*.cpp">
+                <PrecompiledHeader>NotUsing</PrecompiledHeader>
+            </ClCompile>
+        </ItemGroup>
+    </Target>
 
 </Project>

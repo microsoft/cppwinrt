@@ -1,0 +1,11 @@
+namespace TestModuleApp
+{
+    // A simple runtime class using platform SDK types.
+    [default_interface]
+    runtimeclass ModuleTestHelper
+    {
+        ModuleTestHelper();
+        Windows.Foundation.Uri CreateUri(String url);
+        Windows.Foundation.IAsyncOperation<String> GetStringAsync();
+    }
+}

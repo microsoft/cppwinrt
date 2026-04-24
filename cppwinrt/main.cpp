@@ -443,11 +443,14 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             std::mutex ns_deps_mutex;
 
             // First pass: determine which namespaces will be in the module.
+            // This includes namespaces from this invocation AND those from other invocations
+            // (e.g., platform namespaces when building a component). The module_filter
+            // tells us which namespaces have modules across all invocations.
             if (settings.modules)
             {
                 for (auto&& [ns, members] : c.namespaces())
                 {
-                    if (!has_projected_types(members) || !settings.projection_filter.includes(members))
+                    if (!has_projected_types(members))
                     {
                         continue;
                     }
@@ -521,12 +524,33 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
             group.get();
 
-            // Generate per-namespace module interface files (v2)
-            if (settings.modules && settings.base)
+            if (settings.modules)
             {
-                write_module_h();
-                write_numerics_ixx();
-                write_base_ixx();
+                fprintf(stderr, "module namespaces: %zu\n", projected_namespaces.size());
+                for (auto& ns : projected_namespaces)
+                {
+                    auto it = ns_deps_map.find(ns);
+                    size_t ndeps = (it != ns_deps_map.end()) ? it->second.size() : 0;
+                    fprintf(stderr, "  ns: %s (%zu deps)\n", ns.c_str(), ndeps);
+                    if (it != ns_deps_map.end())
+                    {
+                        for (auto& dep : it->second)
+                        {
+                            fprintf(stderr, "    dep: %s\n", dep.c_str());
+                        }
+                    }
+                }
+            }
+
+            // Generate per-namespace module interface files (v2)
+            if (settings.modules && (settings.base || settings.component))
+            {
+                if (settings.base)
+                {
+                    write_module_h();
+                    write_numerics_ixx();
+                    write_base_ixx();
+                }
 
                 // Tarjan's SCC algorithm for cyclic namespace dependencies
                 auto sccs = find_sccs(ns_deps_map);
