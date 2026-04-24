@@ -124,7 +124,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_nocoro", "test\test_no
 		{D613FB39-5035-4043-91E2-BAB323908AF4} = {D613FB39-5035-4043-91E2-BAB323908AF4}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_module", "test\test_module\test_module.vcxproj", "{B8E3A5CE-4E91-4F27-9B02-E0CAF7E10D72}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "test_cpp20_module", "test\test_cpp20_module\test_cpp20_module.vcxproj", "{B8E3A5CE-4E91-4F27-9B02-E0CAF7E10D72}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D613FB39-5035-4043-91E2-BAB323908AF4} = {D613FB39-5035-4043-91E2-BAB323908AF4}
 	EndProjectSection

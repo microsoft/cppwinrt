@@ -28,8 +28,8 @@
   </ItemGroup>  <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <ProjectGuid>{B8E3A5CE-4E91-4F27-9B02-E0CAF7E10D72}</ProjectGuid>
-    <RootNamespace>test_module</RootNamespace>
-    <ProjectName>test_module</ProjectName>
+    <RootNamespace>test_cpp20_module</RootNamespace>
+    <ProjectName>test_cpp20_module</ProjectName>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
     <PlatformToolset>v145</PlatformToolset>
   </PropertyGroup>
