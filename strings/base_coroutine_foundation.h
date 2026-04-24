@@ -99,6 +99,19 @@ namespace winrt::impl
         return async.GetResults();
     }
 
+    template <typename Async>
+    auto wait_get_bypass_sta_check(Async const& async)
+    {
+        auto status = async.Status();
+        if (status == Windows::Foundation::AsyncStatus::Started)
+        {
+            status = wait_for_completed(async, 0xFFFFFFFF); // INFINITE
+        }
+        check_status_canceled(status);
+
+        return async.GetResults();
+    }
+
 #ifdef WINRT_IMPL_COROUTINES
     struct ignore_apartment_context {};
 
@@ -220,6 +233,11 @@ namespace winrt::impl
         impl::wait_get(static_cast<Windows::Foundation::IAsyncAction const&>(static_cast<D const&>(*this)));
     }
     template <typename D>
+    auto consume_Windows_Foundation_IAsyncAction<D>::get_only_safe_from_non_presenting_sta() const
+    {
+        impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncAction const&>(static_cast<D const&>(*this)));
+    }
+    template <typename D>
     auto consume_Windows_Foundation_IAsyncAction<D>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
     {
         return impl::wait_for(static_cast<Windows::Foundation::IAsyncAction const&>(static_cast<D const&>(*this)), timeout);
@@ -229,6 +247,11 @@ namespace winrt::impl
     auto consume_Windows_Foundation_IAsyncOperation<D, TResult>::get() const
     {
         return impl::wait_get(static_cast<Windows::Foundation::IAsyncOperation<TResult> const&>(static_cast<D const&>(*this)));
+    }
+    template <typename D, typename TResult>
+    auto consume_Windows_Foundation_IAsyncOperation<D, TResult>::get_only_safe_from_non_presenting_sta() const
+    {
+        return impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncOperation<TResult> const&>(static_cast<D const&>(*this)));
     }
     template <typename D, typename TResult>
     auto consume_Windows_Foundation_IAsyncOperation<D, TResult>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
@@ -242,6 +265,11 @@ namespace winrt::impl
         impl::wait_get(static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(static_cast<D const&>(*this)));
     }
     template <typename D, typename TProgress>
+    auto consume_Windows_Foundation_IAsyncActionWithProgress<D, TProgress>::get_only_safe_from_non_presenting_sta() const
+    {
+        impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(static_cast<D const&>(*this)));
+    }
+    template <typename D, typename TProgress>
     auto consume_Windows_Foundation_IAsyncActionWithProgress<D, TProgress>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
     {
         return impl::wait_for(static_cast<Windows::Foundation::IAsyncActionWithProgress<TProgress> const&>(static_cast<D const&>(*this)), timeout);
@@ -251,6 +279,11 @@ namespace winrt::impl
     auto consume_Windows_Foundation_IAsyncOperationWithProgress<D, TResult, TProgress>::get() const
     {
         return impl::wait_get(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(static_cast<D const&>(*this)));
+    }
+    template <typename D, typename TResult, typename TProgress>
+    auto consume_Windows_Foundation_IAsyncOperationWithProgress<D, TResult, TProgress>::get_only_safe_from_non_presenting_sta() const
+    {
+        return impl::wait_get_bypass_sta_check(static_cast<Windows::Foundation::IAsyncOperationWithProgress<TResult, TProgress> const&>(static_cast<D const&>(*this)));
     }
     template <typename D, typename TResult, typename TProgress>
     auto consume_Windows_Foundation_IAsyncOperationWithProgress<D, TResult, TProgress>::wait_for(Windows::Foundation::TimeSpan const& timeout) const
