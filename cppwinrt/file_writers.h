@@ -604,7 +604,7 @@ export module winrt_numerics;
         w.write("#include \"winrt/impl/%.2.h\"\n", ns);
         w.write("#include \"winrt/%.h\"\n", ns);
 
-        w.flush_to_file(settings.output_folder + "winrt/" + std::string(ns) + ".ixx");
+        w.flush_to_file(settings.output_folder + "winrt/winrt." + std::string(ns) + ".ixx");
     }
 
     static void write_namespace_scc_owner_ixx(
@@ -672,7 +672,7 @@ export module winrt_numerics;
             w.write("#include \"winrt/%.h\"\n", ns);
         }
 
-        w.flush_to_file(settings.output_folder + "winrt/" + std::string(owner) + ".ixx");
+        w.flush_to_file(settings.output_folder + "winrt/winrt." + std::string(owner) + ".ixx");
     }
 
     static void write_namespace_reexport_ixx(
@@ -686,6 +686,6 @@ export module winrt_numerics;
         w.write("// WinRT namespace module dependency graph (SCC owner consolidation).\n\n");
         w.write("export module winrt.%;\n", ns);
         w.write("export import winrt.%;\n", owner);
-        w.flush_to_file(settings.output_folder + "winrt/" + std::string(ns) + ".ixx");
+        w.flush_to_file(settings.output_folder + "winrt/winrt." + std::string(ns) + ".ixx");
     }
 }
