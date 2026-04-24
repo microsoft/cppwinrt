@@ -5,7 +5,7 @@
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <CppWinRTBuildModule>true</CppWinRTBuildModule>
-    <CppWinRTModuleInclude>Windows.Foundation;TestModuleApp</CppWinRTModuleInclude>
+    <CppWinRTModuleInclude>Windows;TestModuleApp</CppWinRTModuleInclude>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{F3A7B9C1-2D4E-5F6A-8B0C-1D2E3F4A5B6C}</ProjectGuid>
     <ProjectName>TestModuleApp</ProjectName>
@@ -82,6 +82,9 @@
     <ClInclude Include="ModuleTestHelper.h">
       <DependentUpon>TestModuleApp.idl</DependentUpon>
     </ClInclude>
+    <ClInclude Include="CustomDependencyObject.h">
+      <DependentUpon>TestModuleApp.idl</DependentUpon>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -89,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModuleTestHelper.cpp">
+      <DependentUpon>TestModuleApp.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="CustomDependencyObject.cpp">
       <DependentUpon>TestModuleApp.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />

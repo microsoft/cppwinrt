@@ -1,5 +1,14 @@
 namespace TestModuleApp
 {
+    // A type that inherits from Windows.UI.Xaml.DependencyObject to exercise
+    // cross-namespace inheritance in module builds.
+    [default_interface]
+    unsealed runtimeclass CustomDependencyObject : Windows.UI.Xaml.DependencyObject
+    {
+        CustomDependencyObject();
+        String Name{ get; set; };
+    }
+
     // A simple runtime class using platform SDK types.
     [default_interface]
     runtimeclass ModuleTestHelper
