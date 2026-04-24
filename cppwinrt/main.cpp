@@ -41,6 +41,8 @@ namespace cppwinrt
         { "ignore_velocity", 0, 0 }, // Ignore feature staging metadata and always include implementations
         { "synchronous", 0, 0 }, // Instructs cppwinrt to run on a single thread to avoid file system issues in batch builds
         { "modules", 0, 0, {}, "Generate per-namespace C++20 module interface units (.ixx)" },
+        { "module_include", 0, option::no_max, "<prefix>", "Filter which namespaces are included in module .ixx generation" },
+        { "module_exclude", 0, option::no_max, "<prefix>", "Filter which namespaces are excluded from module .ixx generation" },
     };
 
     static void print_usage(writer& w)
@@ -94,6 +96,15 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
         settings.component = args.exists("component");
         settings.base = args.exists("base");
+
+        for (auto&& ns : args.values("module_include"))
+        {
+            settings.module_include.insert(ns);
+        }
+        for (auto&& ns : args.values("module_exclude"))
+        {
+            settings.module_exclude.insert(ns);
+        }
 
         settings.license = args.exists("license");
         settings.brackets = args.exists("brackets");
@@ -202,6 +213,13 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
     static void build_filters(cache const& c)
     {
+        // Build module_filter from -module_include / -module_exclude args.
+        // This controls which namespaces get .ixx files without affecting header generation.
+        if (!settings.module_include.empty() || !settings.module_exclude.empty())
+        {
+            settings.module_filter = { settings.module_include, settings.module_exclude };
+        }
+
         if (settings.reference.empty())
         {
             return;
@@ -424,6 +442,22 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             std::set<std::string> projected_namespaces;
             std::mutex ns_deps_mutex;
 
+            // First pass: determine which namespaces will be in the module.
+            if (settings.modules)
+            {
+                for (auto&& [ns, members] : c.namespaces())
+                {
+                    if (!has_projected_types(members) || !settings.projection_filter.includes(members))
+                    {
+                        continue;
+                    }
+                    if (settings.module_filter.empty() || settings.module_filter.includes(members))
+                    {
+                        projected_namespaces.insert(std::string(ns));
+                    }
+                }
+            }
+
             for (auto&&[ns, members] : c.namespaces())
             {
                 if (!has_projected_types(members) || !settings.projection_filter.includes(members))
@@ -431,22 +465,18 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
                     continue;
                 }
 
-                if (settings.modules)
-                {
-                    projected_namespaces.insert(std::string(ns));
-                }
-
                 group.add([&, &ns = ns, &members = members]
                 {
+                    bool in_module = projected_namespaces.count(std::string(ns)) > 0;
                     std::set<std::string> ns_deps;
-                    auto* deps_ptr = settings.modules ? &ns_deps : nullptr;
+                    auto* deps_ptr = (settings.modules && in_module) ? &ns_deps : nullptr;
 
                     write_namespace_0_h(ns, members, deps_ptr);
                     write_namespace_1_h(ns, members, deps_ptr);
                     write_namespace_2_h(ns, members, deps_ptr);
                     write_namespace_h(c, ns, members, deps_ptr);
 
-                    if (settings.modules)
+                    if (settings.modules && in_module)
                     {
                         std::lock_guard lock(ns_deps_mutex);
                         ns_deps_map[std::string(ns)] = std::move(ns_deps);

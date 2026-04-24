@@ -73,7 +73,7 @@
       <AdditionalDependencies>ole32.lib;windowsapp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PreBuildEvent>
-      <Command>"$(CppWinRTDir)cppwinrt.exe" -in local -out "$(CppWinRTGenDir)." -modules -base -verbose"</Command>
+      <Command>"$(CppWinRTDir)cppwinrt.exe" -in local -out "$(CppWinRTGenDir)." -modules -base -verbose -module_include "Windows.Foundation"</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <!-- After projection generation, discover .ixx files and add them for module compilation.
