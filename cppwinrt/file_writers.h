@@ -364,6 +364,25 @@ namespace cppwinrt
 
         writer w;
         write_pch(w);
+
+        if (settings.modules)
+        {
+            // Emit module-aware preamble for the component stub.
+            // The .g.h handles its own imports, but the implementation .h
+            // needs the types available in scope, so we import them here.
+            writer dep_scanner;
+            dep_scanner.add_depends(type);
+            write_component_g_h(dep_scanner, type);
+
+            w.write("\n#define WINRT_IMPORT_MODULE\n");
+            w.write("import winrt_base;\n");
+            for (auto&& depends : dep_scanner.depends)
+            {
+                w.write("import winrt.%;\n", depends.first);
+            }
+            w.write("\n");
+        }
+
         write_component_cpp(w, type);
         w.flush_to_file(path);
     }

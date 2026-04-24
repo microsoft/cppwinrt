@@ -4,7 +4,7 @@
 import winrt_base;
 import winrt.Windows.Foundation;
 
-#include "TestModuleApp.h"
+#include "ModuleTestHelper.h"
 
 using namespace winrt;
 using namespace Windows::Foundation;

@@ -79,7 +79,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="TestModuleApp.h">
+    <ClInclude Include="ModuleTestHelper.h">
       <DependentUpon>TestModuleApp.idl</DependentUpon>
     </ClInclude>
   </ItemGroup>
@@ -88,7 +88,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="TestModuleApp.cpp">
+    <ClCompile Include="ModuleTestHelper.cpp">
       <DependentUpon>TestModuleApp.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />

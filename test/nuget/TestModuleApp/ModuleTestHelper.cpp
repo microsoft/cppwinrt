@@ -4,5 +4,5 @@
 import winrt_base;
 import winrt.Windows.Foundation;
 
-#include "TestModuleApp.h"
+#include "ModuleTestHelper.h"
 #include "ModuleTestHelper.g.cpp"
