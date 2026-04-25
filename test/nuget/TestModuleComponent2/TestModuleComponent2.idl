@@ -1,0 +1,10 @@
+namespace TestModuleComponent2
+{
+    [default_interface]
+    runtimeclass GreeterGroup
+    {
+        GreeterGroup();
+        void Add(TestModuleComponent1.Greeter greeter);
+        String GreetAll();
+    }
+}

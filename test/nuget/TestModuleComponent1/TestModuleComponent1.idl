@@ -1,0 +1,12 @@
+namespace TestModuleComponent1
+{
+    [default_interface]
+    runtimeclass Greeter
+    {
+        Greeter();
+        Greeter(String name);
+        String Name{ get; };
+        String Greet();
+        Windows.Foundation.Uri Homepage{ get; };
+    }
+}

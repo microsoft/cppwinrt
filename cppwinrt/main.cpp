@@ -1,5 +1,6 @@
 #include "pch.h"
 #include <ctime>
+#include <mutex>
 #include "strings.h"
 #include "settings.h"
 #include "type_writers.h"
@@ -39,6 +40,9 @@ namespace cppwinrt
         { "fastabi", 0, 0 }, // Enable support for the Fast ABI
         { "ignore_velocity", 0, 0 }, // Ignore feature staging metadata and always include implementations
         { "synchronous", 0, 0 }, // Instructs cppwinrt to run on a single thread to avoid file system issues in batch builds
+        { "modules", 0, 0, {}, "Generate per-namespace C++20 module interface units (.ixx)" },
+        { "module_include", 0, option::no_max, "<prefix>", "Filter which namespaces are included in module .ixx generation" },
+        { "module_exclude", 0, option::no_max, "<prefix>", "Filter which namespaces are excluded from module .ixx generation" },
     };
 
     static void print_usage(writer& w)
@@ -85,12 +89,22 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
     {
         settings.verbose = args.exists("verbose");
         settings.fastabi = args.exists("fastabi");
+        settings.modules = args.exists("modules");
 
         settings.input = args.files("input", database::is_database);
         settings.reference = args.files("reference", database::is_database);
 
         settings.component = args.exists("component");
         settings.base = args.exists("base");
+
+        for (auto&& ns : args.values("module_include"))
+        {
+            settings.module_include.insert(ns);
+        }
+        for (auto&& ns : args.values("module_exclude"))
+        {
+            settings.module_exclude.insert(ns);
+        }
 
         settings.license = args.exists("license");
         settings.brackets = args.exists("brackets");
@@ -199,6 +213,13 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
     static void build_filters(cache const& c)
     {
+        // Build module_filter from -module_include / -module_exclude args.
+        // This controls which namespaces get .ixx files without affecting header generation.
+        if (!settings.module_include.empty() || !settings.module_exclude.empty())
+        {
+            settings.module_filter = { settings.module_include, settings.module_exclude };
+        }
+
         if (settings.reference.empty())
         {
             return;
@@ -281,6 +302,79 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
         c.remove_type("Windows.Foundation.Numerics", "Vector4");
     }
 
+    // Tarjan's algorithm for finding strongly connected components in the
+    // namespace dependency graph. Namespaces in an SCC have cyclic deps and
+    // must be combined into a single module.
+    static std::vector<std::vector<std::string>> find_sccs(
+        std::map<std::string, std::set<std::string>, std::less<>> const& graph)
+    {
+        struct context
+        {
+            std::map<std::string, int> index_of;
+            std::map<std::string, int> lowlink;
+            std::map<std::string, bool> on_stack;
+            std::vector<std::string> stack;
+            int next_index = 0;
+            std::vector<std::vector<std::string>> result;
+
+            void strongconnect(std::string const& v,
+                std::map<std::string, std::set<std::string>, std::less<>> const& g)
+            {
+                index_of[v] = next_index;
+                lowlink[v] = next_index;
+                next_index++;
+                stack.push_back(v);
+                on_stack[v] = true;
+
+                auto it = g.find(v);
+                if (it != g.end())
+                {
+                    for (auto& w : it->second)
+                    {
+                        if (g.find(w) == g.end())
+                        {
+                            continue; // dep not in graph (not a projected namespace)
+                        }
+
+                        if (index_of.find(w) == index_of.end())
+                        {
+                            strongconnect(w, g);
+                            lowlink[v] = (std::min)(lowlink[v], lowlink[w]);
+                        }
+                        else if (on_stack[w])
+                        {
+                            lowlink[v] = (std::min)(lowlink[v], index_of[w]);
+                        }
+                    }
+                }
+
+                if (lowlink[v] == index_of[v])
+                {
+                    std::vector<std::string> scc;
+                    std::string w;
+                    do
+                    {
+                        w = stack.back();
+                        stack.pop_back();
+                        on_stack[w] = false;
+                        scc.push_back(std::move(w));
+                    } while (scc.back() != v);
+                    result.push_back(std::move(scc));
+                }
+            }
+        };
+
+        context ctx;
+        for (auto& [node, _] : graph)
+        {
+            if (ctx.index_of.find(node) == ctx.index_of.end())
+            {
+                ctx.strongconnect(node, graph);
+            }
+        }
+        return std::move(ctx.result);
+    }
+
     static int run(int const argc, char** argv)
     {
         int result{};
@@ -342,11 +436,30 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             w.flush_to_console();
             task_group group;
             group.synchronous(args.exists("synchronous"));
-            writer ixx;
-            write_preamble(ixx);
-            ixx.write("module;\n");
-            ixx.write(strings::base_includes);
-            ixx.write("\nexport module winrt;\n#define WINRT_EXPORT export\n\n");
+
+            // Dependency collection for per-namespace modules (v2)
+            std::map<std::string, std::set<std::string>, std::less<>> ns_deps_map;
+            std::set<std::string> projected_namespaces;
+            std::mutex ns_deps_mutex;
+
+            // First pass: determine which namespaces will be in the module.
+            // This includes namespaces from this invocation AND those from other invocations
+            // (e.g., platform namespaces when building a component). The module_filter
+            // tells us which namespaces have modules across all invocations.
+            if (settings.modules)
+            {
+                for (auto&& [ns, members] : c.namespaces())
+                {
+                    if (!has_projected_types(members))
+                    {
+                        continue;
+                    }
+                    if (settings.module_filter.empty() || settings.module_filter.includes(members))
+                    {
+                        projected_namespaces.insert(std::string(ns));
+                    }
+                }
+            }
 
             for (auto&&[ns, members] : c.namespaces())
             {
@@ -355,21 +468,29 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
                     continue;
                 }
 
-                ixx.write("#include \"winrt/%.h\"\n", ns);
-
                 group.add([&, &ns = ns, &members = members]
                 {
-                    write_namespace_0_h(ns, members);
-                    write_namespace_1_h(ns, members);
-                    write_namespace_2_h(ns, members);
-                    write_namespace_h(c, ns, members);
+                    bool in_module = projected_namespaces.count(std::string(ns)) > 0;
+                    std::set<std::string> ns_deps;
+                    auto* deps_ptr = (settings.modules && in_module) ? &ns_deps : nullptr;
+
+                    write_namespace_0_h(ns, members, deps_ptr);
+                    write_namespace_1_h(ns, members, deps_ptr);
+                    write_namespace_2_h(ns, members, deps_ptr);
+                    write_namespace_h(c, ns, members, deps_ptr);
+
+                    if (settings.modules && in_module)
+                    {
+                        std::lock_guard lock(ns_deps_mutex);
+                        ns_deps_map[std::string(ns)] = std::move(ns_deps);
+                    }
                 });
             }
 
             if (settings.base)
             {
                 write_base_h();
-                ixx.flush_to_file(settings.output_folder + "winrt/winrt.ixx");
+                write_module_h();
             }
 
             if (settings.component)
@@ -403,6 +524,64 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             }
 
             group.get();
+
+            // Generate per-namespace module interface files (.ixx)
+            //
+            // Each projected namespace gets its own C++20 named module (winrt.<Namespace>).
+            // Namespaces that form dependency cycles are detected using Tarjan's SCC algorithm
+            // and consolidated: one namespace "owns" the SCC module (containing all declarations),
+            // while others get thin re-export stubs so 'import winrt.<ns>;' always works.
+            //
+            // Base infrastructure modules (winrt_base, winrt_numerics) are only generated
+            // for platform projection builds (-base flag).
+            if (settings.modules)
+            {
+                if (settings.base)
+                {
+                    write_numerics_ixx();
+                    write_base_ixx();
+                }
+
+                // Tarjan's SCC algorithm for cyclic namespace dependencies
+                auto sccs = find_sccs(ns_deps_map);
+
+                for (auto& scc : sccs)
+                {
+                    if (scc.size() == 1)
+                    {
+                        // Standalone namespace module
+                        auto& ns = scc[0];
+                        write_namespace_ixx(ns, ns_deps_map[ns], projected_namespaces);
+                    }
+                    else
+                    {
+                        // SCC: choose owner (alphabetically first), others re-export
+                        std::sort(scc.begin(), scc.end());
+                        auto& owner = scc[0];
+
+                        // External deps = union of all SCC members' deps, minus SCC members themselves
+                        std::set<std::string> external_deps;
+                        std::set<std::string> scc_set(scc.begin(), scc.end());
+                        for (auto& ns : scc)
+                        {
+                            for (auto& dep : ns_deps_map[ns])
+                            {
+                                if (!scc_set.count(dep))
+                                {
+                                    external_deps.insert(dep);
+                                }
+                            }
+                        }
+
+                        write_namespace_scc_owner_ixx(c, owner, scc, external_deps, projected_namespaces);
+
+                        for (size_t i = 1; i < scc.size(); ++i)
+                        {
+                            write_namespace_reexport_ixx(scc[i], owner);
+                        }
+                    }
+                }
+            }
 
             if (settings.verbose)
             {

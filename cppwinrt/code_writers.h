@@ -35,6 +35,28 @@ namespace cppwinrt
         }
     }
 
+    static void write_endif(writer& w)
+    {
+        w.write("#endif\n");
+    }
+
+    // When modules are enabled, wraps a block of #include directives in
+    // #ifndef WINRT_IMPL_BUILD_MODULE ... #endif so that in module builds (where
+    // WINRT_IMPL_BUILD_MODULE is defined in the global module fragment), textual
+    // includes are suppressed — dependencies come via import instead.
+    [[nodiscard]] static finish_with wrap_module_aware_includes_guard(writer& w, bool modules_enabled)
+    {
+        if (modules_enabled)
+        {
+            w.write("#ifndef WINRT_IMPL_BUILD_MODULE\n");
+            return { w, write_endif };
+        }
+        else
+        {
+            return { w, write_nothing };
+        }
+    }
+
     static void write_version_assert(writer& w)
     {
         w.write_root_include("base");
@@ -47,14 +69,6 @@ namespace cppwinrt
     static void write_include_guard(writer& w)
     {
         auto format = R"(#pragma once
-)";
-
-        w.write(format);
-    }
-
-    static void write_endif(writer& w)
-    {
-        auto format = R"(#endif
 )";
 
         w.write(format);
@@ -166,7 +180,7 @@ namespace cppwinrt
 
     [[nodiscard]] static finish_with wrap_impl_namespace(writer& w)
     {
-        auto format = R"(namespace winrt::impl
+        auto format = R"(WINRT_EXPORT namespace winrt::impl
 {
 )";
 

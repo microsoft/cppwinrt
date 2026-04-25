@@ -483,7 +483,7 @@ WINRT_EXPORT namespace winrt
     }
 }
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <typename T>
     struct array_size_proxy

@@ -10,7 +10,10 @@ namespace cppwinrt
         {
             auto wrap_file_guard = wrap_open_file_guard(w, "BASE");
 
-            w.write(strings::base_includes);
+            {
+                auto wrap_includes = wrap_module_aware_includes_guard(w, true);
+                w.write(strings::base_includes);
+            }
             w.write(strings::base_macros);
             w.write(strings::base_types);
             w.write(strings::base_extern);
@@ -65,7 +68,15 @@ namespace cppwinrt
         w.flush_to_file(settings.output_folder + "winrt/fast_forward.h");
     }
 
-    static void write_namespace_0_h(std::string_view const& ns, cache::namespace_members const& members)
+    static void collect_writer_deps(writer const& w, std::set<std::string>& out)
+    {
+        for (auto&& [dep_ns, _] : w.depends)
+        {
+            out.insert(std::string(dep_ns));
+        }
+    }
+
+    static void write_namespace_0_h(std::string_view const& ns, cache::namespace_members const& members, std::set<std::string>* out_deps = nullptr)
     {
         writer w;
         w.type_namespace = ns;
@@ -118,10 +129,11 @@ namespace cppwinrt
             w.write_each<write_forward>(depends.second);
         }
 
+        if (out_deps) collect_writer_deps(w, *out_deps);
         w.save_header('0');
     }
 
-    static void write_namespace_1_h(std::string_view const& ns, cache::namespace_members const& members)
+    static void write_namespace_1_h(std::string_view const& ns, cache::namespace_members const& members, std::set<std::string>* out_deps = nullptr)
     {
         writer w;
         w.type_namespace = ns;
@@ -137,16 +149,20 @@ namespace cppwinrt
         write_preamble(w);
         write_open_file_guard(w, ns, '1');
 
-        for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, '0');
-        }
+            auto wrap_includes = wrap_module_aware_includes_guard(w, true);
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first, '0');
+            }
 
-        w.write_depends(w.type_namespace, '0');
+            w.write_depends(w.type_namespace, '0');
+        }
+        if (out_deps) collect_writer_deps(w, *out_deps);
         w.save_header('1');
     }
 
-    static void write_namespace_2_h(std::string_view const& ns, cache::namespace_members const& members)
+    static void write_namespace_2_h(std::string_view const& ns, cache::namespace_members const& members, std::set<std::string>* out_deps = nullptr)
     {
         writer w;
         w.type_namespace = ns;
@@ -167,16 +183,20 @@ namespace cppwinrt
 
         char const impl = promote ? '2' : '1';
 
-        for (auto&& depends : w.depends)
         {
-            w.write_depends(depends.first, impl);
-        }
+            auto wrap_includes = wrap_module_aware_includes_guard(w, true);
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first, impl);
+            }
 
-        w.write_depends(w.type_namespace, '1');
+            w.write_depends(w.type_namespace, '1');
+        }
+        if (out_deps) collect_writer_deps(w, *out_deps);
         w.save_header('2');
     }
 
-    static void write_namespace_h(cache const& c, std::string_view const& ns, cache::namespace_members const& members)
+    static void write_namespace_h(cache const& c, std::string_view const& ns, cache::namespace_members const& members, std::set<std::string>* out_deps = nullptr)
     {
         writer w;
         w.type_namespace = ns;
@@ -216,18 +236,24 @@ namespace cppwinrt
         write_namespace_special(w, ns);
 
         write_close_file_guard(w);
+        w.write("#endif\n"); // WINRT_IMPORT_MODULE
         w.swap();
         write_preamble(w);
         write_open_file_guard(w, ns);
-        write_version_assert(w);
-        write_parent_depends(w, c, ns);
-
-        for (auto&& depends : w.depends)
+        w.write("#ifndef WINRT_IMPORT_MODULE\n\n");
         {
-            w.write_depends(depends.first, '2');
-        }
+            auto wrap_includes = wrap_module_aware_includes_guard(w, true);
+            write_version_assert(w);
+            write_parent_depends(w, c, ns);
 
-        w.write_depends(w.type_namespace, '2');
+            for (auto&& depends : w.depends)
+            {
+                w.write_depends(depends.first, '2');
+            }
+
+            w.write_depends(w.type_namespace, '2');
+        }
+        if (out_deps) collect_writer_deps(w, *out_deps);
         w.save_header();
     }
 
@@ -236,6 +262,28 @@ namespace cppwinrt
         writer w;
         write_preamble(w);
         write_pch(w);
+
+        if (settings.modules)
+        {
+            // In module builds, import std and winrt_base instead of #include "winrt/base.h".
+            // std is needed for std::wstring_view, std::equal, std::int32_t used in
+            // the activation factory lookup code.
+            w.write("\nimport std;\n");
+            w.write("import winrt_base;\n");
+
+            // Collect all unique namespaces from the component classes
+            std::set<std::string> namespaces;
+            for (auto&& type : classes)
+            {
+                namespaces.insert(std::string(type.TypeNamespace()));
+            }
+            for (auto&& ns : namespaces)
+            {
+                w.write("import winrt.%;\n", ns);
+            }
+            w.write("\n");
+        }
+
         write_module_g_cpp(w, classes);
         w.flush_to_file(settings.output_folder + "module.g.cpp");
     }
@@ -250,10 +298,20 @@ namespace cppwinrt
         write_preamble(w);
         write_include_guard(w);
 
+        w.write("#ifdef WINRT_IMPORT_MODULE\n");
+        w.write("#include \"winrt/module.h\"\n");
+        for (auto&& depends : w.depends)
+        {
+            w.write("import winrt.%;\n", depends.first);
+        }
+        w.write("#else\n");
+
         for (auto&& depends : w.depends)
         {
             w.write_depends(depends.first);
         }
+
+        w.write("#endif\n");
 
         auto filename = settings.output_folder + get_generated_component_filename(type) + ".g.h";
         path folder = filename;
@@ -316,7 +374,429 @@ namespace cppwinrt
 
         writer w;
         write_pch(w);
+
+        if (settings.modules)
+        {
+            // The .g.h handles its own imports, but the implementation .h
+            // needs the types available in scope, so we import them here.
+            writer dep_scanner;
+            dep_scanner.add_depends(type);
+            write_component_g_h(dep_scanner, type);
+
+            w.write("\n#define WINRT_IMPORT_MODULE\n");
+            for (auto&& depends : dep_scanner.depends)
+            {
+                w.write("import winrt.%;\n", depends.first);
+            }
+            w.write("\n");
+        }
+
         write_component_cpp(w, type);
         w.flush_to_file(path);
+    }
+
+    // --- Per-namespace C++20 module interface unit (.ixx) writers ---
+
+    // Emits the common global module fragment used by all generated .ixx files.
+    // Defines WINRT_IMPL_BUILD_MODULE so generated headers switch WINRT_EXPORT
+    // to 'export extern "C++"' and suppress textual #includes of dependencies
+    // (dependencies arrive via module imports instead).
+    // Includes minimal headers needed for macros, intrinsics, and debug assertions.
+    static void write_module_preamble(writer& w)
+    {
+        write_preamble(w);
+        w.write("module;\n");
+        w.write("#define WINRT_IMPL_BUILD_MODULE\n");
+        auto format = R"(#include <intrin.h>
+#include <cstddef>
+#include <version>
+#ifdef _DEBUG
+#include <crtdbg.h>
+#endif
+#include "winrt/module.h"
+)";
+        w.write(format);
+    }
+
+    // Emits $(out)/winrt/module.h
+    // This header provides macros that are needed inside module interface units
+    // but cannot cross module boundaries via 'import'. Each .ixx file includes
+    // this in its global module fragment. It provides:
+    //   - WINRT_ASSERT/WINRT_VERIFY macros
+    //   - WINRT_IMPL_COROUTINES detection
+    //   - WINRT_IMPL_SHIM macro
+    //   - WINRT_EXPORT (switches between empty and 'export extern "C++"')
+    //   - MSVC warning suppressions for module-related diagnostics
+    static void write_module_h()
+    {
+        writer w;
+        write_preamble(w);
+        auto format = R"(#pragma once
+#ifndef WINRT_MODULE_H
+#define WINRT_MODULE_H
+
+#ifdef _DEBUG
+
+#define WINRT_ASSERT _ASSERTE
+#define WINRT_VERIFY WINRT_ASSERT
+#define WINRT_VERIFY_(result, expression) WINRT_ASSERT(result == expression)
+
+#else
+
+#define WINRT_ASSERT(expression) ((void)0)
+#define WINRT_VERIFY(expression) (void)(expression)
+#define WINRT_VERIFY_(result, expression) (void)(expression)
+
+#endif
+
+#if defined(__cpp_lib_coroutine)
+#define WINRT_IMPL_COROUTINES
+#endif
+
+#define WINRT_IMPL_SHIM(...) (*(abi_t<__VA_ARGS__>**)&static_cast<__VA_ARGS__ const&>(static_cast<D const&>(*this)))
+
+#ifdef _MSC_VER
+// Note: this is a workaround for a false-positive warning produced by the Visual C++ 15.9 compiler.
+#pragma warning(disable : 5046)
+
+// Note: this is a workaround for a false-positive warning produced by the Visual C++ 16.3 compiler.
+#pragma warning(disable : 4268)
+
+// C++ module warnings by /W4
+#pragma warning(disable : 4499)
+#pragma warning(disable : 4630)
+#endif
+
+#ifndef WINRT_EXPORT
+#ifdef WINRT_IMPL_BUILD_MODULE
+#define WINRT_EXPORT export extern "C++"
+#else
+#define WINRT_EXPORT
+#endif
+#endif
+
+// Template specializations in namespace std (hash, coroutine_traits) need extern "C++"
+// linkage in module builds for proper merging with the std module, but must NOT be
+// exported — exporting namespace std would make all of std transitively visible.
+#ifndef WINRT_IMPL_STD_EXPORT
+#ifdef WINRT_IMPL_BUILD_MODULE
+#define WINRT_IMPL_STD_EXPORT extern "C++"
+#else
+#define WINRT_IMPL_STD_EXPORT
+#endif
+#endif
+
+// <windowsnumerics.impl.h> pulls in large, hard-to-control legacy headers. In header builds we keep the
+// existing behavior, but in module builds it's provided by the winrt_numerics module.
+#if !(defined(WINRT_IMPL_BUILD_MODULE) || defined(WINRT_IMPORT_MODULE))
+
+#ifdef WINRT_IMPL_NUMERICS
+#define _WINDOWS_NUMERICS_NAMESPACE_ winrt::Windows::Foundation::Numerics
+#define _WINDOWS_NUMERICS_BEGIN_NAMESPACE_ WINRT_EXPORT namespace winrt::Windows::Foundation::Numerics
+#define _WINDOWS_NUMERICS_END_NAMESPACE_
+#include <windowsnumerics.impl.h>
+#undef _WINDOWS_NUMERICS_NAMESPACE_
+#undef _WINDOWS_NUMERICS_BEGIN_NAMESPACE_
+#undef _WINDOWS_NUMERICS_END_NAMESPACE_
+#endif
+
+#endif
+
+#if defined(_MSC_VER)
+#define WINRT_IMPL_NOINLINE __declspec(noinline)
+#elif defined(__GNUC__)
+#define WINRT_IMPL_NOINLINE __attribute__((noinline))
+#else
+#define WINRT_IMPL_NOINLINE
+#endif
+
+#if defined(_MSC_VER)
+#define WINRT_IMPL_EMPTY_BASES __declspec(empty_bases)
+#else
+#define WINRT_IMPL_EMPTY_BASES
+#endif
+
+#if defined(_MSC_VER)
+#define WINRT_IMPL_NOVTABLE __declspec(novtable)
+#else
+#define WINRT_IMPL_NOVTABLE
+#endif
+
+#if defined(__clang__) && defined(__has_attribute)
+#if __has_attribute(__lto_visibility_public__)
+#define WINRT_IMPL_PUBLIC __attribute__((lto_visibility_public))
+#else
+#define WINRT_IMPL_PUBLIC
+#endif // __has_attribute(__lto_visibility_public__)
+#else
+#define WINRT_IMPL_PUBLIC
+#endif
+
+#define WINRT_IMPL_ABI_DECL WINRT_IMPL_NOVTABLE WINRT_IMPL_PUBLIC
+
+#if defined(__clang__)
+#define WINRT_IMPL_HAS_DECLSPEC_UUID __has_declspec_attribute(uuid)
+#elif defined(_MSC_VER)
+#define WINRT_IMPL_HAS_DECLSPEC_UUID 1
+#else
+#define WINRT_IMPL_HAS_DECLSPEC_UUID 0
+#endif
+
+#if defined(__IUnknown_INTERFACE_DEFINED__) || defined(WINRT_ENABLE_LEGACY_COM)
+#define WINRT_IMPL_IUNKNOWN_DEFINED
+#else
+// Forward declare so we can talk about it.
+struct IUnknown;
+typedef struct _GUID GUID;
+#endif
+
+#if defined(__cpp_consteval)
+#define WINRT_IMPL_CONSTEVAL consteval
+#else
+#define WINRT_IMPL_CONSTEVAL constexpr
+#endif
+
+#endif
+)";
+        w.write(format);
+        w.flush_to_file(settings.output_folder + "winrt/module.h");
+    }
+
+    static void write_base_ixx()
+    {
+        writer w;
+        write_module_preamble(w);
+        auto format = R"(
+#ifdef WINRT_ENABLE_LEGACY_COM
+#include <unknwn.h>
+#include <inspectable.h>
+#undef GetCurrentTime
+#endif
+
+export module winrt_base;
+
+import std;
+export import winrt_numerics;
+
+#if __has_include(<windowsnumerics.impl.h>)
+#define WINRT_IMPL_NUMERICS
+#endif
+
+#include "winrt/base.h"
+)";
+        w.write(format);
+        w.flush_to_file(settings.output_folder + "winrt/winrt_base.ixx");
+    }
+
+    static void write_numerics_ixx()
+    {
+        writer w;
+        write_module_preamble(w);
+        auto format = R"(
+export module winrt_numerics;
+
+#if __has_include(<windowsnumerics.impl.h>)
+#ifdef _MSC_VER
+#pragma warning(push)
+#pragma warning(disable : 5244)
+#endif
+#include <directxmath.h>
+
+#define _WINDOWS_NUMERICS_NAMESPACE_ winrt::Windows::Foundation::Numerics
+#define _WINDOWS_NUMERICS_BEGIN_NAMESPACE_ export extern "C++" namespace winrt::Windows::Foundation::Numerics
+#define _WINDOWS_NUMERICS_END_NAMESPACE_
+#include <windowsnumerics.impl.h>
+#undef _WINDOWS_NUMERICS_NAMESPACE_
+#undef _WINDOWS_NUMERICS_BEGIN_NAMESPACE_
+#undef _WINDOWS_NUMERICS_END_NAMESPACE_
+
+#ifdef _MSC_VER
+#pragma warning(pop)
+#endif
+#endif
+)";
+        w.write(format);
+        w.flush_to_file(settings.output_folder + "winrt/winrt_numerics.ixx");
+    }
+
+    // Emits a per-namespace module interface unit for namespaces that are NOT
+    // part of a dependency cycle (standalone module).
+    // Output: $(out)/winrt/winrt.<ns>.ixx  (export module winrt.<ns>;)
+    //
+    // The generated .ixx:
+    //   1. Starts with the global module fragment (WINRT_IMPL_BUILD_MODULE, minimal includes)
+    //   2. Declares 'export module winrt.<ns>;'
+    //   3. Imports std and re-exports winrt_base
+    //   4. Imports each dependent namespace module (computed from type references in headers)
+    //   5. Includes the impl headers (*.0.h, *.1.h, *.2.h) and public header (<ns>.h)
+    //      in the module purview, where WINRT_EXPORT causes declarations to be exported
+    static void write_namespace_ixx(
+        std::string_view const& ns,
+        std::set<std::string> const& deps,
+        std::set<std::string> const& module_namespaces)
+    {
+        writer w;
+        write_module_preamble(w);
+
+        // Module declaration
+        w.write("export module winrt.%;\n\n", ns);
+
+        // Document dependencies
+        w.write("// Module dependencies:\n");
+        w.write("//   - std\n");
+        w.write("//   - winrt_base (re-exported)\n");
+        if (deps.empty())
+        {
+            w.write("//   - (no additional namespace imports)\n");
+        }
+        else
+        {
+            for (auto& dep : deps)
+            {
+                if (module_namespaces.count(dep) || module_namespaces.empty())
+                {
+                    w.write("//   - winrt.%\n", dep);
+                }
+            }
+        }
+        w.write("\n");
+
+        // Import std and base
+        w.write("import std;\n");
+        w.write("export import winrt_base;\n");
+
+        // Import dependency namespace modules
+        for (auto& dep : deps)
+        {
+            if (module_namespaces.count(dep) || module_namespaces.empty())
+            {
+                w.write("import winrt.%;\n", dep);
+            }
+        }
+
+        w.write("\n");
+
+        // Include namespace headers in module purview
+        w.write("#include \"winrt/impl/%.0.h\"\n", ns);
+        w.write("#include \"winrt/impl/%.1.h\"\n", ns);
+        w.write("#include \"winrt/impl/%.2.h\"\n", ns);
+        w.write("#include \"winrt/%.h\"\n", ns);
+
+        w.flush_to_file(settings.output_folder + "winrt/winrt." + std::string(ns) + ".ixx");
+    }
+
+    // Emits the SCC (Strongly Connected Component) owner module interface unit.
+    // When multiple namespaces form a dependency cycle, they cannot each have their
+    // own independent module (circular imports are illegal in C++20 modules).
+    // Instead, one namespace is chosen as the "owner" (alphabetically first in the SCC),
+    // and ALL cyclic namespaces' declarations are consolidated into this single module.
+    // The other namespaces in the SCC get thin re-export stubs (see write_namespace_reexport_ixx).
+    //
+    // Output: $(out)/winrt/winrt.<owner>.ixx  (export module winrt.<owner>;)
+    //
+    // The owner module:
+    //   1. Imports external dependencies (deps outside the SCC)
+    //   2. Forward-declares all projected types for ALL SCC namespaces before any
+    //      impl headers — this breaks the type reference cycles
+    //   3. Includes impl headers in stable phase order: all *.0.h, then all *.1.h,
+    //      then all *.2.h, then all public headers — preserving the original header
+    //      layering while keeping SCC compilation deterministic
+    static void write_namespace_scc_owner_ixx(
+        cache const& c,
+        std::string_view const& owner,
+        std::vector<std::string> const& scc_members,
+        std::set<std::string> const& external_deps,
+        std::set<std::string> const& module_namespaces)
+    {
+        writer w;
+        write_module_preamble(w);
+
+        // Module declaration (owner namespace)
+        w.write("// This module is an SCC owner (cycle breaker). The following namespaces\n");
+        w.write("// form a dependency cycle and are consolidated into this single module:\n");
+        for (auto& ns : scc_members)
+        {
+            w.write("//   - %\n", ns);
+        }
+        w.write("// Other SCC namespaces are emitted as re-export stubs.\n\n");
+        w.write("export module winrt.%;\n\n", owner);
+
+        // Import std and base
+        w.write("import std;\n");
+        w.write("export import winrt_base;\n");
+
+        // Import external dependency modules (outside the SCC)
+        for (auto& dep : external_deps)
+        {
+            if (module_namespaces.count(dep) || module_namespaces.empty())
+            {
+                w.write("import winrt.%;\n", dep);
+            }
+        }
+
+        w.write("\n");
+
+        // Forward declarations for all projected types in this SCC.
+        // This is required because SCC members have cyclic type references,
+        // and generated headers suppress dependent #includes when WINRT_IMPL_BUILD_MODULE
+        // is defined. Forward declarations provide the names needed before definitions.
+        for (auto& ns : scc_members)
+        {
+            auto found = c.namespaces().find(ns);
+            if (found == c.namespaces().end())
+            {
+                continue;
+            }
+            auto& members = found->second;
+
+            auto wrap_type = wrap_type_namespace(w, ns);
+            w.write_each<write_forward>(members.enums);
+            w.write_each<write_forward>(members.interfaces);
+            w.write_each<write_forward>(members.classes);
+            w.write_each<write_forward>(members.structs);
+            w.write_each<write_forward>(members.delegates);
+            w.write_each<write_forward>(members.contracts);
+        }
+
+        // Include all SCC members' headers in stable phase order.
+        // All *.0.h (forward decls + ABIs), then all *.1.h (interfaces),
+        // then all *.2.h (delegates/structs/classes), then all public headers.
+        // This preserves the original header layering while keeping compilation deterministic.
+        for (auto& ns : scc_members)
+        {
+            w.write("#include \"winrt/impl/%.0.h\"\n", ns);
+        }
+        for (auto& ns : scc_members)
+        {
+            w.write("#include \"winrt/impl/%.1.h\"\n", ns);
+        }
+        for (auto& ns : scc_members)
+        {
+            w.write("#include \"winrt/impl/%.2.h\"\n", ns);
+        }
+        for (auto& ns : scc_members)
+        {
+            w.write("#include \"winrt/%.h\"\n", ns);
+        }
+
+        w.flush_to_file(settings.output_folder + "winrt/winrt." + std::string(owner) + ".ixx");
+    }
+
+    // Emits a thin re-export stub module for SCC non-owner namespaces.
+    // This allows 'import winrt.<ns>;' to work even though the actual declarations
+    // live in the SCC owner module. The stub simply re-exports the owner.
+    // Output: $(out)/winrt/winrt.<ns>.ixx  (export module winrt.<ns>; export import winrt.<owner>;)
+    static void write_namespace_reexport_ixx(
+        std::string_view const& ns,
+        std::string_view const& owner)
+    {
+        writer w;
+        write_preamble(w);
+        w.write("\n// NOTE: This module does not define declarations of its own.\n");
+        w.write("// It re-exports all declarations from the 'winrt.%' module. This is used to break cycles in the\n", owner);
+        w.write("// WinRT namespace module dependency graph (SCC owner consolidation).\n\n");
+        w.write("export module winrt.%;\n", ns);
+        w.write("export import winrt.%;\n", owner);
+        w.flush_to_file(settings.output_folder + "winrt/winrt." + std::string(ns) + ".ixx");
     }
 }
