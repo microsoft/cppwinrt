@@ -143,7 +143,7 @@ auto obj = winrt::MyComponent::MyClass();
 
 ## Troubleshooting
 
-**"could not find module 'winrt.X'"** — Ensure the `.ixx` was generated (check `$(GeneratedFilesDir)winrt\`) and that `CppWinRTBuildModule=true` is set. For cross-project references, verify the builder project has `CppWinRTConsumeModule=true` on its ProjectReference and that the builder's IntDir is accessible via `/ifcSearchDir`.
+**"could not find module 'winrt.X'"** — Ensure the `.ixx` was generated (check `$(GeneratedFilesDir)winrt\`) and that `CppWinRTBuildModule=true` is set. For cross-project references, verify the consuming project's `ProjectReference` to the builder has `CppWinRTConsumeModule=true`, and that the builder's `IntDir` is accessible via `/ifcSearchDir`.
 
 **Linker errors for component constructors** — You may be importing a component's internal module instead of building your own reference projection. Remove explicit `/reference` flags for component IFCs and ensure your project has `CppWinRTBuildModule=true` so it builds reference projection modules from the component's `.winmd`.
 
