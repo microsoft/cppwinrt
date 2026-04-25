@@ -1,5 +1,6 @@
 #include "pch.h"
 
+import std;
 import winrt.Windows.Foundation;
 import winrt.TestModuleComponent1;
 import winrt.TestModuleComponent2;
@@ -13,19 +14,19 @@ int main()
 
     // Platform types from pre-built modules
     Uri uri(L"https://example.com/consumer");
-    printf("URI: %ls\n", uri.AbsoluteUri().c_str());
+    std::printf("URI: %ls\n", uri.AbsoluteUri().c_str());
 
     // Component1
     auto greeter = TestModuleComponent1::Greeter(L"Modules");
-    printf("Greet: %ls\n", greeter.Greet().c_str());
-    printf("Homepage: %ls\n", greeter.Homepage().AbsoluteUri().c_str());
+    std::printf("Greet: %ls\n", greeter.Greet().c_str());
+    std::printf("Homepage: %ls\n", greeter.Homepage().AbsoluteUri().c_str());
 
     // Component2 (depends on Component1)
     auto group = TestModuleComponent2::GreeterGroup();
     group.Add(TestModuleComponent1::Greeter(L"Alice"));
     group.Add(TestModuleComponent1::Greeter(L"Bob"));
-    printf("GreetAll: %ls\n", group.GreetAll().c_str());
+    std::printf("GreetAll: %ls\n", group.GreetAll().c_str());
 
-    printf("All consumer tests passed.\n");
+    std::printf("All consumer tests passed.\n");
     return 0;
 }

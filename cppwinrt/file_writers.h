@@ -265,9 +265,11 @@ namespace cppwinrt
 
         if (settings.modules)
         {
-            // In module builds, import winrt_base instead of #include "winrt/base.h".
-            // The component's namespace module(s) provide type visibility.
-            w.write("\nimport winrt_base;\n");
+            // In module builds, import std and winrt_base instead of #include "winrt/base.h".
+            // std is needed for std::wstring_view, std::equal, std::int32_t used in
+            // the activation factory lookup code.
+            w.write("\nimport std;\n");
+            w.write("import winrt_base;\n");
 
             // Collect all unique namespaces from the component classes
             std::set<std::string> namespaces;
@@ -470,6 +472,17 @@ namespace cppwinrt
 #define WINRT_EXPORT export extern "C++"
 #else
 #define WINRT_EXPORT
+#endif
+#endif
+
+// Template specializations in namespace std (hash, coroutine_traits) need extern "C++"
+// linkage in module builds for proper merging with the std module, but must NOT be
+// exported — exporting namespace std would make all of std transitively visible.
+#ifndef WINRT_IMPL_STD_EXPORT
+#ifdef WINRT_IMPL_BUILD_MODULE
+#define WINRT_IMPL_STD_EXPORT extern "C++"
+#else
+#define WINRT_IMPL_STD_EXPORT
 #endif
 #endif
 
