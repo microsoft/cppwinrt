@@ -39,7 +39,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalOptions>%(AdditionalOptions) /bigobj /ifcSearchDir "$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\TestModuleBuilder"</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj</AdditionalOptions>
       <BuildStlModules>true</BuildStlModules>
       <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>

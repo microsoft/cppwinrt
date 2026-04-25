@@ -973,6 +973,17 @@ $(XamlMetaDataProviderPch)
 
         <Message Text="C++/WinRT: Module providers: @(_CppWinRTModuleProviders)" Importance="$(CppWinRTVerbosity)" />
         <Message Text="C++/WinRT: Resolved module IfcDir: @(_CppWinRTResolvedModuleRefs->'%(CppWinRTModuleIfcDir)')" Importance="$(CppWinRTVerbosity)" />
+
+        <!-- Wire resolved IFC directories into AdditionalBMIDirectories so the
+             compiler can find pre-built module interfaces via /ifcSearchDir -->
+        <PropertyGroup Condition="'@(_CppWinRTResolvedModuleRefs)' != ''">
+            <_CppWinRTModuleIfcSearchDirs>@(_CppWinRTResolvedModuleRefs->'%(CppWinRTModuleIfcDir)')</_CppWinRTModuleIfcSearchDirs>
+        </PropertyGroup>
+        <ItemGroup Condition="'$(_CppWinRTModuleIfcSearchDirs)' != ''">
+            <ClCompile>
+                <AdditionalBMIDirectories>$(_CppWinRTModuleIfcSearchDirs);%(ClCompile.AdditionalBMIDirectories)</AdditionalBMIDirectories>
+            </ClCompile>
+        </ItemGroup>
     </Target>
 
 </Project>
