@@ -42,7 +42,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalOptions>%(AdditionalOptions) /bigobj /ifcSearchDir "$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\TestModuleBuilder" /ifcSearchDir "$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\TestModuleComponent1" /reference "winrt.TestModuleComponent1=$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\TestModuleComponent1\winrt.TestModuleComponent1.ixx.ifc"</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj /ifcSearchDir "$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\TestModuleBuilder"</AdditionalOptions>
       <BuildStlModules>true</BuildStlModules>
       <PreprocessorDefinitions>_WINRT_DLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
