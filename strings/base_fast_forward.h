@@ -30,6 +30,10 @@ static_assert(WINRT_FAST_ABI_SIZE >= %);
 
 #pragma detect_mismatch("WINRT_FAST_ABI_SIZE", WINRT_IMPL_STRING(WINRT_FAST_ABI_SIZE))
 
+#ifndef WINRT_EXPORT
+#define WINRT_EXPORT
+#endif
+
 WINRT_EXPORT namespace winrt::impl
 {
     // Thunk definitions are in arch-specific assembly sources
