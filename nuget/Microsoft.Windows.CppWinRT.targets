@@ -817,9 +817,6 @@ $(XamlMetaDataProviderPch)
             <CppWinRTPrecompiledHeader Condition="'$(CppWinRTPrecompiledHeader)' == '' and '%(CLCompile.PrecompiledHeader)' != 'NotUsing'">$(_PCH)</CppWinRTPrecompiledHeader>
             <CppWinRTPrecompiledHeader Condition="'$(CppWinRTPrecompiledHeader)' == '' and '%(CLCompile.PrecompiledHeader)' == 'NotUsing'">.</CppWinRTPrecompiledHeader>
         </PropertyGroup>
-        <PropertyGroup Condition="'$(CppWinRTBuildModule)' == 'true'">
-            <CppWinRTPrecompiledHeader>.</CppWinRTPrecompiledHeader>
-        </PropertyGroup>
         <PropertyGroup>
             <CppWinRTCommandUsePrefixes Condition="'$(CppWinRTUsePrefixes)' == 'true'">-prefix</CppWinRTCommandUsePrefixes>
             <CppWinRTCommandPrecompiledHeader Condition="'$(CppWinRTPrecompiledHeader)' != ''">-pch $(CppWinRTPrecompiledHeader)</CppWinRTCommandPrecompiledHeader>
@@ -909,21 +906,16 @@ $(XamlMetaDataProviderPch)
       When CppWinRTBuildModule is true, discover generated .ixx module interface units
       and add them as ClCompile items for the C++ module build system to compile.
       BeforeTargets="FixupCLCompileOptions" ensures items are added before the module
-      dependency scanner processes them. Generated .cpp files also have PCH disabled
-      since they reference types via module imports.
+      dependency scanner processes them.
     -->
     <Target Name="CppWinRTAddModuleInterfaces"
             Condition="'$(CppWinRTBuildModule)'=='true'"
             DependsOnTargets="CppWinRTMakeProjections"
             BeforeTargets="FixupCLCompileOptions">
-        <!-- Apply module builder paths to the .ixx items -->
         <ItemGroup>
             <ClCompile Include="$(GeneratedFilesDir)winrt\*.ixx">
                 <CompileAs>CompileAsCppModule</CompileAs>
                 <ModulesSupported>true</ModulesSupported>
-                <PrecompiledHeader>NotUsing</PrecompiledHeader>
-            </ClCompile>
-            <ClCompile Update="$(GeneratedFilesDir)**\*.cpp">
                 <PrecompiledHeader>NotUsing</PrecompiledHeader>
             </ClCompile>
         </ItemGroup>
@@ -948,8 +940,8 @@ $(XamlMetaDataProviderPch)
 
     <!--
       Resolve pre-built platform module IFCs from ProjectReference items tagged with
-      CppWinRTConsumeModules=true metadata. This allows consuming projects to use
-      'import winrt_base;' etc. using IFCs built by a module builder project.
+      CppWinRTConsumeModule=true metadata. This allows consuming projects to use
+      'import winrt.Windows.Foundation;' etc. using IFCs built by a module builder project.
       Only platform/reference modules should be shared this way - component modules
       contain -opt optimizations that are only valid inside the originating DLL.
       Runs before the platform projection so _CppWinRTConsumesPlatformModules is
@@ -962,7 +954,7 @@ $(XamlMetaDataProviderPch)
         <ItemGroup>
             <_CppWinRTModuleProviders Remove="@(_CppWinRTModuleProviders)" />
             <_CppWinRTModuleProviders Include="@(ProjectReference)"
-                Condition="'%(ProjectReference.CppWinRTConsumeModules)' == 'true'" />
+                Condition="'%(ProjectReference.CppWinRTConsumeModule)' == 'true'" />
         </ItemGroup>
 
         <!-- Set flag so platform projection knows not to generate .ixx files -->

@@ -1,6 +1,5 @@
 #include "pch.h"
 
-import winrt_base;
 import winrt.Windows.Foundation;
 import winrt.TestModuleComponent1;
 import winrt.TestModuleComponent2;

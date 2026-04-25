@@ -525,7 +525,15 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
 
             group.get();
 
-            // Generate per-namespace module interface files (v2)
+            // Generate per-namespace module interface files (.ixx)
+            //
+            // Each projected namespace gets its own C++20 named module (winrt.<Namespace>).
+            // Namespaces that form dependency cycles are detected using Tarjan's SCC algorithm
+            // and consolidated: one namespace "owns" the SCC module (containing all declarations),
+            // while others get thin re-export stubs so 'import winrt.<ns>;' always works.
+            //
+            // Base infrastructure modules (winrt_base, winrt_numerics) are only generated
+            // for platform projection builds (-base flag).
             if (settings.modules)
             {
                 if (settings.base)

@@ -77,7 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestModuleBuilder\TestModuleBuilder.vcxproj">
-      <CppWinRTConsumeModules>true</CppWinRTConsumeModules>
+      <CppWinRTConsumeModule>true</CppWinRTConsumeModule>
     </ProjectReference>
     <ProjectReference Include="..\TestModuleComponent1\TestModuleComponent1.vcxproj" />
   </ItemGroup>

@@ -1,7 +1,6 @@
 #include "pch.h"
 
 import std;
-import winrt_base;
 import winrt.Windows.Foundation;
 
 using namespace winrt;
