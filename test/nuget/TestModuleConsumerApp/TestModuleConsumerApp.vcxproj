@@ -2,14 +2,11 @@
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(ProjectDir)..\..\..\nuget\Microsoft.Windows.CppWinRT.props" />
   <PropertyGroup Label="Globals">
-    <CppWinRTOptimized>true</CppWinRTOptimized>
-    <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <CppWinRTBuildModule>true</CppWinRTBuildModule>
-    <CppWinRTModuleInclude>TestModuleComponent1</CppWinRTModuleInclude>
     <MinimalCoreWin>true</MinimalCoreWin>
-    <ProjectGuid>{C1C2C3C4-1111-2222-3333-444455556666}</ProjectGuid>
-    <ProjectName>TestModuleComponent1</ProjectName>
-    <RootNamespace>TestModuleComponent1</RootNamespace>
+    <ProjectGuid>{B1B2C3D4-5555-6666-7777-888899990000}</ProjectGuid>
+    <ProjectName>TestModuleConsumerApp</ProjectName>
+    <RootNamespace>TestModuleConsumerApp</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
   </PropertyGroup>
@@ -21,7 +18,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v145</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -44,41 +41,27 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <AdditionalOptions>%(AdditionalOptions) /bigobj /ifcSearchDir "$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\TestModuleBuilder"</AdditionalOptions>
       <BuildStlModules>true</BuildStlModules>
-      <PreprocessorDefinitions>_WINRT_DLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
+      <PreprocessorDefinitions>NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>TestModuleComponent1.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Greeter.h">
-      <DependentUpon>TestModuleComponent1.idl</DependentUpon>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Greeter.cpp">
-      <DependentUpon>TestModuleComponent1.idl</DependentUpon>
-    </ClCompile>
-    <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Midl Include="TestModuleComponent1.idl" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="TestModuleComponent1.def" />
-    <None Include="PropertySheet.props" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestModuleBuilder\TestModuleBuilder.vcxproj">
       <CppWinRTConsumeModules>true</CppWinRTConsumeModules>
     </ProjectReference>
+    <ProjectReference Include="..\TestModuleComponent1\TestModuleComponent1.vcxproj" />
+    <ProjectReference Include="..\TestModuleComponent2\TestModuleComponent2.vcxproj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(ProjectDir)..\..\..\nuget\Microsoft.Windows.CppWinRT.targets" />

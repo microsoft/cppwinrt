@@ -526,7 +526,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             group.get();
 
             // Generate per-namespace module interface files (v2)
-            if (settings.modules && (settings.base || settings.component))
+            if (settings.modules)
             {
                 if (settings.base)
                 {

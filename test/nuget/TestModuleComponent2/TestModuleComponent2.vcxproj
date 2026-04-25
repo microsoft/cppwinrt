@@ -5,11 +5,11 @@
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <CppWinRTBuildModule>true</CppWinRTBuildModule>
-    <CppWinRTModuleInclude>TestModuleComponent1</CppWinRTModuleInclude>
+    <CppWinRTModuleInclude>TestModuleComponent2</CppWinRTModuleInclude>
     <MinimalCoreWin>true</MinimalCoreWin>
-    <ProjectGuid>{C1C2C3C4-1111-2222-3333-444455556666}</ProjectGuid>
-    <ProjectName>TestModuleComponent1</ProjectName>
-    <RootNamespace>TestModuleComponent1</RootNamespace>
+    <ProjectGuid>{C2C2C3C4-1111-2222-3333-444455556666}</ProjectGuid>
+    <ProjectName>TestModuleComponent2</ProjectName>
+    <RootNamespace>TestModuleComponent2</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
     <MinimumVisualStudioVersion>14.0</MinimumVisualStudioVersion>
   </PropertyGroup>
@@ -42,7 +42,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <WarningLevel>Level4</WarningLevel>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalOptions>%(AdditionalOptions) /bigobj /ifcSearchDir "$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\TestModuleBuilder"</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /bigobj /ifcSearchDir "$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\TestModuleBuilder" /ifcSearchDir "$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\TestModuleComponent1" /reference "winrt.TestModuleComponent1=$(IntDirRoot)$(Configuration)\$(PlatformDirectoryName)\TestModuleComponent1\winrt.TestModuleComponent1.ixx.ifc"</AdditionalOptions>
       <BuildStlModules>true</BuildStlModules>
       <PreprocessorDefinitions>_WINRT_DLL;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -50,35 +50,36 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateWindowsMetadata>false</GenerateWindowsMetadata>
-      <ModuleDefinitionFile>TestModuleComponent1.def</ModuleDefinitionFile>
+      <ModuleDefinitionFile>TestModuleComponent2.def</ModuleDefinitionFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="pch.h" />
-    <ClInclude Include="Greeter.h">
-      <DependentUpon>TestModuleComponent1.idl</DependentUpon>
+    <ClInclude Include="GreeterGroup.h">
+      <DependentUpon>TestModuleComponent2.idl</DependentUpon>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="Greeter.cpp">
-      <DependentUpon>TestModuleComponent1.idl</DependentUpon>
+    <ClCompile Include="GreeterGroup.cpp">
+      <DependentUpon>TestModuleComponent2.idl</DependentUpon>
     </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="TestModuleComponent1.idl" />
+    <Midl Include="TestModuleComponent2.idl" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="TestModuleComponent1.def" />
+    <None Include="TestModuleComponent2.def" />
     <None Include="PropertySheet.props" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\TestModuleBuilder\TestModuleBuilder.vcxproj">
       <CppWinRTConsumeModules>true</CppWinRTConsumeModules>
     </ProjectReference>
+    <ProjectReference Include="..\TestModuleComponent1\TestModuleComponent1.vcxproj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="$(ProjectDir)..\..\..\nuget\Microsoft.Windows.CppWinRT.targets" />
