@@ -120,19 +120,19 @@ namespace winrt::impl
         operator I() const noexcept
         {
             I result{ nullptr };
-            copy_from_abi(result, (produce<D, typename default_interface<I>::type>*)this);
+            copy_from_abi(result, reinterpret_cast<produce<D, typename default_interface<I>::type>*>(const_cast<producer_convert*>(this)));
             return result;
         }
 #else
         operator producer_ref<I> const() const noexcept
         {
-            return { (produce<D, typename default_interface<I>::type>*)this };
+            return { reinterpret_cast<produce<D, typename default_interface<I>::type>*>(const_cast<producer_convert*>(this)) };
         }
 #endif
 
         operator producer_vtable<I> const() const noexcept
         {
-            return { (void*)this };
+            return { reinterpret_cast<void*>(const_cast<producer_convert*>(this)) };
         }
     };
 
@@ -263,7 +263,7 @@ WINRT_EXPORT namespace winrt
     template <typename I, typename D>
     impl::abi_t<I>* to_abi(impl::producer_convert<D, I> const* from) noexcept
     {
-        return reinterpret_cast<impl::abi_t<I>*>((impl::producer<D, default_interface<I>>*)from);
+        return reinterpret_cast<impl::abi_t<I>*>(const_cast<impl::producer_convert<D, I>*>(from));
     }
 }
 

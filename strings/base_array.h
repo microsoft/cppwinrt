@@ -440,15 +440,17 @@ WINRT_EXPORT namespace winrt
     template <typename T>
     auto get_abi(array_view<T> object) noexcept
     {
-        auto data = object.size() ? object.data() : (T*)alignof(T);
+        using U = std::remove_const_t<T>;
+
+        auto data = object.size() ? const_cast<U*>(object.data()) : reinterpret_cast<U*>(alignof(U));
 
         if constexpr (std::is_base_of_v<Windows::Foundation::IUnknown, T>)
         {
-            return (void**)data;
+            return impl::abi_cast(*data);
         }
         else
         {
-            return reinterpret_cast<impl::arg_out<std::remove_const_t<T>>>(const_cast<std::remove_const_t<T>*>(data));
+            return reinterpret_cast<impl::arg_out<U>>(data);
         }
     }
 
@@ -562,21 +564,21 @@ WINRT_EXPORT namespace winrt
     inline hstring get_class_name(Windows::Foundation::IInspectable const& object)
     {
         void* value{};
-        check_hresult((*(impl::inspectable_abi**)&object)->GetRuntimeClassName(&value));
+        check_hresult(static_cast<impl::inspectable_abi*>(*impl::abi_cast(object))->GetRuntimeClassName(&value));
         return { value, take_ownership_from_abi };
     }
 
     inline com_array<guid> get_interfaces(Windows::Foundation::IInspectable const& object)
     {
         com_array<guid> value;
-        check_hresult((*(impl::inspectable_abi**)&object)->GetIids(impl::put_size_abi(value), put_abi(value)));
+        check_hresult(static_cast<impl::inspectable_abi*>(*impl::abi_cast(object))->GetIids(impl::put_size_abi(value), put_abi(value)));
         return value;
     }
 
     inline Windows::Foundation::TrustLevel get_trust_level(Windows::Foundation::IInspectable const& object)
     {
         Windows::Foundation::TrustLevel value{};
-        check_hresult((*(impl::inspectable_abi**)&object)->GetTrustLevel(&value));
+        check_hresult(static_cast<impl::inspectable_abi*>(*impl::abi_cast(object))->GetTrustLevel(&value));
         return value;
     }
 }

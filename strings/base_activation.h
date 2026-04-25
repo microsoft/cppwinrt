@@ -23,10 +23,10 @@ namespace winrt::impl
     {
         if (winrt_activation_handler)
         {
-            return winrt_activation_handler(*(void**)(&name), guid, result);
+            return winrt_activation_handler(*impl::abi_cast(name), guid, result);
         }
 
-        hresult hr = WINRT_IMPL_RoGetActivationFactory(*(void**)(&name), guid, result);
+        hresult hr = WINRT_IMPL_RoGetActivationFactory(*impl::abi_cast(name), guid, result);
 
         if (hr == impl::error_not_initialized)
         {
@@ -39,7 +39,7 @@ namespace winrt::impl
 
             void* cookie;
             usage(&cookie);
-            hr = WINRT_IMPL_RoGetActivationFactory(*(void**)(&name), guid, result);
+            hr = WINRT_IMPL_RoGetActivationFactory(*impl::abi_cast(name), guid, result);
         }
 
         if (hr == 0)
@@ -74,7 +74,7 @@ namespace winrt::impl
 
             com_ptr<abi_t<Windows::Foundation::IActivationFactory>> library_factory;
 
-            if (0 != library_call(*(void**)(&name), library_factory.put_void()))
+            if (0 != library_call(*impl::abi_cast(name), library_factory.put_void()))
             {
                 continue;
             }
@@ -114,74 +114,42 @@ WINRT_EXPORT namespace winrt
     }
 }
 
+namespace winrt::impl
+{
+
 #ifdef __clang__
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #endif
 
+    template <typename T>
+    T* interlocked_read_pointer(T* const volatile* target) noexcept
+    {
+#if defined(_M_IX86) || defined(_M_X64)
+        auto const result = *reinterpret_cast<std::intptr_t const volatile*>(target);
+        _ReadWriteBarrier();
+        return reinterpret_cast<T*>(result);
+#elif defined(_M_ARM64)
+#if defined(__GNUC__)
+        auto const result = *reinterpret_cast<std::intptr_t const volatile*>(target);
+#else
+        auto const result = static_cast<std::intptr_t>(
+            __iso_volatile_load64(reinterpret_cast<std::int64_t const volatile*>(target)));
+#endif
 #if defined(__GNUC__) && defined(__aarch64__)
-#define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER __asm__ __volatile__ ("dmb ish");
-#elif defined _M_ARM64
-#define WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER (__dmb(_ARM64_BARRIER_ISH));
+        __asm__ __volatile__ ("dmb ish");
+#elif defined(_M_ARM64)
+        (__dmb(_ARM64_BARRIER_ISH));
 #endif
-
-namespace winrt::impl
-{
-    inline std::int32_t interlocked_read_32(std::int32_t const volatile* target) noexcept
-    {
-#if defined _M_IX86 || defined _M_X64
-        std::int32_t const result = *target;
-        _ReadWriteBarrier();
-        return result;
-#elif defined _M_ARM64
-#if defined(__GNUC__)
-        std::int32_t const result = *target;
-#else
-        std::int32_t const result = __iso_volatile_load32(reinterpret_cast<std::int32_t const volatile*>(target));
-#endif
-        WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER
-        return result;
+        return reinterpret_cast<T*>(result);
 #else
 #error Unsupported architecture
 #endif
     }
-
-#if defined _WIN64
-    inline std::int64_t interlocked_read_64(std::int64_t const volatile* target) noexcept
-    {
-#if defined _M_X64
-        std::int64_t const result = *target;
-        _ReadWriteBarrier();
-        return result;
-#elif defined _M_ARM64
-#if defined(__GNUC__)
-        std::int64_t const result = *target;
-#else
-        std::int64_t const result = __iso_volatile_load64(target);
-#endif
-        WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER
-        return result;
-#else
-#error Unsupported architecture
-#endif
-    }
-#endif
-
-#undef WINRT_IMPL_INTERLOCKED_READ_MEMORY_BARRIER
 
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
-
-    template <typename T>
-    T* interlocked_read_pointer(T* const volatile* target) noexcept
-    {
-#ifdef _WIN64
-        return (T*)interlocked_read_64((std::int64_t*)target);
-#else
-        return (T*)interlocked_read_32((std::int32_t*)target);
-#endif
-    }
 
 #ifdef _WIN64
     inline constexpr std::uint32_t memory_allocation_alignment{ 16 };
@@ -282,20 +250,20 @@ namespace winrt::impl
 
             object_and_count current_value{ pointer_value, 0 };
 
-#if defined _WIN64
+#if defined(_WIN64)
 #if defined(__GNUC__)
-            bool exchanged = __sync_bool_compare_and_swap((__int128*)this, *(__int128*)&current_value, (__int128)0);
+            bool exchanged = __sync_bool_compare_and_swap(reinterpret_cast<__int128*>(this), __builtin_bit_cast(__int128, current_value), (__int128)0);
 #else
-            bool exchanged = 1 == _InterlockedCompareExchange128((std::int64_t*)this, 0, 0, (std::int64_t*)&current_value);
+            bool exchanged = 1 == _InterlockedCompareExchange128(reinterpret_cast<std::int64_t*>(this), 0, 0, reinterpret_cast<std::int64_t*>(&current_value));
 #endif
             if (exchanged)
             {
                 pointer_value->Release();
             }
 #else
-            std::int64_t const result = _InterlockedCompareExchange64((std::int64_t*)this, 0, *(std::int64_t*)&current_value);
+            std::int64_t const result = _InterlockedCompareExchange64(reinterpret_cast<std::int64_t*>(this), 0, __builtin_bit_cast(std::int64_t, current_value));
 
-            if (result == *(std::int64_t*)&current_value)
+            if (result == __builtin_bit_cast(std::int64_t, current_value))
             {
                 pointer_value->Release();
             }
@@ -305,7 +273,7 @@ namespace winrt::impl
 
     static_assert(std::is_standard_layout_v<factory_cache_entry_base>);
 
-#if !defined _M_IX86 && !defined _M_X64 && !defined _M_ARM64
+#if !defined(_M_IX86) && !defined(_M_X64) && !defined(_M_ARM64)
 #error Unsupported architecture: verify that zero-initialization of SLIST_HEADER is still safe
 #endif
 
@@ -370,9 +338,9 @@ namespace winrt::impl
             {
                 factory_count_guard const guard(m_value.count);
 
-                if (nullptr == _InterlockedCompareExchangePointer(reinterpret_cast<void**>(&m_value.object), *reinterpret_cast<void**>(&object), nullptr))
+                if (nullptr == _InterlockedCompareExchangePointer(abi_cast(m_value.object), *abi_cast(object), nullptr))
                 {
-                    *reinterpret_cast<void**>(&object) = nullptr;
+                    *abi_cast(object) = nullptr;
 #ifndef WINRT_NO_MODULE_LOCK
                     get_factory_cache().add(this);
 #endif
@@ -541,7 +509,7 @@ WINRT_EXPORT namespace winrt
             T ActivateInstance() const
             {
                 IInspectable instance;
-                check_hresult((*(impl::abi_t<IActivationFactory>**)this)->ActivateInstance(put_abi(instance)));
+                check_hresult((*impl::abi_t_abi_cast(this))->ActivateInstance(put_abi(instance)));
                 return instance.try_as<T>();
             }
         };
@@ -554,7 +522,7 @@ namespace winrt::impl
     T fast_activate(Windows::Foundation::IActivationFactory const& factory)
     {
         void* result{};
-        check_hresult((*(impl::abi_t<Windows::Foundation::IActivationFactory>**)&factory)->ActivateInstance(&result));
+        check_hresult((*impl::abi_t_abi_cast(factory))->ActivateInstance(&result));
         return{ result, take_ownership_from_abi };
     }
 }

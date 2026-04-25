@@ -61,7 +61,7 @@ WINRT_EXPORT namespace winrt::param
 
     inline void* get_abi(hstring const& object) noexcept
     {
-        return *(void**)(&object);
+        return *impl::abi_cast(object);
     }
 }
 

@@ -552,7 +552,7 @@ WINRT_EXPORT namespace winrt
             }
         }
 
-        return *(hstring*)(&default_value);
+        return *reinterpret_cast<hstring const*>(&default_value);
     }
 
     template <typename T, std::enable_if_t<!std::is_same_v<T, hstring>, int> = 0>
