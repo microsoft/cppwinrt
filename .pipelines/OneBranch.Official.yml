@@ -12,7 +12,7 @@ variables:
   parameters:
     debug: ${{ parameters.debug }}
 
-name: 2.0.$(date:yyMMdd)$(rev:.r)
+name: 3.0.$(date:yyMMdd)$(rev:.r)
 
 trigger: none
 

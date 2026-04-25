@@ -45,7 +45,7 @@ namespace winrt::impl
         std::atomic<std::int32_t> m_count;
     };
 
-    constexpr std::uint32_t hstring_reference_flag{ 1 };
+    inline constexpr std::uint32_t hstring_reference_flag{ 1 };
 
     struct hstring_header
     {

@@ -8,12 +8,17 @@ on:
 
 jobs:
   test-msvc-cppwinrt-build:
-    name: '${{ matrix.compiler }}: Build (${{ matrix.arch }}, ${{ matrix.config }})'
+    name: '${{ matrix.compiler }}: Build (${{ matrix.arch }}, ${{ matrix.config }}, ${{ matrix.toolchain.platform_toolset }})'
     strategy:
       matrix:
         compiler: [MSVC, clang-cl]
         arch: [x86, x64, arm64]
         config: [Debug, Release]
+        toolchain:
+          - image: windows-2025
+            platform_toolset: v143
+          - image: windows-2025-vs2026
+            platform_toolset: v145
         exclude:
           - arch: arm64
             config: Debug
@@ -21,7 +26,7 @@ jobs:
             arch: arm64
           - compiler: clang-cl
             config: Release
-    runs-on: windows-latest
+    runs-on: ${{ matrix.toolchain.image }}
     steps:
       - uses: actions/checkout@v6
 
@@ -41,10 +46,12 @@ jobs:
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
-          $target_version = "1.2.3.4"
+          $target_version = "999.999.999.999"
           $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
           if ("${{ matrix.compiler }}" -eq "clang-cl") {
             $props += ",Clang=1,PlatformToolset=ClangCl"
+          } else {
+            $props += ",PlatformToolset=${{ matrix.toolchain.platform_toolset }}"
           }
           Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:$props"
 
@@ -68,7 +75,7 @@ jobs:
       - name: Upload built executables
         uses: actions/upload-artifact@v7
         with:
-          name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
+          name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolchain.platform_toolset }}-bin
           path: |
             _build/${{ matrix.arch }}/${{ matrix.config }}/*.exe
             _build/${{ matrix.arch }}/${{ matrix.config }}/*.dll
@@ -84,7 +91,7 @@ jobs:
           & "_build\$target_platform\$target_configuration\cppwinrt.exe" -in local -out _build\$target_platform\$target_configuration -verbose
 
   test-msvc-cppwinrt-test:
-    name: '${{ matrix.compiler }}: Test [${{ matrix.test_exe }}] (${{ matrix.arch }}, ${{ matrix.config }})'
+    name: '${{ matrix.compiler }}: Test [${{ matrix.test_exe }}] (${{ matrix.arch }}, ${{ matrix.config }}, ${{ matrix.toolchain.platform_toolset }})'
     needs: test-msvc-cppwinrt-build
     strategy:
       fail-fast: false
@@ -93,6 +100,11 @@ jobs:
         arch: [x86, x64, arm64]
         config: [Debug, Release]
         test_exe: [test, test_nocoro, test_cpp20, test_cpp20_no_sourcelocation, test_fast, test_slow, test_old, test_module_lock_custom, test_module_lock_none]
+        toolchain:
+          - image: windows-2025
+            platform_toolset: v143
+          - image: windows-2025-vs2026
+            platform_toolset: v145
         exclude:
           - arch: arm64
             config: Debug
@@ -100,7 +112,7 @@ jobs:
             arch: arm64
           - compiler: clang-cl
             config: Release
-    runs-on: windows-latest
+    runs-on: ${{ matrix.toolchain.image }}
     steps:
       - uses: actions/checkout@v6
 
@@ -108,14 +120,14 @@ jobs:
         if: matrix.arch != 'arm64'
         uses: actions/download-artifact@v8
         with:
-          name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
+          name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolchain.platform_toolset }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
 
       - name: Fetch x86 cppwinrt executables (arm64 only)
         if: matrix.arch == 'arm64'
         uses: actions/download-artifact@v8
         with:
-          name: msvc-build-${{ matrix.compiler}}-x86-Release-bin
+          name: msvc-build-${{ matrix.compiler}}-x86-Release-${{ matrix.toolchain.platform_toolset }}-bin
           path: _build/x86/Release/
 
       - name: Download nuget
@@ -134,10 +146,12 @@ jobs:
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
-          $target_version = "1.2.3.4"
+          $target_version = "999.999.999.999"
           $props = "Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
           if ("${{ matrix.compiler }}" -eq "clang-cl") {
             $props += ",Clang=1,PlatformToolset=ClangCl"
+          } else {
+            $props += ",PlatformToolset=${{ matrix.toolchain.platform_toolset }}"
           }
           Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:$props"
 
@@ -232,7 +246,7 @@ jobs:
         if: matrix.arch == 'arm64'
         uses: actions/upload-artifact@v7
         with:
-          name: msvc-tests-${{ matrix.test_exe }}-${{ matrix.compiler }}-${{ matrix.arch }}-${{ matrix.config }}-bin
+          name: msvc-tests-${{ matrix.test_exe }}-${{ matrix.compiler }}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolchain.platform_toolset }}-bin
           path: |
             _build/${{ matrix.arch }}/${{ matrix.config }}/*.exe
             _build/${{ matrix.arch }}/${{ matrix.config }}/*.dll
@@ -301,7 +315,7 @@ jobs:
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
-          $target_version = "1.2.3.4"
+          $target_version = "999.999.999.999"
           Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
 
       - name: Restore nuget packages
@@ -313,7 +327,7 @@ jobs:
           cmd /c "$env:VSDevCmd" "&" msbuild /m /clp:ForceConsoleColor "$env:msbuild_config_props" /p:Deployment=${{ matrix.Deployment }} natvis\cppwinrtvisualizer.sln
 
   build-msvc-nuget-test:
-    name: 'Build nuget test (${{ matrix.arch }})'
+    name: 'Build nuget test (${{ matrix.arch }}, ${{ matrix.toolchain.platform_toolset }})'
     needs: test-msvc-cppwinrt-build
     strategy:
       matrix:
@@ -321,14 +335,19 @@ jobs:
           - MSVC
         arch: [x86, x64]
         config: [Release]
-    runs-on: windows-latest
+        toolchain:
+          - image: windows-2025
+            platform_toolset: v143
+          - image: windows-2025-vs2026
+            platform_toolset: v145
+    runs-on: ${{ matrix.toolchain.image }}
     steps:
       - uses: actions/checkout@v6
 
       - name: Fetch cppwinrt executables
         uses: actions/download-artifact@v8
         with:
-          name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-bin
+          name: msvc-build-${{ matrix.compiler}}-${{ matrix.arch }}-${{ matrix.config }}-${{ matrix.toolchain.platform_toolset }}-bin
           path: _build/${{ matrix.arch }}/${{ matrix.config }}/
 
       - name: Download nuget
@@ -347,8 +366,8 @@ jobs:
         run: |
           $target_configuration = "${{ matrix.config }}"
           $target_platform = "${{ matrix.arch }}"
-          $target_version = "1.2.3.4"
-          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version"
+          $target_version = "999.999.999.999"
+          Add-Content $env:GITHUB_ENV "msbuild_config_props=/p:Configuration=$target_configuration,Platform=$target_platform,CppWinRTBuildVersion=$target_version,PlatformToolset=${{ matrix.toolchain.platform_toolset }}"
 
       - name: Restore nuget packages
         run: |

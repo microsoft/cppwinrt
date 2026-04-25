@@ -4,7 +4,7 @@ parameters:
     default: false
     
 variables:
-  MajorVersion: "2"
+  MajorVersion: "3"
   MinorVersion: "0"
   VersionDate: $[format('{0:yyMMdd}', pipeline.startTime)]
   VersionCounter: $[counter(variables['VersionDate'], 1)]
