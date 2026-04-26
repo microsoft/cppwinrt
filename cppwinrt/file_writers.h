@@ -9,6 +9,7 @@ namespace cppwinrt
         w.write(strings::base_version_odr, CPPWINRT_VERSION_STRING);
         {
             auto wrap_file_guard = wrap_open_file_guard(w, "BASE");
+            w.write("#ifndef WINRT_IMPORT_MODULE\n");
 
             {
                 auto wrap_includes = wrap_module_aware_includes_guard(w, true);
@@ -45,6 +46,8 @@ namespace cppwinrt
             w.write(strings::base_coroutine_threadpool);
             w.write(strings::base_natvis);
             w.write(strings::base_version);
+
+            w.write("#endif // WINRT_IMPORT_MODULE\n");
         }
         w.flush_to_file(settings.output_folder + "winrt/base.h");
     }
