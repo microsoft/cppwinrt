@@ -31,6 +31,10 @@
 #define WINRT_EXPORT
 #endif
 
+#ifndef WINRT_IMPL_STD_EXPORT
+#define WINRT_IMPL_STD_EXPORT
+#endif
+
 #if !(defined(WINRT_IMPL_BUILD_MODULE) || defined(WINRT_IMPORT_MODULE))
 #ifdef WINRT_IMPL_NUMERICS
 #define _WINDOWS_NUMERICS_NAMESPACE_ winrt::Windows::Foundation::Numerics
