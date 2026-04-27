@@ -132,7 +132,7 @@ auto obj = winrt::MyComponent::MyClass();
 ## Requirements
 
 - MSVC v145 toolset (Visual Studio 2026) or later recommended
-- C++20 or later (`/std:c++20` or `/std:c++latest`)
+- C++20 or later (`/std:c++20` or newer)
 - `BuildStlModules=true` for `import std;` support
 
 ## Limitations
