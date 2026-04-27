@@ -1,6 +1,6 @@
 #pragma once
-#ifndef WINRT_MODULE_H
-#define WINRT_MODULE_H
+#ifndef WINRT_MACROS_H
+#define WINRT_MACROS_H
 
 #ifdef _DEBUG
 
@@ -123,4 +123,4 @@ typedef struct _GUID GUID;
 #define WINRT_IMPL_CONSTEVAL constexpr
 #endif
 
-#endif // WINRT_MODULE_H
+#endif // WINRT_MACROS_H

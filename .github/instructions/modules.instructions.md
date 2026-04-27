@@ -22,11 +22,10 @@ Each WinRT namespace gets its own C++20 named module (`winrt.<Namespace>`). Base
 
 ### Critical Invariants
 
-- Module guards are unconditional in codegen — `-modules` only controls .ixx generation
-- Component modules use `-opt` (direct instantiation) — NEVER share across projects
-- Reference and platform projection modules DON'T use `-opt` (activation factory) — safe for cross-project consumption
+- Module guards are unconditional in codegen — `-modules` controls .ixx generation and component codegen (module.g.cpp, stub .cpp)
 - SCC owner is alphabetically first namespace in the cycle
 - All .ixx filenames use `winrt` prefix: `winrt.Windows.Foundation.ixx`, `winrt_base.ixx`
+- Shared macros live in `strings/base_module.h` → generates `winrt/macros.h`. `base_macros.h` includes it via `#include "winrt/macros.h"`
 
 ### Testing Changes
 

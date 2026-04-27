@@ -302,7 +302,7 @@ namespace cppwinrt
         write_include_guard(w);
 
         w.write("#ifdef WINRT_IMPORT_MODULE\n");
-        w.write("#include \"winrt/module.h\"\n");
+        w.write("#include \"winrt/macros.h\"\n");
         for (auto&& depends : w.depends)
         {
             w.write("import winrt.%;\n", depends.first);
@@ -411,7 +411,7 @@ namespace cppwinrt
         w.write(strings::base_module_ixx_preamble);
     }
 
-    // Emits $(out)/winrt/module.h
+    // Emits $(out)/winrt/macros.h
     // This header provides macros that are needed inside module interface units
     // but cannot cross module boundaries via 'import'. Each .ixx file includes
     // this in its global module fragment. It provides:
@@ -425,7 +425,7 @@ namespace cppwinrt
         writer w;
         write_preamble(w);
         w.write(strings::base_module);
-        w.flush_to_file(settings.output_folder + "winrt/module.h");
+        w.flush_to_file(settings.output_folder + "winrt/macros.h");
     }
 
     static void write_base_ixx()

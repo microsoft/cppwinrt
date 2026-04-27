@@ -34,8 +34,9 @@ The `strings/*.h` files are embedded as string literals by the prebuild step. If
 
 ### Module Guard Macros
 - `WINRT_IMPL_BUILD_MODULE` — Defined in .ixx global fragment. Makes `WINRT_EXPORT` expand to `export extern "C++"` and suppresses `#include` of dependencies
-- `WINRT_IMPORT_MODULE` — Defined by consumers who import modules. Makes namespace headers no-op (types come from module import)
-- `WINRT_EXPORT` — Empty in header mode, `export extern "C++"` in module mode
+- `WINRT_IMPORT_MODULE` — Defined by consumers who import modules. Makes namespace headers and base.h no-op (types come from module import)
+- `WINRT_EXPORT` — Empty in header mode, `export extern "C++"` in module mode. Defined in `winrt/macros.h`
+- `WINRT_IMPL_STD_EXPORT` — Empty in header mode, `extern "C++"` (without export) in module mode. Used for `namespace std` specializations
 
 ### Generated Header Structure
 Each namespace produces four header files:
@@ -50,7 +51,7 @@ When generating headers with `-modules`, writer.depends is inspected after each 
 ## Common Gotchas
 
 - Module IFCs are NOT compatible across toolset versions — always clean rebuild when switching
-- PCH and modules can coexist but PCH must NOT contain imports from WinRT headers when using modules, and winrt imports are preferred over textual inclusion
+- PCH and modules can coexist but PCH should NOT include winrt headers when using modules
 - `/ifcSearchDir` works for the module dependency scanner to find IFCs, but cross-component modules may need explicit `/reference "name=path.ifc"` flags
 - `import std;` requires `BuildStlModules=true`
-- Component modules (-opt) encode direct instantiation — they cannot be shared across DLL boundaries
+- Shared macros live in `strings/base_module.h` (generates `winrt/macros.h`). `base_macros.h` includes it. New macros should go in `base_module.h` only

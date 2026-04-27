@@ -32,7 +32,7 @@ Module guards (`WINRT_IMPL_BUILD_MODULE`, `WINRT_IMPORT_MODULE`) are emitted unc
 
 ### WINRT_EXPORT Macro
 
-`WINRT_EXPORT` is defined in `module.h`:
+`WINRT_EXPORT` is defined in `macros.h` (generated as `winrt/macros.h`):
 - When `WINRT_IMPL_BUILD_MODULE` is defined (inside `.ixx` compilation): `export extern "C++"`
 - Otherwise (header mode): empty
 
@@ -80,7 +80,7 @@ The `module_filter` is populated from these flags and checked against ALL cache 
 
 | File | When Generated | Purpose |
 |-|-|-|
-| `winrt/module.h` | Always with `-base` | Macros for module builds (WINRT_EXPORT, etc.) |
+| `winrt/macros.h` | Always with `-base` | Macros for module builds (WINRT_EXPORT, etc.) |
 | `winrt/winrt_base.ixx` | `-modules -base` | Core types module |
 | `winrt/winrt_numerics.ixx` | `-modules -base` | Numerics module |
 | `winrt/winrt.<ns>.ixx` | `-modules` | Per-namespace module |
@@ -111,7 +111,7 @@ This means `import winrt.Windows.Foundation;` and `import winrt.Windows.Foundati
 ```cpp
 module;
 #define WINRT_IMPL_BUILD_MODULE
-#include "winrt/module.h"
+#include "winrt/macros.h"
 // ...
 
 // This module is an SCC owner (cycle breaker). The following namespaces
