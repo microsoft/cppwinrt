@@ -6,7 +6,7 @@
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <CppWinRTBuildModule>true</CppWinRTBuildModule>
     <MinimalCoreWin>true</MinimalCoreWin>
-    <ProjectGuid>{C2C2C3C4-1111-2222-3333-444455556666}</ProjectGuid>
+    <ProjectGuid>{126E9412-E861-47C6-8684-C8F9BF32C0BD}</ProjectGuid>
     <ProjectName>TestModuleComponent2</ProjectName>
     <RootNamespace>TestModuleComponent2</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
@@ -14,9 +14,17 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Configuration">

@@ -4,7 +4,7 @@
   <PropertyGroup Label="Globals">
     <CppWinRTBuildModule>true</CppWinRTBuildModule>
     <MinimalCoreWin>true</MinimalCoreWin>
-    <ProjectGuid>{B1B2C3D4-5555-6666-7777-888899990000}</ProjectGuid>
+    <ProjectGuid>{FB7FEAA7-09DE-465C-BA0E-60374D3EFFD9}</ProjectGuid>
     <ProjectName>TestModuleConsumerApp</ProjectName>
     <RootNamespace>TestModuleConsumerApp</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
@@ -12,9 +12,17 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Configuration">

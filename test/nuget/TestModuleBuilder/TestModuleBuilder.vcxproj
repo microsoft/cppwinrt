@@ -5,7 +5,7 @@
     <CppWinRTBuildModule>true</CppWinRTBuildModule>
     <CppWinRTModuleInclude>Windows.Foundation</CppWinRTModuleInclude>
     <MinimalCoreWin>true</MinimalCoreWin>
-    <ProjectGuid>{A1B2C3D4-1111-2222-3333-444455556666}</ProjectGuid>
+    <ProjectGuid>{AEE91B86-AA17-4C22-B0C2-08B2C287E375}</ProjectGuid>
     <ProjectName>TestModuleBuilder</ProjectName>
     <RootNamespace>TestModuleBuilder</RootNamespace>
     <DefaultLanguage>en-US</DefaultLanguage>
@@ -13,9 +13,17 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Configuration">
