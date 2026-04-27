@@ -5,9 +5,9 @@ namespace cppwinrt
     struct finish_with
     {
         writer& w;
-        void (*finisher)(writer&);
+        std::function<void(writer&)> finisher;
 
-        finish_with(writer& w, void (*finisher)(writer&)) : w(w), finisher(finisher) {}
+        finish_with(writer& w, std::function<void(writer&)> finisher) : w(w), finisher(std::move(finisher)) {}
         finish_with(finish_with const&)= delete;
         void operator=(finish_with const&) = delete;
 
@@ -35,9 +35,16 @@ namespace cppwinrt
         }
     }
 
-    static void write_endif(writer& w)
+    static void write_endif(writer& w, std::string_view macro = {})
     {
-        w.write("#endif\n");
+        if (macro.empty())
+        {
+            w.write("#endif\n");
+        }
+        else
+        {
+            w.write("#endif // %\n", macro);
+        }
     }
 
     // When modules are enabled, wraps a block of #include directives in
@@ -49,7 +56,7 @@ namespace cppwinrt
         if (modules_enabled)
         {
             w.write("#ifndef WINRT_IMPL_BUILD_MODULE\n");
-            return { w, write_endif };
+            return { w, [](writer& w) { write_endif(w, "WINRT_IMPL_BUILD_MODULE"); } };
         }
         else
         {
@@ -119,7 +126,7 @@ namespace cppwinrt
 
             w.write(format);
 
-            return { w, write_endif };
+            return { w, [](writer& w) { write_endif(w, "WINRT_LEAN_AND_MEAN"); } };
         }
         else
         {
@@ -134,7 +141,7 @@ namespace cppwinrt
 
         w.write(format, macro);
 
-        return { w, write_endif };
+        return { w, [macro = std::string(macro)](writer& w) { write_endif(w, macro); } };
     }
 
     static void write_parent_depends(writer& w, cache const& c, std::string_view const& type_namespace)

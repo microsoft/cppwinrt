@@ -32,7 +32,7 @@ static_assert(WINRT_FAST_ABI_SIZE >= %);
 
 #ifndef WINRT_EXPORT
 #define WINRT_EXPORT
-#endif
+#endif // WINRT_EXPORT
 
 WINRT_EXPORT namespace winrt::impl
 {

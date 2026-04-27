@@ -29,11 +29,11 @@
 
 #ifndef WINRT_EXPORT
 #define WINRT_EXPORT
-#endif
+#endif // WINRT_EXPORT
 
 #ifndef WINRT_IMPL_STD_EXPORT
 #define WINRT_IMPL_STD_EXPORT
-#endif
+#endif // WINRT_IMPL_STD_EXPORT
 
 #if !(defined(WINRT_IMPL_BUILD_MODULE) || defined(WINRT_IMPORT_MODULE))
 #ifdef WINRT_IMPL_NUMERICS

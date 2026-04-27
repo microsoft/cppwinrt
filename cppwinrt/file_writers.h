@@ -314,7 +314,7 @@ namespace cppwinrt
             w.write_depends(depends.first);
         }
 
-        w.write("#endif\n");
+        w.write("#endif // WINRT_IMPORT_MODULE\n");
 
         auto filename = settings.output_folder + get_generated_component_filename(type) + ".g.h";
         path folder = filename;
@@ -450,11 +450,11 @@ namespace cppwinrt
 #define WINRT_VERIFY(expression) (void)(expression)
 #define WINRT_VERIFY_(result, expression) (void)(expression)
 
-#endif
+#endif // _DEBUG
 
 #if defined(__cpp_lib_coroutine)
 #define WINRT_IMPL_COROUTINES
-#endif
+#endif // __cpp_lib_coroutine
 
 #define WINRT_IMPL_SHIM(...) (*(abi_t<__VA_ARGS__>**)&static_cast<__VA_ARGS__ const&>(static_cast<D const&>(*this)))
 
@@ -468,15 +468,15 @@ namespace cppwinrt
 // C++ module warnings by /W4
 #pragma warning(disable : 4499)
 #pragma warning(disable : 4630)
-#endif
+#endif // _MSC_VER
 
 #ifndef WINRT_EXPORT
 #ifdef WINRT_IMPL_BUILD_MODULE
 #define WINRT_EXPORT export extern "C++"
 #else
 #define WINRT_EXPORT
-#endif
-#endif
+#endif // WINRT_IMPL_BUILD_MODULE
+#endif // WINRT_EXPORT
 
 // Template specializations in namespace std (hash, coroutine_traits) need extern "C++"
 // linkage in module builds for proper merging with the std module, but must NOT be
@@ -486,8 +486,8 @@ namespace cppwinrt
 #define WINRT_IMPL_STD_EXPORT extern "C++"
 #else
 #define WINRT_IMPL_STD_EXPORT
-#endif
-#endif
+#endif // WINRT_IMPL_BUILD_MODULE
+#endif // WINRT_IMPL_STD_EXPORT
 
 // <windowsnumerics.impl.h> pulls in large, hard-to-control legacy headers. In header builds we keep the
 // existing behavior, but in module builds it's provided by the winrt_numerics module.
@@ -501,9 +501,9 @@ namespace cppwinrt
 #undef _WINDOWS_NUMERICS_NAMESPACE_
 #undef _WINDOWS_NUMERICS_BEGIN_NAMESPACE_
 #undef _WINDOWS_NUMERICS_END_NAMESPACE_
-#endif
+#endif // WINRT_IMPL_NUMERICS
 
-#endif
+#endif // !(WINRT_IMPL_BUILD_MODULE || WINRT_IMPORT_MODULE)
 
 #if defined(_MSC_VER)
 #define WINRT_IMPL_NOINLINE __declspec(noinline)
@@ -559,7 +559,7 @@ typedef struct _GUID GUID;
 #define WINRT_IMPL_CONSTEVAL constexpr
 #endif
 
-#endif
+#endif // WINRT_MODULE_H
 )";
         w.write(format);
         w.flush_to_file(settings.output_folder + "winrt/module.h");
