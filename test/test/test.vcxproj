@@ -352,6 +352,7 @@
     <ClCompile Include="rational.cpp" />
     <ClCompile Include="return_params.cpp" />
     <ClCompile Include="return_params_abi.cpp" />
+    <ClCompile Include="resume_foreground.cpp" />
     <ClCompile Include="single_threaded_observable_vector.cpp" />
     <ClCompile Include="structs.cpp" />
     <ClCompile Include="struct_delegate.cpp" />

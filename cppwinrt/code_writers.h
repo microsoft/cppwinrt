@@ -3442,6 +3442,10 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         {
             w.write(strings::base_coroutine_system);
         }
+        else if (namespace_name == "Microsoft.UI.Dispatching")
+        {
+            w.write(strings::base_coroutine_winui);
+        }
         else if (namespace_name == "Windows.UI.Core")
         {
             w.write(strings::base_coroutine_ui_core);
