@@ -805,7 +805,7 @@ WINRT_EXPORT namespace winrt
                     // If task enqueue fails (for example, because the queue is closed), an exception is thrown.
                     // If the exception is not caught, the coroutine will be destroyed, preventing it from
                     // running on the wrong thread or leaks.
-                    throw hresult_canceled();
+                    throw hresult_no_task_queue();
                 }
             }
         };
