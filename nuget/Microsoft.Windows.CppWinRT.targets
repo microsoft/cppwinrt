@@ -736,7 +736,7 @@ $(XamlMetaDataProviderPch)
             <_CppwinrtRefRefs Include="@(CppWinRTPlatformWinMDReferences)"/>
         </ItemGroup>
         <PropertyGroup>
-            <_CppwinrtParameters>$(CppWinRTCommandVerbosity) $(CppWinRTParameters) $(CppWinRTCommandModules)</_CppwinrtParameters>
+            <_CppwinrtParameters>$(CppWinRTCommandVerbosity) $(CppWinRTParameters) $(CppWinRTCommandModules) $(CppWinRTCommandModuleFilter)</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtRefInputs->'-in &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtRefRefs->'-ref &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) -out &quot;$(GeneratedFilesDir).&quot;</_CppwinrtParameters>
@@ -842,7 +842,7 @@ $(XamlMetaDataProviderPch)
             <_CppwinrtCompRefs Include="@(CppWinRTPlatformWinMDReferences)"/>
         </ItemGroup>
         <PropertyGroup>
-            <_CppwinrtParameters>$(CppWinRTCommandVerbosity) $(CppWinRTParameters) $(CppWinRTCommandModules) -overwrite -name $(RootNamespace) $(CppWinRTCommandPrecompiledHeader) $(CppWinRTCommandUsePrefixes) -comp &quot;$(GeneratedFilesDir)sources&quot;</_CppwinrtParameters>
+            <_CppwinrtParameters>$(CppWinRTCommandVerbosity) $(CppWinRTParameters) $(CppWinRTCommandModules) $(CppWinRTCommandModuleFilter) -overwrite -name $(RootNamespace) $(CppWinRTCommandPrecompiledHeader) $(CppWinRTCommandUsePrefixes) -comp &quot;$(GeneratedFilesDir)sources&quot;</_CppwinrtParameters>
             <_CppwinrtParameters Condition="'$(CppWinRTOptimized)'=='true'">$(_CppwinrtParameters) -opt</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtCompInputs->'-in &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>
             <_CppwinrtParameters>$(_CppwinrtParameters) @(_CppwinrtCompRefs->'-ref &quot;%(WinMDPath)&quot;', '&#x0d;&#x0a;')</_CppwinrtParameters>

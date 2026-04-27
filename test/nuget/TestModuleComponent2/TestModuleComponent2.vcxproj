@@ -5,7 +5,6 @@
     <CppWinRTOptimized>true</CppWinRTOptimized>
     <CppWinRTRootNamespaceAutoMerge>true</CppWinRTRootNamespaceAutoMerge>
     <CppWinRTBuildModule>true</CppWinRTBuildModule>
-    <CppWinRTModuleInclude>TestModuleComponent2</CppWinRTModuleInclude>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{C2C2C3C4-1111-2222-3333-444455556666}</ProjectGuid>
     <ProjectName>TestModuleComponent2</ProjectName>

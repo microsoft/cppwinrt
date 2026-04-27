@@ -137,9 +137,18 @@ auto obj = winrt::MyComponent::MyClass();
 
 ## Limitations
 
-- Component modules (built with `-opt`) contain optimizations only valid inside the originating DLL. They should not be shared across projects.
 - Module IFCs are not compatible across toolset versions. All projects must use the same toolset.
 - Cyclic namespace dependencies (e.g., `Windows.Foundation` ↔ `Windows.Foundation.Collections`) are handled automatically via SCC consolidation, but the resulting module name is chosen alphabetically. Adding new APIs could change SCC groupings.
+
+## Caution: Module Reuse Across Projects
+
+Pre-built IFCs (via `CppWinRTConsumeModule`) should only be shared when the builder and consumer use the same compilation context. In particular:
+
+- **Component modules are project-private.** A component projection built with `CppWinRTOptimized=true` generates modules that bypass activation factories for in-component type instantiation (`-opt`). If a consuming project accidentally imports these modules instead of building its own reference projection, the consumer will attempt direct instantiation across DLL boundaries, resulting in linker errors or incorrect behavior. Each project should build its own modules from the component's `.winmd` — do not tag component ProjectReferences with `CppWinRTConsumeModule`.
+
+- **`CppWinRTConsumeModule` is intended for platform module builders only.** The builder project is a dedicated static library whose sole purpose is compiling platform SDK modules. Its compilation flags (no `-opt`, no `-comp`) produce modules safe for any consumer. Only tag this builder's ProjectReference with `CppWinRTConsumeModule=true`.
+
+- **Module filter scope matters.** `CppWinRTModuleInclude` / `CppWinRTModuleExclude` applies to all three projections (platform, reference, component). If you set `CppWinRTModuleInclude=MyComponent`, only `MyComponent` namespaces will get `.ixx` files — platform and reference namespace modules will not be generated. Make sure your filter includes all namespaces you intend to import as modules, or use `CppWinRTConsumeModule` to get platform modules from a builder that was configured with the appropriate filter.
 
 ## Troubleshooting
 
