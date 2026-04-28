@@ -150,6 +150,14 @@ Pre-built IFCs (via `CppWinRTConsumeModule`) should only be shared when the buil
 
 - **Module filter scope matters.** `CppWinRTModuleInclude` / `CppWinRTModuleExclude` applies to all three projections (platform, reference, component). If you set `CppWinRTModuleInclude=MyComponent`, only `MyComponent` namespaces will get `.ixx` files — platform and reference namespace modules will not be generated. Make sure your filter includes all namespaces you intend to import as modules, or use `CppWinRTConsumeModule` to get platform modules from a builder that was configured with the appropriate filter.
 
+- **Compilation settings must be compatible between builder and consumer.** Module IFCs encode assumptions about the compilation environment. While the compiler may not always diagnose mismatches, the following differences between the module builder and consumer may cause subtle or hard-to-diagnose issues:
+  - **Debug vs Release** — Mixing Debug and Release configurations can produce mismatched code generation, iterator debugging levels, and runtime library selections.
+  - **Preprocessor definitions** — Definitions that affect type layout, conditional compilation, or feature flags should match between builder and consumer.
+  - **Struct alignment / packing** — Different `/Zp` settings between projects can change struct layout, causing silent ABI mismatches.
+  - **Language standard** — While C++20 and later are generally compatible, mixing `/std:c++20` and `/std:c++23` and/or `/std:c++latest` if there are language features that affect type definitions.
+
+  As a general rule, the module builder project try to use the same configuration, preprocessor definitions, and compiler options as its consumers.
+
 ## Troubleshooting
 
 **"could not find module 'winrt.X'"** — Ensure the `.ixx` was generated (check `$(GeneratedFilesDir)winrt\`) and that `CppWinRTBuildModule=true` is set. For cross-project references, verify the consuming project's `ProjectReference` to the builder has `CppWinRTConsumeModule=true`, and that the builder's `IntDir` is accessible via `/ifcSearchDir`.
