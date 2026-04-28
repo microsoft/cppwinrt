@@ -490,7 +490,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
             if (settings.base)
             {
                 write_base_h();
-                write_module_h();
+                write_macros_h();
             }
 
             if (settings.component)

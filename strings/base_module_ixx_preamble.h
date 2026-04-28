@@ -6,4 +6,4 @@ module;
 #ifdef _DEBUG
 #include <crtdbg.h>
 #endif // _DEBUG
-#include "winrt/macros.h"
+#include "winrt/base_macros.h"

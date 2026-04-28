@@ -35,7 +35,7 @@ The `strings/*.h` files are embedded as string literals by the prebuild step. If
 ### Module Guard Macros
 - `WINRT_IMPL_BUILD_MODULE` — Defined in .ixx global fragment. Makes `WINRT_EXPORT` expand to `export extern "C++"` and suppresses `#include` of dependencies
 - `WINRT_IMPORT_MODULE` — Defined by consumers who import modules. Makes namespace headers and base.h no-op (types come from module import)
-- `WINRT_EXPORT` — Empty in header mode, `export extern "C++"` in module mode. Defined in `winrt/macros.h`
+- `WINRT_EXPORT` — Empty in header mode, `export extern "C++"` in module mode. Defined in `winrt/base_macros.h`
 - `WINRT_IMPL_STD_EXPORT` — Empty in header mode, `extern "C++"` (without export) in module mode. Used for `namespace std` specializations
 
 ### Generated Header Structure
@@ -54,4 +54,5 @@ When generating headers with `-modules`, writer.depends is inspected after each 
 - PCH and modules can coexist but PCH should NOT include winrt headers when using modules
 - `/ifcSearchDir` works for the module dependency scanner to find IFCs, but cross-component modules may need explicit `/reference "name=path.ifc"` flags
 - `import std;` requires `BuildStlModules=true`
-- Shared macros live in `strings/base_module.h` (generates `winrt/macros.h`). `base_macros.h` includes it. New macros should go in `base_module.h` only
+- `strings/base_macros.h` is the single source of truth for shared macros (generated as `winrt/base_macros.h`). New macros go in `base_macros.h` only
+- When adding, removing, or heavily refactoring `strings/*.h` files, always rebuild the natvis project (`natvis/cppwinrtvisualizer.sln`) to verify — it includes strings/*.h directly in its pch.h

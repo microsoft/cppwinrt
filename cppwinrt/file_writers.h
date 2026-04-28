@@ -15,7 +15,8 @@ namespace cppwinrt
                 auto wrap_includes = wrap_module_aware_includes_guard(w, true);
                 w.write(strings::base_includes);
             }
-            w.write(strings::base_macros);
+            w.write("#include \"winrt/base_macros.h\"\n");
+            w.write(strings::base_source_location);
             w.write(strings::base_types);
             w.write(strings::base_extern);
             w.write(strings::base_meta);
@@ -302,7 +303,7 @@ namespace cppwinrt
         write_include_guard(w);
 
         w.write("#ifdef WINRT_IMPORT_MODULE\n");
-        w.write("#include \"winrt/macros.h\"\n");
+        w.write("#include \"winrt/base_macros.h\"\n");
         for (auto&& depends : w.depends)
         {
             w.write("import winrt.%;\n", depends.first);
@@ -411,21 +412,16 @@ namespace cppwinrt
         w.write(strings::base_module_ixx_preamble);
     }
 
-    // Emits $(out)/winrt/macros.h
-    // This header provides macros that are needed inside module interface units
-    // but cannot cross module boundaries via 'import'. Each .ixx file includes
-    // this in its global module fragment. It provides:
-    //   - WINRT_ASSERT/WINRT_VERIFY macros
-    //   - WINRT_IMPL_COROUTINES detection
-    //   - WINRT_IMPL_SHIM macro
-    //   - WINRT_EXPORT (switches between empty and 'export extern "C++"')
-    //   - MSVC warning suppressions for module-related diagnostics
-    static void write_module_h()
+    // Emits $(out)/winrt/base_macros.h
+    // This header provides the core macros shared between header and module builds.
+    // In header builds, base.h includes base_macros.h inline (via the prebuild-embedded string).
+    // In module builds, each .ixx file includes this in its global module fragment.
+    static void write_macros_h()
     {
         writer w;
         write_preamble(w);
-        w.write(strings::base_module);
-        w.flush_to_file(settings.output_folder + "winrt/macros.h");
+        w.write(strings::base_macros);
+        w.flush_to_file(settings.output_folder + "winrt/base_macros.h");
     }
 
     static void write_base_ixx()
