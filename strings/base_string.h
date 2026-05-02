@@ -1,5 +1,5 @@
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     struct atomic_ref_count
     {
@@ -442,7 +442,7 @@ template<>
 struct std::formatter<winrt::hstring, wchar_t> : std::formatter<std::wstring_view, wchar_t> {};
 #endif
 
-namespace winrt::impl
+WINRT_EXPORT namespace winrt::impl
 {
     template <> struct abi<hstring>
     {

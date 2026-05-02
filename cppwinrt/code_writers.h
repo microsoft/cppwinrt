@@ -5,9 +5,9 @@ namespace cppwinrt
     struct finish_with
     {
         writer& w;
-        void (*finisher)(writer&);
+        std::function<void(writer&)> finisher;
 
-        finish_with(writer& w, void (*finisher)(writer&)) : w(w), finisher(finisher) {}
+        finish_with(writer& w, std::function<void(writer&)> finisher) : w(w), finisher(std::move(finisher)) {}
         finish_with(finish_with const&)= delete;
         void operator=(finish_with const&) = delete;
 
@@ -35,6 +35,35 @@ namespace cppwinrt
         }
     }
 
+    static void write_endif(writer& w, std::string_view macro = {})
+    {
+        if (macro.empty())
+        {
+            w.write("#endif\n");
+        }
+        else
+        {
+            w.write("#endif // %\n", macro);
+        }
+    }
+
+    // When modules are enabled, wraps a block of #include directives in
+    // #ifndef WINRT_IMPL_BUILD_MODULE ... #endif so that in module builds (where
+    // WINRT_IMPL_BUILD_MODULE is defined in the global module fragment), textual
+    // includes are suppressed — dependencies come via import instead.
+    [[nodiscard]] static finish_with wrap_module_aware_includes_guard(writer& w, bool modules_enabled)
+    {
+        if (modules_enabled)
+        {
+            w.write("#ifndef WINRT_IMPL_BUILD_MODULE\n");
+            return { w, [](writer& w) { write_endif(w, "WINRT_IMPL_BUILD_MODULE"); } };
+        }
+        else
+        {
+            return { w, write_nothing };
+        }
+    }
+
     static void write_version_assert(writer& w)
     {
         w.write_root_include("base");
@@ -47,14 +76,6 @@ namespace cppwinrt
     static void write_include_guard(writer& w)
     {
         auto format = R"(#pragma once
-)";
-
-        w.write(format);
-    }
-
-    static void write_endif(writer& w)
-    {
-        auto format = R"(#endif
 )";
 
         w.write(format);
@@ -105,7 +126,7 @@ namespace cppwinrt
 
             w.write(format);
 
-            return { w, write_endif };
+            return { w, [](writer& w) { write_endif(w, "WINRT_LEAN_AND_MEAN"); } };
         }
         else
         {
@@ -120,7 +141,7 @@ namespace cppwinrt
 
         w.write(format, macro);
 
-        return { w, write_endif };
+        return { w, [macro = std::string(macro)](writer& w) { write_endif(w, macro); } };
     }
 
     static void write_parent_depends(writer& w, cache const& c, std::string_view const& type_namespace)
@@ -166,7 +187,7 @@ namespace cppwinrt
 
     [[nodiscard]] static finish_with wrap_impl_namespace(writer& w)
     {
-        auto format = R"(namespace winrt::impl
+        auto format = R"(WINRT_EXPORT namespace winrt::impl
 {
 )";
 
