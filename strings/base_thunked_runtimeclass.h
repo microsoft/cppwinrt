@@ -346,5 +346,14 @@ WINRT_EXPORT namespace winrt::impl
         {
             clear_impl(pairs.data(), N, pair_stride);
         }
+
+        void reset_thunked(void* new_default_abi) noexcept
+        {
+            clear_impl(pairs.data(), N, pair_stride);
+            if (new_default_abi)
+            {
+                attach_impl(new_default_abi, pairs.data(), N, pair_stride, use_tagged);
+            }
+        }
     };
 }

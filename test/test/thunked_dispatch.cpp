@@ -63,3 +63,161 @@ TEST_CASE("thunked_dispatch")
     ps.Clear();
     REQUIRE(ps.Size() == 0);
 }
+
+TEST_CASE("thunked_copy_move")
+{
+    // Populate a PropertySet and resolve a cache slot via Insert.
+    PropertySet ps1;
+    ps1.Insert(L"key", box_value(42));
+    REQUIRE(ps1.Size() == 1);
+
+    // Copy construction: new object, independent lifetime.
+    PropertySet ps2 = ps1;
+    REQUIRE(ps2);
+    REQUIRE(ps2.Size() == 1);
+    REQUIRE(unbox_value<int>(ps2.Lookup(L"key")) == 42);
+
+    // Mutations on the copy are visible (same underlying COM object via AddRef).
+    ps2.Insert(L"other", box_value(99));
+    REQUIRE(ps1.Size() == 2); // same COM object
+
+    // Copy assignment.
+    PropertySet ps3;
+    ps3 = ps1;
+    REQUIRE(ps3);
+    REQUIRE(ps3.Size() == 2);
+
+    // Move construction: source becomes null.
+    PropertySet ps4 = std::move(ps1);
+    REQUIRE(ps4);
+    REQUIRE(!ps1);
+    REQUIRE(ps4.Size() == 2);
+
+    // Move assignment.
+    PropertySet ps5;
+    ps5.Insert(L"temp", box_value(0));
+    ps5 = std::move(ps4);
+    REQUIRE(ps5);
+    REQUIRE(!ps4);
+    REQUIRE(ps5.Size() == 2);
+
+    // Assign nullptr.
+    ps5 = nullptr;
+    REQUIRE(!ps5);
+}
+
+TEST_CASE("thunked_abi_interop")
+{
+    PropertySet ps;
+    ps.Insert(L"x", box_value(1));
+
+    // get_abi returns the default interface pointer.
+    void* abi = get_abi(ps);
+    REQUIRE(abi != nullptr);
+
+    // copy_to_abi / copy_from_abi round-trip.
+    void* copy = nullptr;
+    copy_to_abi(ps, copy);
+    REQUIRE(copy != nullptr);
+
+    PropertySet ps2{ nullptr };
+    copy_from_abi(ps2, copy);
+    static_cast<::IUnknown*>(copy)->Release(); // balance the AddRef from copy_to_abi
+    REQUIRE(ps2);
+    REQUIRE(ps2.Size() == 1);
+
+    // detach_abi / attach_abi round-trip.
+    void* detached = detach_abi(ps);
+    REQUIRE(!ps);
+    REQUIRE(detached != nullptr);
+
+    attach_abi(ps, detached);
+    REQUIRE(ps);
+    REQUIRE(ps.Size() == 1);
+
+    // put_abi clears and returns slot address.
+    void** slot = put_abi(ps);
+    REQUIRE(slot != nullptr);
+    REQUIRE(!ps); // cleared by put_abi
+}
+
+TEST_CASE("thunked_as_try_as")
+{
+    PropertySet ps;
+    ps.Insert(L"a", box_value(1));
+
+    // as<T> for interfaces the object implements.
+    auto map = ps.as<IMap<hstring, IInspectable>>();
+    REQUIRE(map.Size() == 1);
+
+    auto iterable = ps.as<IIterable<IKeyValuePair<hstring, IInspectable>>>();
+    REQUIRE(iterable);
+
+    auto inspectable = ps.as<IInspectable>();
+    REQUIRE(inspectable);
+
+    // try_as<T> returns non-empty for implemented interfaces.
+    auto maybe_map = ps.try_as<IMap<hstring, IInspectable>>();
+    REQUIRE(maybe_map);
+    REQUIRE(maybe_map.Size() == 1);
+
+    // try_as<T> returns empty for non-implemented interfaces.
+    auto maybe_closable = ps.try_as<IClosable>();
+    REQUIRE(!maybe_closable);
+
+    // Implicit conversion to IInspectable.
+    IInspectable as_inspectable = ps;
+    REQUIRE(as_inspectable);
+
+    // Implicit conversion to IUnknown.
+    Windows::Foundation::IUnknown as_unknown = ps;
+    REQUIRE(as_unknown);
+}
+
+TEST_CASE("thunked_threading")
+{
+    // Create a PropertySet and hammer it from multiple threads to verify
+    // concurrent thunk resolution doesn't crash or leak.
+    PropertySet ps;
+
+    static constexpr int thread_count = 8;
+    static constexpr int iterations = 100;
+
+    std::vector<std::thread> threads;
+    std::atomic<int> ready{ 0 };
+    std::atomic<int> errors{ 0 };
+
+    for (int t = 0; t < thread_count; ++t)
+    {
+        threads.emplace_back([&, t]()
+        {
+            ready++;
+            while (ready < thread_count) {} // spin until all threads are ready
+
+            for (int i = 0; i < iterations; ++i)
+            {
+                try
+                {
+                    // Each call through a secondary interface triggers thunk resolution
+                    // on first use. Multiple threads racing to resolve should be safe.
+                    auto key = std::to_wstring(t * iterations + i);
+                    ps.Insert(hstring(key), box_value(i));
+                    (void)ps.HasKey(hstring(key));
+                    (void)ps.Size();
+                }
+                catch (...)
+                {
+                    errors++;
+                }
+            }
+        });
+    }
+
+    for (auto& th : threads)
+    {
+        th.join();
+    }
+
+    REQUIRE(errors == 0);
+    REQUIRE(ps.Size() > 0);
+}

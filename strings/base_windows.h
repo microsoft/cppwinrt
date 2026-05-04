@@ -397,15 +397,17 @@ WINRT_EXPORT namespace winrt
     template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
     void attach_abi(T& object, void* value) noexcept
     {
-        object.clear_thunked();
-        object.attach_default_abi(value);
+        object.reset_thunked(value);
     }
 
     template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
     void copy_from_abi(T& object, void* value) noexcept
     {
-        object.clear_thunked();
-        object.copy_from_default_abi(value);
+        if (value)
+        {
+            static_cast<impl::unknown_abi*>(value)->AddRef();
+        }
+        object.reset_thunked(value);
     }
 
     template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
