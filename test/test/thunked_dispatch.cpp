@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "catch.hpp"
 
+// Additional headers for thunked type testing (pch.h uses WINRT_LEAN_AND_MEAN).
+#undef WINRT_LEAN_AND_MEAN
+#include <winrt/Windows.ApplicationModel.h>
+
 using namespace winrt;
 using namespace Windows::Foundation;
 using namespace Windows::Foundation::Collections;
@@ -220,4 +224,67 @@ TEST_CASE("thunked_threading")
 
     REQUIRE(errors == 0);
     REQUIRE(ps.Size() > 0);
+}
+
+TEST_CASE("thunked_generic_default")
+{
+    // StringMap has a generic default interface: IMap<hstring, hstring>.
+    // Verifies thunking works when the default isn't a named interface.
+    Collections::StringMap sm;
+    REQUIRE(sm);
+
+    sm.Insert(L"hello", L"world");
+    sm.Insert(L"foo", L"bar");
+    REQUIRE(sm.Size() == 2);
+    REQUIRE(sm.Lookup(L"hello") == L"world");
+    REQUIRE(sm.HasKey(L"foo"));
+
+    // IObservableMap is a secondary thunked interface.
+    auto observable = sm.as<Collections::IObservableMap<hstring, hstring>>();
+    REQUIRE(observable);
+
+    // IIterable is another secondary.
+    auto iterable = sm.as<Collections::IIterable<Collections::IKeyValuePair<hstring, hstring>>>();
+    REQUIRE(iterable);
+
+    int count = 0;
+    for (auto&& kv : sm)
+    {
+        (void)kv.Key();
+        (void)kv.Value();
+        count++;
+    }
+    REQUIRE(count == 2);
+
+    sm.Clear();
+    REQUIRE(sm.Size() == 0);
+}
+
+TEST_CASE("thunked_full_mode")
+{
+    // Windows.ApplicationModel.Package has 9 secondary interfaces (>8),
+    // which triggers full mode (cache_and_thunk_full with explicit IID storage
+    // instead of tagged payload). We can't activate Package from a console app,
+    // but we can verify the type compiles, constructs as null, and exercises
+    // the full-mode template path.
+    using Windows::ApplicationModel::Package;
+
+    // Null construction.
+    Package pkg{ nullptr };
+    REQUIRE(!pkg);
+
+    // Copy/move of null.
+    Package pkg2 = pkg;
+    REQUIRE(!pkg2);
+
+    Package pkg3 = std::move(pkg);
+    REQUIRE(!pkg3);
+    REQUIRE(!pkg);
+
+    // Verify the type's thunked_interfaces tuple has >8 entries,
+    // confirming full mode is active.
+    static_assert(std::tuple_size_v<Package::thunked_interfaces> > 8,
+        "Package should have >8 thunked interfaces (full mode)");
+    static_assert(!Package::use_tagged,
+        "Package should use full mode, not tagged mode");
 }
