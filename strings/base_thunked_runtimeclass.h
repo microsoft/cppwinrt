@@ -401,3 +401,24 @@ WINRT_EXPORT namespace winrt::impl
         }
     };
 }
+
+WINRT_EXPORT namespace winrt::impl
+{
+    // Safely convert an ABI parameter (void* for COM types) to a projected type.
+    // For thunked runtimeclasses, constructs a temporary with AddRef (borrowed ref).
+    // For all other types, reinterpret-casts in place (zero-cost, same as before).
+    template <typename T>
+    auto delegate_arg(arg_in<T> const& value) noexcept
+    {
+        if constexpr (has_thunked_cache_v<T>)
+        {
+            void* abi = *reinterpret_cast<void* const*>(&value);
+            if (abi) static_cast<unknown_abi*>(abi)->AddRef();
+            return T{ abi, take_ownership_from_abi_t{} };
+        }
+        else
+        {
+            return *reinterpret_cast<T const*>(&value);
+        }
+    }
+}

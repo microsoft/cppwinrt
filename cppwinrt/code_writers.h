@@ -1767,7 +1767,7 @@ namespace cppwinrt
                 {
                     if (category != param_category::fundamental_type)
                     {
-                        w.write("*reinterpret_cast<% const*>(&%)",
+                        w.write("impl::delegate_arg<%>(%)",
                             param_type,
                             param_name);
                     }
