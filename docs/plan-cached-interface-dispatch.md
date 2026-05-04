@@ -888,17 +888,66 @@ Reduced errors from 42 to 8.
    `com_ref<T>`. Need to overload the ctor or add a deduction path that accepts any type
    with `get_abi()`.
 
+@Copilot - agile_ref<T> detect that T uses cached interfaces, then grab the default interface
+out of it as needed?
+
 2. **LiesAboutInheritance no default ctor**: `unbox_value_type<T>` path tries `T{}`.
    Generated thunked types only have `(nullptr_t)` and `(void*, take_ownership_from_abi_t)`
    ctors — no default ctor. Old types got one from inheriting IStringable (which has a
    default ctor from IInspectable).
+
+@Copilot - Is this a code bug?
 
 3. **IReference<LiesAboutInheritance> ABI mismatch**: `LiesAboutInheritance` as thunked type
    is sizeof > sizeof(void*), so `IReference<T>::Value()` ABI out-param can't take it as a
    pointer. This is an edge case — `IReference<T>` is for value types. The test intentionally
    exercises unusual metadata.
 
+@Copilot - What do you propose as a fix?
+
 **Status:** Phase 2 compiles cleanly for the component (test_component.dll) and most of the
 consumer test (test.exe). 8 errors remain, all in test.exe, all related to thunked types not
 fully mimicking the old IUnknown-based interface. The core thunking mechanism is working —
 PropertySet, StringMap, Deferral, Uri, and many other types are now thunked.
+
+@Copilot - how would you want to verify that? The prototype had a simple method that excercised
+creating a PropertySet and calling methods on it, inspecting the disassembly to verify that it
+was all "load slot, load vtable from slot, call vtable method" sequences, rather than "call
+QueryInterface, load vtable from that, call vtable method" sequences. Maybe pull that sample
+over to one of the test .cpp files, build for x64 Release, disassemble the binary, and verify
+the layout?
+
+### Next steps — COMPLETED (Session 2 continued)
+
+All 3 issues resolved with a single systematic fix: thunked types must be recognized
+as COM object types everywhere the library distinguishes COM from value types.
+
+**Root cause:** The library uses `is_base_of<IUnknown, T>` and `is_base_of<IInspectable, T>`
+in ~15 places to distinguish COM types from value types. Thunked types don't derive from
+either, so they fell into value-type code paths causing: wrong `arg<T>` resolution
+(`abi_t<T>` instead of `void*`), wrong `com_ref<T>` resolution (`com_ptr<T>` instead of `T`),
+wrong `empty_value<T>` (`T{}` instead of `nullptr`), wrong `box_value`/`unbox_value` paths.
+
+**Fix applied (committed `40dac14b`):**
+- `base_meta.h`: moved thunked traits to top (before `empty_value` and `arg`);
+  `arg<T>` and `empty_value<T>` include `has_thunked_cache_v<T>`
+- `base_windows.h`: `is_com_interface` and `com_ref<T>` include `has_thunked_cache_v<T>`
+- `base_reference_produce.h`: `box_value`, `unbox_value`, `unbox_value_or` include
+  `has_thunked_cache_v<T>`
+
+**Result:** Zero compile errors, zero linker errors. 23/25 tests pass. 2 failures
+(`custom_error`, `disconnected`) are pre-existing EH funclet issues — verified by running
+the same tests on the Phase 1 commit (same failures).
+
+### Remaining: disassembly verification
+
+Add a test function that creates a `PropertySet`, calls `Insert`/`Lookup`/`Size`, build
+x64 Release, then disassemble with `cdb -logo nul -z test.exe -c "uf test!function ; q"`
+and verify the hot path is `load cache slot → load vtable → call method` with no QI.
+
+**Status:** The thunk infrastructure is linked into test.exe (verified: `winrt_fast_thunk_vtable`,
+stub symbols, IID tables for Uri/Deferral/XmlDocument/etc. all present). However the existing
+test code exercises projected types through raw interfaces (e.g., `IMap<K,V>` directly),
+not through runtimeclass wrappers. Need to add a dedicated test function that uses a
+thunked runtimeclass (e.g., `PropertySet ps; ps.Insert(L"key", box_value(42)); ps.Size()`)
+to generate consumer-side thunked dispatch code for disassembly verification.
