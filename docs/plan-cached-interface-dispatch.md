@@ -8,7 +8,8 @@
 - **cppwinrt.exe output** must go under `build/` — never into source trees.
 - **the compiler and linker are right**. Before you blame them for a runtime or compiler bug, you MUST prove they work.
 - **debug to collect dump.** When there's a crash, debuggers are in c:\debuggers\cdb.exe for you to use. Dumps should go under build/ and not into the source tree.
-- **disassemble with the debugger** Dumpbin does not work; use `c:\debuggers\cdb.exe -z thefile.exe -c "uf binaryname!symbolname ; q"` - the space around the `;` is important. You can use `-c "x binaryname!*symbol*pattern ; q"` to get precise addresses of functions, then use that with `uf` instead if needed.
+- **disassemble with the debugger** Dumpbin does not work; use `c:\debuggers\cdb.exe -logo nul -z thefile.exe -c "uf binaryname!symbolname ; q"` - the space around the `;` is important. You can use `-c "x binaryname!*symbol*pattern ; q"` to get precise addresses of functions, then use that with `uf` instead if needed. Always use `-logo nul` to suppress the debugger banner.
+- **reduce noisy output.** Use `-logo nul` with cdb, `/v:m` with msbuild, `-Verbosity quiet` with nuget. Pipe verbose output to log files and read only the relevant parts. Consider writing helper scripts under `scripts/` to wrap common operations with clean output.
 - **commit at reasonable chunks.** Don't create lots of little commits, but don't create huge commits either. Commit when something is observed to work or when you want to experiment and use diffs.
 
 
