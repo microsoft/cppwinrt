@@ -453,8 +453,7 @@ namespace cppwinrt
     //      in the module purview, where WINRT_EXPORT causes declarations to be exported
     static void write_namespace_ixx(
         std::string_view const& ns,
-        std::set<std::string> const& deps,
-        std::set<std::string> const& module_namespaces)
+        std::set<std::string> const& deps)
     {
         writer w;
         write_module_preamble(w);
@@ -474,10 +473,7 @@ namespace cppwinrt
         {
             for (auto& dep : deps)
             {
-                if (module_namespaces.count(dep) || module_namespaces.empty())
-                {
-                    w.write("//   - winrt.%\n", dep);
-                }
+                w.write("//   - winrt.%\n", dep);
             }
         }
         w.write("\n");
@@ -489,10 +485,7 @@ namespace cppwinrt
         // Import dependency namespace modules
         for (auto& dep : deps)
         {
-            if (module_namespaces.count(dep) || module_namespaces.empty())
-            {
-                w.write("import winrt.%;\n", dep);
-            }
+            w.write("import winrt.%;\n", dep);
         }
 
         w.write("\n");
@@ -526,8 +519,7 @@ namespace cppwinrt
         cache const& c,
         std::string_view const& owner,
         std::vector<std::string> const& scc_members,
-        std::set<std::string> const& external_deps,
-        std::set<std::string> const& module_namespaces)
+        std::set<std::string> const& external_deps)
     {
         writer w;
         write_module_preamble(w);
@@ -549,10 +541,7 @@ namespace cppwinrt
         // Import external dependency modules (outside the SCC)
         for (auto& dep : external_deps)
         {
-            if (module_namespaces.count(dep) || module_namespaces.empty())
-            {
-                w.write("import winrt.%;\n", dep);
-            }
+            w.write("import winrt.%;\n", dep);
         }
 
         w.write("\n");

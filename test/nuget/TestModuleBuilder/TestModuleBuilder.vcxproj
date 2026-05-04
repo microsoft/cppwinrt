@@ -4,6 +4,7 @@
   <PropertyGroup Label="Globals">
     <CppWinRTBuildModule>true</CppWinRTBuildModule>
     <CppWinRTModuleInclude>Windows.Foundation</CppWinRTModuleInclude>
+    <CppWinRTModuleExclude>Windows.Foundation.Diagnostics</CppWinRTModuleExclude>
     <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{AEE91B86-AA17-4C22-B0C2-08B2C287E375}</ProjectGuid>
     <ProjectName>TestModuleBuilder</ProjectName>

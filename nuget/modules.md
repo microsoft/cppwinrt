@@ -121,6 +121,18 @@ auto obj = winrt::MyComponent::MyClass();
 |-|-|-|
 | `CppWinRTConsumeModule` | false | Consume pre-built platform module IFCs from this project reference |
 
+## Module Filtering and Transitive Dependencies
+
+`CppWinRTModuleInclude` and `CppWinRTModuleExclude` control which namespace `.ixx` files are **generated**, but they do not suppress `import` statements for dependencies. If namespace A is included in the filter and depends on namespace B, the generated `winrt.A.ixx` will contain `import winrt.B;` even if B is excluded from the filter. This is by design — the module for B must exist *somewhere* (either from the same project or from a referenced project).
+
+This has important implications:
+
+- **Transitive closure must be satisfied.** If you filter to a subset of namespaces, any dependencies that fall outside the filter must be available from another source (e.g., a module builder project referenced via `CppWinRTConsumeModule`, or MSBuild's automatic `ReferencedModuleBMIs` from a static library reference). Otherwise, compilation will fail with "could not find module" errors.
+
+- **Use `CppWinRTModuleExclude` to avoid generating modules that have unsatisfied dependencies.** For example, `Windows.Foundation.Diagnostics` depends on `Windows.Storage`. If you filter to `CppWinRTModuleInclude=Windows.Foundation`, the Diagnostics `.ixx` will be generated (it matches the prefix) but will fail to compile because `winrt.Windows.Storage` doesn't exist. Add `CppWinRTModuleExclude=Windows.Foundation.Diagnostics` to prevent this.
+
+- **In multi-project scenarios with static libraries, use `CppWinRTModuleExclude` to avoid duplicate modules.** MSBuild automatically propagates all module IFCs from static library references to consuming projects (via the `AllProjectBMIsArePublic` property, which defaults to `true` for static libraries). If project A is a static library that builds modules for namespace X, and project B references A, then B already has A's IFCs available. If B also has `CppWinRTBuildModule=true`, its reference projection will generate a second `winrt.X.ixx`, causing an ambiguous module error. Set `CppWinRTModuleExclude=X` on project B to prevent this. B's own `.ixx` files will still emit `import winrt.X;`, which resolves to A's IFC via MSBuild's automatic propagation. Note: this issue does not affect DLL references — MSBuild does not propagate module IFCs from DLLs by default.
+
 ## Module Names
 
 | Module | Contents |

@@ -551,7 +551,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
                     {
                         // Standalone namespace module
                         auto& ns = scc[0];
-                        write_namespace_ixx(ns, ns_deps_map[ns], projected_namespaces);
+                        write_namespace_ixx(ns, ns_deps_map[ns]);
                     }
                     else
                     {
@@ -573,7 +573,7 @@ R"(  local               Local ^%WinDir^%\System32\WinMetadata folder
                             }
                         }
 
-                        write_namespace_scc_owner_ixx(c, owner, scc, external_deps, projected_namespaces);
+                        write_namespace_scc_owner_ixx(c, owner, scc, external_deps);
 
                         for (size_t i = 1; i < scc.size(); ++i)
                         {
