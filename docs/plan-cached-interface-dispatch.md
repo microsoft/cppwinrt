@@ -968,7 +968,11 @@ new COM pointer via `copy_from_abi`, its cache slots were still zero → SIGSEGV
 secondary interface call. Fixed by adding `reset_thunked(void*)` that clears old state
 and re-initializes all pairs via `attach_impl`.
 
-**Remaining from Phase 3 plan:**
-- Types with >8 secondaries (full mode with explicit IID storage) — no test yet
-- Types with generic default interface (StringMap) — implicitly tested via codegen
-  but no dedicated test
+**Completed (committed `63e8c490`):**
+- `thunked_generic_default`: StringMap with `IMap<hstring, hstring>` generic default.
+  Insert/Lookup/HasKey/Size/Clear + range-for iteration + `as<IObservableMap>`.
+- `thunked_full_mode`: `Package` with 9 secondaries (>8 → `use_tagged=false`).
+  Static asserts verify `tuple_size>8` and `use_tagged==false`. Null construction,
+  copy/move of null.
+
+**All Phase 3 test scenarios from the plan are now covered.**
