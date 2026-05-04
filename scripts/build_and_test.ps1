@@ -1,14 +1,33 @@
-# build_and_test.ps1 — Single-invocation build and test for cppwinrt
-# Usage: .\scripts\build_and_test.ps1 [-Platform x64] [-Configuration Release] [-BuildOnly] [-BinLog]
+# build_and_test.ps1 — Parallel build and test for cppwinrt
+#
+# Default: builds only test\test (and its deps: prebuild, cppwinrt, test_component, etc.)
+# -BuildAll: builds all 9 test targets
+# -Test:     after building, runs whichever test executables were built
+# -Clean:    git clean -dfx . before building (wipes all build artifacts)
+# -BinLog:   produce _build\build.binlog for structured error analysis
+#
+# Usage:
+#   .\scripts\build_and_test.ps1                    # build test\test only
+#   .\scripts\build_and_test.ps1 -Test              # build test\test + run it
+#   .\scripts\build_and_test.ps1 -BuildAll          # build all test targets
+#   .\scripts\build_and_test.ps1 -BuildAll -Test    # build all + run all
+#   .\scripts\build_and_test.ps1 -Clean -BuildAll   # clean + build all
 param(
     [string]$Platform = "x64",
     [string]$Configuration = "Release",
-    [switch]$BuildOnly,
+    [switch]$BuildAll,
+    [switch]$Test,
+    [switch]$Clean,
     [switch]$BinLog
 )
 
 $ErrorActionPreference = "Stop"
 $root = git -C $PSScriptRoot rev-parse --show-toplevel
+
+if ($Clean) {
+    Write-Host "Cleaning workspace (git clean -dfx) ..." -ForegroundColor Yellow
+    git -C $root clean -dfx .
+}
 
 # Ensure NuGet
 if (-not (Test-Path "$root\.nuget\nuget.exe")) {
@@ -19,25 +38,22 @@ if (-not (Test-Path "$root\.nuget\nuget.exe")) {
 }
 & "$root\.nuget\nuget.exe" restore "$root\cppwinrt.sln" -Verbosity quiet
 
-# Build ALL targets in one msbuild invocation.
-# The solution already has ProjectDependencies:
-#   prebuild -> (none)
-#   cppwinrt -> prebuild
-#   test_component -> cppwinrt
-#   test -> cppwinrt + test_component + test_component_no_pch
-#   (etc.)
-# /m lets MSBuild parallelize across the dependency graph.
-$targets = @(
-    "test\test",
-    "test\test_nocoro",
-    "test\test_cpp20",
-    "test\test_cpp20_no_sourcelocation",
-    "test\test_fast",
-    "test\test_slow",
-    "test\test_module_lock_custom",
-    "test\test_module_lock_none",
-    "test\old_tests\test_old"
-) -join ";"
+# Select targets. Default: just test\test (pulls in prebuild, cppwinrt, test_component, etc.)
+if ($BuildAll) {
+    $targets = @(
+        "test\test",
+        "test\test_nocoro",
+        "test\test_cpp20",
+        "test\test_cpp20_no_sourcelocation",
+        "test\test_fast",
+        "test\test_slow",
+        "test\test_module_lock_custom",
+        "test\test_module_lock_none",
+        "test\old_tests\test_old"
+    ) -join ";"
+} else {
+    $targets = "test\test"
+}
 
 $buildDir = "$root\_build"
 New-Item -ItemType Directory -Path $buildDir -Force | Out-Null
@@ -66,9 +82,9 @@ if ($buildExitCode -ne 0) {
 
 Write-Host "BUILD SUCCEEDED" -ForegroundColor Green
 
-if ($BuildOnly) { exit 0 }
+if (-not $Test) { exit 0 }
 
-# Run tests
+# Run tests — only executables that exist (covers both default and -BuildAll)
 $testDir = "$buildDir\$Platform\$Configuration"
 $testExes = @(
     "test", "test_nocoro", "test_cpp20", "test_cpp20_no_sourcelocation",
@@ -76,17 +92,14 @@ $testExes = @(
     "test_module_lock_custom", "test_module_lock_none"
 )
 $failures = @()
-foreach ($test in $testExes) {
-    $exe = "$testDir\$test.exe"
-    if (-not (Test-Path $exe)) {
-        Write-Host "SKIP $test (not found)" -ForegroundColor Yellow
-        continue
-    }
-    Write-Host "RUN  $test" -ForegroundColor Cyan -NoNewline
-    & $exe > "$testDir\${test}_results.txt" 2>&1
+foreach ($t in $testExes) {
+    $exe = "$testDir\$t.exe"
+    if (-not (Test-Path $exe)) { continue }
+    Write-Host "RUN  $t" -ForegroundColor Cyan -NoNewline
+    & $exe > "$testDir\${t}_results.txt" 2>&1
     if ($LASTEXITCODE -ne 0) {
         Write-Host " FAIL" -ForegroundColor Red
-        $failures += $test
+        $failures += $t
     } else {
         Write-Host " PASS" -ForegroundColor Green
     }
