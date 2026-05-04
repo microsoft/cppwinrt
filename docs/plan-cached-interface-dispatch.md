@@ -21,6 +21,8 @@ QI for `IMap`, a vtable call, and a Release. The new design uses ASM thunk stubs
 masquerade as COM objects and self-resolve on first vtable call, so the QI cost is paid
 once per interface per object, with zero per-call overhead afterward.
 
+Keep detailed notes on your progress in this file, in the section "Detailed Notes".
+
 ## Approach: Three-way branch in `consume_general`
 
 The runtimeclass **does not inherit from its default interface**. Instead it inherits from
@@ -747,3 +749,90 @@ Runs locally-built `cppwinrt.exe`. Output goes under `build/` (gitignored).
    ```
    .\scripts\run_cppwinrt.ps1
    ```
+
+## Detailed Notes
+
+> Record each change you're making. You may be stopped and started multiple times, this history
+> will make continuing the operation easier. Also include any knowledge-base topics that would
+> improve your ability to continue.
+
+### Session 1 (prior agent, pre May 4 2026)
+
+**Commits made (4):**
+- `64b8e32f` — Added plan doc, `scripts/build_and_test.ps1`, `scripts/run_cppwinrt.ps1`
+- `85d475f0` — Addressed plan review: 10 gaps, snake_case, reworked build script
+- `5a3fa1e1` — Moved `write_abi_args` to Phase 1, added user rules
+- `93ef473d` — Rules: add `-logo nul`, reduce noisy output guidance
+
+**Uncommitted Phase 1 work in progress (working tree):**
+
+Phase 1 items completed (uncommitted):
+
+1. **`strings/base_thunked_runtimeclass.h`** — NEW, 415 lines. Contains:
+   - Traits: `has_thunked_cache_v`, `has_thunked_interface_v`, `tuple_contains`, `type_index`
+   - Data structures: `thunked_runtimeclass_header`, `interface_thunk` (with `resolve()`),
+     `cache_and_thunk_tagged` (24B), `cache_and_thunk_full` (32B)
+   - `thunked_runtimeclass_base` — non-template lifecycle ops (clear, attach, copy, move, assign)
+   - `thunked_runtimeclass<IDefault, I...>` — typed template with pairs array, ctors, dtor,
+     `thunk_cache_slot<Q>()`, `clear_thunked()`
+   - SFINAE-guarded ABI overloads: `get_abi`, `put_abi`, `detach_abi`, `attach_abi`,
+     `copy_from_abi`, `copy_to_abi` — all in `winrt` namespace
+
+2. **`strings/base_windows.h`** — Modified `consume_general`, `consume_noexcept`,
+   `consume_noexcept_remove_overload` with three-way `if constexpr` branch
+   (same_v → thunked → QI fallback). Added `consume_general_nothrow` variant.
+
+3. **`cppwinrt/code_writers.h`** — Two changes:
+   - `write_abi_args`: `object_type` case now emits `get_abi(param)` instead of `*(void**)(&param)`
+   - 5 `WINRT_IMPL_SHIM` call sites (IMap/IMapView Lookup, IMap Remove) replaced with
+     `consume_general_nothrow` calls
+
+4. **`strings/base_string.h`** — Added `static_assert(sizeof(T) == sizeof(void*))` in `bind_out`
+
+5. **ASM stubs** — All 4 architecture files created:
+   - `strings/thunk_stubs_x64.asm` — ~80 lines, MASM, 256 stubs + common dispatch + no-op IUnknown
+   - `strings/thunk_stubs_arm64.asm` — ~89 lines, armasm64
+   - `strings/thunk_stubs_arm64ec.asm` — ~85 lines, armasm64
+   - `strings/thunk_stubs_x86.asm` — ~78 lines, MASM .686
+
+6. **`strings/winrt_thunk_resolve.cpp`** — Bridge from ASM to C++ `thunk->resolve()`
+
+7. **`cppwinrt/file_writers.h`** — Added `w.write(strings::base_thunked_runtimeclass)` after
+   `base_implements` in `write_base_h()`
+
+8. **`cppwinrt/cppwinrt.vcxproj`** — Added `base_thunked_runtimeclass.h` to ClInclude list
+
+**Phase 1 status:** All 8 sub-items appear complete in working tree. Nothing has been committed.
+The prior agent did NOT build or test any of this — there are no build logs, no test results,
+and no evidence of a build attempt.
+
+**Phase 2 not started:** `write_slow_class` in `code_writers.h` has NOT been modified to
+generate thunked runtimeclass inheritance. No runtimeclass types actually use the new
+infrastructure yet.
+
+### Session 2 (May 4 2026)
+
+Continuing from Phase 1 uncommitted state. Next steps:
+- Verify Phase 1 builds clean (it affects cppwinrt.exe codegen, not the projection types yet)
+- If clean, commit Phase 1
+- Begin Phase 2: modify `write_slow_class` to emit thunked runtimeclass for cacheable types
+
+**Build fix 1:** `has_thunked_interface_v` and related traits were defined in
+`base_thunked_runtimeclass.h` (included after `base_windows.h`), but `consume_general` etc.
+in `base_windows.h` reference them. Moved all traits (`has_thunked_cache_v`,
+`has_thunked_interface_v`, `tuple_contains`, `type_index`) into `base_meta.h` which is
+included before `base_windows.h`. Removed them from `base_thunked_runtimeclass.h`.
+
+**Build fix 2:** `interface_thunk::resolve()` used `reinterpret_cast<::GUID const&>(*iid)`,
+but `::GUID` (from Windows SDK) is not available in the cppwinrt base headers. Changed to
+pass `*iid` directly since `unknown_abi::QueryInterface` takes `guid const&`.
+
+**Build fix 3:** Reverted `write_abi_args` change (`get_abi(param)` for `object_type`).
+`param_category::object_type` includes `param::iterable<>` and similar wrapper types that
+are incomplete when overload resolution evaluates `std::is_base_of_v<IUnknown, T>`. The
+`*(void**)(&param)` idiom is fine for these types. This change is deferred until Phase 2
+when thunked runtimeclass params actually appear and need `get_abi()` dispatch.
+
+**Build fix 4:** Removed `static_assert(sizeof(T) == sizeof(void*))` from `bind_out`.
+`bind_out` is used for struct OUT params too, not just COM interfaces — a WinRT struct
+like `test_component::Struct` has `sizeof != sizeof(void*)`.

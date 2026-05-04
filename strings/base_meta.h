@@ -314,4 +314,44 @@ namespace winrt::impl
 
     template <typename D, typename K>
     inline constexpr bool has_TryLookup_v = has_TryLookup<D, K>::value;
+
+    // ========================================================================
+    // Traits for detecting thunked runtimeclasses (C++17-compatible)
+    // ========================================================================
+
+    template <typename T, typename = void>
+    inline constexpr bool has_thunked_cache_v = false;
+
+    template <typename T>
+    inline constexpr bool has_thunked_cache_v<T, std::void_t<typename T::thunked_interfaces>> = true;
+
+    template <typename T, typename... Ts>
+    struct tuple_contains : std::disjunction<std::is_same<T, Ts>...> {};
+
+    template <typename T, typename Tuple>
+    struct tuple_contains_tuple;
+
+    template <typename T, typename... Ts>
+    struct tuple_contains_tuple<T, std::tuple<Ts...>> : tuple_contains<T, Ts...> {};
+
+    template <typename T, typename I, typename = void>
+    inline constexpr bool has_thunked_interface_v = false;
+
+    template <typename T, typename I>
+    inline constexpr bool has_thunked_interface_v<T, I, std::void_t<typename T::thunked_interfaces>> =
+        tuple_contains_tuple<I, typename T::thunked_interfaces>::value;
+
+    // ========================================================================
+    // Compile-time type index helper
+    // ========================================================================
+
+    template <typename T, typename... Types>
+    struct type_index;
+
+    template <typename T, typename First, typename... Rest>
+    struct type_index<T, First, Rest...> : std::integral_constant<size_t,
+        std::is_same_v<T, First> ? 0 : 1 + type_index<T, Rest...>::value> {};
+
+    template <typename T>
+    struct type_index<T> : std::integral_constant<size_t, 0> {};
 }

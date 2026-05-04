@@ -457,17 +457,22 @@ WINRT_EXPORT namespace winrt::impl
     template <typename Base, typename Derive, typename MemberPointer, typename ...Args>
     void consume_noexcept_remove_overload(Derive const* d, MemberPointer mptr, Args&&... args) noexcept
     {
-        if constexpr (!std::is_same_v<Derive, Base>)
+        if constexpr (std::is_same_v<Derive, Base>)
+        {
+            auto const _winrt_abi_type = *(abi_t<Base>**)d;
+            (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
+        }
+        else if constexpr (has_thunked_interface_v<Derive, Base>)
+        {
+            auto const _winrt_abi_type = *(abi_t<Base>**)(&d->template thunk_cache_slot<Base>());
+            (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
+        }
+        else
         {
             winrt::hresult _winrt_cast_result_code;
             auto const _winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, _winrt_cast_result_code);
             check_hresult(_winrt_cast_result_code);
             auto const _winrt_abi_type = *(abi_t<Base>**)&_winrt_casted_result;
-            (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
-        }
-        else
-        {
-            auto const _winrt_abi_type = *(abi_t<Base>**)d;
             (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
         }
     }
@@ -475,17 +480,22 @@ WINRT_EXPORT namespace winrt::impl
     template <typename Base, typename Derive, typename MemberPointer, typename ...Args>
     void consume_noexcept(Derive const* d, MemberPointer mptr, Args&&... args) noexcept
     {
-        if constexpr (!std::is_same_v<Derive, Base>)
+        if constexpr (std::is_same_v<Derive, Base>)
+        {
+            auto const _winrt_abi_type = *(abi_t<Base>**)d;
+            WINRT_VERIFY_(0, (_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+        }
+        else if constexpr (has_thunked_interface_v<Derive, Base>)
+        {
+            auto const _winrt_abi_type = *(abi_t<Base>**)(&d->template thunk_cache_slot<Base>());
+            WINRT_VERIFY_(0, (_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+        }
+        else
         {
             winrt::hresult _winrt_cast_result_code;
             auto const _winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, _winrt_cast_result_code);
             check_hresult(_winrt_cast_result_code);
             auto const _winrt_abi_type = *(abi_t<Base>**)&_winrt_casted_result;
-            WINRT_VERIFY_(0, (_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
-        }
-        else
-        {
-            auto const _winrt_abi_type = *(abi_t<Base>**)d;
             WINRT_VERIFY_(0, (_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
     }
@@ -493,7 +503,17 @@ WINRT_EXPORT namespace winrt::impl
     template <typename Base, typename Derive, typename MemberPointer, typename ...Args>
     void consume_general(Derive const* d, MemberPointer mptr, Args&&... args)
     {
-        if constexpr (!std::is_same_v<Derive, Base>)
+        if constexpr (std::is_same_v<Derive, Base>)
+        {
+            auto const _winrt_abi_type = *(abi_t<Base>**)d;
+            check_hresult((_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+        }
+        else if constexpr (has_thunked_interface_v<Derive, Base>)
+        {
+            auto const _winrt_abi_type = *(abi_t<Base>**)(&d->template thunk_cache_slot<Base>());
+            check_hresult((_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+        }
+        else
         {
             winrt::hresult _winrt_cast_result_code;
             auto const _winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, _winrt_cast_result_code);
@@ -501,10 +521,28 @@ WINRT_EXPORT namespace winrt::impl
             auto const _winrt_abi_type = *(abi_t<Base>**)&_winrt_casted_result;
             check_hresult((_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
         }
-        else
+    }
+
+    template <typename Base, typename Derive, typename MemberPointer, typename ...Args>
+    hresult consume_general_nothrow(Derive const* d, MemberPointer mptr, Args&&... args) noexcept
+    {
+        if constexpr (std::is_same_v<Derive, Base>)
         {
             auto const _winrt_abi_type = *(abi_t<Base>**)d;
-            check_hresult((_winrt_abi_type->*mptr)(std::forward<Args>(args)...));
+            return (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
+        }
+        else if constexpr (has_thunked_interface_v<Derive, Base>)
+        {
+            auto const _winrt_abi_type = *(abi_t<Base>**)(&d->template thunk_cache_slot<Base>());
+            return (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
+        }
+        else
+        {
+            winrt::hresult _winrt_cast_result_code;
+            auto const _winrt_casted_result = try_as_with_reason<Base, Derive const*>(d, _winrt_cast_result_code);
+            check_hresult(_winrt_cast_result_code);
+            auto const _winrt_abi_type = *(abi_t<Base>**)&_winrt_casted_result;
+            return (_winrt_abi_type->*mptr)(std::forward<Args>(args)...);
         }
     }
 }

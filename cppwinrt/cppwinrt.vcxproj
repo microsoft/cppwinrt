@@ -77,6 +77,7 @@
     <ClInclude Include="..\strings\base_string_input.h" />
     <ClInclude Include="..\strings\base_string_operators.h" />
     <ClInclude Include="..\strings\base_stringable_format_1.h" />
+    <ClInclude Include="..\strings\base_thunked_runtimeclass.h" />
     <ClInclude Include="..\strings\base_types.h" />
     <ClInclude Include="..\strings\base_version.h" />
     <ClInclude Include="..\strings\base_version_odr.h" />
