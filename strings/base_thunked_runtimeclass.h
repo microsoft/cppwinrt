@@ -207,6 +207,50 @@ WINRT_EXPORT namespace winrt::impl
             return result;
         }
 
+        friend bool operator==(thunked_runtimeclass_base const& left, thunked_runtimeclass_base const& right) noexcept
+        {
+            if (&left == &right)
+            {
+                return true;
+            }
+            auto left_abi = left.default_cache.load(std::memory_order_relaxed);
+            auto right_abi = right.default_cache.load(std::memory_order_relaxed);
+            if (left_abi == right_abi)
+            {
+                return true;
+            }
+            if (!left_abi || !right_abi)
+            {
+                return false;
+            }
+            return get_abi(left.try_as<Windows::Foundation::IUnknown>()) == get_abi(right.try_as<Windows::Foundation::IUnknown>());
+        }
+
+        friend bool operator!=(thunked_runtimeclass_base const& left, thunked_runtimeclass_base const& right) noexcept
+        {
+            return !(left == right);
+        }
+
+        friend bool operator==(thunked_runtimeclass_base const& left, std::nullptr_t) noexcept
+        {
+            return left.default_cache.load(std::memory_order_relaxed) == nullptr;
+        }
+
+        friend bool operator!=(thunked_runtimeclass_base const& left, std::nullptr_t) noexcept
+        {
+            return left.default_cache.load(std::memory_order_relaxed) != nullptr;
+        }
+
+        friend bool operator==(std::nullptr_t, thunked_runtimeclass_base const& right) noexcept
+        {
+            return right.default_cache.load(std::memory_order_relaxed) == nullptr;
+        }
+
+        friend bool operator!=(std::nullptr_t, thunked_runtimeclass_base const& right) noexcept
+        {
+            return right.default_cache.load(std::memory_order_relaxed) != nullptr;
+        }
+
         void* get_default_abi() const noexcept
         {
             return default_cache.load(std::memory_order_relaxed);

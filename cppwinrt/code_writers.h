@@ -3418,6 +3418,35 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
         return false;
     }
 
+    static bool has_async_default_interface(coded_index<TypeDefOrRef> const& default_interface)
+    {
+        std::string_view ns;
+        std::string_view n;
+
+        if (default_interface.type() == TypeDefOrRef::TypeSpec)
+        {
+            auto sig = default_interface.TypeSpec().Signature().GenericTypeInst();
+            auto const& [type_namespace, type_name_val] = get_type_namespace_and_name(sig.GenericType());
+            ns = type_namespace;
+            n = type_name_val;
+        }
+        else
+        {
+            auto tn = type_name(default_interface);
+            ns = tn.name_space;
+            n = tn.name;
+        }
+
+        if (ns != "Windows.Foundation")
+        {
+            return false;
+        }
+        return n == "IAsyncAction" ||
+            n == "IAsyncOperation`1" ||
+            n == "IAsyncActionWithProgress`1" ||
+            n == "IAsyncOperationWithProgress`2";
+    }
+
     static void write_thunked_class(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& default_interface)
     {
         auto type_name = type.TypeName();
@@ -3490,7 +3519,7 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             {
                 write_fast_class(w, type, default_interface);
             }
-            else if (get_bases(type).empty() && has_secondary_interfaces(w, type))
+            else if (get_bases(type).empty() && has_secondary_interfaces(w, type) && !has_async_default_interface(default_interface))
             {
                 write_thunked_class(w, type, default_interface);
             }
