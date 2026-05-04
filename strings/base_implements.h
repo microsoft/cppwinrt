@@ -45,7 +45,7 @@ namespace winrt::impl
     using tuple_if = typename tuple_if_base<Condition, T>::type;
 
     template <typename T>
-    struct is_interface : std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, T>, is_classic_com_interface<T>> {};
+    struct is_interface : std::disjunction<std::is_base_of<Windows::Foundation::IInspectable, T>, is_classic_com_interface<T>, std::bool_constant<has_thunked_cache_v<T>>> {};
 
     template <typename T>
     struct is_marker : std::disjunction<std::is_base_of<marker, T>, std::is_void<T>> {};

@@ -540,9 +540,18 @@ WINRT_EXPORT namespace winrt
             template <typename T>
             T ActivateInstance() const
             {
-                IInspectable instance;
-                check_hresult((*(impl::abi_t<IActivationFactory>**)this)->ActivateInstance(put_abi(instance)));
-                return instance.try_as<T>();
+                if constexpr (impl::has_thunked_cache_v<T>)
+                {
+                    void* result{};
+                    check_hresult((*(impl::abi_t<IActivationFactory>**)this)->ActivateInstance(&result));
+                    return{ result, take_ownership_from_abi };
+                }
+                else
+                {
+                    IInspectable instance;
+                    check_hresult((*(impl::abi_t<IActivationFactory>**)this)->ActivateInstance(put_abi(instance)));
+                    return instance.try_as<T>();
+                }
             }
         };
     }

@@ -296,13 +296,13 @@ WINRT_EXPORT namespace winrt::Windows::Foundation
 
 WINRT_EXPORT namespace winrt
 {
-    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
+    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_thunked_cache_v<T>, int> = 0>
     auto get_abi(T const& object) noexcept
     {
         return reinterpret_cast<impl::abi_t<T> const&>(object);
     }
 
-    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
+    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_thunked_cache_v<T>, int> = 0>
     auto put_abi(T& object) noexcept
     {
         if constexpr (!std::is_trivially_destructible_v<T>)
@@ -313,19 +313,19 @@ WINRT_EXPORT namespace winrt
         return reinterpret_cast<impl::abi_t<T>*>(&object);
     }
 
-    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
+    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_thunked_cache_v<T>, int> = 0>
     void copy_from_abi(T& object, V&& value)
     {
         object = reinterpret_cast<T const&>(value);
     }
 
-    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T>, int> = 0>
+    template <typename T, typename V, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, T> && !impl::has_thunked_cache_v<T>, int> = 0>
     void copy_to_abi(T const& object, V& value)
     {
         reinterpret_cast<T&>(value) = object;
     }
 
-    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, std::decay_t<T>> && !std::is_convertible_v<T, std::wstring_view>, int> = 0>
+    template <typename T, std::enable_if_t<!std::is_base_of_v<Windows::Foundation::IUnknown, std::decay_t<T>> && !impl::has_thunked_cache_v<std::decay_t<T>> && !std::is_convertible_v<T, std::wstring_view>, int> = 0>
     auto detach_abi(T&& object)
     {
         impl::abi_t<T> result{};
@@ -367,6 +367,51 @@ WINRT_EXPORT namespace winrt
     constexpr void* detach_abi(std::nullptr_t) noexcept
     {
         return nullptr;
+    }
+
+    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    void* get_abi(T const& object) noexcept
+    {
+        return object.get_default_abi();
+    }
+
+    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    void** put_abi(T& object) noexcept
+    {
+        object.clear_thunked();
+        return object.put_default_abi();
+    }
+
+    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    void* detach_abi(T& object) noexcept
+    {
+        return object.detach_default_abi();
+    }
+
+    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<std::decay_t<T>>, int> = 0>
+    void* detach_abi(T&& object) noexcept
+    {
+        return object.detach_default_abi();
+    }
+
+    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    void attach_abi(T& object, void* value) noexcept
+    {
+        object.clear_thunked();
+        object.attach_default_abi(value);
+    }
+
+    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    void copy_from_abi(T& object, void* value) noexcept
+    {
+        object.clear_thunked();
+        object.copy_from_default_abi(value);
+    }
+
+    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
+    void copy_to_abi(T const& object, void*& value) noexcept
+    {
+        object.copy_to_default_abi(value);
     }
 
     inline void copy_from_abi(Windows::Foundation::IUnknown& object, void* value) noexcept

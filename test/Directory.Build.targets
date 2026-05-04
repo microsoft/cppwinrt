@@ -1,0 +1,26 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Enable MASM assembler support -->
+  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.props" />
+
+  <!-- Link thunk stubs into all test binaries that use the cppwinrt projection -->
+  <ItemGroup>
+    <MASM Include="$(MSBuildThisFileDirectory)..\strings\thunk_stubs_x64.asm" Condition="'$(Platform)'=='x64'" />
+    <MASM Include="$(MSBuildThisFileDirectory)..\strings\thunk_stubs_x86.asm" Condition="'$(Platform)'=='Win32'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\strings\winrt_thunk_resolve.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+  </ItemGroup>
+
+  <ItemDefinitionGroup>
+    <MASM>
+      <UseSafeExceptionHandlers Condition="'$(Platform)'=='Win32'">true</UseSafeExceptionHandlers>
+    </MASM>
+  </ItemDefinitionGroup>
+
+  <Import Project="$(VCTargetsPath)\BuildCustomizations\masm.targets" />
+
+</Project>

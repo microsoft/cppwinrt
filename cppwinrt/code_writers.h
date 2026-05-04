@@ -3334,6 +3334,113 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             bind_each<write_static_declaration>(factories, type));
     }
 
+    static void write_thunked_class_base(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& default_interface)
+    {
+        w.write("impl::thunked_runtimeclass<%", default_interface);
+
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
+        {
+            if (!info.is_default && !info.is_protected && !info.overridable)
+            {
+                w.write(", %", interface_name);
+            }
+        }
+
+        w.write('>');
+    }
+
+    static void write_thunked_class_requires(writer& w, TypeDef const& type)
+    {
+        bool first = true;
+
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
+        {
+            if (!info.is_protected && !info.overridable)
+            {
+                if (first)
+                {
+                    first = false;
+                    w.write(",\n        impl::require<%", type.TypeName());
+                }
+
+                w.write(", %", interface_name);
+            }
+        }
+
+        if (!first)
+        {
+            w.write('>');
+        }
+    }
+
+    static void write_thunked_class_usings(writer& w, TypeDef const& type)
+    {
+        auto type_name = type.TypeName();
+        std::map<std::string_view, std::set<std::string>> method_usage;
+
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
+        {
+            if (!info.is_protected && !info.overridable)
+            {
+                for (auto&& method : info.type.MethodList())
+                {
+                    method_usage[get_name(method)].insert(interface_name);
+                }
+            }
+        }
+
+        for (auto&& [method_name, interfaces] : method_usage)
+        {
+            if (interfaces.size() <= 1)
+            {
+                continue;
+            }
+
+            for (auto&& interface_name : interfaces)
+            {
+                w.write("        using impl::consume_t<%, %>::%;\n",
+                    type_name,
+                    interface_name,
+                    method_name);
+            }
+        }
+    }
+
+    static bool has_secondary_interfaces(writer& w, TypeDef const& type)
+    {
+        for (auto&& [interface_name, info] : get_interfaces(w, type))
+        {
+            if (!info.is_default && !info.is_protected && !info.overridable)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    static void write_thunked_class(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& default_interface)
+    {
+        auto type_name = type.TypeName();
+        auto factories = get_factories(w, type);
+
+        auto format = R"(    struct WINRT_IMPL_EMPTY_BASES % : %%
+    {
+        %(std::nullptr_t) noexcept : thunked_runtimeclass(nullptr) {}
+        %(void* ptr, take_ownership_from_abi_t) noexcept : thunked_runtimeclass(ptr, take_ownership_from_abi) {}
+%%%    };
+)";
+
+        w.write(format,
+            type_name,
+            bind<write_thunked_class_base>(type, default_interface),
+            bind<write_thunked_class_requires>(type),
+            type_name,
+            type_name,
+            bind<write_constructor_declarations>(type, factories),
+            bind<write_thunked_class_usings>(type),
+            bind_each<write_static_declaration>(factories, type));
+    }
+
     static void write_fast_class(writer& w, TypeDef const& type, coded_index<TypeDefOrRef> const& base_type)
     {
         auto type_name = type.TypeName();
@@ -3382,6 +3489,10 @@ struct WINRT_IMPL_EMPTY_BASES produce_dispatch_to_overridable<T, D, %>
             if (has_fastabi(type))
             {
                 write_fast_class(w, type, default_interface);
+            }
+            else if (get_bases(type).empty() && has_secondary_interfaces(w, type))
+            {
+                write_thunked_class(w, type, default_interface);
             }
             else
             {

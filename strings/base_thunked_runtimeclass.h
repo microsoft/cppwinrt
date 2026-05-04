@@ -193,6 +193,20 @@ WINRT_EXPORT namespace winrt::impl
             return default_cache.load(std::memory_order_relaxed) != nullptr;
         }
 
+        operator Windows::Foundation::IUnknown() const noexcept
+        {
+            Windows::Foundation::IUnknown result{ nullptr };
+            copy_from_abi(result, default_cache.load(std::memory_order_relaxed));
+            return result;
+        }
+
+        operator Windows::Foundation::IInspectable() const noexcept
+        {
+            Windows::Foundation::IInspectable result{ nullptr };
+            copy_from_abi(result, default_cache.load(std::memory_order_relaxed));
+            return result;
+        }
+
         void* get_default_abi() const noexcept
         {
             return default_cache.load(std::memory_order_relaxed);
@@ -245,7 +259,7 @@ WINRT_EXPORT namespace winrt::impl
         using pair_type = cache_and_thunk_t<use_tagged>;
         static constexpr size_t pair_stride = sizeof(pair_type);
 
-        using thunked_interfaces = std::tuple<I...>;
+        using thunked_interfaces = std::tuple<IDefault, I...>;
 
         inline static const std::array<guid const*, N> iids{ &guid_of<I>()... };
         mutable std::array<pair_type, N> pairs{};
@@ -316,9 +330,16 @@ WINRT_EXPORT namespace winrt::impl
         template <typename Q>
         std::atomic<void*> const& thunk_cache_slot() const noexcept
         {
-            constexpr size_t idx = type_index<Q, I...>::value;
-            static_assert(idx < sizeof...(I), "Interface not in thunked list");
-            return pairs[idx].cache;
+            if constexpr (std::is_same_v<Q, IDefault>)
+            {
+                return default_cache;
+            }
+            else
+            {
+                constexpr size_t idx = type_index<Q, I...>::value;
+                static_assert(idx < sizeof...(I), "Interface not in thunked list");
+                return pairs[idx].cache;
+            }
         }
 
         void clear_thunked() noexcept
@@ -326,50 +347,4 @@ WINRT_EXPORT namespace winrt::impl
             clear_impl(pairs.data(), N, pair_stride);
         }
     };
-}
-
-// ========================================================================
-// SFINAE-guarded ABI overloads for thunked runtimeclasses
-// ========================================================================
-
-WINRT_EXPORT namespace winrt
-{
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
-    void* get_abi(T const& object) noexcept
-    {
-        return object.get_default_abi();
-    }
-
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
-    void** put_abi(T& object) noexcept
-    {
-        object.clear_thunked();
-        return object.put_default_abi();
-    }
-
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
-    void* detach_abi(T& object) noexcept
-    {
-        return object.detach_default_abi();
-    }
-
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
-    void attach_abi(T& object, void* value) noexcept
-    {
-        object.clear_thunked();
-        object.attach_default_abi(value);
-    }
-
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
-    void copy_from_abi(T& object, void* value) noexcept
-    {
-        object.clear_thunked();
-        object.copy_from_default_abi(value);
-    }
-
-    template <typename T, std::enable_if_t<impl::has_thunked_cache_v<T>, int> = 0>
-    void copy_to_abi(T const& object, void*& value) noexcept
-    {
-        object.copy_to_default_abi(value);
-    }
 }

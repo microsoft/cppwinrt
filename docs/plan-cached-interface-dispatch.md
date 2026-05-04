@@ -836,3 +836,69 @@ when thunked runtimeclass params actually appear and need `get_abi()` dispatch.
 **Build fix 4:** Removed `static_assert(sizeof(T) == sizeof(void*))` from `bind_out`.
 `bind_out` is used for struct OUT params too, not just COM interfaces — a WinRT struct
 like `test_component::Struct` has `sizeof != sizeof(void*)`.
+
+**Phase 1 committed as `0cb57ec8`** — all 3016 assertions pass.
+
+### Phase 2 work (code generator)
+
+**Added `write_thunked_class` to `code_writers.h`:**
+- `write_thunked_class_base`: emits `impl::thunked_runtimeclass<IDefault, I1, I2, ...>`
+- `write_thunked_class_requires`: emits `impl::require<T, IDefault, I1, I2, ...>` — includes
+  ALL interfaces (including default) since the type no longer inherits from IDefault
+- `write_thunked_class_usings`: all usings use `consume_t<T, I>::method` style (no
+  `using IDefault::method` since no inheritance from IDefault)
+- `has_secondary_interfaces`: checks for non-default, non-protected, non-overridable interfaces
+- `write_class` routing: `!has_fastabi && get_bases().empty() && has_secondary_interfaces` → thunked
+
+**Key insight:** `info.is_default` (IS the default interface) vs `info.defaulted` (reachable
+through default interface hierarchy). Both `write_thunked_class_base` and
+`has_secondary_interfaces` use `!info.is_default` to include interfaces from the default
+hierarchy (e.g., IMap/IIterable for PropertySet which are part of IPropertySet's require<>).
+
+**`thunked_interfaces` includes IDefault:** Changed `thunked_interfaces = std::tuple<IDefault, I...>`
+so `has_thunked_interface_v<PropertySet, IPropertySet>` is true. `thunk_cache_slot<IDefault>()`
+returns `default_cache` via if-constexpr.
+
+**`ActivateInstance<T>()` fix:** Added if-constexpr branch for thunked types using
+fast_activate path (direct `{result, take_ownership_from_abi}` construction).
+
+**`is_interface` fix:** Added `has_thunked_cache_v<T>` to `is_interface` disjunction. Without
+this, `implements<D, Class4, ...>` doesn't create `producer_convert<D, Class4>` because
+thunked Class4 doesn't derive from IInspectable (which was the old detection path).
+
+**ABI overloads moved to `base_windows.h`:** All thunked SFINAE overloads (get_abi, put_abi,
+detach_abi, attach_abi, copy_from_abi, copy_to_abi) moved from `base_thunked_runtimeclass.h`
+to `base_windows.h` so they're visible at all call sites (detach_from in base_activation.h
+couldn't see them when they were in the later-included thunked header). Added rvalue ref
+overload `detach_abi(T&&)`. Added `!has_thunked_cache_v<T>` exclusion to all value-type
+ABI overloads.
+
+**Build system:** Created `test/Directory.Build.targets` to compile x64/x86 ASM thunk stubs
+and `winrt_thunk_resolve.cpp` into all test binaries.
+
+**Implicit conversions:** Added `operator IUnknown()` and `operator IInspectable()` to
+`thunked_runtimeclass_base` — many APIs expect runtimeclass types to be implicitly
+convertible to IInspectable (e.g., `vector.Append(uri)` where vector is
+`IVector<IInspectable>`). The conversion creates a temp with AddRef via copy_from_abi.
+Reduced errors from 42 to 8.
+
+**Remaining errors (8, 3 distinct issues):**
+
+1. **agile_ref<Uri>**: `agile_ref` ctor takes `com_ref<T> const&`. Thunked types aren't
+   `com_ref<T>`. Need to overload the ctor or add a deduction path that accepts any type
+   with `get_abi()`.
+
+2. **LiesAboutInheritance no default ctor**: `unbox_value_type<T>` path tries `T{}`.
+   Generated thunked types only have `(nullptr_t)` and `(void*, take_ownership_from_abi_t)`
+   ctors — no default ctor. Old types got one from inheriting IStringable (which has a
+   default ctor from IInspectable).
+
+3. **IReference<LiesAboutInheritance> ABI mismatch**: `LiesAboutInheritance` as thunked type
+   is sizeof > sizeof(void*), so `IReference<T>::Value()` ABI out-param can't take it as a
+   pointer. This is an edge case — `IReference<T>` is for value types. The test intentionally
+   exercises unusual metadata.
+
+**Status:** Phase 2 compiles cleanly for the component (test_component.dll) and most of the
+consumer test (test.exe). 8 errors remain, all in test.exe, all related to thunked types not
+fully mimicking the old IUnknown-based interface. The core thunking mechanism is working —
+PropertySet, StringMap, Deferral, Uri, and many other types are now thunked.
