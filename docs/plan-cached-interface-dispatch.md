@@ -951,3 +951,24 @@ test code exercises projected types through raw interfaces (e.g., `IMap<K,V>` di
 not through runtimeclass wrappers. Need to add a dedicated test function that uses a
 thunked runtimeclass (e.g., `PropertySet ps; ps.Insert(L"key", box_value(42)); ps.Size()`)
 to generate consumer-side thunked dispatch code for disassembly verification.
+
+### Phase 3 test coverage (committed `722d83a5`)
+
+| Test case | Assertions | Covers |
+|-----------|------------|--------|
+| `thunked_dispatch` | 10 | Insert/Lookup/Size/HasKey/Remove/Clear via PropertySet |
+| `thunked_copy_move` | 9 | Copy ctor/assign, move ctor/assign, nullptr assign |
+| `thunked_abi_interop` | 7 | get_abi, copy_to/from_abi, detach/attach_abi, put_abi |
+| `thunked_as_try_as` | 7 | as<IMap>, as<IIterable>, try_as success/fail, implicit IInspectable/IUnknown |
+| `thunked_threading` | 2 | 8 threads x 100 iterations concurrent Insert/HasKey/Size |
+
+**Bug found by tests:** `copy_from_abi` and `attach_abi` for thunked types only set
+`default_cache` without reinitializing thunk pairs. After a null PropertySet received a
+new COM pointer via `copy_from_abi`, its cache slots were still zero → SIGSEGV on first
+secondary interface call. Fixed by adding `reset_thunked(void*)` that clears old state
+and re-initializes all pairs via `attach_impl`.
+
+**Remaining from Phase 3 plan:**
+- Types with >8 secondaries (full mode with explicit IID storage) — no test yet
+- Types with generic default interface (StringMap) — implicitly tested via codegen
+  but no dedicated test
