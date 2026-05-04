@@ -1,5 +1,17 @@
 # Plan: Thunk-Based Interface Caching for Runtimeclasses
 
+## Rules
+
+- **NEVER modify existing test source files.** Fixes go in `strings/` or `cppwinrt/`.
+- **NEVER poll** waiting for builds. Use async terminal, wait for notification.
+- **Use sub-agents for error triage.** Don't read 100K+ line build logs manually.
+- **cppwinrt.exe output** must go under `build/` — never into source trees.
+- **the compiler and linker are right**. Before you blame them for a runtime or compiler bug, you MUST prove they work.
+- **debug to collect dump.** When there's a crash, debuggers are in c:\debuggers\cdb.exe for you to use. Dumps should go under build/ and not into the source tree.
+- **disassemble with the debugger** Dumpbin does not work; use `c:\debuggers\cdb.exe -z thefile.exe -c "uf binaryname!symbolname ; q"` - the space around the `;` is important. You can use `-c "x binaryname!*symbol*pattern ; q"` to get precise addresses of functions, then use that with `uf` instead if needed.
+- **commit at reasonable chunks.** Don't create lots of little commits, but don't create huge commits either. Commit when something is observed to work or when you want to experiment and use diffs.
+
+
 ## Goal
 
 Eliminate per-call `QueryInterface`/`Release` overhead when calling non-default interface
@@ -605,10 +617,12 @@ loads — standard lock-free pattern.
 
 7. **Include in `write_base_h()`** (`file_writers.h`): after `base_implements.h`
 
-### Phase 2: Code generator (`cppwinrt/`)
-
 8. **`write_abi_args`** (`code_writers.h`):
    - `*(void**)(&param)` → `get_abi(param)` for `object_type` IN params
+   - Safe before Phase 2: for non-thunked types, `get_abi(param)` resolves to the
+     existing `get_abi(IUnknown const&)` which does the same `*(void**)(&object)`
+
+### Phase 2: Code generator (`cppwinrt/`)
 
 9. **`write_slow_class`** (`code_writers.h`):
    - For cacheable types: inherit from `impl::thunked_runtimeclass<IDefault, I...>`
@@ -732,10 +746,3 @@ Runs locally-built `cppwinrt.exe`. Output goes under `build/` (gitignored).
    ```
    .\scripts\run_cppwinrt.ps1
    ```
-
-### Rules
-
-- **NEVER modify existing test source files.** Fixes go in `strings/` or `cppwinrt/`.
-- **NEVER poll** waiting for builds. Use async terminal, wait for notification.
-- **Use sub-agents for error triage.** Don't read 100K+ line build logs manually.
-- **cppwinrt.exe output** must go under `build/` — never into source trees.
