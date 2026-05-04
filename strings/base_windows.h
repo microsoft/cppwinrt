@@ -67,7 +67,7 @@ namespace winrt::impl
 #endif
 
     template <typename T>
-    using com_ref = std::conditional_t<std::is_base_of_v<Windows::Foundation::IUnknown, T>, T, com_ptr<T>>;
+    using com_ref = std::conditional_t<std::is_base_of_v<Windows::Foundation::IUnknown, T> || has_thunked_cache_v<T>, T, com_ptr<T>>;
 
     template <typename T, std::enable_if_t<is_implements_v<T>, int> = 0>
     com_ref<T> wrap_as_result(void* result)
@@ -85,7 +85,7 @@ namespace winrt::impl
     struct is_classic_com_interface : std::conjunction<std::is_base_of<::IUnknown, T>, std::negation<is_implements<T>>> {};
 
     template <typename T>
-    struct is_com_interface : std::disjunction<std::is_base_of<Windows::Foundation::IUnknown, T>, std::is_base_of<unknown_abi, T>, is_implements<T>, is_classic_com_interface<T>> {};
+    struct is_com_interface : std::disjunction<std::is_base_of<Windows::Foundation::IUnknown, T>, std::is_base_of<unknown_abi, T>, is_implements<T>, is_classic_com_interface<T>, std::bool_constant<has_thunked_cache_v<T>>> {};
 
     template <typename T>
     inline constexpr bool is_com_interface_v = is_com_interface<T>::value;
