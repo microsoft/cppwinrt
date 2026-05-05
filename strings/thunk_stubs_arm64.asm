@@ -49,9 +49,16 @@ common_thunk_dispatch PROC
     ldp     x1, x2, [sp, #16]
     ldp     x29, x30, [sp], #80
 
+    cbz     x0, resolve_failed
+
     ldr     x9, [x0]
     ldr     x9, [x9, x10, lsl #3]
     br      x9
+
+resolve_failed
+    mov     w0, #0x4002
+    movk    w0, #0x8000, lsl #16
+    ret
     ENDP
 
 ; ============================================================================

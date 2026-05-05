@@ -46,9 +46,16 @@ common_thunk_dispatch proc
 
     pop     ecx                     ; ecx = slot index
 
+    test    eax, eax
+    jz      resolve_failed
+
     mov     [esp+4], eax            ; replace 'this' with real ptr
     mov     edx, [eax]              ; edx = real vtable
     jmp     dword ptr [edx + ecx*4]
+
+resolve_failed:
+    mov     eax, 80004002h          ; E_NOINTERFACE
+    ret
 common_thunk_dispatch endp
 
 ; ============================================================================

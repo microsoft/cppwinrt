@@ -44,6 +44,9 @@ common_thunk_dispatch proc
     add     rsp, 20h
     pop     r10
 
+    test    rax, rax
+    jz      resolve_failed
+
     mov     rcx, rax
     mov     r11, [rax]
     mov     r11, [r11 + r10*8]
@@ -53,6 +56,10 @@ common_thunk_dispatch proc
     mov     r9,  [rsp+20h]
 
     jmp     r11
+
+resolve_failed:
+    mov     eax, 80004002h          ; E_NOINTERFACE
+    ret
 common_thunk_dispatch endp
 
 ; ============================================================================

@@ -1044,3 +1044,59 @@ zero-cost reinterpret pattern.
 matching the IUnknown layout. This fixes `bind_in`, `get_abi`, and other `reinterpret_cast`
 patterns that read the first member. The earlier `bind_in` SFINAE specialization was
 removed as it's no longer needed.
+
+### Issue 6: `interface_thunk::resolve()` throws through ASM frame on QI failure
+
+**Discovered:** 2026-05-04 via TTD trace of `async_propagate_cancel` test crash.
+
+**Symptoms:** Access violation in `winrt::impl::try_as` inside `operator==`, with
+deeply nested synchronous coroutine completion chain (10 layers of
+`ActionAction$_ResumeCoro → final_suspend_awaiter::await_suspend → set_completed →
+invoke(handler) → ActionAction$_ResumeCoro`). The faulting address contains freed
+memory (`0xc0c0c0c0` AppVerifier fill).
+
+**Root cause:** `interface_thunk::resolve()` uses `check_hresult()` on the QI result.
+If QueryInterface fails (e.g. `E_NOINTERFACE`), `check_hresult` throws a C++ exception.
+But `resolve()` is called from `winrt_fast_resolve_thunk()`, which is called from the
+x64 ASM `common_thunk_dispatch` stub. That stub has no `.pdata`/`.xdata` unwind
+metadata — it manually saves registers to `[rsp+10h/18h/20h]` and uses
+`push/sub rsp/call/add rsp/pop/jmp`. An exception thrown through this frame corrupts
+the stack unwinder's state, leading to undefined behavior downstream.
+
+Even if the ASM had proper unwind info, the design is wrong: `consume_general`'s
+thunked branch does `check_hresult((_winrt_abi_type->*mptr)(...))` — it expects the
+HRESULT from the actual method call, not an exception from the vtable dispatch itself.
+
+**The test:** `async_propagate_cancel` calls `ActionAction(10)`, creating 10 nested
+`IAsyncAction` layers. When cancellation propagates, each layer completes synchronously
+in `final_suspend_awaiter::await_suspend`. During the deep completion unwinding,
+the `CheckWithWait` lambda's `REQUIRE(async == sender)` calls `operator==` which calls
+`try_as<IUnknown>()` on the `async` variable. At this point the `async` COM pointer
+references freed memory.
+
+**Fix options considered:**
+
+- **(A) Return thunk on failure:** Leave cache unresolved. Problem: `common_thunk_dispatch`
+  tail-jumps to `[vtable + slot*8]` which re-enters the same stub, infinite loop.
+
+- **(B) Error sentinel vtable:** Create a static vtable where every slot returns
+  `E_NOINTERFACE`. On QI failure, CAS the cache slot from thunk → error sentinel.
+  `common_thunk_dispatch` tail-jumps into the sentinel, which returns `E_NOINTERFACE`.
+  `consume_general`'s `check_hresult` on the method result throws `hresult_no_interface`
+  as expected. No ASM changes needed. Matches the "thunk IS the null-state handler" design.
+
+- **(C) HRESULT out-param in resolve:** Change `resolve(HRESULT* hr)`, ASM checks rax==null
+  and returns HRESULT directly. Cleanest semantics but requires ASM changes per arch.
+
+**Recommended: Option D** — null return + ASM early-out.
+
+`resolve()` returns `nullptr` without modifying the cache slot when QI fails. The cache
+stays pointing to the thunk (retryable on next call). `common_thunk_dispatch` checks
+the return value; if null, it does `mov eax, 0x80004002; ret` to return `E_NOINTERFACE`
+directly to the caller. `consume_general`'s `check_hresult` on the method result throws
+`hresult_no_interface` in a proper C++ frame.
+
+Changes: one line in `resolve()`, ~4 lines added to each of 4 ASM files (x64, x86,
+arm64, arm64ec).
+
+**Status:** Implemented.

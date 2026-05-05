@@ -49,8 +49,8 @@ WINRT_EXPORT namespace winrt::impl
             }
 
             void* real = nullptr;
-            check_hresult(static_cast<unknown_abi*>(default_abi)->QueryInterface(
-                *iid, &real));
+            if (static_cast<unknown_abi*>(default_abi)->QueryInterface(*iid, &real) < 0)
+                return nullptr;
 
             void* expected = const_cast<interface_thunk*>(this);
             if (!slot->compare_exchange_strong(expected, real, std::memory_order_release, std::memory_order_acquire))

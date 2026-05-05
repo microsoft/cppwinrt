@@ -44,3 +44,4 @@ call msbuild /p:Configuration=%target_configuration%,Platform=%target_platform%,
 if errorlevel 1 exit /b 1
 
 call run_tests.cmd %target_platform% %target_configuration%
+if errorlevel 1 exit /b 1

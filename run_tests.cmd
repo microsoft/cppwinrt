@@ -7,6 +7,7 @@ set target_version=%3
 
 if "%target_platform%"=="" set target_platform=x64
 if "%target_configuration%"=="" set target_configuration=Debug
+set any_failed=false
 
 call :run_test test
 call :run_test test_nocoro
@@ -17,6 +18,7 @@ call :run_test test_slow
 call :run_test test_old
 call :run_test test_module_lock_custom
 call :run_test test_module_lock_none
+if "%any_failed%"=="true" exit /b 1
 goto :eof
 
 :run_test
@@ -28,5 +30,6 @@ if %ERRORLEVEL% EQU 0 (
 ) else (
     type %1_results.txt >&2
     echo %1 >> test_failures.txt
+    set any_failed=true
 )
 goto :eof
