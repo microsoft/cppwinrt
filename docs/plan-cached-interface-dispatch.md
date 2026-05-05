@@ -1012,3 +1012,35 @@ Full clean e2e build passes: cppwinrt, natvis (2 configs), all 10 test targets, 
 **1 remaining failure:** `test_old/event_consume.cpp:147` — factory event revoker crash
 (SIGSEGV in "consume factory events"). Not in thunked code path — `Clipboard` is a static
 class, `IClipboardStatics` is an interface. Needs investigation.
+
+### Produce stub ABI mismatch (fixed post-checkpoint)
+
+**Root cause:** `write_produce_args` in `code_writers.h` generates arguments for produce
+stub upcalls (`this->shim().Method(...)`). For runtimeclass IN parameters it used
+`*reinterpret_cast<T const*>(&param)` to view the `void*` ABI parameter as a projected
+type reference. This worked when `sizeof(T) == sizeof(void*)`, but for thunked types
+(sizeof > 8 bytes) the reinterpret reads past the `void*` stack slot into garbage — even
+with `default_cache` as the first member, the thunk pairs and iid_table beyond it are
+uninitialized stack memory.
+
+**Why it matters:** Produce stubs forward ABI calls to C++ component implementations.
+The shim's method signature takes projected types (`DataPackage const&`). If the
+implementation accesses any secondary interface on the parameter, it reads through the
+thunk cache slots — which were never initialized because the `T const&` was just a
+reinterpret of 8 bytes, not a properly constructed thunked wrapper.
+
+**Fix:** `produce_borrowed_ref<T>` — a non-owning RAII wrapper for produce stub parameters.
+Constructs via `T{nullptr}` + `attach_abi(value, abi)` to properly initialize the full
+thunked layout from the ABI `void*`. Calls `detach_abi(value)` on destruction to prevent
+Release (the caller owns the reference). For non-thunked runtimeclass types, `attach_abi`
+just stores the `void*` — same cost as before.
+
+The code generator emits `produce_borrowed_ref<T>(param)` for `class_type` IN params
+only. Interface and delegate types remain `sizeof(void*)` and continue to use the
+zero-cost reinterpret pattern.
+
+**Layout fix:** `thunked_runtimeclass_header` was also reordered to
+`{default_cache, iid_table}` so that `*(void**)&object` reads the COM pointer first —
+matching the IUnknown layout. This fixes `bind_in`, `get_abi`, and other `reinterpret_cast`
+patterns that read the first member. The earlier `bind_in` SFINAE specialization was
+removed as it's no longer needed.

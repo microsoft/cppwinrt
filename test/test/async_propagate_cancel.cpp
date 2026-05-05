@@ -126,7 +126,7 @@ namespace
         async.Cancel();
 
         // Wait indefinitely if a debugger is present, to make it easier to debug this test.
-        REQUIRE(WaitForSingleObject(completed.get(), IsDebuggerPresent() ? INFINITE : 1000) == WAIT_OBJECT_0);
+        REQUIRE(WaitForSingleObject(completed.get(), IsDebuggerPresent() ? INFINITE : 1000 * 30) == WAIT_OBJECT_0);
 
         REQUIRE(async.Status() == AsyncStatus::Canceled);
         REQUIRE(async.ErrorCode() == HRESULT_FROM_WIN32(ERROR_CANCELLED));

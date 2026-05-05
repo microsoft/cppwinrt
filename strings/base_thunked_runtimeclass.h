@@ -7,8 +7,11 @@ WINRT_EXPORT namespace winrt::impl
 
     struct alignas(16) thunked_runtimeclass_header
     {
-        guid const* const* iid_table{};
+        // default_cache MUST be the first member so that *(void**)&object reads
+        // the COM pointer — matching the layout of IUnknown-derived types and
+        // ensuring reinterpret_cast<T const*>(&void_ptr) works in produce stubs.
         mutable std::atomic<void*> default_cache{};
+        guid const* const* iid_table{};
     };
 
     struct interface_thunk
@@ -400,25 +403,29 @@ WINRT_EXPORT namespace winrt::impl
             }
         }
     };
-}
 
-WINRT_EXPORT namespace winrt::impl
-{
-    // Safely convert an ABI parameter (void* for COM types) to a projected type.
-    // For thunked runtimeclasses, constructs a temporary with AddRef (borrowed ref).
-    // For all other types, reinterpret-casts in place (zero-cost, same as before).
+    // Non-owning wrapper for produce stub IN parameters. Constructs a proper
+    // thunked runtimeclass from a void* ABI pointer (borrowed reference) and
+    // detaches on destruction to prevent Release. For non-thunked types, just
+    // reinterpret-casts (zero overhead, same as before).
     template <typename T>
-    auto delegate_arg(arg_in<T> const& value) noexcept
+    struct produce_borrowed_ref
     {
-        if constexpr (has_thunked_cache_v<T>)
+        T value{ nullptr };
+
+        produce_borrowed_ref(void* abi) noexcept
         {
-            void* abi = *reinterpret_cast<void* const*>(&value);
-            if (abi) static_cast<unknown_abi*>(abi)->AddRef();
-            return T{ abi, take_ownership_from_abi_t{} };
+            attach_abi(value, abi);
         }
-        else
+
+        ~produce_borrowed_ref()
         {
-            return *reinterpret_cast<T const*>(&value);
+            detach_abi(value);
         }
-    }
+
+        produce_borrowed_ref(produce_borrowed_ref const&) = delete;
+        produce_borrowed_ref& operator=(produce_borrowed_ref const&) = delete;
+
+        operator T const&() const noexcept { return value; }
+    };
 }

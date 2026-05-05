@@ -479,7 +479,7 @@ namespace winrt::impl
         handle_type<impl::hstring_traits> m_handle;
     };
 
-    template <typename T, typename Enable = void>
+    template <typename T>
     struct bind_in
     {
         bind_in(T const& object) noexcept : object(object)
@@ -505,24 +505,6 @@ namespace winrt::impl
             return const_cast<R&>(reinterpret_cast<R const&>(object));
         }
 #endif
-    };
-
-    // Thunked runtimeclasses have iid_table as the first member, not the COM
-    // pointer. Extract get_abi() into a stored void* so the reference conversion
-    // returns the correct ABI pointer.
-    template <typename T>
-    struct bind_in<T, std::enable_if_t<has_thunked_cache_v<T>>>
-    {
-        bind_in(T const& object) noexcept : abi(get_abi(object))
-        {
-        }
-
-        void* abi;
-
-        operator void* const& () const noexcept
-        {
-            return abi;
-        }
     };
 
     template <typename T>

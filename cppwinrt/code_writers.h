@@ -1765,9 +1765,15 @@ namespace cppwinrt
 
                 if (param.Flags().In())
                 {
-                    if (category != param_category::fundamental_type)
+                    if (category == param_category::object_type && is_object_class(param_signature->Type()))
                     {
-                        w.write("impl::delegate_arg<%>(%)",
+                        w.write("impl::produce_borrowed_ref<%>(%)",
+                            param_type,
+                            param_name);
+                    }
+                    else if (category != param_category::fundamental_type)
+                    {
+                        w.write("*reinterpret_cast<% const*>(&%)",
                             param_type,
                             param_name);
                     }

@@ -180,6 +180,16 @@ pointing to a vtable). Any code that reads `*(void**)&cache_slot` gets a valid
 vtable pointer — either the thunk's or the real object's. The `consume_general`
 hot path doesn't distinguish between them.
 
+**Produce stubs.** WinRT component produce stubs (server-side ABI implementations)
+receive `void*` parameters and forward them to the C++ implementation as projected
+types. The old code used `*reinterpret_cast<T const*>(&param)` to view the `void*`
+as `T const&` — valid when `sizeof(T) == sizeof(void*)`. With thunked types being
+larger, this overreads the stack. The fix: `produce_borrowed_ref<T>` constructs a
+proper thunked wrapper from the `void*` (via `T{nullptr}` + `attach_abi`) and
+detaches on destruction to prevent Release. This is only emitted for `class_type`
+parameters; interface and delegate types remain pointer-sized and use the zero-cost
+reinterpret pattern.
+
 ## Summary of changes from the prior model
 
 | Aspect | Before | After |
